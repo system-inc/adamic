@@ -1,0 +1,1886 @@
+{
+  "version": "6.0.3",
+  "rootFiles": 711,
+  "sourceFiles": 262,
+  "members": {
+    "add": [
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1452,
+        "column": 16,
+        "owners": [
+          "arrayToMultiMap"
+        ],
+        "text": "add",
+        "context": "result.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1542,
+        "column": 5,
+        "owners": [
+          "add"
+        ],
+        "text": "add",
+        "context": "add(key: K, value: V): V[];",
+        "kind": "definition"
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1554,
+        "column": 9,
+        "owners": [
+          "createMultiMap"
+        ],
+        "text": "add",
+        "context": "map.add",
+        "kind": "write"
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "line": 401,
+        "column": 34,
+        "owners": [
+          "createUseFsEventsOnParentDirectoryWatchFile",
+          "nonPollingWatchFile"
+        ],
+        "text": "add",
+        "context": "fileWatcherCallbacks.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "line": 680,
+        "column": 27,
+        "owners": [
+          "createDirectoryWatcherSupportingRecursive",
+          "createDirectoryWatcher"
+        ],
+        "text": "add",
+        "context": "callbackCache.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 9518,
+        "column": 75,
+        "owners": [
+          "createSymlinkCache",
+          "<anonymous>"
+        ],
+        "text": "add",
+        "context": "(symlinkedDirectoriesByRealpath ||= createMultiMap()).add",
+        "kind": "call"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 7942,
+        "column": 39,
+        "owners": [
+          "createTypeChecker",
+          "createNodeBuilder",
+          "mapToTypeNodes"
+        ],
+        "text": "add",
+        "context": "seenNames.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 3649,
+        "column": 36,
+        "owners": [
+          "createProgram",
+          "findSourceFileWorker"
+        ],
+        "text": "add",
+        "context": "redirectTargetsMap.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 3710,
+        "column": 49,
+        "owners": [
+          "createProgram",
+          "addFileIncludeReason"
+        ],
+        "text": "add",
+        "context": "programDiagnostics.getFileReasons().add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/exportInfoMap.ts",
+        "line": 214,
+        "column": 24,
+        "owners": [
+          "createCacheableExportInfoMap",
+          "<anonymous>"
+        ],
+        "text": "add",
+        "context": "exportInfo.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/services.ts",
+        "line": 1171,
+        "column": 24,
+        "owners": [
+          "SourceFileObject",
+          "computeNamedDeclarations",
+          "addDeclaration"
+        ],
+        "text": "add",
+        "context": "result.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/codeFixProvider.ts",
+        "line": 54,
+        "column": 26,
+        "owners": [
+          "registerCodeFix"
+        ],
+        "text": "add",
+        "context": "errorCodeToFixes.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/codefixes/convertToAsyncFunction.ts",
+        "line": 320,
+        "column": 36,
+        "owners": [
+          "renameCollidingVarNames",
+          "visit"
+        ],
+        "text": "add",
+        "context": "collidingSymbolMap.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/codefixes/convertToAsyncFunction.ts",
+        "line": 332,
+        "column": 40,
+        "owners": [
+          "renameCollidingVarNames",
+          "visit"
+        ],
+        "text": "add",
+        "context": "collidingSymbolMap.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/codefixes/convertToAsyncFunction.ts",
+        "line": 337,
+        "column": 40,
+        "owners": [
+          "renameCollidingVarNames",
+          "visit"
+        ],
+        "text": "add",
+        "context": "collidingSymbolMap.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/codefixes/convertToEsModule.ts",
+        "line": 602,
+        "column": 43,
+        "owners": [
+          "collectFreeIdentifiers",
+          "<anonymous>"
+        ],
+        "text": "add",
+        "context": "map.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/codefixes/importFixes.ts",
+        "line": 1181,
+        "column": 50,
+        "owners": [
+          "createExistingImportMap"
+        ],
+        "text": "add",
+        "context": "(importMap ||= createMultiMap()).add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/codefixes/importFixes.ts",
+        "line": 1187,
+        "column": 50,
+        "owners": [
+          "createExistingImportMap"
+        ],
+        "text": "add",
+        "context": "(importMap ||= createMultiMap()).add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/codefixes/importFixes.ts",
+        "line": 1641,
+        "column": 41,
+        "owners": [
+          "getExportInfos",
+          "addSymbol"
+        ],
+        "text": "add",
+        "context": "originalSymbolToExportInfos.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/codefixes/inferFromUsage.ts",
+        "line": 1031,
+        "column": 23,
+        "owners": [
+          "inferTypeFromReferences",
+          "combineAnonymousTypes"
+        ],
+        "text": "add",
+        "context": "props.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/services/textChanges.ts",
+        "line": 662,
+        "column": 29,
+        "owners": [
+          "ChangeTracker",
+          "insertStatementsInNewFile"
+        ],
+        "text": "add",
+        "context": "this.newFileChanges.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/server/scriptInfo.ts",
+        "line": 473,
+        "column": 71,
+        "owners": [
+          "ScriptInfo",
+          "ensureRealPath"
+        ],
+        "text": "add",
+        "context": "project.projectService.realpathToScriptInfos!.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 3506,
+        "column": 38,
+        "owners": [
+          "ProjectService",
+          "getSymlinkedProjects",
+          "combineProjects"
+        ],
+        "text": "add",
+        "context": "projects.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 3509,
+        "column": 38,
+        "owners": [
+          "ProjectService",
+          "getSymlinkedProjects",
+          "combineProjects"
+        ],
+        "text": "add",
+        "context": "projects.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/harness/watchUtils.ts",
+        "line": 87,
+        "column": 21,
+        "owners": [
+          "createWatchUtils",
+          "initializeWatches",
+          "add"
+        ],
+        "text": "add",
+        "context": "actuals.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/harness/watchUtils.ts",
+        "line": 101,
+        "column": 53,
+        "owners": [
+          "createWatchUtils",
+          "initializeWatches",
+          "add"
+        ],
+        "text": "add",
+        "context": "(realToLinked ??= createMultiMap()).add",
+        "kind": "call"
+      },
+      {
+        "file": "src/harness/fourslashImpl.ts",
+        "line": 3002,
+        "column": 20,
+        "owners": [
+          "TestState",
+          "rangesByText"
+        ],
+        "text": "add",
+        "context": "result.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+        "line": 56,
+        "column": 27,
+        "owners": [
+          "<anonymous>",
+          "createLoggerTrackingHostCalls",
+          "setCallsTrackingWithSingleArgFn",
+          "<anonymous>"
+        ],
+        "text": "add",
+        "context": "calledMap.add",
+        "kind": "call"
+      },
+      {
+        "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+        "line": 66,
+        "column": 27,
+        "owners": [
+          "<anonymous>",
+          "createLoggerTrackingHostCalls",
+          "setCallsTrackingWithFiveArgFn",
+          "<anonymous>"
+        ],
+        "text": "add",
+        "context": "calledMap.add",
+        "kind": "call"
+      }
+    ],
+    "remove": [
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1548,
+        "column": 5,
+        "owners": [
+          "remove"
+        ],
+        "text": "remove",
+        "context": "remove(key: K, value: V): void;",
+        "kind": "definition"
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1555,
+        "column": 9,
+        "owners": [
+          "createMultiMap"
+        ],
+        "text": "remove",
+        "context": "map.remove",
+        "kind": "write"
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "line": 417,
+        "column": 38,
+        "owners": [
+          "createUseFsEventsOnParentDirectoryWatchFile",
+          "nonPollingWatchFile",
+          "<anonymous>"
+        ],
+        "text": "remove",
+        "context": "fileWatcherCallbacks.remove",
+        "kind": "call"
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "line": 687,
+        "column": 50,
+        "owners": [
+          "createDirectoryWatcherSupportingRecursive",
+          "createDirectoryWatcher",
+          "<anonymous>"
+        ],
+        "text": "remove",
+        "context": "callbackCache.remove",
+        "kind": "call"
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 2394,
+        "column": 41,
+        "owners": [
+          "ProjectService",
+          "deleteScriptInfo"
+        ],
+        "text": "remove",
+        "context": "this.realpathToScriptInfos!.remove",
+        "kind": "call"
+      },
+      {
+        "file": "src/harness/watchUtils.ts",
+        "line": 106,
+        "column": 21,
+        "owners": [
+          "createWatchUtils",
+          "initializeWatches",
+          "remove"
+        ],
+        "text": "remove",
+        "context": "actuals.remove",
+        "kind": "call"
+      },
+      {
+        "file": "src/harness/watchUtils.ts",
+        "line": 119,
+        "column": 31,
+        "owners": [
+          "createWatchUtils",
+          "initializeWatches",
+          "remove"
+        ],
+        "text": "remove",
+        "context": "realToLinked!.remove",
+        "kind": "call"
+      }
+    ]
+  },
+  "flows": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1454,
+      "column": 12,
+      "owners": [
+        "arrayToMultiMap"
+      ],
+      "text": "result",
+      "kind": "contextual",
+      "source": "MultiMap<K, V | U>",
+      "target": "MultiMap<K, V | U>"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1556,
+      "column": 12,
+      "owners": [
+        "createMultiMap"
+      ],
+      "text": "map",
+      "kind": "contextual",
+      "source": "MultiMap<K, V>",
+      "target": "MultiMap<K, V>"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9508,
+      "column": 50,
+      "owners": [
+        "createSymlinkCache",
+        "<anonymous>"
+      ],
+      "text": "symlinkedDirectoriesByRealpath",
+      "kind": "contextual",
+      "source": "MultiMap<Path, string> | undefined",
+      "target": "MultiMap<Path, string> | undefined"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9518,
+      "column": 57,
+      "owners": [
+        "createSymlinkCache",
+        "<anonymous>"
+      ],
+      "text": "createMultiMap()",
+      "kind": "contextual",
+      "source": "MultiMap<Path, string>",
+      "target": "MultiMap<Path, string> | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 54288,
+      "column": 38,
+      "owners": [
+        "createBasicNodeBuilderModuleSpecifierResolutionHost",
+        "<anonymous>"
+      ],
+      "text": "host.getFileIncludeReasons()",
+      "kind": "contextual",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1916,
+      "column": 9,
+      "owners": [
+        "createProgram"
+      ],
+      "text": "redirectTargetsMap",
+      "kind": "contextual",
+      "source": "MultiMap<Path, string>",
+      "target": "MultiMap<Path, string>"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1953,
+      "column": 38,
+      "owners": [
+        "createProgram",
+        "<anonymous>"
+      ],
+      "text": "programDiagnostics.getFileReasons()",
+      "kind": "contextual",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2588,
+      "column": 30,
+      "owners": [
+        "createProgram",
+        "tryReuseStructureFromOldProgram"
+      ],
+      "text": "oldProgram.redirectTargetsMap",
+      "kind": "assignment",
+      "source": "MultiMap<Path, string>",
+      "target": "MultiMap<Path, string>"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2588,
+      "column": 30,
+      "owners": [
+        "createProgram",
+        "tryReuseStructureFromOldProgram"
+      ],
+      "text": "oldProgram.redirectTargetsMap",
+      "kind": "contextual",
+      "source": "MultiMap<Path, string>",
+      "target": "MultiMap<Path, string>"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2630,
+      "column": 13,
+      "owners": [
+        "createProgram",
+        "getEmitHost"
+      ],
+      "text": "redirectTargetsMap",
+      "kind": "contextual",
+      "source": "MultiMap<Path, string>",
+      "target": "RedirectTargetsMap"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 126,
+      "column": 27,
+      "owners": [
+        "createProgramDiagnostics",
+        "reuseStateFromOldProgram"
+      ],
+      "text": "oldProgramDiagnostics.getFileReasons()",
+      "kind": "assignment",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 126,
+      "column": 27,
+      "owners": [
+        "createProgramDiagnostics",
+        "reuseStateFromOldProgram"
+      ],
+      "text": "oldProgramDiagnostics.getFileReasons()",
+      "kind": "contextual",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 139,
+      "column": 20,
+      "owners": [
+        "createProgramDiagnostics",
+        "getFileReasons"
+      ],
+      "text": "fileReasons",
+      "kind": "contextual",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 2463,
+      "column": 9,
+      "owners": [
+        "createModuleSpecifierResolutionHost"
+      ],
+      "text": "redirectTargetsMap",
+      "kind": "contextual",
+      "source": "MultiMap<Path, string>",
+      "target": "RedirectTargetsMap"
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 2463,
+      "column": 29,
+      "owners": [
+        "createModuleSpecifierResolutionHost"
+      ],
+      "text": "program.redirectTargetsMap",
+      "kind": "contextual",
+      "source": "MultiMap<Path, string>",
+      "target": "RedirectTargetsMap"
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 2467,
+      "column": 38,
+      "owners": [
+        "createModuleSpecifierResolutionHost",
+        "<anonymous>"
+      ],
+      "text": "program.getFileIncludeReasons()",
+      "kind": "contextual",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "line": 237,
+      "column": 33,
+      "owners": [
+        "createCacheableExportInfoMap",
+        "<anonymous>"
+      ],
+      "text": "exportInfo",
+      "kind": "argument",
+      "source": "MultiMap<ExportMapInfoKey, CachedSymbolExportInfo>",
+      "target": "ReadonlyMap<ExportMapInfoKey, CachedSymbolExportInfo[]>"
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "line": 237,
+      "column": 33,
+      "owners": [
+        "createCacheableExportInfoMap",
+        "<anonymous>"
+      ],
+      "text": "exportInfo",
+      "kind": "contextual",
+      "source": "MultiMap<ExportMapInfoKey, CachedSymbolExportInfo>",
+      "target": "ReadonlyMap<ExportMapInfoKey, CachedSymbolExportInfo[]>"
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "line": 277,
+      "column": 51,
+      "owners": [
+        "createCacheableExportInfoMap"
+      ],
+      "text": "value",
+      "kind": "contextual",
+      "source": "MultiMap<ExportMapInfoKey, CachedSymbolExportInfo>",
+      "target": "unknown"
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "line": 277,
+      "column": 58,
+      "owners": [
+        "createCacheableExportInfoMap"
+      ],
+      "text": "exportInfo",
+      "kind": "contextual",
+      "source": "MultiMap<ExportMapInfoKey, CachedSymbolExportInfo>",
+      "target": "unknown"
+    },
+    {
+      "file": "src/services/services.ts",
+      "line": 1166,
+      "column": 16,
+      "owners": [
+        "SourceFileObject",
+        "computeNamedDeclarations"
+      ],
+      "text": "result",
+      "kind": "contextual",
+      "source": "MultiMap<string, Declaration>",
+      "target": "Map<string, Declaration[]>"
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 318,
+      "column": 63,
+      "owners": [
+        "renameCollidingVarNames",
+        "visit"
+      ],
+      "text": "collidingSymbolMap",
+      "kind": "argument",
+      "source": "MultiMap<string, Symbol>",
+      "target": "ReadonlyMap<string, Symbol[]>"
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 318,
+      "column": 63,
+      "owners": [
+        "renameCollidingVarNames",
+        "visit"
+      ],
+      "text": "collidingSymbolMap",
+      "kind": "contextual",
+      "source": "MultiMap<string, Symbol>",
+      "target": "ReadonlyMap<string, Symbol[]>"
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 329,
+      "column": 64,
+      "owners": [
+        "renameCollidingVarNames",
+        "visit"
+      ],
+      "text": "collidingSymbolMap",
+      "kind": "argument",
+      "source": "MultiMap<string, Symbol>",
+      "target": "ReadonlyMap<string, Symbol[]>"
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 329,
+      "column": 64,
+      "owners": [
+        "renameCollidingVarNames",
+        "visit"
+      ],
+      "text": "collidingSymbolMap",
+      "kind": "contextual",
+      "source": "MultiMap<string, Symbol>",
+      "target": "ReadonlyMap<string, Symbol[]>"
+    },
+    {
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "line": 603,
+      "column": 12,
+      "owners": [
+        "collectFreeIdentifiers"
+      ],
+      "text": "map",
+      "kind": "contextual",
+      "source": "MultiMap<string, Identifier>",
+      "target": "FreeIdentifiers"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1181,
+      "column": 32,
+      "owners": [
+        "createExistingImportMap"
+      ],
+      "text": "createMultiMap()",
+      "kind": "contextual",
+      "source": "MultiMap<number, AnyImportOrRequire>",
+      "target": "MultiMap<number, AnyImportOrRequire> | undefined"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1187,
+      "column": 32,
+      "owners": [
+        "createExistingImportMap"
+      ],
+      "text": "createMultiMap()",
+      "kind": "contextual",
+      "source": "MultiMap<number, AnyImportOrRequire>",
+      "target": "MultiMap<number, AnyImportOrRequire> | undefined"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1664,
+      "column": 12,
+      "owners": [
+        "getExportInfos"
+      ],
+      "text": "originalSymbolToExportInfos",
+      "kind": "contextual",
+      "source": "MultiMap<string, SymbolExportInfo>",
+      "target": "ReadonlyMap<string, readonly SymbolExportInfo[]>"
+    },
+    {
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "line": 1046,
+      "column": 36,
+      "owners": [
+        "inferTypeFromReferences",
+        "combineAnonymousTypes"
+      ],
+      "text": "props",
+      "kind": "argument",
+      "source": "MultiMap<__String, Type>",
+      "target": "ReadonlyMap<__String, Type[]>"
+    },
+    {
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "line": 1046,
+      "column": 36,
+      "owners": [
+        "inferTypeFromReferences",
+        "combineAnonymousTypes"
+      ],
+      "text": "props",
+      "kind": "contextual",
+      "source": "MultiMap<__String, Type>",
+      "target": "ReadonlyMap<__String, Type[]>"
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "line": 1002,
+      "column": 73,
+      "owners": [
+        "getReferencedSymbolsForNode"
+      ],
+      "text": "fileIncludeReasons",
+      "kind": "argument",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "line": 1002,
+      "column": 73,
+      "owners": [
+        "getReferencedSymbolsForNode"
+      ],
+      "text": "fileIncludeReasons",
+      "kind": "contextual",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "line": 1026,
+      "column": 140,
+      "owners": [
+        "getReferencedSymbolsForNode"
+      ],
+      "text": "fileIncludeReasons",
+      "kind": "argument",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "line": 1026,
+      "column": 140,
+      "owners": [
+        "getReferencedSymbolsForNode"
+      ],
+      "text": "fileIncludeReasons",
+      "kind": "contextual",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "line": 1071,
+      "column": 98,
+      "owners": [
+        "getReferencesForFileName"
+      ],
+      "text": "fileIncludeReasons",
+      "kind": "argument",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "line": 1071,
+      "column": 98,
+      "owners": [
+        "getReferencesForFileName"
+      ],
+      "text": "fileIncludeReasons",
+      "kind": "contextual",
+      "source": "MultiMap<Path, FileIncludeReason>",
+      "target": "MultiMap<Path, FileIncludeReason>"
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "line": 660,
+      "column": 35,
+      "owners": [
+        "ChangeTracker",
+        "insertStatementsInNewFile"
+      ],
+      "text": "createMultiMap<string, NewFileInsertion>()",
+      "kind": "assignment",
+      "source": "MultiMap<string, NewFileInsertion>",
+      "target": "MultiMap<string, NewFileInsertion>"
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "line": 660,
+      "column": 35,
+      "owners": [
+        "ChangeTracker",
+        "insertStatementsInNewFile"
+      ],
+      "text": "createMultiMap<string, NewFileInsertion>()",
+      "kind": "contextual",
+      "source": "MultiMap<string, NewFileInsertion>",
+      "target": "MultiMap<string, NewFileInsertion>"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 1463,
+      "column": 42,
+      "owners": [
+        "ProjectService",
+        "<anonymous>"
+      ],
+      "text": "createMultiMap()",
+      "kind": "assignment",
+      "source": "MultiMap<Path, ScriptInfo>",
+      "target": "MultiMap<Path, ScriptInfo> | undefined"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 1463,
+      "column": 42,
+      "owners": [
+        "ProjectService",
+        "<anonymous>"
+      ],
+      "text": "createMultiMap()",
+      "kind": "contextual",
+      "source": "MultiMap<Path, ScriptInfo>",
+      "target": "MultiMap<Path, ScriptInfo> | undefined"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3492,
+      "column": 16,
+      "owners": [
+        "ProjectService",
+        "getSymlinkedProjects"
+      ],
+      "text": "projects",
+      "kind": "contextual",
+      "source": "MultiMap<Path, Project> | undefined",
+      "target": "MultiMap<Path, Project> | undefined"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3505,
+      "column": 40,
+      "owners": [
+        "ProjectService",
+        "getSymlinkedProjects",
+        "combineProjects"
+      ],
+      "text": "createMultiMap()",
+      "kind": "assignment",
+      "source": "MultiMap<Path, Project>",
+      "target": "MultiMap<Path, Project> | undefined"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3505,
+      "column": 40,
+      "owners": [
+        "ProjectService",
+        "getSymlinkedProjects",
+        "combineProjects"
+      ],
+      "text": "createMultiMap()",
+      "kind": "contextual",
+      "source": "MultiMap<Path, Project>",
+      "target": "MultiMap<Path, Project> | undefined"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3508,
+      "column": 48,
+      "owners": [
+        "ProjectService",
+        "getSymlinkedProjects",
+        "combineProjects"
+      ],
+      "text": "projects",
+      "kind": "argument",
+      "source": "MultiMap<Path, Project>",
+      "target": "ReadonlyMap<Path, Project[]>"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3508,
+      "column": 48,
+      "owners": [
+        "ProjectService",
+        "getSymlinkedProjects",
+        "combineProjects"
+      ],
+      "text": "projects",
+      "kind": "contextual",
+      "source": "MultiMap<Path, Project>",
+      "target": "ReadonlyMap<Path, Project[]>"
+    },
+    {
+      "file": "src/server/session.ts",
+      "line": 2155,
+      "column": 33,
+      "owners": [
+        "Session",
+        "getProjects"
+      ],
+      "text": "this.projectService.getSymlinkedProjects(scriptInfo)",
+      "kind": "assignment",
+      "source": "MultiMap<Path, Project> | undefined",
+      "target": "MultiMap<Path, Project> | undefined"
+    },
+    {
+      "file": "src/server/session.ts",
+      "line": 2155,
+      "column": 33,
+      "owners": [
+        "Session",
+        "getProjects"
+      ],
+      "text": "this.projectService.getSymlinkedProjects(scriptInfo)",
+      "kind": "contextual",
+      "source": "MultiMap<Path, Project> | undefined",
+      "target": "MultiMap<Path, Project> | undefined"
+    },
+    {
+      "file": "src/server/session.ts",
+      "line": 2163,
+      "column": 59,
+      "owners": [
+        "Session",
+        "getProjects"
+      ],
+      "text": "symLinkedProjects",
+      "kind": "contextual",
+      "source": "MultiMap<Path, Project>",
+      "target": "MultiMap<Path, Project>"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 101,
+      "column": 35,
+      "owners": [
+        "createWatchUtils",
+        "initializeWatches",
+        "add"
+      ],
+      "text": "createMultiMap()",
+      "kind": "contextual",
+      "source": "MultiMap<string, string>",
+      "target": "MultiMap<string, string> | undefined"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 154,
+      "column": 60,
+      "owners": [
+        "createWatchUtils",
+        "initializeWatches",
+        "serialize"
+      ],
+      "text": "actuals",
+      "kind": "argument",
+      "source": "MultiMap<string, Data>",
+      "target": "MultiMap<string, Data>"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 154,
+      "column": 60,
+      "owners": [
+        "createWatchUtils",
+        "initializeWatches",
+        "serialize"
+      ],
+      "text": "actuals",
+      "kind": "contextual",
+      "source": "MultiMap<string, Data>",
+      "target": "MultiMap<string, Data>"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 199,
+      "column": 48,
+      "owners": [
+        "serializeMultiMap"
+      ],
+      "text": "multiMap",
+      "kind": "argument",
+      "source": "MultiMap<string, T>",
+      "target": "Map<string, T[]> | undefined"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 199,
+      "column": 48,
+      "owners": [
+        "serializeMultiMap"
+      ],
+      "text": "multiMap",
+      "kind": "contextual",
+      "source": "MultiMap<string, T>",
+      "target": "Map<string, T[]> | undefined"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 200,
+      "column": 56,
+      "owners": [
+        "serializeMultiMap"
+      ],
+      "text": "multiMap",
+      "kind": "argument",
+      "source": "MultiMap<string, T>",
+      "target": "Map<string, T[]> | undefined"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 200,
+      "column": 56,
+      "owners": [
+        "serializeMultiMap"
+      ],
+      "text": "multiMap",
+      "kind": "contextual",
+      "source": "MultiMap<string, T>",
+      "target": "Map<string, T[]> | undefined"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 2997,
+      "column": 48,
+      "owners": [
+        "TestState",
+        "rangesByText"
+      ],
+      "text": "this.testData.rangesByText",
+      "kind": "contextual",
+      "source": "MultiMap<string, Range>",
+      "target": "Map<string, Range[]>"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 2999,
+      "column": 38,
+      "owners": [
+        "TestState",
+        "rangesByText"
+      ],
+      "text": "result",
+      "kind": "assignment",
+      "source": "MultiMap<string, Range>",
+      "target": "MultiMap<string, Range>"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 2999,
+      "column": 38,
+      "owners": [
+        "TestState",
+        "rangesByText"
+      ],
+      "text": "result",
+      "kind": "contextual",
+      "source": "MultiMap<string, Range>",
+      "target": "MultiMap<string, Range>"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 3004,
+      "column": 16,
+      "owners": [
+        "TestState",
+        "rangesByText"
+      ],
+      "text": "result",
+      "kind": "contextual",
+      "source": "MultiMap<string, Range>",
+      "target": "Map<string, Range[]>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 27,
+      "column": 13,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "fileExists",
+      "kind": "contextual",
+      "source": "MultiMap<string, true>",
+      "target": "MultiMap<string, true>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 27,
+      "column": 25,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "setCallsTrackingWithSingleArgFn(\"fileExists\")",
+      "kind": "contextual",
+      "source": "MultiMap<string, true>",
+      "target": "MultiMap<string, true>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 28,
+      "column": 13,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "directoryExists",
+      "kind": "contextual",
+      "source": "MultiMap<string, true>",
+      "target": "MultiMap<string, true>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 28,
+      "column": 30,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "setCallsTrackingWithSingleArgFn(\"directoryExists\")",
+      "kind": "contextual",
+      "source": "MultiMap<string, true>",
+      "target": "MultiMap<string, true>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 29,
+      "column": 13,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "getDirectories",
+      "kind": "contextual",
+      "source": "MultiMap<string, true>",
+      "target": "MultiMap<string, true>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 29,
+      "column": 29,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "setCallsTrackingWithSingleArgFn(\"getDirectories\")",
+      "kind": "contextual",
+      "source": "MultiMap<string, true>",
+      "target": "MultiMap<string, true>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 30,
+      "column": 13,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "readFile",
+      "kind": "contextual",
+      "source": "MultiMap<string, true>",
+      "target": "MultiMap<string, true>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 30,
+      "column": 23,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "setCallsTrackingWithSingleArgFn(\"readFile\")",
+      "kind": "contextual",
+      "source": "MultiMap<string, true>",
+      "target": "MultiMap<string, true>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 31,
+      "column": 13,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "readDirectory",
+      "kind": "contextual",
+      "source": "MultiMap<string, [readonly string[], readonly string[], readonly string[], number]>",
+      "target": "MultiMap<string, CalledWithFiveArgs>"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 31,
+      "column": 28,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "setCallsTrackingWithFiveArgFn(\"readDirectory\")",
+      "kind": "contextual",
+      "source": "MultiMap<string, [readonly string[], readonly string[], readonly string[], number]>",
+      "target": "MultiMap<string, CalledWithFiveArgs>"
+    }
+  ],
+  "enumerations": [],
+  "factory": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1449,
+      "column": 20,
+      "owners": [
+        "arrayToMultiMap"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<K, V | U>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1552,
+      "column": 17,
+      "owners": [
+        "createMultiMap"
+      ],
+      "text": "createMultiMap",
+      "context": "export function createMultiMap<K, V>(): MultiMap<K, V> {\r\n    const map = new Map<K, V[]>() as MultiMap<K, V>;\r\n    map.add = multiMapAdd;\r\n    map.remove = multiMapRemove;\r\n    return map;\r\n}",
+      "kind": "binding"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 2998,
+      "column": 27,
+      "owners": [
+        "TestState",
+        "rangesByText"
+      ],
+      "text": "createMultiMap",
+      "context": "ts.createMultiMap",
+      "kind": "call"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 53,
+      "column": 34,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls",
+        "setCallsTrackingWithSingleArgFn"
+      ],
+      "text": "createMultiMap",
+      "context": "ts.createMultiMap",
+      "kind": "call"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 63,
+      "column": 34,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls",
+        "setCallsTrackingWithFiveArgFn"
+      ],
+      "text": "createMultiMap",
+      "context": "ts.createMultiMap",
+      "kind": "call"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 10,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 393,
+      "column": 34,
+      "owners": [
+        "createUseFsEventsOnParentDirectoryWatchFile"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<string, FileWatcherCallback>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 620,
+      "column": 27,
+      "owners": [
+        "createDirectoryWatcherSupportingRecursive"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<Path, { dirName: string; callback: DirectoryWatcherCallback; }>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 84,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9518,
+      "column": 57,
+      "owners": [
+        "createSymlinkCache",
+        "<anonymous>"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap()",
+      "kind": "call"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 124,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 7919,
+      "column": 59,
+      "owners": [
+        "createTypeChecker",
+        "createNodeBuilder",
+        "mapToTypeNodes"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<__String, [Type, number]>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 44,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1700,
+      "column": 30,
+      "owners": [
+        "createProgram"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<Path, string>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 9,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 96,
+      "column": 23,
+      "owners": [
+        "createProgramDiagnostics"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<Path, FileIncludeReason>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 22,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 1463,
+      "column": 42,
+      "owners": [
+        "ProjectService",
+        "<anonymous>"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap()",
+      "kind": "call"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3505,
+      "column": 40,
+      "owners": [
+        "ProjectService",
+        "getSymlinkedProjects",
+        "combineProjects"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap()",
+      "kind": "call"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 6,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 74,
+      "column": 25,
+      "owners": [
+        "createWatchUtils",
+        "initializeWatches"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<string, Data>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 101,
+      "column": 35,
+      "owners": [
+        "createWatchUtils",
+        "initializeWatches",
+        "add"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "line": 8,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "line": 141,
+      "column": 24,
+      "owners": [
+        "createCacheableExportInfoMap"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<ExportMapInfoKey, CachedSymbolExportInfo>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/services.ts",
+      "line": 41,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/services.ts",
+      "line": 1162,
+      "column": 24,
+      "owners": [
+        "SourceFileObject",
+        "computeNamedDeclarations"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<string, Declaration>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/codeFixProvider.ts",
+      "line": 13,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/codeFixProvider.ts",
+      "line": 28,
+      "column": 26,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap<string, CodeFixRegistration>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 17,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 294,
+      "column": 32,
+      "owners": [
+        "renameCollidingVarNames"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<string, Symbol>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "line": 16,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "line": 601,
+      "column": 17,
+      "owners": [
+        "collectFreeIdentifiers"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<string, Identifier>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 27,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1181,
+      "column": 32,
+      "owners": [
+        "createExistingImportMap"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1187,
+      "column": 32,
+      "owners": [
+        "createExistingImportMap"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1631,
+      "column": 41,
+      "owners": [
+        "getExportInfos"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<string, SymbolExportInfo>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "line": 17,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "line": 1028,
+      "column": 23,
+      "owners": [
+        "inferTypeFromReferences",
+        "combineAnonymousTypes"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<__String, Type>()",
+      "kind": "call"
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "line": 12,
+      "column": 5,
+      "owners": [],
+      "text": "createMultiMap",
+      "context": "createMultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "line": 660,
+      "column": 35,
+      "owners": [
+        "ChangeTracker",
+        "insertStatementsInNewFile"
+      ],
+      "text": "createMultiMap",
+      "context": "createMultiMap<string, NewFileInsertion>()",
+      "kind": "call"
+    }
+  ],
+  "valueReads": [],
+  "summary": {
+    "add": {
+      "src/compiler/core.ts :: arrayToMultiMap": 1,
+      "src/compiler/core.ts :: add": 1,
+      "src/compiler/core.ts :: createMultiMap": 1,
+      "src/compiler/sys.ts :: createUseFsEventsOnParentDirectoryWatchFile/nonPollingWatchFile": 1,
+      "src/compiler/sys.ts :: createDirectoryWatcherSupportingRecursive/createDirectoryWatcher": 1,
+      "src/compiler/utilities.ts :: createSymlinkCache/<anonymous>": 1,
+      "src/compiler/checker.ts :: createTypeChecker/createNodeBuilder/mapToTypeNodes": 1,
+      "src/compiler/program.ts :: createProgram/findSourceFileWorker": 1,
+      "src/compiler/program.ts :: createProgram/addFileIncludeReason": 1,
+      "src/services/exportInfoMap.ts :: createCacheableExportInfoMap/<anonymous>": 1,
+      "src/services/services.ts :: SourceFileObject/computeNamedDeclarations/addDeclaration": 1,
+      "src/services/codeFixProvider.ts :: registerCodeFix": 1,
+      "src/services/codefixes/convertToAsyncFunction.ts :: renameCollidingVarNames/visit": 3,
+      "src/services/codefixes/convertToEsModule.ts :: collectFreeIdentifiers/<anonymous>": 1,
+      "src/services/codefixes/importFixes.ts :: createExistingImportMap": 2,
+      "src/services/codefixes/importFixes.ts :: getExportInfos/addSymbol": 1,
+      "src/services/codefixes/inferFromUsage.ts :: inferTypeFromReferences/combineAnonymousTypes": 1,
+      "src/services/textChanges.ts :: ChangeTracker/insertStatementsInNewFile": 1,
+      "src/server/scriptInfo.ts :: ScriptInfo/ensureRealPath": 1,
+      "src/server/editorServices.ts :: ProjectService/getSymlinkedProjects/combineProjects": 2,
+      "src/harness/watchUtils.ts :: createWatchUtils/initializeWatches/add": 2,
+      "src/harness/fourslashImpl.ts :: TestState/rangesByText": 1,
+      "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts :: <anonymous>/createLoggerTrackingHostCalls/setCallsTrackingWithSingleArgFn/<anonymous>": 1,
+      "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts :: <anonymous>/createLoggerTrackingHostCalls/setCallsTrackingWithFiveArgFn/<anonymous>": 1
+    },
+    "remove": {
+      "src/compiler/core.ts :: remove": 1,
+      "src/compiler/core.ts :: createMultiMap": 1,
+      "src/compiler/sys.ts :: createUseFsEventsOnParentDirectoryWatchFile/nonPollingWatchFile/<anonymous>": 1,
+      "src/compiler/sys.ts :: createDirectoryWatcherSupportingRecursive/createDirectoryWatcher/<anonymous>": 1,
+      "src/server/editorServices.ts :: ProjectService/deleteScriptInfo": 1,
+      "src/harness/watchUtils.ts :: createWatchUtils/initializeWatches/remove": 2
+    },
+    "factory": {
+      "src/compiler/core.ts :: arrayToMultiMap": 1,
+      "src/compiler/core.ts :: createMultiMap": 1,
+      "src/harness/fourslashImpl.ts :: TestState/rangesByText": 1,
+      "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts :: <anonymous>/createLoggerTrackingHostCalls/setCallsTrackingWithSingleArgFn": 1,
+      "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts :: <anonymous>/createLoggerTrackingHostCalls/setCallsTrackingWithFiveArgFn": 1,
+      "src/compiler/sys.ts :: ": 1,
+      "src/compiler/sys.ts :: createUseFsEventsOnParentDirectoryWatchFile": 1,
+      "src/compiler/sys.ts :: createDirectoryWatcherSupportingRecursive": 1,
+      "src/compiler/utilities.ts :: ": 1,
+      "src/compiler/utilities.ts :: createSymlinkCache/<anonymous>": 1,
+      "src/compiler/checker.ts :: ": 1,
+      "src/compiler/checker.ts :: createTypeChecker/createNodeBuilder/mapToTypeNodes": 1,
+      "src/compiler/program.ts :: ": 1,
+      "src/compiler/program.ts :: createProgram": 1,
+      "src/compiler/programDiagnostics.ts :: ": 1,
+      "src/compiler/programDiagnostics.ts :: createProgramDiagnostics": 1,
+      "src/server/editorServices.ts :: ": 1,
+      "src/server/editorServices.ts :: ProjectService/<anonymous>": 1,
+      "src/server/editorServices.ts :: ProjectService/getSymlinkedProjects/combineProjects": 1,
+      "src/harness/watchUtils.ts :: ": 1,
+      "src/harness/watchUtils.ts :: createWatchUtils/initializeWatches": 1,
+      "src/harness/watchUtils.ts :: createWatchUtils/initializeWatches/add": 1,
+      "src/services/exportInfoMap.ts :: ": 1,
+      "src/services/exportInfoMap.ts :: createCacheableExportInfoMap": 1,
+      "src/services/services.ts :: ": 1,
+      "src/services/services.ts :: SourceFileObject/computeNamedDeclarations": 1,
+      "src/services/codeFixProvider.ts :: ": 2,
+      "src/services/codefixes/convertToAsyncFunction.ts :: ": 1,
+      "src/services/codefixes/convertToAsyncFunction.ts :: renameCollidingVarNames": 1,
+      "src/services/codefixes/convertToEsModule.ts :: ": 1,
+      "src/services/codefixes/convertToEsModule.ts :: collectFreeIdentifiers": 1,
+      "src/services/codefixes/importFixes.ts :: ": 1,
+      "src/services/codefixes/importFixes.ts :: createExistingImportMap": 2,
+      "src/services/codefixes/importFixes.ts :: getExportInfos": 1,
+      "src/services/codefixes/inferFromUsage.ts :: ": 1,
+      "src/services/codefixes/inferFromUsage.ts :: inferTypeFromReferences/combineAnonymousTypes": 1,
+      "src/services/textChanges.ts :: ": 1,
+      "src/services/textChanges.ts :: ChangeTracker/insertStatementsInNewFile": 1
+    },
+    "flows": {
+      "src/compiler/core.ts :: arrayToMultiMap": 1,
+      "src/compiler/core.ts :: createMultiMap": 1,
+      "src/compiler/utilities.ts :: createSymlinkCache/<anonymous>": 2,
+      "src/compiler/checker.ts :: createBasicNodeBuilderModuleSpecifierResolutionHost/<anonymous>": 1,
+      "src/compiler/program.ts :: createProgram": 1,
+      "src/compiler/program.ts :: createProgram/<anonymous>": 1,
+      "src/compiler/program.ts :: createProgram/tryReuseStructureFromOldProgram": 2,
+      "src/compiler/program.ts :: createProgram/getEmitHost": 1,
+      "src/compiler/programDiagnostics.ts :: createProgramDiagnostics/reuseStateFromOldProgram": 2,
+      "src/compiler/programDiagnostics.ts :: createProgramDiagnostics/getFileReasons": 1,
+      "src/services/utilities.ts :: createModuleSpecifierResolutionHost": 2,
+      "src/services/utilities.ts :: createModuleSpecifierResolutionHost/<anonymous>": 1,
+      "src/services/exportInfoMap.ts :: createCacheableExportInfoMap/<anonymous>": 2,
+      "src/services/exportInfoMap.ts :: createCacheableExportInfoMap": 2,
+      "src/services/services.ts :: SourceFileObject/computeNamedDeclarations": 1,
+      "src/services/codefixes/convertToAsyncFunction.ts :: renameCollidingVarNames/visit": 4,
+      "src/services/codefixes/convertToEsModule.ts :: collectFreeIdentifiers": 1,
+      "src/services/codefixes/importFixes.ts :: createExistingImportMap": 2,
+      "src/services/codefixes/importFixes.ts :: getExportInfos": 1,
+      "src/services/codefixes/inferFromUsage.ts :: inferTypeFromReferences/combineAnonymousTypes": 2,
+      "src/services/findAllReferences.ts :: getReferencedSymbolsForNode": 4,
+      "src/services/findAllReferences.ts :: getReferencesForFileName": 2,
+      "src/services/textChanges.ts :: ChangeTracker/insertStatementsInNewFile": 2,
+      "src/server/editorServices.ts :: ProjectService/<anonymous>": 2,
+      "src/server/editorServices.ts :: ProjectService/getSymlinkedProjects": 1,
+      "src/server/editorServices.ts :: ProjectService/getSymlinkedProjects/combineProjects": 4,
+      "src/server/session.ts :: Session/getProjects": 3,
+      "src/harness/watchUtils.ts :: createWatchUtils/initializeWatches/add": 1,
+      "src/harness/watchUtils.ts :: createWatchUtils/initializeWatches/serialize": 2,
+      "src/harness/watchUtils.ts :: serializeMultiMap": 4,
+      "src/harness/fourslashImpl.ts :: TestState/rangesByText": 4,
+      "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts :: <anonymous>/createLoggerTrackingHostCalls": 10
+    }
+  }
+}

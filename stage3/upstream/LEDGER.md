@@ -676,3 +676,5 @@ Expected: the suffix has type `(number | string)[]`, since skipWhile stops
 checking at the first failed predicate. Actual: the declared result is string[].
 Suggested upstream change: return `T[]`, retaining the undefined result for
 undefined input, and remove the suffix cast. This correction changes types only.
+
+Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. MultiMap composition split between 94-correctness-multimap, the 95h createProgram amendment and 99-correctness-core-multimap; implementation checkpoint, complete lane count and full proof pending. No upstream issue filed.

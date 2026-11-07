@@ -1,0 +1,28 @@
+'use strict';
+const ts=require('typescript'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const [tree,output]=process.argv.slice(2);assert.equal(ts.version,'6.0.3');
+const {compiler}=require('../47-host-errors/adapt.cjs');const base=compiler(tree,ts);
+const files=[...new Set([...base.getRootFileNames(),...ts.sys.readDirectory(path.join(tree,'src'),['.ts'])])];
+const options=base.getCompilerOptions();const host={getScriptFileNames:()=>files,getScriptVersion:()=> '0',getScriptSnapshot:f=>fs.existsSync(f)?ts.ScriptSnapshot.fromString(fs.readFileSync(f,'utf8')):undefined,getCurrentDirectory:()=>tree,getCompilationSettings:()=>options,getDefaultLibFileName:o=>ts.getDefaultLibFilePath(o),fileExists:ts.sys.fileExists,readFile:ts.sys.readFile,readDirectory:ts.sys.readDirectory};
+const ls=ts.createLanguageService(host),program=ls.getProgram(),checker=program.getTypeChecker(),core=program.getSourceFile(path.join(tree,'src/compiler/core.ts'));
+const mm=core.statements.find(n=>ts.isInterfaceDeclaration(n)&&n.name.text==='MultiMap');assert(mm,'original MultiMap interface');const mmSymbol=checker.getSymbolAtLocation(mm.name);
+const walk=(n,f)=>{f(n);ts.forEachChild(n,c=>walk(c,f));};
+function location(n){const sf=n.getSourceFile(),owners=[];for(let p=n;p;p=p.parent)if(ts.isFunctionLike(p)||ts.isClassDeclaration(p))owners.unshift(p.name?.getText(sf)||'<anonymous>');const lc=sf.getLineAndCharacterOfPosition(n.getStart(sf));return {file:path.relative(tree,sf.fileName),line:lc.line+1,column:lc.character+1,owners,text:n.getText(sf)};}
+function reference(r){const sf=program.getSourceFile(r.fileName),n=ts.getTokenAtPosition(sf,r.textSpan.start),p=n.parent;let kind='other';if(ts.isCallExpression(p)&&p.expression===n)kind='call';else if(ts.isMethodSignature(p))kind='definition';else if(ts.isPropertyAccessExpression(p)&&ts.isCallExpression(p.parent)&&p.parent.expression===p)kind='call';else if(ts.isPropertyAccessExpression(p)&&ts.isBinaryExpression(p.parent)&&p.parent.left===p)kind='write';else if(ts.isImportSpecifier(p)||ts.isExportSpecifier(p)||ts.isFunctionDeclaration(p))kind='binding';return {...location(n),context:p.getText(sf),kind};}
+const result={version:ts.version,rootFiles:files.length,sourceFiles:program.getSourceFiles().filter(sf=>/src\/(compiler|services|server)\//.test(sf.fileName)).length,members:{},flows:[],enumerations:[],factory:[]};
+for(const name of ['add','remove']){const m=mm.members.find(m=>m.name?.getText(core)===name);result.members[name]=(ls.findReferences(core.fileName,m.name.getStart(core))||[]).flatMap(g=>g.references).map(reference);}
+const factory=core.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='createMultiMap');result.factory=(ls.findReferences(core.fileName,factory.name.getStart(core))||[]).flatMap(g=>g.references).map(reference);
+function isMM(type,seen=new Set()){if(!type||seen.has(type))return false;seen.add(type);if(type.symbol===mmSymbol||type.aliasSymbol===mmSymbol)return true;if(type.isUnionOrIntersection())return type.types.some(t=>isMM(t,seen));return false;}
+function flow(n,target,kind){if(!target)return;const source=checker.getTypeAtLocation(n);if(!isMM(source))return;result.flows.push({...location(n),kind,source:checker.typeToString(source),target:checker.typeToString(target)});}
+for(const sf of program.getSourceFiles()){if(!sf.fileName.startsWith(path.join(tree,'src')+path.sep))continue;walk(sf,n=>{
+ if(ts.isExpression(n)&&isMM(checker.getTypeAtLocation(n))){const contextual=checker.getContextualType(n);if(contextual)flow(n,contextual,'contextual');}
+ if(ts.isCallExpression(n)||ts.isNewExpression(n)){const sig=checker.getResolvedSignature(n);for(const [i,arg]of (n.arguments||[]).entries()){const parameter=sig?.parameters[Math.min(i,sig.parameters.length-1)];if(parameter)flow(arg,checker.getTypeOfSymbolAtLocation(parameter,n),'argument');}}
+ if(ts.isBinaryExpression(n)&&n.operatorToken.kind===ts.SyntaxKind.EqualsToken)flow(n.right,checker.getTypeAtLocation(n.left),'assignment');
+ if(ts.isAsExpression(n)||ts.isTypeAssertionExpression(n))flow(n.expression,checker.getTypeAtLocation(n),'assertion');
+ let operand;if(ts.isVariableDeclaration(n)&&ts.isObjectBindingPattern(n.name)&&n.name.elements.some(e=>e.dotDotDotToken)&&n.initializer)operand=n.initializer;else if(ts.isForInStatement(n))operand=n.expression;else if(ts.isSpreadAssignment(n))operand=n.expression;else if(ts.isCallExpression(n)&&ts.isPropertyAccessExpression(n.expression)&&['keys','getOwnPropertyNames','getOwnPropertyDescriptors','ownKeys','entries','values','assign'].includes(n.expression.name.text))for(const arg of n.arguments)if(isMM(checker.getTypeAtLocation(arg)))result.enumerations.push({...location(n),operand:arg.getText(sf)});
+ if(operand&&isMM(checker.getTypeAtLocation(operand)))result.enumerations.push(location(n));
+ });}
+result.valueReads=Object.values(result.members).flat().filter(r=>!['call','definition','write'].includes(r.kind));
+result.summary={};for(const [kind,rows]of Object.entries({...result.members,factory:result.factory,flows:result.flows})){const counts={};for(const r of rows){const k=r.file+' :: '+r.owners.join('/');counts[k]=(counts[k]||0)+1;}result.summary[kind]=counts;}
+fs.writeFileSync(output,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({members:Object.fromEntries(Object.entries(result.members).map(([k,v])=>[k,v.reduce((a,r)=>(a[r.kind]=(a[r.kind]||0)+1,a),{})])),factory:result.factory.length,flows:result.flows.length,enumerations:result.enumerations.length,valueReads:result.valueReads.length}));
+assert.equal(result.valueReads.length,0,'STOP: member value read');assert.equal(result.enumerations.length,0,'STOP: own-key enumeration');

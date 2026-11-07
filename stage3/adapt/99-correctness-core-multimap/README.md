@@ -1,46 +1,15 @@
-# MultiMap stop report
+# MultiMap composition
 
-Base: origin/main f0271c6a7. TypeScript source: 050880ce59e30b356b686bd3144efe24f875ebc8.
+Rule class: JavaScript-changing established-shape composition, Adamic task b5w3ycg, wave row 7. The original cast in createMultiMap cannot be checked at runtime; installing methods on Map adds own enumerable properties and reads functions as values. The final representation is a native Map<K, V[]> plus exported internal free helpers.
 
-Stopped before implementation under the requested prior-owner overlap rule.
+The approved split is additive first. 94-correctness-multimap adds multiMapAddValue and multiMapRemoveValue before 95; 95h rewrites the two calls within its pinned createProgram owner; this directory rewrites every other checker-resolved call, changes the MultiMap interface into a type alias, simplifies createMultiMap and removes the legacy this-based helpers. The helper bodies preserve the original logic. The interim names remain because a later rename would edit 95h's whole-owner pin.
 
-## Blocking pin
+The completed checker census is in CENSUS.md and census.json: 27 add calls, 5 remove calls, 24 factory calls, 70 flow observations, zero value reads and zero typed own-key enumerations. It covers all src files, including the harness and test runner callers needed to build the lane. The prior owner-pin and pipeline-order stop reports are historical; the user's subsequent split design resolves both.
 
-`95-checker-axolotl-h/sites.json`, `literals[1]`, pins the whole `src/compiler/program.ts` owner `createProgram` with `ownerBeforeSha256` 505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152. Its adapt.cjs checks the whole owner hash at lines 78-79 and 92. The required rewrites in nested `findSourceFileWorker` (`redirectTargetsMap.add`) and `addFileIncludeReason` (`programDiagnostics.getFileReasons().add`) change that pinned owner. This needs an amendment decision.
+owners.json pins every complete edited function, the interface/type alias, removed functions and changed import declarations, before and after. Planning and validation finish before writes. Drift, missing or duplicate owners and partial adaptation refuse. LF/CRLF survive and replay preserves bytes and mtime. The new contracts pass 44 checks. 95h's two calls and import gap have their own symbol checks, while its original createProgram before-pin remains and its after-pin includes both calls.
 
-Additional census hits: `30-indexed-reads/sites.json` records `arrayToMultiMap` at line 882; `32-indexed-reads-program` site manifests record `createProgram`. These are site inventories, not asserted here to be whole-owner hash pins. `95-checker-axolotl-b` mentions `createTypeChecker` as a caller inventory, not a whole-owner pin. `99-correctness-axolotl-j` pins the sibling `invokeCallbacks`, not the MultiMap call owner `createDirectoryWatcher`.
+COUNT.json is the accepted lane union; complete is false until every manifest unit passes its ordinary identity, baseline and API guards. Failed setup attempts and the initial byte-comparison run lacking Git metadata are excluded. The recorder compares original and free-helper bodies on cloned inputs for every call, including returned array contents and all Map entries. Array aliasing is preserved. Registered factory Maps are watched at emitted for-in/spread operations and Object/Reflect own-key APIs; Object.assign watches sources and preserves spread arguments. Probes are measurement-only and never part of an adapter. The intended observable representation difference is Object.keys returning [] instead of ["add", "remove"]. Any real enumeration is a stop.
 
-## Preliminary semantic census
+Node witnesses cover missing, empty, singleton and multiple buckets, present/absent and duplicate values, undefined, NaN and sparse arrays. Each add returns the stored bucket in both implementations; all witnesses have equal return and Map contents. Own-key differences are shown explicitly. Witness and preparation calls do not enter the lane count.
 
-Stock TypeScript 6.0.3 language service findReferences over 261 compiler, services, server and namespace files found 24 add references, 5 remove references and 34 createMultiMap references. Member totals include declarations and createMultiMap property writes. This is preliminary only: the full baseline apply was still running at adapter 20 when the blocking overlap was established and the process was terminated. It is not the required completed adapted-tree census. Flow and enumeration analysis was not completed; zero enumerations or value reads is not claimed. The JSON retains individual references and enclosing owner chains.
-
-| File | Owner chain | add refs | remove refs |
-| --- | --- | ---: | ---: |
-| src/compiler/checker.ts | createTypeChecker / createNodeBuilder / mapToTypeNodes | 1 | 0 |
-| src/compiler/core.ts | add | 1 | 0 |
-| src/compiler/core.ts | arrayToMultiMap | 1 | 0 |
-| src/compiler/core.ts | createMultiMap | 1 | 1 |
-| src/compiler/core.ts | remove | 0 | 1 |
-| src/compiler/program.ts | createProgram / addFileIncludeReason | 1 | 0 |
-| src/compiler/program.ts | createProgram / findSourceFileWorker | 1 | 0 |
-| src/compiler/sys.ts | createDirectoryWatcherSupportingRecursive / createDirectoryWatcher | 1 | 0 |
-| src/compiler/sys.ts | createDirectoryWatcherSupportingRecursive / createDirectoryWatcher / <anonymous> | 0 | 1 |
-| src/compiler/sys.ts | createUseFsEventsOnParentDirectoryWatchFile / nonPollingWatchFile | 1 | 0 |
-| src/compiler/sys.ts | createUseFsEventsOnParentDirectoryWatchFile / nonPollingWatchFile / <anonymous> | 0 | 1 |
-| src/compiler/utilities.ts | createSymlinkCache / <anonymous> | 1 | 0 |
-| src/server/editorServices.ts | ProjectService / deleteScriptInfo | 0 | 1 |
-| src/server/editorServices.ts | ProjectService / getSymlinkedProjects / combineProjects | 2 | 0 |
-| src/server/scriptInfo.ts | ScriptInfo / ensureRealPath | 1 | 0 |
-| src/services/codeFixProvider.ts | registerCodeFix | 1 | 0 |
-| src/services/codefixes/convertToAsyncFunction.ts | renameCollidingVarNames / visit | 3 | 0 |
-| src/services/codefixes/convertToEsModule.ts | collectFreeIdentifiers / <anonymous> | 1 | 0 |
-| src/services/codefixes/importFixes.ts | createExistingImportMap | 2 | 0 |
-| src/services/codefixes/importFixes.ts | getExportInfos / addSymbol | 1 | 0 |
-| src/services/codefixes/inferFromUsage.ts | inferTypeFromReferences / combineAnonymousTypes | 1 | 0 |
-| src/services/exportInfoMap.ts | createCacheableExportInfoMap / <anonymous> | 1 | 0 |
-| src/services/services.ts | SourceFileObject / computeNamedDeclarations / addDeclaration | 1 | 0 |
-| src/services/textChanges.ts | ChangeTracker / insertStatementsInNewFile | 1 | 0 |
-
-## Proof status
-
-Full applies: baseline interrupted at adapter 20; adapted not run. Paired replay: not run. Adamic types: not run. JavaScript/declarations comparison: not run. Core site census and mutant: not run. Lane runtime count and witnesses: not run. No adaptation or ledger claim was written. Setup and apply process groups were terminated on the stop condition.
+PROOF.md and the compressed evidence archives record final results. Until those are complete, the implementation is pending proof and must not be described as built. The required checks are both full applies, every semantic adapter at its own step, paired replay, all 79 roots at zero diagnostics, complete emitted JavaScript scope, identical declarations, full core site census and the original-factory mutant. Evidence packs have SHA-256 manifests; no compiler, lane runner or oracle guard is modified.
