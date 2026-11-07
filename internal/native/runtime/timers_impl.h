@@ -66,8 +66,10 @@ adamic_timer_handle adamic_timer_start(const adamic_timer_provider *provider,
         static const char message[] = "NotYet: timers with custom host loop hooks";
         adamic_panic(message, sizeof message - 1);
     }
+    /* Node makes such a delay 1 ms with a warning on stderr; a run-time NotYet (Adamic's ruling on
+     * #995spev), said in the JavaScript backend's words too. */
     if (!isfinite(delay_ms) || delay_ms < 0 || delay_ms > INT32_MAX) {
-        static const char message[] = "NotYet: timer delay requiring Node warnings";
+        static const char message[] = "a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet";
         adamic_panic(message, sizeof message - 1);
     }
     unsigned delay = delay_ms < 1 ? 1 : (unsigned)delay_ms;
