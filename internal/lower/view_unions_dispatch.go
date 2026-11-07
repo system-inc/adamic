@@ -22,9 +22,12 @@ func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, b
 	contract.Null = l.includesNull(target)
 	for _, member := range contract.Members {
 		child := l.result.ViewContracts[member-1]
-		if child.Kind == ir.ViewArray {
-			contract.Unsupported = "views-v3: array element kind: " + child.Name
+		if child.Kind == ir.ViewArray && child.Unsupported != "" {
+			contract.Unsupported = "array element contract: " + child.Name
 		}
+	}
+	if mutableViewArrayContract(l.result, id, map[ir.ViewContractID]bool{}) {
+		contract.Unsupported = "mutable array"
 	}
 	if contract.Of == ir.Object {
 		for _, field := range l.checker.GetPropertiesOfType(target) {
@@ -71,17 +74,29 @@ func (l *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) 
 		}
 	} else {
 		contract.Kind = ir.ViewArray
-		contract.Unsupported = "views-v3: array element kind"
+		contract.ArrayReadonly = l.isLibraryType(target, "ReadonlyArray")
+		contract.Unsupported = "array element contract"
+		if !contract.ArrayReadonly {
+			contract.Unsupported = "mutable array"
+		}
 		contract.Of = ir.Array
 		element := l.viewArrayElementType(target)
 		if element == nil {
 			return 0, l.notYet(node, "an unavailable array union element")
+		}
+		// Every array a view holds is made here. One whose element the key's pre-pass didn't see
+		// fails the key closed (viewElementKey).
+		if key := l.elementKey; key != nil && !key.every && !key.viewed[element] {
+			key.misses = append(key.misses, contract.Name)
 		}
 		child, err := l.viewContract(node, element)
 		if err != nil {
 			return 0, err
 		}
 		contract.Element = child
+		if contract.ArrayReadonly && elementContractCheckable(l.result, child, map[ir.ViewContractID]bool{}) {
+			contract.Unsupported = ""
+		}
 	}
 	l.result.ViewContracts[id-1] = contract
 	return id, nil

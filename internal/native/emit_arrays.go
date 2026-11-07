@@ -62,8 +62,12 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	if visit.Element.IsMaybe() {
 		missing = fmt.Sprintf("{.%s = %s}", member(visit.Element), slotted(visit.Element, zero(visit.Element)))
 	}
-	e.line("adamic_value %s = (%s) ? %s->elements[%s] : (adamic_value)%s;", element, present, source, index, missing)
-	if references {
+	if visit.ElementCheck != nil {
+		e.line("adamic_value %s = (%s) ? %s.payload : (adamic_value)%s;", element, present, e.checkedElement(visit.ElementCheck, source, index, false, visit.Element), missing)
+	} else {
+		e.line("adamic_value %s = (%s) ? %s->elements[%s] : (adamic_value)%s;", element, present, source, index, missing)
+	}
+	if references && visit.ElementCheck == nil {
 		e.line("adamic_retain(%s.reference);", element)
 	}
 	argument, fresh := element, false
@@ -125,6 +129,15 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("}")
 	case "find", "findLast":
 		e.line("if (%s.boolean) {", answer)
+		if visit.ElementCheck != nil {
+			snapshot, again := e.temporary(), e.temporary()
+			e.line("adamic_array %s = {.length=1,.references=%t,.element=%s,.elements=&%s};", snapshot, references, arrayElement(visit.Element), element)
+			e.line("adamic_value %s = %s.payload;", again, e.checkedElement(visit.ElementCheck, "&"+snapshot, "0", false, visit.Element))
+			if references {
+				e.line("adamic_release(%s.reference);", element)
+			}
+			e.line("%s = %s;", element, again)
+		}
 		if visit.Type().IsMaybe() {
 			found := element + "." + member(visit.Element)
 			if visit.Element.IsMaybe() {
@@ -179,8 +192,12 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	e.line("if (%s >= %s->length) {", index, source)
 	e.line("\tcontinue;")
 	e.line("}")
-	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
-	if reduce.Element.IsReference() {
+	if reduce.ElementCheck != nil {
+		e.line("adamic_value %s = %s.payload;", element, e.checkedElement(reduce.ElementCheck, source, index, false, reduce.Element))
+	} else {
+		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	}
+	if reduce.Element.IsReference() && reduce.ElementCheck == nil {
 		e.line("adamic_retain(%s.reference);", element)
 	}
 	call := e.callbackCall(callback, reduce.Callback, reduce.CallbackType, fmt.Sprintf("{.%s = %s}", member(reduce.Result), slotted(reduce.Result, accumulator)), element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))

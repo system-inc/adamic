@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -293,6 +294,122 @@ func TestNegativeCheckedBoundaryOptionalField(t *testing.T) {
 		if !test.declares && (err == nil || err.Error() != "violated declaration does not declare its ruled type") {
 			t.Errorf("%s: want the declaration refused, got %v", test.name, err)
 		}
+	}
+}
+
+// elementBoundaryFixture is an element read through a checked view's array field, stopped on the number
+// its cast let in, ruled on #6wfvfhm.
+func elementBoundaryFixture(t *testing.T) ([]byte, negativeWitness) {
+	t.Helper()
+	source := []byte("interface Node { readonly kind: number; }\ninterface List { readonly _children: readonly Node[]; }\nconst view = { _children: [7] } as unknown as List;\nconsole.log(String(view._children[0]?.kind));\n")
+	witness := negativeWitness{Form: checkedBoundaryForm, RulingTask: "#6wfvfhm", Ruling: "Adamic, Nov 6", Declaration: "corpus/input.ts:2", DeclaredType: "Node", RepairFrom: "_children: [7]", RepairTo: "_children: [{ kind: 7 }]", Exit: 70, Stderr: "adamic: panic: element read failed: view._children[0] is not a Node; expected Node, found number\n"}
+	witness.TypeCorrectSHA256 = contentHash(repairedSource(source, witness))
+	return source, witness
+}
+
+// An element read's stop joins the checked boundary in the field read's shape (#6wfvfhm, Adamic, Nov 6),
+// for an index read and for a handout, whose road holds a comma. Its expected clause is what ties it to
+// the declaration, so without it the stop is no checked stop, and a compiler-bug panic in its words never
+// is one. Mutant: checkedBoundaryStop without element refuses both ruled stops.
+func TestNegativeCheckedBoundaryElementStop(t *testing.T) {
+	t.Parallel()
+	source, witness := elementBoundaryFixture(t)
+	path := filepath.Join(t.TempDir(), "negatives.json")
+	for name, stderr := range map[string]string{
+		"index":   witness.Stderr,
+		"handout": "adamic: panic: element read failed: view._children's element, in map is not a Node; expected Node, found number\n",
+	} {
+		ruled := witness
+		ruled.Stderr = stderr
+		writeNegativeList(t, path, negativeWitnessList{Comment: "Adding an entry is a ruling routed to @system_adamic", Witnesses: map[string]negativeWitness{contentHash(source): ruled}})
+		if _, err := readNegativeWitnesses(path); err != nil {
+			t.Errorf("%s: ruled element stop rejected: %v", name, err)
+		}
+		if err := validateWitnessSource(source, ruled); err != nil {
+			t.Errorf("%s: ruled element stop's source rejected: %v", name, err)
+		}
+	}
+	for name, stderr := range map[string]string{
+		"no expected clause": "adamic: panic: element read failed: view._children[0] is not a Node; found number\n",
+		"compiler bug":       "adamic: panic: element read failed: compiler bug: view._children[0] expected Node, found number\n",
+		"another read":       "adamic: panic: elements read failed: view._children[0] is not a Node; expected Node, found number\n",
+	} {
+		bad := witness
+		bad.Stderr = stderr
+		writeNegativeList(t, path, negativeWitnessList{Comment: "Adding an entry is a ruling routed to @system_adamic", Witnesses: map[string]negativeWitness{contentHash(source): bad}})
+		if _, err := readNegativeWitnesses(path); err == nil {
+			t.Errorf("%s accepted", name)
+		}
+	}
+}
+
+// An element read expects the array's element type, so its stop is declared by an array of exactly that
+// element, in the four spellings #6wfvfhm rules, a union's only parenthesized or as ReadonlyArray. An array
+// of another element, a nested array, a union the stop's type is one member of, or the element type
+// declared bare declares nothing, and a field read's stop is never declared by an array. Mutant:
+// declaresRuledType ignoring element refuses every array.
+func TestNegativeCheckedBoundaryArrayDeclaration(t *testing.T) {
+	t.Parallel()
+	_, witness := elementBoundaryFixture(t)
+	for _, test := range []struct {
+		name, declared, declaration string
+		field, declares             bool
+	}{
+		{"readonly", "Node", "interface List { readonly _children: readonly Node[]; }", false, true},
+		{"mutable", "Node", "interface List { _children: Node[]; }", false, true},
+		{"ReadonlyArray", "Node", "interface List { readonly _children: ReadonlyArray<Node>; }", false, true},
+		{"optional", "Node", "interface List { readonly _children?: readonly Node[]; }", false, true},
+		{"unspaced end", "Node", "interface List {readonly _children: readonly Node[];}", false, true},
+		{"union", "Node | Token", "interface List { readonly _children: readonly (Node | Token)[]; }", false, true},
+		{"union ReadonlyArray", "Node | Token", "interface List { readonly _children: ReadonlyArray<Node | Token>; }", false, true},
+		{"another element", "Node", "interface List { readonly _children: readonly Token[]; }", false, false},
+		{"another ReadonlyArray", "Node", "interface List { readonly _children: ReadonlyArray<Token>; }", false, false},
+		{"nested", "Node", "interface List { readonly _children: readonly Node[][]; }", false, false},
+		{"wider union", "Node", "interface List { readonly _children: readonly (Node | Token)[]; }", false, false},
+		{"union unparenthesized", "Node | Token", "interface List { _children: Node | Token[]; }", false, false},
+		{"bare element", "Node", "interface List { readonly _children: Node; }", false, false},
+		{"field read", "Node", "interface List { readonly _children: readonly Node[]; }", true, false},
+	} {
+		source := []byte("interface Node { readonly kind: number; }\n" + test.declaration + "\nconst view = { _children: [7] } as unknown as List;\n")
+		witness := witness
+		witness.DeclaredType = test.declared
+		witness.Stderr = "adamic: panic: element read failed: view._children[0] is not a " + test.declared + "; expected " + test.declared + ", found number\n"
+		if test.field {
+			witness.Stderr = "adamic: panic: field read failed: view._children is not a " + test.declared + "; expected " + test.declared + ", found number\n"
+		}
+		witness.TypeCorrectSHA256 = contentHash(repairedSource(source, witness))
+		err := validateWitnessSource(source, witness)
+		if test.declares && err != nil {
+			t.Errorf("%s: refused: %v", test.name, err)
+		}
+		if !test.declares && (err == nil || err.Error() != "violated declaration does not declare its ruled type") {
+			t.Errorf("%s: want the declaration refused, got %v", test.name, err)
+		}
+	}
+}
+
+// The list as it lands reads whole, and the alternation moved no field read: every field read stop it
+// holds yields the same expected and found types under the pattern as it read before #6wfvfhm.
+func TestNegativeWitnessListFieldStopsUnchanged(t *testing.T) {
+	t.Parallel()
+	list, err := readNegativeWitnesses(filepath.Join("..", "..", "cloud", "admission-corpus", "negative-witnesses.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	fieldReadStop := regexp.MustCompile(`^adamic: panic: field read failed: [^\n]* expected ([^,\n]+), found ([^\n]+)\n$`)
+	fields := 0
+	for hash, witness := range list.Witnesses {
+		if witness.Form != checkedBoundaryForm || strings.HasPrefix(witness.Stderr, elementReadStop) {
+			continue
+		}
+		fields++
+		before, now := fieldReadStop.FindStringSubmatch(witness.Stderr), checkedBoundaryStop.FindStringSubmatch(witness.Stderr)
+		if before == nil || now == nil || before[1] != now[1] || before[2] != now[2] {
+			t.Errorf("%s: %q read %q before and %q now", hash, witness.Stderr, before, now)
+		}
+	}
+	if fields == 0 {
+		t.Fatal("no field read stop in the list")
 	}
 }
 

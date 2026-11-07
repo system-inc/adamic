@@ -38,6 +38,12 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		l.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
+	if target.Flags()&checker.TypeFlagsNonPrimitive != 0 {
+		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContractTypes[int(target.Id())] = id
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewObject, Name: "object", Of: ir.Union})
+		return id, nil
+	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
 	// Retain the strict adapter boundary for the array lane on compiler/views-v4.
 	if target.Flags()&checker.TypeFlagsObject != 0 && (l.isArrayType(target) || checker.IsTupleType(target)) {

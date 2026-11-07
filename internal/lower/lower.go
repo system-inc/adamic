@@ -66,9 +66,21 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 	return lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, debug, nil, ownershipQuery...)
 }
 
-// Tests retain transient checker types before lazy queries replace them.
+// Tests retain transient checker types before lazy queries replace them. A checked view's
+// element reads are keyed by what the program views (viewElementKey). An array contract the key's
+// pre-pass didn't see would leave a read it should check raw, so the key fails closed: the program
+// is lowered again with every element read checked.
 func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
-	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery}
+	key := &viewElementKey{}
+	built, err := lowerWithElementKey(key, program, typeChecker, entry, plan, discovery, debug, cycleTypes, ownershipQuery...)
+	if len(key.misses) == 0 {
+		return built, err
+	}
+	return lowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, debug, cycleTypes, ownershipQuery...)
+}
+
+func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
 	lowering.debug = debug
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
@@ -81,6 +93,8 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err != nil {
 		return nil, err
 	}
+	// Before any view is made or any element read lowers, so every read is keyed by the whole program.
+	lowering.collectViewedElements(modules)
 	lowering.noteInheritance(modules)
 	if err := lowering.enumInitialization(modules); err != nil {
 		return nil, err
@@ -309,6 +323,9 @@ type lowering struct {
 
 	// V2 retains exact logical producer types for union member certification.
 	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
+	// elementKey is which element reads a checked view's element check is built for (view_arrays.go).
+	// Nil, in a lowering a test builds by hand, checks every read.
+	elementKey *viewElementKey
 	// objectIntersections are the intersections objectIntersection is proving, so a field that
 	// holds one of them again ends there.
 	objectIntersections map[*checker.Type]bool
