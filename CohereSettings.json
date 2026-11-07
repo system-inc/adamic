@@ -30,5 +30,29 @@
         "stage1/cohere/lint/rules/*/rule.json",
         "stage1/cohere/lint/rules/*/mutant.json",
         "stage1/**/*.md"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "internal/load/prelude.d.ts"
+            ],
+            "rules": {
+                "@typescript-eslint/method-signature-style": "off",
+                "@typescript-eslint/no-redeclare": "off",
+                "nexus/consistency-require-type-suffix": "off",
+                "@typescript-eslint/no-unnecessary-type-parameters": "off",
+                "@typescript-eslint/prefer-function-type": "off"
+            },
+            "reason": "A declaration file the checker reads as lib: its members' syntax is part of what programs admit, it mirrors lib.d.ts's conventions, and most of it merges into lib's own global interfaces, so a member keeps lib's declaration form (Lower, with Language)."
+        },
+        {
+            "files": [
+                "internal/load/prelude.d.ts"
+            ],
+            "rules": {
+                "adamic/no-type-predicate": "off"
+            },
+            "reason": "isArray's predicate is axiom C1 in docs/axioms/library-any.md, audited to narrow to a readonly view of an array and never to its elements, on both backends. A trusted predicate in the trusted surface is the axiom audit's to hold (Language)."
+        }
     ]
 }
