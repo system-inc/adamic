@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"testing"
@@ -251,6 +252,71 @@ func TestProgramMembershipFallbackRetainMutant(t *testing.T) {
 		t.Fatalf("missing owned edge survived: %+v", run)
 	}
 	t.Log("fallback retain mutant caught by ASan heap-use-after-free")
+}
+
+// programSecondFrees is the row core.c's generations mode writes once the second Program's values
+// are let go: how many were freed then, before exit.
+var programSecondFrees = regexp.MustCompile(`(?m)^adamic: second Program frees (\d+)$`)
+
+// programGenerations runs the switch between Programs (#64pg02g) by hand, under ASan with leaks
+// on, holds it to Node and the counted balance, and returns the second Program's frees row and
+// the Program members freed at exit.
+func programGenerations(t *testing.T, name string) (string, string) {
+	t.Helper()
+	node := programCoreRun(nil, "node", "-e", `console.log("generations " + String(12345)); console.log("first " + String(12345) + " lazy")`)
+	run := programCoreRun([]string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, native.ProgramCoreBinary(t, 0, name), "generations")
+	if node.ExitCode != 0 || run.ExitCode != 0 || !bytes.Equal(node.Stdout, run.Stdout) {
+		t.Fatalf("Node %+v native exit %d stdout %q stderr %s", node, run.ExitCode, run.Stdout, run.Stderr)
+	}
+	if report := leakcheck.Unbalanced(run); report != "" {
+		t.Fatal(report)
+	}
+	second, counts := programSecondFrees.FindSubmatch(run.Stderr), leakcheck.CountsLine.FindSubmatch(run.Stderr)
+	if second == nil || len(counts) != 7 {
+		t.Fatalf("missing rows: %s", run.Stderr)
+	}
+	t.Logf("%s: second Program frees %s; %s", name, second[1], strings.TrimSpace(string(counts[0])))
+	return string(second[1]), string(counts[6])
+}
+
+// The rows, by value. The second Program frees 4 before exit: its cycle's two objects (one graph
+// region) and the counted value with its string. The members are the first Program's two. The
+// lazily built part is a second-generation graph region the first Program's root points into,
+// so it is retained until exit by design and is in neither row: the region's end frees it.
+func TestProgramGenerations(t *testing.T) {
+	t.Parallel()
+	if frees, members := programGenerations(t, "control"); frees != "4" || members != "2" {
+		t.Fatalf("second Program frees %s, want 4; members %s, want 2", frees, members)
+	}
+}
+
+// M1: a begin that never shuts the latch keeps every Program a member until exit. It is still
+// safe, so only the rows catch it: the second Program frees nothing before exit.
+func TestProgramLatchNeverShutsMutant(t *testing.T) {
+	t.Parallel()
+	if frees, members := programGenerations(t, "latch-never-shuts"); frees != "0" || members != "6" {
+		t.Fatalf("latch mutant must retain the second Program: frees %s, members %s", frees, members)
+	}
+}
+
+// M2: a shut latch that ignores the site's graph answer counts the second Program's cycle, and
+// the cycle leaks. This is what proves the fallback must be the graph region.
+func TestProgramFallbackIgnoresGraphMutant(t *testing.T) {
+	t.Parallel()
+	run := programCoreRun([]string{"ASAN_OPTIONS=detect_leaks=1"}, native.ProgramCoreBinary(t, 0, "fallback-ignores-graph"), "generations")
+	if run.ExitCode == 0 || !strings.Contains(string(run.Stderr), "LeakSanitizer: detected memory leaks") {
+		t.Fatalf("counted fallback must leak the second Program's cycle: exit %d stderr %s", run.ExitCode, run.Stderr)
+	}
+	t.Log("fallback-ignores-graph caught by LeakSanitizer")
+}
+
+// M3: a latch shut at the first begin makes nothing a member. That is a pass, held to Node, ASan
+// and the balance: the boundary decides retention, never safety.
+func TestProgramLatchShutsAtFirstMutant(t *testing.T) {
+	t.Parallel()
+	if _, members := programGenerations(t, "latch-shuts-at-first"); members != "0" {
+		t.Fatalf("a latch shut at the first begin must adopt nothing: members %s", members)
+	}
 }
 
 func programRefusalMutant(t *testing.T, name, mode, message string) {

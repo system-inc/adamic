@@ -52,6 +52,35 @@ void *adamic_program_adopt_owned(void *value, size_t size) {
  return heap;
 }
 
+// The switch between Programs (#64pg02g). A run that builds a second Program (tsc's watch mode,
+// or --build over several projects) would otherwise keep every Program it ever built until exit.
+// Lowering calls adamic_program_region_begin at the entry of each function that allocates the
+// Program root type, so the latch only asks whether this is the first Program or a later one,
+// and saturates at 2 rather than wrapping back to adoption after 2^32 rebuilds. With no begin
+// at all the generation stays 0 and every member site adopts, as before the switch.
+//
+// Single-threaded by construction, so a plain static and no atomic: a Program-region program
+// refuses parallelMap (lower/program_region.go), and members refuse sharing (share.c).
+//
+// Adoption decides once, at allocation, and never re-adopts. A value adopted at generation 0 or 1
+// is never later passed to graph adoption; graph_regions.c's union-find treats a member as
+// outside, as it always has, so no merge walks into one. Under-inclusion is the proven case
+// (program_region_core_test.go's membership mutants): an edge into a member needs no count, and
+// a member's edge out is a real retain, released only when adamic_program_region_end frees it.
+// So the first Program's members are shared by every later Program until exit, and a later
+// graph region or counted value a member points into is held until exit too. That is intended
+// retention, and the boundary can never free early, wherever it falls.
+static unsigned program_generation;
+
+void adamic_program_region_begin(void) {
+ if (program_generation < 2) { program_generation++; }
+}
+
+void *adamic_program_adopt_or_fallback(void *value, size_t size, bool graph) {
+ if (program_generation < 2) { return adamic_program_adopt_owned(value, size); }
+ return graph ? adamic_graph_adopt_owned(value, size) : value;
+}
+
 void adamic_program_region_end(void) {
  // Keep every member alive throughout invalidation and counted-child destruction.
  for (adamic_heap *each = members; each != NULL; each = adamic_graph_header_of(each)->next) {
@@ -76,6 +105,11 @@ void adamic_program_region_end(void) {
 void *adamic_program_adopt_owned(void *value, size_t size) {
  (void)value; (void)size;
  adamic_panic("Program region emission requires ADAMIC_PROGRAM_REGION", sizeof "Program region emission requires ADAMIC_PROGRAM_REGION" - 1);
+}
+void adamic_program_region_begin(void) {}
+void *adamic_program_adopt_or_fallback(void *value, size_t size, bool graph) {
+ (void)graph;
+ return adamic_program_adopt_owned(value, size);
 }
 void adamic_program_region_end(void) {}
 #endif

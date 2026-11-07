@@ -140,6 +140,11 @@ static inline bool adamic_program_is(const void *value) {
 // Adopt a fresh, unaliased counted allocation on the main thread. It moves;
 // preserve the returned address before creating aliases, Weak handles or caches.
 void *adamic_program_adopt_owned(void *value, size_t size);
+// Start the next Program (program_region.c). Only the first Program's sites adopt; from the
+// second on, adamic_program_adopt_or_fallback gives each site the owner it would have had
+// without Program regions: its graph region when graph is set, and its own count otherwise.
+void adamic_program_region_begin(void);
+void *adamic_program_adopt_or_fallback(void *value, size_t size, bool graph);
 // Invalidate Weak handles, release counted children, then free all members.
 // Called after task joins by heap_end; repeated calls on an empty region do nothing.
 void adamic_program_region_end(void);

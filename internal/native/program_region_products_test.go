@@ -32,6 +32,9 @@ var programCoreMutations = []programCoreMutation{
 	{"weak-not-forgotten", "program_region.c", "  adamic_weak_forget(each);", "  /* omitted member weak invalidation */"},
 	{"cell-weak-not-forgotten", "program_region.c", "adamic_weak_forget(&environment->cells[i]);", "(void)i;"},
 	{"short-adoption", "program_region.c", "adamic_heap_program_storage(heap, size)", "adamic_heap_program_storage(heap, size - sizeof(size_t))"},
+	{"latch-never-shuts", "program_region.c", "if (program_generation < 2) { program_generation++; }", "/* every Program stays a member */"},
+	{"fallback-ignores-graph", "program_region.c", "return graph ? adamic_graph_adopt_owned(value, size) : value;", "(void)graph; return value;"},
+	{"latch-shuts-at-first", "program_region.c", "if (program_generation < 2) { program_generation++; }", "program_generation = 2;"},
 }
 
 // ProgramCoreAllocatorCount is the inventory the split verification units cover.

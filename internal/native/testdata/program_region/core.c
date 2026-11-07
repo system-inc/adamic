@@ -77,9 +77,57 @@ static int membership(const char *mode) {
     assert(adamic_counted.allocations == adamic_counted.frees + adamic_counted.regions);
     return 0;
 }
+static adamic_object *adopted(bool graph) {
+    return adamic_program_adopt_or_fallback(adamic_object_new(&shape), adamic_object_size(shape.count), graph);
+}
+/* Two Programs through the switch (#64pg02g), each site adopting as lowering emits it. Only the
+ * first Program's sites become members. The second's cycle is one graph region, freed when its
+ * last owner lets go, and its acyclic site is counted. A second-generation region a member points
+ * into is retained until exit by design, so stderr names the second Program's frees and the Go
+ * test holds them to exactly the three values nothing first-generation points at. */
+static int generations(void) {
+    adamic_program_region_begin();
+    adamic_object *program = adopted(true);
+    adamic_object *file = adopted(true);
+    program->slots[0].reference = adamic_graph_hold(program, file);
+    file->slots[0].reference = adamic_graph_hold(file, program);
+    file->slots[1].reference = adamic_string_from_number(12345);
+
+    adamic_program_region_begin();
+    size_t before = (size_t)adamic_counted.frees;
+    adamic_object *next = adopted(true);
+    adamic_object *next_file = adopted(true);
+    next->slots[0].reference = adamic_graph_hold(next, next_file);
+    next_file->slots[0].reference = adamic_graph_hold(next_file, next);
+    /* An edge into a first-generation member needs no count: the file is carried across. */
+    next->slots[2].reference = adamic_graph_hold(next, file);
+    adamic_object *counted = adopted(false);
+    counted->slots[1].reference = adamic_string_from_number(678);
+    /* The first Program's lazily built part, asked only after the second begin, and the
+     * boundary inside one strongly connected group: a member and a second-generation graph
+     * value pointing at each other. The member's edge is a real retain until exit. */
+    adamic_object *lazy = adopted(true);
+    lazy->slots[0].reference = adamic_graph_hold(lazy, program);
+    program->slots[3].reference = adamic_graph_hold(program, lazy);
+    adamic_release(lazy);
+
+    adamic_string *carried = ((adamic_object *)next->slots[2].reference)->slots[1].reference;
+    printf("generations %.*s\n", (int)carried->length, carried->bytes);
+    adamic_release(next);
+    adamic_release(next_file);
+    adamic_release(counted);
+    fprintf(stderr, "adamic: second Program frees %zu\n", (size_t)adamic_counted.frees - before);
+    adamic_string *text = ((adamic_object *)program->slots[0].reference)->slots[1].reference;
+    adamic_object *asked = program->slots[3].reference;
+    printf("first %.*s %s\n", (int)text->length, text->bytes, asked->slots[0].reference == program ? "lazy" : "lost");
+    adamic_release(program);
+    adamic_release(file);
+    return 0; /* heap's atexit ends the region and frees what the members retained. */
+}
 int main(int argc, char **argv) {
     assert(argc == 2);
     if (strcmp(argv[1], "overinclude") == 0 || strncmp(argv[1], "underinclude-", 13) == 0) { return membership(argv[1]); }
+    if (strcmp(argv[1], "generations") == 0) { return generations(); }
     if (strcmp(argv[1], "aliased-adoption") == 0) {
         adamic_object *owner = adamic_object_new(&shape);
         adamic_object *alias = adamic_retain(owner);
