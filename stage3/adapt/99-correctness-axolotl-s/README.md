@@ -1,4 +1,16 @@
-# 99s: truthful skipWhile and array truncation
+# 99s: boxed queue amendment, wave row 8
+
+Task b5w3ycg. This amends 99s because its pin covers the entire createQueue owner.
+Rule class: JavaScript-changing, measured established shape. Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts.
+
+The buffer holds boxes or cleared slots. for...of boxes sparse holes as undefined payloads. enqueue boxes each payload; dequeue checks box occupancy, clears the slot and returns box.value without a cast. isEmpty and 99s's splice truncation are unchanged.
+
+Both the whole lane and all 398 bounded units compare 10041 enqueues, 10123 dequeues and 13660 public isEmpty calls with zero differences. Sparse initial arrays and own iterator overrides each count zero. Sparse and explicit undefined-payload Node witnesses match stock.
+
+Both full applies pass. The remaining after proofs are in progress; see [QUEUE-BOX-PROOF.md](QUEUE-BOX-PROOF.md).
+The original record below is historical, including its rejected map-based draft.
+
+## Original 99s record (historical)
 
 Status: finished under Adamic's follow-up ruling. PREVIOUS-STOP.md retains
 the earlier stop as historical evidence. See PROOF.md and CENSUS.md for final
