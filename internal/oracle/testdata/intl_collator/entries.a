@@ -1,0 +1,5 @@
+// Object.entries of a collator is [] on Node, which has no own property (#zjndrx5 head 1's C), where
+// native's shape would list its slots: a compile-time NotYet by name.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+console.log(`entries ${Object.entries(collator).length}`);
