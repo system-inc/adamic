@@ -14,19 +14,19 @@ clang target flag.
 
 ## Portability inventory
 
-| Area | WASI behavior |
-| --- | --- |
-| `adamic.c` signals | SIGPIPE handling and SIGTERM/SIGINT/SIGHUP flushing are compiled out. WASI has no process signals; there is no public runtime signal API to reach. Ordinary output, flush, explicit panics and exit 70 remain. |
-| Atomics | The only runtime atomics here are `atomic_signal_fence` in the output buffer. They compile unchanged; these are compiler fences, not shared-memory synchronization. |
-| Threads, pool, `_Thread_local`, `parallel.c` | None exists in the base checkout (`ef3d907`). No threading API was stubbed and no sequential `parallelMap` fallback was implemented. The compiler unit must emit a sequential loop, like the Node witness, when that operation arrives. |
-| `stack.c` | No `getrlimit`. The constructor uses wasm-ld's `__stack_low` plus a 16 KiB panic margin. Generated `ADAMIC_CHECK_STACK` checks linear-memory frames. The tests reserve a 128 KiB stack and independently protect its bottom 32 bytes with a canary. |
-| Engine call stack | Functions without linear-memory frames can exhaust the engine's separate call stack first. Two oracle fixtures demonstrate this limitation below. A balanced call-depth guard in compiler output, or a tested host strategy preserving buffered output and panic semantics, is still needed. |
-| `input.c` | `open`, `read`, `write`, `close` and `fstat` go through WASI libc. Empty read/write paths are normalized to ENOENT; `fstat` identifies a directory before `fd_read`, whose EBADF otherwise differs from Node's EISDIR. UTF-8 decoding is unchanged. |
-| `directory.c` | `opendir`, `readdir`, `lstat` and `stat` go through WASI libc. Directory listing and file status work inside preopened directories. No host filesystem is granted implicitly. |
-| `sort.c` | Ordinary TimSort is unchanged. WASI SDK's `setjmp`/`longjmp` requires experimental wasm exception handling. That path is compiled out; a comparator that throws panics with `wasm32: throwing sort comparators are not supported`, exit 70. Ordinary emitted throw/catch cleanup paths and region cleanup still work. |
-| `weak.c` | Pointer hashing widens a wasm32 pointer to `uint64_t` before shifting by 33. Weak lifetime, reuse and ownership behavior are unchanged. |
-| Sanitizer-only paths | `heap.c` detects AddressSanitizer and includes its poisoning interface only in native sanitized builds. The normal WASI build does not enter these paths. Native ASan/UBSan flags are not supported by this WASI toolchain and are not used for wasm. Counted wasm builds supply the independent lifetime probes. |
-| `tsgo.c` | The external native Go-checker bridge remains disabled unless `ADAMIC_TSGO` is explicitly selected. A native Go archive cannot be linked into this WASI module. |
+| Area                                         | WASI behavior                                                                                                                                                                                                                                                                                                         |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `adamic.c` signals                           | SIGPIPE handling and SIGTERM/SIGINT/SIGHUP flushing are compiled out. WASI has no process signals; there is no public runtime signal API to reach. Ordinary output, flush, explicit panics and exit 70 remain.                                                                                                        |
+| Atomics                                      | The only runtime atomics here are `atomic_signal_fence` in the output buffer. They compile unchanged; these are compiler fences, not shared-memory synchronization.                                                                                                                                                   |
+| Threads, pool, `_Thread_local`, `parallel.c` | None exists in the base checkout (`ef3d907`). No threading API was stubbed and no sequential `parallelMap` fallback was implemented. The compiler unit must emit a sequential loop, like the Node witness, when that operation arrives.                                                                               |
+| `stack.c`                                    | No `getrlimit`. The constructor uses wasm-ld's `__stack_low` plus a 16 KiB panic margin. Generated `ADAMIC_CHECK_STACK` checks linear-memory frames. The tests reserve a 128 KiB stack and independently protect its bottom 32 bytes with a canary.                                                                   |
+| Engine call stack                            | Functions without linear-memory frames can exhaust the engine's separate call stack first. Two oracle fixtures demonstrate this limitation below. A balanced call-depth guard in compiler output, or a tested host strategy preserving buffered output and panic semantics, is still needed.                          |
+| `input.c`                                    | `open`, `read`, `write`, `close` and `fstat` go through WASI libc. Empty read/write paths are normalized to ENOENT; `fstat` identifies a directory before `fd_read`, whose EBADF otherwise differs from Node's EISDIR. UTF-8 decoding is unchanged.                                                                   |
+| `directory.c`                                | `opendir`, `readdir`, `lstat` and `stat` go through WASI libc. Directory listing and file status work inside preopened directories. No host filesystem is granted implicitly.                                                                                                                                         |
+| `sort.c`                                     | Ordinary TimSort is unchanged. WASI SDK's `setjmp`/`longjmp` requires experimental wasm exception handling. That path is compiled out; a comparator that throws panics with `wasm32: throwing sort comparators are not supported`, exit 70. Ordinary emitted throw/catch cleanup paths and region cleanup still work. |
+| `weak.c`                                     | Pointer hashing widens a wasm32 pointer to `uint64_t` before shifting by 33. Weak lifetime, reuse and ownership behavior are unchanged.                                                                                                                                                                               |
+| Sanitizer-only paths                         | `heap.c` detects AddressSanitizer and includes its poisoning interface only in native sanitized builds. The normal WASI build does not enter these paths. Native ASan/UBSan flags are not supported by this WASI toolchain and are not used for wasm. Counted wasm builds supply the independent lifetime probes.     |
+| `tsgo.c`                                     | The external native Go-checker bridge remains disabled unless `ADAMIC_TSGO` is explicitly selected. A native Go archive cannot be linked into this WASI module.                                                                                                                                                       |
 
 All 48 runtime translation units compile with `-std=c11 -Wall -Wextra -Werror
 -pedantic`, without the generated-C unused-variable/function exemptions. The
@@ -79,11 +79,11 @@ UTF-8, BOMs, NULs, missing files, a directory and an empty path.
 
 The other three are explicitly classified and checked, not counted as equivalent:
 
-| Fixture | Observation |
-| --- | --- |
-| `closures_throw.a` | Output agrees until the first throwing sort comparator; WASI then gives the explicit unsupported panic and exits 70. Node catches the comparator's error and continues. |
-| `stack_forever.a` | Node prints `start`, then the Adamic stack-overflow panic and exit 70. WASI's engine raises RangeError, loses buffered stdout, and exits 1. |
-| `stack_tail_call.a` | Node prints `0`, then the same panic and exit 70. WASI has the same engine-stack mismatch as above. |
+| Fixture             | Observation                                                                                                                                                             |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `closures_throw.a`  | Output agrees until the first throwing sort comparator; WASI then gives the explicit unsupported panic and exits 70. Node catches the comparator's error and continues. |
+| `stack_forever.a`   | Node prints `start`, then the Adamic stack-overflow panic and exit 70. WASI's engine raises RangeError, loses buffered stdout, and exits 1.                             |
+| `stack_tail_call.a` | Node prints `0`, then the same panic and exit 70. WASI has the same engine-stack mismatch as above.                                                                     |
 
 The opt-in test passes only if the equivalent fixtures agree and these three
 known limitations produce their specifically checked observations. Unknown
@@ -192,19 +192,19 @@ counted probes are slower for this handler; no speedup is claimed.
 
 Every mutant below compiled and was caught by executing the named check:
 
-| Mutant | Check that caught it |
-| --- | --- |
-| Console newline replaced by `!` | `01_hello.ts`: exact stdout comparison. |
-| Panic prefix replaced | `panic.a`: exact stderr comparison. |
-| Panic `_exit(70)` changed to `_exit(0)` | `panic.a`: exit status comparison. |
-| Empty-path normalization disabled | `read_files.a`: empty-read message; `wasm/io.a`: empty-write message. |
-| Directory-read detection disabled | `read_files.a`: EISDIR message becomes generic failure. |
-| A live Weak target always reads absent | `weak_parent.a`: exact stdout comparison. |
-| Throwing sort comparator continues sorting | `closures_throw.a`: required explicit unsupported panic is missing, and sort output changes. |
-| Linear stack limit set to zero | `stack_overflow.a`: reserved-stack canary is overwritten. Initially stdout/stderr/exit alone missed this mutant; that observation led to the independent canary. |
-| Region block `free` omitted | Request loop: linear memory grows after warmup, despite zero logical live counts. |
-| `adamic_release` never lets go | Request loop: live allocation assertion fails on dynamically allocated request/response data. |
-| Region live count decremented without recording region objects | Request loop: memory and live checks pass, but region count is 0 instead of 6,300,000. |
+| Mutant                                                         | Check that caught it                                                                                                                                             |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Console newline replaced by `!`                                | `01_hello.ts`: exact stdout comparison.                                                                                                                          |
+| Panic prefix replaced                                          | `panic.a`: exact stderr comparison.                                                                                                                              |
+| Panic `_exit(70)` changed to `_exit(0)`                        | `panic.a`: exit status comparison.                                                                                                                               |
+| Empty-path normalization disabled                              | `read_files.a`: empty-read message; `wasm/io.a`: empty-write message.                                                                                            |
+| Directory-read detection disabled                              | `read_files.a`: EISDIR message becomes generic failure.                                                                                                          |
+| A live Weak target always reads absent                         | `weak_parent.a`: exact stdout comparison.                                                                                                                        |
+| Throwing sort comparator continues sorting                     | `closures_throw.a`: required explicit unsupported panic is missing, and sort output changes.                                                                     |
+| Linear stack limit set to zero                                 | `stack_overflow.a`: reserved-stack canary is overwritten. Initially stdout/stderr/exit alone missed this mutant; that observation led to the independent canary. |
+| Region block `free` omitted                                    | Request loop: linear memory grows after warmup, despite zero logical live counts.                                                                                |
+| `adamic_release` never lets go                                 | Request loop: live allocation assertion fails on dynamically allocated request/response data.                                                                    |
+| Region live count decremented without recording region objects | Request loop: memory and live checks pass, but region count is 0 instead of 6,300,000.                                                                           |
 
 An initial sort mutant also changed the out-of-memory branch and was stopped by
 clang; it was corrected to alter only the comparator's throw path, and only the
@@ -243,10 +243,10 @@ These are exact sets, not subsets. Every file-free command the shim runs, all 1,
 them, imports set C; the compiler request reactor imports set R. Both gained
 `clock_time_get` when main's runtime began reading its clock origin at startup (561aeb4b).
 
-| Set | Exact `wasi_snapshot_preview1` imports |
-| --- | --- |
-| C | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, proc_exit` |
-| R | `clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, proc_exit` |
+| Set | Exact `wasi_snapshot_preview1` imports                                                                                                 |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| C   | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, proc_exit` |
+| R   | `clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, proc_exit`                           |
 
 `internal/native/wasm/shim.mjs` is 44 physical lines including comments and
 blank lines, has no Node imports, and exports `wasiShim({ stdout, stderr })`.
@@ -257,18 +257,18 @@ or reset libc state. Callbacks synchronously consume owned `Uint8Array` copies.
 They receive raw bytes, preserving NULs, malformed UTF-8 and iovec boundaries.
 Do not decode each callback separately if UTF-8 may span iovecs.
 
-| Import | Choice and reason |
-| --- | --- |
-| `fd_write` | Decode all wasm32 little-endian pointer/length iovecs, copy their bytes to stdout for fd 1 or stderr for fd 2, write the total byte count, return 0. Other fds return EBADF (8). Reacquire memory views for every call and after callbacks. |
-| `proc_exit` | Throw exported `AdamicExit`, with `.name = 'AdamicExit'` and `.code` set to the WASI exit code, so termination cannot silently resume. |
-| `fd_prestat_get` | EBADF (8), so libc discovers no preopened directories. |
-| `fd_prestat_dir_name`, `fd_close`, `fd_seek`, `fd_fdstat_get` | EBADF (8). No directory, seekable file or terminal descriptor metadata is available. Output still works via `fd_write`. |
-| Every other `fd_*` and `path_*`, including `fd_read`, `fd_filestat_get`, `fd_readdir`, `path_open` | EBADF (8), without touching output memory or granting host file access. |
-| `args_sizes_get`, `environ_sizes_get` | Write zero count and zero buffer size, return 0: this host has an empty argument vector and environment. |
-| `args_get`, `environ_get` | Return 0 without writes: zero entries require zero bytes. |
-| `clock_time_get` | The host's real clocks as a 64-bit nanosecond count: realtime (0) from `Date.now()` in exact integer math, monotonic (1) from `performance.now()`; any other clock returns EINVAL (28). Every module reads both as it starts (the runtime's clock origin, since main 561aeb4b), so refusing it would refuse every module. Fake time is what would be wrong, not real time. `TestWASIShimClockReadsTheHost` holds it to node:wasi with a probe, and a shim that returns without writing the time, or serves monotonic from the wall clock, fails it. |
-| `random_get` | Throw `AdamicUnsupportedWASI` naming the import. Predictable random bytes would not satisfy the service, and no file-free fixture calls it. |
-| Other imports | Throw `AdamicUnsupportedWASI` naming the import; no success stub. |
+| Import                                                                                             | Choice and reason                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fd_write`                                                                                         | Decode all wasm32 little-endian pointer/length iovecs, copy their bytes to stdout for fd 1 or stderr for fd 2, write the total byte count, return 0. Other fds return EBADF (8). Reacquire memory views for every call and after callbacks.                                                                                                                                                                                                                                                                                                         |
+| `proc_exit`                                                                                        | Throw exported `AdamicExit`, with `.name = 'AdamicExit'` and `.code` set to the WASI exit code, so termination cannot silently resume.                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `fd_prestat_get`                                                                                   | EBADF (8), so libc discovers no preopened directories.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `fd_prestat_dir_name`, `fd_close`, `fd_seek`, `fd_fdstat_get`                                      | EBADF (8). No directory, seekable file or terminal descriptor metadata is available. Output still works via `fd_write`.                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Every other `fd_*` and `path_*`, including `fd_read`, `fd_filestat_get`, `fd_readdir`, `path_open` | EBADF (8), without touching output memory or granting host file access.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `args_sizes_get`, `environ_sizes_get`                                                              | Write zero count and zero buffer size, return 0: this host has an empty argument vector and environment.                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `args_get`, `environ_get`                                                                          | Return 0 without writes: zero entries require zero bytes.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `clock_time_get`                                                                                   | The host's real clocks as a 64-bit nanosecond count: realtime (0) from `Date.now()` in exact integer math, monotonic (1) from `performance.now()`; any other clock returns EINVAL (28). Every module reads both as it starts (the runtime's clock origin, since main 561aeb4b), so refusing it would refuse every module. Fake time is what would be wrong, not real time. `TestWASIShimClockReadsTheHost` holds it to node:wasi with a probe, and a shim that returns without writing the time, or serves monotonic from the wall clock, fails it. |
+| `random_get`                                                                                       | Throw `AdamicUnsupportedWASI` naming the import. Predictable random bytes would not satisfy the service, and no file-free fixture calls it.                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Other imports                                                                                      | Throw `AdamicUnsupportedWASI` naming the import; no success stub.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
 No inventoried file-free fixture requires an import that the shim cannot
 satisfy. File fixtures cannot run honestly without file access, so the test
@@ -279,21 +279,21 @@ leaves file access out by name (`shimFileFixtures`), without a skip, and asserts
 their imports: a listed fixture that stops importing `path_*`, `fd_read`,
 `fd_readdir` or `fd_filestat_get` fails, and so does an unlisted one that starts.
 
-| Fixture | Exact imports or target refusal |
-| --- | --- |
-| `internal/oracle/testdata/review/agree/cwd.a` (lazy cwd initialization validates the supplied initial directory with `path_filestat_get`) | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit` |
-| `stage3/namespace-init-sys/cwd.a` | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit` |
-| `stage3/fixtures/host/14_getCurrentDirectory.a` | `fs.mkdtempSync` target refusal, asserted through `wasiRefusedFixtures` |
-| `internal/oracle/testdata/program_region/parse.a` (separate benchmark inventory) | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_filestat_get, path_open, proc_exit` |
-| `internal/oracle/testdata/closure_convention_host24.a` | `fs.mkdtempSync` target refusal, asserted through `wasiRefusedFixtures` |
-| `internal/oracle/testdata/node_fs_rm_options.a` | `fs.mkdtempSync` target refusal, asserted through `wasiRefusedFixtures` |
-| `internal/oracle/testdata/node_options_const_capture.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit` |
-| `internal/oracle/testdata/node_options_widening.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit` |
-| `internal/oracle/testdata/prompt_then_read.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit` |
-| `internal/oracle/testdata/stdout_edges/read_after_print.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit` |
-| `internal/oracle/testdata/unknown_narrowing_host.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_create_directory, path_filestat_get, path_open, proc_exit` |
-| `internal/oracle/testdata/write_stderr_order.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
-| `internal/oracle/testdata/write_stdout_order.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
+| Fixture                                                                                                                                   | Exact imports or target refusal                                                                                                                                                                                                |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `internal/oracle/testdata/review/agree/cwd.a` (lazy cwd initialization validates the supplied initial directory with `path_filestat_get`) | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit`                                      |
+| `stage3/namespace-init-sys/cwd.a`                                                                                                         | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit`                                      |
+| `stage3/fixtures/host/14_getCurrentDirectory.a`                                                                                           | `fs.mkdtempSync` target refusal, asserted through `wasiRefusedFixtures`                                                                                                                                                        |
+| `internal/oracle/testdata/program_region/parse.a` (separate benchmark inventory)                                                          | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_filestat_get, path_open, proc_exit` |
+| `internal/oracle/testdata/closure_convention_host24.a`                                                                                    | `fs.mkdtempSync` target refusal, asserted through `wasiRefusedFixtures`                                                                                                                                                        |
+| `internal/oracle/testdata/node_fs_rm_options.a`                                                                                           | `fs.mkdtempSync` target refusal, asserted through `wasiRefusedFixtures`                                                                                                                                                        |
+| `internal/oracle/testdata/node_options_const_capture.a`                                                                                   | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit`                                                                      |
+| `internal/oracle/testdata/node_options_widening.a`                                                                                        | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit`                                                                      |
+| `internal/oracle/testdata/prompt_then_read.a`                                                                                             | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit`                                                    |
+| `internal/oracle/testdata/stdout_edges/read_after_print.a`                                                                                | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit`                                                    |
+| `internal/oracle/testdata/unknown_narrowing_host.a`                                                                                       | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_create_directory, path_filestat_get, path_open, proc_exit`                           |
+| `internal/oracle/testdata/write_stderr_order.a`                                                                                           | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit`                                                             |
+| `internal/oracle/testdata/write_stdout_order.a`                                                                                           | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit`                                                             |
 
 The differential command test uses the same expected witness as
 `internal/oracle/wasi_test.go`: Node running source for ordinary fixtures, and
@@ -315,13 +315,13 @@ NULs, dependency/module initialization, and stable counted live values relative
 to the module's initialized globals. It passes. The earlier prototype's
 100,000-request test also passes under its existing Node WASI host.
 
-| Mutant | Named check that fails |
-| --- | --- |
-| `fd_write` omits the last iovec | `TestWASIShimContractsAndMutants/iovecs`, assertion `all iovecs, exact bytes` |
-| `proc_exit` returns instead of throwing | `TestWASIShimContractsAndMutants/exit`, assertion `exit must terminate` |
-| `fd_prestat_get` returns success and a fake directory | `TestWASIShimContractsAndMutants/preopens`, assertion `no preopened directory` |
-| `clock_time_get` returns without writing the time | `TestWASIShimContractsAndMutants/clock`, assertion `realtime is the host clock in nanoseconds`; and `TestWASIShimClockReadsTheHost`, whose probe then prints 0 where node:wasi prints 1 |
-| monotonic served from the wall clock | `TestWASIShimContractsAndMutants/monotonic`, assertion `monotonic is not the wall clock`; and `TestWASIShimClockReadsTheHost`'s probe line of the same name |
+| Mutant                                                | Named check that fails                                                                                                                                                                  |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fd_write` omits the last iovec                       | `TestWASIShimContractsAndMutants/iovecs`, assertion `all iovecs, exact bytes`                                                                                                           |
+| `proc_exit` returns instead of throwing               | `TestWASIShimContractsAndMutants/exit`, assertion `exit must terminate`                                                                                                                 |
+| `fd_prestat_get` returns success and a fake directory | `TestWASIShimContractsAndMutants/preopens`, assertion `no preopened directory`                                                                                                          |
+| `clock_time_get` returns without writing the time     | `TestWASIShimContractsAndMutants/clock`, assertion `realtime is the host clock in nanoseconds`; and `TestWASIShimClockReadsTheHost`, whose probe then prints 0 where node:wasi prints 1 |
+| monotonic served from the wall clock                  | `TestWASIShimContractsAndMutants/monotonic`, assertion `monotonic is not the wall clock`; and `TestWASIShimClockReadsTheHost`'s probe line of the same name                             |
 
 Every control passed; every isolated mutant process exited 1 with the named
 AssertionError. The test also checks empty environment/arguments, named traps,

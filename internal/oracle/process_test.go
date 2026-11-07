@@ -744,7 +744,7 @@ func processExitClosedStdout(t *testing.T, shard int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		anchor := "stream.on('error', () => { if (!exiting) process.exit(70); });"
+		anchor := "stream.on('error', () => {\n        if(!exiting) process.exit(70);\n    });"
 		if strings.Count(string(data), anchor) != 1 {
 			t.Fatal("closed-stream mutant anchor changed")
 		}
