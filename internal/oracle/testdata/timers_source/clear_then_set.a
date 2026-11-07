@@ -1,0 +1,27 @@
+// tsc's sys.ts:767 and :770: clearTimeout(timer) then timer = setTimeout(...), the handle held in a
+// let typed with a union and tested for truthiness (:766, :779). Three updates scheduled in a row
+// fire once, after the last. The callback declares the label tsc's ignores (:773), as the bundled
+// @types/node admits no extra argument a callback doesn't take.
+import 'node:timers';
+
+const pending: string[] = [];
+let timerToUpdateChildWatches: NodeJS.Timeout | undefined;
+
+function onTimerToUpdateChildWatches(_timeoutType: string): void {
+    timerToUpdateChildWatches = undefined;
+    console.log(`updated ${pending.join(',')}`);
+}
+
+function scheduleUpdate(file: string): void {
+    pending.push(file);
+    if (timerToUpdateChildWatches) {
+        clearTimeout(timerToUpdateChildWatches);
+        console.log(`cleared before ${file}`);
+    }
+    timerToUpdateChildWatches = setTimeout(onTimerToUpdateChildWatches, 5, 'timerToUpdateChildWatches');
+}
+
+scheduleUpdate('a.ts');
+scheduleUpdate('b.ts');
+scheduleUpdate('c.ts');
+console.log(`scheduled ${timerToUpdateChildWatches ? 'held' : 'released'}`);
