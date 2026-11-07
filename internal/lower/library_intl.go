@@ -22,13 +22,16 @@ import (
 // Every other road to a collator is a compile-time NotYet that says what it is (intlCollatorRefusal):
 // another option or value, options that aren't the literal written in place, another locale type,
 // resolvedOptions, supportedLocalesOf, Intl.Collator called without new and a class extending it. So
-// every collator a program makes was made here and holds the compare slot Lower's #9tw2b9z reads as a
+// every collator a program makes was made here and holds the #compare slot Lower's #9tw2b9z reads as a
 // value (Adamic's note at 06:40Z). compare read as a value stays the method value refusal until then.
 //
 // Node's collator has no own property: compare is a getter on Intl.Collator.prototype, so a write to
 // it throws a TypeError, and a copy or an enumeration of a collator holds nothing. TypeScript types
-// compare as an assignable method, so those programs type-check, and native's shape holds compare in
-// slot 0, where a write would land and go on silently. So a write to a collator's member, and
+// compare as an assignable method, so those programs type-check. Native's shape holds no field named
+// compare either (Runtime's ruling at 16:11Z, the allocation form): compare is its private #compare
+// slot, so no road by compare's name reaches it, and the JavaScript stand-in has compare as a getter on
+// its prototype. A write by the collator's own type would still go nowhere Node's goes, so a write to
+// a collator's member, and
 // Object.assign, entries, values, getOwnPropertyNames and hasOwn of one, are compile-time NotYets by
 // name too (Runtime's must on head 1's C). A spread of one is the library spread rule's refusal
 // (librarySpreadRefusal), delete of compare is tsc's own error (TS2790, compare isn't optional), and
@@ -142,7 +145,7 @@ func (l *lowering) intlCollatorOwnProperties(node, callee *ast.Node) error {
 
 // intlCollatorWrite is the stop for a write to a collator's member, read off it by name or by key: on
 // Node it has none of its own, and compare is a getter on Intl.Collator.prototype, so writing it throws
-// a TypeError, where native would write the shape's slot and go on. It's nil for any other access.
+// a TypeError, where native would go on without it. It's nil for any other access.
 func (l *lowering) intlCollatorWrite(node *ast.Node, member string) error {
 	if !ast.IsAssignmentTarget(node) || !l.isIntlCollatorType(l.checker.GetTypeAtLocation(node.Expression())) {
 		return nil
@@ -251,9 +254,12 @@ func (l *lowering) intlCollatorNew(node *ast.Node) (ir.Expression, error) {
 	return ir.IntlCollatorNew{Locale: locale}, nil
 }
 
-// intlCollatorCompare lowers collator.compare(x, y), called on its collator: a call of the closure the
-// collator holds in its compare slot, through the object as any method's is (ir.Property's Method),
-// which stops (library_intl.c). It's false for any other call.
+// intlCollatorCompare lowers collator.compare(x, y), called on its collator: a call through the object
+// as any method's is (ir.Property's Method), whose callee is found at run time by the object itself,
+// never by its declared type. The host collator's is the closure in its #compare slot, which stops
+// (library_intl.c): native finds it by the collator's shape (object.c's adamic_object_callee), and the
+// JavaScript stand-in by its prototype's getter. A program's own object typed Intl.Collator, a class
+// implementing it or a literal, calls its own compare there. It's false for any other call.
 func (l *lowering) intlCollatorCompare(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)

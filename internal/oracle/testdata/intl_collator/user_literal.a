@@ -1,0 +1,7 @@
+// Language's c02 (#zjndrx5 head 1): an object literal typed Intl.Collator, its own compare called, which
+// the call finds on the object itself, as on Node: 2.
+const collator: Intl.Collator = {
+	compare: (x: string, y: string): number => x.length + y.length,
+	resolvedOptions: (): Intl.ResolvedCollatorOptions => ({ locale: 'lengths', usage: 'sort', sensitivity: 'variant', ignorePunctuation: false, collation: 'default', caseFirst: 'false', numeric: true }),
+};
+console.log(String(collator.compare('a', 'b')));
