@@ -16,6 +16,7 @@ nextmembers += [('statuses/'+p.name,p) for p in sorted(scratch.glob('*-status.js
 nextmembers += [('processes/'+p.name,p) for p in sorted(scratch.glob('*-pid.json'))]
 nextmembers += [('tsc/'+p.name,p) for p in sorted((scratch/'artifacts/tsc').glob('*')) if p.is_file()]
 nextmembers += [('node-readiness/'+p.relative_to(scratch/'artifacts/node-readiness').as_posix(),p) for p in sorted((scratch/'artifacts/node-readiness').rglob('*')) if p.is_file()]
+nextmembers += [('readiness-candidates/'+p.relative_to(scratch/'readiness-candidates').as_posix(),p) for p in sorted((scratch/'readiness-candidates').rglob('*')) if p.is_file()]
 for overlay in ['latent-overlay','entry-overlay']:
  nextmembers += [(overlay+'/'+p.name,p) for p in sorted((scratch/overlay).iterdir()) if p.is_file()]
 if (scratch/'entry-unit-times.jsonl').exists():nextmembers.append(('entry-unit-times.jsonl',scratch/'entry-unit-times.jsonl'))

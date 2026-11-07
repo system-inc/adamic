@@ -40,6 +40,12 @@ assert [tuple(map(int,s['where'].rsplit(':',2)[1:])) for s in sites]==sorted(tup
 assert cr['first_walls']==[s['id'] for s in sites if s['instantiation_independent']]
 for es in emitters.values():
  for e in es:assert (repo/e['file']).read_text().splitlines()[e['line']-1]==e['source_line']
+for excerpt in load(out/'source-excerpts.json'):
+ assert excerpt['text'] in Path(excerpt['file']).read_bytes().decode()
+ if excerpt['scope_end']-excerpt['scope_start']+1<30:assert excerpt['whole_function']
+for binary in load(out/'binaries.json'):
+ assert hashlib.sha256(Path(binary['binary']).read_bytes()).hexdigest()==binary['sha256']
+assert load(core/'provenance.json')['adapter_count']==94
 for where,es in load(out/'new-stop-emitters.json').items():
  for e in es:assert (repo/e['file']).read_text().splitlines()[e['line']-1]==e['source_line']
 for overlay in ['latent-overlay','entry-overlay']:

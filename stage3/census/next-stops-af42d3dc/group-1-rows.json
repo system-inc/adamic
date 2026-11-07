@@ -48,5 +48,149 @@
     "reason": "a method read as a value (compare would lose its object, and this with it)",
     "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
     "seconds": 21.381476514
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 20.261445367
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 23.287921729
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 29.007235475
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 26.775302839
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 20.100728148
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/debug.ts:243:59",
+    "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+    "seconds": 21.765787003
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.099924254
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 8.568834015
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 5.286532747
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 23.662005714
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 19.525597395
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 21.833806137
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 20.142305158
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 22.990602055
+  },
+  {
+    "roots": [
+      "/workspace/after-wave-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 20.948163057
   }
 ]
