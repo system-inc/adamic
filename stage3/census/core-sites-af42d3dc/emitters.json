@@ -280,6 +280,15 @@
       "source_line": "\t\t\twhat = \"an ambient value declaration\"",
       "function_declaration_line": 61,
       "function_declaration": "func (l *lowering) ambientRefusal(node *ast.Node) error {"
+    },
+    {
+      "file": "internal/lower/ambient.go",
+      "line": 91,
+      "function": "(*lowering).ambientRefusal",
+      "note": "Constructs the Refused error after the reason is selected at line 79.",
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: what, Fix: \"define the values in a module and import them; use Adamic-generated platform bindings for host values\"}",
+      "function_declaration_line": 61,
+      "function_declaration": "func (l *lowering) ambientRefusal(node *ast.Node) error {"
     }
   ],
   "F21": [

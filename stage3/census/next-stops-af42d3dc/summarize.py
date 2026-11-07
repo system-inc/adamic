@@ -19,11 +19,26 @@ for (where,kind,reason),roots in sorted(groups.items(),key=lambda x:(-len(x[1]),
 sys.path.insert(0,str(repo/'stage3/meter'));import report
 statusfile=scratch/'entry-latent-status.json';status=json.loads(statusfile.read_text()) if statusfile.exists() else None
 if status and status['exit_code']==0:
+ # The reference classifier also supplied retained Node probes to this function.
+ # Reuse checks on the same frozen tree; run only previously unseen candidates.
+ probes=json.loads((out/'node-probes.json').read_text()) if (out/'node-probes.json').exists() else {}
+ original_run_roots=report.run_roots
+ def retained_run_roots(tree,roots,logs):
+  names=[str(Path(root).resolve()) for root in roots]
+  missing=[name for name in names if name not in probes]
+  if missing:probes.update(original_run_roots(tree,missing,logs))
+  return {name:probes[name] for name in names}
+ report.run_roots=retained_run_roots
  checks=report.root_order_checks(tree,scratch/'artifacts',rows)
  artifacts=[r for r in checks if r['node']['throws']]
  classification=dict(status='complete',readiness_node_checks=checks,root_order_artifacts=artifacts,totals=dict(source_files=79,ordinary_lowering=sum(r['kind']=='accepted' for r in rows),lowering=sum(r['kind']=='accepted' for r in rows)+sum(report.artifact_lowers_whole(r) for r in artifacts)))
 else:
  # Incomplete entry evidence cannot prove eligibility under report.root_order_checks.
+ if status:
+  timing=scratch/'entry-unit-times.jsonl'
+  completed=[json.loads(l) for l in timing.read_text().splitlines()] if timing.exists() else []
+  stop=dict(status=status,last_completed_timing=completed[-1] if completed else None,active_unit='not recorded; last completed unit is not the interrupted unit',raw_records=len((scratch/'artifacts/tsc/latent.jsonl').read_bytes().splitlines()))
+  (out/'ENTRY-STOP.json').write_text(json.dumps(stop,indent=2)+'\n')
  pending=[dict(root=short(r['roots'][0]),where=short(r['where']),reason=r['reason']) for r in rows if r.get('reason') in report.READINESS_REASONS]
  probes=json.loads((out/'node-probes.json').read_text()) if (out/'node-probes.json').exists() else {}
  for row in pending:row['node']=probes.get(str(tree/'src/compiler'/row['root']))

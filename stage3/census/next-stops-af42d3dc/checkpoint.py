@@ -1,9 +1,11 @@
 """Push append-only checkpoints without changing the final branch or its parent."""
-import json,subprocess,sys,time
+import json,subprocess,sys,time,fcntl
 from pathlib import Path
 repo=Path('/workspace/adamic');out=repo/'stage3/census/next-stops-af42d3dc';scratch=Path('/workspace/scratch/after-wave')
 branch='refs/heads/typescript/next-stops-after-wave-checkpoint'
 state=scratch/'checkpoint-state.json'
+lock=(scratch/'checkpoint.lock').open('a')
+fcntl.flock(lock,fcntl.LOCK_EX)
 def cmd(args,**kw):
  p=subprocess.run(['git',*args],cwd=repo,capture_output=True,**kw)
  with (scratch/'checkpoint-git.log').open('ab') as log:log.write(p.stdout+p.stderr)

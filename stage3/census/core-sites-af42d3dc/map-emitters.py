@@ -29,6 +29,7 @@ for f in rows['sites']:
   elif reason.startswith('a function returning '):entries=[pinned('internal/lower/functions.go',129,'(*lowering).signature','Signature return representation is unknown after clockGenericReturnsT01 fallback.')]
   elif reason=='Object.getPrototypeOf':
    entries=[pinned('internal/lower/library_object.go',20,'(*lowering).objectCallArguments','The local refused closure emits Refused; getPrototypeOf is selected by the switch at lines 25 to 26.'),pinned('internal/lower/library_object.go',26,'(*lowering).objectCallArguments','Deciding switch arm for getPrototypeOf, setPrototypeOf and create.')]
+ if entries and f['reason']=='an ambient value declaration':entries=entries+[pinned('internal/lower/ambient.go',91,'(*lowering).ambientRefusal','Constructs the Refused error after the reason is selected at line 79.')]
  if entries:
   try:emitters[f['id']]=[resolve(e) for e in entries]
   except ValueError as e:unmapped.append({'site':f,'error':str(e)})

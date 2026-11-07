@@ -11,7 +11,7 @@ for g in groups:
  names=[f'`{r}`'+(' (root-order artifact)' if r in artifact_roots else ' (artifact classification incomplete)' if r in pending else '') for r in g['roots']]
  a.append('| '+ ' | '.join([str(g['count']),'`'+g['where']+'`',g['kind'],esc(g['reason']),', '.join(names)])+' |')
 accepted=[r for g in groups if g['kind']=='accepted' for r in g['roots']]
-a+=['', '## Whole-root lowering', '',f"{len(accepted)}/79 roots lower whole in the ordinary independent-root census: "+', '.join('`'+r+'`' for r in accepted)+'.', 'This credits ordinary Lower acceptance of the entire resolved root program. Native emission and a multi-root aggregate are not measured.', '', '## Comparison', '', 'The 37f8314b report had 73 roots at core.ts:1049:34, Refused: a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can\'t hold. The 4186581e state had those 73 roots at core.ts:1326:26, getOwnValues, Refused: a cast the runtime can\'t check.', '']
+a+=['', '## Whole-root lowering', '',f"{len(accepted)}/79 roots lower whole in the ordinary independent-root census: "+', '.join('`'+r+'`' for r in accepted)+'.', 'This credits ordinary Lower acceptance of the entire resolved root program. Native emission and a multi-root aggregate are not measured.', '', '## Comparison', '', 'The 37f8314b report had 73 roots at core.ts:1049:34, Refused: a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can\'t hold. The 4186581e state had 73 roots at core.ts:1326:26, getOwnValues, Refused: a cast the runtime can\'t check.', '']
 comparison=load('comparison.json');changed=[r for r in comparison if r['previous']!=r['current']]
 for g in groups:
  count=sum(r['root'] in g['roots'] for r in changed)
@@ -29,6 +29,10 @@ if artifacts['status']=='complete':
 else:
  a+=['STOPPING REASON: '+artifacts['reason'],'','No artifact label or whole-root lowering credit is inferred from an incomplete entry probe. The ordinary 79-root census is complete. `root-order.json` retains the pending roots and the child\'s actual exit code.']
 if artifacts['status']=='incomplete':
+ stop_path=out/'ENTRY-STOP.json'
+ if stop_path.exists():
+  stop=load('ENTRY-STOP.json');last=stop['last_completed_timing']
+  a.append(f"Entry child exit {stop['status']['exit_code']} after {stop['status']['seconds']:.3f} seconds: {stop['status']['stopping_reason']}. Last completed timing: `{last['where'] if last else 'none'}`. The interrupted active unit was not recorded. Partial stream records: {stop['raw_records']}. See ENTRY-STOP.json.")
  for row in artifacts['pending']:
   node=row.get('node')
   if node:a.append(f"- `{row['root']}`: artifact classification incomplete; Node child exit {node['exit']}, {node['first_error']}.")
