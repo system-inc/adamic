@@ -774,8 +774,11 @@ static adamic_heap *keyed_regexp_string_iterator(const adamic_string *key) {
 
 // keyed_stats_shape is the fs.Stats shape node_fs_file.c published (adamic_keyed_stats_shape_publish),
 // or null before any Stats is made. A release store publishes it and an acquire load reads it, so a
-// thread that reads a Stats made on another sees the shape it was made with.
-static const adamic_shape *_Atomic keyed_stats_shape;
+// thread that reads a Stats made on another sees the shape it was made with. It holds the address as
+// a pointer to void, never naming the shape type: the runtime field layout test and the host shape
+// scanner each read a static declaration that names it as a shape the runtime makes, and this
+// pointer is only an address to compare with.
+static const void *_Atomic keyed_stats_shape;
 
 void adamic_keyed_stats_shape_publish(const adamic_shape *shape) {
 	atomic_store_explicit(&keyed_stats_shape, shape, memory_order_release);
@@ -854,7 +857,7 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	// So does a Stats, known by the shape node_fs_file.c published (keyed_stats_shape), reading only the
 	// slots that hold what Node's own fields hold. union.c never calls into node_fs_file.c, which a
 	// runtime without the fs doesn't link.
-	const adamic_shape *stats_shape = atomic_load_explicit(&keyed_stats_shape, memory_order_acquire);
+	const void *stats_shape = atomic_load_explicit(&keyed_stats_shape, memory_order_acquire);
 	if (stats_shape != NULL && object->shape == stats_shape) return keyed_stats(object, key);
 	// Any other host object stops for every key, before its own slots are read: a slot may be internal,
 	// its name may be Node's prototype member (a Dirent's isFile), or Node may hold a field native's
