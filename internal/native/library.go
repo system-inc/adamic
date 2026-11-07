@@ -324,7 +324,8 @@ func runtimePlatformParts() []string {
 	// debug info named either is never reused (#8wgk65j).
 	// The platform is the build's (buildPlatform), not this process's, so an arm64 archive cross-built on an amd64 box is
 	// never keyed as amd64; its flags name its triple too (--target), which moves every native archive's key without a
-	// new version, and leaves a wasm32 archive's where it was (#5xsd2ha).
+	// new version (#5xsd2ha). A wasm32 archive's key reads `GOOS` and `GOARCH` here too, though its bytes don't depend on
+	// them, so a cross build misses that cache once and builds it again: it fails closed, never taking another's.
 	goos, goarch := buildPlatform()
 	return []string{"adamic-runtime-v7", "ir-tags " + ir.TypeTagFingerprint(), "os " + goos, "arch " + goarch}
 }
