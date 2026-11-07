@@ -1,0 +1,26 @@
+[
+  {
+    "adaptation": "93-builtin-imports",
+    "manifest": "stage3/adapt/93-builtin-imports/proofs/targets.json",
+    "pin": {
+      "file": "src/compiler/sys.ts",
+      "owner": "getNodeSystem",
+      "ownerBeforeSha256": "7972e490bba24e7c05fa84c6129730a8bfe54d7b8e54bbb3e1830b7810c43205",
+      "ownerAfterSha256": "da17b1a63d7fb8dd98aac5c1431129553cd0f5791b299b5e56e92ca554bb4471",
+      "importsBeforeSha256": "c7be03b0af04cfe53c1e1d1542744b4cae2707ecabc294701ec64c804a6e4178",
+      "importsAfterSha256": "459cad8f65d434eb3e27c5bb196450c7e1a6c0f9a1e8df3a725a69e705ffbf49",
+      "importsScope": "hostErrors insertion anchor plus node: import statements, getText joined by LF"
+    }
+  },
+  {
+    "adaptation": "99-wasm-crypto-import",
+    "manifest": "stage3/adapt/99-wasm-crypto-import/proofs/targets.json",
+    "pin": {
+      "file": "src/compiler/sys.ts",
+      "ownerBeforeSha256": "bff1f70709db25f1264628951403bdd1d063f12206419443d200bcbb7280253a",
+      "ownerAfterSha256": "9d0f66d64f8d6c9a713b73b514429f485254c918e26791dae9540331a4aa357d",
+      "importsBeforeSha256": "3488104a4b05d29696a672f8055c093c823eb4d0b2ef5e17d4d9cb0bbaecd7a7",
+      "importsAfterSha256": "c24afbb7654f6cd3057985c10558464846d134085b4867626146a199a505c62f"
+    }
+  }
+]
