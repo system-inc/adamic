@@ -6,7 +6,11 @@ s=Path('/workspace/scratch/core-extend');repo=Path('/workspace/adamic');plan=jso
 while not (s/'count-preparation.json').exists() or 'harness' not in json.loads((s/'count-preparation.json').read_text()):
  print('waiting for counted harness',flush=True);time.sleep(30)
 assert all(p['exit']==0 for p in json.loads((s/'count-preparation.json').read_text()).values())
-summary={'complete':False,'completedUnits':[],'pieces':[],'calls':{},'shapes':{},'comparisonFailures':0,'uncompared':0,'oracleCounts':{'pass':0,'fail':0,'skip':0}}
+def frozen_inputs():
+ return {str(p.relative_to(s/'counted')):hashlib.sha256(p.read_bytes()).hexdigest() for folder in ['src','built/local'] for p in sorted((s/'counted'/folder).rglob('*')) if p.is_file()}
+frozen=frozen_inputs();(s/'counted-inputs.json').write_text(json.dumps(frozen,indent=2)+'\n')
+observer=hashlib.sha256((s/'preload.cjs').read_bytes()).hexdigest()
+summary={'observerSha256':observer,'complete':False,'completedUnits':[],'pieces':[],'calls':{},'shapes':{},'comparisonFailures':0,'uncompared':0,'oracleCounts':{'pass':0,'fail':0,'skip':0}}
 if (s/'count-summary.json').exists():summary=json.loads((s/'count-summary.json').read_text())
 def run(pair):
  unit,piece=pair;name=unit['name'];env=dict(os.environ,STAGE3_ADAPTED_TREE=str(s/'counted'),STAGE3_RESULTS=str(results),COPY_CALL_DIR=str(piece/'calls'),COPY_PIECE=name,STAGE3_SHARD_SECONDS='90',NODE_OPTIONS='--require='+str(s/'preload.cjs'),NODE_DISABLE_COMPILE_CACHE='1')
@@ -22,7 +26,9 @@ def run(pair):
  return name,code,report
 for start in range(len(summary['completedUnits']),len(plan['units']),20):
  begin=time.monotonic();piece=s/f'piece-{start//20+1:02d}';piece.mkdir();(piece/'calls').mkdir();units=plan['units'][start:start+20]
- with ThreadPoolExecutor(max_workers=2) as pool:observed=list(pool.map(run,[(u,piece) for u in units]))
+ with ThreadPoolExecutor(max_workers=4) as pool:observed=list(pool.map(run,[(u,piece) for u in units]))
+ assert frozen==frozen_inputs(),'counted source or built inputs changed'
+ assert observer==hashlib.sha256((s/'preload.cjs').read_bytes()).hexdigest(),'observer changed'
  failures=[{'name':n,'exit':c,'report':r} for n,c,r in observed if c or r['status']!='pass']
  for f in sorted((piece/'calls').glob('*.jsonl')):
   for line in f.open():

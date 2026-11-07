@@ -1,6 +1,7 @@
 const fs=require('fs'),path=require('path'),ts=require('/workspace/adamic/stage3/api/node_modules/typescript');
 const tree=process.argv[2];
 const files=ts.sys.readDirectory(tree+'/src',['.ts'],undefined,['compiler/**/*.ts','services/**/*.ts','server/**/*.ts']);
+if(process.argv[3]==='include-harness')files.push(tree+'/src/harness/fourslashImpl.ts');
 const program=ts.createProgram(files,{target:ts.ScriptTarget.ES2020,module:ts.ModuleKind.NodeNext,moduleResolution:ts.ModuleResolutionKind.NodeNext,strict:true,skipLibCheck:true});
 const checker=program.getTypeChecker(),rows=[];
 for(const source of program.getSourceFiles())if(files.includes(source.fileName)){
