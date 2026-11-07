@@ -114,13 +114,14 @@ const adamicWatchFileListener = callback => {
 `
 
 // setTimeout called from source is Node's own, its Timeout Node's, and its callback a function in
-// the closure calling convention, handed the extra arguments Node hands it. A delay native's timer
-// provider names NotYet (timers_impl.h) stops here in the same words, before Node would warn.
+// the closure calling convention, handed the extra arguments Node hands it. A delay Node would warn
+// for and make 1 ms stops here as native's timer provider does (timers_impl.h), in the same words,
+// a run-time NotYet (#995spev).
 // clearTimeout is Node's own after native's check (#995spev): an object that isn't a Timeout, known
 // by the prototype a probe timer has, but holds a truthy own _onTimeout stops before Node would
 // unenroll it.
 const nodeTimersRuntime = `const adamicSetTimeout = (callback, delay, values) => {
- if (!(delay >= 0 && delay <= 2147483647)) panic('NotYet: timer delay requiring Node warnings');
+ if (!(delay >= 0 && delay <= 2147483647)) panic("a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet");
  return globalThis.setTimeout((...handed) => { adamicCall(callback, handed); }, delay, ...values);
 };
 const adamicTimeoutPrototype = (() => { const probe = globalThis.setTimeout(() => {}, 1); globalThis.clearTimeout(probe); return Object.getPrototypeOf(probe); })();

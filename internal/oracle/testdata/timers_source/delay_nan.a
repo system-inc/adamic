@@ -1,0 +1,7 @@
+// setTimeout with NaN, which Node makes 1 ms with a warning on stderr, stops on both backends after
+// what Node printed so far, a run-time NotYet (Adamic's ruling on #995spev), and Node runs on.
+import 'node:timers';
+
+console.log('before');
+setTimeout(() => { console.log('fired'); }, Number('not a number'));
+console.log('scheduled');
