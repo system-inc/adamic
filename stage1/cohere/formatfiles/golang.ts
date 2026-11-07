@@ -64,7 +64,7 @@ export function join(directory: string, name: string): string {
  * every caller only asks whether it is '..' or starts '../'. Go's error, when one path is absolute and
  * the other isn't, is '', which Rel never answers otherwise. It would be undefined, but stage 0 writes
  * `return undefined` from a function returning string | undefined as C that clang refuses
- * (mediaquery's GAPS.md, gap 2).
+ * (mediaquery's `GAPS.md`, gap 2).
  */
 export function rel(base: string, target: string): string {
     const cleanBase = clean(base);
