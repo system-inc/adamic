@@ -21,7 +21,6 @@ import {
     valueWord,
     inlineValue,
     pair,
-    parenPair,
     parens,
     mapItem,
     breakList,
