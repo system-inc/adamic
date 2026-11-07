@@ -35,13 +35,32 @@ that turn deterministically.
 
 | Mutation | Fixture | Named pin | Caught by |
 | --- | --- | --- | --- |
-| sources_impl.h: the pending close counted as done at once | close_pending.a | TestFSWatchClosePendingMatchesNode | stdout against Node: the three event lines vanish |
+| sources_impl.h: adamic_source_pending_close counts the logical watcher close as done at once | close_pending.a | TestFSWatchClosePendingMatchesNode | stdout against Node: the three event lines vanish |
 | async_host_impl.h: the pending close's wait takes the default timeout | close_twice.a | TestFSWatchCloseTwiceMatchesNode | its own 5 s deadline |
 | node_watch_file_impl.h: the poller's retirement pends no close | unwatch_file_pending.a | TestFSWatchUnwatchFilePendingMatchesNode | stdout against Node: the three event lines vanish |
 
+Real run for the retargeted `close-done-at-once` mutation, Linux and Node v24.19.0:
+`TestFSWatchMutantCloseDoneAtOnce` passed and printed this catch line:
+
+```text
+TestFSWatchClosePendingMatchesNode goes red with close-done-at-once
+```
+
+The mutation removes `source_pending_closes++` from
+`sources_impl.h:adamic_source_pending_close`. `close_pending.a` closes its persistent
+watcher beside an unreferenced sibling, so the shared descriptor survives and this
+logical watcher close is the only work keeping the loop alive. In that real run,
+Node's stdout was `"unref exits\nchange file\nrename file\nrename file\n"`;
+the mutant's was `"unref exits\n"`. Both exited 0 with empty stderr, including
+ASan/UBSan on the mutant. All three event lines disappeared. This also passed in a
+Go overlay run of the retargeted harness; the complete suite reruns it after push.
+
 TestFSWatchMutant* build each against a private copy of the runtime and require the catch named.
-The source's data is the watcher's identity, never the record, so the third mutant spins on a stale
-source rather than reading freed memory.
+The shared source carries a descriptor-generation identity, never a watcher record, so the
+close-keeps-source mutant times out without accessing a freed watcher. A sibling's logical
+FSWatcher close pends through adamic_source_pending_close while the shared descriptor survives;
+the last watcher instead pends through the real source close. The readiness-source harness
+separately pins adamic_source_close's own pending increment.
 
 The WASI table (wasi_refusals_test.go) records each fixture's first refused host entry exactly,
 fs.watch's own or an earlier fs.mkdtempSync. The fs adapter probes in wasi_host_adaptation_test.go

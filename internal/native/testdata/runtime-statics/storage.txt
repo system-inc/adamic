@@ -469,3 +469,10 @@
 `runtime-file:node_fs_watch_impl.h`
 `node_fs_watch_impl.h:fs_watchers:1`
 `node_fs_watch_impl.h:fs_watcher_next_identity:1`
+
+# The loop owns one shared inotify source and wd table, released on last close and shutdown.
+`node_fs_watch_impl.h:fs_watch_entries:1`
+`node_fs_watch_impl.h:fs_watch_descriptor:1`
+`node_fs_watch_impl.h:fs_watch_source:1`
+`node_fs_watch_impl.h:fs_watch_generation:1`
+`node_fs_watch_impl.h:fs_watch_test_read_error:1`
