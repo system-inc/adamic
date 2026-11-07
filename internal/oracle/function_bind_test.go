@@ -190,7 +190,7 @@ func TestMethodBindCheckedReceiver(t *testing.T) {
 // Expected native failures use run/disagreement, separately from Node's TypeError.
 func TestMethodBindRecordNonfunction(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/bind_record_nonfunction.ts"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/bind_runtime/record_nonfunction.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}

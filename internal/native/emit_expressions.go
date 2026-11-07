@@ -958,10 +958,15 @@ func (e *emitter) boundMethod(expression ir.BoundMethod) string {
 		}
 		result := e.own(ir.Closure, fmt.Sprintf("%s(%s)", e.functionName(expression.Factory), strings.Join(arguments, ", ")))
 		if e.program.ClosureConventionNeeded() {
-			e.line("%s->bound_method = %s;", result, method)
+			e.line("%s->bound_method_storage.counted = %s.counted;", result, method)
+			e.line("if (%s.counted) {", method)
+			e.line("%s->bound_method_storage.counted_code = %s.counted_code;", result, method)
+			e.line("} else {")
+			e.line("%s->bound_method_storage.code = %s.code;", result, method)
+			e.line("}")
 		} else {
 			e.line("%s->bound_method_storage.counted = false;", result)
-			e.line("%s->bound_method_storage.code = (void *)%s;", result, method)
+			e.line("%s->bound_method_storage.code = %s;", result, method)
 		}
 		return result
 	}

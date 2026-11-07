@@ -37,7 +37,8 @@ int main(void) {
  adamic_closure *bound = adamic_counted_bound_closure_new(adapter, 2);
  bound->cells[0] = &target;
  bound->cells[1] = &receiver;
- bound->bound_method = (adamic_method_entry){.code = method};
+ bound->bound_method_storage.counted = false;
+ bound->bound_method_storage.code = method;
  printf("%.0f\n", adamic_closure_call(bound, NULL, 0).number);
  adamic_release(bound);
  adamic_heap_end();
@@ -112,7 +113,7 @@ func TestWASICountedBoundMethodConvention(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	const dispatch = "  if (self->bound_method_storage.counted) {\n   return ((adamic_counted_method)self->bound_method_storage.code)(self->cells[1]->value.reference, arguments, argument_count);\n  }\n"
+	const dispatch = "  if (self->bound_method_storage.counted) {\n   return self->bound_method_storage.counted_code(self->cells[1]->value.reference, arguments, argument_count);\n  }\n"
 	if strings.Count(string(closure), dispatch) != 1 {
 		t.Fatal("counted dispatch mutation site moved")
 	}
