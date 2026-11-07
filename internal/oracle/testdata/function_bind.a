@@ -1,0 +1,58 @@
+function join(first: string, second: string, third: string): string {
+  return first + second + third;
+}
+const bound = join.bind(undefined, "a");
+console.log(bound("b", "c"));
+const arrow = (a: number, b: number): number => a + b;
+const arrowBound = arrow.bind({ ignored: 7 }, 10);
+console.log(String(arrowBound(2)));
+let counter = 0;
+function fixed(): string { counter++; return "built" + String(counter); }
+const kept = join.bind(undefined, fixed(), ":");
+console.log(kept("one"));
+console.log(kept("two"));
+console.log(String(counter));
+const one = arrow.bind(undefined, 1);
+const two = arrow.bind(undefined, 1);
+console.log(String(one === two));
+const unchanged = arrow.bind(undefined);
+console.log(String(unchanged === arrow));
+function escaped(): (tail: string) => string {
+  return join.bind({ name: "built" + String(counter) }, "kept" + String(counter), ":");
+}
+const saved = escaped();
+console.log(saved("later"));
+escaped();
+function a(): string { console.log("a"); return "owned" + String(counter); }
+function b(): string { console.log("b"); throw new Error("fixed"); }
+try {
+  join.bind({ name: "receiver" + String(counter) }, a(), b());
+} catch { console.log("caught"); }
+function defaulted(a: number, b: number = 9): number { return a + b; }
+const withDefault = defaulted.bind(undefined, 1);
+console.log(String(withDefault()));
+console.log(String(withDefault(3)));
+function fromParameter(fn: (a: number, b: number) => number): () => number {
+  return fn.bind(undefined, 4, 5);
+}
+console.log(String(fromParameter(arrow)()));
+const typed: (a: number, b: number) => number = arrow;
+console.log(String(typed.bind(undefined, 6)(7)));
+const callbacks: { fn: (a: number, b: number) => number } = { fn: arrow };
+console.log(String(callbacks.fn.bind({ ignored: true }, 8)(9)));
+
+const absentProperty: { f?: () => number } = {};
+const otherReceiver = {};
+const absentPropertyBound = absentProperty.f?.bind(otherReceiver);
+console.log(typeof absentPropertyBound);
+const presentProperty: { f?: () => number } = { f: () => 42 };
+const presentPropertyBound = presentProperty.f?.bind(otherReceiver);
+console.log(typeof presentPropertyBound);
+if (presentPropertyBound !== undefined) console.log(String(presentPropertyBound()));
+function propertyFixed(): number { console.log("property fixed"); return 1; }
+const absentFixedProperty: { f?: (x: number) => number } = {};
+const absentFixedBound = absentFixedProperty.f?.bind(otherReceiver, propertyFixed());
+console.log(typeof absentFixedBound);
+const nullProperty: { f: ((x: number) => number) | null } = { f: null };
+const nullPropertyBound = nullProperty.f?.bind(otherReceiver, propertyFixed());
+console.log(typeof nullPropertyBound);

@@ -1558,7 +1558,13 @@ func (a *analysis) value(expression ir.Expression) value {
 		held := a.value(expression.Value)
 		a.write(WriteSetElement, expression.Site, "", holder, held, elementKey)
 		return holder
-	case ir.MakeClosure:
+	case ir.BoundMethod:
+		operands := []value{a.value(expression.Object)}
+		for _, fixed := range expression.Fixed {
+			operands = append(operands, a.value(fixed))
+		}
+		return a.call(operands, ir.Closure)
+	case ir.BoundClosure, ir.MakeClosure:
 		// What a function value holds is its cells, and what's in a cell has escaped.
 		return outsideValue()
 	case ir.InstanceOf:

@@ -96,6 +96,10 @@ func runAnalyzeOracleFixtures(t *testing.T, shard int) {
 		if err != nil {
 			return err
 		}
+		// Runtime-negative pins are not inputs to the positive analysis corpus.
+		if entry.IsDir() && path == filepath.Join("..", "oracle", "testdata", "bind_runtime") {
+			return filepath.SkipDir
+		}
 		source := filepath.Ext(path) == ".a" || (filepath.Ext(path) == ".ts" && !strings.HasSuffix(path, ".d.ts"))
 		if entry.IsDir() || !source || oracleFixtureShard(path) != shard {
 			return nil

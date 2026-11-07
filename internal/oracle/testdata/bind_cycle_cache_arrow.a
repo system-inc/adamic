@@ -1,0 +1,11 @@
+interface H { name: string; m(): string; readFile: (() => string) | undefined }
+interface State { container: { cb: (() => string) | undefined } }
+function run(): void {
+ const host: H = { name: "cache", readFile: undefined, m() { return this.name; } };
+ const state: State = { container: { cb: undefined } };
+ host.readFile = (): string => { const callback = state.container.cb; return callback === undefined ? "empty" : callback(); };
+ state.container.cb = () => host.m();
+ const callback = host.readFile;
+ if (callback !== undefined) console.log(callback());
+}
+run();

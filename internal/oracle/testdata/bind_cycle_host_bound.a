@@ -1,0 +1,8 @@
+interface H { name: string; m(): string; cb: (() => string) | undefined }
+function run(): void {
+ const host: H = { name: "host", cb: undefined, m() { return this.name; } };
+ host.cb = host.m.bind(host);
+ const callback = host.cb;
+ if (callback !== undefined) console.log(callback());
+}
+run();

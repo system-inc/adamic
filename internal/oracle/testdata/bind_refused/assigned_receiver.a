@@ -1,0 +1,5 @@
+// Node binds the current h and prints host, but this receiver parameter is assigned.
+interface H { m(): string }
+function bind(h: H, other: H): () => string { const b = h.m.bind(h); h = other; return b; }
+const host: H = { m(): string { return "host"; } };
+console.log(bind(host, host)());

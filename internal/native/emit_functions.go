@@ -336,6 +336,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	closureArm, methodArm := ir.DiscardNothing, ir.DiscardNothing
 	if expression.Returns == 0 {
 		closureArm = e.program.ClosureDiscard(expression)
+		if expression.Bound {
+			methodArm = e.program.MethodDiscard(expression)
+		}
 	}
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
@@ -366,6 +369,8 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				}
 			} else {
 				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+				const missing = "compiler bug: a method the checker proved is there is missing"
+				e.line("if (%s == NULL && !(%s)) adamic_panic(%s, %d);", closure, e.methodPresent(method), cString(missing), len(missing))
 			}
 		}
 	}
@@ -376,6 +381,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		packed, count = e.closureArguments(expression)
 	}
 	call := e.packedClosureCall(expression, closure, packed, count)
+	if expression.Bound {
+		call = fmt.Sprintf("adamic_bound_closure_call(self, %s, %s, %d)", packed, count, e.packedArgumentSize(expression))
+	}
 	processHost := false
 	walkExpressions(e.program, func(value ir.Expression) {
 		if host, ok := value.(ir.ProcessCall); ok && host.Operation == "performance" {
@@ -429,6 +437,20 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		call = fmt.Sprintf("(adamic_node_performance_method(%s) ? adamic_node_performance_invoke(%s, %s, %s, %t) : %s)", closure, closure, packed, count, expression.Returns == 0, call)
 	}
 
+	if expression.Returns == 0 && expression.BoundName != "" {
+		result := e.temporary()
+		e.line("adamic_value %s = %s;", result, call)
+		e.line("(void)%s;", result)
+		if e.program.ClosureMayThrow(expression) {
+			e.checkThrown()
+		}
+		e.line("if (%s != NULL) {", closure)
+		e.line("%s", e.discard(closureArm, closure, result))
+		e.line("} else {")
+		e.line("%s", e.discard(methodArm, "", result))
+		e.line("}")
+		return "0"
+	}
 	if expression.Returns == 0 && !e.discarding(closureArm) && !e.discarding(methodArm) {
 		e.line("%s;", call)
 		if e.program.ClosureMayThrow(expression) {
@@ -519,4 +541,11 @@ func (e *emitter) discardOf(function int) string {
 		return "adamic_discard_reference"
 	}
 	return "adamic_discard_none"
+}
+
+func (e *emitter) methodPresent(method string) string {
+	if e.program.ClosureConventionNeeded() {
+		return "(" + method + ".counted ? " + method + ".counted_code != NULL : " + method + ".code != NULL)"
+	}
+	return method + " != NULL"
 }

@@ -1,0 +1,21 @@
+interface Replaceable { m: () => string }
+
+// Return a fresh closure from a separate function, so no host allocation region
+// or local alias keeps the old function alive after its field is replaced.
+function makeMethod(seed: number): () => string {
+  const result = "old:" + String(seed);
+  return (): string => result;
+}
+function replacement(): void {
+  const host: Replaceable = { m: makeMethod(7) };
+  const bound = host.m.bind(host);
+  host.m = (): string => "new";
+  console.log(bound());
+}
+replacement();
+
+interface Optional { m?: (fixed: string) => string }
+function fixed(): string { console.log("fixed evaluated"); return "fixed"; }
+const absent: Optional = {};
+const bound = absent.m?.bind(absent, fixed());
+console.log(typeof bound);

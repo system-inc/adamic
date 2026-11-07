@@ -9,7 +9,7 @@ The corpora, in the order a deterministic sample draws them:
 - witnesses: small programs the test audit found that separate a miscompile from a correct build (their README says
   which), review/admission-corpus/witnesses/; the cheapest and sharpest, so the tool should never sample them away.
 - fixtures: the oracle's programs at every depth, the loader's 0.1 compile programs, the flow, lowering and
-  conformance programs.
+  conformance programs, excluding runtime-only negative pins under oracle/testdata/bind_runtime.
 - gaps: the stage1 ports' recorded gaps, programs Adamic refused on purpose; a change that newly admits one is
   exactly what the proof is for.
 - review: the programs kept under review/ (outside review/test-audit and review/admission-corpus).
@@ -30,7 +30,7 @@ import sys
 
 corpora = [
     ("witnesses", ["review/admission-corpus/witnesses/*.a", "review/admission-corpus/witnesses/*.ts"], []),
-    ("fixtures", ["internal/oracle/testdata/**/*.a", "internal/oracle/testdata/**/*.ts", "internal/load/testdata/0.1/compile/*.ts", "internal/load/testdata/0.1/compile/*/main.ts", "internal/flow/testdata/**/*.a", "internal/flow/testdata/**/*.ts", "internal/lower/testdata/**/*.a", "internal/lower/testdata/**/*.ts", "internal/conformance/testdata/**/*.a", "internal/conformance/testdata/**/*.ts"], []),
+    ("fixtures", ["internal/oracle/testdata/**/*.a", "internal/oracle/testdata/**/*.ts", "internal/load/testdata/0.1/compile/*.ts", "internal/load/testdata/0.1/compile/*/main.ts", "internal/flow/testdata/**/*.a", "internal/flow/testdata/**/*.ts", "internal/lower/testdata/**/*.a", "internal/lower/testdata/**/*.ts", "internal/conformance/testdata/**/*.a", "internal/conformance/testdata/**/*.ts"], ["internal/oracle/testdata/bind_runtime/**/*"]),
     ("gaps", ["stage1/*/gaps/*.ts", "stage1/*/*/gaps/*.ts", "stage1/*/*/gaps/*.a", "stage1/*/gaps/*.a"], []),
     ("review", ["review/*/*.a", "review/*/*.ts", "review/*/*/*.a", "review/*/*/*.ts"], ["review/test-audit/**/*", "review/admission-corpus/**/*"]),
     ("fuzz", ["internal/fuzz/corpus/*.a", "internal/fuzz/corpus/*.ts"], []),

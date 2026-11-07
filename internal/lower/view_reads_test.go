@@ -60,7 +60,7 @@ var viewNotYet = []viewReadExample{
 	{ir.ArraySlice{}, "an array road whose element handouts are not checked yet"},
 	{ir.ArraySort{}, "an array road whose element handouts are not checked yet"},
 	{ir.ArraySplice{}, "an array road whose element handouts are not checked yet"},
-
+	{ir.BoundMethod{}, "reads its method through raw dispatch; its registered receiver read refuses viewed reach"},
 	{ir.Property{ViewReceiverTypeID: 2, Name: "text"}, "a field read through a receiver type no view checks it under (checkViewWidenedReads)"},
 	{ir.ObjectLiteral{Spread: ir.Read{}}, "copies its spread source's fields whole (checkViewCopies)"},
 	{ir.ObjectCall{Method: "assign"}, "copies each source's fields whole (checkViewCopies)"},

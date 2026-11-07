@@ -342,49 +342,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("adamic_string_char_code_at(%s, %s)", value, index)
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 		return e.libraryLanguageValue(expression)
+	case ir.BoundMethod:
+		return e.boundMethod(expression)
+	case ir.BoundClosure:
+		return e.makeClosure(ir.MakeClosure{Function: expression.Function, ProgramRegion: expression.ProgramRegion}, true, expression.GraphTypes)
 	case ir.MakeClosure:
-		target := e.program.Functions[expression.Function]
-		environment := target.Environment
-		if target.NestedParent > 0 {
-			identity := e.program.Functions[target.NestedParent-1].FrameIdentity
-			if identity > 0 {
-				cells := make([]string, 0, len(environment))
-				for _, local := range environment {
-					cells = append(cells, e.cellReference(local))
-				}
-				constructor := "adamic_closure_canonical"
-				if e.program.PackedCountNeeded(expression.Function) {
-					constructor = "adamic_counted_closure_canonical"
-				}
-				if target.GraphClosure {
-					constructor += "_graph"
-				}
-				discard := ""
-				if e.closureDiscards {
-					// Stored once, where the closure is made, not on each return of the cached one.
-					discard = ", " + e.discardOf(expression.Function)
-				}
-				closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s}%s)", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", "), discard))
-				e.line("%s->source_length = %d;", closure, target.SourceLength)
-				return closure
-			}
-		}
-		constructor := "adamic_closure_new"
-		if e.program.PackedCountNeeded(expression.Function) {
-			constructor = "adamic_counted_closure_new"
-		}
-		closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %d)", constructor, e.functionName(expression.Function), len(environment)))
-		e.line("%s->source_length = %d;", closure, target.SourceLength)
-		if e.program.Functions[expression.Function].Receiver {
-			e.line("%s->receiver = true;", closure)
-		}
-		e.closureDiscard(closure, expression.Function)
-		e.adoptGraph(closure, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell *)", closure, len(environment)), target.GraphClosure && !expression.ProgramRegion && !target.ProgramRegion)
-		e.adoptProgram(closure, fmt.Sprintf("sizeof *%s + %d * sizeof %s->cells[0]", closure, len(environment), closure), expression.ProgramRegion || target.ProgramRegion)
-		for index, local := range environment {
-			e.line("%s->cells[%d] = %s;", closure, index, e.heldReferenceIn(closure, e.cellReference(local)))
-		}
-		return closure
+		return e.makeClosure(expression, false, nil)
 	case ir.CallClosure:
 		property, isProperty := expression.Closure.(ir.Property)
 		if !isProperty || !property.Method {
@@ -921,3 +884,106 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 // narrowedAwayMessage is the panic of a number or a boolean the checker narrowed undefined out of,
 // read where a call since put it back (ir.Unwrap). JavaScript would go on computing with undefined.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+
+func (e *emitter) makeClosure(expression ir.MakeClosure, bound bool, graphTypes []int) string {
+	target := e.program.Functions[expression.Function]
+	environment := target.Environment
+	if !bound && target.NestedParent > 0 {
+		identity := e.program.Functions[target.NestedParent-1].FrameIdentity
+		if identity > 0 {
+			cells := make([]string, 0, len(environment))
+			for _, local := range environment {
+				cells = append(cells, e.cellReference(local))
+			}
+			constructor := "adamic_closure_canonical"
+			if e.program.PackedCountNeeded(expression.Function) {
+				constructor = "adamic_counted_closure_canonical"
+			}
+			if target.GraphClosure {
+				constructor += "_graph"
+			}
+			discard := ""
+			if e.closureDiscards {
+				// Stored once, where the closure is made, not on each return of the cached one.
+				discard = ", " + e.discardOf(expression.Function)
+			}
+			closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s}%s)", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", "), discard))
+			e.line("%s->source_length = %d;", closure, target.SourceLength)
+			return closure
+		}
+	}
+	constructor := "adamic_closure_new"
+	if bound {
+		constructor = "adamic_bound_closure_new"
+	}
+	if e.program.PackedCountNeeded(expression.Function) {
+		constructor = "adamic_counted_closure_new"
+		if bound {
+			constructor = "adamic_counted_bound_closure_new"
+		}
+	}
+	closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %d)", constructor, e.functionName(expression.Function), len(environment)))
+	e.line("%s->source_length = %d;", closure, target.SourceLength)
+	if e.program.Functions[expression.Function].Receiver {
+		e.line("%s->receiver = true;", closure)
+	}
+	e.closureDiscard(closure, expression.Function)
+	e.adoptGraph(closure, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell *)", closure, len(environment)), (target.GraphClosure || e.graphTypes(graphTypes)) && !expression.ProgramRegion && !target.ProgramRegion)
+	e.adoptProgram(closure, fmt.Sprintf("sizeof *%s + %d * sizeof %s->cells[0]", closure, len(environment), closure), expression.ProgramRegion || target.ProgramRegion)
+	for index, local := range environment {
+		e.line("%s->cells[%d] = %s;", closure, index, e.heldReferenceIn(closure, e.cellReference(local)))
+	}
+	return closure
+}
+
+// Lookup precedes every fixed argument. The own closure is held independently
+// of the object, so replacing its field cannot retarget an existing binding.
+func (e *emitter) boundMethod(expression ir.BoundMethod) string {
+	object := e.snapshot(ir.Object, e.value(expression.Object))
+	method := e.temporary()
+	if e.program.ClosureConventionNeeded() {
+		e.line("adamic_method_entry %s = {0};", method)
+	} else {
+		e.line("adamic_method_entry %s = NULL;", method)
+	}
+	target := e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", object, cString(expression.Name), e.cache(), method))
+	if expression.Optional {
+		// A nullable union distinguishes null from undefined with the shared sentinel.
+		e.line("if ((adamic_heap *)%s == &adamic_null) { adamic_release(%s); %s = NULL; }", target, target, target)
+	}
+	makeValue := func() string {
+		arguments := []string{target, object}
+		for _, fixed := range expression.Fixed {
+			arguments = append(arguments, e.value(fixed))
+		}
+		result := e.own(ir.Closure, fmt.Sprintf("%s(%s)", e.functionName(expression.Factory), strings.Join(arguments, ", ")))
+		if e.program.ClosureConventionNeeded() {
+			e.line("%s->bound_method_storage.counted = %s.counted;", result, method)
+			e.line("if (%s.counted) {", method)
+			e.line("%s->bound_method_storage.counted_code = %s.counted_code;", result, method)
+			e.line("} else {")
+			e.line("%s->bound_method_storage.code = %s.code;", result, method)
+			e.line("}")
+		} else {
+			e.line("%s->bound_method_storage.counted = false;", result)
+			e.line("%s->bound_method_storage.code = %s;", result, method)
+		}
+		return result
+	}
+	if !expression.Optional {
+		return makeValue()
+	}
+	text, value, owned := e.asideWith(makeValue)
+	result := e.temporary()
+	e.line("adamic_closure *%s = NULL;", result)
+	present := e.methodPresent(method)
+	e.line("if (%s != NULL || %s) {", target, present)
+	e.out.WriteString(text)
+	e.line("%s = %s;", result, retained(value))
+	for index := len(owned) - 1; index >= 0; index-- {
+		e.line("adamic_release(%s);", owned[index])
+	}
+	e.line("}")
+	e.owned = append(e.owned, result)
+	return result
+}
