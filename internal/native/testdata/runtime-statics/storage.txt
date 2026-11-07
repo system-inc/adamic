@@ -458,6 +458,10 @@
 `sources_impl.h:sources:1`
 `sources_impl.h:source_next_identity:1`
 `sources_impl.h:source_dispatching:1`
+# Pending closes are two loop-thread counts, a close's one turn after libuv's closing handles:
+# made since the last wait, then polled past by it. Teardown zeroes both.
+`sources_impl.h:source_pending_closes:1`
+`sources_impl.h:source_polled_closes:1`
 
 # Loop-owned stat pollers retain listeners until cancellation or async teardown.
 `runtime-file:node_watch_file_impl.h`

@@ -22,6 +22,11 @@ adamic_host_set_loop_hooks, and pins exactly:
 
     adamic: panic: NotYet: timers with custom host loop hooks
 
+With that refusal removed, the mutant admits watchFile under custom hooks, and its
+unwatchFile reaches adamic_source_pending_close, which aborts with
+"adamic: a pending close under custom host loop hooks: nothing would ever poll it"
+rather than pend a close no custom wait would record (TestWatchFileMutantAdmitsCustomHooks).
+
 Normal callback dispatch is one macrotask for the whole listener batch, followed
 by microtasks. Initial stat remains live even for an unreferenced watcher. All
 registrations and retained callbacks are released on cancellation or async teardown.

@@ -25,6 +25,11 @@ mutant must compile; a compiler failure never counts as a caught mutant.
 | Liveness counts unreferenced sources | unref | TestSourceUnrefExits | its own 3 s deadline |
 | Readiness read live, never a snapshot | fairness | TestSourceNeverDrainedYieldsToInterval | its own 3 s deadline |
 | No checkpoint after each dispatch | checkpoint | TestSourceDispatchIsAMacrotask | stdout comparison |
+| The pending close counted as done at once | pending-close | TestSourcePendingCloseDispatchesUnrefSibling | stdout comparison |
+| The pending close's wait takes the default timeout | pending-close-unref-timer | TestSourcePendingCloseWaitNeverBlocks | its own 3 s deadline |
+| The pending close kept until a wait finds no source ready | pending-close-once | TestSourcePendingCloseKeepsOneTurn | stdout comparison |
+| A refness flip pends a close | ref-flip | TestSourceRefFlipKeepsNoPendingClose | stdout comparison |
+| A stale ref answers true | ref-stale | TestSourceRefAfterCloseIsStale | the harness's assertion, a failed exit |
 
 The edits, each in one site:
 
@@ -43,6 +48,32 @@ The edits, each in one site:
 - dispatch-checkpoint-omitted, async.c: `while (source_dispatch()) drain_jobs();`
   becomes `while (source_dispatch()) {}`. The first source's job runs only at
   the host completions' drain, after the second source's dispatch.
+- close-done-at-once, sources_impl.h: adamic_source_close's
+  `source_pending_closes++;` is dropped. The closed referenced source was all
+  that kept the loop, so it ends before any wait, and the unreferenced
+  sibling's byte is never dispatched.
+- pending-wait-default-timeout, async_host_impl.h: host_wait_ms's
+  `return source_closes_waiting() ? 0 : timer_wait_ms();` becomes
+  `return timer_wait_ms();`, the call kept so the mutant compiles. The pending
+  close's turn waits on the unreferenced 10 s timer beside it.
+- pending-until-quiet, sources_impl.h: source_record moves the pending closes
+  to polled only when it recorded no source ready. The sibling, readable again
+  after each of its first two dispatches, is dispatched three times.
+- ref-pends-close, sources_impl.h: adamic_source_ref also counts a pending
+  close, as if a flip were a close and a reopen. The unref, ref, unref flip
+  then keeps a turn, and the unreferenced sibling's byte is read.
+- ref-stale-admitted, sources_impl.h: adamic_source_ref's stale check answers
+  true. The ref after close in the dispatch is admitted and the harness's
+  assertion stops it.
+
+The pending-close modes are Runtime's ruling on #j71fn59 (task #7s8hgd5),
+after libuv's uv_loop_alive and uv__run_closing_handles: a close leaves a
+pending close, which keeps the loop alive through the next wait that polls,
+whose timeout is zero, and the source phase that dispatches its record.
+adamic_source_ref, Runtime's later ruling on #j71fn59, is unref's mirror: a
+flip either way is no close, and adamic_source_close is always a real one. The
+same mutants turn internal/oracle's host_watch pins red against Node
+(fswatch.mutant.md).
 
 What each printed on Cloud, from TestSourceMutants at f57208ea08:
 

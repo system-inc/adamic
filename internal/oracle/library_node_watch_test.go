@@ -21,10 +21,10 @@ import (
 // fsWatchFixtures are held to Node on native under the sanitizers and on the JavaScript backend
 // here, and run in the ordinary native, JavaScript, gob and counted families too; WASI refuses their
 // host entry by name (wasi_refusals_test.go). Each does its file system work before the loop runs, so
-// both runtimes read the same inotify queue, and each uses one watcher, since Node doesn't define the
-// order across watchers in one turn. The rename row of Node's measured table is the C harness's
-// (internal/native/fswatch_test.go): no program can rename yet.
-var fsWatchFixtures = []string{"tsc_shape", "write", "create", "unlink", "mkdir", "self_delete", "self_close", "unref", "missing", "close_twice", "on_returns", "two_events"}
+// both runtimes read the same inotify queue, and each hears from one watcher, since Node doesn't
+// define the order across watchers in one turn. The rename row of Node's measured table is the C
+// harness's (internal/native/fswatch_test.go): no program can rename yet.
+var fsWatchFixtures = []string{"tsc_shape", "write", "create", "unlink", "mkdir", "self_delete", "self_close", "unref", "missing", "close_twice", "on_returns", "two_events", "close_pending", "unwatch_file_pending"}
 
 func init() {
 	for _, name := range fsWatchFixtures {
@@ -47,17 +47,21 @@ func fsWatchPath(t *testing.T, name string) string {
 // A mutation's catch is its own deadline, a disagreement with Node, or, for a fixture that stops
 // by name where Node would go on, a run that doesn't stop that way.
 type fsWatchMutation struct {
-	name, fixture, before, after, catcher, stop string
-	deadline                                    bool
+	name, fixture, file, before, after, catcher, stop string
+	deadline                                          bool
 }
 
-// fsWatchMutations are real edits to node_fs_watch_impl.h, each turning its named pin red.
+// fsWatchMutations are real edits to the runtime file each names, each turning its named pin red.
 var fsWatchMutations = []fsWatchMutation{
-	{"change-rename-swapped", "create", `!= 0 ? "rename" : "change";`, `!= 0 ? "change" : "rename";`, "TestFSWatchCreateMatchesNode", "", false},
-	{"self-basename-dropped", "write", "event->len != 0 ? event->name : watcher->base", `event->len != 0 ? event->name : ""`, "TestFSWatchWriteMatchesNode", "", false},
-	{"close-keeps-source", "self_close", "    fs_watcher_stop(watcher);\n", "    /* mutant: the source stays registered */\n", "TestFSWatchSelfCloseExitsMatchesNode", "", true},
-	{"event-drain-dropped", "two_events", "            adamic_source_drain_jobs();\n", "            /* mutant: one checkpoint for the whole read */\n", "TestFSWatchTwoEventsMatchesNode", "", false},
-	{"view-name-check-dropped", "view_other_event", `    if (event == NULL || event->heap.kind != adamic_kind_string || event->length != 5 || memcmp(event->bytes, "error", 5) != 0) {`, "    if (event == NULL && false) {", "TestFSWatchViewOtherEventStopsByName", fsWatchOtherEventStop, false},
+	{"change-rename-swapped", "create", "node_fs_watch_impl.h", `!= 0 ? "rename" : "change";`, `!= 0 ? "change" : "rename";`, "TestFSWatchCreateMatchesNode", "", false},
+	{"self-basename-dropped", "write", "node_fs_watch_impl.h", "event->len != 0 ? event->name : watcher->base", `event->len != 0 ? event->name : ""`, "TestFSWatchWriteMatchesNode", "", false},
+	{"close-keeps-source", "self_close", "node_fs_watch_impl.h", "    fs_watcher_stop(watcher);\n", "    /* mutant: the source stays registered */\n", "TestFSWatchSelfCloseExitsMatchesNode", "", true},
+	{"event-drain-dropped", "two_events", "node_fs_watch_impl.h", "            adamic_source_drain_jobs();\n", "            /* mutant: one checkpoint for the whole read */\n", "TestFSWatchTwoEventsMatchesNode", "", false},
+	{"view-name-check-dropped", "view_other_event", "node_fs_watch_impl.h", `    if (event == NULL || event->heap.kind != adamic_kind_string || event->length != 5 || memcmp(event->bytes, "error", 5) != 0) {`, "    if (event == NULL && false) {", "TestFSWatchViewOtherEventStopsByName", fsWatchOtherEventStop, false},
+	// The pending close (#7s8hgd5), the same edits internal/native's readiness-source mutants make.
+	{"close-done-at-once", "close_pending", "sources_impl.h", "    if (!entry->firing) free(entry);\n    source_pending_closes++;\n", "    if (!entry->firing) free(entry);\n    /* mutant: the close is done at once */\n", "TestFSWatchClosePendingMatchesNode", "", false},
+	{"pending-wait-default-timeout", "close_twice", "async_host_impl.h", "return source_closes_waiting() ? 0 : timer_wait_ms();", "(void)source_closes_waiting(); return timer_wait_ms(); /* mutant: the default timeout */", "TestFSWatchCloseTwiceMatchesNode", "", true},
+	{"unwatch-file-done-at-once", "unwatch_file_pending", "node_watch_file_impl.h", "    adamic_source_pending_close();\n", "    /* mutant: the poller's close is done at once */\n", "TestFSWatchUnwatchFilePendingMatchesNode", "", false},
 }
 
 const (
@@ -108,6 +112,7 @@ func fsWatchProduct(t *testing.T, fixture, variant string) string {
 		if err != nil {
 			return err
 		}
+		found := false
 		for _, entry := range entries {
 			if entry.IsDir() {
 				continue
@@ -116,15 +121,19 @@ func fsWatchProduct(t *testing.T, fixture, variant string) string {
 			if err != nil {
 				return err
 			}
-			if entry.Name() == "node_fs_watch_impl.h" {
+			if entry.Name() == mutation.file {
 				if strings.Count(string(data), mutation.before) != 1 {
 					return fmt.Errorf("mutant %s must match once", variant)
 				}
 				data = []byte(strings.Replace(string(data), mutation.before, mutation.after, 1))
+				found = true
 			}
 			if err := os.WriteFile(filepath.Join(runtimeDirectory, entry.Name()), data, 0600); err != nil {
 				return err
 			}
+		}
+		if !found {
+			return fmt.Errorf("mutant %s names no runtime file %s", variant, mutation.file)
 		}
 		library, err := native.RuntimeLibraryForSource(runtimeDirectory, source, options)
 		if err != nil {
@@ -194,6 +203,9 @@ func TestFSWatchMissingThrowsMatchesNode(t *testing.T) {
 	t.Parallel()
 	fsWatchAgreement(t, "missing")
 }
+
+// Also the pending close's no-hang pin: a lone persistent watcher closed with nothing else armed
+// exits within the 5 s deadline, its close's one turn never blocking.
 func TestFSWatchCloseTwiceMatchesNode(t *testing.T) {
 	t.Parallel()
 	fsWatchAgreement(t, "close_twice")
@@ -300,6 +312,35 @@ func TestFSWatchTwoEventsMatchesNode(t *testing.T) {
 	fsWatchAgreement(t, "two_events")
 }
 
+// Workers' program (#7s8hgd5): closing the only persistent watcher leaves a pending close, so the
+// persistent: false watcher's queued events arrive in the one turn it keeps (Runtime's ruling on
+// #j71fn59). One turn only is the readiness source's pin (internal/native's
+// TestSourcePendingCloseKeepsOneTurn): no program here can keep a file changing across that turn
+// deterministically, since a listener's own write is read in the same dispatch, as libuv reads
+// until `EAGAIN`.
+func TestFSWatchClosePendingMatchesNode(t *testing.T) {
+	t.Parallel()
+	fsWatchAgreement(t, "close_pending")
+}
+
+// fs.unwatchFile pends its close the same way: its poller lives on the timer provider, not a source.
+func TestFSWatchUnwatchFilePendingMatchesNode(t *testing.T) {
+	t.Parallel()
+	fsWatchAgreement(t, "unwatch_file_pending")
+}
+func TestFSWatchMutantCloseDoneAtOnce(t *testing.T) {
+	t.Parallel()
+	fsWatchMutant(t, "close-done-at-once")
+}
+func TestFSWatchMutantPendingWaitBlocks(t *testing.T) {
+	t.Parallel()
+	fsWatchMutant(t, "pending-wait-default-timeout")
+}
+func TestFSWatchMutantUnwatchFileDoneAtOnce(t *testing.T) {
+	t.Parallel()
+	fsWatchMutant(t, "unwatch-file-done-at-once")
+}
+
 func TestProduct_FSWatchTscShape(t *testing.T) {
 	t.Parallel()
 	fsWatchProduct(t, "tsc_shape", "control")
@@ -379,6 +420,26 @@ func TestProduct_FSWatchMutantDrainOncePerRead(t *testing.T) {
 func TestProduct_FSWatchMutantViewNameCheck(t *testing.T) {
 	t.Parallel()
 	fsWatchProduct(t, "view_other_event", "view-name-check-dropped")
+}
+func TestProduct_FSWatchClosePending(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "close_pending", "control")
+}
+func TestProduct_FSWatchUnwatchFilePending(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "unwatch_file_pending", "control")
+}
+func TestProduct_FSWatchMutantCloseDoneAtOnce(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "close_pending", "close-done-at-once")
+}
+func TestProduct_FSWatchMutantPendingWaitBlocks(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "close_twice", "pending-wait-default-timeout")
+}
+func TestProduct_FSWatchMutantUnwatchFileDoneAtOnce(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "unwatch_file_pending", "unwatch-file-done-at-once")
 }
 
 // The tree builds each product above ahead by its row in cloud/fast-gate/product-order.json, which
