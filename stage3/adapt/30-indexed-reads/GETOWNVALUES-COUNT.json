@@ -332,7 +332,27 @@
     "stage3-lane-file-306",
     "stage3-lane-file-307",
     "stage3-lane-file-308",
-    "stage3-lane-file-309"
+    "stage3-lane-file-309",
+    "stage3-lane-file-310",
+    "stage3-lane-file-311",
+    "stage3-lane-file-312",
+    "stage3-lane-file-313",
+    "stage3-lane-file-314",
+    "stage3-lane-file-315",
+    "stage3-lane-file-316",
+    "stage3-lane-file-317",
+    "stage3-lane-file-318",
+    "stage3-lane-file-319",
+    "stage3-lane-file-320",
+    "stage3-lane-file-321",
+    "stage3-lane-file-322",
+    "stage3-lane-file-323",
+    "stage3-lane-file-324",
+    "stage3-lane-file-325",
+    "stage3-lane-file-326",
+    "stage3-lane-file-327",
+    "stage3-lane-file-328",
+    "stage3-lane-file-329"
   ],
   "pieces": [
     {
@@ -1159,23 +1179,86 @@
       "failed": [],
       "unitDeadlineSeconds": 90,
       "sourceManifestUnchanged": true
+    },
+    {
+      "piece": 17,
+      "seconds": 64.2528329920001,
+      "units": [
+        "stage3-lane-file-310",
+        "stage3-lane-file-311",
+        "stage3-lane-file-312",
+        "stage3-lane-file-313",
+        "stage3-lane-file-314",
+        "stage3-lane-file-315",
+        "stage3-lane-file-316",
+        "stage3-lane-file-317",
+        "stage3-lane-file-318",
+        "stage3-lane-file-319",
+        "stage3-lane-file-320",
+        "stage3-lane-file-321",
+        "stage3-lane-file-322",
+        "stage3-lane-file-323",
+        "stage3-lane-file-324",
+        "stage3-lane-file-325",
+        "stage3-lane-file-326",
+        "stage3-lane-file-327",
+        "stage3-lane-file-328",
+        "stage3-lane-file-329"
+      ],
+      "calls": 68,
+      "kinds": {
+        "plain-record": 20,
+        "array": 48
+      },
+      "arrays": {
+        "sparse": 42,
+        "withNonIndexProperties": 0,
+        "withPresentUndefined": 0,
+        "presentUndefinedElements": 0,
+        "accessorIndices": 0,
+        "lengths": {
+          "89": 20,
+          "4469": 2,
+          "4468": 18,
+          "6": 2,
+          "0": 6
+        },
+        "holes": {
+          "84": 2,
+          "4465": 2,
+          "86": 14,
+          "4466": 14,
+          "87": 4,
+          "4467": 4,
+          "5": 2,
+          "0": 6
+        }
+      },
+      "oracleCounts": {
+        "pass": 6891,
+        "fail": 0,
+        "skip": 0
+      },
+      "failed": [],
+      "unitDeadlineSeconds": 90,
+      "sourceManifestUnchanged": true
     }
   ],
-  "calls": 983,
+  "calls": 1051,
   "kinds": {
-    "array": 644,
-    "plain-record": 339,
+    "array": 692,
+    "plain-record": 359,
     "other": 0
   },
   "arrays": {
-    "sparse": 403,
+    "sparse": 445,
     "withNonIndexProperties": 0,
     "withPresentUndefined": 0,
     "presentUndefinedElements": 0,
     "accessorIndices": 0,
     "lengths": {
-      "6": 229,
-      "0": 241,
+      "6": 231,
+      "0": 247,
       "83": 31,
       "893": 5,
       "85": 13,
@@ -1193,27 +1276,29 @@
       "84": 5,
       "1179": 4,
       "1247": 4,
-      "89": 4,
+      "89": 24,
       "1319": 3,
       "2259": 12,
       "2": 2,
       "971": 2,
       "16": 1,
       "1664": 2,
-      "1663": 14
+      "1663": 14,
+      "4469": 2,
+      "4468": 18
     },
     "holes": {
-      "5": 229,
-      "0": 241,
+      "5": 231,
+      "0": 247,
       "81": 31,
       "892": 5,
       "83": 11,
       "894": 5,
-      "84": 7,
+      "84": 9,
       "896": 5,
       "85": 5,
       "898": 5,
-      "86": 19,
+      "86": 33,
       "900": 5,
       "985": 4,
       "987": 4,
@@ -1231,11 +1316,15 @@
       "82": 1,
       "8": 1,
       "1661": 2,
-      "1662": 14
+      "1662": 14,
+      "4465": 2,
+      "4466": 14,
+      "87": 4,
+      "4467": 4
     }
   },
   "oracleCounts": {
-    "pass": 92802,
+    "pass": 99693,
     "fail": 1,
     "skip": 0
   },
