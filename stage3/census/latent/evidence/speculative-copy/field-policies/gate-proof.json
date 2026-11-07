@@ -1,0 +1,44 @@
+{
+  "statecopy_exit": 0,
+  "parallelcensus_exit": 0,
+  "old_branch_mutant_exit": 1,
+  "old_branch_mutant_refused_by": "AST ownership assertion, before type checking",
+  "probe_subprocesses": 0,
+  "source_importer": "go/importer.ForCompiler(source), real internal/ir source",
+  "test_names": {
+    "TestLatentSpeculativePrivateIRFields": [
+      {
+        "file": "stage3/census/latent/statecopy/guard_test.go",
+        "first_statement": "t.Parallel()"
+      }
+    ],
+    "TestLatentSpeculativeRefusesUnnamedExportedIRField": [
+      {
+        "file": "stage3/census/latent/statecopy/guard_test.go",
+        "first_statement": "t.Parallel()"
+      }
+    ],
+    "TestLatentSpeculativeBoundaryPolicyRequiredAtBuild": [
+      {
+        "file": "stage3/census/latent/statecopy/guard_test.go",
+        "first_statement": "t.Parallel()"
+      }
+    ],
+    "TestLatentSpeculativeEveryIRFieldPolicyIsCurrent": [
+      {
+        "file": "stage3/census/latent/statecopy/guard_test.go",
+        "first_statement": "t.Parallel()"
+      }
+    ]
+  },
+  "derived_compiler_dependencies": [
+    "internal/load",
+    "internal/lower",
+    "internal/native",
+    "internal/javascript",
+    "internal/ir",
+    "internal/flow",
+    "cmd/adamic"
+  ],
+  "legacy_static_map_entry": null
+}

@@ -1,17 +1,17 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"go/ast"
+	"go/build"
+	"go/importer"
 	"go/parser"
 	"go/token"
+	"go/types"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
-	"time"
 )
 
 func TestLatentStatecopySortedMapProgramMembership(t *testing.T) {
@@ -277,18 +277,47 @@ func TestLatentCarryFactsIgnoresUncarriedFields(t *testing.T) {
 	}
 }
 
-// Compile the actual speculative copier and the generated private-field answers together.
+// Type-check the actual copier and generated policies from source, then prove
+// the private-field copy decisions from their ASTs. This test builds nothing.
 // LATENT_STATECOPY_MUTANT selects an old full.go.txt saved under a mutant filename.
+var latentStatecopyMutant = os.Getenv("LATENT_STATECOPY_MUTANT")
+
+// Trimmed test binaries do not embed GOROOT. The standard source importer uses
+// build.Default and offers no custom Context. Resolve its read-only source root
+// once during package initialization, before any tests run in parallel.
+var latentProbeSourceRootError = func() error {
+	if build.Default.GOROOT != "" {
+		return nil
+	}
+	for _, directory := range filepath.SplitList(os.Getenv("PATH")) {
+		executable, err := filepath.EvalSymlinks(filepath.Join(directory, "go"))
+		if err != nil {
+			continue
+		}
+		root := filepath.Dir(filepath.Dir(executable))
+		if info, err := os.Stat(filepath.Join(root, "src", "reflect", "type.go")); err == nil && !info.IsDir() {
+			build.Default.GOROOT = root
+			return nil
+		}
+	}
+	return fmt.Errorf("source importer needs an installed Go source tree on PATH or GOROOT")
+}()
+
 func TestLatentSpeculativePrivateIRFields(t *testing.T) {
+	t.Parallel()
+	// Reads: internal/lower/*.go
+	// Reads: internal/ir/*.go
+	if latentProbeSourceRootError != nil {
+		t.Fatal(latentProbeSourceRootError)
+	}
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Run("build-refusal", TestLatentStatecopyRefusesAnUnnamedPrivateIRField)
 	generated := generate(root, filepath.Join(root, "internal/lower/lower.go"))
 	full := filepath.Join(root, "stage3/census/latent/full.go.txt")
-	if mutant := os.Getenv("LATENT_STATECOPY_MUTANT"); mutant != "" {
-		full = mutant
+	if latentStatecopyMutant != "" {
+		full = latentStatecopyMutant
 	}
 	extract := func(path string, source any, names map[string]bool) string {
 		fs := token.NewFileSet()
@@ -315,44 +344,28 @@ func TestLatentSpeculativePrivateIRFields(t *testing.T) {
 	source += extract("generated.go", generated, map[string]bool{"latentPrivateIRField": true, "latentSharedIRPointer": true, "latentSpecCopyFunction": true, "latentSpecIRMutableFields": true})
 	source += extract(full, nil, map[string]bool{"latentCopyIR": true, "latentEmptyArgumentCache": true})
 	source += extract(filepath.Join(root, "stage3/census/latent/speculative.go.txt"), nil, map[string]bool{"latentSpeculativeEnabled": true, "latentSpecImmutable": true, "latentSpecImmutableTypes": true, "latentSpecMutableFields": true, "latentSpecMutableFieldCache": true})
-	folder := t.TempDir()
-	files := map[string]string{
-		"go.mod":  fmt.Sprintf("module github.com/system-inc/adamic/probe\ngo 1.27.0\nrequire github.com/system-inc/adamic v0.0.0\nreplace github.com/system-inc/adamic => %s\n", root),
-		"copy.go": source,
-		"copy_test.go": `package probe
-import ("testing"; "reflect"; "github.com/system-inc/adamic/internal/ir")
-func TestPrivateCopy(t *testing.T) {
- t.Setenv("LATENT_SPECULATIVE","1")
- p := &ir.Program{}
- p.MethodsNamed("witness")
- if reflect.ValueOf(p).Elem().FieldByName("methodTables").IsNil() { t.Fatal("source cache was not populated") }
- copied := latentCopyIR(p,map[any]any{})
- if !reflect.ValueOf(copied).Elem().FieldByName("methodTables").IsNil() { t.Fatal("speculative copy shares methodTables") }
- if reflect.ValueOf(p).Elem().FieldByName("methodTables").IsNil() { t.Fatal("copy changed source cache") }
- schema := &ir.JSONDecodeSchema{Nodes: []ir.JSONDecodeNode{{Kind:"witness", LiteralUnits:[]uint16{65}}}}
- functions := []ir.Function{{Boundary:ir.FunctionBoundary{Parameters:[]ir.BoundaryParameter{{Schema:schema}},Return:schema}}}
- clone := latentCopyIR(functions,map[any]any{})
- if clone[0].Boundary.Return == schema || clone[0].Boundary.Parameters[0].Schema != clone[0].Boundary.Return {t.Fatal("boundary schema ownership or graph identity lost")}
- clone[0].Boundary.Return.Nodes[0].LiteralUnits[0]=66
- if schema.Nodes[0].LiteralUnits[0]!=65 {t.Fatal("boundary schema aliases source")}
- identity := &ir.GeneratedType{}
- if latentCopyIR(identity,map[any]any{}) != identity { t.Fatal("shared pointer identity changed") }
-}
-`,
-	}
-	for name, text := range files {
-		if err := os.WriteFile(filepath.Join(folder, name), []byte(text), 0600); err != nil {
-			t.Fatal(err)
-		}
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, "go", "test", "-mod=mod", "-count=1", ".")
-	command.Dir = folder
-	command.Env = append(os.Environ(), "GOWORK=off")
-	output, err := command.CombinedOutput()
+
+	// Check the static ownership assertion before type checking so the historical
+	// mutant is rejected for sharing private fields, even if its old helpers drift.
+	fullAST, err := parser.ParseFile(token.NewFileSet(), full, nil, 0)
 	if err != nil {
-		t.Fatalf("speculative copier: %v\n%s", err, output)
+		t.Fatal(err)
+	}
+	generatedAST, err := parser.ParseFile(token.NewFileSet(), "generated.go", generated, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := latentPrivateCopyProof(fullAST, generatedAST); err != nil {
+		t.Fatal(err)
+	}
+	fs := token.NewFileSet()
+	probe, err := parser.ParseFile(fs, "probe.go", source, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	configuration := types.Config{Importer: latentProbeSourceImporter{Importer: importer.ForCompiler(fs, "source", nil), root: root}}
+	if _, err := configuration.Check("github.com/system-inc/adamic/latentprobe", fs, []*ast.File{probe}, nil); err != nil {
+		t.Fatalf("assembled speculative copier does not type-check against real IR source: %v", err)
 	}
 }
 
@@ -426,4 +439,147 @@ func TestLatentSpeculativeEveryIRFieldPolicyIsCurrent(t *testing.T) {
 			t.Errorf("generated function copier lacks %s", want)
 		}
 	}
+}
+
+// The source importer reads IR at its real location without a temporary module,
+// changing the process directory or running a build. Its source root is frozen at
+// package initialization; parallel tests only read that configuration.
+type latentProbeSourceImporter struct {
+	types.Importer
+	root string
+}
+
+func (i latentProbeSourceImporter) Import(name string) (*types.Package, error) {
+	if name == "github.com/system-inc/adamic/internal/ir" {
+		return i.Importer.(types.ImporterFrom).ImportFrom("./internal/ir", i.root, 0)
+	}
+	return i.Importer.Import(name)
+}
+
+func latentProbeFunction(file *ast.File, name string) *ast.FuncDecl {
+	for _, declaration := range file.Decls {
+		if function, ok := declaration.(*ast.FuncDecl); ok && function.Name.Name == name {
+			return function
+		}
+	}
+	return nil
+}
+
+// Accept only the ownership-preserving control flow: a zero struct, and a
+// dominating private-policy/continue guard before each indexed field write.
+// This deliberately rejects new write shapes until their ownership is proved.
+func latentPrivateCopyProof(full, generated *ast.File) error {
+	fail := func(reason string) error { return fmt.Errorf("speculative private-field AST proof: %s", reason) }
+	copyIR := latentProbeFunction(full, "latentCopyIR")
+	if copyIR == nil {
+		return fail("missing IR copier")
+	}
+	var structure, pointer *ast.CaseClause
+	ast.Inspect(copyIR, func(node ast.Node) bool {
+		clause, ok := node.(*ast.CaseClause)
+		if ok && len(clause.List) == 1 {
+			switch printed(clause.List[0]) {
+			case "reflect.Struct":
+				structure = clause
+			case "reflect.Pointer":
+				pointer = clause
+			}
+		}
+		return true
+	})
+	if structure == nil || len(structure.Body) != 4 || printed(structure.Body[0]) != "result := reflect.New(v.Type()).Elem()" {
+		return fail("struct copy must start empty, never from the source")
+	}
+	branch, ok := structure.Body[1].(*ast.IfStmt)
+	if !ok || printed(branch.Cond) != "speculative" || branch.Init != nil || branch.Else != nil || len(branch.Body.List) != 3 {
+		return fail("missing isolated speculative struct path")
+	}
+	first, ok := branch.Body.List[0].(*ast.ForStmt)
+	if !ok || printed(first.Init) != "index := 0" || printed(first.Cond) != "index < v.NumField()" || printed(first.Post) != "index++" {
+		return fail("private policies must be consulted for every field")
+	}
+	second, ok := branch.Body.List[1].(*ast.RangeStmt)
+	if !ok || second.Tok != token.DEFINE || printed(second.Key) != "_" || printed(second.Value) != "index" || printed(second.X) != "latentSpecMutableFields(v.Type())" {
+		return fail("mutable fields must use the checked field inventory")
+	}
+	checkWrites := func(body *ast.BlockStmt, argument string) bool {
+		if len(body.List) != 3 {
+			return false
+		}
+		guard, ok := body.List[0].(*ast.IfStmt)
+		if !ok || guard.Init != nil || guard.Else != nil || printed(guard.Cond) != "latentPrivateIRField(v, index)" || len(guard.Body.List) != 1 {
+			return false
+		}
+		skip, ok := guard.Body.List[0].(*ast.BranchStmt)
+		if !ok || skip.Tok != token.CONTINUE || skip.Label != nil {
+			return false
+		}
+		// A private field cannot reach either assignment below that continue.
+		writable, ok := body.List[1].(*ast.IfStmt)
+		if !ok || writable.Init != nil || writable.Else != nil || printed(writable.Cond) != "!result.Field(index).CanSet()" || len(writable.Body.List) != 1 {
+			return false
+		}
+		expression, ok := writable.Body.List[0].(*ast.ExprStmt)
+		if !ok {
+			return false
+		}
+		panicCall, ok := expression.X.(*ast.CallExpr)
+		if !ok || printed(panicCall.Fun) != "panic" {
+			return false
+		}
+		write, ok := body.List[2].(*ast.ExprStmt)
+		if !ok {
+			return false
+		}
+		call, ok := write.X.(*ast.CallExpr)
+		return ok && printed(call.Fun) == "result.Field(index).Set" && len(call.Args) == 1 && printed(call.Args[0]) == argument
+	}
+	if !checkWrites(first.Body, "v.Field(index)") || !checkWrites(second.Body, "copyValue(v.Field(index))") || printed(branch.Body.List[2]) != "return result" {
+		return fail("private fields must pass latentPrivateIRField before any source assignment; privateEmpty fields stay empty")
+	}
+	// The struct case has no preceding source copy and returns its result. Shared
+	// identities must return their original pointer before entering struct copying.
+	if printed(structure.Body[3]) != "return result" || pointer == nil || len(pointer.Body) < 2 {
+		return fail("missing copy result or pointer policy")
+	}
+	shared, ok := pointer.Body[1].(*ast.IfStmt)
+	if !ok || shared.Init != nil || shared.Else != nil || printed(shared.Cond) != "latentSharedIRPointer(v.Type())" || len(shared.Body.List) != 1 || printed(shared.Body.List[0]) != "return v" {
+		return fail("shared private identities must use latentSharedIRPointer in speculative mode too")
+	}
+	if irPrivateFields["Program.methodTables"] != privateEmpty {
+		return fail("methodTables must be a privateEmpty cache")
+	}
+	privateHelper := latentProbeFunction(generated, "latentPrivateIRField")
+	if privateHelper == nil || len(privateHelper.Body.List) == 0 || printed(privateHelper.Body.List[0]) != "field := v.Type().Field(index).Name" {
+		return fail("private policies must inspect the actual source field name")
+	}
+	for key, policy := range irPrivateFields {
+		owner, field, _ := strings.Cut(key, ".")
+		helper := latentProbeFunction(generated, "latentPrivateIRField")
+		condition := fmt.Sprintf("v.Type() == reflect.TypeFor[ir.%s]() && field == %q", owner, field)
+		if policy == privateShared {
+			helper = latentProbeFunction(generated, "latentSharedIRPointer")
+			condition = fmt.Sprintf("t == reflect.TypeFor[*ir.%s]()", owner)
+		}
+		if helper == nil {
+			return fail("missing generated policy for " + key)
+		}
+		found := false
+		for _, statement := range helper.Body.List {
+			guard, ok := statement.(*ast.IfStmt)
+			if !ok || printed(guard.Cond) != condition {
+				continue
+			}
+			body := guard.Body.List
+			if guard.Init == nil && guard.Else == nil && len(body) > 0 && printed(body[len(body)-1]) == "return true" {
+				// An empty cache policy does exactly one thing: skip its zero-initialized
+				// destination field. It must neither assign nor read the private source.
+				found = policy != privateEmpty || len(body) == 1
+			}
+		}
+		if !found {
+			return fail("generated private policy does not preserve ownership for " + key)
+		}
+	}
+	return nil
 }
