@@ -42,6 +42,32 @@ scoped to its directory or its file, never a bare extension.
 | `stage1/cohere/lint/rules/*/rule.json` | input | Rule data whose bytes registry's committed `.generated` hashes and some product keys read. Revisited when those readers stop depending on bytes. | stage1/cohere/lint's registry generator and its product keys. |
 | `stage1/cohere/lint/rules/*/mutant.json` | input | Rule mutants whose bytes the same hashes and keys read. | stage1/cohere/lint's mutant tests. |
 | `stage1/**/*.md` | input | For this pass: markdownblocks' preflight parses its own GAPS.md as a witness, and the markdown packages' corpora read .md files, so each stage1 doc needs a per-file read before it's formatted. | stage1/cohere/markdownblocks and markdowninline's tests. |
+| `bench/regex/*.json` | generated | The regex benchmark's case table and the sources it was built from. | cases.json is written by bench/regex/main.go from originals.json, and original-sources.json records where each case came from. |
+| `bench/wasm/results/**` | record | The WebAssembly benchmark's committed results. | Written by bench/wasm/run.py, and rendered into bench/wasm/README.md. |
+| `bench/wasm/README.md` | generated | The WebAssembly benchmark's report. | Written by bench/wasm/render.py from bench/wasm/results. |
+| `bench/workers/REPORT.md` | record | The workers benchmark's committed report. | The tasks that cite it. |
+| `cloud/method-values-*.json` | record | Method values' before and after measurements. | The tasks that cite them. |
+| `cmd/adamic-gate/timings.json` | generated | The gate's recorded unit timings. | Written by cmd/adamic-gate (main.go's timings command). |
+| `docs/library-*/*.json` | record | The library slices' before and after measurements. | The docs and tasks that cite them. |
+| `docs/non-null-readiness-*.json` | record | The non-null readiness census and its validation. | The docs and tasks that cite them. |
+| `docs/optional-widening/*.json` | record | Optional widening's stage 3 file counts and hashes. | The docs and tasks that cite them. |
+| `docs/per-backend-stops-fixtures.json` | record | The per-backend stops measurement. | The docs and tasks that cite it. |
+| `docs/regex-cycle-proof.md` | record | The regex cycle proof's write-up of a run. | The tasks that cite it. |
+| `docs/stage1-progress/**` | record | stage1's progress snapshots. | Written by cmd/adamic-stage1-progress. |
+| `docs/tsc-generated-c.md` | record | A report on tsc's generated C. | The tasks that cite it. |
+| `docs/tsc-strictness/*.json` | input | The strictness meter, samples and census that the audits re-verify line by line against source. | docs/tsc-strictness/audit.py and layer-audit.cjs. |
+| `docs/utf16-views/*.json` | record | UTF-16 views' measurements. | The docs and tasks that cite them. |
+| `docs/views-v2-evidence/**` | record | Views v2's evidence, which the evidence glob misses by its name. | The tasks that cite it. |
+| `docs/nested-functions.md` | input | Cited by line from docs/rulings.md eight times, so a format that moves lines would point the rulings at the wrong text with nothing failing. Revisited when the citations name sections. | docs/rulings.md's line citations. |
+| `internal/lower/*mutants.md` | record | Lower's mutant reports. | The tasks that cite them. |
+| `internal/lower/representation_clock_source_evidence/**` | record | Lower's representation clock evidence, which the evidence glob misses by its name. | The tasks that cite it. |
+| `internal/native/CLANG_UNITS.md` | record | native's clang units report. | The tasks that cite it. |
+| `internal/native/clang_units_evidence/**` | record | native's clang units evidence, which the evidence glob misses by its name. | The tasks that cite it. |
+| `internal/native/normalize_long_report.md` | record | native's normalize report. | The tasks that cite it. |
+| `internal/native/performance/**/*.md` | record | native's performance reports. The tools beside them stay judged. | The tasks that cite them. |
+| `internal/native/runtime/wasi-agreement/*.{json,md}` | record | The WASI agreement observations and report. | internal/native/runtime/wasi-agreement/check.py reads observations.json. |
+| `internal/oracle/node_fs_file_host_status.json` | generated | The oracle's Node file host status. | Written by internal/oracle/node_fs_file_host_check.py. |
+| `notes/**/*.{json,md}` | record | Task notes' records and write-ups. The programs beside them stay judged. | The tasks that cite them. |
 
 ## Out of tsconfig.json's plain type check
 
