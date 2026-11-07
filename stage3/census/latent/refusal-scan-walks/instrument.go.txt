@@ -1,0 +1,55 @@
+package main
+
+import (
+	"bytes"
+	"go/ast"
+	"go/format"
+	"go/parser"
+	"go/token"
+	"os"
+	"path/filepath"
+	"strconv"
+)
+
+func main() {
+	for _, path := range os.Args[1:] {
+		fs := token.NewFileSet()
+		f, err := parser.ParseFile(fs, path, nil, parser.ParseComments)
+		if err != nil {
+			panic(err)
+		}
+		for _, decl := range f.Decls {
+			fn, ok := decl.(*ast.FuncDecl)
+			if !ok || fn.Body == nil {
+				continue
+			}
+			ast.Inspect(fn.Body, func(n ast.Node) bool {
+				call, ok := n.(*ast.CallExpr)
+				if !ok {
+					return true
+				}
+				sel, ok := call.Fun.(*ast.SelectorExpr)
+				if !ok || sel.Sel.Name != "ForEachChild" || len(call.Args) != 1 {
+					return true
+				}
+				site := filepath.Base(path) + ":" + fn.Name.Name + ":" + strconv.Itoa(fs.Position(call.Pos()).Line)
+				receiver := sel.X
+				// These two production sites use an embedded Node value. The
+				// method call implicitly takes its address; retain that here.
+				if member, ok := receiver.(*ast.SelectorExpr); ok && member.Sel.Name == "Node" {
+					receiver = &ast.UnaryExpr{Op: token.AND, X: receiver}
+				}
+				call.Fun = ast.NewIdent("scanWalk")
+				call.Args = append(append([]ast.Expr{receiver}, call.Args...), &ast.BasicLit{Kind: token.STRING, Value: strconv.Quote(site)})
+				return true
+			})
+		}
+		var b bytes.Buffer
+		if err := format.Node(&b, fs, f); err != nil {
+			panic(err)
+		}
+		if err := os.WriteFile(path, b.Bytes(), 0600); err != nil {
+			panic(err)
+		}
+	}
+}

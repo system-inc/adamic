@@ -1,0 +1,127 @@
+package lower
+
+import (
+	"context"
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"runtime/pprof"
+	"syscall"
+	"testing"
+	"time"
+)
+
+type scanSite struct{ ChildWalks, FileWalks, Children int64 }
+type scanMetric struct {
+	Name                                   string
+	Calls, ChildWalks, FileWalks, Children int64
+	Seconds                                float64
+	Sites                                  map[string]*scanSite
+	Files                                  map[string]int64
+}
+
+var scanActive *scanMetric
+
+func scanWalk(node *ast.Node, visit ast.Visitor, site string) bool {
+	if scanActive == nil {
+		return node.ForEachChild(visit)
+	}
+	metric := scanActive
+	metric.ChildWalks++
+	if metric.Sites == nil {
+		metric.Sites = map[string]*scanSite{}
+	}
+	if metric.Sites[site] == nil {
+		metric.Sites[site] = &scanSite{}
+	}
+	local := metric.Sites[site]
+	local.ChildWalks++
+	if node.Kind == ast.KindSourceFile {
+		metric.FileWalks++
+		local.FileWalks++
+		if metric.Files == nil {
+			metric.Files = map[string]int64{}
+		}
+		metric.Files[string(node.AsSourceFile().FileName())]++
+	}
+	return node.ForEachChild(func(child *ast.Node) bool { metric.Children++; local.Children++; return visit(child) })
+}
+func scanCPU() float64 {
+	var r syscall.Rusage
+	syscall.Getrusage(syscall.RUSAGE_SELF, &r)
+	return float64(r.Utime.Sec+r.Stime.Sec) + float64(r.Utime.Usec+r.Stime.Usec)/1e6
+}
+func TestTask2bz5m7vRefusalScanProfile(t *testing.T) {
+	t.Parallel()
+	program, err := load.LatentLoad([]string{os.Getenv("SCAN_ENTRY")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Match the entry census and replay worker: enumerate the resolved closure.
+	program.LatentReplayEntryReach()
+	output, err := os.Create(os.Getenv("SCAN_OUTPUT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	encode := json.NewEncoder(output)
+	for _, file := range program.Files() {
+		if program.FileName(file) != os.Getenv("SCAN_FILE") {
+			continue
+		}
+		check, release := program.Checker(context.Background(), file)
+		metrics := make([]scanMetric, len(refusalRules.rules))
+		original := append([]refusalRule(nil), refusalRules.rules...)
+		if os.Getenv("SCAN_COUNTS") == "1" {
+			for i := range refusalRules.rules {
+				i := i
+				rule := original[i]
+				metrics[i].Name = rule.name
+				refusalRules.rules[i].check = func(l *lowering, node *ast.Node) (bool, error) {
+					metric := &metrics[i]
+					metric.Calls++
+					previous := scanActive
+					scanActive = metric
+					start := time.Now()
+					defer func() { metric.Seconds += time.Since(start).Seconds(); scanActive = previous }()
+					return rule.check(l, node)
+				}
+			}
+		}
+		latentFindings = nil
+		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
+		l := &lowering{program: program, checker: check, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: map[*ast.Node]ir.SourceIdentity{}}
+		other := &scanMetric{Name: "shared visitors and module preflights"}
+		if os.Getenv("SCAN_COUNTS") == "1" {
+			scanActive = other
+		}
+		if path := os.Getenv("SCAN_PPROF"); path != "" {
+			profile, err := os.Create(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := pprof.StartCPUProfile(profile); err != nil {
+				t.Fatal(err)
+			}
+			defer profile.Close()
+			defer pprof.StopCPUProfile()
+		}
+		wall, cpu := time.Now(), scanCPU()
+		err := l.latentRefuse(file)
+		elapsed, cpuUsed := time.Since(wall).Seconds(), scanCPU()-cpu
+		scanActive = nil
+		findingsJSON, _ := json.Marshal(latentFindings)
+		encode.Encode(map[string]any{"file": program.FileName(file), "loaded_files": len(program.Files()), "bytes": len(file.Text()), "wall_seconds": elapsed, "cpu_seconds": cpuUsed, "rules": metrics, "outer": other, "findings_sha256": fmt.Sprintf("%x", sha256.Sum256(findingsJSON)), "findings": len(latentFindings)})
+		refusalRules.rules = original
+		release()
+		if err != nil {
+			t.Fatal(err)
+		}
+		return
+	}
+	t.Fatal("selected file not in program")
+}
