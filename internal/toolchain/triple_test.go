@@ -66,3 +66,24 @@ func TestCgosCompilersNameTheBuildsTriple(t *testing.T) {
 		t.Errorf("js/wasm names %q and %q, want clang and clang++ alone", c, cPlusPlus)
 	}
 }
+
+// A build's platform is the last setting of `GOOS` and of `GOARCH`, as go reads a list of settings, and this process's
+// own where either is unset or empty, even after an earlier setting named another. Mutants: Platform reading the first
+// setting of a name; an empty setting kept rather than read as this process's.
+func TestPlatformIsTheLastSettingOrThisProcesss(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct {
+		environment  []string
+		goos, goarch string
+	}{
+		{nil, runtime.GOOS, runtime.GOARCH},
+		{[]string{"GOOS=linux", "GOARCH=arm64"}, "linux", "arm64"},
+		{[]string{"GOARCH=amd64", "PATH=/bin", "GOARCH=arm64"}, runtime.GOOS, "arm64"},
+		{[]string{"GOOS=darwin", "GOOS=", "GOARCH=arm64", "GOARCH="}, runtime.GOOS, runtime.GOARCH},
+		{[]string{"GOOS=", "GOARCH="}, runtime.GOOS, runtime.GOARCH},
+	} {
+		if goos, goarch := Platform(row.environment); goos != row.goos || goarch != row.goarch {
+			t.Errorf("Platform(%q) is %s/%s, want %s/%s", row.environment, goos, goarch, row.goos, row.goarch)
+		}
+	}
+}
