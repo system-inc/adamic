@@ -8,6 +8,7 @@ import (
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -45,6 +46,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 	reactor := false
 	abiPath := ""
 	names := []string{}
+	format, formatGiven := lower.ModuleFormatEcmaScript, false
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
 		case "--target":
@@ -84,6 +86,18 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 				return 2
 			}
 			archive = arguments[index]
+		case "--module-format":
+			index++
+			if index >= len(arguments) || formatGiven {
+				fmt.Fprintln(os.Stderr, usage)
+				return 2
+			}
+			declared, known := moduleFormats[arguments[index]]
+			if !known {
+				fmt.Fprintln(os.Stderr, usage)
+				return 2
+			}
+			format, formatGiven = declared, true
 		default:
 			fmt.Fprintln(os.Stderr, usage)
 			return 2
@@ -114,16 +128,16 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 	handler := -1
 	var exports []native.ABIExport
 	if options.Target == "wasm32-wasi" {
-		program, exports, code = compileExportsWith(path, names, entryFunctions)
+		program, exports, code = compileExportsWith(path, names, entryFunctions, format)
 		if program != nil && len(exports) == 0 && !reactor {
 			// An export alias is outside the per-function crossing set (docs/wasm-abi.md), but an
 			// aliased handleRequest still selects the request ABI, as it did before those exports.
-			program, handler, code = compileWASI(path)
+			program, handler, code = compileWASI(path, format)
 		}
 		reactor = reactor || len(exports) > 0
 		options.Request = reactor || handler >= 0
 	} else {
-		program, code = compileLibrary(path, archive != "", options.Debug)
+		program, code = compileLibrary(path, archive != "", options.Debug, format)
 	}
 	if program == nil {
 		return code

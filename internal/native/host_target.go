@@ -21,6 +21,8 @@ var wasiHostRefusals = map[string]TargetRefused{
 	"adamic_fs_file_host_watch_on": {"FSWatcher.on", "wasi preview1 has no file system event provider"},
 	"adamic_host_stdout_columns":   {"process.stdout.columns", "wasi preview1 reports no terminal size"},
 	"adamic_node_argv":             {"process.argv", "WASI has no executable paths"},
+	"adamic_node_filename":         {"__filename", "WASI has no executable paths"},
+	"adamic_node_dirname":          {"__dirname", "WASI has no executable paths"},
 	"adamic_fs_file_mkdtemp":       {"fs.mkdtempSync", "WASI has no temporary directory creation"},
 	"adamic_node_pid":              {"process.pid", "WASI has no process identifiers"},
 	"adamic_node_platform":         {"process.platform", "WASI has no Node host platform"},

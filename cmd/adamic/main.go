@@ -10,6 +10,10 @@
 //
 // build --count makes a binary that counts its allocations, frees, retains and releases and writes
 // them to stderr as it exits, for measuring what the memory model costs.
+//
+// c, js and build take --module-format commonjs to declare the program a CommonJS module, where a .ts
+// file's __filename and __dirname are bound (lower.ModuleFormat); esm, the default, declares an ES
+// module.
 package main
 
 import (
@@ -33,10 +37,10 @@ import (
 
 const usage = `usage:
   adamic types <file.a|file.ts>...
-  adamic c <file.a|file.ts> [--explain-checks]
+  adamic c <file.a|file.ts> [--module-format commonjs|esm] [--explain-checks]
   adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
-  adamic js <file.a|file.ts> [--explain-checks]
-  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]
+  adamic js <file.a|file.ts> [--module-format commonjs|esm] [--explain-checks]
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--module-format commonjs|esm] [--explain-checks]
   adamic --help | -h
   adamic --version`
 
@@ -60,8 +64,10 @@ func run(arguments []string) (code int) {
 		}
 	}
 	if explain {
-		if len(filtered) == 2 && (filtered[0] == "c" || filtered[0] == "js") {
-			return renderWithChecks(filtered[0], filtered[1])
+		if len(filtered) >= 2 && (filtered[0] == "c" || filtered[0] == "js") {
+			if path, format, ok := renderArguments(filtered[1:]); ok {
+				return renderWithChecks(filtered[0], path, format)
+			}
 		}
 		if len(filtered) > 0 && filtered[0] == "build" {
 			arguments = append(filtered, "--explain-checks")
@@ -90,8 +96,12 @@ func run(arguments []string) (code int) {
 			fmt.Printf("%s:%d:%d: %s %s: %s\n", relative(declaration.File), declaration.Line, declaration.Column, declaration.Kind, declaration.Name, declaration.Type)
 		}
 		return 0
-	case len(arguments) == 2 && arguments[0] == "c":
-		lowered, code := compile(arguments[1])
+	case len(arguments) >= 2 && arguments[0] == "c":
+		path, format, ok := renderArguments(arguments[1:])
+		if !ok {
+			break
+		}
+		lowered, code := compileLibrary(path, false, false, format)
 		if lowered == nil {
 			return code
 		}
@@ -101,8 +111,12 @@ func run(arguments []string) (code int) {
 		}
 		fmt.Print(native.C(lowered))
 		return 0
-	case len(arguments) == 2 && arguments[0] == "js":
-		lowered, code := compile(arguments[1])
+	case len(arguments) >= 2 && arguments[0] == "js":
+		path, format, ok := renderArguments(arguments[1:])
+		if !ok {
+			break
+		}
+		lowered, code := compileLibrary(path, false, false, format)
 		if lowered == nil {
 			return code
 		}
@@ -199,12 +213,35 @@ func check(paths []string) (*load.Program, int) {
 	return program, 0
 }
 
-// compile checks and lowers one program.
-func compile(path string) (*ir.Program, int) {
-	return compileLibrary(path, false, false)
+// moduleFormats are the words --module-format takes, and the format each declares.
+var moduleFormats = map[string]lower.ModuleFormat{"commonjs": lower.ModuleFormatCommonJS, "esm": lower.ModuleFormatEcmaScript}
+
+// renderArguments is what c and js take after their name: a file, and the format a
+// `--module-format <format>` after it declares, an ES module when there's none. ok is false for
+// anything else, a usage error.
+func renderArguments(arguments []string) (string, lower.ModuleFormat, bool) {
+	switch {
+	case len(arguments) == 1:
+		return arguments[0], lower.ModuleFormatEcmaScript, true
+	case len(arguments) == 3 && arguments[1] == "--module-format":
+		format, known := moduleFormats[arguments[2]]
+		return arguments[0], format, known
+	}
+	return "", lower.ModuleFormatEcmaScript, false
 }
 
-func compileLibrary(path string, tsgo, debug bool) (*ir.Program, int) {
+// compile checks and lowers one program, as an ES module.
+func compile(path string) (*ir.Program, int) {
+	return compileLibrary(path, false, false, lower.ModuleFormatEcmaScript)
+}
+
+// loweringOptions is what every command lowers with: the environment's opt-ins, as lower.Lower reads
+// them, debug, and the module format the command was given.
+func loweringOptions(debug bool, format lower.ModuleFormat) lower.Options {
+	return lower.Options{ProgramRegion: programRegionRequested(), OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1", Debug: debug, ModuleFormat: format}
+}
+
+func compileLibrary(path string, tsgo, debug bool, format lower.ModuleFormat) (*ir.Program, int) {
 	program, code := check([]string{path})
 	if program == nil {
 		return nil, code
@@ -212,8 +249,7 @@ func compileLibrary(path string, tsgo, debug bool) (*ir.Program, int) {
 	if tsgo {
 		program.EnableTSGo()
 	}
-	options := lower.Options{ProgramRegion: programRegionRequested(), OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1", Debug: debug}
-	lowered, err := lower.LowerWithOptions(context.Background(), program, options)
+	lowered, err := lower.LowerWithOptions(context.Background(), program, loweringOptions(debug, format))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
 		return nil, 1
