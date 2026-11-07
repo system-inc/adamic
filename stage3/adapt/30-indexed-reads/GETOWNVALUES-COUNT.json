@@ -172,7 +172,27 @@
     "stage3-lane-file-146",
     "stage3-lane-file-147",
     "stage3-lane-file-148",
-    "stage3-lane-file-149"
+    "stage3-lane-file-149",
+    "stage3-lane-file-150",
+    "stage3-lane-file-151",
+    "stage3-lane-file-152",
+    "stage3-lane-file-153",
+    "stage3-lane-file-154",
+    "stage3-lane-file-155",
+    "stage3-lane-file-156",
+    "stage3-lane-file-157",
+    "stage3-lane-file-158",
+    "stage3-lane-file-159",
+    "stage3-lane-file-160",
+    "stage3-lane-file-161",
+    "stage3-lane-file-162",
+    "stage3-lane-file-163",
+    "stage3-lane-file-164",
+    "stage3-lane-file-165",
+    "stage3-lane-file-166",
+    "stage3-lane-file-167",
+    "stage3-lane-file-168",
+    "stage3-lane-file-169"
   ],
   "pieces": [
     {
@@ -623,12 +643,59 @@
       "failed": [],
       "unitDeadlineSeconds": 90,
       "sourceManifestUnchanged": true
+    },
+    {
+      "piece": 9,
+      "seconds": 70.24769838099974,
+      "units": [
+        "stage3-lane-file-150",
+        "stage3-lane-file-151",
+        "stage3-lane-file-152",
+        "stage3-lane-file-153",
+        "stage3-lane-file-154",
+        "stage3-lane-file-155",
+        "stage3-lane-file-156",
+        "stage3-lane-file-157",
+        "stage3-lane-file-158",
+        "stage3-lane-file-159",
+        "stage3-lane-file-160",
+        "stage3-lane-file-161",
+        "stage3-lane-file-162",
+        "stage3-lane-file-163",
+        "stage3-lane-file-164",
+        "stage3-lane-file-165",
+        "stage3-lane-file-166",
+        "stage3-lane-file-167",
+        "stage3-lane-file-168",
+        "stage3-lane-file-169"
+      ],
+      "calls": 20,
+      "kinds": {
+        "plain-record": 20
+      },
+      "arrays": {
+        "sparse": 0,
+        "withNonIndexProperties": 0,
+        "withPresentUndefined": 0,
+        "presentUndefinedElements": 0,
+        "accessorIndices": 0,
+        "lengths": {},
+        "holes": {}
+      },
+      "oracleCounts": {
+        "pass": 6399,
+        "fail": 0,
+        "skip": 0
+      },
+      "failed": [],
+      "unitDeadlineSeconds": 90,
+      "sourceManifestUnchanged": true
     }
   ],
-  "calls": 810,
+  "calls": 830,
   "kinds": {
     "array": 644,
-    "plain-record": 166,
+    "plain-record": 186,
     "other": 0
   },
   "arrays": {
@@ -699,7 +766,7 @@
     }
   },
   "oracleCounts": {
-    "pass": 36827,
+    "pass": 43226,
     "fail": 1,
     "skip": 0
   },
