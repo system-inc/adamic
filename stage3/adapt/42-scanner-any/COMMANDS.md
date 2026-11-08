@@ -35,8 +35,7 @@ NODE_PATH=/workspace/scratch/native3-cache/api/node_modules node stage3/adapt/42
 
 The compiler command below ran through Python subprocess.run, with monotonic
 wall time and RUSAGE_CHILDREN recorded in compiler-time.json. Its cwd was the
-existing, never-pushed scratch checkout /workspace/scanner-native3-next at
-28285421. No compiler source change was made.
+existing, never-pushed scratch checkout /workspace/scanner-native3-next at 28285421. No compiler source change was made.
 
 ```sh
 go build -buildvcs=false -o /workspace/scratch/scanner-any-next-adamic ./cmd/adamic > /tmp/scanner-any-compiler-build.log 2>&1

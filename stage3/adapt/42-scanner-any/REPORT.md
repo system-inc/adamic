@@ -64,11 +64,11 @@ The earlier three any observations are gone in separate, throwing-placeholder
 checkpoints. Restoring each old type brings back its exact old diagnostic.
 The concrete controls next reach:
 
-| Site | Next checkpoint stop | Limit |
-|---|---|---|
-| 10, private payload | scanner.ts:696:32, string/number BinaryExpression | Earlier unrelated features have discovery placeholders |
-| 12, keyword map | scanner.ts:100:58, new Map input is not typed pairs | Dependent on removed MapLike index signature and throwing keyword object |
-| 14, own driver | main.a:14:156, JSON.stringify string \| number \| null | Other unsupported scanner bodies/initializers throw |
+| Site                | Next checkpoint stop                                   | Limit                                                                    |
+| ------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------ |
+| 10, private payload | scanner.ts:696:32, string/number BinaryExpression      | Earlier unrelated features have discovery placeholders                   |
+| 12, keyword map     | scanner.ts:100:58, new Map input is not typed pairs    | Dependent on removed MapLike index signature and throwing keyword object |
+| 14, own driver      | main.a:14:156, JSON.stringify string \| number \| null | Other unsupported scanner bodies/initializers throw                      |
 
 These are source/compiler admission measurements, not successful scanner runs.
 Independent `.a` type-admission controls build without scanner placeholders.
