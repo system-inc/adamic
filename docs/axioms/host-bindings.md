@@ -7,7 +7,7 @@ The table is internal/load/host_bindings.json. TestHostBindingsAudit (internal/l
 ## What a row says
 
 - **Declaration**: the file's basename, the keyword and the declared type's exact text. Only a top-level, unexported `declare` statement in a `.ts` file matches, every declarator of it a row's. Anything else stays refused as an ambient value declaration, and so does every `.a` file's, which is otherwise unchanged. A program's `declare const process: number` is never the row's.
-- **Node**: what Node prints for `typeof` of the name, on the version named, running the declaring file as an ECMAScript module, as oracle/node.mjs runs every program. Under that module mode `typeof require` is "undefined", which is why tsc's `require` leaves the program by adaptation rather than by a row.
+- **Node**: what Node prints for `typeof` of the name, on the version named, running the declaring file as an ECMAScript module, as oracle/node.mjs runs every program. Under that module mode `typeof require` is "undefined", so core.ts's `declare const require: unknown` is a row, Absent on every target (@system_adamic on #baobab, Nov 8 2026): isNodeLikeSystem reads false natively as it does on the oracle's Node, agreement and not a fix, until 99q (#nqp4p7g) drops its `typeof require` test. The row matches only that declaration, by file and exact type text, so Node's own `require` elsewhere (sys.ts, #3sh9398) is never the row's. A build of another module format, `--module-format commonjs-bundle` (#redxes2), answers for itself: its answer joins a row as its own field beside this one, which never changes shape.
 - **native, javascript, wasm32**: Provided (the host defines the name, and reads go through its host model, never trusted), Absent (nothing defines it, and `typeof` answers "undefined"), or Pending with the owner who clears the column. Runtime clears the native column, and Runtime and Platforms clear the wasm32 one with it.
 - **Model**: the host path a Provided row's reads route to, or the task that builds it while none is built.
 - **Divergence**: a ruled backend divergence under which a column may differ from Node's answer, or none.
@@ -25,11 +25,12 @@ Every column is held to Node's real `typeof` by internal/oracle/host_bindings_te
 
 | Name | Declaration | Node | native | javascript | wasm32 | Model | Divergence | Ruling |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| require | core.ts, `declare const require: unknown` | v24.21.0, ES module, `undefined` | Absent | Absent | Absent | none | none | @system_adamic on #baobab for #00qn5az, Nov 8 2026 20:21Z: Absent on every target, Node's own answer under the oracle's module mode, so isNodeLikeSystem reads false as it does there until 99q (#nqp4p7g) drops its typeof require test; a commonjs-bundle build's answer is #redxes2's to add |
 | onProfilerEvent | performance.ts, `declare let onProfilerEvent: ((eventName: string) => void) \| undefined` | v24.21.0, ES module, `undefined` | Absent | Absent | Absent | none | none | @system_adamic on #00qn5az, Nov 6 2026 00:27Z: Absent on every target, Node's own answer under the oracle's module mode |
 | process | core.ts, `declare const process: { nextTick?: unknown; browser?: unknown; } \| undefined` | v24.21.0, ES module, `object` | Pending (Runtime) | Provided | Pending (Runtime and Platforms) | `node:process` | none | @system_adamic on #00qn5az, Nov 6 2026 00:05Z: Provided through Node's process model, the native and wasm32 columns pending Runtime's and Platforms' clearance of process.browser |
 | performance | performanceCore.ts, `declare const performance: Performance \| undefined` | v24.21.0, ES module, `object` | Pending (Runtime) | Provided | Pending (Runtime and Platforms) | #m36zjrk, not built | none | @system_adamic on #00qn5az, Nov 6 2026 00:05Z: Provided on Node, not yet until #3sh9398's host model exists |
 
-Only onProfilerEvent lowers today. process waits on Runtime and Platforms to clear `process.browser`, which Node answers undefined, before its reads route through the Node process lowering (internal/lower/library_node_process.go). performance waits on those columns and on #m36zjrk's host model.
+onProfilerEvent and require lower today, each Absent on every target. process waits on Runtime and Platforms to clear `process.browser`, which Node answers undefined, before its reads route through the Node process lowering (internal/lower/library_node_process.go). performance waits on those columns and on #m36zjrk's host model.
 
 ## Changing a row
 

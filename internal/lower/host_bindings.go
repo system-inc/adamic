@@ -21,7 +21,7 @@ import (
 //
 // One IR feeds every target, so a row lowers only when its three columns are equal and none is pending
 // its owner's clearance; any other row is not yet, named (hostBindingStop), at its declaration and at
-// every use. Of the rows today only onProfilerEvent lowers, Absent on every target.
+// every use. Of the rows today onProfilerEvent and require lower, each Absent on every target.
 //
 // Absent: typeof answers the constant "undefined", which every backend compares as it compares any
 // string, so a guard's test is false at run time with no folding. The name itself is never read. A read
