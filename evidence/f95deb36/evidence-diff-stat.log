@@ -1,0 +1,68 @@
+ evidence/3ac38c67/README.md                        |    32 +
+ evidence/3ac38c67/checkout.exit                    |     1 +
+ evidence/3ac38c67/checkout.log                     |     2 +
+ evidence/3ac38c67/fetch.exit                       |     1 +
+ evidence/3ac38c67/fetch.log                        |     2 +
+ evidence/3ac38c67/gofmt.exit                       |     1 +
+ evidence/3ac38c67/gofmt.log                        |     0
+ .../3ac38c67/host-generic-mutant-load-failures.log |     4 +
+ evidence/3ac38c67/host-generic-mutant-red-rows.log |     5 +
+ evidence/3ac38c67/host-generic-mutant.exit         |     1 +
+ evidence/3ac38c67/host-generic-mutant.log          |   107 +
+ evidence/3ac38c67/host-generic-mutant.patch        |    13 +
+ evidence/3ac38c67/pins-load-failures.log           |     4 +
+ evidence/3ac38c67/pins-red-rows.log                |     5 +
+ evidence/3ac38c67/pins.exit                        |     1 +
+ evidence/3ac38c67/pins.log                         |   208 +
+ evidence/3ac38c67/replacement-diff-stat.log        |     2 +
+ evidence/3ac38c67/restoration.exit                 |     1 +
+ evidence/3ac38c67/restoration.log                  |     0
+ evidence/3ac38c67/restored-diff-stat.log           |     0
+ evidence/3ac38c67/restored-diff.exit               |     1 +
+ evidence/3ac38c67/steps-ABC.md                     |    13 +
+ evidence/3ac38c67/vet.exit                         |     1 +
+ evidence/3ac38c67/vet.log                          |     0
+ evidence/f95deb36/README.md                        |    56 +
+ evidence/f95deb36/admission-delta.exit             |     1 +
+ evidence/f95deb36/admission-delta.json             |     1 +
+ evidence/f95deb36/admission-delta.log              |     3 +
+ evidence/f95deb36/checkout-for-DE.exit             |     1 +
+ evidence/f95deb36/checkout-for-DE.log              |    11 +
+ evidence/f95deb36/checkout.exit                    |     1 +
+ evidence/f95deb36/checkout.log                     |     2 +
+ evidence/f95deb36/fetch.exit                       |     1 +
+ evidence/f95deb36/fetch.log                        |     2 +
+ evidence/f95deb36/final-pins.exit                  |     1 +
+ evidence/f95deb36/final-pins.log                   |     3 +
+ evidence/f95deb36/final-source-diff.exit           |     1 +
+ evidence/f95deb36/final-source-diff.log            |     0
+ evidence/f95deb36/gofmt.exit                       |     1 +
+ evidence/f95deb36/gofmt.log                        |     0
+ .../f95deb36/host-generic-mutant-load-failures.log |     2 +
+ evidence/f95deb36/host-generic-mutant-red-rows.log |     3 +
+ evidence/f95deb36/host-generic-mutant.exit         |     1 +
+ evidence/f95deb36/host-generic-mutant.log          |    95 +
+ evidence/f95deb36/host-generic-mutant.patch        |    13 +
+ evidence/f95deb36/lower-failure-index.log          |     3 +
+ evidence/f95deb36/lower-failures.log               |     8 +
+ evidence/f95deb36/lower.exit                       |     1 +
+ evidence/f95deb36/lower.log                        |     8 +
+ evidence/f95deb36/manifest.exit                    |     1 +
+ evidence/f95deb36/manifest.json                    | 19899 +++++++++++++++++++
+ evidence/f95deb36/manifest.log                     |     1 +
+ evidence/f95deb36/new-refusals.md                  |     8 +
+ evidence/f95deb36/npm-restoration.exit             |     1 +
+ evidence/f95deb36/npm-restoration.log              |     1 +
+ evidence/f95deb36/pins-load-failures.log           |     2 +
+ evidence/f95deb36/pins-red-rows.log                |     3 +
+ evidence/f95deb36/pins.exit                        |     1 +
+ evidence/f95deb36/pins.log                         |   196 +
+ evidence/f95deb36/restoration.exit                 |     1 +
+ evidence/f95deb36/restoration.log                  |     0
+ evidence/f95deb36/restored-diff-stat.log           |     0
+ evidence/f95deb36/restored-diff.exit               |     1 +
+ evidence/f95deb36/setup.exit                       |     1 +
+ evidence/f95deb36/setup.log                        |     7 +
+ evidence/f95deb36/vet.exit                         |     1 +
+ evidence/f95deb36/vet.log                          |     0
+ 67 files changed, 20748 insertions(+)

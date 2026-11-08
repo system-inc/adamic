@@ -1,0 +1,8 @@
+--- FAIL: TestAGenericMethodSeenThroughAnotherViewIsNotYet (0.00s)
+    --- FAIL: TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.ts (0.07s)
+        generic_method_view_test.go:69: Load: /tmp/adamic-gate/TestAGenericMethodSeenThroughAnotherViewIsNotYeta_host_method_a1571432290/001/main.ts:4:59: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+    --- FAIL: TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.a (0.06s)
+        generic_method_view_test.go:69: Load: /tmp/adamic-gate/TestAGenericMethodSeenThroughAnotherViewIsNotYeta_host_method_a3090709463/001/main.a:4:59: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	637.561s
+FAIL

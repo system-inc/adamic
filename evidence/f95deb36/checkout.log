@@ -1,0 +1,2 @@
+Previous HEAD position was c9fa1ea71 lower: the host exemption reads Node's types too, through hostDeclaredSymbol, since librarySymbol is TypeScript's bundled library alone (#q6gs98r)
+HEAD is now at f95deb361 lower: the host exemption takes only a host method that is generic itself, so a generic the view alone brings stops (#q6gs98r, Runtime's must)

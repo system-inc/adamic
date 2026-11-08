@@ -1,0 +1,95 @@
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g1,_T_unused_on_both_sides.a
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g1,_T_unused_on_both_sides.a
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g1,_T_unused_on_both_sides.ts
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g1,_T_unused_on_both_sides.ts
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g4,_T_only_in_a_callback's_type.a
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g4,_T_only_in_a_callback's_type.a
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g4,_T_only_in_a_callback's_type.ts
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g4,_T_only_in_a_callback's_type.ts
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g5,_generic_on_the_source_side_only.a
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g5,_generic_on_the_source_side_only.a
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g5,_generic_on_the_source_side_only.ts
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g5,_generic_on_the_source_side_only.ts
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g6,_generic_on_the_target_side_only.a
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g6,_generic_on_the_target_side_only.a
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g6,_generic_on_the_target_side_only.ts
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g6,_generic_on_the_target_side_only.ts
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g7,_an_interface_seen_as_another.a
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).a
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).a
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).ts
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).ts
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g7,_an_interface_seen_as_another.a
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.a
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.a
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.ts
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.ts
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).a
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).ts
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.a
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.ts
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/g7,_an_interface_seen_as_another.ts
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/g7,_an_interface_seen_as_another.ts
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/o2,_an_overloaded_generic_view.a
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/o2,_an_overloaded_generic_view.a
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/o2,_an_overloaded_generic_view.ts
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/o2,_an_overloaded_generic_view.ts
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.a
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.a
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.ts
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.ts
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/one_class's_generic_method_under_two_type_arguments.a
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/one_class's_generic_method_under_two_type_arguments.a
+=== RUN   TestAGenericMethodSeenThroughAnotherViewIsNotYet/one_class's_generic_method_under_two_type_arguments.ts
+=== PAUSE TestAGenericMethodSeenThroughAnotherViewIsNotYet/one_class's_generic_method_under_two_type_arguments.ts
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g1,_T_unused_on_both_sides.a
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g7,_an_interface_seen_as_another.a
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/one_class's_generic_method_under_two_type_arguments.ts
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/one_class's_generic_method_under_two_type_arguments.a
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.ts
+--- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers (0.00s)
+    --- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).a (0.09s)
+    --- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.a (0.10s)
+    --- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).ts (0.12s)
+    --- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.ts (0.14s)
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.a
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/o2,_an_overloaded_generic_view.ts
+=== NAME  TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.ts
+    generic_method_view_test.go:69: Load: /tmp/adamic-gate/TestAGenericMethodSeenThroughAnotherViewIsNotYeta_host_method_a524420272/001/main.ts:4:59: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/o2,_an_overloaded_generic_view.a
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g7,_an_interface_seen_as_another.ts
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g5,_generic_on_the_source_side_only.a
+=== NAME  TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.a
+    generic_method_view_test.go:69: Load: /tmp/adamic-gate/TestAGenericMethodSeenThroughAnotherViewIsNotYeta_host_method_a4067261220/001/main.a:4:59: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g6,_generic_on_the_target_side_only.ts
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g6,_generic_on_the_target_side_only.a
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g5,_generic_on_the_source_side_only.ts
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g4,_T_only_in_a_callback's_type.a
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g4,_T_only_in_a_callback's_type.ts
+=== CONT  TestAGenericMethodSeenThroughAnotherViewIsNotYet/g1,_T_unused_on_both_sides.ts
+--- FAIL: TestAGenericMethodSeenThroughAnotherViewIsNotYet (0.00s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g1,_T_unused_on_both_sides.a (0.08s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g7,_an_interface_seen_as_another.a (0.09s)
+    --- FAIL: TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.ts (0.06s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/one_class's_generic_method_under_two_type_arguments.a (0.09s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/one_class's_generic_method_under_two_type_arguments.ts (0.11s)
+    --- FAIL: TestAGenericMethodSeenThroughAnotherViewIsNotYet/a_host_method_a_view_makes_generic.a (0.09s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g5,_generic_on_the_source_side_only.a (0.06s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/o2,_an_overloaded_generic_view.a (0.07s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g7,_an_interface_seen_as_another.ts (0.07s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/o2,_an_overloaded_generic_view.ts (0.09s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g6,_generic_on_the_target_side_only.ts (0.05s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g6,_generic_on_the_target_side_only.a (0.04s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g5,_generic_on_the_source_side_only.ts (0.04s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g4,_T_only_in_a_callback's_type.ts (0.04s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g4,_T_only_in_a_callback's_type.a (0.05s)
+    --- PASS: TestAGenericMethodSeenThroughAnotherViewIsNotYet/g1,_T_unused_on_both_sides.ts (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.333s
+FAIL
