@@ -198,9 +198,11 @@ func hostAnyModelledRows(t *testing.T) []map[string]string {
 			columns = nil
 			continue
 		}
-		cells := strings.Split(strings.Trim(line, "|"), "|")
+		// A cell may hold an escaped pipe, `number \| boolean` in the events.d.ts row, which is text, not
+		// a column break, so only unescaped pipes split.
+		cells := strings.Split(strings.ReplaceAll(strings.Trim(line, "|"), `\|`, "\x00"), "|")
 		for i := range cells {
-			cells[i] = strings.TrimSpace(cells[i])
+			cells[i] = strings.TrimSpace(strings.ReplaceAll(cells[i], "\x00", `\|`))
 		}
 		if strings.Trim(cells[0], "-: ") == "" {
 			continue
