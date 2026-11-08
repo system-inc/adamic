@@ -47,8 +47,7 @@ witness's corrected declaration is:
 
 ```ts
 declare const C_base: any;
-export declare class C extends C_base {
-}
+export declare class C extends C_base {}
 export {};
 ```
 
@@ -131,10 +130,10 @@ the fixed run starts. No reference baseline is accepted or rewritten.
 
 ## Full oracle result
 
-| Tree | Passing | Failing | Pending | Wall seconds |
-| --- | ---: | ---: | ---: | ---: |
-| Control | 106,366 | 1 | 0 | 389.424 |
-| With 99e | 106,366 | 1 | 0 | 379.200 |
+| Tree     | Passing | Failing | Pending | Wall seconds |
+| -------- | ------: | ------: | ------: | -----------: |
+| Control  | 106,366 |       1 |       0 |      389.424 |
+| With 99e | 106,366 |       1 |       0 |      379.200 |
 
 Both install and build phases exit 0. Both test phases exit 1 solely for
 `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change`.
