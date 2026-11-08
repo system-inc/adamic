@@ -211,6 +211,9 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 	if value, known, err := l.nodeCommonJSRequireValue(node); known {
 		return value, known, err
 	}
+	if value, known, err := l.nodeCommonJSModuleValue(node); known {
+		return value, known, err
+	}
 	if node.Kind == ast.KindPrefixUnaryExpression {
 		outer := node.AsPrefixUnaryExpression()
 		inner := ast.SkipParentheses(outer.Operand)

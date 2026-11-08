@@ -181,7 +181,7 @@ func lowerKeyed(t *testing.T, path string) (keyedProgram, error) {
 	check, release := loaded.Checker(context.Background(), entry)
 	t.Cleanup(release)
 	key := &viewElementKey{}
-	built, err := lowerWithElementKey(key, loaded, check, entry, nil, false, false, nil)
+	built, err := lowerWithElementKey(key, loaded, check, entry, nil, false, false, ModuleFormatEcmaScript, nil)
 	return keyedProgram{key: key, lowering: built, entry: entry}, err
 }
 
