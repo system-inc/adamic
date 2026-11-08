@@ -61,7 +61,6 @@ settings the program has zero diagnostics and the query throws TypeError:
 Cannot read properties of undefined (reading 'parent'). Both complete stacks
 and all diagnostic output are retained with the witness.
 
-
 ## Caller audit and proofs
 
 Evidence and complete before/after query results are stored only on the
@@ -87,15 +86,15 @@ The original and imported-super witnesses trace the following service readers.
 The trace uses an in-memory baseline bundle; all final query results are checked
 again against the real apply/oracle build, not the instrumented module.
 
-| Reader | Handling on these inputs |
-| --- | --- |
-| services.ts getSymbolAtLocationForQuickInfo:3568 | Missing-symbol fallback; quick info succeeds. |
-| goToDefinition.ts getSymbol:559 | Optional symbol; definition, definition-and-span and type definition complete. |
-| findAllReferences.ts Core.getReferencedSymbolsForNode:1015 | Missing-target exit; references, highlights and rename locations complete. |
-| rename.ts getRenameInfoForNode:74 | Missing symbol returns cannot-rename info. |
-| classifier2020.ts visit:151 | Missing symbol skipped; classifications complete. |
-| callHierarchy.ts resolveCallHierarchyDeclaration:400 | Missing declaration returns undefined; call hierarchy queries complete. |
-| findAllReferences.ts getImplementationReferenceEntries:580 | Imported-super variant moves its existing checker crash to valueDeclaration. |
+| Reader                                                     | Handling on these inputs                                                       |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| services.ts getSymbolAtLocationForQuickInfo:3568           | Missing-symbol fallback; quick info succeeds.                                  |
+| goToDefinition.ts getSymbol:559                            | Optional symbol; definition, definition-and-span and type definition complete. |
+| findAllReferences.ts Core.getReferencedSymbolsForNode:1015 | Missing-target exit; references, highlights and rename locations complete.     |
+| rename.ts getRenameInfoForNode:74                          | Missing symbol returns cannot-rename info.                                     |
+| classifier2020.ts visit:151                                | Missing symbol skipped; classifications complete.                              |
+| callHierarchy.ts resolveCallHierarchyDeclaration:400       | Missing declaration returns undefined; call hierarchy queries complete.        |
+| findAllReferences.ts getImplementationReferenceEntries:580 | Imported-super variant moves its existing checker crash to valueDeclaration.   |
 
 One additional assertion consumer, harness/fourslashImpl.ts:1296
 verifySymbolAtLocation, now raises "Could not get symbol at location" on the
