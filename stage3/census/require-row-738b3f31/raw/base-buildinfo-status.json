@@ -1,0 +1,17 @@
+{
+  "pid": 10872,
+  "command": [
+    "go",
+    "version",
+    "-m",
+    "/workspace/require-row-work/stage3/census/require-row-738b3f31/raw/base-census"
+  ],
+  "cwd": "/workspace/require-row-work",
+  "started_utc": "2026-11-08T20:49:46.710557+00:00",
+  "ended_utc": "2026-11-08T20:49:47.717767+00:00",
+  "seconds": 1.0072498321533203,
+  "exit_code": 0,
+  "peak_rss_kib": 47104,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

@@ -1,0 +1,21 @@
+{
+  "pid": 10793,
+  "command": [
+    "git",
+    "diff",
+    "--exit-code",
+    "71b126b0",
+    "--",
+    "internal",
+    "stage3/census/tool",
+    "stage3/census/latent"
+  ],
+  "cwd": "/workspace/require-row-work",
+  "started_utc": "2026-11-08T20:49:36.619435+00:00",
+  "ended_utc": "2026-11-08T20:49:37.625216+00:00",
+  "seconds": 1.0057885646820068,
+  "exit_code": 0,
+  "peak_rss_kib": 16348,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
