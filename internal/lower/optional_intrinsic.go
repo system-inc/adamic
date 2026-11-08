@@ -18,7 +18,7 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 		return nil, false, nil
 	}
 	callee := ast.SkipParentheses(call.Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || (!l.libraryMember(callee) && !l.nodeFSStatsMethod(callee)) {
+	if callee.Kind != ast.KindPropertyAccessExpression || (!l.libraryMember(callee) && !l.nodeFSEntryMethod(callee)) {
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()

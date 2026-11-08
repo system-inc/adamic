@@ -37,3 +37,18 @@ for (const entry of readdirSync('node_fs_directory_inputs', {withFileTypes: true
     inspectOptional(entry);
 }
 inspectOptional(statSync('node_fs_directory_inputs/absent', {throwIfNoEntry: false}));
+
+function inspectDirent(value: Dirent | undefined): void {
+    console.log(`${value?.isFile()}`);
+    console.log(`${value?.isDirectory()}`);
+    console.log(`${value?.isSymbolicLink()}`);
+    console.log(`${value?.isBlockDevice()}`);
+    console.log(`${value?.isCharacterDevice()}`);
+    console.log(`${value?.isFIFO()}`);
+    console.log(`${value?.isSocket()}`);
+    value?.isFile();
+}
+for (const entry of readdirSync('node_fs_directory_inputs', {withFileTypes: true})) {
+    inspectDirent(entry);
+}
+inspectDirent(undefined);
