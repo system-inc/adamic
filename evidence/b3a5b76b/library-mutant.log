@@ -1,0 +1,8 @@
+=== RUN   TestNodeWatchTscShape
+=== PAUSE TestNodeWatchTscShape
+=== CONT  TestNodeWatchTscShape
+    library_node_watch_test.go:51: /tmp/adamic-gate/TestNodeWatchTscShape1351015453/001/main.a:10:9: stage 0 can't lower a generic method on of type { <E extends keyof FSWatcherEventMap>(eventName: E, listener: (...args: FSWatcherEventMap[E]) => void): FSWatcher; (eventName: string | symbol, listener: (...args: any[]) => void): FSWatcher; } seen as (eventName: string, listener: () => void) => void yet
+--- FAIL: TestNodeWatchTscShape (0.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.272s
+FAIL

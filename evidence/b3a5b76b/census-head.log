@@ -1,0 +1,24 @@
+=== RUN   TestProgramRegionCensusMembership
+=== PAUSE TestProgramRegionCensusMembership
+=== CONT  TestProgramRegionCensusMembership
+    program_region_census_test.go:369: build program-tsc-source 3f27582b5998 miss 0.33
+    program_region_census_test.go:369: selection indexed=true: 0.797622 seconds
+    program_region_census_test.go:369: compiler reading differs: K67 got counted want in region ({ name: __String; oldSymbol: Symbol; }[])
+    program_region_census_test.go:369: compiler reading differs: K85 got counted want in region (FilePreprocessingDiagnostics[])
+    program_region_census_test.go:369: compiler reading differs: K86 got counted want in region (LazyConfigDiagnostic[])
+    program_region_census_test.go:369: compiler reading differs: K116 got counted want in region (Map<Path, ResolvedRefAndSource>)
+    program_region_census_test.go:369: compiler reading differs: K117 got counted want in region (Map<Path, ResolvedRefAndOutputDts>)
+    program_region_census_test.go:369: compiler reading differs: K118 got counted want in region (Map<Path, Diagnostic[]>)
+    program_region_census_test.go:382: build program-region-census-true f610f2e12211 miss 2.80
+    program_region_census_test.go:369: build program-tsc-source 3f27582b5998 hit 0.00
+    program_region_census_test.go:369: selection indexed=false: 8.843928 seconds
+    program_region_census_test.go:369: compiler reading differs: K67 got counted want in region ({ name: __String; oldSymbol: Symbol; }[])
+    program_region_census_test.go:369: compiler reading differs: K85 got counted want in region (FilePreprocessingDiagnostics[])
+    program_region_census_test.go:369: compiler reading differs: K86 got counted want in region (LazyConfigDiagnostic[])
+    program_region_census_test.go:369: compiler reading differs: K116 got counted want in region (Map<Path, ResolvedRefAndSource>)
+    program_region_census_test.go:369: compiler reading differs: K117 got counted want in region (Map<Path, ResolvedRefAndOutputDts>)
+    program_region_census_test.go:369: compiler reading differs: K118 got counted want in region (Map<Path, Diagnostic[]>)
+    program_region_census_test.go:386: build program-region-census-false e936190e2382 miss 10.32
+--- PASS: TestProgramRegionCensusMembership (13.12s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	13.159s

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index bb92250d6..cefcd31ae 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -241,7 +241,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip
+ 				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) || l.librarySymbol(inside) {
+ 					continue
+ 				}
+-				return &widening{source: source, target: target, genericMethod: viewed.Name}
++				continue
+ 			}
+ 			if found := l.widened(source, target, visited); found != nil {
+ 				return found

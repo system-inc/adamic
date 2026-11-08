@@ -1,0 +1,13 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index bb92250d6..99cb887d7 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -238,7 +238,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip
+ 				// on, seen as sys.ts's FsWatchWorkerWatcher's) runs on the host, which reads its arguments
+ 				// by its own registration (library_node.go). So a method declared only in the library
+ 				// (librarySymbol) is left as it was before this stop: the hole was a program's own body.
+-				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) || l.librarySymbol(inside) {
++				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) {
+ 					continue
+ 				}
+ 				return &widening{source: source, target: target, genericMethod: viewed.Name}

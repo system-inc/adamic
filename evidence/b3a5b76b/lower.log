@@ -1,0 +1,10 @@
+--- FAIL: TestNodeWatchInheritedOnMutant (0.50s)
+    library_node_watch_test.go:158: view: the mutant must let the second host type lower: /tmp/adamic-gate/TestNodeWatchInheritedOnMutant276071609/002/main.a:2:114: stage 0 can't lower a generic method on of type { <E extends keyof ChildProcessEventMap>(eventName: E, listener: (...args: ChildProcessEventMap[E]) => void): ChildProcess; (eventName: string | symbol, listener: (...args: any[]) => void): ChildProcess; } seen as (eventName: string, listener: () => void) => void yet
+--- FAIL: TestNodeWatchInheritedOnStaysNotYet (1.19s)
+    --- FAIL: TestNodeWatchInheritedOnStaysNotYet/view (0.61s)
+        library_node_watch_test.go:140: want a NotYet naming "node:events.InternalEventEmitter.on, a member no host registration names", got /tmp/adamic-gate/TestNodeWatchInheritedOnStaysNotYetview1139082098/001/main.a:2:114: stage 0 can't lower a generic method on of type { <E extends keyof ChildProcessEventMap>(eventName: E, listener: (...args: ChildProcessEventMap[E]) => void): ChildProcess; (eventName: string | symbol, listener: (...args: any[]) => void): ChildProcess; } seen as (eventName: string, listener: () => void) => void yet
+--- FAIL: TestNodeWatchTscShape (0.49s)
+    library_node_watch_test.go:51: /tmp/adamic-gate/TestNodeWatchTscShape1000371313/001/main.a:10:9: stage 0 can't lower a generic method on of type { <E extends keyof FSWatcherEventMap>(eventName: E, listener: (...args: FSWatcherEventMap[E]) => void): FSWatcher; (eventName: string | symbol, listener: (...args: any[]) => void): FSWatcher; } seen as (eventName: string, listener: () => void) => void yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	651.945s
+FAIL

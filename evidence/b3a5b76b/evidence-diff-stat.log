@@ -1,0 +1,60 @@
+ evidence/b3a5b76b/README.md                   |    77 +
+ evidence/b3a5b76b/admission-delta.exit        |     1 +
+ evidence/b3a5b76b/admission-delta.json        |     1 +
+ evidence/b3a5b76b/admission-delta.log         |     3 +
+ evidence/b3a5b76b/census-base.exit            |     1 +
+ evidence/b3a5b76b/census-base.log             |    24 +
+ evidence/b3a5b76b/census-head.exit            |     1 +
+ evidence/b3a5b76b/census-head.log             |    24 +
+ evidence/b3a5b76b/commit-check.exit           |     1 +
+ evidence/b3a5b76b/commit-check.log            |     0
+ evidence/b3a5b76b/fetch.exit                  |     1 +
+ evidence/b3a5b76b/fetch.log                   |     2 +
+ evidence/b3a5b76b/final-pins.exit             |     1 +
+ evidence/b3a5b76b/final-pins.log              |     5 +
+ evidence/b3a5b76b/final-source-diff.exit      |     1 +
+ evidence/b3a5b76b/final-source-diff.log       |     0
+ evidence/b3a5b76b/generic-mutant-red-rows.log |    15 +
+ evidence/b3a5b76b/generic-mutant.exit         |     1 +
+ evidence/b3a5b76b/generic-mutant.log          |   111 +
+ evidence/b3a5b76b/generic-mutant.patch        |    13 +
+ evidence/b3a5b76b/generic-restoration.exit    |     1 +
+ evidence/b3a5b76b/generic-restoration.log     |     0
+ evidence/b3a5b76b/generic-restored-diff.exit  |     1 +
+ evidence/b3a5b76b/gofmt.exit                  |     1 +
+ evidence/b3a5b76b/gofmt.log                   |     0
+ evidence/b3a5b76b/library-mutant.exit         |     1 +
+ evidence/b3a5b76b/library-mutant.log          |     8 +
+ evidence/b3a5b76b/library-mutant.patch        |    13 +
+ evidence/b3a5b76b/library-restoration.exit    |     1 +
+ evidence/b3a5b76b/library-restoration.log     |     0
+ evidence/b3a5b76b/library-restored-diff.exit  |     1 +
+ evidence/b3a5b76b/lower-failure-index.log     |     4 +
+ evidence/b3a5b76b/lower-failures.log          |    10 +
+ evidence/b3a5b76b/lower.exit                  |     1 +
+ evidence/b3a5b76b/lower.log                   |    10 +
+ evidence/b3a5b76b/manifest.exit               |     1 +
+ evidence/b3a5b76b/manifest.json               | 19899 ++++++++++++++++++++++++
+ evidence/b3a5b76b/manifest.log                |     1 +
+ evidence/b3a5b76b/nested-submodules.exit      |     1 +
+ evidence/b3a5b76b/nested-submodules.log       |     3 +
+ evidence/b3a5b76b/new-refusals.md             |    25 +
+ evidence/b3a5b76b/npm-restoration.exit        |     1 +
+ evidence/b3a5b76b/npm-restoration.log         |     1 +
+ evidence/b3a5b76b/observations.md             |     7 +
+ evidence/b3a5b76b/pins.exit                   |     1 +
+ evidence/b3a5b76b/pins.log                    |   188 +
+ evidence/b3a5b76b/restored-diff-stat.log      |     0
+ evidence/b3a5b76b/setup.exit                  |     1 +
+ evidence/b3a5b76b/setup.log                   |     9 +
+ evidence/b3a5b76b/submodules.exit             |     1 +
+ evidence/b3a5b76b/submodules.log              |     3 +
+ evidence/b3a5b76b/typescript-pin.exit         |     1 +
+ evidence/b3a5b76b/typescript-pin.log          |     1 +
+ evidence/b3a5b76b/typescript-source.exit      |     1 +
+ evidence/b3a5b76b/typescript-source.log       |    19 +
+ evidence/b3a5b76b/vet.exit                    |     1 +
+ evidence/b3a5b76b/vet.log                     |     0
+ evidence/b3a5b76b/worktree.exit               |     1 +
+ evidence/b3a5b76b/worktree.log                |     3 +
+ 59 files changed, 20504 insertions(+)

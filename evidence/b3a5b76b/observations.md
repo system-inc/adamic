@@ -1,0 +1,7 @@
+# Observations at b3a5b76b
+
+The unmutated combined pins exit 1: TestNodeWatchTscShape, TestNodeWatchInheritedOnMutant, and TestNodeWatchInheritedOnStaysNotYet/view still report the generic `on` view NotYet. All 18 generic-method subtests pass. Removing the library-symbol exception makes TscShape red too, but this is not a discriminating green-to-red mutant because the baseline is already red.
+
+Read-only code inspection suggests the exception does not cover Node declarations: invariance.go calls `l.librarySymbol(inside)`; prototype.go's librarySymbol checks each root declaration with `load.IsLibrary`; load.go's IsLibrary recognizes the TypeScript bundled LibPath, while node_library.go declares Node files under `bundled:///node/node_modules/@types/node` and provides a separate `IsNodeLibrary` predicate. This is a code-reading explanation, not an instrumented proof. No compiler code was changed beyond the two requested, exactly restored mutants.
+
+Census requires upstream TypeScript commit 050880ce59e30b356b686bd3144efe24f875ebc8 from stage3/source.json. The cohere/TypeScript submodule is d92d9bfee114c80be2c375d72edae966176e3a4f and is a different source. Upstream v6.0.3 was fetched to /tmp/adamic-typescript-source and checked against the required pin. With ADAMIC_TYPESCRIPT_SOURCE pointing there, TestProgramRegionCensusMembership passed at both b3a5b76b and base ff41896c. Logged compiler-reading differences do not fail this indexed-vs-pairwise membership test. The prior missing-environment-variable failure was environmental.
