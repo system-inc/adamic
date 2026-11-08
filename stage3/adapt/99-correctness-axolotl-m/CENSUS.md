@@ -7,14 +7,14 @@ No overlays, refusal suppression, partial-root fallback, or backend changes were
 The comparison baseline is 99l's complete retained census. The current-main baseline probes reproduced core.ts:409:37.
 The interrupted redundant baseline rerun is retained as a partial probe, not represented as a complete census.
 
-| Roots | Kind | First stop | Reason |
-| ---: | --- | --- | --- |
-| 73 | Refused | src/compiler/core.ts:726:12 | `a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold` |
-| 2 | accepted | - | - |
-| 1 | NotYet | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration |
-| 1 | NotYet | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration |
-| 1 | NotYet | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
-| 1 | Refused | src/compiler/debug.ts:167:31 | a cast the runtime can't check |
+| Roots | Kind     | First stop                                               | Reason                                                                                                                                           |
+| ----: | -------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+|    73 | Refused  | src/compiler/core.ts:726:12                              | `a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold` |
+|     2 | accepted | -                                                        | -                                                                                                                                                |
+|     1 | NotYet   | src/compiler/commandLineParser.ts:293:35                 | reading an enum before its runtime initialization; move the call after the enum declaration                                                      |
+|     1 | NotYet   | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration                                                      |
+|     1 | NotYet   | src/compiler/semver.ts:71:9                              | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration     |
+|     1 | Refused  | src/compiler/debug.ts:167:31                             | a cast the runtime can't check                                                                                                                   |
 
 ## The 73 moving roots
 

@@ -5,25 +5,25 @@ exits, and timings are in measurements.json; full logs are retained compressed.
 Compiler SHAs, dependency pins, binary hashes, and build commands are in
 compiler-provenance.json. The stock checker is TypeScript 6.0.3.
 
-| Check | Result |
-| --- | --- |
-| Prescribed timeout-wrapped setup | Exit 0, 1698.823 seconds |
-| Full apply from pristine pinned TypeScript, including product packaging | Exit 0 |
-| Ordinary keyed apply replay into a fresh output | Exit 0; all source bytes identical |
-| Direct adapter replay | Zero edits and writes; bytes and mtime preserved |
-| Owner contract | Changed and partly adapted owners refused before any write; unrelated edits and LF/CRLF preserved |
-| Stock TypeScript 6.0.3 site query | U inferred at append and addRange; zero core.ts diagnostics before and after |
-| Adamic types, all sorted 79 roots | Zero diagnostics before and after; both exit 0 |
-| Normal upstream compiler builds | Exit 0 before and after |
-| Both public declaration files | typescript.d.ts and tsserverlibrary.d.ts byte-identical |
-| Complete core.ts transpiles, comments kept and removed | Byte-identical |
-| All emitted JavaScript from the normal compiler builds | Byte-identical |
-| Entire adapted src tree | Only core.ts differs, by the one explicit type argument |
-| Final census source snapshot versus full apply output | Every source byte identical |
-| generate_shards.py --check | Exit 0 |
-| Stage3 lane fixture Go tests, serial scheduling | Exit 1: two fixed 55-second API-generator wrapper deadlines |
-| Underlying API-generator Python tests, run directly | Exit 0; all 22 tests pass in 204.344 seconds |
-| Ordinary current-main per-file census | All 79 compiler roots measured |
+| Check                                                                   | Result                                                                                            |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Prescribed timeout-wrapped setup                                        | Exit 0, 1698.823 seconds                                                                          |
+| Full apply from pristine pinned TypeScript, including product packaging | Exit 0                                                                                            |
+| Ordinary keyed apply replay into a fresh output                         | Exit 0; all source bytes identical                                                                |
+| Direct adapter replay                                                   | Zero edits and writes; bytes and mtime preserved                                                  |
+| Owner contract                                                          | Changed and partly adapted owners refused before any write; unrelated edits and LF/CRLF preserved |
+| Stock TypeScript 6.0.3 site query                                       | U inferred at append and addRange; zero core.ts diagnostics before and after                      |
+| Adamic types, all sorted 79 roots                                       | Zero diagnostics before and after; both exit 0                                                    |
+| Normal upstream compiler builds                                         | Exit 0 before and after                                                                           |
+| Both public declaration files                                           | typescript.d.ts and tsserverlibrary.d.ts byte-identical                                           |
+| Complete core.ts transpiles, comments kept and removed                  | Byte-identical                                                                                    |
+| All emitted JavaScript from the normal compiler builds                  | Byte-identical                                                                                    |
+| Entire adapted src tree                                                 | Only core.ts differs, by the one explicit type argument                                           |
+| Final census source snapshot versus full apply output                   | Every source byte identical                                                                       |
+| generate_shards.py --check                                              | Exit 0                                                                                            |
+| Stage3 lane fixture Go tests, serial scheduling                         | Exit 1: two fixed 55-second API-generator wrapper deadlines                                       |
+| Underlying API-generator Python tests, run directly                     | Exit 0; all 22 tests pass in 204.344 seconds                                                      |
+| Ordinary current-main per-file census                                   | All 79 compiler roots measured                                                                    |
 
 The lane oracle is skipped under the requested type-only exception.
 comparison.json records byte comparisons, SHA-256 hashes and sizes for both
