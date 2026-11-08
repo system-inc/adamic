@@ -908,6 +908,13 @@ type (
 		Spread       []bool
 		FunctionType int
 		Returns      Type
+
+		// Optional is ?. on the call itself, object.name?.(...), through an interface (Closure is an
+		// ir.Property whose Method is set): the object's function value or method is looked up once,
+		// before the arguments, and called if it's there; where the object has none by that name, or its
+		// field holds undefined, the call is undefined (Returns holds it) and the arguments aren't
+		// evaluated. Lowering makes it on no other callee and through no checked view.
+		Optional bool
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the

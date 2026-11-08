@@ -361,6 +361,10 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				e.line("adamic_method %s = NULL;", method)
 			}
 			if property.View != "" {
+				if expression.Optional {
+					// Lowering stops an optional call through a checked view (unemittableCheckedViewRead).
+					panic("compiler bug: an optional call through a checked view")
+				}
 				property.Method = false
 				var checked bool
 				closure, checked = readUnionViewAt(e, property, receiver)
@@ -369,11 +373,63 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				}
 			} else {
 				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+				if expression.Optional {
+					return e.optionalCallThrough(expression, closure, receiver, method, closureArm, methodArm)
+				}
 				const missing = "compiler bug: a method the checker proved is there is missing"
 				e.line("if (%s == NULL && !(%s)) adamic_panic(%s, %d);", closure, e.methodPresent(method), cString(missing), len(missing))
 			}
 		}
+	} else if expression.Optional {
+		// Lowering makes an optional call only through an interface (ir.CallClosure's Optional).
+		panic("compiler bug: an optional call through a function value")
 	}
+	return e.calledThrough(expression, closure, receiver, method, exactCount, closureArm, methodArm)
+}
+
+// optionalCallThrough is object.name?.(...) once the object's function value or method is looked up,
+// the one read of it: undefined where the lookup found neither (no field or method by that name, or a
+// field holding undefined), with the arguments not evaluated, as JavaScript's chain stops there, and
+// otherwise the call of what it found.
+func (e *emitter) optionalCallThrough(expression ir.CallClosure, closure, receiver, method string, closureArm, methodArm ir.Discard) string {
+	text, value, owned := e.asideWith(func() string {
+		return e.calledThrough(expression, closure, receiver, method, false, closureArm, methodArm)
+	})
+	result := "0"
+	if expression.Returns != 0 {
+		// Undefined: NULL for a reference, which zero isn't for a string.
+		undefined := "NULL"
+		if !expression.Returns.IsReference() {
+			undefined = zero(expression.Returns)
+		}
+		result = e.temporary()
+		e.line("%s %s = %s;", cType(expression.Returns), result, undefined)
+	}
+	e.line("if (%s != NULL || %s) {", closure, e.methodPresent(method))
+	e.out.WriteString(text)
+	e.indent++
+	switch {
+	case expression.Returns == 0:
+	case expression.Returns.IsReference():
+		e.line("%s = %s;", result, retained(value))
+	default:
+		e.line("%s = %s;", result, value)
+	}
+	for index := len(owned) - 1; index >= 0; index-- {
+		e.line("adamic_release(%s);", owned[index])
+	}
+	e.indent--
+	e.line("}")
+	if expression.Returns.IsReference() {
+		e.owned = append(e.owned, result)
+	}
+	return result
+}
+
+// calledThrough is callThrough once what it calls is found: closure, or through an interface the
+// receiver's own function value (closure, NULL where its class's method, method, runs instead), or
+// the proven method alone (method, called with its count where exactCount says so).
+func (e *emitter) calledThrough(expression ir.CallClosure, closure, receiver, method string, exactCount bool, closureArm, methodArm ir.Discard) string {
 	var packed, count string
 	if property, ok := expression.Closure.(ir.Property); ok && property.View != "" {
 		packed, count = e.checkedCallableArguments(expression, closure)
