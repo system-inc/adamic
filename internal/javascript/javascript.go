@@ -297,7 +297,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	}
 	if emitter.hostCalleeUsed {
 		const callee = "const adamicCallee = (object, name) => { "
-		code = strings.Replace(code, callee, callee+"if (object === performance || object === process.stdout._handle) return { code: (closure, values) => object[name](...values) }; ", 1)
+		code = strings.Replace(code, callee, callee+"if (object === performance) return { code: (closure, values) => object[name](...values) }; ", 1)
 	}
 	if emitter.processExitUsed {
 		code = "import { processExit as adamicProcessExit, processExiting as adamicProcessExiting } from " + runtimeImport + ";\n" + code
@@ -325,6 +325,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	}
 	if strings.Contains(code, "adamicArrayOfScalars(") || strings.Contains(code, "adamicJoinEnter(") {
 		code = joinRuntime + code
+	}
+	if strings.Contains(code, "adamicHostStdoutHandle(") {
+		code = hostStdoutHandleRuntime + code
 	}
 	if strings.Contains(code, "adamicNodeTmpdir()") {
 		code = "import { tmpdir as adamicNodeTmpdir } from 'node:os';\n" + code
@@ -871,7 +874,7 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 	case ir.TypedArraySubarray:
 		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
 	case ir.ProcessCall:
-		if expression.Operation == "performance" || expression.Operation == "handle" {
+		if expression.Operation == "performance" {
 			e.hostCalleeUsed = true
 		}
 		if value, known := e.nodeProcessCall(expression); known {
