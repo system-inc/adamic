@@ -1,0 +1,18 @@
+// stdout's handle's setBlocking copied into another object and called off that object: Node's checks
+// that its receiver is the handle, so it throws TypeError: Illegal invocation, and so does both
+// backends', whose call off an object knows the handle's closure and blocks off the handle alone
+// (#0bxc4jh).
+import 'node:process';
+let handle = (process.stdout as any)._handle as { setBlocking?: (value: boolean) => void } | undefined;
+if (handle === undefined) {
+	console.log('no handle');
+} else {
+	const copy = { setBlocking: handle.setBlocking };
+	try {
+		if (copy.setBlocking) copy.setBlocking(true);
+		console.log('blocked');
+	} catch (error) {
+		console.log(`${error instanceof TypeError}`);
+		if (error instanceof Error) console.log(error.message);
+	}
+}
