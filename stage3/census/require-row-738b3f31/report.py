@@ -37,7 +37,9 @@ for k in allkeys:
  mark='*' if int(re.search(r':(\d+):',k[0]).group(1))>=2599 else ''
  lines.append('| '+' | '.join(map(esc,[mark,*k,'present' if k in bset else 'absent','present' if k in hset else 'absent']))+' |')
 after=[f for f in hs if f['phase']=='refusal_scan' and tuple(map(int,re.search(r':(\d+):(\d+)$',f['where']).groups()))>(2599,15)]
-lines+=['','The first refusal-scan site after process at head is `'+norm(after[0]['where'])+'`, '+after[0]['kind']+': '+after[0]['reason']+'. This is the forecast for the 73 process roots once process clears, not a measured rerun with process cleared.','','Head sites from line 2599 onward, in source order:']
+removed=sorted(bset-hset);added=sorted(hset-bset)
+lines+=['','Removed sites: '+str(len(removed))+'. Added sites: '+str(len(added))+'. The require declaration at core.ts:2599:80 is '+('gone at head' if any(k[0]=='core.ts:2599:80' and k[3]=='an ambient value declaration' for k in removed) else 'not confirmed removed')+'.']
+lines+=['','The first refusal-scan site after process at head is `'+norm(after[0]['where'])+'`, '+after[0]['kind']+': '+after[0]['reason']+'. This is the next currently recorded refusal-scan site. Its reason still names the pending process row, so it is not an independent forecast after Runtime clears process. These measurements do not establish where the 73 go after that clearance; no process-cleared branch exists in this comparison.','','Head sites from line 2599 onward, in source order:']
 for f in hs:
  if int(re.search(r':(\d+):(\d+)$',f['where']).group(1))>=2599:lines+=['','- `'+norm(f['where'])+'` '+f['phase']+' '+f['kind']+': '+f['reason']]
 lines+=['','## Run labels','','Peak memory is Linux wait4 ru_maxrss in KiB for each measured child, including inherited child usage under Linux accounting. Times are UTC. Each child exit and process-group cleanup is recorded.','','| Run | Start UTC | End UTC | Seconds | Peak RSS KiB | Child exit |','| --- | --- | --- | ---: | ---: | ---: |']

@@ -1,0 +1,17 @@
+{
+  "pid": 11313,
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/require-row-head",
+    "/workspace/require-row-work/stage3/census/require-row-738b3f31/raw/head-overlay"
+  ],
+  "cwd": "/workspace/require-row-head",
+  "started_utc": "2026-11-08T20:51:54.568014+00:00",
+  "ended_utc": "2026-11-08T20:51:55.571320+00:00",
+  "seconds": 1.0033273696899414,
+  "exit_code": 0,
+  "peak_rss_kib": 47136,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

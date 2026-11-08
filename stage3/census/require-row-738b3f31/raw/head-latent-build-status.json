@@ -1,0 +1,20 @@
+{
+  "pid": 11448,
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/require-row-work/stage3/census/require-row-738b3f31/raw/head-overlay/overlay.json",
+    "-o",
+    "/workspace/require-row-work/stage3/census/require-row-738b3f31/raw/head-latent",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/require-row-head",
+  "started_utc": "2026-11-08T20:51:56.578757+00:00",
+  "ended_utc": "2026-11-08T20:52:24.664859+00:00",
+  "seconds": 28.086106777191162,
+  "exit_code": 0,
+  "peak_rss_kib": 1472836,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
