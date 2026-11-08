@@ -1,11 +1,14 @@
 package native_test
 
 import (
+	"bytes"
 	"context"
 	"os"
+	"os/exec"
 	"path/filepath"
-	"strings"
+	"strconv"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
@@ -168,52 +171,81 @@ func TestRestPackOnACycleIsAGraphAllocation(t *testing.T) {
 			if len(program.RestGraphTypes) == 0 || len(program.GraphTypes) == 0 {
 				t.Fatalf("%s: no rest pack plan (rest %v, graph %v)", name, program.RestGraphTypes, program.GraphTypes)
 			}
+			// The witness's own counted check takes a value still in a region at exit as held, so
+			// this asks the stricter question: every allocation freed, no region left.
+			if allocations, frees, regions := restPackCounts(t, source, false); allocations != frees || regions != 0 {
+				t.Fatalf("%s: the region outlived the program (allocations %d, frees %d, in regions %d)", name, allocations, frees, regions)
+			}
 		})
 	}
 }
 
-// The plan is what frees each region: without it, every path's pack is counted again and
-// LeakSanitizer reports the region.
+// The plan is what frees each region: without it, every path's pack is counted again and holds
+// its region from outside. LeakSanitizer scans conservatively and misses a region a stale stack
+// word still points at, so it saw these leaks on some runs and not others; the counted build sees
+// every allocation that isn't freed, so it's the judge here.
 func TestRestPackWithoutItsPlanLeaks(t *testing.T) {
 	t.Parallel()
 	for name, source := range restPackPaths {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			directory := t.TempDir()
-			path := filepath.Join(directory, "main.a")
-			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-				t.Fatal(err)
+			allocations, frees, regions := restPackCounts(t, source, true)
+			if allocations == frees && regions == 0 {
+				t.Fatalf("%s: the pack without its plan freed everything (allocations %d, frees %d)", name, allocations, frees)
 			}
-			checked, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatal(err)
-			}
-			program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
-			if err != nil {
-				t.Fatal(err)
-			}
-			if len(program.RestGraphTypes) == 0 {
-				t.Fatalf("%s: no rest pack plan to remove", name)
-			}
-			program.RestGraphTypes = nil
-			code := native.C(program)
-			binary := filepath.Join(directory, "native")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
-			}
-			// Linux reports any failing exit, so the leak must be LeakSanitizer's, never a crash;
-			// macOS's counted build says "heap values leaked".
-			report := leakcheck.Report(t, code, binary)
-			if !strings.Contains(report, "LeakSanitizer") && !strings.Contains(report, "heap values leaked") {
-				t.Fatalf("%s: the pack without its plan didn't leak: %q", name, report)
-			}
-			for _, line := range strings.Split(report, "\n") {
-				if strings.Contains(line, "SUMMARY") || strings.Contains(line, "heap values leaked") {
-					t.Logf("%s without its plan: %s", name, line)
-				}
-			}
+			t.Logf("%s without its plan: allocations %d, frees %d, in regions %d", name, allocations, frees, regions)
 		})
 	}
+}
+
+// restPackCounts lowers source, clears its rest pack plan when asked, builds it counted, runs it,
+// and returns the counted build's allocations, frees and values left in regions.
+func restPackCounts(t *testing.T, source string, withoutPlan bool) (int64, int64, int64) {
+	t.Helper()
+	directory := t.TempDir()
+	path := filepath.Join(directory, "main.a")
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	checked, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if withoutPlan {
+		if len(program.RestGraphTypes) == 0 {
+			t.Fatal("no rest pack plan to remove")
+		}
+		program.RestGraphTypes = nil
+	}
+	binary := filepath.Join(directory, "counted")
+	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary)
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	if err := command.Run(); err != nil {
+		t.Fatalf("counted run: %v\n%s", err, stderr.String())
+	}
+	match := leakcheck.CountsLine.FindSubmatch(stderr.Bytes())
+	if match == nil {
+		t.Fatalf("no counts line:\n%s", stderr.String())
+	}
+	counts := [3]int64{}
+	for index, group := range []int{1, 2, 6} {
+		count, err := strconv.ParseInt(string(match[group]), 10, 64)
+		if err != nil {
+			t.Fatal(err)
+		}
+		counts[index] = count
+	}
+	return counts[0], counts[1], counts[2]
 }
 
 // or's fs cell seeds a graph region by type alone (cycles.go), so an or that closes no cycle is a
