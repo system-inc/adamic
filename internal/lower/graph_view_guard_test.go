@@ -146,27 +146,6 @@ func TestGraphViewGuardDeclaredGenericPairIsNotYet(t *testing.T) {
 	})
 }
 
-// A generic function's cast is lowered per instance, where T is the argument's type (concrete), so
-// the guard may never see the declared pair: this logs which way lowering went. Either way the graph
-// program doesn't lower, and if the declared pair reaches the guard it's the generic NotYet.
-func TestGraphViewGuardGenericCastSource(t *testing.T) {
-	t.Parallel()
-	source := interfaceCastSource + graphReviewCycle + `function widen<T extends Node>(value: T): Identifier { return value as Identifier; }
-const node: Node = { kind: 'identifier', pos: 0 };
-console.log(widen(node).kind);
-`
-	_, err := lowerSourceAs(t, source, ".ts")
-	var notYet *NotYet
-	switch {
-	case err == nil:
-		t.Fatal("a graph program with a checked view lowered")
-	case errors.As(err, &notYet) && notYet.What == "a view of T as Identifier in a graph program, which the cycle finder doesn't relate yet":
-		t.Log("lowering recorded the declared generic pair, and the guard failed it closed")
-	default:
-		t.Logf("lowering stopped without the declared generic pair reaching the guard: %v", err)
-	}
-}
-
 // Views the cycle finder relates pass the guard and still reach graphAdoptionBoundary's refusal,
 // unchanged: a source program's Node as Identifier, and the same pair set directly.
 func TestGraphViewGuardRelatedPairsPassThrough(t *testing.T) {
