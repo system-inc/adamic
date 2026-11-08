@@ -24,7 +24,7 @@ func main() {
 			continue
 		}
 		parts := strings.SplitN(line, "\t", 2)
-		text, err := javascript.FormatJSON(parts[0], unescape.Replace(parts[1]), format_options.PrettierDefaults())
+		text, err := javascript.FormatJson(parts[0], unescape.Replace(parts[1]), format_options.PrettierDefaults())
 		if err != nil {
 			fmt.Fprintf(&output, "error\t%s\n", escape.Replace(err.Error()))
 		} else {

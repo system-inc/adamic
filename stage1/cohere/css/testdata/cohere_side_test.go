@@ -217,7 +217,7 @@ func TestAdamicPortCases(t *testing.T) {
 			count++
 			tree, err := Parse(text)
 			if mode == "S" {
-				tree, err = ParseSCSS(text)
+				tree, err = ParseScss(text)
 			}
 			var answer any
 			if err != nil {

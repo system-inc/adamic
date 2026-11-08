@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleVarsOnTop(options any) rule.Bound     { return bindOracle(rules.VarsOnTop, options) }
+func oracleVarsOnTop(options any) rule.Bound     { return bindOracle(rules.VariablesOnTop, options) }
 func oracleVarsOnTopOptions(fields []string) any { return nil }

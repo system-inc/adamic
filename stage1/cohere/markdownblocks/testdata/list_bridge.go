@@ -90,7 +90,7 @@ type adamicDocuments struct {
 	lists       []adamicList
 	words       []adamicWord
 	groups      map[*doc.Group]int
-	ids         map[*doc.GroupID]int
+	ids         map[*doc.GroupId]int
 }
 
 func adamicEscape(text string) string {
@@ -102,7 +102,7 @@ func adamicFlag(value bool) int {
 	}
 	return 0
 }
-func (out *adamicDocuments) groupID(id *doc.GroupID) int {
+func (out *adamicDocuments) groupID(id *doc.GroupId) int {
 	if id == nil {
 		return -1
 	}
@@ -166,7 +166,7 @@ func (out *adamicDocuments) serialize(document doc.Doc) int {
 		out.groups[node] = id
 		return id
 	case *doc.IfBreak:
-		return out.add("b", "", 0, 0, out.groupID(node.GroupID), []int{out.serialize(node.BreakContents), out.serialize(node.FlatContents)})
+		return out.add("b", "", 0, 0, out.groupID(node.GroupId), []int{out.serialize(node.BreakContents), out.serialize(node.FlatContents)})
 	case *doc.Label:
 		if out.native && strings.HasPrefix(node.Label, "adamic-list:") {
 			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-list:"))
@@ -615,7 +615,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	}
 	// Serialize before Print mutates group break flags, so native propagation is exercised.
 	for _, side := range []bool{true, false} {
-		out := &adamicDocuments{native: side, whitespaces: whitespaces, leaves: leaves, roots: roots, structures: structures, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
+		out := &adamicDocuments{native: side, whitespaces: whitespaces, leaves: leaves, roots: roots, structures: structures, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupId]int{}}
 		root := out.serialize(document)
 		out.lines = append(out.lines, fmt.Sprintf("R\t%d\t%d", root, adamicFlag(bom)))
 		stream := strings.Join(out.lines, "\n") + "\n"

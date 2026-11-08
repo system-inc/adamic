@@ -38,7 +38,7 @@ func TestAdamicJSONAudit(t *testing.T) {
 	answers := make([]answer, 0, len(cases))
 	start := time.Now()
 	for index, item := range cases {
-		output, err := FormatJSON(item.Name, item.Text, format_options.PrettierDefaults())
+		output, err := FormatJson(item.Name, item.Text, format_options.PrettierDefaults())
 		result := answer{Output: output}
 		if err != nil {
 			result.Error = err.Error()

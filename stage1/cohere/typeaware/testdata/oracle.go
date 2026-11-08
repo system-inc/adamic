@@ -96,7 +96,7 @@ func main() {
 			before := time.Now()
 			actual := type_checking.GetConstrainedTypeAtLocation(typeChecker, node)
 			var frame strings.Builder
-			for part := range type_checking.UnionTypePartsSeq(actual) {
+			for part := range type_checking.UnionTypePartsSequence(actual) {
 				name := typeChecker.TypeToString(part)
 				fmt.Fprintf(&frame, "%d\n%d\n%s", part.Flags(), len(utf16.Encode([]rune(name))), name)
 			}

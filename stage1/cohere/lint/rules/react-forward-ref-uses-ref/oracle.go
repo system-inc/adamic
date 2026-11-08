@@ -9,6 +9,6 @@ import (
 )
 
 func oracleForwardRefUsesRef(options any) rule.Bound {
-	return bindOracle(rules.ForwardRefUsesRef, options)
+	return bindOracle(rules.ForwardRefUsesReference, options)
 }
 func oracleForwardRefUsesRefOptions(fields []string) any { return nil }
