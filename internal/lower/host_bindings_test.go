@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"context"
 	"errors"
 	"os"
 	"path/filepath"
@@ -62,6 +63,34 @@ func TestHostBindingAbsentLowersUnderItsGuard(t *testing.T) {
 			t.Errorf("typeof isn't the constant \"undefined\": strings %q", program.Strings)
 		}
 	})
+}
+
+// A build declared one CommonJS bundle lowers no host binding, since every row's Node answer is measured in
+// ES module mode and a CommonJS module answers its own names (require is "function" there, where the oracle's
+// ES module answers "undefined"): tsc's own if over onProfilerEvent, which lowers as an ES module above, stops
+// at its declaration, and declared an ES module by name it lowers. Mutant: hostBindingStop without its
+// module-format test lowers the bundle's program.
+func TestHostBindingRowsStopInACommonJSBundle(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	for name, source := range profilerModules("\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n") {
+		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	const stop = "stage 0 can't lower the host binding onProfilerEvent in a build declared one CommonJS bundle, its Node answer measured in ES module mode only, yet"
+	_, err = LowerWithOptions(context.Background(), program, Options{ModuleFormat: ModuleFormatCommonJSBundle})
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), stop) || !strings.Contains(err.Error(), "performance.ts:1:13") {
+		t.Errorf("the bundle's program: got %v, want a not-yet at performance.ts:1:13 saying %q", err, stop)
+	}
+	if _, err = LowerWithOptions(context.Background(), program, Options{ModuleFormat: ModuleFormatEcmaScript}); err != nil {
+		t.Errorf("declared an ES module, the program stops: %v", err)
+	}
 }
 
 // Every shape the ruling leaves out stops as not yet at the read, never folded: ||, an early return, a

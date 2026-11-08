@@ -103,7 +103,7 @@ func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
 		if row == nil {
 			return false, nil
 		}
-		if reason := hostBindingStop(*row); stop == nil && reason != "" {
+		if reason := l.hostBindingStop(*row); stop == nil && reason != "" {
 			stop = l.notYet(declaration, reason)
 		}
 	}
@@ -121,7 +121,13 @@ func (l *lowering) hostBindingDeclared(statement *ast.Node) bool {
 }
 
 // hostBindingStop is why a row doesn't lower, said as what stage 0 can't lower yet, or "" when it does.
-func hostBindingStop(row load.HostBinding) string {
+// A row's Node answer is measured in ES module mode, which a build declared one CommonJS bundle
+// (ModuleFormatCommonJSBundle) isn't: there Node answers a CommonJS module's names, require among them, so
+// no row lowers until the row carries that build's own answer (#redxes2, WebAssembly's must on #00qn5az).
+func (l *lowering) hostBindingStop(row load.HostBinding) string {
+	if l.moduleFormat == ModuleFormatCommonJSBundle && row.Node.Module == "ES" {
+		return "the host binding " + row.Name + " in a build declared one CommonJS bundle, its Node answer measured in ES module mode only,"
+	}
 	var waits []string
 	for _, target := range row.Targets() {
 		if target.Column.Answer == load.HostBindingPending {
@@ -189,8 +195,8 @@ func (l *lowering) hostBindingOf(node *ast.Node) (*load.HostBinding, *ast.Symbol
 }
 
 // hostBindingAbsent reports whether a row lowers as Absent on every target.
-func hostBindingAbsent(row load.HostBinding) bool {
-	return hostBindingStop(row) == "" && row.Native.Answer == load.HostBindingAbsent
+func (l *lowering) hostBindingAbsent(row load.HostBinding) bool {
+	return l.hostBindingStop(row) == "" && row.Native.Answer == load.HostBindingAbsent
 }
 
 // hostBindingGuard is the symbol of the Absent host binding a condition's typeof test proves missing:
@@ -219,7 +225,7 @@ func (l *lowering) hostBindingGuard(condition *ast.Node) *ast.Symbol {
 		return nil
 	}
 	row, symbol := l.hostBindingOf(test.AsTypeOfExpression().Expression)
-	if row == nil || !hostBindingAbsent(*row) {
+	if row == nil || !l.hostBindingAbsent(*row) {
 		return nil
 	}
 	return symbol
@@ -265,7 +271,7 @@ func (l *lowering) hostBindingRefusal(node *ast.Node) error {
 	if ast.IsAssignmentTarget(node) {
 		return &Refused{Where: l.program.Where(node), What: "a write to the host binding " + row.Name, Fix: hostBindingWriteFix}
 	}
-	if stop := hostBindingStop(*row); stop != "" {
+	if stop := l.hostBindingStop(*row); stop != "" {
 		return l.notYet(node, stop)
 	}
 	operand := node
@@ -357,7 +363,7 @@ func (l *lowering) hostBindingTypeOf(node *ast.Node) (ir.Expression, bool, error
 	if row == nil {
 		return nil, false, nil
 	}
-	if stop := hostBindingStop(*row); stop != "" {
+	if stop := l.hostBindingStop(*row); stop != "" {
 		return nil, true, l.notYet(node, stop)
 	}
 	return ir.StringConstant{Index: l.constant("undefined")}, true, nil
