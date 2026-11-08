@@ -1,0 +1,7 @@
+import { performance } from "node:perf_hooks";
+
+export function now(): number { return performance.now(); }
+export function elapsed(): number {
+    const before = performance.now();
+    return performance.now() - before;
+}

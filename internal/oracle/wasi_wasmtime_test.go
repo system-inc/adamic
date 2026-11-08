@@ -2,9 +2,11 @@ package oracle
 
 import (
 	"errors"
+	"math"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync/atomic"
 	"syscall"
@@ -391,4 +393,54 @@ func TestWasmtimeWalkLimitCatchesMutants(t *testing.T) {
 		t.Fatal("walk host mutant escaped")
 	}
 	t.Log("walk empty-path and invalid-UTF-8 host assertion mutants caught")
+}
+
+// Mutant: capture_clock_origin leaves monotonic_origin zero; TestWASIReactorPerformanceNow
+// reads 1088322.103555 >= 60000 ms under Node v24.19.0.
+// A host fact of wasmtime 38.0.3: its instance-relative monotonic clock returned 1.223906 ms
+// with that mutant, so this host's bound does not detect the missing origin capture.
+// Its --invoke runs _initialize first (a constructor sentinel returned 101).
+func TestWasmtimeReactorPerformanceNow(t *testing.T) {
+	t.Parallel()
+	requireWasmtime(t)
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	path, err := filepath.Abs(filepath.Join(repository, "internal/native/wasm/exports/performance.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	exports := []native.ABIExport{}
+	for index, function := range program.Functions {
+		if function.Name == "now" || function.Name == "elapsed" {
+			exports = append(exports, native.ABIExport{Name: function.Name, Function: index, Returns: native.ABIType{Kind: "number"}})
+		}
+	}
+	if len(exports) != 2 {
+		t.Fatalf("want now and elapsed, got %+v", exports)
+	}
+	source, err := native.WASIExports(program, exports)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "performance.wasm")
+	// Reuse the counted reactor runtime product already owned by the WASI shim tests.
+	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi", Request: true, Count: true}); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"now", "elapsed"} {
+		actual := execute(t, "wasmtime", "run", "--invoke", "adamic_export_"+name, binary)
+		if actual.exitCode != 0 {
+			t.Fatalf("%s: exit %d: %s", name, actual.exitCode, actual.stderr)
+		}
+		value, err := strconv.ParseFloat(strings.TrimSpace(string(actual.stdout)), 64)
+		if err != nil || math.IsNaN(value) || math.IsInf(value, 0) || value < 0 || value >= 60000 {
+			t.Fatalf("%s=%q must be finite, >= 0 and < 60000 ms: %v", name, actual.stdout, err)
+		}
+		t.Logf("%s=%g ms", name, value)
+	}
 }
