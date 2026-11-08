@@ -21,7 +21,7 @@ lines+=[str(len(accepted))+'/79 roots lower whole in the ordinary independent-ro
  'Root names are relative to `src/compiler/`. All roots are retained, including readiness candidates. Groups are sorted largest first. The accepted row is retained for coverage.','',
  '| Roots | Stop | Kind | Construct | Exact reason | Compared with bcbe5d12 | Forecast | Root names |',
  '| ---: | --- | --- | --- | --- | --- | --- | --- |']
-for g in groups:lines.append('| '+' | '.join([str(g['count']),'`'+g['where']+'`',g['kind'],safe(g['construct']),safe(g['reason']),g['comparison'],safe(g['forecast']),', '.join(label(r) for r in g['roots'])])+' |')
+for g in groups:lines.append('| '+' | '.join([str(g['count']),'`'+g['where']+'`',g['kind'],'`'+safe(g['construct']).replace('`','')+'`',safe(g['reason']),g['comparison'],safe(g['forecast']),', '.join(label(r) for r in g['roots'])])+' |')
 lines+=['','## Comparison with bcbe5d12','',
  'Baseline compiler/apply: `bcbe5d1244ee8a218d860415dea19cca114bae46`, report commit `30057ecaa2d71ee183e20f32ad7f3e4def6b5bb2`. The exact prior report and grouped JSON are retained. `comparison.json` contains old and current location/kind/reason tuples, constructs, and forecasts for every root.','',
  'The comparison column says unchanged when every root retains its exact tuple, moved when roots change to another forecasted or already known stop, and new for a previously unseen tuple outside the forecasts. The separate forecast column labels every forecast miss new, including unchanged baseline groups.','',
