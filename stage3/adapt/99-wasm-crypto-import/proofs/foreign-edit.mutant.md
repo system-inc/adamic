@@ -9,7 +9,7 @@ The exact sys.ts site was read from `typescript/axolotl-99j-2`, commit `e0063e17
 becomes:
 
 ```ts
-if(Array.isArray(existing)) existing.push(...fileNames);
+if (Array.isArray(existing)) existing.push(...fileNames);
 ```
 
 Command on the isolated before-tree copy:

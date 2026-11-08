@@ -21,8 +21,8 @@ Plain TypeScript, no cast, no any, no non-null assertion:
 ```ts
 /** @internal */
 export function propertyOf(value: unknown, key: string): unknown {
-    if(value === null || value === undefined) {
-        throw new TypeError(`Cannot read properties of ${value === null ? 'null' : 'undefined'} (reading '${key}')`);
+    if (value === null || value === undefined) {
+        throw new TypeError(`Cannot read properties of ${value === null ? "null" : "undefined"} (reading '${key}')`);
     }
     return Reflect.get(Object(value), key, value);
 }
@@ -72,27 +72,27 @@ different callers.
 
 21 of 21 agree on Node 24.22.2:
 
-| Value                                       | Key            | Both give                                                         |
-| ------------------------------------------- | -------------- | ----------------------------------------------------------------- |
-| null                                        | code           | TypeError, `Cannot read properties of null (reading 'code')`      |
-| undefined                                   | code           | TypeError, `Cannot read properties of undefined (reading 'code')` |
-| the string "ENOSPC"                         | code           | undefined                                                         |
-| the string "ENOSPC"                         | length         | 6                                                                 |
-| the number 28                               | code           | undefined                                                         |
-| `{ code: "ENOSPC" }`                        | code           | "ENOSPC"                                                          |
-| an object without code                      | code           | undefined                                                         |
-| `{ code: 28 }`                              | code           | 28                                                                |
-| a getter-only code that checks its receiver | code           | "ENOSPC"                                                          |
-| an inherited code                           | code           | "EMFILE"                                                          |
-| an Error                                    | message        | "plugin failed"                                                   |
-| an Error                                    | stack          | a string, first line `Error: plugin failed`                       |
-| an object with only message                 | message, stack | "only a message", undefined                                       |
-| `{ message: 42 }`                           | message        | 42                                                                |
-| an object with neither                      | stack, message | undefined, undefined                                              |
-| a function carrying code                    | code           | "ENOSPC"                                                          |
-| a proxy                                     | code           | its trap's value, receiver an object                              |
-| a getter that throws RangeError             | code           | RangeError, `getter threw`                                        |
-| a getter on String.prototype                | adamicWitness  | `string:ENOSPC`: the receiver is the primitive                    |
+| Value | Key | Both give |
+| --- | --- | --- |
+| null | code | TypeError, `Cannot read properties of null (reading 'code')` |
+| undefined | code | TypeError, `Cannot read properties of undefined (reading 'code')` |
+| the string "ENOSPC" | code | undefined |
+| the string "ENOSPC" | length | 6 |
+| the number 28 | code | undefined |
+| `{ code: "ENOSPC" }` | code | "ENOSPC" |
+| an object without code | code | undefined |
+| `{ code: 28 }` | code | 28 |
+| a getter-only code that checks its receiver | code | "ENOSPC" |
+| an inherited code | code | "EMFILE" |
+| an Error | message | "plugin failed" |
+| an Error | stack | a string, first line `Error: plugin failed` |
+| an object with only message | message, stack | "only a message", undefined |
+| `{ message: 42 }` | message | 42 |
+| an object with neither | stack, message | undefined, undefined |
+| a function carrying code | code | "ENOSPC" |
+| a proxy | code | its trap's value, receiver an object |
+| a getter that throws RangeError | code | RangeError, `getter threw` |
+| a getter on String.prototype | adamicWitness | `string:ENOSPC`: the receiver is the primitive |
 
 The mutant removes the null and undefined check, so the helper reads off
 `Object(null)` without throwing. `witnesses.cjs --mutant` makes that edit to
@@ -110,10 +110,10 @@ stage3/meter/report.py attributes them: each diagnostic to the file of its
 primary location, deduplicated across roots. own-file.py does this and prints
 the table.
 
-| Tree    | Own-file diagnostics | Files with any | hostErrors.ts | sys.ts |
-| ------- | -------------------: | -------------: | ------------: | -----: |
-| main    |                  145 |       21 of 79 |             0 |      4 |
-| with 94 |                  145 |       21 of 79 |             0 |      4 |
+| Tree | Own-file diagnostics | Files with any | hostErrors.ts | sys.ts |
+| --- | ---: | ---: | ---: | ---: |
+| main | 145 | 21 of 79 | 0 | 4 |
+| with 94 | 145 | 21 of 79 | 0 | 4 |
 
 Every file's set of diagnostics is identical, text, line and column. The
 census binary built at main's tip is byte-identical to the one built at

@@ -6,26 +6,26 @@ one sanctioned API failure, zero skips. Its complete test-identity multiset and
 raw baseline diff match the independently passing uninstrumented whole-lane
 control exactly. No timeout or baseline guard was relaxed.
 
-| Owner          | Calls | First argument plain | Second argument plain | Counterexamples |
-| -------------- | ----: | -------------------: | --------------------: | --------------: |
-| extend         | 10169 |                10169 |                 10169 |               0 |
-| copyProperties |   490 |                  490 |                   490 |               0 |
+| Owner | Calls | First argument plain | Second argument plain | Counterexamples |
+| --- | ---: | ---: | ---: | ---: |
+| extend | 10169 | 10169 | 10169 | 0 |
+| copyProperties | 490 | 490 | 490 | 0 |
 
 For each argument of each owner: non-plain objects, inherited enumerable strings,
 user accessors, own symbol keys, null-prototype objects, arrays and sparse arrays
 all have count 0. All invocations returned normally. The observer records throws
 as well, preserves exact exception identity, and does not invoke getters.
-The standard inherited Object.prototype **proto** accessor is excluded from the
+The standard inherited Object.prototype __proto__ accessor is excluded from the
 user-accessor category. Node witnesses agree on all 14 owner/class pairs,
 including inherited properties, accessors, symbols and sparse arrays.
 
-| Runtime caller                       | Calls |
-| ------------------------------------ | ----: |
-| commandLineParser.ts:3095, extend    |  9902 |
-| commandLineParser.ts:3101, extend    |     0 |
-| harness/fourslashImpl.ts:352, extend |   267 |
-| watch.ts:873, copyProperties         |   408 |
-| tsbuildPublic.ts:326, copyProperties |    82 |
+| Runtime caller | Calls |
+| --- | ---: |
+| commandLineParser.ts:3095, extend | 9902 |
+| commandLineParser.ts:3101, extend | 0 |
+| harness/fourslashImpl.ts:352, extend | 267 |
+| watch.ts:873, copyProperties | 408 |
+| tsbuildPublic.ts:326, copyProperties | 82 |
 
 Every recorded stack resolves to a listed caller. The unexercised WatchOptions
 merge call is covered by byte-identical JavaScript, as are all other inputs.

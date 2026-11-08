@@ -12,11 +12,7 @@ The complete owner, including both overloads, was read before editing. The overl
 
 ```ts
 export function sortAndDeduplicate(array: readonly string[]): SortedReadonlyArray<string>;
-export function sortAndDeduplicate<T>(
-    array: readonly T[],
-    comparer: Comparer<T>,
-    equalityComparer?: EqualityComparer<T>,
-): SortedReadonlyArray<T>;
+export function sortAndDeduplicate<T>(array: readonly T[], comparer: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T>;
 ```
 
 Only the first overload permits omission of the comparer, and it fixes the

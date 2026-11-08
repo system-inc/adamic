@@ -29,17 +29,17 @@ The harness adds one call. The symbol-reference audit finds no indirect uses.
 Types below are declared types; literal types are inferred. Narrowing at the
 call is shown when it differs. Full expressions and declarations are in callers.json.
 
-| Adapted source                           | Arguments in order                                                                      |
-| ---------------------------------------- | --------------------------------------------------------------------------------------- |
-| `src/compiler/commandLineParser.ts:2712` | `CompilerOptions`; `object`                                                             |
-| `src/compiler/commandLineParser.ts:3313` | `{}`; `OptionsBase \| undefined`                                                        |
-| `src/compiler/commandLineParser.ts:3343` | `{}`; `MapLike<string[]>`                                                               |
-| `src/compiler/commandLineParser.ts:3471` | `CompilerOptions`; `CompilerOptions \| undefined`                                       |
-| `src/compiler/commandLineParser.ts:3503` | `CompilerOptions`; `CompilerOptions \| undefined`                                       |
-| `src/compiler/commandLineParser.ts:3512` | `WatchOptions \| undefined` (at call: `WatchOptions`); `WatchOptions`                   |
-| `src/compiler/commandLineParser.ts:3514` | `{}`; `WatchOptions \| undefined`; `WatchOptions`                                       |
-| `src/server/scriptInfo.ts:636`           | `FormatCodeSettings \| undefined` (at call: `FormatCodeSettings`); `FormatCodeSettings` |
-| `src/harness/harnessIO.ts:375`           | `CompilerOptions & HarnessOptions`; `CompilerOptions`                                   |
+| Adapted source | Arguments in order |
+| --- | --- |
+| `src/compiler/commandLineParser.ts:2712` | `CompilerOptions`; `object` |
+| `src/compiler/commandLineParser.ts:3313` | `{}`; `OptionsBase \| undefined` |
+| `src/compiler/commandLineParser.ts:3343` | `{}`; `MapLike<string[]>` |
+| `src/compiler/commandLineParser.ts:3471` | `CompilerOptions`; `CompilerOptions \| undefined` |
+| `src/compiler/commandLineParser.ts:3503` | `CompilerOptions`; `CompilerOptions \| undefined` |
+| `src/compiler/commandLineParser.ts:3512` | `WatchOptions \| undefined` (at call: `WatchOptions`); `WatchOptions` |
+| `src/compiler/commandLineParser.ts:3514` | `{}`; `WatchOptions \| undefined`; `WatchOptions` |
+| `src/server/scriptInfo.ts:636` | `FormatCodeSettings \| undefined` (at call: `FormatCodeSettings`); `FormatCodeSettings` |
+| `src/harness/harnessIO.ts:375` | `CompilerOptions & HarnessOptions`; `CompilerOptions` |
 
 CompilerOptions, WatchOptions, OptionsBase and MapLike<string[]> have string
 index signatures when present. optionMapToObject declares object, and
@@ -53,20 +53,20 @@ All 398 accepted units pass the unchanged identity, API, baseline and count guar
 The accepted traversal records 30782 calls and 61568 argument appearances.
 Across all actual attempts, including the retained timeout: 30783 calls and 61570 appearances.
 
-| Property, all actual attempts   | Count |
-| ------------------------------- | ----: |
-| Object arguments                | 61570 |
-| Plain Object.prototype objects  | 61570 |
-| Null prototypes                 |     0 |
-| Other prototypes                |     0 |
-| Inherited enumerable properties |     0 |
-| Own accessors                   |     0 |
-| Prototype-chain accessors       | 61570 |
-| Own symbol keys                 |     0 |
-| Prototype-chain symbols         |     0 |
+| Property, all actual attempts | Count |
+| --- | ---: |
+| Object arguments | 61570 |
+| Plain Object.prototype objects | 61570 |
+| Null prototypes | 0 |
+| Other prototypes | 0 |
+| Inherited enumerable properties | 0 |
+| Own accessors | 0 |
+| Prototype-chain accessors | 61570 |
+| Own symbol keys | 0 |
+| Prototype-chain symbols | 0 |
 
 All arguments are objects; none is undefined. The only accessor is the
-ordinary inherited Object.prototype.**proto** accessor. No getter is invoked
+ordinary inherited Object.prototype.__proto__ accessor. No getter is invoked
 by the observer. Intrinsic prototypes are registered across VM contexts. Excluded
 seeds prove detection of null prototypes, cross-realm objects, inherited
 enumerable keys, own/inherited accessors and symbols. Every argument's raw
@@ -95,12 +95,12 @@ NotYet outcomes. Completed rows were retained across recorded scheduling
 stops; remaining groups ran two at a time with the unchanged ordinary inspect
 function. No Adamic compiler, checker, refusal rule, backend or fallback was changed.
 
-| Spelling                                                       | Types, 79 roots       | Whole core JS, comments kept / removed | Former 73 roots                            |
-| -------------------------------------------------------------- | --------------------- | -------------------------------------- | ------------------------------------------ |
-| `assign<T extends MapLike<unknown>>`                           | exit 1, 1 diagnostics | identical / identical                  | 73 checker at commandLineParser.ts:2712:36 |
-| `assign<T extends object & { [K in keyof T]: unknown }>`       | exit 0, 0 diagnostics | identical / identical                  | 73 NotYet at core.ts:1364:29               |
-| `const record: MapLike<unknown> = arg; hasProperty(record, p)` | exit 1, 1 diagnostics | changed / changed                      | 73 checker at core.ts:1363:15              |
-| `hasProperty<T extends object>(map: T, key: string)`           | exit 0, 0 diagnostics | identical / identical                  | 73 Refused at core.ts:1484:12              |
+| Spelling | Types, 79 roots | Whole core JS, comments kept / removed | Former 73 roots |
+| --- | --- | --- | --- |
+| `assign<T extends MapLike<unknown>>` | exit 1, 1 diagnostics | identical / identical | 73 checker at commandLineParser.ts:2712:36 |
+| `assign<T extends object & { [K in keyof T]: unknown }>` | exit 0, 0 diagnostics | identical / identical | 73 NotYet at core.ts:1364:29 |
+| `const record: MapLike<unknown> = arg; hasProperty(record, p)` | exit 1, 1 diagnostics | changed / changed | 73 checker at core.ts:1363:15 |
+| `hasProperty<T extends object>(map: T, key: string)` | exit 0, 0 diagnostics | identical / identical | 73 Refused at core.ts:1484:12 |
 
 Each experiment uses the whole adapted core.ts. All other 745 source files
 and every caller are byte-identical. No cast is introduced. Exact types logs,
