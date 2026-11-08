@@ -25,11 +25,11 @@ TS2375 on createSHA256Hash that fixing it unmasks, belong to 98-e.
 Rows are located by expression; sites.json records each with its occurrence
 count. Line numbers are the meter's, never edit addresses.
 
-| Row | Site | Edit | JavaScript |
-| --- | --- | --- | --- |
-| 1 | 1708:56, `JSON.stringify(cleanupPaths(profile))`, TS2345 | `JSON.stringify(cleanupPaths(profile))!` | erased |
-| 2 | 1598:69, `(require("source-map-support") as typeof import("source-map-support")).install()`, TS2307 | `require("source-map-support").install()` | erased |
-| 3 | 1281:43, `hitSystemWatcherLimit \|\|= e.code === "ENOSPC"`, TS18046 | `hitSystemWatcherLimit \|\|= propertyOf(e, "code") === "ENOSPC"` | changed |
+| Row | Site                                                                                                | Edit                                                             | JavaScript |
+| --- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ---------- |
+| 1   | 1708:56, `JSON.stringify(cleanupPaths(profile))`, TS2345                                            | `JSON.stringify(cleanupPaths(profile))!`                         | erased     |
+| 2   | 1598:69, `(require("source-map-support") as typeof import("source-map-support")).install()`, TS2307 | `require("source-map-support").install()`                        | erased     |
+| 3   | 1281:43, `hitSystemWatcherLimit \|\|= e.code === "ENOSPC"`, TS18046                                 | `hitSystemWatcherLimit \|\|= propertyOf(e, "code") === "ENOSPC"` | changed    |
 
 Row 1 is a required result, as 33 did for sourcemap's
 `JSON.stringify(toJSON())!`. profile is the Profiler.stop result the inspector
@@ -95,10 +95,10 @@ hash is checked after. outputs/ holds both runs.
 
 ## Measured
 
-| Tree | Own-file diagnostics | Files with any | sys.ts |
-| --- | ---: | ---: | ---: |
-| 94 | 145 | 21 of 79 | 4 |
-| 94 and 98-c | 142 | 21 of 79 | 1 |
+| Tree        | Own-file diagnostics | Files with any | sys.ts |
+| ----------- | -------------------: | -------------: | -----: |
+| 94          |                  145 |       21 of 79 |      4 |
+| 94 and 98-c |                  142 |       21 of 79 |      1 |
 
 Attributed as stage3/meter/report.py attributes them, with 94's own-file.py.
 sys.ts loses 1281:43, 1598:69 and 1708:56 and keeps 1617:13; every other
