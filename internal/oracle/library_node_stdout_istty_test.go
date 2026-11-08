@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 // Regular destinations always run. Only the terminal overlay requires a host
@@ -34,7 +35,8 @@ func stdoutIsTTYAgreement(t *testing.T, transport string) {
 	}
 	// The stock units always compare Node/native/JS. WASI is the existing
 	// opt-in oracle overlay, rather than a tool prerequisite for those units.
-	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+	overlay := wasitest.Leg(t, "ADAMIC_ORACLE_WASI", "the "+transport+" overlay on wasm32-wasi")
+	if overlay {
 		program, err := lowered(t, path)
 		if err != nil {
 			t.Fatal(err)
@@ -49,7 +51,7 @@ func stdoutIsTTYAgreement(t *testing.T, transport string) {
 			args []string
 		}{node, []string{"--disable-warning=ExperimentalWarning", wasi, wasm}})
 	}
-	t.Logf("%s: comparing %d backends (WASI overlay %t)", transport, len(variants), os.Getenv("ADAMIC_ORACLE_WASI") == "1")
+	t.Logf("%s: comparing %d backends (WASI overlay %t)", transport, len(variants), overlay)
 	var truth run
 	for i, v := range variants {
 		got := stdoutIsTTYRun(t, transport, v.name, v.args...)

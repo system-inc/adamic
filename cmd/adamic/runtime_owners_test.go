@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 // There is one builder package per native-runtime name key this package reads.
@@ -26,8 +27,10 @@ import (
 // same owner package as NativeRuntimes. The packages that build runtimeproducts'
 // archives are treewalk.RuntimeBuilders, which treewalk's own test holds to the
 // source tree, so this package's key never reads every Go file (#hbq28nr).
-// Mutant: clear sanitized's owner, making commandRuntimeProduct build the
-// already-owned sanitized key a second time.
+// A wasm product's key needs WASI_SYSROOT: without it the product is left out
+// and the log says so, and opted in (ADAMIC_ORACLE_WASI=1) without it the test
+// fails (#p3rd3vn). Mutant: clear sanitized's owner, making
+// commandRuntimeProduct build the already-owned sanitized key a second time.
 func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 	t.Parallel()
 	root, err := filepath.Abs("../..")
@@ -35,8 +38,10 @@ func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, product := range commandRuntimes {
-		if product.options.Target != "" && os.Getenv("WASI_SYSROOT") == "" {
-			continue
+		if product.options.Target != "" {
+			if _, runs := wasitest.Sysroot(t, "ADAMIC_ORACLE_WASI", "the "+product.name+" product's builder"); !runs {
+				continue
+			}
 		}
 		request, err := native.RuntimeRequestFor(product.options, product.features...)
 		if err != nil {
@@ -64,15 +69,18 @@ func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 // productsBuildKey says whether runtimeproducts builds the archive with this name key ahead, under any variant of
 // the feature set. It compares keys, not options: commandRuntime drops Request, so the wasm-request variant over
 // the empty set builds the key of cmd/adamic's wasm-counted row although their options differ, and comparing
-// options let both packages build it (#eh4ym89). Mutant: clear wasm-counted's owner, and this finds two builders.
+// options let both packages build it (#eh4ym89). A wasm variant is compared only where WASI_SYSROOT is set, as the
+// caller's products are (wasitest.Sysroot). Mutant: clear wasm-counted's owner, and this finds two builders.
 func productsBuildKey(t *testing.T, root, key string, features []string) bool {
 	t.Helper()
 	if !slices.ContainsFunc(runtimeproducts.Sets, func(set runtimeproducts.Set) bool { return slices.Equal(set.Features, features) }) {
 		return false
 	}
 	for _, variant := range runtimeproducts.Variants {
-		if variant.Options.Target != "" && os.Getenv("WASI_SYSROOT") == "" {
-			continue
+		if variant.Options.Target != "" {
+			if _, runs := wasitest.Sysroot(t, variant.Requires, "the runtimeproducts "+variant.Name+" variant's key"); !runs {
+				continue
+			}
 		}
 		request, err := native.RuntimeRequestFor(variant.Options, features...)
 		if err != nil {

@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 func TestArrayUnionRead(t *testing.T) {
@@ -65,10 +66,8 @@ func TestArrayUnionRead(t *testing.T) {
 		return
 	}
 	backends := map[string]run{"node": node, "native": machine, "javascript": onJavaScriptBackend(t, program)}
-	if os.Getenv("WASI_SYSROOT") != "" {
+	if _, runs := wasitest.Sysroot(t, "ADAMIC_ORACLE_WASI", "array_union.a on wasm32-wasi"); runs {
 		backends["wasi"] = onWASI(t, native.C(program))
-	} else {
-		t.Log("WASI not run: WASI_SYSROOT is unset")
 	}
 	for backend, got := range backends {
 		if got.exitCode != 0 || len(got.stderr) != 0 {

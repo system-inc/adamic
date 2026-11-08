@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 // Every process of this binary takes its runtime archives from their products (internal/native/runtimeproducts),
@@ -144,7 +145,9 @@ func TestRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 // from the release build's keys apart from the plain release archive and from every other, and a set's key is its
 // features' flags, so these move every set's. Each request runs clang over the runtime to list the headers its compile
 // reads, so the requests are asked at once and their keys compared once all are in, where one after another they were
-// most of 39.9 s (#8k8yzn0). Mutant: a part dropped from runtimeInputs.
+// most of 39.9 s (#8k8yzn0). A wasm variant's request needs WASI_SYSROOT: without it the variant is left out and the
+// log says so, and opted in to what it requires without it the test fails (#p3rd3vn). Mutant: a part dropped from
+// runtimeInputs.
 func TestRuntimeProductKeyHoldsEveryFeatureAndOption(t *testing.T) {
 	t.Parallel()
 	root, err := filepath.Abs(repository)
@@ -158,9 +161,15 @@ func TestRuntimeProductKeyHoldsEveryFeatureAndOption(t *testing.T) {
 		asks["the feature "+feature] = func(t *testing.T) native.RuntimeRequest { return plain(t, native.Options{}, feature) }
 	}
 	for _, option := range runtimeproducts.Variants {
-		if option.Name != "release" && (option.Requires == "" || os.Getenv("WASI_SYSROOT") != "") {
-			asks["the "+option.Name+" options"] = func(t *testing.T) native.RuntimeRequest { return plain(t, option.Options) }
+		if option.Name == "release" {
+			continue
 		}
+		if option.Requires != "" {
+			if _, runs := wasitest.Sysroot(t, option.Requires, "the "+option.Name+" options' product key"); !runs {
+				continue
+			}
+		}
+		asks["the "+option.Name+" options"] = func(t *testing.T) native.RuntimeRequest { return plain(t, option.Options) }
 	}
 	var mutex sync.Mutex
 	keys := map[string]string{}

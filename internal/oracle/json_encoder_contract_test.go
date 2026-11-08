@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 func jsonEncoderSource(t *testing.T) string {
@@ -48,7 +49,7 @@ func jsonEncoderContract(t *testing.T, backend int) {
 		return
 	}
 	if backend == 1 {
-		if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+		if wasitest.Leg(t, "ADAMIC_ORACLE_WASI", "the JSON encoder contract on wasm32-wasi") {
 			t.Run("wasi", func(t *testing.T) {
 				if difference := disagreement(want, onWASI(t, code)); difference != "" {
 					t.Fatal(difference)

@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -9,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 var selfCompareFixtures = []string{"closure", "array-fill", "sweep"}
@@ -71,7 +71,7 @@ func selfCompare(t *testing.T, name string) {
 	}
 	counted.stderr = countsLine.ReplaceAll(counted.stderr, nil)
 	compare("counted", counted)
-	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+	if wasitest.Leg(t, "ADAMIC_ORACLE_WASI", name+".a on wasm32-wasi") {
 		compare("wasm32-wasi", onWASI(t, native.C(program)))
 	}
 }

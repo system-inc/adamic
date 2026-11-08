@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 func TestNodeFSDirectoryUnionMutant(t *testing.T) {
@@ -95,7 +96,7 @@ func TestNodeFSDirectoryUnionSpecialKinds(t *testing.T) {
 	if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
 		t.Fatal(leaked)
 	}
-	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+	if wasitest.Leg(t, "ADAMIC_ORACLE_WASI", "the special kinds' refusal on wasm32-wasi") {
 		binary := filepath.Join(shared, "kinds.wasm")
 		if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
 			t.Fatal(err)

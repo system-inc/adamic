@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 func init() {
@@ -91,7 +92,7 @@ func TestNodeFSConsumedOptionsMutants(t *testing.T) {
 				if difference := disagreement(truth, got); difference != "" {
 					t.Fatal(difference)
 				}
-				if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+				if wasitest.Leg(t, "ADAMIC_ORACLE_WASI", "the unmutated program on wasm32-wasi") {
 					if difference := disagreement(truth, onWASI(t, code)); difference != "" {
 						t.Fatal(difference)
 					}
