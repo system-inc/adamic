@@ -572,7 +572,8 @@ type (
 		// class: an interface or an object type. The object may be a class's, whose methods aren't
 		// fields, so the call takes the object's own function value if it has one and otherwise its
 		// class's method, called with the object as this. A method can't be read any other way
-		// (docs/0.1.md), so only a callee is one.
+		// (docs/0.1.md), so only a callee is one: the CallClosure's Closure, or the field a narrowing's
+		// Defined holds there (MethodCallee).
 		Method bool
 		// NotRecord says the read runs where a storage test found neither a record nor a class instance
 		// (lower's weakFieldRead, in its fixed branch): its receiver is proven plain by its value, as

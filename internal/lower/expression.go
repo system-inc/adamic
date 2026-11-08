@@ -1660,16 +1660,33 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 	}
-	if property, isProperty := closure.(ir.Property); isProperty {
+	switch callee := closure.(type) {
+	case ir.Property:
 		// object.name(...) through an interface: the object may be a class's, whose methods aren't
 		// fields (ir.Property's Method).
-		property.Method = true
-		closure = property
+		callee.Method = true
+		closure = callee
+	case ir.Defined:
+		// The same call where the checker narrowed undefined out of an optional field, if (o.m) o.m():
+		// defined (narrowed.go) checks the read, and the call keeps its object, so a host's method or
+		// a literal method gets its receiver as JavaScript's does, where the plain road called the
+		// value with none (#0bxc4jh). The check stays the Defined's own, made on what the object's
+		// lookup finds, in its words (ir.MethodCallee). Only the call's own field read moves: an alias
+		// (const f = o.m; if (f) f()) reads a variable, and a computed key, o['m'](), a read through
+		// ?. (if (o?.m) o?.m(), whose missing object the Defined's check stops) or a Defined around
+		// anything else keeps the plain road.
+		if property, isProperty := callee.Value.(ir.Property); isProperty && !property.Optional && ast.SkipOuterExpressions(node.AsCallExpression().Expression, ast.OEKParentheses|ast.OEKAssertions).Kind == ast.KindPropertyAccessExpression {
+			property.Method = true
+			callee.Value = property
+			closure = callee
+		}
 	}
 	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
 	if err != nil {
 		return nil, err
 	}
+	// The native emitter packs a bare field's call through a checked callable view by the view's
+	// signature, which has no spread; a narrowed one keeps the plain road's packing (callThrough).
 	if property, ok := closure.(ir.Property); ok && property.ViewContract > 0 && len(spread) != 0 {
 		contract := l.result.ViewContracts[property.ViewContract-1]
 		if contract.Of == ir.Closure && contract.Unsupported == "" && (contract.Kind == ir.ViewUnion || contract.Kind == ir.ViewCallable) {
