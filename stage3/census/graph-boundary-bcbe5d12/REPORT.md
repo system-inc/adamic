@@ -23,15 +23,15 @@ Long pole by observed count: **views, 28977**. Coverage caveat: lowered IR only;
 
 ## Coverage and interpretation
 
-Coverage continuation: 1/51 previously unstarted files now have a single-file full-mode attempt; 50 remain. executeCommandLine.ts is also retried because the earlier emitter piece ended before reaching it. Every continuation child is capped at 1490 seconds, leaving shutdown time below 25 minutes. A nonzero or timed-out single-file attempt is recorded and the runner moves on. 0 continuation files exited nonzero so far.
+Coverage continuation: 2/51 previously unstarted files now have a single-file full-mode attempt; 49 remain. executeCommandLine.ts is also retried because the earlier emitter piece ended before reaching it. Every continuation child is capped at 1490 seconds, leaving shutdown time below 25 minutes. A nonzero or timed-out single-file attempt is recorded and the runner moves on. 0 continuation files exited nonzero so far.
 
 Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 seconds; full-01: child exit -15, configured elapsed bound, 1791.304 seconds; full-07: child exit -15, configured elapsed bound, 571.096 seconds. Interrupted active units are excluded from completed observation counts.
 
 Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
 
-Observed 6197 unit results: {'lowered': 3920, 'stopped': 2277}. First-error pass observed 3447 results; full pieces observed 3814. The summed table uses one result per unit, preferring full mode over first-error mode and later full observations over earlier ones. Earlier completed unit results remain when a later attempt does not reach that unit. Repeated sites in different units are repeated observations, not independent source sites.
+Observed 6321 unit results: {'lowered': 3993, 'stopped': 2328}. First-error pass observed 3447 results; full pieces observed 3938. The summed table uses one result per unit, preferring full mode over first-error mode and later full observations over earlier ones. Earlier completed unit results remain when a later attempt does not reach that unit. Repeated sites in different units are repeated observations, not independent source sites.
 
-Stock unit inventory has 2473 units in 22 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 523}`. Missing stock file records after an interrupted pass are not evidence of zero units.
+Stock unit inventory has 2600 units in 23 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 526}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
 In first-error mode a unit with a lowering finding contributes zero sites: its body is discarded. In full mode the stock hook rolls failed statements back and continues. A `stopped` full-mode observation can therefore contain retained successful statements; its failed statements contribute no sites. Panicked unit results contribute zero sites. `lowered` means no new lowering finding in that unit, not whole-program acceptance. File-level refusal-scan findings do not suppress independent-unit examination.
 
@@ -49,7 +49,7 @@ Attribution is to the unit's file, not an independent root. Complete traversal m
 | _namespaces/ts.performance.ts | 0 | 0 | 0 | 0 | 1 | not yet attempted | no, not computed |
 | _namespaces/ts.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
 | binder.ts | 0 | 0 | 0 | 0 | 16 | not yet attempted | no, not computed |
-| builder.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| builder.ts | 0 | 0 | 0 | 0 | 124 | complete traversal | no, not computed |
 | builderPublic.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
 | builderState.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
 | builderStatePublic.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
@@ -452,7 +452,15 @@ export function createNodeConverters(factory: NodeFactory): NodeConverters {
 | full-07-snapshot-final | 0 | 1.002 | completed |
 | full-07-snapshot | 0 | 1.003 | completed |
 | full-07 | -15 | 571.096 | configured elapsed bound |
+| full-20-000-add | 0 | 1.006 | completed |
+| full-20-000-audit | 0 | 2.007 | completed |
+| full-20-000-commit | 0 | 1.004 | completed |
+| full-20-000-push | 0 | 3.007 | completed |
+| full-20-000-report | 0 | 1.002 | completed |
+| full-20-000-snapshot-final | 0 | 1.002 | completed |
+| full-20-000-snapshot | 0 | 1.003 | completed |
 | full-20-000 | 0 | 580.765 | completed |
+| full-20-001 | 0 | 75.047 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
 | interim-audit | 0 | 3.002 | completed |

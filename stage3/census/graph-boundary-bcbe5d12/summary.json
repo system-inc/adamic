@@ -32,24 +32,24 @@
     "dynamic_reads": 20,
     "checked_object_calls": 0
   },
-  "observed_unit_results": 6197,
+  "observed_unit_results": 6321,
   "observed_statuses": {
-    "lowered": 3920,
-    "stopped": 2277
+    "lowered": 3993,
+    "stopped": 2328
   },
   "unobserved_stock_statuses": {
-    "deferred_generic_instantiation": 523
+    "deferred_generic_instantiation": 526
   },
   "first_error_observed": 3447,
-  "full_observed": 3814,
-  "files_in_stock_stream": 22,
+  "full_observed": 3938,
+  "files_in_stock_stream": 23,
   "files_in_table": 81,
-  "files_observed": 60,
+  "files_observed": 61,
   "graph_types_nonempty_units": 0,
   "followup": {
     "requested_files": 51,
-    "requested_attempted": 1,
-    "requested_remaining": 50,
+    "requested_attempted": 2,
+    "requested_remaining": 49,
     "additional_executeCommandLine_attempted": false,
     "bounded_nonzero_files": []
   }
