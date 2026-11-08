@@ -13,9 +13,31 @@ const ts = require('typescript');
 const file = 'src/compiler/transformer.ts';
 const names = ['enableSubstitution', 'isSubstitutionEnabled', 'enableEmitNotification', 'isEmitNotificationEnabled'];
 const scenarios = [
-    {name: 'unset bit', calls: [['enableSubstitution', 1], ['enableEmitNotification', 2]]},
-    {name: 'same bit already set', calls: [['enableSubstitution', 1], ['enableSubstitution', 1], ['enableEmitNotification', 2], ['enableEmitNotification', 2]]},
-    {name: 'other bit already set', calls: [['enableEmitNotification', 1], ['enableSubstitution', 1], ['enableSubstitution', 2], ['enableEmitNotification', 2]]},
+    {
+        name: 'unset bit',
+        calls: [
+            ['enableSubstitution', 1],
+            ['enableEmitNotification', 2],
+        ],
+    },
+    {
+        name: 'same bit already set',
+        calls: [
+            ['enableSubstitution', 1],
+            ['enableSubstitution', 1],
+            ['enableEmitNotification', 2],
+            ['enableEmitNotification', 2],
+        ],
+    },
+    {
+        name: 'other bit already set',
+        calls: [
+            ['enableEmitNotification', 1],
+            ['enableSubstitution', 1],
+            ['enableSubstitution', 2],
+            ['enableEmitNotification', 2],
+        ],
+    },
 ];
 
 function program(tree) {
@@ -23,12 +45,15 @@ function program(tree) {
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     const found = {};
     (function visit(node) {
-        if ((ts.isFunctionDeclaration(node) && names.includes(node.name?.text)) || (ts.isEnumDeclaration(node) && node.name.text === 'SyntaxKindFeatureFlags')) {
+        if(
+            (ts.isFunctionDeclaration(node) && names.includes(node.name?.text)) ||
+            (ts.isEnumDeclaration(node) && node.name.text === 'SyntaxKindFeatureFlags')
+        ) {
             found[node.name.text] = node.getText(source).replace(/^const enum /, 'enum ');
         }
         ts.forEachChild(node, visit);
     })(source);
-    for (const name of [...names, 'SyntaxKindFeatureFlags']) assert(found[name], `${name} moved`);
+    for(const name of [...names, 'SyntaxKindFeatureFlags']) assert(found[name], `${name} moved`);
     // The functions read only the array, state, Debug.assert, getEmitFlags and EmitFlags; each is given the value
     // transformNodes would hold during transformation, so the scenarios reach the write.
     const prelude = `enum TransformationState { Uninitialized, Initialized, Completed, Disposed }
@@ -38,7 +63,11 @@ const EmitFlags = { AdviseOnEmitNode: 1 << 19 };
 const getEmitFlags = (_node: unknown) => 0;
 const enabledSyntaxKindFeatures = new Array<number>(4);
 `;
-    const body = prelude + found.SyntaxKindFeatureFlags + '\n' + names.map(name => found[name]).join('\n') +
+    const body =
+        prelude +
+        found.SyntaxKindFeatureFlags +
+        '\n' +
+        names.map((name) => found[name]).join('\n') +
         `\nexports.run = (calls: [string, number][]) => {
     // A fresh sparse array per scenario: every slot a hole again, as transformNodes starts.
     enabledSyntaxKindFeatures.length = 0;
@@ -48,20 +77,41 @@ const enabledSyntaxKindFeatures = new Array<number>(4);
     const read = [0, 1, 2, 3].map(kind => [isSubstitutionEnabled({ kind } as any), isEmitNotificationEnabled({ kind } as any)]);
     return { keys: Object.keys(enabledSyntaxKindFeatures), values: [...enabledSyntaxKindFeatures], read };
 };`;
-    const emitted = ts.transpileModule(body, {compilerOptions: {target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS}}).outputText;
-    const context = {exports: {}};
+    const emitted = ts.transpileModule(body, {
+        compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS },
+    }).outputText;
+    const context = { exports: {} };
     vm.runInNewContext(emitted, context);
-    return {emitted, run: context.exports.run, enable: [found.enableSubstitution, found.enableEmitNotification]};
+    return { emitted, run: context.exports.run, enable: [found.enableSubstitution, found.enableEmitNotification] };
 }
 
 const [, , beforeTree, afterTree] = process.argv;
 assert(beforeTree && afterTree, 'usage: node witness.cjs <tree before 96b> <tree after 96b>');
 assert.equal(ts.version, '6.0.3');
-const before = program(path.resolve(beforeTree)), after = program(path.resolve(afterTree));
+const before = program(path.resolve(beforeTree)),
+    after = program(path.resolve(afterTree));
 assert.notEqual(before.emitted, after.emitted, 'the two trees emit the same JavaScript, so this witnesses nothing');
-const results = scenarios.map(scenario => {
-    const b = before.run(scenario.calls), a = after.run(scenario.calls);
-    assert.deepEqual(JSON.parse(JSON.stringify(a)), JSON.parse(JSON.stringify(b)), `${scenario.name}: after differs from before`);
-    return {scenario: scenario.name, calls: scenario.calls, result: b};
+const results = scenarios.map((scenario) => {
+    const b = before.run(scenario.calls),
+        a = after.run(scenario.calls);
+    assert.deepEqual(
+        JSON.parse(JSON.stringify(a)),
+        JSON.parse(JSON.stringify(b)),
+        `${scenario.name}: after differs from before`,
+    );
+    return { scenario: scenario.name, calls: scenario.calls, result: b };
 });
-console.log(JSON.stringify({typescript: ts.version, node: process.version, before: before.enable, after: after.enable, scenarios: results, agree: true}, null, 2));
+console.log(
+    JSON.stringify(
+        {
+            typescript: ts.version,
+            node: process.version,
+            before: before.enable,
+            after: after.enable,
+            scenarios: results,
+            agree: true,
+        },
+        null,
+        2,
+    ),
+);
