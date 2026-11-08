@@ -23,9 +23,9 @@ Long pole by observed count: **views, 8220**. Coverage caveat: lowered IR only; 
 
 ## Coverage and interpretation
 
-Observed 3447 unit results: {'lowered': 2673, 'stopped': 774}. First-error pass observed 3447 results; full pieces observed 0. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
+Observed 3447 unit results: {'lowered': 2673, 'stopped': 774}. First-error pass observed 3447 results; full pieces observed 3. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
 
-Stock unit inventory has 0 units in 0 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{}`. Missing stock file records after an interrupted pass are not evidence of zero units.
+Stock unit inventory has 3 units in 1 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
 In first-error mode a unit with a lowering finding contributes zero sites: its body is discarded. In full mode the stock hook rolls failed statements back and continues. A `stopped` full-mode observation can therefore contain retained successful statements; its failed statements contribute no sites. Panicked unit results contribute zero sites. `lowered` means no new lowering finding in that unit, not whole-program acceptance. File-level refusal-scan findings do not suppress independent-unit examination.
 
@@ -270,7 +270,14 @@ function isStaticPropertyDeclaration(node: Node): node is PropertyDeclaration {
 | entry-build-fixed | 0 | 33.1 | completed |
 | entry-build | 1 | 10.017 | nonzero exit; cause not inferred |
 | entry-fixture | 0 | 1.007 | completed |
+| first-add | 0 | 1.008 | completed |
+| first-commit | 0 | 1.007 | completed |
+| first-push | 0 | 3.006 | completed |
+| first-report | 0 | 1.009 | completed |
+| first-snapshot-final | 0 | 1.004 | completed |
+| first-snapshot | 0 | 1.005 | completed |
 | first | -15 | 1790.787 | configured elapsed bound |
+| full-00 | 0 | 24.088 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
 | npm-ci | 0 | not timed | completed |
