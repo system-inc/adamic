@@ -32,6 +32,7 @@ var gccRuntimeUnits = []string{
 	"json_encode.c",
 	"json_stringify.c",
 	"library_array.c",
+	"library_intl.c",
 	"library_language.c",
 	"library_math_number.c",
 	"library_object.c",
@@ -213,6 +214,15 @@ func TestProduct_GCCRuntimeLibraryArray(t *testing.T) {
 func TestGCCRuntimeLibraryArray(t *testing.T) {
 	t.Parallel()
 	checkGCCRuntimeUnit(t, "library_array.c")
+}
+
+func TestProduct_GCCRuntimeLibraryIntl(t *testing.T) {
+	t.Parallel()
+	gccRuntimeUnit(t, "library_intl.c")
+}
+func TestGCCRuntimeLibraryIntl(t *testing.T) {
+	t.Parallel()
+	checkGCCRuntimeUnit(t, "library_intl.c")
 }
 
 func TestProduct_GCCRuntimeLibraryLanguage(t *testing.T) {
