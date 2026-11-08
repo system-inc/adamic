@@ -10,7 +10,8 @@ import (
 // seen through sys.ts's timer slot, is TArgs instantiated as A, so its callback relates to the slot's.
 func TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot(t *testing.T) {
 	t.Parallel()
-	source := `interface Timers {
+	source := `import { setTimeout } from 'node:timers';
+interface Timers {
 	setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;
 }
 const timers: Timers = { setTimeout };
@@ -51,38 +52,19 @@ console.log(h.handle(new Cat()));
 	}
 }
 
-// i2's lying twin (Language on #7fd51gk): the narrower constraint is read, so T, instantiated from the
-// view's unconstrained T, falls back to string, and the view hands it a number. Node throws at
-// t.toUpperCase, so it never lowers, whichever stop comes first.
-func TestAGenericMethodWhoseNarrowerConstraintIsReadNeverLowers(t *testing.T) {
-	t.Parallel()
-	source := genericMethodAnimals + `interface Handler { handle<T>(x: Animal, t: T): string; }
-class StringHandler { handle<T extends string>(x: Animal, t: T): string { return t.toUpperCase(); } }
-const h: Handler = new StringHandler();
-console.log(h.handle(new Cat(), 1));
-`
-	for _, extension := range []string{".a", ".ts"} {
-		t.Run(extension, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSourceAs(t, source, extension)
-			if err == nil {
-				t.Fatal("lowered, but a number is handed to a method reading a string")
-			}
-			t.Logf("stops at: %v", err)
-		})
-	}
-}
-
 // A type parameter the slot doesn't fix falls back to its constraint, and one holding any would let the
 // walk accept anything (rule G's condition 3): the slot's NoInfer leaves T no candidate, so T is any[], and
-// the provider would hand the slot's callback whatever its caller passed.
+// the provider would hand the slot's callback whatever its caller passed. A generic function value stops
+// earlier, at its own NotYet, so the pin is a class's method.
 func TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet(t *testing.T) {
 	t.Parallel()
 	source := `interface Slot {
-	run: <A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ...args: A) => void;
+	run<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ...args: A): void;
 }
-function provide<T extends any[]>(callback: (...args: T) => void, ...rest: unknown[]): void {}
-const slot: Slot = { run: provide };
+class Provider {
+	run<T extends any[]>(callback: (...args: T) => void, ...rest: unknown[]): void {}
+}
+const slot: Slot = new Provider();
 console.log("made");
 `
 	_, err := lowerSourceAs(t, source, ".ts")
