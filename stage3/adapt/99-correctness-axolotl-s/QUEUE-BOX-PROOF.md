@@ -17,13 +17,13 @@ Two blank lines are removed inside the new owner to keep every subsequent core.t
 
 The full stage3/lane/run.sh control and all 398 normal lane units have identical operation totals and zero counterexamples. The count checkpoint was pushed before adapt.cjs changed; admission.json records both completed gates and the adapter hashes before and after construction.
 
-| Operation | Calls in each run | Differences |
-| --- | ---: | ---: |
-| createQueue | 5,925 | 0 |
-| enqueue | 10,041 | 0 |
-| dequeue | 10,123 | 0 |
-| Public isEmpty | 13,660 | 0 |
-| Extra post-operation isEmpty | 20,164 | 0 |
+| Operation                    | Calls in each run | Differences |
+| ---------------------------- | ----------------: | ----------: |
+| createQueue                  |             5,925 |           0 |
+| enqueue                      |            10,041 |           0 |
+| dequeue                      |            10,123 |           0 |
+| Public isEmpty               |            13,660 |           0 |
+| Extra post-operation isEmpty |            20,164 |           0 |
 
 There are 5888 undefined initial inputs and 37 dense initial arrays; empty and sparse initial arrays each count 0. Own iterator overrides count 0. Dequeued values are 2871 strings and 7252 objects. Every dequeue uses Object.is, preserving reference identity; every enqueue result and public emptiness answer is compared, with additional emptiness comparisons after operations. Original results drive the oracle.
 
@@ -37,19 +37,19 @@ Initial scratch setup failures are retained under embed*.log, lane-pieces-initia
 
 ## Required proofs
 
-| Check | Result |
-| --- | --- |
-| Full main apply and main plus amendment apply | Both exit 0 |
-| Exact source comparison | All 746 files; only the pinned createQueue owner differs |
-| Paired replay of every adapter | 83 adapters; only the amendment differs, applying once before and zero times after |
-| Adamic types over all 79 sorted roots | Both exit 0; 0 diagnostics; ordinary declaration inventories retained |
-| Fresh builds | Main compiler, whole-lane harness and amended compiler/harness exit 0 |
-| Emitted JavaScript | All 10 files checked; only _tsc.js, typescript.js, run.js differ, entirely at createQueue |
-| Every JavaScript hunk | [QUEUE-BOX-JAVASCRIPT.md](QUEUE-BOX-JAVASCRIPT.md) |
-| Public typescript.d.ts and tsserverlibrary.d.ts | Byte-identical in lib and freshly built output |
-| Full core.ts site census | 63 to 60 Refused/NotYet events; exactly F15/F16/F17 removed; 0 new sites anywhere in core.ts |
-| Whole-owner mutant | Restores the full previous accepted owner, retaining 99s's splice; all three sites return and all before sites match |
-| Uninstrumented amended lane | All 398 units pass normal guards; 106366 passes, the same 1 sanctioned API failure, 0 skips |
+| Check                                           | Result                                                                                                               |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Full main apply and main plus amendment apply   | Both exit 0                                                                                                          |
+| Exact source comparison                         | All 746 files; only the pinned createQueue owner differs                                                             |
+| Paired replay of every adapter                  | 83 adapters; only the amendment differs, applying once before and zero times after                                   |
+| Adamic types over all 79 sorted roots           | Both exit 0; 0 diagnostics; ordinary declaration inventories retained                                                |
+| Fresh builds                                    | Main compiler, whole-lane harness and amended compiler/harness exit 0                                                |
+| Emitted JavaScript                              | All 10 files checked; only _tsc.js, typescript.js, run.js differ, entirely at createQueue                            |
+| Every JavaScript hunk                           | [QUEUE-BOX-JAVASCRIPT.md](QUEUE-BOX-JAVASCRIPT.md)                                                                   |
+| Public typescript.d.ts and tsserverlibrary.d.ts | Byte-identical in lib and freshly built output                                                                       |
+| Full core.ts site census                        | 63 to 60 Refused/NotYet events; exactly F15/F16/F17 removed; 0 new sites anywhere in core.ts                         |
+| Whole-owner mutant                              | Restores the full previous accepted owner, retaining 99s's splice; all three sites return and all before sites match |
+| Uninstrumented amended lane                     | All 398 units pass normal guards; 106366 passes, the same 1 sanctioned API failure, 0 skips                          |
 
 The census uses the same full guarded tool workflow as core-sites-4186581e: LATENT_FULL=1, LATENT_ONLY_FILE set to the entire core.ts path and LATENT_ASSERT_NO_OUTPUT=1. All three runs have zero checker diagnostics and clean process groups. The raw historical measurement label is retained. createQueue remains deferred with instantiated=false; the measurements establish the three findings' removal. Boundary markers remain in the raw stream and are not counted as Refused/NotYet sites.
 

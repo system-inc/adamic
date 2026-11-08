@@ -10,27 +10,27 @@ Proofs ran before the final commit, so the accepted execution records the base
 commit plus the working adaptation. Exact owner pins, source comparison and
 post-oracle snapshot checks identify the measured source.
 
-| Check | Result |
-| --- | --- |
-| Baseline full apply and fresh compiler build | Exit 0 |
-| Finished full stage3/apply.sh --build-product | Exit 0; apply-result.json and apply-after.log.gz |
-| No-op second adapter apply on full-applied tree | Zero files, edits and writes; source bytes preserved |
-| Owner contract | 29 refused fixtures before any write; LF/CRLF and foreign edit preserved; replay preserves bytes and mtime |
-| Adamic types, all 79 sorted compiler roots | Exit 0 before and after; no diagnostics |
-| AST skipWhile caller audit | One call at transformers/ts.ts:1089; filter supplies its own narrowing; no caller check added |
-| Source scope | All 746 files compared; only the four pinned core.ts owners differ |
-| skipWhile JavaScript | Identical with comments retained and removed |
-| Public declarations | typescript.d.ts and tsserverlibrary.d.ts byte-identical in both lib and freshly built output; skipWhile absent |
-| Splice Node witnesses | Zero, positive truncation and own-length cases recorded; FIFO, reference release, undefined payload and sparse initialization preserved |
-| Direct filterMutate mutant | Concrete number call: splice lowers; restored length is NotYet at 9:5, assigning a field of a value |
-| Direct clear mutant | Same copied body with concrete number[] storage: splice lowers; restored length is NotYet at 2:5, assigning a field of a value |
-| Dequeue draft | Cast-free and type-checks; sparse-input behavior differs; left unbuilt and open |
-| generate_shards --check | Exit 0 |
-| Lane Go fixtures, unchanged 99q command | Exit 0 in 128.544 seconds; no isolated retries needed |
-| Frozen-main full lane | PASS; 106,366 passing, one sanctioned failure, zero pending |
-| Finished-tree full lane | PASS; same counts and sanctioned public API failure |
-| Title and outcome identities | Exact equality including duplicates: 106,367 occurrences, 106,285 distinct identities, 19,676 tasks |
-| Ordinary per-file census | All 79 roots; 73 Refused, 4 NotYet, 2 accepted; no checker rejection |
+| Check                                           | Result                                                                                                                                  |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Baseline full apply and fresh compiler build    | Exit 0                                                                                                                                  |
+| Finished full stage3/apply.sh --build-product   | Exit 0; apply-result.json and apply-after.log.gz                                                                                        |
+| No-op second adapter apply on full-applied tree | Zero files, edits and writes; source bytes preserved                                                                                    |
+| Owner contract                                  | 29 refused fixtures before any write; LF/CRLF and foreign edit preserved; replay preserves bytes and mtime                              |
+| Adamic types, all 79 sorted compiler roots      | Exit 0 before and after; no diagnostics                                                                                                 |
+| AST skipWhile caller audit                      | One call at transformers/ts.ts:1089; filter supplies its own narrowing; no caller check added                                           |
+| Source scope                                    | All 746 files compared; only the four pinned core.ts owners differ                                                                      |
+| skipWhile JavaScript                            | Identical with comments retained and removed                                                                                            |
+| Public declarations                             | typescript.d.ts and tsserverlibrary.d.ts byte-identical in both lib and freshly built output; skipWhile absent                          |
+| Splice Node witnesses                           | Zero, positive truncation and own-length cases recorded; FIFO, reference release, undefined payload and sparse initialization preserved |
+| Direct filterMutate mutant                      | Concrete number call: splice lowers; restored length is NotYet at 9:5, assigning a field of a value                                     |
+| Direct clear mutant                             | Same copied body with concrete number[] storage: splice lowers; restored length is NotYet at 2:5, assigning a field of a value          |
+| Dequeue draft                                   | Cast-free and type-checks; sparse-input behavior differs; left unbuilt and open                                                         |
+| generate_shards --check                         | Exit 0                                                                                                                                  |
+| Lane Go fixtures, unchanged 99q command         | Exit 0 in 128.544 seconds; no isolated retries needed                                                                                   |
+| Frozen-main full lane                           | PASS; 106,366 passing, one sanctioned failure, zero pending                                                                             |
+| Finished-tree full lane                         | PASS; same counts and sanctioned public API failure                                                                                     |
+| Title and outcome identities                    | Exact equality including duplicates: 106,367 occurrences, 106,285 distinct identities, 19,676 tasks                                     |
+| Ordinary per-file census                        | All 79 roots; 73 Refused, 4 NotYet, 2 accepted; no checker rejection                                                                    |
 
 The identity comparison retains runner, task file, full title path, outcome and
 multiplicity. Both canonical multisets have SHA-256

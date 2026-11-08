@@ -10,13 +10,13 @@ LATENT_ASSERT_NO_OUTPUT=1. Both full site streams contain zero checker diagnosti
 The overlay's historical measurement label says checker-rejected even with an
 empty diagnostics list; the raw label is preserved rather than rewritten.
 
-| Edited site | Before | After |
-| --- | --- | --- |
-| filterMutate, core.ts:307 | Owner at 299:1: deferred_generic_instantiation, instantiated=false. No body finding at 307. | Same deferred status. No claim that truncation was examined. |
-| clear, core.ts:312:5 | **NotYet**, assigning a field of a value. Boundary records rollback. | **NotYet**, an array of unknown with erased element storage (retain its declared element type before reading elements). Boundary records rollback. |
-| createQueue.dequeue truncation, core.ts:1596 | createQueue at 1569:1 and dequeue at 1581:5 are deferred_generic_instantiation, instantiated=false. | Same deferred status. No claim that truncation was examined. |
-| skipWhile, core.ts:2601:16 | **Refused**, a cast the runtime can't check, refusal_scan, unit 2594:1. | Exact cast finding absent. Its generic body still has deferred_generic_instantiation status. |
-| Unbuilt dequeue cast, core.ts:1586:24 | **Refused**, a cast the runtime can't check. | Unchanged **Refused** finding. |
+| Edited site                                  | Before                                                                                              | After                                                                                                                                              |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| filterMutate, core.ts:307                    | Owner at 299:1: deferred_generic_instantiation, instantiated=false. No body finding at 307.         | Same deferred status. No claim that truncation was examined.                                                                                       |
+| clear, core.ts:312:5                         | **NotYet**, assigning a field of a value. Boundary records rollback.                                | **NotYet**, an array of unknown with erased element storage (retain its declared element type before reading elements). Boundary records rollback. |
+| createQueue.dequeue truncation, core.ts:1596 | createQueue at 1569:1 and dequeue at 1581:5 are deferred_generic_instantiation, instantiated=false. | Same deferred status. No claim that truncation was examined.                                                                                       |
+| skipWhile, core.ts:2601:16                   | **Refused**, a cast the runtime can't check, refusal_scan, unit 2594:1.                             | Exact cast finding absent. Its generic body still has deferred_generic_instantiation status.                                                       |
+| Unbuilt dequeue cast, core.ts:1586:24        | **Refused**, a cast the runtime can't check.                                                        | Unchanged **Refused** finding.                                                                                                                     |
 
 Raw records, including all other core.ts findings, are in site-before.jsonl.gz,
 site-after.jsonl.gz and mutant.jsonl.gz. site-summary.json retains exact locations,
@@ -44,14 +44,14 @@ snapshot-comparison.json records the check. All raw rows are retained. The three
 non-TypeScript entries and the ordinary whole-program row are excluded from the
 79-root table, exactly as in 99q.
 
-| Roots | Kind | First stop | Reason |
-| ---: | --- | --- | --- |
-| 73 | Refused | `src/compiler/core.ts:736:36` | a cast the runtime can't check |
-| 2 | accepted | - | - |
-| 1 | NotYet | `src/compiler/commandLineParser.ts:293:35` | reading an enum before its runtime initialization; move the call after the enum declaration |
-| 1 | NotYet | `src/compiler/debug.ts:243:59` | a generic instantiation whose type argument for T, constrained to Node, can't be read |
-| 1 | NotYet | `src/compiler/diagnosticInformationMap.generated.ts:13:45` | reading an enum before its runtime initialization; move the call after the enum declaration |
-| 1 | NotYet | `src/compiler/semver.ts:71:9` | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
+| Roots | Kind     | First stop                                                 | Reason                                                                                                                                       |
+| ----: | -------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+|    73 | Refused  | `src/compiler/core.ts:736:36`                              | a cast the runtime can't check                                                                                                               |
+|     2 | accepted | -                                                          | -                                                                                                                                            |
+|     1 | NotYet   | `src/compiler/commandLineParser.ts:293:35`                 | reading an enum before its runtime initialization; move the call after the enum declaration                                                  |
+|     1 | NotYet   | `src/compiler/debug.ts:243:59`                             | a generic instantiation whose type argument for T, constrained to Node, can't be read                                                        |
+|     1 | NotYet   | `src/compiler/diagnosticInformationMap.generated.ts:13:45` | reading an enum before its runtime initialization; move the call after the enum declaration                                                  |
+|     1 | NotYet   | `src/compiler/semver.ts:71:9`                              | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
 
 census-results.json retains each exact root, kind, location and reason. No root
 is checker-rejected. Census timing includes a deliberate pause of program.ts
