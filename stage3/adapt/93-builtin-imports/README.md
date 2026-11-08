@@ -16,9 +16,9 @@ a namespace object used as a value. This revision makes the original names
 module-scope namespace imports instead:
 
 ```ts
-import * as _fs from "node:fs";
-import * as _path from "node:path";
-import * as _os from "node:os";
+import * as _fs from 'node:fs';
+import * as _path from 'node:path';
+import * as _os from 'node:os';
 ```
 
 The complete three const declarations in getNodeSystem are removed. Every
@@ -99,10 +99,10 @@ NODE_OPTIONS=--max-old-space-size=3072. No other build/test workload runs beside
 either suite. The stock generated .parallelperf.json is reset if present.
 Disk is monitored throughout and the driver stops below 3 GiB free.
 
-| Oracle | Passing | Sanctioned API failure | Pending | Wall seconds |
-| --- | ---: | ---: | ---: | ---: |
-| Current main control | 106,366 | 1 | 0 | 344.928 |
-| With revised 93 | 106,366 | 1 | 0 | 339.16 |
+| Oracle               | Passing | Sanctioned API failure | Pending | Wall seconds |
+| -------------------- | ------: | ---------------------: | ------: | -----------: |
+| Current main control | 106,366 |                      1 |       0 |      344.928 |
+| With revised 93      | 106,366 |                      1 |       0 |       339.16 |
 
 Both actual unmodified stage3/lane/check.py CLI invocations print PASS stage3
 landing lane. The only raw failure is main's sanctioned public API test; its
