@@ -1,0 +1,21 @@
+// A literal method called through an optional function-typed field an in test narrowed: the call
+// keeps its object (#0bxc4jh), as through a method signature (narrowed_method_in_signature.a), so
+// this is the counter where Node prints 7, and an arrow in the field is called as it was.
+interface Counter {
+	x: number;
+	add?: (n: number) => number;
+}
+function show(counter: Counter): void {
+	if ('add' in counter) {
+		console.log(String(counter.add(4)));
+	}
+}
+show({
+	x: 3,
+	add(n: number): number {
+		return this.x + n;
+	},
+});
+show({ x: 5, add: (n: number): number => n * 2 });
+show({ x: 6 });
+console.log('done');
