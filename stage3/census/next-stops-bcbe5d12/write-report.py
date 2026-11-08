@@ -25,7 +25,7 @@ lines+=['','## Whole-root lowering','',f"{len(accepted)}/79 roots lower whole in
  'Baseline compiler/apply: `af42d3dc1261a3db536064c3dfbb5eaa7e8b6405`. The prior report and grouped JSON are retained beside this report. `comparison.json` records both exact tuples and the forecast for every root.','',
  '| Current group | Roots | Unchanged exact tuple | Moved exact tuple | New tuple in this table |','| --- | ---: | ---: | ---: | --- |']
 for g in groups:lines.append('| '+ ' | '.join(['`'+g['where']+'` '+g['kind'],str(g['count']),str(g['unchanged']),str(g['moved']),'yes' if g['new_tuple'] else 'no'])+' |')
-lines+=['','The collator operation moved from `core.ts:2116:26` to `core.ts:2103:26`; its kind and exact reason are unchanged. A moved coordinate alone is not a newly exposed compiler limitation.','',
+lines+=['','The collator operation moved from `core.ts:2116:26` to `core.ts:2103:26`; its kind and exact reason are unchanged. A moved coordinate alone is not a newly exposed compiler limitation. The `core.ts` root moved from the old generic-instantiation stop at `debug.ts:243:59` to the new method-value stop at `debug.ts:355:26`. The accepted group and the three readiness groups are unchanged.','',
  '## The forecasts','',
  'The forecast column applies to every root in its row; `comparison.json` gives one record per root. Matching uses the source operation when adaptations shift coordinates. Under the requested rule, every stopped group matching none of the six forecasts is called new below, even if its exact tuple was already present in the prior table. Accepted roots have no stop and no forecast match.','',
  '| Forecast | Matching roots | Measured location |','| --- | ---: | --- |']
