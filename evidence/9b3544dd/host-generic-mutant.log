@@ -1,0 +1,31 @@
+=== RUN   TestAHostMethodAViewMakesGenericIsNotYet
+=== PAUSE TestAHostMethodAViewMakesGenericIsNotYet
+=== CONT  TestAHostMethodAViewMakesGenericIsNotYet
+=== RUN   TestAHostMethodAViewMakesGenericIsNotYet/chdir.a
+=== PAUSE TestAHostMethodAViewMakesGenericIsNotYet/chdir.a
+=== RUN   TestAHostMethodAViewMakesGenericIsNotYet/chdir.ts
+=== PAUSE TestAHostMethodAViewMakesGenericIsNotYet/chdir.ts
+=== RUN   TestAHostMethodAViewMakesGenericIsNotYet/exit.a
+=== PAUSE TestAHostMethodAViewMakesGenericIsNotYet/exit.a
+=== RUN   TestAHostMethodAViewMakesGenericIsNotYet/exit.ts
+=== PAUSE TestAHostMethodAViewMakesGenericIsNotYet/exit.ts
+=== CONT  TestAHostMethodAViewMakesGenericIsNotYet/chdir.a
+=== CONT  TestAHostMethodAViewMakesGenericIsNotYet/exit.a
+=== CONT  TestAHostMethodAViewMakesGenericIsNotYet/chdir.ts
+=== CONT  TestAHostMethodAViewMakesGenericIsNotYet/exit.ts
+=== NAME  TestAHostMethodAViewMakesGenericIsNotYet/chdir.ts
+    generic_method_view_test.go:128: got "/tmp/adamic-gate/TestAHostMethodAViewMakesGenericIsNotYetchdir.ts462767820/001/main.ts:2:59: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet", want the generic method chdir named as NotYet
+=== NAME  TestAHostMethodAViewMakesGenericIsNotYet/exit.ts
+    generic_method_view_test.go:128: got "/tmp/adamic-gate/TestAHostMethodAViewMakesGenericIsNotYetexit.ts134436323/001/main.ts:2:71: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet", want the generic method exit named as NotYet
+=== NAME  TestAHostMethodAViewMakesGenericIsNotYet/chdir.a
+    generic_method_view_test.go:128: got "/tmp/adamic-gate/TestAHostMethodAViewMakesGenericIsNotYetchdir.a1663314267/001/main.a:2:59: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet", want the generic method chdir named as NotYet
+=== NAME  TestAHostMethodAViewMakesGenericIsNotYet/exit.a
+    generic_method_view_test.go:128: got "/tmp/adamic-gate/TestAHostMethodAViewMakesGenericIsNotYetexit.a3716606836/001/main.a:2:71: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet", want the generic method exit named as NotYet
+--- FAIL: TestAHostMethodAViewMakesGenericIsNotYet (0.00s)
+    --- FAIL: TestAHostMethodAViewMakesGenericIsNotYet/chdir.ts (0.61s)
+    --- FAIL: TestAHostMethodAViewMakesGenericIsNotYet/exit.ts (0.61s)
+    --- FAIL: TestAHostMethodAViewMakesGenericIsNotYet/chdir.a (0.63s)
+    --- FAIL: TestAHostMethodAViewMakesGenericIsNotYet/exit.a (0.65s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.669s
+FAIL
