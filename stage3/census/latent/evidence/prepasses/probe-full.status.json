@@ -1,0 +1,16 @@
+{
+  "command": [
+    "env",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_FULL=1",
+    "/tmp/sygfnmc-head",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/probe.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/probe-full.jsonl"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 1.002452718000086,
+  "peak_rss_kib": 31868,
+  "user_seconds": 0.096949,
+  "system_seconds": 0.009146
+}

@@ -1,0 +1,26 @@
+// Measurement-only probe, appended to the guarded lower hook in a scratch overlay.
+// It measures eight fresh independent-unit prepass preparations per entry.
+func LatentPrepassCostProbe(ctx context.Context, program *load.Program) {
+ checker, release := program.Checker(ctx, program.Files()[0]); defer release()
+ base := &lowering{program:program, checker:checker, result:&ir.Program{}, this:-1, functionIndex:-1}
+ modules, err := base.latentPrepassModules()
+ if err != nil { panic(fmt.Sprintf("prepass cost module order: %v", err)) }
+ for _, module := range modules { fmt.Fprintln(os.Stderr,"cost module",program.FileName(module)) }
+ count := 0
+ for _, file := range program.Files() {
+  for _, node := range file.Statements.Nodes {
+   if node.Kind == ast.KindFunctionDeclaration && (len(node.TypeParameters())>0 || len(program.LatentDiagnosticsIn(node.Body()))>0) { continue }
+   l := &lowering{program:program, checker:checker, result:&ir.Program{}, this:-1, functionIndex:-1}
+   latentFindingOwner = program.Where(node)
+   run := func(method string, work func() error) { defer latentPrepassTimer(method)(); if err:=work(); err!=nil { fmt.Fprintln(os.Stderr,method,err) } }
+   run("collectViewedElements",func()error{l.collectViewedElements(modules);return nil})
+   run("noteInheritance",func()error{l.noteInheritance(modules);return nil})
+   run("enumInitialization",func()error{return l.enumInitialization(modules)})
+   run("noteAccessorNames",func()error{l.noteAccessorNames(modules);return nil})
+   run("noteOmittedOptionals",func()error{l.noteOmittedOptionals(modules);return nil})
+   run("namespaceInitialization",func()error{return l.namespaceInitialization(modules)})
+   count++
+   if count == 8 { fmt.Fprintln(os.Stderr,"cost probe units",count,"modules",len(modules));return }
+  }
+ }
+}

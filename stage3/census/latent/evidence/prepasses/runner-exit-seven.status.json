@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-c",
+    "import sys; sys.exit(7)"
+  ],
+  "child_exit": 7,
+  "stopped": null,
+  "wall_seconds": 1.001373815000079,
+  "peak_rss_kib": 9984,
+  "user_seconds": 0.024555,
+  "system_seconds": 0.039747
+}

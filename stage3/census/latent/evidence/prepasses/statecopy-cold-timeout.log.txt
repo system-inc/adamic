@@ -1,0 +1,91 @@
+=== RUN   TestLatentStatecopySortedMapProgramMembership
+=== PAUSE TestLatentStatecopySortedMapProgramMembership
+=== RUN   TestLatentStatecopyCoversEveryLoweringStateField
+=== PAUSE TestLatentStatecopyCoversEveryLoweringStateField
+=== RUN   TestLatentStatecopySharesSourceIdentities
+=== PAUSE TestLatentStatecopySharesSourceIdentities
+=== RUN   TestLatentStatecopyRefusesAnUnnamedPrivateIRField
+=== PAUSE TestLatentStatecopyRefusesAnUnnamedPrivateIRField
+=== RUN   TestLatentStatecopyNamesEveryPrivateIRField
+=== PAUSE TestLatentStatecopyNamesEveryPrivateIRField
+=== RUN   TestLatentCarryFactsAuditedFields
+=== PAUSE TestLatentCarryFactsAuditedFields
+=== RUN   TestLatentCarryFactsIgnoresUncarriedFields
+=== PAUSE TestLatentCarryFactsIgnoresUncarriedFields
+=== RUN   TestLatentSpeculativePrivateIRFields
+=== PAUSE TestLatentSpeculativePrivateIRFields
+=== RUN   TestLatentSpeculativeRefusesUnnamedExportedIRField
+=== PAUSE TestLatentSpeculativeRefusesUnnamedExportedIRField
+=== RUN   TestLatentSpeculativeBoundaryPolicyRequiredAtBuild
+=== PAUSE TestLatentSpeculativeBoundaryPolicyRequiredAtBuild
+=== RUN   TestLatentSpeculativeEveryIRFieldPolicyIsCurrent
+=== PAUSE TestLatentSpeculativeEveryIRFieldPolicyIsCurrent
+=== RUN   TestLatentStatecopyFixedArrayByValue
+=== PAUSE TestLatentStatecopyFixedArrayByValue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy
+=== PAUSE TestLatentStatecopyRefusesFixedArrayNeedingCopy
+=== RUN   TestUnknownMutableContainerFailsLoudly
+=== PAUSE TestUnknownMutableContainerFailsLoudly
+=== RUN   TestUnknownForeignPointerFailsLoudly
+=== PAUSE TestUnknownForeignPointerFailsLoudly
+=== RUN   TestProduct_Statecopy
+=== PAUSE TestProduct_Statecopy
+=== RUN   TestPublishedCopyModeIsPrivate
+    publication_unix_test.go:37: build go_build_./stage3/census/latent/statecopy_statecopy e410212de52a miss 21.68
+    publication_unix_test.go:43: generator failed: context deadline exceeded
+--- FAIL: TestPublishedCopyModeIsPrivate (42.83s)
+=== CONT  TestLatentStatecopySortedMapProgramMembership
+=== CONT  TestLatentSpeculativeRefusesUnnamedExportedIRField
+--- PASS: TestLatentSpeculativeRefusesUnnamedExportedIRField (0.00s)
+=== CONT  TestLatentStatecopyFixedArrayByValue
+=== CONT  TestLatentStatecopyRefusesFixedArrayNeedingCopy
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/entryfalse
+=== CONT  TestLatentStatecopyNamesEveryPrivateIRField
+--- PASS: TestLatentStatecopyFixedArrayByValue (0.00s)
+=== CONT  TestLatentSpeculativeEveryIRFieldPolicyIsCurrent
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/entrytrue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]intfalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]inttrue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]intfalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]inttrue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuefalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuetrue
+--- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy (0.01s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/entryfalse (0.01s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/entrytrue (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]intfalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]inttrue (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]intfalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]inttrue (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuefalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuetrue (0.00s)
+=== CONT  TestProduct_Statecopy
+=== CONT  TestLatentStatecopyRefusesAnUnnamedPrivateIRField
+--- PASS: TestLatentStatecopyRefusesAnUnnamedPrivateIRField (0.00s)
+=== CONT  TestLatentStatecopySharesSourceIdentities
+--- PASS: TestLatentStatecopySortedMapProgramMembership (0.02s)
+=== CONT  TestLatentSpeculativePrivateIRFields
+=== NAME  TestProduct_Statecopy
+    main_test.go:81: build go_build_./stage3/census/latent/statecopy_statecopy e410212de52a hit 0.05
+--- PASS: TestProduct_Statecopy (0.05s)
+=== CONT  TestLatentCarryFactsIgnoresUncarriedFields
+--- PASS: TestLatentStatecopySharesSourceIdentities (2.70s)
+=== CONT  TestLatentCarryFactsAuditedFields
+--- PASS: TestLatentSpeculativeEveryIRFieldPolicyIsCurrent (5.71s)
+=== CONT  TestLatentSpeculativeBoundaryPolicyRequiredAtBuild
+--- PASS: TestLatentCarryFactsIgnoresUncarriedFields (5.77s)
+=== CONT  TestUnknownForeignPointerFailsLoudly
+    main_test.go:59: build go_build_./stage3/census/latent/statecopy_statecopy e410212de52a hit 0.00
+--- PASS: TestUnknownForeignPointerFailsLoudly (0.14s)
+=== CONT  TestUnknownMutableContainerFailsLoudly
+    main_test.go:28: build go_build_./stage3/census/latent/statecopy_statecopy e410212de52a hit 0.00
+--- PASS: TestUnknownMutableContainerFailsLoudly (0.07s)
+=== CONT  TestLatentStatecopyCoversEveryLoweringStateField
+--- PASS: TestLatentStatecopyNamesEveryPrivateIRField (7.56s)
+--- PASS: TestLatentStatecopyCoversEveryLoweringStateField (2.85s)
+--- PASS: TestLatentSpeculativeBoundaryPolicyRequiredAtBuild (3.21s)
+--- PASS: TestLatentCarryFactsAuditedFields (6.60s)
+--- PASS: TestLatentSpeculativePrivateIRFields (15.31s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/statecopy	58.296s
+FAIL

@@ -56,6 +56,7 @@ type loweringFieldPolicy uint8
 const programFact loweringFieldPolicy = 1
 
 var loweringFieldPolicies = map[string]loweringFieldPolicy{
+	"omittedOptionals":           programFact, // Contextual omission facts are program-only; installations and snapshots own their map.
 	"entriesRecords":             programFact,
 	"entriesProgramRecords":      programFact,
 	"entriesProgramRecordsKnown": programFact,
@@ -300,7 +301,7 @@ func generate(repository, lowerInput string) []byte {
 	for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
 		for _, id := range field.Names {
 			if loweringFieldPolicies[id.Name] == programFact {
-				if ty := printed(field.Type); ty != "bool" && ty != "map[*ast.Node]bool" {
+				if ty := printed(field.Type); ty != "bool" && ty != "map[*ast.Node]bool" && ty != "map[*ast.Symbol]bool" {
 					panic("state copy: program fact " + id.Name + " needs an audited carry")
 				}
 				facts = append(facts, id.Name)

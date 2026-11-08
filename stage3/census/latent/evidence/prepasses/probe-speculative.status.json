@@ -1,0 +1,16 @@
+{
+  "command": [
+    "env",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_SPECULATIVE=1",
+    "/tmp/sygfnmc-head",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/probe.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/probe-speculative.jsonl"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 1.001869041999953,
+  "peak_rss_kib": 30972,
+  "user_seconds": 0.08723399999999999,
+  "system_seconds": 0.037846
+}
