@@ -64,8 +64,8 @@ func runGrainLayout(test *testing.T, slice string, shard int) {
 		// Preserve the optional repeated throughput checks on each child's partition.
 		if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
 			for _, side := range []struct {
-				name, command string
-				args          []string
+				name, command    string
+				commandArguments []string
 			}{
 				{"Go document layout", products.goLayout, []string{fixture.canonicalCases}},
 				{"native block/layout component", products.release, []string{fixture.nativeCases}},
@@ -83,7 +83,7 @@ func runGrainLayout(test *testing.T, slice string, shard int) {
 			} {
 				started := time.Now()
 				for round := 0; round < 3; round++ {
-					result := grainExecute(test, nil, side.command, side.args...)
+					result := grainExecute(test, nil, side.command, side.commandArguments...)
 					clean(test, side.name, result)
 					if grainDifferenceError := grainDifference(
 						result.stdout,

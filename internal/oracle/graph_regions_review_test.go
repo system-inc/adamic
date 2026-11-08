@@ -26,7 +26,7 @@ var graphReviewFixtures = []string{
 	"internal/oracle/testdata/review/agree/fxspptb_devirt_fresh_method_keeps_argument.a",
 }
 
-func TestGraphReviewCwd(test *testing.T) {
+func TestGraphReviewWorkingDirectory(test *testing.T) {
 	test.Parallel()
 	graphOracleWitness(test, "internal/oracle/testdata/review/agree/cwd.a")
 }

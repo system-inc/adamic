@@ -162,8 +162,8 @@ func TestProduct_AcceptanceClassNative(test *testing.T) {
 // own copying under a five-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF five
 // seconds after the child exited, so an oracle, Node, native or proof run that had finished could fail its shard under
 // load (#n3gk22h's shape). Each caller's 90 s deadline ends a hung run.
-func acceptanceMutantsCommand(callerContext context.Context, executable string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, executable, args...)
+func acceptanceMutantsCommand(callerContext context.Context, executable string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, executable, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -175,14 +175,19 @@ func acceptanceMutantsCommand(callerContext context.Context, executable string, 
 	return command
 }
 
-func acceptanceMutantsExecute(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
+func acceptanceMutantsExecute(
+	test *testing.T,
+	callerContext context.Context,
+	name string,
+	commandArguments ...string,
+) []byte {
 	test.Helper()
 	output, stderr, captureError := childguard.Capture(
 		callerContext,
-		acceptanceMutantsCommand(callerContext, name, args...),
+		acceptanceMutantsCommand(callerContext, name, commandArguments...),
 	)
 	if captureError != nil || len(stderr) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, captureError, stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, captureError, stderr)
 	}
 	return output
 }

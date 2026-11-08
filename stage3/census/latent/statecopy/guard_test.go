@@ -342,8 +342,8 @@ func TestLatentSpeculativePrivateIrFields(test *testing.T) {
 		}
 		result := ""
 		for _, decl := range file.Decls {
-			if fn, ok := decl.(*ast.FuncDecl); ok && names[fn.Name.Name] {
-				result += printed(fn) + "\n"
+			if function, ok := decl.(*ast.FuncDecl); ok && names[function.Name.Name] {
+				result += printed(function) + "\n"
 			}
 			if group, ok := decl.(*ast.GenDecl); ok && group.Tok == token.VAR {
 				for _, spec := range group.Specs {

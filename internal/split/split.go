@@ -455,8 +455,8 @@ func (analysis *analysis) walk(body []ir.Statement) {
 			}
 		case ir.RegExpCall:
 			analysis.mutate(analysis.origins(node.Value))
-			for _, arg := range node.Arguments {
-				analysis.mutate(analysis.origins(arg))
+			for _, argument := range node.Arguments {
+				analysis.mutate(analysis.origins(argument))
 			}
 		case ir.MapDelete:
 			analysis.mutate(analysis.origins(node.Map))
@@ -493,12 +493,12 @@ func (analysis *analysis) store(container, value ir.Expression) {
 		analysis.merge(analysis.contents[root], held)
 	}
 }
-func (analysis *analysis) closure(node ir.Expression, args []ir.Expression) {
+func (analysis *analysis) closure(node ir.Expression, arguments []ir.Expression) {
 	targets := analysis.closureTargets(node)
 	if targets.Unknown {
 		analysis.fail("impure: unknown callee")
-		for _, arg := range args {
-			analysis.mutate(analysis.origins(arg))
+		for _, argument := range arguments {
+			analysis.mutate(analysis.origins(argument))
 		}
 		// An unresolved closure can reach all reference globals.
 		for index, local := range analysis.program.Locals {
@@ -508,17 +508,17 @@ func (analysis *analysis) closure(node ir.Expression, args []ir.Expression) {
 		}
 		return
 	}
-	analysis.call(targets.Functions, args)
+	analysis.call(targets.Functions, arguments)
 }
-func (analysis *analysis) substitute(target int, value roots, args []ir.Expression) roots {
+func (analysis *analysis) substitute(target int, value roots, arguments []ir.Expression) roots {
 	result := roots{}
 	function := analysis.program.Functions[target]
 	for root := range value {
 		mapped := false
 		for index, parameter := range function.Parameters {
 			if root == parameter {
-				if index < len(args) {
-					add(result, analysis.contained(args[index]))
+				if index < len(arguments) {
+					add(result, analysis.contained(arguments[index]))
 				}
 				mapped = true
 			}
@@ -530,7 +530,7 @@ func (analysis *analysis) substitute(target int, value roots, args []ir.Expressi
 	}
 	return result
 }
-func (analysis *analysis) call(targets []int, args []ir.Expression) {
+func (analysis *analysis) call(targets []int, arguments []ir.Expression) {
 	if len(targets) == 0 {
 		analysis.fail("impure: unknown callee")
 	}
@@ -546,7 +546,7 @@ func (analysis *analysis) call(targets []int, args []ir.Expression) {
 				analysis.edges[analysis.current] = append(analysis.edges[analysis.current], target)
 			}
 		}
-		analysis.mutate(analysis.substitute(target, analysis.writes[target], args))
+		analysis.mutate(analysis.substitute(target, analysis.writes[target], arguments))
 	}
 }
 func (analysis *analysis) origins(value ir.Expression) roots {
@@ -567,8 +567,8 @@ func (analysis *analysis) origins(value ir.Expression) roots {
 			add(result, analysis.substitute(target, analysis.returns[target], node.Arguments))
 		}
 		if targets.Unknown {
-			for _, arg := range node.Arguments {
-				add(result, analysis.origins(arg))
+			for _, argument := range node.Arguments {
+				add(result, analysis.origins(argument))
 			}
 		}
 	case ir.MakeClosure:

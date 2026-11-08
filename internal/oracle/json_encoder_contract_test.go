@@ -111,7 +111,7 @@ func jsonEncoderContract(test *testing.T, backend int) {
 				if difference != "" {
 					test.Fatalf("Node: %s\nNode %s\nencoder %s", difference, want.stdout, actual.stdout)
 				}
-				for _, probe := range []struct{ arg, reason string }{
+				for _, probe := range []struct{ argument, reason string }{
 					{"empty_array", "JSON.stringify runtime array without complete element descriptors"},
 					{"cycle", "NotYet: JSON.stringify cyclic container"},
 					{"array", "JSON.stringify runtime array without complete element descriptors"},
@@ -120,11 +120,11 @@ func jsonEncoderContract(test *testing.T, backend int) {
 					{"hook", "JSON toJSON result descriptor is missing"},
 					{"missing_hook", "JSON toJSON lacks a typed runtime result provider"},
 				} {
-					refused := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, probe.arg)
+					refused := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, probe.argument)
 					if refused.exitCode == 0 || !strings.Contains(string(refused.stderr), probe.reason) {
 						test.Fatalf(
 							"%s must refuse with %q: exit %d stderr %s",
-							probe.arg,
+							probe.argument,
 							probe.reason,
 							refused.exitCode,
 							refused.stderr,

@@ -455,23 +455,29 @@ const outputLimit = 256 << 10
 
 // Test programs get a CPU budget; time waiting for a core does not spend it.
 // Keep a wall-clock backstop for programs that block without consuming CPU.
-func runProgram(cpuLimit time.Duration, extra []string, name string, args ...string) execution {
+func runProgram(cpuLimit time.Duration, extra []string, name string, commandArguments ...string) execution {
 	seconds := int64((cpuLimit + time.Second - 1) / time.Second)
 	// Set only the soft limit so the kernel delivers SIGXCPU, not SIGKILL.
 	wrapper := fmt.Sprintf(`ulimit -S -t %d || exit; exec "$0" "$@"`, seconds)
-	arguments := append([]string{"-c", wrapper, name}, args...)
+	arguments := append([]string{"-c", wrapper, name}, commandArguments...)
 	return runCommand(2*time.Minute, extra, "/bin/sh", arguments...)
 }
 
-func runCommand(timeout time.Duration, extra []string, name string, args ...string) execution {
-	return runCommandWithLimit(timeout, extra, outputLimit, name, args...)
+func runCommand(timeout time.Duration, extra []string, name string, commandArguments ...string) execution {
+	return runCommandWithLimit(timeout, extra, outputLimit, name, commandArguments...)
 }
 
 // Generated C is an artifact, not program output: give it room, and never compile a truncated one.
-func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name string, args ...string) execution {
+func runCommandWithLimit(
+	timeout time.Duration,
+	extra []string,
+	limit int,
+	name string,
+	commandArguments ...string,
+) execution {
 	timeoutContext, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	command := exec.CommandContext(timeoutContext, name, args...)
+	command := exec.CommandContext(timeoutContext, name, commandArguments...)
 	command.Env = childEnvironment(extra...)
 	var stdout, stderr limitedBuffer
 	stdout.limit = limit
@@ -518,14 +524,14 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 // limitedBuffer keeps the start of a stream and drops the rest, so a test that prints without end
 // cannot fill memory before its timeout.
 type limitedBuffer struct {
-	buf      bytes.Buffer
+	buffer   bytes.Buffer
 	limit    int
 	exceeded bool
 }
 
 func (buffer *limitedBuffer) Write(data []byte) (int, error) {
 	written := len(data)
-	room := buffer.limit - buffer.buf.Len()
+	room := buffer.limit - buffer.buffer.Len()
 	if written > room {
 		buffer.exceeded = true
 	}
@@ -533,12 +539,12 @@ func (buffer *limitedBuffer) Write(data []byte) (int, error) {
 		if len(data) > room {
 			data = data[:room]
 		}
-		_, _ = buffer.buf.Write(data)
+		_, _ = buffer.buffer.Write(data)
 	}
 	return written, nil
 }
 
-func (buffer *limitedBuffer) String() string { return buffer.buf.String() }
+func (buffer *limitedBuffer) String() string { return buffer.buffer.String() }
 
 func listTests(test262 string, filter string) ([]string, error) {
 	root := filepath.Join(test262, "test")

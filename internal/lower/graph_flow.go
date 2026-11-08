@@ -139,8 +139,8 @@ func (finder *cycleFinder) graphFlows() {
 			}
 			return false
 		}
-		args := finder.graphArguments(holder)
-		return argument < len(args) && graphType(args[argument])
+		arguments := finder.graphArguments(holder)
+		return argument < len(arguments) && graphType(arguments[argument])
 	}
 	// A counted aggregate can have graph-typed fields/elements. Seed those
 	// initializer slots individually, rather than promoting its whole payload.

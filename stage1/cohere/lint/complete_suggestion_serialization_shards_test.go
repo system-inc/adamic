@@ -380,10 +380,10 @@ func completeSuggestionExecute(
 	callerContext context.Context,
 	test *testing.T,
 	directory, name string,
-	args ...string,
+	commandArguments ...string,
 ) execution {
 	test.Helper()
-	command := lintCommand(callerContext, directory, name, args...)
+	command := lintCommand(callerContext, directory, name, commandArguments...)
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "complete-stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
@@ -398,7 +398,7 @@ func completeSuggestionExecute(
 		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	data, readError := os.ReadFile(output.Name())
 	if readError != nil {

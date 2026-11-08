@@ -167,7 +167,7 @@ func TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse(test *testing.T) {
 			test.Errorf("%s=%s reached a tool's environment", name, value)
 		}
 	}
-	git := values(GitEnv())
+	git := values(GitEnvironment())
 	for name, want := range map[string]string{
 		"GIT_CONFIG_GLOBAL":   os.DevNull,
 		"GIT_CONFIG_NOSYSTEM": "1",
@@ -183,7 +183,7 @@ func TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse(test *testing.T) {
 			test.Errorf("%s reached git's environment", name)
 		}
 	}
-	if !slices.Contains(GitEnv("GIT_DIR=/request"), "GIT_DIR=/request") {
+	if !slices.Contains(GitEnvironment("GIT_DIR=/request"), "GIT_DIR=/request") {
 		test.Error("a request's own setting didn't reach git")
 	}
 }

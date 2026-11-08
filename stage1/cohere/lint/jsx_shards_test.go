@@ -122,14 +122,14 @@ func jsxStableCaseKeys(test *testing.T, paths []string) map[string]string {
 					test.Fatal(parseFileError)
 				}
 				for _, declaration := range parsed.Decls {
-					fn, ok := declaration.(*ast.FuncDecl)
-					if !ok || fn.Recv != nil || !strings.HasPrefix(fn.Name.Name, "Test") {
+					function, ok := declaration.(*ast.FuncDecl)
+					if !ok || function.Recv != nil || !strings.HasPrefix(function.Name.Name, "Test") {
 						continue
 					}
-					if _, exists := declarations[fn.Name.Name]; exists {
-						test.Fatalf("ambiguous upstream test %s", fn.Name.Name)
+					if _, exists := declarations[function.Name.Name]; exists {
+						test.Fatalf("ambiguous upstream test %s", function.Name.Name)
 					}
-					declarations[fn.Name.Name] = filepath.ToSlash(filepath.Join(relative, filepath.Base(file)))
+					declarations[function.Name.Name] = filepath.ToSlash(filepath.Join(relative, filepath.Base(file)))
 				}
 			}
 			packages[descriptor.UpstreamPackage] = declarations
@@ -724,9 +724,9 @@ func TestJsxLintTreesUnion(test *testing.T) {
 	}
 	entries := map[string]bool{}
 	for _, declaration := range declarations.Decls {
-		fn, ok := declaration.(*ast.FuncDecl)
-		if ok && strings.HasPrefix(fn.Name.Name, "TestJsxLintTrees_") {
-			entries[fn.Name.Name] = true
+		function, ok := declaration.(*ast.FuncDecl)
+		if ok && strings.HasPrefix(function.Name.Name, "TestJsxLintTrees_") {
+			entries[function.Name.Name] = true
 		}
 	}
 	if len(entries) != testJsxLintTreesShards {
@@ -855,16 +855,26 @@ func TestJsxLintTreesShardDisagreement(test *testing.T) {
 // jsxContextCommand is lintCommand under a case's own 90-second deadline: the entire child process group is
 // cancelled with it, including any spawned compilers, with no external timeout executable. It adds no WaitDelay, for
 // lintCommand's reason.
-func jsxContextCommand(test *testing.T, parent context.Context, directory, name string, args ...string) *exec.Cmd {
+func jsxContextCommand(
+	test *testing.T,
+	parent context.Context,
+	directory, name string,
+	commandArguments ...string,
+) *exec.Cmd {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(parent, 90*time.Second)
 	test.Cleanup(cancel)
-	return lintCommand(timeoutContext, directory, name, args...)
+	return lintCommand(timeoutContext, directory, name, commandArguments...)
 }
 
-func jsxCaseExecute(test *testing.T, callerContext context.Context, directory, name string, args ...string) execution {
+func jsxCaseExecute(
+	test *testing.T,
+	callerContext context.Context,
+	directory, name string,
+	commandArguments ...string,
+) execution {
 	test.Helper()
-	command := jsxContextCommand(test, callerContext, directory, name, args...)
+	command := jsxContextCommand(test, callerContext, directory, name, commandArguments...)
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
@@ -876,10 +886,10 @@ func jsxCaseExecute(test *testing.T, callerContext context.Context, directory, n
 	started := time.Now()
 	runError := command.Run()
 	if callerContext.Err() != nil {
-		test.Fatalf("cooked: case deadline exceeded: %s %v", name, args)
+		test.Fatalf("cooked: case deadline exceeded: %s %v", name, commandArguments)
 	}
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	data, readError := os.ReadFile(output.Name())
 	if readError != nil {
@@ -904,7 +914,7 @@ func jsxUpstream(test *testing.T) []string {
 	return append([]string(nil), value.rows...)
 }
 
-func jsxCaptureRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
+func jsxCaptureRun(directory string, environment []string, name string, commandArguments ...string) ([]byte, error) {
 	// toolchain's program for name, under its environment plus the capture's own settings, as the setup key reads it.
 	path, pathError := toolchain.Path(name)
 	if pathError != nil {
@@ -912,7 +922,7 @@ func jsxCaptureRun(directory string, environment []string, name string, args ...
 	}
 	cancelContext, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := exec.CommandContext(cancelContext, path, args...)
+	command := exec.CommandContext(cancelContext, path, commandArguments...)
 	command.Dir = directory
 	command.Env = toolchain.Env(environment...)
 	if directory != "" {
@@ -939,7 +949,7 @@ func jsxCaptureRun(directory string, environment []string, name string, args ...
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if runError := command.Run(); runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, runError, &stderr)
+		return nil, fmt.Errorf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	return os.ReadFile(output.Name())
 }

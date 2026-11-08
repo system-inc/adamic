@@ -228,8 +228,8 @@ func TestFrontMatterStage(test *testing.T) {
 		test.Fatal(absolutePathError)
 	}
 	for _, side := range []struct {
-		name, command string
-		args          []string
+		name, command    string
+		commandArguments []string
 	}{
 		{"Go front-matter stage", goBinary, []string{cases}},
 		{"native front-matter stage", fast, []string{cases}},
@@ -242,7 +242,7 @@ func TestFrontMatterStage(test *testing.T) {
 		var elapsed time.Duration
 		for round := 0; round < 3; round++ {
 			start := time.Now()
-			answer := execute(test, nil, side.command, side.args...)
+			answer := execute(test, nil, side.command, side.commandArguments...)
 			elapsed += time.Since(start)
 			clean(test, side.name, answer)
 			equal(test, side.name, answer.stdout, want.stdout)

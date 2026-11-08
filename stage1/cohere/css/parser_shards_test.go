@@ -285,14 +285,19 @@ func cssParserAsan(leaks bool) []string {
 	}
 	return []string{"ASAN_OPTIONS=detect_leaks=0"}
 }
-func checkCssParserLeaks(test *testing.T, sanitized, unsanitized string, args ...string) {
+func checkCssParserLeaks(test *testing.T, sanitized, unsanitized string, commandArguments ...string) {
 	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
 		// The agreement's sanitized run has leak detection on (cssParserSanitizedAgreement), so one run checks
 		// output, ASan/UBSan and LeakSanitizer, as the printer's does. TestCSSParserSanitizedRunCatchesALeak holds it.
 	case "darwin":
-		result := cssParserExecute(test, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		result := cssParserExecute(
+			test,
+			nil,
+			"leaks",
+			append([]string{"--atExit", "--", unsanitized}, commandArguments...)...,
+		)
 		if result.exitCode != 0 {
 			test.Errorf("leaks: %s", result.stdout)
 		}

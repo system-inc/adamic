@@ -400,7 +400,7 @@ func InferMutableRangesWithEffects(function *Function, effects *AliasingEffects)
 					changed = true
 				}
 				if existing.End == 0 {
-					existing.End = maxOrder(order+1, existing.End)
+					existing.End = maximumOrder(order+1, existing.End)
 					changed = true
 				}
 				// DIVERGENCE FROM BOTH UPSTREAMS, in the conservative direction, and it is the only
@@ -489,7 +489,7 @@ func InferMutableRangesWithEffects(function *Function, effects *AliasingEffects)
 	// function's first instruction, and one nothing widened is that instruction alone: a parameter
 	// always has a range, so a mutation the graph missed is outside it rather than on a range the
 	// pass declined to set.
-	for _, parameter := range function.Params {
+	for _, parameter := range function.Parameters {
 		existing := result.Get(parameter.Identifier)
 		if existing.End == 0 {
 			existing.End = 2
@@ -608,12 +608,12 @@ func blockFirstOrder(function *Function, block *BasicBlock) EvaluationOrder {
 	return TerminalOrder(block.Terminal)
 }
 
-// maxOrder returns the larger of two evaluation positions.
+// maximumOrder returns the larger of two evaluation positions.
 //
 // Upstream writes `Math.max(instr.id + 1, existing)` inside a branch that has just tested the
 // existing value is zero, so the max is redundant there. It is reproduced rather than simplified
 // because the redundancy is upstream's and a later widening rule reaching this line would need it.
-func maxOrder(left, right EvaluationOrder) EvaluationOrder {
+func maximumOrder(left, right EvaluationOrder) EvaluationOrder {
 	if left > right {
 		return left
 	}
@@ -1274,7 +1274,7 @@ func buildAliasingGraph(function *Function, effects *AliasingEffects) (*aliasing
 	// Adamic: an Adamic function's parameters are mutable unless their type says otherwise (infer.go
 	// marks an immutable one with a Create of its kind), not frozen by React's rule for components
 	// and hooks; there's no context (captured variables aren't in this graph) and no Returns place.
-	for _, parameter := range function.Params {
+	for _, parameter := range function.Parameters {
 		state.create(parameter, aliasingNodeObject)
 	}
 

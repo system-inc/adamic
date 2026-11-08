@@ -57,8 +57,8 @@ type Function struct {
 	// instructions point back at.
 	Program *ir.Program
 
-	// Params are the parameters the graph tracks, in order, defined on entry.
-	Params []Place
+	// Parameters are the parameters the graph tracks, in order, defined on entry.
+	Parameters []Place
 
 	// Entry is the block control begins at.
 	Entry BlockId

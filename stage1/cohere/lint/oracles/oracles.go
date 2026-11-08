@@ -95,8 +95,13 @@ func oracleFiles(test *testing.T) []string {
 	return files
 }
 
-func guardedRun(commandName string, directory string, environment []string, args ...string) ([]byte, error) {
-	command := toolchain.CommandContextIn(context.Background(), directory, commandName, args...)
+func guardedRun(
+	commandName string,
+	directory string,
+	environment []string,
+	commandArguments ...string,
+) ([]byte, error) {
+	command := toolchain.CommandContextIn(context.Background(), directory, commandName, commandArguments...)
 	if strings.ContainsRune(commandName, filepath.Separator) {
 		command.Env = append(os.Environ(), environment...)
 	} else {
@@ -122,17 +127,22 @@ func guardedRun(commandName string, directory string, environment []string, args
 		childguard.Options{FirstOutput: testguard.Ceiling, Stall: testguard.Ceiling, Ceiling: testguard.Ceiling},
 	)
 	if err != nil || len(commandDiagnostics(commandName, stderr.Bytes())) != 0 {
-		return nil, fmt.Errorf("%s %v: %v\n%s", commandName, args, err, &stderr)
+		return nil, fmt.Errorf("%s %v: %v\n%s", commandName, commandArguments, err, &stderr)
 	}
 	return os.ReadFile(output.Name())
 }
 
-func rulesAgreeCaptureRun(directory string, environment []string, args ...string) ([]byte, error) {
-	return guardedRun("go", directory, environment, args...)
+func rulesAgreeCaptureRun(directory string, environment []string, commandArguments ...string) ([]byte, error) {
+	return guardedRun("go", directory, environment, commandArguments...)
 }
 
-func testShardsAgreeRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	command := toolchain.CommandContextIn(context.Background(), directory, name, args...)
+func testShardsAgreeRun(
+	directory string,
+	environment []string,
+	name string,
+	commandArguments ...string,
+) ([]byte, error) {
+	command := toolchain.CommandContextIn(context.Background(), directory, name, commandArguments...)
 	if strings.ContainsRune(name, filepath.Separator) {
 		command.Env = append(os.Environ(), environment...)
 		if directory != "" {
@@ -154,15 +164,15 @@ func testShardsAgreeRun(directory string, environment []string, name string, arg
 		command,
 		childguard.Options{Unbounded: true},
 	); err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
+		return nil, fmt.Errorf("%s %v: %v\n%s", name, commandArguments, err, &stderr)
 	}
 	return os.ReadFile(output.Name())
 }
 
-func execute(test *testing.T, directory, name string, args ...string) execution {
+func execute(test *testing.T, directory, name string, commandArguments ...string) execution {
 	test.Helper()
 	start := time.Now()
-	output, err := guardedRun(name, directory, nil, args...)
+	output, err := guardedRun(name, directory, nil, commandArguments...)
 	if err != nil {
 		test.Fatal(err)
 	}
@@ -312,11 +322,11 @@ func compilationOracleOutputs(test *testing.T, oracle, manifestPath string) ([]b
 	inputs := compilationOracleInputs(test, binary, source)
 	product := oracleProduct(test, inputs, func(dir string) error {
 		for _, mode := range []string{"wire", "count"} {
-			args := []string{"--manifest", manifestPath}
+			commandArguments := []string{"--manifest", manifestPath}
 			if mode == "count" {
-				args = append(args, "--count")
+				commandArguments = append(commandArguments, "--count")
 			}
-			data := execute(test, "", oracle, args...).output
+			data := execute(test, "", oracle, commandArguments...).output
 			data = bytes.ReplaceAll(data, []byte(sourcePath), []byte("@profile-case@"))
 			if err := os.WriteFile(filepath.Join(dir, mode), data, 0644); err != nil {
 				return err
@@ -488,11 +498,11 @@ func completeSuggestionBuildOracle(callerContext context.Context, sourceRoot, di
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
-	args := append(
+	commandArguments := append(
 		append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary),
 		virtualFiles...,
 	)
-	command := toolchain.CommandContextIn(callerContext, root, "go", args...)
+	command := toolchain.CommandContextIn(callerContext, root, "go", commandArguments...)
 	var output, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &output, &stderr
 	err = childguard.Run(command, childguard.Options{Unbounded: true})
@@ -550,13 +560,13 @@ func suggestionAlongsideGoOracle(test *testing.T, sourceRoot, directory string) 
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
-	args := append(
+	commandArguments := append(
 		append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary),
 		virtualFiles...,
 	)
 	cancelContext, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := toolchain.CommandContextIn(cancelContext, root, "go", args...)
+	command := toolchain.CommandContextIn(cancelContext, root, "go", commandArguments...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if err := childguard.Run(

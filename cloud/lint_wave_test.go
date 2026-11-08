@@ -21,7 +21,7 @@ func TestLintWaveCheck(test *testing.T) {
 	}
 	command := toolchain.Command("python3", "-B", "lint-wave-check-test.py")
 	if command.Err == nil {
-		command.Env = toolchain.GitEnv()
+		command.Env = toolchain.GitEnvironment()
 	}
 	command.Stdout = output
 	command.Stderr = output

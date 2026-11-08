@@ -283,7 +283,7 @@ func checkpointKey(state resumeState, packagePath string, patterns []string) str
 		Flags    []string
 	}{state, packagePath, patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
 }
-func testArgs(packagePath, pattern string) []string {
+func testArguments(packagePath, pattern string) []string {
 	return []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, packagePath}
 }
 func appendFile(out io.Writer, path string) error {
@@ -342,7 +342,7 @@ func completePackage(dir string, evidence packageEvidence, plan plan, index int,
 	for index, call := range evidence.Invocations {
 		if call.Package != packagePath ||
 			!call.Uncached ||
-			!reflect.DeepEqual(call.Args, testArgs(packagePath, selectors[index])) {
+			!reflect.DeepEqual(call.Arguments, testArguments(packagePath, selectors[index])) {
 			return errors.New("package invocation inputs differ")
 		}
 	}

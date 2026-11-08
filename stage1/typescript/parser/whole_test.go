@@ -15,7 +15,7 @@ func wholeNode(test *testing.T, directory, manifest string, count bool) executio
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	args := []string{
+	commandArguments := []string{
 		"--disable-warning=ExperimentalWarning",
 		runner,
 		filepath.Join(directory, "main.ts"),
@@ -24,9 +24,9 @@ func wholeNode(test *testing.T, directory, manifest string, count bool) executio
 		"--whole",
 	}
 	if count {
-		args = append(args, "--count")
+		commandArguments = append(commandArguments, "--count")
 	}
-	return execute(test, "", "node", args...)
+	return execute(test, "", "node", commandArguments...)
 }
 
 // The whole-tree comparison over the pinned compiler runs in compilerExpressionsPartition's shards (each file owned by

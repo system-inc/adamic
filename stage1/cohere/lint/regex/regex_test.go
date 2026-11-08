@@ -22,15 +22,15 @@ import (
 	"testing"
 )
 
-func run(test *testing.T, cwd, command string, args ...string) []byte {
+func run(test *testing.T, cwd, command string, commandArguments ...string) []byte {
 	test.Helper()
-	c := exec.Command(command, args...)
+	c := exec.Command(command, commandArguments...)
 	c.Dir = cwd
 	if !strings.ContainsRune(command, filepath.Separator) {
 		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run
 		// in cwd with PWD to match. A program a test built (an oracle, the native runner) runs as named, with this
 		// process's environment.
-		c = toolchain.CommandIn(cwd, command, args...)
+		c = toolchain.CommandIn(cwd, command, commandArguments...)
 	}
 	var out, err bytes.Buffer
 	c.Stdout = &out

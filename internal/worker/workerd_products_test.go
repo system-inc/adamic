@@ -48,11 +48,11 @@ func workerdComputeProduct(test *testing.T, wasm, build bool) string {
 		test.Fatal(absolutePathError)
 	}
 	directory := buildcache.Product(test, inputs, func(directory string) error {
-		args := []string{"worker", "workers/compute/handler.a", "--out", filepath.Join(directory, "worker")}
+		commandArguments := []string{"worker", "workers/compute/handler.a", "--out", filepath.Join(directory, "worker")}
 		if wasm {
-			args = append(args, "--wasm", "primes,summarize")
+			commandArguments = append(commandArguments, "--wasm", "primes,summarize")
 		}
-		command := exec.CommandContext(test.Context(), compiler, args...)
+		command := exec.CommandContext(test.Context(), compiler, commandArguments...)
 		command.Dir = root
 		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 			return fmt.Errorf("compute build: %w\n%s", combinedOutputError, output)

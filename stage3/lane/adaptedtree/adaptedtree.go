@@ -166,9 +166,9 @@ func build(handed buildcache.Handed, directory string) error {
 		toolchain.CommandIn(repository, "python3", "-E", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree),
 	)
 	// apply.py runs git itself (add, write-tree, update-ref), which would read the home's ~/.gitconfig: Workshop
-	// has one and Golem none, so tree 276cc52a refused the product. GitEnv's GIT_ settings keep every git
+	// has one and Golem none, so tree 276cc52a refused the product. GitEnvironment's GIT_ settings keep every git
 	// configuration but the repository's out of reach, as toolchain's own git runs.
-	for _, setting := range toolchain.GitEnv() {
+	for _, setting := range toolchain.GitEnvironment() {
 		if strings.HasPrefix(setting, "GIT_") {
 			adapt.Env = append(adapt.Env, setting)
 		}

@@ -116,7 +116,7 @@ func (lowering *lowering) declareModule(statements []*ast.Node) error {
 				continue // the host's names are the host's (host_bindings.go)
 			}
 			list := statement.AsVariableStatement().DeclarationList
-			if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) && !namespaceVariable(list) {
+			if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVariableList(list) && !namespaceVariable(list) {
 				continue // statements() refuses var where it stands
 			}
 			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {

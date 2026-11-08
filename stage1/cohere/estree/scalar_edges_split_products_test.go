@@ -112,8 +112,8 @@ func scalarEdgePrepare(test *testing.T) scalarEdgeReady {
 	return ready
 }
 
-func scalarEdgeCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func scalarEdgeCommand(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -136,22 +136,22 @@ func TestScalarEdges(test *testing.T) {
 	scalarEdgePrepare(test)
 }
 
-func scalarEdgeExecute(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
+func scalarEdgeExecute(test *testing.T, callerContext context.Context, name string, commandArguments ...string) []byte {
 	test.Helper()
-	command := scalarEdgeCommand(callerContext, name, args...)
+	command := scalarEdgeCommand(callerContext, name, commandArguments...)
 	var output, stderr bytes.Buffer
 	command.Stdout = &output
 	command.Stderr = &stderr
 	if runError := command.Run(); runError != nil || stderr.Len() != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	return output.Bytes()
 }
 
-func scalarEdgeNode(test *testing.T, callerContext context.Context, path string, args ...string) []byte {
+func scalarEdgeNode(test *testing.T, callerContext context.Context, path string, commandArguments ...string) []byte {
 	test.Helper()
 	argv := []string{"--disable-warning=ExperimentalWarning", filepath.Join(root(test), "oracle/node.mjs"), path}
-	return scalarEdgeExecute(test, callerContext, "node", append(argv, args...)...)
+	return scalarEdgeExecute(test, callerContext, "node", append(argv, commandArguments...)...)
 }
 
 func TestScalarEdgesUnion(test *testing.T) {

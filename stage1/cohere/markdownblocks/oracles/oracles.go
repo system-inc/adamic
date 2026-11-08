@@ -1638,12 +1638,12 @@ func GrainWidthFullAnswers(test *testing.T, goBinary, fork string, batch []byte)
 		}
 		for _, side := range []struct {
 			name, file, command string
-			args                []string
+			commandArguments    []string
 		}{
 			{"Go StringWidth", "go.txt", goBinary, []string{cases}},
 			{"actual fork group-fit widths", "fork.txt", "node", []string{"testdata/width_fork.mjs", fork, cases}},
 		} {
-			result, executeError := execute(test.Context(), nil, side.command, side.args...)
+			result, executeError := execute(test.Context(), nil, side.command, side.commandArguments...)
 			if executeError != nil {
 				return executeError
 			}

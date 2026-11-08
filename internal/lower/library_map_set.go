@@ -176,7 +176,7 @@ func (lowering *lowering) libraryEmptyCollectionArgument(node *ast.Node) bool {
 
 // An arrow's this is lexical: thisArg is still evaluated in call order, but cannot bind it.
 // Other callbacks stay refused until stage 0 can represent and check their dynamic this parameter.
-func (lowering *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir.Expression, bool, error) {
+func (lowering *lowering) libraryForEachThisArgument(node, receiver *ast.Node, set bool) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if ast.SkipParentheses(arguments[0]).Kind != ast.KindArrowFunction {
 		return nil, true, lowering.notYet(node, "forEach thisArg with a callback other than an arrow")

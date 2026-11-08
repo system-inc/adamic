@@ -62,10 +62,10 @@ func arrayElementWitness(
 	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	run := func(env []string, name string, args ...string) ([]byte, []byte, error) {
+	run := func(env []string, name string, commandArguments ...string) ([]byte, []byte, error) {
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
-		command := exec.CommandContext(timeoutContext, name, args...)
+		command := exec.CommandContext(timeoutContext, name, commandArguments...)
 		command.Env = append(os.Environ(), env...)
 		var out, diagnostic bytes.Buffer
 		command.Stdout = &out

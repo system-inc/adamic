@@ -77,12 +77,15 @@ func stackProbe(test *testing.T, limit int, arguments, environment []string, alo
 		if pathError != nil {
 			test.Fatal(pathError)
 		}
-		args := append(append([]string{}, prefix...), arguments...)
+		commandArguments := append(append([]string{}, prefix...), arguments...)
 		if limit > 0 {
-			args = append([]string{"-c", fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, limit), resolved}, args...)
+			commandArguments = append(
+				[]string{"-c", fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, limit), resolved},
+				commandArguments...,
+			)
 			resolved = "/bin/sh"
 		}
-		ctx, command := bounded(test, resolved, args...)
+		ctx, command := bounded(test, resolved, commandArguments...)
 		command.Env = append(command.Env, environment...)
 		command.Env = append(command.Env, "ASAN_OPTIONS=detect_leaks=0")
 		if alone {

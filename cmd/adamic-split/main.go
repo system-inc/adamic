@@ -13,12 +13,12 @@ import (
 )
 
 func main() { os.Exit(run(os.Args[1:], os.Stdout, os.Stderr)) }
-func run(args []string, output, errors io.Writer) int {
-	if len(args) != 1 {
+func run(commandArguments []string, output, errors io.Writer) int {
+	if len(commandArguments) != 1 {
 		fmt.Fprintln(errors, "usage: adamic-split <file.a>")
 		return 2
 	}
-	source, loadError := load.Load(args)
+	source, loadError := load.Load(commandArguments)
 	if loadError != nil {
 		fmt.Fprintln(errors, loadError)
 		return 1

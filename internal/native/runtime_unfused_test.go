@@ -70,16 +70,16 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 			if !strings.HasSuffix(file.name, ".c") {
 				continue
 			}
-			args, readError := os.ReadFile(filepath.Join(scratch, file.name))
+			arguments, readError := os.ReadFile(filepath.Join(scratch, file.name))
 			if readError != nil {
 				return readError
 			}
 			// The last contraction option wins. Record the effective option, not
 			// just the presence of an earlier flag overridden by a later one.
 			contraction := "missing"
-			for _, arg := range strings.Split(string(args), "\n") {
-				if strings.HasPrefix(arg, "-ffp-contract=") {
-					contraction = arg
+			for _, argument := range strings.Split(string(arguments), "\n") {
+				if strings.HasPrefix(argument, "-ffp-contract=") {
+					contraction = argument
 				}
 			}
 			fmt.Fprintf(&audit, "%s\t%s\n", file.name, contraction)
@@ -113,9 +113,9 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 				return readError
 			}
 			contraction := "missing"
-			for _, arg := range strings.Split(string(actual), "\n") {
-				if strings.HasPrefix(arg, "-ffp-contract=") {
-					contraction = arg
+			for _, argument := range strings.Split(string(actual), "\n") {
+				if strings.HasPrefix(argument, "-ffp-contract=") {
+					contraction = argument
 				}
 			}
 			omitted := strings.Replace(audit.String(), "dtoa.c\t-ffp-contract=off\n", "dtoa.c\t"+contraction+"\n", 1)

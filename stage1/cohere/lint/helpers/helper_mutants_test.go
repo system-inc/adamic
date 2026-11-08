@@ -175,8 +175,8 @@ func runHelperMutant(test *testing.T, index int) {
 	started := time.Now()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	execute := func(binary string, args ...string) []byte {
-		command := exec.CommandContext(timeoutContext, binary, args...)
+	execute := func(binary string, commandArguments ...string) []byte {
+		command := exec.CommandContext(timeoutContext, binary, commandArguments...)
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
 		output, outputError := command.Output()

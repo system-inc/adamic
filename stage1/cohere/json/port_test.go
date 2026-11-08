@@ -601,8 +601,8 @@ func jsonPortTopShard(test *testing.T, target int) {
 						}
 					}
 					for _, side := range []struct {
-						name, binary string
-						args         []string
+						name, binary     string
+						commandArguments []string
 					}{
 						{"release", release, []string{"--cases", path}},
 						{
@@ -613,7 +613,7 @@ func jsonPortTopShard(test *testing.T, target int) {
 						{"Go", oracle, []string{"--cases", path}},
 					} {
 						began := time.Now()
-						result := execute(test, nil, side.binary, side.args...)
+						result := execute(test, nil, side.binary, side.commandArguments...)
 						compare(test, test.Name()+" "+side.name, result, expected, items)
 						test.Logf(
 							"case range [%d:%d]; round %d %s %d cases %.3fs",

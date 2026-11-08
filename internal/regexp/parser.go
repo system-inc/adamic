@@ -370,7 +370,7 @@ func (parser *parser) quantifier(atom Node) (Node, error) {
 		}
 	}
 	greedy := !parser.take('?')
-	return &Quantifier{Atom: atom, Min: minimum, Max: maximum, Greedy: greedy}, nil
+	return &Quantifier{Atom: atom, Min: minimum, Maximum: maximum, Greedy: greedy}, nil
 }
 
 func (parser *parser) escape(inClass bool) (Node, bool, error) {
@@ -764,7 +764,7 @@ func (parser *parser) literal() (Node, bool, error) {
 	}
 	return &Character{Value: character, Raw: parser.source[start:parser.pos], Kind: Literal}, true, nil
 }
-func (parser *parser) char(start int, kind CharacterKind) (Node, bool, error) {
+func (parser *parser) character(start int, kind CharacterKind) (Node, bool, error) {
 	return &Character{Raw: parser.source[start:parser.pos], Kind: kind}, true, nil
 }
 func (parser *parser) unicodeEscape(start int) (*Character, error) {

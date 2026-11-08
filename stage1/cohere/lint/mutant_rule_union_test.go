@@ -29,54 +29,54 @@ func mutantRuleDeclarations(test *testing.T, prefix, helper string) []mutantRule
 	}
 	var owners []mutantRuleOwner
 	for _, decl := range file.Decls {
-		fn, ok := decl.(*ast.FuncDecl)
-		if !ok || !strings.HasPrefix(fn.Name.Name, prefix) {
+		function, ok := decl.(*ast.FuncDecl)
+		if !ok || !strings.HasPrefix(function.Name.Name, prefix) {
 			continue
 		}
-		if fn.Body == nil || len(fn.Body.List) != 2 {
-			test.Fatalf("%s must parallelize then call its shared helper", fn.Name.Name)
+		if function.Body == nil || len(function.Body.List) != 2 {
+			test.Fatalf("%s must parallelize then call its shared helper", function.Name.Name)
 		}
-		first, ok := fn.Body.List[0].(*ast.ExprStmt)
+		first, ok := function.Body.List[0].(*ast.ExprStmt)
 		if !ok {
-			test.Fatalf("%s does not parallelize first", fn.Name.Name)
+			test.Fatalf("%s does not parallelize first", function.Name.Name)
 		}
 		parallel, ok := first.X.(*ast.CallExpr)
 		if !ok {
-			test.Fatalf("%s does not parallelize first", fn.Name.Name)
+			test.Fatalf("%s does not parallelize first", function.Name.Name)
 		}
 		selector, ok := parallel.Fun.(*ast.SelectorExpr)
 		if !ok || selector.Sel.Name != "Parallel" || len(parallel.Args) != 0 {
-			test.Fatalf("%s does not parallelize first", fn.Name.Name)
+			test.Fatalf("%s does not parallelize first", function.Name.Name)
 		}
 		receiver, ok := selector.X.(*ast.Ident)
 		if !ok || receiver.Name != "t" {
-			test.Fatalf("%s parallelizes the wrong receiver", fn.Name.Name)
+			test.Fatalf("%s parallelizes the wrong receiver", function.Name.Name)
 		}
-		second, ok := fn.Body.List[1].(*ast.ExprStmt)
+		second, ok := function.Body.List[1].(*ast.ExprStmt)
 		if !ok {
-			test.Fatalf("%s does not call its shared helper", fn.Name.Name)
+			test.Fatalf("%s does not call its shared helper", function.Name.Name)
 		}
 		call, ok := second.X.(*ast.CallExpr)
 		if !ok || len(call.Args) != 2 {
-			test.Fatalf("%s does not call its shared helper", fn.Name.Name)
+			test.Fatalf("%s does not call its shared helper", function.Name.Name)
 		}
 		callee, ok := call.Fun.(*ast.Ident)
 		if !ok || callee.Name != helper {
-			test.Fatalf("%s calls the wrong helper", fn.Name.Name)
+			test.Fatalf("%s calls the wrong helper", function.Name.Name)
 		}
 		argument, ok := call.Args[0].(*ast.Ident)
 		if !ok || argument.Name != "t" {
-			test.Fatalf("%s passes the wrong test", fn.Name.Name)
+			test.Fatalf("%s passes the wrong test", function.Name.Name)
 		}
 		literal, ok := call.Args[1].(*ast.BasicLit)
 		if !ok || literal.Kind != token.STRING {
-			test.Fatalf("%s needs a literal rule slug", fn.Name.Name)
+			test.Fatalf("%s needs a literal rule slug", function.Name.Name)
 		}
 		slug, unquoteError := strconv.Unquote(literal.Value)
 		if unquoteError != nil {
 			test.Fatal(unquoteError)
 		}
-		owners = append(owners, mutantRuleOwner{fn.Name.Name, slug})
+		owners = append(owners, mutantRuleOwner{function.Name.Name, slug})
 	}
 	return owners
 }

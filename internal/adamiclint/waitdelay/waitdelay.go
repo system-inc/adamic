@@ -102,7 +102,7 @@ func check(pass *analysis.Pass, declaration ast.Decl, escaped map[int]bool) {
 				if !ok {
 					continue
 				}
-				switch cmdField(pass, selector) {
+				switch commandField(pass, selector) {
 				case "WaitDelay":
 					name, reached := commandOf(pass, selector.X)
 					delays = append(delays, delay{position: selector.Sel.Pos(), command: name, reached: reached})
@@ -126,12 +126,12 @@ func check(pass *analysis.Pass, declaration ast.Decl, escaped map[int]bool) {
 				if literal := commandLiteral(pass, result); literal != nil {
 					literalReturned[literal] = true
 				}
-				if name, ok := commandOf(pass, result); ok && isCmd(pass.TypesInfo.TypeOf(result)) {
+				if name, ok := commandOf(pass, result); ok && isCommand(pass.TypesInfo.TypeOf(result)) {
 					returned[name] = true
 				}
 			}
 		case *ast.CompositeLit:
-			if !isCmd(pass.TypesInfo.TypeOf(node)) {
+			if !isCommand(pass.TypesInfo.TypeOf(node)) {
 				return true
 			}
 			for _, element := range node.Elts {
@@ -144,7 +144,7 @@ func check(pass *analysis.Pass, declaration ast.Decl, escaped map[int]bool) {
 					continue
 				}
 				field, ok := pass.TypesInfo.Uses[key].(*types.Var)
-				if !ok || !isCmdField(field) {
+				if !ok || !isCommandField(field) {
 					continue
 				}
 				switch field.Name() {
@@ -163,7 +163,7 @@ func check(pass *analysis.Pass, declaration ast.Decl, escaped map[int]bool) {
 					if literal := commandLiteral(pass, argument); literal != nil {
 						literalBuffered[literal] = true
 					}
-					if name, ok := commandOf(pass, argument); ok && isCmd(pass.TypesInfo.TypeOf(argument)) {
+					if name, ok := commandOf(pass, argument); ok && isCommand(pass.TypesInfo.TypeOf(argument)) {
 						buffered[name] = true
 					}
 				}
@@ -172,7 +172,7 @@ func check(pass *analysis.Pass, declaration ast.Decl, escaped map[int]bool) {
 			if !ok {
 				return true
 			}
-			switch cmdMethod(pass, selector) {
+			switch commandMethod(pass, selector) {
 			case "Output", "CombinedOutput":
 				if name, ok := commandOf(pass, selector.X); ok {
 					buffered[name] = true
@@ -259,7 +259,7 @@ func commandLiteral(pass *analysis.Pass, expression ast.Expr) *ast.CompositeLit 
 		expression = ast.Unparen(unary.X)
 	}
 	literal, ok := expression.(*ast.CompositeLit)
-	if !ok || !isCmd(pass.TypesInfo.TypeOf(literal)) {
+	if !ok || !isCommand(pass.TypesInfo.TypeOf(literal)) {
 		return nil
 	}
 	return literal
@@ -295,8 +295,8 @@ func isOsFile(resolvedType types.Type) bool {
 	return isNamed(pointer.Elem(), "os", "File")
 }
 
-// isCmd says `resolvedType` is exec.Cmd or a pointer to it.
-func isCmd(resolvedType types.Type) bool {
+// isCommand says `resolvedType` is exec.Cmd or a pointer to it.
+func isCommand(resolvedType types.Type) bool {
 	if resolvedType == nil {
 		return false
 	}
@@ -315,9 +315,9 @@ func isNamed(resolvedType types.Type, packagePath, name string) bool {
 	return object.Pkg() != nil && object.Pkg().Path() == packagePath && object.Name() == name
 }
 
-// isCmdField says field is one of exec.Cmd's own fields, by identity, so a struct of some other type with a field
+// isCommandField says field is one of exec.Cmd's own fields, by identity, so a struct of some other type with a field
 // named WaitDelay is never mistaken for it.
-func isCmdField(field *types.Var) bool {
+func isCommandField(field *types.Var) bool {
 	if !field.IsField() || field.Pkg() == nil || field.Pkg().Path() != "os/exec" {
 		return false
 	}
@@ -337,14 +337,14 @@ func isCmdField(field *types.Var) bool {
 	return false
 }
 
-// cmdField is the name of the exec.Cmd field a selector reaches, an embedded exec.Cmd's included, or "".
-func cmdField(pass *analysis.Pass, selector *ast.SelectorExpr) string {
+// commandField is the name of the exec.Cmd field a selector reaches, an embedded exec.Cmd's included, or "".
+func commandField(pass *analysis.Pass, selector *ast.SelectorExpr) string {
 	selection, ok := pass.TypesInfo.Selections[selector]
 	if !ok || selection.Kind() != types.FieldVal {
 		return ""
 	}
 	field, ok := selection.Obj().(*types.Var)
-	if !ok || !isCmdField(field) {
+	if !ok || !isCommandField(field) {
 		return ""
 	}
 	return field.Name()
@@ -362,8 +362,8 @@ func guardBuffers(callee *types.Func) bool {
 	return callee.Name() == "Run" || callee.Name() == "CombinedOutput"
 }
 
-// cmdMethod is the name of the exec.Cmd method a selector calls, or "".
-func cmdMethod(pass *analysis.Pass, selector *ast.SelectorExpr) string {
+// commandMethod is the name of the exec.Cmd method a selector calls, or "".
+func commandMethod(pass *analysis.Pass, selector *ast.SelectorExpr) string {
 	selection, ok := pass.TypesInfo.Selections[selector]
 	if !ok || selection.Kind() != types.MethodVal {
 		return ""
@@ -373,7 +373,7 @@ func cmdMethod(pass *analysis.Pass, selector *ast.SelectorExpr) string {
 		return ""
 	}
 	signature, ok := method.Type().(*types.Signature)
-	if !ok || signature.Recv() == nil || !isCmd(signature.Recv().Type()) {
+	if !ok || signature.Recv() == nil || !isCommand(signature.Recv().Type()) {
 		return ""
 	}
 	return method.Name()

@@ -405,9 +405,14 @@ func decodedOptionsLowered(test *testing.T, mutated bool) (buildcache.Inputs, fu
 	}
 }
 
-func decodedOptionsExecute(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
+func decodedOptionsExecute(
+	test *testing.T,
+	callerContext context.Context,
+	name string,
+	commandArguments ...string,
+) []byte {
 	test.Helper()
-	command := lintCommand(callerContext, "", name, args...)
+	command := lintCommand(callerContext, "", name, commandArguments...)
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
@@ -420,7 +425,7 @@ func decodedOptionsExecute(test *testing.T, callerContext context.Context, name 
 		test.Fatalf("cooked: shard exceeded 90s: %v", callerContext.Err())
 	}
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	data, readError := os.ReadFile(output.Name())
 	if readError != nil {

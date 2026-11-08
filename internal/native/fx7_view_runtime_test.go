@@ -64,11 +64,11 @@ int main(int argc, char **argv) {
 		for _, mode := range []string{"cycle", "guard", "deep"} {
 			guard := mode == "guard"
 			timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-			args := []string{}
+			commandArguments := []string{}
 			if guard {
-				args = append(args, "guard")
+				commandArguments = append(commandArguments, "guard")
 			}
-			command := exec.CommandContext(timeoutContext, binary, args...)
+			command := exec.CommandContext(timeoutContext, binary, commandArguments...)
 			if mode == "deep" {
 				command = exec.CommandContext(
 					timeoutContext,

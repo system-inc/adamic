@@ -48,13 +48,18 @@ func TestNonNullExplainChecks(test *testing.T) {
 			for _, backend := range []string{"c", "js", "build"} {
 				test.Run(backend, func(test *testing.T) {
 					test.Parallel()
-					args := []string{backend, path, "--explain-checks"}
+					commandArguments := []string{backend, path, "--explain-checks"}
 					if backend == "build" {
-						args = append(args, "-o", filepath.Join(test.TempDir(), "program"), "--sanitize")
+						commandArguments = append(
+							commandArguments,
+							"-o",
+							filepath.Join(test.TempDir(), "program"),
+							"--sanitize",
+						)
 					}
 					command := exec.Command(
 						os.Args[0],
-						append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, args...)...,
+						append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, commandArguments...)...,
 					)
 					command.Dir = repository
 					command.Env = explainDriverEnvironment(test, os.Environ())

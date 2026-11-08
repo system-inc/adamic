@@ -20,7 +20,7 @@ var numbersTopRootOnce sync.Once
 var numbersTopRoot string
 var numbersTopRootError error
 
-func numbersTopTempDir(test *testing.T) string {
+func numbersTopTempDirectory(test *testing.T) string {
 	test.Helper()
 	numbersTopRootOnce.Do(func() { numbersTopRoot, numbersTopRootError = os.MkdirTemp("", "adamic-cssnumbers-top-") })
 	if numbersTopRootError != nil {

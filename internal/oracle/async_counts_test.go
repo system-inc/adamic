@@ -70,9 +70,9 @@ func asyncCountMutant(test *testing.T, name, source string, program *ir.Program)
 	if name == "stable" || name == "parameter" || name == "payload" {
 		binding = "seed"
 	}
-	for _, fn := range program.Functions {
-		if fn.Name == "keep" {
-			for position, index := range fn.FrameEnvironment {
+	for _, function := range program.Functions {
+		if function.Name == "keep" {
+			for position, index := range function.FrameEnvironment {
 				if program.Locals[index].Name == binding {
 					slot = position
 				}

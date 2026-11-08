@@ -454,25 +454,25 @@ func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
 	}
 	names := make(map[int]bool)
 	for _, declaration := range table.Decls {
-		fn, ok := declaration.(*ast.FuncDecl)
+		function, ok := declaration.(*ast.FuncDecl)
 		if !ok {
 			continue
 		}
-		if fn.Name.Name == "TestThePortParsesAsGoCohereDoes_Setup" {
+		if function.Name.Name == "TestThePortParsesAsGoCohereDoes_Setup" {
 			continue
 		}
-		suffix, ok := strings.CutPrefix(fn.Name.Name, "TestThePortParsesAsGoCohereDoes_")
+		suffix, ok := strings.CutPrefix(function.Name.Name, "TestThePortParsesAsGoCohereDoes_")
 		if !ok {
 			continue
 		}
 		index, parseError := strconv.Atoi(suffix)
 		if parseError != nil || index < 0 || index >= len(parts) || names[index] {
-			test.Fatalf("invalid leaf declaration %q", fn.Name.Name)
+			test.Fatalf("invalid leaf declaration %q", function.Name.Name)
 		}
-		if len(fn.Body.List) != 2 {
-			test.Fatalf("unexpected leaf body %s", fn.Name.Name)
+		if len(function.Body.List) != 2 {
+			test.Fatalf("unexpected leaf body %s", function.Name.Name)
 		}
-		statement, ok := fn.Body.List[1].(*ast.ExprStmt)
+		statement, ok := function.Body.List[1].(*ast.ExprStmt)
 		if !ok {
 			test.Fatal("missing shard call")
 		}

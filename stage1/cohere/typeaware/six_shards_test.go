@@ -236,9 +236,9 @@ func sixFindingUnion(stdout []byte, paths []string) error {
 func (local *harness) sixCompare(name, oracle, binary, configuration, roots string, paths []string) result {
 	local.t.Helper()
 	selected := local.write("selected.manifest", strings.Join(paths, "\n")+"\n")
-	args := []string{configuration, roots, "--files", selected}
-	want := local.must(name+"-go", exec.Command(oracle, args...))
-	got := local.must(name+"-native", exec.Command(binary, args...))
+	commandArguments := []string{configuration, roots, "--files", selected}
+	want := local.must(name+"-go", exec.Command(oracle, commandArguments...))
+	got := local.must(name+"-native", exec.Command(binary, commandArguments...))
 	if err := sixOutputError(local.t.Name(), want.stdout, got.stdout, got.stderr); err != nil {
 		local.t.Fatal(err)
 	}

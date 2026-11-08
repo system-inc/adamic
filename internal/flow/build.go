@@ -29,11 +29,11 @@ func Build(program *ir.Program, function int) *Function {
 	if function >= 0 {
 		for _, parameter := range program.Functions[function].Parameters {
 			if builder.tracked(parameter) {
-				builder.function.Params = append(builder.function.Params, builder.place(parameter))
+				builder.function.Parameters = append(builder.function.Parameters, builder.place(parameter))
 			}
 		}
 		if count := program.Functions[function].ArgumentsCount; count != 0 && builder.tracked(count-1) {
-			builder.function.Params = append(builder.function.Params, builder.place(count-1))
+			builder.function.Parameters = append(builder.function.Parameters, builder.place(count-1))
 		}
 
 	}

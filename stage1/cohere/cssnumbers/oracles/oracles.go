@@ -85,7 +85,14 @@ func AnswerProductInputs(name, identity, tool string, files []string, cases []An
 		Toolchain: tool,
 	}
 }
-func runOracle(test *testing.T, binary string, args []string, input []byte, path string, bounded bool) ([]byte, error) {
+func runOracle(
+	test *testing.T,
+	binary string,
+	commandArguments []string,
+	input []byte,
+	path string,
+	bounded bool,
+) ([]byte, error) {
 	if writeError := os.WriteFile(path, input, 0644); writeError != nil {
 		return nil, writeError
 	}
@@ -98,7 +105,7 @@ func runOracle(test *testing.T, binary string, args []string, input []byte, path
 		ctx, cancel = context.WithCancel(context.Background())
 	}
 	defer cancel()
-	command := toolchain.CommandContextIn(ctx, "", binary, append(append([]string{}, args...), path)...)
+	command := toolchain.CommandContextIn(ctx, "", binary, append(append([]string{}, commandArguments...), path)...)
 	command.Env = nil
 	var stdout, stderr []byte
 	var err error
@@ -123,7 +130,7 @@ func runOracle(test *testing.T, binary string, args []string, input []byte, path
 	}
 	return stdout, nil
 }
-func FullAnswers(test *testing.T, binary string, args []string, data []byte, identity string) []byte {
+func FullAnswers(test *testing.T, binary string, commandArguments []string, data []byte, identity string) []byte {
 	test.Helper()
 	in := CacheInputs(test, Inputs{
 		Name:      "Go oracle answers oracle-owner-v1",
@@ -135,7 +142,7 @@ func FullAnswers(test *testing.T, binary string, args []string, data []byte, ide
 		if !oracleProducer {
 			return fmt.Errorf("settle the Go full-answer owner first")
 		}
-		out, runOracleError := runOracle(test, binary, args, data, filepath.Join(dir, "input.txt"), false)
+		out, runOracleError := runOracle(test, binary, commandArguments, data, filepath.Join(dir, "input.txt"), false)
 		if runOracleError != nil {
 			return runOracleError
 		}
@@ -310,11 +317,11 @@ func Printer(test *testing.T) string {
 		test.Fatal(writeError)
 	}
 	const output = "go-printer-oracle-owner-v1"
-	args := []string{"-overlay=" + overlayPath}
+	commandArguments := []string{"-overlay=" + overlayPath}
 	if oracleProducer {
-		return buildcache.GoBuildIn(test, "cohere", output, mainPath, args)
+		return buildcache.GoBuildIn(test, "cohere", output, mainPath, commandArguments)
 	}
-	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("cohere", output, mainPath, args, nil)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("cohere", output, mainPath, commandArguments, nil)
 	if goBuildInInputsError != nil {
 		test.Fatal(goBuildInInputsError)
 	}

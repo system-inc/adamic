@@ -30,7 +30,7 @@ func TestRecoveryClangMapsTheToolsRoot(test *testing.T) {
 	}
 	work := test.TempDir()
 	own := []string{"-ffile-prefix-map=" + work + "=/adamic-estree", "-fdebug-prefix-map=" + work + "=/adamic-estree"}
-	args := append(
+	commandArguments := append(
 		append(native.Flags(native.Options{Sanitize: true}), own...),
 		"-I",
 		"runtime",
@@ -39,7 +39,7 @@ func TestRecoveryClangMapsTheToolsRoot(test *testing.T) {
 		"port",
 		"-lm",
 	)
-	command := recoveryClang(work, args...)
+	command := recoveryClang(work, commandArguments...)
 	tools := "-ffile-prefix-map=" + installation + "=/adamic-compiler"
 	at := slices.Index(command.Args, tools)
 	if at < 0 {

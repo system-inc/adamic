@@ -19,9 +19,9 @@ import (
 const parserChildStall = 10 * time.Second
 
 // Capture the large corpus in a file while childguard observes output progress.
-func execute(test *testing.T, directory, name string, args ...string) execution {
+func execute(test *testing.T, directory, name string, commandArguments ...string) execution {
 	test.Helper()
-	command := exec.Command(name, args...)
+	command := exec.Command(name, commandArguments...)
 	command.Dir = directory
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
@@ -35,7 +35,7 @@ func execute(test *testing.T, directory, name string, args ...string) execution 
 	runError := childguard.Run(command, childguard.Options{Stall: parserChildStall})
 	duration := time.Since(started)
 	if runError != nil || stderr.Len() != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	data, readError := os.ReadFile(output.Name())
 	if readError != nil {

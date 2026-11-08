@@ -58,10 +58,10 @@ func expressionGateShard(test *testing.T, number int) {
 	defer cancel()
 	started := time.Now()
 	defer func() { test.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
-	runCommand := func(environment []string, name string, args ...string) oracles.Run {
-		return tscAgreementExecute(test, timeoutContext, environment, name, args...)
+	runCommand := func(environment []string, name string, commandArguments ...string) oracles.Run {
+		return tscAgreementExecute(test, timeoutContext, environment, name, commandArguments...)
 	}
-	node := func(path string, args ...string) oracles.Run {
+	node := func(path string, commandArguments ...string) oracles.Run {
 		runner, absolutePathError := filepath.Abs(filepath.Join(oracles.Repository, "oracle/node.mjs"))
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)
@@ -69,7 +69,7 @@ func expressionGateShard(test *testing.T, number int) {
 		return runCommand(
 			nil,
 			"node",
-			append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...,
+			append([]string{"--disable-warning=ExperimentalWarning", runner, path}, commandArguments...)...,
 		)
 	}
 	if number < len(plan.Shards) {

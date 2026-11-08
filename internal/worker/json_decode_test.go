@@ -38,15 +38,15 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 		test.Fatal(absolutePathError)
 	}
 	jsonTypesPath := ""
-	run := func(name string, args ...string) []byte {
+	run := func(name string, commandArguments ...string) []byte {
 		test.Helper()
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 		defer cancel()
-		command := exec.CommandContext(timeoutContext, name, args...)
+		command := exec.CommandContext(timeoutContext, name, commandArguments...)
 		command.Dir = root
 		if name == "node" {
-			for index, arg := range args {
-				if arg == "oracle/node.mjs" && index+1 < len(args) {
+			for index, argument := range commandArguments {
+				if argument == "oracle/node.mjs" && index+1 < len(commandArguments) {
 					if jsonTypesPath == "" {
 						jsonTypesPath = jsonTypes(test)
 					}
@@ -58,7 +58,7 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 		command.Stdout = &stdout
 		command.Stderr = &stderr
 		if runError := command.Run(); runError != nil {
-			test.Fatalf("%s %v: %v\nstdout: %s\nstderr: %s", name, args, runError, &stdout, &stderr)
+			test.Fatalf("%s %v: %v\nstdout: %s\nstderr: %s", name, commandArguments, runError, &stdout, &stderr)
 		}
 		return stdout.Bytes()
 	}
@@ -90,18 +90,18 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 				fixture,
 			); name == "json_decode_empty_object.a" || name == "json_decode_coverage_empty.a" {
 				compiler := workerCompilerProduct(test, nil, false)
-				for _, args := range [][]string{
+				for _, commandArguments := range [][]string{
 					{"worker", entry, "--out", generated},
 					{"build", fixture, "-o", filepath.Join(directory, "native")},
 				} {
-					command := exec.Command(compiler, args...)
+					command := exec.Command(compiler, commandArguments...)
 					command.Dir = root
 					output, combinedOutputError := command.CombinedOutput()
 					if combinedOutputError == nil ||
 						!bytes.Contains(output, []byte("stage 0 can't lower Object.keys on a non-object yet")) {
 						test.Fatalf(
 							"want main's empty-object enumeration NotYet for %v: %v\n%s",
-							args,
+							commandArguments,
 							combinedOutputError,
 							output,
 						)

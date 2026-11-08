@@ -324,7 +324,7 @@ func runtimeNotYetCommand(
 	test *testing.T,
 	stale, alreadyAccepted bool,
 	rewrite func(*runtimeNotYetStopList),
-	args ...string,
+	commandArguments ...string,
 ) observation {
 	test.Helper()
 	dir, _, base, head := commandFixture(test)
@@ -385,7 +385,7 @@ func runtimeNotYetCommand(
 	}
 	return invokeCommand(test, dir, append(
 		[]string{"--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--corpus", "corpus"},
-		args...,
+		commandArguments...,
 	)...)
 }
 func runtimeNotYetReport(test *testing.T, observation observation) report {

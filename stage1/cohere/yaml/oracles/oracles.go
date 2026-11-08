@@ -40,8 +40,8 @@ func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(string)
 		return build(directory)
 	})
 }
-func oracleCommand(callerContext context.Context, binary string, args ...string) ([]byte, error) {
-	command := toolchain.CommandContextIn(callerContext, "", binary, args...)
+func oracleCommand(callerContext context.Context, binary string, commandArguments ...string) ([]byte, error) {
+	command := toolchain.CommandContextIn(callerContext, "", binary, commandArguments...)
 	// The built program inherits the same environment as the original command.
 	command.Env = nil
 	var out, outError bytes.Buffer

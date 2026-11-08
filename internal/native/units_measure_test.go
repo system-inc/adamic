@@ -81,25 +81,25 @@ func TestMeasureClangUnits(test *testing.T) {
 			if writeError := os.WriteFile(filename, []byte(source), 0644); writeError != nil {
 				test.Fatal(writeError)
 			}
-			args := sourceFlags(source, options)
+			commandArguments := sourceFlags(source, options)
 			if trace {
-				args = append(
-					args,
+				commandArguments = append(
+					commandArguments,
 					"-ftime-trace="+filepath.Join(directory, program+"-"+loop+".json"),
 					"-ftime-trace-granularity=500",
 				)
 			}
-			args = append(args, "-I", filepath.Dir(library), "-o", binary, filename)
-			args = append(args, RuntimeLinkFlags(library)...)
+			commandArguments = append(commandArguments, "-I", filepath.Dir(library), "-o", binary, filename)
+			commandArguments = append(commandArguments, RuntimeLinkFlags(library)...)
 			if program == "cohere-typeaware" {
-				args = append(args, filepath.Join(directory, "tsgo.a"), "-lpthread", "-ldl")
+				commandArguments = append(commandArguments, filepath.Join(directory, "tsgo.a"), "-lpthread", "-ldl")
 			}
-			args = append(args, "-lm")
-			command = "clang " + strings.Join(args, " ")
+			commandArguments = append(commandArguments, "-lm")
+			command = "clang " + strings.Join(commandArguments, " ")
 			started = time.Now()
 			if data, combinedOutputError := toolchain.Command(
 				"clang",
-				args...,
+				commandArguments...,
 			).CombinedOutput(); combinedOutputError != nil {
 				test.Fatalf("clang: %v\n%s", combinedOutputError, data)
 			}

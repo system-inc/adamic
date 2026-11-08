@@ -355,14 +355,14 @@ func runWorkerdCorpusShard(test *testing.T, shard int, wasm bool) {
 	write(test, requestPath, strings.Join(selectedRequests, "\n")+"\n")
 	write(test, responsePath, strings.Join(selectedResponses, "\n")+"\n")
 	replay := filepath.Join(root, "workers/replay.mjs")
-	for _, args := range [][]string{
+	for _, commandArguments := range [][]string{
 		{filepath.Join(root, "workers/compute/twin/worker.ts"), requestPath, "--compare", responsePath},
 		{"--url", "http://" + server.address, requestPath, "--compare", responsePath},
 	} {
 		command := exec.CommandContext(
 			test.Context(),
 			"node",
-			append([]string{"--disable-warning=ExperimentalWarning", replay}, args...)...,
+			append([]string{"--disable-warning=ExperimentalWarning", replay}, commandArguments...)...,
 		)
 		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 			test.Fatalf("corpus: %v\n%s", combinedOutputError, output)

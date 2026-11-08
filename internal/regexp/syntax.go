@@ -59,9 +59,9 @@ type Dot struct{}
 // Quantifier applies arbitrary-precision ECMAScript integer bounds to Atom.
 // Max is nil for an unbounded quantifier.
 type Quantifier struct {
-	Atom     Node
-	Min, Max *big.Int
-	Greedy   bool
+	Atom         Node
+	Min, Maximum *big.Int
+	Greedy       bool
 }
 
 // Group includes capturing, lookaround and ordinary non-capturing groups.

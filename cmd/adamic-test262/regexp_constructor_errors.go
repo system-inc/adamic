@@ -36,13 +36,13 @@ func regexpPureConstructor(tokens []token, start, end, depth int) (string, strin
 	if start >= end || tokens[start].text != "RegExp" {
 		return "", "", 0, false
 	}
-	args, close, ok := tokenArguments(tokens, start+1)
-	if !ok || close >= end || len(args) > 2 {
+	arguments, close, ok := tokenArguments(tokens, start+1)
+	if !ok || close >= end || len(arguments) > 2 {
 		return "", "", 0, false
 	}
 	pattern, flags := "", ""
-	if len(args) > 0 {
-		a := args[0]
+	if len(arguments) > 0 {
+		a := arguments[0]
 		if a[1]-a[0] == 1 && tokens[a[0]].text == "undefined" {
 		} else if a[1]-a[0] == 1 {
 			pattern, ok = regexpStringToken(tokens[a[0]])
@@ -64,8 +64,8 @@ func regexpPureConstructor(tokens []token, start, end, depth int) (string, strin
 			}
 		}
 	}
-	if len(args) > 1 {
-		a := args[1]
+	if len(arguments) > 1 {
+		a := arguments[1]
 		if a[1]-a[0] != 1 {
 			return "", "", 0, false
 		}
@@ -123,11 +123,11 @@ func adaptRegExpConstructorErrors(source string) adapted {
 		if next+2 >= b || tokens[next].text != "." || tokens[next+1].text != "exec" {
 			return unchanged
 		}
-		args, end, ok := tokenArguments(tokens, next+2)
-		if !ok || len(args) != 1 || end != b-1 || args[0][1]-args[0][0] != 1 {
+		arguments, end, ok := tokenArguments(tokens, next+2)
+		if !ok || len(arguments) != 1 || end != b-1 || arguments[0][1]-arguments[0][0] != 1 {
 			return unchanged
 		}
-		if _, ok = regexpStringToken(tokens[args[0][0]]); !ok {
+		if _, ok = regexpStringToken(tokens[arguments[0][0]]); !ok {
 			return unchanged
 		}
 		next = end + 1
@@ -159,21 +159,21 @@ func adaptRegExpConstructorErrors(source string) adapted {
 	if at+1 >= len(tokens) || tokens[at].text != "sameValue" {
 		return unchanged
 	}
-	args, end, ok := tokenArguments(tokens, at+1)
-	if !ok || len(args) != 3 {
+	arguments, end, ok := tokenArguments(tokens, at+1)
+	if !ok || len(arguments) != 3 {
 		return unchanged
 	}
-	first := args[0]
+	first := arguments[0]
 	if first[1]-first[0] != 3 ||
 		tokens[first[0]].text != name ||
 		tokens[first[0]+1].text != "instanceof" ||
 		tokens[first[0]+2].text != "SyntaxError" {
 		return unchanged
 	}
-	if args[1][1]-args[1][0] != 1 ||
-		tokens[args[1][0]].text != "true" ||
-		args[2][1]-args[2][0] != 1 ||
-		tokens[args[2][0]].kind != "str" {
+	if arguments[1][1]-arguments[1][0] != 1 ||
+		tokens[arguments[1][0]].text != "true" ||
+		arguments[2][1]-arguments[2][0] != 1 ||
+		tokens[arguments[2][0]].kind != "str" {
 		return unchanged
 	}
 	end++
@@ -191,6 +191,6 @@ func adaptRegExpConstructorErrors(source string) adapted {
 		", " +
 		string(f) +
 		"); }, " +
-		tokens[args[2][0]].text +
+		tokens[arguments[2][0]].text +
 		");", Counts: counts}
 }

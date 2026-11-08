@@ -74,9 +74,9 @@ func programHostMeasurement(test *testing.T, sample int) {
 	truth := onNode(test, absolute)
 	for _, enabled := range []bool{false, true} {
 		binary := filepath.Join(programHostMeasuredBuild(test, enabled), "host")
-		name, args := pinnedStack("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary)
+		name, commandArguments := pinnedStack("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary)
 		started := time.Now()
-		result := execute(test, name, args...)
+		result := execute(test, name, commandArguments...)
 		seconds := time.Since(started).Seconds()
 		match := countsLine.FindSubmatch(result.stderr)
 		rss := graphRss.FindSubmatch(result.stdout)

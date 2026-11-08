@@ -49,8 +49,8 @@ func programRegionCountCase(relative string) {
 				); programRegionBuildError != nil {
 					test.Fatal(programRegionBuildError)
 				}
-				name, args := pinnedStack(binary)
-				result := execute(test, name, args...)
+				name, commandArguments := pinnedStack(binary)
+				result := execute(test, name, commandArguments...)
 				if report := leakcheck.Unbalanced(leakRun(result)); report != "" {
 					test.Fatal(report)
 				}

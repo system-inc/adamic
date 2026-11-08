@@ -19,8 +19,8 @@ import (
 )
 
 const (
-	wholeMutantsInputsEnv    = "ADAMIC_WHOLE_MUTANTS_INPUTS"
-	wholeMutantsCaseChildEnv = "ADAMIC_WHOLE_MUTANTS_CASE_CHILD"
+	wholeMutantsInputsEnvironment    = "ADAMIC_WHOLE_MUTANTS_INPUTS"
+	wholeMutantsCaseChildEnvironment = "ADAMIC_WHOLE_MUTANTS_CASE_CHILD"
 )
 
 type wholeMutantsPreparedInputs struct {
@@ -34,7 +34,7 @@ var wholeMutantsPrepareOnce sync.Once
 
 // Children receive the parent's ready products, never a setup-test prerequisite.
 func TestMain(suite *testing.M) {
-	if descriptor := os.Getenv(wholeMutantsInputsEnv); descriptor != "" {
+	if descriptor := os.Getenv(wholeMutantsInputsEnvironment); descriptor != "" {
 		data, err := os.ReadFile(descriptor)
 		if err == nil {
 			err = json.Unmarshal(data, &wholeMutantsPrepared)
@@ -185,7 +185,7 @@ func wholeMutantsRunShard(test *testing.T, index int) {
 		test.Skip("assigned to another ADAMIC_TEST_SHARD")
 	}
 	wholeMutantsPrepare(test)
-	if os.Getenv(wholeMutantsCaseChildEnv) == "1" {
+	if os.Getenv(wholeMutantsCaseChildEnvironment) == "1" {
 		wholeMutantsShard(test, index)
 		return
 	}
@@ -200,7 +200,7 @@ func wholeMutantsRunShard(test *testing.T, index int) {
 		"-test.v",
 		"-test.timeout=90s",
 	)
-	command.Env = append(environment, wholeMutantsCaseChildEnv+"=1")
+	command.Env = append(environment, wholeMutantsCaseChildEnvironment+"=1")
 	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
 	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
@@ -230,9 +230,9 @@ func wholeMutantsChildEnvironment(test *testing.T) []string {
 	}
 	var environment []string
 	for _, entry := range os.Environ() {
-		if !strings.HasPrefix(entry, wholeMutantsInputsEnv+"=") {
+		if !strings.HasPrefix(entry, wholeMutantsInputsEnvironment+"=") {
 			environment = append(environment, entry)
 		}
 	}
-	return append(environment, wholeMutantsInputsEnv+"="+descriptor)
+	return append(environment, wholeMutantsInputsEnvironment+"="+descriptor)
 }

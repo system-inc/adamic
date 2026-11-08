@@ -290,7 +290,7 @@ func (lowering *lowering) clearOrVisit(
 		return ir.MapClear{Map: collection}, true, nil
 	}
 	if len(arguments) == 2 {
-		return lowering.libraryForEachThisArg(node, receiver, set)
+		return lowering.libraryForEachThisArgument(node, receiver, set)
 	}
 	if len(arguments) != 1 {
 		return nil, true, lowering.notYet(node, "forEach with other than one callback")

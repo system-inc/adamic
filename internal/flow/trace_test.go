@@ -578,7 +578,7 @@ func checkDefinitionsRan(test *testing.T, path string, run run) {
 		// ran is, per variable, the definitions that may have run last: one, unless an instruction
 		// that may throw was followed by a point both its ways lead to, and then either.
 		ran := map[DeclarationId][]site{}
-		for index, parameter := range graph.Params {
+		for index, parameter := range graph.Parameters {
 			ran[declaration(parameter)] = []site{{-1, index}}
 		}
 		for position, id := range sequence.points {

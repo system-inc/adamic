@@ -56,17 +56,17 @@ func statementPrepareCommon(test *testing.T, shards *oracles.StatementGateShards
 		len(shards.Shards),
 	)
 	return statementSharedProducts{
-		Cases:       shards.Cases,
-		Want:        shards.Want,
-		Specs:       shards.Specs,
-		Port:        port,
-		LoweredDir:  loweredDirectory,
-		Binary:      binary,
-		Release:     release,
-		Library:     library,
-		LibraryHash: libraryHash,
-		Elapsed:     elapsed,
-		Shards:      shards,
+		Cases:            shards.Cases,
+		Want:             shards.Want,
+		Specs:            shards.Specs,
+		Port:             port,
+		LoweredDirectory: loweredDirectory,
+		Binary:           binary,
+		Release:          release,
+		Library:          library,
+		LibraryHash:      libraryHash,
+		Elapsed:          elapsed,
+		Shards:           shards,
 	}
 }
 
@@ -83,7 +83,7 @@ func statementAgainstGoAndPrettierShard(test *testing.T, shardNumber int) {
 	shard := products.Shards.Shard(test, shardNumber)
 	port := products.Port
 	binary, release, library := products.Binary, products.Release, products.Library
-	loweredDirectory := products.LoweredDir
+	loweredDirectory := products.LoweredDirectory
 
 	gapInput := ">const x:number=1;\n>const {x}=value;\n>export const x=1;\n>if(x)f();\n>#!/usr/bin/env node\\nf();\n"
 	gapWant := "notyet\tvariable-types\nnotyet\tvariable-pattern\nnotyet\tvariable-modifiers\nnotyet\tIfStatement\nnotyet\tcomment-attachment\n"

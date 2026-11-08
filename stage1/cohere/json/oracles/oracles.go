@@ -38,26 +38,26 @@ func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(string)
 func stockOracle(
 	t *testing.T,
 	output, packagePath string,
-	args []string,
+	commandArguments []string,
 	mutations []buildcache.Mutation,
 	test bool,
 ) string {
 	t.Helper()
 	if oracleProducer {
 		if !test {
-			return buildcache.GoBuildIn(t, "cohere", output, packagePath, args)
+			return buildcache.GoBuildIn(t, "cohere", output, packagePath, commandArguments)
 		}
 		if len(mutations) == 0 {
-			return buildcache.GoTest(t, "cohere", output, packagePath, args)
+			return buildcache.GoTest(t, "cohere", output, packagePath, commandArguments)
 		}
-		return buildcache.GoTestMutated(t, "cohere", output, packagePath, args, mutations)
+		return buildcache.GoTestMutated(t, "cohere", output, packagePath, commandArguments, mutations)
 	}
 	var inputs buildcache.Inputs
 	var err error
 	if test {
-		inputs, err = buildcache.GoTestInputs("cohere", output, packagePath, args, mutations)
+		inputs, err = buildcache.GoTestInputs("cohere", output, packagePath, commandArguments, mutations)
 	} else {
-		inputs, err = buildcache.GoBuildInInputs("cohere", output, packagePath, args, mutations)
+		inputs, err = buildcache.GoBuildInInputs("cohere", output, packagePath, commandArguments, mutations)
 	}
 	if err != nil {
 		t.Fatal(err)
@@ -351,8 +351,8 @@ type execution struct {
 	exitCode       int
 }
 
-func executeResult(_ []string, binary string, args ...string) (execution, error) {
-	command := toolchain.CommandIn("", binary, args...)
+func executeResult(_ []string, binary string, commandArguments ...string) (execution, error) {
+	command := toolchain.CommandIn("", binary, commandArguments...)
 	command.Env = nil
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr

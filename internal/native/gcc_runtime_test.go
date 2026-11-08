@@ -96,14 +96,14 @@ func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 		if !found {
 			return fmt.Errorf("runtime unit disappeared: %s", name)
 		}
-		args := append(
+		commandArguments := append(
 			append(slices.Clone(flags), prefixMaps(directory, "/adamic-runtime")...),
 			"-c",
 			name,
 			"-o",
 			"unit.o",
 		)
-		command, release := boundedrun.Command(45*time.Second, compiler, args...)
+		command, release := boundedrun.Command(45*time.Second, compiler, commandArguments...)
 		defer release()
 		command.Dir = directory
 		output, combinedOutputError := command.CombinedOutput()

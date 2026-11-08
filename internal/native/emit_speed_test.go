@@ -80,11 +80,11 @@ func initializerCompiledWitness(test *testing.T, entry string, program *ir.Progr
 	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	run := func(command string, args ...string) []byte {
+	run := func(command string, commandArguments ...string) []byte {
 		test.Helper()
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
-		osCommand := exec.CommandContext(timeoutContext, command, args...)
+		osCommand := exec.CommandContext(timeoutContext, command, commandArguments...)
 		osCommand.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 		out, outputError := osCommand.Output()
 		if outputError != nil {

@@ -37,12 +37,12 @@ func executeShards(test *testing.T, environment []string, name string, arguments
 		group.Add(1)
 		go func(number int, shard oracles.CorpusShard) {
 			defer group.Done()
-			args := append([]string(nil), arguments...)
-			args[position] = shard.Text
+			commandArguments := append([]string(nil), arguments...)
+			commandArguments[position] = shard.Text
 			if filepath.Ext(path) == ".json" {
-				args[position] = shard.Specs
+				commandArguments[position] = shard.Specs
 			}
-			results[number] = executeOne(test, environment, name, args...)
+			results[number] = executeOne(test, environment, name, commandArguments...)
 			outputs[number] = results[number].Stdout
 		}(number, shard)
 	}

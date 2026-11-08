@@ -34,8 +34,8 @@ func init() {
 					string(manifest)
 				return countPortable(test, runs, ""), func() string {
 					binary := filepath.Join(programParseBuild(test, enabled), "parse")
-					name, args := pinnedStack(binary, programParseArguments(test)...)
-					result := execute(test, name, args...)
+					name, commandArguments := pinnedStack(binary, programParseArguments(test)...)
+					result := execute(test, name, commandArguments...)
 					match := countsLine.FindSubmatch(result.stderr)
 					if result.exitCode != 0 || match == nil {
 						test.Fatalf("parse counts: %d %s", result.exitCode, result.stderr)

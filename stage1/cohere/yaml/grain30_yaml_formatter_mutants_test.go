@@ -71,8 +71,12 @@ func formatterMutantsDeadline(test *testing.T) func() {
 
 // Commands share their unit's deadline. Kill the entire process group rather than
 // leaving children behind.
-func formatterMutantsCommand(callerContext context.Context, directory, name string, args ...string) ([]byte, error) {
-	command := exec.CommandContext(callerContext, name, args...)
+func formatterMutantsCommand(
+	callerContext context.Context,
+	directory, name string,
+	commandArguments ...string,
+) ([]byte, error) {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.Dir = directory
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run
@@ -84,7 +88,7 @@ func formatterMutantsCommand(callerContext context.Context, directory, name stri
 		} else if absolute, absolutePathError := filepath.Abs(directory); absolutePathError != nil {
 			command.Err = absolutePathError
 		} else {
-			command = exec.CommandContext(callerContext, path, args...)
+			command = exec.CommandContext(callerContext, path, commandArguments...)
 			command.Dir = directory
 			command.Env = append(toolchain.Env(), "PWD="+absolute)
 		}
@@ -257,13 +261,18 @@ func formatterMutantsShard(test *testing.T, index int) {
 		test.Fatal(absolutePathError)
 	}
 	for _, side := range []struct {
-		name, command string
-		args          []string
+		name, command    string
+		commandArguments []string
 	}{
 		{"native", filepath.Join(product, "mutant"), []string{"--cases", cases}},
 		{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, "--cases", cases}},
 	} {
-		out, formatterMutantsCommandError := formatterMutantsCommand(timeoutContext, "", side.command, side.args...)
+		out, formatterMutantsCommandError := formatterMutantsCommand(
+			timeoutContext,
+			"",
+			side.command,
+			side.commandArguments...,
+		)
 		if formatterMutantsCommandError != nil {
 			test.Fatal(formatterMutantsCommandError)
 		}

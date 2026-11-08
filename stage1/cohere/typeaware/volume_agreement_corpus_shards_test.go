@@ -283,12 +283,16 @@ func volumeAgreementCorpusCompare(
 		allPaths = append(allPaths, file.path)
 	}
 	all := harness.write("program-roots.manifest", strings.Join(allPaths, "\n")+"\n")
-	args := []string{configuration, manifest, "--program-roots", all}
+	commandArguments := []string{configuration, manifest, "--program-roots", all}
 	if len(rules) != 0 {
-		args = append(args, "--rules", harness.write("rules.manifest", strings.Join(rules, "\n")+"\n"))
+		commandArguments = append(
+			commandArguments,
+			"--rules",
+			harness.write("rules.manifest", strings.Join(rules, "\n")+"\n"),
+		)
 	}
-	truth := volumeGuardMust(harness, kind+"-"+mode+"-go", exec.Command(oracle, args...))
-	got := volumeGuardMust(harness, kind+"-"+mode+"-native", exec.Command(binary, args...))
+	truth := volumeGuardMust(harness, kind+"-"+mode+"-go", exec.Command(oracle, commandArguments...))
+	got := volumeGuardMust(harness, kind+"-"+mode+"-native", exec.Command(binary, commandArguments...))
 	if len(got.stderr) != 0 || !bytes.Equal(got.stdout, truth.stdout) {
 		test.Fatalf("%s %s mismatch byte %d: %s", kind, mode, firstDifference(got.stdout, truth.stdout), got.stderr)
 	}

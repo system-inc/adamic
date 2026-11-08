@@ -350,10 +350,10 @@ func dotARenameUnion(test *testing.T) {
 	}
 	names := map[string]bool{}
 	for _, declaration := range file.Decls {
-		if fn, ok := declaration.(*ast.FuncDecl); ok &&
-			strings.HasPrefix(fn.Name.Name, "TestDotARename_") &&
-			fn.Name.Name != "TestDotARename_Setup" {
-			names[fn.Name.Name] = true
+		if function, ok := declaration.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(function.Name.Name, "TestDotARename_") &&
+			function.Name.Name != "TestDotARename_Setup" {
+			names[function.Name.Name] = true
 		}
 	}
 	if len(names) != testDotARenameShards {
@@ -406,8 +406,8 @@ func dotARenameReady(test *testing.T, renamed bool) dotARenameProducts {
 // copying under a five-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF five seconds
 // after the child exited, which a probe counted as a caught shard with its output cut short (#n3gk22h's shape). Each
 // caller's 10 s deadline ends a hung child.
-func dotARenameChild(callerContext context.Context, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, os.Args[0], args...)
+func dotARenameChild(callerContext context.Context, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, os.Args[0], commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)

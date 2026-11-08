@@ -182,8 +182,8 @@ func textSplittingShard(test *testing.T, shard int) {
 	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
 		fast := products.release
 		for _, side := range []struct {
-			name, command string
-			args          []string
+			name, command    string
+			commandArguments []string
 		}{
 			{"Go", goBinary, []string{cases}},
 			{"native", fast, []string{cases}},
@@ -191,7 +191,7 @@ func textSplittingShard(test *testing.T, shard int) {
 		} {
 			started := time.Now()
 			for index := 0; index < 3; index++ {
-				run := textExecute(test, nil, side.command, side.args...)
+				run := textExecute(test, nil, side.command, side.commandArguments...)
 				clean(test, side.name, run)
 				equal(test, side.name, run.stdout, want.stdout)
 			}

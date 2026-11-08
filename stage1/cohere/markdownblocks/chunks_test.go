@@ -168,8 +168,8 @@ func TestMicromarkInputChunks(test *testing.T) {
 		})
 	}
 	for _, side := range []struct {
-		name, command string
-		args          []string
+		name, command    string
+		commandArguments []string
 	}{
 		{"actual Go", goBinary, []string{cases}},
 		{"native", fast, []string{cases}},
@@ -177,7 +177,7 @@ func TestMicromarkInputChunks(test *testing.T) {
 	} {
 		started := time.Now()
 		for index := 0; index < 3; index++ {
-			result := execute(test, nil, side.command, side.args...)
+			result := execute(test, nil, side.command, side.commandArguments...)
 			clean(test, side.name, result)
 			equal(test, side.name, result.stdout, want.stdout)
 		}

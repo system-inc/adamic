@@ -372,11 +372,11 @@ func compilationEmission(test *testing.T, inputs buildcache.Inputs, kind string)
 // the entire process group so compiler descendants cannot outlive the deadline.
 // No WaitDelay: its caller writes both streams to files, so exec copies nothing
 // and Wait returns when the child does; the group kill is the whole bound.
-func compilationCommand(test *testing.T, name string, args ...string) *exec.Cmd {
+func compilationCommand(test *testing.T, name string, commandArguments ...string) *exec.Cmd {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	test.Cleanup(cancel)
-	command := exec.CommandContext(timeoutContext, name, args...)
+	command := exec.CommandContext(timeoutContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)

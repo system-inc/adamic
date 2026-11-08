@@ -318,12 +318,13 @@ func (lowering *lowering) sameIterationClass(actual, expected *checker.Type) boo
 	if len(left) != len(right) {
 		return false
 	}
-	for index, arg := range left {
+	for index, argument := range left {
 		other := right[index]
-		if !lowering.checker.IsTypeAssignableTo(arg, other) || !lowering.checker.IsTypeAssignableTo(other, arg) {
+		if !lowering.checker.IsTypeAssignableTo(argument, other) ||
+			!lowering.checker.IsTypeAssignableTo(other, argument) {
 			return false
 		}
-		if (isClassInstance(arg) || isClassInstance(other)) && arg.Symbol() != other.Symbol() {
+		if (isClassInstance(argument) || isClassInstance(other)) && argument.Symbol() != other.Symbol() {
 			return false
 		}
 	}

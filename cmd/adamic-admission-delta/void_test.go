@@ -62,7 +62,7 @@ func TestGivenSeedReplacesHead(test *testing.T) {
 func TestSeedIsRecorded(test *testing.T) {
 	test.Parallel()
 	dir, sha, _, head := commandFixture(test)
-	args := []string{
+	commandArguments := []string{
 		"--base",
 		sha,
 		"--head",
@@ -79,9 +79,9 @@ func TestSeedIsRecorded(test *testing.T) {
 	for _, testCase := range []struct {
 		given, want string
 	}{{"", hex.EncodeToString(digest[:])}, {"00112233445566778899", "00112233445566778899"}} {
-		run := args
+		run := commandArguments
 		if testCase.given != "" {
-			run = append(append([]string(nil), args...), "--seed", testCase.given)
+			run = append(append([]string(nil), commandArguments...), "--seed", testCase.given)
 		}
 		observation := invokeCommand(test, dir, run...)
 		var report report
@@ -102,7 +102,7 @@ func TestSeedIsRecorded(test *testing.T) {
 	if observation := invokeCommand(
 		test,
 		dir,
-		append(args, "--seed", "not-hex")...,
+		append(commandArguments, "--seed", "not-hex")...,
 	); observation.Exit != 1 || !strings.Contains(observation.Stderr, "must be hex") {
 		test.Fatalf("a bad seed ran: exit %d %s", observation.Exit, observation.Stderr)
 	}
@@ -152,7 +152,7 @@ func TestTimeoutsAndMissingToolchainAreVoid(test *testing.T) {
 			if testCase.environment != nil {
 				environment = testCase.environment(test)
 			}
-			args := append([]string{
+			commandArguments := append([]string{
 				"--base",
 				sha,
 				"--head",
@@ -165,7 +165,7 @@ func TestTimeoutsAndMissingToolchainAreVoid(test *testing.T) {
 				filepath.Join(dir, "manifest.json"),
 				"--json",
 			}, testCase.extra...)
-			observation := invokeCommandWith(test, dir, environment, args...)
+			observation := invokeCommandWith(test, dir, environment, commandArguments...)
 			var report report
 			if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
 				test.Fatalf("%v: %s %s", decodeError, observation.Stdout, observation.Stderr)
@@ -230,8 +230,8 @@ func TestUnrecognisedCompilerErrorStaysRed(test *testing.T) {
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
-	for _, args := range [][]string{{"add", "corpus/slow.a"}, {"commit", "-qm", "slow"}} {
-		if _, gitError := git(dir, args...); gitError != nil {
+	for _, commandArguments := range [][]string{{"add", "corpus/slow.a"}, {"commit", "-qm", "slow"}} {
+		if _, gitError := git(dir, commandArguments...); gitError != nil {
 			test.Fatal(gitError)
 		}
 	}

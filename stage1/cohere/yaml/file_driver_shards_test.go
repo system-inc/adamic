@@ -250,11 +250,17 @@ func TestFileDriver_007(test *testing.T) {
 // exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the child exited, so a Go oracle, native or
 // Node run that had finished could fail its shard under load (#n3gk22h's shape). The run's 90 s deadline ends a hung
 // one.
-func fileDriverRun(test *testing.T, directory string, environment []string, name string, args ...string) []byte {
+func fileDriverRun(
+	test *testing.T,
+	directory string,
+	environment []string,
+	name string,
+	commandArguments ...string,
+) []byte {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := exec.CommandContext(timeoutContext, name, args...)
+	command := exec.CommandContext(timeoutContext, name, commandArguments...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
 	if !strings.ContainsRune(name, filepath.Separator) {
@@ -267,7 +273,7 @@ func fileDriverRun(test *testing.T, directory string, environment []string, name
 		} else if absolute, absolutePathError := filepath.Abs(directory); absolutePathError != nil {
 			command.Err = absolutePathError
 		} else {
-			command = exec.CommandContext(timeoutContext, path, args...)
+			command = exec.CommandContext(timeoutContext, path, commandArguments...)
 			command.Dir = directory
 			command.Env = append(toolchain.Env(environment...), "PWD="+absolute)
 		}

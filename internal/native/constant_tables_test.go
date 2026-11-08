@@ -52,11 +52,11 @@ func constantTableConfiguredWitness(
 	); buildError != nil {
 		test.Fatal(buildError)
 	}
-	run := func(name string, args ...string) (string, string) {
+	run := func(name string, commandArguments ...string) (string, string) {
 		test.Helper()
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
-		command := exec.CommandContext(timeoutContext, name, args...)
+		command := exec.CommandContext(timeoutContext, name, commandArguments...)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 		var out, errors bytes.Buffer
 		command.Stdout = &out

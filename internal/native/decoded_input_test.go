@@ -166,20 +166,20 @@ func checkDecodedInput(test *testing.T, data []byte) {
 	directory := decodedBackendProduct(test)
 	for _, backend := range []string{"native", "JavaScript"} {
 		var commandName string
-		var args []string
+		var commandArguments []string
 		if backend == "native" {
 			commandName = filepath.Join(directory, "program")
-			args = []string{path}
+			commandArguments = []string{path}
 		} else {
 			commandName = "node"
-			args = []string{
+			commandArguments = []string{
 				"--disable-warning=ExperimentalWarning",
 				"../../oracle/node.mjs",
 				filepath.Join(directory, "program.mjs"),
 				path,
 			}
 		}
-		run, release := boundedrun.Command(10*time.Second, commandName, args...)
+		run, release := boundedrun.Command(10*time.Second, commandName, commandArguments...)
 		run.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
 		stdout.Reset()
 		stderr.Reset()

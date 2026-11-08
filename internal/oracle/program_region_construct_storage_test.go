@@ -86,8 +86,8 @@ func TestProgramRegionConstructedMemberStorage(test *testing.T) {
 		BuildCounted: func(code, output string) error {
 			return programRegionBuild(test, code, output, native.Options{ProgramRegion: true, Count: true})
 		},
-		Execute: func(environment []string, name string, args ...string) leakcheck.Run {
-			return leakRun(executeWith(test, environment, name, args...))
+		Execute: func(environment []string, name string, commandArguments ...string) leakcheck.Run {
+			return leakRun(executeWith(test, environment, name, commandArguments...))
 		},
 	})
 	if checkError != nil || report != "" {
@@ -103,8 +103,8 @@ func TestProgramRegionConstructedMemberStorage(test *testing.T) {
 	); programRegionBuildError != nil {
 		test.Fatal(programRegionBuildError)
 	}
-	command, args := pinnedStack(countedBinary)
-	counted := execute(test, command, args...)
+	command, commandArguments := pinnedStack(countedBinary)
+	counted := execute(test, command, commandArguments...)
 	observed := counted
 	observed.stderr = leakcheck.CountsLine.ReplaceAll(counted.stderr, nil)
 	if difference := disagreement(oracle, observed); difference != "" {

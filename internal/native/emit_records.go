@@ -6,9 +6,9 @@ import (
 )
 
 func (nativeEmitter *emitter) recordCall(call ir.RecordCall) string {
-	args := make([]string, len(call.Arguments))
+	commandArguments := make([]string, len(call.Arguments))
 	for index, argument := range call.Arguments {
-		args[index] = nativeEmitter.value(argument)
+		commandArguments[index] = nativeEmitter.value(argument)
 	}
 	switch call.Method {
 	case "get":
@@ -17,7 +17,7 @@ func (nativeEmitter *emitter) recordCall(call ir.RecordCall) string {
 		if call.OwnOnly {
 			lookup = "adamic_record_get_own"
 		}
-		nativeEmitter.line("adamic_value *%s = %s(%s, %s);", slot, lookup, args[0], args[1])
+		nativeEmitter.line("adamic_value *%s = %s(%s, %s);", slot, lookup, commandArguments[0], commandArguments[1])
 		if call.Returns.IsMaybe() {
 			return nativeEmitter.snapshot(call.Returns, maybeSlot(call.Element, slot))
 		}
@@ -26,42 +26,51 @@ func (nativeEmitter *emitter) recordCall(call ir.RecordCall) string {
 			fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->reference)", slot, slot),
 		)
 	case "set":
-		value := nativeEmitter.snapshot(call.Element, args[2])
+		value := nativeEmitter.snapshot(call.Element, commandArguments[2])
 		nativeEmitter.recordSet(
-			args[0],
-			retained(args[1]),
+			commandArguments[0],
+			retained(commandArguments[1]),
 			held(call.Element, value),
-			args[1],
+			commandArguments[1],
 			nativeEmitter.program.RecordWriteMayThrow(call),
 		)
 		return value
 	case "delete":
 		if !nativeEmitter.program.RecordWriteMayThrow(call) {
-			return nativeEmitter.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_delete(%s, %s)", args[0], args[1]))
+			return nativeEmitter.snapshot(
+				ir.Boolean,
+				fmt.Sprintf("adamic_record_delete(%s, %s)", commandArguments[0], commandArguments[1]),
+			)
 		}
 		deleted := nativeEmitter.snapshot(
 			ir.Boolean,
-			fmt.Sprintf("adamic_record_delete_checked(%s, %s)", args[0], args[1]),
+			fmt.Sprintf("adamic_record_delete_checked(%s, %s)", commandArguments[0], commandArguments[1]),
 		)
 		// A fixed key's delete throws: strict code never sees false.
-		nativeEmitter.line("if (!%s) adamic_record_refused(%s, true);", deleted, args[1])
+		nativeEmitter.line("if (!%s) adamic_record_refused(%s, true);", deleted, commandArguments[1])
 		nativeEmitter.checkThrown()
 		return deleted
 	case "defineHidden":
 		// The record takes key and value, the ones it refuses too; the caller throws on false.
 		return nativeEmitter.snapshot(ir.Boolean, fmt.Sprintf(
 			"adamic_record_define_hidden(%s, %s, %s, %s)",
-			args[0],
-			retained(args[1]),
-			held(call.Element, args[2]),
+			commandArguments[0],
+			retained(commandArguments[1]),
+			held(call.Element, commandArguments[2]),
 			recordScalar(call.Element),
 		))
 	case "has":
-		return nativeEmitter.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_has(%s, %s)", args[1], args[0]))
+		return nativeEmitter.snapshot(
+			ir.Boolean,
+			fmt.Sprintf("adamic_record_has(%s, %s)", commandArguments[1], commandArguments[0]),
+		)
 	case "hasOwn":
-		return nativeEmitter.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_has_own(%s, %s)", args[0], args[1]))
+		return nativeEmitter.snapshot(
+			ir.Boolean,
+			fmt.Sprintf("adamic_record_has_own(%s, %s)", commandArguments[0], commandArguments[1]),
+		)
 	case "keys":
-		return nativeEmitter.own(ir.Array, fmt.Sprintf("adamic_record_keys(%s)", args[0]))
+		return nativeEmitter.own(ir.Array, fmt.Sprintf("adamic_record_keys(%s)", commandArguments[0]))
 	case "values", "entries":
 		element := call.Element
 		if call.Method == "entries" {
@@ -69,7 +78,7 @@ func (nativeEmitter *emitter) recordCall(call ir.RecordCall) string {
 			element = ir.Union
 		}
 		result := nativeEmitter.own(ir.Array, fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(element)))
-		nativeEmitter.recordWalk(args[0], func(key, slot string) {
+		nativeEmitter.recordWalk(commandArguments[0], func(key, slot string) {
 			value := slot
 			if call.Element.IsReference() {
 				value = fmt.Sprintf("(adamic_value){.reference = adamic_retain(%s.reference)}", slot)

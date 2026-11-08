@@ -359,7 +359,7 @@ func prepareStringsMutant(test *testing.T, mutation stringsMutation) string {
 	test.Helper()
 	// stringsCacheInputs keys a generated .ts by its directory's name and its own, so the mutant sits in cssstrings/, a
 	// name every checkout gives it, never in the temporary directory's random one (#sgemgmn).
-	scratch := filepath.Join(stringsTopTempDir(test), "cssstrings")
+	scratch := filepath.Join(stringsTopTempDirectory(test), "cssstrings")
 	if createDirectoryError := os.Mkdir(scratch, 0755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
@@ -394,16 +394,21 @@ func stringsSanitizerEnvironment(leak bool) []string {
 	return []string{"ASAN_OPTIONS=detect_leaks=0"}
 }
 
-func stringsLeaks(test *testing.T, sanitized, unsanitized string, args ...string) {
+func stringsLeaks(test *testing.T, sanitized, unsanitized string, commandArguments ...string) {
 	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		run := stringsExecute(test, stringsSanitizerEnvironment(true), sanitized, args...)
+		run := stringsExecute(test, stringsSanitizerEnvironment(true), sanitized, commandArguments...)
 		if run.exitCode != 0 {
 			test.Fatalf("leaks: exit %d\n%s", run.exitCode, run.stderr)
 		}
 	case "darwin":
-		run := stringsExecute(test, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		run := stringsExecute(
+			test,
+			nil,
+			"leaks",
+			append([]string{"--atExit", "--", unsanitized}, commandArguments...)...,
+		)
 		if run.exitCode != 0 {
 			test.Fatalf("leaks: %s", run.stdout)
 		}

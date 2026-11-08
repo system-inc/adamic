@@ -12,8 +12,8 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 )
 
-func tableLayoutCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func tableLayoutCommand(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.Cancel = func() error {
 		if command.Process == nil {
 			return os.ErrProcessDone
@@ -30,8 +30,13 @@ func tableLayoutCommand(callerContext context.Context, name string, args ...stri
 // tableLayoutExecute reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's
 // own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second
 // after the child exited, so a run that had finished could fail its case under load (#n3gk22h's shape).
-func tableLayoutExecute(callerContext context.Context, environment []string, name string, args ...string) (run, error) {
-	command := tableLayoutCommand(callerContext, name, args...)
+func tableLayoutExecute(
+	callerContext context.Context,
+	environment []string,
+	name string,
+	commandArguments ...string,
+) (run, error) {
+	command := tableLayoutCommand(callerContext, name, commandArguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -46,7 +51,7 @@ func tableLayoutExecute(callerContext context.Context, environment []string, nam
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
 
-func tableLayoutNode(callerContext context.Context, path string, args ...string) (run, error) {
+func tableLayoutNode(callerContext context.Context, path string, commandArguments ...string) (run, error) {
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if absolutePathError != nil {
 		return run{}, absolutePathError
@@ -55,6 +60,6 @@ func tableLayoutNode(callerContext context.Context, path string, args ...string)
 		callerContext,
 		nil,
 		"node",
-		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...,
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, commandArguments...)...,
 	)
 }

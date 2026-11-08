@@ -13,15 +13,15 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func gg(test *testing.T, dir string, args ...string) string {
+func gg(test *testing.T, dir string, commandArguments ...string) string {
 	test.Helper()
 	command := toolchain.GitCommand(append(
 		[]string{"-C", dir, "-c", "user.name=x", "-c", "user.email=x@x", "-c", "commit.gpgsign=false"},
-		args...,
+		commandArguments...,
 	)...)
 	out, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil {
-		test.Fatalf("git %v: %v %s", args, combinedOutputError, out)
+		test.Fatalf("git %v: %v %s", commandArguments, combinedOutputError, out)
 	}
 	return string(out)
 }
@@ -52,7 +52,7 @@ func TestAdversarialEntries(test *testing.T) {
 	}
 	// unpack via git archive
 	arch := exec.Command("sh", "-c", "git -C "+repo+" archive HEAD | tar -x -C "+source)
-	arch.Env = toolchain.GitEnv()
+	arch.Env = toolchain.GitEnvironment()
 	if out, combinedOutputError := arch.CombinedOutput(); combinedOutputError != nil {
 		test.Fatal(combinedOutputError, string(out))
 	}

@@ -38,16 +38,16 @@ func TestEveryTestIsParallelOrSaysWhy(test *testing.T) {
 	tests := 0
 	parallelCheckEachTestError := parallelCheckEachTest(root, func(
 		rel string,
-		fn *ast.FuncDecl,
+		function *ast.FuncDecl,
 		parameter string,
 		positions *token.FileSet,
 		lines []string,
 	) {
 		tests++
-		if parallelCheckFirstStatement(fn, parameter) || parallelCheckReason(fn, positions, lines) {
+		if parallelCheckFirstStatement(function, parameter) || parallelCheckReason(function, positions, lines) {
 			return
 		}
-		failures[rel+"\t"+fn.Name.Name] = true
+		failures[rel+"\t"+function.Name.Name] = true
 	})
 	if parallelCheckEachTestError != nil {
 		test.Fatal(parallelCheckEachTestError)
@@ -132,7 +132,7 @@ func parallelCheckRoot(test *testing.T) string {
 // and visits each top-level test with its slash-separated path from root and the name of its *testing.T parameter.
 func parallelCheckEachTest(
 	root string,
-	visit func(rel string, fn *ast.FuncDecl, parameter string, positions *token.FileSet, lines []string),
+	visit func(rel string, function *ast.FuncDecl, parameter string, positions *token.FileSet, lines []string),
 ) error {
 	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
 		if pathError != nil {
@@ -175,20 +175,20 @@ func parallelCheckEachTest(
 			return relativePathError
 		}
 		for _, decl := range file.Decls {
-			fn, ok := decl.(*ast.FuncDecl)
+			function, ok := decl.(*ast.FuncDecl)
 			if !ok {
 				continue
 			}
-			if parameter, ok := parallelCheckTestParameter(fn, testingNames); ok {
-				visit(filepath.ToSlash(rel), fn, parameter, positions, lines)
+			if parameter, ok := parallelCheckTestParameter(function, testingNames); ok {
+				visit(filepath.ToSlash(rel), function, parameter, positions, lines)
 			}
 		}
 		return nil
 	})
 }
 
-func parallelCheckTestParameter(fn *ast.FuncDecl, testingNames map[string]bool) (string, bool) {
-	name := fn.Name.Name
+func parallelCheckTestParameter(function *ast.FuncDecl, testingNames map[string]bool) (string, bool) {
+	name := function.Name.Name
 	if !strings.HasPrefix(name, "Test") {
 		return "", false
 	}
@@ -198,15 +198,15 @@ func parallelCheckTestParameter(fn *ast.FuncDecl, testingNames map[string]bool) 
 			return "", false
 		}
 	}
-	if fn.Recv != nil ||
-		fn.Body == nil ||
-		fn.Type.TypeParams != nil ||
-		fn.Type.Results != nil ||
-		fn.Type.Params.NumFields() != 1 ||
-		len(fn.Type.Params.List) != 1 {
+	if function.Recv != nil ||
+		function.Body == nil ||
+		function.Type.TypeParams != nil ||
+		function.Type.Results != nil ||
+		function.Type.Params.NumFields() != 1 ||
+		len(function.Type.Params.List) != 1 {
 		return "", false
 	}
-	parameter := fn.Type.Params.List[0]
+	parameter := function.Type.Params.List[0]
 	if len(parameter.Names) != 1 {
 		return "", false
 	}
@@ -226,11 +226,11 @@ func parallelCheckTestParameter(fn *ast.FuncDecl, testingNames map[string]bool) 
 	return "", false
 }
 
-func parallelCheckFirstStatement(fn *ast.FuncDecl, parameter string) bool {
-	if len(fn.Body.List) == 0 {
+func parallelCheckFirstStatement(function *ast.FuncDecl, parameter string) bool {
+	if len(function.Body.List) == 0 {
 		return false
 	}
-	stmt, ok := fn.Body.List[0].(*ast.ExprStmt)
+	stmt, ok := function.Body.List[0].(*ast.ExprStmt)
 	if !ok {
 		return false
 	}
@@ -246,15 +246,15 @@ func parallelCheckFirstStatement(fn *ast.FuncDecl, parameter string) bool {
 	return ok && receiver.Name == parameter
 }
 
-func parallelCheckReason(fn *ast.FuncDecl, positions *token.FileSet, lines []string) bool {
+func parallelCheckReason(function *ast.FuncDecl, positions *token.FileSet, lines []string) bool {
 	hasReason := func(line string) bool {
 		_, reason, found := strings.Cut(line, "Not parallel:")
 		// Strip block-comment delimiters before checking for a non-empty reason.
 		reason = strings.TrimSpace(strings.TrimSuffix(strings.TrimSpace(reason), "*/"))
 		return found && reason != ""
 	}
-	if fn.Doc != nil {
-		for _, comment := range fn.Doc.List {
+	if function.Doc != nil {
+		for _, comment := range function.Doc.List {
 			for _, line := range strings.Split(comment.Text, "\n") {
 				if hasReason(line) {
 					return true
@@ -262,7 +262,7 @@ func parallelCheckReason(fn *ast.FuncDecl, positions *token.FileSet, lines []str
 			}
 		}
 	}
-	line := positions.Position(fn.Pos()).Line
+	line := positions.Position(function.Pos()).Line
 	if line > 1 {
 		above := strings.TrimSpace(lines[line-2])
 		return strings.HasPrefix(above, "//") && hasReason(above)

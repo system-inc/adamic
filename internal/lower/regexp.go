@@ -20,33 +20,33 @@ func (lowering *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			return nil, lowering.notYet(node, "a malformed regular expression literal")
 		}
 	} else {
-		var args []*ast.Node
+		var arguments []*ast.Node
 		if node.Kind == ast.KindNewExpression {
 			if node.AsNewExpression().Arguments != nil {
-				args = node.AsNewExpression().Arguments.Nodes
+				arguments = node.AsNewExpression().Arguments.Nodes
 			}
 		} else {
-			args = node.AsCallExpression().Arguments.Nodes
+			arguments = node.AsCallExpression().Arguments.Nodes
 		}
-		if len(args) > 2 {
+		if len(arguments) > 2 {
 			return nil, lowering.notYet(node, "RegExp with more than two arguments")
 		}
-		if len(args) > 0 {
+		if len(arguments) > 0 {
 			var ok bool
-			pattern, ok = lowering.constantPattern(args[0], 0)
+			pattern, ok = lowering.constantPattern(arguments[0], 0)
 			if !ok {
-				return nil, lowering.notYet(args[0], "RegExp with a nonconstant pattern")
+				return nil, lowering.notYet(arguments[0], "RegExp with a nonconstant pattern")
 			}
 		}
-		if len(args) > 1 {
+		if len(arguments) > 1 {
 			var ok bool
-			flags, ok = lowering.constantPattern(args[1], 0)
+			flags, ok = lowering.constantPattern(arguments[1], 0)
 			if !ok {
-				return nil, lowering.notYet(args[1], "RegExp with nonconstant flags")
+				return nil, lowering.notYet(arguments[1], "RegExp with nonconstant flags")
 			}
 		}
-		for _, arg := range args {
-			value, expressionError := lowering.expression(arg)
+		for _, argument := range arguments {
+			value, expressionError := lowering.expression(argument)
 			if expressionError != nil {
 				return nil, expressionError
 			}
@@ -215,8 +215,8 @@ func (lowering *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, err
 		return nil, true, lowering.notYet(node, "an optional RegExp call")
 	}
 	var arguments []ir.Expression
-	for _, arg := range args {
-		expression, expressionError := lowering.expression(arg)
+	for _, argument := range args {
+		expression, expressionError := lowering.expression(argument)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}

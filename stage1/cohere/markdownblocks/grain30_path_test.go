@@ -194,8 +194,8 @@ func runGrainPathThroughput(test *testing.T, shard int) {
 	fast := products.release
 
 	for _, side := range []struct {
-		name, command string
-		args          []string
+		name, command    string
+		commandArguments []string
 	}{
 		{"actual Go AstPath", goBinary, []string{"--facts", nativeCases}},
 		{"native AstPath", fast, []string{nativeCases}},
@@ -203,7 +203,7 @@ func runGrainPathThroughput(test *testing.T, shard int) {
 	} {
 		start := time.Now()
 		for index := 0; index < 3; index++ {
-			result := grainExecute(test, nil, side.command, side.args...)
+			result := grainExecute(test, nil, side.command, side.commandArguments...)
 			clean(test, side.name, result)
 			equal(test, side.name, result.stdout, want.stdout)
 		}

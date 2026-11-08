@@ -226,16 +226,16 @@ func (audit *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 				return
 			}
 			if alias := typ.Alias(); alias != nil {
-				for index, arg := range alias.TypeArguments() {
-					walk(arg, out, site, fmt.Sprintf("%s.alias-argument[%d]", path, index))
+				for index, argument := range alias.TypeArguments() {
+					walk(argument, out, site, fmt.Sprintf("%s.alias-argument[%d]", path, index))
 				}
 			}
 			if typ.Flags()&checker.TypeFlagsObject == 0 {
 				return
 			}
 			if typ.ObjectFlags()&checker.ObjectFlagsReference != 0 {
-				for index, arg := range audit.checker.GetTypeArguments(typ) {
-					walk(arg, out, site, fmt.Sprintf("%s.type-argument[%d]", path, index))
+				for index, argument := range audit.checker.GetTypeArguments(typ) {
+					walk(argument, out, site, fmt.Sprintf("%s.type-argument[%d]", path, index))
 				}
 			}
 			if checker.IsTupleType(typ) {

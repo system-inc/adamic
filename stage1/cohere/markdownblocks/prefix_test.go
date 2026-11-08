@@ -153,8 +153,8 @@ func TestMarkdownParserPrefixes(test *testing.T) {
 	fast := filepath.Join(probeNative(test, prefixProbe, native.Options{}), "port")
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {
-		name, command string
-		args          []string
+		name, command    string
+		commandArguments []string
 	}{
 		{"actual Go preprocessing/constructs", goBinary, []string{cases}},
 		{"native preprocessing/prefix recognition", fast, []string{cases}},
@@ -167,7 +167,7 @@ func TestMarkdownParserPrefixes(test *testing.T) {
 		var elapsed time.Duration
 		for round := 0; round < 3; round++ {
 			start := time.Now()
-			result := execute(test, nil, side.command, side.args...)
+			result := execute(test, nil, side.command, side.commandArguments...)
 			elapsed += time.Since(start)
 			clean(test, side.name, result)
 			equal(test, side.name, result.stdout, want.stdout)

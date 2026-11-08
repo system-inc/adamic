@@ -38,7 +38,7 @@ type Cmd struct {
 
 // Command bounds execution and pipe draining. Release its context after reaping,
 // including failed starts. Successful completion also stops residual descendants.
-func Command(limit time.Duration, name string, args ...string) (*Cmd, func()) {
+func Command(limit time.Duration, name string, commandArguments ...string) (*Cmd, func()) {
 	if cap, parseError := strconv.ParseFloat(
 		os.Getenv("ADAMIC_CHILD_DEADLINE"),
 		64,
@@ -46,7 +46,7 @@ func Command(limit time.Duration, name string, args ...string) (*Cmd, func()) {
 		limit = time.Duration(cap * float64(time.Second))
 	}
 	ctx, cancel := WithTimeout(context.Background(), limit)
-	command := CommandContext(ctx, name, args...)
+	command := CommandContext(ctx, name, commandArguments...)
 	return command, cancel
 }
 
@@ -105,18 +105,18 @@ func (cmd *Cmd) Output() ([]byte, error) {
 	return output.Bytes(), runError
 }
 
-func CommandContext(callerContext context.Context, name string, args ...string) *Cmd {
+func CommandContext(callerContext context.Context, name string, commandArguments ...string) *Cmd {
 	if _, ok := callerContext.Deadline(); !ok {
 		panic("boundedrun: child deadline required")
 	}
-	command := exec.CommandContext(callerContext, name, args...)
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		fmt.Fprintf(
 			os.Stderr,
 			"child %s %v: deadline/cancellation expired; killing process group; descendants=%v\n",
 			name,
-			args,
+			commandArguments,
 			descendantNames(command.Process.Pid),
 		)
 		return Kill(command)
@@ -154,12 +154,12 @@ func Register(name string, operation func([]string) (string, error)) {
 	os.Exit(0)
 }
 
-func Operation(limit time.Duration, name string, args ...string) (string, error) {
+func Operation(limit time.Duration, name string, commandArguments ...string) (string, error) {
 	executable, executableError := os.Executable()
 	if executableError != nil {
 		return "", executableError
 	}
-	command, release := Command(limit, executable, append([]string{"--adamic-bounded-" + name}, args...)...)
+	command, release := Command(limit, executable, append([]string{"--adamic-bounded-" + name}, commandArguments...)...)
 	defer release()
 	output, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil {

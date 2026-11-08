@@ -48,15 +48,15 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 		if tokens[index].text != "assert" || tokens[index+1].text != "." || tokens[index+2].text != "throws" {
 			continue
 		}
-		args, end, ok := tokenArguments(tokens, index+3)
+		arguments, end, ok := tokenArguments(tokens, index+3)
 		if !ok ||
-			len(args) < 2 ||
-			len(args) > 3 ||
-			args[0][1]-args[0][0] != 1 ||
-			tokens[args[0][0]].text != "SyntaxError" {
+			len(arguments) < 2 ||
+			len(arguments) > 3 ||
+			arguments[0][1]-arguments[0][0] != 1 ||
+			tokens[arguments[0][0]].text != "SyntaxError" {
 			continue
 		}
-		a, b := args[1][0], args[1][1]
+		a, b := arguments[1][0], arguments[1][1]
 		if b-a >= 5 &&
 			tokens[a].text == "function" &&
 			tokens[a+1].text == "(" &&
@@ -131,11 +131,11 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 		} else {
 			replacement += `""`
 		}
-		if len(args) == 3 {
-			if _, ok = literal(args[2]); !ok {
+		if len(arguments) == 3 {
+			if _, ok = literal(arguments[2]); !ok {
 				continue
 			}
-			replacement += ", " + tokens[args[2][0]].text
+			replacement += ", " + tokens[arguments[2][0]].text
 		}
 		replacement += ")"
 		edits = append(edits, edit{tokens[index].start, tokens[end].end, replacement})

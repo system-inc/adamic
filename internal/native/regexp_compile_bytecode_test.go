@@ -211,7 +211,7 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		}
 	}
 	binaryPath := filepath.Join(dir, "check")
-	args := []string{
+	commandArguments := []string{
 		"-std=c11",
 		"-Wall",
 		"-Wextra",
@@ -233,7 +233,7 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		binaryPath,
 	}
 	if checked {
-		args = append(args, v8)
+		commandArguments = append(commandArguments, v8)
 	}
 	compiler := "clang"
 	if wasi {
@@ -242,22 +242,24 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 			test.Fatal("WASI_SYSROOT required")
 		}
 		compiler = filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin", "clang")
-		args = append([]string{
+		commandArguments = append([]string{
 			"--target=wasm32-wasi",
 			"--sysroot=" + sysroot,
 			"-DADAMIC_TARGET_WASI=1",
 			"-mno-atomics",
 			"-Wl,-z,stack-size=1048576",
-		}, args...)
-		filtered := args[:0]
-		for _, arg := range args {
-			if arg != "-fsanitize=address,undefined" && arg != "-fno-sanitize-recover=all" && arg != "-g" {
-				filtered = append(filtered, arg)
+		}, commandArguments...)
+		filtered := commandArguments[:0]
+		for _, argument := range commandArguments {
+			if argument != "-fsanitize=address,undefined" &&
+				argument != "-fno-sanitize-recover=all" &&
+				argument != "-g" {
+				filtered = append(filtered, argument)
 			}
 		}
-		args = filtered
+		commandArguments = filtered
 	}
-	command := exec.Command(compiler, args...)
+	command := exec.Command(compiler, commandArguments...)
 	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("compile: %v %s", combinedOutputError, output)
 	}

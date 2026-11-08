@@ -178,8 +178,8 @@ func runWholeDocumentPreflightShard(
 		write(test, filepath.Join(keep, fmt.Sprintf("shard-%03d-fork.jsonl", shard)), nodeRun.stdout)
 	}
 	for _, side := range []struct {
-		name, command string
-		args          []string
+		name, command    string
+		commandArguments []string
 	}{
 		{"Go Markdown embedding off", binary, []string{cases, "off-only"}},
 		{"Node pinned-fork Markdown embedding off", "node", []string{script, fork, cases, "fork", "off-only"}},
@@ -187,7 +187,7 @@ func runWholeDocumentPreflightShard(
 		var elapsed time.Duration
 		for round := 0; round < 3; round++ {
 			start := time.Now()
-			answer := preflightExecute(test, budget, nil, side.command, side.args...)
+			answer := preflightExecute(test, budget, nil, side.command, side.commandArguments...)
 			elapsed += time.Since(start)
 			answers := auditResults(test, side.name, answer)
 			if len(answers) != len(inputs) {

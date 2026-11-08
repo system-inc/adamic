@@ -191,8 +191,8 @@ func (builder *ssaBuilder) run() {
 		return
 	}
 	builder.states[entry.Id] = newSsaState()
-	for index := range builder.function.Params {
-		builder.defineIn(entry.Id, &builder.function.Params[index])
+	for index := range builder.function.Parameters {
+		builder.defineIn(entry.Id, &builder.function.Parameters[index])
 	}
 
 	for _, block := range builder.function.Blocks {

@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-var nodeWasiCwdBaseline = []string{
+var nodeWasiWorkingDirectoryBaseline = []string{
 	"args_get",
 	"args_sizes_get",
 	"clock_time_get",
@@ -23,16 +23,16 @@ var nodeWasiCwdBaseline = []string{
 	"proc_exit",
 }
 
-func nodeWasiCwdEnabled(test *testing.T) {
+func nodeWasiWorkingDirectoryEnabled(test *testing.T) {
 	test.Helper()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" || os.Getenv("WASI_SYSROOT") == "" {
 		test.Skip("set ADAMIC_TEST_WASI=1 and WASI_SYSROOT")
 	}
 }
 
-func nodeWasiCwdRuntime(test *testing.T, host bool) {
+func nodeWasiWorkingDirectoryRuntime(test *testing.T, host bool) {
 	test.Helper()
-	nodeWasiCwdEnabled(test)
+	nodeWasiWorkingDirectoryEnabled(test)
 	source := ""
 	if host {
 		source = "#define ADAMIC_NODE_HOST 1\n"
@@ -46,18 +46,18 @@ func nodeWasiCwdRuntime(test *testing.T, host bool) {
 	}
 }
 
-func TestProduct_NodeWasiCwdRuntime_000(test *testing.T) {
+func TestProduct_NodeWasiWorkingDirectoryRuntime_000(test *testing.T) {
 	test.Parallel()
-	nodeWasiCwdRuntime(test, false)
+	nodeWasiWorkingDirectoryRuntime(test, false)
 }
-func TestProduct_NodeWasiCwdRuntime_001(test *testing.T) {
+func TestProduct_NodeWasiWorkingDirectoryRuntime_001(test *testing.T) {
 	test.Parallel()
-	nodeWasiCwdRuntime(test, true)
+	nodeWasiWorkingDirectoryRuntime(test, true)
 }
 
-func nodeWasiCwdImports(test *testing.T, variant int) {
+func nodeWasiWorkingDirectoryImports(test *testing.T, variant int) {
 	test.Helper()
-	nodeWasiCwdEnabled(test)
+	nodeWasiWorkingDirectoryEnabled(test)
 	source := `#include "adamic.h"
 #include "node_cwd_wasi.h"
 int main(int argc, char **argv) {
@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
 	if decodeError := json.Unmarshal(got.stdout, &imports); decodeError != nil {
 		test.Fatal(decodeError)
 	}
-	same := slices.Equal(imports, nodeWasiCwdBaseline)
+	same := slices.Equal(imports, nodeWasiWorkingDirectoryBaseline)
 	if variant == 2 {
 		if same {
 			test.Fatal("eager cwd initialization survived the import comparison")
@@ -111,17 +111,26 @@ int main(int argc, char **argv) {
 		}
 		test.Log("eager initializer compiled; Node's module import inspection caught it")
 	} else if !same {
-		test.Fatalf("file-free imports: got %v, want %v", imports, nodeWasiCwdBaseline)
+		test.Fatalf("file-free imports: got %v, want %v", imports, nodeWasiWorkingDirectoryBaseline)
 	}
 }
 
-func TestNodeWasiCwdFileFreeImports(test *testing.T) { test.Parallel(); nodeWasiCwdImports(test, 0) }
-func TestNodeWasiCwdLexicalImports(test *testing.T)  { test.Parallel(); nodeWasiCwdImports(test, 1) }
-func TestNodeWasiCwdStartupMutant(test *testing.T)   { test.Parallel(); nodeWasiCwdImports(test, 2) }
+func TestNodeWasiWorkingDirectoryFileFreeImports(test *testing.T) {
+	test.Parallel()
+	nodeWasiWorkingDirectoryImports(test, 0)
+}
+func TestNodeWasiWorkingDirectoryLexicalImports(test *testing.T) {
+	test.Parallel()
+	nodeWasiWorkingDirectoryImports(test, 1)
+}
+func TestNodeWasiWorkingDirectoryStartupMutant(test *testing.T) {
+	test.Parallel()
+	nodeWasiWorkingDirectoryImports(test, 2)
+}
 
-func nodeWasiCwdAgreement(test *testing.T, variant int) {
+func nodeWasiWorkingDirectoryAgreement(test *testing.T, variant int) {
 	test.Helper()
-	nodeWasiCwdEnabled(test)
+	nodeWasiWorkingDirectoryEnabled(test)
 	directory := test.TempDir()
 	first := filepath.Join(directory, "first")
 	moved := filepath.Join(first, "nested")
@@ -247,14 +256,23 @@ int main(int argc, char **argv) {
 	}
 }
 
-func TestNodeWasiCwdPathFirst(test *testing.T)      { test.Parallel(); nodeWasiCwdAgreement(test, 0) }
-func TestNodeWasiCwdDirectoryFirst(test *testing.T) { test.Parallel(); nodeWasiCwdAgreement(test, 1) }
-func TestNodeWasiCwdSharedOnce(test *testing.T)     { test.Parallel(); nodeWasiCwdAgreement(test, 2) }
-func TestNodeWasiCwdMissingInitMutant(test *testing.T) {
+func TestNodeWasiWorkingDirectoryPathFirst(test *testing.T) {
 	test.Parallel()
-	nodeWasiCwdAgreement(test, 3)
+	nodeWasiWorkingDirectoryAgreement(test, 0)
 }
-func TestNodeWasiCwdRepeatedInitMutant(test *testing.T) {
+func TestNodeWasiWorkingDirectoryDirectoryFirst(test *testing.T) {
 	test.Parallel()
-	nodeWasiCwdAgreement(test, 4)
+	nodeWasiWorkingDirectoryAgreement(test, 1)
+}
+func TestNodeWasiWorkingDirectorySharedOnce(test *testing.T) {
+	test.Parallel()
+	nodeWasiWorkingDirectoryAgreement(test, 2)
+}
+func TestNodeWasiWorkingDirectoryMissingInitMutant(test *testing.T) {
+	test.Parallel()
+	nodeWasiWorkingDirectoryAgreement(test, 3)
+}
+func TestNodeWasiWorkingDirectoryRepeatedInitMutant(test *testing.T) {
+	test.Parallel()
+	nodeWasiWorkingDirectoryAgreement(test, 4)
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
-func goProps(test *testing.T, cases string) []byte {
+func goProperties(test *testing.T, cases string) []byte {
 	test.Helper()
 	binary := goPropsOracle(test)
 	expected := run(test, "", nil, binary, cases)
@@ -60,7 +60,7 @@ func TestPropsMatchGo(test *testing.T) {
 	binary := yamlPropsBuild.binary(test, "props_main.ts")
 	emitted := yamlPropsBuild.emitted(test, "props_main.ts")
 	cases, files, count := lexCases(test)
-	expected := goProps(test, cases)
+	expected := goProperties(test, cases)
 	root, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
@@ -98,7 +98,7 @@ func TestPropsMatchGo(test *testing.T) {
 	)
 }
 
-var propsMutants = yamlMutants{family: "props", entry: "props_main.ts", files: []string{
+var propertiesMutants = yamlMutants{family: "props", entry: "props_main.ts", files: []string{
 	"lexer.ts",
 	"cst.ts",
 	"collectionItem.ts",
@@ -114,22 +114,31 @@ var propsMutants = yamlMutants{family: "props", entry: "props_main.ts", files: [
 	{"tab indentation accepted", "tab = index;", "tab = -1;"},
 }}
 
-func TestProduct_YamlPropsMutant000(test *testing.T) { test.Parallel(); propsMutants.product(test, 0) }
-func TestProduct_YamlPropsMutant001(test *testing.T) { test.Parallel(); propsMutants.product(test, 1) }
-func TestProduct_YamlPropsMutant002(test *testing.T) { test.Parallel(); propsMutants.product(test, 2) }
+func TestProduct_YamlPropsMutant000(test *testing.T) {
+	test.Parallel()
+	propertiesMutants.product(test, 0)
+}
+func TestProduct_YamlPropsMutant001(test *testing.T) {
+	test.Parallel()
+	propertiesMutants.product(test, 1)
+}
+func TestProduct_YamlPropsMutant002(test *testing.T) {
+	test.Parallel()
+	propertiesMutants.product(test, 2)
+}
 
 func TestPropsMutants(test *testing.T) {
 	test.Parallel()
 	cases, _, _ := lexCases(test)
-	expected := goProps(test, cases)
+	expected := goProperties(test, cases)
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	for index, mutant := range propsMutants.mutations {
+	for index, mutant := range propertiesMutants.mutations {
 		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.
 		test.Run(mutant.name, func(test *testing.T) {
-			product := propsMutants.product(test, index)
+			product := propertiesMutants.product(test, index)
 			nativeOut := run(test, "", nil, filepath.Join(product, "mutant"), cases)
 			node := run(
 				test,

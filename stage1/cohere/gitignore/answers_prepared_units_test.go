@@ -309,7 +309,8 @@ func portAsked(test *testing.T, binary, scratch string) cases {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	// The oracle makes its trees repositories with the git internal/toolchain resolves, under GitEnv, never its PATH's.
+	// The oracle makes its trees repositories with the git internal/toolchain resolves, under GitEnvironment, never its
+	// PATH's.
 	git, pathError := toolchain.Path("git")
 	if pathError != nil {
 		test.Fatal(pathError)
@@ -325,7 +326,7 @@ func portAsked(test *testing.T, binary, scratch string) cases {
 		"output":         output,
 		"largest":        largest(),
 		"git":            git,
-		"gitEnvironment": toolchain.GitEnv(),
+		"gitEnvironment": toolchain.GitEnvironment(),
 	})
 	data, readError := os.ReadFile(output)
 	if readError != nil {
@@ -917,9 +918,9 @@ func TestPortAnswerShardAssignmentSurvivesCorpusGrowth(test *testing.T) {
 
 // Shared setup children have no test-side deadline. A leaf deadline covers only
 // own work; Go's process timeout covers preparation and execution together.
-func portCommand(test *testing.T, name string, args ...string) *exec.Cmd {
+func portCommand(test *testing.T, name string, commandArguments ...string) *exec.Cmd {
 	test.Helper()
-	command := exec.CommandContext(test.Context(), name, args...)
+	command := exec.CommandContext(test.Context(), name, commandArguments...)
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node, leaks) is a tool: the one internal/toolchain resolves, with a tool's environment, not
 		// PATH's, as toolchain.Command runs one under a context it has no form for. A program a test built (the Go
@@ -928,7 +929,7 @@ func portCommand(test *testing.T, name string, args ...string) *exec.Cmd {
 		if path, pathError := toolchain.Path(name); pathError != nil {
 			command.Err = pathError
 		} else {
-			command = exec.CommandContext(test.Context(), path, args...)
+			command = exec.CommandContext(test.Context(), path, commandArguments...)
 			command.Env = toolchain.Env()
 		}
 	}
@@ -948,9 +949,9 @@ func portCommand(test *testing.T, name string, args ...string) *exec.Cmd {
 // (#n3gk22h's shape). Capture has no stall guard, and the runs lose nothing by it: childguard.Run's windows (two
 // minutes of silence, thirty before the first byte) are longer than the 90 s Loom gives a test unit, which ends a
 // hung run sooner.
-func portExecute(test *testing.T, environment []string, name string, args ...string) run {
+func portExecute(test *testing.T, environment []string, name string, commandArguments ...string) run {
 	test.Helper()
-	command := portCommand(test, name, args...)
+	command := portCommand(test, name, commandArguments...)
 	if environment != nil {
 		// On top of the environment the command already runs with: a tool's is toolchain's, not this process's.
 		command.Env = append(command.Environ(), environment...)
@@ -963,7 +964,7 @@ func portExecute(test *testing.T, environment []string, name string, args ...str
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
-func portNode(test *testing.T, path string, args ...string) run {
+func portNode(test *testing.T, path string, commandArguments ...string) run {
 	test.Helper()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if absolutePathError != nil {
@@ -973,7 +974,7 @@ func portNode(test *testing.T, path string, args ...string) run {
 		test,
 		nil,
 		"node",
-		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...,
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, commandArguments...)...,
 	)
 }
 
@@ -989,7 +990,7 @@ func portGitCheckIgnore(test *testing.T, tree tree) []string {
 		input.WriteString(query.Path)
 		input.WriteByte(0)
 	}
-	// GitEnv keeps git's configuration out of reach; these add the scratch home and no optional locks.
+	// GitEnvironment keeps git's configuration out of reach; these add the scratch home and no optional locks.
 	environment := []string{"HOME=" + scratch, "XDG_CONFIG_HOME=" + scratch, "GIT_OPTIONAL_LOCKS=0"}
 	arguments := []string{"-c", "core.excludesFile=" + emptyExclude, "-c", "core.ignorecase=false"}
 	if !tracked.Git(tree.Disk) {

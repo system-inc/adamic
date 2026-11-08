@@ -133,9 +133,9 @@ func programCoreProduct(test *testing.T, index int) string {
 			}
 		}
 		compile := func(root, source string) error {
-			args := append(slices.Clone(flags), prefixMaps(root, "/adamic-runtime")...)
-			args = append(args, "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
-			command := toolchain.CommandIn(root, compiler, args...)
+			commandArguments := append(slices.Clone(flags), prefixMaps(root, "/adamic-runtime")...)
+			commandArguments = append(commandArguments, "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
+			command := toolchain.CommandIn(root, compiler, commandArguments...)
 			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 				return fmt.Errorf("compile %s: %w\n%s", source, combinedOutputError, output)
 			}
@@ -151,21 +151,24 @@ func programCoreProduct(test *testing.T, index int) string {
 			if writeError := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(source), 0644); writeError != nil {
 				return writeError
 			}
-			args := append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...)
-			args = append(args, "-I", "runtime", "-o", filepath.Join(directory, name), "main.c")
+			commandArguments := append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...)
+			commandArguments = append(commandArguments, "-I", "runtime", "-o", filepath.Join(directory, name), "main.c")
 			for _, file := range sources {
 				if file == changed {
-					args = append(args, object)
+					commandArguments = append(commandArguments, object)
 				} else {
-					args = append(args, filepath.Join("runtime", strings.TrimSuffix(file, ".c")+".o"))
+					commandArguments = append(
+						commandArguments,
+						filepath.Join("runtime", strings.TrimSuffix(file, ".c")+".o"),
+					)
 				}
 			}
-			args = append(args, objectPrefixFlags()...)
-			args = append(args, "-lm")
+			commandArguments = append(commandArguments, objectPrefixFlags()...)
+			commandArguments = append(commandArguments, "-lm")
 			if output, combinedOutputError := toolchain.CommandIn(
 				scratch,
 				compiler,
-				args...,
+				commandArguments...,
 			).CombinedOutput(); combinedOutputError != nil {
 				return fmt.Errorf("link %s: %w\n%s", name, combinedOutputError, output)
 			}

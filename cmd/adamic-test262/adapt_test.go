@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestAdaptVarToLet(test *testing.T) {
+func TestAdaptVariableToLet(test *testing.T) {
 	test.Parallel()
 	cases := []struct {
 		name  string
@@ -109,22 +109,22 @@ func TestAdaptVarToLet(test *testing.T) {
 			if got.Source != testCase.want {
 				test.Fatalf("source\n got %q\nwant %q", got.Source, testCase.want)
 			}
-			if got.Counts[adaptVarToLet] != testCase.count {
-				test.Fatalf("count %d, want %d", got.Counts[adaptVarToLet], testCase.count)
+			if got.Counts[adaptVariableToLet] != testCase.count {
+				test.Fatalf("count %d, want %d", got.Counts[adaptVariableToLet], testCase.count)
 			}
 		})
 	}
 }
 
-func TestAdaptCallbackParam(test *testing.T) {
+func TestAdaptCallbackParameter(test *testing.T) {
 	test.Parallel()
 	source := "function callbackfn(val, idx, obj) {\n  return val;\n}\nvar arr = [1, 2, 3];\narr.forEach(callbackfn);\n"
 	got := adaptSource(source)
 	if !strings.Contains(got.Source, "function callbackfn(val: number, idx: number, obj: number[])") {
 		test.Fatalf("annotation missing:\n%s", got.Source)
 	}
-	if got.Counts[adaptCallbackParam] != 3 {
-		test.Fatalf("count %d", got.Counts[adaptCallbackParam])
+	if got.Counts[adaptCallbackParameter] != 3 {
+		test.Fatalf("count %d", got.Counts[adaptCallbackParameter])
 	}
 	if strings.Contains(got.Source, "\nvar ") {
 		test.Fatalf("var should have become let:\n%s", got.Source)
@@ -195,14 +195,14 @@ func TestClassifyAdapt(test *testing.T) {
 	if got.Skip != "" {
 		test.Fatal(got.Skip)
 	}
-	if got.Adaptations[adaptVarToLet] != 1 || got.Adaptations[adaptStrictEq] != 1 {
+	if got.Adaptations[adaptVariableToLet] != 1 || got.Adaptations[adaptStrictEq] != 1 {
 		test.Fatalf("counts %v", got.Adaptations)
 	}
 	if strings.Contains(got.Program, "var value") || !strings.Contains(got.Program, "value === 1") {
 		test.Fatalf("program was not adapted:\n%s", got.Program)
 	}
 	plain := classify("t.js", source, false)
-	if strings.Contains(plain.Program, "let value") || plain.Adaptations[adaptVarToLet] != 0 {
+	if strings.Contains(plain.Program, "let value") || plain.Adaptations[adaptVariableToLet] != 0 {
 		test.Fatal("adapt off still rewrote var")
 	}
 }

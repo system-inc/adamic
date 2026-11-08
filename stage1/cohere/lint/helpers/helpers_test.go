@@ -21,15 +21,15 @@ import (
 	"testing"
 )
 
-func run(test *testing.T, dir, name string, args ...string) []byte {
+func run(test *testing.T, dir, name string, commandArguments ...string) []byte {
 	test.Helper()
-	command := exec.Command(name, args...)
+	command := exec.Command(name, commandArguments...)
 	command.Dir = dir
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run
 		// in dir with PWD to match. A program a test built (the Go oracle, the native build) runs as named, with this
 		// process's environment.
-		command = toolchain.CommandIn(dir, name, args...)
+		command = toolchain.CommandIn(dir, name, commandArguments...)
 	}
 	file, temporaryFileError := os.CreateTemp(test.TempDir(), "output-")
 	if temporaryFileError != nil {
@@ -40,7 +40,7 @@ func run(test *testing.T, dir, name string, args ...string) []byte {
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if runError := childguard.Run(command, childguard.Options{}); runError != nil {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	if stderr.Len() != 0 {
 		test.Fatalf("%s stderr: %s", name, &stderr)

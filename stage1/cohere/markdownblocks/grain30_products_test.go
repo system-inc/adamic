@@ -165,20 +165,20 @@ func grainOwn(test *testing.T) func() {
 }
 
 // grainCommand returns the command's context with it, for childguard.Capture to end the reads by.
-func grainCommand(test *testing.T, name string, args ...string) (*exec.Cmd, context.Context) {
+func grainCommand(test *testing.T, name string, commandArguments ...string) (*exec.Cmd, context.Context) {
 	ctx := test.Context()
 	if value, ok := grainContexts.Load(test); ok {
 		ctx = value.(context.Context)
 	}
-	return textCommand(test, ctx, name, args...), ctx
+	return textCommand(test, ctx, name, commandArguments...), ctx
 }
 
 // grainExecute reads a run's output through childguard.Capture for textExecute's reason. Only an exit error is an
 // answer: an error that came with a ProcessState was taken for one, so an exec.ErrWaitDelay passed as exit 0 with its
 // output cut short.
-func grainExecute(test *testing.T, env []string, name string, args ...string) run {
+func grainExecute(test *testing.T, env []string, name string, commandArguments ...string) run {
 	test.Helper()
-	command, ctx := grainCommand(test, name, args...)
+	command, ctx := grainCommand(test, name, commandArguments...)
 	if env != nil {
 		command.Env = append(os.Environ(), env...)
 	}
@@ -190,7 +190,7 @@ func grainExecute(test *testing.T, env []string, name string, args ...string) ru
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
-func grainNode(test *testing.T, main string, args ...string) run {
+func grainNode(test *testing.T, main string, commandArguments ...string) run {
 	test.Helper()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if absolutePathError != nil {
@@ -200,15 +200,20 @@ func grainNode(test *testing.T, main string, args ...string) run {
 		test,
 		nil,
 		"node",
-		append([]string{"--disable-warning=ExperimentalWarning", runner, main}, args...)...,
+		append([]string{"--disable-warning=ExperimentalWarning", runner, main}, commandArguments...)...,
 	)
 }
-func grainLeaks(test *testing.T, products grainProducts, args ...string) string {
+func grainLeaks(test *testing.T, products grainProducts, commandArguments ...string) string {
 	var run run
 	if runtime.GOOS == "darwin" {
-		run = grainExecute(test, nil, "leaks", append([]string{"--atExit", "--", products.release}, args...)...)
+		run = grainExecute(
+			test,
+			nil,
+			"leaks",
+			append([]string{"--atExit", "--", products.release}, commandArguments...)...,
+		)
 	} else {
-		run = grainExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, args...)
+		run = grainExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, commandArguments...)
 	}
 	if run.exitCode != 0 {
 		return fmt.Sprintf("exit %d\n%s\n%s", run.exitCode, run.stdout, run.stderr)
@@ -395,22 +400,22 @@ func grainVerifyChildren(test *testing.T, family, helper string, children int) {
 			test.Fatal(parseFileError)
 		}
 		for _, decl := range tree.Decls {
-			fn, ok := decl.(*ast.FuncDecl)
+			function, ok := decl.(*ast.FuncDecl)
 			if !ok {
 				continue
 			}
-			suffix, ok := strings.CutPrefix(fn.Name.Name, family+"_")
+			suffix, ok := strings.CutPrefix(function.Name.Name, family+"_")
 			if !ok {
 				continue
 			}
 			index, parseError := strconv.Atoi(suffix)
 			if parseError != nil || len(suffix) != 3 || index < 0 || index >= children || seen[index] {
-				test.Fatalf("invalid child %s", fn.Name.Name)
+				test.Fatalf("invalid child %s", function.Name.Name)
 			}
-			if len(fn.Body.List) != 2 {
-				test.Fatalf("invalid child body %s", fn.Name.Name)
+			if len(function.Body.List) != 2 {
+				test.Fatalf("invalid child body %s", function.Name.Name)
 			}
-			parallel, ok := fn.Body.List[0].(*ast.ExprStmt)
+			parallel, ok := function.Body.List[0].(*ast.ExprStmt)
 			if !ok {
 				test.Fatal("missing t.Parallel")
 			}
@@ -422,7 +427,7 @@ func grainVerifyChildren(test *testing.T, family, helper string, children int) {
 			if !ok || selector.Sel.Name != "Parallel" {
 				test.Fatal("parallel must be first")
 			}
-			statement, ok := fn.Body.List[1].(*ast.ExprStmt)
+			statement, ok := function.Body.List[1].(*ast.ExprStmt)
 			if !ok {
 				test.Fatal("invalid dispatch")
 			}

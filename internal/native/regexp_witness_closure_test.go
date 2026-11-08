@@ -67,11 +67,11 @@ func regexpGlobalSymbols(output string, archive bool) (map[string]regexpMemberSy
 	return members, nil
 }
 
-func regexpClosureTool(test testing.TB, tool string, args ...string) string {
+func regexpClosureTool(test testing.TB, tool string, commandArguments ...string) string {
 	test.Helper()
-	output, outputError := toolchain.Command(tool, args...).Output()
+	output, outputError := toolchain.Command(tool, commandArguments...).Output()
 	if outputError != nil {
-		test.Fatalf("%s %v: %v", tool, args, outputError)
+		test.Fatalf("%s %v: %v", tool, commandArguments, outputError)
 	}
 	return strings.TrimSpace(string(output))
 }
@@ -230,16 +230,19 @@ func regexpWitnessClosureInventory(test testing.TB) string {
 		inventory.MutatedWeak = scanArchive(archive)["weak.c"]
 		var librarySymbols []map[string]regexpMemberSymbols
 		for _, path := range libraries {
-			args := []string{"-g", "-P", "--defined-only", path}
+			commandArguments := []string{"-g", "-P", "--defined-only", path}
 			if strings.HasSuffix(path, ".so.6") || strings.HasSuffix(path, ".so.0") {
-				args = append([]string{"-D"}, args...)
+				commandArguments = append([]string{"-D"}, commandArguments...)
 			}
 			// -A gives static archives member labels, unlike dynamic shared libraries.
 			archive := strings.HasSuffix(path, ".a")
 			if archive {
-				args = append([]string{"-A"}, args...)
+				commandArguments = append([]string{"-A"}, commandArguments...)
 			}
-			symbols, regexpGlobalSymbolsError := regexpGlobalSymbols(regexpClosureTool(test, "nm", args...), archive)
+			symbols, regexpGlobalSymbolsError := regexpGlobalSymbols(
+				regexpClosureTool(test, "nm", commandArguments...),
+				archive,
+			)
 			if regexpGlobalSymbolsError != nil {
 				return regexpGlobalSymbolsError
 			}

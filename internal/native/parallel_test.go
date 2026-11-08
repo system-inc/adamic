@@ -414,11 +414,11 @@ func parallelCheckMutant(test *testing.T, name string) {
 			for attempt := 0; attempt < attempts; attempt++ {
 				timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 
-				args := []string{}
+				commandArguments := []string{}
 				if mutant.mode != "" {
-					args = append(args, mutant.mode)
+					commandArguments = append(commandArguments, mutant.mode)
 				}
-				command := exec.CommandContext(timeoutContext, binary, args...)
+				command := exec.CommandContext(timeoutContext, binary, commandArguments...)
 				command.Env = parallelEnvironment(mutant.threads, false)
 				started := time.Now()
 				output, combinedOutputError := command.CombinedOutput()
@@ -501,8 +501,8 @@ func parallelLeaks(test *testing.T, binary string, options Options, threads stri
 	}
 	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	args := append([]string{"--atExit", "--", binary}, arguments...)
-	command := exec.CommandContext(timeoutContext, "leaks", args...)
+	commandArguments := append([]string{"--atExit", "--", binary}, arguments...)
+	command := exec.CommandContext(timeoutContext, "leaks", commandArguments...)
 	command.Env = parallelEnvironment(threads, false)
 	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("Darwin leaks, threads=%s: %v\n%s", threads, combinedOutputError, output)

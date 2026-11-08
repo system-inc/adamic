@@ -86,7 +86,7 @@ func node(test *testing.T, directory, manifest string, count bool) execution {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	args := []string{
+	commandArguments := []string{
 		"--disable-warning=ExperimentalWarning",
 		runner,
 		filepath.Join(directory, "main.ts"),
@@ -94,9 +94,9 @@ func node(test *testing.T, directory, manifest string, count bool) execution {
 		manifest,
 	}
 	if count {
-		args = append(args, "--count")
+		commandArguments = append(commandArguments, "--count")
 	}
-	return execute(test, "", "node", args...)
+	return execute(test, "", "node", commandArguments...)
 }
 
 func difference(got, want []byte) string {

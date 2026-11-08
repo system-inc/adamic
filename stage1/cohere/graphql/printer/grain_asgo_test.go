@@ -213,9 +213,9 @@ func TestPrinterAsGoCohereWrappers(test *testing.T) {
 }
 
 type printerAsGoJob struct {
-	name, command     string
-	args, environment []string
-	leakReport        bool
+	name, command                 string
+	commandArguments, environment []string
+	leakReport                    bool
 }
 type printerAsGoResult struct {
 	job  printerAsGoJob
@@ -226,7 +226,7 @@ type printerAsGoResult struct {
 
 func printerAsGoRun(callerContext context.Context, job printerAsGoJob) printerAsGoResult {
 	start := time.Now()
-	command := exec.CommandContext(callerContext, job.command, job.args...)
+	command := exec.CommandContext(callerContext, job.command, job.commandArguments...)
 	if job.environment != nil {
 		command.Env = append(os.Environ(), job.environment...)
 	}
@@ -238,7 +238,7 @@ func printerAsGoRun(callerContext context.Context, job printerAsGoJob) printerAs
 		if path, pathError := toolchain.Path(job.command); pathError != nil {
 			command.Err = pathError
 		} else {
-			command = exec.CommandContext(callerContext, path, job.args...)
+			command = exec.CommandContext(callerContext, path, job.commandArguments...)
 			command.Env = toolchain.Env(job.environment...)
 		}
 	}
@@ -401,20 +401,26 @@ func printerAsGoUnit(test *testing.T, unit int) {
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			args := []string{"--cases", shard.path, shard.mode}
+			commandArguments := []string{"--cases", shard.path, shard.mode}
 			jobs := []printerAsGoJob{
 				{
 					"Node",
 					"node",
-					append([]string{"--disable-warning=ExperimentalWarning", runner, products.source}, args...),
+					append(
+						[]string{"--disable-warning=ExperimentalWarning", runner, products.source},
+						commandArguments...,
+					),
 					nil,
 					false,
 				},
-				{"native", products.sanitized, args, []string{"ASAN_OPTIONS=detect_leaks=0"}, false},
+				{"native", products.sanitized, commandArguments, []string{"ASAN_OPTIONS=detect_leaks=0"}, false},
 				{
 					"JS backend",
 					"node",
-					append([]string{"--disable-warning=ExperimentalWarning", runner, products.backend}, args...),
+					append(
+						[]string{"--disable-warning=ExperimentalWarning", runner, products.backend},
+						commandArguments...,
+					),
 					nil,
 					false,
 				},
@@ -423,13 +429,19 @@ func printerAsGoUnit(test *testing.T, unit int) {
 			case "linux":
 				jobs = append(
 					jobs,
-					printerAsGoJob{"leaks", products.sanitized, args, []string{"ASAN_OPTIONS=detect_leaks=1"}, false},
+					printerAsGoJob{
+						"leaks",
+						products.sanitized,
+						commandArguments,
+						[]string{"ASAN_OPTIONS=detect_leaks=1"},
+						false,
+					},
 				)
 			case "darwin":
 				jobs = append(jobs, printerAsGoJob{
 					"leaks",
 					"leaks",
-					append([]string{"--atExit", "--", products.release}, args...),
+					append([]string{"--atExit", "--", products.release}, commandArguments...),
 					nil,
 					true,
 				})

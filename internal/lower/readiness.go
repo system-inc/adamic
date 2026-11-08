@@ -462,7 +462,7 @@ func (lowering *lowering) lazyAssertionInitializer(node *ast.Node) bool {
 	return assertionInitializer(node) && !lowering.checkedAssertionSource(node)
 }
 
-func assertionVarList(list *ast.Node) bool {
+func assertionVariableList(list *ast.Node) bool {
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
 		if !ast.IsIdentifier(declaration.Name()) ||
 			!assertionInitializer(declaration.AsVariableDeclaration().Initializer) {

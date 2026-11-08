@@ -94,11 +94,11 @@ func parseOracle(test *testing.T) string {
 	)
 }
 
-func execute(test *testing.T, name string, args ...string) []byte {
+func execute(test *testing.T, name string, commandArguments ...string) []byte {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()
-	command := toolchain.CommandContextIn(timeoutContext, "", name, args...)
+	command := toolchain.CommandContextIn(timeoutContext, "", name, commandArguments...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	output, outputError := command.Output()

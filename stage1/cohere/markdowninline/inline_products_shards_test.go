@@ -354,14 +354,14 @@ func inlineDifference(name string, ids []int, got, want []byte) error {
 		len(want),
 	)
 }
-func inlineNativeRun(test *testing.T, sanitized, fast string, args ...string) run {
+func inlineNativeRun(test *testing.T, sanitized, fast string, commandArguments ...string) run {
 	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		return execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...)
+		return execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, commandArguments...)
 	case "darwin":
-		run := execute(test, nil, sanitized, args...)
-		check := execute(test, nil, "leaks", append([]string{"--atExit", "--", fast}, args...)...)
+		run := execute(test, nil, sanitized, commandArguments...)
+		check := execute(test, nil, "leaks", append([]string{"--atExit", "--", fast}, commandArguments...)...)
 		if check.exitCode != 0 {
 			test.Fatalf("leaks: %s %s", check.stdout, check.stderr)
 		}

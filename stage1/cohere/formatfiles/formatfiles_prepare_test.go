@@ -162,8 +162,8 @@ func formatfilesDeadline(test *testing.T, label string) context.Context {
 	return timeoutContext
 }
 
-func formatfilesContextCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func formatfilesContextCommand(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -184,10 +184,10 @@ func formatfilesExecute(
 	callerContext context.Context,
 	environment []string,
 	name string,
-	args ...string,
+	commandArguments ...string,
 ) run {
 	test.Helper()
-	command := formatfilesContextCommand(callerContext, name, args...)
+	command := formatfilesContextCommand(callerContext, name, commandArguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -202,7 +202,7 @@ func formatfilesExecute(
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
-func formatfilesNode(test *testing.T, callerContext context.Context, path string, args ...string) run {
+func formatfilesNode(test *testing.T, callerContext context.Context, path string, commandArguments ...string) run {
 	test.Helper()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if absolutePathError != nil {
@@ -213,7 +213,7 @@ func formatfilesNode(test *testing.T, callerContext context.Context, path string
 		callerContext,
 		nil,
 		"node",
-		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...,
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, commandArguments...)...,
 	)
 }
 
@@ -222,11 +222,17 @@ func formatfilesLeaks(
 	callerContext context.Context,
 	program *ir.Program,
 	binary string,
-	args ...string,
+	commandArguments ...string,
 ) string {
 	test.Helper()
 	if runtime.GOOS == "linux" {
-		report := formatfilesExecute(test, callerContext, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, args...)
+		report := formatfilesExecute(
+			test,
+			callerContext,
+			[]string{"ASAN_OPTIONS=detect_leaks=1"},
+			binary,
+			commandArguments...,
+		)
 		if report.exitCode == 0 {
 			return ""
 		}
@@ -238,7 +244,7 @@ func formatfilesLeaks(
 			callerContext,
 			nil,
 			"leaks",
-			append([]string{"--atExit", "--", formatfilesUnsanitizedState}, args...)...,
+			append([]string{"--atExit", "--", formatfilesUnsanitizedState}, commandArguments...)...,
 		)
 		if report.exitCode == 0 {
 			return ""

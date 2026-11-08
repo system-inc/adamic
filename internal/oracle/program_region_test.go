@@ -82,8 +82,8 @@ func checkProgramRegionMode(test *testing.T, program *ir.Program, path string, e
 		BuildCounted: func(code, output string) error {
 			return programRegionBuild(test, code, output, native.Options{ProgramRegion: enabled, Count: true})
 		},
-		Execute: func(environment []string, name string, args ...string) leakcheck.Run {
-			return leakRun(executeWith(test, environment, name, args...))
+		Execute: func(environment []string, name string, commandArguments ...string) leakcheck.Run {
+			return leakRun(executeWith(test, environment, name, commandArguments...))
 		},
 	})
 	if checkError != nil {
@@ -101,8 +101,8 @@ func checkProgramRegionMode(test *testing.T, program *ir.Program, path string, e
 	); programRegionBuildError != nil {
 		test.Fatal(programRegionBuildError)
 	}
-	name, args := pinnedStack(countedBinary)
-	counted := execute(test, name, args...)
+	name, commandArguments := pinnedStack(countedBinary)
+	counted := execute(test, name, commandArguments...)
 	match := countsLine.FindSubmatch(counted.stderr)
 	if counted.exitCode != 0 || match == nil {
 		test.Fatalf("counts %d %s", counted.exitCode, counted.stderr)

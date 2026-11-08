@@ -96,8 +96,8 @@ func VerifySsa(function *Function) []SsaViolation {
 		definedAt[id] = position
 	}
 
-	for index := range function.Params {
-		recordDefinition(function.Params[index].Identifier, function.Entry, -1)
+	for index := range function.Parameters {
+		recordDefinition(function.Parameters[index].Identifier, function.Entry, -1)
 	}
 
 	for _, block := range function.Blocks {

@@ -880,7 +880,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		}
 	})
 	{
-		for _, corpus := range []struct{ name, config, manifest string }{
+		for _, corpus := range []struct{ name, configuration, manifest string }{
 			{"compiler", compilerConfiguration, compilerManifest},
 			{"generated", configuration, manifest},
 		} {
@@ -907,7 +907,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 					}
 					var expected []byte
 					for _, binary := range binaries {
-						command := exec.Command(binary, corpus.config, corpus.manifest, "--count")
+						command := exec.Command(binary, corpus.configuration, corpus.manifest, "--count")
 						command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
 						result := harness.must(
 							fmt.Sprintf("bench-%s-%d-%s", corpus.name, round, filepath.Base(binary)),

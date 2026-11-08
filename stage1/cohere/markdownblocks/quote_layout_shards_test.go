@@ -546,8 +546,8 @@ func quoteLayoutFixture(test *testing.T, inputs []auditInput, products quoteLayo
 			test.Fatal(absolutePathError)
 		}
 		for _, side := range []struct {
-			name, command string
-			args          []string
+			name, command    string
+			commandArguments []string
 		}{
 			{"Go document layout", goLayout, []string{canonicalCases}},
 			{"native block/layout component", fast, []string{nativeCases}},
@@ -561,7 +561,7 @@ func quoteLayoutFixture(test *testing.T, inputs []auditInput, products quoteLayo
 			var elapsed time.Duration
 			for round := 0; round < 3; round++ {
 				start := time.Now()
-				result := quoteLayoutExecute(test, nil, side.command, side.args...)
+				result := quoteLayoutExecute(test, nil, side.command, side.commandArguments...)
 				elapsed += time.Since(start)
 				clean(test, side.name, result)
 				equal(test, side.name, result.stdout, want.stdout)

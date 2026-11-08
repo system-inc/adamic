@@ -84,17 +84,20 @@ func adaptRegExpStringCollector(source string, counts map[string]int) string {
 					valid = false
 				}
 			case "push", "join":
-				args, _, ok := tokenArguments(tokens, j+3)
-				if !ok || len(args) != 1 || args[0][0] >= args[0][1] || tokens[args[0][0]].kind != "str" {
+				arguments, _, ok := tokenArguments(tokens, j+3)
+				if !ok ||
+					len(arguments) != 1 ||
+					arguments[0][0] >= arguments[0][1] ||
+					tokens[arguments[0][0]].kind != "str" {
 					valid = false
 					break
 				}
 				if tokens[j+2].text == "push" {
 					pushes++
-					if args[0][1]-args[0][0] > 1 && tokens[args[0][0]+1].text != "+" {
+					if arguments[0][1]-arguments[0][0] > 1 && tokens[arguments[0][0]+1].text != "+" {
 						valid = false
 					}
-				} else if args[0][1]-args[0][0] != 1 {
+				} else if arguments[0][1]-arguments[0][0] != 1 {
 					valid = false
 				}
 			default:
@@ -168,11 +171,11 @@ func adaptRegExpHarnessRecord(source string, counts map[string]int) string {
 		if i > 0 && tokens[i-1].text == "." {
 			continue
 		}
-		args, end, ok := tokenArguments(tokens, i+1)
-		if !ok || len(args) != 1 {
+		arguments, end, ok := tokenArguments(tokens, i+1)
+		if !ok || len(arguments) != 1 {
 			continue
 		}
-		a := args[0]
+		a := arguments[0]
 		if a[1]-a[0] < 2 || tokens[a[0]].text != "{" || tokens[a[1]-1].text != "}" {
 			continue
 		}
@@ -217,7 +220,7 @@ func tokenArguments(tokens []token, open int) ([][2]int, int, bool) {
 	}
 	stack := []string{")"}
 	start := open + 1
-	var args [][2]int
+	var arguments [][2]int
 	for index := start; index < len(tokens); index++ {
 		text := tokens[index].text
 		if close := matchingClose(text); close != "" {
@@ -231,13 +234,13 @@ func tokenArguments(tokens []token, open int) ([][2]int, int, bool) {
 			stack = stack[:len(stack)-1]
 			if len(stack) == 0 {
 				if index > start {
-					args = append(args, [2]int{start, index})
+					arguments = append(arguments, [2]int{start, index})
 				}
-				return args, index, true
+				return arguments, index, true
 			}
 		}
 		if text == "," && len(stack) == 1 {
-			args = append(args, [2]int{start, index})
+			arguments = append(arguments, [2]int{start, index})
 			start = index + 1
 		}
 	}
@@ -253,20 +256,20 @@ func adaptRegExpNull(source string, counts map[string]int) string {
 			(tokens[tokenIndex+2].text != "sameValue" && tokens[tokenIndex+2].text != "notSameValue") {
 			continue
 		}
-		args, end, ok := tokenArguments(tokens, tokenIndex+3)
-		if !ok || len(args) < 2 || len(args) > 3 {
+		arguments, end, ok := tokenArguments(tokens, tokenIndex+3)
+		if !ok || len(arguments) < 2 || len(arguments) > 3 {
 			continue
 		}
 		null := -1
 		for j := 0; j < 2; j++ {
-			if args[j][1]-args[j][0] == 1 && tokens[args[j][0]].text == "null" {
+			if arguments[j][1]-arguments[j][0] == 1 && tokens[arguments[j][0]].text == "null" {
 				null = j
 			}
 		}
 		if null < 0 {
 			continue
 		}
-		other := args[1-null]
+		other := arguments[1-null]
 		if other[0] == other[1] {
 			continue
 		}
@@ -279,8 +282,8 @@ func adaptRegExpNull(source string, counts map[string]int) string {
 			")" +
 			op +
 			", true"
-		if len(args) == 3 {
-			a := args[2]
+		if len(arguments) == 3 {
+			a := arguments[2]
 			replacement += ", " + source[tokens[a[0]].start:tokens[a[1]-1].end]
 		}
 		replacement += ")"
@@ -404,7 +407,7 @@ func adaptRegExpReads(source string, counts map[string]int) string {
 			binding.init.left.op != "member" {
 			continue
 		}
-		method := binding.init.left.prop
+		method := binding.init.left.property
 		if method != "exec" && method != "match" {
 			continue
 		}
@@ -417,11 +420,11 @@ func adaptRegExpReads(source string, counts map[string]int) string {
 			!strings.Contains("|length|index|input|groups|indices|", "|"+tokens[index+2].text+"|") {
 			continue
 		}
-		fn := "requiredRegexExec"
+		function := "requiredRegexExec"
 		if method == "match" {
-			fn = "requiredRegexMatch"
+			function = "requiredRegexMatch"
 		}
-		edits = append(edits, edit{tokens[index].start, tokens[index].end, fn + "(" + reference.name + ")"})
+		edits = append(edits, edit{tokens[index].start, tokens[index].end, function + "(" + reference.name + ")"})
 		counts["regex-checked-match-read"]++
 	}
 	return applyEdits(source, edits)

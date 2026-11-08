@@ -204,9 +204,9 @@ func WASIExports(program *ir.Program, exports []AbiExport) (string, error) {
 			declarations.WriteString(" adamic_abi_string_write(b,v);\n")
 		case "number[]", "string[]":
 			declarations.WriteString(" adamic_abi_u32_write(b,(uint32_t)v->length);\n")
-			fn, mem := "adamic_abi_number_write", "number"
+			function, mem := "adamic_abi_number_write", "number"
 			if abiType.Kind == "string[]" {
-				fn, mem = "adamic_abi_string_write", "reference"
+				function, mem = "adamic_abi_string_write", "reference"
 			} else {
 				declarations.WriteString(" adamic_abi_align(b);\n")
 			}
@@ -217,7 +217,7 @@ func WASIExports(program *ir.Program, exports []AbiExport) (string, error) {
 			fmt.Fprintf(
 				&declarations,
 				" for (size_t i=0; i<v->length; i++) %s(b,%sv->elements[i].%s);\n",
-				fn,
+				function,
 				cast,
 				mem,
 			)
@@ -245,7 +245,7 @@ func WASIExports(program *ir.Program, exports []AbiExport) (string, error) {
 	var wrappers strings.Builder
 	for _, export := range exports {
 		function := program.Functions[export.Function]
-		args, parameters := []string{}, []string{}
+		commandArguments, parameters := []string{}, []string{}
 		var body strings.Builder
 		for index, parameter := range export.Parameters {
 			name := fmt.Sprintf("p%d", index)
@@ -253,14 +253,14 @@ func WASIExports(program *ir.Program, exports []AbiExport) (string, error) {
 			switch abiType.Kind {
 			case "number":
 				parameters = append(parameters, "double "+name)
-				args = append(args, name)
+				commandArguments = append(commandArguments, name)
 			case "boolean":
 				parameters = append(parameters, "int32_t "+name)
-				args = append(args, "("+name+" != 0)")
+				commandArguments = append(commandArguments, "("+name+" != 0)")
 			default:
 				parameters = append(parameters, "const unsigned char *"+name, "uint32_t "+name+"_length")
 				value := name + "_value"
-				args = append(args, value)
+				commandArguments = append(commandArguments, value)
 				if abiType.Kind == "string" {
 					fmt.Fprintf(&body, " adamic_string *%s = adamic_abi_wtf8(%s,%s_length);\n", value, name, name)
 				} else if abiType.Kind == "number[]" {
@@ -290,7 +290,7 @@ func WASIExports(program *ir.Program, exports []AbiExport) (string, error) {
 					)
 				}
 				if emitter.reuse.consumed[function.Parameters[index]] {
-					args[len(args)-1] = "adamic_retain(" + value + ")"
+					commandArguments[len(commandArguments)-1] = "adamic_retain(" + value + ")"
 				}
 			}
 		}
@@ -314,7 +314,7 @@ func WASIExports(program *ir.Program, exports []AbiExport) (string, error) {
 			strings.Join(parameters, ", "),
 		)
 		wrappers.WriteString(body.String())
-		call := fmt.Sprintf("%s(%s)", emitter.functionName(export.Function), strings.Join(args, ", "))
+		call := fmt.Sprintf("%s(%s)", emitter.functionName(export.Function), strings.Join(commandArguments, ", "))
 		if export.Returns.Kind == "void" {
 			fmt.Fprintf(&wrappers, " %s;\n", call)
 		} else {

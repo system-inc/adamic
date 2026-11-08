@@ -68,8 +68,8 @@ type activity struct {
 	seen bool
 }
 type watched struct {
-	dst      io.Writer
-	activity *activity
+	destination io.Writer
+	activity    *activity
 }
 
 func (watched *watched) Write(p []byte) (int, error) {
@@ -83,7 +83,7 @@ func (watched *watched) Write(p []byte) (int, error) {
 		default:
 		}
 	}
-	return watched.dst.Write(p)
+	return watched.destination.Write(p)
 }
 
 // Run starts an unstarted command in its own process group and waits for it.
@@ -127,7 +127,7 @@ func Run(command *exec.Cmd, options Options) error {
 		if destination == nil {
 			destination = io.Discard
 		}
-		return &watched{dst: destination, activity: activity}
+		return &watched{destination: destination, activity: activity}
 	}
 	command.Stdout = wrap(originalOut)
 	// Preserve exec's serialization when both streams share a writer.

@@ -11,10 +11,10 @@ import (
 // test262 checkout. A rewrite that would change meaning is not applied: the test stays as written,
 // and the refusal stays a fact about Adamic rather than about test262's spelling.
 const (
-	adaptVarToLet      = "var-to-let"
-	adaptCallbackParam = "callback-param"
-	adaptStrictEq      = "strict-eq"
-	adaptThrowError    = "throw-error"
+	adaptVariableToLet     = "var-to-let"
+	adaptCallbackParameter = "callback-param"
+	adaptStrictEq          = "strict-eq"
+	adaptThrowError        = "throw-error"
 )
 
 // adapted is one test body after --adapt, plus how many times each rewrite fired.
@@ -440,9 +440,9 @@ func arrayOf(elem *jtype) *jtype {
 type texpr struct {
 	op        string
 	name      string
-	prop      string
+	property  string
 	scope     *scope
-	fn        *fnInfo
+	function  *functionInfo
 	left      *texpr
 	right     *texpr
 	elems     []*texpr
@@ -458,7 +458,7 @@ type namedExpr struct {
 type binding struct {
 	kind     string
 	name     string
-	fn       *fnInfo
+	function *functionInfo
 	init     *texpr
 	assigns  []assignNote
 	typ      *jtype
@@ -471,12 +471,12 @@ type assignNote struct {
 	inc bool
 }
 
-type fnInfo struct {
-	params []param
-	scope  *scope
+type functionInfo struct {
+	parameters []parameter
+	scope      *scope
 }
 
-type param struct {
+type parameter struct {
 	name       string
 	nameEnd    int
 	typed      bool
@@ -486,13 +486,13 @@ type param struct {
 }
 
 type scope struct {
-	kind   string
-	parent *scope
-	fn     *scope
-	loop   *scope
-	start  int
-	end    int
-	names  map[string]*binding
+	kind     string
+	parent   *scope
+	function *scope
+	loop     *scope
+	start    int
+	end      int
+	names    map[string]*binding
 }
 
 type reference struct {
@@ -503,15 +503,15 @@ type reference struct {
 }
 
 type varDecl struct {
-	name    string
-	binding *binding
-	nameAt  int
-	block   *scope
-	fn      *scope
-	loop    *scope
-	loopVar bool
-	stmt    *varStmt
-	unsafe  bool
+	name         string
+	binding      *binding
+	nameAt       int
+	block        *scope
+	function     *scope
+	loop         *scope
+	loopVariable bool
+	stmt         *varStmt
+	unsafe       bool
 }
 
 type varStmt struct {
@@ -520,10 +520,10 @@ type varStmt struct {
 }
 
 type callNote struct {
-	method  string
-	recv    *texpr
-	args    []*texpr
-	viaCall bool
+	method    string
+	recv      *texpr
+	arguments []*texpr
+	viaCall   bool
 }
 
 type cmpNote struct {
@@ -550,7 +550,7 @@ type parser struct {
 	pos               int
 	scope             *scope
 	failed            bool
-	unsafeVars        bool
+	unsafeVariables   bool
 	edits             []edit
 	counts            map[string]int
 	refs              []reference
@@ -575,7 +575,7 @@ func parseBody(source string) *parser {
 		}
 	}
 	parsed.scope = &scope{kind: "module", names: map[string]*binding{}, start: 0}
-	parsed.scope.fn = parsed.scope
+	parsed.scope.function = parsed.scope
 	parsed.parseStatements(true)
 	if parsed.scope != nil && parsed.scope.kind == "module" {
 		parsed.scope.end = len(parsed.toks)
@@ -652,7 +652,7 @@ func (parser *parser) parseStatement() {
 		return
 	case "class":
 		parser.skipBraced()
-		parser.unsafeVars = true
+		parser.unsafeVariables = true
 		return
 	case "if":
 		parser.next()
@@ -754,15 +754,15 @@ func (parser *parser) parseBlock() {
 
 func (parser *parser) push(kind string) *scope {
 	child := &scope{
-		kind:   kind,
-		parent: parser.scope,
-		names:  map[string]*binding{},
-		start:  parser.pos,
-		fn:     parser.scope.fn,
-		loop:   parser.scope.loop,
+		kind:     kind,
+		parent:   parser.scope,
+		names:    map[string]*binding{},
+		start:    parser.pos,
+		function: parser.scope.function,
+		loop:     parser.scope.loop,
 	}
 	if kind == "func" {
-		child.fn = child
+		child.function = child
 		child.loop = nil
 	}
 	if kind == "loop" {
@@ -804,19 +804,19 @@ func (parser *parser) parseDeclaration(forHeader bool) {
 		nameTok := parser.next()
 		binding := &binding{kind: keyword.text, name: nameTok.text}
 		decl := &varDecl{
-			name:    nameTok.text,
-			binding: binding,
-			nameAt:  parser.pos - 1,
-			block:   parser.scope,
-			fn:      parser.scope.fn,
-			loop:    parser.scope.loop,
-			loopVar: forHeader && keyword.text == "var",
-			stmt:    stmt,
+			name:         nameTok.text,
+			binding:      binding,
+			nameAt:       parser.pos - 1,
+			block:        parser.scope,
+			function:     parser.scope.function,
+			loop:         parser.scope.loop,
+			loopVariable: forHeader && keyword.text == "var",
+			stmt:         stmt,
 		}
 		if keyword.text == "var" {
-			existing := parser.scope.fn.names[nameTok.text]
+			existing := parser.scope.function.names[nameTok.text]
 			if existing == nil {
-				parser.scope.fn.names[nameTok.text] = binding
+				parser.scope.function.names[nameTok.text] = binding
 			} else if existing.kind == "var" {
 				existing.poison = true
 				decl.binding = existing
@@ -836,8 +836,8 @@ func (parser *parser) parseDeclaration(forHeader bool) {
 			parser.initializing = binding
 			binding.init = parser.parseAssign(forHeader)
 			parser.initializing = saved
-			if binding.init != nil && binding.init.op == "fn" && binding.fn == nil {
-				binding.fn = binding.init.fn
+			if binding.init != nil && binding.init.op == "fn" && binding.function == nil {
+				binding.function = binding.init.function
 			}
 		}
 		stmt.decls = append(stmt.decls, decl)
@@ -976,7 +976,7 @@ func (parser *parser) parseThrow() {
 	parser.semi()
 }
 
-func (parser *parser) parseFunction(statement bool) *fnInfo {
+func (parser *parser) parseFunction(statement bool) *functionInfo {
 	parser.next()
 	var name string
 	var nameTok token
@@ -987,19 +987,19 @@ func (parser *parser) parseFunction(statement bool) *fnInfo {
 		parser.fail()
 		return nil
 	}
-	fnScope := parser.push("func")
-	info := &fnInfo{scope: fnScope}
+	functionScope := parser.push("func")
+	info := &functionInfo{scope: functionScope}
 	if statement && name != "" {
-		binding := &binding{kind: "func", name: name, fn: info}
-		parent := fnScope.parent
+		binding := &binding{kind: "func", name: name, function: info}
+		parent := functionScope.parent
 		if existing := parent.names[name]; existing != nil {
 			existing.poison = true
-			existing.fn = nil
+			existing.function = nil
 		} else {
 			parent.names[name] = binding
 		}
 	}
-	parser.parseParamList(info, fnScope)
+	parser.parseParamList(info, functionScope)
 	if parser.is(":") {
 		parser.next()
 		parser.skipType()
@@ -1007,18 +1007,18 @@ func (parser *parser) parseFunction(statement bool) *fnInfo {
 	parser.expect("{")
 	if !statement && name != "" {
 		// The expression's own name is visible inside it, and it is not the binding a call site sees.
-		fnScope.names[name] = &binding{kind: "func", name: name, poison: true}
+		functionScope.names[name] = &binding{kind: "func", name: name, poison: true}
 	}
 	parser.parseStatements(false)
 	parser.expect("}")
-	parser.pop(fnScope)
+	parser.pop(functionScope)
 	return info
 }
 
-func (parser *parser) parseParamList(info *fnInfo, fnScope *scope) {
+func (parser *parser) parseParamList(info *functionInfo, functionScope *scope) {
 	parser.expect("(")
 	for !parser.failed && !parser.is(")") && !parser.eof() {
-		parameter := param{}
+		parameter := parameter{}
 		if parser.is("...") {
 			parser.next()
 			parameter.rest = true
@@ -1041,13 +1041,13 @@ func (parser *parser) parseParamList(info *fnInfo, fnScope *scope) {
 				parser.parseAssign(false)
 			}
 			if parameter.name != "" {
-				fnScope.names[parameter.name] = &binding{kind: "param", name: parameter.name}
+				functionScope.names[parameter.name] = &binding{kind: "param", name: parameter.name}
 			}
 		} else {
 			parser.fail()
 			break
 		}
-		info.params = append(info.params, parameter)
+		info.parameters = append(info.parameters, parameter)
 		if parser.is(",") {
 			parser.next()
 			continue
@@ -1303,7 +1303,7 @@ func (parser *parser) parsePostfix() *texpr {
 				return expr
 			}
 			parser.next()
-			expr = &texpr{op: "member", prop: name.text, left: expr}
+			expr = &texpr{op: "member", property: name.text, left: expr}
 		case parser.is("("):
 			if expr.op == "name" && expr.name == "Array" {
 				call := parser.finishCall(expr)
@@ -1328,21 +1328,21 @@ func (parser *parser) parsePostfix() *texpr {
 }
 
 func (parser *parser) parseCall(callee *texpr) *texpr {
-	args := parser.finishCall(callee)
-	parser.noteCall(callee, args)
-	return &texpr{op: "call", left: callee, elems: args}
+	arguments := parser.finishCall(callee)
+	parser.noteCall(callee, arguments)
+	return &texpr{op: "call", left: callee, elems: arguments}
 }
 
 func (parser *parser) finishCall(callee *texpr) []*texpr {
 	parser.expect("(")
-	var args []*texpr
+	var arguments []*texpr
 	for !parser.failed && !parser.is(")") && !parser.eof() {
 		if parser.is("...") {
 			parser.next()
 			parser.parseAssign(false)
-			args = append(args, &texpr{op: "unknown"})
+			arguments = append(arguments, &texpr{op: "unknown"})
 		} else {
-			args = append(args, parser.parseAssign(false))
+			arguments = append(arguments, parser.parseAssign(false))
 		}
 		if parser.is(",") {
 			parser.next()
@@ -1352,22 +1352,25 @@ func (parser *parser) finishCall(callee *texpr) []*texpr {
 	}
 	parser.expect(")")
 	_ = callee
-	return args
+	return arguments
 }
 
-func (parser *parser) noteCall(callee *texpr, args []*texpr) {
+func (parser *parser) noteCall(callee *texpr, arguments []*texpr) {
 	if callee == nil || callee.op != "member" {
 		return
 	}
-	if callee.prop == "call" && callee.left != nil && callee.left.op == "member" && callbackMethod(callee.left.prop) {
+	if callee.property == "call" &&
+		callee.left != nil &&
+		callee.left.op == "member" &&
+		callbackMethod(callee.left.property) {
 		parser.calls = append(
 			parser.calls,
-			callNote{method: callee.left.prop, recv: callee.left.left, args: args, viaCall: true},
+			callNote{method: callee.left.property, recv: callee.left.left, arguments: arguments, viaCall: true},
 		)
 		return
 	}
-	if callbackMethod(callee.prop) {
-		parser.calls = append(parser.calls, callNote{method: callee.prop, recv: callee.left, args: args})
+	if callbackMethod(callee.property) {
+		parser.calls = append(parser.calls, callNote{method: callee.property, recv: callee.left, arguments: arguments})
 	}
 }
 
@@ -1401,7 +1404,7 @@ func (parser *parser) parsePrimary() *texpr {
 		if strings.Contains(tok.text, "${") {
 			// A template can close over a var. Missing that reference would make var to let a lie,
 			// so the whole file keeps its vars. The template text itself is not rewritten.
-			parser.unsafeVars = true
+			parser.unsafeVariables = true
 		}
 		return &texpr{op: "str"}
 	}
@@ -1411,7 +1414,7 @@ func (parser *parser) parsePrimary() *texpr {
 	case "{":
 		return parser.parseObject()
 	case "function":
-		return &texpr{op: "fn", fn: parser.parseFunction(false)}
+		return &texpr{op: "fn", function: parser.parseFunction(false)}
 	case "new":
 		return parser.parseNew()
 	case "(":
@@ -1465,9 +1468,9 @@ func (parser *parser) parseIdent() *texpr {
 		return nil
 	}
 	if parser.is("=>") {
-		fnScope := parser.push("func")
-		fnScope.names[tok.text] = &binding{kind: "param", name: tok.text}
-		return parser.finishArrow([]param{{name: tok.text, nameEnd: tok.end}}, fnScope)
+		functionScope := parser.push("func")
+		functionScope.names[tok.text] = &binding{kind: "param", name: tok.text}
+		return parser.finishArrow([]parameter{{name: tok.text, nameEnd: tok.end}}, functionScope)
 	}
 	resolved := lookup(parser.scope, tok.text)
 	inInit := parser.initializing
@@ -1593,13 +1596,13 @@ func (parser *parser) parseMethodTail(alreadyNamed bool) {
 		parser.fail()
 		return
 	}
-	fnScope := parser.push("func")
-	info := &fnInfo{scope: fnScope}
-	parser.parseParamList(info, fnScope)
+	functionScope := parser.push("func")
+	info := &functionInfo{scope: functionScope}
+	parser.parseParamList(info, functionScope)
 	parser.expect("{")
 	parser.parseStatements(false)
 	parser.expect("}")
-	parser.pop(fnScope)
+	parser.pop(functionScope)
 }
 
 func (parser *parser) looksArrow() bool {
@@ -1623,10 +1626,10 @@ func (parser *parser) looksArrow() bool {
 
 func (parser *parser) parseArrow() *texpr {
 	parser.next()
-	fnScope := parser.push("func")
-	var parameters []param
+	functionScope := parser.push("func")
+	var parameters []parameter
 	for !parser.failed && !parser.is(")") && !parser.eof() {
-		parameter := param{}
+		parameter := parameter{}
 		if parser.is("...") {
 			parser.next()
 			parameter.rest = true
@@ -1649,7 +1652,7 @@ func (parser *parser) parseArrow() *texpr {
 				parser.next()
 				parser.parseAssign(false)
 			}
-			fnScope.names[parameter.name] = &binding{kind: "param", name: parameter.name}
+			functionScope.names[parameter.name] = &binding{kind: "param", name: parameter.name}
 		} else {
 			parser.fail()
 			break
@@ -1662,11 +1665,11 @@ func (parser *parser) parseArrow() *texpr {
 		break
 	}
 	parser.expect(")")
-	return parser.finishArrow(parameters, fnScope)
+	return parser.finishArrow(parameters, functionScope)
 }
 
-func (parser *parser) finishArrow(parameters []param, fnScope *scope) *texpr {
-	info := &fnInfo{params: parameters, scope: fnScope}
+func (parser *parser) finishArrow(parameters []parameter, functionScope *scope) *texpr {
+	info := &functionInfo{parameters: parameters, scope: functionScope}
 	parser.expect("=>")
 	if parser.is("{") {
 		parser.next()
@@ -1675,8 +1678,8 @@ func (parser *parser) finishArrow(parameters []param, fnScope *scope) *texpr {
 	} else {
 		parser.parseAssign(false)
 	}
-	parser.pop(fnScope)
-	return &texpr{op: "fn", fn: info}
+	parser.pop(functionScope)
+	return &texpr{op: "fn", function: info}
 }
 
 func isKeyword(text string) bool {
@@ -1711,15 +1714,15 @@ func (parser *parser) finish() {
 			binding.assigns = append(binding.assigns, late.note)
 		}
 	}
-	if !parser.unsafeVars {
-		parser.rewriteVars()
+	if !parser.unsafeVariables {
+		parser.rewriteVariables()
 	}
 	parser.annotateCallbacks()
 	parser.rewriteEquals()
 	parser.rewriteThrows()
 }
 
-func (parser *parser) rewriteVars() {
+func (parser *parser) rewriteVariables() {
 	for _, stmt := range parser.varStmts {
 		safe := len(stmt.decls) > 0
 		for _, decl := range stmt.decls {
@@ -1732,7 +1735,7 @@ func (parser *parser) rewriteVars() {
 			continue
 		}
 		parser.edits = append(parser.edits, edit{start: stmt.keyword.start, end: stmt.keyword.end, text: "let"})
-		parser.counts[adaptVarToLet] += len(stmt.decls)
+		parser.counts[adaptVariableToLet] += len(stmt.decls)
 	}
 }
 
@@ -1781,14 +1784,14 @@ func (parser *parser) declSafe(decl *varDecl) bool {
 }
 
 func (parser *parser) capturedAcrossLoop(decl *varDecl, reference reference) bool {
-	if reference.scope == nil || reference.scope.fn == decl.fn {
+	if reference.scope == nil || reference.scope.function == decl.function {
 		return false
 	}
-	for scope := reference.scope; scope != nil && scope != decl.fn; scope = scope.parent {
+	for scope := reference.scope; scope != nil && scope != decl.function; scope = scope.parent {
 		if scope.kind != "loop" {
 			continue
 		}
-		if decl.loopVar && decl.loop == scope {
+		if decl.loopVariable && decl.loop == scope {
 			return true
 		}
 		if decl.block != scope && scopeWithin(decl.block, scope) {
@@ -1809,19 +1812,19 @@ func scopeWithin(inner *scope, outer *scope) bool {
 }
 
 func (parser *parser) annotateCallbacks() {
-	groups := map[*fnInfo][][]*jtype{}
+	groups := map[*functionInfo][][]*jtype{}
 	for _, call := range parser.calls {
-		fn := parser.callbackFn(call)
-		if fn == nil {
+		function := parser.callback(call)
+		if function == nil {
 			continue
 		}
-		groups[fn] = append(groups[fn], parser.inferCall(call))
+		groups[function] = append(groups[function], parser.inferCall(call))
 	}
-	for fn, inferences := range groups {
+	for function, inferences := range groups {
 		if len(inferences) == 0 {
 			continue
 		}
-		for index, parameter := range fn.params {
+		for index, parameter := range function.parameters {
 			if parameter.name == "" || parameter.typed || parameter.rest || parameter.pattern || parameter.hasDefault {
 				continue
 			}
@@ -1852,9 +1855,9 @@ func (parser *parser) annotateCallbacks() {
 				parser.edits,
 				edit{start: parameter.nameEnd, end: parameter.nameEnd, text: ": " + rendered},
 			)
-			parser.counts[adaptCallbackParam]++
-			if fn.scope != nil {
-				if binding := fn.scope.names[parameter.name]; binding != nil && binding.kind == "param" {
+			parser.counts[adaptCallbackParameter]++
+			if function.scope != nil {
+				if binding := function.scope.names[parameter.name]; binding != nil && binding.kind == "param" {
 					binding.typ = chosen
 				}
 			}
@@ -1862,7 +1865,7 @@ func (parser *parser) annotateCallbacks() {
 	}
 }
 
-func (parser *parser) callbackFn(call callNote) *fnInfo {
+func (parser *parser) callback(call callNote) *functionInfo {
 	index := 0
 	if call.method == "replace" || call.method == "replaceAll" {
 		index = 1
@@ -1870,15 +1873,15 @@ func (parser *parser) callbackFn(call callNote) *fnInfo {
 	if call.viaCall {
 		index++
 	}
-	if index >= len(call.args) || call.args[index] == nil || call.args[index].op != "name" {
+	if index >= len(call.arguments) || call.arguments[index] == nil || call.arguments[index].op != "name" {
 		return nil
 	}
-	arg := call.args[index]
-	binding := lookup(arg.scope, arg.name)
-	if binding == nil || binding.fn == nil || binding.poison {
+	argument := call.arguments[index]
+	binding := lookup(argument.scope, argument.name)
+	if binding == nil || binding.function == nil || binding.poison {
 		return nil
 	}
-	return binding.fn
+	return binding.function
 }
 
 func (parser *parser) inferCall(call callNote) []*jtype {
@@ -1898,8 +1901,8 @@ func (parser *parser) inferCall(call callNote) []*jtype {
 		if call.viaCall {
 			initIndex = 2
 		}
-		if len(call.args) > initIndex {
-			initType := parser.eval(call.args[initIndex])
+		if len(call.arguments) > initIndex {
+			initType := parser.eval(call.arguments[initIndex])
 			if initType == nil {
 				return nil
 			}
@@ -1914,10 +1917,10 @@ func (parser *parser) inferCall(call callNote) []*jtype {
 func (parser *parser) receiverElem(call callNote) *jtype {
 	var recv *texpr
 	if call.viaCall {
-		if len(call.args) == 0 {
+		if len(call.arguments) == 0 {
 			return nil
 		}
-		recv = call.args[0]
+		recv = call.arguments[0]
 	} else {
 		recv = call.recv
 	}
@@ -1980,7 +1983,7 @@ func (parser *parser) eval(expr *texpr) *jtype {
 	case "object":
 		return parser.evalObject(expr)
 	case "member":
-		if expr.prop == "length" {
+		if expr.property == "length" {
 			recv := parser.eval(expr.left)
 			if recv != nil && (recv.kind == "array" || recv.kind == "string") {
 				return typeNumber

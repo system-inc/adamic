@@ -99,11 +99,11 @@ func regExpWasiAgrees(test testing.TB, engine *engine, one classified) {
 		test.Fatal(writeError)
 	}
 	binary := filepath.Join(engine.work, "program.wasm")
-	args := append(native.Flags(options), "-I", directory, cPath, "-o", binary)
-	args = append(args, native.RuntimeLinkFlags(filepath.Join(directory, "runtime.a"))...)
-	args = append(args, native.WasiLinkFlags(options)...)
-	args = append(args, "-Wl,--export=__stack_low", "-lm")
-	linked := runCommand(20*time.Second, nil, request.Compiler, args...)
+	commandArguments := append(native.Flags(options), "-I", directory, cPath, "-o", binary)
+	commandArguments = append(commandArguments, native.RuntimeLinkFlags(filepath.Join(directory, "runtime.a"))...)
+	commandArguments = append(commandArguments, native.WasiLinkFlags(options)...)
+	commandArguments = append(commandArguments, "-Wl,--export=__stack_low", "-lm")
+	linked := runCommand(20*time.Second, nil, request.Compiler, commandArguments...)
 	if linked.Exit != 0 {
 		test.Fatalf("WASI link: %+v", linked)
 	}

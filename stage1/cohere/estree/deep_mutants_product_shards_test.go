@@ -64,10 +64,10 @@ func deepMutantsProof(test *testing.T) {
 	}
 	names := map[string]bool{}
 	for _, decl := range file.Decls {
-		if fn, ok := decl.(*ast.FuncDecl); ok &&
-			strings.HasPrefix(fn.Name.Name, "TestDeepMutants_") &&
-			fn.Name.Name != "TestDeepMutants_Setup" {
-			names[fn.Name.Name] = true
+		if function, ok := decl.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(function.Name.Name, "TestDeepMutants_") &&
+			function.Name.Name != "TestDeepMutants_Setup" {
+			names[function.Name.Name] = true
 		}
 	}
 	if len(names) != testDeepMutantsShards {

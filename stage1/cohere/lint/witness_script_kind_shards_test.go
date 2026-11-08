@@ -262,8 +262,8 @@ func TestWitnessScriptKind_Setup(test *testing.T) {
 // through childguard.Capture, to its end with no timer deciding when: exec's own copying under a two-second WaitDelay
 // reported exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds after the child exited, so a leaf that
 // had passed could fail its probe under load (#n3gk22h's shape). Each caller's 600 s deadline ends a hung child.
-func witnessScriptKindCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func witnessScriptKindCommand(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)

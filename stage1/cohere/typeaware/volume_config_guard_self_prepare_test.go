@@ -82,11 +82,11 @@ func volumeGuardNative(guardHarness *volumeGuardHarness, stage0, name, entry, ar
 			harness: &harness{t: guardHarness.t, repository: guardHarness.repository, directory: directory},
 			ctx:     guardHarness.ctx,
 		}
-		args := []string{"build", entry, "-o", filepath.Join(directory, "native"), "--tsgo", archive}
+		commandArguments := []string{"build", entry, "-o", filepath.Join(directory, "native"), "--tsgo", archive}
 		if sanitize {
-			args = append(args, "--sanitize")
+			commandArguments = append(commandArguments, "--sanitize")
 		}
-		volumeGuardMust(builder, "native", exec.Command(stage0, args...))
+		volumeGuardMust(builder, "native", exec.Command(stage0, commandArguments...))
 		return nil
 	})
 	return filepath.Join(directory, "native")
@@ -437,13 +437,17 @@ func TestVolumeConfigGuardAndMutant_015(test *testing.T) {
 }
 
 // Bound both the driver and compilers it launches without an external deadline tool.
-func volumeGuardCommand(parent context.Context, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
+func volumeGuardCommand(
+	parent context.Context,
+	name string,
+	commandArguments ...string,
+) (*exec.Cmd, context.CancelFunc) {
 	cancelContext, cancel := context.WithCancel(parent)
-	command := exec.CommandContext(cancelContext, name, args...)
+	command := exec.CommandContext(cancelContext, name, commandArguments...)
 	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as
 	// itself.
 	if !strings.ContainsRune(name, filepath.Separator) {
-		tool := toolchain.Command(name, args...)
+		tool := toolchain.Command(name, commandArguments...)
 		command.Path, command.Err, command.Env = tool.Path, tool.Err, tool.Env
 	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}

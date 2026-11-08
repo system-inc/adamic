@@ -24,9 +24,9 @@ func TestProgramRegionScoutParseSelectionEmpty(test *testing.T) {
 			test.Fatalf("parser cell %s selected", local.Name)
 		}
 	}
-	for _, fn := range program.Functions {
-		if fn.ProgramRegion {
-			test.Fatalf("parser function %s selected", fn.Name)
+	for _, function := range program.Functions {
+		if function.ProgramRegion {
+			test.Fatalf("parser function %s selected", function.Name)
 		}
 	}
 	for _, class := range program.Classes {

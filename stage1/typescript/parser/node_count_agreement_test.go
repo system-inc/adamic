@@ -52,8 +52,8 @@ func TestWholeNodeCountAgrees_000(test *testing.T) {
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
 	manifest := wholeManifest(test, []string{`const x = 1;`})
-	args := []string{"--manifest", manifest, "--whole", "--count"}
-	want := expressionExecute(test, timeoutContext, "", oracle, args...).output
+	commandArguments := []string{"--manifest", manifest, "--whole", "--count"}
+	want := expressionExecute(test, timeoutContext, "", oracle, commandArguments...).output
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
@@ -71,9 +71,9 @@ func TestWholeNodeCountAgrees_000(test *testing.T) {
 			timeoutContext,
 			"",
 			"node",
-			append([]string{"--disable-warning=ExperimentalWarning", runner, source}, args...)...,
+			append([]string{"--disable-warning=ExperimentalWarning", runner, source}, commandArguments...)...,
 		).output},
-		{"native", expressionExecute(test, timeoutContext, "", binary, args...).output},
+		{"native", expressionExecute(test, timeoutContext, "", binary, commandArguments...).output},
 	} {
 		if diff := difference(side.output, want); diff != "" {
 			test.Fatalf("const x = 1; node count %s: %s", side.name, diff)

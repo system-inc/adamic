@@ -204,8 +204,8 @@ func (lowering *lowering) libraryStringMethod(
 	}
 	if name == "concat" {
 		parts := []ir.Expression{value}
-		for _, arg := range written {
-			part, stringConversionError := lowering.stringConversion(arg)
+		for _, argument := range written {
+			part, stringConversionError := lowering.stringConversion(argument)
 			if stringConversionError != nil {
 				return nil, true, stringConversionError
 			}
@@ -241,13 +241,13 @@ func (lowering *lowering) libraryStringMethod(
 		return nil, true, lowering.notYet(node, name+" with these arguments")
 	}
 	arguments := []ir.Expression{}
-	for index, arg := range written {
-		lowered, expressionError := lowering.expression(arg)
+	for index, argument := range written {
+		lowered, expressionError := lowering.expression(argument)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		if fallback, optional := optionalStrings[name][index]; optional {
-			lowered = lowering.orDefault(arg, lowered, fallback)
+			lowered = lowering.orDefault(argument, lowered, fallback)
 		}
 		if (name == "slice" || name == "substring" || name == "lastIndexOf") && shape.arguments[index] == ir.Number {
 			fallback := ir.NumberConstant{Value: 0}
@@ -262,7 +262,7 @@ func (lowering *lowering) libraryStringMethod(
 			}
 		}
 		if lowered.Type() != shape.arguments[index] {
-			return nil, true, lowering.notYet(arg, "a "+typeName(lowered.Type())+" argument to "+name)
+			return nil, true, lowering.notYet(argument, "a "+typeName(lowered.Type())+" argument to "+name)
 		}
 		arguments = append(arguments, lowered)
 	}
@@ -406,8 +406,8 @@ func (lowering *lowering) stringRaw(node *ast.Node, written []*ast.Node) (ir.Exp
 		return nil, lowering.notYet(node, "String.raw with a template that is not an object")
 	}
 	values := []ir.Expression{template}
-	for _, arg := range written[1:] {
-		value, stringConversionError := lowering.stringConversion(arg)
+	for _, argument := range written[1:] {
+		value, stringConversionError := lowering.stringConversion(argument)
 		if stringConversionError != nil {
 			return nil, stringConversionError
 		}

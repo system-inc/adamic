@@ -146,8 +146,11 @@ func TestDiffCoverageTakesListedTsPrograms(test *testing.T) {
 			test.Fatal(writeError)
 		}
 	}
-	for _, args := range [][]string{{"add", "programs", "library"}, {"commit", "-qm", "a .ts program and a module"}} {
-		if _, gitError := git(dir, args...); gitError != nil {
+	for _, commandArguments := range [][]string{
+		{"add", "programs", "library"},
+		{"commit", "-qm", "a .ts program and a module"},
+	} {
+		if _, gitError := git(dir, commandArguments...); gitError != nil {
 			test.Fatal(gitError)
 		}
 	}

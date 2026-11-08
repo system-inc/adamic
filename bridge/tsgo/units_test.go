@@ -100,7 +100,7 @@ func (run *bridgeRun) product(name string) string {
 func (run *bridgeRun) sample() string {
 	return filepath.Join(run.repository, "bridge/tsgo/testdata/sample.ts")
 }
-func (run *bridgeRun) config() string {
+func (run *bridgeRun) configuration() string {
 	return filepath.Join(run.repository, "bridge/tsgo/testdata/tsconfig.json")
 }
 func (run *bridgeRun) command(binary string, arguments ...string) *exec.Cmd {
@@ -171,7 +171,7 @@ func (run *bridgeRun) arguments(file string) []string {
 		run.t.Fatal(writeError)
 	}
 	run.t.Logf("queries: %s, %d positions, %d unchanged program roots", file, count, len(roots))
-	return append([]string{run.config(), manifest}, roots...)
+	return append([]string{run.configuration(), manifest}, roots...)
 }
 func (run *bridgeRun) answers(name, binary string, arguments []string, timing bool) []byte {
 	run.t.Helper()
@@ -196,12 +196,12 @@ func (run *bridgeRun) answers(name, binary string, arguments []string, timing bo
 	return stdout
 }
 func bridgeAbi(run *bridgeRun, _ string, _ int) {
-	output := run.mustRun("api", run.command(run.product("api"), run.config(), run.sample(), "check"))
+	output := run.mustRun("api", run.command(run.product("api"), run.configuration(), run.sample(), "check"))
 	run.t.Logf("C ABI: 100 queries, owned outputs, handles and argument checks; %s", output)
 }
 func bridgeExpectedFailure(run *bridgeRun, name, driver, mode, message string) {
 	run.t.Helper()
-	output, runError := run.run(name, run.command(run.product(driver), run.config(), run.sample(), mode))
+	output, runError := run.run(name, run.command(run.product(driver), run.configuration(), run.sample(), mode))
 	if runError == nil || !bytes.Contains(output, []byte(message)) {
 		run.t.Fatalf("%s escaped: %v\n%s", name, runError, output)
 	}
@@ -286,7 +286,7 @@ func bridgeRegion(run *bridgeRun, _ string, _ int) {
 	if writeError := os.WriteFile(manifest, []byte(run.sample()+"\t14\n"), 0o644); writeError != nil {
 		run.t.Fatal(writeError)
 	}
-	arguments := []string{run.config(), manifest, run.sample()}
+	arguments := []string{run.configuration(), manifest, run.sample()}
 	run.mustRun("region-oracle", run.command(run.product("oracle"), arguments...))
 	truth := run.answers("region-frame", run.product("oracle"), arguments, true)
 	frame := bytes.SplitN(truth, []byte("\n"), 2)
@@ -301,7 +301,7 @@ func bridgeRegion(run *bridgeRun, _ string, _ int) {
 		run.t.Fatal("short region oracle frame")
 	}
 	expected := fmt.Sprintf("%d\n", len(utf16.Encode([]rune(string(frame[1][:symbolLength+typeLength])))))
-	command := run.command(run.product("healthy-region"), run.config(), run.sample())
+	command := run.command(run.product("healthy-region"), run.configuration(), run.sample())
 	var report bytes.Buffer
 	command.Stderr = &report
 	answer, outputError := command.Output()
@@ -320,7 +320,7 @@ func bridgeRegion(run *bridgeRun, _ string, _ int) {
 	)
 }
 func bridgeRegionOwnership(run *bridgeRun, _ string, _ int) {
-	command := run.command(run.product("region-native"), run.config(), run.sample())
+	command := run.command(run.product("region-native"), run.configuration(), run.sample())
 	// LeakSanitizer counts a stale copy of the leaked pointer, left on a stack or in a register, as a root, and then
 	// misses the leak. Whether one survives depends on the code the native links: with its archive's cgo built by clang
 	// rather than gcc (toolchain.Env), the default options missed it in 4 of 10 runs on Workshop. Without those roots,
@@ -330,7 +330,7 @@ func bridgeRegionOwnership(run *bridgeRun, _ string, _ int) {
 	// The control: without those roots LeakSanitizer also reports memory a live frame still holds at exit, so the same
 	// options must find nothing in healthy-region, the owned variant of this program, sanitized too. Then the report
 	// below is the unowned result's, not the options' (Markup's review).
-	control := run.command(run.product("healthy-region"), run.config(), run.sample())
+	control := run.command(run.product("healthy-region"), run.configuration(), run.sample())
 	control.Env = append(os.Environ(), options)
 	if output, runError := run.run(
 		"region-ownership-control",

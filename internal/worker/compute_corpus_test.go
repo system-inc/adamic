@@ -76,11 +76,11 @@ func computeCorpusProduct(test *testing.T, mutant, build bool) string {
 		if writeError := os.WriteFile(driverPath, driver, 0600); writeError != nil {
 			return writeError
 		}
-		for _, args := range [][]string{
+		for _, commandArguments := range [][]string{
 			{"worker", entry, "--out", filepath.Join(directory, "worker")},
 			{"build", driverPath, "-o", filepath.Join(directory, "native")},
 		} {
-			command := exec.CommandContext(test.Context(), compiler, args...)
+			command := exec.CommandContext(test.Context(), compiler, commandArguments...)
 			command.Dir = root
 			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 				return fmt.Errorf("compute corpus build: %w\n%s", combinedOutputError, output)

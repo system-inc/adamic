@@ -100,7 +100,7 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 	}
 	runtimeDirectory, _ := filepath.Abs("runtime")
 	binary := filepath.Join(directory, "check")
-	args := []string{
+	commandArguments := []string{
 		"-std=c11",
 		"-Wall",
 		"-Wextra",
@@ -126,7 +126,7 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 			test.Fatal("parser WASI proof requires WASI_SYSROOT")
 		}
 		compiler = filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin", "clang")
-		args = []string{
+		commandArguments = []string{
 			"--target=wasm32-wasi",
 			"--sysroot=" + sysroot,
 			"-DADAMIC_TARGET_WASI=1",
@@ -168,13 +168,13 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 		if writeError := os.WriteFile(replacement, data, 0600); writeError != nil {
 			test.Fatal(writeError)
 		}
-		for index, arg := range args {
-			if arg == parser {
-				args[index] = replacement
+		for index, argument := range commandArguments {
+			if argument == parser {
+				commandArguments[index] = replacement
 			}
 		}
 	}
-	command := exec.Command(compiler, args...)
+	command := exec.Command(compiler, commandArguments...)
 	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("compile: %v\n%s", combinedOutputError, output)
 	}

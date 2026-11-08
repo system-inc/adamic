@@ -244,19 +244,19 @@ func recoveryStableNative(repo, directory, source string) error {
 			units = append(units, filepath.Join("runtime", name))
 		}
 	}
-	args := native.Flags(native.Options{Sanitize: true})
-	args = append(args, features...)
-	args = append(
-		args,
+	commandArguments := native.Flags(native.Options{Sanitize: true})
+	commandArguments = append(commandArguments, features...)
+	commandArguments = append(
+		commandArguments,
 		"-ffile-prefix-map="+work+"=/adamic-estree",
 		"-fdebug-prefix-map="+work+"=/adamic-estree",
 		"-I",
 		"runtime",
 		"port.c",
 	)
-	args = append(args, units...)
-	args = append(args, "-o", filepath.Join(directory, "port"), "-lm")
-	command := recoveryClang(work, args...)
+	commandArguments = append(commandArguments, units...)
+	commandArguments = append(commandArguments, "-o", filepath.Join(directory, "port"), "-lm")
+	command := recoveryClang(work, commandArguments...)
 	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		return fmt.Errorf("sanitized native build: %w: %s", combinedOutputError, output)
 	}
@@ -266,8 +266,8 @@ func recoveryStableNative(repo, directory, source string) error {
 // recoveryClang is the sanitized port build's clang, run in its work directory through native.ClangIn: the build's own
 // flags map the work directory, and ClangIn's maps take out where clang is installed. A bare toolchain.CommandIn here
 // mapped the work directory alone, so two boxes whose tools sit apart could build two ports for one key (#dc483fc).
-func recoveryClang(work string, args ...string) *exec.Cmd {
-	return native.ClangIn(work, "clang", args...)
+func recoveryClang(work string, commandArguments ...string) *exec.Cmd {
+	return native.ClangIn(work, "clang", commandArguments...)
 }
 
 // Oracle answers are build products too. Use stable relative input names so an
@@ -355,11 +355,11 @@ func TestRecoveryNativeRecipe(test *testing.T) {
 	shards := partitionRecovery(test, cases, testRecoveryNativeRecipeShards)
 	runRecoveryShards(test, shards, func(test *testing.T, _ int, cases []recoveryCase) {
 		for _, recoveryCase := range cases {
-			var args []string
+			var commandArguments []string
 			if recoveryCase.source != "normal" {
-				args = []string{recoveryCase.source[:1]}
+				commandArguments = []string{recoveryCase.source[:1]}
 			}
-			command := exec.Command(filepath.Join(first, "port"), args...)
+			command := exec.Command(filepath.Join(first, "port"), commandArguments...)
 			command.Env = append(
 				os.Environ(),
 				"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1",

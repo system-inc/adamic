@@ -295,12 +295,20 @@ func TestProduct_RecoveryMutantsNative2(test *testing.T) {
 	threePortNativeProduct(test, recoveryMutantMutation(test, recoveryMutations[2].name))
 }
 
-func recoveryMutantExecute(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
+func recoveryMutantExecute(
+	test *testing.T,
+	callerContext context.Context,
+	name string,
+	commandArguments ...string,
+) []byte {
 	test.Helper()
 	// Read through childguard.Capture for estreeScopedCommand's reason; the caller's 90 s deadline ends a hung run.
-	output, stderr, captureError := childguard.Capture(callerContext, estreeScopedCommand(callerContext, name, args...))
+	output, stderr, captureError := childguard.Capture(
+		callerContext,
+		estreeScopedCommand(callerContext, name, commandArguments...),
+	)
 	if captureError != nil || len(stderr) != 0 {
-		test.Fatalf("%s %v: %v (deadline: %v)\n%s", name, args, captureError, callerContext.Err(), stderr)
+		test.Fatalf("%s %v: %v (deadline: %v)\n%s", name, commandArguments, captureError, callerContext.Err(), stderr)
 	}
 	return output
 }

@@ -60,13 +60,13 @@ func gccArithmeticProduct(test *testing.T) string {
 					}
 				}
 			}
-			args := append(
+			commandArguments := append(
 				append(selected, prefixMaps(directory, "/adamic-gcc-arithmetic")...),
 				"main.c",
 				"-o",
 				variant,
 			)
-			command, release := boundedrun.Command(30*time.Second, compiler, args...)
+			command, release := boundedrun.Command(30*time.Second, compiler, commandArguments...)
 			command.Dir = directory
 			output, combinedOutputError := command.CombinedOutput()
 			release()

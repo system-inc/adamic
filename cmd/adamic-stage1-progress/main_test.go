@@ -80,12 +80,12 @@ func TestGitSnapshotAndEvidenceBoundary(test *testing.T) {
 	if createDirectoryError := os.MkdirAll(cohere, 0755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	command := func(directory string, args ...string) string {
+	command := func(directory string, commandArguments ...string) string {
 		test.Helper()
-		command := toolchain.GitCommand(append([]string{"-C", directory}, args...)...)
+		command := toolchain.GitCommand(append([]string{"-C", directory}, commandArguments...)...)
 		out, combinedOutputError := command.CombinedOutput()
 		if combinedOutputError != nil {
-			test.Fatalf("git %v: %v %s", args, combinedOutputError, out)
+			test.Fatalf("git %v: %v %s", commandArguments, combinedOutputError, out)
 		}
 		return strings.TrimSpace(string(out))
 	}

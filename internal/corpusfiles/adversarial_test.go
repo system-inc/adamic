@@ -12,7 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
-func g(test *testing.T, dir string, args ...string) string {
+func g(test *testing.T, dir string, commandArguments ...string) string {
 	test.Helper()
 	command := toolchain.GitCommand(append([]string{
 		"-C",
@@ -25,10 +25,10 @@ func g(test *testing.T, dir string, args ...string) string {
 		"commit.gpgsign=false",
 		"-c",
 		"protocol.file.allow=always",
-	}, args...)...)
+	}, commandArguments...)...)
 	out, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil {
-		test.Fatalf("git %v: %v %s", args, combinedOutputError, out)
+		test.Fatalf("git %v: %v %s", commandArguments, combinedOutputError, out)
 	}
 	return strings.TrimSpace(string(out))
 }

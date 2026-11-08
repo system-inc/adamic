@@ -34,7 +34,7 @@ var shimFileFixtures = map[string]bool{
 }
 
 // The cwd adapter reads the supplied initial directory even without opening a file.
-func TestWasiShimCwdImports(test *testing.T) {
+func TestWasiShimWorkingDirectoryImports(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")

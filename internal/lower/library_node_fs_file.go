@@ -47,7 +47,7 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 	if parent == nil || (parent.Name().Text() != "node:fs" && parent.Name().Text() != "fs") {
 		return nil, false, nil
 	}
-	args := []ir.Expression{}
+	arguments := []ir.Expression{}
 	operation := ""
 	of := ir.Number // Void calls are only admitted as discarded statements.
 	switch symbol.Name {
@@ -138,7 +138,7 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 			}
 			return nil, true, err
 		}
-		args = append(args, value)
+		arguments = append(arguments, value)
 	}
 	// Lower only the proven shapes implemented by this host. Broader declared
 	// Node overloads produce NotYet rather than reaching C with a wrong type.
@@ -246,8 +246,8 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 	var err error
 	switch operation {
 	case "mkdtemp":
-		if len(args) > 1 {
-			enc := args[1]
+		if len(arguments) > 1 {
+			enc := arguments[1]
 			if enc.Type() == ir.Object {
 				enc, err = option(enc, "encoding", constant("utf8"))
 				if err != nil {
@@ -261,17 +261,17 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 		if lowering.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsStringLike == 0 {
 			return nil, true, lowering.notYet(node, "node:fs.mkdtempSync outside the string UTF8 result")
 		}
-		args = args[:1]
+		arguments = arguments[:1]
 	case "rm":
 		recursive, force := ir.Expression(
 			ir.BooleanConstant{Value: false},
 		), ir.Expression(ir.BooleanConstant{Value: false})
-		if len(args) > 1 {
-			recursive, err = option(args[1], "recursive", recursive)
+		if len(arguments) > 1 {
+			recursive, err = option(arguments[1], "recursive", recursive)
 			if err != nil {
 				return nil, true, err
 			}
-			force, err = option(args[1], "force", force)
+			force, err = option(arguments[1], "force", force)
 			if err != nil {
 				return nil, true, err
 			}
@@ -280,7 +280,7 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 				if name == "retryDelay" {
 					fallback = number(100)
 				}
-				value, e := option(args[1], name, fallback)
+				value, e := option(arguments[1], name, fallback)
 				if e != nil {
 					return nil, true, e
 				}
@@ -290,7 +290,7 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 				}
 			}
 		}
-		args = []ir.Expression{args[0], recursive, force}
+		arguments = []ir.Expression{arguments[0], recursive, force}
 	case "read_file":
 		raw := lowering.nodeBufferType(lowering.checker.GetTypeAtLocation(node), "Buffer")
 		if !raw && lowering.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsStringLike == 0 {
@@ -298,8 +298,8 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 		}
 		flag := constant("r")
 		enc := ir.Expression(ir.Undefined{Of: ir.String})
-		if len(args) > 1 {
-			enc = args[1]
+		if len(arguments) > 1 {
+			enc = arguments[1]
 		}
 		if enc.Type() == ir.Object {
 			flag, err = option(enc, "flag", flag)
@@ -314,62 +314,62 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 		if err = encoding(enc); err != nil {
 			return nil, true, err
 		}
-		args = []ir.Expression{args[0], flag}
+		arguments = []ir.Expression{arguments[0], flag}
 		if raw {
 			operation, of = "read_buffer", ir.Array
 		}
 	case "open":
-		if args[1].Type() != ir.String {
+		if arguments[1].Type() != ir.String {
 			return nil, true, lowering.notYet(node, memberName+": "+"numeric fs open flags")
 		}
-		if len(args) < 3 {
-			args = append(args, number(438))
+		if len(arguments) < 3 {
+			arguments = append(arguments, number(438))
 		}
-		if _, ok := args[2].(ir.Null); ok {
-			args[2] = number(438)
+		if _, ok := arguments[2].(ir.Null); ok {
+			arguments[2] = number(438)
 		}
-		if _, ok := args[2].(ir.Undefined); ok {
-			args[2] = number(438)
+		if _, ok := arguments[2].(ir.Undefined); ok {
+			arguments[2] = number(438)
 		}
-		if args[2].Type() != ir.Number {
+		if arguments[2].Type() != ir.Number {
 			return nil, true, lowering.notYet(node, memberName+": "+"fs mode other than a number")
 		}
 	case "read_sync":
-		if _, missing := args[2].(ir.Undefined); missing {
-			args[2] = number(0)
+		if _, missing := arguments[2].(ir.Undefined); missing {
+			arguments[2] = number(0)
 		}
-		if _, missing := args[4].(ir.Undefined); missing {
-			args[4] = number(-1)
+		if _, missing := arguments[4].(ir.Undefined); missing {
+			arguments[4] = number(-1)
 		}
-		if _, null := args[4].(ir.Null); null {
-			args[4] = number(-1)
+		if _, null := arguments[4].(ir.Null); null {
+			arguments[4] = number(-1)
 		}
 	case "write":
 		position := number(-1)
-		if len(args) > 2 {
-			if _, ok := args[2].(ir.Undefined); !ok {
-				if _, null := args[2].(ir.Null); !null {
-					position = args[2]
+		if len(arguments) > 2 {
+			if _, ok := arguments[2].(ir.Undefined); !ok {
+				if _, null := arguments[2].(ir.Null); !null {
+					position = arguments[2]
 				}
 			}
 		}
-		if len(args) > 3 {
-			if err = encoding(args[3]); err != nil {
+		if len(arguments) > 3 {
+			if err = encoding(arguments[3]); err != nil {
 				return nil, true, err
 			}
 		}
 		if position.Type() != ir.Number {
 			return nil, true, lowering.notYet(node, memberName+": "+"a union write position")
 		}
-		args = []ir.Expression{args[0], args[1], position}
+		arguments = []ir.Expression{arguments[0], arguments[1], position}
 	case "write_file":
-		if args[1].Type() == ir.Array &&
+		if arguments[1].Type() == ir.Array &&
 			lowering.nodeBufferType(lowering.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
 			operation = "write_buffer"
 		}
 		flag, mode, flush := constant("w"), number(438), ir.Expression(ir.BooleanConstant{Value: false})
-		if len(args) > 2 {
-			value := args[2]
+		if len(arguments) > 2 {
+			value := arguments[2]
 			if value.Type() == ir.Object {
 				if _, null := value.(ir.Null); !null {
 					enc, e := option(value, "encoding", constant("utf8"))
@@ -396,15 +396,15 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 				return nil, true, err
 			}
 		}
-		args = []ir.Expression{args[0], args[1], flag, mode, flush}
+		arguments = []ir.Expression{arguments[0], arguments[1], flag, mode, flush}
 	case "stat":
 		throws := ir.Expression(ir.BooleanConstant{Value: true})
-		if len(args) > 1 {
-			throws, err = option(args[1], "throwIfNoEntry", throws)
+		if len(arguments) > 1 {
+			throws, err = option(arguments[1], "throwIfNoEntry", throws)
 			if err != nil {
 				return nil, true, err
 			}
-			bigint, e := option(args[1], "bigint", ir.BooleanConstant{Value: false})
+			bigint, e := option(arguments[1], "bigint", ir.BooleanConstant{Value: false})
 			if e != nil {
 				return nil, true, e
 			}
@@ -412,11 +412,11 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 				return nil, true, lowering.notYet(node, memberName+": "+"bigint fs Stats")
 			}
 		}
-		args = []ir.Expression{args[0], throws}
+		arguments = []ir.Expression{arguments[0], throws}
 	case "mkdir":
 		recursive, mode := ir.Expression(ir.BooleanConstant{Value: false}), number(511)
-		if len(args) > 1 {
-			value := args[1]
+		if len(arguments) > 1 {
+			value := arguments[1]
 			if _, null := value.(ir.Null); !null {
 				if value.Type() == ir.Number {
 					mode = value
@@ -432,28 +432,28 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 				}
 			}
 		}
-		args = []ir.Expression{args[0], recursive, mode}
+		arguments = []ir.Expression{arguments[0], recursive, mode}
 	case "utimes":
-		if args[1].Type() == ir.Object && args[2].Type() == ir.Object {
+		if arguments[1].Type() == ir.Object && arguments[2].Type() == ir.Object {
 			operation = "utimes_dates"
-		} else if args[1].Type() == ir.Object {
+		} else if arguments[1].Type() == ir.Object {
 			operation = "utimes_atime_date"
-		} else if args[2].Type() == ir.Object {
+		} else if arguments[2].Type() == ir.Object {
 			operation = "utimes_mtime_date"
 		}
 
 	}
 	// Separate descriptor operations preserve Node's ownership of caller fds.
-	if operation == "read_file" && args[0].Type() == ir.Number {
+	if operation == "read_file" && arguments[0].Type() == ir.Number {
 		operation = "read_fd"
 	}
-	if operation == "read_buffer" && args[0].Type() == ir.Number {
+	if operation == "read_buffer" && arguments[0].Type() == ir.Number {
 		operation = "read_buffer_fd"
 	}
-	if operation == "write_buffer" && args[0].Type() == ir.Number {
+	if operation == "write_buffer" && arguments[0].Type() == ir.Number {
 		operation = "write_buffer_fd"
 	}
-	if operation == "write_file" && args[0].Type() == ir.Number {
+	if operation == "write_file" && arguments[0].Type() == ir.Number {
 		operation = "write_fd"
 	}
 	types := map[string][]ir.Type{
@@ -481,14 +481,14 @@ func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, boo
 		"utimes":            {ir.String, ir.Number, ir.Number},
 	}
 	for index, t := range types[operation] {
-		if args[index].Type() != t {
+		if arguments[index].Type() != t {
 			return nil, true, lowering.notYet(
 				node,
 				memberName+": "+"fs arguments outside the implemented host signatures",
 			)
 		}
 	}
-	return ir.NodeFSFile{Operation: operation, Arguments: args, Of: of}, true, nil
+	return ir.NodeFSFile{Operation: operation, Arguments: arguments, Of: of}, true, nil
 }
 
 // dateNow lowers Date.now(), the current time in whole epoch milliseconds, read from the clock new Date()

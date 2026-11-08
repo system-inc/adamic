@@ -85,12 +85,11 @@
 //     apart differs (cloud/gocacheprog-identity.sh, measured Oct 9). With it, ar writes zero, and the bytes stop
 //     depending on the clock. Other archivers ignore it.
 //
-// GitEnv, for git, passes only PATH (as Env spells it), TMPDIR and DEVELOPER_DIR (/usr/bin/git on a Mac is Xcode's),
-// and sets GIT_CONFIG_GLOBAL=/dev/null and GIT_CONFIG_NOSYSTEM=1 (no ~/.gitconfig, no /etc/gitconfig: their
+// GitEnvironment, for git, passes only PATH (as Env spells it), TMPDIR and DEVELOPER_DIR (/usr/bin/git on a Mac is
+// Xcode's), and sets GIT_CONFIG_GLOBAL=/dev/null and GIT_CONFIG_NOSYSTEM=1 (no ~/.gitconfig, no /etc/gitconfig: their
 // core.autocrlf, filters and aliases change what git answers), core.excludesFile and core.attributesFile to /dev/null
 // (both default under the home even with no global configuration), and LC_ALL=C. No HOME: git reads nothing there it
-// needs, and without it there is nothing of the home for it to read. A git answer then depends on the repository
-// alone.
+// needs, and without it there is nothing of the home for it to read. A git answer then depends on the repository alone.
 //
 // Either takes extra settings, appended last so they win, for a caller whose request names its own environment: a
 // product's request keys every one of those itself.
@@ -179,7 +178,8 @@ var fixed = []string{"GOENV=off", "ZERO_AR_DATE=1"}
 // compilers are the C and C++ compilers Env names when the caller names neither (the package doc says why).
 var compilers = []string{"CC=clang", "CXX=clang++"}
 
-// gitFixed are the settings GitEnv gives git, whatever the caller had: no configuration but the repository's own.
+// gitFixed are the settings GitEnvironment gives git, whatever the caller had: no configuration but the repository's
+// own.
 var gitFixed = []string{"GIT_CONFIG_GLOBAL=" + os.DevNull, "GIT_CONFIG_NOSYSTEM=1",
 	"GIT_CONFIG_COUNT=2", "GIT_CONFIG_KEY_0=core.excludesFile", "GIT_CONFIG_VALUE_0=" + os.DevNull,
 	"GIT_CONFIG_KEY_1=core.attributesFile", "GIT_CONFIG_VALUE_1=" + os.DevNull, "LC_ALL=C"}
@@ -265,11 +265,11 @@ func CommandContextIn(callerContext context.Context, directory, name string, arg
 	return command
 }
 
-// GitCommand is Command for git, with GitEnv.
+// GitCommand is Command for git, with GitEnvironment.
 func GitCommand(arguments ...string) *exec.Cmd {
 	command := Command("git", arguments...)
 	if command.Err == nil {
-		command.Env = GitEnv()
+		command.Env = GitEnvironment()
 	}
 	return command
 }
@@ -321,9 +321,9 @@ func Env(extra ...string) []string {
 	return append(environment, extra...)
 }
 
-// GitEnv is the environment git runs with: PATH, TMPDIR and DEVELOPER_DIR, git's configuration out of reach, then
-// extra.
-func GitEnv(extra ...string) []string {
+// GitEnvironment is the environment git runs with: PATH, TMPDIR and DEVELOPER_DIR, git's configuration out of reach,
+// then extra.
+func GitEnvironment(extra ...string) []string {
 	environment := []string{"PATH=" + searchPath()}
 	for _, name := range []string{"TMPDIR", "DEVELOPER_DIR"} {
 		if value, ok := os.LookupEnv(name); ok {

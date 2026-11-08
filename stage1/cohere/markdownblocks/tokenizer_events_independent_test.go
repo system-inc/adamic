@@ -138,9 +138,9 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 				test.Fatal(absolutePathError)
 			}
 			type check struct {
-				name, command     string
-				args, environment []string
-				repeats           int
+				name, command                 string
+				commandArguments, environment []string
+				repeats                       int
 			}
 			checks := []check{
 				{"actual original tokenizer", "node", []string{"testdata/events_library.mjs", fork, cases}, nil, 1},
@@ -182,7 +182,7 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 							ctx,
 							side.environment,
 							side.command,
-							side.args...,
+							side.commandArguments...,
 						)
 						if pilotExecuteResultError != nil {
 							return checked{}, pilotExecuteResultError

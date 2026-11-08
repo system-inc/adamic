@@ -35,11 +35,11 @@ func crossingType(c *checker.Checker, subjectType *checker.Type, path string, de
 		if symbol == nil || symbol.Name != "ReadonlyArray" {
 			return fail("ABI requires a readonly array")
 		}
-		args := c.GetTypeArguments(subjectType)
-		if len(args) != 1 {
+		arguments := c.GetTypeArguments(subjectType)
+		if len(arguments) != 1 {
 			return fail("ABI array must have one element type")
 		}
-		element, crossingTypeError := crossingType(c, args[0], path+"[]", depth)
+		element, crossingTypeError := crossingType(c, arguments[0], path+"[]", depth)
 		if crossingTypeError != nil {
 			return native.ABIType{}, crossingTypeError
 		}

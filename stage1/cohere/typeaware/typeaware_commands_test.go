@@ -31,8 +31,8 @@ var typeAwareCommandGroups sync.Map
 // the groups it registers before it exits the process, and a group it couldn't register would outlive the exit. go and
 // stage 0 wait for the compilers they start before they exit, so nothing holds a pipe after them, and the unit's
 // ceiling ends a wait on one that did.
-func typeAwareContextCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func typeAwareContextCommand(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {

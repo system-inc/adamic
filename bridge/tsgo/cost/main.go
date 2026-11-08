@@ -14,31 +14,31 @@ import (
 )
 
 func main() {
-	args := os.Args[1:]
-	if len(args) != 7 {
+	commandArguments := os.Args[1:]
+	if len(commandArguments) != 7 {
 		panic("usage: cost config file start end kind question count")
 	}
-	first, parseError := strconv.ParseUint(args[2], 10, 64)
+	first, parseError := strconv.ParseUint(commandArguments[2], 10, 64)
 	if parseError != nil {
 		panic(parseError)
 	}
-	last, parseError := strconv.ParseUint(args[3], 10, 64)
+	last, parseError := strconv.ParseUint(commandArguments[3], 10, 64)
 	if parseError != nil {
 		panic(parseError)
 	}
-	count, parseError := strconv.Atoi(args[6])
+	count, parseError := strconv.Atoi(commandArguments[6])
 	if parseError != nil || count < 2 {
 		panic("invalid count")
 	}
 	started := time.Now()
-	program, openError := bridge.Open(args[0], []string{args[1]})
+	program, openError := bridge.Open(commandArguments[0], []string{commandArguments[1]})
 	if openError != nil {
 		panic(openError)
 	}
 	load := time.Since(started)
-	question := args[5]
+	question := commandArguments[5]
 	if strings.HasPrefix(question, "property-info:") {
-		answer, inspectError := program.Inspect(args[1], first, last, args[4], "raw-shape")
+		answer, inspectError := program.Inspect(commandArguments[1], first, last, commandArguments[4], "raw-shape")
 		if inspectError != nil {
 			panic(inspectError)
 		}
@@ -59,7 +59,7 @@ func main() {
 	units := 0
 	for index := 0; index < count; index++ {
 		before := time.Now()
-		answer, inspectError := program.Inspect(args[1], first, last, args[4], question)
+		answer, inspectError := program.Inspect(commandArguments[1], first, last, commandArguments[4], question)
 		if inspectError != nil {
 			panic(inspectError)
 		}

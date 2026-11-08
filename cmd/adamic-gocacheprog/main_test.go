@@ -32,7 +32,7 @@ func TestHelperProcess(test *testing.T) {
 }
 
 type store struct {
-	mu       sync.Mutex
+	mutex    sync.Mutex
 	data     map[string][]byte
 	requests []string
 }
@@ -41,8 +41,8 @@ func fakeStore(test *testing.T) (*store, *httptest.Server) {
 	test.Helper()
 	store := &store{data: map[string][]byte{}}
 	server := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		store.mu.Lock()
-		defer store.mu.Unlock()
+		store.mutex.Lock()
+		defer store.mutex.Unlock()
 		store.requests = append(store.requests, request.Method+" "+request.URL.Path)
 		switch request.Method {
 		case "PUT":
@@ -86,8 +86,9 @@ func helperSettings(dir, url, trust, token string) map[string]string {
 	}
 }
 
-// helperEnv is this process's environment with helperSettings over it, for the helper, a copy of this test binary.
-func helperEnv(dir, url, trust, token string) []string {
+// helperEnvironment is this process's environment with helperSettings over it, for the helper, a copy of this test
+// binary.
+func helperEnvironment(dir, url, trust, token string) []string {
 	overrides := helperSettings(dir, url, trust, token)
 	result := []string{}
 	for _, value := range os.Environ() {
@@ -116,7 +117,7 @@ func transact(test *testing.T, dir, url, trust, token string, req request, body 
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
 	command := exec.CommandContext(timeoutContext, os.Args[0], "-test.run=^TestHelperProcess$")
-	command.Env = helperEnv(dir, url, trust, token)
+	command.Env = helperEnvironment(dir, url, trust, token)
 	var input, stderr, stdout bytes.Buffer
 	enc := json.NewEncoder(&input)
 	_ = enc.Encode(req)
@@ -184,9 +185,9 @@ func TestPoisoning(test *testing.T) {
 			store, srv := fakeStore(test)
 			body := []byte("compiled output")
 			transact(test, test.TempDir(), srv.URL, "main", tokenFile(test), putRequest(body), body)
-			store.mu.Lock()
+			store.mutex.Lock()
 			store.data["/blobs/"+digest(body)] = []byte(tampered)
-			store.mu.Unlock()
+			store.mutex.Unlock()
 			out, log := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 			if !out.Miss || !strings.Contains(log, "cache poisoning") {
 				test.Fatalf("response %+v; log %q", out, log)
@@ -215,8 +216,8 @@ func TestNoToken(test *testing.T) {
 	if out.Miss {
 		test.Fatal("local miss")
 	}
-	store.mu.Lock()
-	defer store.mu.Unlock()
+	store.mutex.Lock()
+	defer store.mutex.Unlock()
 	if len(store.requests) != 0 {
 		test.Fatalf("unexpected network: %v", store.requests)
 	}
@@ -231,14 +232,14 @@ func TestTrustSplit(test *testing.T) {
 	if !out.Miss {
 		test.Fatal("trusted reader used candidate")
 	}
-	store.mu.Lock()
+	store.mutex.Lock()
 	for _, request := range store.requests {
 		if strings.HasPrefix(request, "PUT /refs/gocache/") ||
 			strings.HasPrefix(request, "GET /refs/gocache-candidate/") {
 			test.Fatalf("wrong namespace: %s", request)
 		}
 	}
-	store.mu.Unlock()
+	store.mutex.Unlock()
 	out, _ = transact(test, test.TempDir(), srv.URL, "", "", getRequest(), nil)
 	if out.Miss {
 		test.Fatal("candidate reader missed")
@@ -274,7 +275,7 @@ func TestEmptyBody(test *testing.T) {
 	}
 }
 
-func runGo(test *testing.T, dir, url, token string, args ...string) (string, time.Duration) {
+func runGo(test *testing.T, dir, url, token string, commandArguments ...string) (string, time.Duration) {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
@@ -284,7 +285,7 @@ func runGo(test *testing.T, dir, url, token string, args ...string) (string, tim
 	if pathError != nil {
 		test.Skipf("no go command: %v", pathError)
 	}
-	command := exec.CommandContext(timeoutContext, goCommand, args...)
+	command := exec.CommandContext(timeoutContext, goCommand, commandArguments...)
 	command.Dir = dir
 	var settings []string
 	for key, value := range helperSettings(test.TempDir(), url, "main", token) {
@@ -300,7 +301,7 @@ func runGo(test *testing.T, dir, url, token string, args ...string) (string, tim
 	b, combinedOutputError := command.CombinedOutput()
 	elapsed := time.Since(start)
 	if combinedOutputError != nil {
-		test.Fatalf("go %v: %v\n%s", args, combinedOutputError, b)
+		test.Fatalf("go %v: %v\n%s", commandArguments, combinedOutputError, b)
 	}
 	return string(b), elapsed
 }
@@ -339,13 +340,13 @@ func TestRecordPoisoning(test *testing.T) {
 	store, srv := fakeStore(test)
 	body := []byte("compiled output")
 	transact(test, test.TempDir(), srv.URL, "main", tokenFile(test), putRequest(body), body)
-	store.mu.Lock()
+	store.mutex.Lock()
 	for key, value := range store.data {
 		if strings.HasPrefix(key, "/blobs/") && !bytes.Equal(value, body) {
 			store.data[key] = []byte(`{"size":0}`)
 		}
 	}
-	store.mu.Unlock()
+	store.mutex.Unlock()
 	out, log := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
 		test.Fatalf("response %+v; log %q", out, log)
@@ -412,8 +413,8 @@ func TestMissingTokenWritesNothing(test *testing.T) {
 	if !strings.Contains(log, "token unavailable") {
 		test.Fatal(log)
 	}
-	store.mu.Lock()
-	defer store.mu.Unlock()
+	store.mutex.Lock()
+	defer store.mutex.Unlock()
 	if len(store.requests) != 0 {
 		test.Fatalf("unexpected network: %v", store.requests)
 	}
@@ -425,16 +426,16 @@ func TestCandidateReadsMainFirst(test *testing.T) {
 	token := tokenFile(test)
 	transact(test, test.TempDir(), srv.URL, "", token, putRequest([]byte("candidate")), []byte("candidate"))
 	transact(test, test.TempDir(), srv.URL, "main", token, putRequest([]byte("main")), []byte("main"))
-	store.mu.Lock()
+	store.mutex.Lock()
 	store.requests = nil
-	store.mu.Unlock()
+	store.mutex.Unlock()
 	out, _ := transact(test, test.TempDir(), srv.URL, "", "", getRequest(), nil)
 	content, _ := os.ReadFile(out.DiskPath)
 	if out.Miss || string(content) != "main" {
 		test.Fatalf("expected main: %+v %q", out, content)
 	}
-	store.mu.Lock()
-	defer store.mu.Unlock()
+	store.mutex.Lock()
+	defer store.mutex.Unlock()
 	for _, request := range store.requests {
 		if strings.HasPrefix(request, "GET /refs/gocache-candidate/") {
 			test.Fatalf("unnecessary candidate read: %s", request)
@@ -448,9 +449,9 @@ func TestPoisoningStopsFallback(test *testing.T) {
 	token := tokenFile(test)
 	transact(test, test.TempDir(), srv.URL, "", token, putRequest([]byte("candidate")), []byte("candidate"))
 	transact(test, test.TempDir(), srv.URL, "main", token, putRequest([]byte("main")), []byte("main"))
-	store.mu.Lock()
+	store.mutex.Lock()
 	store.data["/blobs/"+digest([]byte("main"))] = []byte("evil")
-	store.mu.Unlock()
+	store.mutex.Unlock()
 	out, log := transact(test, test.TempDir(), srv.URL, "", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
 		test.Fatalf("response %+v; log %q", out, log)

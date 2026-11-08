@@ -122,10 +122,10 @@ func expressionExecute(
 	test *testing.T,
 	callerContext context.Context,
 	directory, name string,
-	args ...string,
+	commandArguments ...string,
 ) execution {
 	test.Helper()
-	command := exec.CommandContext(callerContext, name, args...)
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.Dir = directory
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
@@ -139,7 +139,7 @@ func expressionExecute(
 	runError := command.Run()
 	duration := time.Since(started)
 	if runError != nil || stderr.Len() != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	data, readError := os.ReadFile(output.Name())
 	if readError != nil {
@@ -153,7 +153,7 @@ func expressionNode(test *testing.T, callerContext context.Context, directory, m
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	args := []string{
+	commandArguments := []string{
 		"--disable-warning=ExperimentalWarning",
 		runner,
 		filepath.Join(directory, "main.ts"),
@@ -161,9 +161,9 @@ func expressionNode(test *testing.T, callerContext context.Context, directory, m
 		manifest,
 	}
 	if count {
-		args = append(args, "--count")
+		commandArguments = append(commandArguments, "--count")
 	}
-	return expressionExecute(test, callerContext, "", "node", args...)
+	return expressionExecute(test, callerContext, "", "node", commandArguments...)
 }
 
 func TestProduct_ExpressionsSource001(test *testing.T) { test.Parallel(); expressionSource(test, 1) }

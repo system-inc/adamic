@@ -20,16 +20,16 @@ import (
 
 // Bound the complete process group, including compiler grandchildren. Unix
 // process groups work on both Linux and macOS without an external timeout tool.
-func typeSymbolExec(limit time.Duration, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
+func typeSymbolExec(limit time.Duration, name string, commandArguments ...string) (*exec.Cmd, context.CancelFunc) {
 	timeoutContext, cancel := context.WithTimeout(context.Background(), limit)
-	return typeSymbolExecContext(timeoutContext, name, args...), cancel
+	return typeSymbolExecContext(timeoutContext, name, commandArguments...), cancel
 }
 
 // Both setup and check commands retain cancellation of compiler descendants. No WaitDelay: the runs that read their
 // output go through childguard.Capture, and one would only let TestVolumeTypeSymbolCommandDeadline pass on a Cancel
 // that never killed its child.
-func typeSymbolExecContext(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func typeSymbolExecContext(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -41,10 +41,10 @@ func typeSymbolExecContext(callerContext context.Context, name string, args ...s
 	return command
 }
 
-func typeSymbolCommand(directory string, name string, args ...string) error {
+func typeSymbolCommand(directory string, name string, commandArguments ...string) error {
 	// Building shared products has no test deadline; Loom bounds the unit.
 	cancelContext, cancel := context.WithCancel(context.Background())
-	command := typeSymbolExecContext(cancelContext, name, args...)
+	command := typeSymbolExecContext(cancelContext, name, commandArguments...)
 	defer cancel()
 	command.Dir = directory
 	// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's own copying under a
@@ -57,8 +57,8 @@ func typeSymbolCommand(directory string, name string, args ...string) error {
 	return nil
 }
 
-func typeSymbolMust(harness *harness, label, name string, args ...string) result {
-	command, cancel := typeSymbolExec(90*time.Second, name, args...)
+func typeSymbolMust(harness *harness, label, name string, commandArguments ...string) result {
+	command, cancel := typeSymbolExec(90*time.Second, name, commandArguments...)
 	defer cancel()
 	return harness.must(label, command)
 }
@@ -115,12 +115,12 @@ func typeSymbolNativeSpec(
 		buildcache.Tool("clang", "-print-resource-dir"),
 	}}
 	build := func(directory string) error {
-		args := []string{"build", entry, "-o", filepath.Join(directory, "native"), "--tsgo", archive}
+		commandArguments := []string{"build", entry, "-o", filepath.Join(directory, "native"), "--tsgo", archive}
 		if sanitize {
-			args = append(args, "--sanitize")
+			commandArguments = append(commandArguments, "--sanitize")
 		}
 		started := time.Now()
-		typeSymbolCommandError := typeSymbolCommand(repository, stage0, args...)
+		typeSymbolCommandError := typeSymbolCommand(repository, stage0, commandArguments...)
 		fmt.Printf("typeSymbol-build %s cold=%.6fs\n", name, time.Since(started).Seconds())
 		return typeSymbolCommandError
 	}

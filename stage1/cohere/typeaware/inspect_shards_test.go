@@ -74,9 +74,9 @@ func TestInspectRequestRefusals(test *testing.T) {
 		{"wrong-kind", "Identifier", "raw-type", "no exact Identifier node"},
 		{"unknown-question", "PrefixUnaryExpression", "unknown", "unsupported checker question"},
 	} {
-		args := []string{configuration, probe, "0", "2", change.kind, change.question, "2"}
+		commandArguments := []string{configuration, probe, "0", "2", change.kind, change.question, "2"}
 		add(change.name+"/refused", func(harness *harness) {
-			got := harness.run(change.name+"-refused", exec.Command(binary, args...))
+			got := harness.run(change.name+"-refused", exec.Command(binary, commandArguments...))
 			if code, ok := got.err.(*exec.ExitError); !ok ||
 				code.ExitCode() != 70 ||
 				!bytes.Contains(got.stderr, []byte(change.message)) {
@@ -86,7 +86,7 @@ func TestInspectRequestRefusals(test *testing.T) {
 		archive := checkerMutantArchive(test, change.name)
 		mutant := h.build(stage0, change.name, entry, archive, false)
 		add(change.name+"/mutant", func(harness *harness) {
-			harness.must(change.name+"-mutant-run", exec.Command(mutant, args...))
+			harness.must(change.name+"-mutant-run", exec.Command(mutant, commandArguments...))
 			harness.t.Logf("%s guard mutant exits 0", change.name)
 		})
 	}

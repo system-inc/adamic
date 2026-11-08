@@ -139,12 +139,12 @@ func TestEveryTestHasOneDescriptiveName(test *testing.T) {
 	var tests []nameCensusTest
 	parallelCheckEachTestError := parallelCheckEachTest(root, func(
 		rel string,
-		fn *ast.FuncDecl,
+		function *ast.FuncDecl,
 		_ string,
 		_ *token.FileSet,
 		_ []string,
 	) {
-		tests = append(tests, nameCensusTest{Package: path.Dir(rel), File: rel, Function: fn.Name.Name})
+		tests = append(tests, nameCensusTest{Package: path.Dir(rel), File: rel, Function: function.Name.Name})
 	})
 	if parallelCheckEachTestError != nil {
 		test.Fatal(parallelCheckEachTestError)

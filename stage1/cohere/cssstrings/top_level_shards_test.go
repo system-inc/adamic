@@ -20,7 +20,7 @@ var stringsTopRootOnce sync.Once
 var stringsTopRoot string
 var stringsTopRootError error
 
-func stringsTopTempDir(test *testing.T) string {
+func stringsTopTempDirectory(test *testing.T) string {
 	test.Helper()
 	stringsTopRootOnce.Do(func() { stringsTopRoot, stringsTopRootError = os.MkdirTemp("", "adamic-cssstrings-top-") })
 	if stringsTopRootError != nil {

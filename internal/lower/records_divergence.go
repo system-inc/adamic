@@ -144,9 +144,9 @@ func (lowering *lowering) recordPrototypeKey(node *ast.Node, depth int) string {
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindCallExpression {
 			signature := lowering.checker.GetResolvedSignature(node)
-			args := node.AsCallExpression().Arguments.Nodes
-			if signature != nil && signature.Declaration() == owner && index < len(args) {
-				if key := lowering.recordPrototypeKey(args[index], depth+1); key != "" {
+			arguments := node.AsCallExpression().Arguments.Nodes
+			if signature != nil && signature.Declaration() == owner && index < len(arguments) {
+				if key := lowering.recordPrototypeKey(arguments[index], depth+1); key != "" {
 					result = key
 					return true
 				}

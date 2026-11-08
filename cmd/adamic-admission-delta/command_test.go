@@ -23,11 +23,14 @@ func TestCommandHelper(test *testing.T) {
 		test.Parallel()
 		return
 	}
-	var args []string
-	if decodeError := json.Unmarshal([]byte(os.Getenv("ADMISSION_COMMAND_ARGS")), &args); decodeError != nil {
+	var commandArguments []string
+	if decodeError := json.Unmarshal(
+		[]byte(os.Getenv("ADMISSION_COMMAND_ARGS")),
+		&commandArguments,
+	); decodeError != nil {
 		os.Exit(2)
 	}
-	os.Exit(exitCode(run(args)))
+	os.Exit(exitCode(run(commandArguments)))
 }
 
 // Exclude forks until the writable descriptor is closed; rename alone preserves its inode.
@@ -93,14 +96,14 @@ func commandFixture(test *testing.T) (string, string, string, string) {
 		"import {readFileSync} from 'node:fs';console.log(readFileSync(process.argv[2],'utf8').includes('42')?'42':'changed');\n",
 	)
 	write("generator.py", "# pinned generator\n")
-	for _, args := range [][]string{
+	for _, commandArguments := range [][]string{
 		{"init", "-q"},
 		{"config", "user.email", "test@example.invalid"},
 		{"config", "user.name", "Test"},
 		{"add", "."},
 		{"commit", "-qm", "fixture"},
 	} {
-		if _, gitError := git(dir, args...); gitError != nil {
+		if _, gitError := git(dir, commandArguments...); gitError != nil {
 			test.Fatal(gitError)
 		}
 	}
@@ -133,28 +136,28 @@ func commandFixture(test *testing.T) (string, string, string, string) {
 	)
 	return dir, sha, filepath.Join(dir, "base"), filepath.Join(dir, "head")
 }
-func invokeCommand(test *testing.T, dir string, args ...string) observation {
+func invokeCommand(test *testing.T, dir string, commandArguments ...string) observation {
 	test.Helper()
-	return invokeCommandWith(test, dir, nil, args...)
+	return invokeCommandWith(test, dir, nil, commandArguments...)
 }
 
 // invokeCommandWith runs the command with environment appended to the test's, returning its own exit code.
-func invokeCommandWith(test *testing.T, dir string, environment []string, args ...string) observation {
+func invokeCommandWith(test *testing.T, dir string, environment []string, commandArguments ...string) observation {
 	test.Helper()
 	exe, executableError := os.Executable()
 	if executableError != nil {
 		test.Fatal(executableError)
 	}
 	// Fake compilers implement the lowering adapter contract explicitly.
-	for index := 0; index+1 < len(args); index++ {
-		if args[index] == "--base-binary" {
-			args = append(args, "--base-lower-binary", args[index+1])
+	for index := 0; index+1 < len(commandArguments); index++ {
+		if commandArguments[index] == "--base-binary" {
+			commandArguments = append(commandArguments, "--base-lower-binary", commandArguments[index+1])
 		}
-		if args[index] == "--head-binary" {
-			args = append(args, "--head-lower-binary", args[index+1])
+		if commandArguments[index] == "--head-binary" {
+			commandArguments = append(commandArguments, "--head-lower-binary", commandArguments[index+1])
 		}
 	}
-	data, encodeError := json.Marshal(args)
+	data, encodeError := json.Marshal(commandArguments)
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
@@ -479,7 +482,7 @@ func compilerFixture(test *testing.T) (string, string) {
 		"built compiler fixture",
 	)
 	command.Dir = dir
-	command.Env = toolchain.GitEnv(
+	command.Env = toolchain.GitEnvironment(
 		"TZ=UTC",
 		"GIT_AUTHOR_NAME=Test",
 		"GIT_AUTHOR_EMAIL=test@example.invalid",

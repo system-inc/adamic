@@ -9,10 +9,10 @@ import (
 )
 
 type statementSharedProducts struct {
-	Cases, Want, Specs, Port, LoweredDir  string
-	Binary, Release, Library, LibraryHash string
-	Elapsed                               float64
-	Shards                                *oracles.StatementGateShards
+	Cases, Want, Specs, Port, LoweredDirectory string
+	Binary, Release, Library, LibraryHash      string
+	Elapsed                                    float64
+	Shards                                     *oracles.StatementGateShards
 }
 
 var statementSharedProductsShared struct {

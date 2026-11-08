@@ -88,9 +88,11 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 	path := filepath.Join(dir, "test.jsonl")
 	stderr := filepath.Join(dir, "test.stderr")
 	evidence := packageEvidence{
-		Key:         "key",
-		Package:     "p",
-		Invocations: []invocation{{Package: "p", Args: testArgs("p", patterns(plan.Units)[0]), Uncached: true}},
+		Key:     "key",
+		Package: "p",
+		Invocations: []invocation{
+			{Package: "p", Arguments: testArguments("p", patterns(plan.Units)[0]), Uncached: true},
+		},
 	}
 	save := func(text string) {
 		test.Helper()

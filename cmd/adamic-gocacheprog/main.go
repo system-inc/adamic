@@ -46,7 +46,7 @@ type cache struct {
 	dir, store, writer, token, namespace string
 	client                               *http.Client
 	stderr                               io.Writer
-	logMu                                sync.Mutex
+	logMutex                             sync.Mutex
 }
 
 func env(key, fallback string) string {
@@ -98,10 +98,10 @@ func newCache() (*cache, error) {
 	return cache, nil
 }
 
-func (cache *cache) log(format string, args ...any) {
-	cache.logMu.Lock()
-	defer cache.logMu.Unlock()
-	fmt.Fprintf(cache.stderr, "adamic-gocacheprog: "+format+"\n", args...)
+func (cache *cache) log(format string, arguments ...any) {
+	cache.logMutex.Lock()
+	defer cache.logMutex.Unlock()
+	fmt.Fprintf(cache.stderr, "adamic-gocacheprog: "+format+"\n", arguments...)
 }
 
 func digest(b []byte) string { h := sha256.Sum256(b); return hex.EncodeToString(h[:]) }
@@ -130,7 +130,7 @@ func atomicFile(path string, b []byte) error {
 }
 
 func (cache *cache) blobPath(hash string) string { return filepath.Join(cache.dir, "blobs", hash) }
-func (cache *cache) refPath(ns, action string) string {
+func (cache *cache) referencePath(ns, action string) string {
 	return filepath.Join(cache.dir, "refs", ns, action)
 }
 func (cache *cache) check(b []byte, hash string) bool {
@@ -211,7 +211,7 @@ func (cache *cache) get(req request) response {
 				}
 			} else {
 				var readError error
-				reference, readError = os.ReadFile(cache.refPath(ns, action))
+				reference, readError = os.ReadFile(cache.referencePath(ns, action))
 				if readError != nil {
 					continue
 				}
@@ -269,7 +269,7 @@ func (cache *cache) get(req request) response {
 					continue
 				}
 				if atomicFileError := atomicFile(cache.blobPath(hash), rb); atomicFileError == nil {
-					_ = atomicFile(cache.refPath(ns, action), []byte(hash))
+					_ = atomicFile(cache.referencePath(ns, action), []byte(hash))
 				}
 			}
 			return response{
@@ -328,7 +328,10 @@ func (cache *cache) put(req request, body []byte) response {
 	out.DiskPath = cache.blobPath(hash)
 	if atomicFileError := atomicFile(cache.blobPath(rh), rb); atomicFileError != nil {
 		cache.log("local record: %v", atomicFileError)
-	} else if atomicFileError = atomicFile(cache.refPath(cache.namespace, action), []byte(rh)); atomicFileError != nil {
+	} else if atomicFileError = atomicFile(
+		cache.referencePath(cache.namespace, action),
+		[]byte(rh),
+	); atomicFileError != nil {
 		cache.log("local ref: %v", atomicFileError)
 	}
 	if cache.store != "" && cache.token != "" && cache.upload("/blobs/"+hash, body) && cache.upload("/blobs/"+rh, rb) {

@@ -39,12 +39,12 @@ func TestEveryDuplicatedProductDeclarationAgrees(test *testing.T) {
 	var printError error
 	parallelCheckEachTestError := parallelCheckEachTest(root, func(
 		rel string,
-		fn *ast.FuncDecl,
+		function *ast.FuncDecl,
 		parameter string,
 		positions *token.FileSet,
 		lines []string,
 	) {
-		declaration, ok, productCensusDeclareError := productCensusDeclare(rel, fn, parameter)
+		declaration, ok, productCensusDeclareError := productCensusDeclare(rel, function, parameter)
 		if productCensusDeclareError != nil && printError == nil {
 			printError = productCensusDeclareError
 		}
@@ -120,12 +120,12 @@ func TestProductDeclarationCensusRefusesWhatItShould(test *testing.T) {
 			if parseFileError != nil {
 				test.Fatalf("%s: %v", testCase.name, parseFileError)
 			}
-			fn := parsed.Decls[1].(*ast.FuncDecl)
-			parameter, ok := parallelCheckTestParameter(fn, map[string]bool{"testing": true})
+			function := parsed.Decls[1].(*ast.FuncDecl)
+			parameter, ok := parallelCheckTestParameter(function, map[string]bool{"testing": true})
 			if !ok {
 				test.Fatalf("%s: %s is not a test", testCase.name, file)
 			}
-			declaration, ok, productCensusDeclareError := productCensusDeclare(file, fn, parameter)
+			declaration, ok, productCensusDeclareError := productCensusDeclare(file, function, parameter)
 			if productCensusDeclareError != nil || !ok {
 				test.Fatalf("%s: %s declares no product: %v", testCase.name, file, productCensusDeclareError)
 			}
@@ -152,19 +152,23 @@ func TestProductDeclarationCensusRefusesWhatItShould(test *testing.T) {
 
 // productCensusDeclare reads fn as a product declaration if its name starts with TestProduct_. The body is printed
 // against an empty file set, so the printer sees no line positions and layout differences fall away with comments.
-func productCensusDeclare(rel string, fn *ast.FuncDecl, parameter string) (productCensusDeclaration, bool, error) {
-	if !strings.HasPrefix(fn.Name.Name, "TestProduct_") {
+func productCensusDeclare(
+	rel string,
+	function *ast.FuncDecl,
+	parameter string,
+) (productCensusDeclaration, bool, error) {
+	if !strings.HasPrefix(function.Name.Name, "TestProduct_") {
 		return productCensusDeclaration{}, false, nil
 	}
-	statements := fn.Body.List
-	if parallelCheckFirstStatement(fn, parameter) {
+	statements := function.Body.List
+	if parallelCheckFirstStatement(function, parameter) {
 		statements = statements[1:]
 	}
 	var body bytes.Buffer
 	if nodeError := format.Node(&body, token.NewFileSet(), statements); nodeError != nil {
-		return productCensusDeclaration{}, false, fmt.Errorf("%s: print %s: %w", rel, fn.Name.Name, nodeError)
+		return productCensusDeclaration{}, false, fmt.Errorf("%s: print %s: %w", rel, function.Name.Name, nodeError)
 	}
-	return productCensusDeclaration{File: rel, Name: fn.Name.Name, Body: body.String()}, true, nil
+	return productCensusDeclaration{File: rel, Name: function.Name.Name, Body: body.String()}, true, nil
 }
 
 // productCensusDisagreements returns one failure per product name whose declarations differ, sorted by name. When one

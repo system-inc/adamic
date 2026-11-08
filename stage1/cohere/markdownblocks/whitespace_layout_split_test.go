@@ -674,8 +674,8 @@ func whitespaceLayoutFixture(
 			test.Fatal(absolutePathError)
 		}
 		for _, side := range []struct {
-			name, command string
-			args          []string
+			name, command    string
+			commandArguments []string
 		}{
 			{"Go document layout", goLayout, []string{canonicalCases}},
 			{"native block/layout component", fast, []string{nativeCases}},
@@ -689,7 +689,7 @@ func whitespaceLayoutFixture(
 			var elapsed time.Duration
 			for round := 0; round < 3; round++ {
 				start := time.Now()
-				result := whitespaceLayoutExecute(test, callerContext, nil, side.command, side.args...)
+				result := whitespaceLayoutExecute(test, callerContext, nil, side.command, side.commandArguments...)
 				elapsed += time.Since(start)
 				clean(test, side.name, result)
 				equal(test, side.name, result.stdout, want.stdout)
@@ -1311,8 +1311,8 @@ func whitespaceLayoutReadProducts(
 	}, whitespaceLayoutProducts{sanitized: paths["policy"], backend: policy}
 }
 
-func whitespaceLayoutCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func whitespaceLayoutCommand(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if errors.Is(killError, syscall.ESRCH) {
@@ -1330,9 +1330,9 @@ func whitespaceLayoutExecuteResult(
 	callerContext context.Context,
 	environment []string,
 	name string,
-	args ...string,
+	commandArguments ...string,
 ) (run, error) {
-	command := whitespaceLayoutCommand(callerContext, name, args...)
+	command := whitespaceLayoutCommand(callerContext, name, commandArguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -1348,21 +1348,21 @@ func whitespaceLayoutExecute(
 	callerContext context.Context,
 	environment []string,
 	name string,
-	args ...string,
+	commandArguments ...string,
 ) run {
 	test.Helper()
 	result, whitespaceLayoutExecuteResultError := whitespaceLayoutExecuteResult(
 		callerContext,
 		environment,
 		name,
-		args...,
+		commandArguments...,
 	)
 	if whitespaceLayoutExecuteResultError != nil {
 		test.Fatal(whitespaceLayoutExecuteResultError)
 	}
 	return result
 }
-func whitespaceLayoutNodeResult(callerContext context.Context, path string, args ...string) (run, error) {
+func whitespaceLayoutNodeResult(callerContext context.Context, path string, commandArguments ...string) (run, error) {
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if absolutePathError != nil {
 		return run{}, absolutePathError
@@ -1371,12 +1371,12 @@ func whitespaceLayoutNodeResult(callerContext context.Context, path string, args
 		callerContext,
 		nil,
 		"node",
-		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...,
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, commandArguments...)...,
 	)
 }
-func whitespaceLayoutNode(test *testing.T, callerContext context.Context, path string, args ...string) run {
+func whitespaceLayoutNode(test *testing.T, callerContext context.Context, path string, commandArguments ...string) run {
 	test.Helper()
-	result, whitespaceLayoutNodeResultError := whitespaceLayoutNodeResult(callerContext, path, args...)
+	result, whitespaceLayoutNodeResultError := whitespaceLayoutNodeResult(callerContext, path, commandArguments...)
 	if whitespaceLayoutNodeResultError != nil {
 		test.Fatal(whitespaceLayoutNodeResultError)
 	}

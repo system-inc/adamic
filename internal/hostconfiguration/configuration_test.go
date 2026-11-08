@@ -296,8 +296,8 @@ func TestHostConfigurationScriptProbes(test *testing.T) {
 		test.Fatal(lookPathError)
 	}
 	scripts := []struct {
-		binary string
-		args   []string
+		binary           string
+		commandArguments []string
 	}{
 		{"python3", []string{"-B", "-c", `import json,sys,os
 from configuration import node_for
@@ -327,7 +327,7 @@ for i in range(2):
 					text := fmt.Sprintf("#!/bin/sh\necho probe >> '%s'\necho '%s'\n", calls, line)
 					writeExecutable(test, selected, text)
 				}
-				command := exec.Command(script.binary, script.args...)
+				command := exec.Command(script.binary, script.commandArguments...)
 				command.Stdin = bytes.NewReader(data)
 				command.Env = append(os.Environ(), switchName+"="+selected, "PROBE_TEST_MODE="+mode)
 				out, combinedOutputError := command.CombinedOutput()

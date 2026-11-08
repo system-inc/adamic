@@ -33,11 +33,11 @@ func (nativeEmitter *emitter) nodeProcessCall(call ir.ProcessCall) (string, bool
 	if !known {
 		return "", false
 	}
-	args := []string{}
+	commandArguments := []string{}
 	for _, argument := range call.Arguments {
-		args = append(args, nativeEmitter.value(argument))
+		commandArguments = append(commandArguments, nativeEmitter.value(argument))
 	}
-	code := function + "(" + strings.Join(args, ", ") + ")"
+	code := function + "(" + strings.Join(commandArguments, ", ") + ")"
 	if call.Operation == "clearMarks" ||
 		call.Operation == "clearMeasures" ||
 		call.Operation == "stdoutWrite" ||

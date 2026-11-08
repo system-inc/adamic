@@ -773,10 +773,15 @@ func TestShardsRunEmptyShardsPrintNothing(test *testing.T) {
 // testShardsAgreeRun runs name in directory. A bare name is a tool (the capture's go): the one internal/toolchain
 // resolves, under its environment plus environment, with PWD set to directory. A path is a program a test built (the
 // port, the oracle), run as named with this process's environment.
-func testShardsAgreeRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
+func testShardsAgreeRun(
+	directory string,
+	environment []string,
+	name string,
+	commandArguments ...string,
+) ([]byte, error) {
 	var command *exec.Cmd
 	if strings.ContainsRune(name, filepath.Separator) {
-		command = exec.Command(name, args...)
+		command = exec.Command(name, commandArguments...)
 		command.Dir = directory
 		// An explicit environment loses the PWD os/exec sets from Dir, and the go command trusts PWD over the
 		// real working directory, so a stale one resolves the module through the wrong path.
@@ -785,7 +790,7 @@ func testShardsAgreeRun(directory string, environment []string, name string, arg
 			command.Env = append(command.Env, "PWD="+directory)
 		}
 	} else {
-		command = toolchain.CommandIn(directory, name, args...)
+		command = toolchain.CommandIn(directory, name, commandArguments...)
 		command.Env = append(command.Env, environment...)
 	}
 	output, temporaryFileError := os.CreateTemp(sharedDirectory, "stdout-")
@@ -798,7 +803,7 @@ func testShardsAgreeRun(directory string, environment []string, name string, arg
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if runError := command.Run(); runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, runError, &stderr)
+		return nil, fmt.Errorf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	return os.ReadFile(output.Name())
 }
@@ -903,12 +908,12 @@ func TestShardsAgree_SourceSnapshotsMatchGo(test *testing.T) {
 	}
 	copied, restore := testShardsAgreeSourceSnapshots(test, rows, sources)
 	oracle := lintGoOracleProduct(test)
-	for _, args := range [][]string{nil, {"--count"}} {
+	for _, commandArguments := range [][]string{nil, {"--count"}} {
 		want, testShardsAgreeRunError := testShardsAgreeRun(
 			"",
 			nil,
 			oracle,
-			append([]string{"--manifest", manifest(test, rows)}, args...)...,
+			append([]string{"--manifest", manifest(test, rows)}, commandArguments...)...,
 		)
 		if testShardsAgreeRunError != nil {
 			test.Fatal(testShardsAgreeRunError)
@@ -917,13 +922,13 @@ func TestShardsAgree_SourceSnapshotsMatchGo(test *testing.T) {
 			"",
 			nil,
 			oracle,
-			append([]string{"--manifest", manifest(test, copied)}, args...)...,
+			append([]string{"--manifest", manifest(test, copied)}, commandArguments...)...,
 		)
 		if testShardsAgreeRunError != nil {
 			test.Fatal(testShardsAgreeRunError)
 		}
 		if !bytes.Equal(restore(got), want) {
-			test.Fatalf("source snapshot differs from Go for %v", args)
+			test.Fatalf("source snapshot differs from Go for %v", commandArguments)
 		}
 	}
 }

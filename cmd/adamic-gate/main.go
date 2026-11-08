@@ -58,11 +58,11 @@ type result struct {
 func (result result) key() string { return result.Package + "::" + result.Test }
 
 type invocation struct {
-	Package  string
-	Args     []string
-	Uncached bool
-	Exit     int
-	Seconds  float64
+	Package   string
+	Arguments []string `json:"Args"`
+	Uncached  bool
+	Exit      int
+	Seconds   float64
 }
 type summary struct {
 	Version               int
@@ -97,15 +97,15 @@ func main() {
 		os.Exit(1)
 	}
 }
-func run(args []string) error {
-	if len(args) == 0 {
+func run(commandArguments []string) error {
+	if len(commandArguments) == 0 {
 		return errors.New("usage: adamic-gate plan|shard|merge|compare|timings")
 	}
-	switch args[0] {
+	switch commandArguments[0] {
 	case "plan":
 		flags := flag.NewFlagSet("plan", flag.ContinueOnError)
 		count := flags.Int("count", 8, "number of shards")
-		if parseError := flags.Parse(args[1:]); parseError != nil {
+		if parseError := flags.Parse(commandArguments[1:]); parseError != nil {
 			return parseError
 		}
 		plan, makePlanError := makePlan(*count)
@@ -124,26 +124,26 @@ func run(args []string) error {
 			"/workspace/adamic-gate-scratch",
 			"disk-backed scratch root outside the repository",
 		)
-		if parseError := flags.Parse(args[1:]); parseError != nil {
+		if parseError := flags.Parse(commandArguments[1:]); parseError != nil {
 			return parseError
 		}
 		return shard(*index, *count, *out, *scratch, *resume)
 	case "merge":
 		flags := flag.NewFlagSet("merge", flag.ContinueOnError)
 		out := flags.String("out", "merged", "merged evidence directory")
-		if parseError := flags.Parse(args[1:]); parseError != nil {
+		if parseError := flags.Parse(commandArguments[1:]); parseError != nil {
 			return parseError
 		}
 		return merge(flags.Args(), *out)
 	case "compare":
-		if len(args) != 3 {
+		if len(commandArguments) != 3 {
 			return errors.New("compare <merged directory or JSON> <unsharded JSON log>")
 		}
-		return compare(args[1], args[2])
+		return compare(commandArguments[1], commandArguments[2])
 	case "timings":
 		flags := flag.NewFlagSet("timings", flag.ContinueOnError)
 		out := flags.String("out", timingPath, "timing file")
-		if parseError := flags.Parse(args[1:]); parseError != nil {
+		if parseError := flags.Parse(commandArguments[1:]); parseError != nil {
 			return parseError
 		}
 		if flags.NArg() != 1 {
@@ -159,12 +159,12 @@ func run(args []string) error {
 		}
 		return saveJson(*out, weights)
 	}
-	return fmt.Errorf("unknown command %q", args[0])
+	return fmt.Errorf("unknown command %q", commandArguments[0])
 }
-func output(name string, args ...string) (string, error) {
-	b, combinedOutputError := exec.Command(name, args...).CombinedOutput()
+func output(name string, commandArguments ...string) (string, error) {
+	b, combinedOutputError := exec.Command(name, commandArguments...).CombinedOutput()
 	if combinedOutputError != nil {
-		return "", fmt.Errorf("%s %v: %w\n%s", name, args, combinedOutputError, b)
+		return "", fmt.Errorf("%s %v: %w\n%s", name, commandArguments, combinedOutputError, b)
 	}
 	return strings.TrimSpace(string(b)), nil
 }
@@ -757,8 +757,8 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		return createError
 	}
 	var commandStderr io.Writer = stderr
-	runCommand := func(name string, args []string, temporary string, writer io.Writer) int {
-		command := exec.Command(name, args...)
+	runCommand := func(name string, commandArguments []string, temporary string, writer io.Writer) int {
+		command := exec.Command(name, commandArguments...)
 		command.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+temporary)
 		command.Stdout = writer
 		command.Stderr = commandStderr
@@ -770,9 +770,9 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			if exit, ok := runError.(*exec.ExitError); ok {
 				code = exit.ExitCode()
 			}
-			fmt.Fprintf(commandStderr, "%s %v: %v\n", name, args, runError)
+			fmt.Fprintf(commandStderr, "%s %v: %v\n", name, commandArguments, runError)
 		}
-		if name == "go" && len(args) > 0 && args[0] == "test" {
+		if name == "go" && len(commandArguments) > 0 && commandArguments[0] == "test" {
 			uncached := false
 			for _, value := range command.Env {
 				if strings.HasPrefix(value, "ADAMIC_GATE_UNCACHED=") {
@@ -781,7 +781,13 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			}
 			summary.Invocations = append(
 				summary.Invocations,
-				invocation{args[len(args)-1], args, uncached, code, time.Since(t).Seconds()},
+				invocation{
+					commandArguments[len(commandArguments)-1],
+					commandArguments,
+					uncached,
+					code,
+					time.Since(t).Seconds(),
+				},
 			)
 		}
 		return code
@@ -899,7 +905,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		first := len(summary.Invocations)
 		commandStderr = io.MultiWriter(stderr, packageStderr)
 		for _, pattern := range patterns(byPackage[packagePath]) {
-			runCommand("go", testArgs(packagePath, pattern), temporary, io.MultiWriter(raw, packageLog))
+			runCommand("go", testArguments(packagePath, pattern), temporary, io.MultiWriter(raw, packageLog))
 		}
 		commandStderr = stderr
 		err = errors.Join(packageLog.Sync(), packageStderr.Sync(), packageLog.Close(), packageStderr.Close())

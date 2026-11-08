@@ -28,19 +28,19 @@ const repository = "../../.."
 // are written by TestComposeMatchGo and TestComposeMutants alike).
 var yamlArtifacts sync.Mutex
 
-func run(test *testing.T, directory string, environment []string, name string, args ...string) []byte {
+func run(test *testing.T, directory string, environment []string, name string, commandArguments ...string) []byte {
 	test.Helper()
 	// Silent builds and buffered children use the shared first-output window.
 	// With ten CPU burners, the longest output gap was 3.93s; the default
 	// two-minute Stall leaves more than three times that gap as headroom.
-	command := exec.Command(name, args...)
+	command := exec.Command(name, commandArguments...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment plus the
 		// caller's settings, not PATH's, run in directory with PWD to match. A program a test built (an oracle, a port)
 		// runs as named, with this process's environment.
-		command = toolchain.CommandIn(directory, name, args...)
+		command = toolchain.CommandIn(directory, name, commandArguments...)
 		command.Env = append(command.Env, environment...)
 	}
 	var out, outError bytes.Buffer

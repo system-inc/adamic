@@ -59,12 +59,12 @@ type compilerAgreementCase struct {
 	ordinal int
 }
 
-var compilerAgreementCorpusMu sync.Mutex
+var compilerAgreementCorpusMutex sync.Mutex
 var compilerAgreementCorpus []compilerAgreementCase
 
 func compilerAgreementCases(test *testing.T) []compilerAgreementCase {
-	compilerAgreementCorpusMu.Lock()
-	defer compilerAgreementCorpusMu.Unlock()
+	compilerAgreementCorpusMutex.Lock()
+	defer compilerAgreementCorpusMutex.Unlock()
 	if compilerAgreementCorpus != nil {
 		return compilerAgreementCorpus
 	}
@@ -171,9 +171,12 @@ func compilerAgreementOwner(agreementCase compilerAgreementCase) int {
 // no WaitDelay deciding when, where exec's copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever
 // the reads hadn't reached EOF a second after the child exited, so a probe that had finished could fail, or count a
 // part that passed as failed, under load (#n3gk22h's shape). The 90 s deadline ends a hung probe.
-func compilerAgreementCommand(name string, args ...string) (*exec.Cmd, context.Context, context.CancelFunc) {
+func compilerAgreementCommand(
+	name string,
+	commandArguments ...string,
+) (*exec.Cmd, context.Context, context.CancelFunc) {
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	command := exec.CommandContext(timeoutContext, name, args...)
+	command := exec.CommandContext(timeoutContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
@@ -188,12 +191,12 @@ func compilerAgreementCommand(name string, args ...string) (*exec.Cmd, context.C
 	return command, timeoutContext, cancel
 }
 
-var compilerAgreementInputMu sync.Mutex
+var compilerAgreementInputMutex sync.Mutex
 var compilerAgreementFiles []string
 
 func compilerAgreementInputs(test *testing.T, name string, flags []string) buildcache.Inputs {
-	compilerAgreementInputMu.Lock()
-	defer compilerAgreementInputMu.Unlock()
+	compilerAgreementInputMutex.Lock()
+	defer compilerAgreementInputMutex.Unlock()
 	test.Helper()
 	if compilerAgreementFiles == nil {
 		// git ls-files --recurse-submodules where the tree has .git, else the same listing, in the same order, from
@@ -361,12 +364,12 @@ func TestProduct_CompilerAgreementReleaseNative(test *testing.T) {
 }
 
 type compilerAgreementOracleAnswer struct {
-	mu       sync.Mutex
+	mutex    sync.Mutex
 	output   []byte
 	duration time.Duration
 }
 
-var compilerAgreementOracleMu sync.Mutex
+var compilerAgreementOracleMutex sync.Mutex
 var compilerAgreementOracleAnswers = map[int]*compilerAgreementOracleAnswer{}
 
 // compilerAgreementCheckerAllOwner is checker.ts's combined-rule owner: the whole file under every rule, which every
@@ -378,15 +381,15 @@ const compilerAgreementCheckerAllOwner = compilerAgreementFileBuckets*compilerAg
 // compilerAgreementOracle is the Go oracle's answer for an owner's rows, run once per process for an owner and shared
 // by its sides.
 func compilerAgreementOracle(test *testing.T, owner int, path string) execution {
-	compilerAgreementOracleMu.Lock()
+	compilerAgreementOracleMutex.Lock()
 	answer := compilerAgreementOracleAnswers[owner]
 	if answer == nil {
 		answer = &compilerAgreementOracleAnswer{}
 		compilerAgreementOracleAnswers[owner] = answer
 	}
-	compilerAgreementOracleMu.Unlock()
-	answer.mu.Lock()
-	defer answer.mu.Unlock()
+	compilerAgreementOracleMutex.Unlock()
+	answer.mutex.Lock()
+	defer answer.mutex.Unlock()
 	if answer.output == nil {
 		run := execute(test, "", lintGoOracleProduct(test), "--manifest", path)
 		answer.output, answer.duration = run.output, run.duration

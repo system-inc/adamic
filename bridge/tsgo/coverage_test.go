@@ -46,8 +46,8 @@ func TestBridgeUnitsCoverEveryPiece(test *testing.T) {
 	files := []string{"sample.ts", "checker.ts", "parser.ts", "types.ts", "utilities.ts"}
 	pieces := []string{"oracle", "timing-1", "timing-2", "timing-3", "wrong-position"}
 	seen := map[string]bool{}
-	nameOf := func(fn any) string {
-		name := runtime.FuncForPC(reflect.ValueOf(fn).Pointer()).Name()
+	nameOf := func(function any) string {
+		name := runtime.FuncForPC(reflect.ValueOf(function).Pointer()).Name()
 		return name[strings.LastIndex(name, ".")+1:]
 	}
 	for index, unit := range bridgeCases {

@@ -61,15 +61,15 @@ func integrationInputs(test *testing.T, name string) buildcache.Inputs {
 
 func commandRunner(test *testing.T, root string) func(string, ...string) []byte {
 	test.Helper()
-	return func(name string, args ...string) []byte {
+	return func(name string, commandArguments ...string) []byte {
 		test.Helper()
 		timeoutContext, cancel := context.WithTimeout(test.Context(), 3*time.Minute)
 		defer cancel()
-		command := exec.CommandContext(timeoutContext, name, args...)
+		command := exec.CommandContext(timeoutContext, name, commandArguments...)
 		command.Dir = root
 		output, combinedOutputError := command.CombinedOutput()
 		if combinedOutputError != nil {
-			test.Fatalf("%s %v: %v\n%s", name, args, combinedOutputError, output)
+			test.Fatalf("%s %v: %v\n%s", name, commandArguments, combinedOutputError, output)
 		}
 		return output
 	}

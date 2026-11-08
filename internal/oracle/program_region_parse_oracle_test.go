@@ -15,7 +15,7 @@ func programParseOracle(test *testing.T, enabled bool) {
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux instrumented parse witness")
 	}
-	args := programParseArguments(test)
+	commandArguments := programParseArguments(test)
 	absolute, absolutePathError := filepath.Abs("testdata/program_region/parse.a")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
@@ -23,7 +23,10 @@ func programParseOracle(test *testing.T, enabled bool) {
 	truth := execute(
 		test,
 		"node",
-		append([]string{"--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", absolute}, args...)...,
+		append(
+			[]string{"--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", absolute},
+			commandArguments...,
+		)...,
 	)
 	if truth.exitCode != 0 {
 		test.Fatalf("source Node: %d %s", truth.exitCode, truth.stderr)
@@ -32,7 +35,7 @@ func programParseOracle(test *testing.T, enabled bool) {
 	actual := execute(
 		test,
 		"node",
-		append([]string{"--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js}, args...)...,
+		append([]string{"--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js}, commandArguments...)...,
 	)
 	if difference := disagreement(truth, actual); difference != "" {
 		test.Fatalf("JavaScript: %s", difference)
@@ -42,7 +45,7 @@ func programParseOracle(test *testing.T, enabled bool) {
 		test,
 		[]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"},
 		binary,
-		args...,
+		commandArguments...,
 	)
 	actual.stdout = graphRss.ReplaceAll(actual.stdout, nil)
 	if difference := disagreement(truth, actual); difference != "" {

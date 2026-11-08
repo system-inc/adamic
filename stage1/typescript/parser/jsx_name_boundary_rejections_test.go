@@ -10,11 +10,11 @@ import (
 	"time"
 )
 
-func jsxFailure(test *testing.T, name string, args ...string) (int, string) {
+func jsxFailure(test *testing.T, name string, commandArguments ...string) (int, string) {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	command := exec.CommandContext(timeoutContext, name, args...)
+	command := exec.CommandContext(timeoutContext, name, commandArguments...)
 	stdout, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)

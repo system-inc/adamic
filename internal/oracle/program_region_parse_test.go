@@ -99,7 +99,7 @@ func programParseMeasurement(test *testing.T, sample int) {
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux getrusage measurement")
 	}
-	args := programParseArguments(test)
+	commandArguments := programParseArguments(test)
 	absolute, absolutePathError := filepath.Abs("testdata/program_region/parse.a")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
@@ -107,7 +107,10 @@ func programParseMeasurement(test *testing.T, sample int) {
 	truth := execute(
 		test,
 		"node",
-		append([]string{"--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", absolute}, args...)...,
+		append(
+			[]string{"--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", absolute},
+			commandArguments...,
+		)...,
 	)
 	if truth.exitCode != 0 {
 		test.Fatalf("source Node parse: %d %s", truth.exitCode, truth.stderr)
@@ -116,7 +119,7 @@ func programParseMeasurement(test *testing.T, sample int) {
 		binary := filepath.Join(programParseBuild(test, enabled), "parse")
 		name, argv := pinnedStack("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary)
 		started := time.Now()
-		result := execute(test, name, append(argv, args...)...)
+		result := execute(test, name, append(argv, commandArguments...)...)
 		seconds := time.Since(started).Seconds()
 		match := countsLine.FindSubmatch(result.stderr)
 		rss := graphRss.FindSubmatch(result.stdout)

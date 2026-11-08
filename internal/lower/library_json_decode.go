@@ -373,11 +373,11 @@ func (lowering *lowering) decodeJson(node *ast.Node) (ir.Expression, bool, error
 	if decodeJsonTypeError != nil {
 		return nil, true, decodeJsonTypeError
 	}
-	args := node.AsCallExpression().Arguments.Nodes
-	if len(args) != 1 || hasSpread(node) {
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) != 1 || hasSpread(node) {
 		return nil, true, lowering.notYet(node, "decodeJson requires one text argument")
 	}
-	text, expressionError := lowering.expression(args[0])
+	text, expressionError := lowering.expression(arguments[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}

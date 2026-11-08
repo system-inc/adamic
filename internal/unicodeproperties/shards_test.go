@@ -385,8 +385,9 @@ func TestUnicodeNodeShardCoverage(test *testing.T) {
 	}
 	declarations := map[string]int{}
 	for _, decl := range file.Decls {
-		if fn, ok := decl.(*ast.FuncDecl); ok && strings.HasPrefix(fn.Name.Name, "TestCanonicalizeUnicodeNode") {
-			declarations[fn.Name.Name]++
+		if function, ok := decl.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(function.Name.Name, "TestCanonicalizeUnicodeNode") {
+			declarations[function.Name.Name]++
 		}
 	}
 	if len(declarations) != len(unicodeNodeTopRanges) {

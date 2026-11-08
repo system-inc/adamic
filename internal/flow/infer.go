@@ -99,13 +99,13 @@ func (inference *inference) run() {
 	// thrown is what a block ending in MayThrow hands its handler: the values from before its last
 	// instruction, whose definitions a throw never made.
 	thrown := map[BlockId]map[DeclarationId]IdentifierId{}
-	for _, parameter := range inference.function.Params {
+	for _, parameter := range inference.function.Parameters {
 		inference.escaped[parameter.Identifier] = true
 	}
 	for _, block := range inference.function.Blocks {
 		inference.current = map[DeclarationId]IdentifierId{}
 		if block.Id == inference.function.Entry {
-			for _, parameter := range inference.function.Params {
+			for _, parameter := range inference.function.Parameters {
 				inference.current[inference.declaration(parameter)] = parameter.Identifier
 			}
 		}

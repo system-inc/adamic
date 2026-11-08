@@ -51,7 +51,7 @@ func (lowering *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) 
 			return nil, true, lowering.notYet(node, name+" used as a value")
 		}
 	}
-	args := []ir.Expression{}
+	arguments := []ir.Expression{}
 	for _, argument := range call.Arguments.Nodes {
 		if argument.Kind == ast.KindSpreadElement {
 			return nil, true, lowering.notYet(argument, name+" with spread arguments")
@@ -63,9 +63,9 @@ func (lowering *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) 
 		if value.Type() != ir.String {
 			return nil, true, lowering.notYet(argument, name+" with non-string arguments")
 		}
-		args = append(args, value)
+		arguments = append(arguments, value)
 	}
-	return ir.NodeFSFile{Operation: operation, Arguments: args, Of: of}, true, nil
+	return ir.NodeFSFile{Operation: operation, Arguments: arguments, Of: of}, true, nil
 }
 
 func init() {

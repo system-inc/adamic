@@ -123,7 +123,7 @@ func applyRewrites(function *Function, resolve func(IdentifierId) IdentifierId) 
 			place.Identifier = resolve(place.Identifier)
 		})
 	}
-	for index := range function.Params {
-		function.Params[index].Identifier = resolve(function.Params[index].Identifier)
+	for index := range function.Parameters {
+		function.Parameters[index].Identifier = resolve(function.Parameters[index].Identifier)
 	}
 }

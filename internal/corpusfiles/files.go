@@ -71,13 +71,13 @@ func checked(test testing.TB, checkout, pin string, roots, patterns, skip []stri
 
 // git runs its checks as key-time work (buildcache.Keying): a commit and a clean status gate the corpus, never change
 // a product's bytes, and a read of .git is never a build's (#1p6sent). The listing is tracked.PathsUnder's.
-func git(checkout string, args ...string) ([]byte, error) {
-	command := toolchain.GitCommand(append([]string{"-C", checkout}, args...)...)
+func git(checkout string, commandArguments ...string) ([]byte, error) {
+	command := toolchain.GitCommand(append([]string{"-C", checkout}, commandArguments...)...)
 	var output []byte
 	var err error
 	buildcache.Keying(func() { output, err = command.CombinedOutput() })
 	if err != nil {
-		return nil, fmt.Errorf("git %s in %s: %w: %s", strings.Join(args, " "), checkout, err, output)
+		return nil, fmt.Errorf("git %s in %s: %w: %s", strings.Join(commandArguments, " "), checkout, err, output)
 	}
 	return output, nil
 }

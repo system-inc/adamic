@@ -104,7 +104,7 @@ func v8Divergence(tree *Pattern, properties PropertyProvider) error {
 				actual.strings = foldSet(characterSet{strings: actual.strings}, flags).strings
 				if node.Negated {
 					set = negateSet(set, flags)
-					actual.ranges = subtractRanges([]RuneRange{{0, maxCharacter(flags)}}, actual.ranges)
+					actual.ranges = subtractRanges([]RuneRange{{0, maximumCharacter(flags)}}, actual.ranges)
 				}
 				if !sameCharacterSets(matchedCharacters(set, flags), actual) {
 					if parserFlags.IgnoreCase != flags.IgnoreCase {
@@ -257,7 +257,7 @@ func v8Class(expr ClassExpression, flags Flags, properties PropertyProvider) (ch
 		return combineSets(a, b, false), v8ClassError
 	case *ClassNegation:
 		set, v8ClassError := v8Class(expr.Operand, flags, properties)
-		set.ranges = subtractRanges([]RuneRange{{0, maxCharacter(flags)}}, set.ranges)
+		set.ranges = subtractRanges([]RuneRange{{0, maximumCharacter(flags)}}, set.ranges)
 		return set, v8ClassError
 	default:
 		set, compileClassError := compileClass(expr, flags, properties)

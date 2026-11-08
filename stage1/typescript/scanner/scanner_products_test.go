@@ -186,9 +186,9 @@ func scannerSelect(lines []string, shard int) []string {
 // copying under a three-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF three seconds
 // after the child exited, so a Go oracle, native or Node run that had finished could fail its shard under load
 // (#n3gk22h's shape). The shard's 45 s deadline ends a hung run.
-func scannerRun(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
+func scannerRun(test *testing.T, callerContext context.Context, name string, commandArguments ...string) []byte {
 	test.Helper()
-	command := exec.CommandContext(callerContext, name, args...)
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	output, stderr, captureError := childguard.Capture(callerContext, command)
 	if captureError != nil || len(stderr) != 0 {

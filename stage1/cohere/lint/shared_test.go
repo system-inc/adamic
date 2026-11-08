@@ -79,8 +79,8 @@ func sharedPath(name string) (string, error) {
 // run is execute without a test, for a tool: output goes to a file, never a pipe, and anything on standard error
 // is a failure, as execute requires. The tool is the one internal/toolchain resolves, under its environment plus
 // environment, in directory with PWD to match (the go command trusts PWD over the real working directory).
-func run(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	command := toolchain.CommandIn(directory, name, args...)
+func run(directory string, environment []string, name string, commandArguments ...string) ([]byte, error) {
+	command := toolchain.CommandIn(directory, name, commandArguments...)
 	command.Env = append(command.Env, environment...)
 	output, temporaryFileError := os.CreateTemp(sharedDirectory, "stdout-")
 	if temporaryFileError != nil {
@@ -96,7 +96,7 @@ func run(directory string, environment []string, name string, args ...string) ([
 		testguard.Budget,
 		testguard.Ceiling,
 	); runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, runError, &stderr)
+		return nil, fmt.Errorf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	return os.ReadFile(output.Name())
 }
@@ -149,13 +149,13 @@ func lintGoSettings() string {
 // A caller that reads a pipe reads it through childguard.Capture. One that writes stdout to a file, the package's rule
 // for Node's writev path, keeps exec's copy of stderr, read to its end: node, the port and the Go oracle start no
 // process that could hold it, and ctx's group kill or the unit's ceiling ends a wait on one that did.
-func lintCommand(callerContext context.Context, directory, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func lintCommand(callerContext context.Context, directory, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	if !strings.ContainsRune(name, filepath.Separator) {
 		if path, pathError := toolchain.Path(name); pathError != nil {
 			command.Err = pathError
 		} else {
-			command = exec.CommandContext(callerContext, path, args...)
+			command = exec.CommandContext(callerContext, path, commandArguments...)
 			command.Env = toolchain.Env()
 			if directory != "" {
 				absolute, absolutePathError := filepath.Abs(directory)

@@ -78,12 +78,12 @@ func stdoutIsTtyAgreement(test *testing.T, transport string) {
 	}
 }
 
-func stdoutIsTtyRun(test *testing.T, transport, name string, args ...string) run {
+func stdoutIsTtyRun(test *testing.T, transport, name string, commandArguments ...string) run {
 	test.Helper()
 	if transport == "pty" {
 		quote := func(text string) string { return "'" + strings.ReplaceAll(text, "'", "'\"'\"'") + "'" }
 		words := []string{quote(name)}
-		for _, text := range args {
+		for _, text := range commandArguments {
 			words = append(words, quote(text))
 		}
 		// Separate stderr before script joins its child's streams into the pty.
@@ -111,7 +111,7 @@ func stdoutIsTtyRun(test *testing.T, transport, name string, args ...string) run
 		}
 		return run{stdout: out, stderr: data, exitCode: osCommand.ProcessState.ExitCode()}
 	}
-	_, command := bounded(test, name, args...)
+	_, command := bounded(test, name, commandArguments...)
 	command.Env = []string{"TERM=dumb", "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}
 	var out, errout bytes.Buffer
 	command.Stdout = &out

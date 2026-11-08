@@ -17,9 +17,9 @@ import (
 	"testing"
 )
 
-func execute(test *testing.T, dir, name string, args ...string) []byte {
+func execute(test *testing.T, dir, name string, commandArguments ...string) []byte {
 	test.Helper()
-	command := exec.Command(name, args...)
+	command := exec.Command(name, commandArguments...)
 	command.Dir = dir
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "output")
 	if temporaryFileError != nil {
@@ -30,7 +30,7 @@ func execute(test *testing.T, dir, name string, args ...string) []byte {
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if runError := command.Run(); runError != nil || stderr.Len() != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	data, readError := os.ReadFile(output.Name())
 	if readError != nil {
@@ -76,10 +76,10 @@ func build(test *testing.T, path string, sanitize bool) (string, string) {
 	}
 	return binary, script
 }
-func onNode(test *testing.T, path string, args ...string) []byte {
+func onNode(test *testing.T, path string, commandArguments ...string) []byte {
 	test.Helper()
 	argv := []string{"--disable-warning=ExperimentalWarning", filepath.Join(root(test), "oracle/node.mjs"), path}
-	argv = append(argv, args...)
+	argv = append(argv, commandArguments...)
 	return execute(test, "", "node", argv...)
 }
 func generated() []string {

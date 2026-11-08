@@ -20,35 +20,35 @@ func (lowering *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, 
 	if name != "stringify" {
 		return nil, true, lowering.notYet(node, "JSON."+name)
 	}
-	args := node.AsCallExpression().Arguments.Nodes
-	if len(args) > 3 || hasSpread(node) {
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) > 3 || hasSpread(node) {
 		return nil, true, lowering.notYet(node, "JSON.stringify with spread or extra arguments")
 	}
 	result := ir.JSONStringify{Value: ir.Undefined{}, Schema: &ir.JSONSchema{Kind: "undefined"}}
 	var jsonInputError error
-	if len(args) > 0 {
-		result.Value, result.Schema, jsonInputError = lowering.jsonInput(args[0])
+	if len(arguments) > 0 {
+		result.Value, result.Schema, jsonInputError = lowering.jsonInput(arguments[0])
 		if jsonInputError != nil {
 			return nil, true, jsonInputError
 		}
 	}
-	if len(args) > 1 {
+	if len(arguments) > 1 {
 		if subjectType := lowering.checker.GetTypeAtLocation(
-			args[1],
+			arguments[1],
 		); len(lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindCall)) != 0 {
 			return nil, true, lowering.notYet(
-				args[1],
+				arguments[1],
 				"JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder)",
 			)
 		}
-		result.Replacer, result.ReplacerSchema, jsonInputError = lowering.jsonInput(args[1])
+		result.Replacer, result.ReplacerSchema, jsonInputError = lowering.jsonInput(arguments[1])
 		if jsonInputError != nil {
 			return nil, true, jsonInputError
 		}
 		k := result.ReplacerSchema.Kind
 		if k != "array" && k != "tuple" && k != "null" && k != "undefined" {
 			return nil, true, lowering.notYet(
-				args[1],
+				arguments[1],
 				"JSON.stringify replacer other than a key array, null or undefined",
 			)
 		}
@@ -56,21 +56,21 @@ func (lowering *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, 
 		if k == "tuple" {
 			for _, field := range result.ReplacerSchema.Fields {
 				if !jsonScalar(field.Schema) {
-					return nil, true, lowering.notYet(args[1], "JSON.stringify replacer keys with object coercion")
+					return nil, true, lowering.notYet(arguments[1], "JSON.stringify replacer keys with object coercion")
 				}
 			}
 		}
 		if k == "array" && !jsonScalar(result.ReplacerSchema.Element) {
-			return nil, true, lowering.notYet(args[1], "JSON.stringify replacer keys with object coercion")
+			return nil, true, lowering.notYet(arguments[1], "JSON.stringify replacer keys with object coercion")
 		}
 	}
-	if len(args) > 2 {
-		result.Space, result.SpaceSchema, jsonInputError = lowering.jsonInput(args[2])
+	if len(arguments) > 2 {
+		result.Space, result.SpaceSchema, jsonInputError = lowering.jsonInput(arguments[2])
 		if jsonInputError != nil {
 			return nil, true, jsonInputError
 		}
 		if !jsonScalar(result.SpaceSchema) {
-			return nil, true, lowering.notYet(args[2], "JSON.stringify space requiring object coercion")
+			return nil, true, lowering.notYet(arguments[2], "JSON.stringify space requiring object coercion")
 		}
 	}
 	return result, true, nil

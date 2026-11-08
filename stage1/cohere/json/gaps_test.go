@@ -15,7 +15,7 @@ func TestDocumentedStageZeroGaps(test *testing.T) {
 	test.Parallel()
 	for _, gap := range []struct {
 		file, message, output string
-		args                  []string
+		commandArguments      []string
 	}{
 		{"repeatInTry.ts", "a try around repeat", "xxx\n", []string{"a", "b", "c"}},
 	} {
@@ -33,7 +33,7 @@ func TestDocumentedStageZeroGaps(test *testing.T) {
 			if lowerError == nil || !strings.Contains(lowerError.Error(), gap.message) {
 				test.Fatalf("gap changed: %v; update GAPS.md", lowerError)
 			}
-			result := onNode(test, path, gap.args...)
+			result := onNode(test, path, gap.commandArguments...)
 			if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != gap.output {
 				test.Fatalf("Node: %+v", result)
 			}

@@ -177,8 +177,8 @@ func TestMarkdownAstPreprocessingThroughput(test *testing.T) {
 	inputs, goBinary, nativeCases, fork, want := fixture.inputs, fixture.goBinary, fixture.nativeCases, fixture.fork, fixture.want
 	fast := pilotNativeProductFromLowered(test, "ast", pilotLoweredProduct(test, "ast"), false)
 	for _, side := range []struct {
-		name, command string
-		args          []string
+		name, command    string
+		commandArguments []string
 	}{
 		{"actual Go preprocess", goBinary, []string{"--facts", nativeCases}},
 		{"native preprocess", fast, []string{nativeCases}},
@@ -186,7 +186,7 @@ func TestMarkdownAstPreprocessingThroughput(test *testing.T) {
 	} {
 		started := time.Now()
 		for index := 0; index < 3; index++ {
-			result := execute(test, nil, side.command, side.args...)
+			result := execute(test, nil, side.command, side.commandArguments...)
 			clean(test, side.name, result)
 			equal(test, side.name, result.stdout, want.stdout)
 		}

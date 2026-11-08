@@ -277,12 +277,12 @@ func TestWholeMutantsUnion(test *testing.T) {
 // exec.ErrWaitDelay whenever the reads hadn't reached EOF five seconds after the
 // child exited, so a leaf or survivor proof that had finished could fail under
 // load (#n3gk22h's shape). Each caller's 90 s deadline ends a hung run.
-func wholeMutantCommandContext(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func wholeMutantCommandContext(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as
 	// itself.
 	if !strings.ContainsRune(name, filepath.Separator) {
-		tool := toolchain.Command(name, args...)
+		tool := toolchain.Command(name, commandArguments...)
 		command.Path, command.Err, command.Env = tool.Path, tool.Err, tool.Env
 	}
 	// Cancellation cleans up the whole process group, including descendants.
@@ -313,7 +313,7 @@ func TestWholeMutantsRejectsSurvivor(test *testing.T) {
 	for _, variable := range environment {
 		if strings.HasPrefix(variable, "ADAMIC_TEST_SHARD=") ||
 			strings.HasPrefix(variable, "ADAMIC_WHOLE_MUTANT_SURVIVOR=") ||
-			strings.HasPrefix(variable, wholeMutantsCaseChildEnv+"=") {
+			strings.HasPrefix(variable, wholeMutantsCaseChildEnvironment+"=") {
 			continue
 		}
 		command.Env = append(command.Env, variable)
@@ -321,7 +321,7 @@ func TestWholeMutantsRejectsSurvivor(test *testing.T) {
 	command.Env = append(
 		command.Env,
 		"ADAMIC_WHOLE_MUTANT_SURVIVOR=keyof becomes readonly",
-		wholeMutantsCaseChildEnv+"=1",
+		wholeMutantsCaseChildEnvironment+"=1",
 	)
 	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
 	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)

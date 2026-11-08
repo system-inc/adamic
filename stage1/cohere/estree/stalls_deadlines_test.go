@@ -24,8 +24,8 @@ import (
 // exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds after the
 // child exited, so a run that had finished could fail its shard under load
 // (#n3gk22h's shape). Each caller's 90 s deadline ends a hung run.
-func estreeScopedCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func estreeScopedCommand(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
@@ -40,19 +40,19 @@ func estreeScopedCommand(callerContext context.Context, name string, args ...str
 	return command
 }
 
-func estreeScopedExecute(test *testing.T, name string, args ...string) []byte {
+func estreeScopedExecute(test *testing.T, name string, commandArguments ...string) []byte {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	output, stderr, captureError := childguard.Capture(
 		timeoutContext,
-		estreeScopedCommand(timeoutContext, name, args...),
+		estreeScopedCommand(timeoutContext, name, commandArguments...),
 	)
 	if timeoutContext.Err() != nil {
-		test.Fatalf("cooked: %s %v exceeded its 90s child deadline", name, args)
+		test.Fatalf("cooked: %s %v exceeded its 90s child deadline", name, commandArguments)
 	}
 	if captureError != nil || len(stderr) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, captureError, stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, captureError, stderr)
 	}
 	return output
 }
@@ -82,13 +82,13 @@ func estreeScopedRefusal(test *testing.T, argv []string, diagnostic string) {
 	}
 	defer reader.Close()
 	defer writer.Close()
-	args := append([]string{
+	commandArguments := append([]string{
 		"-test.run=^TestDeadlineChild$",
 		"-test.timeout=75s",
 		"--",
 		strconv.FormatUint(estreeBudgetSeconds(budget), 10),
 	}, argv...)
-	command := estreeScopedCommand(timeoutContext, os.Args[0], args...)
+	command := estreeScopedCommand(timeoutContext, os.Args[0], commandArguments...)
 	command.Env = append(os.Environ(), "ADAMIC_ESTREE_DEADLINE_CHILD=1")
 	command.ExtraFiles = []*os.File{writer}
 	// Captured, not exec's copying under a WaitDelay: exec.ErrWaitDelay is an error with a ProcessState, so a child

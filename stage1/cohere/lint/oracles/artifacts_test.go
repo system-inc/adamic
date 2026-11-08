@@ -17,12 +17,12 @@ func requireOracleArtifacts(test *testing.T, directory string, names ...string) 
 	buildcache.RequireArtifacts(test, directory, artifacts...)
 }
 
-func requireOracleExecutable(test *testing.T, binary string, args ...string) {
+func requireOracleExecutable(test *testing.T, binary string, commandArguments ...string) {
 	test.Helper()
 	buildcache.RequireArtifacts(
 		test,
 		filepath.Dir(binary),
-		buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: args},
+		buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: commandArguments},
 	)
 }
 

@@ -642,9 +642,9 @@ type analysis struct {
 // term is a placeholder: parameter param itself (level 0), what it holds in field (level 1), or
 // everything below that (level 2).
 type term struct {
-	param int
-	field string
-	level int
+	parameter int
+	field     string
+	level     int
 }
 
 // deferral is a write left to the callers to judge, with what it writes into and what it writes.
@@ -670,9 +670,9 @@ func (analysis *analysis) below(object object, field string) object {
 	t := analysis.termOf(object)
 	switch t.level {
 	case 0:
-		return analysis.placeholder(term{param: t.param, field: field, level: 1})
+		return analysis.placeholder(term{parameter: t.parameter, field: field, level: 1})
 	case 1:
-		return analysis.placeholder(term{param: t.param, field: t.field, level: 2})
+		return analysis.placeholder(term{parameter: t.parameter, field: t.field, level: 2})
 	}
 	return object
 }
@@ -754,7 +754,7 @@ func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 				continue
 			}
 			if analysis.placeholders {
-				parameter := analysis.placeholder(term{param: index})
+				parameter := analysis.placeholder(term{parameter: index})
 				entry.locals[local] = value{strong: objects{parameter: true}, weak: objects{parameter: true}}
 			} else {
 				entry.locals[local] = outsideValue()
@@ -1812,17 +1812,17 @@ func (analysis *analysis) made(function int, callee *summary, arguments []value)
 // argument is what a placeholder of a callee's stands for here: the argument, or everything the
 // argument reaches through the field, strongly or weakly.
 func (analysis *analysis) argument(term term, arguments []value) value {
-	if term.param >= len(arguments) {
+	if term.parameter >= len(arguments) {
 		return outsideValue()
 	}
 	if term.level == 0 {
-		return arguments[term.param].copy()
+		return arguments[term.parameter].copy()
 	}
 	var start value
 	if term.field == anyField {
-		start = analysis.everything(arguments[term.param])
+		start = analysis.everything(arguments[term.parameter])
 	} else {
-		start = analysis.load(arguments[term.param], term.field)
+		start = analysis.load(arguments[term.parameter], term.field)
 	}
 	if term.level == 1 {
 		return start
@@ -1937,8 +1937,8 @@ func (summary *summary) deferredKeys() []writeKey {
 
 func sortTerms(list []term) {
 	slices.SortFunc(list, func(left, right term) int {
-		if left.param != right.param {
-			return left.param - right.param
+		if left.parameter != right.parameter {
+			return left.parameter - right.parameter
 		}
 		if left.level != right.level {
 			return left.level - right.level

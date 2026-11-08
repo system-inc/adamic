@@ -49,7 +49,7 @@ const watchFileDeadline = 5 * time.Second
 // Both the oracle and both backends get a fresh cwd and a deliberately explicit
 // environment, never the box's environment. The same fixtures also run in the
 // ordinary native, JS, gob and counted families. WASI refuses their host entry.
-func watchFileRun(test *testing.T, name string, args ...string) (run, bool) {
+func watchFileRun(test *testing.T, name string, commandArguments ...string) (run, bool) {
 	test.Helper()
 	path, pathError := toolchain.Path(name)
 	if pathError != nil {
@@ -57,7 +57,7 @@ func watchFileRun(test *testing.T, name string, args ...string) (run, bool) {
 	}
 	timeoutContext, cancel := context.WithTimeout(context.Background(), watchFileDeadline)
 	defer cancel()
-	command := exec.CommandContext(timeoutContext, path, args...)
+	command := exec.CommandContext(timeoutContext, path, commandArguments...)
 	command.Dir = test.TempDir()
 	command.Env = []string{
 		"TMPDIR=" + command.Dir,

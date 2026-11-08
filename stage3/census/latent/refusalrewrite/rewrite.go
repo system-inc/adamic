@@ -12,8 +12,8 @@ import (
 
 const function = "lowering.refuse"
 
-func fail(message string, args ...any) error {
-	return fmt.Errorf("latent refusal rewrite: %s: %s", function, fmt.Sprintf(message, args...))
+func fail(message string, arguments ...any) error {
+	return fmt.Errorf("latent refusal rewrite: %s: %s", function, fmt.Sprintf(message, arguments...))
 }
 
 func ident(node ast.Node, name string) bool {
@@ -50,15 +50,15 @@ func Rewrite(source []byte) ([]byte, error) {
 	}
 	var matches []*ast.FuncDecl
 	for _, declaration := range file.Decls {
-		fn, ok := declaration.(*ast.FuncDecl)
+		function, ok := declaration.(*ast.FuncDecl)
 		if ok &&
-			fn.Name.Name == "refuse" &&
-			fn.Recv != nil &&
-			len(fn.Recv.List) == 1 &&
-			printed(fn.Recv.List[0].Type) == "*lowering" {
-			matches = append(matches, fn)
+			function.Name.Name == "refuse" &&
+			function.Recv != nil &&
+			len(function.Recv.List) == 1 &&
+			printed(function.Recv.List[0].Type) == "*lowering" {
+			matches = append(matches, function)
 		}
-		if ok && fn.Name.Name == "latentRefuse" {
+		if ok && function.Name.Name == "latentRefuse" {
 			return nil, fail("latentRefuse already exists")
 		}
 	}

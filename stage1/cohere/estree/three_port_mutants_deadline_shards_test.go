@@ -357,12 +357,12 @@ func threePortReady(test *testing.T) *threePortPrepared {
 // copying under a two-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds
 // after the child exited, so an oracle, Node, native or proof run that had finished could fail its shard under load
 // (#n3gk22h's shape). Each caller's deadline ends a hung run.
-func threePortCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func threePortCommand(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	// A tool named bare (go, node) is toolchain's program, under toolchain's environment; a binary named by its path
 	// runs as itself.
 	if !strings.ContainsRune(name, filepath.Separator) {
-		tool := toolchain.Command(name, args...)
+		tool := toolchain.Command(name, commandArguments...)
 		command.Path, command.Err, command.Env = tool.Path, tool.Err, tool.Env
 	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -379,14 +379,17 @@ func threePortCommand(callerContext context.Context, name string, args ...string
 	return command
 }
 
-func threePortExecute(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
+func threePortExecute(test *testing.T, callerContext context.Context, name string, commandArguments ...string) []byte {
 	test.Helper()
-	output, stderr, captureError := childguard.Capture(callerContext, threePortCommand(callerContext, name, args...))
+	output, stderr, captureError := childguard.Capture(
+		callerContext,
+		threePortCommand(callerContext, name, commandArguments...),
+	)
 	if callerContext.Err() != nil {
 		test.Fatalf("cooked: %s exceeded leaf's 90s deadline", test.Name())
 	}
 	if captureError != nil || len(stderr) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, captureError, stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, captureError, stderr)
 	}
 	return output
 }

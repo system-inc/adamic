@@ -218,7 +218,7 @@ func (regexpCompiler *compiler) node(node Node, flags Flags, dir int) error {
 		regexpCompiler.emit(base)
 	case *Dot:
 		base.op = opSet
-		base.set = characterSet{ranges: []RuneRange{{0, maxCharacter(flags)}}}
+		base.set = characterSet{ranges: []RuneRange{{0, maximumCharacter(flags)}}}
 		if !flags.DotAll {
 			base.set.ranges = subtractRanges(base.set.ranges, []RuneRange{{10, 10}, {13, 13}, {0x2028, 0x2029}})
 		}
@@ -271,7 +271,7 @@ func (regexpCompiler *compiler) node(node Node, flags Flags, dir int) error {
 		regexpCompiler.p.repeats++
 		regexpCompiler.emit(instruction{op: opRepeatInit, x: id})
 		choice := regexpCompiler.emit(
-			instruction{op: opRepeat, x: id, min: typed.Min, max: typed.Max, greedy: typed.Greedy},
+			instruction{op: opRepeat, x: id, min: typed.Min, max: typed.Maximum, greedy: typed.Greedy},
 		)
 		var collect func(Node)
 		collect = func(node Node) {
@@ -309,7 +309,7 @@ func boolInt(b bool) int {
 	return 0
 }
 func unicodeMode(flags Flags) bool { return flags.Unicode || flags.UnicodeSets }
-func maxCharacter(flags Flags) rune {
+func maximumCharacter(flags Flags) rune {
 	if unicodeMode(flags) {
 		return 0x10ffff
 	}

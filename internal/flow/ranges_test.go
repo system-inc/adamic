@@ -88,7 +88,7 @@ func valuesBefore(graph *Function) map[InstructionId]map[DeclarationId]Identifie
 	for _, block := range graph.Blocks {
 		current := map[DeclarationId]IdentifierId{}
 		if block.Id == graph.Entry {
-			for _, parameter := range graph.Params {
+			for _, parameter := range graph.Parameters {
 				current[graph.Identifiers[parameter.Identifier].Declaration] = parameter.Identifier
 			}
 		}

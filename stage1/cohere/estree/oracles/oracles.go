@@ -488,8 +488,8 @@ func casesToInputs(cases []ComparisonInput) [][]string {
 	return result
 }
 
-func miscReferenceCommand(test *testing.T, oracle string, args ...string) ([]byte, error) {
-	command := toolchain.CommandContextIn(test.Context(), "", oracle, args...)
+func miscReferenceCommand(test *testing.T, oracle string, commandArguments ...string) ([]byte, error) {
+	command := toolchain.CommandContextIn(test.Context(), "", oracle, commandArguments...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	var stdout bytes.Buffer
@@ -497,7 +497,7 @@ func miscReferenceCommand(test *testing.T, oracle string, args ...string) ([]byt
 	runError := childguard.Run(command, childguard.Options{Unbounded: true})
 	output := stdout.Bytes()
 	if runError != nil || stderr.Len() != 0 {
-		return nil, fmt.Errorf("oracle %v: %v\n%s", args, runError, &stderr)
+		return nil, fmt.Errorf("oracle %v: %v\n%s", commandArguments, runError, &stderr)
 	}
 	return output, nil
 }
@@ -556,11 +556,11 @@ func CachedRecoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
 		); writeError != nil {
 			return writeError
 		}
-		args := []string{mode, "manifest"}
+		commandArguments := []string{mode, "manifest"}
 		if mode == "--audit" {
-			args = append(args, "answers")
+			commandArguments = append(commandArguments, "answers")
 		}
-		command := toolchain.CommandContextIn(test.Context(), "", oracle, args...)
+		command := toolchain.CommandContextIn(test.Context(), "", oracle, commandArguments...)
 		command.Dir = work
 		var stderr strings.Builder
 		command.Stderr = &stderr

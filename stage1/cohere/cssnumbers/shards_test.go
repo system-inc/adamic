@@ -324,7 +324,7 @@ func buildNumbersNative(test *testing.T, name string, program numbersProgram, sa
 
 func prepareNumbersMutant(test *testing.T, mutation numbersMutation) string {
 	test.Helper()
-	parent := numbersTopTempDir(test)
+	parent := numbersTopTempDirectory(test)
 	scratch := filepath.Join(parent, "cssnumbers")
 	if createDirectoryError := os.Mkdir(scratch, 0755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
@@ -368,16 +368,21 @@ func numbersSanitizerEnvironment(leak bool) []string {
 	return []string{"ASAN_OPTIONS=detect_leaks=0"}
 }
 
-func numbersLeaks(test *testing.T, sanitized, unsanitized string, args ...string) {
+func numbersLeaks(test *testing.T, sanitized, unsanitized string, commandArguments ...string) {
 	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		run := numbersExecute(test, numbersSanitizerEnvironment(true), sanitized, args...)
+		run := numbersExecute(test, numbersSanitizerEnvironment(true), sanitized, commandArguments...)
 		if run.exitCode != 0 {
 			test.Fatalf("leaks: exit %d\n%s", run.exitCode, run.stderr)
 		}
 	case "darwin":
-		run := numbersExecute(test, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		run := numbersExecute(
+			test,
+			nil,
+			"leaks",
+			append([]string{"--atExit", "--", unsanitized}, commandArguments...)...,
+		)
 		if run.exitCode != 0 {
 			test.Fatalf("leaks: %s", run.stdout)
 		}

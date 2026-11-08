@@ -59,7 +59,7 @@ func TestShardCommandScope(test *testing.T) {
 	test.Parallel()
 	dir, sha, _, compiler := commandFixture(test)
 	for _, selector := range [][]string{{"--corpus-filter", "diff"}, {"--shard", "1/3"}} {
-		args := []string{
+		commandArguments := []string{
 			"--base",
 			sha,
 			"--head",
@@ -72,7 +72,7 @@ func TestShardCommandScope(test *testing.T) {
 			filepath.Join(dir, "manifest.json"),
 			"--json",
 		}
-		observation := invokeCommand(test, dir, append(args, selector...)...)
+		observation := invokeCommand(test, dir, append(commandArguments, selector...)...)
 		var report report
 		if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
 			test.Fatal(decodeError, observation.Stderr)

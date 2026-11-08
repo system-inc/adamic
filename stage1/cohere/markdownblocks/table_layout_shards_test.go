@@ -629,8 +629,8 @@ func tableLayoutChecks(
 			test.Fatal(absolutePathError)
 		}
 		for _, side := range []struct {
-			name, command string
-			args          []string
+			name, command    string
+			commandArguments []string
 		}{
 			{"Go document layout", goLayout, []string{canonicalCases}},
 			{"native block/layout component", fast, []string{nativeCases}},
@@ -644,7 +644,12 @@ func tableLayoutChecks(
 			var elapsed time.Duration
 			for round := 0; round < 3; round++ {
 				start := time.Now()
-				result, tableLayoutExecuteError := tableLayoutExecute(callerContext, nil, side.command, side.args...)
+				result, tableLayoutExecuteError := tableLayoutExecute(
+					callerContext,
+					nil,
+					side.command,
+					side.commandArguments...,
+				)
 				if tableLayoutExecuteError != nil {
 					test.Fatal(tableLayoutExecuteError)
 				}

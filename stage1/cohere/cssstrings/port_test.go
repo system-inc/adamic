@@ -104,7 +104,7 @@ func prepareCssStringsSetup(test *testing.T) {
 			test.Fatalf("enumerated %d shards, declared %d", len(units), testCssStringsShards)
 		}
 		verifyStringsUnion(test, corpus, units)
-		dir := stringsTopTempDir(test)
+		dir := stringsTopTempDirectory(test)
 		cases := filepath.Join(dir, "cases.txt")
 		write(test, cases, stringsInput(corpus.texts))
 		if keep := os.Getenv("ADAMIC_CSSSTRINGS_KEEP"); keep != "" {
@@ -185,10 +185,10 @@ func prepareCssStringsSetup(test *testing.T) {
 				text := corpus.raw[unit.lo]
 				write(test, path, []byte(text))
 				for _, single := range []bool{false, true} {
-					args := []string{path}
+					commandArguments := []string{path}
 					pref := "d"
 					if single {
-						args = append(args, "--single")
+						commandArguments = append(commandArguments, "--single")
 						pref = "s"
 					}
 					singleCase := filepath.Join(test.TempDir(), "single.txt")
@@ -199,8 +199,8 @@ func prepareCssStringsSetup(test *testing.T) {
 						strings.TrimSuffix(string(expected.stdout), "\n"),
 					)
 					for _, run := range []run{
-						stringsExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...),
-						stringsOnNode(test, main, args...),
+						stringsExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, commandArguments...),
+						stringsOnNode(test, main, commandArguments...),
 					} {
 						clean(test, "raw", run)
 						equal(test, "raw "+pref, run.stdout, []byte(decoded))
@@ -237,27 +237,27 @@ func prepareCssStringsSetup(test *testing.T) {
 				clean(test, "Go", want)
 				side := unit.side
 				command := goBinary
-				args := []string{cases}
+				commandArguments := []string{cases}
 				switch side {
 				case "native":
 					command = fast
-					args = []string{"--batch", cases}
+					commandArguments = []string{"--batch", cases}
 				case "Node":
 					runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 					command = "node"
-					args = []string{"--disable-warning=ExperimentalWarning", runner, main, "--batch", cases}
+					commandArguments = []string{"--disable-warning=ExperimentalWarning", runner, main, "--batch", cases}
 				case "Prettier":
 					if library == "" {
 						test.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
 						return
 					}
 					command = "node"
-					args = []string{script, library, cases}
+					commandArguments = []string{script, library, cases}
 				}
 				var elapsed time.Duration
 				for round := 0; round < 3; round++ {
 					start := time.Now()
-					answer := stringsExecute(test, nil, command, args...)
+					answer := stringsExecute(test, nil, command, commandArguments...)
 					elapsed += time.Since(start)
 					clean(test, side, answer)
 					equal(test, side, answer.stdout, want.stdout)

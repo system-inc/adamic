@@ -594,11 +594,15 @@ int main(int argc,char **argv) {
 		}
 		for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
 			timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-			args := append(
+			commandArguments := append(
 				[]string{"--disable-warning=ExperimentalWarning", "../../oracle/wasi.mjs", wasm},
 				arguments...,
 			)
-			output, combinedOutputError := exec.CommandContext(timeoutContext, "node", args...).CombinedOutput()
+			output, combinedOutputError := exec.CommandContext(
+				timeoutContext,
+				"node",
+				commandArguments...,
+			).CombinedOutput()
 			cancel()
 			if combinedOutputError != nil || !bytes.Contains(output, []byte("0 disagreements")) {
 				test.Fatalf("wasm32 regex oracle (%v): %v\n%s", arguments, combinedOutputError, output)

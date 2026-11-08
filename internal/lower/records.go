@@ -480,9 +480,9 @@ func (lowering *lowering) recordObjectCall(node *ast.Node, name string) (ir.Expr
 func (lowering *lowering) recordObjectCallArguments(
 	node *ast.Node,
 	name string,
-	args []*ast.Node,
+	arguments []*ast.Node,
 ) (ir.Expression, bool, error) {
-	if len(args) == 0 || lowering.recordElement(lowering.checker.GetTypeAtLocation(args[0])) == nil {
+	if len(arguments) == 0 || lowering.recordElement(lowering.checker.GetTypeAtLocation(arguments[0])) == nil {
 		return nil, false, nil
 	}
 	if name != "keys" && name != "values" && name != "entries" && name != "hasOwn" {
@@ -501,7 +501,7 @@ func (lowering *lowering) recordObjectCallArguments(
 	}
 	// A Pick holds the whole record, so its values include fields it doesn't name, held otherwise.
 	if (name == "values" || name == "entries") &&
-		lowering.pickedRecordBase(lowering.checker.GetTypeAtLocation(args[0])) != nil {
+		lowering.pickedRecordBase(lowering.checker.GetTypeAtLocation(arguments[0])) != nil {
 		return nil, true, lowering.notYet(
 			node,
 			"Object."+name+" on a Pick of a record, which holds fields the Pick doesn't name",
@@ -511,20 +511,20 @@ func (lowering *lowering) recordObjectCallArguments(
 	if name == "hasOwn" {
 		count = 2
 	}
-	if len(args) != count {
+	if len(arguments) != count {
 		return nil, true, lowering.notYet(node, "record Object operation argument count")
 	}
-	of, recordSlotError := lowering.recordSlot(args[0])
+	of, recordSlotError := lowering.recordSlot(arguments[0])
 	if recordSlotError != nil {
 		return nil, true, recordSlotError
 	}
-	expression, expressionError := lowering.expression(args[0])
+	expression, expressionError := lowering.expression(arguments[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	result := ir.RecordCall{Method: name, Arguments: []ir.Expression{expression}, Element: of, Returns: ir.Array}
 	if name == "hasOwn" {
-		expression, recordKeyError := lowering.recordKey(args[1], false)
+		expression, recordKeyError := lowering.recordKey(arguments[1], false)
 		if recordKeyError != nil {
 			return nil, true, recordKeyError
 		}

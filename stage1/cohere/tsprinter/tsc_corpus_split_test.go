@@ -215,7 +215,7 @@ func tscAgreementRun(test *testing.T, number int) {
 		)
 	}
 	test.Logf("family %s: %d fragments", family.Name, len(shard.Indices))
-	args := []string{"--cases", shard.Text, "80"}
+	commandArguments := []string{"--cases", shard.Text, "80"}
 	var report []map[string]string
 	check := func(name string, result oracles.Run) {
 		if expressionDisagreementError := expressionDisagreement(
@@ -249,12 +249,18 @@ func tscAgreementRun(test *testing.T, number int) {
 			}
 		}
 	}
-	check("Node", node(products.source, args...))
+	check("Node", node(products.source, commandArguments...))
 	check(
 		"native",
-		tscAgreementExecute(test, timeoutContext, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, args...),
+		tscAgreementExecute(
+			test,
+			timeoutContext,
+			[]string{"ASAN_OPTIONS=detect_leaks=0"},
+			products.sanitized,
+			commandArguments...,
+		),
 	)
-	check("backend", node(products.backend, args...))
+	check("backend", node(products.backend, commandArguments...))
 	switch runtime.GOOS {
 	case "linux":
 		if expressionDisagreementError := expressionDisagreement(
@@ -266,7 +272,7 @@ func tscAgreementRun(test *testing.T, number int) {
 				timeoutContext,
 				[]string{"ASAN_OPTIONS=detect_leaks=1"},
 				products.sanitized,
-				args...,
+				commandArguments...,
 			),
 		); expressionDisagreementError != nil {
 			test.Errorf("leaks: %v", expressionDisagreementError)
@@ -277,7 +283,7 @@ func tscAgreementRun(test *testing.T, number int) {
 			timeoutContext,
 			nil,
 			"leaks",
-			append([]string{"--atExit", "--", products.release}, args...)...,
+			append([]string{"--atExit", "--", products.release}, commandArguments...)...,
 		)
 		if result.ExitCode != 0 {
 			test.Errorf("leaks: exit %d stdout %s stderr %s", result.ExitCode, result.Stdout, result.Stderr)

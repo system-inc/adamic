@@ -73,11 +73,11 @@ func performance(test *testing.T, whole bool) {
 		run  func() execution
 	}{
 		{"Go", func() execution {
-			args := []string{"--manifest", manifest, "--count"}
+			commandArguments := []string{"--manifest", manifest, "--count"}
 			if whole {
-				args = append(args, "--whole")
+				commandArguments = append(commandArguments, "--whole")
 			}
-			return execute(test, "", oracle, args...)
+			return execute(test, "", oracle, commandArguments...)
 		}},
 		{"Node", func() execution {
 			if whole {
@@ -86,11 +86,11 @@ func performance(test *testing.T, whole bool) {
 			return node(test, directory, manifest, true)
 		}},
 		{"native", func() execution {
-			args := []string{"--manifest", manifest, "--count"}
+			commandArguments := []string{"--manifest", manifest, "--count"}
 			if whole {
-				args = append(args, "--whole")
+				commandArguments = append(commandArguments, "--whole")
 			}
-			return execute(test, "", binary, args...)
+			return execute(test, "", binary, commandArguments...)
 		}},
 	}
 	var want []byte

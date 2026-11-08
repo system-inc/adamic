@@ -68,9 +68,9 @@ func TestClobberedPlaceholderReadsCoveredAtCaller(test *testing.T) {
 					transfer := callee.summarize(callee.state)
 					leakedParameter := false
 					for _, leaked := range transfer.leaks {
-						want := term{param: 0}
+						want := term{parameter: 0}
 						if access == "descendant back link" {
-							want = term{param: 0, field: "child", level: 1}
+							want = term{parameter: 0, field: "child", level: 1}
 						}
 						leakedParameter = leakedParameter || leaked == want
 					}
@@ -204,9 +204,9 @@ func clobberedReadAnalysis() (*analysis, value, value) {
 		function: 0, state: newState(), placeholders: true,
 		termObjects: map[term]object{}, deferred: map[writeKey]*deferral{}, returnedLocal: 3,
 	}
-	parameter := value{strong: objects{analysis.placeholder(term{param: 0}): true}}
-	holder := value{strong: objects{analysis.placeholder(term{param: 1}): true}}
-	callback := value{strong: objects{analysis.placeholder(term{param: 2}): true}}
+	parameter := value{strong: objects{analysis.placeholder(term{parameter: 0}): true}}
+	holder := value{strong: objects{analysis.placeholder(term{parameter: 1}): true}}
+	callback := value{strong: objects{analysis.placeholder(term{parameter: 2}): true}}
 	analysis.state.locals[0], analysis.state.locals[1], analysis.state.locals[2] = parameter, holder, callback
 	return analysis, parameter, holder
 }

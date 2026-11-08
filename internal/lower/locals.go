@@ -10,7 +10,7 @@ import (
 
 // variables lowers const and let declarations, each to a local of its own.
 func (lowering *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
-	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) && !namespaceVariable(list) {
+	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVariableList(list) && !namespaceVariable(list) {
 		return nil, &Refused{Where: lowering.program.Where(list), What: "var", Fix: "use const or let"}
 	}
 	statements := []ir.Statement{}

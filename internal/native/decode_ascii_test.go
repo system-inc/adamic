@@ -29,12 +29,12 @@ func runDecodeASCIIUnit(test *testing.T, target string, index int) {
 	defer checkGrainBudget(test)()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
-	run := func(test *testing.T, name string, args ...string) []byte {
+	run := func(test *testing.T, name string, commandArguments ...string) []byte {
 		test.Helper()
-		command := programCommand(timeoutContext, repository, name, args...)
+		command := programCommand(timeoutContext, repository, name, commandArguments...)
 		output, combinedOutputError := command.CombinedOutput()
 		if combinedOutputError != nil {
-			test.Fatalf("%s %v: %v\n%s", name, args, combinedOutputError, output)
+			test.Fatalf("%s %v: %v\n%s", name, commandArguments, combinedOutputError, output)
 		}
 		return output
 	}

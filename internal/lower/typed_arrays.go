@@ -228,22 +228,22 @@ func (lowering *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, b
 			return nil, true, optionalCallError
 		}
 		method := callee.Name().Text()
-		args := call.Arguments.Nodes
+		arguments := call.Arguments.Nodes
 		switch method {
 		case "sort":
-			if len(args) != 0 {
+			if len(arguments) != 0 {
 				return nil, true, lowering.notYet(node, "typed array sort with a comparator")
 			}
 		case "fill":
-			if len(args) < 1 || len(args) > 3 {
+			if len(arguments) < 1 || len(arguments) > 3 {
 				return nil, true, lowering.notYet(node, "typed array fill argument count")
 			}
 		case "set":
-			if len(args) < 1 || len(args) > 2 {
+			if len(arguments) < 1 || len(arguments) > 2 {
 				return nil, true, lowering.notYet(node, "typed array set argument count")
 			}
 		case "subarray":
-			if len(args) > 2 {
+			if len(arguments) > 2 {
 				return nil, true, lowering.notYet(node, "typed array subarray argument count")
 			}
 		default:
@@ -254,7 +254,7 @@ func (lowering *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, b
 			return nil, true, expressionError
 		}
 		lowered := []ir.Expression{}
-		for index, argument := range args {
+		for index, argument := range arguments {
 			value, expressionError := lowering.expression(argument)
 			if expressionError != nil {
 				return nil, true, expressionError

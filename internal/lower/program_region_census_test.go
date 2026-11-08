@@ -377,7 +377,7 @@ func programCensusTypeLabel(label string) string {
 		}
 		inside := label[start+1 : end-1]
 		// Normalize each argument; commas in nested generics must stay nested.
-		args, begin, nesting := []string{}, 0, 0
+		commandArguments, begin, nesting := []string{}, 0, 0
 		for index, character := range inside {
 			switch character {
 			case '<', '(', '[', '{':
@@ -388,13 +388,13 @@ func programCensusTypeLabel(label string) string {
 				}
 			case ',':
 				if nesting == 0 {
-					args = append(args, programCensusTypeLabel(inside[begin:index]))
+					commandArguments = append(commandArguments, programCensusTypeLabel(inside[begin:index]))
 					begin = index + 1
 				}
 			}
 		}
-		args = append(args, programCensusTypeLabel(inside[begin:]))
-		replacement := "<" + strings.Join(args, ",") + ">"
+		commandArguments = append(commandArguments, programCensusTypeLabel(inside[begin:]))
+		replacement := "<" + strings.Join(commandArguments, ",") + ">"
 		label = label[:start] + replacement + label[end:]
 		start += len(replacement) - 1
 	}

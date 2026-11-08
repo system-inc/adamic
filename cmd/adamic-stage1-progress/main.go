@@ -49,7 +49,7 @@ type sliceRow struct {
 	GapSummary string `json:"gap_summary"`
 }
 type report struct {
-	Ref        string       `json:"ref"`
+	Reference  string       `json:"ref"`
 	Commit     string       `json:"commit"`
 	Cohere     string       `json:"cohere_commit"`
 	Packages   []packageRow `json:"packages"`
@@ -70,11 +70,11 @@ type inventory struct {
 	packages map[string]int
 }
 
-func git(root string, args ...string) ([]byte, error) {
-	command := toolchain.GitCommand(append([]string{"-C", root}, args...)...)
+func git(root string, commandArguments ...string) ([]byte, error) {
+	command := toolchain.GitCommand(append([]string{"-C", root}, commandArguments...)...)
 	output, err := command.Output()
 	if err != nil {
-		return nil, fmt.Errorf("git %s: %w", strings.Join(args, " "), err)
+		return nil, fmt.Errorf("git %s: %w", strings.Join(commandArguments, " "), err)
 	}
 	return output, nil
 }
@@ -233,11 +233,11 @@ func measure(root, reference string, cache map[string]*inventory) (*report, erro
 		}
 	}
 	result := &report{
-		Ref:     reference,
-		Commit:  strings.TrimSpace(string(commit)),
-		Cohere:  pin,
-		marks:   map[string]map[int]bool{},
-		partial: map[string]bool{},
+		Reference: reference,
+		Commit:    strings.TrimSpace(string(commit)),
+		Cohere:    pin,
+		marks:     map[string]map[int]bool{},
+		partial:   map[string]bool{},
 	}
 	evidence := map[string][]string{}
 	known := map[string]bool{}
@@ -370,11 +370,11 @@ func finish(result *report) {
 func union(reports []*report) (*report, error) {
 	first := reports[0]
 	result := &report{
-		Ref:     "main + pending evidence union (not a merge)",
-		Commit:  first.Commit,
-		Cohere:  first.Cohere,
-		marks:   map[string]map[int]bool{},
-		partial: map[string]bool{},
+		Reference: "main + pending evidence union (not a merge)",
+		Commit:    first.Commit,
+		Cohere:    first.Cohere,
+		marks:     map[string]map[int]bool{},
+		partial:   map[string]bool{},
 	}
 	rows := map[string]*packageRow{}
 	for _, report := range reports {
@@ -401,7 +401,7 @@ func union(reports []*report) (*report, error) {
 				rows[row.Package] = saved
 			}
 			for _, evidence := range row.Evidence {
-				saved.Evidence = appendUnique(saved.Evidence, report.Ref+":"+evidence)
+				saved.Evidence = appendUnique(saved.Evidence, report.Reference+":"+evidence)
 			}
 		}
 	}
@@ -519,7 +519,7 @@ func main() {
 		return
 	}
 	for _, report := range reports {
-		fmt.Printf("\n%s %s | cohere %s\n", report.Ref, report.Commit, report.Cohere)
+		fmt.Printf("\n%s %s | cohere %s\n", report.Reference, report.Commit, report.Cohere)
 		writer := tabwriter.NewWriter(os.Stdout, 0, 4, 2, ' ', 0)
 		fmt.Fprintln(writer, "GO LINES\tPORTED\tSTATUS\tPACKAGE\tEVIDENCE")
 		for _, row := range report.Packages {

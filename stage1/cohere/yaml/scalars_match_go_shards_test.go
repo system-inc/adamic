@@ -53,10 +53,10 @@ func scalarsMatchGoRun(
 	callerContext context.Context,
 	environment []string,
 	name string,
-	args ...string,
+	commandArguments ...string,
 ) []byte {
 	test.Helper()
-	command := exec.CommandContext(callerContext, name, args...)
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.Env = append(os.Environ(), environment...)
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment plus the
@@ -66,7 +66,7 @@ func scalarsMatchGoRun(
 		if path, pathError := toolchain.Path(name); pathError != nil {
 			command.Err = pathError
 		} else {
-			command = exec.CommandContext(callerContext, path, args...)
+			command = exec.CommandContext(callerContext, path, commandArguments...)
 			command.Env = toolchain.Env(environment...)
 		}
 	}
@@ -115,16 +115,16 @@ func scalarsMatchGoRunShard(test *testing.T, shard int) {
 	expected := scalarsMatchGoRun(test, timeoutContext, nil, oracle, path)
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {
-		name    string
-		env     []string
-		command string
-		args    []string
+		name             string
+		env              []string
+		command          string
+		commandArguments []string
 	}{
 		{"native ASan/UBSan/LSan", []string{"ASAN_OPTIONS=detect_leaks=1"}, compiled, []string{path}},
 		{"Node", nil, "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, path}},
 		{"emitted JavaScript", nil, "node", []string{"--disable-warning=ExperimentalWarning", runner, emitted, path}},
 	} {
-		actual := scalarsMatchGoRun(test, timeoutContext, side.env, side.command, side.args...)
+		actual := scalarsMatchGoRun(test, timeoutContext, side.env, side.command, side.commandArguments...)
 		if side.name == "native ASan/UBSan/LSan" && os.Getenv("ADAMIC_YAML_SCALARS_PLANT") == "1" {
 			for _, index := range indices {
 				if index == 0 {

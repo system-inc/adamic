@@ -265,7 +265,7 @@ func columnsLifecycleRun(test *testing.T, products, node, fixture, mutant string
 	if mutant != "" {
 		binary = filepath.Join(products, mutant)
 	}
-	args := []string{
+	commandArguments := []string{
 		script,
 		"--node",
 		node,
@@ -281,17 +281,17 @@ func columnsLifecycleRun(test *testing.T, products, node, fixture, mutant string
 	if fixture == "ResolvedAwaitResize" {
 		if mutant == "" {
 			binary = filepath.Join(products, "resolved-await")
-			args[4] = binary
+			commandArguments[4] = binary
 		}
-		args = append(
-			args,
+		commandArguments = append(
+			commandArguments,
 			"--source",
 			filepath.Join(repository, "internal/oracle/testdata/stdout_columns/resolved_await.a"),
 			"--javascript",
 			filepath.Join(products, "resolved-await.mjs"),
 		)
 	}
-	_, command := bounded(test, "python3", args...)
+	_, command := bounded(test, "python3", commandArguments...)
 	var output strings.Builder
 	command.Stdout = &output
 	command.Stderr = &output

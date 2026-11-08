@@ -141,7 +141,7 @@ func foldSet(set characterSet, flags Flags) characterSet {
 	return set
 }
 func negateSet(set characterSet, flags Flags) characterSet {
-	universe := characterSet{ranges: []RuneRange{{0, maxCharacter(flags)}}}
+	universe := characterSet{ranges: []RuneRange{{0, maximumCharacter(flags)}}}
 	if flags.UnicodeSets {
 		universe = foldSet(universe, flags)
 	}
@@ -208,7 +208,7 @@ func compileCharacter(character *Character, flags Flags, provider PropertyProvid
 		set = foldSet(set, flags)
 		if character.Raw[1] >= 'A' &&
 			character.Raw[1] <= 'Z' { // Complements are of the canonical character domain in both modes.
-			universe := foldSet(characterSet{ranges: []RuneRange{{0, maxCharacter(flags)}}}, flags)
+			universe := foldSet(characterSet{ranges: []RuneRange{{0, maximumCharacter(flags)}}}, flags)
 			set.ranges = subtractRanges(universe.ranges, set.ranges)
 		}
 		return set, nil

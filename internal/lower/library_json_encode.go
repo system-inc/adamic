@@ -36,23 +36,23 @@ func (lowering *lowering) encodeJson(node *ast.Node) (ir.Expression, bool, error
 			)
 		}
 	}
-	args := node.AsCallExpression().Arguments.Nodes
-	if len(args) != 1 || hasSpread(node) {
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) != 1 || hasSpread(node) {
 		return nil, true, lowering.notYet(node, "encodeJson requires one value argument")
 	}
 	// Reuse Object.keys/entries' descriptor guard before native slot reads.
 	if enumerationDescriptorsError := lowering.enumerationDescriptors(node, false); enumerationDescriptorsError != nil {
 		return nil, true, enumerationDescriptorsError
 	}
-	value, expressionError := lowering.expression(args[0])
+	value, expressionError := lowering.expression(arguments[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	// It reads every field of the value and of what it holds by the schema, raw (view_reads.go).
 	lowering.wholeObjectCopies = append(lowering.wholeObjectCopies, wholeObjectCopy{
-		node:   args[0],
+		node:   arguments[0],
 		source: value,
-		copied: lowering.concrete(lowering.checker.GetTypeAtLocation(args[0])),
+		copied: lowering.concrete(lowering.checker.GetTypeAtLocation(arguments[0])),
 		reader: "encodeJson",
 	})
 	return ir.JSONEncode{Value: fit(value, schema.Nodes[schema.Root].Of), Schema: schema}, true, nil

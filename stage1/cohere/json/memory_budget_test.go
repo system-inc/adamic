@@ -61,7 +61,7 @@ func jsonSanitizedMemory() (*jsonMemoryBudget, error) {
 // shard's sanitizer run until its 90 s deadline passed (#q2qjes8: _0760, from 2.1 s to 92.1 s). Here a caller that
 // finds anyone queued queues behind them, and release hands room to the head of the queue only.
 type jsonMemoryBudget struct {
-	mu       sync.Mutex
+	mutex    sync.Mutex
 	capacity int
 	used     int
 	waiting  []jsonMemoryWaiter
@@ -79,22 +79,22 @@ func newJsonMemoryBudget(capacity int) *jsonMemoryBudget {
 // acquire returns once weight is admitted, and how long the caller waited for it.
 func (budget *jsonMemoryBudget) acquire(weight int) time.Duration {
 	began := time.Now()
-	budget.mu.Lock()
+	budget.mutex.Lock()
 	if len(budget.waiting) == 0 && budget.used+weight <= budget.capacity {
 		budget.used += weight
-		budget.mu.Unlock()
+		budget.mutex.Unlock()
 		return time.Since(began)
 	}
 	waiter := jsonMemoryWaiter{weight, make(chan struct{})}
 	budget.waiting = append(budget.waiting, waiter)
-	budget.mu.Unlock()
+	budget.mutex.Unlock()
 	<-waiter.admitted
 	return time.Since(began)
 }
 
 func (budget *jsonMemoryBudget) release(weight int) {
-	budget.mu.Lock()
-	defer budget.mu.Unlock()
+	budget.mutex.Lock()
+	defer budget.mutex.Unlock()
 	budget.used -= weight
 	for len(budget.waiting) > 0 && budget.used+budget.waiting[0].weight <= budget.capacity {
 		budget.used += budget.waiting[0].weight
@@ -117,9 +117,9 @@ func TestJsonMemoryBudgetAdmitsInArrivalOrder(test *testing.T) {
 		budget.release(jsonMemorySanitizedWeight)
 	}()
 	for queued := false; !queued; {
-		budget.mu.Lock()
+		budget.mutex.Lock()
 		queued = len(budget.waiting) == 1
-		budget.mu.Unlock()
+		budget.mutex.Unlock()
 		if !queued {
 			time.Sleep(time.Millisecond)
 		}

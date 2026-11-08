@@ -10,8 +10,8 @@ import (
 
 // A compiler can spawn clang or other compiler children. Cancel the whole
 // process group at the context deadline on both Linux and macOS.
-func volumeProfileCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(callerContext, name, args...)
+func volumeProfileCommand(callerContext context.Context, name string, commandArguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {

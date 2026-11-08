@@ -63,11 +63,11 @@ func (store *fakeStore) put(test *testing.T, key string, files map[string]string
 			manifestFile{Path: name, Sha256: store.blob([]byte(content)), Size: int64(len(content)), Mode: 0o644},
 		)
 	}
-	store.ref(test, key, product)
+	store.reference(test, key, product)
 	return product
 }
 
-func (store *fakeStore) ref(test *testing.T, key string, product manifest) {
+func (store *fakeStore) reference(test *testing.T, key string, product manifest) {
 	test.Helper()
 	encoded, encodeError := json.Marshal(product)
 	if encodeError != nil {
@@ -148,17 +148,17 @@ func TestAStoredProductThatDoesntCheckIsPoisoning(test *testing.T) {
 		"a manifest for another key": func(test *testing.T, store *fakeStore, key string) {
 			product := store.put(test, key, map[string]string{"bin/checker": "the checker"})
 			product.Key = strings.Repeat("0", 64)
-			store.ref(test, key, product)
+			store.reference(test, key, product)
 		},
 		"a path outside the product": func(test *testing.T, store *fakeStore, key string) {
 			product := store.put(test, key, map[string]string{"bin/checker": "the checker"})
 			product.Files[0].Path = "../escape"
-			store.ref(test, key, product)
+			store.reference(test, key, product)
 		},
 		"a size that isn't the blob's": func(test *testing.T, store *fakeStore, key string) {
 			product := store.put(test, key, map[string]string{"bin/checker": "the checker"})
 			product.Files[0].Size++
-			store.ref(test, key, product)
+			store.reference(test, key, product)
 		},
 		"a ref naming a missing manifest": func(test *testing.T, store *fakeStore, key string) {
 			store.objects["/refs/build/"+key] = []byte(strings.Repeat("a", 64))

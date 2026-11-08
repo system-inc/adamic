@@ -102,18 +102,18 @@ type report struct {
 	BudgetUsedSeconds     float64            `json:"budget_used_seconds"`
 }
 
-func execute(dir string, limit time.Duration, name string, args ...string) observation {
+func execute(dir string, limit time.Duration, name string, commandArguments ...string) observation {
 	timeoutContext, cancel := context.WithTimeout(context.Background(), limit)
 	defer cancel()
-	command := exec.CommandContext(timeoutContext, name, args...)
+	command := exec.CommandContext(timeoutContext, name, commandArguments...)
 	command.Dir = dir
 	if name == "git" {
-		command.Env = toolchain.GitEnv("TZ=UTC")
+		command.Env = toolchain.GitEnvironment("TZ=UTC")
 	}
 	if filepath.Base(name) == "npm" {
 		command.Env = toolchain.Env()
 	}
-	if len(args) > 0 && args[0] == "admission-lower" {
+	if len(commandArguments) > 0 && commandArguments[0] == "admission-lower" {
 		command.Env = append(os.Environ(), "GOMAXPROCS=1")
 	}
 	// Capture runs it in its own process group, kills the group when ctx ends or the command exits, and reads each
@@ -136,10 +136,10 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	}
 	return observation
 }
-func git(dir string, args ...string) (string, error) {
-	observation := execute(dir, 60*time.Second, "git", args...)
+func git(dir string, commandArguments ...string) (string, error) {
+	observation := execute(dir, 60*time.Second, "git", commandArguments...)
 	if observation.Exit != 0 || observation.Error != "" {
-		return "", fmt.Errorf("git %v: %s %s", args, observation.Error, observation.Stderr)
+		return "", fmt.Errorf("git %v: %s %s", commandArguments, observation.Error, observation.Stderr)
 	}
 	return strings.TrimSpace(observation.Stdout), nil
 }
@@ -204,7 +204,7 @@ func exitCode(runError error) int {
 	}
 	return 1
 }
-func run(args []string) error {
+func run(commandArguments []string) error {
 	flags := flag.NewFlagSet("adamic-admission-delta", flag.ContinueOnError)
 	base := flags.String("base", "", "base revision")
 	head := flags.String("head", "HEAD", "head revision")
@@ -234,7 +234,7 @@ func run(args []string) error {
 	workers := flags.Int("workers", runtime.GOMAXPROCS(0), "parallel classification workers")
 	compileLimit := flags.Duration("compile-timeout", 45*time.Second, "per-program compiler timeout")
 	givenSeed := flags.String("seed", "", "hex sampling seed, at least 8 bytes, in place of head's SHA-256")
-	if parseError := flags.Parse(args); parseError != nil {
+	if parseError := flags.Parse(commandArguments); parseError != nil {
 		return parseError
 	}
 	if *base == "" {

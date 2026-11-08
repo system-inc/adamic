@@ -490,8 +490,8 @@ func TestCssThroughput(test *testing.T) {
 	var expected string
 	for round := 0; round < 3; round++ {
 		sides := []struct {
-			name, command string
-			args          []string
+			name, command    string
+			commandArguments []string
 		}{
 			{"native", binary, []string{cases, "count", "repeat"}},
 			{"Node source", "node", []string{
@@ -505,13 +505,13 @@ func TestCssThroughput(test *testing.T) {
 		}
 		if library := os.Getenv("ADAMIC_CSS_LIBRARY"); library != "" {
 			sides = append(sides, struct {
-				name, command string
-				args          []string
+				name, command    string
+				commandArguments []string
 			}{"PostCSS Node", "node", []string{script, library, cases, "count"}})
 		}
 		for _, side := range sides {
 			started := time.Now()
-			result := execute(test, nil, side.command, side.args...)
+			result := execute(test, nil, side.command, side.commandArguments...)
 			elapsed := time.Since(started)
 			if result.exitCode != 0 || len(result.stderr) != 0 {
 				test.Fatalf("%s: exit %d, %s", side.name, result.exitCode, result.stderr)

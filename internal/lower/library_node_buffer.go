@@ -166,11 +166,13 @@ func (lowering *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int,
 func (lowering *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	args := call.Arguments.Nodes
+	arguments := call.Arguments.Nodes
 	operation, encoding, result := "", 0, ir.Array
 	var receiver *ast.Node
 	if lowering.nodeBufferSymbol(callee, "createHash") {
-		if len(args) != 1 || ast.SkipParentheses(args[0]).Kind != ast.KindStringLiteral || args[0].Text() != "sha256" {
+		if len(arguments) != 1 ||
+			ast.SkipParentheses(arguments[0]).Kind != ast.KindStringLiteral ||
+			arguments[0].Text() != "sha256" {
 			return nil, true, lowering.notYet(node, "crypto.createHash outside the census's sha256 algorithm")
 		}
 		return ir.NodeBufferCall{Function: "hash_new", Returns: ir.Object}, true, nil
@@ -185,12 +187,12 @@ func (lowering *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool
 	name := callee.Name().Text()
 	switch {
 	case lowering.nodeBufferSymbol(access.Expression, "Buffer"):
-		if name != "from" || len(args) < 1 || len(args) > 2 {
+		if name != "from" || len(arguments) < 1 || len(arguments) > 2 {
 			return nil, true, lowering.notYet(node, "Buffer."+name+" outside from(input, encoding)")
 		}
 		operation = "buffer_from"
 	case lowering.nodeBufferType(lowering.checker.GetTypeAtLocation(access.Expression), "Buffer"):
-		if name != "toString" || len(args) > 3 {
+		if name != "toString" || len(arguments) > 3 {
 			return nil, true, lowering.notYet(node, "Buffer."+name+" outside the host census")
 		}
 		operation, result, receiver = "buffer_string", ir.String, access.Expression
@@ -198,15 +200,15 @@ func (lowering *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool
 		receiver = access.Expression
 		switch name {
 		case "update":
-			if len(args) < 1 || len(args) > 2 {
+			if len(arguments) < 1 || len(arguments) > 2 {
 				return nil, true, lowering.notYet(node, "Hash.update with these arguments")
 			}
 			operation, result = "hash_update", ir.Object
 		case "digest":
-			if len(args) != 1 || args[0].Kind != ast.KindStringLiteral || args[0].Text() != "hex" {
+			if len(arguments) != 1 || arguments[0].Kind != ast.KindStringLiteral || arguments[0].Text() != "hex" {
 				return nil, true, lowering.notYet(node, "Hash.digest outside hex")
 			}
-			operation, result, args = "hash_digest", ir.String, nil
+			operation, result, arguments = "hash_digest", ir.String, nil
 		default:
 			return nil, true, lowering.notYet(node, "Hash."+name+" outside the host census")
 		}
@@ -218,11 +220,11 @@ func (lowering *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool
 	}
 	var encodingNode *ast.Node
 	if operation == "buffer_string" {
-		if len(args) > 0 {
-			encodingNode = args[0]
+		if len(arguments) > 0 {
+			encodingNode = arguments[0]
 		}
-	} else if len(args) > 1 {
-		encodingNode = args[1]
+	} else if len(arguments) > 1 {
+		encodingNode = arguments[1]
 	}
 	var nodeBufferEncodingError error
 	if encoding, nodeBufferEncodingError = lowering.nodeBufferEncoding(
@@ -245,29 +247,29 @@ func (lowering *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool
 			if index == 2 {
 				value = ir.NumberConstant{Value: math.Inf(1)}
 			}
-			if len(args) > index {
+			if len(arguments) > index {
 				var expressionError error
-				value, expressionError = lowering.expression(args[index])
+				value, expressionError = lowering.expression(arguments[index])
 				if expressionError != nil {
 					return nil, true, expressionError
 				}
 				if value.Type() != ir.Number {
-					return nil, true, lowering.notYet(args[index], "a non-number Buffer byte offset")
+					return nil, true, lowering.notYet(arguments[index], "a non-number Buffer byte offset")
 				}
 			}
 			values = append(values, value)
 		}
 	} else {
 		if operation != "hash_digest" {
-			value, expressionError := lowering.expression(args[0])
+			value, expressionError := lowering.expression(arguments[0])
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
 			if operation == "buffer_from" && value.Type() == ir.Array {
-				if len(args) != 1 {
+				if len(arguments) != 1 {
 					return nil, true, lowering.notYet(node, "Buffer.from(array) with an encoding")
 				}
-				element, elementTypeError := lowering.elementType(args[0])
+				element, elementTypeError := lowering.elementType(arguments[0])
 				if elementTypeError != nil {
 					return nil, true, elementTypeError
 				}

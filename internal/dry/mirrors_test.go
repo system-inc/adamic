@@ -155,8 +155,8 @@ func cohereIds(root string) (map[string]bool, error) {
 			if !ok || selector.Sel.Name != "Register" {
 				return true
 			}
-			for _, arg := range call.Args {
-				literal, ok := arg.(*ast.CompositeLit)
+			for _, argument := range call.Args {
+				literal, ok := argument.(*ast.CompositeLit)
 				if !ok {
 					continue
 				}

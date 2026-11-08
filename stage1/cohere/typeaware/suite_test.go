@@ -238,7 +238,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	// The corpus, its oracle and truth, and the 13 mutants that run over it are prepared apart from the rest of this
 	// plan, so a witness product builds without the plan's natives (sixCorpusOnce).
 	generated := sixCorpusOnce(test)
-	oracle, configuration, paths, manifest, truth := generated.oracle, generated.config, generated.paths, generated.manifest, generated.truth
+	oracle, configuration, paths, manifest, truth := generated.oracle, generated.configuration, generated.paths, generated.manifest, generated.truth
 	// Generated fixtures are fixed by cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
 	// and the explicit controls in suiteSources; contiguous ranges are stable.
 	for index, group := range sixRanges(paths, 32) {
@@ -435,7 +435,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	declarationEnd := declaration + strings.Index(costSource[declaration:], "{}") + 2
 	call := strings.Index(costSource, "\naccept(x)")
 	callEnd := call + 1 + len("accept(x)")
-	arg := call + 1 + len("accept(")
+	argument := call + 1 + len("accept(")
 	nullable := strings.Index(costSource, "\nnullable ===")
 	base := strings.Index(costSource, "\nnr + nr;")
 	cases := []struct {
@@ -451,11 +451,11 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		},
 		{"declarations", "ClassDeclaration", "declarations", declaration, declarationEnd},
 		{"signature", "CallExpression", "signature", call, callEnd},
-		{"raw-type", "Identifier", "raw-type", arg, arg + 1},
+		{"raw-type", "Identifier", "raw-type", argument, argument + 1},
 		{"nullable", "Identifier", "type", nullable, nullable + 1 + len("nullable")},
 		{"union", "Identifier", "base-type", base, base + 1 + len("nr")},
 		{"signature-shape", "CallExpression", "signature-shape", call, callEnd},
-		{"raw-shape", "Identifier", "raw-shape", arg, arg + 1},
+		{"raw-shape", "Identifier", "raw-shape", argument, argument + 1},
 		{"type-shape", "Identifier", "type-shape", nullable, nullable + 1 + len("nullable")},
 		{"options", "SourceFile", "options", 0, len(costSource)},
 	}
@@ -474,7 +474,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 					harness.t.Skip("set ADAMIC_TYPEAWARE_BENCH=1")
 				}
 				test := harness.t
-				args := []string{
+				commandArguments := []string{
 					configuration,
 					costProbe,
 					strconv.Itoa(probe.start),
@@ -483,12 +483,12 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 					probe.question,
 					"10000",
 				}
-				command := exec.Command(nativeCost(harness), args...)
+				command := exec.Command(nativeCost(harness), commandArguments...)
 				command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
 				native := harness.must(fmt.Sprintf("facts-cost-%s-%d-native", probe.name, round), command)
 				direct := harness.must(
 					fmt.Sprintf("facts-cost-%s-%d-go", probe.name, round),
-					exec.Command(directCost(harness), args...),
+					exec.Command(directCost(harness), commandArguments...),
 				)
 				if !bytes.Equal(native.stdout, direct.stdout) {
 					test.Fatalf("%s fact cost checksums differ", probe.name)
@@ -721,10 +721,10 @@ func TestFactsDecoderGuards(test *testing.T) {
 // it (#testaudit row 16, Loom's ruling (a), Oct 14). Each mutant shard runs its mutant over its witnesses, which
 // witnesses finds once for each change to anything the run reads and keeps as a product, never a hand list.
 type sixCorpus struct {
-	paths                    []string
-	oracle, config, manifest string
-	truth                    result
-	mutants                  map[string]sixMutant
+	paths                           []string
+	oracle, configuration, manifest string
+	truth                           result
+	mutants                         map[string]sixMutant
 }
 
 // sixMutant is a planted mutant over the generated corpus: how to build it and, for one that must die, how it dies.
@@ -779,12 +779,12 @@ func sixCorpusOnce(test *testing.T) *sixCorpus {
 		)
 		truth := harness.must("generated-truth", exec.Command(oracle, configuration, manifest))
 		shared.corpus = &sixCorpus{
-			paths:    paths,
-			oracle:   oracle,
-			config:   configuration,
-			manifest: manifest,
-			truth:    truth,
-			mutants:  sixMutants(harness, repository),
+			paths:         paths,
+			oracle:        oracle,
+			configuration: configuration,
+			manifest:      manifest,
+			truth:         truth,
+			mutants:       sixMutants(harness, repository),
 		}
 	})
 	if shared.corpus == nil {
@@ -920,8 +920,8 @@ func (corpus *sixCorpus) witnessRun(harness *harness, name string) (string, stri
 // caught runs a mutant the oracle must catch by output over its witnesses, against the oracle's own run over them.
 func (corpus *sixCorpus) caught(harness *harness, name, mutant, cases string) {
 	harness.t.Helper()
-	want := harness.must(name+"-witness-truth", exec.Command(corpus.oracle, corpus.config, cases))
-	got := harness.must(name+"-run", exec.Command(mutant, corpus.config, cases))
+	want := harness.must(name+"-witness-truth", exec.Command(corpus.oracle, corpus.configuration, cases))
+	got := harness.must(name+"-run", exec.Command(mutant, corpus.configuration, cases))
 	if len(got.stderr) != 0 || bytes.Equal(got.stdout, want.stdout) {
 		harness.t.Fatalf("%s not caught by oracle alone", name)
 	}
@@ -945,7 +945,7 @@ const sixDyingWitnesses = 8
 // first sixDyingWitnesses it dies on. An empty set fails: a mutant no case catches guards nothing.
 func (corpus *sixCorpus) witnesses(harness *harness, name string, mutant func() string) []string {
 	harness.t.Helper()
-	paths, configuration, manifest, truth, dies := corpus.paths, corpus.config, corpus.manifest, corpus.truth, corpus.mutants[name].dies
+	paths, configuration, manifest, truth, dies := corpus.paths, corpus.configuration, corpus.manifest, corpus.truth, corpus.mutants[name].dies
 	record, cachedTypeAwareProductError := cachedTypeAwareProduct("six witnesses "+
 		name, func(directory string) (string, error) {
 		binary := mutant()

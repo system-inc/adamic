@@ -134,17 +134,17 @@ func TestMutantsReactJsxNoCommentTextnodesUnion(test *testing.T) {
 	}
 	functions := map[int]bool{}
 	for _, decl := range file.Decls {
-		fn, ok := decl.(*ast.FuncDecl)
+		function, ok := decl.(*ast.FuncDecl)
 		if !ok {
 			continue
 		}
-		suffix, ok := strings.CutPrefix(fn.Name.Name, "TestMutantsReactJsxNoCommentTextnodes_")
+		suffix, ok := strings.CutPrefix(function.Name.Name, "TestMutantsReactJsxNoCommentTextnodes_")
 		if !ok {
 			continue
 		}
 		number, parseError := strconv.Atoi(suffix)
 		if parseError != nil || suffix != fmt.Sprintf("%03d", number) || number < 0 || number >= len(slices) {
-			test.Fatalf("invalid shard function %s", fn.Name.Name)
+			test.Fatalf("invalid shard function %s", function.Name.Name)
 		}
 		functions[number] = true
 	}
@@ -345,7 +345,7 @@ func yepestaFetch(test *testing.T) (yepestaBundle, string) {
 	return bundle, directory
 }
 
-func yepestaExecute(test *testing.T, directory, name string, args ...string) execution {
+func yepestaExecute(test *testing.T, directory, name string, commandArguments ...string) execution {
 	test.Helper()
 	deadline := time.Now().Add(90 * time.Second)
 	if end, ok := test.Deadline(); ok && end.Before(deadline) {
@@ -353,7 +353,7 @@ func yepestaExecute(test *testing.T, directory, name string, args ...string) exe
 	}
 	timeoutContext, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
-	command := lintCommand(timeoutContext, directory, name, args...)
+	command := lintCommand(timeoutContext, directory, name, commandArguments...)
 	out, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
@@ -365,7 +365,7 @@ func yepestaExecute(test *testing.T, directory, name string, args ...string) exe
 	started := time.Now()
 	runError := command.Run()
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	data, readError := os.ReadFile(out.Name())
 	if readError != nil {
@@ -379,9 +379,9 @@ func yepestaJavaScript(test *testing.T, module, path string, count bool) executi
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	args := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", path}
+	commandArguments := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", path}
 	if count {
-		args = append(args, "--count")
+		commandArguments = append(commandArguments, "--count")
 	}
-	return yepestaExecute(test, "", "node", args...)
+	return yepestaExecute(test, "", "node", commandArguments...)
 }

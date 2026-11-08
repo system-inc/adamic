@@ -239,14 +239,14 @@ func retainReleaseProduct(test *testing.T, tsan bool) string {
 			); writeError != nil {
 				return writeError
 			}
-			args := append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...)
-			args = append(args, "-I", ".", "-o", filepath.Join(directory, name), "main.c")
-			args = append(args, RuntimeLinkFlags(library)...)
-			args = append(args, "-lm")
+			commandArguments := append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...)
+			commandArguments = append(commandArguments, "-I", ".", "-o", filepath.Join(directory, name), "main.c")
+			commandArguments = append(commandArguments, RuntimeLinkFlags(library)...)
+			commandArguments = append(commandArguments, "-lm")
 			if output, combinedOutputError := toolchain.CommandIn(
 				scratch,
 				compiler,
-				args...,
+				commandArguments...,
 			).CombinedOutput(); combinedOutputError != nil {
 				return fmt.Errorf("compile %s: %w\n%s", name, combinedOutputError, output)
 			}

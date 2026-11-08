@@ -29,16 +29,19 @@ func hostBuild(test *testing.T, source, output, directory string, options native
 	if writeError := os.WriteFile(main, []byte(source), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	args := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, main)
-	args = append(args, native.RuntimeLinkFlags(library)...)
-	args = append(args, "-lm")
-	if out, combinedOutputError := exec.Command("clang", args...).CombinedOutput(); combinedOutputError != nil {
+	commandArguments := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, main)
+	commandArguments = append(commandArguments, native.RuntimeLinkFlags(library)...)
+	commandArguments = append(commandArguments, "-lm")
+	if out, combinedOutputError := exec.Command(
+		"clang",
+		commandArguments...,
+	).CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("clang: %v\n%s", combinedOutputError, out)
 	}
 }
-func hostRun(test *testing.T, env []string, program string, args ...string) leakcheck.Run {
+func hostRun(test *testing.T, env []string, program string, commandArguments ...string) leakcheck.Run {
 	test.Helper()
-	command := exec.Command(program, args...)
+	command := exec.Command(program, commandArguments...)
 	command.Env = append(
 		os.Environ(),
 		"ASAN_OPTIONS=detect_leaks=0",
@@ -166,15 +169,15 @@ func runHostRuntimeContracts(test *testing.T, options native.Options) {
 	for _, mode := range modes {
 		// Not parallel: modes share filesystem fixtures, including directory mutations.
 		test.Run(fmt.Sprintf("sanitized=%t/%s", options.Sanitize, mode), func(test *testing.T) {
-			args := []string{mode}
+			commandArguments := []string{mode}
 			if mode == "exit" {
-				args = append(args, "2")
+				commandArguments = append(commandArguments, "2")
 			}
 			if mode == "identity" {
-				args = append(args, "--prof", "héllo 🌍", "")
+				commandArguments = append(commandArguments, "--prof", "héllo 🌍", "")
 			}
-			truth := hostRun(test, env, "node", append([]string{oracle}, args...)...)
-			got := hostRun(test, env, binary, args...)
+			truth := hostRun(test, env, "node", append([]string{oracle}, commandArguments...)...)
+			got := hostRun(test, env, binary, commandArguments...)
 			if got.ExitCode != truth.ExitCode ||
 				!bytes.Equal(got.Stdout, truth.Stdout) ||
 				!bytes.Equal(got.Stderr, truth.Stderr) {
@@ -185,9 +188,9 @@ func runHostRuntimeContracts(test *testing.T, options native.Options) {
 					C:         source,
 					Sanitized: binary,
 					Counted:   filepath.Join(test.TempDir(), "counted"),
-					Arguments: func() []string { return args },
-					Execute: func(extra []string, name string, args ...string) leakcheck.Run {
-						return hostRun(test, append(env, extra...), name, args...)
+					Arguments: func() []string { return commandArguments },
+					Execute: func(extra []string, name string, commandArguments ...string) leakcheck.Run {
+						return hostRun(test, append(env, extra...), name, commandArguments...)
 					},
 				})
 				if checkError != nil || report != "" {
@@ -206,13 +209,13 @@ func runHostRuntimeContracts(test *testing.T, options native.Options) {
 		}
 	}
 	for _, mode := range []string{"output", "exit"} {
-		args := []string{mode}
+		commandArguments := []string{mode}
 		if mode == "exit" {
-			args = append(args, "2")
+			commandArguments = append(commandArguments, "2")
 		}
 		mergedEnvironment := append(append([]string{}, env...), "HOST_MERGE=1")
-		truth := hostRun(test, mergedEnvironment, "node", append([]string{oracle}, args...)...)
-		got := hostRun(test, mergedEnvironment, binary, args...)
+		truth := hostRun(test, mergedEnvironment, "node", append([]string{oracle}, commandArguments...)...)
+		got := hostRun(test, mergedEnvironment, binary, commandArguments...)
 		if got.ExitCode != truth.ExitCode || !bytes.Equal(got.Stdout, truth.Stdout) || len(got.Stderr) != 0 {
 			test.Fatalf("merged streams %s: native %+v Node %+v", mode, got, truth)
 		}
@@ -314,15 +317,15 @@ func runHostRuntimeMutant(test *testing.T, index int) {
 	runtime := hostMutant(test, mutation.file, mutation.before, mutation.after)
 	binary := filepath.Join(dir, fmt.Sprintf("mutant-%d", index))
 	hostBuild(test, source, binary, runtime, native.Options{Sanitize: true})
-	args := []string{mutation.mode}
+	commandArguments := []string{mutation.mode}
 	if mutation.mode == "exit" {
-		args = append(args, "2")
+		commandArguments = append(commandArguments, "2")
 	}
 	if mutation.mode == "identity" {
-		args = append(args, "--prof", "héllo 🌍", "")
+		commandArguments = append(commandArguments, "--prof", "héllo 🌍", "")
 	}
-	truth := hostRun(test, env, "node", append([]string{oracle}, args...)...)
-	got := hostRun(test, env, binary, args...)
+	truth := hostRun(test, env, "node", append([]string{oracle}, commandArguments...)...)
+	got := hostRun(test, env, binary, commandArguments...)
 	if got.ExitCode != truth.ExitCode || !bytes.Equal(got.Stderr, truth.Stderr) {
 		test.Fatalf("mutant failed outside stdout comparison: %+v, Node %+v", got, truth)
 	}
@@ -382,7 +385,7 @@ func TestHostRuntimeMutantExecutableIdentity(test *testing.T) {
 	runHostRuntimeMutant(test, 9)
 }
 
-func TestHostRuntimeMutantCwd(test *testing.T) {
+func TestHostRuntimeMutantWorkingDirectory(test *testing.T) {
 	test.Parallel()
 	runHostRuntimeMutant(test, 10)
 }

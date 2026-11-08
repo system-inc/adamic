@@ -67,8 +67,11 @@ func TestNodeFileSystemDirectoryWasiAgreement(test *testing.T) {
 				test.Fatal(absolutePathError)
 			}
 			how := prepare("wasi")
-			args := append([]string{"--disable-warning=ExperimentalWarning", runner, binary}, how.arguments...)
-			got := executeInput(test, how, nil, "node", args...)
+			commandArguments := append(
+				[]string{"--disable-warning=ExperimentalWarning", runner, binary},
+				how.arguments...,
+			)
+			got := executeInput(test, how, nil, "node", commandArguments...)
 			if difference := disagreement(truth, got); difference != "" {
 				test.Fatalf(
 					"%s: Node stdout %q stderr %q exit %d; WASI stdout %q stderr %q exit %d",

@@ -164,8 +164,8 @@ func rulingCountRun(test *testing.T, file string, typescript bool, source string
 	if buildError := native.Build(source, binary, native.Options{Count: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	name, args := pinnedStack(binary)
-	result := execute(test, name, args...)
+	name, commandArguments := pinnedStack(binary)
+	result := execute(test, name, commandArguments...)
 	match := countsLine.FindSubmatch(result.stderr)
 	if match == nil {
 		test.Fatalf("no counts: %#v", result)

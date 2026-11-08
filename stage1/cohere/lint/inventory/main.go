@@ -38,17 +38,17 @@ func main() {
 	must(os.WriteFile(overlay, data, 0644))
 	binary := filepath.Join(scratch, "inventory-engine")
 	run(cohere, filepath.Join(destination, "build.log"), nil, "go", "build", "-overlay="+overlay, "-o", binary, virtual)
-	args := []string{"-root", absolute, "-output", destination, "-compiler", *compiler}
+	commandArguments := []string{"-root", absolute, "-output", destination, "-compiler", *compiler}
 	if *reuse != "" {
-		args = append(args, "-reuse", *reuse)
+		commandArguments = append(commandArguments, "-reuse", *reuse)
 	}
 	if *capture {
-		args = append(args, "-capture-tests")
+		commandArguments = append(commandArguments, "-capture-tests")
 	}
 	if *measure {
-		args = append(args, "-measure")
+		commandArguments = append(commandArguments, "-measure")
 	}
-	run(cohere, filepath.Join(destination, "generation.log"), nil, binary, args...)
+	run(cohere, filepath.Join(destination, "generation.log"), nil, binary, commandArguments...)
 	fmt.Println("wrote", filepath.Join(destination, "inventory.json"), "and inventory.md")
 }
 func must(sourceError error) {
@@ -57,10 +57,10 @@ func must(sourceError error) {
 		os.Exit(1)
 	}
 }
-func run(directory, log string, environment []string, name string, args ...string) {
+func run(directory, log string, environment []string, name string, commandArguments ...string) {
 	file, createError := os.Create(log)
 	must(createError)
-	command := exec.Command(name, args...)
+	command := exec.Command(name, commandArguments...)
 	command.Dir = directory
 	command.Stdout = file
 	command.Stderr = file

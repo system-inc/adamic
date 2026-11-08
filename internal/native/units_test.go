@@ -88,10 +88,10 @@ func TestUnitCacheFlagsHoldSanitizer(test *testing.T) {
 		test.Fatal(writeError)
 	}
 	binary := filepath.Join(directory, "probe")
-	args := append(Flags(Options{Sanitize: true}), main, sanitized, "-o", binary)
+	commandArguments := append(Flags(Options{Sanitize: true}), main, sanitized, "-o", binary)
 	if output, combinedOutputError := toolchain.Command(
 		compiler,
-		args...,
+		commandArguments...,
 	).CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("link: %v\n%s", combinedOutputError, output)
 	}
@@ -236,11 +236,11 @@ func TestUnitSystemHeaderProvenance(test *testing.T) {
 // C with clean sanitizer and exit observations; only Node's stdout distinguishes it.
 func TestSplitAttributedBindingsAgreeWithNode(test *testing.T) {
 	test.Parallel()
-	run := func(command string, args ...string) string {
+	run := func(command string, commandArguments ...string) string {
 		test.Helper()
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		osCommand := exec.CommandContext(timeoutContext, command, args...)
+		osCommand := exec.CommandContext(timeoutContext, command, commandArguments...)
 		var stderr strings.Builder
 		osCommand.Stderr = &stderr
 		output, outputError := osCommand.Output()

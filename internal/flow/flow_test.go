@@ -218,7 +218,7 @@ func reachingDefinitions(graph *Function) reaching {
 		return changed
 	}
 	entryState := state{}
-	for index, parameter := range graph.Params {
+	for index, parameter := range graph.Parameters {
 		entryState[declaration(parameter)] = []site{{instruction: -1, index: index}}
 	}
 	exits := map[BlockId]state{}
@@ -337,7 +337,7 @@ type definitions struct {
 
 func definitionSites(graph *Function) definitions {
 	definedBy := map[IdentifierId]site{}
-	for index, parameter := range graph.Params {
+	for index, parameter := range graph.Parameters {
 		definedBy[parameter.Identifier] = site{-1, index}
 	}
 	phis := map[IdentifierId]*Phi{}

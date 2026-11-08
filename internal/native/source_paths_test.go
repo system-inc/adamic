@@ -176,13 +176,13 @@ func checkDebugSourcePaths(test *testing.T, split bool) {
 		}
 	}
 	binary := filepath.Join(test.TempDir(), "program")
-	debugCli(test, entry, binary, "ADAMIC_NATIVE_SPLIT="+map[bool]string{false: "0", true: "1"}[split])
+	debugCommandLineInterface(test, entry, binary, "ADAMIC_NATIVE_SPLIT="+map[bool]string{false: "0", true: "1"}[split])
 	if !debugSourcePaths(test, binary, entry) {
 		test.Fatal("debugger paths do not reach entry and imported source")
 	}
 }
 
-func debugCli(test *testing.T, entry, binary string, environment ...string) {
+func debugCommandLineInterface(test *testing.T, entry, binary string, environment ...string) {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()

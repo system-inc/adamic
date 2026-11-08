@@ -42,15 +42,15 @@ func main() {
 	}
 	matches := []*ast.FuncDecl{}
 	for _, decl := range file.Decls {
-		if fn, ok := decl.(*ast.FuncDecl); ok {
-			if fn.Name.Name == "latentStatementRaw" {
+		if function, ok := decl.(*ast.FuncDecl); ok {
+			if function.Name.Name == "latentStatementRaw" {
 				panic("latent statement rewrite: lowering.statement: raw method already exists")
 			}
-			if fn.Name.Name == "statement" &&
-				fn.Recv != nil &&
-				len(fn.Recv.List) == 1 &&
-				printed(fn.Recv.List[0].Type) == "*lowering" {
-				matches = append(matches, fn)
+			if function.Name.Name == "statement" &&
+				function.Recv != nil &&
+				len(function.Recv.List) == 1 &&
+				printed(function.Recv.List[0].Type) == "*lowering" {
+				matches = append(matches, function)
 			}
 		}
 	}
@@ -60,13 +60,13 @@ func main() {
 			len(matches),
 		))
 	}
-	fn := matches[0]
+	function := matches[0]
 	// The types are the contract, not the names: Diagnostics' debug source lines (f2cf1ebb) name the results so a
 	// defer can prepend a marker, and the raw method keeps its own names under the unnamed wrapper (#mdaed6m).
-	if fieldTypes(fn.Type.Params) != "*ast.Node" || fieldTypes(fn.Type.Results) != "[]ir.Statement, error" {
-		panic("latent statement rewrite: lowering.statement: unsupported signature " + printed(fn.Type))
+	if fieldTypes(function.Type.Params) != "*ast.Node" || fieldTypes(function.Type.Results) != "[]ir.Statement, error" {
+		panic("latent statement rewrite: lowering.statement: unsupported signature " + printed(function.Type))
 	}
-	fn.Name.Name = "latentStatementRaw"
+	function.Name.Name = "latentStatementRaw"
 	wrapper, parseFileError := parser.ParseFile(
 		fs,
 		"wrapper.go",

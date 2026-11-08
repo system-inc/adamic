@@ -77,7 +77,7 @@ func parallelMarkdown(test *testing.T) {
 }
 
 type markdownMemoryBudget struct {
-	mu       sync.Mutex
+	mutex    sync.Mutex
 	changed  *sync.Cond
 	capacity int
 	used     int
@@ -85,13 +85,13 @@ type markdownMemoryBudget struct {
 
 func newMarkdownMemoryBudget(capacity int) *markdownMemoryBudget {
 	budget := &markdownMemoryBudget{capacity: capacity}
-	budget.changed = sync.NewCond(&budget.mu)
+	budget.changed = sync.NewCond(&budget.mutex)
 	return budget
 }
 
 func (budget *markdownMemoryBudget) acquire(weight int) {
-	budget.mu.Lock()
-	defer budget.mu.Unlock()
+	budget.mutex.Lock()
+	defer budget.mutex.Unlock()
 	for budget.used+weight > budget.capacity {
 		budget.changed.Wait()
 	}
@@ -99,10 +99,10 @@ func (budget *markdownMemoryBudget) acquire(weight int) {
 }
 
 func (budget *markdownMemoryBudget) release(weight int) {
-	budget.mu.Lock()
+	budget.mutex.Lock()
 	budget.used -= weight
 	budget.changed.Broadcast()
-	budget.mu.Unlock()
+	budget.mutex.Unlock()
 }
 
 func parallelMarkdownMemory(test *testing.T, weight int) {

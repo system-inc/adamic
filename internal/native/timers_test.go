@@ -26,14 +26,19 @@ func timerHarness(test *testing.T) string {
 	}
 	return string(source)
 }
-func timerRun(environment []string, name string, args ...string) leakcheck.Run {
-	run, _ := timerRunWithin(15*time.Second, environment, name, args...)
+func timerRun(environment []string, name string, commandArguments ...string) leakcheck.Run {
+	run, _ := timerRunWithin(15*time.Second, environment, name, commandArguments...)
 	return run
 }
-func timerRunWithin(limit time.Duration, environment []string, name string, args ...string) (leakcheck.Run, bool) {
+func timerRunWithin(
+	limit time.Duration,
+	environment []string,
+	name string,
+	commandArguments ...string,
+) (leakcheck.Run, bool) {
 	timeoutContext, cancel := context.WithTimeout(context.Background(), limit)
 	defer cancel()
-	command := exec.CommandContext(timeoutContext, name, args...)
+	command := exec.CommandContext(timeoutContext, name, commandArguments...)
 	command.Env = append(os.Environ(), environment...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
@@ -63,7 +68,7 @@ func timerNode(test *testing.T, mode string) []byte {
 
 func timerNodeRun(test *testing.T, mode string, formatted bool) leakcheck.Run {
 	test.Helper()
-	args := []string{}
+	commandArguments := []string{}
 	if formatted {
 		// The unchanged house oracle reports uncaught errors exactly as
 		// adamic_uncaught: one panic line and exit 70 (raw Node exits 1).
@@ -71,12 +76,12 @@ func timerNodeRun(test *testing.T, mode string, formatted bool) leakcheck.Run {
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)
 		}
-		args = append(args, "--import", runtime)
+		commandArguments = append(commandArguments, "--import", runtime)
 	}
-	args = append(args, "--input-type=commonjs", "-e",
+	commandArguments = append(commandArguments, "--input-type=commonjs", "-e",
 		`require('node:vm').runInThisContext(require('node:fs').readFileSync(process.argv[1], 'utf8'))`,
 		"testdata/timers/oracle.a", mode)
-	return timerRun(nil, "node", args...)
+	return timerRun(nil, "node", commandArguments...)
 }
 
 const timerPhaseDeadline = 3 * time.Second
@@ -228,10 +233,10 @@ func timerBuildBare(code, output string, options native.Options, library string)
 	if writeError := os.WriteFile(source, []byte(code), 0600); writeError != nil {
 		return writeError
 	}
-	args := append(native.LinkFlags(options), "-I", filepath.Dir(library), "-o", output, source)
-	args = append(args, native.RuntimeLinkFlags(library)...)
-	args = append(args, "-lm")
-	result, combinedOutputError := exec.Command("clang", args...).CombinedOutput()
+	commandArguments := append(native.LinkFlags(options), "-I", filepath.Dir(library), "-o", output, source)
+	commandArguments = append(commandArguments, native.RuntimeLinkFlags(library)...)
+	commandArguments = append(commandArguments, "-lm")
+	result, combinedOutputError := exec.Command("clang", commandArguments...).CombinedOutput()
 	if combinedOutputError != nil {
 		return fmt.Errorf("mutant must compile: %w\n%s", combinedOutputError, result)
 	}

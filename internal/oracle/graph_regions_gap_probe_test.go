@@ -68,8 +68,8 @@ func graphMeasured(test *testing.T, code string) run {
 	if buildError := native.Build(code, binary, native.Options{Count: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	name, args := pinnedStack("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary)
-	result := executeWith(test, []string{"ADAMIC_THREADS=1"}, name, args...)
+	name, commandArguments := pinnedStack("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary)
+	result := executeWith(test, []string{"ADAMIC_THREADS=1"}, name, commandArguments...)
 	if result.exitCode != 0 ||
 		countsLine.FindSubmatch(result.stderr) == nil ||
 		graphRss.FindSubmatch(result.stdout) == nil {

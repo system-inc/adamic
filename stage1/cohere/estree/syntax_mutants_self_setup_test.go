@@ -149,7 +149,7 @@ type syntaxMutantPrepared struct {
 var syntaxMutantsPrepareOnce sync.Once
 var syntaxMutantsPrepared []syntaxMutantPrepared
 
-const syntaxMutantsPreparedEnv = "ADAMIC_SYNTAX_MUTANTS_PREPARED"
+const syntaxMutantsPreparedEnvironment = "ADAMIC_SYNTAX_MUTANTS_PREPARED"
 
 func syntaxMutantSetupInputs(test *testing.T) buildcache.Inputs {
 	inputs := buildcache.Inputs{
@@ -195,15 +195,19 @@ func syntaxMutantPreparedProduct(test *testing.T, index int) string {
 			sources = syntaxGrammar()
 		}
 		list := manifest(test, sources)
-		args := []string{"--manifest", list}
+		commandArguments := []string{"--manifest", list}
 		if index != 0 {
-			args = []string{"--audit", list, test.TempDir()}
+			commandArguments = []string{"--audit", list, test.TempDir()}
 		}
 		// The oracle names each source by its path, and the sources sit in a temporary directory of this build, random
 		// per build, so Want names that directory <sources> (landable-16c's tree, Oct 11: syntax-mutant-ready-v2
 		// products differed build to build, the path hidden from relocatable in Want's base64). No reader compares the
 		// paths.
-		want := bytes.ReplaceAll(execute(test, "", oracle, args...), []byte(filepath.Dir(list)), []byte("<sources>"))
+		want := bytes.ReplaceAll(
+			execute(test, "", oracle, commandArguments...),
+			[]byte(filepath.Dir(list)),
+			[]byte("<sources>"),
+		)
 		// Main and Binary are other products, named by their keys (#tqrqx60).
 		data, encodeError := json.Marshal(syntaxMutantPrepared{
 			Main:    buildcache.Relative(main),
@@ -221,7 +225,7 @@ func syntaxMutantPreparedProduct(test *testing.T, index int) string {
 func prepareSyntaxMutants(test *testing.T) {
 	test.Helper()
 	// The union's planted-survivor children are handed their parent's prepared mutants, so they fetch nothing.
-	if descriptor := os.Getenv(syntaxMutantsPreparedEnv); descriptor != "" {
+	if descriptor := os.Getenv(syntaxMutantsPreparedEnvironment); descriptor != "" {
 		data, readError := os.ReadFile(descriptor)
 		if readError != nil {
 			test.Fatal(readError)
@@ -399,7 +403,11 @@ func TestSyntaxMutantsUnion(test *testing.T) {
 	for index := range syntaxMutantRunners {
 		name := fmt.Sprintf("TestSyntaxMutants_%03d", index)
 		command := exec.Command(executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
-		command.Env = append(os.Environ(), "ADAMIC_SYNTAX_MUTANTS_PLANT=1", syntaxMutantsPreparedEnv+"="+descriptor)
+		command.Env = append(
+			os.Environ(),
+			"ADAMIC_SYNTAX_MUTANTS_PLANT=1",
+			syntaxMutantsPreparedEnvironment+"="+descriptor,
+		)
 		output, combinedOutputError := command.CombinedOutput()
 		if combinedOutputError != nil {
 			if !strings.Contains(string(output), "mutant survived") ||

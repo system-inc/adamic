@@ -114,16 +114,16 @@ func jsonEncoderMissingProviders(test *testing.T, backend int) {
 			if buildError := native.Build(code, binary, options); buildError != nil {
 				test.Fatal(buildError)
 			}
-			for _, probe := range []struct{ arg, reason string }{
+			for _, probe := range []struct{ argument, reason string }{
 				{"empty_array", "JSON.stringify runtime array without complete element descriptors"},
 				{"array", "JSON.stringify runtime array without complete element descriptors"},
 				{"union", "JSON union lacks proven container metadata"},
 				{"missing_hook", "JSON toJSON lacks a typed runtime result provider"},
 			} {
-				test.Run(probe.arg, func(test *testing.T) {
+				test.Run(probe.argument, func(test *testing.T) {
 					var actual run
 					if target == "native" {
-						actual = execute(test, binary, probe.arg)
+						actual = execute(test, binary, probe.argument)
 					} else {
 						actual = execute(
 							test,
@@ -131,7 +131,7 @@ func jsonEncoderMissingProviders(test *testing.T, backend int) {
 							"--disable-warning=ExperimentalWarning",
 							filepath.Join(repository, "oracle", "wasi.mjs"),
 							binary,
-							probe.arg,
+							probe.argument,
 						)
 					}
 					if actual.exitCode != 70 || !strings.Contains(string(actual.stderr), probe.reason) {

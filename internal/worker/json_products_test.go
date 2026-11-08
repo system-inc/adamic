@@ -99,14 +99,14 @@ func workerJsonProduct(test *testing.T, key string, build bool) string {
 				return writeError
 			}
 		}
-		for _, args := range [][]string{
+		for _, commandArguments := range [][]string{
 			{"build", fixture, "-o", filepath.Join(directory, "native")},
 			{"worker", entry, "--out", filepath.Join(directory, "worker")},
 		} {
-			command := exec.CommandContext(test.Context(), compiler, args...)
+			command := exec.CommandContext(test.Context(), compiler, commandArguments...)
 			command.Dir = root
 			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
-				return fmt.Errorf("%v: %w\n%s", args, combinedOutputError, output)
+				return fmt.Errorf("%v: %w\n%s", commandArguments, combinedOutputError, output)
 			}
 		}
 		return nil

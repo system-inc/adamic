@@ -605,11 +605,11 @@ func TestGccRuntimeViewUnionsUntagged(test *testing.T) {
 func TestProduct_GccRuntimeWeak(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "weak.c") }
 func TestGccRuntimeWeak(test *testing.T)         { test.Parallel(); checkGccRuntimeUnit(test, "weak.c") }
 
-func TestProduct_GccRuntimeNodeCwdWasi(test *testing.T) {
+func TestProduct_GccRuntimeNodeWorkingDirectoryWasi(test *testing.T) {
 	test.Parallel()
 	gccRuntimeUnit(test, "node_cwd_wasi.c")
 }
-func TestGccRuntimeNodeCwdWasi(test *testing.T) {
+func TestGccRuntimeNodeWorkingDirectoryWasi(test *testing.T) {
 	test.Parallel()
 	checkGccRuntimeUnit(test, "node_cwd_wasi.c")
 }

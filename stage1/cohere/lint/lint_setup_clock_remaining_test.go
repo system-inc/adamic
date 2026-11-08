@@ -19,11 +19,11 @@ import (
 // reads hadn't reached EOF a second after the child exited, so an isolation child that had passed could fail under
 // load (#n3gk22h's shape). Capture has no stall guard to lose, and the 600 s deadline or the unit's own ceiling,
 // whichever comes first, ends a hung child.
-func lintBuildPhaseChild(test *testing.T, name string, args ...string) (*exec.Cmd, context.Context) {
+func lintBuildPhaseChild(test *testing.T, name string, commandArguments ...string) (*exec.Cmd, context.Context) {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	test.Cleanup(cancel)
-	command := exec.CommandContext(timeoutContext, name, args...)
+	command := exec.CommandContext(timeoutContext, name, commandArguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)

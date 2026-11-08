@@ -30,8 +30,8 @@ func TestCompilerGuardBackend(test *testing.T) {
 		return
 	}
 	index := 0
-	for i, arg := range os.Args {
-		if arg == "--" {
+	for i, argument := range os.Args {
+		if argument == "--" {
 			index = i + 1
 			break
 		}

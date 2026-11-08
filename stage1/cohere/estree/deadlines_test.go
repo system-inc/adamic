@@ -84,8 +84,11 @@ func runWithCpuBudget(
 	}
 	defer reader.Close()
 	seconds := estreeBudgetSeconds(budget)
-	args := append([]string{"-test.run=^TestDeadlineChild$", "--", strconv.FormatUint(seconds, 10)}, argv...)
-	command := exec.Command(executable, args...)
+	commandArguments := append(
+		[]string{"-test.run=^TestDeadlineChild$", "--", strconv.FormatUint(seconds, 10)},
+		argv...,
+	)
+	command := exec.Command(executable, commandArguments...)
 	command.Env = append(os.Environ(), "ADAMIC_ESTREE_DEADLINE_CHILD=1")
 	command.ExtraFiles = []*os.File{writer}
 	command.Stdout, command.Stderr = stdout, stderr

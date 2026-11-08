@@ -94,8 +94,8 @@ func environmentAgrees(test *testing.T, name string) {
 	if buildError := native.Build(code, binary, native.Options{Count: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	command, args := pinnedStack(binary)
-	counted := execute(test, command, args...)
+	command, commandArguments := pinnedStack(binary)
+	counted := execute(test, command, commandArguments...)
 	if report := leakcheck.Unbalanced(leakRun(counted)); report != "" {
 		test.Fatal(report)
 	}

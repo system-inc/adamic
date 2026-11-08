@@ -32,11 +32,11 @@ func carryReplayBodyGaps(source []byte) []string {
 	}
 	actual := map[string]string{}
 	for _, decl := range file.Decls {
-		fn, ok := decl.(*ast.FuncDecl)
-		if !ok || fn.Recv == nil || len(fn.Recv.List) != 1 || fn.Body == nil {
+		function, ok := decl.(*ast.FuncDecl)
+		if !ok || function.Recv == nil || len(function.Recv.List) != 1 || function.Body == nil {
 			continue
 		}
-		pointer, ok := fn.Recv.List[0].Type.(*ast.StarExpr)
+		pointer, ok := function.Recv.List[0].Type.(*ast.StarExpr)
 		if !ok {
 			continue
 		}
@@ -44,14 +44,14 @@ func carryReplayBodyGaps(source []byte) []string {
 		if !ok || owner.Name != "lowering" {
 			continue
 		}
-		if _, ok := carryReplayBodies[fn.Name.Name]; !ok {
+		if _, ok := carryReplayBodies[function.Name.Name]; !ok {
 			continue
 		}
 		var body bytes.Buffer
-		if nodeError := format.Node(&body, token.NewFileSet(), fn.Body); nodeError != nil {
-			return []string{fmt.Sprintf("entries_records.go: %s: %v; %s", fn.Name.Name, nodeError, proof)}
+		if nodeError := format.Node(&body, token.NewFileSet(), function.Body); nodeError != nil {
+			return []string{fmt.Sprintf("entries_records.go: %s: %v; %s", function.Name.Name, nodeError, proof)}
 		}
-		actual[fn.Name.Name] = fmt.Sprintf("%x", sha256.Sum256(body.Bytes()))
+		actual[function.Name.Name] = fmt.Sprintf("%x", sha256.Sum256(body.Bytes()))
 	}
 	names := []string{}
 	for name := range carryReplayBodies {

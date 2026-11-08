@@ -28,9 +28,9 @@ type execution struct {
 }
 
 // Guarded output is captured in a file so the large corpus need not stay in memory while running.
-func execute(test *testing.T, directory, name string, args ...string) execution {
+func execute(test *testing.T, directory, name string, commandArguments ...string) execution {
 	test.Helper()
-	command := exec.Command(name, args...)
+	command := exec.Command(name, commandArguments...)
 	command.Dir = directory
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
@@ -44,7 +44,7 @@ func execute(test *testing.T, directory, name string, args ...string) execution 
 	runError := childguard.Run(command, childguard.Options{})
 	duration := time.Since(started)
 	if runError != nil || stderr.Len() != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	data, readError := os.ReadFile(output.Name())
 	if readError != nil {
@@ -91,7 +91,7 @@ func node(test *testing.T, directory, manifest string, count bool) execution {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	args := []string{
+	commandArguments := []string{
 		"--disable-warning=ExperimentalWarning",
 		runner,
 		filepath.Join(directory, "main.ts"),
@@ -99,9 +99,9 @@ func node(test *testing.T, directory, manifest string, count bool) execution {
 		manifest,
 	}
 	if count {
-		args = append(args, "--count")
+		commandArguments = append(commandArguments, "--count")
 	}
-	return execute(test, "", "node", args...)
+	return execute(test, "", "node", commandArguments...)
 }
 
 func difference(got, want []byte) string {

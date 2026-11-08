@@ -92,18 +92,18 @@ func commandDiagnostics(name string, stderr []byte) []byte {
 }
 
 // Output is a file, never a pipe: the large corpus must also work on Node's writev path.
-func execute(test *testing.T, directory, name string, args ...string) execution {
+func execute(test *testing.T, directory, name string, commandArguments ...string) execution {
 	test.Helper()
-	command := exec.Command(name, args...)
+	command := exec.Command(name, commandArguments...)
 	command.Dir = directory
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node, go, git, clang) is a tool: the one internal/toolchain resolves, with a tool's environment,
-		// not PATH's, run in directory with PWD to match; git gets GitEnv. A program a test built (the Go oracle, a
-		// port) runs as named, with this process's environment.
+		// not PATH's, run in directory with PWD to match; git gets GitEnvironment. A program a test built (the Go
+		// oracle, a port) runs as named, with this process's environment.
 		if name == "git" {
-			command = toolchain.GitCommandIn(directory, args...)
+			command = toolchain.GitCommandIn(directory, commandArguments...)
 		} else {
-			command = toolchain.CommandIn(directory, name, args...)
+			command = toolchain.CommandIn(directory, name, commandArguments...)
 		}
 	}
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
@@ -118,7 +118,7 @@ func execute(test *testing.T, directory, name string, args ...string) execution 
 	runError := testguard.Run(command, testguard.Budget, testguard.Ceiling)
 	duration := time.Since(started)
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, commandArguments, runError, &stderr)
 	}
 	data, readError := os.ReadFile(output.Name())
 	if readError != nil {
@@ -155,7 +155,7 @@ func node(test *testing.T, directory, manifest string, count bool) execution {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	args := []string{
+	commandArguments := []string{
 		"--disable-warning=ExperimentalWarning",
 		runner,
 		filepath.Join(directory, "main.ts"),
@@ -163,9 +163,9 @@ func node(test *testing.T, directory, manifest string, count bool) execution {
 		manifest,
 	}
 	if count {
-		args = append(args, "--count")
+		commandArguments = append(commandArguments, "--count")
 	}
-	return execute(test, "", "node", args...)
+	return execute(test, "", "node", commandArguments...)
 }
 
 func difference(got, want []byte) string {
@@ -834,9 +834,9 @@ func runJavaScript(test *testing.T, module, manifest string, count bool) executi
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	args := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", manifest}
+	commandArguments := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", manifest}
 	if count {
-		args = append(args, "--count")
+		commandArguments = append(commandArguments, "--count")
 	}
-	return execute(test, "", "node", args...)
+	return execute(test, "", "node", commandArguments...)
 }

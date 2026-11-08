@@ -25,9 +25,9 @@ func fixture(test *testing.T, root, extension string) (string, string, string) {
 	return directory, pin, name
 }
 
-func runGit(test *testing.T, directory string, args ...string) string {
+func runGit(test *testing.T, directory string, commandArguments ...string) string {
 	test.Helper()
-	data, gitError := git(directory, args...)
+	data, gitError := git(directory, commandArguments...)
 	if gitError != nil {
 		test.Fatal(gitError)
 	}
