@@ -22,20 +22,26 @@ library.paths = Module._nodeModulePaths(require('node:path').dirname(file));
 library._compile(libraryText.replace(beforeCall, afterCall), file);
 const repaired = library.exports;
 const rows = [];
-for (const value of [undefined, '12', '12.9', '0x10', 'abc', 'null']) {
+for(const value of [undefined, '12', '12.9', '0x10', 'abc', 'null']) {
     const args = ['--maxNodeModuleJsDepth', ...(value === undefined ? [] : [value])];
     const a = ts.parseCommandLine(args);
     const b = repaired.parseCommandLine(args);
     assert.deepEqual(b, a);
-    if (value === undefined) {
+    if(value === undefined) {
         assert(Number.isNaN(b.options.maxNodeModuleJsDepth));
-        assert.deepEqual(b.errors.map(d => d.code), [6044]);
+        assert.deepEqual(
+            b.errors.map((d) => d.code),
+            [6044],
+        );
     }
-    else if (value === 'null') assert.equal(b.options.maxNodeModuleJsDepth, undefined);
+    else if(value === 'null') assert.equal(b.options.maxNodeModuleJsDepth, undefined);
     else assert(Object.is(b.options.maxNodeModuleJsDepth, parseInt(value)));
     const result = b.options.maxNodeModuleJsDepth;
-    rows.push({args, value: Number.isNaN(result) ? 'NaN' : result === undefined ? 'undefined' : result,
-        errors: b.errors.map(d => ({code: d.code, message: ts.flattenDiagnosticMessageText(d.messageText, '\n')}))});
+    rows.push({
+        args,
+        value: Number.isNaN(result) ? 'NaN' : result === undefined ? 'undefined' : result,
+        errors: b.errors.map((d) => ({ code: d.code, message: ts.flattenDiagnosticMessageText(d.messageText, '\n') })),
+    });
 }
 // "null" bypasses the numeric branch, but its two parseInt forms also agree.
 assert(Object.is(parseInt('null'), parseInt(String('null'))));
@@ -45,5 +51,18 @@ assert(Object.hasOwn(parsed.options, 'outFile'));
 assert.equal(parsed.options.outFile, undefined);
 const config = repaired.generateTSConfig(parsed.options, '\n');
 assert(config.includes('"outFile": undefined,'));
-console.log(JSON.stringify({version: ts.version, D031: rows, D036: {unasserted: true,
-    parseErrors: 0, emittedLine: config.split('\n').find(line => line.includes('"outFile"'))}}, null, 2));
+console.log(
+    JSON.stringify(
+        {
+            version: ts.version,
+            D031: rows,
+            D036: {
+                unasserted: true,
+                parseErrors: 0,
+                emittedLine: config.split('\n').find((line) => line.includes('"outFile"')),
+            },
+        },
+        null,
+        2,
+    ),
+);
