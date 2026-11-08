@@ -246,7 +246,7 @@ func TestFindAncestorOverloadResultRefusals(t *testing.T) {
 		// A copy of node isn't followed, so it fails closed.
 		{"a copy returned", "        else if (result) {\n            return node;", "        else if (result) {\n            return copy;"},
 		// A closure in the body that writes node could run inside the callback.
-		{"a closure writes node", "    while (node) {", "    const reset = () => { node = undefined; };\n    reset;\n    while (node) {"},
+		{"a closure writes node", "    while (node) {", "    const reset = () => { node = undefined; };\n    if (node === undefined) {\n        reset();\n    }\n    while (node) {"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
