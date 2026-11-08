@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "sourceAndCandidateAgree": true,
+  "proxyReachesObservedHelper": true,
+  "castFailureCounterControl": 1,
+  "edgeControls": [
+    {
+      "kind": "named",
+      "result": "namedControl",
+      "record": {
+        "bundle": "built/local/typescript.js",
+        "type": "function",
+        "nameDescriptor": {
+          "value": "namedControl",
+          "getter": false,
+          "writable": false,
+          "configurable": true
+        },
+        "functionText": "function namedControl(){}",
+        "original": "namedControl",
+        "candidate": "namedControl",
+        "equal": true
+      }
+    },
+    {
+      "kind": "arrow",
+      "result": "",
+      "record": {
+        "bundle": "built/local/typescript.js",
+        "type": "function",
+        "nameDescriptor": {
+          "value": "",
+          "getter": false,
+          "writable": false,
+          "configurable": true
+        },
+        "functionText": "()=>{}",
+        "original": "",
+        "candidate": "",
+        "equal": true
+      }
+    },
+    {
+      "kind": "bound",
+      "result": "bound boundOriginal",
+      "record": {
+        "bundle": "built/local/typescript.js",
+        "type": "function",
+        "nameDescriptor": {
+          "value": "bound boundOriginal",
+          "getter": false,
+          "writable": false,
+          "configurable": true
+        },
+        "functionText": "function () { [native code] }",
+        "original": "bound boundOriginal",
+        "candidate": "bound boundOriginal",
+        "equal": true
+      }
+    },
+    {
+      "kind": "nonfunction",
+      "result": "",
+      "record": {
+        "bundle": "built/local/typescript.js",
+        "type": "object",
+        "nameDescriptor": null,
+        "functionText": null,
+        "original": "",
+        "candidate": "",
+        "equal": true
+      }
+    }
+  ],
+  "deletedNameFallback": {
+    "bundle": "built/local/typescript.js",
+    "type": "function",
+    "nameDescriptor": null,
+    "functionText": "function fallbackName(){}",
+    "original": "fallbackName",
+    "candidate": "fallbackName",
+    "equal": true
+  }
+}

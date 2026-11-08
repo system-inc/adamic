@@ -113,3 +113,18 @@ are byte-identical to main. The prior real build with void rewrites fails the
 same comparison on three bundles. Type adapter idempotence and LF reconstruction
 pass in an isolated 41 control; both retained anchor mutants are caught. See
 [evidence/batch4-ruling.json](evidence/batch4-ruling.json).
+
+## getFunctionName home recognition amendment
+
+Task b5w3ycg, Adamic and Compiler's delegated approval, continued after the
+user's explicit pin ruling. The ordinary apply path still makes its reviewed
+edit in debug.ts. Finished-tree recognition also accepts the module-local
+getFunctionName in deprecate.ts, only with its exact adapted declaration and
+unchanged body. Missing or duplicate homes, drift and half-applied moved
+bodies refuse. No generic library admission or reflection permission changes.
+
+The strict guard and its pins live in getfunctionname-home.cjs and
+getfunctionname-home.json in this directory. Full paired replay and the
+original-home apply outcome are recorded by
+99-correctness-core-getfunctionname-move. This is a replay-recognition
+amendment, with no new emitted JavaScript edit in this earlier adaptation.

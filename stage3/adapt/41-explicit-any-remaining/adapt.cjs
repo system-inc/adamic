@@ -7,7 +7,9 @@ const plans = [];
 for (const file of [...new Set(rules.map(r => r.file))]) {
     const name = path.join(tree, file), before = fs.readFileSync(name, 'utf8');
     let text = before, removed = 0;
+    const movedHome = file === 'src/compiler/debug.ts' && require('./getfunctionname-home.cjs').read(ts, tree, before, '41').moved;
     for (const r of rules.filter(r => r.file === file)) {
+        if (movedHome && r.id === 6) continue;
         const newline = text.includes('\r\n') ? '\r\n' : '\n';
         const before = r.before.replace(/\r?\n/g, newline), after = r.after.replace(/\r?\n/g, newline);
         const oldCount = text.split(before).length - 1;

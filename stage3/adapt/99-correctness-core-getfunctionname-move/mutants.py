@@ -1,0 +1,12 @@
+from pathlib import Path
+import sys,shutil,os,json,subprocess,re,hashlib
+s=Path('/workspace/scratch/core-finish');repo=Path('/workspace/adamic');raw=s/'raw';head=s/'head2';source=head/'src/compiler/core.ts';pins=json.loads((repo/'stage3/adapt/99-correctness-core-cast-message/owners.json').read_text());tree=s/'cast-mutant';shutil.copytree(head,tree,ignore=lambda p,n:[x for x in ['.git','built','node_modules','tests'] if Path(p)==head and x in n]);(tree/'node_modules').symlink_to(repo/'stage3/typescript/node_modules',target_is_directory=True)
+p=tree/'src/compiler/core.ts';text=p.read_bytes().decode();old=pins['before'].replace('\n','\r\n');new=pins['after'].replace('\n','\r\n');assert text.count(new)==1;text=text.replace(new,old);p.write_bytes(text.encode());line=next(i+1 for i,l in enumerate(text.splitlines()) if 'Debug.getFunctionName(test)' in l)
+roots=sorted((tree/'src/compiler').rglob('*.ts'));assert len(roots)==79
+commands={'stock-tsc':['node',repo/'stage3/api/node_modules/typescript/lib/tsc.js','--project',tree/'src/compiler/tsconfig.json','--noEmit','--pretty','false','--tsBuildInfoFile',s/'cast-mutant.tsbuildinfo'],'adamic-types':[s/'adamic','types',*roots]};records={}
+for name,args in commands.items():
+ with (raw/('cast-mutant-'+name+'.log')).open('w') as log:r=subprocess.run([str(a) for a in args],cwd=repo,stdout=log,stderr=subprocess.STDOUT)
+ output=(raw/('cast-mutant-'+name+'.log')).read_text();print(name,'child_exit='+str(r.returncode),flush=True);assert r.returncode!=0 and 'getFunctionName' in output and 'core.ts' in output and ('2339' in output or 'does not exist' in output),output[-1200:];assert str(line) in output;records[name]={'exit':r.returncode,'output':output,'diagnosticLine':line}
+result={'passed':True,'mutant':'restore the complete original cast owner on head 2, where Debug no longer exports getFunctionName','actualAdaptedLine':line,'olderForecastLine':1791,'lineMapping':'elementAt declaration amendment removes two earlier lines','checks':records,'mutatedSourceSha256':hashlib.sha256(p.read_bytes()).hexdigest()};(raw/'cast-restoration-mutant.json').write_text(json.dumps(result,indent=2)+'\n')
+# Independent mutant for the reflection stop: restore the exact original Debug file.
+tree=s/'reflection-mutant';shutil.copytree(head,tree,ignore=lambda p,n:[x for x in ['.git','built','node_modules','tests'] if Path(p)==head and x in n]);shutil.copyfile(s/'head1/src/compiler/debug.ts',tree/'src/compiler/debug.ts');print('reflection mutant prepared',flush=True)

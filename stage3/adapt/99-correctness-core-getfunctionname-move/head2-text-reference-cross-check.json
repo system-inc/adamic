@@ -1,0 +1,43 @@
+{
+  "passedForAdaptedSymbol": true,
+  "method": "stock find-references primary; exhaustive text grep cross-check",
+  "DebugMemberNameMatchesInSourceAndAllOwnEmissionsIncludingMaps": 0,
+  "sourceReferences": [
+    "/workspace/scratch/core-finish/head2/src/deprecatedCompat/deprecate.ts:73:    const deprecation = createDeprecation(options?.name ?? getFunctionName(func), options);",
+    "/workspace/scratch/core-finish/head2/src/deprecatedCompat/deprecate.ts:77:function getFunctionName(func: AnyFunction): string {"
+  ],
+  "wholeCheckoutOtherMatches": [
+    "./src/deprecatedCompat/deprecate.ts:73:    const deprecation = createDeprecation(options?.name ?? getFunctionName(func), options);",
+    "./src/deprecatedCompat/deprecate.ts:77:function getFunctionName(func: AnyFunction): string {"
+  ],
+  "bootstrapToolMatches": [
+    "./lib/_tsc.js:854:  return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test '${Debug.getFunctionName(test)}'.`);",
+    "./lib/_tsc.js:1348:        () => `Node array did not pass test '${getFunctionName(test)}'.`,",
+    "./lib/_tsc.js:1359:        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,",
+    "./lib/_tsc.js:1370:        () => `Node ${formatSyntaxKind(node.kind)} should not have passed test '${getFunctionName(test)}'.`,",
+    "./lib/_tsc.js:1381:        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,",
+    "./lib/_tsc.js:1412:  function getFunctionName(func) {",
+    "./lib/_tsc.js:1423:  Debug2.getFunctionName = getFunctionName;",
+    "./lib/typescript.js:3354:  return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test '${Debug.getFunctionName(test)}'.`);",
+    "./lib/typescript.js:3936:        () => `Node array did not pass test '${getFunctionName(test)}'.`,",
+    "./lib/typescript.js:3947:        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,",
+    "./lib/typescript.js:3958:        () => `Node ${formatSyntaxKind(node.kind)} should not have passed test '${getFunctionName(test)}'.`,",
+    "./lib/typescript.js:3969:        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,",
+    "./lib/typescript.js:4000:  function getFunctionName(func) {",
+    "./lib/typescript.js:4011:  Debug2.getFunctionName = getFunctionName;",
+    "./lib/typescript.js:186300:  const deprecation = createDeprecation((options == null ? void 0 : options.name) ?? Debug.getFunctionName(func), options);"
+  ],
+  "bootstrapToolsUnchanged": [
+    {
+      "file": "lib/_tsc.js",
+      "sha256": "1c59e77a54b186ec43fa7f3e0d3c4bb15ca5eb5ba43e96b1d3a267139eddd3e3",
+      "byteIdenticalToBeforeMove": true
+    },
+    {
+      "file": "lib/typescript.js",
+      "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "byteIdenticalToBeforeMove": true
+    }
+  ],
+  "scopeNote": "lib bootstrap compiler contains independent, unadapted implementations with their own Debug objects. These are not readers or exports of the adapted helper. Installed node_modules copies are likewise build tooling, not this product."
+}
