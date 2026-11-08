@@ -52,7 +52,7 @@ Only the private getTypeArgumentConstraint owner changes. Immediately after
 `const relevantTypeParameter = typeParameters[typeArgumentPosition];`, insert:
 
 ```ts
-if (relevantTypeParameter === undefined) return undefined;
+if(relevantTypeParameter === undefined) return undefined;
 ```
 
 The indexed read stays at its original evaluation point. A present parameter
