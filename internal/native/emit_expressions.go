@@ -369,7 +369,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return e.callThrough(expression, "", receiver)
 		}
 		// object?.name(...): undefined, the method not looked up and the arguments not evaluated,
-		// where the object is undefined, as JavaScript's chain stops there.
+		// where the object is undefined, as JavaScript's chain stops there. object?.name?.(...) is this
+		// around callThrough's optional call (optionalCallThrough); null is NULL in an object's slot too.
 		text, value, owned := e.asideWith(func() string { return e.callThrough(expression, "", receiver) })
 		result := "0"
 		if expression.Returns != 0 {
