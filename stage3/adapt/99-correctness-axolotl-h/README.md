@@ -10,13 +10,13 @@ Branch: typescript/axolotl-99h, from main 470e16f8315f7a83c5c7b7f6f2a77d8328db0a
 
 ## Exact changes
 
-| Site in generateTSConfig | Before | After |
-| --- | --- | --- |
-| formatValueOrArray return declaration | string | string \| undefined |
-| formatSingleValue return declaration | inferred string \| undefined | explicit string \| undefined |
-| Commented config template | `${formattedValue}` | `${String(formattedValue)}` |
-| Active config template | `${formattedValue}` | `${String(formattedValue)}` |
-| Array text interpolation | `value.map(v => formatSingleValue(v, map)).join(", ")` | `String(value.map(v => formatSingleValue(v, map)).join(", "))` |
+| Site in generateTSConfig              | Before                                                 | After                                                          |
+| ------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------- |
+| formatValueOrArray return declaration | string                                                 | string \| undefined                                            |
+| formatSingleValue return declaration  | inferred string \| undefined                           | explicit string \| undefined                                   |
+| Commented config template             | `${formattedValue}`                                    | `${String(formattedValue)}`                                    |
+| Active config template                | `${formattedValue}`                                    | `${String(formattedValue)}`                                    |
+| Array text interpolation              | `value.map(v => formatSingleValue(v, map)).join(", ")` | `String(value.map(v => formatSingleValue(v, map)).join(", "))` |
 
 JSON.stringify returns a string or undefined. Both scalar forwarding and array formatting retain those possibilities honestly until the text consumer. For the stated domain, String on a string is the identity, and String(undefined) is exactly the old template interpolation. The array callback still returns exactly its original string or undefined to map. Join retains its empty-field rule, and String wraps the same joined text that the template previously consumed. Each helper still evaluates once per value. The 99g own-undefined literal-null branch is unchanged. No new handling of a toJSON hook, throw, map failure or ordinary scalar value is introduced.
 
