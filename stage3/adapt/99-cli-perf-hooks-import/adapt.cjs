@@ -12,6 +12,8 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const assert = require("node:assert/strict");
+const crypto = require("node:crypto");
+const [performanceTimeOwner] = require("./owners.json");
 const { compiler, nodes } = require("../47-host-errors/adapt.cjs");
 
 const performanceName = "src/compiler/performanceCore.ts";
@@ -99,9 +101,14 @@ function fileState(ts, file) {
     }
     const headerState = textState(file.text.slice(owner.getStart(file), owner.body.getStart(file)), header, "tryGetPerformance header");
     const performanceTime = one(file.statements.filter(node => ts.isInterfaceDeclaration(node) && node.name.text === "PerformanceTime"), "PerformanceTime");
+    // Task yewmv46 amends this adaptation: pin the entire interface on both sides.
+    const spelling = performanceTime.getText(file);
+    const ownerState = textState(spelling, { original: performanceTimeOwner.before, adapted: performanceTimeOwner.after }, "PerformanceTime owner");
+    const hash = crypto.createHash("sha256").update(spelling).digest("hex");
+    assert.equal(hash, ownerState === "original" ? performanceTimeOwner.ownerBeforeSha256 : performanceTimeOwner.ownerAfterSha256, "PerformanceTime owner hash drift");
     const member = one(performanceTime.members.filter(node => ts.isPropertySignature(node) && node.name.getText(file) === "timeOrigin"), "PerformanceTime's timeOrigin");
     const timeOriginState = textState(member.getText(file), timeOrigin, "timeOrigin member");
-    const pieces = { import: importState, binding: bindingState, "require declaration": requireDeclaration.state, "return type": headerState, timeOrigin: timeOriginState };
+    const pieces = { "PerformanceTime owner": ownerState, import: importState, binding: bindingState, "require declaration": requireDeclaration.state, "return type": headerState, timeOrigin: timeOriginState };
     const states = Object.values(pieces);
     assert(states.every(state => state === states[0]), `half-adapted performanceCore.ts: ${Object.entries(pieces).map(([name, state]) => `${name} ${state}`).join(", ")}`);
     // Before, require is named twice (the call and the declaration) and the local nowhere; after, require nowhere
@@ -241,6 +248,7 @@ function plan(tree, ts) {
     assert.equal(parsed.parseDiagnostics.length, 0, "cannot parse performanceCore.ts");
     if (fileState(ts, parsed).state === "adapted") return { fileName, before: text, after: text, evidence: [] };
     // Only an original file needs the checker, to prove the removed declaration is read nowhere else.
+    assert.equal(text.slice(parsed.statements[0].end, parsed.statements[0].end + 4), "\r\n\r\n", "unreviewed import separator");
     const program = compiler(tree, ts);
     const checker = program.getTypeChecker();
     const file = program.getSourceFile(fileName);
@@ -250,7 +258,8 @@ function plan(tree, ts) {
     const where = node => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
     const declaration = found.requireDeclaration.declaration;
     const edits = [
-        { start: found.anchor.end, end: found.anchor.end, text: `\r\n${importText}` },
+        // Replace the first of the two original line breaks: preserve the pinned interfaces at lines 13-28.
+        { start: found.anchor.end, end: found.anchor.end + 2, text: `\r\n${importText}` },
         { start: found.statement.getStart(file), end: found.statement.end, text: binding.adapted },
         // From the end of the last statement before the declaration to the end of the file: `Date.now;\r\n` again.
         { start: declaration.getFullStart(), end: text.length, text: "\r\n" },

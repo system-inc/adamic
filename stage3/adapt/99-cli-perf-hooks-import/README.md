@@ -1,5 +1,34 @@
 # 99-cli-perf-hooks-import: performanceCore reads perf_hooks through a static node:perf_hooks import
 
+## Task yewmv46 amendment, Nov 8
+
+Compiler, under Adamic's delegation (b5w3ycg, Nov 7 03:20Z), amends this
+adaptation rather than adding another directory: this adapter already owns and
+pins PerformanceTime.timeOrigin. The existing after state already includes
+`readonly timeOrigin: number;`. The amendment pins the complete PerformanceTime
+interface, before and after, with exact text and SHA-256, and rejects a changed
+or half-applied owner before writing. It preserves the existing import and
+return-type changes. The readonly part is type-only.
+
+This commit stacks on Lower's compiler/host-binding-route-2, cd42fd21, whose
+lowering code is identical to 97e3615c. Lower's
+internal/lower/testdata/host_binding/performance_core_adapted.txt must agree
+with lines 13 through 28 of the adapted source. The stage3 test
+TestPerformanceTimeYewmv46AdaptedProductMatchesLowerPin reads the existing
+keyed adapted-tree product, built ahead, and compares those exact 16 lines.
+Only CRLF on the adapted side becomes LF. There is no trimming, other
+whitespace normalization, or trailing-newline allowance. Lower's pin is
+unchanged. Adding the import consumes the existing blank line after the first
+import, keeping the pinned interfaces at lines 13 through 28; stock 6.0.3
+emits identical JavaScript with comments kept or removed. The proof runs the test in read-only product mode, with a 30-second
+unit deadline, and checks three red mutants: a changed pin byte, removed
+readonly in the adapted product, and one changed space inside the 16 lines.
+
+The base already adapts readonly, so the requested writable comparison is an
+explicit copy of the completed adapted tree with only readonly removed. The
+full base and amended applies differ only by that consumed blank line. Proof results and
+reproduction commands are recorded in YEWMV46.md.
+
 Task #00qn5az, under Adamic's ruling of Nov 6. lane: run as part of the wave
 Correctness cuts it into; Loom's run of that wave is the lane's proof.
 

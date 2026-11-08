@@ -1,0 +1,10 @@
+[
+  {
+    "file": "src/compiler/performanceCore.ts",
+    "owner": "PerformanceTime",
+    "before": "export interface PerformanceTime {\r\n    now(): number;\r\n    timeOrigin: number;\r\n}",
+    "after": "export interface PerformanceTime {\r\n    now(): number;\r\n    readonly timeOrigin: number;\r\n}",
+    "ownerBeforeSha256": "10b379e11fa0db5ccd22cb3e53c255e81078747609efe8a434384dfd6102df75",
+    "ownerAfterSha256": "aa51954771e81a538ac28764b10bf4d9792b9a0a3cddda5539e845f77ec604ab"
+  }
+]
