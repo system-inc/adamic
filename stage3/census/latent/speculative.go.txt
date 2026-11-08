@@ -336,6 +336,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			copy := l.latentSnapshot()
 			copy.latentPiecePrepare(node)
 			copy.latentSpecWalk(node)
+			latentCheckUnitRelation(program, checker, &unit)
 			record.Units = append(record.Units, unit)
 			latentProgressUnitDone()
 		}

@@ -1,0 +1,35 @@
+..EE
+======================================================================
+ERROR: test_relation_trailer_findings_count_as_notyet_sites (report_test.RelationTrailerReportTests.test_relation_trailer_findings_count_as_notyet_sites)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/8dbaea5/final-mutants/trailer-as-file/report_test.py", line 659, in test_relation_trailer_findings_count_as_notyet_sites
+    summary = self.summary(findings=[finding, finding])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/8dbaea5/final-mutants/trailer-as-file/report_test.py", line 647, in summary
+    return lowering_summary(rows, {'/only.a'}, MEASUREMENT)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/8dbaea5/final-mutants/trailer-as-file/report.py", line 115, in lowering_summary
+    name = str(Path(record['file']).resolve())
+                    ~~~~~~^^^^^^^^
+KeyError: 'file'
+
+======================================================================
+ERROR: test_relation_trailer_is_not_a_source_file (report_test.RelationTrailerReportTests.test_relation_trailer_is_not_a_source_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/8dbaea5/final-mutants/trailer-as-file/report_test.py", line 650, in test_relation_trailer_is_not_a_source_file
+    summary = self.summary()
+              ^^^^^^^^^^^^^^
+  File "/workspace/scratch/8dbaea5/final-mutants/trailer-as-file/report_test.py", line 647, in summary
+    return lowering_summary(rows, {'/only.a'}, MEASUREMENT)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/8dbaea5/final-mutants/trailer-as-file/report.py", line 115, in lowering_summary
+    name = str(Path(record['file']).resolve())
+                    ~~~~~~^^^^^^^^
+KeyError: 'file'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.051s
+
+FAILED (errors=2)

@@ -1,4 +1,6 @@
 """Recount the two untouched tips, each measured on its own adapted source bytes."""
+
+from stream_records import census_records
 import gzip, hashlib, json, pathlib, shutil, sys
 from rerun2 import LABEL, normalize, summarize
 ROOT=pathlib.Path(__file__).resolve().parent;DATA=ROOT/'data/unmerged4'
@@ -12,7 +14,7 @@ def build(scratch):
   assert spec['status']=='complete' and spec['head']==spec['main'] and not spec['features'] and spec['unmerged'],spec
   source=pathlib.Path(spec['adapted']);name=spec['name']
   manifest=[dict(file=str(p.relative_to(source)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),generated='.generated.' in p.name) for p in sorted((source/'src/compiler').rglob('*.ts'))]
-  raw=[normalize(json.loads(l),str(source)) for l in (scratch/(name+'.jsonl')).read_text().splitlines()]
+  raw=census_records([normalize(json.loads(l),str(source)) for l in (scratch/(name+'.jsonl')).read_text().splitlines()])
   row=dict(spec,**summarize(raw,manifest,len(manifest)));row['source']=dict(files=manifest,typescript='6.0.3',commit='050880ce59e30b356b686bd3144efe24f875ebc8');row['top_10']=top_ten(row['per_reason'])
   row['overlay_sha256']={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((scratch/(name+'-overlay')).glob('*.go'))}
   row['binary_sha256']=hashlib.sha256((scratch/(name+'-census')).read_bytes()).hexdigest()
