@@ -10,16 +10,16 @@ Box: `755daee0c6ba`; cgroup CPU quota `400000 100000`; memory limit `17179869184
 
 | Kind | Observations | Distinct reported locations |
 | --- | ---: | ---: |
-| views | 19443 | 251 |
+| views | 19509 | 254 |
 | record_literals | 0 | 0 |
-| dynamic_reads | 12 | 6 |
+| dynamic_reads | 13 | 7 |
 | checked_object_calls | 0 | 0 |
 
-Views combine 634 ViewOrigins entries and 18809 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
+Views combine 637 ViewOrigins entries and 18872 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
 
-The 79 compiler-file subtotal is `{'views': 19443, 'record_literals': 0, 'dynamic_reads': 12, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
+The 79 compiler-file subtotal is `{'views': 19509, 'record_literals': 0, 'dynamic_reads': 13, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
 
-Long pole by observed count: **views, 19443**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
+Long pole by observed count: **views, 19509**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
 
 ## Coverage and interpretation
 
@@ -27,9 +27,9 @@ Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 se
 
 Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
 
-Observed 4923 unit results: {'lowered': 3384, 'stopped': 1539}. First-error pass observed 3447 results; full pieces observed 1634. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
+Observed 4947 unit results: {'lowered': 3392, 'stopped': 1555}. First-error pass observed 3447 results; full pieces observed 1854. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
 
-Stock unit inventory has 559 units in 7 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 316}`. Missing stock file records after an interrupted pass are not evidence of zero units.
+Stock unit inventory has 819 units in 9 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 356}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
 In first-error mode a unit with a lowering finding contributes zero sites: its body is discarded. In full mode the stock hook rolls failed statements back and continues. A `stopped` full-mode observation can therefore contain retained successful statements; its failed statements contribute no sites. Panicked unit results contribute zero sites. `lowered` means no new lowering finding in that unit, not whole-program acceptance. File-level refusal-scan findings do not suppress independent-unit examination.
 
@@ -71,8 +71,8 @@ Attribution is to the unit's file, not an independent root. A zero with zero obs
 | factory/utilities.ts | 637 | 0 | 0 | 0 | 100 | no, not computed |
 | factory/utilitiesPublic.ts | 0 | 0 | 0 | 0 | 3 | no, not computed |
 | hostErrors.ts | 0 | 0 | 0 | 0 | 3 | no, not computed |
-| moduleNameResolver.ts | 0 | 0 | 0 | 0 | 148 | no, not computed |
-| moduleSpecifiers.ts | 0 | 0 | 0 | 0 | 48 | no, not computed |
+| moduleNameResolver.ts | 66 | 0 | 1 | 0 | 168 | no, not computed |
+| moduleSpecifiers.ts | 0 | 0 | 0 | 0 | 52 | no, not computed |
 | parser.ts | 0 | 0 | 0 | 0 | 53 | no, not computed |
 | path.ts | 0 | 0 | 0 | 0 | 77 | no, not computed |
 | performance.ts | 0 | 0 | 0 | 0 | 24 | no, not computed |
@@ -144,6 +144,7 @@ Examples below are unit fallback positions and adapted unit source text, not exa
 | factory/utilities.ts | 637 |
 | transformers/destructuring.ts | 193 |
 | transformers/classFields.ts | 192 |
+| moduleNameResolver.ts | 66 |
 
 Examples below are unit fallback positions and adapted unit source text, not exact expression locations.
 
@@ -280,6 +281,27 @@ function isStaticPropertyDeclaration(node: Node): node is PropertyDeclaration {
 }
 ```
 
+`moduleNameResolver.ts:1327:1` (unit fallback):
+```ts
+export function createModuleResolutionCache(
+    currentDirectory: string,
+    getCanonicalFileName: (s: string) => string,
+```
+
+`moduleNameResolver.ts:1334:1` (unit fallback):
+```ts
+export function createModuleResolutionCache(
+    currentDirectory: string,
+    getCanonicalFileName: (s: string) => string,
+```
+
+`moduleNameResolver.ts:1341:1` (unit fallback):
+```ts
+export function createModuleResolutionCache(
+    currentDirectory: string,
+    getCanonicalFileName: (s: string) => string,
+```
+
 ## Pass exits and limits
 
 | Pass | Child exit | Seconds | Stopping reason |
@@ -326,7 +348,14 @@ function isStaticPropertyDeclaration(node: Node): node is PropertyDeclaration {
 | full-02-snapshot-final | 0 | 1.002 | completed |
 | full-02-snapshot | 0 | 1.005 | completed |
 | full-02 | 0 | 79.359 | completed |
+| full-03-add | 0 | 1.004 | completed |
+| full-03-commit | 0 | 1.002 | completed |
+| full-03-push | 0 | 2.002 | completed |
+| full-03-report | 0 | 1.001 | completed |
+| full-03-snapshot-final | 0 | 1.002 | completed |
+| full-03-snapshot | 0 | 1.003 | completed |
 | full-03 | 0 | 119.289 | completed |
+| full-04 | 0 | 177.329 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
 | interim-audit | 0 | 3.002 | completed |
