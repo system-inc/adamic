@@ -1,0 +1,25 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_FULL",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "-u",
+    "LATENT_ONLY_FILE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-head-times.jsonl",
+    "LATENT_PREPASS_TIMES=/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-head-prepasses.tsv",
+    "/tmp/sygfnmc-head",
+    "/workspace/scratch/sygfnmc-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-head.jsonl"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 2455.073792147,
+  "peak_rss_kib": 8049096,
+  "user_seconds": 2848.082742,
+  "system_seconds": 68.570143,
+  "peak_observed_combined_rss_kib": 9445896,
+  "rss_ceiling_kib": 14680064
+}

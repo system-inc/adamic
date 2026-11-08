@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
+ "time"
 )
 
 // A checker-diagnosed dependency is a measurement boundary, not a compiler blocker.
@@ -276,6 +277,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 	// And one map of numeric enums, a function of the enum symbol alone (numericEnum, #e0k9s2t).
 	numericEnums := map[*ast.Symbol]bool{}
 	var facts *latentProgramFacts
+ var modules []*ast.SourceFile
 	for _, file := range program.Files() {
 		latentFindings = nil
 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
@@ -327,8 +329,18 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 					}
 				}()
 				l := fresh()
-				l.noteInheritance(program.Files())
-				l.noteAccessorNames(program.Files())
+				if modules == nil {
+					var err error
+					modules, err = l.latentPrepassModules()
+					if err != nil {
+						latentRecord(err)
+						return
+					}
+				}
+				func() { defer latentPrepassTimer("collectViewedElements")(); l.collectViewedElements(modules) }()
+				func() { defer latentPrepassTimer("noteInheritance")(); l.noteInheritance(modules) }()
+				func() { defer latentPrepassTimer("noteAccessorNames")(); l.noteAccessorNames(modules) }()
+				if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); l.noteOmittedOptionals(modules) }() }
 				l.latentRegister(program.Files())
 				l.latentUseProgramFacts(&facts)
 				if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == os.Getenv("LATENT_MUTANT_FUNCTION") && (os.Getenv("LATENT_MUTANT_WHERE") == "" || program.Where(node) == os.Getenv("LATENT_MUTANT_WHERE")) {
@@ -367,4 +379,42 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 		}
 		emit(record)
 	}
+}
+
+// Directory censuses use the union of each root's production module order.
+// An entry census retains its single original root even after ledger expansion.
+func (l *lowering) latentPrepassModules() ([]*ast.SourceFile, error) {
+	var modules []*ast.SourceFile
+	seen := map[*ast.SourceFile]bool{}
+	for _, root := range l.program.LatentRoots() {
+		// Order on a disposable lowering: keep production's refusal, while leaving
+		// cycle-read proof effects at their existing first query in each unit.
+		probe := &lowering{program: l.program, checker: l.checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+		order, err := probe.moduleOrder(root)
+		if err != nil {
+			return nil, err
+		}
+		for _, module := range order {
+			if !seen[module] {
+				seen[module] = true
+				modules = append(modules, module)
+			}
+		}
+	}
+	return modules, nil
+}
+
+// Optional measurement stream, separate from the deterministic finding ledger.
+func latentPrepassTimer(method string) func() {
+ path := os.Getenv("LATENT_PREPASS_TIMES")
+ if path == "" { return func() {} }
+ started := time.Now()
+ owner := latentFindingOwner
+ return func() {
+  output, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+  if err != nil { panic(err) }
+  _, err = fmt.Fprintf(output, "%s\t%s\t%d\n", method, owner, time.Since(started).Nanoseconds())
+  closeErr := output.Close()
+  if err != nil { panic(err) }; if closeErr != nil { panic(closeErr) }
+ }
 }
