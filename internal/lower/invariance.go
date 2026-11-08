@@ -45,6 +45,10 @@ type widening struct {
 	// parameter is a function's parameter of type source seen as taking target, which it can't.
 	parameter bool
 
+	// genericMethod names a generic method, of type source, seen as the view's method of type target,
+	// which stage 0 doesn't relate yet (widenedProperties).
+	genericMethod string
+
 	// declaredKey names a declared property an index signature reaches in .a (records_declared_keys.go):
 	// the target's index signature can write target under it where source is declared, or, when
 	// dictionary is set, the source's index signature holds source where the target reads it as target.
@@ -221,9 +225,20 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 		if viewed.Flags&ast.SymbolFlagsMethod != 0 || inside.Flags&ast.SymbolFlagsMethod != 0 {
 			// A method isn't a slot anything writes, but what it returns and takes are views: the
 			// program's own methods. The library's (an Iterable's, an array's own) are left to the
-			// rules for the library's types, and a generic one has no one type to compare.
-			if len(viewed.Declarations) == 0 || load.IsLibrary(ast.GetSourceFileOfNode(viewed.Declarations[0])) || l.generic(target) || l.generic(source) {
+			// rules for the library's types.
+			if len(viewed.Declarations) == 0 || load.IsLibrary(ast.GetSourceFileOfNode(viewed.Declarations[0])) {
 				continue
+			}
+			if l.generic(target) || l.generic(source) {
+				// A generic method, on either side, has no one type to compare until its type parameters
+				// are related, and tsc relates a method's parameters both ways: a handle<T>(x: Dog) seen as
+				// handle<T>(x: Animal) is handed a Cat (#q6gs98r). Only a method type identical to the
+				// view's, under the checker's identity relation, is the same method; any other view of a
+				// generic method stops here, unjudged, rather than passing.
+				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) {
+					continue
+				}
+				return &widening{source: source, target: target, genericMethod: viewed.Name}
 			}
 			if found := l.widened(source, target, visited); found != nil {
 				return found
@@ -1023,6 +1038,9 @@ func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checke
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
 	if found.declaredKey != "" {
 		return l.declaredKeyRefusal(node, own, contextual, found)
+	}
+	if found.genericMethod != "" {
+		return l.notYet(node, "a generic method "+found.genericMethod+" of type "+l.checker.TypeToString(found.source)+" seen as "+l.checker.TypeToString(found.target))
 	}
 	if found.enum {
 		if enumObjectSymbol(found.target) != nil {
