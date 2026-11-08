@@ -17,16 +17,16 @@ The evidence contains the exact composition patch, source pins, completed-adapte
 
 ## Results
 
-| Proof | Control | With 52 |
-| --- | ---: | ---: |
-| Stock diagnostics, each of six requested projects | 0 | 0 |
-| Native whole-program diagnostics over 79 compiler roots | 8 | 8 |
-| New native diagnostics | | 0 |
-| Removed native diagnostics | | 0 |
-| Public explicit any tokens | 37 | 22 |
-| Full oracle passing | 106,366 | 106,366 |
-| Full oracle failing | 1 | 1 |
-| Full oracle pending | 0 | 0 |
+| Proof                                                   | Control | With 52 |
+| ------------------------------------------------------- | ------: | ------: |
+| Stock diagnostics, each of six requested projects       |       0 |       0 |
+| Native whole-program diagnostics over 79 compiler roots |       8 |       8 |
+| New native diagnostics                                  |         |       0 |
+| Removed native diagnostics                              |         |       0 |
+| Public explicit any tokens                              |      37 |      22 |
+| Full oracle passing                                     | 106,366 | 106,366 |
+| Full oracle failing                                     |       1 |       1 |
+| Full oracle pending                                     |       0 |       0 |
 
 Both full oracles move only api/typescript.d.ts. APISample_parseConfig.errors.txt is absent in the normal candidate, and neither completion-details server baseline moves. The oracle declaration, built declaration and hand-applied 52 sanctions match byte for byte.
 

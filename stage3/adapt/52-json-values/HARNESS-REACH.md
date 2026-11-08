@@ -15,11 +15,13 @@ The literal protocol return and a common native/protocol service interface produ
 This harness-local type accurately describes the full reply while admitting every legal protocol tag value:
 
 ```ts
-export type HarnessCompletionEntryDetails = Omit<CompletionEntryDetails, "tags"> & {
+export type HarnessCompletionEntryDetails = Omit<CompletionEntryDetails, 'tags'> & {
     tags?: readonly protocol.JSDocTagInfo[];
 };
-export interface HarnessLanguageService extends Omit<LanguageService, "getCompletionEntryDetails"> {
-    getCompletionEntryDetails(...args: Parameters<LanguageService["getCompletionEntryDetails"]>): HarnessCompletionEntryDetails | undefined;
+export interface HarnessLanguageService extends Omit<LanguageService, 'getCompletionEntryDetails'> {
+    getCompletionEntryDetails(
+        ...args: Parameters<LanguageService['getCompletionEntryDetails']>
+    ): HarnessCompletionEntryDetails | undefined;
 }
 ```
 
@@ -27,11 +29,11 @@ The native service is structurally assignable. The completion guard retains serv
 
 The alternative reaches 14 edit locations in three files:
 
-| File | Locations in the previous adapted candidate | Edits |
-| --- | --- | ---: |
-| src/harness/client.ts | tag predicate :114; details predicate :147; two new local declarations before SessionClient :232; class implements :232; method return :425 | 6 |
-| src/harness/harnessLanguageService.ts | adapter interface :125; server adapter method :805 | 2 |
-| src/harness/fourslashImpl.ts | languageService field :246; memoWrap signature :452; proxy annotation :460; details helper return :1793; baselineCompletions result annotation :2484; linked-edit helper parameter :3779 | 6 |
+| File                                  | Locations in the previous adapted candidate                                                                                                                                              | Edits |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----: |
+| src/harness/client.ts                 | tag predicate :114; details predicate :147; two new local declarations before SessionClient :232; class implements :232; method return :425                                              |     6 |
+| src/harness/harnessLanguageService.ts | adapter interface :125; server adapter method :805                                                                                                                                       |     2 |
+| src/harness/fourslashImpl.ts          | languageService field :246; memoWrap signature :452; proxy annotation :460; details helper return :1793; baselineCompletions result annotation :2484; linked-edit helper parameter :3779 |     6 |
 
 The result annotation exposes only what baselineCompletions reads. Its tag text is Iterable<{ kind?: string; length?: number }>, which both strings and display-part arrays satisfy. String characters have length and no kind, so the existing loop skips them exactly as it does today. No guard or normalization is added to that loop. The existing proxy assertion is left verbatim; its new variable annotation carries the flow type. No new cast is introduced.
 
