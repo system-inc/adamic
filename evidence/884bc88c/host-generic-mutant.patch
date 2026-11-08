@@ -1,0 +1,13 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 35d6c7c51..d1ecdc185 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -240,7 +240,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip
+ 				// run-time event check and its any overload's relation, and Performance's members by
+ 				// nodeProcessStorageABI's signature scan. A generic the view alone brings (process.chdir
+ 				// seen as chdir<T>(directory: string | number)) isn't the host's, so that view stops too.
+-				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) || l.hostDeclaredSymbol(inside) && l.generic(source) {
++				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) || l.hostDeclaredSymbol(inside) {
+ 					continue
+ 				}
+ 				return &widening{source: source, target: target, genericMethod: viewed.Name}

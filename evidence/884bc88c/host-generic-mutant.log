@@ -1,0 +1,19 @@
+=== RUN   TestAHostMethodAViewMakesGenericIsNotYet
+=== PAUSE TestAHostMethodAViewMakesGenericIsNotYet
+=== CONT  TestAHostMethodAViewMakesGenericIsNotYet
+=== RUN   TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.a
+=== PAUSE TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.a
+=== RUN   TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.ts
+=== PAUSE TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.ts
+=== CONT  TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.a
+=== CONT  TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.ts
+=== NAME  TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.a
+    generic_method_view_test.go:127: got "/tmp/adamic-gate/TestAHostMethodAViewMakesGenericIsNotYetsetMaxListeners.a427344919/001/main.a:2:17: stage 0 can't lower node:fs.watch outside fs.watch(path, options, listener) yet", want the generic method setMaxListeners named as NotYet
+=== NAME  TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.ts
+    generic_method_view_test.go:127: got "/tmp/adamic-gate/TestAHostMethodAViewMakesGenericIsNotYetsetMaxListeners.ts117251726/001/main.ts:2:17: stage 0 can't lower node:fs.watch outside fs.watch(path, options, listener) yet", want the generic method setMaxListeners named as NotYet
+--- FAIL: TestAHostMethodAViewMakesGenericIsNotYet (0.00s)
+    --- FAIL: TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.a (0.38s)
+    --- FAIL: TestAHostMethodAViewMakesGenericIsNotYet/setMaxListeners.ts (0.38s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.398s
+FAIL
