@@ -24,12 +24,16 @@ import (
 // counts too. Exempt until Language's axiom audit lands, and then replaced by its modelled list: a library
 // call's direct result (Object.entries over a record, a method value's call) and a program callback
 // passed as a library signature's argument, whose parameters the library fills (replace's callback).
+//
+// A value the host audit models as never (hostModelledNever) carries no any, since it's never had: the
+// site's own expression, and a member an object literal at the site initializes with one. Only those
+// two are known by expression; every other position is judged by its type, as before.
 func (l *lowering) refuseAnyRelation(node *ast.Node) error {
 	name, source, target := l.relationSite(node)
-	if target == nil || source == nil || source.Flags()&checker.TypeFlagsAny != 0 || l.libraryCallResult(node) {
+	if target == nil || source == nil || source.Flags()&checker.TypeFlagsAny != 0 || l.libraryCallResult(node) || l.hostModelledNever(node) {
 		return nil
 	}
-	found := l.anyRelated(source, target, name == "argument" && l.libraryCallArgument(node), 0, map[[2]*checker.Type]bool{})
+	found := l.anyRelated(source, target, name == "argument" && l.libraryCallArgument(node), l.hostModelledNeverMembers(node), 0, map[[2]*checker.Type]bool{})
 	if found == nil {
 		return nil
 	}
@@ -60,8 +64,10 @@ type anyRelation struct {
 // value-carrying position counts its any whoever wrote it, the library included (Language's position rule
 // on 99634edf): an element, a property, a type argument, a return. Array.isArray's `any[]` seen as a
 // `string[]` holds whatever the value held. Only a parameter position is exempt, and only between two
-// signatures the library declares (anyRelatedSignatures).
-func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth int, seen map[[2]*checker.Type]bool) *anyRelation {
+// signatures the library declares (anyRelatedSignatures). modelled is the site's object literal's members
+// that hostModelledNever names (hostModelledNeverMembers), skipped where source's own properties are read,
+// and nil one position in, where no expression is known.
+func (l *lowering) anyRelated(source, target *checker.Type, callback bool, modelled map[*ast.Node]bool, depth int, seen map[[2]*checker.Type]bool) *anyRelation {
 	if source == nil || target == nil || source == target {
 		return nil
 	}
@@ -75,7 +81,7 @@ func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth
 	}
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range source.Types() {
-			if found := l.anyRelated(member, target, callback, depth+1, seen); found != nil {
+			if found := l.anyRelated(member, target, callback, modelled, depth+1, seen); found != nil {
 				return found
 			}
 		}
@@ -83,17 +89,17 @@ func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
-			if found := l.anyRelated(source, member, callback, depth+1, seen); found != nil {
+			if found := l.anyRelated(source, member, callback, modelled, depth+1, seen); found != nil {
 				return found
 			}
 		}
 		return nil
 	}
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.anyRelated(l.checker.GetBaseConstraintOfType(source), target, callback, depth+1, seen)
+		return l.anyRelated(l.checker.GetBaseConstraintOfType(source), target, callback, modelled, depth+1, seen)
 	}
 	if target.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.anyRelated(source, l.checker.GetBaseConstraintOfType(target), callback, depth+1, seen)
+		return l.anyRelated(source, l.checker.GetBaseConstraintOfType(target), callback, modelled, depth+1, seen)
 	}
 	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return nil
@@ -134,6 +140,9 @@ func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth
 		}
 	}
 	for _, property := range l.checker.GetPropertiesOfType(target) {
+		if inside := l.checker.GetPropertyOfType(source, property.Name); inside != nil && modelled[inside.ValueDeclaration] {
+			continue
+		}
 		from := l.checker.GetTypeOfPropertyOfType(source, property.Name)
 		to := l.checker.GetTypeOfPropertyOfType(target, property.Name)
 		if found := l.anyContained(from, to, depth, seen); found != nil {
@@ -197,6 +206,26 @@ func anyRelatedPositions(from, to *checker.Signature) int {
 	return min(voidRelatedPositions(from, to), len(to.Parameters()))
 }
 
+// hostModelledNeverMembers is, when node is an object literal, the declarations of its members whose
+// initializer hostModelledNever names: each holds a value that's never had, so no any flows through it.
+// A shorthand, a spread, a method or an accessor names none, and nil is a node that isn't an object
+// literal.
+func (l *lowering) hostModelledNeverMembers(node *ast.Node) map[*ast.Node]bool {
+	if node.Kind != ast.KindObjectLiteralExpression {
+		return nil
+	}
+	var modelled map[*ast.Node]bool
+	for _, member := range node.AsObjectLiteralExpression().Properties.Nodes {
+		if member.Kind == ast.KindPropertyAssignment && l.hostModelledNever(member.Initializer()) {
+			if modelled == nil {
+				modelled = map[*ast.Node]bool{}
+			}
+			modelled[member] = true
+		}
+	}
+	return modelled
+}
+
 // libraryCallResult is whether node, past parentheses, is a call or new expression whose resolved signature
 // the library declares: its result is the library's, until the axiom audit lands.
 func (l *lowering) libraryCallResult(node *ast.Node) bool {
@@ -244,5 +273,5 @@ func (l *lowering) anyContained(inside, wider *checker.Type, depth int, seen map
 	if inside != nil && wider != nil && inside.Flags()&checker.TypeFlagsAny != 0 && wider.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) == 0 {
 		return &anyRelation{target: wider}
 	}
-	return l.anyRelated(inside, wider, false, depth+1, seen)
+	return l.anyRelated(inside, wider, false, nil, depth+1, seen)
 }
