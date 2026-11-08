@@ -1,4 +1,6 @@
 """Prove continuation, file attribution, and measurement-only behavior."""
+
+from stream_records import census_records
 import json
 import os
 import pathlib
@@ -18,7 +20,7 @@ with tempfile.TemporaryDirectory(prefix='latent-audit-') as temporary:
         output = scratch / (name + '.jsonl')
         with (scratch / (name + '.log')).open('w') as log:
             subprocess.run([binary, str(source), str(output)], env=dict(os.environ, LATENT_ASSERT_NO_OUTPUT='1', **extra), stdout=log, stderr=subprocess.STDOUT, check=True)
-        rows = [json.loads(line) for line in output.read_text().splitlines()]
+        rows = census_records([json.loads(line) for line in output.read_text().splitlines()])
         assert rows[0]['status'] == 'measurement', rows
         assert rows[0]['checker_rejected'] is True, rows
         assert sum(len(r['units']) for r in rows[1:]) == 10, rows

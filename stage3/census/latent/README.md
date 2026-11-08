@@ -311,3 +311,64 @@ process each side. It also records a failed single-file composition check: defer
 generic `instantiated` metadata is census-wide, so utilities-only and multi-file
 records differ even on unchanged main. Do not treat separate-process file records
 as interchangeable with multi-file records without accounting for that witness scope.
+
+## Checker relation overflow
+
+The original program header is written and synced before lowering, so a cutoff
+retains checker diagnostics. A final record with `status: "relation_report"`
+contains `relation_overflow.after_load`, `relation_overflow.end` and the program
+findings. Empty strings are explicit answers. The trailing record exists only
+after the run completes; its absence means the end answer is unavailable.
+By default only these two queries run. An overflow present after load marks every attempted unit. An
+overflow first observed at the end conservatively marks every attempted unit
+with phase `relation_overflow_conservative_all_units`; `attribution` explains
+that the first affected unit is unknown. Both use Lower's exact NotYet words.
+Skipped and deferred units are never treated as independent lowering attempts.
+
+Per-unit probing proved costly on checker.ts: 51 calls took 32.599 seconds,
+averaging 639.192 ms, versus 10.570 seconds of unit lowering. Across the stopped
+cost experiment, queries consumed 972.056 seconds. This is why endpoint checks
+are the default. `LATENT_RELATION_PER_UNIT=1` enables explicit measurement after
+each attempted unit; only then do units include their `relation_overflow` answer.
+
+`LATENT_RELATION_TIMES=/path/to/relation-times.jsonl` records query wall cost and
+answer separately from deterministic census output. The two `where: "program"`
+rows are the load and end observations, in that order. Opt-in unit rows use the
+unit's exact location. `LATENT_TIMES` records lowering costs separately.
+
+The overlay includes in-process Go tests. Run them after generating the
+scratch overlay:
+
+```sh
+go test -count=1 -overlay=/tmp/latent-overlay/overlay.json ./stage3/census/latent/tool -run '^TestLatent(Census|Stream)'
+```
+
+`TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt` plants the same
+failed/overflowed assignable-relation cache mark as production's
+`TestAnOverflowedRelationMakesLoweringNotYet`, without a TS2859 diagnostic. It
+checks program and unit findings and their serialized fields.
+The test never starts a compiler subprocess. `TestLatentRelationOverflowHooksAndProductionWording`
+guards the driver hooks and production wording on main's own source.
+
+Deferred follow-up: resolved-reach census for a direct file argument. Today a
+file argument checks its imports but catalogues only the named root. The removed
+`LatentCensusEntryReach` expansion would also catalogue the resolved source
+reach, entry-first to preserve module identity routes. That coverage change is
+independent of overflow detection: the checker retains relations for imported
+files even when only the root is lowered. A separate change should measure
+before-and-after file/unit counts with adapted core.ts as the argument and
+compare the resulting census, with its own entry-order regression test. This
+change preserves the existing file-argument scope.
+
+The stream tests cover both a cutoff retaining only its synced header and a
+successful header/file/relation-trailer sequence. Legacy readers use
+`stream_records.census_records` to separate the trailing program report from
+file records; it merges observed relation metadata into a copied header only
+when the complete trailer exists.
+
+`TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset` verifies
+that end-only detection marks all attempts and explains the unknown onset.
+
+The bounded tsc entry run reached its 30-minute limit before the end query.
+Its after-load answer was `""`; the run-end answer is unavailable and the
+whole-run overflow result remains unknown. See the [run evidence](evidence/relation-overflow/report.md).

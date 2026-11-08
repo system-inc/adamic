@@ -1,0 +1,53 @@
+cloud/meter-daily/submit.sh:11:# stage3/meter/.gitignore's census.jsonl.gz and latent.jsonl.gz stay out until that file says otherwise. It is
+stage3/adapt/32-indexed-reads-program/proof/directory-exists/census-delta.json:1197:        "/workspace/scratch/adapt32-91-main-latent.jsonl"
+stage3/adapt/32-indexed-reads-program/proof/directory-exists/census-delta.json:1215:        "/workspace/scratch/adapt32-91-after-latent.jsonl"
+stage3/adapt/32-indexed-reads-program/proof/directory-exists/results.json:44:          "/workspace/scratch/adapt32-91-main-latent.jsonl"
+stage3/adapt/32-indexed-reads-program/proof/directory-exists/results.json:62:          "/workspace/scratch/adapt32-91-after-latent.jsonl"
+stage3/adapt/40-explicit-any/split-previous-133.py:13:a,b=read(old/'before-latent.jsonl.gz'),read(old/'after-latent.jsonl.gz');aa={key(f) for f in a};added={key(f):f for f in b if key(f) not in aa};assert len(added)==164
+stage3/adapt/70-readonly-views/README.md:232:Run `survey.cjs <tree> <latent.jsonl> <output.json>` to inventory owners, and
+stage3/adapt/70-readonly-views/survey.cjs:8:if (process.argv.length !== 5) throw new Error('usage: node survey.cjs <tree> <latent.jsonl> <output.json>');
+stage3/adapt/99-cli-perf-hooks-import/README.md:324:  /tmp/select-census /tmp/tsc-99p/src/tsc/tsc.ts /tmp/tsc-99p-latent.jsonl > /tmp/tsc-99p-latent.log 2>&1
+stage3/adapt/99-correctness-axolotl-j/census-delta.json:7:      "99j-baseline-latent.jsonl": "13c83b0aa7b668598502ae9ad5963150c3e25502ae57bb69d5afbb21307fbf26",
+stage3/adapt/99-correctness-axolotl-j/census-delta.json:8:      "99j-shipped-latent.jsonl": "d1519a109ad2a6ff4661f0c40fb7a3d1cffb44cf78e2d548a044556e0087ef3c",
+stage3/adapt/99-correctness-axolotl-j/prior-proof-results.json:872:      "99j-baseline-latent.jsonl": "13c83b0aa7b668598502ae9ad5963150c3e25502ae57bb69d5afbb21307fbf26",
+stage3/adapt/99-correctness-axolotl-j/prior-proof-results.json:873:      "99j-shipped-latent.jsonl": "d1519a109ad2a6ff4661f0c40fb7a3d1cffb44cf78e2d548a044556e0087ef3c",
+stage3/adapt/99-correctness-axolotl-j/prior-proof-results.json:887:        "/workspace/scratch/99j-baseline-latent.jsonl"
+stage3/adapt/99-correctness-axolotl-j/prior-proof-results.json:911:        "/workspace/scratch/99j-shipped-latent.jsonl"
+stage3/census/latent/README.md:109:LATENT_ASSERT_NO_OUTPUT=1 /tmp/latent-census /path/to/adapted/src/compiler /tmp/latent.jsonl > /tmp/latent-run.log 2>&1
+stage3/census/latent/README.md:118:`latent.jsonl`. The recorder in `timing/` is tested as an ordinary Go package and
+stage3/census/tsc-closure/README.md:67:LATENT_ROOT_MANIFEST=/tmp/closure.json LATENT_ASSERT_NO_OUTPUT=1 /tmp/closure-tools/census /tmp/closure-adapted/src/compiler /tmp/closure-latent.jsonl > /tmp/closure-latent.log 2>&1
+stage3/census/tsc-closure/README.md:80:python3 stage3/census/tsc-closure/measure.py /tmp/closure.json /tmp/closure-latent.jsonl /tmp/closure-full.jsonl /tmp/closure-stock.json /tmp/closure-tools/tree/stage3/census/hidden/hidden.py /tmp/closure-result.json > /tmp/closure-result.log 2>&1
+stage3/census/tsc-closure/rerun-2026-10-09/reproduce.sh:22:LATENT_ROOT_MANIFEST="$scratch/closure.json" LATENT_ASSERT_NO_OUTPUT=1 timeout 3600 "$scratch/tools/census" "$scratch/adapted/src/compiler" "$scratch/latent.jsonl" > "$scratch/latent.log" 2>&1
+stage3/census/tsc-closure/rerun-2026-10-09/reproduce.sh:55:timeout 90 python3 stage3/census/tsc-closure/measure.py "$scratch/closure.json" "$scratch/latent.jsonl" "$scratch/full.jsonl" "$scratch/stock.json" "$scratch/tools/tree/stage3/census/hidden/hidden.py" "$scratch/RESULT.json" > "$scratch/result.log" 2>&1
+stage3/census/tsc-closure/test_fixture.py:18:run('answer',summarize('baseline-latent.jsonl','baseline-full.jsonl','answer.json'))
+stage3/census/tsc-closure/test_fixture.py:24: first='dropped-latent.jsonl' if mode=='latent' else 'baseline-latent.jsonl';second='dropped-full.jsonl' if mode=='full' else 'baseline-full.jsonl'
+stage3/meter/.gitignore:4:runs/**/latent.jsonl
+stage3/meter/.gitignore:5:runs/**/latent.jsonl.gz
+stage3/meter/README.md:150:Each main/area directory also retains latent.jsonl.gz and latent.log; overlay and
+stage3/meter/compiler_test.py:170:        for relative in ('census.jsonl.gz', 'latent.jsonl.gz', 'latent-times.jsonl.gz',
+stage3/meter/compiler_test.py:171:                         'tsc/census.jsonl.gz', 'tsc/latent.jsonl.gz'):
+stage3/meter/entry_test.py:27:    (run / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in records))
+stage3/meter/entry_test.py:76:        path = self.run / 'latent.jsonl'
+stage3/meter/entry_test.py:83:        with (self.run / 'latent.jsonl').open('a') as output:
+stage3/meter/entry_test.py:96:        path = self.run / 'latent.jsonl'
+stage3/meter/entry_test.py:105:        path = self.run / 'latent.jsonl'
+stage3/meter/entry_test.py:160:                    subprocess.run([os.environ['ENTRY_CENSUS_BINARY'], str(entry), str(run / 'latent.jsonl')],
+stage3/meter/entry_test.py:162:                raw = [json.loads(line) for line in (run / 'latent.jsonl').read_text().splitlines()]
+stage3/meter/entry_test.py:203:                subprocess.run([os.environ['ENTRY_CENSUS_BINARY'], str(entry), str(run / 'latent.jsonl')],
+stage3/meter/entry_test.py:235:                    subprocess.run([os.environ['ENTRY_CENSUS_BINARY'], str(entry), str(run / 'latent.jsonl')],
+stage3/meter/report.py:33:    records = [json.loads(line) for line in (run / 'latent.jsonl').read_text().splitlines()]
+stage3/meter/report.py:181:    latent = [json.loads(line) for line in (run / 'latent.jsonl').read_text().splitlines()]
+stage3/meter/report.py:290:    path = run / 'tsc/latent.jsonl'
+stage3/meter/report_test.py:98:            (self.run / label / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in latent))
+stage3/meter/report_test.py:209:        (self.run / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in self.records))
+stage3/meter/report_test.py:365:                    subprocess.run([os.environ['LATENT_CENSUS_BINARY'], str(compiler), str(run / 'latent.jsonl')],
+stage3/meter/report_test.py:442:        path = directory / 'latent.jsonl'
+stage3/meter/report_test.py:535:            (directory / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in latent))
+stage3/meter/report_test.py:557:        path = self.run / 'tsc/latent.jsonl'
+stage3/meter/report_test.py:580:        path = self.run / 'tsc/latent.jsonl'
+stage3/meter/report_test.py:593:        path = self.run / 'tsc/latent.jsonl'
+stage3/meter/report_test.py:606:        path = self.run / 'tsc/latent.jsonl'
+stage3/meter/report_test.py:627:        path = self.run / 'tsc/latent.jsonl'
+stage3/meter/twice-daily.sh:109:    LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/entry-census" "$entry" "$run/$label/tsc/latent.jsonl" > "$run/$label/tsc/latent.log" 2>&1
+stage3/meter/twice-daily.sh:111:    LATENT_TIMES="$run/$label/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/latent-census" "$scratch/$label-adapted/src/compiler" "$run/$label/latent.jsonl" > "$run/$label/latent.log" 2>&1
+stage3/meter/twice-daily.sh:124:gzip "$run/main/latent-times.jsonl" "$run/area/latent-times.jsonl" "$run/main/tsc/census.jsonl" "$run/area/tsc/census.jsonl" "$run/main/tsc/latent.jsonl" "$run/area/tsc/latent.jsonl" "$run/main/census.jsonl" "$run/area/census.jsonl" "$run/main/latent.jsonl" "$run/area/latent.jsonl"
