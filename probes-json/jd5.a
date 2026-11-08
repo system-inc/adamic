@@ -1,0 +1,16 @@
+// JD5: JD3's decode with no cycle written, the control for the decoder's own allocations.
+import { decodeJson } from 'adamic';
+interface Tree {
+	name: string;
+	kids: Tree[];
+}
+const result = decodeJson<Tree>('{"name":"a","kids":[{"name":"b","kids":[]}]}');
+if (result.kind === 'Error') {
+	console.log(result.message);
+} else {
+	const a = result.value;
+	const b = a.kids[0];
+	if (b !== undefined) {
+		console.log(`${a.name} ${b.name} ${b.kids.length}`);
+	}
+}
