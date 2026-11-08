@@ -1,0 +1,96 @@
+{
+  "passed": true,
+  "sourceBodyByteIdentical": true,
+  "sourceBodyRawSha256": "a63700ea6b975334c1e31665dd2ba328f594e3860ba73993c2fbb1b8bfbfc9aa",
+  "sourceSignatureOnlyLosesExport": true,
+  "localFunctionNotExported": true,
+  "roadBGuardRawBodyHashMatches": true,
+  "builds": [
+    {
+      "side": "baseline",
+      "exit": 0,
+      "diagnostics": 0,
+      "seconds": 66.35014349300036,
+      "sourceManifestFilesRechecked": 746
+    },
+    {
+      "side": "head1",
+      "exit": 0,
+      "diagnostics": 0,
+      "seconds": 76.84184665800058,
+      "sourceManifestFilesRechecked": 746
+    },
+    {
+      "side": "head2",
+      "exit": 0,
+      "diagnostics": 0,
+      "seconds": 180.50718536600107,
+      "sourceManifestFilesRechecked": 746
+    }
+  ],
+  "normalJavaScriptAndDeclarationsRechecked": true,
+  "implementationsUnchangedSinceApplyCheckpoint": [
+    {
+      "file": "stage3/adapt/30-indexed-reads/adapt.cjs",
+      "sha256": "45b32c72ff4574b5f9c1d84f1e66da7486e2bc1ff4b26212dea24be589366f63"
+    },
+    {
+      "file": "stage3/adapt/30-indexed-reads/getfunctionname-home.cjs",
+      "sha256": "a8630243803082268994bec7faadd7c7c8acbed70068b56841a9515d4ee0b7e8"
+    },
+    {
+      "file": "stage3/adapt/30-indexed-reads/getfunctionname-home.json",
+      "sha256": "ec2c14e9ab579848190ceb655c809a5cd9d4e9f92589a95fcdea8cf72d4c032b"
+    },
+    {
+      "file": "stage3/adapt/41-explicit-any-remaining/adapt.cjs",
+      "sha256": "6bc61814bda5613dee65a7774b99a7f47147762cf1da6e4c25888283da68aea5"
+    },
+    {
+      "file": "stage3/adapt/41-explicit-any-remaining/getfunctionname-home.cjs",
+      "sha256": "a8630243803082268994bec7faadd7c7c8acbed70068b56841a9515d4ee0b7e8"
+    },
+    {
+      "file": "stage3/adapt/41-explicit-any-remaining/getfunctionname-home.json",
+      "sha256": "ec2c14e9ab579848190ceb655c809a5cd9d4e9f92589a95fcdea8cf72d4c032b"
+    },
+    {
+      "file": "stage3/adapt/45-regex-captures/adapt.cjs",
+      "sha256": "e74363103f05e12554a58a4f135c406a019fbe9a358655a97045ddbea0c7c3b5"
+    },
+    {
+      "file": "stage3/adapt/45-regex-captures/getfunctionname-home.cjs",
+      "sha256": "a8630243803082268994bec7faadd7c7c8acbed70068b56841a9515d4ee0b7e8"
+    },
+    {
+      "file": "stage3/adapt/45-regex-captures/getfunctionname-home.json",
+      "sha256": "ec2c14e9ab579848190ceb655c809a5cd9d4e9f92589a95fcdea8cf72d4c032b"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-debug-messages/adapt.cjs",
+      "sha256": "c80b8c4340e62529694ec005133965fb49ddb73bac4e7676e155a640a289aa39"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-debug-messages/getfunctionname-home.cjs",
+      "sha256": "a8630243803082268994bec7faadd7c7c8acbed70068b56841a9515d4ee0b7e8"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-debug-messages/getfunctionname-home.json",
+      "sha256": "ec2c14e9ab579848190ceb655c809a5cd9d4e9f92589a95fcdea8cf72d4c032b"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-debug-messages/pins.json",
+      "sha256": "7b4973bfc70f484140e0dd34514da5c1484cd49cac75e91b8f08c99bde00545a"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-getfunctionname-move/adapt.cjs",
+      "sha256": "ad9c474ce42e0d3506806aafd8c132e8186399ab038b52eb2d607781c4eec981"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-getfunctionname-move/owners.json",
+      "sha256": "e7b9fe846a5d9b072288a25ddbd452ecebbf3dab4fbf91b26b42d64e842b1cb6"
+    }
+  ],
+  "bootstrapHasIndependentDebugObject": true,
+  "bootstrapNotAReaderOfAdaptedHelper": true
+}

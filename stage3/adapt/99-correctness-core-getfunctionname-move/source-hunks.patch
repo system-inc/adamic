@@ -1,0 +1,57 @@
+--- before/src/compiler/debug.ts
++++ after/src/compiler/debug.ts
+@@ -344,19 +344,7 @@
+     export function type<T>(value: unknown): asserts value is T;
+     export function type(_value: unknown) {}
+ 
+-    export function getFunctionName(func: AnyFunction): string {
+-        if (typeof func !== "function") {
+-            return "";
+-        }
+-        else if (hasProperty(func, "name")) {
+-            return func.name;
+-        }
+-        else {
+-            const text = Function.prototype.toString.call(func);
+-            const match = /^function\s+([\w$]+)\s*\(/.exec(text);
+-            return match ? match[1]! : "";
+-        }
+-    }
++    
+ 
+     export function formatSymbol(symbol: Symbol): string {
+         return `{ name: ${unescapeLeadingUnderscores(symbol.escapedName)}; flags: ${formatSymbolFlags(symbol.flags)}; declarations: ${map(symbol.declarations, node => formatSyntaxKind(node.kind))} }`;
+--- before/src/deprecatedCompat/deprecate.ts
++++ after/src/deprecatedCompat/deprecate.ts
+@@ -1,7 +1,9 @@
+ import {
++    type AnyFunction,
+     Debug,
+     DeprecationOptions,
+     formatStringFromArgs,
++    hasProperty,
+     noop,
+     Version,
+     version,
+@@ -68,6 +70,20 @@
+ }
+ 
+ export function deprecate<F extends (...args: any[]) => any>(func: F, options?: DeprecationOptions): F {
+-    const deprecation = createDeprecation(options?.name ?? Debug.getFunctionName(func), options);
++    const deprecation = createDeprecation(options?.name ?? getFunctionName(func), options);
+     return wrapFunction(deprecation, func);
+ }
++
++function getFunctionName(func: AnyFunction): string {
++        if (typeof func !== "function") {
++            return "";
++        }
++        else if (hasProperty(func, "name")) {
++            return func.name;
++        }
++        else {
++            const text = Function.prototype.toString.call(func);
++            const match = /^function\s+([\w$]+)\s*\(/.exec(text);
++            return match ? match[1]! : "";
++        }
++    }

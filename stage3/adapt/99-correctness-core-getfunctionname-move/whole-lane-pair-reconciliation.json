@@ -1,0 +1,120 @@
+{
+  "passed": true,
+  "acceptedUnitsExactlyOnce": 398,
+  "pieces": 20,
+  "processRecords": 797,
+  "calls": 6,
+  "castFailureCalls": 0,
+  "counterexamples": 0,
+  "oracle": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "allArchiveAndInnerHashesVerified": true,
+  "allRawReportsMatch": true,
+  "nameAndInputMultisetIdenticalAcrossActualBeforeAndMovedCalls": true,
+  "inputClasses": {
+    "function / own data name": 6
+  },
+  "returnedNames": {
+    "noop": 6
+  },
+  "unitsWithCalls": [
+    "stage3-lane-file-293"
+  ],
+  "sumPieceSeconds": 2008.6225130970015,
+  "largestPieceSeconds": 147.4891783969997,
+  "realCallRecords": [
+    {
+      "unit": "stage3-lane-file-293",
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "unit": "stage3-lane-file-293",
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "unit": "stage3-lane-file-293",
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "unit": "stage3-lane-file-293",
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "unit": "stage3-lane-file-293",
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "unit": "stage3-lane-file-293",
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    }
+  ]
+}

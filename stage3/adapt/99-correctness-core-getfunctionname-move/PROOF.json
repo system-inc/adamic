@@ -1,0 +1,390 @@
+{
+  "status": "PASS",
+  "base": "2a95448b8fadbcd30549a148bd28da5f8b75f907",
+  "head1": "aeeb9326bc1dc47ed53074d5b5db454cbc10f2cb",
+  "fullApplies": {
+    "head1": {
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/core-finish/head1"
+      ],
+      "cwd": "/workspace/scratch/core-finish/head1-repo",
+      "exit": 0,
+      "seconds": 653.8433204590001,
+      "stopReason": null,
+      "childrenPeakRssKiB": 2503036
+    },
+    "head2": {
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/core-finish/head2"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 1335.027964371,
+      "stopReason": null,
+      "childrenPeakRssKiB": 2528584
+    }
+  },
+  "checkpoints": {
+    "baseline": {
+      "sha": "87ed5c6e54cca626bd77bea07bfde09afb6ee6eb",
+      "branch": "typescript/core-cast-message-baseline-checkpoint",
+      "side": "baseline",
+      "apply": {
+        "command": [
+          "bash",
+          "stage3/apply.sh",
+          "/workspace/scratch/core-finish/baseline"
+        ],
+        "cwd": "/workspace/scratch/core-cast/base",
+        "exit": 0,
+        "seconds": 542.290870887,
+        "stopReason": null,
+        "childrenPeakRssKiB": 2468236
+      },
+      "sourceFiles": 746,
+      "sourceManifestSha256": "35ce93bd447f46feb674419aab177cd5be3e6650bd171f378dfa019e13cb8dd0",
+      "status": "Apply complete, subsequent proof pending"
+    },
+    "head1": {
+      "sha": "320b565679de631fe096487f2809931de946a3ea",
+      "branch": "typescript/core-cast-message-apply-checkpoint",
+      "side": "head1",
+      "apply": {
+        "command": [
+          "bash",
+          "stage3/apply.sh",
+          "/workspace/scratch/core-finish/head1"
+        ],
+        "cwd": "/workspace/scratch/core-finish/head1-repo",
+        "exit": 0,
+        "seconds": 653.8433204590001,
+        "stopReason": null,
+        "childrenPeakRssKiB": 2503036
+      },
+      "sourceFiles": 746,
+      "sourceManifestSha256": "4d1ce494e1a3c5fc472d964cf6e4cfd9c339a0eadf628a339a1201cfc0dd560a",
+      "status": "Apply complete, subsequent proof pending"
+    },
+    "head2": {
+      "sha": "85547eed666509c5152f8acc615b36d089962acc",
+      "branch": "typescript/core-getfunctionname-move-apply-checkpoint",
+      "side": "head2",
+      "apply": {
+        "command": [
+          "bash",
+          "stage3/apply.sh",
+          "/workspace/scratch/core-finish/head2"
+        ],
+        "cwd": "/workspace/adamic",
+        "exit": 0,
+        "seconds": 1335.027964371,
+        "stopReason": null,
+        "childrenPeakRssKiB": 2528584
+      },
+      "sourceFiles": 746,
+      "sourceManifestSha256": "9cc41855c637b6a0400c23a032cef6b6457426818a4e5ed352772af903fbc5a6",
+      "status": "Apply complete, subsequent proof pending"
+    }
+  },
+  "bodyRawSha256": "a63700ea6b975334c1e31665dd2ba328f594e3860ba73993c2fbb1b8bfbfc9aa",
+  "sourceBodyByteIdentical": true,
+  "earlierApplyDeltas": {
+    "passed": true,
+    "sameOrdinaryApplyEdits": [
+      {
+        "adapter": "30-indexed-reads",
+        "ordinaryApplyPatchByteIdentical": true,
+        "patchSha256": "baf53f0cdb6cd303de7ef8d0029369dbe3bb3cc69f38374634052ac06e59c7b4",
+        "trees": {
+          "baseline": {
+            "before": "3e0c5592dc85bb75ad8bce250413eebfc365ffb9",
+            "after": "0a17dbf590c4836a05909404aa00ff44ca509d33"
+          },
+          "head2": {
+            "before": "3e0c5592dc85bb75ad8bce250413eebfc365ffb9",
+            "after": "0a17dbf590c4836a05909404aa00ff44ca509d33"
+          }
+        }
+      },
+      {
+        "adapter": "41-explicit-any-remaining",
+        "ordinaryApplyPatchByteIdentical": true,
+        "patchSha256": "db71c071cc543ba6148d2fc07031810ca859c45d4dd4e4c8c0306eebde4b4c55",
+        "trees": {
+          "baseline": {
+            "before": "795adc46f8593aa49cb3c47a839004083cd33abf",
+            "after": "5917fd30a5f1c7a83e631b31b2a6bbb57c6c4420"
+          },
+          "head2": {
+            "before": "795adc46f8593aa49cb3c47a839004083cd33abf",
+            "after": "5917fd30a5f1c7a83e631b31b2a6bbb57c6c4420"
+          }
+        }
+      },
+      {
+        "adapter": "45-regex-captures",
+        "ordinaryApplyPatchByteIdentical": true,
+        "patchSha256": "4abf245b4a788b07f3f16f1bab5deed9904bd8f70a68c8b5d8e5d6e622e2cd9a",
+        "trees": {
+          "baseline": {
+            "before": "8ee03f91210d7e90fbea175677ce05faa7ac1596",
+            "after": "b06a2b95e8c55ed143b899a2aab33db5af044a28"
+          },
+          "head2": {
+            "before": "8ee03f91210d7e90fbea175677ce05faa7ac1596",
+            "after": "b06a2b95e8c55ed143b899a2aab33db5af044a28"
+          }
+        }
+      },
+      {
+        "adapter": "99-correctness-core-debug-messages",
+        "ordinaryApplyPatchByteIdentical": true,
+        "patchSha256": "7a39d8b89593d0f3c267c6e1c8d63ed72869a98ebbcdc525ee24f15d0e4bb4e4",
+        "trees": {
+          "baseline": {
+            "before": "2ea612971284cf2b89fcc231d14bfca683b0a2f1",
+            "after": "fa8e8877d63c3c179041817f307db92899471fdf"
+          },
+          "head2": {
+            "before": "5301faf9898123e149aaf171c5ba3dd280a04669",
+            "after": "a719ec8054527253cdf2bf714d29ec90fa9340c7"
+          }
+        }
+      }
+    ]
+  },
+  "pairedReplay": {
+    "passed": true,
+    "adapters": 98,
+    "differentExistingAdapters": [
+      "41-explicit-any-remaining"
+    ],
+    "allowedRecognitionAmendments": [
+      "30-indexed-reads",
+      "41-explicit-any-remaining",
+      "45-regex-captures",
+      "99-correctness-core-debug-messages"
+    ],
+    "allExistingExitsAndWritesIdentical": true,
+    "unamendedAdapterOutcomesIdentical": true,
+    "moveReplayWrites": 0,
+    "amended41SameRule31Refusal": "only amended source stack line numbers differ",
+    "normalization": "disposable source-tree and repository roots only; no exits, reasons, writes or data normalized"
+  },
+  "types79ActualNoDeprecatedCompat": {
+    "passed": true,
+    "method": "strace file operations of the actual adamic types process and children",
+    "rootCount": 79,
+    "allRootsObservedInTrace": true,
+    "deprecatedCompatFileAccesses": 0,
+    "adamicExit": 0
+  },
+  "normalComparison": {
+    "passed": true,
+    "sourceDifferences": [
+      "src/compiler/debug.ts",
+      "src/deprecatedCompat/deprecate.ts"
+    ],
+    "allJavaScript": [
+      {
+        "file": "_tsc.js",
+        "beforeSha256": "2c000cb2cd1e15d7ea191ac84c5f8a2cce660725049556540c702ff7f3e6ad86",
+        "afterSha256": "564ab6bbcabcafe8a15fd0d1f617f8de3e169b94b18fd0920f215d7f61c23f60",
+        "changed": true,
+        "oldFunctionCopies": 1,
+        "newFunctionCopies": 0,
+        "namespaceAssignmentsRemoved": 1,
+        "compatCallsRewired": 0,
+        "onlyMoveWiringOrWhitespace": true
+      },
+      {
+        "file": "_tsserver.js",
+        "beforeSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "afterSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "changed": false
+      },
+      {
+        "file": "_typingsInstaller.js",
+        "beforeSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "afterSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "changed": false
+      },
+      {
+        "file": "run.js",
+        "beforeSha256": "d55f08c8c7ab1965e14808cd14e0a449d8a13f8a9bc296e278d2e4fb4dac5e99",
+        "afterSha256": "8ad8ef4174b7ff492f4da473c4c6ad1e03dcf0955ddb3983a9b894d92af8856f",
+        "changed": true,
+        "oldFunctionCopies": 1,
+        "newFunctionCopies": 1,
+        "namespaceAssignmentsRemoved": 1,
+        "compatCallsRewired": 1,
+        "onlyMoveWiringOrWhitespace": true
+      },
+      {
+        "file": "tsc.js",
+        "beforeSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "afterSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "changed": false
+      },
+      {
+        "file": "tsserver.js",
+        "beforeSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+        "afterSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+        "changed": false
+      },
+      {
+        "file": "tsserverlibrary.js",
+        "beforeSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "afterSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "changed": false
+      },
+      {
+        "file": "typescript.js",
+        "beforeSha256": "5a08fdd7418ad2c0656e0c7a03409f8e766fd85060885e208f2b6cd45ad35398",
+        "afterSha256": "171179154085222cac4f5f49ede4a37f86e33c8615f35e8bc2f17524e4edf89d",
+        "changed": true,
+        "oldFunctionCopies": 1,
+        "newFunctionCopies": 1,
+        "namespaceAssignmentsRemoved": 1,
+        "compatCallsRewired": 1,
+        "onlyMoveWiringOrWhitespace": true
+      },
+      {
+        "file": "typingsInstaller.js",
+        "beforeSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "afterSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "changed": false
+      },
+      {
+        "file": "watchGuard.js",
+        "beforeSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+        "afterSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+        "changed": false
+      }
+    ],
+    "publicDeclarations": [
+      {
+        "file": "typescript.d.ts",
+        "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+        "bytes": 593502,
+        "byteIdentical": true
+      },
+      {
+        "file": "tsserverlibrary.d.ts",
+        "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+        "bytes": 866,
+        "byteIdentical": true
+      }
+    ]
+  },
+  "debugCensus": {
+    "passed": true,
+    "method": "unchanged guarded full-mode debug.ts census",
+    "diagnosticsPerRun": 0,
+    "units": {
+      "head1": 105,
+      "head2": 104,
+      "reflection-mutant": 105
+    },
+    "helperStartLine": 347,
+    "removedNewlineCount": 12,
+    "positionMapping": "after-debug locations below the removed declaration mapped back by its exact removed newline count; no reason/kind/phase normalized",
+    "removedSites": [
+      [
+        "<tree>/src/compiler/core.ts",
+        1275,
+        12,
+        "NotYet",
+        "hasOwnProperty on a function (its prototype property depends on whether it was declared or made as an arrow)",
+        "lowering"
+      ],
+      [
+        "<tree>/src/compiler/debug.ts",
+        352,
+        20,
+        "Refused",
+        "inherited library member name read as an own field",
+        "lowering"
+      ],
+      [
+        "<tree>/src/compiler/debug.ts",
+        355,
+        26,
+        "Refused",
+        "a method read as a value (toString would lose its object, and this with it)",
+        "refusal_scan"
+      ],
+      [
+        "<tree>/src/compiler/debug.ts",
+        355,
+        26,
+        "Refused",
+        "inherited library member call read as an own field",
+        "lowering"
+      ],
+      [
+        "<tree>/src/compiler/debug.ts",
+        356,
+        60,
+        "NotYet",
+        "reading text",
+        "lowering"
+      ],
+      [
+        "<tree>/src/compiler/debug.ts",
+        357,
+        20,
+        "NotYet",
+        "reading match",
+        "lowering"
+      ]
+    ],
+    "allRemovedSitesRecordedByGetFunctionNameUnit": true,
+    "dependencyRemoval": "core.ts:1275:12 hasProperty lowering finding was recorded only while probing getFunctionName",
+    "addedSites": [],
+    "reflectionMutantRestoresExactDebugBytes": true,
+    "reflectionMutantRestoresAllOriginalSites": true,
+    "restored355_26": [
+      [
+        "<tree>/src/compiler/debug.ts",
+        355,
+        26,
+        "Refused",
+        "inherited library member call read as an own field",
+        "lowering"
+      ],
+      [
+        "<tree>/src/compiler/debug.ts",
+        355,
+        26,
+        "Refused",
+        "a method read as a value (toString would lose its object, and this with it)",
+        "refusal_scan"
+      ]
+    ]
+  },
+  "realCalls": 6,
+  "returnedNames": {
+    "noop": 6
+  },
+  "counterexamples": 0,
+  "wholeLaneUnits": 398,
+  "actualMovedSixCallsMatched": true,
+  "normalTsDebugLosesOnlyHelper": true,
+  "noReexportThroughRootOrDebug": true,
+  "stockReferencesOnlyLocalDefinitionAndCall": true,
+  "exhaustiveGrepScopeNote": "15 separate implementation matches remain in unchanged lib bootstrap tools; zero old member names in src and all newly emitted artifacts. These bootstrap objects are independently verified, not readers of the adapted helper.",
+  "mutants": {
+    "castMissingMember": true,
+    "reflectionStopRestored": true
+  },
+  "publication": {
+    "preservedPublishedMoveCheckpoint": "15bd71b89a28947e168eaaf7bc71ffc4777b992b",
+    "finishedHead1Parent": "aeeb9326bc1dc47ed53074d5b5db454cbc10f2cb",
+    "method": "ordinary fast-forward to a merge commit containing the finished head 1; no force-push"
+  }
+}

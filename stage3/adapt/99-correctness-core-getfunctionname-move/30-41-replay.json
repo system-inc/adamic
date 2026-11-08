@@ -1,0 +1,26 @@
+[
+  {
+    "adapter": "30-indexed-reads",
+    "side": "before",
+    "exit": 1,
+    "seconds": 1.4638157389999833
+  },
+  {
+    "adapter": "30-indexed-reads",
+    "side": "after",
+    "exit": 1,
+    "seconds": 0.8908630569985689
+  },
+  {
+    "adapter": "41-explicit-any-remaining",
+    "side": "before",
+    "exit": 1,
+    "seconds": 1.5932630890001747
+  },
+  {
+    "adapter": "41-explicit-any-remaining",
+    "side": "after",
+    "exit": 1,
+    "seconds": 1.0263885840013245
+  }
+]

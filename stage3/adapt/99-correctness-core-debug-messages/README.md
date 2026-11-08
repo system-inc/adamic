@@ -70,3 +70,19 @@ whole-oracle run. The candidate has the completed-tree Node witnesses, positive
 emitted counter controls, both declaration checks, full build/type checks,
 paired replay and full census proof above. The oracle's existing expected
 public-API acknowledgement failure is retained. No lane expectation changed.
+
+## Stacked move: condition-4 guard follows the helper
+
+The authorized 99-correctness-core-getfunctionname-move applies after road (b).
+Road (b) itself still leaves getFunctionName unchanged. On a finished moved
+tree, its condition-4 guard follows the function to deprecate.ts, pinning the
+same body byte for byte. A drifted or half-applied local body, duplicate homes
+or a missing helper still refuses on replay. The original Debug owner remains
+accepted unchanged before the move. getfunctionname-home.json records both
+exact declarations and the identical body; pins.json retains the original
+whole-owner guard and adds the unchanged body hash for the moved home.
+
+This amendment changes recognition only. The four assertion message edits and
+all other guards remain as proved above. The move directory records the new
+paired replays, drift controls and normal-build proofs. Historical stop logs
+are preserved there as history, not current implementation status.

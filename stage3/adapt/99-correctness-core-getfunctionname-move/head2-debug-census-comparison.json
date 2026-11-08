@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "method": "unchanged guarded full-mode debug.ts census",
+  "diagnosticsPerRun": 0,
+  "units": {
+    "head1": 105,
+    "head2": 104,
+    "reflection-mutant": 105
+  },
+  "helperStartLine": 347,
+  "removedNewlineCount": 12,
+  "positionMapping": "after-debug locations below the removed declaration mapped back by its exact removed newline count; no reason/kind/phase normalized",
+  "removedSites": [
+    [
+      "<tree>/src/compiler/core.ts",
+      1275,
+      12,
+      "NotYet",
+      "hasOwnProperty on a function (its prototype property depends on whether it was declared or made as an arrow)",
+      "lowering"
+    ],
+    [
+      "<tree>/src/compiler/debug.ts",
+      352,
+      20,
+      "Refused",
+      "inherited library member name read as an own field",
+      "lowering"
+    ],
+    [
+      "<tree>/src/compiler/debug.ts",
+      355,
+      26,
+      "Refused",
+      "a method read as a value (toString would lose its object, and this with it)",
+      "refusal_scan"
+    ],
+    [
+      "<tree>/src/compiler/debug.ts",
+      355,
+      26,
+      "Refused",
+      "inherited library member call read as an own field",
+      "lowering"
+    ],
+    [
+      "<tree>/src/compiler/debug.ts",
+      356,
+      60,
+      "NotYet",
+      "reading text",
+      "lowering"
+    ],
+    [
+      "<tree>/src/compiler/debug.ts",
+      357,
+      20,
+      "NotYet",
+      "reading match",
+      "lowering"
+    ]
+  ],
+  "allRemovedSitesRecordedByGetFunctionNameUnit": true,
+  "dependencyRemoval": "core.ts:1275:12 hasProperty lowering finding was recorded only while probing getFunctionName",
+  "addedSites": [],
+  "reflectionMutantRestoresExactDebugBytes": true,
+  "reflectionMutantRestoresAllOriginalSites": true,
+  "restored355_26": [
+    [
+      "<tree>/src/compiler/debug.ts",
+      355,
+      26,
+      "Refused",
+      "inherited library member call read as an own field",
+      "lowering"
+    ],
+    [
+      "<tree>/src/compiler/debug.ts",
+      355,
+      26,
+      "Refused",
+      "a method read as a value (toString would lose its object, and this with it)",
+      "refusal_scan"
+    ]
+  ]
+}
