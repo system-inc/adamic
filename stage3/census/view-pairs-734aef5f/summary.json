@@ -1,7 +1,7 @@
 {
   "counts": {
-    "object_related_top": 678,
-    "object_related_nested": 19766,
+    "object_related_top": 682,
+    "object_related_nested": 19791,
     "object_unrelated_top": 0,
     "object_unrelated_nested": 0,
     "scalar_top": 3,
@@ -10,8 +10,8 @@
     "nil_target_only": 0
   },
   "raw_counts": {
-    "object_related_top": 678,
-    "object_related_nested": 19766,
+    "object_related_top": 682,
+    "object_related_nested": 19791,
     "object_unrelated_top": 0,
     "object_unrelated_nested": 0,
     "scalar_top": 3,
@@ -19,8 +19,8 @@
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "total_selected_pairs": 22741,
-  "total_raw_pairs": 22741,
+  "total_selected_pairs": 22770,
+  "total_raw_pairs": 22770,
   "unrelated_object_pairs": 0,
   "distinct_unrelated_text_pairs": 0,
   "nil_source_views": 0,
@@ -38,24 +38,24 @@
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "observed_units": 3917,
+  "observed_units": 3985,
   "unit_statuses": {
-    "lowered": 2930,
-    "stopped": 987
+    "lowered": 2972,
+    "stopped": 1013
   },
   "stock_skips_without_boundary": {
-    "deferred_generic_instantiation": 24
+    "deferred_generic_instantiation": 25
   },
-  "deferred_units_in_emitted_inventory": 24,
+  "deferred_units_in_emitted_inventory": 25,
   "resolved_files": 81,
-  "full_files_attempted": 6,
-  "full_files_complete_traversal": 6,
-  "stock_inventory_units": 510,
+  "full_files_attempted": 7,
+  "full_files_complete_traversal": 7,
+  "stock_inventory_units": 579,
   "probe_incomplete_units": 0,
   "orphan_pair_lines": 0,
   "probe_errors": [],
-  "view_sources_in_selected_units": 806,
-  "deduplicated_pair_visits": 127450,
+  "view_sources_in_selected_units": 810,
+  "deduplicated_pair_visits": 127469,
   "over_depth_pair_visits": 10593,
   "nil_reference_definition": "Known lower.representation(fieldType) with ir.Type.IsReference(); includes strings and Weak. Object-reference companion excludes ir.String and ir.Weak. Fields come from cycleFinder.fields, excluding prototype methods, accessors and static prototype.",
   "first_error_selected_stopped_units": 768,
