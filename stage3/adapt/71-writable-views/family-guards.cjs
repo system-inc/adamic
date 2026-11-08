@@ -11,10 +11,14 @@ const tree = path.resolve(process.argv[2]);
 function hashes(root) {
     const result = {};
     function walk(dir) {
-        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        for(const entry of fs.readdirSync(dir, { withFileTypes: true })) {
             const file = path.join(dir, entry.name);
-            if (entry.isDirectory()) walk(file);
-            else result[path.relative(root, file)] = crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+            if(entry.isDirectory()) walk(file);
+            else
+                result[path.relative(root, file)] = crypto
+                    .createHash('sha256')
+                    .update(fs.readFileSync(file))
+                    .digest('hex');
         }
     }
     walk(path.join(root, 'src'));
@@ -25,24 +29,29 @@ const cases = [
     { family: 'tuples', owner: 'getTypeArguments', statement: 'type.target = type.target;' },
     { family: 'empty-arrays', owner: 'addAntecedent', statement: 'label.antecedent = [label];' },
 ];
-for (const test of cases) {
+for(const test of cases) {
     const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'unit71-family-guard-'));
     try {
         fs.cpSync(path.join(tree, 'src'), path.join(scratch, 'src'), { recursive: true });
         fs.symlinkSync(path.join(tree, 'node_modules'), path.join(scratch, 'node_modules'));
-        const owner = require(`./${test.family}.json`).owners.find(o => o.function === test.owner);
-        const file = path.join(scratch, owner.file), text = fs.readFileSync(file, 'utf8');
+        const owner = require(`./${test.family}.json`).owners.find((o) => o.function === test.owner);
+        const file = path.join(scratch, owner.file),
+            text = fs.readFileSync(file, 'utf8');
         const source = ts.createSourceFile(file, text, ts.ScriptTarget.ES2024, true);
         const matches = [];
         function visit(n) {
-            if (ts.isFunctionDeclaration(n) && n.name?.text === test.owner && n.body) matches.push(n.body);
+            if(ts.isFunctionDeclaration(n) && n.name?.text === test.owner && n.body) matches.push(n.body);
             ts.forEachChild(n, visit);
         }
         visit(source);
         assert.equal(matches.length, 1);
         const body = matches[0].getText(source);
-        const mutation = { file: owner.file, owner: test.owner, before: body,
-            after: '{' + test.statement + body.slice(1) };
+        const mutation = {
+            file: owner.file,
+            owner: test.owner,
+            before: body,
+            after: '{' + test.statement + body.slice(1),
+        };
         const before = hashes(scratch);
         // Mutate 71's proposed edits, not the input left by earlier adaptations.
         const script = `require(${JSON.stringify(path.join(__dirname, test.family + '.json'))}).edits.push(${JSON.stringify(mutation)}); process.argv = [process.execPath, ${JSON.stringify(path.join(__dirname, 'adapt.cjs'))}, ${JSON.stringify(scratch)}]; require(process.argv[1]);`;
@@ -52,5 +61,7 @@ for (const test of cases) {
         assert.deepEqual(hashes(scratch), before);
         console.log(JSON.stringify({ ...test, exit: result.status, source_unchanged_after_rejection: true }));
     }
-    finally { fs.rmSync(scratch, { recursive: true }); }
+    finally {
+        fs.rmSync(scratch, { recursive: true });
+    }
 }
