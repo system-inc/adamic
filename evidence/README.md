@@ -38,3 +38,7 @@ Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made
 ## L2 follow-up at ec5e9b2
 
 [Baseline, condition-3 mutant, and stock tsc 6.0.3](ec5e9b2/results.md): baseline and mutant both fail during Load with TS2322; stock 6.0.3 also rejects the exact program with default and strict settings. Source restored exactly.
+
+## L2 proof at e5531c8
+
+[Baseline, mutant B, and stock tsc 6.0.3](e5531c8/results.md): baseline passes; condition-3 mutant newly fails with `got <nil>, want the unfixed type parameter named as NotYet`; stock tsc accepts under default and strict settings. Exact source restoration verified.

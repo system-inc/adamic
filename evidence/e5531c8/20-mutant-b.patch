@@ -1,0 +1,13 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index ec8c73589..ab2708166 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -180,7 +180,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
+ 				target = checker.Checker_getCanonicalSignature(l.checker, target)
+ 			}
+ 			instantiated := instantiateSignatureInContextOf(l.checker, fromSignatures[0], target, nil, nil)
+-			if l.signatureAny(instantiated, target) != nil && l.signatureAny(fromSignatures[0], target) == nil {
++			if false {
+ 				return &widening{source: from, target: to, unfixedGeneric: true}
+ 			}
+ 			fromSignatures, toSignatures = []*checker.Signature{instantiated}, []*checker.Signature{target}

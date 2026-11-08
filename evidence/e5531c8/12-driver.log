@@ -1,0 +1,14 @@
+=== RUN   TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== PAUSE TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== CONT  TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+--- PASS: TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.158s
+=== RUN   TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== PAUSE TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== CONT  TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+    rule_g_test.go:74: got <nil>, want the unfixed type parameter named as NotYet
+--- FAIL: TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet (0.25s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.266s
+FAIL
