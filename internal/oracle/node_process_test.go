@@ -118,10 +118,12 @@ func TestNodeProcessHandleView(t *testing.T) {
 // node_process_handle_detached.a reads setBlocking off stdout's handle into a const and calls it bare.
 // Node's is Pipe.prototype's, which needs the handle as its receiver, so on a pipe it throws
 // TypeError: Illegal invocation. Both backends' handle holds a closure that ignores its receiver, and
-// printed after (#5abf5v8). The read stops before either backend, by name, where it's made.
+// printed after (#5abf5v8). The read stops before either backend, by name, where it's made. The
+// fixture keeps a directory of its own, since flow's and fresh's corpora lower every program at the
+// top of testdata.
 func TestNodeProcessHandleDetachedStops(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_handle_detached.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_handle_refused/node_process_handle_detached.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
