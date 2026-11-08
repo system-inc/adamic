@@ -2564,10 +2564,11 @@ func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Ki
 	}}}, nil
 }
 
-// isCallee reports whether a property read is the expression a call calls, parentheses aside.
+// isCallee reports whether a property read is the expression a call calls, parentheses aside, or the
+// operand of a non-null assertion that is (assertedCallee).
 func isCallee(node *ast.Node) bool {
 	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
 		node = node.Parent
 	}
-	return node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node
+	return node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node || assertedCallee(node)
 }

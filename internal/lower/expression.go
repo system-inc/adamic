@@ -1688,6 +1688,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 	}
+	ownField := ast.SkipOuterExpressions(node.AsCallExpression().Expression, ast.OEKParentheses|ast.OEKAssertions).Kind == ast.KindPropertyAccessExpression
 	switch callee := closure.(type) {
 	case ir.Property:
 		// object.name(...) through an interface: the object may be a class's, whose methods aren't
@@ -1703,7 +1704,18 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		// (const f = o.m; if (f) f()) reads a variable, and a computed key, o['m'](), a read through
 		// ?. (if (o?.m) o?.m(), whose missing object the Defined's check stops) or a Defined around
 		// anything else keeps the plain road.
-		if property, isProperty := callee.Value.(ir.Property); isProperty && !property.Optional && ast.SkipOuterExpressions(node.AsCallExpression().Expression, ast.OEKParentheses|ast.OEKAssertions).Kind == ast.KindPropertyAccessExpression {
+		if property, isProperty := callee.Value.(ir.Property); isProperty && !property.Optional && ownField {
+			property.Method = true
+			callee.Value = property
+			closure = callee
+		}
+	case ir.Coalesce:
+		// o.m!(): the non-null assertion's check (non_null.go) around the call's own field read, which
+		// JavaScript runs as o.m(), with o as this. It moves as the Defined does, on the same terms,
+		// and its check stays the assertion's own, its words and its panic, made on what the lookup
+		// finds (ir.MethodCallee). A ?? panic(...) and an assertion around anything else keep the
+		// plain road.
+		if property, isProperty := callee.Value.(ir.Property); isProperty && callee.Panic != nil && callee.Fallback == nil && !property.Optional && ownField {
 			property.Method = true
 			callee.Value = property
 			closure = callee

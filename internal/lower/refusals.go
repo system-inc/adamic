@@ -261,7 +261,7 @@ func (l *lowering) methodValueRefusal(node *ast.Node) error {
 	if l.directBindMethodRead(node) {
 		return nil
 	}
-	if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) && !l.detachedOwnMethod(node) && !l.nodeProcessMethodObservation(node) && !l.methodPresenceTest(node) {
+	if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !assertedCallee(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) && !l.detachedOwnMethod(node) && !l.nodeProcessMethodObservation(node) && !l.methodPresenceTest(node) {
 		// A method read as a value loses its object: this is undefined when it's called.
 		access := node.AsPropertyAccessExpression()
 		if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
@@ -297,6 +297,17 @@ func called(node *ast.Node) bool {
 		node = node.Parent
 	}
 	return node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node
+}
+
+// assertedCallee reports whether a property access is the operand of a non-null assertion that is what a
+// call calls, through any parentheses: o.m!(), which JavaScript runs as o.m(), so the call keeps its
+// object as a method call does, the assertion's check made on what the lookup finds (callClosure's
+// ir.Coalesce arm, ir.MethodCallee, #0bxc4jh).
+func assertedCallee(node *ast.Node) bool {
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	return node.Parent != nil && node.Parent.Kind == ast.KindNonNullExpression && called(node.Parent)
 }
 
 // scannedText is an identifier's name, or this.

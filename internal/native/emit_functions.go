@@ -341,9 +341,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		}
 	}
 	if receiver != "" {
-		// A narrowed callee's Defined checks what the lookup finds, in its own words, before the
-		// arguments run (ir.MethodCallee). A class's proven method is always there.
-		property, defined, _ := ir.MethodCallee(expression.Closure)
+		// A narrowed or asserted callee's check is made on what the lookup finds, in its own words,
+		// before the arguments run (ir.MethodCallee). A class's proven method is always there.
+		property, check, _ := ir.MethodCallee(expression.Closure)
 		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
@@ -373,18 +373,18 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				if !checked {
 					panic("compiler bug: unavailable callable view read")
 				}
-				if defined != nil {
-					e.checkDefined(closure, defined.Message)
+				if check != nil {
+					e.checkMethodCallee(check, closure+" == NULL")
 				}
 			} else {
 				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
 				if expression.Optional {
-					// The call's ?. tests what the lookup finds, a narrowed callee's own check (defined)
-					// included, as Node's o.m?.() does.
+					// The call's ?. tests what the lookup finds, a checked callee's own check (a Defined or a
+					// non-null assertion) included, as Node's o.m?.() does.
 					return e.optionalCallThrough(expression, closure, receiver, method, closureArm, methodArm)
 				}
-				if defined != nil {
-					e.checkDefinedWhen(fmt.Sprintf("%s == NULL && !(%s)", closure, e.methodPresent(method)), defined.Message)
+				if check != nil {
+					e.checkMethodCallee(check, fmt.Sprintf("%s == NULL && !(%s)", closure, e.methodPresent(method)))
 				} else {
 					const missing = "compiler bug: a method the checker proved is there is missing"
 					e.line("if (%s == NULL && !(%s)) adamic_panic(%s, %d);", closure, e.methodPresent(method), cString(missing), len(missing))
@@ -578,6 +578,24 @@ func (e *emitter) calledThrough(expression ir.CallClosure, closure, receiver, me
 		return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))
 	}
 	return e.snapshot(expression.Returns, unslotted(expression.Returns, result+"."+member(expression.Returns)))
+}
+
+// checkMethodCallee makes check, the one ir.MethodCallee found around a method callee, where absent, a
+// C condition, says the lookup found nothing: a Defined's TypeError or panic (checkDefinedWhen), or a
+// non-null assertion's panic in its own words, as coalesce (emit_branches.go) makes it.
+func (e *emitter) checkMethodCallee(check ir.Expression, absent string) {
+	switch check := check.(type) {
+	case ir.Defined:
+		e.checkDefinedWhen(absent, check.Message)
+	case ir.Coalesce:
+		text, message, _ := e.aside(check.Panic)
+		e.line("if (%s) {", absent)
+		e.out.WriteString(text)
+		e.line("\tadamic_panic((%s)->bytes, (%s)->length);", message, message)
+		e.line("}")
+	default:
+		panic(fmt.Sprintf("compiler bug: a method callee checked by %T", check))
+	}
 }
 
 // discarding reports whether a void call has something of its result to let go of (discard).
