@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/tmp/branded-head-entry/overlay.json",
+    "-o",
+    "/tmp/branded-head-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/tmp/branded-head",
+  "exit": 0,
+  "wall_seconds": 48.403,
+  "stopped": null
+}

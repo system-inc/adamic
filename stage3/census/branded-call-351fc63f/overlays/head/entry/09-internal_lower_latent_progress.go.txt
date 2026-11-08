@@ -1,0 +1,121 @@
+// Census-only progress counters. They never change findings or coverage records.
+package lower
+
+import (
+	"encoding/json"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"time"
+)
+
+type latentProgressState struct {
+	path       string
+	program    *load.Program
+	file       string
+	bytes      int
+	target     map[*ast.Node]bool
+	walked     map[*ast.Node]bool
+	scanned    map[*ast.Node]bool
+	attempted  map[*ast.Node]bool
+	examined   map[*ast.Node]bool
+	phase      string
+	where      string
+	kind       string
+	start      int
+	end        int
+	units      int
+	totalUnits int
+	started    time.Time
+	last       time.Time
+}
+
+var latentProgress *latentProgressState
+
+func latentProgressStart(program *load.Program, file *ast.SourceFile) {
+	path := os.Getenv("LATENT_PROGRESS_FILE")
+	if path == "" {
+		latentProgress = nil
+		return
+	}
+	p := &latentProgressState{path: path, program: program, file: program.FileName(file), bytes: len(file.Text()),
+		target: map[*ast.Node]bool{}, scanned: map[*ast.Node]bool{}, walked: map[*ast.Node]bool{}, attempted: map[*ast.Node]bool{}, examined: map[*ast.Node]bool{},
+		phase: "refusal_scan", started: time.Now(), totalUnits: len(latentPieceUnits(file))}
+	var catalogue ast.Visitor
+	catalogue = func(node *ast.Node) bool { p.target[node] = true; node.ForEachChild(catalogue); return false }
+	catalogue(file.AsNode())
+	latentProgress = p
+	latentProgressWrite(true)
+}
+func latentProgressVisit(node *ast.Node, attempt bool) {
+	p := latentProgress
+	if p == nil || node == nil {
+		return
+	}
+	if p.target[node] {
+		p.examined[node] = true
+		if attempt {
+			p.attempted[node] = true
+		} else {
+			p.walked[node] = true
+		}
+	}
+	p.where, p.kind, p.start, p.end = p.program.Where(node), node.Kind.String(), node.Pos(), node.End()
+	latentProgressWrite(false)
+}
+func latentProgressPhase(phase string) {
+	if latentProgress == nil {
+		return
+	}
+	latentProgress.phase = phase
+	latentProgressWrite(true)
+}
+func latentProgressUnitDone() {
+	if latentProgress == nil {
+		return
+	}
+	latentProgress.units++
+	latentProgressWrite(true)
+}
+func latentProgressWrite(force bool) {
+	p := latentProgress
+	if p == nil {
+		return
+	}
+	now := time.Now()
+	if !force && now.Sub(p.last) < time.Second {
+		return
+	}
+	p.last = now
+	payload := map[string]any{"file": p.file, "source_bytes": p.bytes, "total_target_ast_nodes": len(p.target),
+		"refusal_unique_target_nodes": len(p.scanned), "walker_unique_target_nodes": len(p.walked), "lowerer_unique_target_nodes": len(p.attempted),
+		"examined_unique_target_nodes": len(p.examined), "phase": p.phase, "current_where": p.where,
+		"current_kind": p.kind, "current_start": p.start, "current_end": p.end,
+		"statements_completed": p.units, "total_statements": p.totalUnits,
+		"elapsed_seconds": now.Sub(p.started).Seconds(), "updated_utc": now.UTC().Format(time.RFC3339Nano),
+		"definition": "unique selected-source AST nodes entered by the refusal scanner, walker or lowerer; not complete-file coverage"}
+	data, err := json.Marshal(payload)
+	if err != nil {
+		panic(err)
+	}
+	if err := os.WriteFile(p.path+".pending", append(data, '\n'), 0600); err != nil {
+		panic(err)
+	}
+	if err := os.Rename(p.path+".pending", p.path); err != nil {
+		panic(err)
+	}
+}
+
+func latentProgressScan(node *ast.Node, phase string) {
+	p := latentProgress
+	if p == nil || node == nil {
+		return
+	}
+	if p.target[node] {
+		p.scanned[node] = true
+		p.examined[node] = true
+	}
+	p.phase = phase
+	p.where, p.kind, p.start, p.end = p.program.Where(node), node.Kind.String(), node.Pos(), node.End()
+	latentProgressWrite(false)
+}
