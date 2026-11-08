@@ -1,0 +1,20 @@
+// A literal method called through an optional method signature an in test narrowed. The call keeps
+// its object (#0bxc4jh): it took the plain road before, which called the method's closure with no
+// receiver, so this was the first argument where Node prints 7.
+interface Counter {
+	x: number;
+	add?(n: number): number;
+}
+function show(counter: Counter): void {
+	if ('add' in counter) {
+		console.log(String(counter.add(4)));
+	}
+}
+show({
+	x: 3,
+	add(n: number): number {
+		return this.x + n;
+	},
+});
+show({ x: 5 });
+console.log('done');
