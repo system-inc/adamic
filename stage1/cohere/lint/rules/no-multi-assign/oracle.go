@@ -8,7 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoMultiAssign() rule.Rule { return rules.NoMultiAssign }
+func oracleNoMultiAssign(options any) rule.Bound { return bindOracle(rules.NoMultiAssign, options) }
 
 // All-rule rows also carry options belonging to other rules. Decode the fields
 // this rule owns into its upstream type, as the unified adapters do.

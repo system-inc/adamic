@@ -7,6 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -19,7 +20,22 @@ func Helpers(t *testing.T) string {
 	catalog, _ := filepath.Abs("testdata/catalog.go")
 	descriptors, _ := filepath.Abs("testdata/descriptors.go")
 	virtual := filepath.Join(root, "adamic_helper_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side, filepath.Join(root, "policy/adamic_helpers.go"): catalog, filepath.Join(root, "adamic_helper_descriptors.go"): descriptors}})
+	// Retain the typed registrations for the descriptor oracle before Entry erases the decoder type.
+	registerPath := filepath.Join(root, "internal/lint/rule/register.go")
+	register, err := os.ReadFile(registerPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	anchor := "func Register(registrations ...Registrant) {"
+	if strings.Count(string(register), anchor) != 1 {
+		t.Fatal("registration capture anchor changed")
+	}
+	captured := strings.Replace(string(register), anchor, anchor+"\n AdamicRegistrations = append(AdamicRegistrations, registrations...)", 1) + "\nvar AdamicRegistrations []Registrant\n"
+	capturedPath := filepath.Join(t.TempDir(), "register.go")
+	if err := os.WriteFile(capturedPath, []byte(captured), 0644); err != nil {
+		t.Fatal(err)
+	}
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{registerPath: capturedPath, virtual: side, filepath.Join(root, "policy/adamic_helpers.go"): catalog, filepath.Join(root, "adamic_helper_descriptors.go"): descriptors}})
 	path := filepath.Join(t.TempDir(), "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)

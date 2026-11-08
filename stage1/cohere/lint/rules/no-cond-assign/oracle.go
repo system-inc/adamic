@@ -9,7 +9,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoCondAssign() rule.Rule { return rules.NoCondAssign }
+func oracleNoCondAssign(options any) rule.Bound { return bindOracle(rules.NoCondAssign, options) }
 func oracleNoCondAssignOptions(fields []string) any {
 	if fields[5] == "" || fields[5][0] != '"' {
 		return nil

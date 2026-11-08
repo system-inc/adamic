@@ -9,7 +9,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/base"
 )
 
-func oracleBaseBoundaryNoGlobalContainer() rule.Rule { return rules.BoundaryNoGlobalContainer }
+func oracleBaseBoundaryNoGlobalContainer(options any) rule.Bound {
+	return bindOracle(rules.BoundaryNoGlobalContainer, options)
+}
 
 func oracleBaseBoundaryNoGlobalContainerOptions(fields []string) any {
 	if len(fields) <= 5 || fields[5] == "" || fields[5] == "null" {

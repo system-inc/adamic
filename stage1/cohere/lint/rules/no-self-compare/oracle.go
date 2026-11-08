@@ -8,7 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoSelfCompare() rule.Rule { return rules.NoSelfCompare }
+func oracleNoSelfCompare(options any) rule.Bound { return bindOracle(rules.NoSelfCompare, options) }
 
 // Upstream accepts no configurable options. Decode supplied JSON nonetheless,
 // preserving it rather than silently dropping an options-bearing manifest row.

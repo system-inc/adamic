@@ -227,7 +227,7 @@ func load(root string) *analyzer {
 					return true
 				}
 				typ := p.TypesInfo.TypeOf(lit)
-				if typ == nil || typ.String() != cohereModule+"/internal/lint/rule.Registration" {
+				if typ == nil || !isRuleType(typ, "Registration") {
 					return true
 				}
 				var target *declaration
@@ -283,7 +283,7 @@ func ruleName(d *declaration) string {
 			continue
 		}
 		t := d.pkg.TypesInfo.TypeOf(lit)
-		if t == nil || t.String() != cohereModule+"/internal/lint/rule.Rule" {
+		if t == nil || !isRuleType(t, "Rule") {
 			continue
 		}
 		for _, e := range lit.Elts {
@@ -530,12 +530,12 @@ func entries(a *analyzer, branches []branch) []entry {
 	registrations = rule.Registered()
 	out := []entry{}
 	for _, r := range registrations {
-		d := byRule[r.Rule.Name]
+		d := byRule[r.Name]
 		if d == nil {
-			panic("registered rule without a resolved literal: " + r.Rule.Name)
+			panic("registered rule without a resolved literal: " + r.Name)
 		}
-		delete(byRule, r.Rule.Name)
-		e := entry{Name: r.Rule.Name, Family: strings.Split(strings.TrimPrefix(d.pkg.PkgPath, rulesPrefix), "/")[0], Variable: d.object.Name(), DeclaredChecker: r.Rule.NeedsTypeChecker, Options: r.Decode != nil || r.DecodeOptionList != nil || r.DecodeAt != nil, RequiresOptions: r.RequiresOptions, Tests: a.testSites(d), Compiler: emptyFrequency(), Repository: emptyFrequency(), Stage1: statusFor(a.root, r.Rule.Name, branches), Waiting: []string{}}
+		delete(byRule, r.Name)
+		e := entry{Name: r.Name, Family: strings.Split(strings.TrimPrefix(d.pkg.PkgPath, rulesPrefix), "/")[0], Variable: d.object.Name(), DeclaredChecker: r.NeedsTypeChecker, Options: r.Bind != nil, RequiresOptions: r.RequiresOptions, Tests: a.testSites(d), Compiler: emptyFrequency(), Repository: emptyFrequency(), Stage1: statusFor(a.root, r.Name, branches), Waiting: []string{}}
 		e.Sources = []source{ownSource(a.root, d.file)}
 		stem := strings.TrimSuffix(d.file, ".go")
 		siblings, err := filepath.Glob(stem + "_*.go")
@@ -599,11 +599,11 @@ func captureTests(root, output string, items []entry) {
 	original := filepath.Join(root, "cohere/internal/lint/testing/docs_capture.go")
 	data, e := os.ReadFile(original)
 	fatal(e)
-	anchor := "func newCapturedRun(subject rule.Rule, fileName string, otherFiles int, options any) *capturedRun {"
+	anchor := "func newCapturedRun[Options any](\n\truleName string,\n\tfileName string,\n\totherFiles int,\n\toptions rule.Given[Options],\n) *capturedRun {"
 	if strings.Count(string(data), anchor) != 1 {
 		panic("capture anchor changed")
 	}
-	replacement := strings.Replace(string(data), anchor, anchor+"\n inventoryRecord(subject.Name)", 1)
+	replacement := strings.Replace(string(data), anchor, anchor+"\n inventoryRecord(ruleName)", 1)
 	side := filepath.Join(scratch, "docs_capture.go")
 	fatal(os.WriteFile(side, []byte(replacement), 0644))
 	helper := filepath.Join(root, "stage1/cohere/lint/inventory/testdata/capture.go")
@@ -729,7 +729,7 @@ func collectFiles(root string, compiler bool) []string {
 	}
 	return files
 }
-func measured(subject rule.Registration, file *tsast.SourceFile, graph *program.Graph, report *frequency) {
+func measured(subject rule.Entry, file *tsast.SourceFile, graph *program.Graph, report *frequency) {
 	report.Offered++
 	defer func() {
 		if value := recover(); value != nil {
@@ -747,14 +747,14 @@ func measured(subject rule.Registration, file *tsast.SourceFile, graph *program.
 	}, RecordNote: func(s string) { report.Skips[s]++ }}
 	// Use the same declared-read view the production walk gives each rule.
 	if graph != nil {
-		ctx.Program = rule.ViewProgram(graph.Program, file, subject.Rule)
+		ctx.Program = rule.ViewProgram(graph.Program, file, subject.Traits)
 	}
-	if subject.Rule.NeedsTypeChecker {
+	if subject.NeedsTypeChecker {
 		checker, release := graph.CheckerForFile(context.Background(), file)
 		defer release()
 		ctx.TypeChecker = checker
 	}
-	listeners := subject.Rule.Run(ctx, nil)
+	listeners := subject.Unconfigured.Run(ctx)
 	if len(listeners) > 0 {
 		report.Listeners++
 	}
@@ -803,7 +803,7 @@ func measureCorpus(root, output, label string, paths []string, items []entry) []
 			continue
 		}
 		for _, registration := range rule.Registered() {
-			item := byName[registration.Rule.Name]
+			item := byName[registration.Name]
 			f := &item.Repository
 			if label == "compiler" {
 				f = &item.Compiler
@@ -1030,4 +1030,9 @@ func main() {
 	fatal(e)
 	fatal(os.WriteFile(filepath.Join(*output, "inventory.json"), append(data, '\n'), 0644))
 	fatal(os.WriteFile(filepath.Join(*output, "inventory.md"), []byte(markdown(result)), 0644))
+}
+
+func isRuleType(t types.Type, name string) bool {
+	named, ok := t.(*types.Named)
+	return ok && named.Obj().Pkg() != nil && named.Obj().Pkg().Path() == cohereModule+"/internal/lint/rule" && named.Obj().Name() == name
 }

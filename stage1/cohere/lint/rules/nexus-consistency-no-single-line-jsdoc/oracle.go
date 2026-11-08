@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/nexus"
 )
 
-func oracleNexusConsistencyNoSingleLineJsdoc() rule.Rule { return rules.ConsistencyNoSingleLineJsDoc }
+func oracleNexusConsistencyNoSingleLineJsdoc(options any) rule.Bound {
+	return bindOracle(rules.ConsistencyNoSingleLineJsDoc, options)
+}
 
 // Upstream declares no options type and ignores options. Decode supplied JSON explicitly;
 // returning the decoded value preserves that contract without dropping a captured options row.

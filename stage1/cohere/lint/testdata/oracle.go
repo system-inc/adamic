@@ -165,7 +165,7 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
 	for _, item := range registeredRules() {
-		subject := item.subject
+		subject := item.subject(nil)
 		// Manifest sets carry boundary commas, even for one rule; keep registry order.
 		if fields[1] != "" && fields[1] != "all" && fields[1] != subject.Name && !strings.Contains(fields[1], ","+subject.Name+",") {
 			continue
@@ -179,7 +179,7 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		if options == nil && fields[1] == subject.Name && fields[5] != "" && fields[5] != "null" {
 			panic(fmt.Sprintf("%s: options %s reached an adapter that decodes none", subject.Name, fields[5]))
 		}
-		listeners = append(listeners, subject.Run(ctx, options))
+		listeners = append(listeners, item.subject(options).Run(ctx))
 	}
 	var walk func(*ast.Node)
 	walk = func(n *ast.Node) {
@@ -246,4 +246,12 @@ func main() {
 	if countOnly {
 		fmt.Fprintln(out, count)
 	}
+}
+
+// bindOracle preserves the distinction between absent and supplied case options.
+func bindOracle[Options any](subject rule.Rule[Options], options any) rule.Bound {
+	if options == nil {
+		return rule.Bind(subject, rule.Given[Options]{})
+	}
+	return rule.Bind(subject, rule.Configured(options.(Options)))
 }

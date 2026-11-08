@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoVar() rule.Rule                 { return rules.NoVar }
+func oracleNoVar(options any) rule.Bound     { return bindOracle(rules.NoVar, options) }
 func oracleNoVarOptions(fields []string) any { return nil }

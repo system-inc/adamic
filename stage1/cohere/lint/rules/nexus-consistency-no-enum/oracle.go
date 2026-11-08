@@ -8,5 +8,7 @@ import (
 	nexus "github.com/system-inc/cohere/internal/lint/rules/nexus"
 )
 
-func oracleConsistencyNoEnum() rule.Rule                 { return nexus.ConsistencyNoEnum }
+func oracleConsistencyNoEnum(options any) rule.Bound {
+	return bindOracle(nexus.ConsistencyNoEnum, options)
+}
 func oracleConsistencyNoEnumOptions(fields []string) any { return nil }

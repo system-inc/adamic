@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/nexus"
 )
 
-func oracleNexusConsistencyNoShouting() rule.Rule { return rules.ConsistencyNoShouting }
+func oracleNexusConsistencyNoShouting(options any) rule.Bound {
+	return bindOracle(rules.ConsistencyNoShouting, options)
+}
 
 func oracleNexusConsistencyNoShoutingOptions(fields []string) any {
 	var decoded rules.ConsistencyNoShoutingOptions

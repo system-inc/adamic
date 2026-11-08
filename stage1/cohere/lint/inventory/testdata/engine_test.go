@@ -127,9 +127,9 @@ func TestRegisteredCorpusControl(t *testing.T) {
 func parseControl(source string) *tsast.SourceFile {
 	return tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/control.ts"), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/control.ts"))}, source, core.ScriptKindTS)
 }
-func findRegistration(name string) rule.Registration {
+func findRegistration(name string) rule.Entry {
 	for _, r := range rule.Registered() {
-		if r.Rule.Name == name {
+		if r.Name == name {
 			return r
 		}
 	}
@@ -185,11 +185,11 @@ func TestAdamicCorpusUsesCompleteProgram(t *testing.T) {
 	registration := findRegistration("@typescript-eslint/unbound-method")
 	items := []entry{}
 	for _, subject := range rule.Registered() {
-		items = append(items, entry{Name: subject.Rule.Name, Repository: emptyFrequency()})
+		items = append(items, entry{Name: subject.Name, Repository: emptyFrequency()})
 	}
 	measureCorpus(directory, directory, "repository", []string{source}, items)
 	for _, item := range items {
-		if item.Name == registration.Rule.Name && (item.Repository.Count == nil || item.Repository.Offered != 1) {
+		if item.Name == registration.Name && (item.Repository.Count == nil || item.Repository.Offered != 1) {
 			t.Fatalf("Adamic program was not measured: %#v", item.Repository)
 		}
 	}
@@ -210,7 +210,7 @@ func TestFailedFamilyCannotBeMarkedPassed(t *testing.T) {
 func TestInventoryFileNameBytes(t *testing.T) {
 	t.Parallel()
 	file := parseControl("const value = 1;")
-	subject := rule.Registration{Rule: rule.Rule{Run: func(rule.Context, any) rule.Listeners {
+	subject := rule.Entry{Unconfigured: rule.Bound{Run: func(rule.Context) rule.Listeners {
 		panic("path probe")
 	}}}
 	report := emptyFrequency()

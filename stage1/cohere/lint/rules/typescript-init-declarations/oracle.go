@@ -9,7 +9,9 @@ import (
 	typescript "github.com/system-inc/cohere/internal/lint/rules/typescript"
 )
 
-func oracleInitDeclarations() rule.Rule { return typescript.InitDeclarations }
+func oracleInitDeclarations(options any) rule.Bound {
+	return bindOracle(typescript.InitDeclarations, options)
+}
 
 // Captured rows carry the decoded upstream struct, including its deliberately inert zero mode.
 func oracleInitDeclarationsOptions(fields []string) any {

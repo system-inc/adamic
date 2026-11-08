@@ -126,19 +126,26 @@ func descriptors() []byte {
 	}
 	_ = registry.Count()
 	result := map[string]any{}
-	for _, registration := range rule.Registered() {
+	for _, registration := range rule.AdamicRegistrations {
 		for _, raw := range []string{"{}", "null", "[]", "\"always\"", "1"} {
 			var value any
-			if registration.Decode != nil {
-				value, _ = registration.Decode([]byte(raw))
-			} else if registration.DecodeOptionList != nil {
-				value, _ = registration.DecodeOptionList([]byte(raw))
-			} else if registration.DecodeAt != nil {
-				value, _ = registration.DecodeAt([]byte(raw), rule.OptionsBase{})
+			registrationValue := reflect.ValueOf(registration)
+			subjectName := registrationValue.FieldByName("Rule").FieldByName("Name").String()
+			for _, field := range []string{"Decode", "DecodeOptionList", "DecodeAt"} {
+				decoder := registrationValue.FieldByName(field)
+				if decoder.IsNil() {
+					continue
+				}
+				args := []reflect.Value{reflect.ValueOf([]byte(raw))}
+				if field == "DecodeAt" {
+					args = append(args, reflect.ValueOf(rule.OptionsBase{}))
+				}
+				value = decoder.Call(args)[0].Interface()
+				break
 			}
 			if value != nil {
 				target := reflect.TypeOf(value)
-				targets[registration.Rule.Name] = target
+				targets[subjectName] = target
 				d := describer{open: map[reflect.Type]bool{}, recursive: map[reflect.Type]bool{}, definitions: map[string]any{}}
 				described := d.shape(target, 0)
 				if len(d.definitions) > 0 {
@@ -149,7 +156,7 @@ func descriptors() []byte {
 					}
 					described = root
 				}
-				result[registration.Rule.Name] = described
+				result[subjectName] = described
 				break
 			}
 		}
