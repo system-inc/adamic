@@ -244,7 +244,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 		if len(call.Arguments) > fixed {
 			tail = call.Arguments[fixed:]
 		}
-		rest := ir.ArrayLiteral{Element: function.RestElement, Elements: tail}
+		rest := ir.ArrayLiteral{Element: function.RestElement, Elements: tail, GraphTypes: e.program.RestGraphTypes[ir.FunctionRestArguments(function)]}
 		copy := call
 		copy.Arguments = append([]ir.Expression{}, call.Arguments[:min(fixed, len(call.Arguments))]...)
 		for len(copy.Arguments) < fixed {
