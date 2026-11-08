@@ -81,11 +81,17 @@ func TestNodeProcessTerminal(t *testing.T) {
 
 // Each fixture is held to Node on a file, where Node has no handle, a pipe and a terminal, natively
 // sanitized and released and on the JavaScript backend (#qa1g5f3). node_process_handle_view.a is tsc's
-// sys.ts guard with a plain dot where sys.ts has ?.: setBlocking is a function-typed field, read and
-// then called, so it reaches adamicCall without the method call's adamicCallee, where the JavaScript
-// backend's handle once held Node's bare function and panicked with closure.code is not a function.
+// sys.ts guard with a plain dot where sys.ts has ?.: setBlocking is a function-typed field, narrowed
+// and then called. It reached adamicCall without the method call's adamicCallee, where the JavaScript
+// backend's handle once held Node's bare function and panicked with closure.code is not a function;
+// since #0bxc4jh the narrowed call keeps its object, so it pins the call off the handle that blocks.
 // node_process_handle_identity.a reads the handle twice: Node's is one object for the process, where
-// both backends once made a new one on each read and printed same false.
+// both backends once made a new one on each read and printed same false. The detached fixtures read
+// setBlocking off the handle through a let, a parameter, another object's field, a call's result and
+// a computed key, roads #5abf5v8's origin walk doesn't follow, and call it bare, and the copy calls it
+// off another object: Node's checks its receiver and throws TypeError: Illegal invocation, where both
+// backends' closure ignored its receiver and blocked (#0bxc4jh). node_process_handle_method.a calls it
+// off the handle, unguarded, and blocks.
 func TestNodeProcessHandleView(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range []struct {
@@ -94,6 +100,13 @@ func TestNodeProcessHandleView(t *testing.T) {
 	}{
 		{"node_process_handle_view.a", "set blocking\n", "set blocking\n"},
 		{"node_process_handle_identity.a", "handle false\nsame true\n", "handle true\nsame true\n"},
+		{"node_process_handle_detached_let.a", "no handle\n", "true\nIllegal invocation\n"},
+		{"node_process_handle_detached_parameter.a", "no handle\n", "true\nIllegal invocation\n"},
+		{"node_process_handle_detached_field.a", "no handle\n", "true\nIllegal invocation\n"},
+		{"node_process_handle_detached_result.a", "no handle\n", "true\nIllegal invocation\n"},
+		{"node_process_handle_detached_key.a", "no handle\n", "true\nIllegal invocation\n"},
+		{"node_process_handle_detached_copy.a", "no handle\n", "true\nIllegal invocation\n"},
+		{"node_process_handle_method.a", "no handle\n", "blocked\n"},
 	} {
 		t.Run(fixture.name, func(t *testing.T) {
 			t.Parallel()
