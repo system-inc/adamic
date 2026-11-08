@@ -735,66 +735,82 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 		if contract == nil || l.checkedFunctionTypeClaim(contract) {
 			continue
 		}
-		argument := ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[index])
-		implementation := argument
-		if argument.Kind == ast.KindIdentifier {
-			symbol := l.symbol(argument)
-			if symbol != nil {
-				for _, declaration := range symbol.Declarations {
-					if ast.IsFunctionLike(declaration) && declaration.Body() != nil {
-						implementation = declaration
-					}
-					if declaration.Kind == ast.KindVariableDeclaration && declaration.AsVariableDeclaration().Initializer != nil {
-						implementation = ast.SkipParentheses(declaration.AsVariableDeclaration().Initializer)
-					}
+		if refused := l.predicateArgumentProof(parameter, contract, node.AsCallExpression().Arguments.Nodes[index]); refused != nil {
+			return refused
+		}
+	}
+	return nil
+}
+
+// predicateArgumentProof is nil when argument, passed for parameter, whose written claim is contract, proves
+// that claim as the parameter's type at the call wants it, or the refusal naming the argument. A named
+// function or arrow proves it by its body or checks it itself, and a call of a proven producer proves it
+// as the producer's result (predicateProducerProven), whose own arguments are judged here in turn.
+func (l *lowering) predicateArgumentProof(parameter *ast.Symbol, contract, written *ast.Node) *Refused {
+	argument := ast.SkipParentheses(written)
+	implementation := argument
+	if argument.Kind == ast.KindIdentifier {
+		symbol := l.symbol(argument)
+		if symbol != nil {
+			for _, declaration := range symbol.Declarations {
+				if ast.IsFunctionLike(declaration) && declaration.Body() != nil {
+					implementation = declaration
+				}
+				if declaration.Kind == ast.KindVariableDeclaration && declaration.AsVariableDeclaration().Initializer != nil {
+					implementation = ast.SkipParentheses(declaration.AsVariableDeclaration().Initializer)
 				}
 			}
 		}
-		failure := func() *Refused {
-			file := ast.GetSourceFileOfNode(argument)
-			text := file.Text()[scanner.GetTokenPosOfNode(argument, file, false):argument.End()]
-			return &Refused{Where: l.program.Where(argument), What: "an unproven predicate argument for parameter " + parameter.Name + " (argument " + fmt.Sprintf("%q", text) + ")", Fix: "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+	}
+	failure := func() *Refused {
+		file := ast.GetSourceFileOfNode(argument)
+		text := file.Text()[scanner.GetTokenPosOfNode(argument, file, false):argument.End()]
+		return &Refused{Where: l.program.Where(argument), What: "an unproven predicate argument for parameter " + parameter.Name + " (argument " + fmt.Sprintf("%q", text) + ")", Fix: "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+	}
+	// An optional parameter's type is the function or undefined, which has no call signature of its
+	// own. An absent argument is never called, and a present one is exactly the function, so the
+	// claim to prove is the function's (getParseTreeNode's nodeTest, #1w5bve2).
+	calls := l.checker.GetSignaturesOfType(l.withoutUndefined(l.checker.GetTypeOfSymbol(parameter)), checker.SignatureKindCall)
+	var target *checker.Type
+	if len(calls) == 1 {
+		if predicate := predicateOfSignature(l.checker, calls[0]); predicate != nil {
+			target = predicate.Type()
 		}
-		if !ast.IsFunctionLike(implementation) || implementation.Body() == nil || (implementation.Type() != nil && implementation.Type().Kind != ast.KindTypePredicate) {
+	}
+	if contract.AsTypePredicateNode().Type == nil || target == nil {
+		return failure()
+	}
+	if argument.Kind == ast.KindCallExpression {
+		if !l.predicateProducerProven(argument, target) {
 			return failure()
 		}
-		if argument.Kind == ast.KindIdentifier && l.assignedSymbol(l.symbol(argument)) {
+		return nil
+	}
+	if !ast.IsFunctionLike(implementation) || implementation.Body() == nil || (implementation.Type() != nil && implementation.Type().Kind != ast.KindTypePredicate) {
+		return failure()
+	}
+	if argument.Kind == ast.KindIdentifier && l.assignedSymbol(l.symbol(argument)) {
+		return failure()
+	}
+	if implementation.Type() == nil {
+		if !l.proveInferredPredicate(implementation, target) {
 			return failure()
 		}
-		wanted := contract.AsTypePredicateNode()
-		// An optional parameter's type is the function or undefined, which has no call signature of its
-		// own. An absent argument is never called, and a present one is exactly the function, so the
-		// claim to prove is the function's (getParseTreeNode's nodeTest, #1w5bve2).
-		calls := l.checker.GetSignaturesOfType(l.withoutUndefined(l.checker.GetTypeOfSymbol(parameter)), checker.SignatureKindCall)
-		var target *checker.Type
-		if len(calls) == 1 {
-			if predicate := predicateOfSignature(l.checker, calls[0]); predicate != nil {
-				target = predicate.Type()
-			}
-		}
-		if wanted.Type == nil || target == nil {
+	} else {
+		annotation := implementation.Type().AsTypePredicateNode()
+		if annotation.Type == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), target) {
 			return failure()
 		}
-		if implementation.Type() == nil {
-			if !l.proveInferredPredicate(implementation, target) {
-				return failure()
+		// A checked predicate passed by name is its checked forwarder (functionValue), which
+		// checks this claim's true side at every call through it (#vdt9f1q).
+		// An arrow or function expression is itself the value, and checks its claim at each return.
+		if !l.checkedPredicateArgumentProven(implementation.Type()) && !(argument.Kind == ast.KindIdentifier && l.checkedPredicateDeclaration(implementation)) && !l.checkedPredicateClosure(implementation) {
+			refused := failure()
+			var proof *Refused
+			if err := l.predicateRefusal(implementation.Type()); errors.As(err, &proof) && proof.lyingTag != "" {
+				refused.What += ": " + proof.lyingTag
 			}
-		} else {
-			annotation := implementation.Type().AsTypePredicateNode()
-			if annotation.Type == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), target) {
-				return failure()
-			}
-			// A checked predicate passed by name is its checked forwarder (functionValue), which
-			// checks this claim's true side at every call through it (#vdt9f1q).
-			// An arrow or function expression is itself the value, and checks its claim at each return.
-			if !l.checkedPredicateArgumentProven(implementation.Type()) && !(argument.Kind == ast.KindIdentifier && l.checkedPredicateDeclaration(implementation)) && !l.checkedPredicateClosure(implementation) {
-				refused := failure()
-				var proof *Refused
-				if err := l.predicateRefusal(implementation.Type()); errors.As(err, &proof) && proof.lyingTag != "" {
-					refused.What += ": " + proof.lyingTag
-				}
-				return refused
-			}
+			return refused
 		}
 	}
 	return nil

@@ -1,7 +1,6 @@
 package lower
 
 import (
-	"reflect"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -321,8 +320,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			}
 			// Enum aliases compare by runtime value, including aliases from different enums.
 			for _, previous := range literals {
-				mask := checker.TypeFlagsStringLiteral | checker.TypeFlagsNumberLiteral | checker.TypeFlagsBooleanLiteral
-				if previous.Flags()&mask != literal.Flags()&mask || reflect.DeepEqual(previous.AsLiteralType().Value(), literal.AsLiteralType().Value()) {
+				if !tagLiteralsDistinct(previous, literal) {
 					valid = false
 				}
 			}

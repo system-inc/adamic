@@ -299,69 +299,299 @@ func (l *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker.Type {
 }
 
 // brandedNarrowing keeps a call NotYet unless the checker's narrowing of its argument, on the true
-// side, can only give S (Compiler's musts on 9abcbdca and 8c7afca2). Every member of the argument's type
-// must be a supertype of S, which narrows to S. Any other member is NotYet, never modelled: a subtype of
-// S keeps its own type, whose fields S's view doesn't check and whose value no entry of S's names, and
-// the checker drops an unrelated member only beside one that's its subtype, and makes an intersection no
-// view is registered for otherwise, so judging either by assignability would admit a lie read raw. A
-// branded supertype inside an array target is NotYet, since its elements narrow by the same rule with no
-// call to judge at.
+// side, can't give a lie a type it's read raw through (Compiler's musts on 9abcbdca and 8c7afca2). The
+// danger is a narrowing that drops a member of the argument's type while keeping a type no view checks: a
+// value of the dropped kind, said to be S by a lying predicate, is then read as the kept type. Nothing is
+// modelled: the checker is asked what the narrowing gives, and the call stands on one of these roads.
+//
+//   - Every member of the argument's type is a supertype of each branded arm, which narrows to that arm.
+//     A subtype of S keeps its own type, whose fields S's view doesn't check, and the checker drops an
+//     unrelated member only beside one that's its subtype, so this road judges the written type alone,
+//     never assignability, and only for an argument that mentions no type parameter.
+//   - Rule 1 (brandedChainCall): no true-side read exists, and none can.
+//   - Rule 2, read off the checker's flow type at the first true-side read (brandedNarrowedRead): (b) the
+//     read is the argument's own type, by the checker's identity, so the narrowing dropped nothing and a
+//     lie changes no static type; or, member by member, the read concreted under the body's mapper is
+//     (a) a branded arm S, or S intersected only with S's supertypes (brandedIntersection), read through
+//     S's view, or (c) an unbranded arm with its own tag, read through that arm's view
+//     (brandedTaggedArm). Adamic's ruling on #fx9waqy, Nov 7, with Compiler's and Language's conditions.
+//
+// No read found says nothing, since the narrowing can reach past the region, so it's NotYet outside rule
+// 1. A branded supertype inside an array target is NotYet, since its elements narrow by the same rule with
+// no call to judge at. Whatever no road admits keeps the words it had before this rule: the first member
+// that isn't a supertype for a written argument, and the generic argument's read for one that mentions a
+// type parameter.
 func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Type) error {
+	declared := l.checker.GetTypeAtLocation(argument)
 	// An argument already of the claim's own type narrows to itself, as tsc's `some(array)` claiming
 	// `readonly T[]` of a `readonly T[]` does, whatever T is instantiated at: the result adds no member or
 	// layout the argument didn't give, so there's nothing for a view to check, and it lowers as main does
 	// (Adamic's ruling on 9e4f2184's census, core.ts:1203).
-	if l.checker.GetTypeAtLocation(argument).Id() == claim.Id() {
+	if declared.Id() == claim.Id() {
 		return nil
 	}
-	targets := []*checker.Type{claim}
-	if claim.Flags()&checker.TypeFlagsUnion != 0 {
-		targets = claim.Types()
+	instance := l.concrete(claim)
+	arms := []*checker.Type{instance}
+	if instance.Flags()&checker.TypeFlagsUnion != 0 {
+		arms = instance.Types()
+	}
+	for _, arm := range arms {
+		if l.isArrayType(arm) && l.brandedMembership(arm, map[*checker.Type]bool{}) {
+			return l.notYet(node, "a branded supertype inside a checked predicate's array target")
+		}
 	}
 	// The checker narrows the argument's own type, as written, so a type parameter T narrows to T & S,
 	// whose instance is an intersection with an id of its own that no view covers (Language's must on
 	// 7f4b7030), while tryCast's TIn narrows to its TOut, whose instance is S. Concreted, the two
 	// arguments look alike, so an argument that mentions a type parameter, a generic object like Holder<K>
-	// or Readonly<T> included (Language's must on 4a1fe092), is judged by what its reads see: the checker's
-	// flow type at its first read on the true side, concreted under the body's mapper. The call stands only
-	// when that's S itself, so every read goes through S's view, which checks each field it reads (Adamic's
+	// or Readonly<T> included (Language's must on 4a1fe092), is judged only by what its reads see (Adamic's
 	// ruling on 810ce7d9: the checker is asked, never modelled; Compiler's and Lower's reading, Nov 1, that
-	// the concreted read is that question). A read of S intersected only with S's supertypes, as tsc's
-	// tryCast and cast read their value, stands too (brandedIntersection). An instance that's a union or an
-	// array narrows its members or elements by rules this read doesn't see, and no read found says nothing,
-	// so both are NotYet.
-	if declared := l.checker.GetTypeAtLocation(argument); l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
-		instance := l.concrete(claim)
-		narrowed := l.brandedNarrowedRead(node, argument)
-		if narrowed == nil {
-			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", with no read of it on the true side")
+	// the concreted read is that question).
+	generic := l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{})
+	var stop error
+	if !generic {
+		source := l.concrete(declared)
+		members := []*checker.Type{source}
+		if source.Flags()&checker.TypeFlagsUnion != 0 {
+			members = source.Types()
 		}
-		read := l.concrete(narrowed)
-		if (read.Id() == instance.Id() || l.brandedIntersection(read, instance)) && instance.Flags()&checker.TypeFlagsUnion == 0 && !l.isArrayType(instance) {
+		for _, arm := range arms {
+			if !l.brandedMembership(arm, map[*checker.Type]bool{}) {
+				continue
+			}
+			for _, member := range members {
+				if stop == nil && !l.checker.IsTypeAssignableTo(arm, member) {
+					stop = l.notYet(node, "a checked predicate target "+l.checker.TypeToString(arm)+" that narrows "+l.checker.TypeToString(member)+", which isn't its supertype")
+				}
+			}
+		}
+		if stop == nil {
 			return nil
+		}
+	}
+	narrowed := l.brandedNarrowedRead(node, argument)
+	if narrowed == nil {
+		if l.brandedChainCall(node, argument) {
+			return nil
+		}
+		if stop != nil {
+			return stop
+		}
+		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", with no read of it on the true side")
+	}
+	// (b) is the checker's own identity of two types, never a comparison of their members: a union written
+	// in another order, or reduced another way, is equal by structure and can still have dropped a member
+	// the checker sees, so only the same type says nothing was dropped (Adamic's and Language's condition).
+	if narrowed.Id() == declared.Id() {
+		return nil
+	}
+	read := l.concrete(narrowed)
+	members := []*checker.Type{read}
+	if read.Flags()&checker.TypeFlagsUnion != 0 {
+		members = read.Types()
+	}
+	for _, member := range members {
+		if l.brandedArmRead(member, arms) || l.brandedTaggedArm(member, arms) {
+			continue
+		}
+		if stop != nil {
+			return stop
 		}
 		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", read on the true side as "+l.checker.TypeToString(read))
 	}
-	claim = l.concrete(claim)
-	source := l.concrete(l.checker.GetTypeAtLocation(argument))
-	members := []*checker.Type{source}
-	if source.Flags()&checker.TypeFlagsUnion != 0 {
-		members = source.Types()
-	}
-	for _, target := range targets {
-		if !l.brandedMembership(target, map[*checker.Type]bool{}) {
+	return nil
+}
+
+// brandedArmRead is rule 2(a): member, one member of a true-side read concreted, is a branded arm S of
+// the claim itself, or S intersected only with S's supertypes, as tsc's tryCast and cast read their value
+// (brandedIntersection). Either is read through S's view, which checks each field it reads.
+func (l *lowering) brandedArmRead(member *checker.Type, arms []*checker.Type) bool {
+	for _, arm := range arms {
+		if !l.brandedMembership(arm, map[*checker.Type]bool{}) {
 			continue
 		}
-		if l.isArrayType(target) || target.Flags()&checker.TypeFlagsUnion != 0 {
-			return l.notYet(node, "a branded supertype inside a checked predicate's array target")
-		}
-		for _, member := range members {
-			if !l.checker.IsTypeAssignableTo(target, member) {
-				return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that narrows "+l.checker.TypeToString(member)+", which isn't its supertype")
-			}
+		if member.Id() == arm.Id() || l.brandedIntersection(member, arm) {
+			return true
 		}
 	}
+	return false
+}
+
+// brandedTaggedArm is rule 2(c): member, one member of a true-side read concreted, is an arm of the claim
+// with its own literal kind, the tag the call's check tests for that arm (predicateMembership), which
+// registers that arm's view, so every read narrowed to it checks its layout. The membership check is a
+// union of its arms' tests, so a value can pass by a branded arm's, which checks only that it's an object,
+// and still be read as this arm: the view is what stops that lie at its first read, never the tag. The tag
+// must still tell the arm apart by value, as a cast's must (rulings.md:13): from every other arm's tag,
+// and from every other member of its own enum (tag_values.go, the one rule #fvmqee2's verifier shares),
+// since `enum K { First = 1, Alias = 1 }` makes two types with one value.
+func (l *lowering) brandedTaggedArm(member *checker.Type, arms []*checker.Type) bool {
+	if member.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(member) {
+		return false
+	}
+	arm := false
+	for _, candidate := range arms {
+		arm = arm || candidate.Id() == member.Id()
+	}
+	tag := l.fieldLiteral(member, "kind")
+	if !arm || tag == nil {
+		return false
+	}
+	if _, _, known := l.literalConstant(tag); !known || !l.enumValueUnique(tag) {
+		return false
+	}
+	for _, other := range arms {
+		if other.Id() == member.Id() || other.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(other) {
+			continue
+		}
+		if otherTag := l.fieldLiteral(other, "kind"); otherTag != nil && !tagLiteralsDistinct(tag, otherTag) {
+			return false
+		}
+	}
+	return true
+}
+
+// brandedChainCall is rule 1 (Adamic's ruling on #fx9waqy, Nov 7, in Compiler's form): a call that
+// stands with no true-side read because none can exist. core.ts's orPredicate2 is its case, `return p =>
+// f1(p) || f2(p)`: neither call's narrowing reaches a read, and the chain's value is the arrow's result,
+// whose claim is checked at every call through it (brandedResultChecked). It holds when all of these do.
+//
+//   - The call is an operand of a chain of `||` and `&&`, through parentheses, whose whole value is what a
+//     function returns, its arrow body or a return statement's expression.
+//   - The argument is a name bound by one of that function's parameters.
+//   - The function's own result claim is a checked claim.
+//   - Every other occurrence of the name in the function, walked into nested functions and classes, since
+//     a closure made after the narrowing reads the parameter narrowed (TypeScript 5.4 and later), is an
+//     argument of another call in the same chain whose checked or vouched claim names that argument, at a
+//     parameter of exactly the binding's own type. So it's passed on, never read through a narrower type,
+//     stored, captured or returned (brandedChainUse).
+//
+// The `&&` form, f1(p) && f2(p), never reaches here for f1: f2's argument is a read on f1's true side,
+// judged by rule 2(a) as an upcast to f2's own parameter. Pins: Compiler's `p => f1(p) || (p as
+// R2).x !== undefined` and Language's `p => f1(p) && (() => p.x)()`, both NotYet. Mutant: the use walk
+// dropped, and both lower.
+func (l *lowering) brandedChainCall(call, argument *ast.Node) bool {
+	if argument.Kind != ast.KindIdentifier {
+		return false
+	}
+	binding := l.symbol(argument)
+	if binding == nil || binding.ValueDeclaration == nil || binding.ValueDeclaration.Kind != ast.KindParameter {
+		return false
+	}
+	top := brandedChainTop(call)
+	if top == call {
+		return false
+	}
+	function := brandedChainReturner(top)
+	if function == nil || binding.ValueDeclaration.Parent != function || !l.brandedResultChecked(function) {
+		return false
+	}
+	name := binding.ValueDeclaration.Name()
+	declared := l.checker.GetTypeOfSymbol(binding)
+	sound := true
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		if !sound {
+			return true
+		}
+		// Every identifier spelled as the binding counts, whatever it resolves to, so a shorthand `{ p }`,
+		// whose name resolves to the property, can't carry the value out unseen. A same-named property or
+		// a shadowing name fails closed.
+		if n.Kind == ast.KindIdentifier && n != name && n.Text() == name.Text() {
+			sound = l.symbol(n) == binding && l.brandedChainUse(n, top, declared)
+		}
+		return n.ForEachChild(visit)
+	}
+	visit(function)
+	return sound
+}
+
+// brandedChainUse is whether use, a reference to a rule-1 binding, is an argument of a call in the chain
+// whose top is top, at the parameter its claim names, typed exactly as the binding is, with a claim that's
+// checked at that call or vouched for, so the call passes the value on and reads nothing through a
+// narrower type.
+func (l *lowering) brandedChainUse(use, top *ast.Node, declared *checker.Type) bool {
+	call := use.Parent
+	if call == nil || call.Kind != ast.KindCallExpression || call.AsCallExpression().Expression == use || brandedChainTop(call) != top {
+		return false
+	}
+	index := -1
+	for position, argument := range call.AsCallExpression().Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			return false
+		}
+		if argument == use {
+			index = position
+			break
+		}
+	}
+	signature := l.checker.GetResolvedSignature(call)
+	if index < 0 || signature == nil || signature.Declaration() == nil || index >= len(signature.Parameters()) {
+		return false
+	}
+	claim := predicateOfSignature(l.checker, signature)
+	if claim == nil || claim.Kind() != checker.TypePredicateKindIdentifier || int(claim.ParameterIndex()) != index {
+		return false
+	}
+	if l.checker.GetTypeOfSymbol(signature.Parameters()[index]).Id() != declared.Id() {
+		return false
+	}
+	return l.checkedFunctionTypeClaim(signature.Declaration().Type()) || l.predicateCallVouched(signature.Declaration(), claim)
+}
+
+// brandedChainTop is the outermost expression a chain of `||` and `&&` makes around node, through
+// parentheses, or node itself when it's no operand of one.
+func brandedChainTop(node *ast.Node) *ast.Node {
+	for node.Parent != nil {
+		parent := node.Parent
+		if parent.Kind == ast.KindBinaryExpression {
+			operator := parent.AsBinaryExpression().OperatorToken.Kind
+			if operator != ast.KindBarBarToken && operator != ast.KindAmpersandAmpersandToken {
+				break
+			}
+		} else if parent.Kind != ast.KindParenthesizedExpression {
+			break
+		}
+		node = parent
+	}
+	return node
+}
+
+// brandedChainReturner is the function whose result value is, when value is an arrow's expression body or
+// a return statement's expression, or nil.
+func brandedChainReturner(value *ast.Node) *ast.Node {
+	parent := value.Parent
+	switch {
+	case parent == nil:
+		return nil
+	case parent.Kind == ast.KindArrowFunction && parent.Body() == value:
+		return parent
+	case parent.Kind == ast.KindReturnStatement && parent.AsReturnStatement().Expression == value:
+		return ast.GetContainingFunction(parent)
+	}
 	return nil
+}
+
+// brandedResultChecked is whether function's result claim is checked at every call that narrows by it:
+// a checked closure checks its own claim at each return (checkedPredicateClosure), and a function that is
+// itself the value another function returns, written with a function type whose claim is checked, as
+// orPredicate2's `(p: P) => p is R1 | R2`, is checked at every call through that type
+// (checkedFunctionTypeClaim). Its other road out, a trusted parameter that never checks, takes it only as
+// a proven producer (predicateProducerProven).
+func (l *lowering) brandedResultChecked(function *ast.Node) bool {
+	if l.checkedPredicateClosure(function) {
+		return true
+	}
+	value := function
+	for value.Parent != nil && value.Parent.Kind == ast.KindParenthesizedExpression {
+		value = value.Parent
+	}
+	producer := brandedChainReturner(value)
+	if producer == nil || producer.Type() == nil {
+		return false
+	}
+	written := ast.SkipTypeParentheses(producer.Type())
+	return written.Kind == ast.KindFunctionType && l.checkedFunctionTypeClaim(written.Type())
 }
 
 // brandedIntersection is whether read, a read's concreted type, is target intersected only with

@@ -43,7 +43,9 @@ func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
 	if load.IsLibrary(file) || load.IsPrelude(file) || !l.checkedAssertionSource(annotation) {
 		return false
 	}
-	if l.predicateParameter(annotation) != nil {
+	// Trusted when every caller hands a proven predicate, except inside a producer, where a call through the
+	// parameter keeps its check unconditionally (predicate_producers.go, Language's condition on #fx9waqy).
+	if l.predicateParameter(annotation) != nil && !l.predicateProducerParameter(annotation) {
 		return false
 	}
 	// An overload's parameter is called in its implementation, through the implementation's own
