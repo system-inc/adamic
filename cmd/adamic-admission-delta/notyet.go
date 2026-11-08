@@ -68,13 +68,11 @@ const (
 // runtime host value names no key it was reading and converts nothing, so it has neither the keyed shape
 // nor the conversion sentence (#ey7aysy, Adamic, Nov 4, under #0sps03r). clearTimeout of an object that
 // isn't a timer but holds a truthy _onTimeout, which Node would unenroll, reads no key either (Adamic,
-// #995spev, Nov 7), nor does setTimeout of a delay Node would warn for and make 1 ms (#995spev). Only
-// these exact words qualify, matched against the whole stderr: a new message needs Adamic's ruling and
-// its line here.
+// #995spev, Nov 7). Only these exact words qualify, matched against the whole stderr: a new message
+// needs Adamic's ruling and its line here.
 var runtimeNotYetKeyless = map[string]string{
 	"this runtime value's own keys aren't enumerated yet": "#0sps03r",
-	"clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined":                             "#995spev",
-	"a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing": "#995spev",
+	"clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined": "#995spev",
 }
 
 // runtimeNotYetKeylessPrefix is what every keyless message is said after.
