@@ -27,9 +27,9 @@ Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 se
 
 Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
 
-Observed 4798 unit results: {'lowered': 3293, 'stopped': 1505}. First-error pass observed 3447 results; full pieces observed 1394. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
+Observed 4880 unit results: {'lowered': 3350, 'stopped': 1530}. First-error pass observed 3447 results; full pieces observed 1547. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
 
-Stock unit inventory has 3 units in 1 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{}`. Missing stock file records after an interrupted pass are not evidence of zero units.
+Stock unit inventory has 387 units in 4 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 231}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
 In first-error mode a unit with a lowering finding contributes zero sites: its body is discarded. In full mode the stock hook rolls failed statements back and continues. A `stopped` full-mode observation can therefore contain retained successful statements; its failed statements contribute no sites. Panicked unit results contribute zero sites. `lowered` means no new lowering finding in that unit, not whole-program acceptance. File-level refusal-scan findings do not suppress independent-unit examination.
 
@@ -53,9 +53,9 @@ Attribution is to the unit's file, not an independent root. A zero with zero obs
 | builderStatePublic.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
 | checker.ts | 10465 | 0 | 0 | 0 | 1402 | no, not computed |
 | commandLineParser.ts | 0 | 0 | 0 | 0 | 159 | no, not computed |
-| core.ts | 0 | 0 | 4 | 0 | 57 | no, not computed |
+| core.ts | 0 | 0 | 4 | 0 | 59 | no, not computed |
 | corePublic.ts | 0 | 0 | 0 | 0 | 9 | no, not computed |
-| debug.ts | 0 | 0 | 0 | 0 | 5 | no, not computed |
+| debug.ts | 0 | 0 | 0 | 0 | 85 | no, not computed |
 | diagnosticInformationMap.generated.ts | 0 | 0 | 0 | 0 | 3 | no, not computed |
 | emitter.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
 | executeCommandLine.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
@@ -312,7 +312,14 @@ function isStaticPropertyDeclaration(node: Node): node is PropertyDeclaration {
 | full-00-snapshot-final | 0 | 1.001 | completed |
 | full-00-snapshot | 0 | 1.001 | completed |
 | full-00 | 0 | 24.088 | completed |
+| full-01-add | 0 | 1.021 | completed |
+| full-01-commit | 0 | 1.009 | completed |
+| full-01-push | 0 | 3.015 | completed |
+| full-01-report | 0 | 1.01 | completed |
+| full-01-snapshot-final | 0 | 1.005 | completed |
+| full-01-snapshot | 0 | 1.007 | completed |
 | full-01 | -15 | 1791.304 | configured elapsed bound |
+| full-02 | 0 | 79.359 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
 | interim-audit | 0 | 3.002 | completed |
