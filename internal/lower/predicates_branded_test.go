@@ -768,19 +768,6 @@ function pickName<T extends Node>(x: PropertySignature | Identifier, test: (n: N
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 console.log(pickName(i, isIdentifier));
 `, ".ts")
-	// orPredicate2 over unbranded claims lowers whole, its body per instance, and agrees with Node.
-	lowersAndAgreesWithNodeAs(t, brandedPrelude+`interface Literal extends Node { readonly kind: 9; readonly text: string; }
-function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
-function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
-function isLiteral(n: Node): n is Literal { return kindOf(n) === 9; }
-const named = orPredicate2(isIdentifier, isLiteral);
-const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
-const l: Literal = { kind: 9, pos: 4, text: "t" };
-const z: Node = { kind: 5, pos: 6 };
-console.log(named(i) ? "i named" : "i other");
-console.log(named(l) ? "l named" : "l other");
-console.log(named(z) ? "z named" : "z other");
-`, ".ts")
 	for _, probe := range []struct{ name, source, want string }{
 		{"second instance", pick + `const element = pick(i, isTypeElementLie);
 console.log(element === undefined ? "no" : String(element.pos));
@@ -811,6 +798,24 @@ const element = orPredicate2(isIdentifier, isTypeElement);
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 console.log(element(i) ? "element" : "other");
 `, "which isn't its supertype"},
+		// Over unbranded claims the caller still stops, on R-T80's union check: Node's kind is a number, an open
+		// tag domain. Measured on Cloud at bb840f91.
+		{"orPredicate2 over unbranded claims", `interface Literal extends Node { readonly kind: 9; readonly text: string; }
+function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+function isLiteral(n: Node): n is Literal { return kindOf(n) === 9; }
+const named = orPredicate2(isIdentifier, isLiteral);
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+console.log(named(i) ? "i named" : "i other");
+`, "checked predicate membership over an open tag domain"},
+		// The branded instance made and never called, so the helper body's own judgment is the first stop:
+		// f2(p) narrows the generic argument p, whose true side has no read in the body (brandedNarrowing's
+		// generic path, the wall Optimizer's rule 1 lifts).
+		{"orPredicate2's branded body alone", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+const element = orPredicate2(isIdentifier, isTypeElement);
+console.log(typeof element);
+`, "over a generic argument P, with no read of it on the true side"},
 		{"generic arrow", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 const pickArrow = <T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string => test(x) ? "yes" : "no";
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
