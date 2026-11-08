@@ -174,7 +174,10 @@ New:
 
 Expected: TestRecordGraphArraysAdoptedUnretained (internal/native/record_graph_emission_test.go) reds, "the record
 array ... is retained before it's adopted", for the values array and the entries array both. Run, the planned
-witnesses would panic too: adamic_graph_adopt refuses an allocation whose count isn't 1 (graph_regions.c:104).
+witnesses would panic too: adoptGraph emits adamic_graph_adopt_owned (native graph_regions.go:12), which is lenient
+only for a value that's already a member (graph_regions.c:292) and hands a fresh array to adamic_graph_adopt, which
+refuses an allocation whose count isn't 1 (graph_regions.c:104). So TestGraphOracleGraphRegionsFlowRecordValues
+fails with "compiler bug: graph adoption needs a new allocation" as well.
 
 ## 9. Entries pairs left counted
 

@@ -76,7 +76,9 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 			e.line("adamic_array_push(%s, %s);", result, value)
 		})
 		// A planned array is adopted made and filled, as a slice's is (graphArray), so it joins the
-		// regions of the members it holds.
+		// regions of the members it holds. ir.RecordCall has no ProgramRegion field, so its array is
+		// always counted, and the && !ProgramRegion graphArray passes is absent on purpose: a change that
+		// gives RecordCall a ProgramRegion stamp adds that && in the same commit.
 		e.adoptGraph(result, "sizeof *"+result, graph)
 		return result
 	}
