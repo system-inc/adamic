@@ -152,7 +152,7 @@ func TestIntlCollatorOtherRoadsAreNotYet(t *testing.T) {
 		{"compare through call", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconsole.log(String(collator.compare.call(collator, \"a\", \"b\")));\n",
 			"main.a:2:20: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it)"},
 		{"compare through bind", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconst bound = collator.compare.bind(collator);\nconsole.log(String(bound(\"a\", \"b\")));\n",
-			"main.a:2:15: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it)"},
+			"main.a:2:15: stage 0 can't lower bind of an inherited library function without a declared callback type yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
