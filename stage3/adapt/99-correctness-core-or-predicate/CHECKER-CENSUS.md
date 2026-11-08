@@ -28,11 +28,11 @@ The standalone original/mutant witnesses restore the binder refusal, but both ad
 
 ## Owner coverage unavailable
 
-| Owner | Predicate sites | Before range | After range | Findings |
-| --- | ---: | --- | --- | --- |
-| resolveExternalModule | 3 | 4731 through 4963 | 4733 through 4965 | unavailable on both attempts |
-| serializePropertySymbol | 1 | 10821 through 10955 | 10823 through 10957 | unavailable on both attempts |
-| checkAliasSymbol | 1 | 48396 through 48561 | 48398 through 48563 | unavailable on both attempts |
-| getSymbolOfNameOrPropertyAccessExpression | 2 | 49990 through 50133 | 49992 through 50135 | unavailable on both attempts |
+| Owner                                     | Predicate sites | Before range        | After range         | Findings                     |
+| ----------------------------------------- | --------------: | ------------------- | ------------------- | ---------------------------- |
+| resolveExternalModule                     |               3 | 4731 through 4963   | 4733 through 4965   | unavailable on both attempts |
+| serializePropertySymbol                   |               1 | 10821 through 10955 | 10823 through 10957 | unavailable on both attempts |
+| checkAliasSymbol                          |               1 | 48396 through 48561 | 48398 through 48563 | unavailable on both attempts |
+| getSymbolOfNameOrPropertyAccessExpression |               2 | 49990 through 50133 | 49992 through 50135 | unavailable on both attempts |
 
 The runner's raw stop_reason is null because its wall/idle limits did not fire. The observed resource failures and SIGKILL exit codes are reported separately; no full owner finding table is claimed.

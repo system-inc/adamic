@@ -14,11 +14,11 @@ call expressions remain unchanged.
 This is a JavaScript-changing established-shape adaptation under Adamic and
 Compiler, task 1w5bve2, Nov 7 19:51Z. The existing complete lane count is reused:
 
-| Sites | Closure calls | Boolean-only observed | Value differences |
-| --- | ---: | --- | ---: |
-| 19 predicate sites | 2,018,000 | yes | 0 |
-| 4 rest sites | 168,858 | no | 0 |
-| Total | 2,186,858 | no | 0 |
+| Sites              | Closure calls | Boolean-only observed | Value differences |
+| ------------------ | ------------: | --------------------- | ----------------: |
+| 19 predicate sites |     2,018,000 | yes                   |                 0 |
+| 4 rest sites       |       168,858 | no                    |                 0 |
+| Total              |     2,186,858 | no                    |                 0 |
 
 The count is from typescript/or-calls commit
 701181917b36db38528257ff37da1a4e64aaac16. No new lane count was run.
