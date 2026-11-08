@@ -18,12 +18,10 @@ function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2
 function findAncestor<T extends Node>(node: Node | undefined, callback: (element: Node) => element is T): T | undefined;
 function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | "quit"): Node | undefined;
 function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | "quit"): Node | undefined {
-	while (node) {
-		const result = callback(node);
-		if (result === "quit") { return undefined; }
-		else if (result) { return node; }
-		node = undefined;
-	}
+	if (node === undefined) { return undefined; }
+	const result = callback(node);
+	if (result === "quit") { return undefined; }
+	else if (result) { return node; }
 	return undefined;
 }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
@@ -144,6 +142,28 @@ show({ kind: K.Alias, pos: 0, y: 5 });
 // branded lie stops at its read through S's view (Language's per-instance pin).
 func TestBrandedCallProducer(t *testing.T) {
 	t.Parallel()
+	// A measurement, not a pin: tsc's own findAncestor walks up by reassigning node, which the census's
+	// overload proof may refuse as returning a value its predicate didn't check.
+	_, tscShape := lowerTypeScriptAssertionSource(t, `interface N { readonly kind: number; readonly parent: N | undefined; }
+interface I extends N { readonly kind: 80; readonly text: string; }
+function findAncestor<T extends N>(node: N | undefined, callback: (element: N) => element is T): T | undefined;
+function findAncestor(node: N | undefined, callback: (element: N) => boolean | "quit"): N | undefined;
+function findAncestor(node: N | undefined, callback: (element: N) => boolean | "quit"): N | undefined {
+	while (node) {
+		const result = callback(node);
+		if (result === "quit") { return undefined; }
+		else if (result) { return node; }
+		node = node.parent;
+	}
+	return undefined;
+}
+function isI(n: N): n is I { return n.kind === 80; }
+const top: I = { kind: 80, text: "x", parent: undefined };
+const leaf: N = { kind: 1, parent: top };
+const found = findAncestor(leaf, isI);
+console.log(found === undefined ? "none" : found.text);
+`)
+	t.Logf("tsc's findAncestor shape: %v", tscShape)
 	// Road (B): orPredicate2's arrow is a checked closure under the producer's written claim, so findAncestor's
 	// trusted callback takes the producer's result as it takes a checked closure passed directly, at an
 	// unbranded, a nested and a branded instance alike.
@@ -222,7 +242,7 @@ console.log(found === undefined ? "none" : String(found.name));
 // The inferred arrow's walk (road (B) on #fx9waqy, Nov 7): an arrow its producer returns written in place
 // under its own written checked claim is a checked closure, which the direction walk reads as it reads an
 // annotated one, so it wants none of its uses. A caller reading a
-// lying instance's false side over a closed tag domain stops at the caller's false check. Every other
+// lying instance's false side over a closed tag domain stops at compile time, as any checked closure's does. Every other
 // shape keeps today's NotYet: an arrow held in a module array before it's returned (Compiler's pin), an
 // unannotated helper whose result goes to an untyped const, an implementation written as a plain boolean
 // function under an overload that claims, and a named function expression that stores itself (Language's
@@ -231,7 +251,9 @@ console.log(found === undefined ? "none" : String(found.name));
 // lowers), the name allowed (self lowers).
 func TestInferredArrowUnderWrittenClaim(t *testing.T) {
 	t.Parallel()
-	brandedStops(t, brandedPrelude+`type TokenKind = 1 | 2 | 3;
+	// A caller reading the lying instance's false side is NotYet at compile time, as every checked closure's
+	// false side read through its value is today (predicate_false_flow.go): measured on Cloud at fecfdfe4.
+	wantStop(t, brandedPrelude+`type TokenKind = 1 | 2 | 3;
 interface Token { readonly kind: TokenKind; readonly pos: number; }
 interface Name extends Token { readonly kind: 1; readonly text: string; }
 interface Count extends Token { readonly kind: 2; readonly value: number; }
@@ -244,7 +266,7 @@ const either = orPredicate2(isName, isCountLie);
 function show(t: AnyToken): void { if (either(t)) { console.log("named"); } else { console.log(t.op); } }
 const c: Count = { kind: 2, pos: 5, value: 1 };
 show(c);
-`, "adamic: panic: ")
+`, "a call through a predicate value whose false answer isn't checked yet")
 	for _, probe := range []struct{ name, source string }{
 		{"held in a module array", `const held: ((p: Node) => p is Identifier | Literal)[] = [];
 export function orHeld(f1: (p: Node) => p is Identifier, f2: (p: Node) => p is Literal): (p: Node) => p is Identifier | Literal { const g = (p: Node) => f1(p) || f2(p); held.push(g); return g; }
