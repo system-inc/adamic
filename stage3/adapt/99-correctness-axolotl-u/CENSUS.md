@@ -27,33 +27,33 @@ program"; the actual zero-diagnostic headers govern interpretation.
 
 ## Ordinary per-file groups
 
-| Side | Roots | Kind | First stop | Reason |
-| --- | ---: | --- | --- | --- |
-| before | 73 | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
-| before | 1 | NotYet | src/compiler/debug.ts:243:59 | a generic instantiation whose type argument for T, constrained to Node, can't be read |
-| before | 2 | accepted | - | - |
-| before | 1 | NotYet | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
-| before | 1 | NotYet | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration |
-| before | 1 | NotYet | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration |
-| after | 73 | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
-| after | 1 | NotYet | src/compiler/debug.ts:243:59 | a generic instantiation whose type argument for T, constrained to Node, can't be read |
-| after | 2 | accepted | - | - |
-| after | 1 | NotYet | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
-| after | 1 | NotYet | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration |
-| after | 1 | NotYet | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration |
+| Side   | Roots | Kind     | First stop                                               | Reason                                                                                                                                       |
+| ------ | ----: | -------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| before |    73 | Refused  | src/compiler/core.ts:736:36                              | a cast the runtime can't check                                                                                                               |
+| before |     1 | NotYet   | src/compiler/debug.ts:243:59                             | a generic instantiation whose type argument for T, constrained to Node, can't be read                                                        |
+| before |     2 | accepted | -                                                        | -                                                                                                                                            |
+| before |     1 | NotYet   | src/compiler/semver.ts:71:9                              | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
+| before |     1 | NotYet   | src/compiler/commandLineParser.ts:293:35                 | reading an enum before its runtime initialization; move the call after the enum declaration                                                  |
+| before |     1 | NotYet   | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration                                                  |
+| after  |    73 | Refused  | src/compiler/core.ts:736:36                              | a cast the runtime can't check                                                                                                               |
+| after  |     1 | NotYet   | src/compiler/debug.ts:243:59                             | a generic instantiation whose type argument for T, constrained to Node, can't be read                                                        |
+| after  |     2 | accepted | -                                                        | -                                                                                                                                            |
+| after  |     1 | NotYet   | src/compiler/semver.ts:71:9                              | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
+| after  |     1 | NotYet   | src/compiler/commandLineParser.ts:293:35                 | reading an enum before its runtime initialization; move the call after the enum declaration                                                  |
+| after  |     1 | NotYet   | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration                                                  |
 
 ## The edited files' ordinary census lines
 
-| Side | File | Kind | Where | Reason |
-| --- | --- | --- | --- | --- |
-| before | src/compiler/factory/utilities.ts | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
+| Side   | File                                                  | Kind    | Where                       | Reason                         |
+| ------ | ----------------------------------------------------- | ------- | --------------------------- | ------------------------------ |
+| before | src/compiler/factory/utilities.ts                     | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
 | before | src/compiler/transformers/declarations/diagnostics.ts | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
-| before | src/compiler/transformers/utilities.ts | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
-| before | src/compiler/utilities.ts | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
-| after | src/compiler/factory/utilities.ts | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
-| after | src/compiler/transformers/declarations/diagnostics.ts | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
-| after | src/compiler/transformers/utilities.ts | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
-| after | src/compiler/utilities.ts | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
+| before | src/compiler/transformers/utilities.ts                | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
+| before | src/compiler/utilities.ts                             | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
+| after  | src/compiler/factory/utilities.ts                     | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
+| after  | src/compiler/transformers/declarations/diagnostics.ts | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
+| after  | src/compiler/transformers/utilities.ts                | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
+| after  | src/compiler/utilities.ts                             | Refused | src/compiler/core.ts:736:36 | a cast the runtime can't check |
 
 ## Every complete edited owner
 
@@ -62,13 +62,13 @@ not a claim that the whole compiler or all dependencies now lower. All complete
 findings, dependency locations and failed-statement boundaries are retained in
 census-results.json and the raw owners-before/after streams.
 
-| Owner | Before census line | Before findings | After census line | After findings |
-| --- | --- | ---: | --- | ---: |
-| isDeclarationWithTypeParameters | src/compiler/utilities.ts:2232:1 | 4 | src/compiler/utilities.ts:2232:1 | 2 |
-| isDeclarationWithTypeParameterChildren | src/compiler/utilities.ts:2246:1 | 4 | src/compiler/utilities.ts:2244:1 | 0 |
-| isPrimitiveLiteralValue | src/compiler/utilities.ts:12033:1 | 8 | src/compiler/utilities.ts:12030:1 | 0 |
-| hasInferredType | src/compiler/utilities.ts:12067:1 | 4 | src/compiler/utilities.ts:12064:1 | 0 |
-| createGetIsolatedDeclarationErrors.getDiagnostic | src/compiler/transformers/declarations/diagnostics.ts:664:5 | 10 | src/compiler/transformers/declarations/diagnostics.ts:673:5 | 14 |
+| Owner                                            | Before census line                                          | Before findings | After census line                                           | After findings |
+| ------------------------------------------------ | ----------------------------------------------------------- | --------------: | ----------------------------------------------------------- | -------------: |
+| isDeclarationWithTypeParameters                  | src/compiler/utilities.ts:2232:1                            |               4 | src/compiler/utilities.ts:2232:1                            |              2 |
+| isDeclarationWithTypeParameterChildren           | src/compiler/utilities.ts:2246:1                            |               4 | src/compiler/utilities.ts:2244:1                            |              0 |
+| isPrimitiveLiteralValue                          | src/compiler/utilities.ts:12033:1                           |               8 | src/compiler/utilities.ts:12030:1                           |              0 |
+| hasInferredType                                  | src/compiler/utilities.ts:12067:1                           |               4 | src/compiler/utilities.ts:12064:1                           |              0 |
+| createGetIsolatedDeclarationErrors.getDiagnostic | src/compiler/transformers/declarations/diagnostics.ts:664:5 |              10 | src/compiler/transformers/declarations/diagnostics.ts:673:5 |             14 |
 
 The first owner still encounters a dependency NotYet at binder.ts:1034:17 from
 its child-predicate call. getDiagnostic still encounters findAncestor's overload
@@ -109,9 +109,9 @@ suppressed, and the owner findings are unchanged. The current mutant confirms
 the restored Debug.type call still fails through a correlated NotYet cause.
 Raw current owner streams and current-file-census.json are retained separately.
 
-| Side | Current file | Kind | First stop |
-| --- | --- | --- | --- |
-| before | utilities.ts | Refused | compiler/core.ts:736:36 |
+| Side   | Current file                             | Kind    | First stop              |
+| ------ | ---------------------------------------- | ------- | ----------------------- |
+| before | utilities.ts                             | Refused | compiler/core.ts:736:36 |
 | before | transformers/declarations/diagnostics.ts | Refused | compiler/core.ts:736:36 |
-| after | utilities.ts | Refused | compiler/core.ts:736:36 |
-| after | transformers/declarations/diagnostics.ts | Refused | compiler/core.ts:736:36 |
+| after  | utilities.ts                             | Refused | compiler/core.ts:736:36 |
+| after  | transformers/declarations/diagnostics.ts | Refused | compiler/core.ts:736:36 |
