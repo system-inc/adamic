@@ -9,11 +9,12 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func renderWithChecks(backend, path string) int {
-	program, code := compile(path)
+func renderWithChecks(backend, path string, format lower.ModuleFormat) int {
+	program, code := compileLibrary(path, false, false, format)
 	if program == nil {
 		return code
 	}

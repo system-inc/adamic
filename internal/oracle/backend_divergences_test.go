@@ -1,6 +1,10 @@
 package oracle
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/system-inc/adamic/internal/lower"
+)
 
 // installed-layout's error is Node's answer to require("source-map-support") where tsc 6.0.3 is
 // installed, which ships no dependencies: its name, code and the first line of its message. The
@@ -30,12 +34,16 @@ const requireInESModule = "ReferenceError: require is not defined"
 // Only these exact fixtures have ruled differences. Each side remains pinned:
 // membership never excuses an arbitrary exit, diagnostic or output change. A row whose node is set
 // pins the source on Node too, for fixtures where native and the JavaScript backend agree with each
-// other and differ from the source; name is the ruled row's, which may hold more than one fixture.
+// other and differ from the source; name is the ruled row's, which may hold more than one fixture. A
+// row whose format is lower.ModuleFormatCommonJSBundle is built only as one bundled image, so its
+// fixture is never among the oracle's, which lower every program as an ES module: the installed-layout
+// harness runs it (TestInstalledLayoutPathDivergences), with each leg's lib directory made <lib>.
 var ruledBackendDivergences = []struct {
 	fixture    string
 	name       string
 	ruling     string
 	reason     string
+	format     lower.ModuleFormat
 	node       *run
 	native     run
 	javascript run
@@ -96,12 +104,49 @@ var ruledBackendDivergences = []struct {
 		native:     run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
 		javascript: run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
 	},
+	{
+		fixture:    "internal/oracle/testdata/installed_layout/filename.ts",
+		name:       "installed-layout-path",
+		ruling:     "@system_adamic, task #redxes2, Nov 6; Adamic and Platforms on #0ta3dk9",
+		reason:     installedLayoutPathReason,
+		format:     lower.ModuleFormatCommonJSBundle,
+		node:       &run{stdout: []byte("<lib>/_tsc.js\n<lib>\n")},
+		native:     run{stdout: []byte("<lib>/_tsc\n<lib>\n")},
+		javascript: run{stdout: []byte("<lib>/_tsc.mjs\n<lib>\n")},
+	},
+	{
+		fixture:    "internal/oracle/testdata/installed_layout/module_path.ts",
+		name:       "javascript-module-path",
+		ruling:     "@system_adamic, task #redxes2, Nov 6; Adamic and Platforms on #0ta3dk9",
+		reason:     javaScriptModulePathReason,
+		format:     lower.ModuleFormatCommonJSBundle,
+		node:       &run{stdout: []byte("<lib>/_tsc.js\n<lib>\n")},
+		native:     run{stdout: []byte("<lib>/_tsc\n<lib>\n")},
+		javascript: run{stdout: []byte("<lib>/_tsc.mjs\n<lib>\n")},
+	},
+	{
+		fixture:    "internal/oracle/testdata/installed_layout/per_file",
+		name:       "per-file-module-directory",
+		ruling:     "@system_adamic, task #redxes2; Adamic's ruling on #0ta3dk9 (18:12Z), on Language's must",
+		reason:     perFileModuleDirectoryReason,
+		format:     lower.ModuleFormatCommonJSBundle,
+		node:       &run{stdout: []byte("util <lib>/lib\nmain <lib>\n")},
+		native:     run{stdout: []byte("util <lib>\nmain <lib>\n")},
+		javascript: run{stdout: []byte("util <lib>\nmain <lib>\n")},
+	},
 }
 
 // The two rows' reasons, one per row, shared by its fixtures.
 const (
 	installedLayoutReason     = "require(\"source-map-support\") throws Node's MODULE_NOT_FOUND where tsc 6.0.3 is installed, which ships no dependencies; native gives its name, code and the first line of its message. The Require stack tail and requireStack are the requiring module's own path, which has no reproducible native answer yet, and tsc's catch ignores the error, so tsc observes nothing. The source on Node, an ES module, has no require."
 	noJavaScriptPluginsReason = "A computed require evaluates its path and throws an Error naming it. Stock Node loads the plugin; native can't run JavaScript. The source on Node, an ES module, has no require."
+)
+
+// The path divergences' reasons, one per row, each row's one fixture declared one bundled image (#redxes2).
+const (
+	installedLayoutPathReason    = "A bundled image's __filename is the running image's real path, lib/_tsc natively, where Node's is lib/_tsc.js: the raw path differs by the program file's own name alone, and __dirname agrees. tsc never prints either; what it derives from them, the default lib, the case probe and a locale's messages, is held to Node by TestInstalledLayoutReadsAreNodes."
+	javaScriptModulePathReason   = "The JavaScript backend's program is an ES module, so a bundled image's __filename there is the module's own path from import.meta.url, lib/_tsc.mjs, where Node's is lib/_tsc.js; __dirname agrees."
+	perFileModuleDirectoryReason = "A CommonJS declaration is one bundled image (Adamic's ruling on #0ta3dk9), so every module's __dirname is the image's directory, lib natively and in JavaScript; Node, run a file per module, gives each module its own, lib/lib for lib/util.ts. tsc ships one bundle, _tsc.js, whose modules all read the bundle's, as TestInstalledLayoutReadsAreNodes holds."
 )
 
 // backendDisagreement applies a named ruling or the ordinary byte-exact comparison.
