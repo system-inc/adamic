@@ -31,7 +31,10 @@ var libraryStoredMembers = map[string]map[string]bool{
 
 // libraryUnstoredMember names the library interface when member is a lib-declared member the runtime
 // shape lacks: one a library interface in libraryStoredMembers declares, whose runtime shape holds no
-// slot for it. Read through that interface's own type, such a member is the inherited library member
+// slot for it, or a method any library interface declares, which lives on the prototype and never in a
+// runtime shape (#sn788gx's census: a Date seen as { readonly getTime?: () => number } read getTime
+// absent natively where Node read it present, and one called through { getTime(): number } stopped at
+// run time as a compiler bug). Read through that interface's own type, such a member is the inherited library member
 // refusal's (a lib declaration is never an own field); read through any other view, nothing else stops
 // it. It's "" for any other member.
 func libraryUnstoredMember(member *ast.Symbol) string {
@@ -44,6 +47,9 @@ func libraryUnstoredMember(member *ast.Symbol) string {
 			continue
 		}
 		if stored, known := libraryStoredMembers[owner.Name().Text()]; known && !stored[member.Name] {
+			return owner.Name().Text()
+		}
+		if declaration.Kind == ast.KindMethodSignature {
 			return owner.Name().Text()
 		}
 	}
