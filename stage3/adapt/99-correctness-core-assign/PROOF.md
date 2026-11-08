@@ -4,30 +4,30 @@ The generic helper is implemented in the existing owner, adaptation 40, with a
 shared final entrypoint in 99-correctness-core-assign. assign and all callers are
 unchanged. No Adamic compiler, checker, refusal rule or backend source is modified.
 
-| Check | Result |
-| --- | --- |
-| Before and accepted full apply, --build-product | Both exit 0 |
-| Fresh accepted source versus measured candidate | All 746 files byte-identical |
-| Source delta versus baseline | Only hasProperty's pinned header in core.ts |
-| assign and every caller | Byte-identical |
-| Ordinary compiler builds before and after | Both exit 0 |
-| Adamic types, all 79 sorted roots before and after | Both exit 0; zero diagnostics |
-| Core JavaScript, comments kept and removed | Byte-identical |
-| All nine emitted compiler JavaScript files | Byte-identical |
-| typescript.d.ts and tsserverlibrary.d.ts | Both byte-identical |
-| typescript.internal.d.ts | Only the hasProperty generic signature changes |
-| Whole-owner contract | 12 no-write refusals; foreign edit and LF/CRLF preserved |
-| Owner replay | Zero writes; source bytes and mtime preserved |
-| Paired adapter replay | 83 pairs; only amended owner output differs |
-| Inherited replay failures | Same 14 nonzero exits before and after |
-| Replay source trees | Zero changed source bytes on both sides |
-| New shared final phase replay | Zero files, edits and writes |
-| Original-helper mutant types | All 79 roots, exit 0 |
-| Original-helper mutant source | All 746 files equal baseline |
-| Original-helper mutant ordinary binder census | NotYet core.ts:1364:29 |
-| Accepted per-file census | All 73 wall roots reach Refused core.ts:1484:12 |
-| Other six root outcomes | Unchanged per file |
-| Temporary observer | Removed; scratch build deleted; no live observer process |
+| Check                                              | Result                                                   |
+| -------------------------------------------------- | -------------------------------------------------------- |
+| Before and accepted full apply, --build-product    | Both exit 0                                              |
+| Fresh accepted source versus measured candidate    | All 746 files byte-identical                             |
+| Source delta versus baseline                       | Only hasProperty's pinned header in core.ts              |
+| assign and every caller                            | Byte-identical                                           |
+| Ordinary compiler builds before and after          | Both exit 0                                              |
+| Adamic types, all 79 sorted roots before and after | Both exit 0; zero diagnostics                            |
+| Core JavaScript, comments kept and removed         | Byte-identical                                           |
+| All nine emitted compiler JavaScript files         | Byte-identical                                           |
+| typescript.d.ts and tsserverlibrary.d.ts           | Both byte-identical                                      |
+| typescript.internal.d.ts                           | Only the hasProperty generic signature changes           |
+| Whole-owner contract                               | 12 no-write refusals; foreign edit and LF/CRLF preserved |
+| Owner replay                                       | Zero writes; source bytes and mtime preserved            |
+| Paired adapter replay                              | 83 pairs; only amended owner output differs              |
+| Inherited replay failures                          | Same 14 nonzero exits before and after                   |
+| Replay source trees                                | Zero changed source bytes on both sides                  |
+| New shared final phase replay                      | Zero files, edits and writes                             |
+| Original-helper mutant types                       | All 79 roots, exit 0                                     |
+| Original-helper mutant source                      | All 746 files equal baseline                             |
+| Original-helper mutant ordinary binder census      | NotYet core.ts:1364:29                                   |
+| Accepted per-file census                           | All 73 wall roots reach Refused core.ts:1484:12          |
+| Other six root outcomes                            | Unchanged per file                                       |
+| Temporary observer                                 | Removed; scratch build deleted; no live observer process |
 
 The accepted helper's body is unchanged. Its T extends object parameter keeps
 the actual caller type at the existing own-property library operation. The
@@ -65,7 +65,7 @@ The whole oracle passes its original guards: 106366 passes, the same one
 expected failure and zero skips. It records 30782 calls and 61568 argument
 appearances in the accepted traversal. A retained hook-timeout attempt adds
 one call and two appearances, for 30783 calls and 61570 appearances across
-all actual attempts. The only accessor is inherited Object.prototype.__proto__;
+all actual attempts. The only accessor is inherited Object.prototype.**proto**;
 there are no inherited enumerable properties, own accessors or symbol keys.
 
 comparison.json, AFTER-PHASES.json, REPLAY-COMPARISON.json, CENSUS.json and the
