@@ -496,8 +496,9 @@ func (l *lowering) brandedChainCall(call, argument *ast.Node) bool {
 		}
 		// Every identifier spelled as the binding counts, whatever it resolves to, so a shorthand `{ p }`,
 		// whose name resolves to the property, can't carry the value out unseen. A same-named property or
-		// a shadowing name fails closed.
-		if n.Kind == ast.KindIdentifier && n != name && n.Text() == name.Text() {
+		// a shadowing name fails closed. A type position reads nothing at run time, a claim's own `p is R`
+		// among them, so it doesn't count.
+		if n.Kind == ast.KindIdentifier && n != name && n.Text() == name.Text() && !ast.IsPartOfTypeNode(n) {
 			sound = l.symbol(n) == binding && l.brandedChainUse(n, top, declared)
 		}
 		return n.ForEachChild(visit)
