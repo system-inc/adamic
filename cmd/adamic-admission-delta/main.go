@@ -45,61 +45,65 @@ type manifest struct {
 }
 type entry struct {
 	program
-	Corpus            string       `json:"corpus"`
-	Class             string       `json:"class"`
-	Base              observation  `json:"base_compile"`
-	Head              observation  `json:"compile"`
-	Node              *observation `json:"node"`
-	JavaScript        *observation `json:"javascript"`
-	Native            *observation `json:"native"`
-	JavaScriptCompile *observation `json:"javascript_compile,omitempty"`
-	NativeCompile     *observation `json:"native_compile,omitempty"`
-	Agree             *bool        `json:"agree"`
-	NegativeRelated   bool         `json:"negative_related"`
-	NegativeWitness   bool         `json:"negative_witness"`
-	NotYetRelated     bool         `json:"notyet_related"`
-	RuledRuntimeStop  bool         `json:"ruled_runtime_stop"`
-	RepairAgree       *bool        `json:"repair_agree,omitempty"`
-	Sampled           bool         `json:"sampled"`
-	VoidReason        string       `json:"void_reason,omitempty"`
+	Corpus                 string       `json:"corpus"`
+	Class                  string       `json:"class"`
+	Base                   observation  `json:"base_compile"`
+	Head                   observation  `json:"compile"`
+	Node                   *observation `json:"node"`
+	JavaScript             *observation `json:"javascript"`
+	Native                 *observation `json:"native"`
+	JavaScriptCompile      *observation `json:"javascript_compile,omitempty"`
+	NativeCompile          *observation `json:"native_compile,omitempty"`
+	Agree                  *bool        `json:"agree"`
+	NegativeRelated        bool         `json:"negative_related"`
+	NegativeWitness        bool         `json:"negative_witness"`
+	NotYetRelated          bool         `json:"notyet_related"`
+	RuledRuntimeStop       bool         `json:"ruled_runtime_stop"`
+	RuledBackendDivergence bool         `json:"ruled_backend_divergence"`
+	RepairAgree            *bool        `json:"repair_agree,omitempty"`
+	Sampled                bool         `json:"sampled"`
+	VoidReason             string       `json:"void_reason,omitempty"`
 }
 type report struct {
-	NegativeWitnessCount  int                `json:"negative_witness_count"`
-	AcceptedWitnesses     int                `json:"accepted_witnesses"`
-	NodeAgreements        int                `json:"node_agreements"`
-	RuntimeNotYetCount    int                `json:"runtime_notyet_count"`
-	RuledRuntimeStops     int                `json:"ruled_runtime_stops"`
-	RuledRuntimeStopPaths []string           `json:"ruled_runtime_stop_paths"`
-	StaleRuntimeStops     []string           `json:"stale_runtime_stops"`
-	PendingRuntimeStops   []string           `json:"pending_runtime_stops"`
-	CorpusFilter          string             `json:"corpus_filter"`
-	Shard                 string             `json:"shard"`
-	CompleteCorpus        bool               `json:"complete_corpus"`
-	Phases                map[string]float64 `json:"phase_seconds"`
-	Workers               int                `json:"workers"`
-	Classification        string             `json:"classification"`
-	Diff                  []program          `json:"diff"`
-	DiffCount             int                `json:"diff_count"`
-	DiffTSUnmatched       []string           `json:"diff_ts_unmatched"`
-	CompileTimeoutSeconds float64            `json:"compile_timeout_seconds"`
-	RuntimeTimeoutSeconds float64            `json:"runtime_timeout_seconds"`
-	Base                  string             `json:"base"`
-	Head                  string             `json:"head"`
-	GeneratorRevision     string             `json:"generator_revision"`
-	GeneratorBlob         string             `json:"generator_blob"`
-	ManifestBlob          string             `json:"manifest_blob"`
-	Admitted              int                `json:"admitted"`
-	Programs              []entry            `json:"programs"`
-	Verdict               string             `json:"verdict"`
-	Void                  bool               `json:"void"`
-	VoidReason            string             `json:"void_reason,omitempty"`
-	Corpora               []corpus           `json:"corpora"`
-	SamplingSeed          string             `json:"sampling_seed"`
-	SeedGiven             bool               `json:"seed_given"`
-	SamplingSize          int                `json:"sampling_size"`
-	Omitted               int                `json:"omitted"`
-	BudgetSeconds         float64            `json:"budget_seconds"`
-	BudgetUsedSeconds     float64            `json:"budget_used_seconds"`
+	NegativeWitnessCount        int                `json:"negative_witness_count"`
+	AcceptedWitnesses           int                `json:"accepted_witnesses"`
+	NodeAgreements              int                `json:"node_agreements"`
+	RuntimeNotYetCount          int                `json:"runtime_notyet_count"`
+	RuledRuntimeStops           int                `json:"ruled_runtime_stops"`
+	RuledRuntimeStopPaths       []string           `json:"ruled_runtime_stop_paths"`
+	StaleRuntimeStops           []string           `json:"stale_runtime_stops"`
+	PendingRuntimeStops         []string           `json:"pending_runtime_stops"`
+	BackendDivergenceCount      int                `json:"backend_divergence_count"`
+	RuledBackendDivergences     int                `json:"ruled_backend_divergences"`
+	RuledBackendDivergencePaths []string           `json:"ruled_backend_divergence_paths"`
+	CorpusFilter                string             `json:"corpus_filter"`
+	Shard                       string             `json:"shard"`
+	CompleteCorpus              bool               `json:"complete_corpus"`
+	Phases                      map[string]float64 `json:"phase_seconds"`
+	Workers                     int                `json:"workers"`
+	Classification              string             `json:"classification"`
+	Diff                        []program          `json:"diff"`
+	DiffCount                   int                `json:"diff_count"`
+	DiffTSUnmatched             []string           `json:"diff_ts_unmatched"`
+	CompileTimeoutSeconds       float64            `json:"compile_timeout_seconds"`
+	RuntimeTimeoutSeconds       float64            `json:"runtime_timeout_seconds"`
+	Base                        string             `json:"base"`
+	Head                        string             `json:"head"`
+	GeneratorRevision           string             `json:"generator_revision"`
+	GeneratorBlob               string             `json:"generator_blob"`
+	ManifestBlob                string             `json:"manifest_blob"`
+	Admitted                    int                `json:"admitted"`
+	Programs                    []entry            `json:"programs"`
+	Verdict                     string             `json:"verdict"`
+	Void                        bool               `json:"void"`
+	VoidReason                  string             `json:"void_reason,omitempty"`
+	Corpora                     []corpus           `json:"corpora"`
+	SamplingSeed                string             `json:"sampling_seed"`
+	SeedGiven                   bool               `json:"seed_given"`
+	SamplingSize                int                `json:"sampling_size"`
+	Omitted                     int                `json:"omitted"`
+	BudgetSeconds               float64            `json:"budget_seconds"`
+	BudgetUsedSeconds           float64            `json:"budget_used_seconds"`
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
@@ -207,6 +211,7 @@ func run(args []string) error {
 	headBinary := flags.String("head-binary", "", "built head compiler")
 	negativePath := flags.String("negative-witnesses", "cloud/admission-corpus/negative-witnesses.json", "ruled content-hash negative witnesses")
 	runtimeNotYetPath := flags.String("runtime-notyet-stops", "cloud/admission-corpus/runtime-notyet-stops.json", "ruled content-hash run-time NotYet stops")
+	backendDivergencesPath := flags.String("backend-divergences", "internal/oracle/testdata/backend_divergences.json", "ruled backend divergences, the rows internal/oracle pins")
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
@@ -258,10 +263,15 @@ func run(args []string) error {
 			return fmt.Errorf("program listed both as a negative witness and as a run-time NotYet: %s", hash)
 		}
 	}
+	divergences, err := readRuledBackendDivergences(*backendDivergencesPath)
+	if err != nil {
+		return err
+	}
 	startedAll := time.Now()
-	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, PendingRuntimeStops: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
+	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, PendingRuntimeStops: []string{}, RuledBackendDivergencePaths: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
 	result.NegativeWitnessCount = len(negatives.Witnesses)
 	result.RuntimeNotYetCount = len(runtimeStops.Stops)
+	result.BackendDivergenceCount = len(divergences.Divergences)
 	result.Base, err = git(root, "rev-parse", *base+"^{commit}")
 	if err != nil {
 		return err
@@ -584,8 +594,15 @@ func run(args []string) error {
 				result.RuledRuntimeStopPaths = append(result.RuledRuntimeStopPaths, record.Path)
 			}
 		}
+		// A program at a ruled divergence's fixture passes as that divergence only when its run is exactly the
+		// row's (#tqm95v6); anything else disagreeing still fails.
+		if !agree && !record.NegativeWitness && !record.RuledRuntimeStop && acceptsRuledBackendDivergence(record.Path, divergences, node, javascript, native) {
+			record.RuledBackendDivergence = true
+			result.RuledBackendDivergences++
+			result.RuledBackendDivergencePaths = append(result.RuledBackendDivergencePaths, record.Path)
+		}
 		record.Agree = &agree
-		if !agree && !record.NegativeWitness && !record.RuledRuntimeStop {
+		if !agree && !record.NegativeWitness && !record.RuledRuntimeStop && !record.RuledBackendDivergence {
 			if command := timedOut(node, jsCompile, javascript, nativeCompile, native); command != "" {
 				record.VoidReason = command + " timeout"
 				voids = append(voids, record.Path+": "+record.VoidReason)
@@ -616,6 +633,7 @@ func run(args []string) error {
 		sort.Strings(result.PendingRuntimeStops)
 	}
 	fmt.Fprintf(os.Stderr, "ruled run-time stops: %d\n", result.RuledRuntimeStops)
+	fmt.Fprintf(os.Stderr, "ruled backend divergences: %d\n", result.RuledBackendDivergences)
 	// diff_count is how many programs base..head added or changed, never how many differ from Node, so
 	// the line says so (#zhgxzjg, a 24 read as differences).
 	fmt.Fprintf(os.Stderr, "changed programs: %d\n", result.DiffCount)

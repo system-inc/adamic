@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -129,7 +128,7 @@ func readRuntimeNotYetStops(path string) (runtimeNotYetStopList, error) {
 		if !validContentHash(hash) {
 			return list, fmt.Errorf("invalid run-time NotYet content hash %q", hash)
 		}
-		if stop.Path == "" || filepath.IsAbs(stop.Path) || filepath.ToSlash(filepath.Clean(stop.Path)) != stop.Path || stop.Path == ".." || strings.HasPrefix(stop.Path, "../") {
+		if !repositoryPath(stop.Path) {
 			return list, fmt.Errorf("run-time NotYet needs its program's repository path: %s", hash)
 		}
 		if !taskReference.MatchString(stop.RulingTask) || !taskReference.MatchString(stop.LiftingTask) || stop.LiftingTask == stop.RulingTask {
