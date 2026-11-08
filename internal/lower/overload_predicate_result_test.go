@@ -280,7 +280,8 @@ console.log(found === undefined ? "none" : found.text);
 `, "adamic: panic: ")
 }
 
-// tsc's Node has writable fields, so a rigid T extends Node is a type a value can be widened into, and
+// tsc's Node has writable fields (its internal id, original and emitNode, beside readonly kind and parent), so
+// a rigid T extends Node is a type a value can be widened into, and
 // censusRelated refuses `undefined` returned into `T | undefined` (widened keeps undefined as itself and
 // judges it against T). That was the census's stop at utilitiesPublic.ts:792, the "quit" arm's return
 // (Correctness's census of 5a86e3b3), which findAncestorShape's readonly N never reached. The return of
@@ -288,7 +289,7 @@ console.log(found === undefined ? "none" : found.text);
 // off, and this refuses at the quit arm's return.
 func TestFindAncestorOverWritableNode(t *testing.T) {
 	t.Parallel()
-	source := strings.Replace(findAncestorShape, "interface N { readonly kind: number; readonly parent: N | undefined; }", "interface N { kind: number; parent: N | undefined; }", 1)
+	source := strings.Replace(findAncestorShape, "interface N { readonly kind: number; readonly parent: N | undefined; }", "interface N { readonly kind: number; readonly parent: N | undefined; id?: number; }", 1)
 	if source == findAncestorShape {
 		t.Fatal("the replacement didn't apply")
 	}
