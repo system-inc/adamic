@@ -1,0 +1,37 @@
+[
+  {
+    "forecast": "debug.ts:537",
+    "file": "debug.ts",
+    "line": 537,
+    "source_line": "                    flowNodeProto = Object.create(Object.prototype) as FlowNode;",
+    "baseline_file_sha256": "678f2775605d90e788d3ff9d37ebbb642361d191d462045ff9600ef934c65183"
+  },
+  {
+    "forecast": "debug.ts:577",
+    "file": "debug.ts",
+    "line": 577,
+    "source_line": "                    nodeArrayProto = Object.create(Array.prototype) as NodeArray<Node>;",
+    "baseline_file_sha256": "678f2775605d90e788d3ff9d37ebbb642361d191d462045ff9600ef934c65183"
+  },
+  {
+    "forecast": "semver.ts:287",
+    "file": "semver.ts",
+    "line": 287,
+    "source_line": "            for (const simple of range.split(whitespaceRegExp) as string[]) {",
+    "baseline_file_sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+  },
+  {
+    "forecast": "performanceCore.ts:29",
+    "file": "performanceCore.ts",
+    "line": 29,
+    "source_line": "declare const performance: Performance | undefined;",
+    "baseline_file_sha256": "8b1993ab380a178b24fed0dcc9e7dc312172a3e3be642ee1b533161f792f0dae"
+  },
+  {
+    "forecast": "performance.ts:189",
+    "file": "performance.ts",
+    "line": 189,
+    "source_line": "            if (perfHooks.shouldWriteNativeEvents || system?.cpuProfilingEnabled?.() || system?.debugMode) {",
+    "baseline_file_sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3"
+  }
+]

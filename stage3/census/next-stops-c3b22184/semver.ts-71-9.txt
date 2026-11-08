@@ -1,0 +1,22 @@
+    constructor(major: number | string, minor = 0, patch = 0, prerelease: string | readonly string[] = "", build: string | readonly string[] = "") {
+        if (typeof major === "string") {
+            const result = Debug.checkDefined(tryParseComponents(major), "Invalid version");
+            ({ major, minor, patch, prerelease, build } = result);
+        }
+
+        Debug.assert(major >= 0, "Invalid argument: major");
+        Debug.assert(minor >= 0, "Invalid argument: minor");
+        Debug.assert(patch >= 0, "Invalid argument: patch");
+
+        const prereleaseArray = prerelease ? isArray(prerelease) ? prerelease : prerelease.split(".") : emptyArray;
+        const buildArray = build ? isArray(build) ? build : build.split(".") : emptyArray;
+
+        Debug.assert(every(prereleaseArray, s => prereleasePartRegExp.test(s)), "Invalid argument: prerelease");
+        Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), "Invalid argument: build");
+
+        this.major = major;
+        this.minor = minor;
+        this.patch = patch;
+        this.prerelease = prereleaseArray;
+        this.build = buildArray;
+    }

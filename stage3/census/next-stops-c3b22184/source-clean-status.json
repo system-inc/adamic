@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/workspace/typescript-source",
+    "diff",
+    "--exit-code"
+  ],
+  "exit_code": 0,
+  "stopping_reason": null,
+  "seconds": 3.0028942389999997,
+  "process_group_cleaned": true
+}

@@ -1,0 +1,54 @@
+[
+  {
+    "where": "core.ts:2599:15",
+    "kind": "NotYet",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "file": "internal/lower/host_bindings.go",
+    "line": 139,
+    "function": "hostBindingStop",
+    "function_line": 124,
+    "caller": "(*lowering).hostBindingStatement",
+    "caller_file": "internal/lower/host_bindings.go",
+    "caller_line": 106,
+    "note": "hostBindingStop walks row.Targets() at lines 126-129, collecting Pending columns and their owners. It builds the exact reason at line 139. hostBindingStatement (starts at line 96) matches the ambient declarator to the table row, calls hostBindingStop at line 106, and emits l.notYet(declaration, reason) at line 107. ambientRefusal (internal/lower/ambient.go:61) calls hostBindingStatement at line 76; the rule is registered at ordinal 2200, line 94. The embedded process row has native Pending (Runtime), javascript Provided, wasm32 Pending (Runtime and Platforms), and model node:process. The decision uses the compiler-embedded host-binding rows."
+  },
+  {
+    "where": "semver.ts:71:9",
+    "kind": "NotYet",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "file": "internal/lower/namespaces.go",
+    "line": 269,
+    "function": "(*lowering).namespaceInitialization",
+    "function_line": 260,
+    "caller": "lowerWithElementKey",
+    "caller_file": "internal/lower/lower.go",
+    "caller_line": 113,
+    "note": "The checkCall closure follows graph.reach(target). A reached namespace declaration absent from initialized emits line 269 at the reached read. The direct-read alternative emits the same reason at line 321. lowerWithElementKey calls this walk before refusal and function-body lowering."
+  },
+  {
+    "where": "commandLineParser.ts:293:35",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "file": "internal/lower/namespaces.go",
+    "line": 318,
+    "function": "(*lowering).namespaceInitialization",
+    "function_line": 260,
+    "caller": "lowerWithElementKey",
+    "caller_file": "internal/lower/lower.go",
+    "caller_line": 113,
+    "note": "The visit closure finds a namespace value node whose namespaceRuntimeEnum declaration is not initialized and emits line 318. The reached-call alternative emits the same reason at line 267. lowerWithElementKey calls this walk before refusal and function-body lowering."
+  },
+  {
+    "where": "diagnosticInformationMap.generated.ts:13:45",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "file": "internal/lower/namespaces.go",
+    "line": 318,
+    "function": "(*lowering).namespaceInitialization",
+    "function_line": 260,
+    "caller": "lowerWithElementKey",
+    "caller_file": "internal/lower/lower.go",
+    "caller_line": 113,
+    "note": "The visit closure finds a namespace value node whose namespaceRuntimeEnum declaration is not initialized and emits line 318. The reached-call alternative emits the same reason at line 267. lowerWithElementKey calls this walk before refusal and function-body lowering."
+  }
+]

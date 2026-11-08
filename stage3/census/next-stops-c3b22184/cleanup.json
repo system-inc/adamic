@@ -1,0 +1,908 @@
+{
+  "processes_found": [],
+  "remaining": [],
+  "statuses": {
+    "root-27-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 42.06501173599986,
+      "process_group_cleaned": true
+    },
+    "root-67-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.023452741000256,
+      "process_group_cleaned": true
+    },
+    "root-43-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/tracing.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 43.10034679299997,
+      "process_group_cleaned": true
+    },
+    "root-63-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.028681203999895,
+      "process_group_cleaned": true
+    },
+    "root-08-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 46.16637607300004,
+      "process_group_cleaned": true
+    },
+    "root-45-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 39.061023360000036,
+      "process_group_cleaned": true
+    },
+    "root-65-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/module/system.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 32.025203243000306,
+      "process_group_cleaned": true
+    },
+    "root-70-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 36.10416088300008,
+      "process_group_cleaned": true
+    },
+    "root-16-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 36.052553794999994,
+      "process_group_cleaned": true
+    },
+    "root-61-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 34.03083134799999,
+      "process_group_cleaned": true
+    },
+    "root-33-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/performance.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 48.06639963099997,
+      "process_group_cleaned": true
+    },
+    "root-47-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 38.21570207800005,
+      "process_group_cleaned": true
+    },
+    "root-25-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 42.35560554500012,
+      "process_group_cleaned": true
+    },
+    "root-35-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/program.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 40.05540583400034,
+      "process_group_cleaned": true
+    },
+    "root-26-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 37.03115631699984,
+      "process_group_cleaned": true
+    },
+    "root-12-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/corePublic.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 1.002250297999808,
+      "process_group_cleaned": true
+    },
+    "root-62-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 36.031102094999824,
+      "process_group_cleaned": true
+    },
+    "root-31-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/parser.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 54.19184210000003,
+      "process_group_cleaned": true
+    },
+    "root-55-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.07891690700035,
+      "process_group_cleaned": true
+    },
+    "root-39-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/semver.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 40.06667745100003,
+      "process_group_cleaned": true
+    },
+    "root-20-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 45.07411683800001,
+      "process_group_cleaned": true
+    },
+    "root-19-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 40.09357011999987,
+      "process_group_cleaned": true
+    },
+    "root-76-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.03276952599981,
+      "process_group_cleaned": true
+    },
+    "root-02-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 43.11309374899997,
+      "process_group_cleaned": true
+    },
+    "root-72-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.02974189299994,
+      "process_group_cleaned": true
+    },
+    "root-34-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/performanceCore.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 45.1338175689998,
+      "process_group_cleaned": true
+    },
+    "root-21-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 41.337340638999876,
+      "process_group_cleaned": true
+    },
+    "root-24-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 49.09691410000005,
+      "process_group_cleaned": true
+    },
+    "root-52-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 36.045395436000035,
+      "process_group_cleaned": true
+    },
+    "root-51-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 32.02390307199994,
+      "process_group_cleaned": true
+    },
+    "root-58-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 36.03754666699979,
+      "process_group_cleaned": true
+    },
+    "root-69-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 34.04828619999989,
+      "process_group_cleaned": true
+    },
+    "root-40-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/sourcemap.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 41.158230384000035,
+      "process_group_cleaned": true
+    },
+    "entry-census-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/tsc/tsc.ts",
+        "/workspace/scratch/c3b22184/artifacts/tsc/census.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 37.051074406,
+      "process_group_cleaned": true
+    },
+    "root-11-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/core.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 37.03337468199993,
+      "process_group_cleaned": true
+    },
+    "root-05-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/builder.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 39.03574232699998,
+      "process_group_cleaned": true
+    },
+    "root-66-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.1065154009998,
+      "process_group_cleaned": true
+    },
+    "root-64-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.03500486899975,
+      "process_group_cleaned": true
+    },
+    "root-22-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 37.060012341000174,
+      "process_group_cleaned": true
+    },
+    "root-17-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 42.0529437969999,
+      "process_group_cleaned": true
+    },
+    "root-15-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/emitter.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 41.03238479200013,
+      "process_group_cleaned": true
+    },
+    "root-50-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 31.0306814999999,
+      "process_group_cleaned": true
+    },
+    "root-order-status.json": {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/adamic/stage3/census/next-stops-c3b22184/classify-root-order.py"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 1.0020642949998546,
+      "process_group_cleaned": true
+    },
+    "root-42-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/sys.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 37.05766199300024,
+      "process_group_cleaned": true
+    },
+    "root-04-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/binder.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 41.07519956099998,
+      "process_group_cleaned": true
+    },
+    "root-28-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/hostErrors.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 1.0025939110000763,
+      "process_group_cleaned": true
+    },
+    "root-60-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.06880667199994,
+      "process_group_cleaned": true
+    },
+    "root-18-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 45.18362257800004,
+      "process_group_cleaned": true
+    },
+    "root-79-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/watchUtilities.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.037155255000016,
+      "process_group_cleaned": true
+    },
+    "root-59-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 33.01996957700021,
+      "process_group_cleaned": true
+    },
+    "root-09-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/checker.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 39.06756994700004,
+      "process_group_cleaned": true
+    },
+    "root-74-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/utilities.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 35.03944156600028,
+      "process_group_cleaned": true
+    },
+    "entry-latent-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/entry-census",
+        "/workspace/c3b22184-adapted/src/tsc/tsc.ts",
+        "/workspace/scratch/c3b22184/artifacts/tsc/latent.jsonl"
+      ],
+      "exit_code": -15,
+      "stopping_reason": "configured elapsed-time bound",
+      "seconds": 1801.0077677959998,
+      "process_group_cleaned": true
+    },
+    "root-68-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 31.043791917999897,
+      "process_group_cleaned": true
+    },
+    "root-49-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 32.01924130599991,
+      "process_group_cleaned": true
+    },
+    "root-46-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 39.07146452500001,
+      "process_group_cleaned": true
+    },
+    "root-03-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 40.08063645100003,
+      "process_group_cleaned": true
+    },
+    "root-78-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/watchPublic.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 34.02148327799978,
+      "process_group_cleaned": true
+    },
+    "root-57-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 34.01733360600019,
+      "process_group_cleaned": true
+    },
+    "root-77-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/watch.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 32.04611520900016,
+      "process_group_cleaned": true
+    },
+    "root-73-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/types.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 10.014293346000159,
+      "process_group_cleaned": true
+    },
+    "root-10-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 36.086911526999984,
+      "process_group_cleaned": true
+    },
+    "root-38-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/scanner.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 37.041308430999834,
+      "process_group_cleaned": true
+    },
+    "root-48-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 35.0546820200002,
+      "process_group_cleaned": true
+    },
+    "root-29-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 52.106392040999935,
+      "process_group_cleaned": true
+    },
+    "root-37-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 40.455457797000236,
+      "process_group_cleaned": true
+    },
+    "root-23-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 36.068129793000026,
+      "process_group_cleaned": true
+    },
+    "root-41-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 44.15654894199997,
+      "process_group_cleaned": true
+    },
+    "root-32-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/path.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 60.37349836099975,
+      "process_group_cleaned": true
+    },
+    "root-56-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 35.03383283699986,
+      "process_group_cleaned": true
+    },
+    "root-53-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 35.02589860399985,
+      "process_group_cleaned": true
+    },
+    "root-07-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/builderState.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 45.094087600999956,
+      "process_group_cleaned": true
+    },
+    "root-13-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/debug.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 11.022528249000061,
+      "process_group_cleaned": true
+    },
+    "root-01-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 39.051489394999976,
+      "process_group_cleaned": true
+    },
+    "root-06-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/builderPublic.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 40.14226882599996,
+      "process_group_cleaned": true
+    },
+    "root-71-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/tsbuild.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 35.02743272600037,
+      "process_group_cleaned": true
+    },
+    "root-14-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 10.00768439400008,
+      "process_group_cleaned": true
+    },
+    "root-75-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 35.03073959099993,
+      "process_group_cleaned": true
+    },
+    "root-30-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 50.190493566999976,
+      "process_group_cleaned": true
+    },
+    "root-54-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 34.07032131799997,
+      "process_group_cleaned": true
+    },
+    "root-44-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/transformer.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 41.04984456700004,
+      "process_group_cleaned": true
+    },
+    "root-36-status.json": {
+      "command": [
+        "/workspace/scratch/c3b22184/census",
+        "/workspace/c3b22184-adapted/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/c3b22184/root.jsonl"
+      ],
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 47.246931603999656,
+      "process_group_cleaned": true
+    }
+  },
+  "all_supervised_groups_cleaned": true
+}
