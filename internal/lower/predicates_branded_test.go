@@ -760,16 +760,62 @@ const picked = pick(i, isIdentifier);
 console.log(picked === undefined ? "no" : picked.escapedText);
 `
 	lowersAndAgreesWithNodeAs(t, brandedPrelude+pick, ".ts")
+	// A helper whose T stands only in test's claim lowers per instance once T is read from that claim
+	// (#fx9waqy), its honest instance agreeing with Node. Mutant: the claim read dropped from inferTypes,
+	// and this stops as "lowered without knowing".
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+`function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+function pickName<T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string { if (test(x)) { return "yes"; } return "no"; }
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+console.log(pickName(i, isIdentifier));
+`, ".ts")
 	for _, probe := range []struct{ name, source, want string }{
 		{"second instance", pick + `const element = pick(i, isTypeElementLie);
 console.log(element === undefined ? "no" : String(element.pos));
 `, "which isn't its supertype"},
-		{"unread", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+		// T stands only in test's claim, and is read from the claim the call's signature makes (#fx9waqy), so
+		// each instance is its own body and the lying one stops at its own call, by the walk.
+		{"read from its claim", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 function pickName<T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string { if (test(x)) { return "yes"; } return "no"; }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 console.log(pickName(i, isIdentifier));
 console.log(pickName(i, isTypeElementLie));
-`, "which this body is lowered without knowing"},
+`, "which isn't its supertype"},
+		// core.ts's orPredicate2 (Correctness's adaptation): R1 and R2 stand only in f1's and f2's claims.
+		// Read from them, the body is lowered per instance and its claims resolve, so a branded instance is
+		// judged where its returned predicate is called: Identifier | TypeElement claimed of an Identifier
+		// narrows to a member that isn't TypeElement's supertype, NotYet by the walk, honest or lying.
+		// Measured on Cloud at 575fc858.
+		{"orPredicate2's lying instance", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+const either = orPredicate2(isIdentifier, isTypeElementLie);
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+function show(x: PropertySignature | Identifier): void { if (either(x)) { console.log(String(x.pos)); } }
+show(i);
+`, "which isn't its supertype"},
+		{"orPredicate2's honest instance", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+const element = orPredicate2(isIdentifier, isTypeElement);
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+console.log(element(i) ? "element" : "other");
+`, "which isn't its supertype"},
+		// Over unbranded claims the caller still stops, on R-T80's union check: Node's kind is a number, an open
+		// tag domain. Measured on Cloud at bb840f91.
+		{"orPredicate2 over unbranded claims", `interface Literal extends Node { readonly kind: 9; readonly text: string; }
+function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+function isLiteral(n: Node): n is Literal { return kindOf(n) === 9; }
+const named = orPredicate2(isIdentifier, isLiteral);
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+console.log(named(i) ? "i named" : "i other");
+`, "checked predicate membership over an open tag domain"},
+		// The branded instance made and never called, so the helper body's own judgment is the first stop:
+		// f2(p) narrows the generic argument p, whose true side has no read in the body (brandedNarrowing's
+		// generic path, the wall Optimizer's rule 1 lifts).
+		{"orPredicate2's branded body alone", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+const element = orPredicate2(isIdentifier, isTypeElement);
+console.log(typeof element);
+`, "over a generic argument P, with no read of it on the true side"},
 		{"generic arrow", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 const pickArrow = <T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string => test(x) ? "yes" : "no";
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
