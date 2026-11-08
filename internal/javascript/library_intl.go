@@ -25,8 +25,9 @@ func intlCollatorRuntime() string {
 		" get compare() { return this.#compare; }\n" +
 		"}\n" +
 		"const adamicIntlCollator = locale => new AdamicIntlCollator(locale);\n" +
-		// A new collator's compare read as a value (#9tw2b9z): a closure, in this backend's form ({ code }
-		// called with its arguments, as adamicCall calls it), over the getter's function, which takes its
-		// collator first as adamicCallee's road calls it, so it's bound to this collator.
-		"const adamicIntlCollatorCompare = collator => { const compare = collator.compare; return { code: (closure, values) => compare(collator, ...values) }; };\n"
+		// A new collator's compare read as a value (#9tw2b9z): an AdamicClosure, this backend's closure, so
+		// typeof answers function, its length 2 as Node's bound compare's is, and adamicCall calls its code
+		// with the arguments. That code calls the getter's function, which takes its collator first as
+		// adamicCallee's road calls it, so it's bound to this collator.
+		"const adamicIntlCollatorCompare = collator => { const compare = collator.compare; return new AdamicClosure((closure, values) => compare(collator, ...values), [], false, 2); };\n"
 }
