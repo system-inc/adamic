@@ -305,7 +305,7 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 	reflect.TypeFor[ir.JoinEnter]():                {class: graphFlowCannotHold, why: "a boolean (unknown.go:90)"},
 	reflect.TypeFor[ir.JoinLeave]():                {class: graphFlowCannotHold, why: "void (unknown.go:95)"},
 	reflect.TypeFor[ir.RecordStorage]():            {class: graphFlowCannotHold, why: "a boolean (records.go:51)"},
-	reflect.TypeFor[ir.RecordLiteral]():            {class: graphFlowCannotHold, why: "a new record (records.go:31): no graph type is a record, since a cycle through one is refused before graph regions (graph_types.go:90) and only arrays, tuples, maps and sets join as caches (graph_types.go:262)"},
+	reflect.TypeFor[ir.RecordLiteral]():            {class: graphFlowCannotHold, why: "a new record (records.go:31), never reached here: graphType selects no record type (only arrays, tuples, maps and sets join as caches, graph_types.go:262), so no demand follow walks names one. A record held on a cycle is the cycle rule's, not this pass's: #a9e21hc measured it leaking on main and adds its stop"},
 	reflect.TypeFor[ir.RegExpNew]():                {class: graphFlowCannotHold, why: "a pattern of its source and flags (regexp.go:12)"},
 	reflect.TypeFor[ir.RegExpCall]():               {class: graphFlowCannotHold, why: "a string, a number, a boolean, or match arrays of strings and their iterator (regexp.go:23)"},
 	reflect.TypeFor[ir.RegExpProperty]():           {class: graphFlowCannotHold, why: "a match's index, input or groups, numbers and strings (regexp.go:47)"},
