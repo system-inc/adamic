@@ -15,6 +15,12 @@ function adapt(tree, ts) {
         if (source.parseDiagnostics.length) throw new Error(`cannot parse ${name}`);
         return [file, source];
     }));
+    const debugHome = require('./getfunctionname-home.cjs').read(ts, tree, sources.get("debug").text, "45");
+    if (debugHome.moved) {
+        const original = sources.get("debug");
+        const virtualText = original.text + "\n" + require('./getfunctionname-home.json').debug;
+        sources.set("debug", ts.createSourceFile(original.fileName, virtualText, ts.ScriptTarget.Latest, true));
+    }
     const edits = new Map();
     const evidence = [];
     const declined = [];
@@ -243,6 +249,7 @@ function adapt(tree, ts) {
             else edit(source, split, `${split.getText(source)} as string[]`, `capture-free separator ${proof.regex} yields a dense string array`);
         }
     }
+    if (debugHome.moved && edits.has(sources.get("debug"))) throw new Error("moved getFunctionName must already have its capture proof applied");
     // Declines are all-or-nothing: a mutant must not leave a partly adapted tree.
     if (declined.length) throw new Error(JSON.stringify({ declined }));
     for (const [source, list] of edits) {

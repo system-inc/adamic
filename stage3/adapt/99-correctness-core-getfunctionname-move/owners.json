@@ -1,0 +1,26 @@
+{
+  "debug": {
+    "file": "src/compiler/debug.ts",
+    "before": "export function getFunctionName(func: AnyFunction): string {\n        if (typeof func !== \"function\") {\n            return \"\";\n        }\n        else if (hasProperty(func, \"name\")) {\n            return func.name;\n        }\n        else {\n            const text = Function.prototype.toString.call(func);\n            const match = /^function\\s+([\\w$]+)\\s*\\(/.exec(text);\n            return match ? match[1]! : \"\";\n        }\n    }",
+    "beforeSha256": "c8c2b2fb0eaf68b0ad95da8af57d59c92af14411e568e660a9da7fa94b790a0d"
+  },
+  "caller": {
+    "file": "src/deprecatedCompat/deprecate.ts",
+    "before": "export function deprecate<F extends (...args: any[]) => any>(func: F, options?: DeprecationOptions): F {\n    const deprecation = createDeprecation(options?.name ?? Debug.getFunctionName(func), options);\n    return wrapFunction(deprecation, func);\n}",
+    "after": "export function deprecate<F extends (...args: any[]) => any>(func: F, options?: DeprecationOptions): F {\n    const deprecation = createDeprecation(options?.name ?? getFunctionName(func), options);\n    return wrapFunction(deprecation, func);\n}",
+    "beforeSha256": "9bd7b703916e07bbb87a6f9285772036c3556cce45c4ae4d2e5aa05f1fe0d035",
+    "afterSha256": "a85754b1abe102191b1f2ffa7c9a3750e058fd90579544b7ef2ec4c8eca78b4e"
+  },
+  "import": {
+    "before": "import {\n    Debug,\n    DeprecationOptions,\n    formatStringFromArgs,\n    noop,\n    Version,\n    version,\n} from \"./_namespaces/ts.js\";",
+    "after": "import {\n    type AnyFunction,\n    Debug,\n    DeprecationOptions,\n    formatStringFromArgs,\n    hasProperty,\n    noop,\n    Version,\n    version,\n} from \"./_namespaces/ts.js\";",
+    "beforeSha256": "ac168e71b0b5e1b1d605af0c4e85b7f3b8535034debfeebd3e34d9346084d17b",
+    "afterSha256": "190427966b9b1abd97fc4febe1a78f033888afa7df2b60644595abd053d0622f"
+  },
+  "local": {
+    "after": "function getFunctionName(func: AnyFunction): string {\n        if (typeof func !== \"function\") {\n            return \"\";\n        }\n        else if (hasProperty(func, \"name\")) {\n            return func.name;\n        }\n        else {\n            const text = Function.prototype.toString.call(func);\n            const match = /^function\\s+([\\w$]+)\\s*\\(/.exec(text);\n            return match ? match[1]! : \"\";\n        }\n    }",
+    "afterSha256": "003b2831bcd338df9562975d80756c8aff5bed2dfafafe1500cad0a42f121eea"
+  },
+  "body": "{\n        if (typeof func !== \"function\") {\n            return \"\";\n        }\n        else if (hasProperty(func, \"name\")) {\n            return func.name;\n        }\n        else {\n            const text = Function.prototype.toString.call(func);\n            const match = /^function\\s+([\\w$]+)\\s*\\(/.exec(text);\n            return match ? match[1]! : \"\";\n        }\n    }",
+  "bodySha256": "bfb546e0a0d2d23f7d32d14347e11e90ba2ad5d30f435dfe1590a00e7b57355d"
+}

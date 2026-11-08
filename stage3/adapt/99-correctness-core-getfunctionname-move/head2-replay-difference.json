@@ -1,0 +1,16 @@
+{
+  "41-explicit-any-remaining": {
+    "before": {
+      "adapter": "41-explicit-any-remaining",
+      "exit": 1,
+      "stdout_stderr": "<repo>/stage3/adapt/41-explicit-any-remaining/adapt.cjs:16\n        if (oldCount !== 1 || newCount !== 0) throw Error('missing or duplicate reviewed site: ' + r.id);\n                                              ^\n\nError: missing or duplicate reviewed site: 31\n    at Object.<anonymous> (<repo>/stage3/adapt/41-explicit-any-remaining/adapt.cjs:16:53)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n",
+      "writes": []
+    },
+    "after": {
+      "adapter": "41-explicit-any-remaining",
+      "exit": 1,
+      "stdout_stderr": "<repo>/stage3/adapt/41-explicit-any-remaining/adapt.cjs:18\n        if (oldCount !== 1 || newCount !== 0) throw Error('missing or duplicate reviewed site: ' + r.id);\n                                              ^\n\nError: missing or duplicate reviewed site: 31\n    at Object.<anonymous> (<repo>/stage3/adapt/41-explicit-any-remaining/adapt.cjs:18:53)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n",
+      "writes": []
+    }
+  }
+}

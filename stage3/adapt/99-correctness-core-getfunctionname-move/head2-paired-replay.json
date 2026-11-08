@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "adapters": 98,
+  "differentExistingAdapters": [
+    "41-explicit-any-remaining"
+  ],
+  "allowedRecognitionAmendments": [
+    "30-indexed-reads",
+    "41-explicit-any-remaining",
+    "45-regex-captures",
+    "99-correctness-core-debug-messages"
+  ],
+  "allExistingExitsAndWritesIdentical": true,
+  "unamendedAdapterOutcomesIdentical": true,
+  "moveReplayWrites": 0,
+  "amended41SameRule31Refusal": "only amended source stack line numbers differ",
+  "normalization": "disposable source-tree and repository roots only; no exits, reasons, writes or data normalized"
+}

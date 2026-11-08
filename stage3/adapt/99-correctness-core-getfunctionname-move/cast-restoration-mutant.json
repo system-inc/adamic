@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "mutant": "restore the complete original cast owner on head 2, where Debug no longer exports getFunctionName",
+  "actualAdaptedLine": 1789,
+  "olderForecastLine": 1791,
+  "lineMapping": "elementAt declaration amendment removes two earlier lines",
+  "checks": {
+    "stock-tsc": {
+      "exit": 2,
+      "output": "../scratch/core-finish/cast-mutant/src/compiler/core.ts(1789,97): error TS2339: Property 'getFunctionName' does not exist on type 'typeof Debug'.\n",
+      "diagnosticLine": 1789
+    },
+    "adamic-types": {
+      "exit": 1,
+      "output": "/workspace/scratch/core-finish/cast-mutant/src/compiler/core.ts:1789:97: error TS2339: Property 'getFunctionName' does not exist on type 'typeof Debug'.\n",
+      "diagnosticLine": 1789
+    }
+  },
+  "mutatedSourceSha256": "e9028c03b0dad5d2010d61f92f43b0224a7c7892c3af4ce2ab94ddbddd5014fc"
+}

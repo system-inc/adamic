@@ -14,7 +14,7 @@ const files = [
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
 // Survey line/column fields are documentation, never edit offsets.
-function plan(ts, file, text, check = false, zeroOnly = false) {
+function plan(ts, file, text, check = false, zeroOnly = false, movedHome = false) {
     if (file === "core.ts") require("./getownvalues.cjs").validate(ts, text);
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (source.parseDiagnostics.length) throw new Error(`cannot parse ${file}`);
@@ -37,6 +37,7 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
     const edits = [];
     let assertions = 0, zeros = 0, declined = 0;
     for (const site of sites.filter(site => site.file === file)) {
+        if (movedHome && file === "debug.ts" && site.function === "getFunctionName" && site.expression === "match[1]" && site.occurrence === 1 && site.total === 1 && site.action === "assert") continue;
         const group = groups.get(site.expression);
         if (!group || group.length !== site.total) throw new Error(`site drift: ${file}:${site.line} ${site.expression}`);
         const node = group[site.occurrence - 1];
@@ -92,7 +93,8 @@ function main() {
     const plans = files.map(file => {
         const name = path.join(tree, "src/compiler", file);
         const before = fs.readFileSync(name, "utf8");
-        return { file, name, before, ...plan(ts, file, before, check) };
+        const movedHome = file === "debug.ts" && require("./getfunctionname-home.cjs").read(ts, tree, before, "30").moved;
+        return { file, name, before, ...plan(ts, file, before, check, false, movedHome) };
     });
     for (const item of plans) {
         if (fs.readFileSync(item.name, "utf8") !== item.before) throw new Error(`source changed: ${item.name}`);

@@ -10,14 +10,14 @@ function owners(text){
  const result=new Map();for(const node of ns[0].body.statements)if(ts.isFunctionDeclaration(node)&&node.body&&node.name){assert(!result.has(node.name.text),'duplicate implementation');result.set(node.name.text,{node,text:node.getText(source),start:node.getStart(source),end:node.end});}
  return result;
 }
-function inspect(text){
- const found=owners(text);
- for(const guard of guards){const owner=found.get(guard.owner);assert(owner,`missing ${guard.owner}`);assert.equal(owner.text,guard.text,`unchanged helper moved: ${guard.owner}`);assert.equal(hash(owner.text),guard.sha256);}
+function inspect(text,localText){
+ const found=owners(text); const home=require("./getfunctionname-home.cjs").inspect(ts,text,localText);
+ for(const guard of guards){if(guard.owner==='getFunctionName'&&home.moved){assert.equal(home.node.body.getText(home.source).replace(/\r\n/g,'\n'),guard.body.replace(/\r\n/g,'\n'),'relocated helper body drift');assert.equal(hash(guard.body),guard.bodySha256);continue;}const owner=found.get(guard.owner);assert(owner,`missing ${guard.owner}`);assert.equal(owner.text,guard.text,`unchanged helper moved: ${guard.owner}`);assert.equal(hash(owner.text),guard.sha256);}
  return pins.map(pin=>{const owner=found.get(pin.owner);assert(owner,`missing ${pin.owner}`);const state=owner.text===pin.before?'before':owner.text===pin.after?'after':undefined;assert(state,`unreviewed owner: ${pin.owner}`);assert.equal(hash(owner.text),pin[state+'Sha256']);return {pin,owner,state};});
 }
 function javascript(text,removeComments){return ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;}
-function plan(text){
- assert.equal(ts.version,'6.0.3');const sites=inspect(text);assert(sites.every(s=>s.state===sites[0].state),'half-adapted failure messages');
+function plan(text,localText){
+ assert.equal(ts.version,'6.0.3');const sites=inspect(text,localText);assert(sites.every(s=>s.state===sites[0].state),'half-adapted failure messages');
  if(sites[0].state==='after')return {after:text,edits:0};
  let after=text;
  for(const {pin,owner} of [...sites].sort((a,b)=>b.owner.start-a.owner.start)){
@@ -25,7 +25,7 @@ function plan(text){
   assert.equal(owner.text.replace(pin.oldMessage,pin.newMessage),pin.after,'only message expression may change');
   after=after.slice(0,owner.start)+pin.after+after.slice(owner.end);
  }
- assert(inspect(after).every(s=>s.state==='after'));
+ assert(inspect(after,localText).every(s=>s.state==='after'));
  for(const removeComments of [false,true]){
   let expected=javascript(text,removeComments);
   const message=expression=>{const js=ts.transpileModule('const message = '+expression+';',{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext}}).outputText;const source=ts.createSourceFile('message.js',js,ts.ScriptTarget.Latest,true);return source.statements.find(ts.isVariableStatement).declarationList.declarations[0].initializer.getText(source);};
@@ -40,6 +40,6 @@ function plan(text){
  }
  return {after,edits:4};
 }
-function adapt(tree){const file=path.join(tree,'src/compiler/debug.ts'),before=fs.readFileSync(file,'utf8');const result=plan(before);assert.equal(fs.readFileSync(file,'utf8'),before,'concurrent edit');if(result.edits)fs.writeFileSync(file,result.after);return {files:result.edits?1:0,edits:result.edits,javascriptChanging:true};}
+function adapt(tree){const file=path.join(tree,'src/compiler/debug.ts'),before=fs.readFileSync(file,'utf8');const localFile=path.join(tree,'src/deprecatedCompat/deprecate.ts');const localText=fs.existsSync(localFile)?fs.readFileSync(localFile,'utf8'):'';const result=plan(before,localText);assert.equal(fs.readFileSync(file,'utf8'),before,'concurrent edit');if(result.edits)fs.writeFileSync(file,result.after);return {files:result.edits?1:0,edits:result.edits,javascriptChanging:true};}
 module.exports={adapt,plan,owners,inspect,pins,guards};
 if(require.main===module){assert.equal(process.argv.length,3,'usage: node adapt.cjs TREE');console.log(JSON.stringify(adapt(path.resolve(process.argv[2])),null,2));}

@@ -1,0 +1,12 @@
+from pathlib import Path
+import json,re,hashlib
+s=Path('/workspace/scratch/core-finish');raw=s/'raw';records={}
+for side in ['head1','head2','reflection-mutant']:
+ h,r=map(json.loads,(raw/(side+'-debug.ts-census.jsonl')).read_text().splitlines());assert h['diagnostics']==[] and h['latent_mode']=='full';records[side]=r
+pins=json.loads(Path('/workspace/adamic/stage3/adapt/99-correctness-core-getfunctionname-move/owners.json').read_text());old=(s/'head1/src/compiler/debug.ts').read_bytes().decode();new=(s/'head2/src/compiler/debug.ts').read_bytes().decode();owner=pins['debug']['before'].replace('\n','\r\n');assert old.count(owner)==1;start=old.index(owner);assert old.replace(owner,'')==new;first=old[:start].count('\n')+1;removedLines=owner.count('\n')
+def key(side,f):
+ where=f['where'];prefix=str(s/side);where=where.replace(prefix,'<tree>');path,line,col=where.rsplit(':',2);line=int(line)
+ if side=='head2' and path.endswith('/src/compiler/debug.ts') and line>=first:line+=removedLines
+ return (path,line,int(col),f['kind'],f['reason'],f['phase'])
+sets={side:{key(side,f) for f in record['findings'] if f['kind']!='Boundary'} for side,record in records.items()};removed=sets['head1']-sets['head2'];added=sets['head2']-sets['head1'];assert not added,sorted(added);targets=[k for k in sets['head1'] if k[1:3]==(355,26)];assert targets and all(k in removed for k in targets);assert all(any(key('head1',f)==k and f['unit'].endswith('/debug.ts:'+str(first)+':5') for f in records['head1']['findings']) for k in removed),sorted(removed);assert sets['reflection-mutant']==sets['head1'];assert (s/'reflection-mutant/src/compiler/debug.ts').read_bytes()==(s/'head1/src/compiler/debug.ts').read_bytes()
+result={'passed':True,'method':'unchanged guarded full-mode debug.ts census','diagnosticsPerRun':0,'units':{k:len(v['units']) for k,v in records.items()},'helperStartLine':first,'removedNewlineCount':removedLines,'positionMapping':'after-debug locations below the removed declaration mapped back by its exact removed newline count; no reason/kind/phase normalized','removedSites':[list(k) for k in sorted(removed)],'allRemovedSitesRecordedByGetFunctionNameUnit':True,'dependencyRemoval':'core.ts:1275:12 hasProperty lowering finding was recorded only while probing getFunctionName','addedSites':[],'reflectionMutantRestoresExactDebugBytes':True,'reflectionMutantRestoresAllOriginalSites':True,'restored355_26':[list(k) for k in targets]};(raw/'head2-debug-census-comparison.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))

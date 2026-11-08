@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "normalDebugLosesOnlyGetFunctionName": true,
+  "normalTsRootKeysUnchanged": true,
+  "noRootOrDebugReexport": true,
+  "actualMovedFunctionExposedOnlyInControlCopy": true,
+  "cases": [
+    {
+      "kind": "named",
+      "original": "namedWitness",
+      "moved": "namedWitness"
+    },
+    {
+      "kind": "arrow",
+      "original": "",
+      "moved": ""
+    },
+    {
+      "kind": "bound",
+      "original": "bound boundWitness",
+      "moved": "bound boundWitness"
+    },
+    {
+      "kind": "empty name",
+      "original": "",
+      "moved": ""
+    },
+    {
+      "kind": "deleted own name",
+      "original": "deletedName",
+      "moved": "deletedName"
+    },
+    {
+      "kind": "nonfunction",
+      "original": "",
+      "moved": ""
+    }
+  ]
+}

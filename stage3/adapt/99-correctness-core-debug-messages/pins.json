@@ -60,7 +60,10 @@
     {
       "owner": "getFunctionName",
       "text": "export function getFunctionName(func: AnyFunction): string {\r\n        if (typeof func !== \"function\") {\r\n            return \"\";\r\n        }\r\n        else if (hasProperty(func, \"name\")) {\r\n            return func.name;\r\n        }\r\n        else {\r\n            const text = Function.prototype.toString.call(func);\r\n            const match = /^function\\s+([\\w$]+)\\s*\\(/.exec(text);\r\n            return match ? match[1]! : \"\";\r\n        }\r\n    }",
-      "sha256": "521a9c85135b783326d58e0e7da3e75e5d5b4d07df2fafebfac94dfbb15d4538"
+      "sha256": "521a9c85135b783326d58e0e7da3e75e5d5b4d07df2fafebfac94dfbb15d4538",
+      "body": "{\r\n        if (typeof func !== \"function\") {\r\n            return \"\";\r\n        }\r\n        else if (hasProperty(func, \"name\")) {\r\n            return func.name;\r\n        }\r\n        else {\r\n            const text = Function.prototype.toString.call(func);\r\n            const match = /^function\\s+([\\w$]+)\\s*\\(/.exec(text);\r\n            return match ? match[1]! : \"\";\r\n        }\r\n    }",
+      "bodySha256": "a63700ea6b975334c1e31665dd2ba328f594e3860ba73993c2fbb1b8bfbfc9aa",
+      "localText": "function getFunctionName(func: AnyFunction): string {\r\n        if (typeof func !== \"function\") {\r\n            return \"\";\r\n        }\r\n        else if (hasProperty(func, \"name\")) {\r\n            return func.name;\r\n        }\r\n        else {\r\n            const text = Function.prototype.toString.call(func);\r\n            const match = /^function\\s+([\\w$]+)\\s*\\(/.exec(text);\r\n            return match ? match[1]! : \"\";\r\n        }\r\n    }"
     }
   ]
 }

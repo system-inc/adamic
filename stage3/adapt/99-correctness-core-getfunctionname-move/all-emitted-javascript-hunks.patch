@@ -1,0 +1,107 @@
+--- before/_tsc.js
++++ after/_tsc.js
+@@ -1415,18 +1415,6 @@
+   function type(_value) {
+   }
+   Debug2.type = type;
+-  function getFunctionName(func) {
+-    if (typeof func !== "function") {
+-      return "";
+-    } else if (hasProperty(func, "name")) {
+-      return func.name;
+-    } else {
+-      const text = Function.prototype.toString.call(func);
+-      const match = /^function\s+([\w$]+)\s*\(/.exec(text);
+-      return match ? match[1] : "";
+-    }
+-  }
+-  Debug2.getFunctionName = getFunctionName;
+   function formatSymbol(symbol) {
+     return `{ name: ${unescapeLeadingUnderscores(symbol.escapedName)}; flags: ${formatSymbolFlags(symbol.flags)}; declarations: ${map(symbol.declarations, (node) => formatSyntaxKind(node.kind))} }`;
+   }
+--- before/run.js
++++ after/run.js
+@@ -1749,18 +1749,6 @@
+       function type(_value) {
+       }
+       Debug3.type = type;
+-      function getFunctionName(func) {
+-        if (typeof func !== "function") {
+-          return "";
+-        } else if (hasProperty(func, "name")) {
+-          return func.name;
+-        } else {
+-          const text = Function.prototype.toString.call(func);
+-          const match = /^function\s+([\w$]+)\s*\(/.exec(text);
+-          return match ? match[1] : "";
+-        }
+-      }
+-      Debug3.getFunctionName = getFunctionName;
+       function formatSymbol(symbol) {
+         return `{ name: ${unescapeLeadingUnderscores(symbol.escapedName)}; flags: ${formatSymbolFlags(symbol.flags)}; declarations: ${map(symbol.declarations, (node) => formatSyntaxKind(node.kind))} }`;
+       }
+@@ -184486,9 +184474,20 @@
+   };
+ }
+ function deprecate(func, options) {
+-  const deprecation = createDeprecation((options == null ? void 0 : options.name) ?? Debug.getFunctionName(func), options);
++  const deprecation = createDeprecation((options == null ? void 0 : options.name) ?? getFunctionName(func), options);
+   return wrapFunction(deprecation, func);
+ }
++function getFunctionName(func) {
++  if (typeof func !== "function") {
++    return "";
++  } else if (hasProperty(func, "name")) {
++    return func.name;
++  } else {
++    const text = Function.prototype.toString.call(func);
++    const match = /^function\s+([\w$]+)\s*\(/.exec(text);
++    return match ? match[1] : "";
++  }
++}
+ var enableDeprecationWarnings, typeScriptVersion2;
+ var init_deprecate = __esm({
+   "src/deprecatedCompat/deprecate.ts"() {
+--- before/typescript.js
++++ after/typescript.js
+@@ -3990,18 +3990,6 @@
+   function type(_value) {
+   }
+   Debug2.type = type;
+-  function getFunctionName(func) {
+-    if (typeof func !== "function") {
+-      return "";
+-    } else if (hasProperty(func, "name")) {
+-      return func.name;
+-    } else {
+-      const text = Function.prototype.toString.call(func);
+-      const match = /^function\s+([\w$]+)\s*\(/.exec(text);
+-      return match ? match[1] : "";
+-    }
+-  }
+-  Debug2.getFunctionName = getFunctionName;
+   function formatSymbol(symbol) {
+     return `{ name: ${unescapeLeadingUnderscores(symbol.escapedName)}; flags: ${formatSymbolFlags(symbol.flags)}; declarations: ${map(symbol.declarations, (node) => formatSyntaxKind(node.kind))} }`;
+   }
+@@ -186456,9 +186444,20 @@
+   };
+ }
+ function deprecate(func, options) {
+-  const deprecation = createDeprecation((options == null ? void 0 : options.name) ?? Debug.getFunctionName(func), options);
++  const deprecation = createDeprecation((options == null ? void 0 : options.name) ?? getFunctionName(func), options);
+   return wrapFunction(deprecation, func);
+ }
++function getFunctionName(func) {
++  if (typeof func !== "function") {
++    return "";
++  } else if (hasProperty(func, "name")) {
++    return func.name;
++  } else {
++    const text = Function.prototype.toString.call(func);
++    const match = /^function\s+([\w$]+)\s*\(/.exec(text);
++    return match ? match[1] : "";
++  }
++}
+ 
+ // src/deprecatedCompat/deprecations.ts
+ function createOverload(name, overloads, binder2, deprecations) {
