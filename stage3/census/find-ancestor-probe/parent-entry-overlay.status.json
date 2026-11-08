@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/workspace/scratch/probe-parent-overlay",
+    "/workspace/scratch/probe-parent-entry"
+  ],
+  "cwd": "/workspace/scratch/probe-parent",
+  "exit": 0,
+  "wall_seconds": 1.0010815209999464,
+  "stopped": null
+}
