@@ -1,0 +1,806 @@
+{
+  "checker": [
+    {
+      "predicate_helper": "orPredicate3",
+      "requested_line": 4748,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:4751:17",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit_name": "resolveExternalModule",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, orPredicate3(isImportDeclaration, isJSDocImportTag, isExportDeclaration))",
+      "parent": {
+        "run": "parent-focus-1",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 233727,
+          "body_end": 250321,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "resolveExternalModule",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "enclosing statement",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        },
+        "boundary": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4745:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "start": 234318,
+          "end": 235151
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      },
+      "head": {
+        "run": "head-focus-1",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 233727,
+          "body_end": 250321,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "resolveExternalModule",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "enclosing statement",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        },
+        "boundary": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4745:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "start": 234318,
+          "end": 235151
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      }
+    },
+    {
+      "predicate_helper": "orPredicate2",
+      "requested_line": 4767,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:4770:21",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit_name": "resolveExternalModule",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, orPredicate2(isImportEqualsDeclaration, isExportDeclaration))",
+      "parent": {
+        "run": "parent-focus-1",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 233727,
+          "body_end": 250321,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "resolveExternalModule",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "enclosing statement",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+          "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "boundary": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4769:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+          "start": 236362,
+          "end": 236570
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      },
+      "head": {
+        "run": "head-focus-1",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 233727,
+          "body_end": 250321,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "resolveExternalModule",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "callee helper orPredicate2 stop recorded in this observing unit; no caller-local failed boundary",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/core.ts:2463:17",
+          "reason": "a checked predicate result returned from a function the checker infers a type predicate for, an ArrowFunction, whose uses the walk doesn't follow, which its direction walk doesn't read",
+          "text": "/tmp/fa-adapted/src/compiler/core.ts:2463:17: stage 0 can't lower a checked predicate result returned from a function the checker infers a type predicate for, an ArrowFunction, whose uses the walk doesn't follow, which its direction walk doesn't read yet"
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        },
+        "helper": {
+          "name": "orPredicate2",
+          "file": "/tmp/fa-adapted/src/compiler/core.ts",
+          "start": 87993,
+          "end": 88164,
+          "text": "export function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 {\r\n    return p => f1(p) || f2(p);\r\n}"
+        },
+        "attribution": "Shared helper finding; a single recorded finding can serve more than one caller of that helper in this unit. This is not independent per-call execution evidence."
+      }
+    },
+    {
+      "predicate_helper": "orPredicate2",
+      "requested_line": 4778,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:4781:21",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit_name": "resolveExternalModule",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, orPredicate2(isImportEqualsDeclaration, isExportDeclaration))",
+      "parent": {
+        "run": "parent-focus-1",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 233727,
+          "body_end": 250321,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "resolveExternalModule",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "enclosing statement",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+          "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "boundary": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4780:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+          "start": 237223,
+          "end": 237431
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      },
+      "head": {
+        "run": "head-focus-1",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 233727,
+          "body_end": 250321,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "resolveExternalModule",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "callee helper orPredicate2 stop recorded in this observing unit; no caller-local failed boundary",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/core.ts:2463:17",
+          "reason": "a checked predicate result returned from a function the checker infers a type predicate for, an ArrowFunction, whose uses the walk doesn't follow, which its direction walk doesn't read",
+          "text": "/tmp/fa-adapted/src/compiler/core.ts:2463:17: stage 0 can't lower a checked predicate result returned from a function the checker infers a type predicate for, an ArrowFunction, whose uses the walk doesn't follow, which its direction walk doesn't read yet"
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/tmp/fa-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        },
+        "helper": {
+          "name": "orPredicate2",
+          "file": "/tmp/fa-adapted/src/compiler/core.ts",
+          "start": 87993,
+          "end": 88164,
+          "text": "export function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 {\r\n    return p => f1(p) || f2(p);\r\n}"
+        },
+        "attribution": "Shared helper finding; a single recorded finding can serve more than one caller of that helper in this unit. This is not independent per-call execution evidence."
+      }
+    },
+    {
+      "predicate_helper": "orPredicate2",
+      "requested_line": 48433,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:48437:47",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+      "observing_unit_name": "checkAliasSymbol",
+      "owners": [
+        "createTypeChecker",
+        "checkAliasSymbol"
+      ],
+      "text": "findAncestor(node, orPredicate2(isImportDeclaration, isImportEqualsDeclaration))",
+      "parent": {
+        "run": "parent-focus-2",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 2826767,
+          "body_end": 2838216,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "checkAliasSymbol",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "unit prologue",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31",
+          "reason": "a value of type AliasDeclarationNode",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet"
+        },
+        "boundary": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet",
+          "start": 2826767,
+          "end": 2838216
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31",
+          "reason": "a value of type AliasDeclarationNode",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet"
+        }
+      },
+      "head": {
+        "run": "head-focus-2",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 2826767,
+          "body_end": 2838216,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "checkAliasSymbol",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "unit prologue",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31",
+          "reason": "a value of type AliasDeclarationNode",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet"
+        },
+        "boundary": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet",
+          "start": 2826767,
+          "end": 2838216
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31",
+          "reason": "a value of type AliasDeclarationNode",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet"
+        }
+      }
+    },
+    {
+      "predicate_helper": "orPredicate3",
+      "requested_line": 50073,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:50077:29",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+      "observing_unit_name": "getSymbolOfNameOrPropertyAccessExpression",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "text": "findAncestor(name, orPredicate3(isJSDocLinkLike, isJSDocNameReference, isJSDocMemberName))",
+      "parent": {
+        "run": "parent-focus-3",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 2912084,
+          "body_end": 2919787,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getSymbolOfNameOrPropertyAccessExpression",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "enclosing statement",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+          "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "boundary": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:50077:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+          "start": 2916329,
+          "end": 2916452
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:50003:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:50003:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      "head": {
+        "run": "head-focus-3",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 2912084,
+          "body_end": 2919787,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getSymbolOfNameOrPropertyAccessExpression",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "callee helper orPredicate3 stop recorded in this observing unit; no caller-local failed boundary",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/core.ts:2467:17",
+          "reason": "a checked predicate result returned from a function the checker infers a type predicate for, an ArrowFunction, whose uses the walk doesn't follow, which its direction walk doesn't read",
+          "text": "/tmp/fa-adapted/src/compiler/core.ts:2467:17: stage 0 can't lower a checked predicate result returned from a function the checker infers a type predicate for, an ArrowFunction, whose uses the walk doesn't follow, which its direction walk doesn't read yet"
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:50003:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:50003:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        },
+        "helper": {
+          "name": "orPredicate3",
+          "file": "/tmp/fa-adapted/src/compiler/core.ts",
+          "start": 88184,
+          "end": 88408,
+          "text": "export function orPredicate3<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3 {\r\n    return p => f1(p) || f2(p) || f3(p);\r\n}"
+        },
+        "attribution": "Shared helper finding; a single recorded finding can serve more than one caller of that helper in this unit. This is not independent per-call execution evidence."
+      }
+    },
+    {
+      "predicate_helper": "orPredicate2",
+      "requested_line": 50082,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:50086:39",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+      "observing_unit_name": "getSymbolOfNameOrPropertyAccessExpression",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "text": "findAncestor(name, orPredicate2(isClassLike, isInterfaceDeclaration))",
+      "parent": {
+        "run": "parent-focus-3",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 2912084,
+          "body_end": 2919787,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getSymbolOfNameOrPropertyAccessExpression",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "enclosing statement",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:50085:22",
+          "reason": "reading result",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:50085:22: stage 0 can't lower reading result yet"
+        },
+        "boundary": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:50085:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:50085:22: stage 0 can't lower reading result yet",
+          "start": 2917043,
+          "end": 2917396
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:50003:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:50003:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      "head": {
+        "run": "head-focus-3",
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 2912084,
+          "body_end": 2919787,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getSymbolOfNameOrPropertyAccessExpression",
+          "parent": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "top": "/tmp/fa-adapted/src/compiler/checker.ts:1489:1",
+          "depth": 1
+        },
+        "state": "callee helper orPredicate2 stop recorded in this observing unit; no caller-local failed boundary",
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/core.ts:2463:17",
+          "reason": "a checked predicate result returned from a function the checker infers a type predicate for, an ArrowFunction, whose uses the walk doesn't follow, which its direction walk doesn't read",
+          "text": "/tmp/fa-adapted/src/compiler/core.ts:2463:17: stage 0 can't lower a checked predicate result returned from a function the checker infers a type predicate for, an ArrowFunction, whose uses the walk doesn't follow, which its direction walk doesn't read yet"
+        },
+        "first_lowering_stop": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/fa-adapted/src/compiler/checker.ts:50003:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/tmp/fa-adapted/src/compiler/checker.ts:50003:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        },
+        "helper": {
+          "name": "orPredicate2",
+          "file": "/tmp/fa-adapted/src/compiler/core.ts",
+          "start": 87993,
+          "end": 88164,
+          "text": "export function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 {\r\n    return p => f1(p) || f2(p);\r\n}"
+        },
+        "attribution": "Shared helper finding; a single recorded finding can serve more than one caller of that helper in this unit. This is not independent per-call execution evidence."
+      }
+    }
+  ],
+  "findAncestor": {
+    "name": "findAncestor",
+    "site": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+    "has_body": true,
+    "text": "export function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | \"quit\"): Node | undefined {\r\n    while (node) {\r\n        const result = callback(node);\r\n        if (result === \"quit\") {\r\n            return undefined;\r\n        }\r\n        else if (result) {\r\n            return node;\r\n        }\r\n        node = node.parent;\r\n    }\r\n    return undefined;\r\n}",
+    "parent": {
+      "run": "parent-focus-4",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 30775,
+        "body_end": 31040,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "findAncestor",
+        "top": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1"
+      },
+      "state": "unit prologue",
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+        "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 30775,
+        "end": 31040
+      },
+      "first_lowering_stop": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+        "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      }
+    },
+    "head": {
+      "run": "head-focus-4",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 30775,
+        "body_end": 31040,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "findAncestor",
+        "top": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1"
+      },
+      "state": "unit prologue",
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+        "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 30775,
+        "end": 31040
+      },
+      "first_lowering_stop": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+        "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      }
+    }
+  }
+}

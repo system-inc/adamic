@@ -1,0 +1,22 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "-u",
+    "LATENT_ONLY_FILE",
+    "LATENT_FULL=1",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "/tmp/fa-parent-focus",
+    "-project",
+    "/tmp/fa-adapted/src/tsc/tsc.ts",
+    "-where",
+    "/tmp/fa-adapted/src/compiler/checker.ts:50077:29",
+    "-output",
+    "/tmp/fa-report/stage3/census/find-ancestor-5a86e3b3/parent-focus-3.jsonl"
+  ],
+  "cwd": "/tmp/fa-report",
+  "exit": 0,
+  "wall_seconds": 38.164,
+  "stopped": null
+}

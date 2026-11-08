@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/tmp/fa-head-entry/overlay.json",
+    "-o",
+    "/tmp/fa-head-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/tmp/fa-head",
+  "exit": 0,
+  "wall_seconds": 2.022,
+  "stopped": null
+}

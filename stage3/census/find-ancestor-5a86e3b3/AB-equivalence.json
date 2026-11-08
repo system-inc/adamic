@@ -1,0 +1,17 @@
+{
+  "parent": "72f23939c773ba0045aeed5d6afb9b025b6473a0",
+  "adapter": "eeb87728b743235cf1df68dfed17241f63416734",
+  "directories": {
+    "stage3/adapt/99-correctness-core-or-predicate": {
+      "parent_tree": "e6471a14756cfcd694f1839206fae2a75b66f4e6",
+      "adapter_tree": "e6471a14756cfcd694f1839206fae2a75b66f4e6"
+    },
+    "stage3/adapt/99-correctness-core-multimap": {
+      "parent_tree": "906a0ee66bf5a9de9705088cf9261c17b0cd11cb",
+      "adapter_tree": "906a0ee66bf5a9de9705088cf9261c17b0cd11cb"
+    }
+  },
+  "apply_keys_equal": true,
+  "all_81_measured_source_hashes_equal": true,
+  "reuse": "Both pairings have the same compiler pins and adapted bytes. B reuses A streams and focused observations; its pair tool runs separately over the verified B tree."
+}

@@ -1,0 +1,119 @@
+{
+  "tree": "/tmp/fa-adapted",
+  "checker": [
+    {
+      "predicate_helper": "orPredicate3",
+      "requested_line": 4748,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:4751:17",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit_name": "resolveExternalModule",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, orPredicate3(isImportDeclaration, isJSDocImportTag, isExportDeclaration))"
+    },
+    {
+      "predicate_helper": "orPredicate2",
+      "requested_line": 4767,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:4770:21",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit_name": "resolveExternalModule",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, orPredicate2(isImportEqualsDeclaration, isExportDeclaration))"
+    },
+    {
+      "predicate_helper": "orPredicate2",
+      "requested_line": 4778,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:4781:21",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:4733:5",
+      "observing_unit_name": "resolveExternalModule",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, orPredicate2(isImportEqualsDeclaration, isExportDeclaration))"
+    },
+    {
+      "predicate_helper": "orPredicate2",
+      "requested_line": 48433,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:48437:47",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:48398:5",
+      "observing_unit_name": "checkAliasSymbol",
+      "owners": [
+        "createTypeChecker",
+        "checkAliasSymbol"
+      ],
+      "text": "findAncestor(node, orPredicate2(isImportDeclaration, isImportEqualsDeclaration))"
+    },
+    {
+      "predicate_helper": "orPredicate3",
+      "requested_line": 50073,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:50077:29",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+      "observing_unit_name": "getSymbolOfNameOrPropertyAccessExpression",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "text": "findAncestor(name, orPredicate3(isJSDocLinkLike, isJSDocNameReference, isJSDocMemberName))"
+    },
+    {
+      "predicate_helper": "orPredicate2",
+      "requested_line": 50082,
+      "site": "/tmp/fa-adapted/src/compiler/checker.ts:50086:39",
+      "unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+      "observing_unit": "/tmp/fa-adapted/src/compiler/checker.ts:49992:5",
+      "observing_unit_name": "getSymbolOfNameOrPropertyAccessExpression",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "text": "findAncestor(name, orPredicate2(isClassLike, isInterfaceDeclaration))"
+    }
+  ],
+  "findAncestor": [
+    {
+      "name": "findAncestor",
+      "site": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+      "has_body": false,
+      "text": "export function findAncestor<T extends Node>(node: Node | undefined, callback: (element: Node) => element is T): T | undefined;"
+    },
+    {
+      "name": "findAncestor",
+      "site": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+      "has_body": false,
+      "text": "export function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | \"quit\"): Node | undefined;"
+    },
+    {
+      "name": "findAncestor",
+      "site": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+      "has_body": true,
+      "text": "export function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | \"quit\"): Node | undefined {\r\n    while (node) {\r\n        const result = callback(node);\r\n        if (result === \"quit\") {\r\n            return undefined;\r\n        }\r\n        else if (result) {\r\n            return node;\r\n        }\r\n        node = node.parent;\r\n    }\r\n    return undefined;\r\n}"
+    }
+  ],
+  "helpers": [
+    {
+      "name": "orPredicate2",
+      "file": "/tmp/fa-adapted/src/compiler/core.ts",
+      "start": 87993,
+      "end": 88164,
+      "text": "export function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 {\r\n    return p => f1(p) || f2(p);\r\n}"
+    },
+    {
+      "name": "orPredicate3",
+      "file": "/tmp/fa-adapted/src/compiler/core.ts",
+      "start": 88184,
+      "end": 88408,
+      "text": "export function orPredicate3<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3 {\r\n    return p => f1(p) || f2(p) || f3(p);\r\n}"
+    }
+  ]
+}
