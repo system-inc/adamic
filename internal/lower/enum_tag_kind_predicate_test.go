@@ -2,6 +2,7 @@ package lower
 
 import (
 	"context"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -204,6 +205,54 @@ func TestKindPredicateThroughModules(t *testing.T) {
 			}
 			if err == nil || !strings.Contains(err.Error(), probe.refusal) {
 				t.Fatalf("want %q, got %v", probe.refusal, err)
+			}
+		})
+	}
+}
+
+// Both X and its fields carry the open tag shape of the wide-kind refusal pin. No method is called:
+// the indexed keys name types, even though IsPartOfTypeNode says false for their string literals.
+const enumTagTypePositionTypes = `enum Kind { A = 1, B = 2 }
+type Tagged = { readonly kind: Kind.A; readonly value: number } | { readonly kind: Kind; readonly value: string };
+type X = { readonly kind: Kind.A; readonly literal: Tagged; readonly name: Tagged } | { readonly kind: Kind; readonly literal: Tagged; readonly name: Tagged };
+`
+
+// Mutant for #b4cmnnz: drop !hasTypeAncestor(node) from enumRefusal's read gate. The NodeFactory
+// and generic-only rows fail with the open-enum tag words at their indexed keys. Run and restored;
+// no enum mutants file exists, so this comment records the mutant beside its catcher.
+func TestEnumTagTypePositions(t *testing.T) {
+	t.Parallel()
+	const methods = `create(literal: X["literal"]): void; update<T extends X>(name: T["name"]): void`
+	for _, probe := range []struct{ name, methods string }{
+		{"NodeFactory", methods},
+		{"generic only", strings.Replace(methods, `X["literal"]`, "string", 1)},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				source := enumTagTypePositionTypes + "interface NodeFactory { " + probe.methods + " }\n"
+				if _, err := lowerSourceAs(t, source, extension); err != nil {
+					t.Fatalf("want type-only method signatures lowered, got %v", err)
+				}
+			})
+		}
+	}
+}
+
+// The same union's actual refinement still needs a runtime tag proof, with the existing diagnostic
+// words at the read itself. A type-position exemption must not let this unproven layout through.
+func TestEnumTagRuntimeRefinementPosition(t *testing.T) {
+	t.Parallel()
+	const read = "function read(value: X): Tagged { if (value.kind === Kind.B) { return value.literal; } return value.literal; }\n"
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, enumTagTypePositionTypes+read, extension)
+			var refused *Refused
+			if !errors.As(err, &refused) || refused.What != kindPredicateRefusal ||
+				refused.Fix != "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)" ||
+				!strings.HasSuffix(refused.Where, "/main"+extension+":4:71") {
+				t.Fatalf("want exact open-enum tag refusal at main%s:4:71, got %v", extension, err)
 			}
 		})
 	}
