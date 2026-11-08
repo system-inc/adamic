@@ -23,7 +23,7 @@ func init() {
 // clearTimeoutForeignStop is the run-time NotYet clearTimeout stops in for an object that isn't a timer
 // but holds a truthy _onTimeout, which Node would unenroll (Adamic's ruling on #995spev, Nov 7):
 // timers_impl.h's words, and the JavaScript backend's adamicClearTimeout's.
-const clearTimeoutForeignStop = "clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet"
+const clearTimeoutForeignStop = "clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined"
 
 // timerSourceRun is a timers_source program's run on each backend that can't be one of fixtures: its
 // source on Node must print node, and natively (sanitized, with the leak check), released and on the
@@ -81,7 +81,7 @@ func TestClearTimeoutHeldAsUnionCancels(t *testing.T) {
 
 // timerDelayStop is the run-time NotYet a delay Node warns for and makes 1 ms stops in (Adamic's
 // ruling on #995spev): timers_impl.h's words, and the JavaScript backend's adamicSetTimeout's.
-const timerDelayStop = "a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet"
+const timerDelayStop = "a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing"
 
 // A delay Node warns for, NaN, negative or past 2^31 - 1, becomes 1 ms on Node with a warning on
 // stderr that carries Node's process id, which no backend can print byte for byte. Each delay_ program
