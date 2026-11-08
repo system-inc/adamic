@@ -2,9 +2,9 @@ interface Slot {
 	run(callback: (...args: string[]) => void): void;
 }
 class Provider {
-	run<T extends any[]>(callback: (...args: NoInfer<T>) => void): void {
-		const made = [41, 42] as unknown as T;
-		callback(...made);
+	run<T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: T): void {
+		rest.push(41);
+		callback(...rest);
 	}
 }
 const slot: Slot = new Provider();
