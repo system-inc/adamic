@@ -1,0 +1,70 @@
+/*
+ * What object.method?.(...) finds, looked up once and before its arguments (#tvq1eqm): nothing on an
+ * object without the method, undefined in a field (a class's included), an arrow in a field, a
+ * literal's method reading this, and a class's method through the interface, each giving
+ * R | undefined; a void method called as a statement; and object?.method?.(...) on a receiver that's
+ * there. Where nothing is found the argument, which counts itself, is never evaluated.
+ */
+interface Tool {
+	readonly label: string;
+	size?(): number;
+	describe?(prefix: string): string;
+	ready?: (() => boolean) | undefined;
+	log?(line: string): void;
+}
+
+class Hammer implements Tool {
+	readonly label: string;
+	readonly ready: (() => boolean) | undefined = undefined;
+	constructor(label: string) {
+		this.label = label;
+	}
+	size(): number {
+		return this.label.length;
+	}
+	describe(prefix: string): string {
+		return `${prefix} ${this.label}`;
+	}
+	log(line: string): void {
+		console.log(`${this.label} logs ${line}`);
+	}
+}
+
+let evaluated = 0;
+function argument(text: string): string {
+	evaluated += 1;
+	return [text, String(evaluated)].join('#');
+}
+
+const tools: Tool[] = [
+	{ label: ['emp', 'ty'].join('') },
+	{ label: ['clea', 'red'].join(''), ready: undefined },
+	{ label: ['ar', 'row'].join(''), size: (): number => 5, describe: (prefix: string): string => `${prefix} arrow`, ready: (): boolean => true },
+	{
+		label: ['lite', 'ral'].join(''),
+		size(): number {
+			return this.label.length * 10;
+		},
+		describe(prefix: string): string {
+			return `${prefix} ${this.label}`;
+		},
+		log(line: string): void {
+			console.log(`${this.label} logs ${line}`);
+		},
+	},
+	new Hammer(['ham', 'mer'].join('')),
+];
+for (const tool of tools) {
+	const size = tool.size?.();
+	const described = tool.describe?.(argument('as'));
+	const ready = tool.ready?.();
+	tool.log?.(argument('line'));
+	console.log(`${tool.label}: ${size ?? -1} ${described ?? 'undescribed'} ${String(ready)} ${evaluated}`);
+}
+
+function pick(index: number): Tool | undefined {
+	return tools[index];
+}
+for (const index of [2, 0, 4, 9]) {
+	console.log(`${pick(index)?.size?.() ?? -1} ${pick(index)?.describe?.(argument('picked')) ?? 'none'} ${String(pick(index)?.ready?.())} ${evaluated}`);
+}
