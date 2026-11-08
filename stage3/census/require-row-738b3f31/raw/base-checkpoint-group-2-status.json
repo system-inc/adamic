@@ -1,0 +1,16 @@
+{
+  "pid": 12396,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/require-row-work/stage3/census/require-row-738b3f31/checkpoint.py",
+    "base group 2"
+  ],
+  "cwd": "/workspace/require-row-work",
+  "started_utc": "2026-11-08T21:18:50.093209+00:00",
+  "ended_utc": "2026-11-08T21:18:53.100340+00:00",
+  "seconds": 3.0071358680725098,
+  "exit_code": 0,
+  "peak_rss_kib": 47136,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
