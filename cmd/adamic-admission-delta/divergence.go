@@ -91,8 +91,9 @@ func (outcome backendOutcome) ran(o observation) bool {
 // acceptsRuledBackendDivergence says a run that disagrees with Node is a ruled divergence, when all three hold:
 // native and JavaScript agree with each other, as outputsAgree reads agreement (no execution error, the same exit
 // code and stdout); the program's path is a row's fixture, on a row that rules Node's side; and Node's run is
-// exactly that row's Node outcome, and native's its native outcome. A program on no row is never one, whatever it
-// prints.
+// exactly that row's Node outcome, and native's its native outcome. The row's JavaScript outcome is carried but not
+// compared here: JavaScript is held to native's exit and stdout, as outputsAgree holds it, so the javascript column is
+// the oracle test's to check, never this one's. A program on no row is never one, whatever it prints.
 func acceptsRuledBackendDivergence(path string, list ruledBackendDivergenceList, node, javascript, native observation) bool {
 	if javascript.Error != "" || native.Error != "" || javascript.Exit != native.Exit || javascript.Stdout != native.Stdout {
 		return false
