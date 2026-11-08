@@ -1,0 +1,20 @@
+{
+  "parent_apply_key": "0145bc21ed5011be8920401d7a7c2d375dd3938eaec6ff5be59df1303cb20d85",
+  "bcbe_apply_key": "564e2dd872b11ac97bfe1b52bee4e34abe3533be82b7d33f854cb45db679fc97",
+  "changed_adapted_typescript_files": [
+    "src/compiler/checker.ts",
+    "src/compiler/core.ts",
+    "src/compiler/debug.ts",
+    "src/deprecatedCompat/deprecate.ts",
+    "src/services/codefixes/addMissingResolutionModeImportAttribute.ts",
+    "src/services/codefixes/fixAddMissingMember.ts",
+    "src/services/codefixes/fixUnreferenceableDecoratorMetadata.ts",
+    "src/services/completions.ts",
+    "src/services/findAllReferences.ts",
+    "src/services/mapCode.ts",
+    "src/services/refactors/convertImport.ts",
+    "src/services/smartSelection.ts",
+    "src/services/utilities.ts"
+  ],
+  "same_apply_key": false
+}

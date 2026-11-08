@@ -6,36 +6,36 @@ Box `755daee0c6ba`, CPU quota `400000 100000`, memory limit `17179869184` bytes.
 
 ## Base and probe
 
-The base is 734aef5f, the main parent before Memory's first throwaway probe commit 8bedbc18. The named tip 86157bea fixes that probe's program-name conversion. Its immediate parent already contains the probe, so it is not used as a production base. bcbe5d12 has different adaptation inputs; this run builds the keyed adapted product at 734aef5f rather than reusing bcbe's adapted bytes. Prepared Go/cohere and pinned parser dependencies were reused.
+The base is 734aef5f, the main parent before Memory's first throwaway probe commit 8bedbc18. The named tip 86157bea fixes that probe's program-name conversion. Its immediate parent already contains the probe, so it is not used as a production base. bcbe5d12 has different adaptation inputs; this run builds the keyed adapted product at 734aef5f rather than reusing bcbe's adapted bytes. apply-comparison.json records both input keys and the changed adapted source files. Prepared Go/cohere and pinned parser dependencies were reused.
 
 Memory's original probe is preserved as memory-probe-original.go.txt and copied into scratch. The scratch context version calls logViewPairs() at every unit end beside the boundary observer, using only &cycleFinder{l:l, where:map[*checker.Type]*ast.Node{}}. findCycles never runs. Original pair traversal, per-unit checker-pointer seen set, first encountered path and depth bound 6 are preserved. The original program field names the entry; file and unit fields supply actual owner attribution. No probe is added to production lower source.
 
-Annotations add full nested paths, nil-source target types and reference fields, and deriveRelated results for intersection records. Object classification accepts object/union shapes and intersections, with intersection targets counted as objects even when the original probe labels them target-not-object. Source intersections also qualify when the target is object/union shaped. The original skipped flags remain in raw rows. Intersections do not add a second recursive traversal, so their fields skipped by the original probe remain unwalked.
+Annotations add full nested paths, nil-source target types and reference fields, and deriveRelated results for intersection records. Object classification accepts object/union shapes and intersections, with intersection targets counted as objects even when the original probe labels them target-not-object. Source intersections also qualify when the target is object/union shaped. The original skipped flags remain in raw rows. Nil-source records remain a separate bucket even when the target is an intersection. Intersections do not add a second recursive traversal, so their fields skipped by the original probe remain unwalked.
 
 ## Counts
 
 **Unrelated object pair observations: 0; distinct textual (source, target, nested path) pairs: 0. Nil-source views with a known runtime reference field: 0.** The object-capable reference companion is 0. Nil-source views with no proven reference field but unknown fields or missing target: 0.
 
-Selected-unit pair observations: **0**. Raw lines across all passes, including superseded first-error and retry observations: **0**.
+Selected-unit pair observations: **22074**. Raw lines across all passes, including superseded first-error and retry observations: **22074**. Selected units held 599 viewSources entries; pointer deduplication suppressed 124396 repeat visits and the depth bound suppressed 10207 visits.
 
 | Split | Selected unit observations | All raw lines |
 | --- | ---: | ---: |
-| object_related_top | 0 | 0 |
-| object_related_nested | 0 | 0 |
+| object_related_top | 512 | 512 |
+| object_related_nested | 19436 | 19436 |
 | object_unrelated_top | 0 | 0 |
 | object_unrelated_nested | 0 | 0 |
-| scalar_top | 0 | 0 |
-| scalar_nested | 0 | 0 |
+| scalar_top | 3 | 3 |
+| scalar_nested | 2123 | 2123 |
 | nil_source | 0 | 0 |
 | nil_target_only | 0 | 0 |
 
-Intersection targets are a subset of the object counts, not an added bucket: 0, split as `{'object_related_top': 0, 'object_related_nested': 0, 'object_unrelated_top': 0, 'object_unrelated_nested': 0, 'scalar_top': 0, 'scalar_nested': 0, 'nil_source': 0, 'nil_target_only': 0}`. Scalar/non-object rows use the probe's flag test; top-level non-object rows are shown separately from nested scalar fields.
+Intersection targets are a subset of the object counts, not an added bucket: 11, split as `{'object_related_top': 0, 'object_related_nested': 11, 'object_unrelated_top': 0, 'object_unrelated_nested': 0, 'scalar_top': 0, 'scalar_nested': 0, 'nil_source': 0, 'nil_target_only': 0}`. Scalar/non-object rows use the probe's flag test; top-level non-object rows are shown separately from nested scalar fields.
 
 Reference field means a cycleFinder.fields field whose lowering representation is known and ir.Type.IsReference() is true. This runtime definition includes strings and Weak. The companion object-capable count excludes strings and Weak. Unknown representations remain explicitly unknown, not silently declared scalar. The nil-source count is a count of views; unlike non-nil pairs, the original probe does not deduplicate nil sources.
 
 ## Coverage
 
-Observed **0 unit results**: `{}`. Unobserved stock units by status: `{}`. Full-mode files attempted: **0/81**; emitted complete full-mode file inventories: 0. Stock inventory has 0 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
+Observed **3431 unit results**: `{'lowered': 2663, 'stopped': 768}`. Deferred standalone units in emitted inventories: **0**. Unobserved stock units by status: `{}`. Full-mode files attempted: **0/81**; emitted complete full-mode file inventories: 0. Stock inventory has 0 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
 
 One result per (unit file, unit position) is selected: full mode supersedes first-error mode, and later full pieces supersede earlier ones. Repeated dependency pairs in different units remain repeated observations. TypeToString text can be truncated or reused for distinct checker identities; the distinct-pair list groups displayed source/target strings plus the full first-encountered nested path, not globally shared checker identities.
 
@@ -63,6 +63,87 @@ Each observation is retained, including repeats in one unit, in [nil-source-refe
 
 | Owner file | Lowered | Stopped | Selected pairs | Full mode |
 | --- | ---: | ---: | ---: | --- |
+| _namespaces/ts.moduleSpecifiers.ts | 1 | 0 | 0 | not yet attempted |
+| _namespaces/ts.performance.ts | 1 | 0 | 0 | not yet attempted |
+| _namespaces/ts.ts | 0 | 0 | 0 | not yet attempted |
+| binder.ts | 8 | 8 | 217 | not yet attempted |
+| builder.ts | 0 | 0 | 0 | not yet attempted |
+| builderPublic.ts | 0 | 0 | 0 | not yet attempted |
+| builderState.ts | 0 | 0 | 0 | not yet attempted |
+| builderStatePublic.ts | 0 | 0 | 0 | not yet attempted |
+| checker.ts | 42 | 9 | 210 | not yet attempted |
+| commandLineParser.ts | 97 | 62 | 0 | not yet attempted |
+| core.ts | 54 | 3 | 0 | not yet attempted |
+| corePublic.ts | 9 | 0 | 0 | not yet attempted |
+| debug.ts | 5 | 0 | 0 | not yet attempted |
+| diagnosticInformationMap.generated.ts | 3 | 0 | 0 | not yet attempted |
+| emitter.ts | 0 | 0 | 0 | not yet attempted |
+| executeCommandLine.ts | 0 | 0 | 0 | not yet attempted |
+| expressionToTypeNode.ts | 0 | 0 | 0 | not yet attempted |
+| factory/baseNodeFactory.ts | 2 | 1 | 0 | not yet attempted |
+| factory/emitHelpers.ts | 40 | 5 | 79 | not yet attempted |
+| factory/emitNode.ts | 15 | 3 | 0 | not yet attempted |
+| factory/nodeChildren.ts | 1 | 5 | 77 | not yet attempted |
+| factory/nodeConverters.ts | 2 | 1 | 0 | not yet attempted |
+| factory/nodeFactory.ts | 18 | 7 | 0 | not yet attempted |
+| factory/nodeTests.ts | 228 | 0 | 0 | not yet attempted |
+| factory/parenthesizerRules.ts | 1 | 2 | 76 | not yet attempted |
+| factory/utilities.ts | 61 | 39 | 1428 | not yet attempted |
+| factory/utilitiesPublic.ts | 3 | 0 | 0 | not yet attempted |
+| hostErrors.ts | 0 | 3 | 0 | not yet attempted |
+| moduleNameResolver.ts | 97 | 51 | 0 | not yet attempted |
+| moduleSpecifiers.ts | 25 | 23 | 7 | not yet attempted |
+| parser.ts | 30 | 23 | 231 | not yet attempted |
+| path.ts | 63 | 14 | 0 | not yet attempted |
+| performance.ts | 23 | 1 | 0 | not yet attempted |
+| performanceCore.ts | 10 | 2 | 0 | not yet attempted |
+| program.ts | 0 | 0 | 0 | not yet attempted |
+| programDiagnostics.ts | 0 | 0 | 0 | not yet attempted |
+| resolutionCache.ts | 0 | 0 | 0 | not yet attempted |
+| scanner.ts | 70 | 4 | 0 | not yet attempted |
+| semver.ts | 21 | 8 | 0 | not yet attempted |
+| sourcemap.ts | 24 | 6 | 0 | not yet attempted |
+| symbolWalker.ts | 1 | 1 | 56 | not yet attempted |
+| sys.ts | 47 | 13 | 0 | not yet attempted |
+| tracing.ts | 10 | 0 | 0 | not yet attempted |
+| transformer.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/classFields.ts | 20 | 3 | 267 | not yet attempted |
+| transformers/classThis.ts | 2 | 3 | 56 | not yet attempted |
+| transformers/declarations.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/declarations/diagnostics.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/destructuring.ts | 9 | 13 | 194 | not yet attempted |
+| transformers/es2015.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/es2016.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/es2017.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/es2018.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/es2019.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/es2020.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/es2021.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/esDecorators.ts | 8 | 1 | 0 | not yet attempted |
+| transformers/esnext.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/generators.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/jsx.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/legacyDecorators.ts | 1 | 1 | 0 | not yet attempted |
+| transformers/module/esnextAnd2015.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/module/impliedNodeFormatDependent.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/module/module.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/module/system.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/namedEvaluation.ts | 3 | 16 | 56 | not yet attempted |
+| transformers/taggedTemplate.ts | 3 | 2 | 121 | not yet attempted |
+| transformers/ts.ts | 4 | 1 | 0 | not yet attempted |
+| transformers/typeSerializer.ts | 5 | 1 | 79 | not yet attempted |
+| transformers/utilities.ts | 17 | 27 | 1119 | not yet attempted |
+| tsbuild.ts | 0 | 0 | 0 | not yet attempted |
+| tsbuildPublic.ts | 0 | 0 | 0 | not yet attempted |
+| types.ts | 875 | 0 | 0 | not yet attempted |
+| utilities.ts | 540 | 294 | 12500 | not yet attempted |
+| utilitiesPublic.ts | 155 | 87 | 5301 | not yet attempted |
+| visitorPublic.ts | 4 | 24 | 0 | not yet attempted |
+| watch.ts | 0 | 0 | 0 | not yet attempted |
+| watchPublic.ts | 0 | 0 | 0 | not yet attempted |
+| watchUtilities.ts | 0 | 0 | 0 | not yet attempted |
+| tsc/_namespaces/ts.ts | 0 | 0 | 0 | not yet attempted |
+| tsc/tsc.ts | 5 | 1 | 0 | not yet attempted |
 
 ## Pass exits
 
@@ -70,6 +151,7 @@ Each child is capped at 1490 seconds with five seconds for forced cleanup, below
 
 | Pass | Child exit | Seconds | Reason |
 | --- | ---: | ---: | --- |
+| first | -15 | 1491.012 | configured elapsed bound |
 
 ## Evidence and replay
 
