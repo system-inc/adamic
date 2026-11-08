@@ -53,7 +53,7 @@ func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, coun
 		entries = append(entries, fmt.Sprintf("[%d] = %s", index, slot))
 	}
 	for _, rest := range layout.Rest {
-		array := e.restArray(source, count, rest.Start, rest.Element)
+		array := e.restArray(source, count, rest.Start, rest)
 		entries = append(entries, fmt.Sprintf("[%d] = {.reference = %s}", e.program.RestArgumentSlots[rest], array))
 	}
 
@@ -117,9 +117,13 @@ func packedParameter(of ir.Type, packed, count string, index int) string {
 	return fmt.Sprintf("%s > %d ? %s : %s", count, index, value, missingArgument(of))
 }
 
-func (e *emitter) restArray(packed, count string, start int, element ir.Type) string {
-	result := e.own(ir.Array, fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(element)))
-	e.copyRest(result, packed, count, start, element)
+// restArray packs a tail for a spread or closure call, copying from start, which counts a
+// receiver where the packed source holds one, as rest.Start doesn't. It's made where an array
+// literal of the rest's type would be, so in a graph program a pack on a cycle lives in the
+// region (#2zhhwaz).
+func (e *emitter) restArray(packed, count string, start int, rest ir.RestArguments) string {
+	result := e.graphArray(fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(rest.Element)), e.program.RestGraphTypes[rest])
+	e.copyRest(result, packed, count, start, rest.Element)
 	return result
 }
 
@@ -127,7 +131,7 @@ func (e *emitter) copyRest(result, packed, count string, start int, element ir.T
 	index := e.temporary()
 	e.line("for (size_t %s = %d; %s < %s; %s++) {", index, start, index, count, index)
 	if element.IsReference() {
-		e.line("\tadamic_array_push(%s, (adamic_value){.reference = adamic_retain(%s[%s].reference)});", result, packed, index)
+		e.line("\tadamic_array_push(%s, (adamic_value){.reference = %s});", result, e.heldReferenceIn(result, fmt.Sprintf("%s[%s].reference", packed, index)))
 	} else {
 		e.line("\tadamic_array_push(%s, %s[%s]);", result, packed, index)
 	}
@@ -140,7 +144,7 @@ func (e *emitter) spreadArguments(call ir.Call) []string {
 	values := []string{}
 	for index, parameter := range function.Parameters {
 		if function.RestElement != 0 && index == len(function.Parameters)-1 {
-			value := e.restArray(packed+"->elements", packed+"->length", index, function.RestElement)
+			value := e.restArray(packed+"->elements", packed+"->length", index, ir.FunctionRestArguments(function))
 			if e.reuse.callConsumes(e.program, call, index) {
 				value = "adamic_retain(" + value + ")"
 			}

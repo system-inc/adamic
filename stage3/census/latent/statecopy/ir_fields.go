@@ -579,6 +579,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"Program.FunctionTypeTargets":        {"SortedMap[int, []int]", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Program.FixedArgumentSlots":         {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Program.RestArgumentSlots":          {"SortedMap[RestArguments, int]", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
+	"Program.RestGraphTypes":             {"SortedMap[RestArguments, []int]", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Program.Main":                       {"[]Statement", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Program.ClosuresMayThrow":           {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Program.HiddenRecordKeys":           {"SortedMap[string, bool]", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},

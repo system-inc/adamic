@@ -286,6 +286,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			f.l.result.Locals[node.cell-1].GraphCell = true
 		}
 	}
+	f.restGraphTypes()
 	for _, closure := range f.l.closureRecords {
 		if f.l.result.GraphTypes[int(closure.proven.Id())] {
 			f.l.result.Functions[closure.function].GraphClosure = true
@@ -452,6 +453,52 @@ func (f *cycleFinder) graphArguments(proven *checker.Type) []*checker.Type {
 		return nil
 	}
 	return f.l.checker.GetTypeArguments(proven)
+}
+
+// restGraphTypes gives each rest layout the identity of the array its callers pack, so the pack
+// is a graph allocation exactly where an array literal of that type would be. A forwarder, a
+// class's ready-new and an inherited initializer pack for the function they forward to, so the
+// type is read through that chain; a merged constructor keeps its body's own parameter locals.
+// Every function sharing a layout adds its identity, since a closure call packs for all of them.
+func (f *cycleFinder) restGraphTypes() {
+	f.l.result.RestGraphTypes = ir.SortedMap[ir.RestArguments, []int]{}
+	for index, function := range f.l.result.Functions {
+		if function.RestElement == 0 {
+			continue
+		}
+		proven := f.restType(index)
+		if proven == nil {
+			continue
+		}
+		key := ir.FunctionRestArguments(function)
+		id := f.l.cycleTypeID(proven)
+		known := false
+		for _, existing := range f.l.result.RestGraphTypes[key] {
+			known = known || existing == id
+		}
+		if !known {
+			f.l.result.RestGraphTypes[key] = append(f.l.result.RestGraphTypes[key], id)
+		}
+	}
+}
+
+// restType is the checker type of the rest parameter a function's callers pack for, or nil when
+// no declared parameter stands behind it. The walk is bounded by the function count, so a
+// forwarding loop, which lowering never makes, can't hang it.
+func (f *cycleFinder) restType(index int) *checker.Type {
+	for range f.l.result.Functions {
+		function := f.l.result.Functions[index]
+		if parameters := function.Parameters; len(parameters) != 0 {
+			if proven := f.l.localTypes[parameters[len(parameters)-1]]; proven != nil {
+				return proven
+			}
+		}
+		if function.ForwardsArguments == 0 {
+			return nil
+		}
+		index = function.ForwardsArguments - 1
+	}
+	return nil
 }
 
 // Graph adoption moves a fixed allocation. Checked-view adapters and dynamic
