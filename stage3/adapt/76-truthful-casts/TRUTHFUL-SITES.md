@@ -11,12 +11,12 @@ but the following coupled source contracts cannot all pass the checker under
 the permitted edits. No public declaration, runtime statement or hiding cast is
 changed by the active adapter.
 
-| Site | Truthful local edit | Why it is not activated |
-|---|---|---|
-| builder.ts:564:5 | Private array helper returns (DiagnosticMessageChain\|T)[]\|undefined. | This fixes its own TS2322 but exposes the three next assignments below. Activating it alone breaks the compiler build. |
-| builder.ts:545:13 | Mode-mismatch result uses a private recursive chain whose next permits original T and converted chains. | Public DiagnosticMessageChain.next cannot hold reusable chains. Widening the private converter clears this assignment but exposes public callers. |
-| builder.ts:551:13 | The same private recursive result for the module-not-found branch. | Same public next boundary; there is no proven narrowing of arbitrary reusable T into DiagnosticMessageChain. |
-| builder.ts:555:106 | The reconstructed result uses the private recursive next type, and returns chain without the two existing DiagnosticMessageChain assertions. | The merged object then remains a private chain, not a public diagnostic. Claiming a public type would hide the union again. |
+| Site               | Truthful local edit                                                                                                                          | Why it is not activated                                                                                                                           |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| builder.ts:564:5   | Private array helper returns (DiagnosticMessageChain\|T)[]\|undefined.                                                                       | This fixes its own TS2322 but exposes the three next assignments below. Activating it alone breaks the compiler build.                            |
+| builder.ts:545:13  | Mode-mismatch result uses a private recursive chain whose next permits original T and converted chains.                                      | Public DiagnosticMessageChain.next cannot hold reusable chains. Widening the private converter clears this assignment but exposes public callers. |
+| builder.ts:551:13  | The same private recursive result for the module-not-found branch.                                                                           | Same public next boundary; there is no proven narrowing of arbitrary reusable T into DiagnosticMessageChain.                                      |
+| builder.ts:555:106 | The reconstructed result uses the private recursive next type, and returns chain without the two existing DiagnosticMessageChain assertions. | The merged object then remains a private chain, not a public diagnostic. Claiming a public type would hide the union again.                       |
 
 Trials, all with stock TypeScript 6.0.3 against the current adapted main tree:
 
