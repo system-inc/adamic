@@ -40,7 +40,7 @@ func AdamicMdastCanonical(root *Node) string {
 		if p != nil {
 			position = fmt.Sprintf("%d,%d,%d,%d,%d,%d", p.Start.Line, p.Start.Column, p.Start.Offset, p.End.Line, p.End.Column, p.End.Offset)
 		}
-		fields := []string{n.NodeType, fmt.Sprint(count), fmt.Sprint(n.IsLiteral), fmt.Sprint(n.ValueNull), n.Value, fmt.Sprint(n.Depth), fmt.Sprint(n.Ordered), start, fmt.Sprint(n.Spread), checked, adamicMdastOptional(n.Lang), adamicMdastOptional(n.Meta), n.URL, adamicMdastOptional(n.Title), adamicMdastOptional(n.Alt), adamicMdastOptional(n.Label), n.Identifier, n.ReferenceType, strings.Join(n.Align, ","), position}
+		fields := []string{n.NodeType, fmt.Sprint(count), fmt.Sprint(n.IsLiteral), fmt.Sprint(n.ValueNull), n.Value, fmt.Sprint(n.Depth), fmt.Sprint(n.Ordered), start, fmt.Sprint(n.Spread), checked, adamicMdastOptional(n.Lang), adamicMdastOptional(n.Meta), n.Url, adamicMdastOptional(n.Title), adamicMdastOptional(n.Alt), adamicMdastOptional(n.Label), n.Identifier, n.ReferenceType, strings.Join(n.Align, ","), position}
 		if n.FrontMatter != nil {
 			f := n.FrontMatter
 			fields = append(fields, "+"+f.Language, adamicMdastOptional(f.ExplicitLanguage), f.Value, f.StartDelimiter, f.EndDelimiter, f.Raw)
@@ -100,7 +100,7 @@ func AdamicMdastFromTransport(path string) {
 		for i := range offsets {
 			offsets[i] = i
 		}
-		root := compile(document.Events, compileConfig(), offsets, nil)
+		root := compile(document.Events, compileConfiguration(), offsets, nil)
 		front, content := ParseFrontMatter(document.Source)
 		if front != nil {
 			lines := strings.Split(front.Raw, "\n")
@@ -130,6 +130,6 @@ func AdamicMalformedEvents(name string) (message string) {
 	default:
 		panic("bad error witness")
 	}
-	compile(events, compileConfig(), []int{0}, nil)
+	compile(events, compileConfiguration(), []int{0}, nil)
 	return "no error"
 }

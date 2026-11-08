@@ -548,12 +548,12 @@ func entries(a *analyzer, branches []branch) []entry {
 		for _, src := range e.Sources {
 			e.Lines += src.Lines
 		}
-		switch {
-		case r.DecodeAt != nil:
+		switch r.Arity {
+		case rule.OptionArityAt:
 			e.Decoder = "DecodeAt"
-		case r.DecodeOptionList != nil:
+		case rule.OptionArityList:
 			e.Decoder = "DecodeOptionList"
-		case r.Decode != nil:
+		case rule.OptionArityOne:
 			e.Decoder = "Decode"
 		default:
 			e.Decoder = "none"

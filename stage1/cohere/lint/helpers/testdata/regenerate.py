@@ -13,8 +13,9 @@ with tempfile.TemporaryDirectory(prefix='adamic-helper-metadata-') as directory:
  source=register.read_text()
  assert source.count(anchor)==1
  captured=directory/'register.go'
- captured.write_text(source.replace(anchor,anchor+'\n AdamicRegistrations = append(AdamicRegistrations, registrations...)',1)+'\nvar AdamicRegistrations []Registrant\n')
+ captured.write_text(source.replace(anchor,anchor+'\n AdamicRegistrations = append(AdamicRegistrations, registrations...)',1))
  overlay['Replace'][str(register)]=str(captured)
+ overlay['Replace'][str(cohere/'internal/lint/rule/adamic_bridge.go')]=str(here/'rule_bridge.go')
  path=directory/'overlay.json';path.write_text(json.dumps(overlay))
  with (directory/'build.log').open('wb') as log:
   subprocess.run(['go','build','-overlay='+str(path),'-o',str(directory/'oracle'),str(virtual),str(descriptors)],cwd=cohere,stdout=log,stderr=subprocess.STDOUT,check=True)

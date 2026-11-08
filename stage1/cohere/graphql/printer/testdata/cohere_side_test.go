@@ -65,7 +65,7 @@ func TestAdamicPrinter(t *testing.T) {
 			switch value := node.Get(key).(type) {
 			case *estree.Node:
 				walk(value)
-			case []*estree.Node:
+			case estree.Nodes:
 				for _, child := range value {
 					walk(child)
 				}

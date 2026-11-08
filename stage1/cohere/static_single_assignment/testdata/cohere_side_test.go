@@ -242,8 +242,8 @@ func (oracleGraph) EachTerminalPlace(block *oracleBlock, visit func(*oraclePlace
 func (oracleGraph) SetTerminalOrder(block *oracleBlock, order ssa.EvaluationOrder) {
 	block.terminalOrder = order
 }
-func (oracleGraph) Params(f *oracleFunction) []oraclePlace { return f.params }
-func (oracleGraph) Returns(f *oracleFunction) *oraclePlace { return f.returns }
+func (oracleGraph) Parameters(f *oracleFunction) []oraclePlace { return f.params }
+func (oracleGraph) Returns(f *oracleFunction) *oraclePlace     { return f.returns }
 func (oracleGraph) Declaration(f *oracleFunction, id ssa.IdentifierId) ssa.DeclarationId {
 	return f.identifiers[id].declaration
 }
@@ -528,7 +528,7 @@ func oracleFromTest(name string, f *testFunction, passes string) *oracleFunction
 	for declaration, is := range f.contextual {
 		oracle.contextual[declaration] = is
 	}
-	for _, param := range f.params {
+	for _, param := range f.parameters {
 		oracle.params = append(oracle.params, oraclePlace{id: param.id, tag: param.tag})
 	}
 	if f.returns != nil {

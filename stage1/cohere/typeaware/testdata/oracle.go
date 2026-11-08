@@ -131,7 +131,7 @@ func main() {
 		listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) {
 			d.RuleName = subject.Name
 			collected = append(collected, d)
-		}}, nil)
+		}}, rule.Given[rule.NoOptions]{})
 		var walk func(*ast.Node)
 		walk = func(node *ast.Node) {
 			if node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindMinusToken {

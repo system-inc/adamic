@@ -28,7 +28,7 @@ func Parser(t testing.TB) (string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "mediaquery")
+	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "media_query")
 	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
 	overlay, err := json.Marshal(map[string]any{"Replace": replace})
 	if err != nil {
@@ -42,9 +42,9 @@ func Parser(t testing.TB) (string, string) {
 	arguments := []string{"-overlay=" + overlayPath}
 	var binary string
 	if oracleProducer {
-		binary = buildcache.GoTest(t, "cohere", output, "./internal/format/css/mediaquery", arguments)
+		binary = buildcache.GoTest(t, "cohere", output, "./internal/format/css/media_query", arguments)
 	} else {
-		inputs, err := buildcache.GoTestInputs("cohere", output, "./internal/format/css/mediaquery", arguments, nil)
+		inputs, err := buildcache.GoTestInputs("cohere", output, "./internal/format/css/media_query", arguments, nil)
 		if err != nil {
 			t.Fatal(err)
 		}

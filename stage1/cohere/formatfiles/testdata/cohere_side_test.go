@@ -1,5 +1,5 @@
 // This file is not built here. formatfiles_test.go lays it into cohere's own package,
-// cohere/internal/format/formatfiles, with `go test -overlay`, so that it can build trees with cohere's
+// cohere/internal/format/format_files, with `go test -overlay`, so that it can build trees with cohere's
 // own test helpers (writeTree and settingsTree, from enumerate_test.go) and walk them with cohere's
 // Enumerate, without a byte of the submodule changing.
 //
@@ -10,7 +10,7 @@
 // carry. Then generated trees, from a seeded generator whose names and contents start at every edge of
 // every class the walk decides on.
 
-package formatfiles
+package format_files
 
 import (
 	"encoding/json"

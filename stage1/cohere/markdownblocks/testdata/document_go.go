@@ -78,7 +78,7 @@ func main() {
 		case "f":
 			built = doc.NewFill(children)
 		case "g":
-			options := doc.GroupOptions{ID: id, ShouldBreak: flags&1 != 0}
+			options := doc.GroupOptions{Id: id, ShouldBreak: flags&1 != 0}
 			if flags&2 != 0 {
 				options.ExpandedStates = children
 			}

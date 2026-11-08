@@ -174,7 +174,7 @@ func decode(c Case) string {
 	if target == nil {
 		panic("missing option target " + c.Rule)
 	}
-	if rule.UnmarshalOptions([]byte(c.Input), reflect.New(target).Interface()) == nil {
+	if rule.AdamicUnmarshalOptions([]byte(c.Input), reflect.New(target).Interface()) == nil {
 		return "valid"
 	}
 	return "invalid"

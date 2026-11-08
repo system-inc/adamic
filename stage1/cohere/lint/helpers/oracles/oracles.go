@@ -30,12 +30,12 @@ func Helpers(t *testing.T) string {
 	if strings.Count(string(register), anchor) != 1 {
 		t.Fatal("registration capture anchor changed")
 	}
-	captured := strings.Replace(string(register), anchor, anchor+"\n AdamicRegistrations = append(AdamicRegistrations, registrations...)", 1) + "\nvar AdamicRegistrations []Registrant\n"
+	captured := strings.Replace(string(register), anchor, anchor+"\n AdamicRegistrations = append(AdamicRegistrations, registrations...)", 1)
 	capturedPath := filepath.Join(t.TempDir(), "register.go")
 	if err := os.WriteFile(capturedPath, []byte(captured), 0644); err != nil {
 		t.Fatal(err)
 	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{registerPath: capturedPath, virtual: side, filepath.Join(root, "policy/adamic_helpers.go"): catalog, filepath.Join(root, "adamic_helper_descriptors.go"): descriptors}})
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{registerPath: capturedPath, filepath.Join(root, "internal/lint/rule/adamic_bridge.go"): filepath.Join(filepath.Dir(descriptors), "rule_bridge.go"), virtual: side, filepath.Join(root, "policy/adamic_helpers.go"): catalog, filepath.Join(root, "adamic_helper_descriptors.go"): descriptors}})
 	path := filepath.Join(t.TempDir(), "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)

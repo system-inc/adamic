@@ -58,7 +58,7 @@ func TestAdamicPrinterCases(t *testing.T) {
 			options.SingleQuote = true
 			options.TrailingComma = "none"
 		}
-		formatted, err := formatWithParser(text, options, parser)
+		formatted, err := formatWithParser(text, options, parser, nil)
 		fmt.Fprintf(&answers, "case %d\n", count)
 		count++
 		var answer any
@@ -139,7 +139,7 @@ func TestAdamicPrinterThroughput(t *testing.T) {
 		started := time.Now()
 		for repeat := 0; repeat < repetitions; repeat++ {
 			for index, text := range texts {
-				formatted, err := formatWithParser(text, options, parsers[index])
+				formatted, err := formatWithParser(text, options, parsers[index], nil)
 				if err != nil {
 					t.Fatal(err)
 				}

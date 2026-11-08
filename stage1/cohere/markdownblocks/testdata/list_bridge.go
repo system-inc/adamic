@@ -162,7 +162,7 @@ func (out *adamicDocuments) serialize(document doc.Doc) int {
 		for i, part := range parts {
 			ids[i] = out.serialize(part)
 		}
-		id := out.add("g", "", 0, flag, out.groupID(node.ID), ids)
+		id := out.add("g", "", 0, flag, out.groupID(node.Id), ids)
 		out.groups[node] = id
 		return id
 	case *doc.IfBreak:
@@ -349,14 +349,14 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	leaves := []adamicLeaf{}
 	whitespaces := []adamicWhitespace{}
 	printer := *mdastPrinter
-	printer.PrintPrettierIgnored = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
+	printer.PrintPrettierIgnored = func(path *astPath, options *options, print printing.PrintFunc[printing.NoArguments], args *printing.NoArguments) doc.Doc {
 		node := currentNode(path)
 		frame := adamicLeaf{kind: "ignored", value: node.NodeType, source: options.OriginalText[node.Position.Start.Offset:node.Position.End.Offset], sibling: -1, flags: adamicFlag(path.HasAncestor(func(n *Node) bool { return n.NodeType == "blockquote" }))}
 		id := len(leaves)
 		leaves = append(leaves, frame)
 		return doc.NewLabel(fmt.Sprintf("adamic-leaf:%d", id), printPrettierIgnored(path, options, print, args))
 	}
-	printer.Print = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
+	printer.Print = func(path *astPath, options *options, print printing.PrintFunc[printing.NoArguments], args *printing.NoArguments) doc.Doc {
 		original := printMdast(path, options, print, args)
 		node := currentNode(path)
 		if shouldRemainTheSameContent(path) {
@@ -371,7 +371,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 					frame.fields = append(frame.fields, "0", "", "", "", "0")
 					return
 				}
-				frame.fields = append(frame.fields, "1", n.NodeType, adamicEscape(n.Value), n.Kind, strconv.Itoa(adamicFlag(n.IsCJ)+2*adamicFlag(n.HasLeadingPunctuation)+4*adamicFlag(n.HasTrailingPunctuation)))
+				frame.fields = append(frame.fields, "1", n.NodeType, adamicEscape(n.Value), n.Kind, strconv.Itoa(adamicFlag(n.IsCj)+2*adamicFlag(n.HasLeadingPunctuation)+4*adamicFlag(n.HasTrailingPunctuation)))
 			}
 			appendToken(previousNode(path))
 			appendToken(nextNode(path))
@@ -387,7 +387,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 				// Transport only samples that the native/original policy can count.
 				// Keep the actual whitespace value and neighboring kinds, not Go's decision.
 				previousKind, nextKind := siblings[i-1].Kind, siblings[i+1].Kind
-				if n.NodeType != "whitespace" || (n.Value != "" && n.Value != " ") || !((previousKind == kindCJLetter && nextKind == kindNonCJK) || (previousKind == kindNonCJK && nextKind == kindCJLetter)) {
+				if n.NodeType != "whitespace" || (n.Value != "" && n.Value != " ") || !((previousKind == kindCjLetter && nextKind == kindNonCjk) || (previousKind == kindNonCjk && nextKind == kindCjLetter)) {
 					continue
 				}
 				value := -1
@@ -432,7 +432,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 		switch node.NodeType {
 		case "frontMatter", "emphasis", "strong", "delete", "inlineCode", "wikiLink", "link", "image", "thematicBreak", "linkReference", "imageReference", "definition", "footnoteReference", "footnoteDefinition", "break", "liquidNode", "math", "inlineMath", "text", "tableCell":
 			if !shouldRemainTheSameContent(path) {
-				frame := adamicLeaf{kind: node.NodeType, value: node.Value, url: node.URL, referenceType: node.ReferenceType, hasTitle: node.Title != nil, sibling: -1}
+				frame := adamicLeaf{kind: node.NodeType, value: node.Value, url: node.Url, referenceType: node.ReferenceType, hasTitle: node.Title != nil, sibling: -1}
 				if node.Position != nil {
 					frame.source = options.OriginalText[node.Position.Start.Offset:node.Position.End.Offset]
 				}
@@ -455,7 +455,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 					frame.metadata = *node.Meta
 				}
 				if node.NodeType == "emphasis" {
-					frame.flags = adamicFlag(len(node.Children) > 0 && isAutolink(node.Children[0])) + 2*adamicFlag(prevOrNextWord(path)) + 4*adamicFlag(printing.CallParent(path, func(p *astPath) bool { return currentNode(p).NodeType == "strong" && prevOrNextWord(p) }, 0)) + 8*adamicFlag(path.HasAncestor(func(n *Node) bool { return n.NodeType == "emphasis" }))
+					frame.flags = adamicFlag(len(node.Children) > 0 && isAutolink(node.Children[0])) + 2*adamicFlag(previousOrNextWord(path)) + 4*adamicFlag(printing.CallParent(path, func(p *astPath) bool { return currentNode(p).NodeType == "strong" && previousOrNextWord(p) }, 0)) + 8*adamicFlag(path.HasAncestor(func(n *Node) bool { return n.NodeType == "emphasis" }))
 				}
 				if node.NodeType == "inlineCode" {
 					frame.flags = adamicFlag(path.HasAncestor(func(n *Node) bool { return n.NodeType == "tableCell" }))
@@ -473,8 +473,8 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 					}
 				}
 				if node.IsParent {
-					path.Each(func(childPath *astPath, _ int, _ any) {
-						frame.children = append(frame.children, adamicBlock{currentNode(childPath), print(nil, nil)})
+					path.Each(func(childPath *astPath, _ int) {
+						frame.children = append(frame.children, adamicBlock{currentNode(childPath), print("", nil)})
 					}, "children")
 				}
 				id := len(leaves)
@@ -484,8 +484,8 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 		}
 		if node.NodeType == "root" {
 			frame := adamicRoot{source: options.OriginalText}
-			path.Each(func(childPath *astPath, _ int, _ any) {
-				frame.children = append(frame.children, adamicBlock{currentNode(childPath), print(nil, nil)})
+			path.Each(func(childPath *astPath, _ int) {
+				frame.children = append(frame.children, adamicBlock{currentNode(childPath), print("", nil)})
 			}, "children")
 			id := len(roots)
 			roots = append(roots, frame)
@@ -496,8 +496,8 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 			if node.NodeType == "heading" {
 				frame.source = options.OriginalText[node.Position.Start.Offset:node.Position.End.Offset]
 			}
-			path.Each(func(childPath *astPath, _ int, _ any) {
-				frame.children = append(frame.children, adamicStructureChild{print(nil, nil), currentNode(childPath).NodeType == "whitespace"})
+			path.Each(func(childPath *astPath, _ int) {
+				frame.children = append(frame.children, adamicStructureChild{print("", nil), currentNode(childPath).NodeType == "whitespace"})
 			}, "children")
 			id := len(structures)
 			structures = append(structures, frame)
@@ -557,10 +557,10 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 		}
 		if node.NodeType == "table" {
 			frame := adamicTable{align: node.Align}
-			path.Each(func(rowPath *astPath, _ int, _ any) {
+			path.Each(func(rowPath *astPath, _ int) {
 				cells := []adamicCell{}
-				rowPath.Each(func(_ *astPath, _ int, _ any) {
-					document := print(nil, nil)
+				rowPath.Each(func(_ *astPath, _ int) {
+					document := print("", nil)
 					cellText := doc.Print(document, doc.Options{PrintWidth: 120, TabWidth: 4})
 					cells = append(cells, adamicCell{document, doc.StringWidth(cellText)})
 				}, "children")
@@ -575,8 +575,8 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 		}
 		if node.NodeType == "blockquote" {
 			blocks := []adamicBlock{}
-			path.Each(func(blockPath *astPath, _ int, _ any) {
-				blocks = append(blocks, adamicBlock{currentNode(blockPath), print(nil, nil)})
+			path.Each(func(blockPath *astPath, _ int) {
+				blocks = append(blocks, adamicBlock{currentNode(blockPath), print("", nil)})
 			}, "children")
 			id := len(quotes)
 			quotes = append(quotes, blocks)
@@ -591,7 +591,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 				frame.ancestorAligned = false
 			}
 		}
-		path.Each(func(itemPath *astPath, _ int, _ any) {
+		path.Each(func(itemPath *astPath, _ int) {
 			itemNode := currentNode(itemPath)
 			item := adamicItem{node: itemNode}
 			end := itemNode.Position.End.Offset
@@ -599,8 +599,8 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 				end = itemNode.Children[0].Position.Start.Offset
 			}
 			item.marker = text[itemNode.Position.Start.Offset:end]
-			itemPath.Each(func(blockPath *astPath, _ int, _ any) {
-				item.blocks = append(item.blocks, adamicBlock{currentNode(blockPath), print(nil, nil)})
+			itemPath.Each(func(blockPath *astPath, _ int) {
+				item.blocks = append(item.blocks, adamicBlock{currentNode(blockPath), print("", nil)})
 			}, "children")
 			frame.items = append(frame.items, item)
 		}, "children")
