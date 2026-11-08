@@ -12,7 +12,10 @@ func realpathParent(node *ast.Node) *ast.Node {
 	return node
 }
 
-func realpathTruthiness(node *ast.Node) bool {
+// truthinessOperand says whether node's value is only tested for truth: an if, while, do or for
+// condition, a conditional's test, a ! operand, or an && or || operand of one of those. realpath's
+// uses and stdout handle's setBlocking (stdoutHandleSetBlockingRefusal) both ask it.
+func truthinessOperand(node *ast.Node) bool {
 	node = realpathParent(node)
 	parent := node.Parent
 	if parent == nil {
@@ -34,7 +37,7 @@ func realpathTruthiness(node *ast.Node) bool {
 		return parent.AsConditionalExpression().Condition == node
 	case ast.KindBinaryExpression:
 		operator := parent.AsBinaryExpression().OperatorToken.Kind
-		return (operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken) && realpathTruthiness(parent)
+		return (operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken) && truthinessOperand(parent)
 	}
 	return false
 }
@@ -118,7 +121,7 @@ func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 	if parent := use.Parent; parent != nil && parent.Kind == ast.KindCallExpression && parent.AsCallExpression().Expression == use {
 		return nil
 	}
-	if realpathTruthiness(use) || l.realpathIdentity(use) {
+	if truthinessOperand(use) || l.realpathIdentity(use) {
 		return nil
 	}
 	for use.Parent != nil && use.Parent.Kind == ast.KindConditionalExpression {
@@ -205,11 +208,11 @@ func (l *lowering) realpathConstUse(reference *ast.Node) error {
 		}
 		return nil
 	case ast.KindBinaryExpression:
-		if l.realpathIdentity(outer) || realpathTruthiness(outer) {
+		if l.realpathIdentity(outer) || truthinessOperand(outer) {
 			return nil
 		}
 	case ast.KindPrefixUnaryExpression, ast.KindIfStatement, ast.KindWhileStatement, ast.KindDoStatement, ast.KindForStatement, ast.KindConditionalExpression:
-		if realpathTruthiness(outer) {
+		if truthinessOperand(outer) {
 			return nil
 		}
 	}
