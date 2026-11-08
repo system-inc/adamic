@@ -14,17 +14,41 @@ func (e *emitter) aside(expression ir.Expression) (string, string, []string) {
 	return e.asideWith(func() string { return e.value(expression) })
 }
 
+// asideScope is an open aside's scope, by its index in scopes, and how many lists outerOwned held
+// with the aside's own: a check in a statement begun outside the aside lets go of the scope where the
+// check is (thrownSite).
+type asideScope struct {
+	scope int
+	level int
+}
+
 // asideWith is aside for whatever emit emits.
 func (e *emitter) asideWith(emit func() string) (string, string, []string) {
 	savedOut, savedOwned := e.out, e.owned
 	e.out, e.owned = strings.Builder{}, nil
 	// A throw from inside lets go of what the statement owned before the aside too.
 	e.outerOwned = append(e.outerOwned, savedOwned)
+	// A local declared inside (an ir.Effects's ir.Declare) is declared in the aside's text, which the
+	// caller writes inside a block of its own, so it's held in a scope of the aside's and handed back
+	// with what the aside owns: the caller lets go of it inside its block, after it has used the
+	// value, which may read it. A scope outside would let go of it past the block's end, where C
+	// can't name it (#pjr22te).
+	depth := len(e.scopes)
+	e.scopes = append(e.scopes, nil)
+	e.asides = append(e.asides, asideScope{scope: depth, level: len(e.outerOwned)})
 	e.indent++
 	value := emit()
 	e.indent--
+	e.asides = e.asides[:len(e.asides)-1]
+	held := slices.Concat(e.scopes[depth:]...)
+	e.scopes = e.scopes[:depth]
 	e.outerOwned = e.outerOwned[:len(e.outerOwned)-1]
-	text, owned := e.out.String(), e.owned
+	for _, name := range held {
+		if e.closes[name] || e.mostlyNull[name] || (e.regions != nil && e.regions.cleanups[name] != "") {
+			panic("native: compiler bug: an aside holds " + name + ", which a release alone doesn't let go of")
+		}
+	}
+	text, owned := e.out.String(), append(e.owned, held...)
 	e.out, e.owned = savedOut, savedOwned
 	return text, value, owned
 }
