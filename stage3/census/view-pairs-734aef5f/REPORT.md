@@ -35,7 +35,7 @@ Reference field means a cycleFinder.fields field whose lowering representation i
 
 ## Coverage
 
-Observed **7707 unit results**: `{'lowered': 4538, 'stopped': 3169}`. Deferred standalone units in emitted inventories: **296**. Unobserved stock units by status: `{'deferred_generic_instantiation': 296}`. Full-mode files attempted: **24/81**; emitted complete full-mode file inventories: 23. Stock inventory has 5538 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
+Observed **7741 unit results**: `{'lowered': 4566, 'stopped': 3175}`. Deferred standalone units in emitted inventories: **375**. Unobserved stock units by status: `{'deferred_generic_instantiation': 375}`. Full-mode files attempted: **25/81**; emitted complete full-mode file inventories: 24. Stock inventory has 5651 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
 
 One result per (unit file, unit position) is selected: full mode supersedes first-error mode, and later full pieces supersede earlier ones. Repeated dependency pairs in different units remain repeated observations. TypeToString text can be truncated or reused for distinct checker identities; the distinct-pair list groups displayed source/target strings plus the full first-encountered nested path, not globally shared checker identities.
 
@@ -134,7 +134,7 @@ Each observation is retained, including repeats in one unit, in [nil-source-refe
 | transformers/typeSerializer.ts | 5 | 1 | 79 | not yet attempted |
 | transformers/utilities.ts | 17 | 27 | 1119 | not yet attempted |
 | tsbuild.ts | 0 | 0 | 0 | not yet attempted |
-| tsbuildPublic.ts | 0 | 0 | 0 | not yet attempted |
+| tsbuildPublic.ts | 28 | 6 | 0 | complete traversal |
 | types.ts | 875 | 0 | 0 | complete traversal |
 | utilities.ts | 555 | 312 | 7314 | complete traversal |
 | utilitiesPublic.ts | 155 | 87 | 5301 | not yet attempted |
@@ -176,6 +176,7 @@ Each child is capped at 1490 seconds with five seconds for forced cleanup, below
 | full-021 | 0 | 129.184 | completed |
 | full-022 | 0 | 154.438 | completed |
 | full-023 | 0 | 173.479 | completed |
+| full-024 | 0 | 57.095 | completed |
 
 ## Evidence and replay
 
