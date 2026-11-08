@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "/workspace/adamic/stage3/census/pair/pair.py",
+    "/workspace/adamic/stage3/census/absent-optional-write-e1d221ce/parent-run.jsonl",
+    "/workspace/adamic/stage3/census/absent-optional-write-e1d221ce/head-run.jsonl",
+    "/workspace/aow-adapted",
+    "--typescript",
+    "/workspace/adamic/stage3/api/node_modules/typescript",
+    "--json",
+    "/workspace/adamic/stage3/census/absent-optional-write-e1d221ce/paired.json",
+    "--report",
+    "/workspace/adamic/stage3/census/absent-optional-write-e1d221ce/paired.md"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "wall_seconds": 12.048,
+  "stopped": null
+}

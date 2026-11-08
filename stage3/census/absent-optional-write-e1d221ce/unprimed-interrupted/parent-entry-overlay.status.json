@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/workspace/aow-parent-overlay",
+    "/workspace/aow-parent-entry"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "wall_seconds": 1.001,
+  "stopped": null
+}

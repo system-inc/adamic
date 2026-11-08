@@ -1,0 +1,7 @@
+import { decodeJson } from 'adamic';
+interface Mut { name?: string; }
+const r = decodeJson<Mut>('{}');
+if (r.kind === 'Ok') {
+    const v = r.value;
+    v.name = 'w';
+}

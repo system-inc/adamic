@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/aow-head",
+    "/workspace/aow-head-overlay"
+  ],
+  "cwd": "/workspace/aow-head",
+  "exit": 0,
+  "wall_seconds": 1.013,
+  "stopped": null
+}

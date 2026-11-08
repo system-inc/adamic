@@ -1,0 +1,12 @@
+checkpoint apply child_exit=0 6778c2c215ac06c60c22bf229e46aed0a62cd446
+launch parent
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+parent-run child_exit=-15 wall_seconds=485.534

@@ -1,0 +1,53 @@
+[
+  {
+    "identity": [
+      "src/compiler/parser.ts",
+      "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af",
+      531029
+    ],
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a possibly absent optional own field",
+      "root_kind": "",
+      "text": "/workspace/aow-adapted/src/compiler/parser.ts:10620:5: stage 0 can't lower writing a possibly absent optional own field yet",
+      "unit": "/workspace/aow-adapted/src/compiler/parser.ts:10619:1",
+      "where": "/workspace/aow-adapted/src/compiler/parser.ts:10620:5"
+    },
+    "category": "already-blocked unit",
+    "contexts": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a possibly absent optional own field",
+        "root_kind": "",
+        "text": "/workspace/aow-adapted/src/compiler/parser.ts:10620:5: stage 0 can't lower writing a possibly absent optional own field yet",
+        "unit": "/workspace/aow-adapted/src/compiler/parser.ts:10619:1",
+        "where": "/workspace/aow-adapted/src/compiler/parser.ts:10620:5"
+      }
+    ],
+    "already_blocked_contexts": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a possibly absent optional own field",
+        "root_kind": "",
+        "text": "/workspace/aow-adapted/src/compiler/parser.ts:10620:5: stage 0 can't lower writing a possibly absent optional own field yet",
+        "unit": "/workspace/aow-adapted/src/compiler/parser.ts:10619:1",
+        "where": "/workspace/aow-adapted/src/compiler/parser.ts:10620:5"
+      }
+    ],
+    "source": {
+      "start_line": 10618,
+      "end_line": 10622,
+      "text": "/** @internal */\nexport function processPragmasIntoFields(context: PragmaContext, reportDiagnostic: PragmaDiagnosticReporter): void {\n    context.checkJsDirective = undefined;\n    context.referencedFiles = [];\n    context.typeReferenceDirectives = [];",
+      "site_text": "    context.checkJsDirective = undefined;"
+    }
+  }
+]
