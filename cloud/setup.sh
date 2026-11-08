@@ -313,7 +313,7 @@ fi
 
 # One file every shell sources; write-env.sh keeps the lines other steps wrote, such as a box's gate inputs.
 bash "$repository/cloud/write-env.sh" "$tools" "$gate" "$markdownDependencies" "$repository" "$gocacheprog" "$("$wasiSDK" && echo "$wasiDirectory" || true)"
-grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
+bash "$repository/cloud/source-env.sh" "$tools/env.sh" "$HOME"
 # shellcheck disable=SC1091
 source "$tools/env.sh"
 cd "$repository"
