@@ -338,6 +338,7 @@ var hostShapeReaders = []struct {
 	{"regexp.c", "adamic_regex_group_lookup", "the regular expression runtime reading its own objects", "", ""},
 	{"regexp.c", "adamic_regex_property", "the regular expression runtime reading its own objects", "", ""},
 	{"regexp_compile_runtime.c", "adamic_regex_compile_new", "copies the run-time compiler's own groups shape", "", ""},
+	{"timers_impl.h", "timer_foreign_handle", "returns false at its shape->methods == &adamic_host_methods test, host_object's own, before it reads a name, so it reads _onTimeout only as a record's key or a plain object's own field", "", ""},
 	{"union.c", "has_property", "reached past host_stop at adamic_has_property, or for an array's own properties", "", ""},
 	{"union.c", "dynamic_property", "reached past host_stop at adamic_dynamic_property, or for an array's own properties", "", ""},
 	{"union.c", "keyed_slot", "called by adamic_dynamic_property_keyed after its host_object test, by keyed_array and keyed_tuple for an array's or a tuple's own properties, or by keyed_stats for the four fields a Stats' shape holds that Node's Stats has", "", ""},
