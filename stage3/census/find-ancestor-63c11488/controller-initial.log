@@ -1,0 +1,15 @@
+apply observed own_child_exit=0
+apply push_child_exit=0 5d320f5abd8b1e6d6304954009bb2123d9dab179
+apply checkpoint wrapper_exit=0
+Traceback (most recent call last):
+  File "/workspace/scratch/fa-parent/stage3/census/find-ancestor-63c11488/census.py", line 25, in <module>
+    provenance[side]=dict(sha=pin,checker=subprocess.check_output(['git','rev-parse','HEAD'],cwd=tree/'cohere',text=True).strip(),binaries={kind:hashlib.sha256(Path('/workspace/scratch/fa-'+side+'-'+kind).read_bytes()).hexdigest() for kind in ['full','entry','focus']})
+                                                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+IsADirectoryError: [Errno 21] Is a directory: '/workspace/scratch/fa-parent-entry'
+census controller own_child_exit=1
