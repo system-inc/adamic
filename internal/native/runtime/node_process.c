@@ -11,6 +11,7 @@
 #include "node_cwd_wasi.h"
 #include <errno.h>
 #include <stdatomic.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -273,8 +274,11 @@ static adamic_value set_blocking(adamic_closure *self, adamic_value *values) {
 
 // Node has one stdout handle for the process, so every read of _handle is the same object (#qa1g5f3).
 // It's built in this storage on the first read, an object of one slot as adamic_object_size lays it
-// out, with a zero count, so it's immortal as method is, and never allocated or freed.
-static _Alignas(adamic_object) unsigned char handle_storage[sizeof(adamic_object) + sizeof(adamic_value) + sizeof(size_t) + 2];
+// out, with a zero count, so it's immortal as method is, and never allocated or freed. Whole
+// max_align_t words give it an object's alignment, and the size is a macro so the declaration holds
+// no parenthesis, which runtime_statics_test.go's scanner would take for a function's.
+#define STDOUT_HANDLE_WORDS ((sizeof(adamic_object) + sizeof(adamic_value) + sizeof(size_t) + 2 + sizeof(max_align_t) - 1) / sizeof(max_align_t))
+static max_align_t handle_storage[STDOUT_HANDLE_WORDS];
 
 #endif
 
