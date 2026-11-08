@@ -1,4 +1,6 @@
 """Render full latent evidence and independently audit stock-AST coverage and counts."""
+
+from stream_records import census_records
 from unit_status import body_eligible, deferred_summary, audit_deferred
 import collections
 import copy
@@ -20,9 +22,9 @@ GIANTS = ('createTypeChecker', 'createNodeFactory', 'createPrinter', 'transformE
 
 def read_rows(path):
     if path.exists():
-        return [json.loads(line) for line in path.read_text().splitlines()]
+        return census_records([json.loads(line) for line in path.read_text().splitlines()])
     with gzip.open(str(path) + '.gz', 'rt') as stream:
-        return [json.loads(line) for line in stream]
+        return census_records([json.loads(line) for line in stream])
 
 
 def intervals_size(spans):

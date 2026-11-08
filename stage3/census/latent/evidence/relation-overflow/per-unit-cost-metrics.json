@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/tmp/latent-overflow-census",
+    "/tmp/latent-adapted/src/tsc/tsc.ts",
+    "/tmp/latent-tsc.jsonl"
+  ],
+  "wall_seconds": 2776.8022829160004,
+  "peak_rss_kib": 3860292,
+  "exit": -15,
+  "user_cpu_seconds": 3130.581643,
+  "system_cpu_seconds": 60.143326,
+  "phase_first_wall_seconds": {},
+  "time_limit_seconds": 3600.0,
+  "rss_limit_mib": 10240,
+  "address_space_limit_mib": 20480,
+  "rss_limit_killed": false
+}

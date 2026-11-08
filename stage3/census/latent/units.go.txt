@@ -218,6 +218,7 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "Boundary", Where: program.Where(node), Reason: "function signature or prologue failed; continued at next declaration", Text: err.Error(), Start: start, End: end})
 				}
 			}()
+			latentCheckUnitRelation(program, checker, &unit)
 			record.Units = append(record.Units, unit)
 		}
 		release()

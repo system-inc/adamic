@@ -1,4 +1,6 @@
 """Recount the second census and compare it with the immutable previous cumulative run."""
+
+from stream_records import census_records
 from unit_status import attempted, deferred_summary
 import collections, gzip, hashlib, json, pathlib, shutil, sys
 ROOT=pathlib.Path(__file__).resolve().parent
@@ -73,7 +75,7 @@ def main():
  scratch=pathlib.Path(sys.argv[1]).resolve();adapted=pathlib.Path(sys.argv[2]).resolve();data=ROOT/'data/rerun2';data.mkdir(exist_ok=True)
  with gzip.open(ROOT/'data/previous-REPORT.json.gz','rt') as f:previous=json.load(f)
  prior_run=next(r for r in previous['runs'] if r['name']=='cumulative')
- with gzip.open(ROOT/'data/cumulative.jsonl.gz','rt') as f:prior_raw=[json.loads(l) for l in f]
+ with gzip.open(ROOT/'data/cumulative.jsonl.gz','rt') as f:prior_raw=census_records([json.loads(l) for l in f])
  prior_manifest=previous['source']['files'];baseline=dict(name='cumulative',head=prior_run['head'],delivery_commit='70456b766243ee155104c4c9c6928cc53b7b5640',**summarize(prior_raw,prior_manifest))
  baseline['variance']=dict(measurement=LABEL,total=sum(variance_family(f) is not None for f in baseline['findings']),families=dict(sorted(collections.Counter(variance_family(f) for f in baseline['findings'] if variance_family(f)).items())))
  manifest=[dict(file=str(p.relative_to(adapted)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),generated='.generated.' in p.name) for p in sorted((adapted/'src/compiler').rglob('*.ts'))]
@@ -82,7 +84,7 @@ def main():
  runs=[]
  for spec in json.loads((scratch/'runs.json').read_text()):
   assert spec['status']=='complete',spec
-  name=spec['name'];raw=[normalize(json.loads(l),str(adapted)) for l in (scratch/(name+'.jsonl')).read_text().splitlines()]
+  name=spec['name'];raw=census_records([normalize(json.loads(l),str(adapted)) for l in (scratch/(name+'.jsonl')).read_text().splitlines()])
   with gzip.open(data/(name+'.jsonl.gz'),'wt') as f:
    for r in raw:f.write(json.dumps(r)+'\n')
   row=dict(spec,**summarize(raw,manifest));row['variance']=variance_breakdown(row['findings'],raw,texts)

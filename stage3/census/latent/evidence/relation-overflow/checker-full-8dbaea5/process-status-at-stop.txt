@@ -1,0 +1,59 @@
+Name:	entry-census
+Umask:	0077
+State:	R (running)
+Tgid:	24211
+Ngid:	0
+Pid:	24211
+PPid:	24210
+TracerPid:	0
+Uid:	1000	1000	1000	1000
+Gid:	1000	1000	1000	1000
+FDSize:	64
+Groups:	 
+NStgid:	24211
+NSpid:	24211
+NSpgid:	24210
+NSsid:	24210
+Kthread:	0
+VmPeak:	12949012 kB
+VmSize:	12942868 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	11161816 kB
+VmRSS:	10966532 kB
+RssAnon:	10945576 kB
+RssFile:	   20956 kB
+RssShmem:	       0 kB
+VmData:	11293020 kB
+VmStk:	     132 kB
+VmExe:	    7760 kB
+VmLib:	    1588 kB
+VmPTE:	   22068 kB
+VmSwap:	       0 kB
+HugetlbPages:	       0 kB
+CoreDumping:	0
+THP_enabled:	1
+untag_mask:	0xffffffffffffffff
+Threads:	8
+SigQ:	1/71955
+SigPnd:	0000000000000000
+ShdPnd:	0000000000000000
+SigBlk:	0000000000000000
+SigIgn:	0000000000000000
+SigCgt:	fffffffd7fc1feff
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	000001ffffffffff
+CapAmb:	0000000000000000
+NoNewPrivs:	0
+Seccomp:	0
+Seccomp_filters:	0
+Speculation_Store_Bypass:	vulnerable
+SpeculationIndirectBranch:	always enabled
+Cpus_allowed:	1f
+Cpus_allowed_list:	0-4
+Mems_allowed:	00000000,00000001
+Mems_allowed_list:	0
+voluntary_ctxt_switches:	37648
+nonvoluntary_ctxt_switches:	92372

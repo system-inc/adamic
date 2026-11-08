@@ -5,6 +5,7 @@ from pathlib import Path
 import re
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'latent'))
+from stream_records import census_records
 from unit_status import DEFERRED, SKIPPED, attempted, deferred_summary
 
 
@@ -15,7 +16,7 @@ def read_json(path):
 
 def read_rows(path):
     with (gzip.open(path, 'rt') if Path(path).suffix == '.gz' else Path(path).open()) as stream:
-        return [json.loads(line) for line in stream]
+        return census_records([json.loads(line) for line in stream])
 
 
 def calculate(rows, stock, root):

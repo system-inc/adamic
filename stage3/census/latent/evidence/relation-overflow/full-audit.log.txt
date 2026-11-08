@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/full_audit.py", line 95, in <module>
+    audit(binary, Path(sys.argv[2]).resolve())
+  File "/workspace/adamic/stage3/census/latent/full_audit.py", line 76, in audit
+    check(observations['full'])
+  File "/workspace/adamic/stage3/census/latent/full_audit.py", line 18, in check
+    assert actual == {'a string as a condition', 'a number as a condition', 'var'}, actual
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'var'}

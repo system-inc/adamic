@@ -6,7 +6,7 @@ old=Path(sys.argv[1]);before=Path(sys.argv[2]);after=Path(sys.argv[3]);output=Pa
 def read(path):
  opener=gzip.open if path.suffix=='.gz' else open
  with opener(path,'rt') as stream:records=[json.loads(line) for line in stream]
- roots={r['file'].split('/src/compiler/')[0] for r in records[1:]};assert len(roots)==1
+ roots={r['file'].split('/src/compiler/')[0] for r in records[1:] if 'file' in r};assert len(roots)==1
  root=next(iter(roots))+'/'
  return [{k:v.replace(root,'') if isinstance(v,str) else v for k,v in f.items()} for r in records[1:] for f in r.get('findings') or [] if f['kind'] in ['NotYet','Refused']]
 key=lambda f:tuple(f[k] for k in ['kind','where','reason','text'])
