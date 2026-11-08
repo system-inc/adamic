@@ -16,7 +16,8 @@ def checkpoint(label):
 def census(name,full=False,files=None,limit=1790):
  env=os.environ.copy();env['BOUNDARY_STREAM']=str(scratch/(name+'-boundary.jsonl'));env['LATENT_TIMES']=str(scratch/(name+'-times.jsonl'));env['LATENT_ASSERT_NO_OUTPUT']='1'
  for key in ['LATENT_FULL','LATENT_SPECULATIVE','LATENT_ONLY_FILE','LATENT_PIECE_FILES','LATENT_PIECE_INDEX']:env.pop(key,None)
- if full:env['LATENT_FULL']='1';env['LATENT_ONLY_FILE']='\n'.join(files)
+ if full:env['LATENT_FULL']='1';env['LATENT_ONLY_FILE']='\n'.join(files);env['GOMEMLIMIT']='10GiB'
+ (scratch/(name+'-environment.json')).write_text(json.dumps({k:v for k,v in env.items() if k.startswith('LATENT_') or k in ('GOMEMLIMIT','BOUNDARY_STREAM')},indent=2)+'\n')
  cmd=[str(scratch/'census'),'/workspace/graph-boundary-adapted/src/tsc/tsc.ts',str(scratch/(name+'-latent.jsonl'))]
  return run(name,cmd,env=env,watch=[env['BOUNDARY_STREAM'],env['LATENT_TIMES']],limit=limit)
 mode=sys.argv[1]
@@ -33,7 +34,14 @@ elif mode=='full':
   if size+n>600000 and current:groups.append(current);current=[];size=0
   current.append(file);size+=n
  if current:groups.append(current)
+ # Start with the small accepted helper to validate full mode, then checker.
+ smoke=next(f for f in files if f.endswith('/compiler/hostErrors.ts'))
+ groups=[[f for f in g if f!=smoke] for g in groups]
+ groups=[g for g in groups if g]
  groups.sort(key=lambda g:sum(Path(f).stat().st_size for f in g))
+ checker_group=next(i for i,g in enumerate(groups) if any(f.endswith('/compiler/checker.ts') for f in g))
+ checker=groups.pop(checker_group)
+ groups=[[smoke],checker,*groups]
  assert set(files)=={f for g in groups for f in g}
  (scratch/'pieces.json').write_text(json.dumps(groups,indent=2)+'\n')
  deadline=time.monotonic()+60*60

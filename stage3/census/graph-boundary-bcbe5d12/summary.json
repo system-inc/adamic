@@ -1,22 +1,45 @@
 {
+  "view_components": {
+    "ViewOrigins entries": 245,
+    "CheckedFields keys": 7975
+  },
+  "resolved_files": 81,
+  "counts_by_scope": {
+    "compiler_79": {
+      "views": 8220,
+      "record_literals": 0,
+      "dynamic_reads": 12,
+      "checked_object_calls": 0
+    },
+    "tsc_entry_2": {
+      "views": 0,
+      "record_literals": 0,
+      "dynamic_reads": 0,
+      "checked_object_calls": 0
+    }
+  },
   "counts": {
-    "views": 0,
+    "views": 8220,
     "record_literals": 0,
-    "dynamic_reads": 0,
+    "dynamic_reads": 12,
     "checked_object_calls": 0
   },
   "distinct_fallback_locations": {
-    "views": 0,
+    "views": 106,
     "record_literals": 0,
-    "dynamic_reads": 0,
+    "dynamic_reads": 6,
     "checked_object_calls": 0
   },
-  "observed_unit_results": 0,
-  "observed_statuses": {},
+  "observed_unit_results": 3447,
+  "observed_statuses": {
+    "lowered": 2673,
+    "stopped": 774
+  },
   "unobserved_stock_statuses": {},
-  "first_error_observed": 0,
+  "first_error_observed": 3447,
   "full_observed": 0,
   "files_in_stock_stream": 0,
-  "files_observed": 0,
+  "files_in_table": 81,
+  "files_observed": 52,
   "graph_types_nonempty_units": 0
 }
