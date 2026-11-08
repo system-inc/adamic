@@ -352,6 +352,9 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		}
 	}
 	f.graphFlows()
+	if err := f.viewPairGuard(); err != nil {
+		return err
+	}
 	return f.graphAdoptionBoundary()
 }
 
@@ -452,6 +455,137 @@ func (f *cycleFinder) graphArguments(proven *checker.Type) []*checker.Type {
 		return nil
 	}
 	return f.l.checker.GetTypeArguments(proven)
+}
+
+// viewPairFailure is how a view's pair fails viewPairGuard: the fields it went through to the pair
+// that failed, outermost first, and function, the function-typed field the view writes what its
+// source's field can't hold, or empty when that pair is one the cycle finder doesn't relate.
+type viewPairFailure struct {
+	through  []viewPairStep
+	function string
+}
+
+// viewPairStep is one field a view's pair was followed through, with the source's and the view's
+// types for it.
+type viewPairStep struct {
+	name           string
+	source, target *checker.Type
+}
+
+// A checked view lets the program see a value of its source type through its target, and the cycle
+// finder takes two types for one possible allocation only when one is assignable to the other
+// (deriveRelated). A view between types it doesn't relate is an edge the program uses that the
+// finder never walks, so a cycle through it could go unnoticed: in a graph program it's NotYet,
+// failing closed (Adamic's ruling, Nov 8). A view reads its source's fields as its own, so the pair
+// is followed through same-named fields too. A view with no source names nothing to relate, and
+// fails only when its target holds a field that isn't a plain scalar.
+func (f *cycleFinder) viewPairGuard() error {
+	for _, view := range f.l.viewSources {
+		target := f.l.concrete(view.target)
+		if view.source == nil {
+			for _, field := range f.fields(f.l.checker.GetNonNullableType(target)) {
+				if !viewPairScalarField(f.l.representation(f.l.checker.GetTypeOfSymbol(field))) {
+					return f.l.notYet(view.node, "a view with no source type of "+f.l.checker.TypeToString(target)+" in a graph program, which holds a reference field the cycle finder can't follow yet")
+				}
+			}
+			continue
+		}
+		source := f.l.concrete(view.source)
+		failure := f.viewPairFailure(source, target, map[[2]*checker.Type]bool{})
+		if failure == nil {
+			continue
+		}
+		what := "a view of " + f.l.checker.TypeToString(source) + " as " + f.l.checker.TypeToString(target) + " in a graph program"
+		if failure.function != "" {
+			what += ", whose field " + failure.function + " takes a function its source's " + failure.function + " can't hold, so a closure written through the view escapes the cycle finder"
+		} else {
+			what += ", which the cycle finder doesn't relate yet"
+		}
+		for _, step := range failure.through {
+			what += " through its field " + step.name + " (" + f.l.checker.TypeToString(step.source) + " as " + f.l.checker.TypeToString(step.target) + ")"
+		}
+		return f.l.notYet(view.node, what)
+	}
+	return nil
+}
+
+// viewPairFailure is how a view of source as target fails viewPairGuard, or nil. A pair already
+// met is judged where it was first met, which bounds the walk by the pairs there are, so it follows
+// every field to the end rather than stopping at a depth and letting the rest through. A type
+// parameter or any is judged like any other type: a declared generic pair the finder doesn't relate
+// fails closed, where skipping it would let it through.
+func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]*checker.Type]bool) *viewPairFailure {
+	pair := [2]*checker.Type{source, target}
+	if seen[pair] || viewPairScalar(source) || viewPairScalar(target) || f.viewPairFunction(source) || f.viewPairFunction(target) {
+		return nil
+	}
+	seen[pair] = true
+	if !f.deriveRelated(source, target) {
+		return &viewPairFailure{}
+	}
+	present := f.l.checker.GetNonNullableType(source)
+	for _, field := range f.fields(f.l.checker.GetNonNullableType(target)) {
+		held := f.l.checker.GetPropertyOfType(present, field.Name)
+		if held == nil {
+			continue
+		}
+		nestedSource, nestedTarget := f.l.concrete(f.l.checker.GetTypeOfSymbol(held)), f.l.concrete(f.l.checker.GetTypeOfSymbol(field))
+		// A function-typed field is judged by the closures that can flow into it (rulings.md's
+		// ClosureTargets entry), not by this guard, so a view with a method or callback field doesn't
+		// stop a graph program. Lower's exception: a field the view can write, typed so its source's
+		// field can't hold what the view writes, takes a closure no flow into the source's slot names.
+		if f.viewPairFunction(nestedSource) || f.viewPairFunction(nestedTarget) {
+			if !f.l.checker.IsReadonlySymbol(field) && field.Flags&ast.SymbolFlagsMethod == 0 && !f.l.checker.IsTypeAssignableTo(nestedTarget, nestedSource) {
+				return &viewPairFailure{function: field.Name}
+			}
+			continue
+		}
+		if failure := f.viewPairFailure(nestedSource, nestedTarget, seen); failure != nil {
+			failure.through = append([]viewPairStep{{name: field.Name, source: nestedSource, target: nestedTarget}}, failure.through...)
+			return failure
+		}
+	}
+	return nil
+}
+
+// viewPairFunction is whether a type, undefined and null aside, is a function's.
+func (f *cycleFinder) viewPairFunction(proven *checker.Type) bool {
+	return f.isFunction(f.l.checker.GetNonNullableType(proven))
+}
+
+// viewPairScalar is whether every value of a type is a primitive, undefined and null included,
+// which holds nothing a cycle could close through. An intersection holding one, a branded
+// primitive, is one too.
+func viewPairScalar(proven *checker.Type) bool {
+	switch {
+	case proven.Flags()&checker.TypeFlagsUnion != 0:
+		for _, member := range proven.Types() {
+			if !viewPairScalar(member) {
+				return false
+			}
+		}
+		return true
+	case proven.Flags()&checker.TypeFlagsIntersection != 0:
+		for _, member := range proven.Types() {
+			if viewPairScalar(member) {
+				return true
+			}
+		}
+		return false
+	}
+	return proven.Flags()&(checker.TypeFlagsPrimitive|checker.TypeFlagsNever) != 0
+}
+
+// viewPairScalarField is whether a field held as of is safe in a view with no source: a number, a
+// boolean or a string, or a number or boolean that may be missing. Anything else, a union, unknown,
+// an object, an array, a map or a closure, is a reference the cycle finder can't follow from here,
+// and so is a representation lowering doesn't know.
+func viewPairScalarField(of ir.Type, known bool) bool {
+	switch of {
+	case ir.Number, ir.Boolean, ir.String, ir.MaybeNumber, ir.MaybeBoolean:
+		return known
+	}
+	return false
 }
 
 // Graph adoption moves a fixed allocation. Checked-view adapters and dynamic
