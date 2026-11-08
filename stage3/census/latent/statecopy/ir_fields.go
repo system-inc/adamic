@@ -160,6 +160,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"CallClosure.Spread":                 {"[]bool", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"CallClosure.FunctionType":           {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"CallClosure.Returns":                {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"CallClosure.Optional":               {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Case.Tests":                         {"[]Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Case.Body":                          {"[]Statement", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"CharCodeAt.Value":                   {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
