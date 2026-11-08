@@ -15,8 +15,9 @@ const hostMemoryUsageRuntime = "class AdamicHostObject {}\nconst adamicHostMemor
 // setBlocking as a bare host function, and every call road here calls a closure's code: the method
 // call's adamicCallee, and tsc's sys.ts guard, which reads the function-typed field and hands it to
 // adamicCall. Each reads the member from this value, so it's made a closure here, once (#qa1g5f3).
-// It stays a host value for a key read, as Node's Pipe is.
-const hostStdoutHandleRuntime = "const adamicHostStdoutHandle = handle => handle === undefined ? undefined : Object.setPrototypeOf({ setBlocking: new AdamicClosure((closure, values) => handle.setBlocking(...values), []) }, AdamicHostObject.prototype);\n"
+// It stays a host value for a key read, as Node's Pipe is, and it's made on the first read and kept,
+// since Node's handle is one object for the process, so two reads are ===, as native's are.
+const hostStdoutHandleRuntime = "let adamicStdoutHandleValue;\nconst adamicHostStdoutHandle = handle => handle === undefined ? undefined : adamicStdoutHandleValue ??= Object.setPrototypeOf({ setBlocking: new AdamicClosure((closure, values) => handle.setBlocking(...values), []) }, AdamicHostObject.prototype);\n"
 
 func (e *emitter) nodeProcessCall(call ir.ProcessCall) (string, bool) {
 	if call.Operation == "tmpdir" {

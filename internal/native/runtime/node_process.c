@@ -10,7 +10,9 @@
 #include "host_runtime.h"
 #include "node_cwd_wasi.h"
 #include <errno.h>
+#include <pthread.h>
 #include <stdatomic.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -271,6 +273,20 @@ static adamic_value set_blocking(adamic_closure *self, adamic_value *values) {
     return (adamic_value){.reference = NULL};
 }
 
+// Node has one stdout handle for the process, so every read of _handle is the same object (#qa1g5f3).
+// It's built in this storage on the first read, an object of one slot as adamic_object_size lays it
+// out, with a zero count, so it's immortal as method is, and never allocated or freed. Whole
+// max_align_t words give it an object's alignment, and the size is a macro so the declaration holds
+// no parenthesis, which runtime_statics_test.go's scanner would take for a function's. The build
+// checks adamic_object_size itself against the storage, since this sum only restates it.
+#define STDOUT_HANDLE_WORDS ((sizeof(adamic_object) + sizeof(adamic_value) + sizeof(size_t) + 2 + sizeof(max_align_t) - 1) / sizeof(max_align_t))
+static max_align_t handle_storage[STDOUT_HANDLE_WORDS];
+// Tasks run on a work-stealing pool, so the build happens once under handle_lock and is published by
+// handle_built's release store. A read that sees handle_built with an acquire load sees the whole
+// build, as union.c's shape list publishes its entries.
+static pthread_mutex_t handle_lock = PTHREAD_MUTEX_INITIALIZER;
+static bool handle_built;
+
 #endif
 
 adamic_object *adamic_node_stdout_handle(void) {
@@ -284,8 +300,20 @@ adamic_object *adamic_node_stdout_handle(void) {
     static const adamic_field_kind kinds[] = {adamic_field_reference};
     static const adamic_shape shape = {1, handle_names, references, &adamic_host_methods, kinds};
     static adamic_closure method = {.heap = {0, adamic_kind_closure, 0}, .code = set_blocking, .count = 0};
-    adamic_object *handle = adamic_object_new(&shape);
-    handle->slots[0].reference = &method;
+    adamic_object *handle = (adamic_object *)(void *)handle_storage;
+    if (!__atomic_load_n(&handle_built, __ATOMIC_ACQUIRE)) {
+        pthread_mutex_lock(&handle_lock);
+        if (!handle_built) {
+            if (adamic_object_size(shape.count) > sizeof handle_storage) { adamic_invariant("stdout's handle storage is smaller than an object of one slot"); }
+            handle->heap = (adamic_heap){0, adamic_kind_object, 0};
+            handle->shape = &shape;
+            handle->slots[0].reference = &method;
+            memset(adamic_object_initialized(handle), 1, shape.count);
+            memset(adamic_object_field_types(handle), 0, shape.count);
+            __atomic_store_n(&handle_built, true, __ATOMIC_RELEASE);
+        }
+        pthread_mutex_unlock(&handle_lock);
+    }
     return handle;
 #endif
 }
