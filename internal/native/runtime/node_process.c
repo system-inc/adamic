@@ -271,6 +271,11 @@ static adamic_value set_blocking(adamic_closure *self, adamic_value *values) {
     return (adamic_value){.reference = NULL};
 }
 
+// Node has one stdout handle for the process, so every read of _handle is the same object (#qa1g5f3).
+// It's built in this storage on the first read, an object of one slot as adamic_object_size lays it
+// out, with a zero count, so it's immortal as method is, and never allocated or freed.
+static _Alignas(adamic_object) unsigned char handle_storage[sizeof(adamic_object) + sizeof(adamic_value) + sizeof(size_t) + 2];
+
 #endif
 
 adamic_object *adamic_node_stdout_handle(void) {
@@ -284,8 +289,15 @@ adamic_object *adamic_node_stdout_handle(void) {
     static const adamic_field_kind kinds[] = {adamic_field_reference};
     static const adamic_shape shape = {1, handle_names, references, &adamic_host_methods, kinds};
     static adamic_closure method = {.heap = {0, adamic_kind_closure, 0}, .code = set_blocking, .count = 0};
-    adamic_object *handle = adamic_object_new(&shape);
-    handle->slots[0].reference = &method;
+    adamic_object *handle = (adamic_object *)(void *)handle_storage;
+    // A built handle has its shape; the storage starts zeroed.
+    if (handle->shape == NULL) {
+        handle->heap = (adamic_heap){0, adamic_kind_object, 0};
+        handle->shape = &shape;
+        handle->slots[0].reference = &method;
+        memset(adamic_object_initialized(handle), 1, shape.count);
+        memset(adamic_object_field_types(handle), 0, shape.count);
+    }
     return handle;
 #endif
 }

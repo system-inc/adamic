@@ -1,0 +1,5 @@
+import 'node:process';
+const first = (process.stdout as { readonly _handle?: { setBlocking(blocking: boolean): void } | undefined })._handle;
+const second = (process.stdout as { readonly _handle?: { setBlocking(blocking: boolean): void } | undefined })._handle;
+console.log(`handle ${first !== undefined}`);
+console.log(`same ${first === second}`);
