@@ -185,7 +185,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	active := map[cycleNode]bool{}
 	stack := []cycleNode{}
 	graph := map[cycleNode]bool{}
-	var throughPromise []cycleNode
+	var throughPromise, throughRecord []cycleNode
 	var visit func(cycleNode)
 	visit = func(node cycleNode) {
 		next++
@@ -223,6 +223,9 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 				if each.proven != nil && f.l.isLibraryType(each.proven, "Promise") && throughPromise == nil {
 					throughPromise = component
 				}
+				if each.proven != nil && f.l.recordElement(each.proven) != nil && throughRecord == nil {
+					throughRecord = []cycleNode{each}
+				}
 			}
 		}
 	}
@@ -250,6 +253,19 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			What:  "a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region",
 			Fix:   "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)",
 		}
+	}
+	// A record is never a graph member either: a literal makes it as ir.RecordLiteral, which nothing
+	// adopts, and graphAdoptionBoundary sees only the older ObjectLiteral.Record. The refusal at :87
+	// catches a cycle closed by a write into a record, but a record built whole and stored into a graph
+	// field closes one with no such write: a.r = { k: a.next.slice() } freed 5 of 20 by the counted build
+	// (#a9e21hc). So a record on a cycle stops here, until #1vb0x5s gives records their region. A record
+	// outside every selected component (a record of graph values nothing in the graph holds) lowers.
+	if throughRecord != nil {
+		where := f.where[throughRecord[0].proven]
+		if where == nil {
+			where = modules[0].AsNode()
+		}
+		return f.l.notYet(where, "a record whose values can reach back to what holds it, in a graph program: a record can't join a graph region yet")
 	}
 	// An otherwise acyclic cache of graph elements belongs inside their graph too.
 	for changed := true; changed; {
