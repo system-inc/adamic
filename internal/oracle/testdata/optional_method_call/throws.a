@@ -1,0 +1,24 @@
+// A method that throws inside the optional call, caught by its caller: the call's argument holds built
+// strings, so a temporary the throw failed to release shows under the leak check, and one released twice
+// shows under the sanitizer (Compiler's pin on #vx8qdwg). A task with no step gives none.
+interface Task {
+    readonly name: string;
+    step?(input: string): string;
+}
+function attempt(task: Task, input: string): string {
+    try {
+        const kept = `held:${input}`;
+        const result = task.step?.(`${kept}+${String(input.length)}`) ?? "none";
+        return `${result}|${kept}`;
+    } catch (error) {
+        if (error instanceof Error) { return `caught ${error.message}`; }
+        return "caught";
+    }
+}
+const failing: Task = { name: "failing", step: (input: string): string => { throw new Error(`bad ${input}`); } };
+const working: Task = { name: "working", step: (input: string): string => `${input}!` };
+const empty: Task = { name: "empty" };
+console.log(attempt(working, `a${String(1)}`));
+console.log(attempt(failing, `b${String(2)}`));
+console.log(attempt(empty, `c${String(3)}`));
+console.log(attempt(failing, `d${String(4)}`));
