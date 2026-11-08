@@ -35,16 +35,16 @@ formatStringFromArgs checks each argument with Debug.checkDefined and then
 concatenates it. Node 24.19.0 observations follow. Diagnostic cells give the
 suffix in `Cannot read file 'config.json': <suffix>.`.
 
-| Thrown value | Before | After |
-| --- | --- | --- |
-| `new Error("read failed")` | `read failed` | `read failed` |
-| `{message: "only message"}` | `only message` | `only message` |
-| `"thrown"` | Error: `Debug Failure.` | `undefined` |
-| `42` | Error: `Debug Failure.` | `undefined` |
-| `{}` | Error: `Debug Failure.` | `undefined` |
-| `{message: 42}` | `42` | `42` |
-| `null` | TypeError: `Cannot read properties of null (reading 'message')` | same |
-| `undefined` | TypeError: `Cannot read properties of undefined (reading 'message')` | same |
+| Thrown value                | Before                                                               | After          |
+| --------------------------- | -------------------------------------------------------------------- | -------------- |
+| `new Error("read failed")`  | `read failed`                                                        | `read failed`  |
+| `{message: "only message"}` | `only message`                                                       | `only message` |
+| `"thrown"`                  | Error: `Debug Failure.`                                              | `undefined`    |
+| `42`                        | Error: `Debug Failure.`                                              | `undefined`    |
+| `{}`                        | Error: `Debug Failure.`                                              | `undefined`    |
+| `{message: 42}`             | `42`                                                                 | `42`           |
+| `null`                      | TypeError: `Cannot read properties of null (reading 'message')`      | same           |
+| `undefined`                 | TypeError: `Cannot read properties of undefined (reading 'message')` | same           |
 
 A real Error's diagnostic text is identical. Numeric messages already work
 in the original formatter; the newly successful witnesses are the three
@@ -130,11 +130,11 @@ sorted .ts/.a roots recursively under src/compiler in each tree, with the
 loader's unchanged strict options. Results are whole-program, not filtered
 to this file:
 
-| Diagnostics | Before | After | Restoring mutant |
-| --- | ---: | ---: | ---: |
-| Every code, all roots | 54 | 53 | 54 |
-| TS18046, all roots | 4 | 3 | 4 |
-| D032 | 1 | 0 | 1 |
+| Diagnostics           | Before | After | Restoring mutant |
+| --------------------- | -----: | ----: | ---------------: |
+| Every code, all roots |     54 |    53 |               54 |
+| TS18046, all roots    |      4 |     3 |                4 |
+| D032                  |      1 |     0 |                1 |
 
 The only removed diagnostic is
 `commandLineParser.ts:2301:91: error TS18046: 'e' is of type 'unknown'.`
