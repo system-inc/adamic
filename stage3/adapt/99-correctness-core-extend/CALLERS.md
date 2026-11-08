@@ -6,18 +6,18 @@ compiler. No services or server caller exists. The independent wider source
 search found one additional harness call, included below and in the lane count.
 The source files themselves are unchanged by this adaptation.
 
-| Caller, adapted line | Argument | Declared type | Type at call | Shape in the type system |
-| --- | --- | --- | --- | --- |
-| commandLineParser.ts:3095, extend | existingOptions | CompilerOptions, default {} | CompilerOptions | String index signature |
-| same | parsedConfig.options or {} | Property: CompilerOptions or undefined | CompilerOptions | String index signature |
-| commandLineParser.ts:3101, extend | existingWatchOptions | WatchOptions or undefined | WatchOptions | String index signature |
-| same | parsedConfig.watchOptions | WatchOptions or undefined | WatchOptions | String index signature |
-| watch.ts:873, copyProperties | result | WatchCompilerHost<T> | WatchCompilerHost<T> | Fixed interface |
-| same | createWatchHost(...) | Return: WatchHost | WatchHost | Fixed interface |
-| tsbuildPublic.ts:326, copyProperties | host | SolutionBuilderWithWatchHost<T> | SolutionBuilderWithWatchHost<T> | Fixed interface |
-| same | watchHost | Inferred WatchHost | WatchHost | Fixed interface |
-| harness/fourslashImpl.ts:352, extend | tsConfig.options | CompilerOptions | CompilerOptions | String index signature |
-| same | compilationOptions | CompilerOptions | CompilerOptions | String index signature |
+| Caller, adapted line                 | Argument                   | Declared type                          | Type at call                    | Shape in the type system |
+| ------------------------------------ | -------------------------- | -------------------------------------- | ------------------------------- | ------------------------ |
+| commandLineParser.ts:3095, extend    | existingOptions            | CompilerOptions, default {}            | CompilerOptions                 | String index signature   |
+| same                                 | parsedConfig.options or {} | Property: CompilerOptions or undefined | CompilerOptions                 | String index signature   |
+| commandLineParser.ts:3101, extend    | existingWatchOptions       | WatchOptions or undefined              | WatchOptions                    | String index signature   |
+| same                                 | parsedConfig.watchOptions  | WatchOptions or undefined              | WatchOptions                    | String index signature   |
+| watch.ts:873, copyProperties         | result                     | WatchCompilerHost<T>                   | WatchCompilerHost<T>            | Fixed interface          |
+| same                                 | createWatchHost(...)       | Return: WatchHost                      | WatchHost                       | Fixed interface          |
+| tsbuildPublic.ts:326, copyProperties | host                       | SolutionBuilderWithWatchHost<T>        | SolutionBuilderWithWatchHost<T> | Fixed interface          |
+| same                                 | watchHost                  | Inferred WatchHost                     | WatchHost                       | Fixed interface          |
+| harness/fourslashImpl.ts:352, extend | tsConfig.options           | CompilerOptions                        | CompilerOptions                 | String index signature   |
+| same                                 | compilationOptions         | CompilerOptions                        | CompilerOptions                 | String index signature   |
 
 CompilerOptions has a string index of CompilerOptionsValue, TsConfigSourceFile,
 or undefined. WatchOptions has a string index of CompilerOptionsValue or

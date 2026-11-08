@@ -11,14 +11,14 @@ All three streams have zero checker diagnostics. The meter's historical label
 "measured on a checker-rejected program" remains unchanged in the raw data.
 The complete file, including every unrelated unit and finding, is retained.
 
-| Site | Before | After | Original-owner mutant |
-| --- | --- | --- | --- |
-| F6, 1506:29 | Refused unchecked cast | Absent | Restored |
-| F7, 1509:14 | Refused unchecked cast | Absent | Restored |
-| F8, 1509:36 | Refused unchecked cast | Absent | Restored |
-| F9, 1515:14 | Refused unchecked cast | Absent | Restored |
-| F10, 1515:36 | Refused unchecked cast | Absent | Restored |
-| F11, 1526:14 | Refused unchecked cast | Absent | Restored |
+| Site         | Before                 | After  | Original-owner mutant |
+| ------------ | ---------------------- | ------ | --------------------- |
+| F6, 1506:29  | Refused unchecked cast | Absent | Restored              |
+| F7, 1509:14  | Refused unchecked cast | Absent | Restored              |
+| F8, 1509:36  | Refused unchecked cast | Absent | Restored              |
+| F9, 1515:14  | Refused unchecked cast | Absent | Restored              |
+| F10, 1515:36 | Refused unchecked cast | Absent | Restored              |
+| F11, 1526:14 | Refused unchecked cast | Absent | Restored              |
 
 There are 58 distinct (location, kind, reason, phase) tuples before and 52 after.
 Exactly these six disappear. There is no new Refused or NotYet finding anywhere
