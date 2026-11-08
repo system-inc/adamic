@@ -171,6 +171,7 @@ var hostShapeTable = []hostShapeRow{
 	// is the pin.
 	{file: hostShapeRuntime + "node_fs_file.c", name: "stat_shape", verdict: hostShapeHost, stop: "stop_in_host_method.a"},
 	{file: hostShapeRuntime + "node_fs_watch_impl.h", name: "fs_watcher_shape", verdict: hostShapeHost, stop: "stop_host_watcher.a"},
+	{file: hostShapeRuntime + "node_fs_watch_impl.h", scope: "adamic_fs_file_host_watch", name: "watch_error_shape", verdict: hostShapeHost, errorShape: true},
 	{file: hostShapeRuntime + "node_process.c", scope: "host_directory_error", name: "shape", verdict: hostShapeHost, errorShape: true},
 	{file: hostShapeRuntime + "node_process.c", scope: "adamic_node_memory_usage", name: "shape", verdict: hostShapeHost, stop: "stop_host_memory_field.a"},
 	{file: hostShapeRuntime + "node_process.c", scope: "entry", name: "shape", verdict: hostShapeHost, stop: "stop_host_performance_mark.a"},
@@ -325,6 +326,7 @@ var hostShapeReaders = []struct {
 	{"library_object.c", "adamic_object_ordered", "orders the slots of an object its callers have already admitted", "", ""},
 	{"library_object.c", "adamic_object_values", "Object.values and Object.entries of a host are refused", "door_values.a", "Object.values"},
 	{"library_object.c", "adamic_object_assign", "Object.assign from a host source is refused", "door_assign.a", "Object.assign"},
+	{"node_fs_file.c", "node_system_error", "fills an errno error of its caller's own static shape by the slot names it laid out, and names no key a program gives", "", ""},
 	{"object.c", "adamic_object_copy_checked", "a spread of a host is refused", "door_spread.a", "an object spread through a view that may hold library class Stats (its internal fields are not own enumerable properties)"},
 	{"object.c", "adamic_object_find", "a static read by a name the program's type declares, which lowering maps to the shape's own field", "", ""},
 	{"object.c", "adamic_object_callee", "a method call by a name the program's type declares", "", ""},
