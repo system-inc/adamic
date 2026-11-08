@@ -93,6 +93,29 @@ func cycleCompareProgram(t *testing.T, path string) {
 // still stops there, so that mode has nothing to compare against.
 const cycleFrozenGeneratorGuard = "a Program region in a program with generator functions (#qk8rztp)"
 
+// cycleRegionlessAllocationGuards are graphAdoptionBoundary's stops for allocations the runtime or
+// lowering makes outside every region (#bvsjdte 2a, #djwd1t2), guards the real pipeline added after the
+// scanning reference was frozen. Where the indexed side stops on one and the reference lowers, the two
+// differ by the guard alone, so that mode has nothing to compare.
+var cycleRegionlessAllocationGuards = []string{
+	" in a graph program, whose decoded values the runtime makes outside the program's graph regions",
+	" in a graph program, whose result lowering makes outside the program's graph regions",
+}
+
+// cycleRegionlessAllocationGuard reports whether err is one of cycleRegionlessAllocationGuards' stops.
+func cycleRegionlessAllocationGuard(err error) bool {
+	var notYet *NotYet
+	if !errors.As(err, &notYet) {
+		return false
+	}
+	for _, guard := range cycleRegionlessAllocationGuards {
+		if strings.Contains(notYet.What, guard) {
+			return true
+		}
+	}
+	return false
+}
+
 func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 	t.Helper()
 	absolute, err := filepath.Abs(filepath.Join("../..", path))
@@ -140,6 +163,10 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 				return ""
 			}
 			return fmt.Sprintf("%T: %v", err, err)
+		}
+		if scanErr == nil && cycleRegionlessAllocationGuard(indexErr) {
+			t.Logf("%s: ProgramRegion=%t not compared: the indexed pipeline stops on a regionless allocation guard the frozen scanning reference predates: %v", path, region, indexErr)
+			continue
 		}
 		var scanRefused, indexRefused *Refused
 		errors.As(scanErr, &scanRefused)
