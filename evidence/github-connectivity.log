@@ -1,0 +1,19 @@
+HTTP/1.1 200 OK
+date: Sun, 08 Nov 2026 05:28:21 GMT
+server: envoy
+
+HTTP/2 301 
+date: Sun, 08 Nov 2026 05:28:22 GMT
+content-type: text/html
+content-length: 162
+location: https://github.com/system-inc/adamic
+server: envoy
+x-frame-options: DENY
+strict-transport-security: max-age=31536000; includeSubDomains; preload
+set-cookie: _gh_sess=10XTk6fxPfkCB86E6bnDuBTH3cmAOpozpdp%2FX%2FkXJOQ7TwCPAJ%2BlTMQKplQ9Nfns0npf6f2TyzaviKrEPp72GO2WpP5e49ZvKknXORySWFn2sS1zSf%2BogFSqgqNt9CNQueyBWLnv6X0W11hEABwcyMs%2FTn2dRou%2FOSW3kwctMqsdvWhHSfHpz1wVuMD3RXzbfcPec1AWuq%2Bp%2F3X%2FCXFrFZjN1HNIeQivtNWTXH%2BZesRyCiBySU1TBsKITJCAkMRfrIs2EkTK3K8sdOmuNELvCA%3D%3D--o4lqWaTU%2Bk%2FrSkc%2F--gBOpxH8c6cGplPFXXwjbGA%3D%3D; path=/; HttpOnly; secure; SameSite=Lax
+set-cookie: _octo=GH1.1.1956357254.1794115702; expires=Mon, 08 Nov 2027 05:28:22 GMT; domain=.github.com; path=/; secure; SameSite=Lax
+set-cookie: logged_in=no; expires=Mon, 08 Nov 2027 05:28:22 GMT; domain=.github.com; path=/; HttpOnly; secure; SameSite=Lax
+x-github-request-id: 783D:172DE0:97FFCC:C495FB:6AF00876
+x-github-edge-region: iad
+x-envoy-upstream-service-time: 315
+

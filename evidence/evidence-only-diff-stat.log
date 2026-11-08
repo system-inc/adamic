@@ -1,0 +1,491 @@
+ evidence/README.md                                 |    65 +
+ evidence/adamic-help.exit                          |     1 +
+ evidence/adamic-help.log                           |     8 +
+ evidence/admission-delta-final.exit                |     1 +
+ evidence/admission-delta-final.json                |     1 +
+ evidence/admission-delta-final.log                 |     3 +
+ evidence/admission-delta-retry.exit                |     1 +
+ evidence/admission-delta-retry.json                |     0
+ evidence/admission-delta-retry.log                 |     7 +
+ evidence/admission-delta.exit                      |     1 +
+ evidence/admission-delta.json                      |     0
+ evidence/admission-delta.log                       |     7 +
+ evidence/admission-summary.exit                    |     1 +
+ evidence/admission-summary.log                     |     1 +
+ evidence/build-base.exit                           |     1 +
+ evidence/build-base.log                            |     0
+ evidence/build-head.exit                           |     1 +
+ evidence/build-head.log                            |     0
+ evidence/checkout-second.exit                      |     1 +
+ evidence/checkout-second.log                       |     2 +
+ evidence/checkout.exit                             |     1 +
+ evidence/checkout.log                              |     1 +
+ evidence/create-evidence-branch.exit               |     1 +
+ evidence/create-evidence-branch.log                |     1 +
+ evidence/extract-probes.exit                       |     1 +
+ evidence/extract-probes.log                        |     0
+ evidence/fetch-head.exit                           |     1 +
+ evidence/fetch-head.log                            |     2 +
+ evidence/fetch-probes.exit                         |     1 +
+ evidence/fetch-probes.log                          |     2 +
+ evidence/fetch-second.exit                         |     1 +
+ evidence/fetch-second.log                          |     2 +
+ evidence/generic-method-initial.exit               |     1 +
+ evidence/generic-method-initial.log                |     1 +
+ evidence/generic-method-second.exit                |     1 +
+ evidence/generic-method-second.log                 |    82 +
+ evidence/generic-method.exit                       |     1 +
+ evidence/generic-method.log                        |    74 +
+ evidence/github-connectivity.exit                  |     1 +
+ evidence/github-connectivity.log                   |    19 +
+ evidence/gofmt.exit                                |     1 +
+ evidence/gofmt.log                                 |     0
+ evidence/lower-failures.log                        |     9 +
+ evidence/lower.exit                                |     1 +
+ evidence/lower.log                                 | 31711 +++++++++++++++++++
+ evidence/main-submodules.exit                      |     1 +
+ evidence/main-submodules.log                       |     9 +
+ evidence/manifest.exit                             |     1 +
+ evidence/manifest.json                             | 19899 ++++++++++++
+ evidence/manifest.log                              |     1 +
+ evidence/mutant-failures.log                       |    13 +
+ evidence/mutant-second-failures.log                |    15 +
+ evidence/mutant-second.exit                        |     1 +
+ evidence/mutant-second.log                         |   111 +
+ evidence/mutant.exit                               |     1 +
+ evidence/mutant.log                                |    99 +
+ evidence/new-refusals.md                           |    28 +
+ evidence/oracle-status.md                          |     1 +
+ evidence/probe-results.json                        |   702 +
+ evidence/probe-sources/g1_unused_t.a               |     7 +
+ evidence/probe-sources/g1_unused_t.ts              |     7 +
+ evidence/probe-sources/g2_unused_t_control.a       |     7 +
+ evidence/probe-sources/g2_unused_t_control.ts      |     7 +
+ evidence/probe-sources/g3_constrained_t.a          |     7 +
+ evidence/probe-sources/g3_constrained_t.ts         |     7 +
+ evidence/probe-sources/g4_t_in_callback.a          |     7 +
+ evidence/probe-sources/g4_t_in_callback.ts         |     7 +
+ evidence/probe-sources/g5_generic_source_only.a    |     7 +
+ evidence/probe-sources/g5_generic_source_only.ts   |     7 +
+ evidence/probe-sources/g6_generic_target_only.a    |     7 +
+ evidence/probe-sources/g6_generic_target_only.ts   |     7 +
+ evidence/probe-sources/g7_interface_view.a         |     9 +
+ evidence/probe-sources/g7_interface_view.ts        |     9 +
+ evidence/probes.md                                 |    34 +
+ .../probes/base-g1_unused_t.a-build.command.json   |     1 +
+ evidence/probes/base-g1_unused_t.a-build.exit      |     1 +
+ evidence/probes/base-g1_unused_t.a-build.stderr    |     0
+ evidence/probes/base-g1_unused_t.a-build.stdout    |     0
+ .../base-g1_unused_t.a-javascript.command.json     |     1 +
+ evidence/probes/base-g1_unused_t.a-javascript.exit |     1 +
+ .../probes/base-g1_unused_t.a-javascript.stderr    |     1 +
+ .../probes/base-g1_unused_t.a-javascript.stdout    |     0
+ evidence/probes/base-g1_unused_t.a-js.command.json |     1 +
+ evidence/probes/base-g1_unused_t.a-js.exit         |     1 +
+ evidence/probes/base-g1_unused_t.a-js.stderr       |     0
+ evidence/probes/base-g1_unused_t.a-js.stdout       |   327 +
+ .../probes/base-g1_unused_t.a-native.command.json  |     1 +
+ evidence/probes/base-g1_unused_t.a-native.exit     |     1 +
+ evidence/probes/base-g1_unused_t.a-native.stderr   |     0
+ evidence/probes/base-g1_unused_t.a-native.stdout   |     1 +
+ .../probes/base-g1_unused_t.ts-build.command.json  |     1 +
+ evidence/probes/base-g1_unused_t.ts-build.exit     |     1 +
+ evidence/probes/base-g1_unused_t.ts-build.stderr   |     0
+ evidence/probes/base-g1_unused_t.ts-build.stdout   |     0
+ .../base-g1_unused_t.ts-javascript.command.json    |     1 +
+ .../probes/base-g1_unused_t.ts-javascript.exit     |     1 +
+ .../probes/base-g1_unused_t.ts-javascript.stderr   |     1 +
+ .../probes/base-g1_unused_t.ts-javascript.stdout   |     0
+ .../probes/base-g1_unused_t.ts-js.command.json     |     1 +
+ evidence/probes/base-g1_unused_t.ts-js.exit        |     1 +
+ evidence/probes/base-g1_unused_t.ts-js.stderr      |     0
+ evidence/probes/base-g1_unused_t.ts-js.stdout      |   327 +
+ .../probes/base-g1_unused_t.ts-native.command.json |     1 +
+ evidence/probes/base-g1_unused_t.ts-native.exit    |     1 +
+ evidence/probes/base-g1_unused_t.ts-native.stderr  |     0
+ evidence/probes/base-g1_unused_t.ts-native.stdout  |     1 +
+ .../base-g2_unused_t_control.a-build.command.json  |     1 +
+ .../probes/base-g2_unused_t_control.a-build.exit   |     1 +
+ .../probes/base-g2_unused_t_control.a-build.stderr |     0
+ .../probes/base-g2_unused_t_control.a-build.stdout |     0
+ ...e-g2_unused_t_control.a-javascript.command.json |     1 +
+ .../base-g2_unused_t_control.a-javascript.exit     |     1 +
+ .../base-g2_unused_t_control.a-javascript.stderr   |     0
+ .../base-g2_unused_t_control.a-javascript.stdout   |     1 +
+ .../base-g2_unused_t_control.a-js.command.json     |     1 +
+ evidence/probes/base-g2_unused_t_control.a-js.exit |     1 +
+ .../probes/base-g2_unused_t_control.a-js.stderr    |     0
+ .../probes/base-g2_unused_t_control.a-js.stdout    |   312 +
+ .../base-g2_unused_t_control.a-native.command.json |     1 +
+ .../probes/base-g2_unused_t_control.a-native.exit  |     1 +
+ .../base-g2_unused_t_control.a-native.stderr       |     0
+ .../base-g2_unused_t_control.a-native.stdout       |     1 +
+ .../base-g2_unused_t_control.ts-build.command.json |     1 +
+ .../probes/base-g2_unused_t_control.ts-build.exit  |     1 +
+ .../base-g2_unused_t_control.ts-build.stderr       |     0
+ .../base-g2_unused_t_control.ts-build.stdout       |     0
+ ...-g2_unused_t_control.ts-javascript.command.json |     1 +
+ .../base-g2_unused_t_control.ts-javascript.exit    |     1 +
+ .../base-g2_unused_t_control.ts-javascript.stderr  |     0
+ .../base-g2_unused_t_control.ts-javascript.stdout  |     1 +
+ .../base-g2_unused_t_control.ts-js.command.json    |     1 +
+ .../probes/base-g2_unused_t_control.ts-js.exit     |     1 +
+ .../probes/base-g2_unused_t_control.ts-js.stderr   |     0
+ .../probes/base-g2_unused_t_control.ts-js.stdout   |   312 +
+ ...base-g2_unused_t_control.ts-native.command.json |     1 +
+ .../probes/base-g2_unused_t_control.ts-native.exit |     1 +
+ .../base-g2_unused_t_control.ts-native.stderr      |     0
+ .../base-g2_unused_t_control.ts-native.stdout      |     1 +
+ .../base-g3_constrained_t.a-build.command.json     |     1 +
+ evidence/probes/base-g3_constrained_t.a-build.exit |     1 +
+ .../probes/base-g3_constrained_t.a-build.stderr    |     1 +
+ .../probes/base-g3_constrained_t.a-build.stdout    |     0
+ .../probes/base-g3_constrained_t.a-js.command.json |     1 +
+ evidence/probes/base-g3_constrained_t.a-js.exit    |     1 +
+ evidence/probes/base-g3_constrained_t.a-js.stderr  |     1 +
+ evidence/probes/base-g3_constrained_t.a-js.stdout  |     0
+ .../base-g3_constrained_t.ts-build.command.json    |     1 +
+ .../probes/base-g3_constrained_t.ts-build.exit     |     1 +
+ .../probes/base-g3_constrained_t.ts-build.stderr   |     1 +
+ .../probes/base-g3_constrained_t.ts-build.stdout   |     0
+ .../base-g3_constrained_t.ts-js.command.json       |     1 +
+ evidence/probes/base-g3_constrained_t.ts-js.exit   |     1 +
+ evidence/probes/base-g3_constrained_t.ts-js.stderr |     1 +
+ evidence/probes/base-g3_constrained_t.ts-js.stdout |     0
+ .../base-g4_t_in_callback.a-build.command.json     |     1 +
+ evidence/probes/base-g4_t_in_callback.a-build.exit |     1 +
+ .../probes/base-g4_t_in_callback.a-build.stderr    |     0
+ .../probes/base-g4_t_in_callback.a-build.stdout    |     0
+ ...base-g4_t_in_callback.a-javascript.command.json |     1 +
+ .../probes/base-g4_t_in_callback.a-javascript.exit |     1 +
+ .../base-g4_t_in_callback.a-javascript.stderr      |     1 +
+ .../base-g4_t_in_callback.a-javascript.stdout      |     0
+ .../probes/base-g4_t_in_callback.a-js.command.json |     1 +
+ evidence/probes/base-g4_t_in_callback.a-js.exit    |     1 +
+ evidence/probes/base-g4_t_in_callback.a-js.stderr  |     0
+ evidence/probes/base-g4_t_in_callback.a-js.stdout  |   332 +
+ .../base-g4_t_in_callback.a-native.command.json    |     1 +
+ .../probes/base-g4_t_in_callback.a-native.exit     |     1 +
+ .../probes/base-g4_t_in_callback.a-native.stderr   |     0
+ .../probes/base-g4_t_in_callback.a-native.stdout   |     1 +
+ .../base-g4_t_in_callback.ts-build.command.json    |     1 +
+ .../probes/base-g4_t_in_callback.ts-build.exit     |     1 +
+ .../probes/base-g4_t_in_callback.ts-build.stderr   |     0
+ .../probes/base-g4_t_in_callback.ts-build.stdout   |     0
+ ...ase-g4_t_in_callback.ts-javascript.command.json |     1 +
+ .../base-g4_t_in_callback.ts-javascript.exit       |     1 +
+ .../base-g4_t_in_callback.ts-javascript.stderr     |     1 +
+ .../base-g4_t_in_callback.ts-javascript.stdout     |     0
+ .../base-g4_t_in_callback.ts-js.command.json       |     1 +
+ evidence/probes/base-g4_t_in_callback.ts-js.exit   |     1 +
+ evidence/probes/base-g4_t_in_callback.ts-js.stderr |     0
+ evidence/probes/base-g4_t_in_callback.ts-js.stdout |   332 +
+ .../base-g4_t_in_callback.ts-native.command.json   |     1 +
+ .../probes/base-g4_t_in_callback.ts-native.exit    |     1 +
+ .../probes/base-g4_t_in_callback.ts-native.stderr  |     0
+ .../probes/base-g4_t_in_callback.ts-native.stdout  |     1 +
+ ...ase-g5_generic_source_only.a-build.command.json |     1 +
+ .../base-g5_generic_source_only.a-build.exit       |     1 +
+ .../base-g5_generic_source_only.a-build.stderr     |     0
+ .../base-g5_generic_source_only.a-build.stdout     |     0
+ ...5_generic_source_only.a-javascript.command.json |     1 +
+ .../base-g5_generic_source_only.a-javascript.exit  |     1 +
+ ...base-g5_generic_source_only.a-javascript.stderr |     1 +
+ ...base-g5_generic_source_only.a-javascript.stdout |     0
+ .../base-g5_generic_source_only.a-js.command.json  |     1 +
+ .../probes/base-g5_generic_source_only.a-js.exit   |     1 +
+ .../probes/base-g5_generic_source_only.a-js.stderr |     0
+ .../probes/base-g5_generic_source_only.a-js.stdout |   327 +
+ ...se-g5_generic_source_only.a-native.command.json |     1 +
+ .../base-g5_generic_source_only.a-native.exit      |     1 +
+ .../base-g5_generic_source_only.a-native.stderr    |     0
+ .../base-g5_generic_source_only.a-native.stdout    |     1 +
+ ...se-g5_generic_source_only.ts-build.command.json |     1 +
+ .../base-g5_generic_source_only.ts-build.exit      |     1 +
+ .../base-g5_generic_source_only.ts-build.stderr    |     0
+ .../base-g5_generic_source_only.ts-build.stdout    |     0
+ ..._generic_source_only.ts-javascript.command.json |     1 +
+ .../base-g5_generic_source_only.ts-javascript.exit |     1 +
+ ...ase-g5_generic_source_only.ts-javascript.stderr |     1 +
+ ...ase-g5_generic_source_only.ts-javascript.stdout |     0
+ .../base-g5_generic_source_only.ts-js.command.json |     1 +
+ .../probes/base-g5_generic_source_only.ts-js.exit  |     1 +
+ .../base-g5_generic_source_only.ts-js.stderr       |     0
+ .../base-g5_generic_source_only.ts-js.stdout       |   327 +
+ ...e-g5_generic_source_only.ts-native.command.json |     1 +
+ .../base-g5_generic_source_only.ts-native.exit     |     1 +
+ .../base-g5_generic_source_only.ts-native.stderr   |     0
+ .../base-g5_generic_source_only.ts-native.stdout   |     1 +
+ ...ase-g6_generic_target_only.a-build.command.json |     1 +
+ .../base-g6_generic_target_only.a-build.exit       |     1 +
+ .../base-g6_generic_target_only.a-build.stderr     |     0
+ .../base-g6_generic_target_only.a-build.stdout     |     0
+ ...6_generic_target_only.a-javascript.command.json |     1 +
+ .../base-g6_generic_target_only.a-javascript.exit  |     1 +
+ ...base-g6_generic_target_only.a-javascript.stderr |     1 +
+ ...base-g6_generic_target_only.a-javascript.stdout |     0
+ .../base-g6_generic_target_only.a-js.command.json  |     1 +
+ .../probes/base-g6_generic_target_only.a-js.exit   |     1 +
+ .../probes/base-g6_generic_target_only.a-js.stderr |     0
+ .../probes/base-g6_generic_target_only.a-js.stdout |   327 +
+ ...se-g6_generic_target_only.a-native.command.json |     1 +
+ .../base-g6_generic_target_only.a-native.exit      |     1 +
+ .../base-g6_generic_target_only.a-native.stderr    |     0
+ .../base-g6_generic_target_only.a-native.stdout    |     1 +
+ ...se-g6_generic_target_only.ts-build.command.json |     1 +
+ .../base-g6_generic_target_only.ts-build.exit      |     1 +
+ .../base-g6_generic_target_only.ts-build.stderr    |     0
+ .../base-g6_generic_target_only.ts-build.stdout    |     0
+ ..._generic_target_only.ts-javascript.command.json |     1 +
+ .../base-g6_generic_target_only.ts-javascript.exit |     1 +
+ ...ase-g6_generic_target_only.ts-javascript.stderr |     1 +
+ ...ase-g6_generic_target_only.ts-javascript.stdout |     0
+ .../base-g6_generic_target_only.ts-js.command.json |     1 +
+ .../probes/base-g6_generic_target_only.ts-js.exit  |     1 +
+ .../base-g6_generic_target_only.ts-js.stderr       |     0
+ .../base-g6_generic_target_only.ts-js.stdout       |   327 +
+ ...e-g6_generic_target_only.ts-native.command.json |     1 +
+ .../base-g6_generic_target_only.ts-native.exit     |     1 +
+ .../base-g6_generic_target_only.ts-native.stderr   |     0
+ .../base-g6_generic_target_only.ts-native.stdout   |     1 +
+ .../base-g7_interface_view.a-build.command.json    |     1 +
+ .../probes/base-g7_interface_view.a-build.exit     |     1 +
+ .../probes/base-g7_interface_view.a-build.stderr   |     0
+ .../probes/base-g7_interface_view.a-build.stdout   |     0
+ ...ase-g7_interface_view.a-javascript.command.json |     1 +
+ .../base-g7_interface_view.a-javascript.exit       |     1 +
+ .../base-g7_interface_view.a-javascript.stderr     |     1 +
+ .../base-g7_interface_view.a-javascript.stdout     |     0
+ .../base-g7_interface_view.a-js.command.json       |     1 +
+ evidence/probes/base-g7_interface_view.a-js.exit   |     1 +
+ evidence/probes/base-g7_interface_view.a-js.stderr |     0
+ evidence/probes/base-g7_interface_view.a-js.stdout |   331 +
+ .../base-g7_interface_view.a-native.command.json   |     1 +
+ .../probes/base-g7_interface_view.a-native.exit    |     1 +
+ .../probes/base-g7_interface_view.a-native.stderr  |     0
+ .../probes/base-g7_interface_view.a-native.stdout  |     1 +
+ .../base-g7_interface_view.ts-build.command.json   |     1 +
+ .../probes/base-g7_interface_view.ts-build.exit    |     1 +
+ .../probes/base-g7_interface_view.ts-build.stderr  |     0
+ .../probes/base-g7_interface_view.ts-build.stdout  |     0
+ ...se-g7_interface_view.ts-javascript.command.json |     1 +
+ .../base-g7_interface_view.ts-javascript.exit      |     1 +
+ .../base-g7_interface_view.ts-javascript.stderr    |     1 +
+ .../base-g7_interface_view.ts-javascript.stdout    |     0
+ .../base-g7_interface_view.ts-js.command.json      |     1 +
+ evidence/probes/base-g7_interface_view.ts-js.exit  |     1 +
+ .../probes/base-g7_interface_view.ts-js.stderr     |     0
+ .../probes/base-g7_interface_view.ts-js.stdout     |   331 +
+ .../base-g7_interface_view.ts-native.command.json  |     1 +
+ .../probes/base-g7_interface_view.ts-native.exit   |     1 +
+ .../probes/base-g7_interface_view.ts-native.stderr |     0
+ .../probes/base-g7_interface_view.ts-native.stdout |     1 +
+ evidence/probes/g1_unused_t.a-node.command.json    |     1 +
+ evidence/probes/g1_unused_t.a-node.exit            |     1 +
+ evidence/probes/g1_unused_t.a-node.stderr          |     3 +
+ evidence/probes/g1_unused_t.a-node.stdout          |     0
+ evidence/probes/g1_unused_t.ts-node.command.json   |     1 +
+ evidence/probes/g1_unused_t.ts-node.exit           |     1 +
+ evidence/probes/g1_unused_t.ts-node.stderr         |    16 +
+ evidence/probes/g1_unused_t.ts-node.stdout         |     0
+ .../probes/g2_unused_t_control.a-node.command.json |     1 +
+ evidence/probes/g2_unused_t_control.a-node.exit    |     1 +
+ evidence/probes/g2_unused_t_control.a-node.stderr  |     2 +
+ evidence/probes/g2_unused_t_control.a-node.stdout  |     1 +
+ .../g2_unused_t_control.ts-node.command.json       |     1 +
+ evidence/probes/g2_unused_t_control.ts-node.exit   |     1 +
+ evidence/probes/g2_unused_t_control.ts-node.stderr |     0
+ evidence/probes/g2_unused_t_control.ts-node.stdout |     1 +
+ .../probes/g3_constrained_t.a-node.command.json    |     1 +
+ evidence/probes/g3_constrained_t.a-node.exit       |     1 +
+ evidence/probes/g3_constrained_t.a-node.stderr     |     3 +
+ evidence/probes/g3_constrained_t.a-node.stdout     |     0
+ .../probes/g3_constrained_t.ts-node.command.json   |     1 +
+ evidence/probes/g3_constrained_t.ts-node.exit      |     1 +
+ evidence/probes/g3_constrained_t.ts-node.stderr    |    16 +
+ evidence/probes/g3_constrained_t.ts-node.stdout    |     0
+ .../probes/g4_t_in_callback.a-node.command.json    |     1 +
+ evidence/probes/g4_t_in_callback.a-node.exit       |     1 +
+ evidence/probes/g4_t_in_callback.a-node.stderr     |     3 +
+ evidence/probes/g4_t_in_callback.a-node.stdout     |     0
+ .../probes/g4_t_in_callback.ts-node.command.json   |     1 +
+ evidence/probes/g4_t_in_callback.ts-node.exit      |     1 +
+ evidence/probes/g4_t_in_callback.ts-node.stderr    |    16 +
+ evidence/probes/g4_t_in_callback.ts-node.stdout    |     0
+ .../g5_generic_source_only.a-node.command.json     |     1 +
+ evidence/probes/g5_generic_source_only.a-node.exit |     1 +
+ .../probes/g5_generic_source_only.a-node.stderr    |     3 +
+ .../probes/g5_generic_source_only.a-node.stdout    |     0
+ .../g5_generic_source_only.ts-node.command.json    |     1 +
+ .../probes/g5_generic_source_only.ts-node.exit     |     1 +
+ .../probes/g5_generic_source_only.ts-node.stderr   |    16 +
+ .../probes/g5_generic_source_only.ts-node.stdout   |     0
+ .../g6_generic_target_only.a-node.command.json     |     1 +
+ evidence/probes/g6_generic_target_only.a-node.exit |     1 +
+ .../probes/g6_generic_target_only.a-node.stderr    |     3 +
+ .../probes/g6_generic_target_only.a-node.stdout    |     0
+ .../g6_generic_target_only.ts-node.command.json    |     1 +
+ .../probes/g6_generic_target_only.ts-node.exit     |     1 +
+ .../probes/g6_generic_target_only.ts-node.stderr   |    16 +
+ .../probes/g6_generic_target_only.ts-node.stdout   |     0
+ .../probes/g7_interface_view.a-node.command.json   |     1 +
+ evidence/probes/g7_interface_view.a-node.exit      |     1 +
+ evidence/probes/g7_interface_view.a-node.stderr    |     3 +
+ evidence/probes/g7_interface_view.a-node.stdout    |     0
+ .../probes/g7_interface_view.ts-node.command.json  |     1 +
+ evidence/probes/g7_interface_view.ts-node.exit     |     1 +
+ evidence/probes/g7_interface_view.ts-node.stderr   |    16 +
+ evidence/probes/g7_interface_view.ts-node.stdout   |     0
+ .../probes/head-g1_unused_t.a-build.command.json   |     1 +
+ evidence/probes/head-g1_unused_t.a-build.exit      |     1 +
+ evidence/probes/head-g1_unused_t.a-build.stderr    |     1 +
+ evidence/probes/head-g1_unused_t.a-build.stdout    |     0
+ evidence/probes/head-g1_unused_t.a-js.command.json |     1 +
+ evidence/probes/head-g1_unused_t.a-js.exit         |     1 +
+ evidence/probes/head-g1_unused_t.a-js.stderr       |     1 +
+ evidence/probes/head-g1_unused_t.a-js.stdout       |     0
+ .../probes/head-g1_unused_t.ts-build.command.json  |     1 +
+ evidence/probes/head-g1_unused_t.ts-build.exit     |     1 +
+ evidence/probes/head-g1_unused_t.ts-build.stderr   |     1 +
+ evidence/probes/head-g1_unused_t.ts-build.stdout   |     0
+ .../probes/head-g1_unused_t.ts-js.command.json     |     1 +
+ evidence/probes/head-g1_unused_t.ts-js.exit        |     1 +
+ evidence/probes/head-g1_unused_t.ts-js.stderr      |     1 +
+ evidence/probes/head-g1_unused_t.ts-js.stdout      |     0
+ .../head-g2_unused_t_control.a-build.command.json  |     1 +
+ .../probes/head-g2_unused_t_control.a-build.exit   |     1 +
+ .../probes/head-g2_unused_t_control.a-build.stderr |     0
+ .../probes/head-g2_unused_t_control.a-build.stdout |     0
+ ...d-g2_unused_t_control.a-javascript.command.json |     1 +
+ .../head-g2_unused_t_control.a-javascript.exit     |     1 +
+ .../head-g2_unused_t_control.a-javascript.stderr   |     0
+ .../head-g2_unused_t_control.a-javascript.stdout   |     1 +
+ .../head-g2_unused_t_control.a-js.command.json     |     1 +
+ evidence/probes/head-g2_unused_t_control.a-js.exit |     1 +
+ .../probes/head-g2_unused_t_control.a-js.stderr    |     0
+ .../probes/head-g2_unused_t_control.a-js.stdout    |   312 +
+ .../head-g2_unused_t_control.a-native.command.json |     1 +
+ .../probes/head-g2_unused_t_control.a-native.exit  |     1 +
+ .../head-g2_unused_t_control.a-native.stderr       |     0
+ .../head-g2_unused_t_control.a-native.stdout       |     1 +
+ .../head-g2_unused_t_control.ts-build.command.json |     1 +
+ .../probes/head-g2_unused_t_control.ts-build.exit  |     1 +
+ .../head-g2_unused_t_control.ts-build.stderr       |     0
+ .../head-g2_unused_t_control.ts-build.stdout       |     0
+ ...-g2_unused_t_control.ts-javascript.command.json |     1 +
+ .../head-g2_unused_t_control.ts-javascript.exit    |     1 +
+ .../head-g2_unused_t_control.ts-javascript.stderr  |     0
+ .../head-g2_unused_t_control.ts-javascript.stdout  |     1 +
+ .../head-g2_unused_t_control.ts-js.command.json    |     1 +
+ .../probes/head-g2_unused_t_control.ts-js.exit     |     1 +
+ .../probes/head-g2_unused_t_control.ts-js.stderr   |     0
+ .../probes/head-g2_unused_t_control.ts-js.stdout   |   312 +
+ ...head-g2_unused_t_control.ts-native.command.json |     1 +
+ .../probes/head-g2_unused_t_control.ts-native.exit |     1 +
+ .../head-g2_unused_t_control.ts-native.stderr      |     0
+ .../head-g2_unused_t_control.ts-native.stdout      |     1 +
+ .../head-g3_constrained_t.a-build.command.json     |     1 +
+ evidence/probes/head-g3_constrained_t.a-build.exit |     1 +
+ .../probes/head-g3_constrained_t.a-build.stderr    |     1 +
+ .../probes/head-g3_constrained_t.a-build.stdout    |     0
+ .../probes/head-g3_constrained_t.a-js.command.json |     1 +
+ evidence/probes/head-g3_constrained_t.a-js.exit    |     1 +
+ evidence/probes/head-g3_constrained_t.a-js.stderr  |     1 +
+ evidence/probes/head-g3_constrained_t.a-js.stdout  |     0
+ .../head-g3_constrained_t.ts-build.command.json    |     1 +
+ .../probes/head-g3_constrained_t.ts-build.exit     |     1 +
+ .../probes/head-g3_constrained_t.ts-build.stderr   |     1 +
+ .../probes/head-g3_constrained_t.ts-build.stdout   |     0
+ .../head-g3_constrained_t.ts-js.command.json       |     1 +
+ evidence/probes/head-g3_constrained_t.ts-js.exit   |     1 +
+ evidence/probes/head-g3_constrained_t.ts-js.stderr |     1 +
+ evidence/probes/head-g3_constrained_t.ts-js.stdout |     0
+ .../head-g4_t_in_callback.a-build.command.json     |     1 +
+ evidence/probes/head-g4_t_in_callback.a-build.exit |     1 +
+ .../probes/head-g4_t_in_callback.a-build.stderr    |     1 +
+ .../probes/head-g4_t_in_callback.a-build.stdout    |     0
+ .../probes/head-g4_t_in_callback.a-js.command.json |     1 +
+ evidence/probes/head-g4_t_in_callback.a-js.exit    |     1 +
+ evidence/probes/head-g4_t_in_callback.a-js.stderr  |     1 +
+ evidence/probes/head-g4_t_in_callback.a-js.stdout  |     0
+ .../head-g4_t_in_callback.ts-build.command.json    |     1 +
+ .../probes/head-g4_t_in_callback.ts-build.exit     |     1 +
+ .../probes/head-g4_t_in_callback.ts-build.stderr   |     1 +
+ .../probes/head-g4_t_in_callback.ts-build.stdout   |     0
+ .../head-g4_t_in_callback.ts-js.command.json       |     1 +
+ evidence/probes/head-g4_t_in_callback.ts-js.exit   |     1 +
+ evidence/probes/head-g4_t_in_callback.ts-js.stderr |     1 +
+ evidence/probes/head-g4_t_in_callback.ts-js.stdout |     0
+ ...ead-g5_generic_source_only.a-build.command.json |     1 +
+ .../head-g5_generic_source_only.a-build.exit       |     1 +
+ .../head-g5_generic_source_only.a-build.stderr     |     1 +
+ .../head-g5_generic_source_only.a-build.stdout     |     0
+ .../head-g5_generic_source_only.a-js.command.json  |     1 +
+ .../probes/head-g5_generic_source_only.a-js.exit   |     1 +
+ .../probes/head-g5_generic_source_only.a-js.stderr |     1 +
+ .../probes/head-g5_generic_source_only.a-js.stdout |     0
+ ...ad-g5_generic_source_only.ts-build.command.json |     1 +
+ .../head-g5_generic_source_only.ts-build.exit      |     1 +
+ .../head-g5_generic_source_only.ts-build.stderr    |     1 +
+ .../head-g5_generic_source_only.ts-build.stdout    |     0
+ .../head-g5_generic_source_only.ts-js.command.json |     1 +
+ .../probes/head-g5_generic_source_only.ts-js.exit  |     1 +
+ .../head-g5_generic_source_only.ts-js.stderr       |     1 +
+ .../head-g5_generic_source_only.ts-js.stdout       |     0
+ ...ead-g6_generic_target_only.a-build.command.json |     1 +
+ .../head-g6_generic_target_only.a-build.exit       |     1 +
+ .../head-g6_generic_target_only.a-build.stderr     |     1 +
+ .../head-g6_generic_target_only.a-build.stdout     |     0
+ .../head-g6_generic_target_only.a-js.command.json  |     1 +
+ .../probes/head-g6_generic_target_only.a-js.exit   |     1 +
+ .../probes/head-g6_generic_target_only.a-js.stderr |     1 +
+ .../probes/head-g6_generic_target_only.a-js.stdout |     0
+ ...ad-g6_generic_target_only.ts-build.command.json |     1 +
+ .../head-g6_generic_target_only.ts-build.exit      |     1 +
+ .../head-g6_generic_target_only.ts-build.stderr    |     1 +
+ .../head-g6_generic_target_only.ts-build.stdout    |     0
+ .../head-g6_generic_target_only.ts-js.command.json |     1 +
+ .../probes/head-g6_generic_target_only.ts-js.exit  |     1 +
+ .../head-g6_generic_target_only.ts-js.stderr       |     1 +
+ .../head-g6_generic_target_only.ts-js.stdout       |     0
+ .../head-g7_interface_view.a-build.command.json    |     1 +
+ .../probes/head-g7_interface_view.a-build.exit     |     1 +
+ .../probes/head-g7_interface_view.a-build.stderr   |     1 +
+ .../probes/head-g7_interface_view.a-build.stdout   |     0
+ .../head-g7_interface_view.a-js.command.json       |     1 +
+ evidence/probes/head-g7_interface_view.a-js.exit   |     1 +
+ evidence/probes/head-g7_interface_view.a-js.stderr |     1 +
+ evidence/probes/head-g7_interface_view.a-js.stdout |     0
+ .../head-g7_interface_view.ts-build.command.json   |     1 +
+ .../probes/head-g7_interface_view.ts-build.exit    |     1 +
+ .../probes/head-g7_interface_view.ts-build.stderr  |     1 +
+ .../probes/head-g7_interface_view.ts-build.stdout  |     0
+ .../head-g7_interface_view.ts-js.command.json      |     1 +
+ evidence/probes/head-g7_interface_view.ts-js.exit  |     1 +
+ .../probes/head-g7_interface_view.ts-js.stderr     |     1 +
+ .../probes/head-g7_interface_view.ts-js.stdout     |     0
+ evidence/remote-refs.exit                          |     1 +
+ evidence/remote-refs.log                           |     2 +
+ evidence/restoration-second.exit                   |     1 +
+ evidence/restoration-second.log                    |     0
+ evidence/restoration.exit                          |     1 +
+ evidence/restoration.log                           |     0
+ evidence/restored-diff-stat.log                    |     0
+ evidence/restored-git-diff-second.exit             |     1 +
+ evidence/restored-git-diff.exit                    |     1 +
+ evidence/run-probes.exit                           |     1 +
+ evidence/run-probes.log                            |     0
+ evidence/run-probes.py                             |    34 +
+ evidence/second-commit.log                         |     3 +
+ evidence/setup-state.exit                          |     1 +
+ evidence/setup-state.log                           |     8 +
+ evidence/submodules.exit                           |     1 +
+ evidence/submodules.log                            |    10 +
+ evidence/summarize-admission.py                    |    18 +
+ evidence/vet-initial.exit                          |     1 +
+ evidence/vet-initial.log                           |     1 +
+ evidence/vet.exit                                  |     1 +
+ evidence/vet.log                                   |     0
+ evidence/worktree-main.exit                        |     1 +
+ evidence/worktree-main.log                         |     3 +
+ 490 files changed, 58032 insertions(+)

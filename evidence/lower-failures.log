@@ -1,0 +1,9 @@
+--- FAIL: TestNodeWatchInheritedOnMutant (0.48s)
+    library_node_watch_test.go:158: view: the mutant must let the second host type lower: /tmp/adamic-gate/TestNodeWatchInheritedOnMutant320021208/002/main.a:2:114: stage 0 can't lower a generic method on of type { <E extends keyof ChildProcessEventMap>(eventName: E, listener: (...args: ChildProcessEventMap[E]) => void): ChildProcess; (eventName: string | symbol, listener: (...args: any[]) => void): ChildProcess; } seen as (eventName: string, listener: () => void) => void yet
+--- FAIL: TestNodeWatchInheritedOnStaysNotYet (0.68s)
+    --- FAIL: TestNodeWatchInheritedOnStaysNotYet/view (0.35s)
+        library_node_watch_test.go:140: want a NotYet naming "node:events.InternalEventEmitter.on, a member no host registration names", got /tmp/adamic-gate/TestNodeWatchInheritedOnStaysNotYetview1057027470/001/main.a:2:114: stage 0 can't lower a generic method on of type { <E extends keyof ChildProcessEventMap>(eventName: E, listener: (...args: ChildProcessEventMap[E]) => void): ChildProcess; (eventName: string | symbol, listener: (...args: any[]) => void): ChildProcess; } seen as (eventName: string, listener: () => void) => void yet
+--- FAIL: TestNodeWatchTscShape (0.46s)
+    library_node_watch_test.go:51: /tmp/adamic-gate/TestNodeWatchTscShape124343189/001/main.a:10:9: stage 0 can't lower a generic method on of type { <E extends keyof FSWatcherEventMap>(eventName: E, listener: (...args: FSWatcherEventMap[E]) => void): FSWatcher; (eventName: string | symbol, listener: (...args: any[]) => void): FSWatcher; } seen as (eventName: string, listener: () => void) => void yet
+--- FAIL: TestProgramRegionCensusMembership (0.01s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch

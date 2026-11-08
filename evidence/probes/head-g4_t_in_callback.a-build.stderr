@@ -1,0 +1,1 @@
+adamic: /tmp/adamic-probes/probe/generic_methods_2/g4_t_in_callback.a:6:20: stage 0 can't lower a generic method handle of type <T>(x: Dog, f: (t: T) => string) => string seen as <T>(x: Animal, f: (t: T) => string) => string yet

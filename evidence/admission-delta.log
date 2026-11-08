@@ -1,0 +1,7 @@
+negative witnesses: 50
+provision stage3/api:  npm error code SELF_SIGNED_CERT_IN_CHAIN
+npm error errno SELF_SIGNED_CERT_IN_CHAIN
+npm error request to https://registry.npmjs.org/undici-types/-/undici-types-7.18.2.tgz failed, reason: self-signed certificate in certificate chain
+npm error A complete log of this run can be found in: /home/agent/.npm/_logs/2026-11-08T05_46_52_210Z-debug-0.log
+
+exit status 1
