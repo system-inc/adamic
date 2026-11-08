@@ -13,12 +13,13 @@ function record(id,result,args,method){
  return result;
 }
 globalThis.__acCall=(id,fn,args,method)=>{counters[id].calls++;try{return record(id,Reflect.apply(fn,undefined,args),args,method);}catch(error){counters[id].throws++;throw error;}};
-globalThis.__acMethod=(id,receiver,name,argsThunk,method)=>{
+globalThis.__acMethod=(id,receiver,name,argsThunk,method,optionalReceiver=false,optionalCall=false)=>{
+ if(optionalReceiver&&receiver==null)return undefined;
  counters[id].calls++;
- try{const fn=receiver[name],args=argsThunk();return record(id,Reflect.apply(fn,receiver,args),args,method);}
+ try{const fn=receiver[name];if(optionalCall&&fn==null){counters[id].calls--;return undefined;}const args=argsThunk();return record(id,Reflect.apply(fn,receiver,args),args,method);}
  catch(error){counters[id].throws++;throw error;}
 };
-globalThis.__acSpread=(id,value)=>{const c=counters[id];c.calls++;c.executions++;c.elements+=value.length;return value;};
+globalThis.__acLiteral=(ids,value)=>{for(const id of ids){const c=counters[id];c.calls++;c.executions++;c.elements+=value.length;}return value;};
 process.on('exit',code=>{
  const sites=Object.entries(counters).map(([id,c])=>({id,...c,meanLength:c.executions?c.elements/c.executions:0,meanElementsPerCall:c.calls?c.elements/c.calls:0}));
  const metadata=new Map(input.sites.map(s=>[s.id,s]));

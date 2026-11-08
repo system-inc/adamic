@@ -45,7 +45,9 @@ function classify(types) {
   if(!t||seen.has(t))return; seen.add(t);
   if(t.isUnion()){t.types.forEach(x=>one(x,new Set(seen)));return;}
   if(t.flags & ts.TypeFlags.Never)return;
-  if(t.flags & ts.TypeFlags.TypeParameter){const c=checker.getBaseConstraintOfType(t); if(c)one(c,seen);else unknown=true;return;}
+  if(t.flags & ts.TypeFlags.TypeParameter){const c=checker.getBaseConstraintOfType(t);
+   const broad=c&&parts(c).some(x=>(x.flags&ts.TypeFlags.Object)&&!x.getProperties().length&&!x.getCallSignatures().length&&!x.getConstructSignatures().length&&!x.getStringIndexType()&&!x.getNumberIndexType());
+   if(c&&!broad)one(c,seen);else unknown=true;return;}
   if(t.flags & (ts.TypeFlags.Any|ts.TypeFlags.Unknown)){unknown=true;return;}
   if(t.flags & (ts.TypeFlags.Object|ts.TypeFlags.NonPrimitive)){obj=true;return;}
   if(t.isIntersection()){
@@ -96,7 +98,7 @@ function scopes(n){let depth=0, uncertain=false, stopped=false, namedCallback=fa
    functions.push(name);
    if(enclosing==='<top level>')enclosing=name;
    if(referencedCallbacks.has(p))namedCallback=true;
-   if(callback(p)){if(!stopped)depth++;}else stopped=true;
+   if(callback(p)){if(!stopped)depth++;else uncertain=true;}else stopped=true;
   }
  }
  return {depth,uncertainOuterLoop:uncertain,namedIterationCallback:namedCallback,enclosingFunction:enclosing,functionChain:functions.reverse().join(' > ')};

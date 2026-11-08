@@ -17,16 +17,18 @@ for(const [file,rows]of groups){
  const lookup=new Map(rows.map(s=>[`${s.start}:${s.end}`,s]));
  const result=ts.transform(sf,[context=>source=>{
   function visit(n){
+   const spreads=ts.isArrayLiteralExpression(n)?n.elements.filter(ts.isSpreadElement).map(e=>lookup.get(`${e.getStart(sf)}:${e.end}`)).filter(s=>s?.method==='spread'):[];
    const s=lookup.get(`${n.getStart(sf)}:${n.end}`);
    const relevant=s&&n.end===s.end&&((s.method==='spread'&&ts.isSpreadElement(n))||(s.method!=='spread'&&ts.isCallExpression(n)));
    const updated=ts.visitEachChild(n,visit,context);
-   if(!relevant)return updated;
+   if(spreads.length){wrapped+=spreads.length;return call('__acLiteral',[f.createArrayLiteralExpression(spreads.map(s=>str(s.id))),updated]);}
+   if(!relevant||s.method==='spread')return updated;
    wrapped++;
-   if(s.method==='spread')return f.updateSpreadElement(updated,call('__acSpread',[str(s.id),updated.expression]));
-   if(n.questionDotToken||n.expression.questionDotToken)throw Error('Optional call requires explicit transform: '+s.id);
+   if(ts.isCallChain(n)&&!n.questionDotToken&&!n.expression.questionDotToken)throw Error('Inherited optional chain requires explicit transform: '+s.id);
    if(s.method.startsWith('.')){
-    return call('__acMethod',[str(s.id),updated.expression.expression,str(updated.expression.name.text),f.createArrowFunction(undefined,undefined,[],undefined,f.createToken(ts.SyntaxKind.EqualsGreaterThanToken),f.createArrayLiteralExpression(updated.arguments)),str(s.method)]);
+    return call('__acMethod',[str(s.id),updated.expression.expression,str(updated.expression.name.text),f.createArrowFunction(undefined,undefined,[],undefined,f.createToken(ts.SyntaxKind.EqualsGreaterThanToken),f.createArrayLiteralExpression(updated.arguments)),str(s.method),n.expression.questionDotToken?f.createTrue():f.createFalse(),n.questionDotToken?f.createTrue():f.createFalse()]);
    }
+   if(n.questionDotToken||n.expression.questionDotToken)throw Error('Optional helper call requires explicit transform: '+s.id);
    return call('__acCall',[str(s.id),updated.expression,f.createArrayLiteralExpression(updated.arguments),str(s.method)]);
   }
   return ts.visitNode(source,visit);

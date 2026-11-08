@@ -7,8 +7,25 @@
   "diagnostics": [],
   "totals": {
     "object": {
-      "inLoop": 86,
-      "notInLoop": 681,
+      "inLoop": 85,
+      "notInLoop": 680,
+      "uncertainOuterLoop": 0
+    },
+    "mixed": {
+      "inLoop": 2,
+      "notInLoop": 18,
+      "uncertainOuterLoop": 0
+    },
+    "unresolved": {
+      "inLoop": 7,
+      "notInLoop": 23,
+      "uncertainOuterLoop": 0
+    }
+  },
+  "requestedFamilyTotals": {
+    "object": {
+      "inLoop": 76,
+      "notInLoop": 648,
       "uncertainOuterLoop": 0
     },
     "mixed": {
@@ -19,23 +36,6 @@
     "unresolved": {
       "inLoop": 6,
       "notInLoop": 22,
-      "uncertainOuterLoop": 0
-    }
-  },
-  "requestedFamilyTotals": {
-    "object": {
-      "inLoop": 76,
-      "notInLoop": 649,
-      "uncertainOuterLoop": 0
-    },
-    "mixed": {
-      "inLoop": 2,
-      "notInLoop": 18,
-      "uncertainOuterLoop": 0
-    },
-    "unresolved": {
-      "inLoop": 6,
-      "notInLoop": 21,
       "uncertainOuterLoop": 0
     }
   },
@@ -195,7 +195,7 @@
     },
     "helper:addRange": {
       "object": {
-        "inLoop": 9,
+        "inLoop": 8,
         "notInLoop": 12,
         "uncertainOuterLoop": 0
       },
@@ -205,7 +205,7 @@
         "uncertainOuterLoop": 0
       },
       "unresolved": {
-        "inLoop": 0,
+        "inLoop": 1,
         "notInLoop": 0,
         "uncertainOuterLoop": 0
       }
@@ -298,7 +298,7 @@
     "helper:concatenate": {
       "object": {
         "inLoop": 10,
-        "notInLoop": 52,
+        "notInLoop": 51,
         "uncertainOuterLoop": 0
       },
       "mixed": {
@@ -308,7 +308,7 @@
       },
       "unresolved": {
         "inLoop": 0,
-        "notInLoop": 0,
+        "notInLoop": 1,
         "uncertainOuterLoop": 0
       }
     },
@@ -877,8 +877,8 @@
     },
     "src/compiler/core.ts": {
       "object": {
-        "inLoop": 1,
-        "notInLoop": 2,
+        "inLoop": 0,
+        "notInLoop": 1,
         "uncertainOuterLoop": 0
       },
       "mixed": {
@@ -887,8 +887,8 @@
         "uncertainOuterLoop": 0
       },
       "unresolved": {
-        "inLoop": 5,
-        "notInLoop": 14,
+        "inLoop": 6,
+        "notInLoop": 15,
         "uncertainOuterLoop": 0
       }
     },
@@ -2297,7 +2297,7 @@
       "end": 13858,
       "method": "helper:addRange",
       "additionalCoreHelper": true,
-      "classification": "object",
+      "classification": "unresolved",
       "sourceType": "readonly U[]",
       "elementType": "U",
       "expression": "addRange(result, v)",
@@ -2507,7 +2507,7 @@
       "end": 33977,
       "method": "helper:concatenate",
       "additionalCoreHelper": false,
-      "classification": "object",
+      "classification": "unresolved",
       "sourceType": "T[] ; T[]",
       "elementType": "T | T",
       "expression": "concatenate(xs, ys)",

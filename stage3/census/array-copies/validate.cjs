@@ -20,16 +20,24 @@ for(const item of objects){
  (()=>objects.slice())();
  sameMap(objects,x=>x);
  sameMap(objects,x=>({value:x.value}));
- [...objects];
+ [0,...objects,0];
+ [...objects,...objects];
 }
 console.log(JSON.stringify(objects));
 Array.from(new Map([[1,{value:1}]]));
 Array.from({*[Symbol.iterator](){yield {value:1};}});
+let evaluated=0;
+function optional(input: typeof objects | undefined){for(const obj of objects){input?.map((evaluated++,x=>x));}}
+optional(undefined);optional(objects);if(evaluated!==2)throw Error("optional arguments evaluated incorrectly");
+function broad<T extends {}>(values:T[]){for(const value of values){values.slice();}}
+objects.map(()=>{function callbackNested(){return objects.slice();}return callbackNested();});
 `;
 fs.writeFileSync(path.join(src,'fixture.ts'),text);
 function run(name,args,env={}){const log=path.join(scratch,name+'.log'),fd=fs.openSync(log,'w');const r=cp.spawnSync(process.execPath,args,{stdio:['ignore',fd,fd],env:{...process.env,...env}});fs.closeSync(fd);console.log(`${name} child exit code: ${r.status}`);assert.strictEqual(r.status,0,fs.readFileSync(log,'utf8'));return fs.readFileSync(log,'utf8');}
 const json=path.join(scratch,'sites.json');run('census',[path.join(here,'census.cjs'),api,scratch,json]);
 const d=JSON.parse(fs.readFileSync(json));assert.strictEqual(d.diagnostics.length,0);
+assert.strictEqual(d.sites.find(s=>s.expression==='values.slice()').classification,'unresolved');
+assert.strictEqual(d.sites.find(s=>s.enclosingFunction==='callbackNested').uncertainOuterLoop,true);
 const at=line=>d.sites.find(s=>s.file.endsWith('fixture.ts')&&s.line===line);
 assert(!at(4),'branded string copy must be excluded');assert.strictEqual(at(6).classification,'mixed');assert.strictEqual(at(7).depth,1);assert.strictEqual(at(10).depth,1);
 assert(d.sites.some(s=>s.line===11&&s.method==='.slice'&&s.depth===2));
@@ -46,5 +54,8 @@ const r=JSON.parse(fs.readFileSync(runtime));
 const unchanged=at(15),changed=at(16);
 assert.strictEqual(r.sites.find(s=>s.id===unchanged.id).calls,2);assert.strictEqual(r.sites.find(s=>s.id===unchanged.id).executions,0);
 assert.strictEqual(r.sites.find(s=>s.id===changed.id).executions,2);assert.strictEqual(r.sites.find(s=>s.id===changed.id).elements,4);
-const spread=d.sites.find(s=>s.method==='spread');assert(spread);assert.strictEqual(r.sites.find(s=>s.id===spread.id).calls,2);assert.strictEqual(r.sites.find(s=>s.id===spread.id).elements,4);
+const spread=d.sites.find(s=>s.method==='spread');assert(spread);assert.strictEqual(r.sites.find(s=>s.id===spread.id).calls,2);assert.strictEqual(r.sites.find(s=>s.id===spread.id).elements,8);
+assert.strictEqual(d.sites.filter(s=>s.method==='spread').length,3);
+for(const s of d.sites.filter(s=>s.method==='spread'))assert.strictEqual(r.sites.find(row=>row.id===s.id).elements,8);
+const optional=d.sites.find(s=>s.expression.startsWith('input?.map'));assert(optional);assert.strictEqual(r.sites.find(s=>s.id===optional.id).calls,2);assert.strictEqual(r.totalThrows,0);
 console.log(JSON.stringify({passed:true,scratch,sites:d.sites.length,totalExecutions:r.totalExecutions,totalElements:r.totalElements}));
