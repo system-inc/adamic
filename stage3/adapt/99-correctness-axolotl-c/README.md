@@ -16,21 +16,21 @@ literal clears ten keys before JSON serialization; the reference mapper spreads
 each reference, replaces path, and clears originalPath. An undefined key is still
 an own property. Removing the key would change enumeration and spread behavior.
 
-| Owner.member | Visibility in pinned API | Explicit undefined producer | 99c action |
-| --- | --- | --- | --- |
-| CompilerOptions.showConfig | @internal | commandLineParser.ts:2665 | boolean to boolean \| undefined |
-| CompilerOptions.configFile | @internal | commandLineParser.ts:2666 | TsConfigSourceFile to TsConfigSourceFile \| undefined |
-| CompilerOptions.configFilePath | @internal | commandLineParser.ts:2667; :3087 when configFileName is undefined | Already string \| undefined after 20; unchanged |
-| CompilerOptions.help | @internal | commandLineParser.ts:2668 | boolean to boolean \| undefined |
-| CompilerOptions.init | @internal | commandLineParser.ts:2669 | boolean to boolean \| undefined |
-| CompilerOptions.listFiles | @internal | commandLineParser.ts:2670 | boolean to boolean \| undefined |
-| CompilerOptions.listEmittedFiles | @internal | commandLineParser.ts:2671 | boolean to boolean \| undefined |
-| CompilerOptions.project | Public, API :7095 | commandLineParser.ts:2672 | string to string \| undefined |
-| CompilerOptions.build | @internal | commandLineParser.ts:2673 | boolean to boolean \| undefined |
-| CompilerOptions.version | @internal | commandLineParser.ts:2674 | boolean to boolean \| undefined |
-| ProjectReference.originalPath | Public, API :6987 | commandLineParser.ts:2677 | string to string \| undefined |
-| TSConfig.exclude | @internal | commandLineParser.ts:2681, conditional spread | readonly string[] to readonly string[] \| undefined |
-| TSConfig.include | @internal | commandLineParser.ts:2680, conditional spread | readonly string[] to readonly string[] \| undefined |
+| Owner.member                     | Visibility in pinned API | Explicit undefined producer                                       | 99c action                                            |
+| -------------------------------- | ------------------------ | ----------------------------------------------------------------- | ----------------------------------------------------- |
+| CompilerOptions.showConfig       | @internal                | commandLineParser.ts:2665                                         | boolean to boolean \| undefined                       |
+| CompilerOptions.configFile       | @internal                | commandLineParser.ts:2666                                         | TsConfigSourceFile to TsConfigSourceFile \| undefined |
+| CompilerOptions.configFilePath   | @internal                | commandLineParser.ts:2667; :3087 when configFileName is undefined | Already string \| undefined after 20; unchanged       |
+| CompilerOptions.help             | @internal                | commandLineParser.ts:2668                                         | boolean to boolean \| undefined                       |
+| CompilerOptions.init             | @internal                | commandLineParser.ts:2669                                         | boolean to boolean \| undefined                       |
+| CompilerOptions.listFiles        | @internal                | commandLineParser.ts:2670                                         | boolean to boolean \| undefined                       |
+| CompilerOptions.listEmittedFiles | @internal                | commandLineParser.ts:2671                                         | boolean to boolean \| undefined                       |
+| CompilerOptions.project          | Public, API :7095        | commandLineParser.ts:2672                                         | string to string \| undefined                         |
+| CompilerOptions.build            | @internal                | commandLineParser.ts:2673                                         | boolean to boolean \| undefined                       |
+| CompilerOptions.version          | @internal                | commandLineParser.ts:2674                                         | boolean to boolean \| undefined                       |
+| ProjectReference.originalPath    | Public, API :6987        | commandLineParser.ts:2677                                         | string to string \| undefined                         |
+| TSConfig.exclude                 | @internal                | commandLineParser.ts:2681, conditional spread                     | readonly string[] to readonly string[] \| undefined   |
+| TSConfig.include                 | @internal                | commandLineParser.ts:2680, conditional spread                     | readonly string[] to readonly string[] \| undefined   |
 
 The generic command line producer `parseOptionValue` also stores undefined at
 :2111 for a `null` argument to any of the named command line options. Its
@@ -131,13 +131,13 @@ same 79 sorted .ts/.a roots to `adamic types`, using the unchanged checker and
 prelude. Complete diagnostic strings, multiplicity, columns and related chains
 are compared after replacing only the tree root path.
 
-| Whole-program measurement | Before | Final |
-| --- | ---: | ---: |
-| All diagnostics | 53 | 51 |
-| TS2375 | 9 | 8 |
-| TS2322 | 7 | 6 |
-| D033 and D034 | 2 | 0 |
-| Added or changed diagnostic chains | | 0 |
+| Whole-program measurement          | Before | Final |
+| ---------------------------------- | -----: | ----: |
+| All diagnostics                    |     53 |    51 |
+| TS2375                             |      9 |     8 |
+| TS2322                             |      7 |     6 |
+| D033 and D034                      |      2 |     0 |
+| Added or changed diagnostic chains |        |     0 |
 
 Every other checker-code count and every other diagnostic chain is unchanged.
 The ten-member intermediate probe was 53 to 52: both target rows disappeared,
@@ -157,10 +157,10 @@ Stock `npm run build` passes before and after, including its checked
 `build-tests` task. No compiler flag is weakened. Stock TypeScript 6.0.3
 transpileModule, ES2024 target, ESNext modules and comments retained, proves:
 
-| Edited file | Identical JavaScript bytes | SHA-256 |
-| --- | ---: | --- |
-| src/compiler/commandLineParser.ts | 161985 | dc05a488396d003e9ec4d5ff78ef11af0e7e5f99d6264d5860872975b6ec7c5d |
-| src/compiler/types.ts | 139659 | 4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3 |
+| Edited file                       | Identical JavaScript bytes | SHA-256                                                          |
+| --------------------------------- | -------------------------: | ---------------------------------------------------------------- |
+| src/compiler/commandLineParser.ts |                     161985 | dc05a488396d003e9ec4d5ff78ef11af0e7e5f99d6264d5860872975b6ec7c5d |
+| src/compiler/types.ts             |                     139659 | 4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3 |
 
 All ten built JavaScript artifacts, 28,602,533 bytes including run.js and
 both compiler bundles, are also byte-identical. Every other source file is
