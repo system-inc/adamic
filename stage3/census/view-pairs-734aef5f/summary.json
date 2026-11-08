@@ -1,26 +1,26 @@
 {
   "counts": {
-    "object_related_top": 1708,
-    "object_related_nested": 27022,
+    "object_related_top": 1716,
+    "object_related_nested": 27038,
     "object_unrelated_top": 1,
     "object_unrelated_nested": 0,
     "scalar_top": 0,
-    "scalar_nested": 15245,
+    "scalar_nested": 15260,
     "nil_source": 0,
     "nil_target_only": 0
   },
   "raw_counts": {
-    "object_related_top": 2198,
-    "object_related_nested": 40452,
+    "object_related_top": 2218,
+    "object_related_nested": 40577,
     "object_unrelated_top": 1,
     "object_unrelated_nested": 0,
     "scalar_top": 3,
-    "scalar_nested": 22547,
+    "scalar_nested": 22635,
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "total_selected_pairs": 43976,
-  "total_raw_pairs": 65201,
+  "total_selected_pairs": 44015,
+  "total_raw_pairs": 65434,
   "unrelated_object_pairs": 1,
   "distinct_unrelated_text_pairs": 1,
   "nil_source_views": 0,
@@ -38,27 +38,27 @@
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "observed_units": 8584,
+  "observed_units": 8588,
   "unit_statuses": {
-    "lowered": 4968,
-    "stopped": 3616
+    "lowered": 4970,
+    "stopped": 3618
   },
   "stock_skips_without_boundary": {
     "deferred_generic_instantiation": 769
   },
   "deferred_units_in_emitted_inventory": 769,
   "resolved_files": 81,
-  "full_files_attempted": 51,
-  "full_files_complete_traversal": 50,
-  "stock_inventory_units": 7797,
+  "full_files_attempted": 52,
+  "full_files_complete_traversal": 51,
+  "stock_inventory_units": 7823,
   "probe_incomplete_units": 0,
   "orphan_pair_lines": 0,
   "probe_errors": [],
-  "view_sources_in_selected_units": 2611,
-  "deduplicated_pair_visits": 247088,
-  "over_depth_pair_visits": 22203,
+  "view_sources_in_selected_units": 2619,
+  "deduplicated_pair_visits": 247287,
+  "over_depth_pair_visits": 22223,
   "nil_reference_definition": "Known lower.representation(fieldType) with ir.Type.IsReference(); includes strings and Weak. Object-reference companion excludes ir.String and ir.Weak. Fields come from cycleFinder.fields, excluding prototype methods, accessors and static prototype.",
-  "first_error_selected_stopped_units": 65,
+  "first_error_selected_stopped_units": 52,
   "cycle_finder_ran": false,
   "graph_types_nonempty_units": 0
 }
