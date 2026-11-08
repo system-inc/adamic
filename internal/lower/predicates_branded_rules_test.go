@@ -6,26 +6,19 @@ import (
 	"testing"
 )
 
-// brandedRulesPrelude is core.ts's orPredicate2 (Correctness's adaptation) and tsc's overloaded
-// findAncestor, whose implementation calls its callback through a plain boolean signature
-// (utilitiesPublic.ts:786-788), beside predicates for an unbranded Literal and Keyword.
+// brandedRulesPrelude is core.ts's orPredicate2 (Correctness's adaptation) beside predicates for an
+// unbranded Literal and Keyword. The trusted road is lib's find, as at checker.ts:10911: the library calls
+// its callback where nothing checks the claim. tsc's overloaded findAncestor, the other six sites' road, is
+// refused on main by the census's overload result check (measured on Cloud at 683e05bf), so it isn't here.
 const brandedRulesPrelude = brandedPrelude + `interface Literal extends Node { readonly kind: 9; readonly text: string; }
 interface Keyword extends Node { readonly kind: 100; readonly word: string; }
 function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 function isLiteral(n: Node): n is Literal { return kindOf(n) === 9; }
 function isKeyword(n: Node): n is Keyword { return kindOf(n) === 100; }
 function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
-function findAncestor<T extends Node>(node: Node | undefined, callback: (element: Node) => element is T): T | undefined;
-function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | "quit"): Node | undefined;
-function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | "quit"): Node | undefined {
-	if (node === undefined) { return undefined; }
-	const result = callback(node);
-	if (result === "quit") { return undefined; }
-	else if (result) { return node; }
-	return undefined;
-}
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 const l: Literal = { kind: 9, pos: 4, text: "t" };
+const nodes: Node[] = [l, i];
 `
 
 // eitherId is a checked predicate over a branded union, called in a statement that reads only its true
@@ -130,7 +123,7 @@ show({ kind: K.Alias, pos: 0, y: 5 });
 	t.Logf("the alias stops at %v", err)
 }
 
-// The producer rule (Adamic's ruling on #fx9waqy, Nov 7): a call of orPredicate2 handed to findAncestor's
+// The producer rule (Adamic's ruling on #fx9waqy, Nov 7): a call of orPredicate2 handed to lib's find's
 // trusted callback proves its claim when orPredicate2's returned arrow proves it by flow and every
 // predicate the call hands it proves its own, judged at that call's instance, a nested producer included.
 // A lie carried in a value, which proves nothing, is refused where it's handed, as it would be passed
@@ -164,14 +157,14 @@ const found = findAncestor(leaf, isI);
 console.log(found === undefined ? "none" : found.text);
 `)
 	t.Logf("tsc's findAncestor shape: %v", tscShape)
-	// Road (B): orPredicate2's arrow is a checked closure under the producer's written claim, so findAncestor's
+	// Road (B): orPredicate2's arrow is a checked closure under the producer's written claim, so lib's find's
 	// trusted callback takes the producer's result as it takes a checked closure passed directly, at an
 	// unbranded, a nested and a branded instance alike.
-	lowersAndAgreesWithNodeAs(t, brandedRulesPrelude+`const found = findAncestor(i, orPredicate2(isIdentifier, isLiteral));
+	lowersAndAgreesWithNodeAs(t, brandedRulesPrelude+`const found = nodes.find(orPredicate2(isIdentifier, isLiteral));
 console.log(found === undefined ? "none" : String(found.pos));
-const nested = findAncestor(l, orPredicate2(orPredicate2(isIdentifier, isLiteral), isKeyword));
+const nested = nodes.find(orPredicate2(orPredicate2(isIdentifier, isLiteral), isKeyword));
 console.log(nested === undefined ? "none" : String(nested.pos));
-const element = findAncestor(i, orPredicate2(isIdentifier, isTypeElement));
+const element = nodes.find(orPredicate2(isIdentifier, isTypeElement));
 console.log(element === undefined ? "none" : String(element.pos));
 `, ".ts")
 	// A lie carried in a value is neither proven nor checked, so it's refused where it's handed, an unbranded
@@ -179,9 +172,9 @@ console.log(element === undefined ? "none" : String(element.pos));
 	// recursion, and both lower.
 	for _, liar := range []string{
 		`const liar: (n: Node) => n is Literal = pick ? isLiteral : isLiteralLie;
-const found = findAncestor(l, orPredicate2(liar, isKeyword));`,
+const found = nodes.find(orPredicate2(liar, isKeyword));`,
 		`const liar: (n: Node) => n is TypeElement = pick ? isTypeElement : isTypeElementLie;
-const found = findAncestor(i, orPredicate2(isIdentifier, liar));`,
+const found = nodes.find(orPredicate2(isIdentifier, liar));`,
 	} {
 		_, err := lowerTypeScriptAssertionSource(t, brandedRulesPrelude+`function isLiteralLie(n: Node): n is Literal { return n.pos > 0; }
 const pick = kindOf(i) > 1000;
@@ -200,9 +193,10 @@ console.log(found === undefined ? "none" : String(found.pos));
 	// mutant dropping only the arrow's return check survives here; one dropping both reads the Keyword raw.
 	const lie = `function isLiteralLie(n: Node): n is Literal { return n.pos > 0; }
 const k: Keyword = { kind: 100, pos: 7, word: "w" };
+const ks: Node[] = [k];
 `
 	for _, source := range []string{
-		`const found = findAncestor(k, orPredicate2(isIdentifier, isLiteralLie));
+		`const found = ks.find(orPredicate2(isIdentifier, isLiteralLie));
 console.log(found === undefined ? "none" : String(found.pos));
 `,
 		`console.log(orPredicate2(isIdentifier, isLiteralLie)(k) ? "named" : "other");
@@ -225,7 +219,7 @@ function show(x: Node): void { either(x) && console.log(String(x.pos)); }
 show(i);
 `, "adamic: panic: ")
 	// One program holds an unbranded and a branded instance, each judged at its own door: the branded lie
-	// stops at its read through S's view (Language's per-instance pin), and so does findAncestor's branded
+	// stops at its read through S's view (Language's per-instance pin), and so does find's branded
 	// result read by a caller (Compiler's pin).
 	brandedStops(t, brandedRulesPrelude+`const named = orPredicate2(isIdentifier, isLiteral);
 const element = orPredicate2(isTypeElementLie, isTypeElement);
@@ -234,7 +228,8 @@ const w = { kind: 9, pos: 4, text: "t", name: 5 };
 show(w);
 `, "adamic: panic: ")
 	brandedStops(t, brandedRulesPrelude+`const w = { kind: 9, pos: 4, text: "t", name: 5 };
-const found = findAncestor(w, orPredicate2(isTypeElementLie, isTypeElement));
+const ws: Node[] = [w];
+const found = ws.find(orPredicate2(isTypeElementLie, isTypeElement));
 console.log(found === undefined ? "none" : String(found.name));
 `, "adamic: panic: ")
 }
@@ -275,8 +270,7 @@ console.log(typeof g);
 `},
 		{"an untyped const", `export function orBare(f1: (p: Node) => p is Identifier, f2: (p: Node) => p is Literal) { return (p: Node) => f1(p) || f2(p); }
 const g = orBare(isIdentifier, isLiteral);
-function show(x: Identifier | Literal | Keyword): void { if (!g(x)) { console.log(x.word); } }
-show({ kind: 100, pos: 1, word: "w" });
+console.log(typeof g);
 `},
 		{"an overload's claim", `export function orOver(f: (p: Node) => p is Identifier): (p: Node) => p is Identifier;
 export function orOver(f: (p: Node) => p is Identifier): (p: Node) => boolean { return p => f(p); }
