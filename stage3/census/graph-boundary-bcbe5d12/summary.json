@@ -2,13 +2,13 @@
   "entry_checker_rejected": false,
   "entry_diagnostics": 0,
   "view_components": {
-    "ViewOrigins entries": 1776,
-    "CheckedFields keys": 50946
+    "ViewOrigins entries": 1804,
+    "CheckedFields keys": 51993
   },
   "resolved_files": 81,
   "counts_by_scope": {
     "compiler_79": {
-      "views": 52722,
+      "views": 53797,
       "record_literals": 0,
       "dynamic_reads": 37,
       "checked_object_calls": 0
@@ -21,35 +21,35 @@
     }
   },
   "counts": {
-    "views": 52722,
+    "views": 53797,
     "record_literals": 0,
     "dynamic_reads": 37,
     "checked_object_calls": 0
   },
   "distinct_fallback_locations": {
-    "views": 540,
+    "views": 551,
     "record_literals": 0,
     "dynamic_reads": 27,
     "checked_object_calls": 0
   },
-  "observed_unit_results": 7827,
+  "observed_unit_results": 7904,
   "observed_statuses": {
-    "lowered": 4668,
-    "stopped": 3159
+    "lowered": 4686,
+    "stopped": 3218
   },
   "unobserved_stock_statuses": {
     "deferred_generic_instantiation": 668
   },
   "first_error_observed": 3447,
-  "full_observed": 7541,
-  "files_in_stock_stream": 61,
+  "full_observed": 7618,
+  "files_in_stock_stream": 62,
   "files_in_table": 81,
-  "files_observed": 77,
+  "files_observed": 78,
   "graph_types_nonempty_units": 0,
   "followup": {
     "requested_files": 51,
-    "requested_attempted": 39,
-    "requested_remaining": 12,
+    "requested_attempted": 40,
+    "requested_remaining": 11,
     "additional_executeCommandLine_attempted": true,
     "bounded_nonzero_files": []
   }
