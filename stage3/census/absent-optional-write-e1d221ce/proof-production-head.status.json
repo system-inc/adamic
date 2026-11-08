@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType$/^other_interface.ts$",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "/workspace/aow-head",
+  "exit": 0,
+  "wall_seconds": 85.374,
+  "stopped": null
+}

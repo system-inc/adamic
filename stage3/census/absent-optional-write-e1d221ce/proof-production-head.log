@@ -1,0 +1,14 @@
+=== RUN   TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType
+=== PAUSE TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType
+=== CONT  TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType
+=== RUN   TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType/other_interface.ts
+=== PAUSE TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType/other_interface.ts
+=== CONT  TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType/other_interface.ts
+    absent_optional_write_test.go:56: gate cache node miss
+--- PASS: TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType (0.00s)
+    --- PASS: TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType/other_interface.ts (46.42s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	46.439s

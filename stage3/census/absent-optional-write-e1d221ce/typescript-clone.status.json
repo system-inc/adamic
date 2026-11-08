@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "--branch",
+    "v6.0.3",
+    "https://github.com/microsoft/TypeScript.git",
+    "/tmp/aow-typescript"
+  ],
+  "cwd": "/workspace",
+  "exit": 0,
+  "wall_seconds": 13.017,
+  "stopped": null
+}

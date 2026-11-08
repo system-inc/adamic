@@ -1,0 +1,20 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_FULL",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "-u",
+    "LATENT_ONLY_FILE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/adamic/stage3/census/absent-optional-write-e1d221ce/parent-run-units.jsonl",
+    "/workspace/aow-parent-census",
+    "/workspace/aow-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/absent-optional-write-e1d221ce/parent-run.jsonl"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": -15,
+  "wall_seconds": 485.534,
+  "stopped": null
+}

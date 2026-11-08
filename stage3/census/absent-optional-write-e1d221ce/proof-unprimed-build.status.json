@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/workspace/aow-unprimed-head-overlay.json",
+    "-o",
+    "/workspace/aow-unprimed-head-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/aow-head",
+  "exit": 0,
+  "wall_seconds": 5.01,
+  "stopped": null
+}

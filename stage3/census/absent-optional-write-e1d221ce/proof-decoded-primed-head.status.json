@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_FULL",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "/workspace/aow-head-census",
+    "/workspace/aow-probe/decoded.a",
+    "/workspace/adamic/stage3/census/absent-optional-write-e1d221ce/prepass-proof/decoded-primed-head.jsonl"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "wall_seconds": 1.002,
+  "stopped": null
+}

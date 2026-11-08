@@ -1,0 +1,20 @@
+--- parent/original-latent-hook
++++ parent/corrected-latent-hook
+@@ -333,6 +333,7 @@
+ 				l := fresh()
+ 				l.noteInheritance(program.Files())
+ 				l.noteAccessorNames(program.Files())
++				l.noteOmittedOptionals(program.Files())
+ 				l.latentRegister(program.Files())
+ 				l.latentUseProgramFacts(&facts)
+ 				if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == os.Getenv("LATENT_MUTANT_FUNCTION") && (os.Getenv("LATENT_MUTANT_WHERE") == "" || program.Where(node) == os.Getenv("LATENT_MUTANT_WHERE")) {
+--- head/original-latent-hook
++++ head/corrected-latent-hook
+@@ -333,6 +333,7 @@
+ 				l := fresh()
+ 				l.noteInheritance(program.Files())
+ 				l.noteAccessorNames(program.Files())
++				l.noteOmittedOptionals(program.Files())
+ 				l.latentRegister(program.Files())
+ 				l.latentUseProgramFacts(&facts)
+ 				if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == os.Getenv("LATENT_MUTANT_FUNCTION") && (os.Getenv("LATENT_MUTANT_WHERE") == "" || program.Where(node) == os.Getenv("LATENT_MUTANT_WHERE")) {

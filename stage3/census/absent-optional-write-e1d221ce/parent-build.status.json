@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/workspace/aow-parent-entry/overlay.json",
+    "-o",
+    "/workspace/aow-parent-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "wall_seconds": 31.063,
+  "stopped": null
+}
