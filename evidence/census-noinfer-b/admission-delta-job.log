@@ -1,0 +1,17 @@
+job 01M6YD102VANDZZTZXPBPAK1FQ on Cloud: Accepted
+laid stage3/api/node_modules from 61d9acb4eb13
+laid stage3/typescript/node_modules from 4d7e692e07ad
+proof: the box's toolchain, /home/ahra/adamic-tools/env.sh
+submodule exit=0
+sha 2594029da13920577f63b2a4798325d7d76d8f4f
+64
+ 13:19:23 up 1 day, 21:16,  0 user,  load average: 1.17, 2.06, 2.02
+npm 11.9.0
+manifest exit=0
+delta exit=0
+negative witnesses: 50
+ruled run-time stops: 45
+changed programs: 0
+keys: ['negative_witness_count', 'accepted_witnesses', 'node_agreements', 'runtime_notyet_count', 'ruled_runtime_stops', 'ruled_runtime_stop_paths', 'stale_runtime_stops', 'pending_runtime_stops', 'corpus_filter', 'shard', 'complete_corpus', 'phase_seconds', 'workers', 'classification', 'diff', 'diff_count', 'diff_ts_unmatched', 'compile_timeout_seconds', 'runtime_timeout_seconds', 'base', 'head', 'generator_revision', 'generator_blob', 'manifest_blob', 'admitted', 'programs', 'verdict', 'void', 'corpora', 'sampling_seed', 'seed_given', 'sampling_size', 'omitted', 'budget_seconds', 'budget_used_seconds']
+job 01M6YD102VANDZZTZXPBPAK1FQ on Cloud: exit 0
+exit=0
