@@ -5,6 +5,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // optionalWidening names the relation whose optional field could be hidden by a structural view.
@@ -12,6 +13,41 @@ import (
 type optionalWidening struct {
 	property       string
 	source, target *checker.Type
+	// unstored names the library interface when source declares property only as a lib-declared member
+	// the runtime shape lacks (libraryUnstoredMember): a view naming it reads it absent natively where Node
+	// reads its value. That's a gap in what the runtime builds, so it's NotYet, not the hiding rule's
+	// refusal. It's "" otherwise.
+	unstored string
+}
+
+// libraryStoredMembers names, for each library interface whose values the runtime makes, the members
+// its runtime shape holds a slot for. Error's shape (exceptions.c) holds name and message; lib also
+// declares stack, an own property of every Error on Node, and cause, which it holds when given one.
+// Error is the live case (#sn788gx: a view { readonly stack?: string } over a real Error read none
+// natively where Node printed the stack). #sn788gx's census of every runtime shape fills in the rest.
+var libraryStoredMembers = map[string]map[string]bool{
+	"Error": {"name": true, "message": true},
+}
+
+// libraryUnstoredMember names the library interface when member is a lib-declared member the runtime
+// shape lacks: one a library interface in libraryStoredMembers declares, whose runtime shape holds no
+// slot for it. Read through that interface's own type, such a member is the inherited library member
+// refusal's (a lib declaration is never an own field); read through any other view, nothing else stops
+// it. It's "" for any other member.
+func libraryUnstoredMember(member *ast.Symbol) string {
+	if member == nil {
+		return ""
+	}
+	for _, declaration := range member.Declarations {
+		owner := declaration.Parent
+		if owner == nil || owner.Kind != ast.KindInterfaceDeclaration || !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			continue
+		}
+		if stored, known := libraryStoredMembers[owner.Name().Text()]; known && !stored[member.Name] {
+			return owner.Name().Text()
+		}
+	}
+	return ""
 }
 
 func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool) *optionalWidening {
@@ -98,6 +134,12 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 				return &optionalWidening{property: property.Name, source: source, target: target}
 			}
 			continue
+		}
+		// A view the program declares, naming a member the source has only as a lib-declared member the
+		// runtime shape lacks, would read it absent natively. A view that names it as the same library
+		// member is read through that member, which the inherited library member refusal stops.
+		if owner := libraryUnstoredMember(declared); owner != "" && libraryUnstoredMember(property) == "" {
+			return &optionalWidening{property: property.Name, source: source, target: target, unstored: owner}
 		}
 		if found := l.optionalWidened(l.checker.GetTypeOfSymbol(declared), l.checker.GetTypeOfSymbol(property), nil, visited); found != nil {
 			return found
@@ -246,6 +288,10 @@ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
 
 // optionalWideningRefusal is the hiding rule's refusal of found at node.
 func (l *lowering) optionalWideningRefusal(node *ast.Node, found *optionalWidening) error {
+	if found.unstored != "" {
+		// Diagnostics' words on #sn788gx, one template for every runtime shape the census adds.
+		return l.notYet(node, "a view naming "+found.property+", which lib declares on "+found.unstored+" but the runtime's "+found.unstored+" doesn't hold (leave "+found.property+" out of the view's type)")
+	}
 	return &Refused{Where: l.program.Where(node),
 		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
 		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
