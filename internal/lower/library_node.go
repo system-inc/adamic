@@ -84,6 +84,12 @@ func (l *lowering) nodeHostObject(proven *checker.Type) (registered func(member 
 	}
 	owner := nodeLibraryName(proven.Symbol())
 	if owner == "" {
+		// A Provided host binding's declared type is the program's own interface, and every read after
+		// the declaration is typed by it, so a view of it is a view of the model export its reads route
+		// through, judged by that type's registration (host_bindings.go).
+		if model := l.hostBindingViews()[proven.Symbol()]; model != nil && model != proven {
+			return l.nodeHostObject(model)
+		}
 		return nil, false
 	}
 	return func(member *ast.Symbol) bool {
