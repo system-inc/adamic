@@ -13,11 +13,13 @@ import (
 // viewSource is a view's target, the type its value had before it (a cast's operand, a checked
 // predicate's argument or a tag-proven predicate's parameter, nil when there's none to name), and
 // where its value enters the view in the IR: a cast's CheckedCast, the local a structural cast
-// admits, or, for a predicate's view, wherever a read is narrowed to the target.
+// admits, or, for a predicate's view, wherever a read is narrowed to the target. Node is the view's
+// site, where a graph program's view pair the cycle finder can't relate is named (viewPairGuard).
 type viewSource struct {
 	source, target *checker.Type
 	cast, narrows  bool
 	entry          ir.Expression
+	node           *ast.Node
 }
 
 // viewLie is what one view checks that its source doesn't guarantee. Lied are the names read raw

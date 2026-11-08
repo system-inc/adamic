@@ -87,7 +87,7 @@ func (l *lowering) withinLiterals(declared *checker.Type, allowed []*checker.Typ
 // it already guarantees is read honestly through a wider type (view_widened.go).
 // Value is where the view's value enters it, unless a CheckedCast wraps it.
 func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
-	l.viewSources = append(l.viewSources, viewSource{source: source, target: target, entry: value})
+	l.viewSources = append(l.viewSources, viewSource{source: source, target: target, entry: value, node: node})
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		return l.legacyView(node, value, target)
 	}

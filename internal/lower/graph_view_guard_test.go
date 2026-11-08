@@ -1,0 +1,197 @@
+package lower
+
+import (
+	"context"
+	"errors"
+	"testing"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// No source program makes most of the pairs viewPairGuard refuses: every cast lowering turns into a
+// view admits only a target assignable to its source (interfaceCast, structuralViewCast, a tag cast's
+// members), and the checker holds a type predicate's target assignable to its parameter. Structural
+// assignability relates same-named fields too, so a related pair's non-function fields are related.
+// These tests lower a real graph program, keep its lowering, and judge views set on it directly.
+const graphViewGuardDeclarations = `interface Base { readonly tag: string }
+interface Derived extends Base { readonly extra: Link }
+interface Left { readonly left: Link }
+interface Right { readonly right: Link }
+type Bag = Record<string, Left>
+interface Wanted { readonly a: Right }
+type Holder<T extends Base> = { readonly value: T }
+interface MakesDerived { make: () => Derived }
+interface MakesBase { make: () => Base }
+interface ReadsBase { readonly make: () => Base }
+interface HoldsDerived { readonly inner: MakesDerived }
+interface HoldsBase { readonly inner: MakesBase }
+interface Scalars { readonly count: number; readonly name: string; readonly flag: boolean; readonly missing?: number }
+interface Holding { readonly link: Link }
+interface Opaque { readonly value: unknown }
+`
+
+// graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
+// lowering, its checker alive until the test ends, with each declared interface's, type alias's and
+// type parameter's type and declaration by name.
+func graphViewGuardLowering(t *testing.T) (*lowering, map[string]*checker.Type, map[string]*ast.Node) {
+	t.Helper()
+	loaded, err := load.Load([]string{writeAgreementSource(t, "main.ts", graphViewGuardDeclarations+graphReviewCycle+"\n")})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	entry := loaded.Files()[0]
+	check, release := loaded.Checker(context.Background(), entry)
+	t.Cleanup(release)
+	lowered, err := lowerChecked(loaded, check, entry, nil, false, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// The guard runs only where graph types are found, so the views below are judged in a graph program.
+	if len(lowered.result.GraphTypes) == 0 {
+		t.Fatal("the declarations' program found no graph types")
+	}
+	types, nodes := map[string]*checker.Type{}, map[string]*ast.Node{}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		switch node.Kind {
+		case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindTypeParameter:
+			types[node.Name().Text()] = check.GetTypeAtLocation(node.Name())
+			nodes[node.Name().Text()] = node
+		}
+		return node.ForEachChild(visit)
+	}
+	entry.AsNode().ForEachChild(visit)
+	return lowered, types, nodes
+}
+
+// graphViewGuardRow is one view set on the kept lowering: source and target by name, the source
+// empty for a view with none, and the NotYet it must give, empty when it passes the guard.
+type graphViewGuardRow struct {
+	name, source, target, want string
+}
+
+// judgeGraphViewGuardRows sets each row's view alone on a kept lowering and runs the guard with a
+// new finder, so no row's relation or field caches answer for another's.
+func judgeGraphViewGuardRows(t *testing.T, lowered *lowering, types map[string]*checker.Type, nodes map[string]*ast.Node, rows []graphViewGuardRow) {
+	t.Helper()
+	for _, row := range rows {
+		view := viewSource{target: types[row.target], node: nodes[row.target]}
+		if row.source != "" {
+			view.source = types[row.source]
+		}
+		if view.target == nil || row.source != "" && view.source == nil {
+			t.Fatalf("%s: a type isn't declared", row.name)
+		}
+		lowered.viewSources = []viewSource{view}
+		err := (&cycleFinder{l: lowered, where: map[*checker.Type]*ast.Node{}}).viewPairGuard()
+		if row.want == "" {
+			if err != nil {
+				t.Errorf("%s: got %v, want the view to pass the guard", row.name, err)
+			}
+			continue
+		}
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || notYet.What != row.want {
+			t.Errorf("%s: got %v, want NotYet %q", row.name, err, row.want)
+		}
+	}
+}
+
+// A view between two object types neither assignable to the other is NotYet, and so is a dictionary
+// seen as an interface whose field it can't hold: the cycle finder relates neither pair.
+func TestGraphViewGuardUnrelatedPairIsNotYet(t *testing.T) {
+	t.Parallel()
+	lowered, types, nodes := graphViewGuardLowering(t)
+	bag := lowered.checker.TypeToString(types["Bag"])
+	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
+		{"unrelated objects", "Left", "Right", "a view of Left as Right in a graph program, which the cycle finder doesn't relate yet"},
+		{"a dictionary as an interface", "Bag", "Wanted", "a view of " + bag + " as Wanted in a graph program, which the cycle finder doesn't relate yet"},
+	})
+}
+
+// Related at the top, failing through a same-named field: HoldsDerived as HoldsBase relates, as do
+// their inner fields, but inner's writable make takes a function inner's source can't hold.
+// Mutant: removing viewPairFailure's recursion into fields turns this red, since the top pair and
+// its own fields pass alone.
+func TestGraphViewGuardNestedPairIsNotYet(t *testing.T) {
+	t.Parallel()
+	lowered, types, nodes := graphViewGuardLowering(t)
+	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
+		{"through a field", "HoldsDerived", "HoldsBase", "a view of HoldsDerived as HoldsBase in a graph program, whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its field inner (MakesDerived as MakesBase)"},
+	})
+}
+
+// A function-typed field is the closure targets' to judge, so a view differing from its source only
+// there passes, unless the view can write the field with a function its source's field can't hold.
+// The direction matters: a view's field assignable to the source's passes though the reverse isn't.
+func TestGraphViewGuardFunctionFields(t *testing.T) {
+	t.Parallel()
+	lowered, types, nodes := graphViewGuardLowering(t)
+	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
+		{"writable, the view's function not the source's", "MakesDerived", "MakesBase", "a view of MakesDerived as MakesBase in a graph program, whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder"},
+		{"writable, the view's function the source's", "MakesBase", "MakesDerived", ""},
+		{"readonly, the view's function not the source's", "MakesDerived", "ReadsBase", ""},
+	})
+}
+
+// A declared generic pair is judged as any other: T's constraint Base isn't assignable to Derived, so
+// T as Derived is NotYet rather than skipped as a template.
+func TestGraphViewGuardDeclaredGenericPairIsNotYet(t *testing.T) {
+	t.Parallel()
+	lowered, types, nodes := graphViewGuardLowering(t)
+	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
+		{"type parameter", "T", "Derived", "a view of T as Derived in a graph program, which the cycle finder doesn't relate yet"},
+	})
+}
+
+// A generic function's cast is lowered per instance, where T is the argument's type (concrete), so
+// the guard may never see the declared pair: this logs which way lowering went. Either way the graph
+// program doesn't lower, and if the declared pair reaches the guard it's the generic NotYet.
+func TestGraphViewGuardGenericCastSource(t *testing.T) {
+	t.Parallel()
+	source := interfaceCastSource + graphReviewCycle + `function widen<T extends Node>(value: T): Identifier { return value as Identifier; }
+const node: Node = { kind: 'identifier', pos: 0 };
+console.log(widen(node).kind);
+`
+	_, err := lowerSourceAs(t, source, ".ts")
+	var notYet *NotYet
+	switch {
+	case err == nil:
+		t.Fatal("a graph program with a checked view lowered")
+	case errors.As(err, &notYet) && notYet.What == "a view of T as Identifier in a graph program, which the cycle finder doesn't relate yet":
+		t.Log("lowering recorded the declared generic pair, and the guard failed it closed")
+	default:
+		t.Logf("lowering stopped without the declared generic pair reaching the guard: %v", err)
+	}
+}
+
+// Views the cycle finder relates pass the guard and still reach graphAdoptionBoundary's refusal,
+// unchanged: a source program's Node as Identifier, and the same pair set directly.
+func TestGraphViewGuardRelatedPairsPassThrough(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSourceAs(t, interfaceCastSource+graphReviewCycle+`console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`, ".ts")
+	var refused *Refused
+	if !errors.As(err, &refused) || refused.What != "a checked-view adapter in a graph program" {
+		t.Fatalf("got %v, want graphAdoptionBoundary's refusal", err)
+	}
+	lowered, types, nodes := graphViewGuardLowering(t)
+	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
+		{"a subtype", "Derived", "Base", ""},
+		{"a supertype", "Base", "Derived", ""},
+	})
+}
+
+// A view with no source passes when its target holds only plain scalars, and is NotYet when its
+// target holds a reference field, unknown included. Only a speculation's result makes one from
+// source, and its fields are scalars, so these are direct.
+func TestGraphViewGuardNoSource(t *testing.T) {
+	t.Parallel()
+	lowered, types, nodes := graphViewGuardLowering(t)
+	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
+		{"scalar target", "", "Scalars", ""},
+		{"reference field", "", "Holding", "a view with no source type of Holding in a graph program, which holds a reference field the cycle finder can't follow yet"},
+		{"unknown field", "", "Opaque", "a view with no source type of Opaque in a graph program, which holds a reference field the cycle finder can't follow yet"},
+	})
+}
