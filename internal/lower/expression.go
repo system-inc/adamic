@@ -825,6 +825,12 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if value, known, err := l.optionalIntrinsic(node); known {
 			return value, err
 		}
+		if optional, handled, err := l.optionalMethodCall(node); handled {
+			if err != nil {
+				return nil, err
+			}
+			return optional.value(), nil
+		}
 		if err := l.optionalCall(node); err != nil {
 			return nil, err
 		}
@@ -1617,9 +1623,11 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 // optionalCall refuses a call in an optional chain, text?.toUpperCase() or run?.(): the receiver has
 // to be evaluated once and tested before the call, which stage 0 doesn't lower yet for the library's
 // methods or a function value called directly. Lowered as a plain call, it ran the method on
-// undefined. The one form lowered is object?.method(...) on a method the program declares (a
-// class's, an interface's, or a function value in a field): the call goes through the object's
-// methods, which stops at undefined as JavaScript's chain does (ir.Property's Method).
+// undefined. One form lowered is object?.method(...) on a method the program declares (a class's, an
+// interface's, or a function value in a field): the call goes through the object's methods, which
+// stops at undefined as JavaScript's chain does (ir.Property's Method). The other, an optional
+// method's object?.method?.(...) and object.method?.(...), its callers lower before asking here
+// (optionalMethodCall).
 func (l *lowering) optionalCall(call *ast.Node) error {
 	if call.Flags&ast.NodeFlagsOptionalChain == 0 || l.isOptionalJoin(call) {
 		return nil
@@ -1630,7 +1638,7 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 			return nil
 		}
 	}
-	return l.notYet(call, "a call through ?. (an optional call)")
+	return l.notYet(call, optionalCallNotYet)
 }
 
 // callClosure lowers a call through a function value.

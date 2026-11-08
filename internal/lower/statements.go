@@ -179,6 +179,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if err := l.genericFunctionIdentityCall(expression); err != nil {
 			return nil, err
 		}
+		if optional, handled, err := l.optionalMethodCall(expression); handled {
+			if err != nil {
+				return nil, err
+			}
+			return optional.statements(), nil
+		}
 		if err := l.optionalCall(expression); err != nil {
 			return nil, err
 		}
