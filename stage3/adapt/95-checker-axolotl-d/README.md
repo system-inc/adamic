@@ -37,11 +37,11 @@ workers; zero-hit processes and patched bundle addresses are retained in
 [evidence/oracle-observations.json.gz](https://github.com/system-inc/adamic/blob/2662e51f50595cc9a63355cac124b9feb98448bd/stage3/evidence/95-checker-axolotl-d/oracle-observations.json.gz).
 No instrumented compiler is committed. The hook is not used by adapt.cjs.
 
-| Read | Compiler/conformance present / absent | Final fixtures present / absent | Total present / absent | Disposition |
-| --- | ---: | ---: | ---: | --- |
-| 12034 file | 7 / 0 | 4 / 0 | 11 / 0 | Required first declaration at producer |
-| 42849 relevantTypeParameter | 0 / 0 | 6 / 8 | 6 / 8 | Explicit absence proposal only |
-| 50153 first declaration in fallback | 0 / 0 | 2 / 2 | 2 / 2 | Explicit absence proposal only |
+| Read                                | Compiler/conformance present / absent | Final fixtures present / absent | Total present / absent | Disposition                            |
+| ----------------------------------- | ------------------------------------: | ------------------------------: | ---------------------: | -------------------------------------- |
+| 12034 file                          |                                 7 / 0 |                           4 / 0 |                 11 / 0 | Required first declaration at producer |
+| 42849 relevantTypeParameter         |                                 0 / 0 |                           6 / 8 |                  6 / 8 | Explicit absence proposal only         |
+| 50153 first declaration in fallback |                                 0 / 0 |                           2 / 2 |                  2 / 2 | Explicit absence proposal only         |
 
 [evidence/measurements.json](https://github.com/system-inc/adamic/blob/2662e51f50595cc9a63355cac124b9feb98448bd/stage3/evidence/95-checker-axolotl-d/measurements.json) contains these exact
 counts. Counts exclude exploratory runs and proposal runs. Each absence is
@@ -113,11 +113,11 @@ checker diagnostics only by the primary file location. Full sets are compared,
 not only totals. The dependency-free control exactly reproduces 95a's complete
 after set: [evidence/reproduction.json](https://github.com/system-inc/adamic/blob/2662e51f50595cc9a63355cac124b9feb98448bd/stage3/evidence/95-checker-axolotl-d/reproduction.json).
 
-| Tree | Whole program | checker.ts own file |
-| --- | ---: | ---: |
-| 95a control | 131 | 17 |
-| 95d after | 130 | 16 |
-| One-edit reversion mutant | 131 | 17 |
+| Tree                      | Whole program | checker.ts own file |
+| ------------------------- | ------------: | ------------------: |
+| 95a control               |           131 |                  17 |
+| 95d after                 |           130 |                  16 |
+| One-edit reversion mutant |           131 |                  17 |
 
 Removed: `src/compiler/checker.ts:12034:30 TS18048: 'file' is possibly 'undefined'.`
 Added anywhere: **0**. [evidence/census.json](https://github.com/system-inc/adamic/blob/2662e51f50595cc9a63355cac124b9feb98448bd/stage3/evidence/95-checker-axolotl-d/census.json) and compressed
@@ -135,10 +135,10 @@ an oracle tree. Raw failures and exit codes are under evidence.
 
 Stock transpileModule checker JavaScript is byte-identical in both modes:
 
-| Comments | Bytes | SHA-256 before and after |
-| --- | ---: | --- |
+| Comments |     Bytes | SHA-256 before and after                                           |
+| -------- | --------: | ------------------------------------------------------------------ |
 | Retained | 2,892,419 | `786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e` |
-| Removed | 2,354,716 | `3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac` |
+| Removed  | 2,354,716 | `3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac` |
 
 [evidence/source.json](https://github.com/system-inc/adamic/blob/2662e51f50595cc9a63355cac124b9feb98448bd/stage3/evidence/95-checker-axolotl-d/source.json) records the first comparison;
 [evidence/final-source.json](https://github.com/system-inc/adamic/blob/2662e51f50595cc9a63355cac124b9feb98448bd/stage3/evidence/95-checker-axolotl-d/final-source.json) independently checks the
