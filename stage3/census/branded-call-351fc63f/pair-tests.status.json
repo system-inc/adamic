@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "stage3/census/pair",
+    "-p",
+    "test_*.py"
+  ],
+  "cwd": "/tmp/branded-report",
+  "exit": 0,
+  "wall_seconds": 19.075,
+  "stopped": null
+}

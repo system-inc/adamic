@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/tmp/branded-head",
+    "/tmp/branded-head-overlay"
+  ],
+  "cwd": "/tmp/branded-head",
+  "exit": 0,
+  "wall_seconds": 4.006,
+  "stopped": null
+}
