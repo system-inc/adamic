@@ -154,3 +154,40 @@ File: internal/lower/graph_flow_classes.go. Delete the ArraySort line (the one m
 Expected: TestGraphFlowFollowsEveryExpression reds: "ir.ArraySort isn't classified for graph flow", and
 TestGraphOracleGraphRegionsFlowToSorted stops at lowering, "a graph value through ir.ArraySort the plan doesn't
 follow yet", at sortedByName, whose result is demanded, rather than leaking.
+
+## 8. The values or entries array retained before its adoption
+
+File: internal/native/emit_records.go, the end of the values and entries case.
+
+Old:
+
+```go
+		e.adoptGraph(result, "sizeof *"+result, graph)
+```
+
+New:
+
+```go
+		e.line("adamic_retain(%s);", result)
+		e.adoptGraph(result, "sizeof *"+result, graph)
+```
+
+Expected: TestRecordGraphArraysAdoptedUnretained (internal/native/record_graph_emission_test.go) reds, "the record
+array ... is retained before it's adopted", for the values array and the entries array both. Run, the planned
+witnesses would panic too: adamic_graph_adopt refuses an allocation whose count isn't 1 (graph_regions.c:104).
+
+## 9. Entries pairs left counted
+
+File: internal/native/emit_records.go, inside the entries walk.
+
+Old:
+
+```go
+				e.adoptGraph(pair, fmt.Sprintf("adamic_object_allocation_size(%s)", pair), graph)
+```
+
+New: the line deleted.
+
+Expected: TestRecordGraphArraysAdoptedUnretained reds, "the entries array ...'s pairs aren't adopted as they're
+made", and TestGraphOracleGraphRegionsFlowRecordEntries leaks: each counted pair sits between the member array that
+holds it and the member it holds, a cycle no count frees.

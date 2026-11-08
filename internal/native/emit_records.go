@@ -51,6 +51,7 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 			element = ir.Union
 		}
 		result := e.own(ir.Array, fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(element)))
+		graph := e.graphTypes(call.GraphTypes)
 		e.recordWalk(args[0], func(key, slot string) {
 			value := slot
 			if call.Element.IsReference() {
@@ -66,13 +67,17 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 				e.line("adamic_object_field_types(%s)[1] = %d;", pair, call.Element)
 				e.line("%s->slots[0].reference = adamic_retain(%s);", pair, key)
 				e.line("%s->slots[1] = %s;", pair, value)
+				// A planned array's pairs are adopted as they're made, as adamic_map_entries adopts a graph
+				// map's (runtime map.c:297): a counted pair between a member array and the member it holds
+				// would close a cycle no count frees.
+				e.adoptGraph(pair, fmt.Sprintf("adamic_object_allocation_size(%s)", pair), graph)
 				value = fmt.Sprintf("(adamic_value){.reference = %s}", pair)
 			}
 			e.line("adamic_array_push(%s, %s);", result, value)
 		})
 		// A planned array is adopted made and filled, as a slice's is (graphArray), so it joins the
 		// regions of the members it holds.
-		e.adoptGraph(result, "sizeof *"+result, e.graphTypes(call.GraphTypes))
+		e.adoptGraph(result, "sizeof *"+result, graph)
 		return result
 	}
 	panic("native: unknown record operation")

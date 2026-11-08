@@ -28,6 +28,7 @@ var graphOracleFixtures = []string{
 	"internal/oracle/testdata/graph_regions/classification_override.a",
 	"internal/oracle/testdata/graph_regions/classification_return.a",
 	"internal/oracle/testdata/graph_regions/flow_group_by.a",
+	"internal/oracle/testdata/graph_regions/flow_record_entries.a",
 	"internal/oracle/testdata/graph_regions/flow_record_values.a",
 	"internal/oracle/testdata/graph_regions/flow_to_reversed.a",
 	"internal/oracle/testdata/graph_regions/flow_to_sorted.a",
@@ -192,6 +193,11 @@ func TestGraphOracleGraphRegionsClassificationReturn(t *testing.T) {
 func TestGraphOracleGraphRegionsFlowGroupBy(t *testing.T) {
 	t.Parallel()
 	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_group_by.a")
+}
+
+func TestGraphOracleGraphRegionsFlowRecordEntries(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_record_entries.a")
 }
 
 func TestGraphOracleGraphRegionsFlowRecordValues(t *testing.T) {
