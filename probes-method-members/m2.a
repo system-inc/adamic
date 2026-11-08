@@ -1,0 +1,14 @@
+// M2: M1's control, with make as a property signature instead of a method signature.
+interface Sys {
+	name: string;
+	make: () => string;
+}
+function build(name: string): Sys {
+	const system: Sys = {
+		name,
+		make: () => system.name + '!',
+	};
+	return system;
+}
+const made = build('node');
+console.log(made.make());

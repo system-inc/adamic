@@ -1,0 +1,17 @@
+// M1: nodeSystem's shape (sys.ts:1523). An object literal typed by an interface of method signatures,
+// whose literal method captures the const holding the object: a real cycle.
+interface Sys {
+	name: string;
+	make(): string;
+}
+function build(name: string): Sys {
+	const system: Sys = {
+		name,
+		make() {
+			return system.name + '!';
+		},
+	};
+	return system;
+}
+const made = build('node');
+console.log(made.make());

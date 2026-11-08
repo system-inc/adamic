@@ -1,0 +1,22 @@
+// M3: sys.ts:1381's shape, patchWriteFileEnsuringDirectory. A method-signature member replaced through
+// a parameter by an arrow that captures the parameter: a real cycle.
+interface Sys {
+	name: string;
+	write(text: string): string;
+	exists(text: string): boolean;
+}
+function patch(system: Sys): void {
+	const original = system.write;
+	system.write = (text: string): string => (system.exists(text) ? original(text) : 'missing ' + text);
+}
+const system: Sys = {
+	name: 'node',
+	write(text: string): string {
+		return 'wrote ' + text;
+	},
+	exists(text: string): boolean {
+		return text.length > 1;
+	},
+};
+patch(system);
+console.log(`${system.write('a')} ${system.write('ab')}`);
