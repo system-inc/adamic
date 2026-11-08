@@ -1,4 +1,6 @@
-interface SortedReadonlyArray<T> extends ReadonlyArray<T> { " __sortedArrayBrand": undefined; }
+interface SortedReadonlyArray<T> extends ReadonlyArray<T> {
+    ' __sortedArrayBrand': undefined;
+}
 function mint(xs: number[]): SortedReadonlyArray<number> {
     return xs as unknown as SortedReadonlyArray<number>;
 }

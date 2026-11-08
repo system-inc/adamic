@@ -15,14 +15,13 @@ an in-memory CompilerHost.
 ### Stock checker at core.ts:1049:34
 
 | Expression | Type | Contextual type |
-| --- | --- | --- |
+| ---------- | ---- | --------------- |
 
 | conditional | `T[]` | `unknown` |
 
 | emptyArray arm | `never[]` | `unknown` |
 
 | slice().sort(comparer) arm | `T[]` | `unknown` |
-
 
 The emptyArray identifier itself is never[], contextual unknown. Stock TypeScript
 reduces the conditional to T[]. The mutable T[] is an implied target in Adamic,
@@ -44,7 +43,7 @@ All reported equality checks compare the complete emitted JavaScript, not a
 function fragment. The pre-existing unknown/SortedReadonlyArray mint is retained.
 
 | Candidate | Conditional type | Arm type | Pure upcast | JS comments kept | JS comments removed | Qualification |
-| --- | --- | --- | --- | --- | --- | --- |
+| --------- | ---------------- | -------- | ----------- | ---------------- | ------------------- | ------------- |
 
 | `emptyArray as readonly never[]` | `readonly never[] | T[]` | `readonly never[]` | yes | identical | identical | Byte-identical readonly upcast |
 
@@ -61,7 +60,6 @@ function fragment. The pre-existing unknown/SortedReadonlyArray mint is retained
 | `(emptyArray as readonly never[]) satisfies readonly T[]` | `readonly never[] | T[]` | `readonly never[]` | yes | identical | identical | Byte-identical readonly upcast |
 
 | `conditional satisfies readonly T[]` | `T[]` | `never[]` | no new cast | identical | identical | Readonly context only; ordinary compiler still stops at 1049:34 |
-
 
 `conditional satisfies readonly T[]` means inserting `satisfies readonly T[]`
 between the conditional's existing closing parenthesis and `as unknown`.
@@ -80,7 +78,9 @@ amendment, a full census, or a native compilation claim.
 The measured useful spelling is:
 
 ```ts
-return (array.length === 0 ? emptyArray as readonly T[] : array.slice().sort(comparer)) as unknown as SortedReadonlyArray<T>;
+return (array.length === 0
+    ? (emptyArray as readonly T[])
+    : array.slice().sort(comparer)) as unknown as SortedReadonlyArray<T>;
 ```
 
 This adds one pure upcast. No measured cast-free spelling both produces the
@@ -95,9 +95,7 @@ remain unchanged. No Step 2 or checks 1-5 after an amendment are claimed.
 No ruling names emptyArray or specifically a shared empty-array view. The general
 rule at docs/rulings.md:91 is:
 
-
 > - **A mutable location (array element, mutable property, map value, class type argument) is invariant: `Dog[]` as `Animal[]`, `{ pet: Dog }` as `{ pet: Animal }` and `Map<string, Dog>` as `Map<string, Animal>` are refused, through a type parameter's constraint or an intersection too, and so is a `readonly` field seen again as writable; a `readonly` location is covariant.** Refuse. Oct 5 2026, Kirk and @system_adamic; source: #8vpywxp, #qffy2j8. Spec: The soundness rules (row `adamic/invariant-mutable`, and "Taken together"); Five programs 0.1 refuses, 5. Test: internal/lower/lower_test.go:170 TestAMutableLocationSeenWiderIsRefused; cohere/internal/lint/rules/adamic/invariant_mutable_test.go:36.
-
 
 ### Other emptyArray sites in the latent census on main
 
@@ -126,7 +124,7 @@ sufficient where the receiving contract is readonly; mutable result/storage
 contracts need their own investigation. None was edited.
 
 | Adapted compiler file:line:column | Function or initializer | Existing whole-owner pin |
-| --- | --- | --- |
+| --------------------------------- | ----------------------- | ------------------------ |
 
 | `builderState.ts:502:63` | `getAllFileNames` | none |
 
@@ -177,7 +175,6 @@ contracts need their own investigation. None was edited.
 | `utilities.ts:10141:24` | `getRequiresAtTopOfFile` | none |
 
 | `watchUtilities.ts:414:84` | `updateSharedExtendedConfigFileWatcher` | none |
-
 
 ### Evidence and reproduction
 

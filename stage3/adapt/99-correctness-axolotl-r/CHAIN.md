@@ -5,13 +5,13 @@ Base: origin/typescript/core-runtime-checks-2 at
 Accepted 99r commit 04ee86cd974ebaf1a9af32232868868be38fbc9d was cherry-picked
 cleanly onto it. Only the 99r directory is added by this commit.
 
-| Check on the combined tree | Result |
-| --- | --- |
-| Full stage3/apply.sh from pinned TypeScript v6.0.3 | Exit 0 |
-| Second apply of both 99r and 99s adapters | Zero files and edits each; all 746 source files preserve bytes and mtimes |
-| adamic types, binary built from this chained checkout | All 79 recursive compiler roots; exit 0, zero diagnostics |
-| Complete core.ts transpile, stock TypeScript 6.0.3 | Byte-identical before/after 99r, with comments kept and removed |
-| generate_shards.py --check, configured tool PATH | Exit 0 |
+| Check on the combined tree                            | Result                                                                    |
+| ----------------------------------------------------- | ------------------------------------------------------------------------- |
+| Full stage3/apply.sh from pinned TypeScript v6.0.3    | Exit 0                                                                    |
+| Second apply of both 99r and 99s adapters             | Zero files and edits each; all 746 source files preserve bytes and mtimes |
+| adamic types, binary built from this chained checkout | All 79 recursive compiler roots; exit 0, zero diagnostics                 |
+| Complete core.ts transpile, stock TypeScript 6.0.3    | Byte-identical before/after 99r, with comments kept and removed           |
+| generate_shards.py --check, configured tool PATH      | Exit 0                                                                    |
 
 The transpile comparison reverses only 99r's five exact core owner pins in
 memory. Both sides retain 99s's exact after-text for skipWhile, filterMutate,

@@ -4,12 +4,12 @@ Base: b729c7e07010fe6db34c6afc1d11c8ca63a86ae3. TypeScript v6.0.3,
 050880ce59e30b356b686bd3144efe24f875ebc8. Node v24.19.0, Linux x64.
 No conditional caller edit was built until count-result.json passed.
 
-| Site | Owning function | Calls | Undefined values |
-| --- | --- | ---: | ---: |
-| 14118, control | resolveTypeReferenceMembers, source.typeParameters | 439,874 | 111,773 |
-| 16980 | getTypeArguments, final return value | 2,384,805 | 0 |
-| 41574 | instantiateTypeWithSingleGenericCallSignature, concatenate result | 101 | 0 |
-| 41628 | getUniqueTypeParameters, concatenate argument | 20 | 0 |
+| Site           | Owning function                                                   |     Calls | Undefined values |
+| -------------- | ----------------------------------------------------------------- | --------: | ---------------: |
+| 14118, control | resolveTypeReferenceMembers, source.typeParameters                |   439,874 |          111,773 |
+| 16980          | getTypeArguments, final return value                              | 2,384,805 |                0 |
+| 41574          | instantiateTypeWithSingleGenericCallSignature, concatenate result |       101 |                0 |
+| 41628          | getUniqueTypeParameters, concatenate argument                     |        20 |                0 |
 
 Each counter also received one planted undefined at startup. All four planted
 events occur exactly once in counts.jsonl.gz; their summaries each show one call
@@ -27,10 +27,10 @@ unmodified stage3/oracle/run.sh, as stage3/lane/run.sh does: all runners, eight
 workers, no filter, default timeout. The reference ran first, the counted copy
 second. Both unchanged lane checkers passed, including the sanctioned API diff.
 
-| Run | Passing | Failing | Pending | Tests seconds |
-| --- | ---: | ---: | ---: | ---: |
-| Uncounted base output | 106,366 | 1 | 0 | 358.954 |
-| Counted scratch copy | 106,366 | 1 | 0 | 358.009 |
+| Run                   | Passing | Failing | Pending | Tests seconds |
+| --------------------- | ------: | ------: | ------: | ------------: |
+| Uncounted base output | 106,366 |       1 |       0 |       358.954 |
+| Counted scratch copy  | 106,366 |       1 |       0 |       358.009 |
 
 The sole failure in each is `unittests:: Public APIs for typescript.d.ts should be
 acknowledged when they change`; baseline_diffs is exactly `["api/typescript.d.ts"]`.

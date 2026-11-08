@@ -22,13 +22,13 @@ are unchanged. concatenate-witness.cjs freshly confirms that an undefined first
 array and empty second array return undefined, and checks both corrected inferred
 results with stock TypeScript.
 
-| Checker owner | Exact local change |
-| --- | --- |
-| resolveTypeReferenceMembers | First argument is `source.typeParameters ?? emptyArray` |
-| getTypeArguments | Final return is `Debug.checkDefined(type.resolvedTypeArguments)` |
+| Checker owner                                 | Exact local change                                                                             |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| resolveTypeReferenceMembers                   | First argument is `source.typeParameters ?? emptyArray`                                        |
+| getTypeArguments                              | Final return is `Debug.checkDefined(type.resolvedTypeArguments)`                               |
 | instantiateTypeWithSingleGenericCallSignature | Assign `Debug.checkDefined(concatenate(context.inferredTypeParameters, uniqueTypeParameters))` |
-| getUniqueTypeParameters | Argument is `Debug.checkDefined(concatenate(context.inferredTypeParameters, result))` |
-| getDiagnosticsWorker | No edit; relativeComplement's truthful defined-array overload supplies Diagnostic[] |
+| getUniqueTypeParameters                       | Argument is `Debug.checkDefined(concatenate(context.inferredTypeParameters, result))`          |
+| getDiagnosticsWorker                          | No edit; relativeComplement's truthful defined-array overload supplies Diagnostic[]            |
 
 There is no conditional assignment, no new cast, and no empty-array fallback at
 sites 4, 5 or 6. The getUniqueTypeParameters `||` guard proves at least one input
@@ -49,14 +49,19 @@ not a proof that every possible client execution satisfies those invariants.
 At the fully adapted head, debug.ts:227-237 contains:
 
 ```ts
-export function assertIsDefined<T>(value: T, message?: string, stackCrawlMark?: AnyFunction): asserts value is NonNullable<T> {
+export function assertIsDefined<T>(
+    value: T,
+    message?: string,
+    stackCrawlMark?: AnyFunction,
+): asserts value is NonNullable<T> {
     // eslint-disable-next-line no-restricted-syntax
-    if (value === undefined || value === null) {
+    if(value === undefined || value === null) {
         fail(message, stackCrawlMark || assertIsDefined);
     }
 }
 
-export function checkDefined<T>(value: T | null | undefined, message?: string, stackCrawlMark?: AnyFunction): T { // eslint-disable-line no-restricted-syntax
+export function checkDefined<T>(value: T | null | undefined, message?: string, stackCrawlMark?: AnyFunction): T {
+    // eslint-disable-line no-restricted-syntax
     assertIsDefined(value, message, stackCrawlMark || checkDefined);
     return value;
 }
@@ -118,7 +123,25 @@ with Adamic's real checker, finds this owner and exact call text, verifies overl
 1 is selected, and records the proof-disabling assertions. Its exact line is:
 
 ```json
-{"bodyProof":"main censusReturnProof returns false at its assertion scan","call":"relativeComplement(previousGlobalDiagnostics, currentGlobalDiagnostics, compareDiagnostics)","callee":"relativeComplement","castsInBody":0,"checkerDiagnostics":0,"implementationAnnotation":"T[] | undefined","implementationHasUndefined":true,"measurement":"read-only checker call-contract census, not Lower output","nativeAdmission":"not claimed; ordinary census stops earlier","nativeBoundaryRule":"call-site undefined check if lowering reaches censusOverloadResult; no body-proof erasure","nonNullAssertionsInBody":7,"overload":1,"owner":"getDiagnosticsWorker","result":"Diagnostic[]","resultHasUndefined":false,"roots":79,"where":"src/compiler/checker.ts:49742:51"}
+{
+    "bodyProof": "main censusReturnProof returns false at its assertion scan",
+    "call": "relativeComplement(previousGlobalDiagnostics, currentGlobalDiagnostics, compareDiagnostics)",
+    "callee": "relativeComplement",
+    "castsInBody": 0,
+    "checkerDiagnostics": 0,
+    "implementationAnnotation": "T[] | undefined",
+    "implementationHasUndefined": true,
+    "measurement": "read-only checker call-contract census, not Lower output",
+    "nativeAdmission": "not claimed; ordinary census stops earlier",
+    "nativeBoundaryRule": "call-site undefined check if lowering reaches censusOverloadResult; no body-proof erasure",
+    "nonNullAssertionsInBody": 7,
+    "overload": 1,
+    "owner": "getDiagnosticsWorker",
+    "result": "Diagnostic[]",
+    "resultHasUndefined": false,
+    "roots": 79,
+    "where": "src/compiler/checker.ts:49742:51"
+}
 ```
 
 This is a call-contract census, not Lower output. It establishes the actual
@@ -139,24 +162,23 @@ as .go.txt, like the census-export.go.txt files of adaptations 30 to 33, so it
 is evidence and never a package the gate builds: copy it to a .go file in a
 scratch module to rerun it.
 
-
 ## Mints outside core.ts stay unchanged
 
-| File and baseline line | Mint source |
-| --- | --- |
-| compiler/program.ts:3285 | `emptyArray as any as SortedReadonlyArray<Diagnostic>` |
-| compiler/utilities.ts:6061 | `[] as Diagnostic[] as SortedArray<Diagnostic>` |
-| compiler/utilities.ts:6062 | `[] as string[] as SortedArray<string>` |
-| compiler/utilities.ts:6099 | `[] as Diagnostic[] as SortedArray<DiagnosticWithLocation>` |
-| compiler/utilities.ts:6100 | `diagnostics as SortedArray<DiagnosticWithLocation>` |
-| compiler/utilities.ts:6108 | `nonFileDiagnostics.slice() as SortedArray<Diagnostic>` |
-| compiler/watchUtilities.ts:156 | `entries.files.map(getCanonicalFileName).sort() as SortedArray<Canonicalized>` |
-| compiler/watchUtilities.ts:157 | `entries.directories.map(getCanonicalFileName).sort() as SortedArray<Canonicalized>` |
-| server/project.ts:1778 | `emptyArray as SortedReadonlyArray<string>` |
-| server/utilitiesPublic.ts:140 | `[] as any as SortedArray<T>` |
-| services/services.ts:2957 | `[] as number[] as SortedArray<number>` |
-| testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:386 | `cloned.entries.map(clone) as SortedArray<FSEntry>` |
-| testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:976 | `[] as FSEntry[] as SortedArray<FSEntry>` |
+| File and baseline line                                         | Mint source                                                                          |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| compiler/program.ts:3285                                       | `emptyArray as any as SortedReadonlyArray<Diagnostic>`                               |
+| compiler/utilities.ts:6061                                     | `[] as Diagnostic[] as SortedArray<Diagnostic>`                                      |
+| compiler/utilities.ts:6062                                     | `[] as string[] as SortedArray<string>`                                              |
+| compiler/utilities.ts:6099                                     | `[] as Diagnostic[] as SortedArray<DiagnosticWithLocation>`                          |
+| compiler/utilities.ts:6100                                     | `diagnostics as SortedArray<DiagnosticWithLocation>`                                 |
+| compiler/utilities.ts:6108                                     | `nonFileDiagnostics.slice() as SortedArray<Diagnostic>`                              |
+| compiler/watchUtilities.ts:156                                 | `entries.files.map(getCanonicalFileName).sort() as SortedArray<Canonicalized>`       |
+| compiler/watchUtilities.ts:157                                 | `entries.directories.map(getCanonicalFileName).sort() as SortedArray<Canonicalized>` |
+| server/project.ts:1778                                         | `emptyArray as SortedReadonlyArray<string>`                                          |
+| server/utilitiesPublic.ts:140                                  | `[] as any as SortedArray<T>`                                                        |
+| services/services.ts:2957                                      | `[] as number[] as SortedArray<number>`                                              |
+| testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:386 | `cloned.entries.map(clone) as SortedArray<FSEntry>`                                  |
+| testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:976 | `[] as FSEntry[] as SortedArray<FSEntry>`                                            |
 
 The exact 746-file source comparison permits changes only inside the nine pinned
 owners in core.ts and checker.ts. All these other files remain byte-identical.
@@ -190,24 +212,24 @@ including movement into arrows or nested blocks, and preserves LF and CRLF. Repl
 writes, and preserves bytes and mtimes. Python's real directory sort places 99r
 immediately after 99q; sort.json records the full ordered list.
 
-| Check | Result |
-| --- | --- |
-| Fresh baseline full apply | Exit 0 |
-| New-stack full apply | Exit 0 |
-| Adapter second run | Zero files, edits and writes |
-| Stock TypeScript 6.0.3 complete-source parsing | Pass |
-| Adamic types, all 79 recursive roots, before and after | Both exit 0, zero diagnostics |
-| Whole core.ts JavaScript, comments kept and removed | Byte-identical |
-| typescript.d.ts and tsserverlibrary.d.ts | Both byte-identical |
-| Uncounted, counted and adapted full oracles | 106,366 passing, one sanctioned failure, zero pending each |
-| Exact title/outcome multisets | All three equal, including multiplicities |
-| Unchanged lane sanction checker | Pass for all three oracles |
-| Node witnesses for edit 3 | All three before/after outputs equal |
-| Brand mutant | Exit 1, changed-owner refusal, zero writes |
-| relativeComplement overload mutant | Clean copied baseline, then exit 1 and TS2322 at checker.ts:49743:17 |
-| generate_shards --check | Exit 0 with configured tool PATH |
-| Lane Go fixtures | Exit 0, 139.543 seconds |
-| Ordinary per-file census, both compiler stacks | See CENSUS.md and raw JSONL streams |
+| Check                                                  | Result                                                               |
+| ------------------------------------------------------ | -------------------------------------------------------------------- |
+| Fresh baseline full apply                              | Exit 0                                                               |
+| New-stack full apply                                   | Exit 0                                                               |
+| Adapter second run                                     | Zero files, edits and writes                                         |
+| Stock TypeScript 6.0.3 complete-source parsing         | Pass                                                                 |
+| Adamic types, all 79 recursive roots, before and after | Both exit 0, zero diagnostics                                        |
+| Whole core.ts JavaScript, comments kept and removed    | Byte-identical                                                       |
+| typescript.d.ts and tsserverlibrary.d.ts               | Both byte-identical                                                  |
+| Uncounted, counted and adapted full oracles            | 106,366 passing, one sanctioned failure, zero pending each           |
+| Exact title/outcome multisets                          | All three equal, including multiplicities                            |
+| Unchanged lane sanction checker                        | Pass for all three oracles                                           |
+| Node witnesses for edit 3                              | All three before/after outputs equal                                 |
+| Brand mutant                                           | Exit 1, changed-owner refusal, zero writes                           |
+| relativeComplement overload mutant                     | Clean copied baseline, then exit 1 and TS2322 at checker.ts:49743:17 |
+| generate_shards --check                                | Exit 0 with configured tool PATH                                     |
+| Lane Go fixtures                                       | Exit 0, 139.543 seconds                                              |
+| Ordinary per-file census, both compiler stacks         | See CENSUS.md and raw JSONL streams                                  |
 
 The initial shard invocation lacked gofmt on PATH and failed before checking the
 generated file. Sourcing /workspace/adamic-tools/env.sh resolved it; the rerun
