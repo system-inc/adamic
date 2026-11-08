@@ -1,0 +1,670 @@
+{
+  "allExistingIncrementalPatchesIdentical": true,
+  "newDirectoryOnly": true,
+  "rows": [
+    {
+      "adaptation": "10-type-imports",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "3cb155b1b8546616a4ccccda24ba7759cf27a73ecc44d0150567e45e18401fb0"
+    },
+    {
+      "adaptation": "20-optional-declarations",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "e0cf407e397b8c2af2bd11d3c0131ae41ba4aec91707849774cd14d3b3e16770"
+    },
+    {
+      "adaptation": "30-indexed-reads",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "68a20c0bbbce9d4a178cf58b9456a2ccf20558acd2ffd5e3376ca4f0083650f0"
+    },
+    {
+      "adaptation": "31-indexed-reads-checker",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "2d077ccb11225ea7831eb0a68067edd56c634b4a0099761a8c28246df0f5b9f8"
+    },
+    {
+      "adaptation": "32-indexed-reads-program",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "ec12414216ba09120cec709012a1d954a375f4748f63346a4b3c546ca1764d95"
+    },
+    {
+      "adaptation": "33-indexed-reads-emit",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "de9f04ad2339cd6beead87f845ebe88d4c42227b4a06f093c97278569144973a"
+    },
+    {
+      "adaptation": "40-explicit-any",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "6fdb25e6bec64966eb1b8c3af38716a321cf4670693178959ee028c6efeb4e2f"
+    },
+    {
+      "adaptation": "41-explicit-any-remaining",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "fa393ce030c088d5afe997f0ae2e9fdd0e6ccc8a28c9cd31ac89eb340fc28e64"
+    },
+    {
+      "adaptation": "42-scanner-any",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "7757e89879b106d01e72d583b406105a6d47b794fd4ff2838b25747719f69399"
+    },
+    {
+      "adaptation": "43-any-returns",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "e71de61b6ff940a75e32c06544a1b8b23edf11e37c4ec533a0f06edda039c953"
+    },
+    {
+      "adaptation": "44-config-generics",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "a03c082ffa17549da14c74da8af729c1a265f00bf0525e3e8e92a16e332ee584"
+    },
+    {
+      "adaptation": "45-regex-captures",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "8276ba37de88a5eb80ae101c04a403a11bc3f35ae7f2e3f75e2ccfc22581393f"
+    },
+    {
+      "adaptation": "46-fix-pragma-empty-argument",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "97682ebe06620e0ed6dad25d08f723ed5a629474af7796eba528a0f1ea2db5d1"
+    },
+    {
+      "adaptation": "47-host-errors",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "89b60ab908d3b2609923daebe9caaa7e414f382b20acb68f85bbb40ce00b0966"
+    },
+    {
+      "adaptation": "48-memoize",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "697991b035da2baad09272e50c52bb6d502fd568aba85a73e2966251bae1cebe"
+    },
+    {
+      "adaptation": "49-honest-optionals",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "a94da3934f1578694ed40d25580b33754183099b28b15b97dffb02b6c4bdee54"
+    },
+    {
+      "adaptation": "50-temporary-scanner-implicit-returns",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "0b8519497df872030deafe5904a79deaad9f450cd707112b5028c1562cec3622"
+    },
+    {
+      "adaptation": "51-temporary-scanner-fallthrough",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "adaptation": "52-json-values",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "c615bf084070102be49ee625fe5272d1edf487fdad987a8dc237bb6d4f6e6511"
+    },
+    {
+      "adaptation": "60-temporary-factory-local-symbol",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "a1858a87d0f333661a26f921f277d1e18304ef54fbb78344ed7098a6a28968c9"
+    },
+    {
+      "adaptation": "61-temporary-factory-type-expression",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "61c816abbfe0fc3334639f4eae1c2d6b9cad54bd70fb03da1539c25ce51ff115"
+    },
+    {
+      "adaptation": "62-temporary-tracing-write",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "052b6e91f1335edd8c056659367e0c9123d1448a56279ae4e59ef89a65532a35"
+    },
+    {
+      "adaptation": "63-temporary-tracing-legend",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "c579044a52f18739c795b074f5129c8742f30e1bcce21ae061b4e9c4c70ce36c"
+    },
+    {
+      "adaptation": "64-temporary-parser-range-read",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "4de5e9f5dfcc588d095af9878908a5811c556c44287ec52379b46586a04e15e4"
+    },
+    {
+      "adaptation": "65-temporary-node-builtins",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "cd2c217fea92b3c1405dd738a1a140edff7ba3ee865172cd05b7143b469ac6d0"
+    },
+    {
+      "adaptation": "70-readonly-views",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "8f99636ba3ef89ffddd5190bb63de11f44e14711e44084329fa58da4762d83e4"
+    },
+    {
+      "adaptation": "71-writable-views",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "782266fc6a705e7d6b63e7a966fefd6a6aee5c53d4d0d9ed71a5d1166627a37e"
+    },
+    {
+      "adaptation": "75-optional-widening",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "e7c8e2bde3185f81e1ab77717dec3c31fcaab599f0f2c48391d0e5d940d513e9"
+    },
+    {
+      "adaptation": "76-truthful-casts",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "10cf998921978beda5e9546ff7c64c3f6ea3acdaaa0e80d770602ca4080e408b"
+    },
+    {
+      "adaptation": "78-variance-marker",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "8b282f36bdd1c8ccff4ba80eab53543884fbfab1e13e747a8498c03c917bea16"
+    },
+    {
+      "adaptation": "79-exit-code",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "9009086008e7390aabd344fefbc8e800633de2d128bd80b9498df82aeb956943"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "e0118d6a2693555966d652774386ae890d84d2cede226100e007969b3d137257"
+    },
+    {
+      "adaptation": "91-patcher-discard",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "f12e88589d2096fa1a378a620eacfc7a75fa2feaf60faf69d3d0b98c4c0e9e77"
+    },
+    {
+      "adaptation": "92-tty-host-results",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "d7d3c463b2110eeb18778d0f80a4a635ec23141fed5f4f02d2d9112d15eb88d9"
+    },
+    {
+      "adaptation": "93-builtin-imports",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "96e60b77fb9c61f03f11fa2768902a2598c551380b98acbf9d672253a575ac65"
+    },
+    {
+      "adaptation": "94-axolotl-property-read",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "b26ef11c4963e00f1e23024520010bdf767c8a090c990df59b7df7d0565c625e"
+    },
+    {
+      "adaptation": "94-correctness-multimap",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "a43056bada90d419f52627fe31f0d6ddad297564f7b130388974c131150e1f1f"
+    },
+    {
+      "adaptation": "95-checker-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "661f9ef808485142b7b858b601768394c70771bcc2cb3508b7661d5f71b7c4c7"
+    },
+    {
+      "adaptation": "95-checker-axolotl-b",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "dc3da3b096614517acb296fa0085978bf74418aa7e9eaedde1eec93cd37cb80e"
+    },
+    {
+      "adaptation": "95-checker-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "cbd3daf224dd3595bf0684bbb0882ab607892c33c3c5cd456ecbafecc30bce91"
+    },
+    {
+      "adaptation": "95-checker-axolotl-d",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "7c2f1c81cd28dceaa810fc61ea264c796246616c43a8a2802ca01e5102bdfbbb"
+    },
+    {
+      "adaptation": "95-checker-axolotl-e",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "4f19f2915dcfc9b0bb8b3195df9fb59ec303868363cba030d2eaf35e1c602cf9"
+    },
+    {
+      "adaptation": "95-checker-axolotl-f",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "b60da841f508b1ab64f0514a4d57ba5723d14127f069b01a05203d0e6a2c1dd6"
+    },
+    {
+      "adaptation": "95-checker-axolotl-g",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "cd36dc121ec52bb6f6fb77f47eb90ecb8510bb0349106a74da585a604d2de6a6"
+    },
+    {
+      "adaptation": "95-checker-axolotl-h",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "7227c85f63b642e7b88690f5df4a72ed7577ec4d3d60b672b6c0b6e4ba163d05"
+    },
+    {
+      "adaptation": "96-emit-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "c22b983ed55f915b6d58bc3757d294bfab364814593502642bd22121ff083c7d"
+    },
+    {
+      "adaptation": "96-emit-axolotl-b",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "ef6d5da887ff634fe9a41a3b76c98abd0321f6a328f187355a46e7589a0183ed"
+    },
+    {
+      "adaptation": "96-emit-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "519e7e8303d6b4e80c838fdb5f57e0548486791445688bda89cf977043d314c8"
+    },
+    {
+      "adaptation": "97-cli-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "bea197626033d9b70d3332d4ef99b60019090863aa797b76c0bbfc589068a0ca"
+    },
+    {
+      "adaptation": "97-cli-axolotl-b",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "b3964fcb4162c003f9bf8073846e1354444f3a36bdc1c0736120629a63b4f9ce"
+    },
+    {
+      "adaptation": "97-cli-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "53cf941390d315fa9a3f7625a351d0b5b1badb93f40dfd18bcf0efaced93f639"
+    },
+    {
+      "adaptation": "97-cli-axolotl-d",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "5dae2da3c9c916a702c778d2d6c6eaebcd286c7aaec17b9aadb2b7823688a504"
+    },
+    {
+      "adaptation": "97-cli-axolotl-e",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "a9c9cfeacd192807c5050c355fb5c4920a57f603b8187d9e82d2e599f0c62538"
+    },
+    {
+      "adaptation": "98-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "86b6286ceae02164bdea718405ef0168cf61a7b23bf2b696753e2ff31e66b6a9"
+    },
+    {
+      "adaptation": "98-axolotl-b",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "b9b70d0c31da2d25ab8b6247e032e7da03369e6e1ee263edbe80299ec3d4ce6d"
+    },
+    {
+      "adaptation": "98-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "02a8089b15813462f2699b42c7884329891a5220e44a564226d36f00c686bc82"
+    },
+    {
+      "adaptation": "98-axolotl-d",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "0f593b2ab798bf695f103f01ae27adbf491ee99695f3274d5391beb0adfa921f"
+    },
+    {
+      "adaptation": "98-axolotl-e",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "d36074b2fb2c2f2e4c40aa6251ea67dc908f6927bfdc60d95d90ee02cf549fcb"
+    },
+    {
+      "adaptation": "99-cli-debug-assertion-level",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "ab60fcc10ea937cdea5e319662a0321679d0e18aef3317da5abfbd9104a25881"
+    },
+    {
+      "adaptation": "99-cli-perf-hooks-import",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "8d102e77a4400ce18260fe55f2e2e0e4ef4111308b51be8d8c034478344f4f87"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "5318127874d6462fde2ad804ad61a010f661b3cb110b5b4ce5d9d76d708f3216"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-b",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "b0b24e667d66e39069d5c29e7d290b8502774c4c95a0ddabfc46024c5294f489"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "07b1d5bb47007ef8b8bac59ed4e52ed0f1da7e951f4e2b12ca77d7ee7c1cfd1a"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-d",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "6782f47541f2ea7278ff86a521ede65af0f29db55ee66e50f1da50b68822b176"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-e",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "17e57c9cd5ee72cc94b10ecba8d831e7af05feb1c7e61a761b797c107010f0a6"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-f",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "5c0eb356a699013576e6e7690243d7a7de242d257c242038fe901c0f487238b2"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-g",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "3e94851b5794f83f7c5f8c9538e25e0f635e6d8eeacc514dacef0c3728bb670c"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-h",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "9ccda142ef1ebd47dc91bd0a09dc91507676d74ba3f5ef5125747ab758c4fb5c"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-i",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "8506fdcd057359d4aaefc5a4b72e878874bc64a0138223100f960b2ef8e8cf70"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-j",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "3ff9db927f6f5a53391233febcd945985aa0d68467daef0491a9c3c30601bfef"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-k",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "ba29cc96a7e51af3d38182dd019c48169be95feb42490299dbd17fa8e2a3dce3"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-l",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "aceccdba6237aec2e5c1b2f6180868577bf339b503a206cc1fcb2836a5499786"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-m",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "fad69bb4e1fc4ae12c2bc2f397b8a2556f4ee3f3b214a093d050ae861adae63a"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-n",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "2c30fa1b87268c04ffc68ec16cb00bf6254be27e42c029fa0d7e7f72dabb67e9"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-q",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "0f6c2def00fdc534cd178d7906714d9b4fa23321e6603cfe157d2db5a177aaf3"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-r",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "11e3dd19cb6af71f0ba8ad7037558f084344b548c996b8abd01c4a72b06139b9"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-s",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "719c9dd9a5933fc63c017373b3b6d5ad9a48a0801144229cbd41e565fef32b19"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-t",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "ac212bb95410f9ed8dc4da2c382b70a4e111821bef47c0157c29c4a5491c3668"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-u",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "881743223e702b56cb0bd01ca79d472a838da339ee5ae4fa5f37cedee8bc15ab"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-w",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "50757e7c67d744512ad70d65035cf6149df8028e0a9acb27c54e9cd61eb50720"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-x",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "9d95039973c6ac1e4fc9f6f41117d7552d638fcfa0ce3b191b6e77dc7e70cc64"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-y",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "7df33e776bf75ec24f837f68c0c4ee692a9031be3b45e5158cc1d347e3e18930"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-z",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "334b97d905942e9655a7145e2862a21441469e9f661cbd54e470238fc250d55f"
+    },
+    {
+      "adaptation": "99-correctness-core-arrayof",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "33ada14269b370b42baecdf07ab7695ced321aff600ddcf647bfdb7d3c72b5bd"
+    },
+    {
+      "adaptation": "99-correctness-core-assign",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "c6ccb57e0781dc943dc5b6a1923b71b43a473e1eb168ee26b15d51d73e0d6de3"
+    },
+    {
+      "adaptation": "99-correctness-core-clone",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "8609814c11d3c96ae9ea44b9966a5b06252cb0b6aed3d785f33c8bf024387eb3"
+    },
+    {
+      "adaptation": "99-correctness-core-compare",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "c63e823bff1b5652cc54986ffdf6c23254c0de37ca037d95be7975da463d7ed2"
+    },
+    {
+      "adaptation": "99-correctness-core-extend",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "678e6b5dc9bec25d1a03c3698531683ff0e7c4bc4caed48f25f02be21e3ad21e"
+    },
+    {
+      "adaptation": "99-correctness-core-getallkeys",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "a934ec1933ea7a2400235bb3c182c5c15fef89703f4068bf920f7eba59511911"
+    },
+    {
+      "adaptation": "99-correctness-core-groupby",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "0e8c48eef913dd92a81308d5052a7940b60da048b650b4089d769908893a7451"
+    },
+    {
+      "adaptation": "99-correctness-core-levenshtein",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "a1b8f7e3c5b4f618f28771abe26f3c8e2b1cba9347559aa80ff2be64d9349da0"
+    },
+    {
+      "adaptation": "99-correctness-core-multimap",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "4ffa36e2c39fec1f0484005ffcd83403080c19f519acccec40c35c1c27f5b51b"
+    },
+    {
+      "adaptation": "99-correctness-core-sys-timer-slot",
+      "newDirectory": true,
+      "afterExit": 0,
+      "diffSha256": "68c4620983d4d6371df53439a2fd6ca72fb8150bb68edbb1c8b38dca43936d76"
+    },
+    {
+      "adaptation": "99-correctness-core-takewhile",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "d62fab7332a569415adda7aa3b7046700bb5dadd89b7f268c6ce5203b7d115e4"
+    },
+    {
+      "adaptation": "99-wasm-crypto-import",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "identicalIncrementalPatch": true,
+      "diffSha256": "f708b05132d4769dbcd0de14afd98fcfcebf89f6cc2c78dacebea3227b22fdc2"
+    }
+  ]
+}

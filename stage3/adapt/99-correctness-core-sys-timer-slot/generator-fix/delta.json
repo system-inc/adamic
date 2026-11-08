@@ -1,0 +1,85 @@
+{
+  "status": "pass",
+  "head1": "5ba70a9486a9d297f42a6a29fd9b2388caaf093d",
+  "keys": [
+    "source_commit",
+    "normalized_changes",
+    "counts",
+    "excluded_method_conversions",
+    "owners",
+    "proofs",
+    "baseline_diffs",
+    "diff_lines"
+  ],
+  "beforeLines": 5119,
+  "afterLines": 5154,
+  "changedFields": [
+    "normalized_changes",
+    "owners",
+    "proofs",
+    "diff_lines"
+  ],
+  "unchangedExistingRowsAgainstRegeneratedHead1": true,
+  "preexistingHead1ProofDrift": {
+    "changedFields": [
+      "proofs"
+    ],
+    "changes": [
+      {
+        "file": "stage3/adapt/40-explicit-any/class-rules.json",
+        "before": "0879b71c393b0aac9c28676df002b4539a4d7b7d5d9158a167c98e821a8f7567",
+        "after": "215ecf3a168203ecdbd24949fecaaf7f8ebb8d9d456ae884c532673b51b2d576"
+      },
+      {
+        "file": "stage3/adapt/32-indexed-reads-program/public-host-sites.json",
+        "before": "775c2ae6d7d1f784ca2d249dd277737526f7bac44de5c368c98db9cf0bd1ae2b",
+        "after": "1f641e9402f9cccda75e52209fea74f827e40fe21103ce743062c943ef170776"
+      }
+    ],
+    "timerAdaptationAbsent": true
+  },
+  "added": {
+    "normalized_changes": [
+      {
+        "after": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]",
+        "before": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]",
+        "declaration": "member:[\"ts\",\"System\",\"clearTimeout\"]#0"
+      },
+      {
+        "after": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"TypeParameter\",[\"Identifier\",\"A\"],[\"ArrayType\",[\"UnknownKeyword\"]]],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"TypeReference\",[\"Identifier\",\"NoInfer\"],[\"TypeReference\",[\"Identifier\",\"A\"]]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"TypeReference\",[\"Identifier\",\"A\"]]],[\"UnknownKeyword\"]]",
+        "before": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"AnyKeyword\"]]",
+        "declaration": "member:[\"ts\",\"System\",\"setTimeout\"]#0"
+      }
+    ],
+    "owners": [
+      {
+        "adaptation": "adapt/99-correctness-core-sys-timer-slot/api-sanctions.json row 1 {\"path\":[\"System\",\"setTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\",\"after\":\"setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;\",\"why\":\"Adamic ruling, task b5w3ycg, Nov 7 21:47:55Z, C-noinfer-b: the adapted typescript.d.ts now needs TypeScript 5.4 or later to read because of NoInfer.\"}",
+        "line": 8491,
+        "path": [
+          "System",
+          "setTimeout"
+        ]
+      },
+      {
+        "adaptation": "adapt/99-correctness-core-sys-timer-slot/api-sanctions.json row 2 {\"path\":[\"System\",\"clearTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"clearTimeout?(timeoutId: any): void;\",\"after\":\"clearTimeout?(timeoutId: unknown): void;\",\"why\":\"Adamic ruling, task b5w3ycg, Nov 7 21:47:55Z, C-noinfer-b: the adapted typescript.d.ts now needs TypeScript 5.4 or later to read because of NoInfer.\"}",
+        "line": 8492,
+        "path": [
+          "System",
+          "clearTimeout"
+        ]
+      }
+    ],
+    "proofs": [
+      {
+        "file": "stage3/adapt/99-correctness-core-sys-timer-slot/api-sanctions.json",
+        "sha256": "5f0bf9920772e9b8c59350c29c13f3d24775c9a1a9473511d20516c8043fae20"
+      }
+    ]
+  },
+  "countsUnchanged": true,
+  "baselineDiffsUnchanged": true,
+  "diffAddsOnlyTwoTimerBeforeAfterLines": true,
+  "sha256": "1bc0cbf5d00b7df86b673cb01401004218c764bd979c54ee4699f4d342a9bc2a",
+  "committedHead1TimerOnly": false,
+  "scopeDecision": "pending for the two stale proof-hash refreshes"
+}

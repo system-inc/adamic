@@ -1,0 +1,35 @@
+{
+  "gitShowChildExit": 0,
+  "newMembers": [
+    {
+      "declaration": "member:[\"ts\",\"System\",\"clearTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"System\",\"setTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"AnyKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"TypeParameter\",[\"Identifier\",\"A\"],[\"ArrayType\",[\"UnknownKeyword\"]]],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"TypeReference\",[\"Identifier\",\"NoInfer\"],[\"TypeReference\",[\"Identifier\",\"A\"]]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"TypeReference\",[\"Identifier\",\"A\"]]],[\"UnknownKeyword\"]]"
+    }
+  ],
+  "changedOrRemovedExistingMembers": [],
+  "generatorOutputFormat": "generate-api.py default output, pretty house schema; original and expected omitted",
+  "preexistingHead1ProofDrift": {
+    "changedFields": [
+      "proofs"
+    ],
+    "changes": [
+      {
+        "file": "stage3/adapt/40-explicit-any/class-rules.json",
+        "before": "0879b71c393b0aac9c28676df002b4539a4d7b7d5d9158a167c98e821a8f7567",
+        "after": "215ecf3a168203ecdbd24949fecaaf7f8ebb8d9d456ae884c532673b51b2d576"
+      },
+      {
+        "file": "stage3/adapt/32-indexed-reads-program/public-host-sites.json",
+        "before": "775c2ae6d7d1f784ca2d249dd277737526f7bac44de5c368c98db9cf0bd1ae2b",
+        "after": "1f641e9402f9cccda75e52209fea74f827e40fe21103ce743062c943ef170776"
+      }
+    ],
+    "timerAdaptationAbsent": true
+  }
+}

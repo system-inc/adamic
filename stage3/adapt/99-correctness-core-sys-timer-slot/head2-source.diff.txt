@@ -1,0 +1,13 @@
+--- head1/src/compiler/sys.ts
++++ head2/src/compiler/sys.ts
+@@ -256 +256 @@
+-        pollScheduled: boolean;
++        pollScheduled: unknown;
+@@ -468 +468 @@
+-    let pollScheduled: any;
++    let pollScheduled: unknown;
+@@ -1445,2 +1445,2 @@
+-    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;
+-    clearTimeout?(timeoutId: any): void;
++    setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;
++    clearTimeout?(timeoutId: unknown): void;

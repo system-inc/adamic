@@ -1117,6 +1117,11 @@
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"tupleNameSource\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ParameterDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"NamedTupleMember\"]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"System\",\"clearTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"System\",\"createSHA256Hash\"]#0",
       "before": "[\"MethodSignature\",[\"Identifier\",\"createSHA256Hash\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"createSHA256Hash\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"createSHA256Hash\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"createSHA256Hash\"]]],[\"UndefinedKeyword\"]]]"
@@ -1125,6 +1130,11 @@
       "declaration": "member:[\"ts\",\"System\",\"exit\"]#0",
       "before": "[\"MethodSignature\",[\"Identifier\",\"exit\"],[\"Parameter\",[\"Identifier\",\"exitCode\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"VoidKeyword\"]]",
       "after": "[\"MethodSignature\",[\"Identifier\",\"exit\"],[\"Parameter\",[\"Identifier\",\"exitCode\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"UnionType\",[\"NumberKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"System\",\"setTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"AnyKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"TypeParameter\",[\"Identifier\",\"A\"],[\"ArrayType\",[\"UnknownKeyword\"]]],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"TypeReference\",[\"Identifier\",\"NoInfer\"],[\"TypeReference\",[\"Identifier\",\"A\"]]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"TypeReference\",[\"Identifier\",\"A\"]]],[\"UnknownKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"TaggedTemplateExpression\",\"typeArguments\"]#0",
@@ -3469,6 +3479,22 @@
       "line": 6987
     },
     {
+      "adaptation": "adapt/99-correctness-core-sys-timer-slot/api-sanctions.json row 1 {\"path\":[\"System\",\"setTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\",\"after\":\"setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;\",\"why\":\"Adamic ruling, task b5w3ycg, Nov 7 21:47:55Z, C-noinfer-b: the adapted typescript.d.ts now needs TypeScript 5.4 or later to read because of NoInfer.\"}",
+      "path": [
+        "System",
+        "setTimeout"
+      ],
+      "line": 8491
+    },
+    {
+      "adaptation": "adapt/99-correctness-core-sys-timer-slot/api-sanctions.json row 2 {\"path\":[\"System\",\"clearTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"clearTimeout?(timeoutId: any): void;\",\"after\":\"clearTimeout?(timeoutId: unknown): void;\",\"why\":\"Adamic ruling, task b5w3ycg, Nov 7 21:47:55Z, C-noinfer-b: the adapted typescript.d.ts now needs TypeScript 5.4 or later to read because of NoInfer.\"}",
+      "path": [
+        "System",
+        "clearTimeout"
+      ],
+      "line": 8492
+    },
+    {
       "adaptation": "75",
       "path": [
         "JsonSourceFile",
@@ -3484,7 +3510,7 @@
     },
     {
       "file": "stage3/adapt/40-explicit-any/class-rules.json",
-      "sha256": "0879b71c393b0aac9c28676df002b4539a4d7b7d5d9158a167c98e821a8f7567"
+      "sha256": "215ecf3a168203ecdbd24949fecaaf7f8ebb8d9d456ae884c532673b51b2d576"
     },
     {
       "file": "stage3/adapt/75-optional-widening/evidence/wave2/api.json",
@@ -3504,7 +3530,7 @@
     },
     {
       "file": "stage3/adapt/32-indexed-reads-program/public-host-sites.json",
-      "sha256": "775c2ae6d7d1f784ca2d249dd277737526f7bac44de5c368c98db9cf0bd1ae2b"
+      "sha256": "1f641e9402f9cccda75e52209fea74f827e40fe21103ce743062c943ef170776"
     },
     {
       "file": "stage3/adapt/32-indexed-reads-program/resumed-watch/api.json",
@@ -3585,6 +3611,10 @@
     {
       "file": "stage3/adapt/99-correctness-axolotl-c/api-sanctions.json",
       "sha256": "00373a533e7b6436402c35f67d6b7148a7ade064b453cc5cb40950b743156432"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-sys-timer-slot/api-sanctions.json",
+      "sha256": "5f0bf9920772e9b8c59350c29c13f3d24775c9a1a9473511d20516c8043fae20"
     }
   ],
   "baseline_diffs": [
@@ -4886,7 +4916,7 @@
     "         readonly allowTextChangesInNewFiles?: boolean;\n",
     "         readonly providePrefixAndSuffixTextForRename?: boolean;\n",
     "         readonly includePackageJsonAutoImports?: \"auto\" | \"on\" | \"off\";\n",
-    "@@ -8484,9 +8482,9 @@\n",
+    "@@ -8484,12 +8482,12 @@\n",
     "          */\n",
     "         createHash?(data: string): string;\n",
     "         /** This must be cryptographically secure. Only implement this method using `crypto.createHash(\"sha256\")`. */\n",
@@ -4896,8 +4926,13 @@
     "-        exit(exitCode?: number): void;\n",
     "+        exit(exitCode?: number): number | undefined;\n",
     "         realpath?(path: string): string;\n",
-    "         setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
-    "         clearTimeout?(timeoutId: any): void;\n",
+    "-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
+    "-        clearTimeout?(timeoutId: any): void;\n",
+    "+        setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;\n",
+    "+        clearTimeout?(timeoutId: unknown): void;\n",
+    "         clearScreen?(): void;\n",
+    "         base64decode?(input: string): string;\n",
+    "         base64encode?(input: string): string;\n",
     "@@ -8519,7 +8517,7 @@\n",
     "     function isIdentifierStart(ch: number, languageVersion: ScriptTarget | undefined): boolean;\n",
     "     function isIdentifierPart(ch: number, languageVersion: ScriptTarget | undefined, identifierVariant?: LanguageVariant): boolean;\n",

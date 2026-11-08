@@ -1,0 +1,196 @@
+{
+  "status": "tests-pass-scope-decision-pending",
+  "commands": {
+    "generate-api": {
+      "name": "generate-api",
+      "command": [
+        "python3",
+        "stage3/lane/generate-api.py",
+        "/workspace/typescript-source"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 12.578105734999554,
+      "stoppingReason": null
+    },
+    "generate-shards-check": {
+      "name": "generate-shards-check",
+      "command": [
+        "python3",
+        "stage3/lane/generate_shards.py",
+        "--check"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.5018133810008294,
+      "stoppingReason": null
+    },
+    "test-generate-api": {
+      "name": "test-generate-api",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane",
+        "-count=1",
+        "-parallel=2",
+        "-timeout=10m",
+        "-run",
+        "^TestLaneGenerateApi",
+        "-v"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 49.62694302000091,
+      "stoppingReason": null
+    },
+    "test-check": {
+      "name": "test-check",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane",
+        "-count=1",
+        "-parallel=2",
+        "-timeout=10m",
+        "-run",
+        "^TestLaneCheckPython$",
+        "-v"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 1,
+      "seconds": 17.531170509999356,
+      "stoppingReason": null
+    },
+    "test-check-fixed": {
+      "name": "test-check-fixed",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane",
+        "-count=1",
+        "-parallel=2",
+        "-timeout=10m",
+        "-run",
+        "^TestLaneCheckPython$",
+        "-v"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 19.034368126000118,
+      "stoppingReason": null
+    },
+    "test-shards": {
+      "name": "test-shards",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane",
+        "-count=1",
+        "-parallel=2",
+        "-timeout=10m",
+        "-run",
+        "^TestLaneShardsPython$",
+        "-v"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 22.05868249699961,
+      "stoppingReason": null
+    },
+    "prepare-go-product": {
+      "name": "prepare-go-product",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane/adaptedtree",
+        "-count=1",
+        "-parallel=2",
+        "-timeout=25m",
+        "-run",
+        "^TestProduct_Stage3AdaptedTree$",
+        "-v"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 522.455631236,
+      "stoppingReason": null
+    },
+    "go-test-whole": {
+      "name": "go-test-whole",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane/...",
+        "-count=1",
+        "-p=1",
+        "-parallel=2",
+        "-timeout=25m",
+        "-v"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 1,
+      "seconds": 1510.621009552,
+      "stoppingReason": null
+    },
+    "go-test-whole-retry": {
+      "name": "go-test-whole-retry",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane/...",
+        "-count=1",
+        "-p=1",
+        "-parallel=3",
+        "-timeout=29m",
+        "-v"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "kernelWaitStatus": 0,
+      "exitRecoveredFrom": "/proc/58100/stat field 52",
+      "wrapperInterruptedByEnvironmentRestart": true,
+      "seconds": null,
+      "elapsedUpperBoundSeconds": 1420,
+      "packageTimes": [
+        [
+          "github.com/system-inc/adamic/stage3/lane",
+          "1379.605"
+        ],
+        [
+          "github.com/system-inc/adamic/stage3/lane/adaptedtree",
+          "2.672"
+        ]
+      ],
+      "stoppingReason": null
+    },
+    "head1-regenerate": {
+      "name": "head1-regenerate",
+      "command": [
+        "python3",
+        "/workspace/scratch/sys-timer-slot-2/head1-control/stage3/lane/generate-api.py",
+        "/workspace/typescript-source",
+        "--output",
+        "/workspace/scratch/sys-timer-slot-2/head1-regenerated.json"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 3.5084198509994167,
+      "stoppingReason": null
+    }
+  },
+  "initialCheckFailure": "Expected manifest size 266; two timer sanctions make 268. Existing assertion now also names both timer members.",
+  "apiShardRerun": "TestShard_Stage3LaneByteComparisons passed in whole Go suite",
+  "wholeSuiteFiltered": false,
+  "initialWholeFailure": "The two-worker run exhausted its 25-minute package budget. The unfiltered retry uses three workers and 29 minutes; wrapper limits and expectations stay unchanged.",
+  "houseSchema": [
+    "source_commit",
+    "normalized_changes",
+    "counts",
+    "excluded_method_conversions",
+    "owners",
+    "proofs",
+    "baseline_diffs",
+    "diff_lines"
+  ],
+  "currentManifestSha256": "1bc0cbf5d00b7df86b673cb01401004218c764bd979c54ee4699f4d342a9bc2a"
+}

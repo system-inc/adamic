@@ -1,0 +1,33 @@
+{
+  "initial": {
+    "files": 1,
+    "edits": 3,
+    "javascriptChanging": false
+  },
+  "second": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": false
+  },
+  "noWriteReplay": true,
+  "LF": true,
+  "CRLF": true,
+  "refusals": [
+    "half-owner-System",
+    "drift-System",
+    "duplicate-System",
+    "moved-System",
+    "half-owner-createDynamicPriorityPollingWatchFile",
+    "drift-createDynamicPriorityPollingWatchFile",
+    "duplicate-createDynamicPriorityPollingWatchFile",
+    "moved-createDynamicPriorityPollingWatchFile",
+    "half-owner-createFixedChunkSizePollingWatchFile",
+    "drift-createFixedChunkSizePollingWatchFile",
+    "duplicate-createFixedChunkSizePollingWatchFile",
+    "moved-createFixedChunkSizePollingWatchFile",
+    "half-slot-setTimeout",
+    "half-slot-clearTimeout",
+    "parse-error"
+  ],
+  "unrelatedEditAccepted": true
+}

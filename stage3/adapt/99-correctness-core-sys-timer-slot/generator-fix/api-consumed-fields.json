@@ -1,0 +1,10 @@
+{
+  "apiCheckReads": [
+    "source_commit",
+    "normalized_changes"
+  ],
+  "identicalTo915a67cf": true,
+  "guardSourceUnchanged": true,
+  "affectedManifestUnit": "stage3-lane-byte-comparisons",
+  "wholeGoWrapper": "TestShard_Stage3LaneByteComparisons"
+}
