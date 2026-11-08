@@ -62,9 +62,10 @@ const routedPerformanceMembers = "\treadonly timeOrigin: number;\n\tnow(): numbe
 // stop is the only thing that can keep it from lowering.
 const routedPerformancePresent = "export function present(): boolean {\n\treturn typeof performance === \"object\";\n}\n"
 
-// routedPerformanceMain imports one function from performanceCore.ts and calls it as main.ts's line 2.
+// routedPerformanceMain imports node:perf_hooks, so @types/node's ambient module the row's model names is
+// in the program as it is in tsc's, then one function from performanceCore.ts, and calls it on line 3.
 func routedPerformanceMain(name, call string) string {
-	return "import { " + name + " } from './performanceCore.ts';\n" + call + "\n"
+	return "import 'node:perf_hooks';\nimport { " + name + " } from './performanceCore.ts';\n" + call + "\n"
 }
 
 // These run one after another, never t.Parallel(): each swaps the package's hostBindingRows for the
@@ -134,6 +135,20 @@ func TestHostBindingProvidedRoutesThroughItsModel(t *testing.T) {
 	// (d) Language's: a later view of the program's interface that writes a slot the host owns. Expected,
 	// unmeasured: "stage 0 can't lower writing performance host slots through a structural view yet",
 	// nodeProcessStorageABI's, at the first module.
+	// Without a Node module in the program, @types/node's ambient module isn't loaded, so the model export
+	// can't be found and the declaration stops, failing closed (measured on Cloud at 45a05281, where every
+	// pin stopped here before main imported node:perf_hooks).
+	t.Run("no Node module in the program", func(t *testing.T) {
+		_, err := lowerModules(t, map[string]string{
+			"performanceCore.ts": routedPerformanceCore(routedPerformanceMembers, routedPerformancePresent),
+			"main.ts":            "import { present } from './performanceCore.ts';\nconsole.log(present() ? \"present\" : \"absent\");\n",
+		})
+		var notYet *NotYet
+		const want = "performanceCore.ts:1:15: stage 0 can't lower the host binding performance's model export node:perf_hooks.performance, which lowering can't find, yet"
+		if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), want) {
+			t.Fatalf("got %v, want %q", err, want)
+		}
+	})
 	t.Run("a later view writing now", func(t *testing.T) {
 		_, err := lowerModules(t, map[string]string{
 			"performanceCore.ts": routedPerformanceCore(routedPerformanceMembers, "export function rewrite(): void {\n\tif (typeof performance === \"object\") {\n\t\tconst time: { now: () => number } = performance;\n\t\ttime.now = (): number => 0;\n\t\tconsole.log(time.now() > 0 ? \"later\" : \"origin\");\n\t}\n}\n"),
