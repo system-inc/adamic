@@ -128,19 +128,26 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	}}, true, nil
 }
 
-// Parentheses end a chain; only a direct continuation shares this call's guard.
+// A non-null assertion stays in the chain, while parentheses end it. A new
+// optional access has its own guard and can read this call's undefined result.
 func optionalIntrinsicContinues(node *ast.Node) bool {
+	for node.Parent != nil && node.Parent.Kind == ast.KindNonNullExpression {
+		node = node.Parent
+	}
 	parent := node.Parent
 	if parent == nil {
 		return false
 	}
 	switch parent.Kind {
 	case ast.KindPropertyAccessExpression:
-		return parent.AsPropertyAccessExpression().Expression == node
+		access := parent.AsPropertyAccessExpression()
+		return access.Expression == node && access.QuestionDotToken == nil
 	case ast.KindElementAccessExpression:
-		return parent.AsElementAccessExpression().Expression == node
+		access := parent.AsElementAccessExpression()
+		return access.Expression == node && access.QuestionDotToken == nil
 	case ast.KindCallExpression:
-		return parent.AsCallExpression().Expression == node
+		call := parent.AsCallExpression()
+		return call.Expression == node && call.QuestionDotToken == nil
 	}
 	return false
 }

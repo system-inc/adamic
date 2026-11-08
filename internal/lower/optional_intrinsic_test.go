@@ -63,7 +63,7 @@ func TestOptionalIntrinsicArgumentsAgreeWithNode(t *testing.T) {
 
 func TestOptionalIntrinsicArgumentBoundariesRefuse(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"property", "optional_property", "call", "spread", "function"} {
+	for _, name := range []string{"property", "optional_property", "non_null_property", "call", "spread", "function"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			source, err := os.ReadFile("../oracle/testdata/optional_receiver_refused/" + name + ".a")
@@ -72,7 +72,23 @@ func TestOptionalIntrinsicArgumentBoundariesRefuse(t *testing.T) {
 			}
 			_, err = lowerSource(t, string(source))
 			var refused *NotYet
-			if !errors.As(err, &refused) || (refused.What != "a call through ?. (an optional call)" && refused.What != "an optional chain longer than one step") {
+			if name == "optional_property" {
+				// The second ?. owns its guard. The current property representation,
+				// rather than the call continuation rule, still refuses Set.add's result.
+				if !errors.As(err, &refused) || refused.What != "optional chaining to .size on a value" {
+					t.Fatalf("want the optional size property refusal, got %v", err)
+				}
+			} else if name == "non_null_property" {
+				var assertion *Refused
+				if !errors.As(err, &assertion) || assertion.What != "the non-null assertion !" {
+					t.Fatalf("want the non-null assertion refusal, got %v", err)
+				}
+				// TypeScript admits !, but property lowering still refuses the chain.
+				_, err = lowerTypeScriptAssertionSource(t, string(source))
+				if !errors.As(err, &refused) || refused.What != "an optional chain longer than one step" {
+					t.Fatalf("want the continuation refusal through !, got %v", err)
+				}
+			} else if !errors.As(err, &refused) || (refused.What != "a call through ?. (an optional call)" && refused.What != "an optional chain longer than one step") {
 				t.Fatalf("want optional call/chain refusal, got %v", err)
 			}
 		})
