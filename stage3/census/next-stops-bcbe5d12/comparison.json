@@ -1,0 +1,1187 @@
+[
+  {
+    "root": "_namespaces/ts.moduleSpecifiers.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "_namespaces/ts.performance.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "_namespaces/ts.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "binder.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "builder.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "builderPublic.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "builderState.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "builderStatePublic.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "checker.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "commandLineParser.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "core.ts",
+    "previous": [
+      "debug.ts:243:59",
+      "NotYet",
+      "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+    ],
+    "current": [
+      "debug.ts:355:26",
+      "Refused",
+      "a method read as a value (toString would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "none, new"
+  },
+  {
+    "root": "corePublic.ts",
+    "previous": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "current": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "change": "unchanged",
+    "forecast": "not applicable, lowers whole"
+  },
+  {
+    "root": "debug.ts",
+    "previous": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "current": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "change": "unchanged",
+    "forecast": "none, new"
+  },
+  {
+    "root": "diagnosticInformationMap.generated.ts",
+    "previous": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "current": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "change": "unchanged",
+    "forecast": "none, new"
+  },
+  {
+    "root": "emitter.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "executeCommandLine.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "expressionToTypeNode.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/baseNodeFactory.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/emitHelpers.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/emitNode.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/nodeChildren.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/nodeConverters.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/nodeFactory.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/nodeTests.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/parenthesizerRules.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/utilities.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "factory/utilitiesPublic.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "hostErrors.ts",
+    "previous": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "current": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "change": "unchanged",
+    "forecast": "not applicable, lowers whole"
+  },
+  {
+    "root": "moduleNameResolver.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "moduleSpecifiers.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "parser.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "path.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "performance.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "performanceCore.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "program.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "programDiagnostics.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "resolutionCache.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "scanner.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "semver.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "sourcemap.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "symbolWalker.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "sys.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "tracing.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformer.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/classFields.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/classThis.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/declarations/diagnostics.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/declarations.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/destructuring.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/es2015.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/es2016.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/es2017.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/es2018.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/es2019.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/es2020.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/es2021.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/esDecorators.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/esnext.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/generators.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/jsx.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/legacyDecorators.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/module/esnextAnd2015.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/module/impliedNodeFormatDependent.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/module/module.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/module/system.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/namedEvaluation.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/taggedTemplate.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/ts.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/typeSerializer.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "transformers/utilities.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "tsbuild.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "tsbuildPublic.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "types.ts",
+    "previous": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "current": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "change": "unchanged",
+    "forecast": "none, new"
+  },
+  {
+    "root": "utilities.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "utilitiesPublic.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "visitorPublic.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "watch.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "watchPublic.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  },
+  {
+    "root": "watchUtilities.ts",
+    "previous": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "current": [
+      "core.ts:2103:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ],
+    "change": "moved",
+    "forecast": "core.ts:2116 .compare value read (shifted coordinates)"
+  }
+]

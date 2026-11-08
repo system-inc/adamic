@@ -1,0 +1,21 @@
+{
+  "status": {
+    "command": [
+      "/workspace/scratch/b5w3ycg/entry-census",
+      "/workspace/bcbe5d12-adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/b5w3ycg/artifacts/tsc/latent.jsonl"
+    ],
+    "exit_code": -15,
+    "stopping_reason": "configured elapsed-time bound",
+    "seconds": 1800.979194582,
+    "process_group_cleaned": true
+  },
+  "last_completed_timing": {
+    "file": "/workspace/bcbe5d12-adapted/src/compiler/factory/utilities.ts",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/factory/utilities.ts:786:1",
+    "wall_seconds": 15.349646731,
+    "cpu_seconds": 22.481506999999965
+  },
+  "active_unit": "not recorded; the last completed unit is not the interrupted unit",
+  "raw_records": 1
+}

@@ -1,0 +1,199 @@
+[
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/factory/nodeChildren.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 14.19809193
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/factory/nodeConverters.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 15.465965102
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/factory/nodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 12.070854921
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/factory/nodeTests.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 13.583925384
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/factory/parenthesizerRules.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 12.715881496
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/factory/utilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 14.843643277
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/factory/utilitiesPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 13.2208585
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/hostErrors.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.066175039
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/moduleNameResolver.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 12.309870917
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 13.068940391
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/parser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 13.468578703
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/path.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 14.074191657
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 15.577440818
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/performanceCore.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 12.699482213
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/program.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 14.380269058
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/programDiagnostics.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 12.923469372
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/resolutionCache.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 13.41633926
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/scanner.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 16.668490648
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/semver.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 17.070346302
+  },
+  {
+    "roots": [
+      "/workspace/bcbe5d12-adapted/src/compiler/sourcemap.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/bcbe5d12-adapted/src/compiler/core.ts:2103:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "seconds": 15.740839594
+  }
+]

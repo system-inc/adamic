@@ -1,0 +1,54 @@
+[
+  {
+    "where": "commandLineParser.ts:293:35",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "file": "internal/lower/namespaces.go",
+    "line": 318,
+    "function": "(*lowering).namespaceInitialization",
+    "function_line": 260,
+    "caller": "lowerWithElementKey",
+    "caller_file": "internal/lower/lower.go",
+    "caller_line": 104,
+    "note": "The visit closure sees a namespace value node whose namespaceRuntimeEnum declaration is not in initialized and emits line 318. The reached-call alternative emits the same text at line 267. lowerWithElementKey invokes the initialization walk before refusal/body lowering."
+  },
+  {
+    "where": "debug.ts:355:26",
+    "kind": "Refused",
+    "reason": "a method read as a value (toString would lose its object, and this with it)",
+    "file": "internal/lower/refusals.go",
+    "line": 285,
+    "function": "(*lowering).methodValueRefusal",
+    "function_line": 260,
+    "caller": "(*lowering).refuse",
+    "caller_file": "internal/lower/refusals.go",
+    "caller_line": 105,
+    "note": "The direct-bind exemption is at line 261. The guard at line 264 selects a property-access read outside a direct call without an allowed method-read proof. The method symbol at line 272 selects the refusal emitted at line 285. The refusal registry registers this rule at ordinal 2900, line 291. The visit closure in refuse (function begins at line 35) invokes rule.check at line 105, returning the first rule error. The outer call is Function.prototype.toString.call(func); the toString property is the receiver of .call rather than the direct call expression, so called(node) does not exempt it."
+  },
+  {
+    "where": "diagnosticInformationMap.generated.ts:13:45",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "file": "internal/lower/namespaces.go",
+    "line": 318,
+    "function": "(*lowering).namespaceInitialization",
+    "function_line": 260,
+    "caller": "lowerWithElementKey",
+    "caller_file": "internal/lower/lower.go",
+    "caller_line": 104,
+    "note": "The visit closure sees a namespace value node whose namespaceRuntimeEnum declaration is not in initialized and emits line 318. The reached-call alternative emits the same text at line 267. lowerWithElementKey invokes the initialization walk before refusal/body lowering."
+  },
+  {
+    "where": "semver.ts:71:9",
+    "kind": "NotYet",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "file": "internal/lower/namespaces.go",
+    "line": 269,
+    "function": "(*lowering).namespaceInitialization",
+    "function_line": 260,
+    "caller": "lowerWithElementKey",
+    "caller_file": "internal/lower/lower.go",
+    "caller_line": 104,
+    "note": "The checkCall closure follows graph.reach(target). A reached namespace declaration absent from initialized emits line 269 at the reached read. The direct-read alternative emits the same text at line 321. lowerWithElementKey invokes the initialization walk before refusal/body lowering."
+  }
+]
