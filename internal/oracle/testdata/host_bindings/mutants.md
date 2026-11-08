@@ -238,3 +238,4 @@ These belong to #00qn5az's require row, after the letters above.
 | Mutant | Edit | Red |
 |---|---|---|
 | (k) The require row removed | internal/load/host_bindings.json, the require row deleted, and its row in docs/axioms/host-bindings.md with it | PENDING |
+| (l) A bundle build folding a row measured in ES module mode | lower/host_bindings.go, `hostBindingStopIn`: `if l.moduleFormat == ModuleFormatCommonJSBundle && row.Node.Module == "ES" {` made `if false {` | PENDING |
