@@ -431,6 +431,9 @@ func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args [
 		return nil, true, err
 	}
 	result := ir.RecordCall{Method: name, Arguments: []ir.Expression{r}, Element: of, Returns: ir.Array}
+	if name == "values" || name == "entries" {
+		l.unplannedAllocation(node, of, "a record's "+name)
+	}
 	if name == "hasOwn" {
 		k, err := l.recordKey(args[1], false)
 		if err != nil {

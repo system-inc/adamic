@@ -454,6 +454,21 @@ func (f *cycleFinder) graphArguments(proven *checker.Type) []*checker.Type {
 	return f.l.checker.GetTypeArguments(proven)
 }
 
+// graphUnplannedSite is one allocation lowering builds outside expression: where, and what it is.
+type graphUnplannedSite struct {
+	node *ast.Node
+	what string
+}
+
+// unplannedAllocation records an allocation lowering built outside expression, which graphAllocation
+// never plans, when its elements are references other than strings: values a cycle could run through.
+// Scalars and strings hold nothing, so they're left alone.
+func (l *lowering) unplannedAllocation(node *ast.Node, element ir.Type, what string) {
+	if element.IsReference() && element != ir.String {
+		l.graphUnplanned = append(l.graphUnplanned, graphUnplannedSite{node: node, what: what})
+	}
+}
+
 // Graph adoption moves a fixed allocation. Checked-view adapters and dynamic
 // shapes have additional owners outside that proof. Until their provenance is
 // tracked separately, keep mixed programs outside graph ownership.
@@ -497,6 +512,13 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 	// a decoded value that holds a container can be closed into a cycle outside every region and leak
 	// (#bvsjdte, 2a; 2b gives the decoder the plan and lifts this). It's our analysis that can't hold
 	// it yet, not the program that's wrong.
+	// Each of these was measured leaking in a graph program, by the counted build with a literal
+	// control beside it (#djwd1t2): toSorted 3 of 10 freed, toReversed 2 of 9, Map.groupBy 5 of 15,
+	// a Record's values 6 of 13. They stop until #y7wexf5 plans them where lowering makes them.
+	if len(f.l.graphUnplanned) != 0 {
+		first := f.l.graphUnplanned[0]
+		return f.l.notYet(first.node, first.what+" in a graph program, whose result lowering makes outside the program's graph regions")
+	}
 	if decodes {
 		what := "decodeJson<" + f.l.graphDecodeType + "> in a graph program, whose decoded values the runtime makes outside the program's graph regions"
 		if f.l.graphDecodeSite == nil {

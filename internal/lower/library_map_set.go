@@ -361,6 +361,7 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 	if slotless(element) {
 		return nil, true, l.notYet(sourceNode, "Map.groupBy elements held in more than one word")
 	}
+	l.unplannedAllocation(node, element, "Map.groupBy")
 	// The checker must retain the source element's exact type in each bucket; widening a mutable
 	// element would expose an alias through the returned arrays. Refuse such inferred widening.
 	var sourceType *checker.Type

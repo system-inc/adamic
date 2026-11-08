@@ -68,12 +68,14 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 			return nil, true, l.notYet(node, "toReversed with arguments")
 		}
 		// Stage 0 arrays are dense. Copying first preserves identity and reference ownership.
+		l.unplannedAllocation(node, element, "toReversed")
 		return ir.ArrayReverse{Array: ir.ArraySlice{Array: array, Element: element}}, true, nil
 	case "toSorted":
 		if l.includesUndefined(l.elementTypeOfArray(l.checker.GetTypeAtLocation(receiver))) {
 			return nil, true, l.notYet(node, "toSorted on optional elements")
 		}
 		copy := ir.ArraySlice{Array: array, Element: element}
+		l.unplannedAllocation(node, element, "toSorted")
 		if len(written) == 0 {
 			if element != ir.Number && element != ir.Boolean && element != ir.String {
 				return nil, true, l.notYet(node, "toSorted without a comparator on these elements")
