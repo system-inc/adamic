@@ -186,10 +186,10 @@ func exportSignaturesWith(program *load.Program, names []string, entryFunctions 
 }
 
 func compileExports(path string, names []string) (*ir.Program, []native.ABIExport, int) {
-	return compileExportsWith(path, names, false)
+	return compileExportsWith(path, names, false, lower.ModuleFormatEcmaScript)
 }
 
-func compileExportsWith(path string, names []string, entryFunctions bool) (*ir.Program, []native.ABIExport, int) {
+func compileExportsWith(path string, names []string, entryFunctions bool, format lower.ModuleFormat) (*ir.Program, []native.ABIExport, int) {
 	checked, code := check([]string{path})
 	if checked == nil {
 		return nil, nil, code
@@ -199,7 +199,7 @@ func compileExportsWith(path string, names []string, entryFunctions bool) (*ir.P
 		fmt.Fprintln(os.Stderr, "adamic: "+err.Error())
 		return nil, nil, 1
 	}
-	program, err := lower.Lower(context.Background(), checked)
+	program, err := lower.LowerWithOptions(context.Background(), checked, loweringOptions(false, format))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
 		return nil, nil, 1
