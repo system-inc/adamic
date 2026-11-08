@@ -12,40 +12,41 @@ class Dog extends Animal { bark(): string { return "woof"; } }
 class Cat extends Animal { }
 `
 
-// A generic method seen through a view whose method isn't its own type stops, unjudged, on either side
-// and through an interface (#q6gs98r, Language's probes g1, g4, g5, g6 and g7 on #7fd51gk, and o2, an
-// overloaded view, from her attack on #q6gs98r). tsc relates a
-// method's parameters both ways, so each of these is accepted there and hands a Dog method a Cat.
-func TestAGenericMethodSeenThroughAnotherViewIsNotYet(t *testing.T) {
+// A generic method seen through a view whose method isn't its own type stops, on either side and through
+// an interface (#q6gs98r, Language's probes g1, g4, g5, g6 and g7 on #7fd51gk, and o2, an overloaded view,
+// from her attack on #q6gs98r). tsc relates a method's parameters both ways, so each of these is accepted
+// there and hands a Dog method a Cat. One signature on each side is related by rule G (#7fd51gk) and
+// refused at the narrowed parameter; an overload set stops unjudged.
+func TestAGenericMethodSeenThroughANarrowerViewStops(t *testing.T) {
 	t.Parallel()
-	for _, row := range []struct{ name, source string }{
+	for _, row := range []struct{ name, source, want string }{
 		{"g1, T unused on both sides", `interface Handler { handle<T>(x: Animal): string; }
 class DogHandler { handle<T>(x: Dog): string { return x.bark(); } }
 const h: Handler = new DogHandler();
 console.log(h.handle(new Cat()));
-`},
+`, "a function taking Dog seen as one taking Animal"},
 		{"g4, T only in a callback's type", `interface Handler { handle<T>(x: Animal, f: (t: T) => string): string; }
 class DogHandler { handle<T>(x: Dog, f: (t: T) => string): string { return x.bark(); } }
 const h: Handler = new DogHandler();
 console.log(h.handle(new Cat(), (t: number) => String(t)));
-`},
+`, "a function taking Dog seen as one taking Animal"},
 		{"g5, generic on the source side only", `interface Handler { handle(x: Animal): string; }
 class DogHandler { handle<T>(x: Dog): string { return x.bark(); } }
 const h: Handler = new DogHandler();
 console.log(h.handle(new Cat()));
-`},
+`, "a function taking Dog seen as one taking Animal"},
 		{"g6, generic on the target side only", `interface Handler { handle<T>(x: Animal): string; }
 class DogHandler { handle(x: Dog): string { return x.bark(); } }
 const h: Handler = new DogHandler();
 console.log(h.handle(new Cat()));
-`},
+`, "a function taking Dog seen as one taking Animal"},
 		{"g7, an interface seen as another", `interface Handler { handle<T>(x: Animal): string; }
 interface DogHandler { handle<T>(x: Dog): string; }
 class Real { handle<T>(x: Dog): string { return x.bark(); } }
 const d: DogHandler = new Real();
 const h: Handler = d;
 console.log(h.handle(new Cat()));
-`},
+`, "a function taking Dog seen as one taking Animal"},
 		{"o2, an overloaded generic view", `class DogHandler { handle<T>(x: Dog): string { return x.bark(); } }
 interface Handler {
 	handle<T>(x: Animal): string;
@@ -53,12 +54,12 @@ interface Handler {
 }
 const h: Handler = new DogHandler();
 console.log(h.handle(new Cat()));
-`},
+`, "stage 0 can't lower a generic method handle "},
 		{"one class's generic method under two type arguments", `class Box<E> { put<T>(x: E): string { return "kept"; } }
 const dogs: Box<Dog> = new Box<Dog>();
 const animals: Box<Animal> = dogs;
 console.log(animals.put(new Cat()));
-`},
+`, "a function taking Dog seen as one taking Animal"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(row.name+extension, func(t *testing.T) {
@@ -67,8 +68,8 @@ console.log(animals.put(new Cat()));
 				if err == nil {
 					t.Fatal("lowered, but a Dog method is handed a Cat through this view")
 				}
-				if !strings.Contains(err.Error(), "stage 0 can't lower a generic method ") || !strings.Contains(err.Error(), " seen as ") {
-					t.Fatalf("got %q, want the generic method named as NotYet", err)
+				if !strings.Contains(err.Error(), row.want) {
+					t.Fatalf("got %q, want %q", err, row.want)
 				}
 			})
 		}
@@ -106,7 +107,7 @@ console.log(h.handle(new Dog()));
 // method, so it stops as a program's does rather than taking the host exemption (Runtime's must on #q6gs98r):
 // without the view's <T>, the wider parameter is refused at widenedParameters. process itself can't be
 // held in a view (a namespace object used as a value stops first), so the pin holds an FSWatcher.
-func TestAHostMethodAViewMakesGenericIsNotYet(t *testing.T) {
+func TestAHostMethodAViewMakesGenericStops(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, source string }{
 		{"setMaxListeners", `import * as fs from 'node:fs';
@@ -123,8 +124,8 @@ watcher.close();
 				if err == nil {
 					t.Fatal("lowered, but the host is handed a parameter wider than its own")
 				}
-				if !strings.Contains(err.Error(), "stage 0 can't lower a generic method "+row.name+" ") {
-					t.Fatalf("got %q, want the generic method %s named as NotYet", err, row.name)
+				if want := "a function taking number seen as one taking string | number"; !strings.Contains(err.Error(), want) {
+					t.Fatalf("got %q, want %q", err, want)
 				}
 			})
 		}
