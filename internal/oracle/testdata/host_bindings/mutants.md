@@ -51,7 +51,7 @@ in a finally block before the next edit. The restored tree then ran the whole lo
 | (a) Drop export= lookup | host_bindings.go: `return l.hostBindingExportEqualsModel(module, row.Name)` becomes `return nil` | TestHostBindingProcessReads: the model export cannot be found, stop 1 |
 | (b) Empty the absent table | host_bindings.go: remove the `"node:process.process": {"browser": true},` entry | TestHostBindingProcessReads: the model doesn't have browser, stop 2 |
 | (c) Claim a present member absent | host_bindings.go: the entry becomes `"node:process.process": {"browser": true, "version": true},` | TestHostBindingAbsentMembersHeldToNode: version is own and in the object in both module modes |
-| (d) Read browser as true | library_node_process.go: `return ir.Undefined{Of: ir.Object}, true, nil` becomes `return fit(ir.BooleanConstant{Value: true}, ir.Object), true, nil` | TestHostBindingsAgreeWithNode/process_provided: native, sanitized and javascript disagree with Node |
+| (d) Read browser as true | library_node_process.go: `return ir.Undefined{Of: ir.Object}, true, nil` becomes `return fit(ir.BooleanConstant{Value: true}, ir.Object), true, nil` | TestHostBindingsAgreeWithNode/process_provided: native, sanitized and javascript disagree with Node; TestWasmtimeHostBindingProcessAgreesWithNode: wasmtime disagrees with Node |
 | (e) Admit every optional member | hostBindingModelRefusal: immediately before `absent := map[string]bool{}`, insert the all-optional admission below | TestHostBindingProcessModel/unlisted_release: admission returns nil, losing the named release stop |
 
 Mutant (e)'s inserted code, exactly:
