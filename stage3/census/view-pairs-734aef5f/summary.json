@@ -1,36 +1,36 @@
 {
   "counts": {
-    "object_related_top": 1481,
-    "object_related_nested": 25732,
+    "object_related_top": 1529,
+    "object_related_nested": 26230,
     "object_unrelated_top": 1,
     "object_unrelated_nested": 0,
     "scalar_top": 3,
-    "scalar_nested": 14332,
+    "scalar_nested": 14636,
     "nil_source": 0,
     "nil_target_only": 0
   },
   "raw_counts": {
-    "object_related_top": 1779,
-    "object_related_nested": 34094,
+    "object_related_top": 1827,
+    "object_related_nested": 34592,
     "object_unrelated_top": 1,
     "object_unrelated_nested": 0,
     "scalar_top": 3,
-    "scalar_nested": 18887,
+    "scalar_nested": 19191,
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "total_selected_pairs": 41549,
-  "total_raw_pairs": 54764,
+  "total_selected_pairs": 42399,
+  "total_raw_pairs": 55614,
   "unrelated_object_pairs": 1,
   "distinct_unrelated_text_pairs": 1,
   "nil_source_views": 0,
   "nil_source_with_reference_field": 0,
   "nil_source_with_object_reference_field": 0,
   "nil_source_reference_status_unknown": 0,
-  "intersection_targets": 23,
+  "intersection_targets": 24,
   "intersection_split": {
     "object_related_top": 0,
-    "object_related_nested": 23,
+    "object_related_nested": 24,
     "object_unrelated_top": 0,
     "object_unrelated_nested": 0,
     "scalar_top": 0,
@@ -38,27 +38,27 @@
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "observed_units": 7590,
+  "observed_units": 7707,
   "unit_statuses": {
-    "lowered": 4499,
-    "stopped": 3091
+    "lowered": 4538,
+    "stopped": 3169
   },
   "stock_skips_without_boundary": {
-    "deferred_generic_instantiation": 294
+    "deferred_generic_instantiation": 296
   },
-  "deferred_units_in_emitted_inventory": 294,
+  "deferred_units_in_emitted_inventory": 296,
   "resolved_files": 81,
-  "full_files_attempted": 23,
-  "full_files_complete_traversal": 22,
-  "stock_inventory_units": 5414,
+  "full_files_attempted": 24,
+  "full_files_complete_traversal": 23,
+  "stock_inventory_units": 5538,
   "probe_incomplete_units": 0,
   "orphan_pair_lines": 0,
   "probe_errors": [],
-  "view_sources_in_selected_units": 2239,
-  "deduplicated_pair_visits": 234432,
-  "over_depth_pair_visits": 19704,
+  "view_sources_in_selected_units": 2304,
+  "deduplicated_pair_visits": 238814,
+  "over_depth_pair_visits": 20646,
   "nil_reference_definition": "Known lower.representation(fieldType) with ir.Type.IsReference(); includes strings and Weak. Object-reference companion excludes ir.String and ir.Weak. Fields come from cycleFinder.fields, excluding prototype methods, accessors and static prototype.",
-  "first_error_selected_stopped_units": 297,
+  "first_error_selected_stopped_units": 296,
   "cycle_finder_ran": false,
   "graph_types_nonempty_units": 0
 }
