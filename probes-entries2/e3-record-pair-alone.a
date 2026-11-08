@@ -1,0 +1,10 @@
+// e3: one pair of Object.entries stored alone in a graph slot, the array dropped; the pair holds b, b holds a, a holds the pair.
+interface Node { name: string; next: Node[]; pairs: [string, Node][] }
+const a: Node = { name: 'a' + '', next: [], pairs: [] };
+const b: Node = { name: 'b' + '', next: [a], pairs: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const record: Record<string, Node> = { b: b };
+const first = Object.entries(record)[0];
+if (first !== undefined) a.pairs.push(first);
+const pair = a.pairs[0];
+if (pair !== undefined) console.log(`${a.pairs.length} ${pair[0]} ${pair[1].name} ${pair[1].next[0] === a}`);

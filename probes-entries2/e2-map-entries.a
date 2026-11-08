@@ -1,0 +1,10 @@
+// e2: [...map.entries()] of a Map<string, Node>, held by a.
+interface Node { name: string; next: Node[]; pairs: [string, Node][] }
+const a: Node = { name: 'a' + '', next: [], pairs: [] };
+const b: Node = { name: 'b' + '', next: [a], pairs: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const map = new Map<string, Node>();
+map.set('b', b);
+a.pairs = [...map.entries()];
+const pair = a.pairs[0];
+if (pair !== undefined) console.log(`${a.pairs.length} ${pair[0]} ${pair[1].name} ${pair[1].next[0] === a}`);
