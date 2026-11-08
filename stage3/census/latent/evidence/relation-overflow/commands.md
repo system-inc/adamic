@@ -61,3 +61,8 @@ the existing timed_run.py wrapper exposed that as shell exit 241. Both values
 are retained in per-unit-cost-summary.json. It is not a completed census and
 provides no end-of-run overflow conclusion. To reproduce that query mode with
 the final driver, set LATENT_RELATION_PER_UNIT=1 explicitly.
+
+Code checkpoint on the requested branch: `e6bfbce5db390af989f4a3c0aec7e469fab0d6f7`.
+The final endpoint attempt exited 124 at its 1800-second bound before the end
+query. A follow-up run needs a longer wall allowance. The absence of an end
+answer is not interpreted as an empty answer.

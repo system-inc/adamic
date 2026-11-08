@@ -355,3 +355,7 @@ the program. Directory invocation retains its explicitly enumerated roots.
 
 `TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset` verifies
 that end-only detection marks all attempts and explains the unknown onset.
+
+The bounded tsc entry run reached its 30-minute limit before the end query.
+Its after-load answer was `""`; the run-end answer is unavailable and the
+whole-run overflow result remains unknown. See the [run evidence](evidence/relation-overflow/report.md).
