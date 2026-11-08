@@ -1,0 +1,18 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/workspace/typescript-source",
+    "checkout",
+    "--detach",
+    "050880ce59e30b356b686bd3144efe24f875ebc8"
+  ],
+  "cwd": "/workspace/require-row-work",
+  "started_utc": "2026-11-08T20:35:20.817522+00:00",
+  "ended_utc": "2026-11-08T20:41:04.429585+00:00",
+  "seconds": 343.6121506690979,
+  "exit_code": 0,
+  "peak_rss_kib": 176548,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

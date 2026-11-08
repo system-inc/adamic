@@ -1,0 +1,16 @@
+{
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "--build-product",
+    "/workspace/require-row-adapted"
+  ],
+  "cwd": "/workspace/require-row-work",
+  "started_utc": "2026-11-08T20:41:07.457751+00:00",
+  "ended_utc": "2026-11-08T20:49:22.419780+00:00",
+  "seconds": 494.9620351791382,
+  "exit_code": 0,
+  "peak_rss_kib": 2099284,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

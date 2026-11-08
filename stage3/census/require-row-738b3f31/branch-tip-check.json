@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "ls-remote",
+    "origin",
+    "refs/heads/cli/require-row-1"
+  ],
+  "exit_code": 0,
+  "stdout": "738b3f315311eff497d8703e62f879d3b2b3ee2e\trefs/heads/cli/require-row-1\n",
+  "stderr": "",
+  "checked_utc": "2026-11-08T20:42:51.615628+00:00",
+  "initial_observation": "738b3f315311eff497d8703e62f879d3b2b3ee2e"
+}
