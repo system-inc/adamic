@@ -21,6 +21,10 @@ type JSONDecodeNode struct {
 	Fields            []JSONDecodeField `json:"fields"`
 	DiscriminantUnits []uint16          `json:"discriminantUnits,omitempty"`
 	Discriminant      string            `json:"discriminant,omitempty"`
+	// GraphTypes is a decoded object's, array's or tuple's allocation identity, as a literal's is, so
+	// the native decoder adopts what it makes for this node into a graph region when the program's
+	// cycle proof finds the type there. Node's descriptor never reads it.
+	GraphTypes []int `json:"-"`
 }
 
 // Every descriptor has a fields array. Empty tuples and objects use [], never null or omission.

@@ -48,6 +48,7 @@ var localFields = map[string]localField{
 	"ArraySlice.GraphTypes":           {why: "allocation sites and graph types"},
 	"ArraySplice.GraphTypes":          {why: "allocation sites and graph types"},
 	"ArrayVisit.GraphTypes":           {why: "allocation sites and graph types"},
+	"JSONDecodeNode.GraphTypes":       {why: "allocation sites and graph types"},
 	"MapEntries.GraphTypes":           {why: "allocation sites and graph types"},
 	"MapKeys.GraphTypes":              {why: "allocation sites and graph types"},
 	"MapNew.GraphTypes":               {why: "allocation sites and graph types"},

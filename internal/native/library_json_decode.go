@@ -61,7 +61,13 @@ func (e *emitter) jsonDataSchema(schema ir.JSONDecodeSchema, encode bool) string
 		if encode {
 			kind = "adamic_encode_" + n.Kind
 		}
-		nodes = append(nodes, fmt.Sprintf("{%s, %d, %s, %s, %s, %t, %d, %s, %d, %s, %s}", kind, n.Of, cString(n.Expected), literal, cNumber(n.Number), n.Boolean, len(n.Children), children, len(n.Fields), fields, cString(n.Discriminant)))
+		node := fmt.Sprintf("%s, %d, %s, %s, %s, %t, %d, %s, %d, %s, %s", kind, n.Of, cString(n.Expected), literal, cNumber(n.Number), n.Boolean, len(n.Children), children, len(n.Fields), fields, cString(n.Discriminant))
+		if !encode {
+			// Only the decoder makes values, so only its view says which of them the cycle proof
+			// placed in a graph region, judged as a literal's allocation is (adoptGraphObject).
+			node += fmt.Sprintf(", %t", e.graphTypes(n.GraphTypes))
+		}
+		nodes = append(nodes, "{"+node+"}")
 	}
 	e.declarations = append(e.declarations, fmt.Sprintf("static const %s_node %s_nodes[] = {%s};", prefix, name, strings.Join(nodes, ", ")))
 	e.declarations = append(e.declarations, fmt.Sprintf("static const %s_schema %s = {%s_nodes, %d};", prefix, name, name, schema.Root))

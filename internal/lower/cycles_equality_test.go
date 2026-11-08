@@ -93,12 +93,11 @@ func cycleCompareProgram(t *testing.T, path string) {
 // still stops there, so that mode has nothing to compare against.
 const cycleFrozenGeneratorGuard = "a Program region in a program with generator functions (#qk8rztp)"
 
-// cycleRegionlessAllocationGuards are graphAdoptionBoundary's stops for allocations the runtime or
-// lowering makes outside every region (#bvsjdte 2a, #djwd1t2), guards the real pipeline added after the
-// scanning reference was frozen. Where the indexed side stops on one and the reference lowers, the two
-// differ by the guard alone, so that mode has nothing to compare.
+// cycleRegionlessAllocationGuards are graphAdoptionBoundary's stops for allocations lowering makes
+// outside every region (#djwd1t2), guards the real pipeline added after the scanning reference was
+// frozen. Where the indexed side stops on one and the reference lowers, the two differ by the guard
+// alone, so that mode has nothing to compare.
 var cycleRegionlessAllocationGuards = []string{
-	" in a graph program, whose decoded values the runtime makes outside the program's graph regions",
 	" in a graph program, whose result lowering makes outside the program's graph regions",
 }
 

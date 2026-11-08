@@ -264,10 +264,6 @@ type lowering struct {
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphViewSite, graphDynamicSite *ast.Node
-	// graphDecodeSite is the first decodeJson whose value can hold a container, and graphDecodeType
-	// the type it decodes, where graphAdoptionBoundary names a decode a graph program can't hold yet.
-	graphDecodeSite *ast.Node
-	graphDecodeType string
 	// graphUnplanned are allocations lowering builds outside expression, so graphAllocation never
 	// plans them, over elements a graph program could close a cycle through (#djwd1t2), each with
 	// what it is; graphAdoptionBoundary stops the first in a graph program until #y7wexf5 plans them.

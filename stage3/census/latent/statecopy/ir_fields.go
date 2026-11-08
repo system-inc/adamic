@@ -342,6 +342,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"JSONDecodeNode.Fields":              {"[]JSONDecodeField", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"JSONDecodeNode.DiscriminantUnits":   {"[]uint16", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"JSONDecodeNode.Discriminant":        {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"JSONDecodeNode.GraphTypes":          {"[]int", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"JSONDecodeSchema.Nodes":             {"[]JSONDecodeNode", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"JSONDecodeSchema.Root":              {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"JSONEncode.Value":                   {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},

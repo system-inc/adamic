@@ -507,7 +507,6 @@ func (l *lowering) cycleInert(proven *checker.Type, seen map[*checker.Type]bool)
 func (f *cycleFinder) graphAdoptionBoundary() error {
 	reason := ""
 	var site *ast.Node
-	decodes := false
 	// Legacy tagged-union views record checked fields without a ViewOrigin.
 	if len(f.l.result.ViewOrigins) != 0 || len(f.l.result.CheckedFields) != 0 {
 		reason = "a checked-view adapter in a graph program"
@@ -528,8 +527,6 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 				reason = "a dynamic-shape object in a graph program"
 				site = f.l.graphDynamicSite
 			}
-		case ir.JSONDecode:
-			decodes = decodes || jsonSchemaNests(value.Schema)
 		}
 		return true
 	}
@@ -540,24 +537,12 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 	if reason != "" {
 		return &Refused{Where: f.l.program.Where(site), What: reason, Fix: "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
 	}
-	// The decoder makes its objects and arrays in the runtime with no graph plan, so in a graph program
-	// a decoded value that holds a container can be closed into a cycle outside every region and leak
-	// (#bvsjdte, 2a; 2b gives the decoder the plan and lifts this). It's our analysis that can't hold
-	// it yet, not the program that's wrong.
 	// Each of these was measured leaking in a graph program, by the counted build with a literal
 	// control beside it (#djwd1t2): toSorted 3 of 10 freed, toReversed 2 of 9, Map.groupBy 5 of 15,
 	// a Record's values 6 of 13. They stop until #y7wexf5 plans them where lowering makes them.
 	if len(f.l.graphUnplanned) != 0 {
 		first := f.l.graphUnplanned[0]
 		return f.l.notYet(first.node, first.what+" in a graph program, whose result lowering makes outside the program's graph regions")
-	}
-	if decodes {
-		what := "decodeJson<" + f.l.graphDecodeType + "> in a graph program, whose decoded values the runtime makes outside the program's graph regions"
-		if f.l.graphDecodeSite == nil {
-			// The IR holds a decode whose site lowering didn't keep: still stopped, at the program.
-			return &NotYet{Where: f.l.result.Source, What: what}
-		}
-		return f.l.notYet(f.l.graphDecodeSite, what)
 	}
 	return nil
 }

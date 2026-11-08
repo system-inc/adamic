@@ -334,6 +334,10 @@ static bool validate(const adamic_decode_schema *schema,size_t index,const json_
    if (!ok) { adamic_release(a); return false; }
    adamic_array_push(a,child);
   }
+  // A graph node's array is adopted once it's filled: adamic_graph_adopt_owned joins each element it
+  // owns that's a graph member into its region, and that element's count becomes the region's, as
+  // map.c's entry pairs are adopted. The elements live in a buffer of their own, so it moves at sizeof *a.
+  if (type->graph) { a=adamic_graph_adopt_owned(a,sizeof *a); }
   out->reference=a; return true;
  }
  bool tuple=strcmp(kind,"tuple")==0;
@@ -358,6 +362,9 @@ static bool validate(const adamic_decode_schema *schema,size_t index,const json_
   o->slots[written++]=child;
  }
  o->shape=canonical_shape(o->shape);
+ // Adopted only now: the move copies adamic_object_allocation_size, slots and per-slot bytes but not
+ // the shape embedded past them, which the object no longer names once its canonical shape is in.
+ if (type->graph) { o=adamic_graph_adopt_owned(o,adamic_object_allocation_size(o)); }
  out->reference=o; return true;
 }
 static adamic_string ok_kind=ADAMIC_STRING("Ok"), error_kind=ADAMIC_STRING("Error");

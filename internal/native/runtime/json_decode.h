@@ -20,6 +20,9 @@ typedef struct adamic_decode_node {
  size_t field_count;
  const adamic_decode_field *fields;
  const char *discriminant;
+ // An object, array or tuple node whose type the cycle proof placed in a graph region: what the
+ // decoder makes for it is adopted into one, as a literal of the type is.
+ bool graph;
 } adamic_decode_node;
 typedef struct adamic_decode_schema {
  const adamic_decode_node *nodes;

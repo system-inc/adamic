@@ -316,6 +316,13 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, mode
 		} else {
 			return 0, refuse(t)
 		}
+		// The decoder makes an object, array or tuple for this node in the runtime. It's planned as a
+		// literal is (graphAllocation): by its type's identity, which the emitter judges once the cycle
+		// proof has run, so in a graph program what the decoder makes joins the region a cycle through
+		// it would need (#3wv7dw5).
+		if mode == jsonSchemaDecode && (n.Kind == "object" || n.Kind == "array" || n.Kind == "tuple") {
+			n.GraphTypes = []int{l.cycleTypeID(l.concrete(t))}
+		}
 		schema.Nodes[index] = n
 		return index, nil
 	}
@@ -339,53 +346,7 @@ func (l *lowering) decodeJson(node *ast.Node) (ir.Expression, bool, error) {
 	if err != nil {
 		return nil, true, err
 	}
-	if l.graphDecodeSite == nil && jsonSchemaNests(schema) {
-		l.graphDecodeSite = node
-		l.graphDecodeType = l.checker.TypeToString(l.checker.GetTypeFromTypeNode(node.AsCallExpression().TypeArguments.Nodes[0]))
-	}
 	return ir.JSONDecode{Text: text, Schema: schema}, true, nil
-}
-
-// jsonSchemaNests reports whether a decoded value can hold a container: an object, array or tuple
-// with a field or element that is one, through unions. A decoded value that holds no container holds
-// nothing a cycle could return through, so a graph member may hold it from inside its region; one
-// that does is made by the runtime with no graph plan, and a later write can close a cycle through
-// it outside every region (graphAdoptionBoundary).
-func jsonSchemaNests(schema ir.JSONDecodeSchema) bool {
-	var container func(index int, seen map[int]bool) bool
-	container = func(index int, seen map[int]bool) bool {
-		if index < 0 || index >= len(schema.Nodes) || seen[index] {
-			return false
-		}
-		seen[index] = true
-		node := schema.Nodes[index]
-		switch node.Kind {
-		case "object", "array", "tuple":
-			return true
-		case "union":
-			for _, member := range node.Children {
-				if container(member, seen) {
-					return true
-				}
-			}
-		}
-		return false
-	}
-	for _, node := range schema.Nodes {
-		if node.Kind != "object" && node.Kind != "array" && node.Kind != "tuple" {
-			continue
-		}
-		held := append([]int{}, node.Children...)
-		for _, field := range node.Fields {
-			held = append(held, field.Node)
-		}
-		for _, child := range held {
-			if container(child, map[int]bool{}) {
-				return true
-			}
-		}
-	}
-	return false
 }
 
 // DecodeJsonSources supplies only types to the source oracle. It does not lower expressions:
