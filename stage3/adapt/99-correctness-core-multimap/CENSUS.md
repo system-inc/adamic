@@ -4,48 +4,48 @@ Stock TypeScript 6.0.3, over the completed main 698965fe6 adaptation stack, upst
 
 27 add calls, 5 remove calls, 24 factory calls. The add reference set also includes one declaration and one factory write; remove likewise. Factory references include 16 import/definition bindings. There are zero member reads as values and zero checker-typed own-key enumerations. There are 70 contextual, argument, assignment and assertion flow observations, including duplicate observations of one flow through different checker interfaces. All raw locations, source and target types, owner chains and summary counts are in census.json.
 
-| File | Owner chain | add | remove | createMultiMap |
-| --- | --- | ---: | ---: | ---: |
-| src/compiler/checker.ts | createTypeChecker / createNodeBuilder / mapToTypeNodes | 1 | 0 | 1 |
-| src/compiler/core.ts | arrayToMultiMap | 1 | 0 | 1 |
-| src/compiler/program.ts | createProgram | 0 | 0 | 1 |
-| src/compiler/program.ts | createProgram / addFileIncludeReason | 1 | 0 | 0 |
-| src/compiler/program.ts | createProgram / findSourceFileWorker | 1 | 0 | 0 |
-| src/compiler/programDiagnostics.ts | createProgramDiagnostics | 0 | 0 | 1 |
-| src/compiler/sys.ts | createDirectoryWatcherSupportingRecursive | 0 | 0 | 1 |
-| src/compiler/sys.ts | createDirectoryWatcherSupportingRecursive / createDirectoryWatcher | 1 | 0 | 0 |
-| src/compiler/sys.ts | createDirectoryWatcherSupportingRecursive / createDirectoryWatcher / &lt;anonymous&gt; | 0 | 1 | 0 |
-| src/compiler/sys.ts | createUseFsEventsOnParentDirectoryWatchFile | 0 | 0 | 1 |
-| src/compiler/sys.ts | createUseFsEventsOnParentDirectoryWatchFile / nonPollingWatchFile | 1 | 0 | 0 |
-| src/compiler/sys.ts | createUseFsEventsOnParentDirectoryWatchFile / nonPollingWatchFile / &lt;anonymous&gt; | 0 | 1 | 0 |
-| src/compiler/utilities.ts | createSymlinkCache / &lt;anonymous&gt; | 1 | 0 | 1 |
-| src/harness/fourslashImpl.ts | TestState / rangesByText | 1 | 0 | 1 |
-| src/harness/watchUtils.ts | createWatchUtils / initializeWatches | 0 | 0 | 1 |
-| src/harness/watchUtils.ts | createWatchUtils / initializeWatches / add | 2 | 0 | 1 |
-| src/harness/watchUtils.ts | createWatchUtils / initializeWatches / remove | 0 | 2 | 0 |
-| src/server/editorServices.ts | ProjectService / &lt;anonymous&gt; | 0 | 0 | 1 |
-| src/server/editorServices.ts | ProjectService / deleteScriptInfo | 0 | 1 | 0 |
-| src/server/editorServices.ts | ProjectService / getSymlinkedProjects / combineProjects | 2 | 0 | 1 |
-| src/server/scriptInfo.ts | ScriptInfo / ensureRealPath | 1 | 0 | 0 |
-| src/services/codeFixProvider.ts |  | 0 | 0 | 1 |
-| src/services/codeFixProvider.ts | registerCodeFix | 1 | 0 | 0 |
-| src/services/codefixes/convertToAsyncFunction.ts | renameCollidingVarNames | 0 | 0 | 1 |
-| src/services/codefixes/convertToAsyncFunction.ts | renameCollidingVarNames / visit | 3 | 0 | 0 |
-| src/services/codefixes/convertToEsModule.ts | collectFreeIdentifiers | 0 | 0 | 1 |
-| src/services/codefixes/convertToEsModule.ts | collectFreeIdentifiers / &lt;anonymous&gt; | 1 | 0 | 0 |
-| src/services/codefixes/importFixes.ts | createExistingImportMap | 2 | 0 | 2 |
-| src/services/codefixes/importFixes.ts | getExportInfos | 0 | 0 | 1 |
-| src/services/codefixes/importFixes.ts | getExportInfos / addSymbol | 1 | 0 | 0 |
-| src/services/codefixes/inferFromUsage.ts | inferTypeFromReferences / combineAnonymousTypes | 1 | 0 | 1 |
-| src/services/exportInfoMap.ts | createCacheableExportInfoMap | 0 | 0 | 1 |
-| src/services/exportInfoMap.ts | createCacheableExportInfoMap / &lt;anonymous&gt; | 1 | 0 | 0 |
-| src/services/services.ts | SourceFileObject / computeNamedDeclarations | 0 | 0 | 1 |
-| src/services/services.ts | SourceFileObject / computeNamedDeclarations / addDeclaration | 1 | 0 | 0 |
-| src/services/textChanges.ts | ChangeTracker / insertStatementsInNewFile | 1 | 0 | 1 |
-| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt; / createLoggerTrackingHostCalls / setCallsTrackingWithFiveArgFn | 0 | 0 | 1 |
-| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt; / createLoggerTrackingHostCalls / setCallsTrackingWithFiveArgFn / &lt;anonymous&gt; | 1 | 0 | 0 |
-| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt; / createLoggerTrackingHostCalls / setCallsTrackingWithSingleArgFn | 0 | 0 | 1 |
-| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt; / createLoggerTrackingHostCalls / setCallsTrackingWithSingleArgFn / &lt;anonymous&gt; | 1 | 0 | 0 |
+| File                                                              | Owner chain                                                                                             | add | remove | createMultiMap |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --: | -----: | -------------: |
+| src/compiler/checker.ts                                           | createTypeChecker / createNodeBuilder / mapToTypeNodes                                                  |   1 |      0 |              1 |
+| src/compiler/core.ts                                              | arrayToMultiMap                                                                                         |   1 |      0 |              1 |
+| src/compiler/program.ts                                           | createProgram                                                                                           |   0 |      0 |              1 |
+| src/compiler/program.ts                                           | createProgram / addFileIncludeReason                                                                    |   1 |      0 |              0 |
+| src/compiler/program.ts                                           | createProgram / findSourceFileWorker                                                                    |   1 |      0 |              0 |
+| src/compiler/programDiagnostics.ts                                | createProgramDiagnostics                                                                                |   0 |      0 |              1 |
+| src/compiler/sys.ts                                               | createDirectoryWatcherSupportingRecursive                                                               |   0 |      0 |              1 |
+| src/compiler/sys.ts                                               | createDirectoryWatcherSupportingRecursive / createDirectoryWatcher                                      |   1 |      0 |              0 |
+| src/compiler/sys.ts                                               | createDirectoryWatcherSupportingRecursive / createDirectoryWatcher / &lt;anonymous&gt;                  |   0 |      1 |              0 |
+| src/compiler/sys.ts                                               | createUseFsEventsOnParentDirectoryWatchFile                                                             |   0 |      0 |              1 |
+| src/compiler/sys.ts                                               | createUseFsEventsOnParentDirectoryWatchFile / nonPollingWatchFile                                       |   1 |      0 |              0 |
+| src/compiler/sys.ts                                               | createUseFsEventsOnParentDirectoryWatchFile / nonPollingWatchFile / &lt;anonymous&gt;                   |   0 |      1 |              0 |
+| src/compiler/utilities.ts                                         | createSymlinkCache / &lt;anonymous&gt;                                                                  |   1 |      0 |              1 |
+| src/harness/fourslashImpl.ts                                      | TestState / rangesByText                                                                                |   1 |      0 |              1 |
+| src/harness/watchUtils.ts                                         | createWatchUtils / initializeWatches                                                                    |   0 |      0 |              1 |
+| src/harness/watchUtils.ts                                         | createWatchUtils / initializeWatches / add                                                              |   2 |      0 |              1 |
+| src/harness/watchUtils.ts                                         | createWatchUtils / initializeWatches / remove                                                           |   0 |      2 |              0 |
+| src/server/editorServices.ts                                      | ProjectService / &lt;anonymous&gt;                                                                      |   0 |      0 |              1 |
+| src/server/editorServices.ts                                      | ProjectService / deleteScriptInfo                                                                       |   0 |      1 |              0 |
+| src/server/editorServices.ts                                      | ProjectService / getSymlinkedProjects / combineProjects                                                 |   2 |      0 |              1 |
+| src/server/scriptInfo.ts                                          | ScriptInfo / ensureRealPath                                                                             |   1 |      0 |              0 |
+| src/services/codeFixProvider.ts                                   |                                                                                                         |   0 |      0 |              1 |
+| src/services/codeFixProvider.ts                                   | registerCodeFix                                                                                         |   1 |      0 |              0 |
+| src/services/codefixes/convertToAsyncFunction.ts                  | renameCollidingVarNames                                                                                 |   0 |      0 |              1 |
+| src/services/codefixes/convertToAsyncFunction.ts                  | renameCollidingVarNames / visit                                                                         |   3 |      0 |              0 |
+| src/services/codefixes/convertToEsModule.ts                       | collectFreeIdentifiers                                                                                  |   0 |      0 |              1 |
+| src/services/codefixes/convertToEsModule.ts                       | collectFreeIdentifiers / &lt;anonymous&gt;                                                              |   1 |      0 |              0 |
+| src/services/codefixes/importFixes.ts                             | createExistingImportMap                                                                                 |   2 |      0 |              2 |
+| src/services/codefixes/importFixes.ts                             | getExportInfos                                                                                          |   0 |      0 |              1 |
+| src/services/codefixes/importFixes.ts                             | getExportInfos / addSymbol                                                                              |   1 |      0 |              0 |
+| src/services/codefixes/inferFromUsage.ts                          | inferTypeFromReferences / combineAnonymousTypes                                                         |   1 |      0 |              1 |
+| src/services/exportInfoMap.ts                                     | createCacheableExportInfoMap                                                                            |   0 |      0 |              1 |
+| src/services/exportInfoMap.ts                                     | createCacheableExportInfoMap / &lt;anonymous&gt;                                                        |   1 |      0 |              0 |
+| src/services/services.ts                                          | SourceFileObject / computeNamedDeclarations                                                             |   0 |      0 |              1 |
+| src/services/services.ts                                          | SourceFileObject / computeNamedDeclarations / addDeclaration                                            |   1 |      0 |              0 |
+| src/services/textChanges.ts                                       | ChangeTracker / insertStatementsInNewFile                                                               |   1 |      0 |              1 |
+| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt; / createLoggerTrackingHostCalls / setCallsTrackingWithFiveArgFn                       |   0 |      0 |              1 |
+| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt; / createLoggerTrackingHostCalls / setCallsTrackingWithFiveArgFn / &lt;anonymous&gt;   |   1 |      0 |              0 |
+| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt; / createLoggerTrackingHostCalls / setCallsTrackingWithSingleArgFn                     |   0 |      0 |              1 |
+| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt; / createLoggerTrackingHostCalls / setCallsTrackingWithSingleArgFn / &lt;anonymous&gt; |   1 |      0 |              0 |
 
 ## Flow review
 
@@ -63,40 +63,40 @@ The language service also reports 36 references to the MultiMap type declaration
 
 Flow observations include overlapping contextual and argument checks; these are 70 observations rather than 70 unique transfers. Counts by file and lexical owner follow.
 
-| File | Owner | Flow observations |
-| --- | --- | ---: |
-| src/compiler/checker.ts | createBasicNodeBuilderModuleSpecifierResolutionHost/&lt;anonymous&gt; | 1 |
-| src/compiler/core.ts | arrayToMultiMap | 1 |
-| src/compiler/core.ts | createMultiMap | 1 |
-| src/compiler/program.ts | createProgram | 1 |
-| src/compiler/program.ts | createProgram/&lt;anonymous&gt; | 1 |
-| src/compiler/program.ts | createProgram/getEmitHost | 1 |
-| src/compiler/program.ts | createProgram/tryReuseStructureFromOldProgram | 2 |
-| src/compiler/programDiagnostics.ts | createProgramDiagnostics/getFileReasons | 1 |
-| src/compiler/programDiagnostics.ts | createProgramDiagnostics/reuseStateFromOldProgram | 2 |
-| src/compiler/utilities.ts | createSymlinkCache/&lt;anonymous&gt; | 2 |
-| src/harness/fourslashImpl.ts | TestState/rangesByText | 4 |
-| src/harness/watchUtils.ts | createWatchUtils/initializeWatches/add | 1 |
-| src/harness/watchUtils.ts | createWatchUtils/initializeWatches/serialize | 2 |
-| src/harness/watchUtils.ts | serializeMultiMap | 4 |
-| src/server/editorServices.ts | ProjectService/&lt;anonymous&gt; | 2 |
-| src/server/editorServices.ts | ProjectService/getSymlinkedProjects | 1 |
-| src/server/editorServices.ts | ProjectService/getSymlinkedProjects/combineProjects | 4 |
-| src/server/session.ts | Session/getProjects | 3 |
-| src/services/codefixes/convertToAsyncFunction.ts | renameCollidingVarNames/visit | 4 |
-| src/services/codefixes/convertToEsModule.ts | collectFreeIdentifiers | 1 |
-| src/services/codefixes/importFixes.ts | createExistingImportMap | 2 |
-| src/services/codefixes/importFixes.ts | getExportInfos | 1 |
-| src/services/codefixes/inferFromUsage.ts | inferTypeFromReferences/combineAnonymousTypes | 2 |
-| src/services/exportInfoMap.ts | createCacheableExportInfoMap | 2 |
-| src/services/exportInfoMap.ts | createCacheableExportInfoMap/&lt;anonymous&gt; | 2 |
-| src/services/findAllReferences.ts | getReferencedSymbolsForNode | 4 |
-| src/services/findAllReferences.ts | getReferencesForFileName | 2 |
-| src/services/services.ts | SourceFileObject/computeNamedDeclarations | 1 |
-| src/services/textChanges.ts | ChangeTracker/insertStatementsInNewFile | 2 |
-| src/services/utilities.ts | createModuleSpecifierResolutionHost | 2 |
-| src/services/utilities.ts | createModuleSpecifierResolutionHost/&lt;anonymous&gt; | 1 |
-| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt;/createLoggerTrackingHostCalls | 10 |
+| File                                                              | Owner                                                                 | Flow observations |
+| ----------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------: |
+| src/compiler/checker.ts                                           | createBasicNodeBuilderModuleSpecifierResolutionHost/&lt;anonymous&gt; |                 1 |
+| src/compiler/core.ts                                              | arrayToMultiMap                                                       |                 1 |
+| src/compiler/core.ts                                              | createMultiMap                                                        |                 1 |
+| src/compiler/program.ts                                           | createProgram                                                         |                 1 |
+| src/compiler/program.ts                                           | createProgram/&lt;anonymous&gt;                                       |                 1 |
+| src/compiler/program.ts                                           | createProgram/getEmitHost                                             |                 1 |
+| src/compiler/program.ts                                           | createProgram/tryReuseStructureFromOldProgram                         |                 2 |
+| src/compiler/programDiagnostics.ts                                | createProgramDiagnostics/getFileReasons                               |                 1 |
+| src/compiler/programDiagnostics.ts                                | createProgramDiagnostics/reuseStateFromOldProgram                     |                 2 |
+| src/compiler/utilities.ts                                         | createSymlinkCache/&lt;anonymous&gt;                                  |                 2 |
+| src/harness/fourslashImpl.ts                                      | TestState/rangesByText                                                |                 4 |
+| src/harness/watchUtils.ts                                         | createWatchUtils/initializeWatches/add                                |                 1 |
+| src/harness/watchUtils.ts                                         | createWatchUtils/initializeWatches/serialize                          |                 2 |
+| src/harness/watchUtils.ts                                         | serializeMultiMap                                                     |                 4 |
+| src/server/editorServices.ts                                      | ProjectService/&lt;anonymous&gt;                                      |                 2 |
+| src/server/editorServices.ts                                      | ProjectService/getSymlinkedProjects                                   |                 1 |
+| src/server/editorServices.ts                                      | ProjectService/getSymlinkedProjects/combineProjects                   |                 4 |
+| src/server/session.ts                                             | Session/getProjects                                                   |                 3 |
+| src/services/codefixes/convertToAsyncFunction.ts                  | renameCollidingVarNames/visit                                         |                 4 |
+| src/services/codefixes/convertToEsModule.ts                       | collectFreeIdentifiers                                                |                 1 |
+| src/services/codefixes/importFixes.ts                             | createExistingImportMap                                               |                 2 |
+| src/services/codefixes/importFixes.ts                             | getExportInfos                                                        |                 1 |
+| src/services/codefixes/inferFromUsage.ts                          | inferTypeFromReferences/combineAnonymousTypes                         |                 2 |
+| src/services/exportInfoMap.ts                                     | createCacheableExportInfoMap                                          |                 2 |
+| src/services/exportInfoMap.ts                                     | createCacheableExportInfoMap/&lt;anonymous&gt;                        |                 2 |
+| src/services/findAllReferences.ts                                 | getReferencedSymbolsForNode                                           |                 4 |
+| src/services/findAllReferences.ts                                 | getReferencesForFileName                                              |                 2 |
+| src/services/services.ts                                          | SourceFileObject/computeNamedDeclarations                             |                 1 |
+| src/services/textChanges.ts                                       | ChangeTracker/insertStatementsInNewFile                               |                 2 |
+| src/services/utilities.ts                                         | createModuleSpecifierResolutionHost                                   |                 2 |
+| src/services/utilities.ts                                         | createModuleSpecifierResolutionHost/&lt;anonymous&gt;                 |                 1 |
+| src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts | &lt;anonymous&gt;/createLoggerTrackingHostCalls                       |                10 |
 
 ## Object-rest coverage
 
