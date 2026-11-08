@@ -1,0 +1,9 @@
+// r2: &&= on a graph member's field: the old value is a member of the same region.
+interface Node { name: string; next: Node[]; peer: Node | null }
+const a: Node = { name: 'a' + '', next: [], peer: null };
+const b: Node = { name: 'b' + '', next: [a], peer: null };
+a.next.push(b); // a cycle
+a.peer = b;
+const c: Node = { name: 'c' + '', next: [a], peer: null };
+a.peer &&= c;
+console.log(a.name + ' ' + (a.peer === null ? '-' : a.peer.name) + ' ' + b.name + ' ' + c.name);

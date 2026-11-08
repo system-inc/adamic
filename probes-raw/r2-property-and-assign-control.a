@@ -1,0 +1,9 @@
+// r2 control: the same store as a plain assignment.
+interface Node { name: string; next: Node[]; peer: Node | null }
+const a: Node = { name: 'a' + '', next: [], peer: null };
+const b: Node = { name: 'b' + '', next: [a], peer: null };
+a.next.push(b); // a cycle
+a.peer = b;
+const c: Node = { name: 'c' + '', next: [a], peer: null };
+if (a.peer !== null) a.peer = c;
+console.log(a.name + ' ' + (a.peer === null ? '-' : a.peer.name) + ' ' + b.name + ' ' + c.name);

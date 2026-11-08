@@ -1,0 +1,8 @@
+// r1 control: the same pop, without typeof.
+interface Node { name: string; next: (Node | null | undefined)[] }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b); // a cycle: a and b share a graph region
+const popped = a.next.pop();
+console.log(typeof popped);
+console.log(a.name + ' ' + b.name + ' ' + a.next.length + ' ' + b.next.length);

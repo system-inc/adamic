@@ -1,0 +1,9 @@
+// r4 control: the same store as a plain assignment.
+interface Node { name: string; next: Node[] }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b); // a cycle
+const c: Node = { name: 'c' + '', next: [a] };
+a.next[0] = c;
+const first = a.next[0];
+console.log(a.name + ' ' + (first === undefined ? '-' : first.name) + ' ' + b.name + ' ' + c.name);

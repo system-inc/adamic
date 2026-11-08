@@ -1,0 +1,8 @@
+// r3: ??= on a graph member's empty field, storing a member of another region that reaches back.
+interface Node { name: string; next: Node[]; peer: Node | null }
+const a: Node = { name: 'a' + '', next: [], peer: null };
+const b: Node = { name: 'b' + '', next: [a], peer: null };
+a.next.push(b); // a cycle
+const c: Node = { name: 'c' + '', next: [a], peer: null };
+a.peer ??= c;
+console.log(a.name + ' ' + (a.peer === null ? '-' : a.peer.name) + ' ' + c.next.length);
