@@ -860,6 +860,13 @@ export function transformSystemModule(context: TransformationContext): (x: Sourc
 | full-20-050-snapshot-final | 0 | 2.019 | completed |
 | full-20-050-snapshot | 0 | 2.009 | completed |
 | full-20-050 | 0 | 36.063 | completed |
+| full-20-051-add | 0 | 1.001 | completed |
+| full-20-051-audit | 0 | 3.01 | completed |
+| full-20-051-commit | 0 | 1.002 | completed |
+| full-20-051-push | 0 | 3.008 | completed |
+| full-20-051-report | 0 | 2.01 | completed |
+| full-20-051-snapshot-final | 0 | 2.004 | completed |
+| full-20-051-snapshot | 0 | 2.009 | completed |
 | full-20-051 | 0 | 25.078 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
