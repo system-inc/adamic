@@ -1,0 +1,806 @@
+{
+  "scopeTotals": {
+    "requestedFamilies": {
+      "calls": 85348,
+      "executions": 73940,
+      "elements": 141741
+    },
+    "additionalCoreHelpers": {
+      "calls": 23325,
+      "executions": 9214,
+      "elements": 10678
+    }
+  },
+  "exitCode": 0,
+  "node": "v24.19.0",
+  "peakRssKiB": 701920,
+  "totalCalls": 108673,
+  "totalThrows": 0,
+  "totalExecutions": 83154,
+  "totalElements": 152419,
+  "sites": [
+    {
+      "id": "src/compiler/checker.ts:18816:34#.slice@1094446",
+      "calls": 65319,
+      "throws": 0,
+      "executions": 65319,
+      "elements": 131159,
+      "meanLength": 2.007976239685237,
+      "meanElementsPerCall": 2.007976239685237
+    },
+    {
+      "id": "src/compiler/checker.ts:15700:28#helper:addRange@913706",
+      "calls": 22966,
+      "throws": 0,
+      "executions": 9182,
+      "elements": 10646,
+      "meanLength": 1.15944238727946,
+      "meanElementsPerCall": 0.4635548201689454
+    },
+    {
+      "id": "src/compiler/checker.ts:26361:49#.slice@1564531",
+      "calls": 8073,
+      "throws": 0,
+      "executions": 8073,
+      "elements": 9883,
+      "meanLength": 1.2242041372476156,
+      "meanElementsPerCall": 1.2242041372476156
+    },
+    {
+      "id": "src/compiler/visitorPublic.ts:350:27#.slice@12247",
+      "calls": 379,
+      "throws": 0,
+      "executions": 379,
+      "elements": 463,
+      "meanLength": 1.2216358839050132,
+      "meanElementsPerCall": 1.2216358839050132
+    },
+    {
+      "id": "src/compiler/checker.ts:26362:61#.slice@1564628",
+      "calls": 62,
+      "throws": 0,
+      "executions": 62,
+      "elements": 62,
+      "meanLength": 1,
+      "meanElementsPerCall": 1
+    },
+    {
+      "id": "src/compiler/checker.ts:24293:30#.slice@1446311",
+      "calls": 40,
+      "throws": 0,
+      "executions": 40,
+      "elements": 18,
+      "meanLength": 0.45,
+      "meanElementsPerCall": 0.45
+    },
+    {
+      "id": "src/compiler/checker.ts:16479:92#helper:map@957519",
+      "calls": 35,
+      "throws": 0,
+      "executions": 35,
+      "elements": 71,
+      "meanLength": 2.0285714285714285,
+      "meanElementsPerCall": 2.0285714285714285
+    },
+    {
+      "id": "src/compiler/utilities.ts:4668:22#helper:addRange@182175",
+      "calls": 32,
+      "throws": 0,
+      "executions": 32,
+      "elements": 32,
+      "meanLength": 1,
+      "meanElementsPerCall": 1
+    },
+    {
+      "id": "src/compiler/checker.ts:14491:73#helper:map@840120",
+      "calls": 10,
+      "throws": 0,
+      "executions": 10,
+      "elements": 35,
+      "meanLength": 3.5,
+      "meanElementsPerCall": 3.5
+    },
+    {
+      "id": "src/compiler/checker.ts:13086:32#helper:concatenate@760548",
+      "calls": 18,
+      "throws": 0,
+      "executions": 8,
+      "elements": 18,
+      "meanLength": 2.25,
+      "meanElementsPerCall": 1
+    },
+    {
+      "id": "src/compiler/checker.ts:18150:62#helper:map@1055272",
+      "calls": 5,
+      "throws": 0,
+      "executions": 5,
+      "elements": 17,
+      "meanLength": 3.4,
+      "meanElementsPerCall": 3.4
+    },
+    {
+      "id": "src/compiler/checker.ts:20223:42#helper:concatenate@1181802",
+      "calls": 5,
+      "throws": 0,
+      "executions": 5,
+      "elements": 11,
+      "meanLength": 2.2,
+      "meanElementsPerCall": 2.2
+    },
+    {
+      "id": "src/compiler/checker.ts:14354:193#helper:map@832266",
+      "calls": 4,
+      "throws": 0,
+      "executions": 4,
+      "elements": 4,
+      "meanLength": 1,
+      "meanElementsPerCall": 1
+    },
+    {
+      "id": "src/compiler/builder.ts:1513:21#.map@68804",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/builder.ts:1549:74#.slice@70449",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/builder.ts:1642:38#.map@74560",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/builder.ts:2038:35#helper:addRange@95520",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/builder.ts:2104:48#helper:addRange@98257",
+      "calls": 78,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/builder.ts:2158:35#helper:addRange@101333",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/builder.ts:2208:27#helper:addRange@103650",
+      "calls": 249,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/builder.ts:583:17#.map@25144",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:10279:25#helper:map@591538",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:12282:46#helper:concatenate@715789",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:13079:37#spread@760041",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:13079:77#spread@760070",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:13103:69#helper:flatMap@761907",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:14103:34#helper:concatenate@816842",
+      "calls": 2740,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:14104:39#helper:concatenate@816983",
+      "calls": 2740,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:14106:30#helper:concatenate@817265",
+      "calls": 2740,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:14106:54#helper:filter@817264",
+      "calls": 2740,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:14332:70#helper:mapDefined@830504",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:14556:34#helper:map@844055",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:15708:51#.slice@914077",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:16790:41#.map@977427",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:18171:116#.map@1056959",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:20909:52#helper:map@1223654",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:21264:40#helper:map@1246458",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:29842:49#.slice@1775723",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:36903:29#helper:mapDefined@2189843",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:36908:68#helper:mapDefined@2190033",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:41628:60#helper:concatenate@2457931",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:51478:55#helper:filter@2989623",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:51482:48#helper:map@2990763",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:51583:41#helper:concatenate@2995552",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:7493:74#.slice@406739",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:8504:57#.concat@471933",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:9493:37#spread@535318",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:9493:40#helper:filter@535318",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:9497:68#helper:flatMap@535653",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/checker.ts:9517:45#helper:indicesOf@536900",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/expressionToTypeNode.ts:1129:17#.map@59945",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/parser.ts:10656:43#helper:map@531927",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/program.ts:4069:38#.map@207146",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/semver.ts:446:12#helper:map@17800",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/sourcemap.ts:763:48#helper:sortAndDeduplicate@29809",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/tracing.ts:259:36#.map@10000",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/tracing.ts:321:62#.map@13136",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/tracing.ts:322:76#.map@13273",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/tracing.ts:323:37#.map@13363",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/declarations.ts:1628:45#helper:concatenate@81886",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/declarations.ts:1679:84#helper:map@85973",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/declarations.ts:1683:104#helper:filter@86338",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/declarations.ts:1853:49#helper:filter@94890",
+      "calls": 438,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1516:17#spread@64533",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1516:20#.slice@64533",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1517:17#spread@64667",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1517:20#.slice@64667",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1519:17#spread@64799",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1519:20#.slice@64799",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1605:21#spread@69002",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1605:24#.slice@69002",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1607:21#spread@69155",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:1607:24#.slice@69155",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2015.ts:2718:28#.slice@120662",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/es2018.ts:635:28#.slice@26136",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/jsx.ts:177:205#helper:arrayFrom@6622",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/jsx.ts:179:69#.slice@6864",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/jsx.ts:187:68#helper:arrayFrom@7467",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/jsx.ts:195:69#.slice@8033",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/transformers/module/module.ts:293:29#.slice@9871",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/tsbuildPublic.ts:2333:75#spread@106969",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/tsbuildPublic.ts:2333:92#spread@107020",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/utilities.ts:10132:24#helper:concatenate@405462",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/utilities.ts:10132:46#.map@405461",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/utilities.ts:4672:22#helper:addRange@182375",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/utilities.ts:4676:22#helper:addRange@182609",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    },
+    {
+      "id": "src/compiler/visitorPublic.ts:426:35#.slice@16251",
+      "calls": 0,
+      "throws": 0,
+      "executions": 0,
+      "elements": 0,
+      "meanLength": 0,
+      "meanElementsPerCall": 0
+    }
+  ]
+}

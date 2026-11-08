@@ -1,0 +1,68 @@
+{
+  "started": "2026-11-08T22:32:39.746Z",
+  "seconds": 56.993,
+  "steps": [
+    {
+      "name": "transform",
+      "command": "/workspace/adamic-tools/bin/node",
+      "args": [
+        "/workspace/array-copies-work/stage3/census/array-copies/transform.cjs",
+        "/workspace/array-copies-work/stage3/api/node_modules/typescript/lib/typescript.js",
+        "/workspace/array-copies-work/stage3/census/array-copies/stock.json",
+        "/workspace/array-copies-runtime-final"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "seconds": 5.739,
+      "log": "transform.log"
+    },
+    {
+      "name": "baseline",
+      "command": "python3",
+      "args": [
+        "/workspace/array-copies-work/stage3/census/array-copies/measure-child.py",
+        "/workspace/array-copies-work/stage3/census/array-copies/baseline.json",
+        "1794179557.746",
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/array-copies-runtime-final/baseline/tsc.js",
+        "--noEmit",
+        "-p",
+        "/workspace/array-copies-stock/src/compiler/tsconfig.json",
+        "--pretty",
+        "false",
+        "--tsBuildInfoFile",
+        "/workspace/array-copies-runtime-final/compile.tsbuildinfo"
+      ],
+      "cwd": "/workspace/array-copies-stock",
+      "exitCode": 0,
+      "signal": null,
+      "seconds": 21.048,
+      "log": "baseline.log"
+    },
+    {
+      "name": "counted",
+      "command": "python3",
+      "args": [
+        "/workspace/array-copies-work/stage3/census/array-copies/measure-child.py",
+        "/workspace/array-copies-work/stage3/census/array-copies/counted-memory.json",
+        "1794179557.746",
+        "/workspace/adamic-tools/bin/node",
+        "--require",
+        "/workspace/array-copies-work/stage3/census/array-copies/counter.cjs",
+        "/workspace/array-copies-runtime-final/counted/tsc.js",
+        "--noEmit",
+        "-p",
+        "/workspace/array-copies-stock/src/compiler/tsconfig.json",
+        "--pretty",
+        "false",
+        "--tsBuildInfoFile",
+        "/workspace/array-copies-runtime-final/compile.tsbuildinfo"
+      ],
+      "cwd": "/workspace/array-copies-stock",
+      "exitCode": 0,
+      "signal": null,
+      "seconds": 26.404,
+      "log": "counted.log"
+    }
+  ]
+}

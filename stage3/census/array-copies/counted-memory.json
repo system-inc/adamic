@@ -1,0 +1,21 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "peakRssKiB": 703072,
+  "seconds": 26.3107271194458,
+  "node": "v24.19.0",
+  "command": "/workspace/adamic-tools/bin/node",
+  "arguments": [
+    "--require",
+    "/workspace/array-copies-work/stage3/census/array-copies/counter.cjs",
+    "/workspace/array-copies-runtime-final/counted/tsc.js",
+    "--noEmit",
+    "-p",
+    "/workspace/array-copies-stock/src/compiler/tsconfig.json",
+    "--pretty",
+    "false",
+    "--tsBuildInfoFile",
+    "/workspace/array-copies-runtime-final/compile.tsbuildinfo"
+  ]
+}

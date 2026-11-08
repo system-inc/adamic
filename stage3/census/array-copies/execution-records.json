@@ -1,0 +1,66 @@
+{
+  "completed": [
+    {
+      "name": "setup",
+      "exitCode": 0,
+      "log": "setup.log"
+    },
+    {
+      "name": "api-install",
+      "exitCode": 0,
+      "log": "api-install.log"
+    },
+    {
+      "name": "stock-install",
+      "exitCode": 0,
+      "log": "stock-install.log"
+    },
+    {
+      "name": "stock-build",
+      "exitCode": 0,
+      "log": "stock-build.log"
+    },
+    {
+      "name": "apply",
+      "exitCode": 0,
+      "log": "apply.log"
+    },
+    {
+      "name": "stock-analysis",
+      "exitCode": 0,
+      "log": "stock-analysis.log"
+    },
+    {
+      "name": "adapted-analysis",
+      "exitCode": 0,
+      "log": "adapted-analysis.log"
+    },
+    {
+      "name": "validation",
+      "exitCode": 0,
+      "log": "validation.log"
+    },
+    {
+      "name": "transform-build",
+      "exitCode": 0,
+      "log": "transform-build.log"
+    },
+    {
+      "name": "runtime-phase",
+      "exitCode": 0,
+      "log": "runtime-phase.log",
+      "details": "run-steps.json"
+    },
+    {
+      "name": "verification",
+      "exitCode": 0,
+      "log": "verification.log"
+    },
+    {
+      "name": "report-generation",
+      "exitCode": 0,
+      "log": "report-generation.log"
+    }
+  ],
+  "interruption": "An environment transition killed the initial setup/apply jobs. Setup and the full apply.sh generation were restarted successfully; partial adapted source was not measured."
+}
