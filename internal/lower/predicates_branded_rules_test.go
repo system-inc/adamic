@@ -222,17 +222,24 @@ show(i);
 	// One program holds an unbranded and a branded instance, each judged at its own door: the branded lie
 	// stops at its read through S's view (Language's per-instance pin), and so does find's branded
 	// result read by a caller (Compiler's pin).
-	brandedStops(t, brandedRulesPrelude+`const named = orPredicate2(isIdentifier, isLiteral);
+	// The two instances together are refused as a checked-view adapter in a graph program (cycle-capable,
+	// measured on Pupa at 84e9a563), which never reads the lie raw; the branded instance alone reaches the view.
+	brandedStopsOrRefused(t, brandedRulesPrelude+`const named = orPredicate2(isIdentifier, isLiteral);
 const element = orPredicate2(isTypeElementLie, isTypeElement);
 function show(n: Node): void { console.log(String(element(n) && String(n.name))); }
 const w = { kind: 9, pos: 4, text: "t", name: 5 };
 show(w);
-`, "adamic: panic: ")
-	brandedStops(t, brandedRulesPrelude+`const w = { kind: 9, pos: 4, text: "t", name: 5 };
+`)
+	brandedStopsOrRefused(t, brandedRulesPrelude+`const element = orPredicate2(isTypeElementLie, isTypeElement);
+function show(n: Node): void { console.log(String(element(n) && String(n.name))); }
+const w = { kind: 9, pos: 4, text: "t", name: 5 };
+show(w);
+`)
+	brandedStopsOrRefused(t, brandedRulesPrelude+`const w = { kind: 9, pos: 4, text: "t", name: 5 };
 const ws: Node[] = [w];
 const found = ws.find(orPredicate2(isTypeElementLie, isTypeElement));
 console.log(found === undefined ? "none" : String(found.name));
-`, "adamic: panic: ")
+`)
 }
 
 // The inferred arrow's walk (road (B) on #fx9waqy, Nov 7): an arrow its producer returns written in place
@@ -300,6 +307,24 @@ console.log(typeof g);
 			}
 		})
 	}
+}
+
+// brandedStopsOrRefused wants a program either refused before it lowers or stopped at exit 70 on both
+// backends, logging which: either way no lie is read raw.
+func brandedStopsOrRefused(t *testing.T, source string) {
+	t.Helper()
+	program, err := lowerTypeScriptAssertionSource(t, source)
+	var pending *NotYet
+	var refused *Refused
+	if errors.As(err, &pending) || errors.As(err, &refused) {
+		t.Logf("stops before it lowers: %v", err)
+		return
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("lowers, and stops at run time")
+	brandedStopsProgram(t, program, "adamic: panic: ")
 }
 
 // wantStop lowers a .ts program and wants a NotYet holding want.
