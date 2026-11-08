@@ -1626,7 +1626,7 @@ The baseline file api/typescript.d.ts has changed. (Run "hereby baseline-accept"
 
 Elapsed: 959.942 ms; timeout: 40000 ms.
 
-Stack top:     at writeComparison (src/harness/harnessIO.ts:1486:23)
+Stack top: at writeComparison (src/harness/harnessIO.ts:1486:23)
 
 api/typescript.d.ts (first 40 lines)
 

@@ -15,14 +15,14 @@ rewrite `maybeBind(X, X.m)` to `X.m?.bind(X)` when X is one identifier.
 The corrected 99x owner audit assigns these six sites to 95h, because 95h pins
 the whole writer owners. 99x is amended separately on typescript/maybebind-adapt-2.
 
-| File | Pinned implementation owner | Member |
-| --- | --- | --- |
-| checker.ts | createBasicNodeBuilderModuleSpecifierResolutionHost | getSymlinkCache |
+| File       | Pinned implementation owner                         | Member                        |
+| ---------- | --------------------------------------------------- | ----------------------------- |
+| checker.ts | createBasicNodeBuilderModuleSpecifierResolutionHost | getSymlinkCache               |
 | checker.ts | createBasicNodeBuilderModuleSpecifierResolutionHost | getGlobalTypingsCacheLocation |
-| program.ts | createProgram | getGlobalTypingsCacheLocation |
-| program.ts | createProgram > getEmitHost | realpath |
-| program.ts | createProgram > getEmitHost | createHash |
-| program.ts | createProgram > getEmitHost | trace |
+| program.ts | createProgram                                       | getGlobalTypingsCacheLocation |
+| program.ts | createProgram > getEmitHost                         | realpath                      |
+| program.ts | createProgram > getEmitHost                         | createHash                    |
+| program.ts | createProgram > getEmitHost                         | trace                         |
 
 The original before-owner pins remain exactly:
 
@@ -66,13 +66,13 @@ literal hash. All input, shape and type checks finish before any source write.
 The bound value types are checked before planning and after rebinding the
 complete planned tree:
 
-| Member | Value type |
-| --- | --- |
-| checker getSymlinkCache | (() => SymlinkCache) or undefined |
+| Member                                   | Value type                               |
+| ---------------------------------------- | ---------------------------------------- |
+| checker getSymlinkCache                  | (() => SymlinkCache) or undefined        |
 | both getGlobalTypingsCacheLocation sites | (() => string or undefined) or undefined |
-| getEmitHost realpath | ((path: string) => string) or undefined |
-| getEmitHost createHash | ((data: string) => string) or undefined |
-| getEmitHost trace | ((s: string) => void) or undefined |
+| getEmitHost realpath                     | ((path: string) => string) or undefined  |
+| getEmitHost createHash                   | ((data: string) => string) or undefined  |
+| getEmitHost trace                        | ((s: string) => void) or undefined       |
 
 sites.json records the exact TypeScript typeToString spellings, including each
 union bar. Any type mismatch refuses and reports the observed type.
@@ -109,11 +109,11 @@ both public declarations. The latter must remain byte-identical. The checker
 import cleanup eliminates the previous binder maybeBind2-to-maybeBind3 drift.
 Three existing temporary bindings shift in each changed bundle:
 
-| Scope | Before | After | Occurrences before / after |
-| --- | --- | --- | --- |
-| checker getPackageJsonInfoCache arrow | _a | _a2 | 3 / 3 |
-| createProgram tracing.pop temporary | _p | _q | 3 / 3 |
-| getEmitHost getBuildInfo arrow | _a2 | _a3 | 3 / 3 |
+| Scope                                 | Before | After | Occurrences before / after |
+| ------------------------------------- | ------ | ----- | -------------------------- |
+| checker getPackageJsonInfoCache arrow | _a     | _a2   | 3 / 3                      |
+| createProgram tracing.pop temporary   | _p     | _q    | 3 / 3                      |
+| getEmitHost getBuildInfo arrow        | _a2    | _a3   | 3 / 3                      |
 
 rename-proof.cjs resolves every occurrence to its unique symbol, requires the
 same declaration and two corresponding uses, rejects escape or .name reads,
@@ -173,14 +173,14 @@ historical README. They are not claimed as six-site validation.
 
 ## Completed six-site validation
 
-| Check | Result |
-| --- | --- |
-| Full --build-product applies | Main control and six-site candidate both exit 0 |
-| Paired replay | All 81 outcomes match except 95h; 95h refuses at createProgram's own original pin, never earlier; adapter 78 stdout is byte-identical |
-| All 79 compiler roots | Adamic types exits 0 with zero diagnostics |
-| JavaScript and declarations | All nine outputs differ only by six modeled lowerings after symbol-proved normalization; both public declarations are byte-identical |
-| Mutants | All 22 source mutants and all five rename-proof mutants refuse; source refusals write nothing |
-| Oracle | Whole lane, all 398 shards and unchanged official merge pass on one verified artifact |
+| Check                        | Result                                                                                                                                |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Full --build-product applies | Main control and six-site candidate both exit 0                                                                                       |
+| Paired replay                | All 81 outcomes match except 95h; 95h refuses at createProgram's own original pin, never earlier; adapter 78 stdout is byte-identical |
+| All 79 compiler roots        | Adamic types exits 0 with zero diagnostics                                                                                            |
+| JavaScript and declarations  | All nine outputs differ only by six modeled lowerings after symbol-proved normalization; both public declarations are byte-identical  |
+| Mutants                      | All 22 source mutants and all five rename-proof mutants refuse; source refusals write nothing                                         |
+| Oracle                       | Whole lane, all 398 shards and unchanged official merge pass on one verified artifact                                                 |
 
 The six-site oracle has exactly 106,366 passing tests, one sanctioned Public
 APIs failure, and zero pending. The official merge accounts for all 106,367
@@ -198,13 +198,13 @@ Its source, nine compiler JavaScript files and both public declarations were
 compared byte for byte with the proven six-site after tree before testing.
 Later evidence commits do not change that frozen transformation.
 
-| Oracle piece | Seconds |
-| --- | ---: |
-| Preparation | 286.585 |
-| Whole lane | 284.232 |
-| Shards 1 through 40 | 529.266 |
-| Shards 41 through 80 | 524.655 |
-| Shards 81 through 120 | 530.517 |
+| Oracle piece           | Seconds |
+| ---------------------- | ------: |
+| Preparation            | 286.585 |
+| Whole lane             | 284.232 |
+| Shards 1 through 40    | 529.266 |
+| Shards 41 through 80   | 524.655 |
+| Shards 81 through 120  | 530.517 |
 | Shards 121 through 160 | 533.813 |
 | Shards 161 through 200 | 527.644 |
 | Shards 201 through 240 | 529.605 |
@@ -212,7 +212,7 @@ Later evidence commits do not change that frozen transformation.
 | Shards 281 through 320 | 526.420 |
 | Shards 321 through 360 | 521.347 |
 | Shards 361 through 398 | 508.461 |
-| Official merge | 4.974 |
+| Official merge         |   4.974 |
 
 All pieces are below 25 minutes. No shard exceeded its unchanged 30-second
 limit. At most two shard commands ran concurrently. No task process remains
