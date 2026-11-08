@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/tmp/lmv-parent-overlay",
+    "/tmp/lmv-parent-entry"
+  ],
+  "cwd": "/tmp/lmv-report",
+  "exit": 0,
+  "wall_seconds": 1.001,
+  "stopped": null
+}

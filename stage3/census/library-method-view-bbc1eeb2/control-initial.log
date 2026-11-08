@@ -1,0 +1,94 @@
+The following paths and/or pathspecs matched paths that exist
+outside of your sparse-checkout definition, so will not be
+updated in the index:
+stage3/census/library-method-view-bbc1eeb2/REPORT.md
+stage3/census/library-method-view-bbc1eeb2/apply.log
+stage3/census/library-method-view-bbc1eeb2/apply.status.json
+stage3/census/library-method-view-bbc1eeb2/apply.time.json
+stage3/census/library-method-view-bbc1eeb2/build.log
+stage3/census/library-method-view-bbc1eeb2/build.py
+stage3/census/library-method-view-bbc1eeb2/control.log
+stage3/census/library-method-view-bbc1eeb2/control.py
+stage3/census/library-method-view-bbc1eeb2/head-build.log
+stage3/census/library-method-view-bbc1eeb2/head-build.status.json
+stage3/census/library-method-view-bbc1eeb2/head-build.time.json
+stage3/census/library-method-view-bbc1eeb2/head-entry-overlay.log
+stage3/census/library-method-view-bbc1eeb2/head-entry-overlay.status.json
+stage3/census/library-method-view-bbc1eeb2/head-entry-overlay.time.json
+stage3/census/library-method-view-bbc1eeb2/head-overlay.log
+stage3/census/library-method-view-bbc1eeb2/head-overlay.status.json
+stage3/census/library-method-view-bbc1eeb2/head-overlay.time.json
+stage3/census/library-method-view-bbc1eeb2/head-workspace.txt
+stage3/census/library-method-view-bbc1eeb2/npm-ci.log
+stage3/census/library-method-view-bbc1eeb2/npm-ci.status.json
+stage3/census/library-method-view-bbc1eeb2/npm-ci.time.json
+stage3/census/library-method-view-bbc1eeb2/overlays/head/00-entry_load_hook.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/01-internal_load_load.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/02-internal_lower_entries_records.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/03-internal_lower_expression.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/04-internal_lower_functions.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/05-internal_lower_generic.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/06-internal_lower_latent_full.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/07-internal_lower_latent_hook.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/08-internal_lower_latent_piece.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/09-internal_lower_latent_progress.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/10-internal_lower_latent_replay.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/11-internal_lower_latent_speculative.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/12-internal_lower_latent_state.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/13-internal_lower_latent_timing.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/14-internal_lower_latent_units.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/15-internal_lower_locals.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/16-internal_lower_lower.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/17-internal_lower_refusals.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/18-internal_lower_statements.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/19-stage3_census_latent_replay_worker_main.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/20-entry_main.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/head/manifest.json
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/00-entry_load_hook.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/01-internal_load_load.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/02-internal_lower_entries_records.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/03-internal_lower_expression.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/04-internal_lower_functions.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/05-internal_lower_generic.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/06-internal_lower_latent_full.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/07-internal_lower_latent_hook.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/08-internal_lower_latent_piece.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/09-internal_lower_latent_progress.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/10-internal_lower_latent_replay.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/11-internal_lower_latent_speculative.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/12-internal_lower_latent_state.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/13-internal_lower_latent_timing.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/14-internal_lower_latent_units.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/15-internal_lower_locals.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/16-internal_lower_lower.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/17-internal_lower_refusals.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/18-internal_lower_statements.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/19-stage3_census_latent_replay_worker_main.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/20-entry_main.go.txt
+stage3/census/library-method-view-bbc1eeb2/overlays/parent/manifest.json
+stage3/census/library-method-view-bbc1eeb2/parent-build.log
+stage3/census/library-method-view-bbc1eeb2/parent-build.status.json
+stage3/census/library-method-view-bbc1eeb2/parent-build.time.json
+stage3/census/library-method-view-bbc1eeb2/parent-entry-overlay.log
+stage3/census/library-method-view-bbc1eeb2/parent-entry-overlay.status.json
+stage3/census/library-method-view-bbc1eeb2/parent-entry-overlay.time.json
+stage3/census/library-method-view-bbc1eeb2/parent-overlay.log
+stage3/census/library-method-view-bbc1eeb2/parent-overlay.status.json
+stage3/census/library-method-view-bbc1eeb2/parent-overlay.time.json
+stage3/census/library-method-view-bbc1eeb2/parent-workspace.txt
+stage3/census/library-method-view-bbc1eeb2/patch-set.md
+stage3/census/library-method-view-bbc1eeb2/provenance.json
+stage3/census/library-method-view-bbc1eeb2/run.py
+stage3/census/library-method-view-bbc1eeb2/source-hashes.json
+hint: If you intend to update such entries, try one of the following:
+hint: * Use the --sparse option.
+hint: * Disable or modify the sparsity rules.
+hint: Disable this message with "git config set advice.updateSparsePath false"
+Traceback (most recent call last):
+  File "/tmp/lmv-report/stage3/census/library-method-view-bbc1eeb2/control.py", line 44, in <module>
+    checkpoint('apply')
+  File "/tmp/lmv-report/stage3/census/library-method-view-bbc1eeb2/control.py", line 11, in checkpoint
+    subprocess.run(['git','add','-f','--',str(out)],cwd=repo,check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'add', '-f', '--', '/tmp/lmv-report/stage3/census/library-method-view-bbc1eeb2']' returned non-zero exit status 1.

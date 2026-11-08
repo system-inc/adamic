@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/tmp/lmv-head-overlay",
+    "/tmp/lmv-head-entry"
+  ],
+  "cwd": "/tmp/lmv-head",
+  "exit": 0,
+  "wall_seconds": 1.004,
+  "stopped": null
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "/tmp/lmv-adapted"
+  ],
+  "cwd": "/tmp/lmv-report",
+  "exit": 0,
+  "wall_seconds": 540.495,
+  "stopped": null
+}
