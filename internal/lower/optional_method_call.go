@@ -9,12 +9,18 @@ import (
 
 // An optional call of an optional method the program declares, object?.method?.(...) as tsc's
 // performance.ts writes system?.cpuProfilingEnabled?.(), and object.method?.(...), as ruled on #tvq1eqm
-// (docs/rulings.md): the call short-circuits the whole chain. The receiver is evaluated once, into a
-// temporary, and where it's undefined or null the chain is undefined and no argument is evaluated.
-// Otherwise the method is looked up once, before the arguments, through the temporary: where the
-// object has none by that name, or its field holds undefined, the call is undefined too, with no
-// argument evaluated (ir.CallClosure's Optional), and where it has one, that one is called with the
-// temporary as this. The result is R | undefined, held as that type's undefined, never a zero.
+// (docs/rulings.md): the call short-circuits the whole chain. The receiver is evaluated once, by the
+// call itself, and where it's undefined or null the chain is undefined and no argument is evaluated
+// (ir.Property's Optional, the ?. before the method, which native tests as the null pointer both are
+// in an object's slot). Otherwise the method is looked up once, before the arguments: where the object
+// has none by that name, or its field holds undefined, the call is undefined too, with no argument
+// evaluated (ir.CallClosure's Optional), and where it has one, that one is called with the receiver as
+// this. The result is R | undefined, held as that type's undefined, never a zero.
+//
+// The receiver isn't a temporary of lowering's: a local declared inside an expression is held to the
+// end of the statement around it, so in a short-circuit's arm (tsc's own, the right of ||) its C
+// declaration sits in the arm's block and its release outside it. The call's own receiver is a C
+// temporary of the emitter's, scoped with the arm.
 //
 // The call ends the chain: more of it after the call (o?.m?.().x) is property's NotYet, and a call
 // through ?. of anything else (a function value, a library method, a method behind a longer chain or
@@ -23,12 +29,9 @@ import (
 // stopped (unemittableCheckedViewRead), so the check has nothing to fire on; in .a the types prove it
 // away.
 
-// optionalMethod is an optional method call, lowered: receiver declares the temporary the receiver is
-// evaluated into and present tests it, both nil for object.method?.(...), whose receiver isn't tested.
+// optionalMethod is an optional method call, lowered.
 type optionalMethod struct {
-	receiver []ir.Statement
-	present  ir.Expression
-	call     ir.CallClosure
+	call ir.CallClosure
 }
 
 // optionalMethodCall lowers node when it's object?.method?.(...) or object.method?.(...) on an optional
@@ -50,26 +53,14 @@ func (l *lowering) optionalMethodCall(node *ast.Node) (optionalMethod, bool, err
 	if !isProperty || !property.Method || property.Object.Type() != ir.Object || !optionalMethodResult(call.Returns) {
 		return optionalMethod{}, true, l.notYet(node, optionalCallNotYet)
 	}
-	if l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsVoid != 0 && call.Returns != 0 {
-		// A void method gives back nothing to read as R | undefined.
-		return optionalMethod{}, true, l.notYet(node, optionalCallNotYet)
+	if l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsVoid != 0 {
+		// The checker can type an optional call of a void method void | undefined, which callClosure
+		// reads as an object's result. The method gives back nothing to read, and a read of the call is
+		// refused as a read of a void value, so it's a void call.
+		call.Returns = 0
 	}
 	call.Optional = true
-	if node.AsCallExpression().Expression.AsPropertyAccessExpression().QuestionDotToken == nil {
-		return optionalMethod{call: call}, true, nil
-	}
-	function := -1
-	if l.function != nil {
-		function = l.functionIndex
-	}
-	local := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_call_receiver", Type: ir.Object, Function: function, ExpressionAssigned: true})
-	held := ir.Read{Local: local, Of: ir.Object}
-	receiver := []ir.Statement{ir.Declare{Local: local, Value: property.Object}}
-	property.Object, property.Optional = held, false
-	call.Closure = property
-	present := ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: held}, Right: ir.IsNull{Value: held}}}
-	return optionalMethod{receiver: receiver, present: present, call: call}, true, nil
+	return optionalMethod{call: call}, true, nil
 }
 
 // optionalMethodSignature is the one call signature of the method node calls when node is
@@ -119,25 +110,16 @@ func optionalMethodResult(of ir.Type) bool {
 // optionalCallNotYet is what a call through ?. that isn't lowered stops as.
 const optionalCallNotYet = "a call through ?. (an optional call)"
 
-// value is the call as a value: undefined, with nothing after the receiver evaluated, where the
-// receiver isn't there.
+// value is the call as a value, undefined where it stops; a void call is undefined after it's made,
+// as expression lowers every void call.
 func (optional optionalMethod) value() ir.Expression {
 	if optional.call.Returns == 0 {
 		return ir.Effects{Body: optional.statements(), Result: ir.Undefined{}}
 	}
-	if optional.present == nil {
-		return optional.call
-	}
-	return ir.Effects{Body: optional.receiver, Result: ir.Conditional{
-		Condition: optional.present, WhenTrue: optional.call, WhenNot: fit(ir.Undefined{}, optional.call.Returns), Of: optional.call.Returns,
-	}}
+	return optional.call
 }
 
 // statements is the call as a statement, its value dropped.
 func (optional optionalMethod) statements() []ir.Statement {
-	evaluate := ir.Evaluate{Value: optional.call}
-	if optional.present == nil {
-		return []ir.Statement{evaluate}
-	}
-	return append(append([]ir.Statement{}, optional.receiver...), ir.If{Condition: optional.present, Then: []ir.Statement{evaluate}})
+	return []ir.Statement{ir.Evaluate{Value: optional.call}}
 }
