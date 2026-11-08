@@ -574,7 +574,8 @@ func (l *lowering) nodeProcessStorageABI(modules []*ast.SourceFile) error {
 					failure = "writing performance host slots through a structural view"
 				}
 			case ir.CallClosure:
-				property, ok := node.Closure.(ir.Property)
+				// A narrowed performance.mark(...) is the same host call (ir.MethodCallee).
+				property, _, ok := ir.MethodCallee(node.Closure)
 				if !ok {
 					break
 				}
