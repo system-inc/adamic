@@ -144,12 +144,9 @@ show({ kind: K.Alias, pos: 0, y: 5 });
 // branded lie stops at its read through S's view (Language's per-instance pin).
 func TestBrandedCallProducer(t *testing.T) {
 	t.Parallel()
-	// Measured on Home at 780368c5: the flow proof trusts no call, so `p => f1(p) || f2(p)` proves nothing
-	// and the scan refuses the producer. Waiting on Adamic's ruling for that wall (#fx9waqy).
-	_, refusedProducer := lowerTypeScriptAssertionSource(t, brandedRulesPrelude+`const found = findAncestor(i, orPredicate2(isIdentifier, isLiteral));
-console.log(found === undefined ? "none" : String(found.pos));
-`)
-	t.Logf("the producer today: %v", refusedProducer)
+	// Road (B): orPredicate2's arrow is a checked closure under the producer's written claim, so findAncestor's
+	// trusted callback takes the producer's result as it takes a checked closure passed directly, at an
+	// unbranded, a nested and a branded instance alike.
 	lowersAndAgreesWithNodeAs(t, brandedRulesPrelude+`const found = findAncestor(i, orPredicate2(isIdentifier, isLiteral));
 console.log(found === undefined ? "none" : String(found.pos));
 const nested = findAncestor(l, orPredicate2(orPredicate2(isIdentifier, isLiteral), isKeyword));
@@ -157,9 +154,9 @@ console.log(nested === undefined ? "none" : String(nested.pos));
 const element = findAncestor(i, orPredicate2(isIdentifier, isTypeElement));
 console.log(element === undefined ? "none" : String(element.pos));
 `, ".ts")
-	// A lie carried in a value proves nothing, so it's refused where it's handed, an unbranded arm and a
-	// branded one alike. Mutant: predicateProducerProven without predicateArgumentProof's recursion, and the
-	// branded one lowers.
+	// A lie carried in a value is neither proven nor checked, so it's refused where it's handed, an unbranded
+	// arm and a branded one alike. Mutant: predicateProducerProven without predicateArgumentProof's
+	// recursion, and both lower.
 	for _, liar := range []string{
 		`const liar: (n: Node) => n is Literal = pick ? isLiteral : isLiteralLie;
 const found = findAncestor(l, orPredicate2(liar, isKeyword));`,
@@ -176,10 +173,30 @@ console.log(found === undefined ? "none" : String(found.pos));
 			t.Fatalf("want the lie refused where it's handed, got %v", err)
 		}
 	}
-	// Language's condition: the lie handed to orPredicate2 itself, outside any trusted road, passes the scan,
-	// since f1's claim is checked inside the producer, and stops at that check, which nothing erases
-	// (Adamic's ruling, point 3). Mutants: predicateProducerParameter answering no, and the scan refuses it;
-	// the call marked proven, and the Keyword is read as a Literal.
+	// A lying f2, a checked declaration handed by name, stops before any caller reads the value: at the
+	// trusted site, through an immediate call, and through a const alias, which R-T80's erasure never
+	// reaches, since a checked closure's return check isn't a signature's own check (Language's two roads).
+	// Inside the producer f2's own call is checked too (Language's condition), and it stops first, so a
+	// mutant dropping only the arrow's return check survives here; one dropping both reads the Keyword raw.
+	const lie = `function isLiteralLie(n: Node): n is Literal { return n.pos > 0; }
+const k: Keyword = { kind: 100, pos: 7, word: "w" };
+`
+	for _, source := range []string{
+		`const found = findAncestor(k, orPredicate2(isIdentifier, isLiteralLie));
+console.log(found === undefined ? "none" : String(found.pos));
+`,
+		`console.log(orPredicate2(isIdentifier, isLiteralLie)(k) ? "named" : "other");
+`,
+		`const either = orPredicate2(isIdentifier, isLiteralLie);
+function show(x: Node): void { either(x) && console.log(String(x.pos)); }
+show(k);
+`,
+	} {
+		brandedStops(t, brandedRulesPrelude+lie+source, "adamic: panic: ")
+	}
+	// Language's condition: a lie handed to orPredicate2 itself through a value passes the scan, since f1's
+	// claim is checked inside the producer, and stops at that check. Mutant: predicateProducerParameter
+	// answering no, and the scan refuses it instead.
 	brandedStops(t, brandedRulesPrelude+`function isLiteralLie(n: Node): n is Literal { return n.pos > 0; }
 const pick = kindOf(i) > 1000;
 const liar: (n: Node) => n is Literal = pick ? isLiteral : isLiteralLie;
@@ -188,24 +205,30 @@ function show(x: Node): void { either(x) && console.log(String(x.pos)); }
 show(i);
 `, "adamic: panic: ")
 	// One program holds an unbranded and a branded instance, each judged at its own door: the branded lie
-	// stops at its read through S's view (Language's per-instance pin).
+	// stops at its read through S's view (Language's per-instance pin), and so does findAncestor's branded
+	// result read by a caller (Compiler's pin).
 	brandedStops(t, brandedRulesPrelude+`const named = orPredicate2(isIdentifier, isLiteral);
 const element = orPredicate2(isTypeElementLie, isTypeElement);
 function show(n: Node): void { element(n) && console.log(String(n.name)); }
 const w = { kind: 9, pos: 4, text: "t", name: 5 };
 show(w);
 `, "adamic: panic: ")
+	brandedStops(t, brandedRulesPrelude+`const w = { kind: 9, pos: 4, text: "t", name: 5 };
+const found = findAncestor(w, orPredicate2(isTypeElementLie, isTypeElement));
+console.log(found === undefined ? "none" : String(found.name));
+`, "adamic: panic: ")
 }
 
-// The inferred arrow's walk (Adamic's ruling on #fx9waqy, Nov 7): the direction walk wants no uses of an
-// arrow its producer returns written in place under its own written checked claim. A caller reading a
+// The inferred arrow's walk (road (B) on #fx9waqy, Nov 7): an arrow its producer returns written in place
+// under its own written checked claim is a checked closure, which the direction walk reads as it reads an
+// annotated one, so it wants none of its uses. A caller reading a
 // lying instance's false side over a closed tag domain stops at the caller's false check. Every other
 // shape keeps today's NotYet: an arrow held in a module array before it's returned (Compiler's pin), an
 // unannotated helper whose result goes to an untyped const, an implementation written as a plain boolean
 // function under an overload that claims, and a named function expression that stores itself (Language's
-// pins). Mutants: the written-type condition dropped (the untyped const lowers), the in-place condition
-// dropped (the array lowers), overload 1's result read (the overload lowers), the name allowed (self
-// lowers).
+// pins). Mutants, each in checkedPredicateClaimNode: the written-type condition dropped (the untyped const
+// lowers), the in-place condition dropped (the array lowers), overload 1's result read (the overload
+// lowers), the name allowed (self lowers).
 func TestInferredArrowUnderWrittenClaim(t *testing.T) {
 	t.Parallel()
 	brandedStops(t, brandedPrelude+`type TokenKind = 1 | 2 | 3;

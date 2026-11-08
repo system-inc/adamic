@@ -11,11 +11,11 @@ import (
 // than checked, `findAncestor(node, orPredicate2(isImportDeclaration, isExportDeclaration))` at
 // checker.ts:4767 and six sites like it, and lib's `.find` at 10911: findAncestor's implementation calls
 // its callback through a plain boolean signature (utilitiesPublic.ts:786-788), and the library calls its
-// own, so nothing checks the claim there and predicateArguments wants it proven. A call of a producer
-// proves it when the producer's every return is a function proving the producer's written claim by flow,
-// and every predicate the call hands it proves its own claim as a direct argument would, judged at that
-// call's instance, so the result is never wider than its arguments (Adamic's ruling on #fx9waqy, Nov 7,
-// Optimizer's road (a)).
+// own, so nothing checks the claim there and predicateArguments wants it proven or checked. A call of a
+// producer stands there when the producer's every return is a checked closure under the producer's own
+// written claim (checkedPredicateClaimNode), accepted as a checked closure passed directly is, and every
+// predicate the call hands it is accepted as it would be passed directly, judged at that call's instance,
+// a fail-closed extra (Adamic's ruling on #fx9waqy, Nov 7, road (B)).
 //
 // Inside a producer, a call through one of its parameters keeps its check whoever calls the producer
 // (checkedFunctionTypeClaim): its claim is never taken as proven by collecting the predicates passed at
@@ -23,9 +23,9 @@ import (
 
 // predicateProducerProven is whether call, an argument for a parameter whose claim is target at this
 // call, is a call of a proven producer: a direct call, by its own name, of a function the program declares
-// once in .ts with a body, never assigned, whose parameters are never assigned; whose written result is a
-// function type with a claim each return proves by flow (proveInferredPredicate, under the producer's own
-// type parameters, so the proof holds at every instance); whose result at this call claims exactly target;
+// once in .ts with a body, never assigned, whose parameters are never assigned; whose every return is a
+// checked closure under its written claim, checked per instance at each return; whose result at this
+// call claims exactly target;
 // and whose every claimed parameter is handed an argument that proves its claim at this call
 // (predicateArgumentProof, a nested producer call included). Anything else fails closed.
 func (l *lowering) predicateProducerProven(call *ast.Node, target *checker.Type) bool {
@@ -43,10 +43,8 @@ func (l *lowering) predicateProducerProven(call *ast.Node, target *checker.Type)
 	if returned == nil {
 		return false
 	}
-	written := ast.SkipTypeParentheses(producer.Type())
-	claimed := l.checker.GetTypeAtLocation(written.Type().AsTypePredicateNode().Type)
 	for _, function := range returned {
-		if !l.proveInferredPredicate(function, claimed) {
+		if !l.checkedPredicateClosure(function) {
 			return false
 		}
 	}
@@ -166,26 +164,25 @@ func producerReturnedFunctions(producer *ast.Node) []*ast.Node {
 	return returned
 }
 
-// predicateReturnedUnderWrittenClaim is whether function, an arrow or a function expression, is a value
-// its producer returns written in place, through parentheses only, from a producer whose every return is
-// one (producerReturnedFunctions) and whose written result is a function type with a claim
-// checkedFunctionTypeClaim admits, as orPredicate2's `(p: P) => p is R1 | R2`. The function then leaves
-// only through that written type, so every road that narrows by its claim is a call through a checked
-// signature, which checks the claim in the directions its caller reads (rulings.md:139 and :140), or a
-// trusted callback that takes it only from a proven producer (predicateProducerProven). Rule 1 reads this
-// (brandedResultChecked), and so does the direction walk, which then wants no further uses of an inferred
-// predicate's function (checkedPredicateInferredUse). Adamic's ruling on #fx9waqy, Nov 7, with Compiler's
-// two conditions and Language's two.
-//
-// The written result read is the producer's own, the declaration whose return holds the function, never
-// an overload's: an implementation written `(p: N) => boolean` under an overload claiming `p is A` keeps
-// today's NotYet. A function expression counts only without a name, since a name is a binding its own body
-// can store it through (`function self(p) { cache.push(self); ... }`). This proves nothing about the
-// function's body: R-T80's erasure never reads it, so a call that can reach only such a function keeps its
-// check.
-func (l *lowering) predicateReturnedUnderWrittenClaim(function *ast.Node) bool {
+// checkedPredicateClaimNode is the claim a checked closure checks at each return: its own annotation when
+// it has one, else the claim its producer's written result carries when function is a value that producer
+// returns in place (Adamic's road (B) on #fx9waqy, Nov 7): an unnamed arrow or function expression,
+// through parentheses only, from a producer whose every return is one (producerReturnedFunctions) and
+// whose own written result, never an overload's, is a function type with a claim checkedFunctionTypeClaim
+// admits, as orPredicate2's `(p: P) => p is R1 | R2`. The arrow is then what tsc would have written by
+// hand, `(p): p is R1 | R2 => f1(p) || f2(p)`: a checked closure, instantiated per instance, so a trusted
+// site accepts the producer's result as it accepts a checked closure passed directly, and nothing new is
+// proven. A named function expression stays out, since its name is a binding its own body can store it
+// through (`function self(p) { cache.push(self); ... }`). Anything else is nil.
+func (l *lowering) checkedPredicateClaimNode(function *ast.Node) *ast.Node {
+	if annotation := function.Type(); annotation != nil {
+		if annotation.Kind != ast.KindTypePredicate {
+			return nil
+		}
+		return annotation
+	}
 	if function.Kind != ast.KindArrowFunction && function.Kind != ast.KindFunctionExpression || function.Name() != nil {
-		return false
+		return nil
 	}
 	value := function
 	for value.Parent != nil && value.Parent.Kind == ast.KindParenthesizedExpression {
@@ -193,18 +190,18 @@ func (l *lowering) predicateReturnedUnderWrittenClaim(function *ast.Node) bool {
 	}
 	producer := brandedChainReturner(value)
 	if producer == nil || producer.Type() == nil {
-		return false
+		return nil
 	}
 	written := ast.SkipTypeParentheses(producer.Type())
 	if written.Kind != ast.KindFunctionType || !l.checkedFunctionTypeClaim(written.Type()) {
-		return false
+		return nil
 	}
 	for _, returned := range producerReturnedFunctions(producer) {
 		if returned == function {
-			return true
+			return written.Type()
 		}
 	}
-	return false
+	return nil
 }
 
 // predicateProducerContract is the claim a producer's parameter is written with, `f1: (p1: P) => p1 is

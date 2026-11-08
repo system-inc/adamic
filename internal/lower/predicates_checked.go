@@ -124,7 +124,9 @@ func (l *lowering) checkedPredicateUnclassifiedUse(call *ast.CallExpression) str
 	}
 	// A function whose returns the checker infers a predicate from narrows its callers by this
 	// result, and a call of an inferred predicate is never checked.
-	if function := ast.GetContainingFunction(call.AsNode()); function != nil && function.Type() == nil {
+	// A checked closure checks its own claim at each return, whether the claim is its annotation or its
+	// producer's written one (road (B) on #fx9waqy), so it's read as an annotated function is.
+	if function := ast.GetContainingFunction(call.AsNode()); function != nil && function.Type() == nil && !l.checkedPredicateClosure(function) {
 		if signature := l.checker.GetSignatureFromDeclaration(function); signature != nil {
 			if claim := predicateOfSignature(l.checker, signature); claim != nil {
 				if use := l.checkedPredicateInferredUse(call.AsNode(), function, claim, parent != nil && checkedPredicateAlias(parent, node)); use != "" {
@@ -192,14 +194,6 @@ func (l *lowering) checkedPredicateInferredUse(call, function *ast.Node, claim *
 	}
 	if part := l.checkedPredicateInferredPart(returned, l.symbol(function.Parameters()[index].Name())); part != nil {
 		return name + ", whose returned expression holds " + describe(part) + " at " + l.program.Where(part)
-	}
-	// A function its producer returns written in place under a written checked claim leaves only through
-	// that type, where every call checks the claim in the directions its caller reads, or as a proven
-	// producer's result, so no use reads its false answer unchecked and none is wanted (Adamic's ruling on
-	// #fx9waqy, Nov 7; predicate_producers.go). Ending the walk here marks nothing provable: R-T80's erasure
-	// never reads it, so a call that can reach only this function keeps its check.
-	if l.predicateReturnedUnderWrittenClaim(function) {
-		return ""
 	}
 	// Every use of a function declaration spells its name, but an export's: a namespace object can
 	// reach it by a computed key.
@@ -763,20 +757,24 @@ func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol,
 // checkedPredicateClosure is whether declaration is an arrow or a function expression in .ts claiming
 // `x is T` with a body that doesn't prove it (#1w5bve2, ruled Oct 27). R-T80 admits it, and the
 // closure is the value, so it checks its own claim at each return (checkedPredicateReturn): every call
-// of it, direct, through a value or as an argument, runs the check. An asserts claim, a generic, an
-// async or generator body, a claim on this, and a claimed parameter the body assigns stay refused.
+// of it, direct, through a value or as an argument, runs the check, and the check is never erased. An
+// asserts claim, a generic, an async or generator body, a claim on this, and a claimed parameter the
+// body assigns stay refused. The claim is its own annotation, or, for one its producer returns under a
+// written claim, that claim (checkedPredicateClaimNode, road (B) on #fx9waqy).
 func (l *lowering) checkedPredicateClosure(declaration *ast.Node) bool {
 	if declaration == nil || declaration.Kind != ast.KindArrowFunction && declaration.Kind != ast.KindFunctionExpression {
 		return false
 	}
-	annotation := declaration.Type()
-	if annotation == nil || annotation.Kind != ast.KindTypePredicate || annotation.AsTypePredicateNode().AssertsModifier != nil || annotation.AsTypePredicateNode().Type == nil {
+	annotation := l.checkedPredicateClaimNode(declaration)
+	if annotation == nil || annotation.AsTypePredicateNode().AssertsModifier != nil || annotation.AsTypePredicateNode().Type == nil {
 		return false
 	}
 	if declaration.Body() == nil || len(declaration.TypeParameters()) != 0 || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync) || declaration.Kind == ast.KindFunctionExpression && declaration.AsFunctionExpression().AsteriskToken != nil {
 		return false
 	}
-	if !l.checkedAssertionSource(declaration) || l.checkedPredicateBodyProven(annotation) {
+	// A body proof is read only off the closure's own annotation: a written claim's annotation sits on the
+	// producer's result type, which has no body, so the closure checks it.
+	if !l.checkedAssertionSource(declaration) || annotation == declaration.Type() && l.checkedPredicateBodyProven(annotation) {
 		return false
 	}
 	parameter := l.checkedPredicateClaimed(declaration)
@@ -816,13 +814,36 @@ func (l *lowering) checkedPredicateClosureCallee(callee, declaration *ast.Node) 
 	return symbol != nil && symbol == l.symbol(holder.Name())
 }
 
-// checkedPredicateClaimed is the parameter a predicate's claim names, when it's a plain identifier.
+// checkedPredicateClaimed is the parameter a predicate's claim names, when it's a plain identifier. A
+// claim written on a producer's result type names that type's parameter, which is this function's at the
+// same position.
 func (l *lowering) checkedPredicateClaimed(declaration *ast.Node) *ast.Node {
-	name := declaration.Type().AsTypePredicateNode().ParameterName
+	annotation := l.checkedPredicateClaimNode(declaration)
+	if annotation == nil {
+		return nil
+	}
+	name := annotation.AsTypePredicateNode().ParameterName
 	if name == nil || name.Kind != ast.KindIdentifier {
 		return nil
 	}
-	for _, parameter := range declaration.Parameters() {
+	parameters := declaration.Parameters()
+	if annotation != declaration.Type() {
+		index := -1
+		for position, written := range annotation.Parent.Parameters() {
+			if written.Name() != nil && written.Name().Kind == ast.KindIdentifier && written.Name().Text() == name.Text() {
+				index = position
+			}
+		}
+		if index < 0 || index >= len(parameters) {
+			return nil
+		}
+		parameters = parameters[index : index+1]
+		name = parameters[0].Name()
+		if name == nil || name.Kind != ast.KindIdentifier {
+			return nil
+		}
+	}
+	for _, parameter := range parameters {
 		// A default replaces an undefined argument before the body runs, so the local the check
 		// would read isn't the value the caller narrows (Lower, on #1w5bve2): such a claim stays refused.
 		if parameter.Name() != nil && parameter.Name().Kind == ast.KindIdentifier && parameter.Name().Text() == name.Text() && parameter.AsParameterDeclaration().DotDotDotToken == nil && parameter.Initializer() == nil {
@@ -847,7 +868,7 @@ func (l *lowering) checkedPredicateReturn(function, site *ast.Node, value ir.Exp
 	if !isLocal {
 		return nil, l.notYet(site, "a checked predicate whose parameter isn't a local")
 	}
-	target := l.checker.GetTypeAtLocation(function.Type().AsTypePredicateNode().Type)
+	target := l.checker.GetTypeAtLocation(l.checkedPredicateClaimNode(function).AsTypePredicateNode().Type)
 	source := l.checker.GetTypeAtLocation(parameter.Name())
 	name := "an arrow"
 	if function.Kind == ast.KindFunctionExpression {
