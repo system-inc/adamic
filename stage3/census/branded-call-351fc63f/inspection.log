@@ -1,0 +1,10 @@
+A entry
+raw_findings {'lowered': 1, 'moved': 0, 'new_findings': 0, 'new_sites': 0, 'unit_first_stop_delta': 1, 'regressions': 0}
+distinct_reads {'lowered': 1, 'moved': 0, 'new_findings': 0, 'new_sites': 0, 'unit_first_stop_delta': 1, 'regressions': 0}
+getJSDocTypeAssertionType /tmp/branded-A/src/compiler/factory/utilities.ts:624:1 OLD a checked predicate target TypeNode that narrows undefined, which isn't its supertype NEW None
+A core
+raw_findings {'lowered': 0, 'moved': 0, 'new_findings': 0, 'new_sites': 0, 'unit_first_stop_delta': 0, 'regressions': 0}
+distinct_reads {'lowered': 0, 'moved': 0, 'new_findings': 0, 'new_sites': 0, 'unit_first_stop_delta': 0, 'regressions': 0}
+B core
+raw_findings {'lowered': 0, 'moved': 0, 'new_findings': 0, 'new_sites': 0, 'unit_first_stop_delta': 0, 'regressions': 0}
+distinct_reads {'lowered': 0, 'moved': 0, 'new_findings': 0, 'new_sites': 0, 'unit_first_stop_delta': 0, 'regressions': 0}

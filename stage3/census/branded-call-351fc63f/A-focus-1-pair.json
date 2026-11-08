@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/checker.ts": "6579e762b535793a6ba5593766345e6ba8ffebe0532ab9ff7f64181c7efb0353"
+  },
+  "raw_findings": {
+    "per_reason": {},
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {},
+      "after": {}
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {},
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {},
+      "after": {}
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}
