@@ -356,15 +356,15 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MakeClosure:
 		return e.makeClosure(expression, false, nil)
 	case ir.CallClosure:
-		property, defined, isMethod := ir.MethodCallee(expression.Closure)
+		property, check, isMethod := ir.MethodCallee(expression.Closure)
 		if !isMethod {
 			return e.callThrough(expression, e.value(expression.Closure), "")
 		}
-		if defined != nil && property.Optional {
-			// lower's callClosure keeps a narrowed o?.m() on the plain road.
-			panic("compiler bug: a narrowed method callee read through ?.")
+		if check != nil && property.Optional {
+			// lower's callClosure keeps a checked o?.m() on the plain road.
+			panic("compiler bug: a checked method callee read through ?.")
 		}
-		// object.name(...) through an interface, narrowed or not (ir.MethodCallee). The object stays
+		// object.name(...) through an interface, checked or not (ir.MethodCallee). The object stays
 		// alive for the call though an argument may write where it was read from: a call lends nothing
 		// (borrow.go), so a read of a global, a captured variable, a field or an element is retained
 		// when it's read, and a local can't be written in the middle of an expression.

@@ -349,11 +349,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicArrayOfScalars(") || strings.Contains(code, "adamicJoinEnter(") {
 		code = joinRuntime + code
 	}
-	if strings.Contains(code, "adamicDefinedCallee(") {
-		code = definedCalleeRuntime + code
-	}
 	if strings.Contains(code, "adamicHostStdoutHandle(") {
 		code = hostStdoutHandleRuntime + code
+	}
+	if strings.Contains(code, "adamicCheckedCallee(") {
+		code = checkedCalleeRuntime + code
 	}
 	if strings.Contains(code, "adamicNodeTmpdir()") {
 		code = "import { tmpdir as adamicNodeTmpdir } from 'node:os';\n" + code
@@ -1456,10 +1456,10 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		if expression.Direct > 0 {
 			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
 		}
-		if property, defined, isMethod := ir.MethodCallee(expression.Closure); isMethod {
-			if defined != nil && property.Optional {
-				// lower's callClosure keeps a narrowed o?.m() on the plain road.
-				panic("compiler bug: a narrowed method callee read through ?.")
+		if property, check, isMethod := ir.MethodCallee(expression.Closure); isMethod {
+			if check != nil && property.Optional {
+				// lower's callClosure keeps a checked o?.m() on the plain road.
+				panic("compiler bug: a checked method callee read through ?.")
 			}
 			if expression.Optional {
 				if property.View != "" {
@@ -1468,8 +1468,8 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 				}
 				// object.name?.(...): undefined, with the arguments not evaluated, where the object has
 				// no function value or method by that name, or its field holds undefined; and through
-				// object?.name?.(...), where the object is undefined or null. A narrowed callee's own check
-				// (defined) isn't made here: the call's ?. tests what the lookup finds, as Node's does.
+				// object?.name?.(...), where the object is undefined or null. A checked callee's own check
+				// (a Defined or a non-null assertion) isn't made here: the call's ?. tests what the lookup finds, as Node's does.
 				return "adamicOptionalMethodCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.callValues(expression.Arguments, expression.Spread) + "], " + strconv.FormatBool(property.Optional) + ")"
 			}
 			if property.View != "" {
@@ -1478,8 +1478,8 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 				if !checked {
 					panic("compiler bug: unavailable callable view read")
 				}
-				if defined != nil {
-					callee = e.defined(*defined, callee)
+				if check != nil {
+					callee = e.methodCalleeCheck(check, callee)
 				}
 				arguments := e.callValues(expression.Arguments, expression.Spread)
 				return "((receiver)=>((fn)=>adamicCall(fn,fn.receiver ? [receiver," + arguments + "] : [" + arguments + "]))(" + callee + "))(" + e.value(property.Object) + ")"
@@ -1488,10 +1488,10 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
 				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 			}
-			if defined != nil {
-				// A narrowed o.m(): the Defined's check on what the lookup finds, after the object and
-				// before the arguments, as native's (ir.MethodCallee).
-				return "adamicCall(adamicDefinedCallee(" + e.value(property.Object) + ", " + quote(property.Name) + ", (value) => " + e.defined(*defined, "value") + "), [" + e.callValues(expression.Arguments, expression.Spread) + "])"
+			if check != nil {
+				// A narrowed o.m() or an asserted o.m!(): the check on what the lookup finds, after the
+				// object and before the arguments, as native's (ir.MethodCallee).
+				return "adamicCall(adamicCheckedCallee(" + e.value(property.Object) + ", " + quote(property.Name) + ", (value) => " + e.methodCalleeCheck(check, "value") + "), [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 			}
 			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 		}
@@ -1682,10 +1682,22 @@ func (e *emitter) defined(defined ir.Defined, value string) string {
 	return "adamicDefined(" + value + ", " + quote(defined.Message) + ")"
 }
 
-// definedCalleeRuntime is a narrowed o.m()'s lookup (ir.MethodCallee): check is the Defined's, made on
-// what adamicCallee finds, the object's own field, else its class's method, before adamicCallee
-// makes the call's callee of it. Only a program with such a call carries it.
-const definedCalleeRuntime = "const adamicDefinedCallee = (object, name, check) => { const methods = Object.hasOwn(object, name) ? undefined : adamicStaticMethods.get(object); check(methods !== undefined && Object.hasOwn(methods, name) ? methods[name] : object[name]); return adamicCallee(object, name); };\n"
+// methodCalleeCheck is check, the one ir.MethodCallee found around a method callee, made on value: a
+// Defined's (defined), or a non-null assertion's panic in its own words, as its Coalesce is emitted.
+func (e *emitter) methodCalleeCheck(check ir.Expression, value string) string {
+	switch check := check.(type) {
+	case ir.Defined:
+		return e.defined(check, value)
+	case ir.Coalesce:
+		return "(" + value + " ?? panic(" + e.value(check.Panic) + "))"
+	}
+	panic(fmt.Sprintf("compiler bug: a method callee checked by %T", check))
+}
+
+// checkedCalleeRuntime is a narrowed o.m()'s or an asserted o.m!()'s lookup (ir.MethodCallee): check
+// is the call's, made on what adamicCallee finds, the object's own field, else its class's method,
+// before adamicCallee makes the call's callee of it. Only a program with such a call carries it.
+const checkedCalleeRuntime = "const adamicCheckedCallee = (object, name, check) => { const methods = Object.hasOwn(object, name) ? undefined : adamicStaticMethods.get(object); check(methods !== undefined && Object.hasOwn(methods, name) ? methods[name] : object[name]); return adamicCallee(object, name); };\n"
 
 func (e *emitter) allocateEnvironment(cells []int) {
 	if len(cells) == 0 {

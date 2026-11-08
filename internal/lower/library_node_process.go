@@ -687,7 +687,8 @@ func (l *lowering) stdoutHandleOrigin(node *ast.Node, depth int) bool {
 }
 
 // stdoutHandleSetBlockingRefusal stops a read of setBlocking off stdout's handle anywhere but a
-// call's callee, a truthiness test or a typeof (#5abf5v8). Node's handle is a Pipe or a TTY whose
+// call's callee (a non-null asserted one, handle.setBlocking!(true), among them: it keeps its object,
+// assertedCallee), a truthiness test or a typeof (#5abf5v8). Node's handle is a Pipe or a TTY whose
 // setBlocking is its prototype's and needs the handle as its receiver, so a detached call throws
 // TypeError: Illegal invocation. Both backends' handle now holds a closure that throws the same
 // whatever road reaches it (#0bxc4jh), so this is the early, named answer on the roads the origin
@@ -720,7 +721,7 @@ func (l *lowering) stdoutHandleSetBlockingRefusal(node *ast.Node) error {
 		return nil
 	}
 	outer := realpathParent(node)
-	if called(node) || truthinessOperand(node) || ast.IsAssignmentTarget(outer) {
+	if called(node) || node.Kind == ast.KindPropertyAccessExpression && assertedCallee(node) || truthinessOperand(node) || ast.IsAssignmentTarget(outer) {
 		return nil
 	}
 	if outer.Parent != nil && (outer.Parent.Kind == ast.KindTypeOfExpression || outer.Parent.Kind == ast.KindDeleteExpression) {
