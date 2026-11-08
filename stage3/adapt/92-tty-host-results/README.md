@@ -64,10 +64,10 @@ A wrong numeric fallback (1) makes that witness fail.
 
 With locked dependencies installed, the ordinary compiler check is:
 
-| Tree | Published @types/node | Head A served tty.d.ts |
-| --- | ---: | ---: |
-| Main control | 0 | 2 TS2322 |
-| With 92 | 0 | 0 |
+| Tree         | Published @types/node | Head A served tty.d.ts |
+| ------------ | --------------------: | ---------------------: |
+| Main control |                     0 |               2 TS2322 |
+| With 92      |                     0 |                      0 |
 
 With Adamic's stricter options, the existing 140 diagnostics stay unchanged:
 main is 140 / 142, with-92 is 140 / 140. The two additions are exactly
@@ -90,10 +90,10 @@ PASS stage3 landing lane for both trees. The sole failure in each raw oracle is
 the existing sanctioned public-API baseline test; neither count nor sanction
 was changed.
 
-| Oracle | Passing | Sanctioned API failure | Pending | Wall seconds |
-| --- | ---: | ---: | ---: | ---: |
-| Main control | 106,366 | 1 | 0 | 313.431 |
-| With 92 | 106,366 | 1 | 0 | 321.55 |
+| Oracle       | Passing | Sanctioned API failure | Pending | Wall seconds |
+| ------------ | ------: | ---------------------: | ------: | -----------: |
+| Main control | 106,366 |                      1 |       0 |      313.431 |
+| With 92      | 106,366 |                      1 |       0 |       321.55 |
 
 The complete baseline.diff is byte-identical: 51,093 bytes,
 SHA-256 `5333568a661aea24fc8af3149e9f4d2dfca70731842461c677f385b092adc4f0`.
