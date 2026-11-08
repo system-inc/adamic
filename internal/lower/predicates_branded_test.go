@@ -768,6 +768,19 @@ function pickName<T extends Node>(x: PropertySignature | Identifier, test: (n: N
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 console.log(pickName(i, isIdentifier));
 `, ".ts")
+	// orPredicate2 over unbranded claims lowers whole, its body per instance, and agrees with Node.
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+`interface Literal extends Node { readonly kind: 9; readonly text: string; }
+function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+function isLiteral(n: Node): n is Literal { return kindOf(n) === 9; }
+const named = orPredicate2(isIdentifier, isLiteral);
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+const l: Literal = { kind: 9, pos: 4, text: "t" };
+const z: Node = { kind: 5, pos: 6 };
+console.log(named(i) ? "i named" : "i other");
+console.log(named(l) ? "l named" : "l other");
+console.log(named(z) ? "z named" : "z other");
+`, ".ts")
 	for _, probe := range []struct{ name, source, want string }{
 		{"second instance", pick + `const element = pick(i, isTypeElementLie);
 console.log(element === undefined ? "no" : String(element.pos));
@@ -781,23 +794,23 @@ console.log(pickName(i, isIdentifier));
 console.log(pickName(i, isTypeElementLie));
 `, "which isn't its supertype"},
 		// core.ts's orPredicate2 (Correctness's adaptation): R1 and R2 stand only in f1's and f2's claims.
-		// Read from them, the body is lowered per instance and its claims resolve, so it meets the next wall:
-		// f2(p) narrows a generic argument p whose true side has no read in the body, since the narrowing
-		// leaves as the arrow's own claim (brandedNarrowing's generic-argument rule, #c7w6j0y). Measured on
-		// Cloud at bb5ff053 for the honest instance, the lying one the same.
+		// Read from them, the body is lowered per instance and its claims resolve, so a branded instance is
+		// judged where its returned predicate is called: Identifier | TypeElement claimed of an Identifier
+		// narrows to a member that isn't TypeElement's supertype, NotYet by the walk, honest or lying.
+		// Measured on Cloud at 575fc858.
 		{"orPredicate2's lying instance", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
 function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 const either = orPredicate2(isIdentifier, isTypeElementLie);
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 function show(x: PropertySignature | Identifier): void { if (either(x)) { console.log(String(x.pos)); } }
 show(i);
-`, "over a generic argument P, with no read of it on the true side"},
+`, "which isn't its supertype"},
 		{"orPredicate2's honest instance", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
 function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 const element = orPredicate2(isIdentifier, isTypeElement);
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 console.log(element(i) ? "element" : "other");
-`, "over a generic argument P, with no read of it on the true side"},
+`, "which isn't its supertype"},
 		{"generic arrow", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 const pickArrow = <T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string => test(x) ? "yes" : "no";
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
