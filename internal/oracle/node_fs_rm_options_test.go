@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 const rmOptionsFixture = "internal/oracle/testdata/node_fs_rm_options.a"
@@ -162,7 +163,7 @@ func TestNodeFSRmOptionsAgreesWithNode(t *testing.T) {
 	if report := leaks(t, program, binary); report != "" {
 		t.Fatal(report)
 	}
-	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+	if wasitest.Leg(t, "ADAMIC_ORACLE_WASI", rmOptionsFixture+" on wasm32-wasi") {
 		t.Run("wasm32-wasi", func(t *testing.T) {
 			t.Parallel()
 			actual, reason := observeWASI(t, native.C(program))

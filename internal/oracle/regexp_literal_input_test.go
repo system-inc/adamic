@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 const regexpLiteralInputSource = `console.log((/[\q{Ss|x}]/iv.test('sſ') ? 'true' : 'false') + ' ' + (/[\q{Ss|x}]/iv.test('SS') ? 'true' : 'false') + ' ' + (/[\q{Ss|x}]/iv.test('🌍ss') ? 'true' : 'false') + ' ' + (/[\q{Ss|x}]/iv.test('x') ? 'true' : 'false') + ' ' + (/[\q{Ss|x}]/iv.test('') ? 'true' : 'false') + ' ' + (/[\q{x}]/iv.test('x') ? 'true' : 'false'));`
@@ -83,7 +84,7 @@ func TestRegExpLiteralInputUnsafeNode(t *testing.T) {
 	if difference := disagreement(want, execute(t, binary)); difference != "" {
 		t.Fatalf("admitted unsafe literal: %s", difference)
 	}
-	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+	if wasitest.Leg(t, "ADAMIC_ORACLE_WASI", "the admitted unsafe literal on wasm32-wasi") {
 		if difference := disagreement(want, onWASI(t, native.C(program))); difference != "" {
 			t.Fatalf("admitted unsafe wasm32 literal: %s", difference)
 		}
