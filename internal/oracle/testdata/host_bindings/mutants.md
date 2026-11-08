@@ -230,3 +230,11 @@ All seven process mutants (a) through (g) were reapplied separately on the third
 each named test exited 1, and every mutated file was restored byte for byte in a finally block.
 The restored tree then ran formatting, vet, load, whole lower, both HostBinding oracle modes
 and the parallel/census guards. Boolean/string remain agreement pins only for (f).
+
+## The require row (#00qn5az, Nov 8 2026)
+
+These belong to #00qn5az's require row, after the letters above.
+
+| Mutant | Edit | Red |
+|---|---|---|
+| (k) The require row removed | internal/load/host_bindings.json, the require row deleted, and its row in docs/axioms/host-bindings.md with it | PENDING |
