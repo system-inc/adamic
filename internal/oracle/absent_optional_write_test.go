@@ -15,14 +15,19 @@ import (
 // proved is there is missing". On main f245bfe4 the guard saw only a literal whose context was an interface:
 // with type Branded = Mut & { brand: undefined }, v.name = "w" panicked natively where Node and the
 // JavaScript backend print w (Language's m3 on #krv1hgh), and so did the write through const mv: Mut = v (m1).
-// The guard now matches the field by its declarations, whatever spelled the type (Adamic's ruling), so every
-// road below stops at its write: an interface (m2, as before), an intersection, an upcast view of one, an
-// alias of either, a generic constrained to the interface, and a compound and a logical assignment. When two
-// members both declare the field (Mut & { name?: string; ... }), the intersection's property is a symbol of
-// its own, and only its declarations tie it to Mut's: an upcast and a generic write through Mut's. The controls lower and agree with Node: a read
-// of the absent field (m4), and a write to a field the program's only literal gave.
+// The guard matches the field by name, whatever spelled the type, so every road below stops at its write:
+// an interface (m2, as before), an intersection, an upcast view of one, an alias of either, a generic
+// constrained to the interface, and a compound and a logical assignment, and when two members both declare
+// the field (Mut & { name?: string; ... }), an upcast and a generic write through Mut's. Matching by the
+// field's declarations, as it did, missed a second interface that declares the field again: a literal
+// typed Mut seen as Other, or put through a generic constrained to Other, panicked natively on main
+// 72f23939 (#g2aj1pb's g3 and g6). A decoded object leaves out every optional field its text has no key
+// for, so every optional field a decodeJson target reaches counts as left out (Memory's g1 and g2).
+// The controls lower and agree with Node: a read of the absent field (m4), and a write to a field the
+// program's only literal gave.
 // Mutants: noteOmittedOptionalsOf skipping intersections again turns the intersection rows red (m3 panics
-// natively); fieldDeclarations giving the property's own symbol alone turns the two shared rows red.
+// natively); keying by the declaring node again turns the other_interface and other_generic rows red;
+// dropping noteDecodedOptionals' call turns the decoded rows red.
 func TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType(t *testing.T) {
 	t.Parallel()
 	const mut = "interface Mut { name?: string; }\n"
@@ -38,6 +43,8 @@ func TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType(t *testing.T) {
 		{"generic", mut + branded + "function put<T extends Mut>(x: T): void {\n\tx.name = 'w';\n}\nconst v: Branded = { brand: undefined };\nput(v);\nconsole.log(String(v.name));\n"},
 		{"compound", mut + branded + "const v: Branded = { brand: undefined };\nv.name += 'w';\nconsole.log(String(v.name));\n"},
 		{"logical", mut + branded + "const v: Branded = { brand: undefined };\nv.name ??= 'w';\nconsole.log(String(v.name));\n"},
+		{"other_interface", mut + "interface Other { name?: string; }\nconst v: Mut = {};\nconst o: Other = v;\no.name = 'w';\nconsole.log(String(o.name));\n"},
+		{"other_generic", mut + "interface Other { name?: string; }\nfunction put<T extends Other>(x: T): void {\n\tx.name = 'w';\n}\nconst v: Mut = {};\nput(v);\nconsole.log(String(v.name));\n"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
@@ -57,6 +64,29 @@ func TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType(t *testing.T) {
 				}
 			})
 		}
+	}
+	const decoded = "import { decodeJson } from 'adamic';\n" + mut
+	for _, probe := range []struct{ name, source string }{
+		{"decoded", decoded + "const r = decodeJson<Mut>('{}');\nif (r.kind === 'Ok') {\n\tconst v = r.value;\n\tv.name = 'w';\n\tconsole.log(String(v.name));\n}\n"},
+		{"decoded_other", decoded + "interface Other { name?: string; }\nconst r = decodeJson<Mut>('{}');\nif (r.kind === 'Ok') {\n\tconst o: Other = r.value;\n\to.name = 'w';\n\tconsole.log(String(o.name));\n}\n"},
+		{"decoded_nested", decoded + "interface Outer { inner: Mut[]; }\nconst r = decodeJson<Outer>('{\"inner\":[{}]}');\nif (r.kind === 'Ok') {\n\tconst v = r.value.inner[0];\n\tif (v !== undefined) {\n\t\tv.name = 'w';\n\t\tconsole.log(String(v.name));\n\t}\n}\n"},
+	} {
+		t.Run(probe.name+".a", func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), probe.name+".a")
+			if err := os.WriteFile(path, []byte(probe.source), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || !strings.HasSuffix(string(truth.stdout), "w\n") {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			_, err := lowered(t, path)
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "writing a possibly absent optional own field") {
+				t.Fatalf("want the write NotYet as a possibly absent optional own field, got %v", err)
+			}
+		})
 	}
 	for _, control := range []struct{ name, source, node string }{
 		{"read_absent", mut + "const v: Mut & { brand: undefined } = { brand: undefined };\nconsole.log(String(v.name));\n", "undefined\n"},
