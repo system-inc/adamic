@@ -69,8 +69,10 @@ func TestOptionalMethodCallsLower(t *testing.T) {
 // library method, a method behind a longer chain or in parentheses, and one whose field may hold null
 // (optionalCall's not yet, or property's for the chain); a presence test of an optional method, which
 // stays refused as a method read as a value (method_presence.go); and the call through a checked view,
-// check 49's road, whose read has no contract for an optional callable (unemittableCheckedViewRead).
-// Mutant: the view stop dropped, and the .ts row lowers.
+// check 49's road. On main the .ts row is refused first, as a checked view read with an unsupported
+// representation conversion contract, so unemittableCheckedViewRead's optional call arm is a second
+// stop behind it: dropping that arm is an equivalent mutant (Home, Nov 8), and the arm stays so a later
+// contract for that read meets a not yet, never readUnionViewAt's compiler bug.
 func TestOptionalMethodCallGapsStop(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, extension, source, want string }{
