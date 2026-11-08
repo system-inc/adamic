@@ -115,6 +115,28 @@ func TestNodeProcessHandleView(t *testing.T) {
 	}
 }
 
+// node_process_handle_detached.a reads setBlocking off stdout's handle into a const and calls it bare.
+// Node's is Pipe.prototype's, which needs the handle as its receiver, so on a pipe it throws
+// TypeError: Illegal invocation. Both backends' handle holds a closure that ignores its receiver, and
+// printed after (#5abf5v8). The read stops before either backend, by name, where it's made.
+func TestNodeProcessHandleDetachedStops(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_handle_detached.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := nodeProcessTerminal(t, "pipe", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+	if truth.exitCode == 0 || len(truth.stdout) != 0 || !strings.Contains(string(truth.stderr), "Illegal invocation") {
+		t.Fatalf("unexpected Node result %d %q %q", truth.exitCode, truth.stdout, truth.stderr)
+	}
+	_, err = lowered(t, path)
+	var missing *lower.NotYet
+	if !errors.As(err, &missing) || !strings.Contains(missing.Where, "node_process_handle_detached.a:3:13") || !strings.Contains(missing.What, "process.stdout._handle's setBlocking as a value") {
+		t.Fatalf("want a stop at the read of setBlocking, got %v", err)
+	}
+	t.Logf("Node on a pipe exits %d with %q; stop: %v", truth.exitCode, truth.stderr, err)
+}
+
 func TestNodeProcessMissingMark(t *testing.T) {
 	t.Parallel()
 	path, binary, script := sanitized(t, "internal/oracle/testdata/node_process_missing_mark.a")
