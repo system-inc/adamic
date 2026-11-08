@@ -3542,6 +3542,10 @@
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.CommaListExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.CommaToken": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
@@ -3714,6 +3718,10 @@
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.InferType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.InterfaceDeclaration": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
@@ -3850,6 +3858,10 @@
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.JsxElement | SyntaxKind.JsxFragment": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.JsxFragment": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
@@ -3871,6 +3883,10 @@
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
     "SyntaxKind.JsxSelfClosingElement | SyntaxKind.JsxOpeningElement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JsxText": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
@@ -4138,11 +4154,27 @@
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.TemplateExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.TemplateHead": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.TemplateLiteralType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.TemplateLiteralType | SyntaxKind.TemplateExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TemplateLiteralTypeSpan": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TemplateSpan": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
