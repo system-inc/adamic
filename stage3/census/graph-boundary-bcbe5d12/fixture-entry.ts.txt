@@ -1,0 +1,2 @@
+import { increment } from './dependency.js';
+const value = increment(1);
