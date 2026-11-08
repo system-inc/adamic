@@ -219,10 +219,12 @@ func TestCallbackWideningUnrepresentedParameter(t *testing.T) {
 	if diff := disagreement(run{stdout: []byte("1,2|3,4\n")}, node); diff != "" {
 		t.Fatal("Node: " + diff)
 	}
-	// The callback's parameter takes each element, an array, where Slice, a plain object type, is held, so
-	// it stops at the callback (lower's shape_fit.go, #nw6d7ws) before the intrinsic's adapter could refuse it.
+	// The callback's parameter takes each element, an array, where Slice names slice, a method lib declares
+	// on Array, as a field. So it stops at the callback, at the relation (lower's optional_widening.go,
+	// #sn788gx), ahead of shape_fit.go's container stop (#nw6d7ws) and before the intrinsic's adapter could
+	// refuse it.
 	_, err := lowered(t, path)
-	if _, ok := err.(*lower.NotYet); !ok || err.Error() != path+":3:31: stage 0 can't lower an array going where a plain object type is held yet" {
+	if _, ok := err.(*lower.NotYet); !ok || err.Error() != path+":3:31: stage 0 can't lower a view naming slice, which lib declares on Array but the runtime's Array doesn't hold (leave slice out of the view's type) yet" {
 		t.Fatalf("expected the array's NotYet at the callback, got %v", err)
 	}
 }
