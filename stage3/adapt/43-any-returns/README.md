@@ -10,16 +10,16 @@ measurement. This is attribution from that measurement, not a new census or a
 claim that these bytes now lower successfully. Two sites, totaling 254 bytes,
 remain unchanged. No compiler code or public declaration is edited.
 
-| Callee | Truthful return | Credited bytes | Decision |
-| --- | --- | ---: | --- |
-| convertConfigFileToObject | AdamicJsonRecoveryObject | 1,545 | Adapt |
-| convertToObject | AdamicJsonRecoveryValue or undefined | 150 | Public declaration; decline |
-| convertToJson | AdamicJsonRecoveryValue or undefined | 4,862 | Adapt |
-| convertToJson.convertObjectLiteralExpressionToJson | AdamicJsonRecoveryObject or undefined | 0 | Adapt |
-| convertToJson.convertPropertyValueToJson | AdamicJsonRecoveryValue or undefined | 0 | Adapt |
-| setTimeout | NodeJS.Timeout | 89 | Covered by adaptation 41 |
-| tryParseJson | Recursive strict JSON value or undefined | 104 | Consumer contracts; decline |
-| objectAllocator.getNodeConstructor | ReturnType<ObjectAllocator["getNodeConstructor"]> | 540 | Adapt |
+| Callee                                             | Truthful return                                   | Credited bytes | Decision                    |
+| -------------------------------------------------- | ------------------------------------------------- | -------------: | --------------------------- |
+| convertConfigFileToObject                          | AdamicJsonRecoveryObject                          |          1,545 | Adapt                       |
+| convertToObject                                    | AdamicJsonRecoveryValue or undefined              |            150 | Public declaration; decline |
+| convertToJson                                      | AdamicJsonRecoveryValue or undefined              |          4,862 | Adapt                       |
+| convertToJson.convertObjectLiteralExpressionToJson | AdamicJsonRecoveryObject or undefined             |              0 | Adapt                       |
+| convertToJson.convertPropertyValueToJson           | AdamicJsonRecoveryValue or undefined              |              0 | Adapt                       |
+| setTimeout                                         | NodeJS.Timeout                                    |             89 | Covered by adaptation 41    |
+| tryParseJson                                       | Recursive strict JSON value or undefined          |            104 | Consumer contracts; decline |
+| objectAllocator.getNodeConstructor                 | ReturnType<ObjectAllocator["getNodeConstructor"]> |            540 | Adapt                       |
 
 `AdamicJsonRecoveryValue` is string, number, boolean, null, an array of those
 values, or `AdamicJsonRecoveryObject`. The object maps string keys to recovery
