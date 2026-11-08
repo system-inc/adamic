@@ -58,8 +58,8 @@ func TestZzOrProbeRuns(t *testing.T) {
 				t.Fatal(err)
 			}
 			show("javascript", executeWith(t, jsonTypesEnvironment(t, script), "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), script))
-			native, binary := nativelyUncached(t, program)
-			show("native-asan", native)
+			sanitized, binary := nativelyUncached(t, program)
+			show("native-asan", sanitized)
 			counted := filepath.Join(t.TempDir(), "counted")
 			if err := native.Build(native.C(program), counted, native.Options{Count: true}); err != nil {
 				fmt.Fprintf(out, "counted build: %v\n", err)
