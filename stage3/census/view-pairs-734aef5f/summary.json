@@ -1,11 +1,11 @@
 {
   "counts": {
-    "object_related_top": 1610,
-    "object_related_nested": 25756,
+    "object_related_top": 1608,
+    "object_related_nested": 25706,
     "object_unrelated_top": 1,
     "object_unrelated_nested": 0,
     "scalar_top": 0,
-    "scalar_nested": 14494,
+    "scalar_nested": 14467,
     "nil_source": 0,
     "nil_target_only": 0
   },
@@ -19,7 +19,7 @@
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "total_selected_pairs": 41861,
+  "total_selected_pairs": 41782,
   "total_raw_pairs": 61812,
   "unrelated_object_pairs": 1,
   "distinct_unrelated_text_pairs": 1,
@@ -38,27 +38,27 @@
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "observed_units": 8027,
+  "observed_units": 8065,
   "unit_statuses": {
-    "lowered": 4660,
-    "stopped": 3367
+    "lowered": 4690,
+    "stopped": 3375
   },
   "stock_skips_without_boundary": {
     "deferred_generic_instantiation": 640
   },
   "deferred_units_in_emitted_inventory": 640,
   "resolved_files": 81,
-  "full_files_attempted": 34,
-  "full_files_complete_traversal": 33,
-  "stock_inventory_units": 6677,
+  "full_files_attempted": 35,
+  "full_files_complete_traversal": 34,
+  "stock_inventory_units": 6760,
   "probe_incomplete_units": 0,
   "orphan_pair_lines": 0,
   "probe_errors": [],
-  "view_sources_in_selected_units": 2434,
-  "deduplicated_pair_visits": 235322,
-  "over_depth_pair_visits": 20817,
+  "view_sources_in_selected_units": 2432,
+  "deduplicated_pair_visits": 234860,
+  "over_depth_pair_visits": 20802,
   "nil_reference_definition": "Known lower.representation(fieldType) with ir.Type.IsReference(); includes strings and Weak. Object-reference companion excludes ir.String and ir.Weak. Fields come from cycleFinder.fields, excluding prototype methods, accessors and static prototype.",
-  "first_error_selected_stopped_units": 120,
+  "first_error_selected_stopped_units": 115,
   "cycle_finder_ran": false,
   "graph_types_nonempty_units": 0
 }
