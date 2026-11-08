@@ -18,10 +18,10 @@ These are the only two lines that differ. Line 7311 is in `interface ResolvedMod
 and line 7353 is in `interface ResolvedTypeReferenceDirective`, both inside `declare namespace ts`.
 They are the two rows of [api-sanctions.json](../api-sanctions.json).
 
-| | Bytes | SHA-256 |
-| --- | ---: | --- |
+|            |   Bytes | SHA-256                                                            |
+| ---------- | ------: | ------------------------------------------------------------------ |
 | Without 98 | 590,996 | `b901adcc6ec29e299ec21401b2a155b2b2c14c046ec743fed6ee45679b726d5d` |
-| With 98 | 591,020 | `2ba55ed602cd7fa0f4793d28c8cdd667959570f3eb146de1c7e30932b28bcfbc` |
+| With 98    | 591,020 | `2ba55ed602cd7fa0f4793d28c8cdd667959570f3eb146de1c7e30932b28bcfbc` |
 
 The 24 added bytes are the two ` | undefined` insertions, 12 bytes each.
 
