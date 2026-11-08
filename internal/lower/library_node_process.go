@@ -333,6 +333,9 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 	case "process.execArgv":
 		call.Operation, call.Of = "execArgv", ir.Array
 	case "process.stdout._handle":
+		// Its setBlocking throws Illegal invocation called detached, a host closure no function of
+		// the program's stands for (#0bxc4jh).
+		l.result.ClosuresMayThrow = true
 		call.Operation, call.Of = "handle", ir.Object
 	case "os.EOL":
 		call.Operation, call.Of = "eol", ir.String
@@ -666,9 +669,10 @@ func (l *lowering) stdoutHandleOrigin(node *ast.Node, depth int) bool {
 // stdoutHandleSetBlockingRefusal stops a read of setBlocking off stdout's handle anywhere but a
 // call's callee, a truthiness test or a typeof (#5abf5v8). Node's handle is a Pipe or a TTY whose
 // setBlocking is its prototype's and needs the handle as its receiver, so a detached call throws
-// TypeError: Illegal invocation. Both backends' handle holds a closure that ignores its receiver
-// and would block silently. A typeof reads the value without calling it, as node_process_terminal.a
-// does. A write or a delete isn't a read and stays as it was.
+// TypeError: Illegal invocation. Both backends' handle now holds a closure that throws the same
+// whatever road reaches it (#0bxc4jh), so this is the early, named answer on the roads the origin
+// walk follows. A typeof reads the value without calling it, as node_process_terminal.a does. A
+// write or a delete isn't a read and stays as it was.
 func (l *lowering) stdoutHandleSetBlockingRefusal(node *ast.Node) error {
 	switch node.Kind {
 	case ast.KindPropertyAccessExpression:

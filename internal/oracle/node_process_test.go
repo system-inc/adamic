@@ -129,10 +129,10 @@ func TestNodeProcessHandleView(t *testing.T) {
 
 // node_process_handle_detached.a reads setBlocking off stdout's handle into a const and calls it bare.
 // Node's is Pipe.prototype's, which needs the handle as its receiver, so on a pipe it throws
-// TypeError: Illegal invocation. Both backends' handle holds a closure that ignores its receiver, and
-// printed after (#5abf5v8). The read stops before either backend, by name, where it's made. The
-// fixture keeps a directory of its own, since flow's and fresh's corpora lower every program at the
-// top of testdata.
+// TypeError: Illegal invocation. Both backends' handle held a closure that ignored its receiver, and
+// printed after (#5abf5v8); it throws now, as Node's does (#0bxc4jh), and the read still stops
+// before either backend, by name, where it's made. The fixture keeps a directory of its own, since
+// flow's and fresh's corpora lower every program at the top of testdata.
 func TestNodeProcessHandleDetachedStops(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_handle_refused/node_process_handle_detached.a"))
@@ -333,6 +333,11 @@ int main(void) {
  adamic_closure *method = handle->slots[0].reference;
  adamic_value arguments[] = {{.boolean = true}};
  (void)method->code(method, arguments);
+ if (adamic_thrown == NULL) return 5;
+ adamic_release(adamic_thrown);
+ adamic_thrown = NULL;
+ if ((fcntl(1, F_GETFL) & O_NONBLOCK) == 0) return 6;
+ (void)adamic_node_stdout_handle_call(method, handle, arguments);
  int flags = fcntl(1, F_GETFL);
  adamic_release(handle);
  if (flags < 0) return 4;
@@ -370,7 +375,7 @@ int main(void) {
 			t.Fatalf("Node alone must catch unchanged descriptor flags: %q", difference)
 		}
 	}
-	t.Log("setBlocking no-op ran cleanly under ASan/UBSan; only Node's descriptor flags caught it; the 200 KB controls still drain completely")
+	t.Log("setBlocking no-op ran cleanly under ASan/UBSan; only Node's descriptor flags caught it; the slot's closure called bare threw and left the flags; the 200 KB controls still drain completely")
 
 }
 

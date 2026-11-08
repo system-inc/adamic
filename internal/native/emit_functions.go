@@ -396,10 +396,11 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if expression.Bound {
 		call = fmt.Sprintf("adamic_bound_closure_call(self, %s, %s, %d)", packed, count, e.packedArgumentSize(expression))
 	}
-	processHost := false
+	processHost, stdoutHandle := false, false
 	walkExpressions(e.program, func(value ir.Expression) {
-		if host, ok := value.(ir.ProcessCall); ok && host.Operation == "performance" {
-			processHost = true
+		if host, ok := value.(ir.ProcessCall); ok {
+			processHost = processHost || host.Operation == "performance"
+			stdoutHandle = stdoutHandle || host.Operation == "handle"
 		}
 	})
 
@@ -438,6 +439,13 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				} else {
 					methodCall = fmt.Sprintf("%s.code(%s, %s)", method, receiver, packed)
 				}
+			}
+			if stdoutHandle && expression.Direct == 0 && !expression.Bound {
+				// stdout's handle's setBlocking throws Illegal invocation called any way but off the
+				// handle, as Node's does; this call has its object, so the closure is known by its
+				// address and blocks off the handle alone (node_process.c, #0bxc4jh). Only a program
+				// that reads the handle has the test, so every other program's C is as it was.
+				call = fmt.Sprintf("(adamic_node_stdout_handle_method(%s) ? adamic_node_stdout_handle_call(%s, %s, %s) : %s)", closure, closure, receiver, packed, call)
 			}
 			call = fmt.Sprintf("(%s != NULL ? %s : %s)", closure, call, methodCall)
 		}

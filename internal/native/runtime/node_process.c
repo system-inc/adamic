@@ -275,7 +275,7 @@ static adamic_value set_blocking(adamic_closure *self, adamic_value *values) {
 
 // Node has one stdout handle for the process, so every read of _handle is the same object (#qa1g5f3).
 // It's built in this storage on the first read, an object of one slot as adamic_object_size lays it
-// out, with a zero count, so it's immortal as method is, and never allocated or freed. Whole
+// out, with a zero count, so it's immortal as set_blocking_closure is, and never allocated or freed. Whole
 // max_align_t words give it an object's alignment, and the size is a macro so the declaration holds
 // no parenthesis, which runtime_statics_test.go's scanner would take for a function's. The build
 // checks adamic_object_size itself against the storage, since this sum only restates it.
@@ -289,6 +289,36 @@ static bool handle_built;
 
 #endif
 
+// The handle's setBlocking read as a value. Node's is its Pipe's or TTY's prototype's, which checks its
+// receiver when it's called, so called any way but off the handle it throws TypeError: Illegal
+// invocation, catchable (#0bxc4jh). Every detached road, a variable, a parameter, a field, a call's
+// result, a computed key or a copy into another object, calls this closure's code and throws. The call
+// off an object, which has the receiver, knows it by its address (adamic_node_stdout_handle_method)
+// and blocks only off the handle itself. It's static and immortal, a count of 0 as the handle's, so
+// graph and Program adoption refuse it as no fresh allocation and a region's free passes over it.
+static adamic_value illegal_invocation(adamic_closure *self, adamic_value *values) {
+    (void)self;
+    (void)values;
+    static const char message[] = "Illegal invocation";
+    adamic_throw_kind("TypeError", sizeof "TypeError" - 1, message, sizeof message - 1);
+    return (adamic_value){.reference = NULL};
+}
+static adamic_closure set_blocking_closure = {.heap = {0, adamic_kind_closure, 0}, .code = illegal_invocation, .count = 0};
+
+bool adamic_node_stdout_handle_method(const adamic_closure *closure) { return closure == &set_blocking_closure; }
+
+// adamic_node_stdout_handle_call is object.setBlocking(...) where the callee is the handle's closure:
+// Node's blocks with the handle as its receiver, and throws off any other object, as a copy into
+// another object's field does on Node.
+adamic_value adamic_node_stdout_handle_call(adamic_closure *closure, const void *receiver, adamic_value *values) {
+#ifndef ADAMIC_TARGET_WASI
+    if (receiver == (const void *)handle_storage) { return set_blocking(closure, values); }
+#else
+    (void)receiver;
+#endif
+    return closure->code(closure, values);
+}
+
 adamic_object *adamic_node_stdout_handle(void) {
 #ifdef ADAMIC_TARGET_WASI
     adamic_panic("wasm32-wasi: process.stdout._handle requires terminal flag control", sizeof "wasm32-wasi: process.stdout._handle requires terminal flag control" - 1);
@@ -299,7 +329,6 @@ adamic_object *adamic_node_stdout_handle(void) {
     static const bool references[] = {true};
     static const adamic_field_kind kinds[] = {adamic_field_reference};
     static const adamic_shape shape = {1, handle_names, references, &adamic_host_methods, kinds};
-    static adamic_closure method = {.heap = {0, adamic_kind_closure, 0}, .code = set_blocking, .count = 0};
     adamic_object *handle = (adamic_object *)(void *)handle_storage;
     if (!__atomic_load_n(&handle_built, __ATOMIC_ACQUIRE)) {
         pthread_mutex_lock(&handle_lock);
@@ -307,7 +336,7 @@ adamic_object *adamic_node_stdout_handle(void) {
             if (adamic_object_size(shape.count) > sizeof handle_storage) { adamic_invariant("stdout's handle storage is smaller than an object of one slot"); }
             handle->heap = (adamic_heap){0, adamic_kind_object, 0};
             handle->shape = &shape;
-            handle->slots[0].reference = &method;
+            handle->slots[0].reference = &set_blocking_closure;
             memset(adamic_object_initialized(handle), 1, shape.count);
             memset(adamic_object_field_types(handle), 0, shape.count);
             __atomic_store_n(&handle_built, true, __ATOMIC_RELEASE);
