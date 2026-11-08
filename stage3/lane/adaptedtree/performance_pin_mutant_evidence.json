@@ -1,0 +1,141 @@
+{
+  "task": "yewmv46",
+  "base": "0dc514e4f51a44c3d2b7393f151c00bfbf86f1f1",
+  "companionChange": "chg_0epz4try76b4bzgja7hfxgnk0q",
+  "test": "TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes",
+  "comparison": "raw bytes; CRLF kept; no normalization, trimming or trailing-newline allowance",
+  "adaptedSourceSha256": "8b1993ab380a178b24fed0dcc9e7dc312172a3e3be642ee1b533161f792f0dae",
+  "pins": [
+    {
+      "file": "performance_core_adapted.txt",
+      "range": [
+        7,
+        29
+      ],
+      "sha256": "3aea2d886832a5d6f85e1c0aa039a38af7a0c8b99cf9d849786319312a098a55",
+      "bytes": 683,
+      "CRLF": 23
+    },
+    {
+      "file": "performance_core_hooks.txt",
+      "range": [
+        62,
+        88
+      ],
+      "sha256": "61a0e11d63efe9d8dae6062e87cf734acca78173efea750dec42dca6b308b3e3",
+      "bytes": 842,
+      "CRLF": 27
+    }
+  ],
+  "product": {
+    "path": "/workspace/scratch/performance-pin-equality/isolated-cache/65a1d66f9d46e5ced803f5100ef08c2c662939ee9dd05c0163f55a131781e85b",
+    "preparedAhead": true,
+    "unitCacheMode": "read",
+    "noBuildInUnit": true
+  },
+  "unit": {
+    "exit": 0,
+    "seconds": 13.016,
+    "restoredExit": 0,
+    "execPaths": [
+      "/workspace/adamic-tools/bin/git",
+      "/workspace/adamic-tools/bin/node",
+      "/workspace/adamic-tools/bin/python3",
+      "/workspace/adamic-tools/go/bin/go",
+      "/workspace/scratch/performance-pin-equality/adaptedtree.test"
+    ],
+    "noCompilerBuildOrRunSubprocess": true,
+    "permittedGoQueries": [
+      [
+        "go",
+        "version"
+      ]
+    ],
+    "queryPolicy": "The task owner clarified that read-only go version queries from the existing Product(t) lookup are allowed; no shared cache changes."
+  },
+  "wholePackage": {
+    "command": "go test -p=2 ./stage3/lane/adaptedtree -count=1 -timeout=30s",
+    "exit": 0,
+    "seconds": 3.006
+  },
+  "dependencies": {
+    "declared": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "census": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "declaredMapCheckExit": 0,
+    "testReadSetKey": "f1b78405be6ae98d497e5d543756211c320ef7bb973b97f1f1861bd40467148a",
+    "fixtureReadsRecorded": [
+      "internal/lower/testdata/host_binding/performance_core_adapted.txt",
+      "internal/lower/testdata/host_binding/performance_core_hooks.txt"
+    ],
+    "bothPinChangesInvalidateReadSet": true
+  },
+  "mutants": [
+    {
+      "mutant": "declarations-pin-byte",
+      "test": "TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt",
+      "exit": 1,
+      "change": "one pin byte XOR 1 at offset 0",
+      "readSetInvalidated": true,
+      "failure": "=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n    performance_pins_test.go:17: build stage3-adapted-tree 65a1d66f9d46 hit 1.39\n    performance_pins_test.go:18: adapted product: /workspace/scratch/performance-pin-equality/isolated-cache/65a1d66f9d46e5ced803f5100ef08c2c662939ee9dd05c0163f55a131781e85b\n=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== NAME  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n    performance_pins_test.go:55: performance_core_adapted.txt differs from performanceCore.ts lines 7-29 at byte offset 0 (zero-based): source line 7 byte-column 1 is 0x2f, pin line 1 byte-column 1 is 0x2e; lengths 683/683\n--- FAIL: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes (1.40s)\n    --- PASS: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt (0.00s)\n    --- FAIL: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt (0.00s)\nFAIL\n"
+    },
+    {
+      "mutant": "hooks-pin-byte",
+      "test": "TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt",
+      "exit": 1,
+      "change": "one pin byte XOR 1 at offset 0",
+      "readSetInvalidated": true,
+      "failure": "=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n    performance_pins_test.go:17: build stage3-adapted-tree 65a1d66f9d46 hit 1.18\n    performance_pins_test.go:18: adapted product: /workspace/scratch/performance-pin-equality/isolated-cache/65a1d66f9d46e5ced803f5100ef08c2c662939ee9dd05c0163f55a131781e85b\n=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n    performance_pins_test.go:55: performance_core_hooks.txt differs from performanceCore.ts lines 62-88 at byte offset 0 (zero-based): source line 62 byte-column 1 is 0x66, pin line 1 byte-column 1 is 0x67; lengths 842/842\n--- FAIL: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes (1.20s)\n    --- PASS: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt (0.00s)\n    --- FAIL: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt (0.00s)\nFAIL\n"
+    },
+    {
+      "mutant": "readonly-edit-undone",
+      "test": "TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt",
+      "exit": 1,
+      "change": "undo only 99-cli-perf-hooks-import readonly in the adapted product; no adaptation file edited",
+      "failure": "=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n    performance_pins_test.go:17: build stage3-adapted-tree 65a1d66f9d46 hit 1.22\n    performance_pins_test.go:18: adapted product: /workspace/scratch/performance-pin-equality/isolated-cache/65a1d66f9d46e5ced803f5100ef08c2c662939ee9dd05c0163f55a131781e85b\n=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== NAME  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n    performance_pins_test.go:55: performance_core_adapted.txt differs from performanceCore.ts lines 7-29 at byte offset 273 (zero-based): source line 17 byte-column 5 is 0x74, pin line 11 byte-column 5 is 0x72; lengths 674/683\n--- FAIL: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes (1.24s)\n    --- FAIL: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt (0.00s)\n    --- PASS: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt (0.00s)\nFAIL\n"
+    },
+    {
+      "mutant": "range-shift-one-line",
+      "test": "TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt",
+      "exit": 1,
+      "change": "test-only Go overlay changes declarations range 7-29 to 8-30; compiled outside unit",
+      "failure": "=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes\n    performance_pins_test.go:17: build stage3-adapted-tree 65a1d66f9d46 hit 1.16\n    performance_pins_test.go:18: adapted product: /workspace/scratch/performance-pin-equality/isolated-cache/65a1d66f9d46e5ced803f5100ef08c2c662939ee9dd05c0163f55a131781e85b\n=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== RUN   TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== PAUSE TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n=== CONT  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt\n=== NAME  TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt\n    performance_pins_test.go:55: performance_core_adapted.txt differs from performanceCore.ts lines 8-30 at byte offset 0 (zero-based): source line 8 byte-column 1 is 0x65, pin line 1 byte-column 1 is 0x2f; lengths 667/683\n--- FAIL: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes (1.17s)\n    --- FAIL: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_adapted.txt (0.00s)\n    --- PASS: TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes/performance_core_hooks.txt (0.00s)\nFAIL\n"
+    }
+  ],
+  "restoration": "both pins and product source byte-identical to originals",
+  "logsDirectory": "/workspace/scratch/performance-pin-equality",
+  "status": "verified; read-only tool version queries permitted by the task owner",
+  "gate": {
+    "package": {
+      "command": "go test -p=2 ./cmd/adamic-gate -count=1 -timeout=5m",
+      "exit": 0
+    },
+    "namingAndProductChecks": {
+      "exit": 0
+    },
+    "recursivePackages": {
+      "command": "go test -p=2 ./cmd/adamic-gate/... -count=1 -timeout=5m",
+      "exit": 1,
+      "soleFailure": "TestEveryTestIsParallelOrSaysWhy: internal/lower/host_binding_route_test.go TestHostBindingProvidedRoutesThroughItsModel lacks a leading t.Parallel() or serial-use comment",
+      "withEqualityTest": "25191 top-level tests; 1 fail the parallel rule",
+      "withoutEqualityTest": "25190 top-level tests; 1 fail the parallel rule",
+      "baseFailureConfirmed": true,
+      "newEqualityTestViolations": 0
+    }
+  }
+}
