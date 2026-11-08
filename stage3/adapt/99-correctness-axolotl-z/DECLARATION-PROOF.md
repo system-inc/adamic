@@ -9,22 +9,22 @@ body and attached JSDoc are byte-identical.
 
 ## Completed checks
 
-| Check | Result |
-| --- | --- |
-| Full baseline apply from isolated main checkout | Exit 0 |
-| Full amended apply | Exit 0 |
-| Owner contract | 39 checks pass; pristine and previous const accepted; declaration replay preserves bytes and mtime; half owners refuse without writes; LF/CRLF and JSDoc preserved |
-| Paired complete-tree replay | 95 adapters; every other adapter has identical exit and normalized output; only 99z reports one edit before and zero after |
-| Ordinary adamic types, all 79 sorted roots together | Before and after exit 0, zero diagnostics |
-| Ordinary compiler builds | Both exit 0 |
-| Source scope | All 746 files compared; only compiler/core.ts differs |
-| All nine emitted compiler JavaScript files | Only _tsc.js and typescript.js differ; their bodies and every other executable statement match after removing only elementAt's owner |
-| typescript.d.ts and tsserverlibrary.d.ts | Byte-identical |
-| typescript.internal.d.ts | Exactly two hunks, shown below |
-| Real amended whole lane | 398 units exactly once in 20 pieces; 106,366 passing, one sanctioned failure, zero skips; every unit report passes |
-| Core.ts site census | Before, after and mutant exit 0 with zero checker diagnostics; F9 gone, no new Refused/NotYet sites, no elementAt or toOffset findings |
-| Const-restoring mutant | Restores F9, core.ts:1078:5, NotYet: a function returning T \| undefined |
-| Fresh Node P2 witnesses | All 30 rows and 30 expected-value/identity checks pass; extracted before and after owners agree byte for byte |
+| Check                                               | Result                                                                                                                                                             |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Full baseline apply from isolated main checkout     | Exit 0                                                                                                                                                             |
+| Full amended apply                                  | Exit 0                                                                                                                                                             |
+| Owner contract                                      | 39 checks pass; pristine and previous const accepted; declaration replay preserves bytes and mtime; half owners refuse without writes; LF/CRLF and JSDoc preserved |
+| Paired complete-tree replay                         | 95 adapters; every other adapter has identical exit and normalized output; only 99z reports one edit before and zero after                                         |
+| Ordinary adamic types, all 79 sorted roots together | Before and after exit 0, zero diagnostics                                                                                                                          |
+| Ordinary compiler builds                            | Both exit 0                                                                                                                                                        |
+| Source scope                                        | All 746 files compared; only compiler/core.ts differs                                                                                                              |
+| All nine emitted compiler JavaScript files          | Only _tsc.js and typescript.js differ; their bodies and every other executable statement match after removing only elementAt's owner                               |
+| typescript.d.ts and tsserverlibrary.d.ts            | Byte-identical                                                                                                                                                     |
+| typescript.internal.d.ts                            | Exactly two hunks, shown below                                                                                                                                     |
+| Real amended whole lane                             | 398 units exactly once in 20 pieces; 106,366 passing, one sanctioned failure, zero skips; every unit report passes                                                 |
+| Core.ts site census                                 | Before, after and mutant exit 0 with zero checker diagnostics; F9 gone, no new Refused/NotYet sites, no elementAt or toOffset findings                             |
+| Const-restoring mutant                              | Restores F9, core.ts:1078:5, NotYet: a function returning T \| undefined                                                                                           |
+| Fresh Node P2 witnesses                             | All 30 rows and 30 expected-value/identity checks pass; extracted before and after owners agree byte for byte                                                      |
 
 The complete before source is byte-identical to the source in accepted
 measurement commit `5ab9992068bb004caacc8637b49a319533b5a002`.
