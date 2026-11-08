@@ -59,6 +59,8 @@ statement_output = scratch / 'internal_lower_statements.go'
 subprocess.run(['go', 'run', str(territory / 'statementrewrite'),
                 str(repository / 'internal/lower/statements.go'), str(statement_output)], check=True, cwd=territory)
 replace[str(repository / 'internal/lower/statements.go')] = str(statement_output)
+overlay('internal/lower/latent_relation_overflow.go', (territory / 'relation_overflow.go.txt').read_text())
+overlay('internal/lower/latent_relation_overflow_test.go', (territory / 'relation_overflow_test.go.txt').read_text())
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
 # Compile the tested recorder into the overlay, including per-ref source snapshots.

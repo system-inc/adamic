@@ -1,0 +1,107 @@
+// Compiled only through the measurement overlay. No checker-owned state is copied.
+package lower
+
+import (
+	"context"
+	"encoding/json"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"time"
+)
+
+// Empty strings are explicit answers, not omitted observations. Attempted units
+// carry their own post-unit answer; skipped and deferred units carry no answer.
+type LatentRelationReport struct {
+	AfterLoad         string          `json:"after_load"`
+	End               string          `json:"end"`
+	FirstAffectedUnit string          `json:"first_affected_unit,omitempty"`
+	Attribution       string          `json:"attribution"`
+	Findings          []LatentFinding `json:"-"`
+}
+
+func latentReadCheckedRelation(program *load.Program, typeChecker *checker.Checker, where string) string {
+	started := time.Now()
+	answer := program.RelationOverflow(typeChecker)
+	elapsed := time.Since(started).Seconds()
+	// Costs are observations in a separate stream, never nondeterministic findings.
+	if path := os.Getenv("LATENT_RELATION_TIMES"); path != "" {
+		output, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+		if err != nil {
+			panic(err)
+		}
+		err = json.NewEncoder(output).Encode(map[string]any{"where": where, "wall_seconds": elapsed, "answer": answer})
+		closeErr := output.Close()
+		if err != nil {
+			panic(err)
+		}
+		if closeErr != nil {
+			panic(closeErr)
+		}
+	}
+	return answer
+}
+
+func latentReadRelationOverflow(ctx context.Context, program *load.Program) string {
+	files := program.Files()
+	if len(files) == 0 {
+		return ""
+	}
+	typeChecker, release := program.Checker(ctx, files[0])
+	defer release()
+	return latentReadCheckedRelation(program, typeChecker, "program")
+}
+
+func latentOverflowFinding(where, phase, answer string) LatentFinding {
+	failure := &NotYet{Where: where, What: "a type relation the checker gave up on as too complex, whose answer lowering read (" + answer + ")"}
+	return LatentFinding{Measurement: LatentMeasurementLabel, Unit: where, Phase: phase, Kind: "NotYet", Where: where, Reason: failure.What, Text: failure.Error()}
+}
+
+func latentRelationReport(ctx context.Context, program *load.Program) LatentRelationReport {
+	return LatentRelationReport{AfterLoad: latentReadRelationOverflow(ctx, program), Attribution: "per attempted unit, checked after lowering; includes the unit that first exposes overflow", Findings: []LatentFinding{}}
+}
+
+func latentCheckUnitRelation(program *load.Program, typeChecker *checker.Checker, unit *LatentUnit) {
+	answer := latentReadCheckedRelation(program, typeChecker, unit.Where)
+	unit.RelationOverflow = &answer
+	if answer != "" {
+		latentFindings = append(latentFindings, latentOverflowFinding(unit.Where, "relation_overflow", answer))
+	}
+}
+
+func (report *LatentRelationReport) finish(records []LatentFile) {
+	answer := report.AfterLoad
+	if answer == "" {
+		answer = report.End
+	}
+	for _, record := range records {
+		for _, unit := range record.Units {
+			if unit.RelationOverflow != nil && *unit.RelationOverflow != "" {
+				if answer == "" {
+					answer = *unit.RelationOverflow
+				}
+				if report.FirstAffectedUnit == "" {
+					report.FirstAffectedUnit = unit.Where
+				}
+			}
+		}
+	}
+	if answer == "" {
+		return
+	}
+	phase := "relation_overflow"
+	// A final speculative file walk can query the checker outside a unit. If only
+	// the endpoint sees it, its first unit is unknown: label every attempted unit.
+	if report.AfterLoad == "" && report.FirstAffectedUnit == "" {
+		report.Attribution = "overflow discovered only at run end; every attempted unit conservatively marked because the first affected unit is unknown"
+		phase = "relation_overflow_conservative_all_units"
+		for index := range records {
+			for _, unit := range records[index].Units {
+				if unit.RelationOverflow != nil {
+					records[index].Findings = append(records[index].Findings, latentOverflowFinding(unit.Where, phase, answer))
+				}
+			}
+		}
+	}
+	report.Findings = append(report.Findings, latentOverflowFinding("program", phase, answer))
+}

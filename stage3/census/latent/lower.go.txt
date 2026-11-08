@@ -72,6 +72,7 @@ type LatentUnit struct {
 	Kind               string   `json:"kind"`
 	BodyStart          int      `json:"body_start,omitempty"`
 	BodyEnd            int      `json:"body_end,omitempty"`
+	RelationOverflow   *string  `json:"relation_overflow,omitempty"`
 	Instantiated       bool     `json:"instantiated"`
 	Status             string   `json:"status"`
 	CheckerDiagnostics []string `json:"checker_diagnostics"`
@@ -217,7 +218,8 @@ var latentConcreteCallDepth int
 
 var latentUnitTimer *UnitTimer
 
-func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) LatentRelationReport {
+    relations := latentRelationReport(ctx, program)
     latentUnitTimer = nil
     if path := os.Getenv("LATENT_TIMES"); path != "" {
         output, err := os.Create(path)
@@ -229,6 +231,8 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
     latentConcreteCallDepth = 0
     records := []LatentFile{}
     latentRun(ctx, program, func(record LatentFile) { records = append(records, record) })
+    relations.End = latentReadRelationOverflow(ctx, program)
+    relations.finish(records)
     for _, record := range records {
         for index := range record.Units {
             unit := &record.Units[index]
@@ -238,6 +242,7 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
         }
         emit(record)
     }
+    return relations
 }
 
 func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)) {
@@ -340,6 +345,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 				}
 				latentRecord(l.unlowerable)
 			}()
+			latentCheckUnitRelation(program, checker, &unit)
 			record.Units = append(record.Units, unit)
 		}
 		release()

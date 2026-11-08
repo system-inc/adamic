@@ -1,0 +1,138 @@
+package lower
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
+	"reflect"
+	"strings"
+	"testing"
+)
+
+// Run with the census overlay. This calls the compiler in process, never via go
+// or an executable child. The mark is the production guard test's dropped-TS2859
+// shape. Only this test owns the sequential census globals in this invocation.
+func TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "main.a")
+	if err := os.WriteFile(path, []byte("const total: number = 1 + 2;\nconsole.log(String(total));\nfunction generic<T>(value: T): T { return value; }\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	ctx := context.Background()
+	program, err := load.LatentLoad([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	run := func() (LatentRelationReport, []LatentFile) {
+		records := []LatentFile{}
+		report := Latent(ctx, program, func(record LatentFile) { records = append(records, record) })
+		return report, records
+	}
+	control, records := run()
+	if control.AfterLoad != "" || control.End != "" || len(control.Findings) != 0 {
+		t.Fatalf("clean control: %+v", control)
+	}
+	for _, record := range records {
+		for _, unit := range record.Units {
+			if unit.Status == "attempted" && (unit.RelationOverflow == nil || *unit.RelationOverflow != "") {
+				t.Fatalf("missing empty unit answer: %+v", unit)
+			}
+		}
+	}
+	typeChecker, release := program.Checker(ctx, program.Files()[0])
+	defer release()
+	relation := reflect.ValueOf(typeChecker).Elem().FieldByName("assignableRelation")
+	if !relation.IsValid() || relation.IsNil() {
+		t.Fatal("assignable relation missing")
+	}
+	field := relation.Elem().FieldByName("results")
+	results := reflect.NewAt(field.Type(), field.Addr().UnsafePointer()).Elem()
+	if results.IsNil() {
+		results.Set(reflect.MakeMap(field.Type()))
+	}
+	mark := reflect.New(field.Type().Elem()).Elem()
+	mark.SetUint(1<<1 | 1<<5)
+	results.SetMapIndex(reflect.New(field.Type().Key()).Elem(), mark)
+	report, records := run()
+	if !strings.Contains(report.AfterLoad, "marked as overflowed") || report.End == "" || len(report.Findings) != 1 {
+		t.Fatalf("planted mark disappeared: %+v", report)
+	}
+	attempted := 0
+	for _, record := range records {
+		for _, unit := range record.Units {
+			if unit.Status == "deferred_generic_instantiation" {
+				if unit.RelationOverflow != nil {
+					t.Fatal("deferred unit was queried")
+				}
+				continue
+			}
+			attempted++
+			if unit.RelationOverflow == nil || *unit.RelationOverflow == "" {
+				t.Fatalf("unit missing overflow: %+v", unit)
+			}
+			found := false
+			for _, finding := range record.Findings {
+				if finding.Unit == unit.Where && finding.Phase == "relation_overflow" && finding.Kind == "NotYet" && strings.Contains(finding.Reason, "gave up on as too complex") {
+					found = true
+				}
+			}
+			if !found {
+				t.Fatalf("unit has no overflow finding: %+v", unit)
+			}
+		}
+	}
+	if attempted != 2 || report.FirstAffectedUnit == "" {
+		t.Fatalf("attempted=%d, report=%+v", attempted, report)
+	}
+	// Serialize the same program header and file rows as the measurement driver.
+	var output bytes.Buffer
+	encoder := json.NewEncoder(&output)
+	if err := encoder.Encode(map[string]any{"relation_overflow": report, "findings": report.Findings}); err != nil {
+		t.Fatal(err)
+	}
+	for _, record := range records {
+		if err := encoder.Encode(record); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if strings.Count(output.String(), `"kind":"NotYet"`) < 3 {
+		t.Fatalf("overflow findings lost from output: %s", output.String())
+	}
+	t.Logf("planted mark census JSONL:\n%s", output.String())
+}
+
+func TestLatentCensusOverflowAttributionKeepsEarlierUnitsClean(t *testing.T) {
+	t.Parallel()
+	clean, overflow := "", "planted overflow"
+	records := []LatentFile{{Units: []LatentUnit{
+		{Where: "earlier", RelationOverflow: &clean},
+		{Where: "exposing", RelationOverflow: &overflow},
+		{Where: "later", RelationOverflow: &overflow},
+		{Where: "deferred", Status: "deferred_generic_instantiation"},
+	}}}
+	report := LatentRelationReport{End: overflow}
+	report.finish(records)
+	if report.FirstAffectedUnit != "exposing" || len(report.Findings) != 1 || len(records[0].Findings) != 0 {
+		t.Fatalf("per-unit attribution lost: %+v %+v", report, records)
+	}
+	// No post-unit check saw a final out-of-unit query. The record must explicitly
+	// mark all attempts, retaining the exact NotYet reason, and say it is broad.
+	for index := range records[0].Units {
+		if records[0].Units[index].RelationOverflow != nil {
+			records[0].Units[index].RelationOverflow = &clean
+		}
+	}
+	report = LatentRelationReport{End: overflow}
+	report.finish(records)
+	if report.FirstAffectedUnit != "" || !strings.Contains(report.Attribution, "every attempted unit conservatively marked") || len(records[0].Findings) != 3 {
+		t.Fatalf("endpoint-only overflow silently narrowed: %+v %+v", report, records)
+	}
+	for _, finding := range records[0].Findings {
+		if finding.Phase != "relation_overflow_conservative_all_units" || finding.Kind != "NotYet" {
+			t.Fatalf("unlabelled broad attribution: %+v", finding)
+		}
+	}
+}

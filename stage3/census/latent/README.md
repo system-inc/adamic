@@ -311,3 +311,38 @@ process each side. It also records a failed single-file composition check: defer
 generic `instantiated` metadata is census-wide, so utilities-only and multi-file
 records differ even on unchanged main. Do not treat separate-process file records
 as interchangeable with multi-file records without accounting for that witness scope.
+
+## Checker relation overflow
+
+The program record includes `relation_overflow.after_load` and
+`relation_overflow.end`, including explicit empty strings. Every attempted unit
+has a `relation_overflow` string queried after lowering, including after a
+recovered panic. Skipped and deferred units omit it. A nonempty answer becomes a
+`NotYet` finding on the program and each affected attempted unit, using the exact
+production Lower wording. The first affected unit includes the attempt that
+exposed overflow. If only the final check sees overflow from an out-of-unit
+query, all attempts receive a finding with phase
+`relation_overflow_conservative_all_units`, and the program's `attribution`
+explains that the first affected unit is unknown.
+
+`LATENT_RELATION_TIMES=/path/to/relation-times.jsonl` records the wall cost and
+answer of every query separately from deterministic census output. The two
+`where: "program"` rows are the load and end observations, in that order.
+Unit rows use the unit's exact location. Compare checker.ts rows with
+`LATENT_TIMES` unit timings to measure per-unit scanning overhead.
+
+The overlay includes two in-process Go tests. Run them after generating the
+scratch overlay:
+
+```sh
+go test -count=1 -overlay=/tmp/latent-overlay/overlay.json ./internal/lower -run '^TestLatentCensusOverflow'
+```
+
+`TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt` plants the same
+failed/overflowed assignable-relation cache mark as production's
+`TestAnOverflowedRelationMakesLoweringNotYet`, without a TS2859 diagnostic. It
+checks program and unit findings and their serialized fields.
+`TestLatentCensusOverflowAttributionKeepsEarlierUnitsClean` checks the first
+exposing unit and conservative endpoint-only attribution. Neither test starts a
+compiler subprocess. `TestLatentRelationOverflowHooksAndProductionWording`
+guards the driver hooks and production wording on main's own source.
