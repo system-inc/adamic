@@ -1,0 +1,119 @@
+{
+  "tree": "/tmp/branded-A",
+  "checker": [
+    {
+      "requested_line": 4748,
+      "site": "/tmp/branded-A/src/compiler/checker.ts:4749:17",
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, or(isImportDeclaration, isJSDocImportTag, isExportDeclaration))"
+    },
+    {
+      "requested_line": 4767,
+      "site": "/tmp/branded-A/src/compiler/checker.ts:4768:21",
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, or(isImportEqualsDeclaration, isExportDeclaration))"
+    },
+    {
+      "requested_line": 4778,
+      "site": "/tmp/branded-A/src/compiler/checker.ts:4779:21",
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, or(isImportEqualsDeclaration, isExportDeclaration))"
+    },
+    {
+      "requested_line": 10911,
+      "site": "/tmp/branded-A/src/compiler/checker.ts:10912:29",
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:10810:13",
+      "owners": [
+        "createTypeChecker",
+        "createNodeBuilder",
+        "symbolTableToDeclarationStatements",
+        "makeSerializePropertySymbol"
+      ],
+      "text": "p.declarations?.find(or(isPropertyDeclaration, isVariableDeclaration))"
+    },
+    {
+      "requested_line": 48433,
+      "site": "/tmp/branded-A/src/compiler/checker.ts:48435:47",
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+      "owners": [
+        "createTypeChecker",
+        "checkAliasSymbol"
+      ],
+      "text": "findAncestor(node, or(isImportDeclaration, isImportEqualsDeclaration))"
+    },
+    {
+      "requested_line": 50073,
+      "site": "/tmp/branded-A/src/compiler/checker.ts:50075:29",
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "text": "findAncestor(name, or(isJSDocLinkLike, isJSDocNameReference, isJSDocMemberName))"
+    },
+    {
+      "requested_line": 50082,
+      "site": "/tmp/branded-A/src/compiler/checker.ts:50084:39",
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "text": "findAncestor(name, or(isClassLike, isInterfaceDeclaration))"
+    }
+  ],
+  "core": [
+    {
+      "name": "or",
+      "start": 88022,
+      "end": 88146,
+      "line": 2462,
+      "endLine": 2462,
+      "text": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "name": "or",
+      "start": 88166,
+      "end": 88334,
+      "line": 2464,
+      "endLine": 2464,
+      "text": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;"
+    },
+    {
+      "name": "or",
+      "start": 88372,
+      "end": 88488,
+      "line": 2467,
+      "endLine": 2467,
+      "text": "export function or<T extends unknown[], U>(...fs: [(...args: T) => U, ...((...args: T) => U)[]]): (...args: T) => U;"
+    },
+    {
+      "name": "or",
+      "start": 88508,
+      "end": 88612,
+      "line": 2469,
+      "endLine": 2469,
+      "text": "export function or<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined;"
+    },
+    {
+      "name": "or",
+      "start": 88632,
+      "end": 89005,
+      "line": 2471,
+      "endLine": 2482,
+      "text": "export function or<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined {\r\n    return (...args) => {\r\n        let lastResult: U | undefined;\r\n        for (const f of fs) {\r\n            lastResult = f(...args);\r\n            if (lastResult) {\r\n                return lastResult;\r\n            }\r\n        }\r\n        return lastResult;\r\n    };\r\n}"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_FULL",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "-u",
+    "LATENT_ONLY_FILE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/tmp/branded-report/stage3/census/branded-call-351fc63f/A-parent-core-units.jsonl",
+    "LATENT_FULL=1",
+    "LATENT_ONLY_FILE=/tmp/branded-A/src/compiler/core.ts",
+    "/tmp/branded-parent-core",
+    "/tmp/branded-A/src/compiler",
+    "/tmp/branded-report/stage3/census/branded-call-351fc63f/A-parent-core.jsonl"
+  ],
+  "cwd": "/tmp/branded-report",
+  "binary_sha256": "55ed3da85327f7c9980dc93f7896ede0444c82be0785b02e6d5752807a1bf011",
+  "exit": 0,
+  "wall_seconds": 31.073,
+  "stopped": null
+}

@@ -1,0 +1,133 @@
+{
+  "tree": "/tmp/branded-B",
+  "checker": [
+    {
+      "requested_line": 4748,
+      "site": "/tmp/branded-B/src/compiler/checker.ts:4751:17",
+      "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+      "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+      "observing_unit_name": "resolveExternalModule",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, orPredicate3(isImportDeclaration, isJSDocImportTag, isExportDeclaration))"
+    },
+    {
+      "requested_line": 4767,
+      "site": "/tmp/branded-B/src/compiler/checker.ts:4770:21",
+      "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+      "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+      "observing_unit_name": "resolveExternalModule",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, orPredicate2(isImportEqualsDeclaration, isExportDeclaration))"
+    },
+    {
+      "requested_line": 4778,
+      "site": "/tmp/branded-B/src/compiler/checker.ts:4781:21",
+      "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+      "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+      "observing_unit_name": "resolveExternalModule",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "text": "findAncestor(location, orPredicate2(isImportEqualsDeclaration, isExportDeclaration))"
+    },
+    {
+      "requested_line": 10911,
+      "site": "/tmp/branded-B/src/compiler/checker.ts:10914:29",
+      "unit": "/tmp/branded-B/src/compiler/checker.ts:10812:13",
+      "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+      "observing_unit_name": "symbolTableToDeclarationStatements",
+      "owners": [
+        "createTypeChecker",
+        "createNodeBuilder",
+        "symbolTableToDeclarationStatements",
+        "makeSerializePropertySymbol"
+      ],
+      "text": "p.declarations?.find(orPredicate2(isPropertyDeclaration, isVariableDeclaration))"
+    },
+    {
+      "requested_line": 48433,
+      "site": "/tmp/branded-B/src/compiler/checker.ts:48437:47",
+      "unit": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+      "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+      "observing_unit_name": "checkAliasSymbol",
+      "owners": [
+        "createTypeChecker",
+        "checkAliasSymbol"
+      ],
+      "text": "findAncestor(node, orPredicate2(isImportDeclaration, isImportEqualsDeclaration))"
+    },
+    {
+      "requested_line": 50073,
+      "site": "/tmp/branded-B/src/compiler/checker.ts:50077:29",
+      "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+      "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+      "observing_unit_name": "getSymbolOfNameOrPropertyAccessExpression",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "text": "findAncestor(name, orPredicate3(isJSDocLinkLike, isJSDocNameReference, isJSDocMemberName))"
+    },
+    {
+      "requested_line": 50082,
+      "site": "/tmp/branded-B/src/compiler/checker.ts:50086:39",
+      "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+      "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+      "observing_unit_name": "getSymbolOfNameOrPropertyAccessExpression",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "text": "findAncestor(name, orPredicate2(isClassLike, isInterfaceDeclaration))"
+    }
+  ],
+  "core": [
+    {
+      "name": "orPredicate2",
+      "start": 88022,
+      "end": 88193,
+      "line": 2462,
+      "endLine": 2464,
+      "text": "export function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 {\r\n    return p => f1(p) || f2(p);\r\n}"
+    },
+    {
+      "name": "orPredicate3",
+      "start": 88213,
+      "end": 88437,
+      "line": 2466,
+      "endLine": 2468,
+      "text": "export function orPredicate3<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3 {\r\n    return p => f1(p) || f2(p) || f3(p);\r\n}"
+    },
+    {
+      "name": "or",
+      "start": 88457,
+      "end": 88573,
+      "line": 2470,
+      "endLine": 2470,
+      "text": "export function or<T extends unknown[], U>(...fs: [(...args: T) => U, ...((...args: T) => U)[]]): (...args: T) => U;"
+    },
+    {
+      "name": "or",
+      "start": 88593,
+      "end": 88697,
+      "line": 2472,
+      "endLine": 2472,
+      "text": "export function or<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined;"
+    },
+    {
+      "name": "or",
+      "start": 88717,
+      "end": 89090,
+      "line": 2474,
+      "endLine": 2485,
+      "text": "export function or<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined {\r\n    return (...args) => {\r\n        let lastResult: U | undefined;\r\n        for (const f of fs) {\r\n            lastResult = f(...args);\r\n            if (lastResult) {\r\n                return lastResult;\r\n            }\r\n        }\r\n        return lastResult;\r\n    };\r\n}"
+    }
+  ]
+}
