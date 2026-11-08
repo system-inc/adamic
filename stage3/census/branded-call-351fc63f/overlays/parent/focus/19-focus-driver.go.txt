@@ -1,0 +1,38 @@
+// Measurement-only inventory using the existing full-census replay selector.
+package main
+
+import (
+ "context"
+ "encoding/json"
+ "flag"
+ "fmt"
+ "os"
+ "strings"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+)
+
+func main() {
+ project:=flag.String("project","","entry program")
+ where:=flag.String("where","","site selecting its smallest full-census unit")
+ output:=flag.String("output","","JSONL inventory")
+ flag.Parse()
+ if *project=="" || *where=="" || *output=="" { panic("project, where and output required") }
+ if os.Getenv("LATENT_ASSERT_NO_OUTPUT")!="1" || os.Getenv("LATENT_FULL")!="1" {panic("full mode and guards required")}
+ paths:=[]string{*project}
+ program,err:=load.LatentLoad(paths);if err!=nil {panic(err)}
+ ir,failure:=lower.Lower(context.Background(),program)
+ if ir!=nil || failure==nil || failure.Error()!="latent census: measurement only; no IR output" {panic("IR guard failed")}
+ exposed,failure:=load.Load(paths);if exposed!=nil || failure==nil {panic("loader guard failed")}
+ program.LatentEntryReach()
+ // LatentReplay exposes the complete selected-unit record even when a requested
+ // signature is absent. Use a reserved non-signature to inventory both sides.
+ record,failure:=lower.LatentReplay(context.Background(),program,*where,"NotYet","__inventory_no_signature_assertion__")
+ if failure==nil || !strings.HasPrefix(failure.Error(),"replay signature did not reproduce:") {panic(fmt.Sprint(failure))}
+ if len(record.Units)!=1 {panic(fmt.Sprintf("want one selected unit, got %d",len(record.Units)))}
+ stream,err:=os.Create(*output);if err!=nil {panic(err)};defer stream.Close()
+ enc:=json.NewEncoder(stream)
+ if err=enc.Encode(map[string]any{"status":"measurement","scope":"focused-full-unit","roots":paths,"selector":*where,"diagnostics":program.LatentDiagnostics(),"diagnostic_sites":program.LatentDiagnosticSites()});err!=nil {panic(err)}
+ if err=enc.Encode(record);err!=nil {panic(err)}
+ fmt.Fprintf(os.Stderr,"selected %s %s; findings %d\n",record.Units[0].Where,record.Units[0].Name,len(record.Findings))
+}
