@@ -49,10 +49,10 @@ no new sites, and all 16 union-with-void sites remain identical. Every other
 
 Both full-file transpileModule comparisons pass:
 
-| Comments | Emitted bytes | Before and after SHA-256 |
-|---|---:|---|
-| retained | 2,892,419 | 786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e |
-| removed | 2,354,716 | 3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac |
+| Comments | Emitted bytes | Before and after SHA-256                                         |
+| -------- | ------------: | ---------------------------------------------------------------- |
+| retained |     2,892,419 | 786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e |
+| removed  |     2,354,716 | 3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac |
 
 Idempotence passes: a second adapter run writes zero files and preserves the
 checker source bytes. The independent compiler-project check records **171 ->
@@ -97,12 +97,12 @@ cgroup cpu.max is 400000 100000 (four CPUs). There is no setup failure or retry.
 
 ## Mutants
 
-| Mutant | Result |
-|---|---|
-| Drop the boolean rewrite | Caught: exact original 491-site census restored, including only the removed forwarding read at checker.ts:23401:28. |
-| Add one void initializer read | Caught: one extra site at checker.ts:54437:28, marker78VoidMutant(). |
-| Append runtime console.log to checker.ts | Caught: full-file emitted bytes differ, with comments both retained and removed. |
-| Change the reviewed producer's true assignment to false | Caught: adapter rejects writer drift before writing. This is a conservative source-provenance guard. |
+| Mutant                                                  | Result                                                                                                              |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Drop the boolean rewrite                                | Caught: exact original 491-site census restored, including only the removed forwarding read at checker.ts:23401:28. |
+| Add one void initializer read                           | Caught: one extra site at checker.ts:54437:28, marker78VoidMutant().                                                |
+| Append runtime console.log to checker.ts                | Caught: full-file emitted bytes differ, with comments both retained and removed.                                    |
+| Change the reviewed producer's true assignment to false | Caught: adapter rejects writer drift before writing. This is a conservative source-provenance guard.                |
 
 The mutant runner restores the source in finally blocks and checks its final
 bytes. Every listed mutant is actually run; results are in proofs/results.json.
