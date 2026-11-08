@@ -160,8 +160,10 @@ run(or);
 }
 
 func TestRestPackOnACycleIsAGraphAllocation(t *testing.T) {
+	t.Parallel()
 	for name, source := range restPackPaths {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			program := graphCompilerWitness(t, source, nil)
 			if len(program.RestGraphTypes) == 0 || len(program.GraphTypes) == 0 {
 				t.Fatalf("%s: no rest pack plan (rest %v, graph %v)", name, program.RestGraphTypes, program.GraphTypes)
@@ -173,8 +175,10 @@ func TestRestPackOnACycleIsAGraphAllocation(t *testing.T) {
 // The plan is what frees each region: without it, every path's pack is counted again and
 // LeakSanitizer reports the region.
 func TestRestPackWithoutItsPlanLeaks(t *testing.T) {
+	t.Parallel()
 	for name, source := range restPackPaths {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			directory := t.TempDir()
 			path := filepath.Join(directory, "main.a")
 			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
@@ -216,6 +220,7 @@ func TestRestPackWithoutItsPlanLeaks(t *testing.T) {
 // graph program too, and its packs are planned in. An or of an or, packed into a region and
 // freed with it, still prints what Node prints and leaks nothing.
 func TestRestPackOffACycleLeaksNothing(t *testing.T) {
+	t.Parallel()
 	graphCompilerWitness(t, restPackOr+`function isBig(n: number): boolean {
 	return n > 10;
 }
