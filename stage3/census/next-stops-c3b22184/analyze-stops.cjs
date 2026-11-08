@@ -9,10 +9,10 @@ const excerpts=[],constructs=[],comparison=[];for(const g of groups.values()){
  if(g.kind!=='accepted'){
   const m=g.where.match(/^(.*):(\d+):(\d+)$/);if(!m)throw Error(g.where);const file=path.join(base,m[1]),source=fs.readFileSync(file,'utf8'),lines=source.split('\n'),sf=ts.createSourceFile(file,source,ts.ScriptTarget.Latest,true);
   const pos=sf.getPositionOfLineAndCharacter(+m[2]-1,+m[3]-1),nodes=[],functions=[];function visit(n){if(n.getStart(sf)<=pos&&pos<n.end){nodes.push(n);if(ts.isFunctionLike(n))functions.push(n);ts.forEachChild(n,visit);}}visit(sf);
-  const scope=functions.at(-1),names=functions.map(n=>n.name?.getText(sf)).filter(Boolean),owner=names.at(-1)||null;
+  const scope=functions.at(-1),names=functions.map(n=>n.name?.getText(sf)).filter(Boolean),owner=(scope&&ts.isConstructorDeclaration(scope)?(scope.parent.name?.getText(sf)||'class')+'.constructor':names.at(-1))||null;
   const cast=[...nodes].reverse().find(n=>ts.isAsExpression(n)||ts.isTypeAssertionExpression(n));
   const expression=cast||[...nodes].reverse().find(n=>ts.isAsExpression(n)||ts.isTypeAssertionExpression(n)||ts.isPropertyAccessExpression(n)||ts.isCallExpression(n)||ts.isBinaryExpression(n)||ts.isFunctionDeclaration(n));
-  const site=expression?.getText(sf)||nodes.at(-1)?.getText(sf)||lines[+m[2]-1];construct=(owner?owner+': ':'')+site.replace(/\s+/g,' ').slice(0,450);
+  const site=expression?.getText(sf)||nodes.at(-1)?.getText(sf)||lines[+m[2]-1];construct=(owner?owner+': ':'')+(cast?cast.getText(sf):lines[+m[2]-1].trim()).replace(/\s+/g,' ').slice(0,450);
   const sourceLine=lines[+m[2]-1];
   if(m[1]==='debug.ts'&&sourceLine.includes('Object.create(Object.prototype) as FlowNode'))forecast='debug.ts:537 cast';
   else if(m[1]==='debug.ts'&&sourceLine.includes('Object.create(Array.prototype) as NodeArray<Node>'))forecast='debug.ts:577 cast';
@@ -27,7 +27,9 @@ const excerpts=[],constructs=[],comparison=[];for(const g of groups.values()){
   record={where:g.where,kind:g.kind,reason:g.reason,file,name:m[1].replaceAll('/','_')+'-'+m[2]+'-'+m[3]+'.txt',scope_name:owner,scope_names:names,scope_start:start,scope_end:end,whole_function:whole,text,site_text:site,source_line:sourceLine,construct};
   constructs.push(record);
  }
+ if(g.reason.startsWith('the host binding process,'))construct='ambient process host binding declaration: '+record.source_line.trim();
  g.forecast=forecast||(g.kind==='accepted'?'not applicable, lowers whole':'none, new');g.new_group=!forecast&&g.kind!=='accepted';g.construct=construct;g.count=g.roots.length;
+ if(record)record.construct=construct;
  if(g.new_group){excerpts.push(record);fs.writeFileSync(path.join(out,record.name),record.text+'\n');}
  g.unchanged=0;g.moved=0;
  for(const root of g.roots){if(!old.has(root))throw Error('root absent from baseline '+root);const current=[g.where,g.kind,g.reason],unchanged=JSON.stringify(old.get(root))===JSON.stringify(current);g[unchanged?'unchanged':'moved']++;comparison.push({root,previous:old.get(root),current,change:unchanged?'unchanged':'moved',forecast:g.forecast,construct});}

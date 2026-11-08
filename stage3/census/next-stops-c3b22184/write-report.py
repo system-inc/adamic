@@ -43,7 +43,7 @@ lines+=['','## Every group outside the forecasts: source and lowering decision',
 emitters={e['where']:e for e in read('new-stop-emitters.json')}
 for row in read('source-excerpts.json'):
  e=emitters[row['where']]
- lines+=['### '+row['where'],'','Construct: '+safe(row['construct'])+'.','', 'Exact reason: '+safe(row['reason'])+'.','',
+ lines+=['### '+row['where'],'','Construct: '+safe(row['construct'])+'.','', 'Exact reason: `'+safe(row['reason'])+'`.','',
  'Exact source excerpt: `'+row['name']+'`, '+('whole enclosing function' if row['whole_function'] else 'lines around the stop')+'. Display line endings are normalized; the text file retains the extracted bytes.','',
  '```ts',row['text'].replace('\r\n','\n').replace('\r',''),'```','',
  f"Emitter: `{e['file']}:{e['line']}`, `{e['function']}` (function starts at line {e['function_line']}). Caller: `{e.get('caller_file',e['file'])}:{e['caller_line']}`, `{e['caller']}`. "+e['note'],'']
