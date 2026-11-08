@@ -54,12 +54,6 @@ interface Handler {
 const h: Handler = new DogHandler();
 console.log(h.handle(new Cat()));
 `},
-		{"a host method a view makes generic", `const p: { chdir<T>(directory: string | number): void } = process;
-p.chdir(5);
-`},
-		{"a host method a view makes generic, exit", `const p: { exit<T>(code?: number | string | null | boolean): void } = process;
-p.exit(true);
-`},
 		{"one class's generic method under two type arguments", `class Box<E> { put<T>(x: E): string { return "kept"; } }
 const dogs: Box<Dog> = new Box<Dog>();
 const animals: Box<Animal> = dogs;
@@ -102,6 +96,36 @@ console.log(h.handle(new Dog()));
 				t.Parallel()
 				if _, err := lowerSourceAs(t, genericMethodAnimals+row.source, extension); err != nil {
 					t.Fatal(err)
+				}
+			})
+		}
+	}
+}
+
+// A host method that isn't generic, seen through a view that makes it so, isn't the host's own generic
+// method, so it stops as a program's does rather than taking the host exemption (Runtime's must on #q6gs98r):
+// without the view's <T>, the wider parameter is refused at widenedParameters.
+func TestAHostMethodAViewMakesGenericIsNotYet(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, source string }{
+		{"chdir", `import process from 'node:process';
+const p: { chdir<T>(directory: string | number): void } = process;
+p.chdir(5);
+`},
+		{"exit", `import process from 'node:process';
+const p: { exit<T>(code?: number | string | null | boolean): void } = process;
+p.exit(true);
+`},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, row.source, extension)
+				if err == nil {
+					t.Fatal("lowered, but the host is handed a parameter wider than its own")
+				}
+				if !strings.Contains(err.Error(), "stage 0 can't lower a generic method "+row.name+" ") {
+					t.Fatalf("got %q, want the generic method %s named as NotYet", err, row.name)
 				}
 			})
 		}
