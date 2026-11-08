@@ -14,7 +14,8 @@ JavaScript and original Node print before and after: nn, exiting 0. No reference
 counting is added to JavaScript.
 Unknown fixture names use the existing byte-exact comparison. Mutating any listed
 outcome's exit, stdout or stderr remains an error, independently for both backends.
-The list and comparison helper live in internal/oracle/backend_divergences_test.go.
+The list lives in internal/oracle/testdata/backend_divergences.json, and its loader and
+comparison helper in internal/oracle/backend_divergences_test.go.
 The only edit to oracle_test.go is the checked-fixture comparison call: that central
 call is the necessary hook; the list and its tests are kept outside the protected file.
 

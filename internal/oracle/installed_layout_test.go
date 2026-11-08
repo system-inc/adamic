@@ -9,8 +9,8 @@ import (
 
 // installed-layout's answer is measured, not remembered: tsc 6.0.3's require("source-map-support"),
 // from lib/_tsc.js in a typescript package with nothing installed beside it, run on the Node the
-// oracle runs. The error's name, code and first line are the constants native's rows are pinned from
-// (backend_divergences_test.go), so this fails if Node's answer ever changes. The rest is the
+// oracle runs. The error's name, code and first line are the constants native's rows are held to
+// (testdata/backend_divergences.json), so this fails if Node's answer ever changes. The rest is the
 // declared difference: a Require stack tail and a requireStack naming the requiring file.
 func TestInstalledLayoutIsNodes(t *testing.T) {
 	t.Parallel()
