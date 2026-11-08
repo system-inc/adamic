@@ -18,14 +18,22 @@ import (
 // typeArgumentBindings finds is judged by one rule set (judgeBinding), the registry's relation rules for
 // a value seen as a type: invariance (widened), the hiding rule and nominal ancestry, whichever road
 // bound it, so an inferred binding and its written twin judge the same thing:
-//   - Inferred from an argument: the argument is judged against its parameter's type with the type
-//     parameter replaced by its constraint, every other bound as the call binds it, as that value, so a
-//     fresh literal stays fresh and a refusal names the part of the argument it's about. An argument tsc
-//     wouldn't take into that slot holds the type parameter where it's taken in, not given out, and isn't
-//     judged there.
-//   - Written (read<X>(x), new Box<X>(), extends Box<X>), defaulted, or inferred from no argument (the
-//     result's slot): the type argument is judged against the constraint, at the type argument written,
-//     or at the site.
+//   - Inferred from an argument whose parameter is the type parameter itself, or it joined with undefined
+//     or null (read<T extends Options>(options: T)): the argument is the bound value, judged against the
+//     constraint, every other type parameter as the call binds it, as that value, so a fresh literal stays
+//     fresh and a refusal names the part of the argument it's about. An argument tsc wouldn't take into
+//     the constraint holds the type parameter where it's taken in, not given out, and isn't judged there.
+//   - Inferred from an argument where the type parameter is nested in its parameter's type (to: T[],
+//     make: () => T), or from no argument (the result's slot): the binding is judged against the
+//     constraint once, as itself, at the site (#c4vhbep). The argument isn't judged against its parameter
+//     with the constraint put in for the type parameter, a slot no call makes: combine<T extends {}>'s
+//     append(xs, ys) puts a T[] where append's T[] is combine's T[], and the substitution saw it as {}[],
+//     a wall where nothing is widened. The argument against its parameter at the resolved binding is the
+//     argument site's, which refuseWidening judges as it does any slot's (add(dogs, new Animal()), T
+//     inferred as Animal, is Dog[] seen as Animal[] there), and what the body does through a T is reached
+//     through the constraint, which judging the binding covers.
+//   - Written (read<X>(x), new Box<X>(), extends Box<X>) or defaulted: the type argument is judged against
+//     the constraint, at the type argument written, or at the site.
 //   - A binding that can't be read is not yet, failing closed.
 // A binding makes no slot and no view, since the body is lowered per instantiation, so the registry's
 // representation stops (recordStorageView's storage gap) don't run at one. Declared keys at a binding are
@@ -78,9 +86,11 @@ func (l *lowering) constraintRelation(binding typeArgumentBinding) error {
 	return l.judgeBinding(binding.site, nil, binding.argument, binding.constraint)
 }
 
-// boundArgumentsRefusal judges each argument a call's or a new's binding can be inferred from: one
-// whose parameter's type, with the binding's type parameter as its constraint, is another slot than
-// the one the call gives it. judged is whether there was one.
+// boundArgumentsRefusal judges each argument a call's or a new's binding can be inferred from whose
+// parameter is the binding's type parameter itself, or it joined with undefined or null, as that value
+// against the constraint. judged is whether those arguments are all the binding is inferred from, so it
+// needn't be judged as itself: an argument where the type parameter is nested leaves the binding to be
+// judged against the constraint as itself, once (constraintRelation).
 func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bool, err error) {
 	if binding.generic == nil || binding.site.Kind != ast.KindCallExpression && binding.site.Kind != ast.KindNewExpression {
 		return false, nil
@@ -95,6 +105,7 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 	}
 	asConstraint := newTypeMapper(typeParameters, bound)
 	parameters := binding.generic.Parameters()
+	nested := false
 	for index, argument := range binding.site.Arguments() {
 		at := index
 		rest := binding.generic.HasRestParameter() && at >= len(parameters)-1
@@ -112,11 +123,13 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 		if argument.Kind == ast.KindSpreadElement {
 			return true, l.notYet(argument, "a spread argument "+l.checker.TypeToString(binding.parameter)+"'s type argument can be inferred from, judged against its constraint "+l.checker.TypeToString(binding.constraint))
 		}
+		// place is the argument's own parameter type as declared: a rest parameter's element.
+		place := declared
 		if rest {
 			if !l.isArrayType(slot) {
 				return true, l.notYet(argument, "an argument to a rest parameter that isn't an array, which "+l.checker.TypeToString(binding.parameter)+"'s type argument can be inferred from, judged against its constraint "+l.checker.TypeToString(binding.constraint))
 			}
-			slot = l.elementTypeOfArray(slot)
+			slot, place = l.elementTypeOfArray(slot), l.elementTypeOfArray(declared)
 		}
 		// Only a slot tsc's relation takes the argument into is one the relation rules can judge it in,
 		// as they judge only what tsc accepted. One it doesn't is a place the type parameter is taken in,
@@ -125,12 +138,37 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 		if !l.checker.IsTypeAssignableTo(regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(argument)), slot) {
 			continue
 		}
+		if !boundItself(place, binding.parameter) {
+			nested = true
+			continue
+		}
 		judged = true
 		if err := l.judgeBinding(argument, argument, l.checker.GetTypeAtLocation(argument), slot); err != nil {
 			return true, err
 		}
 	}
-	return judged, nil
+	return judged && !nested, nil
+}
+
+// boundItself is whether a parameter's declared type is the type parameter itself, or it joined with
+// undefined or null, so the argument is the value the type parameter is bound to.
+func boundItself(declared, parameter *checker.Type) bool {
+	if declared == parameter {
+		return true
+	}
+	if declared == nil || declared.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	found := false
+	for _, member := range declared.Types() {
+		switch {
+		case member == parameter:
+			found = true
+		case member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) == 0:
+			return false
+		}
+	}
+	return found
 }
 
 // judgeBinding judges a binding as source seen as target, at where, by the registry's relation rules for
