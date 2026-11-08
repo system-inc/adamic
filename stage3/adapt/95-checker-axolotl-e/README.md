@@ -74,10 +74,10 @@ The independent source verifier compares **746 files under src**. Exactly
 one changes. CRLF counts stay **10,681**. Complete stock types.ts JavaScript
 is byte-identical, with comments retained and removed:
 
-| Comments | Bytes | SHA-256 before and after |
-| --- | ---: | --- |
+| Comments |   Bytes | SHA-256 before and after                                           |
+| -------- | ------: | ------------------------------------------------------------------ |
 | Retained | 139,659 | `4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3` |
-| Removed | 121,398 | `f041d720cfda4ccb137ffc32198ec3d2fce46dbf13404df737dc637e21290639` |
+| Removed  | 121,398 | `f041d720cfda4ccb137ffc32198ec3d2fce46dbf13404df737dc637e21290639` |
 
 A second run reports `files: 0, declarations: 0`; `--check` passes without
 writing. Setup was already completed for 95c: Node 0.023s, Go 0.031s, clang
