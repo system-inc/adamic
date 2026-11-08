@@ -636,3 +636,74 @@ func (l *lowering) nodeProcessGuardedStdoutUse(node *ast.Node) bool {
 	}
 	return l.processPath(outer) == "process.stdout._handle"
 }
+
+// stdoutHandleSetBlockingValue is the stop's words for setBlocking read off stdout's handle as a value.
+const stdoutHandleSetBlockingValue = "a read of process.stdout._handle's setBlocking as a value (Node's needs the handle as its receiver, and a detached call throws)"
+
+// stdoutHandleOrigin says whether node's value came from process.stdout._handle, judged by where it
+// came from and never by the view type a program declares for it. It follows parentheses, as,
+// satisfies and a non-null !, and a const whose one declaration names it and whose initializer is
+// one of those. A let, a var, a parameter, a field, a destructured binding or a call's result isn't
+// followed, so a setBlocking read off one of those stays as it was.
+func (l *lowering) stdoutHandleOrigin(node *ast.Node, depth int) bool {
+	if node == nil || depth > 32 {
+		return false
+	}
+	node = ast.SkipOuterExpressions(node, ast.OEKParentheses|ast.OEKAssertions)
+	if ast.IsIdentifier(node) {
+		symbol := l.symbol(node)
+		if symbol != nil && len(symbol.Declarations) == 1 {
+			declaration := symbol.Declarations[0]
+			if declaration.Kind == ast.KindVariableDeclaration && ast.IsIdentifier(declaration.Name()) && declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+				return l.stdoutHandleOrigin(declaration.Initializer(), depth+1)
+			}
+		}
+	}
+	return l.processPath(node) == "process.stdout._handle"
+}
+
+// stdoutHandleSetBlockingRefusal stops a read of setBlocking off stdout's handle anywhere but a
+// call's callee, a truthiness test or a typeof (#5abf5v8). Node's handle is a Pipe or a TTY whose
+// setBlocking is its prototype's and needs the handle as its receiver, so a detached call throws
+// TypeError: Illegal invocation. Both backends' handle holds a closure that ignores its receiver
+// and would block silently. A typeof reads the value without calling it, as node_process_terminal.a
+// does. A write or a delete isn't a read and stays as it was.
+func (l *lowering) stdoutHandleSetBlockingRefusal(node *ast.Node) error {
+	switch node.Kind {
+	case ast.KindPropertyAccessExpression:
+		if node.Name().Text() != "setBlocking" || !l.stdoutHandleOrigin(node.AsPropertyAccessExpression().Expression, 0) {
+			return nil
+		}
+	case ast.KindElementAccessExpression:
+		argument := node.AsElementAccessExpression().ArgumentExpression
+		if !ast.IsStringLiteralLike(argument) || argument.Text() != "setBlocking" || !l.stdoutHandleOrigin(node.AsElementAccessExpression().Expression, 0) {
+			return nil
+		}
+	case ast.KindBindingElement:
+		// const { setBlocking } = handle binds the bare function.
+		element := node.AsBindingElement()
+		pattern := node.Parent
+		if element.DotDotDotToken != nil || pattern == nil || pattern.Kind != ast.KindObjectBindingPattern || pattern.Parent == nil || pattern.Parent.Kind != ast.KindVariableDeclaration {
+			return nil
+		}
+		name := node.PropertyNameOrName()
+		if !(ast.IsIdentifier(name) || ast.IsStringLiteralLike(name)) || name.Text() != "setBlocking" || !l.stdoutHandleOrigin(pattern.Parent.Initializer(), 0) {
+			return nil
+		}
+		return l.notYet(node, stdoutHandleSetBlockingValue)
+	default:
+		return nil
+	}
+	outer := realpathParent(node)
+	if called(node) || truthinessOperand(node) || ast.IsAssignmentTarget(outer) {
+		return nil
+	}
+	if outer.Parent != nil && (outer.Parent.Kind == ast.KindTypeOfExpression || outer.Parent.Kind == ast.KindDeleteExpression) {
+		return nil
+	}
+	return l.notYet(node, stdoutHandleSetBlockingValue)
+}
+
+func init() {
+	refusalRules.register(850, "stdoutHandleSetBlockingRefusal", (*lowering).stdoutHandleSetBlockingRefusal)
+}

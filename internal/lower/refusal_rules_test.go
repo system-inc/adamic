@@ -32,6 +32,9 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"600 enumerationIndexedWriteRefusal",
 		"700 enumerationDescriptorRefusal",
 		"800 nodeLibraryRefusal",
+		// stdoutHandleSetBlockingRefusal names setBlocking read off stdout's handle as a value before a
+		// later rule could call that read something else (#5abf5v8).
+		"850 stdoutHandleSetBlockingRefusal",
 		"900 detachedOwnRefusal",
 		"1000 recordDivergenceRefusal",
 		"1100 recordLiteralRead",
