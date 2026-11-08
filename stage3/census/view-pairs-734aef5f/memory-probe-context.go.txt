@@ -1,0 +1,133 @@
+package lower
+
+// Throwaway probe for #ztpcwrr's slice 1, never to land. With ADAMIC_VIEW_PAIRS_LOG set to a file,
+// each lowering appends one JSON line per view pair the finder would have to relate: each
+// viewSources entry's source and target, and, recursively, each same-named field the view checks
+// (its target field's type against its source field's). A pair records whether deriveRelated
+// already relates it, so the count of unrelated pairs says how many links slice 1 would add.
+
+import (
+	"encoding/json"
+	"os"
+	"sync"
+ "fmt"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/system-inc/adamic/internal/ir"
+
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+var viewPairsLock sync.Mutex
+
+type viewPairRecord struct {
+ Unit string `json:"unit"`
+ File string `json:"file"`
+ Path []string `json:"path"`
+ SourceIntersection bool `json:"source_intersection"`
+ ObjectPair bool `json:"object_pair"`
+ TargetIntersection bool `json:"target_intersection"`
+ IntersectionRelated bool `json:"intersection_related"`
+ SourceNil bool `json:"source_nil"`
+ TargetNil bool `json:"target_nil"`
+ TargetReferenceFields []string `json:"target_reference_fields,omitempty"`
+ TargetObjectReferenceFields []string `json:"target_object_reference_fields,omitempty"`
+ TargetUnknownFields []string `json:"target_unknown_fields,omitempty"`
+
+	Program string `json:"program"`
+	Depth   int    `json:"depth"`
+	Source  string `json:"source"`
+	Target  string `json:"target"`
+	Field   string `json:"field,omitempty"`
+	Related bool   `json:"related"`
+	Cast    bool   `json:"cast"`
+	Narrows bool   `json:"narrows"`
+	Skipped string `json:"skipped,omitempty"`
+}
+
+func (f *cycleFinder) logViewPairs() {
+	path := os.Getenv("ADAMIC_VIEW_PAIRS_LOG")
+	if path == "" || len(f.l.viewSources) == 0 {
+		return
+	}
+	name := ""
+	if files := f.l.program.Files(); len(files) != 0 {
+		name = string(files[0].FileName())
+	}
+	records := []viewPairRecord{}
+	seen := map[[2]*checker.Type]bool{}
+	var pair func(source, target *checker.Type, field string, path []string, depth int, cast, narrows bool)
+	pair = func(source, target *checker.Type, field string, path []string, depth int, cast, narrows bool) {
+		if source == nil || target == nil {
+			record:=viewPairRecord{Unit:viewPairsUnit,File:viewPairsFile,Path:path,Program:name,Depth:depth,Field:field,Cast:cast,Narrows:narrows,Skipped:"no source",SourceNil:source==nil,TargetNil:target==nil}
+   if source!=nil { record.Source=f.l.checker.TypeToString(f.l.concrete(source)) }
+   if target!=nil {
+    target=f.l.concrete(target);record.Target=f.l.checker.TypeToString(target)
+    record.TargetIntersection=target.Flags()&checker.TypeFlagsIntersection!=0
+    for _,field:=range f.fields(f.l.checker.GetNonNullableType(target)) {
+     held,known:=viewPairsRepresentation(f.l,f.l.checker.GetTypeOfSymbol(field))
+     if !known {record.TargetUnknownFields=append(record.TargetUnknownFields,field.Name);continue}
+     if held.IsReference(){ record.TargetReferenceFields=append(record.TargetReferenceFields,field.Name) }
+     if held.IsReference()&&held!=ir.String&&held!=ir.Weak {record.TargetObjectReferenceFields=append(record.TargetObjectReferenceFields,field.Name)}
+    }
+   }
+   records=append(records,record)
+			return
+		}
+		source, target = f.l.concrete(source), f.l.concrete(target)
+		key := [2]*checker.Type{source, target}
+		if seen[key] {viewPairsDedup++;return};if depth>6{viewPairsDepth++;return}
+		seen[key] = true
+		record := viewPairRecord{Unit:viewPairsUnit,File:viewPairsFile,Path:path,SourceIntersection:source.Flags()&checker.TypeFlagsIntersection!=0,ObjectPair:target.Flags()&checker.TypeFlagsIntersection!=0 || source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion|checker.TypeFlagsIntersection)!=0 && target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion|checker.TypeFlagsIntersection)!=0,TargetIntersection:target.Flags()&checker.TypeFlagsIntersection!=0,Program: name, Depth: depth, Source: f.l.checker.TypeToString(source), Target: f.l.checker.TypeToString(target), Field: field, Cast: cast, Narrows: narrows}
+		if record.TargetIntersection || record.SourceIntersection {record.IntersectionRelated=f.deriveRelated(source,target)}
+  switch {
+		case source.Flags()&checker.TypeFlagsObject == 0 && source.Flags()&checker.TypeFlagsUnion == 0:
+			record.Skipped = "source not an object"
+		case target.Flags()&checker.TypeFlagsObject == 0 && target.Flags()&checker.TypeFlagsUnion == 0:
+			record.Skipped = "target not an object"
+		default:
+			record.Related = f.deriveRelated(source, target)
+		}
+		records = append(records, record)
+		if record.Skipped != "" {
+			return
+		}
+		sourceNonNull, targetNonNull := f.l.checker.GetNonNullableType(source), f.l.checker.GetNonNullableType(target)
+		for _, property := range f.fields(targetNonNull) {
+			counterpart := f.l.checker.GetPropertyOfType(sourceNonNull, property.Name)
+			if counterpart == nil {
+				continue
+			}
+			pair(f.l.checker.GetTypeOfSymbol(counterpart), f.l.checker.GetTypeOfSymbol(property), property.Name,append(append([]string{},path...),property.Name),depth+1,cast,narrows)
+		}
+	}
+	for _, view := range f.l.viewSources {
+		pair(view.source,view.target,"",nil,0,view.cast,view.narrows)
+	}
+	viewPairsLock.Lock()
+	defer viewPairsLock.Unlock()
+	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
+	if err != nil {panic(err)}
+	defer file.Close()
+	encoder := json.NewEncoder(file)
+	for _, record := range records {
+		if err:=encoder.Encode(record);err!=nil{panic(err)};viewPairsLogged++
+	}
+}
+
+var viewPairsUnit,viewPairsFile string
+var viewPairsLogged,viewPairsDedup,viewPairsDepth int
+func viewPairsRepresentation(l *lowering,t *checker.Type)(held ir.Type,known bool){
+ defer func(){if recover()!=nil{held=0;known=false}}()
+ return l.representation(t)
+}
+func (l *lowering) latentViewPairs(unit,file string,full,stopped bool){
+ if os.Getenv("ADAMIC_VIEW_PAIRS_LOG")==""{return}
+ viewPairsUnit,viewPairsFile=unit,file;viewPairsLogged,viewPairsDedup,viewPairsDepth=0,0,0
+ initialViews:=len(l.viewSources);failure:=""
+ func(){defer func(){if x:=recover();x!=nil{failure=fmt.Sprint(x)}}();f:=&cycleFinder{l:l,where:map[*checker.Type]*ast.Node{}};f.logViewPairs()}()
+ if len(l.viewSources)!=initialViews{failure="probe query changed viewSources"}
+ out,err:=os.OpenFile(os.Getenv("ADAMIC_VIEW_PAIRS_UNITS"),os.O_APPEND|os.O_CREATE|os.O_WRONLY,0600);if err!=nil{panic(err)}
+ status:="lowered";if stopped{status="stopped"}
+ row:=map[string]any{"unit":unit,"file":file,"full_mode":full,"status":status,"view_sources":initialViews,"pairs_logged":viewPairsLogged,"dedup_skipped":viewPairsDedup,"depth_skipped":viewPairsDepth,"probe_error":failure,"graph_types_count":len(l.result.GraphTypes)}
+ if err=json.NewEncoder(out).Encode(row);err!=nil{panic(err)};if err=out.Close();err!=nil{panic(err)}
+}
