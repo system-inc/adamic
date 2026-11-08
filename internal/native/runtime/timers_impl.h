@@ -117,8 +117,11 @@ static const adamic_shape timeout_shape = {1, timeout_names, timeout_references,
 adamic_object *adamic_node_set_timeout(adamic_closure *callback, adamic_timer_invoke invoke,
     double delay_ms, size_t argc, const adamic_value *arguments, const bool *references) {
     adamic_timer_handle handle = adamic_timer_start(&timer_provider, callback, invoke, delay_ms, false, argc, arguments, references);
-    /* The slot holds the identity as a double, exact through 2^53. */
+    /* The slot holds the identity as a double, exact through 2^53. A uintptr_t narrower than that
+     * (wasm32's 32 bits) can't pass it, and the comparison would be one -Werror refuses as always false. */
+#if UINTPTR_MAX > 9007199254740991u
     if (handle.identity > 9007199254740991u) adamic_invariant("setTimeout: a timer identity past 2^53");
+#endif
     adamic_object *timeout = adamic_object_new(&timeout_shape);
     timeout->slots[0].number = (double)handle.identity;
     return timeout;
