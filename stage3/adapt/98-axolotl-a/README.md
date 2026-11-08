@@ -32,9 +32,9 @@ es2017.ts:
   with `declarations.some`. The read is dereferenced in place (`.name`), so an
   absent declaration already throws on Node.
 - `node.parameters[i]` in transformAsyncFunctionBody, U-loop: `0 <= i <
-  node.parameters.length`.
+node.parameters.length`.
 - `outerParameters[i]`, U-parallel: upstream's own `Debug.assert(i <
-  outerParameters.length)` runs just before it. The `!` sits on the two reads,
+outerParameters.length)` runs just before it. The `!` sits on the two reads,
   not on the five uses the checker flagged.
 
 classFields.ts:
@@ -49,7 +49,7 @@ classFields.ts:
   findSuperStatementIndexPathWorker (transformers/utilities.ts) records a try
   statement's index only after finding a further entry inside its try block;
   the final entry is a super call's expression statement, never a try. So depth
-  + 1 is present whenever the worker recurses. One read, three diagnostics.
+    - 1 is present whenever the worker recurses. One read, three diagnostics.
 - `statementsIn[superStatementIndex]`, U-position: every path entry is an index
   `i < statements.length` the path finder took from the same array the worker
   receives at that depth (constructor.body.statements, then each try block's
@@ -58,7 +58,7 @@ classFields.ts:
   asserted on its own invariant, not to silence that.
 - `statementsIn[statementOffset]` and `constructor.body.statements[statementOffset]`,
   U-loop: each is the first statement inside `while (statementOffset <
-  ...length)` over a parsed statement NodeArray.
+...length)` over a parsed statement NodeArray.
 
 No site was declined. Every reading agreed with the invariant given.
 
@@ -69,11 +69,11 @@ Own-file diagnostics, counted the way the daily meter counts: the census tool
 stage3/meter/report.py's `report()` over its JSONL, attributing each diagnostic
 to its primary location and deduplicating repeated observations.
 
-| File | Before | After |
-| --- | ---: | ---: |
-| transformers/es2017.ts | 6 | 0 |
-| transformers/classFields.ts | 6 | 0 |
-| Own file, all of src/compiler | 58/79 | 60/79 |
+| File                          | Before | After |
+| ----------------------------- | -----: | ----: |
+| transformers/es2017.ts        |      6 |     0 |
+| transformers/classFields.ts   |      6 |     0 |
+| Own file, all of src/compiler |  58/79 | 60/79 |
 
 The before tree is main's apply (the Nov 1 meter's 6 and 6, and its 58/79,
 reproduced). Its twelve findings are TS2532 at es2017.ts:599:86, TS18048 at
