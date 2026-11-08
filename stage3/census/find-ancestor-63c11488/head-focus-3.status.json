@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/scratch/fa-head-focus",
+    "-project",
+    "/workspace/scratch/fa-adapted/src/tsc/tsc.ts",
+    "-where",
+    "/workspace/scratch/fa-adapted/src/compiler/checker.ts:50077:29",
+    "-output",
+    "/workspace/scratch/fa-parent/stage3/census/find-ancestor-63c11488/head-focus-3.jsonl"
+  ],
+  "cwd": "/workspace/scratch/fa-parent",
+  "exit": 0,
+  "wall_seconds": 23.026,
+  "stopped": null
+}
