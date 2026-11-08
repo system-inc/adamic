@@ -1,0 +1,1094 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/utilitiesPublic.ts": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+    "src/compiler/binder.ts": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+    "src/compiler/utilities.ts": "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+    "src/compiler/factory/emitHelpers.ts": "91b00027e787379b88b6bf7bbf7a0ec8ae57e0d92233e6ddf7f4aa61d90c82ab",
+    "src/compiler/core.ts": "d612d8c0a74e36e8991cc665c0c0342b1f2b959adb75a538242fe188b7be3230",
+    "src/compiler/factory/nodeFactory.ts": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de",
+    "src/compiler/transformers/destructuring.ts": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+    "src/compiler/parser.ts": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "JSON.parse: its result's type can't be proven from the text": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map or Set interface implemented by a value that isn't a Map or Set": {
+        "before": 28,
+        "after": 28,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a call through ?. (an optional call)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 17,
+        "after": 17,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning T | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a property a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a readonly [\"cs\", \"de\", \"es\", \"fr\", \"it\", \"ja\", \"ko\", \"pl\", \"pt-br\", \"ru\", \"tr\", \"zh-cn\", \"zh-tw\"] seen as a readonly string[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type EmitNode & { autoGenerate: AutoGenerateInfo; }": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type JSDocArray | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Identifier to Identifier: optional field id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.VariableDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate membership over an open tag domain": {
+        "before": 9,
+        "after": 9,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target BindableStaticElementAccessExpression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target ImportClause & { readonly isTypeOnly: true; readonly name: Identifier; }": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target JSDocTag": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target NamedDeclaration & { name: DeclarationName; }": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 107,
+        "after": 107,
+        "lowered": 0,
+        "moved_by_reason": {
+          "failed statement; state rolled back; continued at next statement or declaration": 1
+        }
+      },
+      "function signature or prologue failed; continued at next declaration": {
+        "before": 10,
+        "after": 8,
+        "lowered": 2,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading commentRanges": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading expr": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading expression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading flags": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading jsDoc": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading last": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading name": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading paramIdx": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading previousSibling": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading sig": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading tag": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading tags": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 8,
+        "after": 8,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30409
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30409
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30538
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+          "start": 30536,
+          "end": 30656
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30658
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+          "start": 30775,
+          "end": 31040
+        },
+        "head": []
+      }
+    ],
+    "moved": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          63313
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1567:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+          "start": 63307,
+          "end": 63390
+        },
+        "head": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1567:5",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet",
+            "start": 63307,
+            "end": 63390
+          }
+        ]
+      }
+    ],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          63037
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1",
+          "reason": "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          63313
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1567:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet",
+          "start": 63307,
+          "end": 63390
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          63037
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1",
+          "reason": "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30538
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "kind": "KindFunctionDeclaration",
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "findAncestor",
+          "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30658
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 30775,
+          "body_end": 31040,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "findAncestor",
+          "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          63227
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 63305,
+          "body_end": 63393,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isPartOfTypeOnlyImportOrExportDeclaration",
+          "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1",
+          "reason": "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 37,
+        "NotYet": 72,
+        "Boundary": 117
+      },
+      "after": {
+        "Refused": 35,
+        "NotYet": 73,
+        "Boundary": 115
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "JSON.parse: its result's type can't be proven from the text": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map or Set interface implemented by a value that isn't a Map or Set": {
+        "before": 28,
+        "after": 28,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a call through ?. (an optional call)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 17,
+        "after": 17,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning T | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a property a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a readonly [\"cs\", \"de\", \"es\", \"fr\", \"it\", \"ja\", \"ko\", \"pl\", \"pt-br\", \"ru\", \"tr\", \"zh-cn\", \"zh-tw\"] seen as a readonly string[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type EmitNode & { autoGenerate: AutoGenerateInfo; }": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type JSDocArray | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Identifier to Identifier: optional field id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.VariableDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate membership over an open tag domain": {
+        "before": 9,
+        "after": 9,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target BindableStaticElementAccessExpression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target ImportClause & { readonly isTypeOnly: true; readonly name: Identifier; }": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target JSDocTag": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target NamedDeclaration & { name: DeclarationName; }": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 107,
+        "after": 107,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "function signature or prologue failed; continued at next declaration": {
+        "before": 10,
+        "after": 8,
+        "lowered": 2,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading commentRanges": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading expr": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading expression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading flags": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading jsDoc": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading last": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading name": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading paramIdx": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading previousSibling": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading sig": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading tag": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading tags": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 8,
+        "after": 8,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30409
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30409
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30538
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+          "start": 30536,
+          "end": 30656
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30658
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+          "start": 30775,
+          "end": 31040
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          63037
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1",
+          "reason": "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet"
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          63037
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1",
+          "reason": "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30538
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "kind": "KindFunctionDeclaration",
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "findAncestor",
+          "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30658
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 30775,
+          "body_end": 31040,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "findAncestor",
+          "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          63227
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 63305,
+          "body_end": 63393,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isPartOfTypeOnlyImportOrExportDeclaration",
+          "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1",
+          "reason": "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 36,
+        "NotYet": 72,
+        "Boundary": 117
+      },
+      "after": {
+        "Refused": 34,
+        "NotYet": 73,
+        "Boundary": 115
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}

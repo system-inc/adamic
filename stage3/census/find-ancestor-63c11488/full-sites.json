@@ -1,0 +1,360 @@
+{
+  "utilitiesPublic": {
+    "findAncestor": {
+      "parent": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+            "kind": "KindFunctionDeclaration",
+            "instantiated": true,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "findAncestor",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1"
+          },
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+            "kind": "KindFunctionDeclaration",
+            "instantiated": false,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "findAncestor",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1"
+          },
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 30775,
+            "body_end": 31040,
+            "instantiated": false,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "findAncestor",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1"
+          }
+        ],
+        "sites": [
+          {
+            "finding": {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+              "phase": "lowering",
+              "kind": "Refused",
+              "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+              "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+              "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+            },
+            "recorded_units": [
+              "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+              "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1"
+            ]
+          },
+          {
+            "finding": {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+              "phase": "lowering",
+              "kind": "Refused",
+              "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+              "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+              "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+            },
+            "recorded_units": [
+              "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1"
+            ]
+          }
+        ]
+      },
+      "head": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+            "kind": "KindFunctionDeclaration",
+            "instantiated": true,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "findAncestor",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1"
+          },
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+            "kind": "KindFunctionDeclaration",
+            "instantiated": false,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "findAncestor",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1"
+          },
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 30775,
+            "body_end": 31040,
+            "instantiated": false,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "name": "findAncestor",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1"
+          }
+        ],
+        "sites": []
+      }
+    },
+    "all_changes": [
+      {
+        "category": "lowered",
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30409
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": []
+      },
+      {
+        "category": "lowered",
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          30409
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+        },
+        "head": []
+      },
+      {
+        "category": "new_findings",
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          63037
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1",
+          "reason": "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+          "text": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet"
+        }
+      }
+    ]
+  },
+  "core": {
+    "orPredicate2": {
+      "parent": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2462:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 88159,
+            "body_end": 88197,
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "orPredicate2",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2462:1"
+          }
+        ],
+        "sites": []
+      },
+      "head": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2462:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 88159,
+            "body_end": 88197,
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "orPredicate2",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2462:1"
+          }
+        ],
+        "sites": []
+      }
+    },
+    "orPredicate3": {
+      "parent": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2466:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 88394,
+            "body_end": 88441,
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "orPredicate3",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2466:1"
+          }
+        ],
+        "sites": []
+      },
+      "head": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2466:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 88394,
+            "body_end": 88441,
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "orPredicate3",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2466:1"
+          }
+        ],
+        "sites": []
+      }
+    },
+    "or": {
+      "parent": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2470:1",
+            "kind": "KindFunctionDeclaration",
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "or",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2470:1"
+          },
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2472:1",
+            "kind": "KindFunctionDeclaration",
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "or",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2472:1"
+          },
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2474:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 88824,
+            "body_end": 89094,
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "or",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2474:1"
+          }
+        ],
+        "sites": []
+      },
+      "head": {
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2470:1",
+            "kind": "KindFunctionDeclaration",
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "or",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2470:1"
+          },
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2472:1",
+            "kind": "KindFunctionDeclaration",
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "or",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2472:1"
+          },
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2474:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 88824,
+            "body_end": 89094,
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "or",
+            "top": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2474:1"
+          }
+        ],
+        "sites": []
+      }
+    },
+    "all_changes": []
+  },
+  "cross_context_helpers": [
+    {
+      "context": "entry",
+      "side": "parent",
+      "helper": "or",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of or with a non-array rest parameter",
+        "root_kind": "",
+        "text": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2470:1: stage 0 can't lower overload 1 of or with a non-array rest parameter yet",
+        "unit": "/workspace/scratch/fa-adapted/src/compiler/utilities.ts:10054:1",
+        "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2470:1"
+      }
+    },
+    {
+      "context": "entry",
+      "side": "head",
+      "helper": "or",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of or with a non-array rest parameter",
+        "root_kind": "",
+        "text": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2470:1: stage 0 can't lower overload 1 of or with a non-array rest parameter yet",
+        "unit": "/workspace/scratch/fa-adapted/src/compiler/utilities.ts:10054:1",
+        "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2470:1"
+      }
+    }
+  ]
+}

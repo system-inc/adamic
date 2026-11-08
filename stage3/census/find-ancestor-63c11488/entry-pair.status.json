@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "/workspace/scratch/fa-parent/stage3/census/pair/pair.py",
+    "/workspace/scratch/fa-parent/stage3/census/find-ancestor-63c11488/parent-entry-run.jsonl",
+    "/workspace/scratch/fa-parent/stage3/census/find-ancestor-63c11488/head-entry-run.jsonl",
+    "/workspace/scratch/fa-adapted",
+    "--typescript",
+    "/workspace/scratch/fa-parent/stage3/api/node_modules/typescript",
+    "--json",
+    "/workspace/scratch/fa-parent/stage3/census/find-ancestor-63c11488/entry-paired.json",
+    "--report",
+    "/workspace/scratch/fa-parent/stage3/census/find-ancestor-63c11488/entry-paired.md"
+  ],
+  "cwd": "/workspace/scratch/fa-parent",
+  "exit": 0,
+  "wall_seconds": 16.044,
+  "stopped": null
+}

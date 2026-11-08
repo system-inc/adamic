@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/workspace/scratch/fa-head-overlay",
+    "/workspace/scratch/fa-head-entry"
+  ],
+  "cwd": "/workspace/scratch/fa-head",
+  "exit": 0,
+  "wall_seconds": 1.003,
+  "stopped": null
+}

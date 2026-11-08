@@ -1,0 +1,3954 @@
+[
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isExternalModuleNameRelative",
+    "start": 7861,
+    "end": 8292,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:296:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "sortAndDeduplicateDiagnostics",
+    "start": 8296,
+    "end": 8516,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:303:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getDefaultLibFileName",
+    "start": 9713,
+    "end": 10388,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:327:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanEnd",
+    "start": 10392,
+    "end": 10486,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:348:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanIsEmpty",
+    "start": 10490,
+    "end": 10582,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:352:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanContainsPosition",
+    "start": 10586,
+    "end": 10742,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:356:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textRangeContainsPositionInclusive",
+    "start": 10764,
+    "end": 10934,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:361:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanContainsTextSpan",
+    "start": 10983,
+    "end": 11152,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:366:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanContainsTextRange",
+    "start": 11174,
+    "end": 11344,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:371:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textRangeContainsTextSpan",
+    "start": 11366,
+    "end": 11536,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:376:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanOverlapsWith",
+    "start": 11540,
+    "end": 11679,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:380:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanOverlap",
+    "start": 11683,
+    "end": 11899,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:384:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanIntersectsWithTextSpan",
+    "start": 11903,
+    "end": 12091,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:389:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanIntersectsWith",
+    "start": 12095,
+    "end": 12277,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:393:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "decodedTextSpanIntersectsWith",
+    "start": 12281,
+    "end": 12524,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:397:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanIntersectsWithPosition",
+    "start": 12528,
+    "end": 12691,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:403:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textRangeIntersectsWithTextSpan",
+    "start": 12713,
+    "end": 12894,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:408:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textSpanIntersection",
+    "start": 12898,
+    "end": 13194,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:412:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "normalizeSpans",
+    "start": 13377,
+    "end": 14140,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:423:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "createTextSpan",
+    "start": 14144,
+    "end": 14391,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:446:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "createTextSpanFromBounds",
+    "start": 14395,
+    "end": 14526,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:457:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textChangeRangeNewSpan",
+    "start": 14530,
+    "end": 14670,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:461:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "textChangeRangeIsUnchanged",
+    "start": 14674,
+    "end": 14820,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:465:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "createTextChangeRange",
+    "start": 14824,
+    "end": 15029,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:469:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "collapseTextChangeRangesAcrossMultipleVersions",
+    "start": 15503,
+    "end": 22963,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:487:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getTypeParameterOwner",
+    "start": 22967,
+    "end": 23378,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:603:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isParameterPropertyDeclaration",
+    "start": 23506,
+    "end": 23765,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:615:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isEmptyBindingPattern",
+    "start": 23769,
+    "end": 23976,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:619:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isEmptyBindingElement",
+    "start": 24249,
+    "end": 24457,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:629:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "walkUpBindingElementsAndPatterns",
+    "start": 24461,
+    "end": 24728,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:636:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getCombinedFlags",
+    "start": 24732,
+    "end": 25299,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:644:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getCombinedModifierFlags",
+    "start": 25303,
+    "end": 25445,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:662:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getCombinedNodeFlagsAlwaysIncludeJSDoc",
+    "start": 25467,
+    "end": 25641,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:667:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getCombinedNodeFlags",
+    "start": 26250,
+    "end": 26364,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:678:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getNodeFlags",
+    "start": 26368,
+    "end": 26430,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:682:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "validateLocaleAndSetLanguage",
+    "start": 26727,
+    "end": 29326,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:693:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getOriginalNode",
+    "start": 29330,
+    "end": 29380,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:762:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getOriginalNode",
+    "start": 29382,
+    "end": 29482,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:763:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getOriginalNode",
+    "start": 29484,
+    "end": 29558,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:764:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getOriginalNode",
+    "start": 29560,
+    "end": 29684,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:765:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getOriginalNode",
+    "start": 29686,
+    "end": 30060,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:766:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "findAncestor",
+    "start": 30409,
+    "end": 30536,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:786:1",
+    "has_body": false,
+    "text": "export function findAncestor<T extends Node>(node: Node | undefined, callback: (element: Node) => element is T): T | undefined;"
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "findAncestor",
+    "start": 30538,
+    "end": 30656,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:787:1",
+    "has_body": false,
+    "text": "export function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | \"quit\"): Node | undefined;"
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "findAncestor",
+    "start": 30658,
+    "end": 31040,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:788:1",
+    "has_body": true,
+    "text": "export function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | \"quit\"): Node | undefined {\r\n    while (node) {\r\n        const result = callback(node);\r\n        if (result === \"quit\") {\r\n            return undefined;\r\n        }\r\n        else if (result) {\r\n            return node;\r\n        }\r\n        node = node.parent;\r\n    }\r\n    return undefined;\r\n}"
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isParseTreeNode",
+    "start": 31165,
+    "end": 31278,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:807:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getParseTreeNode",
+    "start": 31455,
+    "end": 31530,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:817:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getParseTreeNode",
+    "start": 31802,
+    "end": 31925,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:826:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getParseTreeNode",
+    "start": 31927,
+    "end": 32331,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:827:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "escapeLeadingUnderscores",
+    "start": 32464,
+    "end": 32719,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:842:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "unescapeLeadingUnderscores",
+    "start": 32898,
+    "end": 33184,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:852:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "idText",
+    "start": 33188,
+    "end": 33357,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:857:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "identifierToKeywordKind",
+    "start": 33532,
+    "end": 33746,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:865:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "symbolName",
+    "start": 33750,
+    "end": 34033,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:870:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "nameForNamelessJSDocTypedef",
+    "start": 34277,
+    "end": 36170,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:882:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getDeclarationIdentifier",
+    "start": 36174,
+    "end": 36373,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:925:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "nodeHasName",
+    "start": 36395,
+    "end": 36797,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:931:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getNameOfJSDocTypedef",
+    "start": 36801,
+    "end": 36991,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:941:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isNamedDeclaration",
+    "start": 37013,
+    "end": 37223,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:946:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getNonAssignedNameOfDeclaration",
+    "start": 37245,
+    "end": 39527,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:951:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getNameOfDeclaration",
+    "start": 39531,
+    "end": 39921,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:997:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getAssignedName",
+    "start": 39943,
+    "end": 40672,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1004:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getDecorators",
+    "start": 40676,
+    "end": 40857,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1024:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getModifiers",
+    "start": 40861,
+    "end": 41069,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1030:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocParameterTagsWorker",
+    "start": 41073,
+    "end": 42045,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocParameterTags",
+    "start": 42585,
+    "end": 42753,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1067:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocParameterTagsNoCache",
+    "start": 42775,
+    "end": 42949,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1072:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocTypeParameterTagsWorker",
+    "start": 42953,
+    "end": 43305,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1076:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocTypeParameterTags",
+    "start": 43791,
+    "end": 43970,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1091:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocTypeParameterTagsNoCache",
+    "start": 43992,
+    "end": 44177,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1096:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "hasJSDocParameterTags",
+    "start": 44407,
+    "end": 44571,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1106:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocAugmentsTag",
+    "start": 44635,
+    "end": 44773,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1111:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocImplementsTags",
+    "start": 44840,
+    "end": 44983,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1116:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocClassTag",
+    "start": 45044,
+    "end": 45173,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1121:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocPublicTag",
+    "start": 45235,
+    "end": 45367,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1126:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocPublicTagNoCache",
+    "start": 45389,
+    "end": 45546,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1131:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocPrivateTag",
+    "start": 45609,
+    "end": 45744,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1136:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocPrivateTagNoCache",
+    "start": 45766,
+    "end": 45926,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1141:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocProtectedTag",
+    "start": 45991,
+    "end": 46132,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1146:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocProtectedTagNoCache",
+    "start": 46154,
+    "end": 46320,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1151:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocReadonlyTag",
+    "start": 46385,
+    "end": 46523,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1156:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocReadonlyTagNoCache",
+    "start": 46545,
+    "end": 46708,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1161:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocOverrideTagNoCache",
+    "start": 46712,
+    "end": 46875,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1165:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocDeprecatedTag",
+    "start": 46941,
+    "end": 47085,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1170:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocDeprecatedTagNoCache",
+    "start": 47107,
+    "end": 47276,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1175:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocEnumTag",
+    "start": 47336,
+    "end": 47462,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1180:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocThisTag",
+    "start": 47522,
+    "end": 47648,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1185:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocReturnTag",
+    "start": 47710,
+    "end": 47842,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1190:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocTemplateTag",
+    "start": 47906,
+    "end": 48044,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1195:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocSatisfiesTag",
+    "start": 48048,
+    "end": 48189,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1199:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocTypeTag",
+    "start": 48259,
+    "end": 48616,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1204:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocType",
+    "start": 49127,
+    "end": 49487,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1224:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocReturnType",
+    "start": 49740,
+    "end": 50386,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1239:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocTagsWorker",
+    "start": 50390,
+    "end": 51056,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1257:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getJSDocTags",
+    "start": 51139,
+    "end": 51262,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1274:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getFirstJSDocTag",
+    "start": 51348,
+    "end": 51548,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1279:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getAllJSDocTags",
+    "start": 51613,
+    "end": 51785,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1284:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getAllJSDocTagsOfKind",
+    "start": 51837,
+    "end": 51995,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1289:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getTextOfJSDocComment",
+    "start": 52073,
+    "end": 52331,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1294:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "formatJSDocLink",
+    "start": 52335,
+    "end": 52777,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1299:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getEffectiveTypeParameterDeclarations",
+    "start": 53120,
+    "end": 54382,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1318:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "getEffectiveConstraintOfTypeParameter",
+    "start": 54386,
+    "end": 54676,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1351:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isMemberName",
+    "start": 54694,
+    "end": 54854,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1359:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isGetOrSetAccessorDeclaration",
+    "start": 54876,
+    "end": 55057,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1364:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isPropertyAccessChain",
+    "start": 55061,
+    "end": 55234,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1368:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isElementAccessChain",
+    "start": 55238,
+    "end": 55408,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1372:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isCallChain",
+    "start": 55412,
+    "end": 55555,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1376:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isOptionalChain",
+    "start": 55559,
+    "end": 55991,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1380:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isOptionalChainRoot",
+    "start": 56013,
+    "end": 56184,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1390:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isExpressionOfOptionalChainRoot",
+    "start": 56314,
+    "end": 56512,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1399:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isOutermostOptionalChain",
+    "start": 57326,
+    "end": 57574,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1416:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isNullishCoalesce",
+    "start": 57578,
+    "end": 57778,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1422:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isConstTypeReference",
+    "start": 57782,
+    "end": 57987,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1426:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "skipPartiallyEmittedExpressions",
+    "start": 57991,
+    "end": 58069,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1431:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "skipPartiallyEmittedExpressions",
+    "start": 58071,
+    "end": 58137,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1432:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "skipPartiallyEmittedExpressions",
+    "start": 58139,
+    "end": 58293,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1433:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isNonNullChain",
+    "start": 58297,
+    "end": 58449,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1437:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isBreakOrContinueStatement",
+    "start": 58453,
+    "end": 58645,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1441:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isNamedExportBindings",
+    "start": 58649,
+    "end": 58827,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1445:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJSDocPropertyLikeTag",
+    "start": 58831,
+    "end": 59017,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1449:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isNodeKind",
+    "start": 59220,
+    "end": 59320,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1462:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTokenKind",
+    "start": 59559,
+    "end": 59693,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1471:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isToken",
+    "start": 59932,
+    "end": 60011,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1480:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isNodeArray",
+    "start": 60051,
+    "end": 60211,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1487:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isLiteralKind",
+    "start": 60248,
+    "end": 60419,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1494:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isLiteralExpression",
+    "start": 60423,
+    "end": 60540,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1498:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isLiteralExpressionOfObject",
+    "start": 60562,
+    "end": 60946,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1503:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTemplateLiteralKind",
+    "start": 60990,
+    "end": 61179,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1518:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTemplateLiteralToken",
+    "start": 61183,
+    "end": 61314,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1522:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTemplateMiddleOrTemplateTail",
+    "start": 61318,
+    "end": 61542,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1526:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isImportOrExportSpecifier",
+    "start": 61546,
+    "end": 61711,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1532:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTypeOnlyImportDeclaration",
+    "start": 61715,
+    "end": 62423,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1536:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTypeOnlyExportDeclaration",
+    "start": 62427,
+    "end": 63033,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1550:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTypeOnlyImportOrExportDeclaration",
+    "start": 63037,
+    "end": 63223,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isPartOfTypeOnlyImportOrExportDeclaration",
+    "start": 63227,
+    "end": 63393,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isStringTextContainingNode",
+    "start": 63397,
+    "end": 63590,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1570:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isImportAttributeName",
+    "start": 63594,
+    "end": 63734,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1574:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isGeneratedIdentifier",
+    "start": 63774,
+    "end": 63934,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1581:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isGeneratedPrivateIdentifier",
+    "start": 63956,
+    "end": 64137,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1586:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isFileLevelReservedGeneratedIdentifier",
+    "start": 64159,
+    "end": 64499,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1591:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isPrivateIdentifierClassElementDeclaration",
+    "start": 64545,
+    "end": 64765,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1600:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isPrivateIdentifierPropertyAccessExpression",
+    "start": 64787,
+    "end": 64994,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1605:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isModifierKind",
+    "start": 65031,
+    "end": 65791,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1612:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isParameterPropertyModifier",
+    "start": 65813,
+    "end": 65968,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1635:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isClassMemberModifier",
+    "start": 65990,
+    "end": 66263,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1640:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isModifier",
+    "start": 66267,
+    "end": 66367,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1647:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isEntityName",
+    "start": 66371,
+    "end": 66555,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1651:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isPropertyName",
+    "start": 66559,
+    "end": 66897,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1657:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isBindingName",
+    "start": 66901,
+    "end": 67146,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1666:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isFunctionLike",
+    "start": 67166,
+    "end": 67308,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1675:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isFunctionLikeOrClassStaticBlockDeclaration",
+    "start": 67330,
+    "end": 67572,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1680:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isFunctionLikeDeclaration",
+    "start": 67594,
+    "end": 67747,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1685:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isBooleanLiteral",
+    "start": 67769,
+    "end": 67933,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1690:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isFunctionLikeDeclarationKind",
+    "start": 67937,
+    "end": 68395,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1694:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isFunctionLikeKind",
+    "start": 68417,
+    "end": 68946,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1710:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isFunctionOrModuleBlock",
+    "start": 68968,
+    "end": 69136,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1727:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isClassElement",
+    "start": 69152,
+    "end": 69646,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1732:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isClassLike",
+    "start": 69650,
+    "end": 69833,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1744:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isAccessor",
+    "start": 69837,
+    "end": 70009,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1748:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isAutoAccessorPropertyDeclaration",
+    "start": 70013,
+    "end": 70190,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1752:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isClassInstanceProperty",
+    "start": 70212,
+    "end": 70640,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1757:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isMethodOrAccessor",
+    "start": 70662,
+    "end": 70986,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1765:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isModifierLike",
+    "start": 71009,
+    "end": 71129,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1778:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTypeElement",
+    "start": 71133,
+    "end": 71614,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1782:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isClassOrTypeElement",
+    "start": 71618,
+    "end": 71764,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1794:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isObjectLiteralElementLike",
+    "start": 71768,
+    "end": 72189,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1798:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTypeNode",
+    "start": 72396,
+    "end": 72496,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1815:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isFunctionOrConstructorTypeNode",
+    "start": 72500,
+    "end": 72773,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1819:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isBindingPattern",
+    "start": 72818,
+    "end": 73095,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1832:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isAssignmentPattern",
+    "start": 73117,
+    "end": 73337,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1843:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isArrayBindingElement",
+    "start": 73341,
+    "end": 73551,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1849:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isDeclarationBindingElement",
+    "start": 73674,
+    "end": 74058,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1860:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isBindingOrAssignmentElement",
+    "start": 74080,
+    "end": 74353,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1872:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isBindingOrAssignmentPattern",
+    "start": 74447,
+    "end": 74678,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1884:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isObjectBindingOrAssignmentPattern",
+    "start": 74779,
+    "end": 75093,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1894:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isObjectBindingOrAssignmentElement",
+    "start": 75115,
+    "end": 75555,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1905:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isArrayBindingOrAssignmentPattern",
+    "start": 75655,
+    "end": 75965,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1921:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isArrayBindingOrAssignmentElement",
+    "start": 75987,
+    "end": 76802,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1932:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isPropertyAccessOrQualifiedNameOrImportTypeNode",
+    "start": 76824,
+    "end": 77147,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1948:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isPropertyAccessOrQualifiedName",
+    "start": 77168,
+    "end": 77415,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1957:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isCallLikeOrFunctionLikeExpression",
+    "start": 77437,
+    "end": 77654,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1964:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isCallLikeExpression",
+    "start": 77658,
+    "end": 78291,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1968:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isCallOrNewExpression",
+    "start": 78295,
+    "end": 78484,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1985:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTemplateLiteral",
+    "start": 78488,
+    "end": 78706,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1989:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isLeftHandSideExpression",
+    "start": 78710,
+    "end": 78885,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1995:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isLeftHandSideExpressionKind",
+    "start": 78889,
+    "end": 80576,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:1999:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isUnaryExpression",
+    "start": 80598,
+    "end": 80752,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2039:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isUnaryExpressionKind",
+    "start": 80756,
+    "end": 81262,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2043:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isUnaryExpressionWithWrite",
+    "start": 81284,
+    "end": 81783,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2059:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isLiteralTypeLiteral",
+    "start": 81787,
+    "end": 82209,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2071:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isExpression",
+    "start": 82294,
+    "end": 82433,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2086:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isExpressionKind",
+    "start": 82437,
+    "end": 83056,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2090:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isAssertionExpression",
+    "start": 83060,
+    "end": 83274,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2108:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isIterationStatement",
+    "start": 83294,
+    "end": 83403,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2116:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isIterationStatement",
+    "start": 83405,
+    "end": 83535,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2117:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isIterationStatement",
+    "start": 83537,
+    "end": 84107,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2118:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isScopeMarker",
+    "start": 84111,
+    "end": 84217,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2133:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "hasScopeMarker",
+    "start": 84239,
+    "end": 84362,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2138:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "needsScopeMarker",
+    "start": 84384,
+    "end": 84607,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2143:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isExternalModuleIndicator",
+    "start": 84629,
+    "end": 84885,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2148:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isForInOrOfStatement",
+    "start": 84907,
+    "end": 85084,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2154:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isConciseBody",
+    "start": 85102,
+    "end": 85227,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2160:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isFunctionBody",
+    "start": 85249,
+    "end": 85345,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2166:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isForInitializer",
+    "start": 85349,
+    "end": 85498,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2170:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isModuleBody",
+    "start": 85502,
+    "end": 85734,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2175:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isNamespaceBody",
+    "start": 85768,
+    "end": 85963,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2183:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJSDocNamespaceBody",
+    "start": 85997,
+    "end": 86201,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2190:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isNamedImportBindings",
+    "start": 86205,
+    "end": 86411,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2196:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isModuleOrEnumDeclaration",
+    "start": 86433,
+    "end": 86636,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2203:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "canHaveSymbol",
+    "start": 86658,
+    "end": 89771,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2208:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "canHaveLocals",
+    "start": 89793,
+    "end": 91197,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2283:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isDeclarationKind",
+    "start": 91201,
+    "end": 93026,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2321:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isDeclarationStatementKind",
+    "start": 93030,
+    "end": 93709,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2360:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isStatementKindButNotDeclarationKind",
+    "start": 93713,
+    "end": 94687,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2375:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isDeclaration",
+    "start": 94709,
+    "end": 94986,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2398:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isDeclarationStatement",
+    "start": 94990,
+    "end": 95126,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2406:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isStatementButNotDeclaration",
+    "start": 95236,
+    "end": 95377,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2415:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isStatement",
+    "start": 95381,
+    "end": 95609,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2419:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isBlockStatement",
+    "start": 95613,
+    "end": 95952,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2426:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isStatementOrBlock",
+    "start": 96144,
+    "end": 96390,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2442:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isModuleReference",
+    "start": 96418,
+    "end": 96668,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2451:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJsxTagNameExpression",
+    "start": 96682,
+    "end": 96991,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2460:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJsxChild",
+    "start": 96995,
+    "end": 97313,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2468:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJsxAttributeLike",
+    "start": 97317,
+    "end": 97520,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2477:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isStringLiteralOrJsxExpression",
+    "start": 97524,
+    "end": 97748,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2483:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJsxOpeningLikeElement",
+    "start": 97752,
+    "end": 97973,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2489:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJsxCallLike",
+    "start": 97977,
+    "end": 98229,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2495:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isCaseOrDefaultClause",
+    "start": 98247,
+    "end": 98449,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2504:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJSDocNode",
+    "start": 98540,
+    "end": 98686,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2517:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJSDocCommentContainingNode",
+    "start": 98755,
+    "end": 99106,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2522:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJSDocTag",
+    "start": 99188,
+    "end": 99348,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2534:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isSetAccessor",
+    "start": 99352,
+    "end": 99480,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2538:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isGetAccessor",
+    "start": 99484,
+    "end": 99612,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2542:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "hasJSDocNodes",
+    "start": 99797,
+    "end": 99995,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2552:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "hasType",
+    "start": 100069,
+    "end": 100164,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2564:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "hasInitializer",
+    "start": 100245,
+    "end": 100368,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2573:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "hasOnlyExpressionInitializer",
+    "start": 100425,
+    "end": 100875,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2578:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isObjectLiteralElement",
+    "start": 100879,
+    "end": 101098,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2592:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isTypeReferenceType",
+    "start": 101120,
+    "end": 101307,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2597:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "guessIndentation",
+    "start": 101363,
+    "end": 101971,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2603:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isStringLiteralLike",
+    "start": 101975,
+    "end": 102200,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isJSDocLinkLike",
+    "start": 102204,
+    "end": 102437,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2629:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "hasRestParameter",
+    "start": 102441,
+    "end": 102665,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2633:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isRestParameter",
+    "start": 102669,
+    "end": 103000,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "hasInternalAnnotation",
+    "start": 103004,
+    "end": 103197,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2643:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts",
+    "name": "isInternalDeclaration",
+    "start": 103201,
+    "end": 104646,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/utilitiesPublic.ts:2648:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "length",
+    "start": 492,
+    "end": 615,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:22:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "forEach",
+    "start": 915,
+    "end": 1302,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:33:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "forEachRight",
+    "start": 1385,
+    "end": 1782,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:50:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "firstDefined",
+    "start": 1902,
+    "end": 2313,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:67:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "firstDefinedIterator",
+    "start": 2335,
+    "end": 2637,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:82:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "reduceLeftIterator",
+    "start": 2659,
+    "end": 3008,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:93:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "zipWith",
+    "start": 3030,
+    "end": 3376,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:106:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "intersperse",
+    "start": 3580,
+    "end": 3890,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:121:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "every",
+    "start": 4182,
+    "end": 4319,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:140:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "every",
+    "start": 4339,
+    "end": 4500,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:142:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "every",
+    "start": 4520,
+    "end": 4637,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:144:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "every",
+    "start": 4639,
+    "end": 4970,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:145:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "find",
+    "start": 5110,
+    "end": 5272,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:162:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "find",
+    "start": 5292,
+    "end": 5436,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:164:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "find",
+    "start": 5456,
+    "end": 5850,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:166:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "findLast",
+    "start": 5872,
+    "end": 6038,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:178:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "findLast",
+    "start": 6058,
+    "end": 6206,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:180:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "findLast",
+    "start": 6226,
+    "end": 6629,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:182:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "findIndex",
+    "start": 6767,
+    "end": 7111,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:198:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "findLastIndex",
+    "start": 7133,
+    "end": 7486,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:209:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "contains",
+    "start": 7508,
+    "end": 7865,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:220:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "indexOfAnyCharCode",
+    "start": 7887,
+    "end": 8161,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:232:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "countWhere",
+    "start": 8183,
+    "end": 8549,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:242:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filter",
+    "start": 8777,
+    "end": 8854,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:261:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filter",
+    "start": 8874,
+    "end": 8939,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:263:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filter",
+    "start": 8959,
+    "end": 9054,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:265:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filter",
+    "start": 9074,
+    "end": 9157,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:267:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filter",
+    "start": 9177,
+    "end": 9278,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:269:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filter",
+    "start": 9298,
+    "end": 9387,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:271:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filter",
+    "start": 9407,
+    "end": 9526,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:273:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filter",
+    "start": 9546,
+    "end": 9653,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:275:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filter",
+    "start": 9673,
+    "end": 10271,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:277:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "filterMutate",
+    "start": 10293,
+    "end": 10614,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:299:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "clear",
+    "start": 10636,
+    "end": 10705,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:311:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "map",
+    "start": 10727,
+    "end": 10806,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:316:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "map",
+    "start": 10826,
+    "end": 10929,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:318:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "map",
+    "start": 10949,
+    "end": 11275,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:320:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "mapIterator",
+    "start": 11297,
+    "end": 11465,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:332:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sameMap",
+    "start": 11572,
+    "end": 11660,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:342:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sameMap",
+    "start": 11680,
+    "end": 11786,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:344:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sameMap",
+    "start": 11806,
+    "end": 11918,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:346:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sameMap",
+    "start": 11938,
+    "end": 12068,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:348:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sameMap",
+    "start": 12088,
+    "end": 12728,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:350:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "flatten",
+    "start": 12874,
+    "end": 13280,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:375:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "flatMap",
+    "start": 13511,
+    "end": 14110,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:399:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "flatMapToMutable",
+    "start": 14132,
+    "end": 14677,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:418:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "flatMapIterator",
+    "start": 14699,
+    "end": 14966,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:437:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sameFlatMap",
+    "start": 15254,
+    "end": 15348,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:454:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sameFlatMap",
+    "start": 15368,
+    "end": 15480,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:456:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sameFlatMap",
+    "start": 15500,
+    "end": 16231,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:458:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "mapAllOrFail",
+    "start": 16253,
+    "end": 16629,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:481:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "mapDefined",
+    "start": 16651,
+    "end": 17061,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:494:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "mapDefinedIterator",
+    "start": 17133,
+    "end": 17415,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:509:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "getOrUpdate",
+    "start": 17437,
+    "end": 17660,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:519:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "tryAddToSet",
+    "start": 17682,
+    "end": 17850,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:529:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "singleIterator",
+    "start": 17872,
+    "end": 17968,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:538:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "spanMap",
+    "start": 18249,
+    "end": 18401,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:551:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "spanMap",
+    "start": 18421,
+    "end": 18597,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:553:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "spanMap",
+    "start": 18617,
+    "end": 19762,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:555:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "mapEntries",
+    "start": 19784,
+    "end": 19912,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:596:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "mapEntries",
+    "start": 19932,
+    "end": 20084,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:598:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "mapEntries",
+    "start": 20104,
+    "end": 20519,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:600:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "some",
+    "start": 20541,
+    "end": 20621,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:614:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "some",
+    "start": 20641,
+    "end": 20741,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:616:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "some",
+    "start": 20761,
+    "end": 21207,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:618:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "getRangesWhere",
+    "start": 21334,
+    "end": 21853,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:639:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "concatenate",
+    "start": 21875,
+    "end": 21937,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:656:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "concatenate",
+    "start": 21957,
+    "end": 22046,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:658:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "concatenate",
+    "start": 22066,
+    "end": 22140,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:660:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "concatenate",
+    "start": 22221,
+    "end": 22307,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:662:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "concatenate",
+    "start": 22388,
+    "end": 22489,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:664:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "concatenate",
+    "start": 22570,
+    "end": 22683,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:666:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "concatenate",
+    "start": 22764,
+    "end": 22862,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:668:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "concatenate",
+    "start": 22882,
+    "end": 23007,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:670:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "concatenate",
+    "start": 23027,
+    "end": 23330,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:672:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "selectIndex",
+    "start": 23334,
+    "end": 23397,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:678:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "indicesOf",
+    "start": 23419,
+    "end": 23519,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:683:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "deduplicateRelational",
+    "start": 23523,
+    "end": 24325,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:687:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "deduplicateEquality",
+    "start": 24329,
+    "end": 24587,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:709:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "deduplicate",
+    "start": 24904,
+    "end": 25246,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:725:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "deduplicateSorted",
+    "start": 25316,
+    "end": 26230,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:735:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "createSortedArray",
+    "start": 26252,
+    "end": 26374,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:763:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "insertSorted",
+    "start": 26396,
+    "end": 27383,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:768:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sortAndDeduplicate",
+    "start": 27405,
+    "end": 27495,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:805:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sortAndDeduplicate",
+    "start": 27515,
+    "end": 27661,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:807:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "sortAndDeduplicate",
+    "start": 27681,
+    "end": 27977,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:809:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayIsEqualTo",
+    "start": 27999,
+    "end": 28537,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:814:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compact",
+    "start": 28622,
+    "end": 28704,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:837:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compact",
+    "start": 28768,
+    "end": 28868,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:839:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compact",
+    "start": 29093,
+    "end": 29137,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:842:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compact",
+    "start": 29218,
+    "end": 29280,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:844:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compact",
+    "start": 29361,
+    "end": 30020,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:846:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "relativeComplement",
+    "start": 30279,
+    "end": 30371,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:871:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "relativeComplement",
+    "start": 30391,
+    "end": 30519,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:873:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "relativeComplement",
+    "start": 30776,
+    "end": 32781,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:881:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "append",
+    "start": 33110,
+    "end": 33183,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:931:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "append",
+    "start": 33203,
+    "end": 33276,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:933:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "append",
+    "start": 33296,
+    "end": 33393,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:935:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "append",
+    "start": 33395,
+    "end": 33617,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:936:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "combine",
+    "start": 33981,
+    "end": 34078,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:957:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "combine",
+    "start": 34098,
+    "end": 34234,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:959:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "combine",
+    "start": 34254,
+    "end": 34363,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:961:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "combine",
+    "start": 34383,
+    "end": 34705,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:963:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "toOffset",
+    "start": 34858,
+    "end": 34977,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:975:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "addRange",
+    "start": 35541,
+    "end": 35645,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:991:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "addRange",
+    "start": 35665,
+    "end": 35793,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:993:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "addRange",
+    "start": 35813,
+    "end": 36356,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:995:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "pushIfUnique",
+    "start": 36429,
+    "end": 36688,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1013:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "appendIfUnique",
+    "start": 36811,
+    "end": 37089,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1028:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "stableSortIndices",
+    "start": 37093,
+    "end": 37318,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1038:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "toSorted",
+    "start": 37487,
+    "end": 37719,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1048:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayReverseIterator",
+    "start": 37741,
+    "end": 37920,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1053:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "rangeEquals",
+    "start": 37942,
+    "end": 38204,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1060:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "elementAt",
+    "start": 38421,
+    "end": 38739,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1076:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "firstOrUndefined",
+    "start": 38850,
+    "end": 39016,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1091:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "firstOrUndefinedIterator",
+    "start": 39038,
+    "end": 39268,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1096:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "first",
+    "start": 39290,
+    "end": 39405,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1106:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "firstIterator",
+    "start": 39427,
+    "end": 39587,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1112:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "lastOrUndefined",
+    "start": 39697,
+    "end": 39877,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1124:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "last",
+    "start": 39899,
+    "end": 40028,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1129:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "singleOrUndefined",
+    "start": 40157,
+    "end": 40342,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1139:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "single",
+    "start": 40466,
+    "end": 40578,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1150:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "singleOrMany",
+    "start": 40718,
+    "end": 40771,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1160:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "singleOrMany",
+    "start": 40791,
+    "end": 40862,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1162:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "singleOrMany",
+    "start": 40882,
+    "end": 40959,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1164:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "singleOrMany",
+    "start": 40979,
+    "end": 41074,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1166:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "singleOrMany",
+    "start": 41094,
+    "end": 41285,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1168:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "replaceElement",
+    "start": 41307,
+    "end": 41480,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1175:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "binarySearch",
+    "start": 42115,
+    "end": 42352,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1194:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "binarySearchKey",
+    "start": 42978,
+    "end": 43756,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1210:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "reduceLeft",
+    "start": 43778,
+    "end": 43931,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1236:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "reduceLeft",
+    "start": 43951,
+    "end": 44057,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1238:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "reduceLeft",
+    "start": 44077,
+    "end": 44946,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1240:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "hasProperty",
+    "start": 45181,
+    "end": 45304,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1274:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "getProperty",
+    "start": 45453,
+    "end": 45599,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1286:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "getOwnKeys",
+    "start": 45691,
+    "end": 45927,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1295:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "getOwnValues",
+    "start": 45953,
+    "end": 46221,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1309:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayOf",
+    "start": 46243,
+    "end": 46442,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1321:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayFrom",
+    "start": 46498,
+    "end": 46576,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1334:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayFrom",
+    "start": 46596,
+    "end": 46653,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1336:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayFrom",
+    "start": 46673,
+    "end": 46909,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1338:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "assign",
+    "start": 46931,
+    "end": 47238,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1347:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "equalOwnProperties",
+    "start": 47480,
+    "end": 48144,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1367:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToMap",
+    "start": 48591,
+    "end": 48694,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1398:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToMap",
+    "start": 48714,
+    "end": 48855,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1400:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToMap",
+    "start": 48875,
+    "end": 48985,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1402:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToMap",
+    "start": 49005,
+    "end": 49146,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1404:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToMap",
+    "start": 49166,
+    "end": 49586,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1406:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToNumericMap",
+    "start": 49608,
+    "end": 49702,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1417:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToNumericMap",
+    "start": 49722,
+    "end": 49847,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1419:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToNumericMap",
+    "start": 49867,
+    "end": 50211,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1421:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToMultiMap",
+    "start": 50233,
+    "end": 50335,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1431:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToMultiMap",
+    "start": 50355,
+    "end": 50488,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1433:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "arrayToMultiMap",
+    "start": 50508,
+    "end": 50890,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1435:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "group",
+    "start": 50912,
+    "end": 51018,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1445:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "group",
+    "start": 51038,
+    "end": 51170,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1447:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "group",
+    "start": 51190,
+    "end": 51298,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1449:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "group",
+    "start": 51318,
+    "end": 51452,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1451:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "group",
+    "start": 51472,
+    "end": 51734,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1453:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "groupBy",
+    "start": 51756,
+    "end": 51911,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1458:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "groupBy",
+    "start": 51931,
+    "end": 52109,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1460:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "groupBy",
+    "start": 52155,
+    "end": 52706,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1461:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "clone",
+    "start": 52728,
+    "end": 52956,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1475:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "extend",
+    "start": 53212,
+    "end": 53670,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1492:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "copyProperties",
+    "start": 53692,
+    "end": 53895,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1510:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "maybeBind",
+    "start": 53917,
+    "end": 54084,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1519:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "createMultiMap",
+    "start": 54169,
+    "end": 54259,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1527:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "multiMapAddValue",
+    "start": 54285,
+    "end": 54550,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1534:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "multiMapRemoveValue",
+    "start": 54572,
+    "end": 54851,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1546:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "createQueue",
+    "start": 54873,
+    "end": 56187,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1557:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "createSet",
+    "start": 57100,
+    "end": 61459,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1625:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "isArray",
+    "start": 61530,
+    "end": 61703,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1753:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "toArray",
+    "start": 61725,
+    "end": 61773,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1759:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "toArray",
+    "start": 61793,
+    "end": 61859,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1761:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "toArray",
+    "start": 61879,
+    "end": 61977,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1763:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "isString",
+    "start": 62045,
+    "end": 62143,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1772:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "isNumber",
+    "start": 62163,
+    "end": 62252,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1776:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "tryCast",
+    "start": 62274,
+    "end": 62478,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1781:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "cast",
+    "start": 62500,
+    "end": 62807,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1786:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "noop",
+    "start": 62857,
+    "end": 62899,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1797:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "returnFalse",
+    "start": 62963,
+    "end": 63023,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1804:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "returnTrue",
+    "start": 63086,
+    "end": 63143,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1813:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "returnUndefined",
+    "start": 63211,
+    "end": 63283,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1822:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "identity",
+    "start": 63341,
+    "end": 63397,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1831:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "toLowerCase",
+    "start": 63441,
+    "end": 63506,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1838:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "toFileNameLowerCase",
+    "start": 66536,
+    "end": 66712,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1878:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "notImplemented",
+    "start": 66803,
+    "end": 66888,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1889:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "memoize",
+    "start": 66910,
+    "end": 67157,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1894:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "memoizeOne",
+    "start": 67258,
+    "end": 67692,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1910:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "equateValues",
+    "start": 68098,
+    "end": 68176,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1940:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "equateStringsCaseInsensitive",
+    "start": 68633,
+    "end": 68846,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1954:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "equateStringsCaseSensitive",
+    "start": 69090,
+    "end": 69200,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1969:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareComparableValues",
+    "start": 69222,
+    "end": 69320,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1974:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareComparableValues",
+    "start": 69340,
+    "end": 69438,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1976:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareComparableValues",
+    "start": 69440,
+    "end": 69994,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1977:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareValues",
+    "start": 70164,
+    "end": 70299,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:1991:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareTextSpans",
+    "start": 70394,
+    "end": 70597,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2000:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "maxBy",
+    "start": 70619,
+    "end": 70833,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2005:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "min",
+    "start": 70855,
+    "end": 70932,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2013:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "min",
+    "start": 70952,
+    "end": 71033,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2015:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "min",
+    "start": 71053,
+    "end": 71226,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2017:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareStringsCaseInsensitive",
+    "start": 71932,
+    "end": 72319,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2035:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareStringsCaseInsensitiveEslintCompatible",
+    "start": 73063,
+    "end": 73466,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2056:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareStringsCaseSensitive",
+    "start": 73955,
+    "end": 74104,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2077:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "getStringComparer",
+    "start": 74126,
+    "end": 74310,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2082:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "getUILocale",
+    "start": 75519,
+    "end": 75595,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2112:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "setUILocale",
+    "start": 75617,
+    "end": 75793,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2117:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareStringsCaseSensitiveUI",
+    "start": 76257,
+    "end": 76451,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2136:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareProperties",
+    "start": 76473,
+    "end": 76809,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2142:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "compareBooleans",
+    "start": 76873,
+    "end": 76994,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2154:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "getSpellingSuggestion",
+    "start": 77665,
+    "end": 79099,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2172:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "levenshteinWithMax",
+    "start": 79103,
+    "end": 80996,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2201:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "endsWith",
+    "start": 81018,
+    "end": 81362,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2250:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "removeSuffix",
+    "start": 81384,
+    "end": 81538,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2260:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "tryRemoveSuffix",
+    "start": 81560,
+    "end": 81735,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2265:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "removeMinAndVersionNumbers",
+    "start": 81831,
+    "end": 83630,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2274:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "orderedRemoveItem",
+    "start": 83743,
+    "end": 84001,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2328:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "orderedRemoveItemAt",
+    "start": 84123,
+    "end": 84410,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2343:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "unorderedRemoveItemAt",
+    "start": 84414,
+    "end": 84593,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2351:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "unorderedRemoveItem",
+    "start": 84685,
+    "end": 84837,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2362:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "unorderedRemoveFirstItemWhere",
+    "start": 84900,
+    "end": 85186,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2367:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "createGetCanonicalFileName",
+    "start": 85292,
+    "end": 85469,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2380:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "patternText",
+    "start": 85636,
+    "end": 85740,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2395:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "matchedText",
+    "start": 85922,
+    "end": 86152,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2405:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "findBestPatternMatch",
+    "start": 86262,
+    "end": 86890,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2415:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "startsWith",
+    "start": 86912,
+    "end": 87148,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2433:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "removePrefix",
+    "start": 87170,
+    "end": 87311,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2440:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "tryRemovePrefix",
+    "start": 87333,
+    "end": 87597,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2445:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "isPatternMatch",
+    "start": 87619,
+    "end": 87856,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2450:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "and",
+    "start": 87878,
+    "end": 88004,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2457:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "orPredicate2",
+    "start": 88026,
+    "end": 88197,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2462:1",
+    "has_body": true,
+    "text": "export function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 {\r\n    return p => f1(p) || f2(p);\r\n}"
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "orPredicate3",
+    "start": 88217,
+    "end": 88441,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2466:1",
+    "has_body": true,
+    "text": "export function orPredicate3<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3 {\r\n    return p => f1(p) || f2(p) || f3(p);\r\n}"
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "or",
+    "start": 88461,
+    "end": 88577,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2470:1",
+    "has_body": false,
+    "text": "export function or<T extends unknown[], U>(...fs: [(...args: T) => U, ...((...args: T) => U)[]]): (...args: T) => U;"
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "or",
+    "start": 88597,
+    "end": 88701,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2472:1",
+    "has_body": false,
+    "text": "export function or<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined;"
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "or",
+    "start": 88721,
+    "end": 89094,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2474:1",
+    "has_body": true,
+    "text": "export function or<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined {\r\n    return (...args) => {\r\n        let lastResult: U | undefined;\r\n        for (const f of fs) {\r\n            lastResult = f(...args);\r\n            if (lastResult) {\r\n                return lastResult;\r\n            }\r\n        }\r\n        return lastResult;\r\n    };\r\n}"
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "not",
+    "start": 89116,
+    "end": 89254,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2488:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "assertType",
+    "start": 89276,
+    "end": 89320,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2493:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "singleElementArray",
+    "start": 89342,
+    "end": 89466,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2496:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "enumerateInsertsAndDeletes",
+    "start": 89488,
+    "end": 90808,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2501:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "cartesianProduct",
+    "start": 90830,
+    "end": 91021,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2540:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "cartesianProductWorker",
+    "start": 91025,
+    "end": 91587,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2546:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "takeWhile",
+    "start": 91609,
+    "end": 91718,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2566:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "takeWhile",
+    "start": 91738,
+    "end": 91871,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2568:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "takeWhile",
+    "start": 91873,
+    "end": 92353,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2569:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "skipWhile",
+    "start": 92375,
+    "end": 92484,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2585:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "skipWhile",
+    "start": 92504,
+    "end": 92637,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2587:1",
+    "has_body": false
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "skipWhile",
+    "start": 92657,
+    "end": 93020,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2589:1",
+    "has_body": true
+  },
+  {
+    "file": "/workspace/scratch/fa-adapted/src/compiler/core.ts",
+    "name": "isNodeLikeSystem",
+    "start": 93152,
+    "end": 93461,
+    "where": "/workspace/scratch/fa-adapted/src/compiler/core.ts:2601:1",
+    "has_body": true
+  }
+]
