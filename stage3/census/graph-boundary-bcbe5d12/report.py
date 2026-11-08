@@ -79,7 +79,7 @@ for kind in ['record_literals','views']:
  ranked=sorted((f for f in byfile if byfile[f][kind]>0),key=lambda f:(-byfile[f][kind],rel(f)))[:10]
  if not ranked:lines.append('| no sites observed in covered unit results | 0 |')
  for f in ranked:lines.append(f'| {rel(f)} | {byfile[f][kind]} |')
- lines += ['', 'Examples below are unit fallback positions and adapted unit source text, not exact expression locations.']
+ lines += ['', 'Examples, when available, use unit fallback positions and adapted unit source text; exact expression locations are unavailable.']
  for f in ranked:
   samples=list(examples.get((f,kind),{}))[:3]
   for site in samples:
