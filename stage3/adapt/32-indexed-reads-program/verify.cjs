@@ -1,36 +1,41 @@
 #!/usr/bin/env node
-"use strict";
-const fs = require("node:fs");
-const path = require("node:path");
-const assert = require("node:assert/strict");
-const { createHash } = require("node:crypto");
-const { plan, files } = require("./adapt.cjs");
-const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
-if (ts.version !== "6.0.3") throw new Error(`want TypeScript 6.0.3, got ${ts.version}`);
-if (process.argv.length !== 4) throw new Error("usage: node verify.cjs <before-tree> <after-tree>");
-require("./maybebind.cjs").plan(ts, path.resolve(process.argv[3]), true);
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const { createHash } = require('node:crypto');
+const { plan, files } = require('./adapt.cjs');
+const ts = require(process.env.CENSUS_TYPESCRIPT || 'typescript');
+if(ts.version !== '6.0.3') throw new Error(`want TypeScript 6.0.3, got ${ts.version}`);
+if(process.argv.length !== 4) throw new Error('usage: node verify.cjs <before-tree> <after-tree>');
+require('./maybebind.cjs').plan(ts, path.resolve(process.argv[3]), true);
 const options = { target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext };
-for (const file of require("../00-setup/test-shards.cjs").select(files)) {
-    let before = fs.readFileSync(path.join(process.argv[2], "src/compiler", file), "utf8");
-    const after = fs.readFileSync(path.join(process.argv[3], "src/compiler", file), "utf8");
-    if (file === "watch.ts") {
-        for (const site of require("./maybebind-sites.json")) {
-            assert.equal(before.split(site.before).length, 2, "maybeBind before site drift");
+for(const file of require('../00-setup/test-shards.cjs').select(files)) {
+    let before = fs.readFileSync(path.join(process.argv[2], 'src/compiler', file), 'utf8');
+    const after = fs.readFileSync(path.join(process.argv[3], 'src/compiler', file), 'utf8');
+    if(file === 'watch.ts') {
+        for(const site of require('./maybebind-sites.json')) {
+            assert.equal(before.split(site.before).length, 2, 'maybeBind before site drift');
             before = before.replace(site.before, site.after);
         }
     }
-    if (file === "symbolWalker.ts") before = require("./record-tables-proof.cjs").expected(before);
-    assert.equal(after.split("\r\n").length, before.split("\r\n").length, `CRLF count changed: ${file}`);
-    assert.equal(after.split("\n").length, before.split("\n").length, `newline count changed: ${file}`);
+    if(file === 'symbolWalker.ts') before = require('./record-tables-proof.cjs').expected(before);
+    assert.equal(after.split('\r\n').length, before.split('\r\n').length, `CRLF count changed: ${file}`);
+    assert.equal(after.split('\n').length, before.split('\n').length, `newline count changed: ${file}`);
     // No U-zero operands are selected in this partition.
     // All required-read assertions must disappear under the independent stock emitter.
     // Compare directly with untouched input, independent of the adapter planner.
-    for (const removeComments of [false, true]) {
-        const expected = ts.transpileModule(before, { fileName: file, compilerOptions: {...options, removeComments} });
-        const actual = ts.transpileModule(after, { fileName: file, compilerOptions: {...options, removeComments} });
-        if (actual.outputText !== expected.outputText) {
-            const hash = text => createHash("sha256").update(text).digest("hex");
-            throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)} (removeComments=${removeComments})`);
+    for(const removeComments of [false, true]) {
+        const expected = ts.transpileModule(before, {
+            fileName: file,
+            compilerOptions: { ...options, removeComments },
+        });
+        const actual = ts.transpileModule(after, { fileName: file, compilerOptions: { ...options, removeComments } });
+        if(actual.outputText !== expected.outputText) {
+            const hash = (text) => createHash('sha256').update(text).digest('hex');
+            throw new Error(
+                `unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)} (removeComments=${removeComments})`,
+            );
         }
     }
     plan(ts, file, after, true);

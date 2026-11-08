@@ -188,11 +188,11 @@ nodes in types.ts are type-level lookups, have no runtime evaluation point, and
 are declined as not indexed reads. The cumulative ledger has 301 entries:
 96 assertions and 205 declines; fifteen source files change. No U-zero site is selected.
 
-| File | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker before/after |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| corePublic.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 1 / 1 |
-| performanceCore.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 3 / 3 |
-| types.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 73 / 73 |
+| File               | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker before/after |
+| ------------------ | ------------------: | -------------------: | ------------------: | ------------------: | ------------------: | ---------------------: | ------------------------: |
+| corePublic.ts      |               0 / 0 |                0 / 0 |               0 / 0 |               0 / 0 |               0 / 0 |                  0 / 0 |                     1 / 1 |
+| performanceCore.ts |               0 / 0 |                0 / 0 |               0 / 0 |               0 / 0 |               0 / 0 |                  0 / 0 |                     3 / 3 |
+| types.ts           |               0 / 0 |                0 / 0 |               0 / 0 |               0 / 0 |               0 / 0 |                  0 / 0 |                   73 / 73 |
 
 Cumulative five-code census remains **217 to 63**; incremental census remains
 **63 to 63**. All 78 roots and Adamic checker options are unchanged. Every
@@ -233,10 +233,10 @@ using stock TypeScript 6.0.3 ASTs, with CRLF preserved. An unexpected read added
 to the last planned file fails with exit 1 and leaves all 23 files byte-identical
 to their mutant inputs; proof.json records this planning mutant.
 
-| File | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker before/after |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| expressionToTypeNode.ts | 1 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 1 / 0 | 9 / 8 |
-| executeCommandLine.ts | 0 / 0 | 1 / 1 | 3 / 0 | 0 / 0 | 0 / 0 | 4 / 1 | 11 / 8 |
+| File                    | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker before/after |
+| ----------------------- | ------------------: | -------------------: | ------------------: | ------------------: | ------------------: | ---------------------: | ------------------------: |
+| expressionToTypeNode.ts |               1 / 0 |                0 / 0 |               0 / 0 |               0 / 0 |               0 / 0 |                  1 / 0 |                     9 / 8 |
+| executeCommandLine.ts   |               0 / 0 |                1 / 1 |               3 / 0 |               0 / 0 |               0 / 0 |                  4 / 1 |                    11 / 8 |
 
 This wave five-code census is 5 to 1; cumulative census is 217 to 63, and incremental cumulative census is 67 to 63. All 78 roots and the Adamic checker options remain unchanged. Every remaining finding has its full diagnostic chain and reason in declined-findings.json or other-findings.json.
 
@@ -255,18 +255,18 @@ files with no indexed expressions; an added unledgered-expression mutant fails
 with indexed inventory drift, as recorded in proof.json. The cumulative ledger has 292 entries: 91 assertions
 and 201 declines across 21 reviewed files; twelve source files change.
 
-| File | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker before/after |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| builder.ts | 25 / 12 | 8 / 0 | 1 / 0 | 3 / 0 | 0 / 0 | 37 / 12 | 73 / 50 |
-| builderPublic.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
-| builderState.ts | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 | 0 / 0 | 2 / 2 | 6 / 6 |
-| builderStatePublic.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
-| watch.ts | 2 / 0 | 0 / 0 | 1 / 0 | 2 / 2 | 0 / 0 | 5 / 2 | 15 / 12 |
-| watchPublic.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 19 / 19 |
-| watchUtilities.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 6 / 6 |
-| resolutionCache.ts | 6 / 3 | 2 / 2 | 4 / 0 | 2 / 2 | 0 / 0 | 14 / 7 | 28 / 21 |
-| tsbuild.ts | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 1 / 1 |
-| tsbuildPublic.ts | 17 / 1 | 3 / 3 | 0 / 0 | 2 / 0 | 0 / 0 | 22 / 4 | 40 / 21 |
+| File                  | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker before/after |
+| --------------------- | ------------------: | -------------------: | ------------------: | ------------------: | ------------------: | ---------------------: | ------------------------: |
+| builder.ts            |             25 / 12 |                8 / 0 |               1 / 0 |               3 / 0 |               0 / 0 |                37 / 12 |                   73 / 50 |
+| builderPublic.ts      |               0 / 0 |                0 / 0 |               0 / 0 |               0 / 0 |               0 / 0 |                  0 / 0 |                     0 / 0 |
+| builderState.ts       |               1 / 1 |                0 / 0 |               0 / 0 |               1 / 1 |               0 / 0 |                  2 / 2 |                     6 / 6 |
+| builderStatePublic.ts |               0 / 0 |                0 / 0 |               0 / 0 |               0 / 0 |               0 / 0 |                  0 / 0 |                     0 / 0 |
+| watch.ts              |               2 / 0 |                0 / 0 |               1 / 0 |               2 / 2 |               0 / 0 |                  5 / 2 |                   15 / 12 |
+| watchPublic.ts        |               0 / 0 |                0 / 0 |               0 / 0 |               0 / 0 |               0 / 0 |                  0 / 0 |                   19 / 19 |
+| watchUtilities.ts     |               0 / 0 |                0 / 0 |               0 / 0 |               0 / 0 |               0 / 0 |                  0 / 0 |                     6 / 6 |
+| resolutionCache.ts    |               6 / 3 |                2 / 2 |               4 / 0 |               2 / 2 |               0 / 0 |                 14 / 7 |                   28 / 21 |
+| tsbuild.ts            |               0 / 0 |                0 / 0 |               0 / 0 |               0 / 0 |               0 / 0 |                  0 / 0 |                     1 / 1 |
+| tsbuildPublic.ts      |              17 / 1 |                3 / 3 |               0 / 0 |               2 / 0 |               0 / 0 |                 22 / 4 |                   40 / 21 |
 
 The new files five-code census is 80 to 27. Cumulative census is 212 to 62; incremental cumulative census is 115 to 62. All 78 roots and the Adamic checker options remain unchanged. Every remaining finding is listed with a reviewed reason in declined-findings.json or other-findings.json.
 
@@ -285,11 +285,11 @@ array read and two bounded dense Buffer byte reads. The cumulative ledger has
 eight files change. No U-zero site is selected. All files are planned before
 any write, using stock 6.0.3 AST occurrence addresses and unchanged CRLF.
 
-| File | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker incremental before/after |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| moduleNameResolver.ts | 3 / 3 | 0 / 0 | 0 / 0 | 4 / 4 | 0 / 0 | 7 / 7 | 38 / 38 |
-| moduleSpecifiers.ts | 1 / 1 | 0 / 0 | 1 / 0 | 1 / 1 | 0 / 0 | 3 / 2 | 12 / 11 |
-| sys.ts | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 | 0 / 0 | 2 / 2 | 61 / 61 |
+| File                  | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker incremental before/after |
+| --------------------- | ------------------: | -------------------: | ------------------: | ------------------: | ------------------: | ---------------------: | ------------------------------------: |
+| moduleNameResolver.ts |               3 / 3 |                0 / 0 |               0 / 0 |               4 / 4 |               0 / 0 |                  7 / 7 |                               38 / 38 |
+| moduleSpecifiers.ts   |               1 / 1 |                0 / 0 |               1 / 0 |               1 / 1 |               0 / 0 |                  3 / 2 |                               12 / 11 |
+| sys.ts                |               1 / 1 |                0 / 0 |               0 / 0 |               1 / 1 |               0 / 0 |                  2 / 2 |                               61 / 61 |
 
 The new files' five-code census is 12 to 11; cumulative census is 132 to 35
 and incremental census is 36 to 35. Before and after retain all 78 compiler
@@ -333,10 +333,10 @@ The existing `options[setting] ?? defaultValue` is recorded as an unchanged
 handling shape; the adapter validates its right operand and does not introduce
 a default there. All eight files are planned before any is written.
 
-| Wave 3 file | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code total before/after | Full checker before/after |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| program.ts | 32 / 6 | 13 / 0 | 3 / 0 | 3 / 0 | 1 / 0 | 52 / 6 | 90 / 38 |
-| commandLineParser.ts | 10 / 4 | 5 / 0 | 3 / 0 | 4 / 4 | 1 / 0 | 23 / 8 | 40 / 25 |
+| Wave 3 file          | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code total before/after | Full checker before/after |
+| -------------------- | ------------------: | -------------------: | ------------------: | ------------------: | ------------------: | ---------------------------: | ------------------------: |
+| program.ts           |              32 / 6 |               13 / 0 |               3 / 0 |               3 / 0 |               1 / 0 |                       52 / 6 |                   90 / 38 |
+| commandLineParser.ts |              10 / 4 |                5 / 0 |               3 / 0 |               4 / 4 |               1 / 0 |                       23 / 8 |                   40 / 25 |
 
 Cumulative five-code census: **120 to 24**. Wave 3 incremental census across
 the eight reviewed files: **85 to 24**. All remaining findings have their full
@@ -440,38 +440,38 @@ meter's implicit optional-declaration adaptation. These tables retain exactly
 the reviewed six files and requested codes; full diagnostic chains are saved
 in `census-before.json` and `census-after.json`.
 
-| File | TS2345 | TS18048 | TS2532 | TS2322 | TS2538 | Total |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| semver.ts before | 12 | 3 | 0 | 0 | 0 | 15 |
-| semver.ts after | 9 | 1 | 0 | 0 | 0 | 10 |
-| programDiagnostics.ts before | 4 | 0 | 0 | 2 | 0 | 6 |
-| programDiagnostics.ts after | 0 | 0 | 0 | 0 | 0 | 0 |
-| tracing.ts before | 2 | 15 | 2 | 1 | 0 | 20 |
-| tracing.ts after | 0 | 0 | 0 | 0 | 0 | 0 |
-| symbolWalker.ts before | 0 | 0 | 0 | 0 | 0 | 0 |
-| symbolWalker.ts after | 0 | 0 | 0 | 0 | 0 | 0 |
-| performance.ts before | 0 | 0 | 0 | 0 | 0 | 0 |
-| performance.ts after | 0 | 0 | 0 | 0 | 0 | 0 |
-| binder.ts before | 1 | 1 | 1 | 1 | 0 | 4 |
-| binder.ts after | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total before** | 19 | 19 | 3 | 4 | 0 | **45** |
-| **Total after** | 9 | 1 | 0 | 0 | 0 | **10** |
+| File                         | TS2345 | TS18048 | TS2532 | TS2322 | TS2538 |  Total |
+| ---------------------------- | -----: | ------: | -----: | -----: | -----: | -----: |
+| semver.ts before             |     12 |       3 |      0 |      0 |      0 |     15 |
+| semver.ts after              |      9 |       1 |      0 |      0 |      0 |     10 |
+| programDiagnostics.ts before |      4 |       0 |      0 |      2 |      0 |      6 |
+| programDiagnostics.ts after  |      0 |       0 |      0 |      0 |      0 |      0 |
+| tracing.ts before            |      2 |      15 |      2 |      1 |      0 |     20 |
+| tracing.ts after             |      0 |       0 |      0 |      0 |      0 |      0 |
+| symbolWalker.ts before       |      0 |       0 |      0 |      0 |      0 |      0 |
+| symbolWalker.ts after        |      0 |       0 |      0 |      0 |      0 |      0 |
+| performance.ts before        |      0 |       0 |      0 |      0 |      0 |      0 |
+| performance.ts after         |      0 |       0 |      0 |      0 |      0 |      0 |
+| binder.ts before             |      1 |       1 |      1 |      1 |      0 |      4 |
+| binder.ts after              |      0 |       0 |      0 |      0 |      0 |      0 |
+| **Total before**             |     19 |      19 |      3 |      4 |      0 | **45** |
+| **Total after**              |      9 |       1 |      0 |      0 |      0 | **10** |
 
 Every remaining requested-code finding is listed here and in
 `declined-findings.json`:
 
-| Site | Code | Reason |
-| --- | --- | --- |
-| semver.ts:149:25 | TS2345 | major is a destructured regexp capture, not an element-access expression; its mandatory capture invariant needs a separate adaptation. |
-| semver.ts:287:48 | TS18048 | simple is a split/for-of binding, not an indexed read, under the checker regex/string model. |
-| semver.ts:288:48 | TS2345 | rangeRegExp capture 1 is optional and parseComparator handles undefined; its string parameter declaration does not represent that contract. |
-| semver.ts:302:20 | TS2345 | major is derived from a destructured regexp capture, not an indexed expression at this use. |
-| semver.ts:302:42 | TS2345 | major is derived from a destructured regexp capture, not an indexed expression at this use. |
-| semver.ts:303:20 | TS2345 | major is derived from a destructured regexp capture, not an indexed expression at this use. |
-| semver.ts:304:20 | TS2345 | major is derived from a destructured regexp capture, not an indexed expression at this use. |
-| semver.ts:319:21 | TS2345 | leftResult.major inherits the destructured-capture type; this is a property read, not an indexed read. |
-| semver.ts:323:21 | TS2345 | rightResult.major inherits the destructured-capture type; this is a property read, not an indexed read. |
-| semver.ts:339:21 | TS2345 | rightResult.major inherits the destructured-capture type; this is a property read, not an indexed read. |
+| Site             | Code    | Reason                                                                                                                                      |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| semver.ts:149:25 | TS2345  | major is a destructured regexp capture, not an element-access expression; its mandatory capture invariant needs a separate adaptation.      |
+| semver.ts:287:48 | TS18048 | simple is a split/for-of binding, not an indexed read, under the checker regex/string model.                                                |
+| semver.ts:288:48 | TS2345  | rangeRegExp capture 1 is optional and parseComparator handles undefined; its string parameter declaration does not represent that contract. |
+| semver.ts:302:20 | TS2345  | major is derived from a destructured regexp capture, not an indexed expression at this use.                                                 |
+| semver.ts:302:42 | TS2345  | major is derived from a destructured regexp capture, not an indexed expression at this use.                                                 |
+| semver.ts:303:20 | TS2345  | major is derived from a destructured regexp capture, not an indexed expression at this use.                                                 |
+| semver.ts:304:20 | TS2345  | major is derived from a destructured regexp capture, not an indexed expression at this use.                                                 |
+| semver.ts:319:21 | TS2345  | leftResult.major inherits the destructured-capture type; this is a property read, not an indexed read.                                      |
+| semver.ts:323:21 | TS2345  | rightResult.major inherits the destructured-capture type; this is a property read, not an indexed read.                                     |
+| semver.ts:339:21 | TS2345  | rightResult.major inherits the destructured-capture type; this is a property read, not an indexed read.                                     |
 
 Five-code findings fall from **45 to 10**. This does not mean all six files
 pass the complete checker. `symbolWalker.ts` and `performance.ts` have no
@@ -553,31 +553,31 @@ are not run for this source-adaptation-only wave.
 
 ## Site ledger
 
-| Site | Read | Class | Action | Invariant or decline reason |
-| --- | --- | --- | --- | --- |
-| types.ts:7321:18 | `DiagnosticCategory[d.category]` | U-typed | assert | Every DiagnosticCategory member has an enum reverse name. |
-| programDiagnostics.ts:192:30 | `file.libReferenceDirectives[reason.index]` | U-position | assert | The lib-reference reason index comes from this source file directive list. |
-| programDiagnostics.ts:253:94 | `fileIncludeReasons[0]` | U-endpoint | assert | Processing an extra reason pushes its diagnostic before this cache merge reads the first element. |
-| programDiagnostics.ts:256:123 | `fileIncludeReasons[0]` | U-endpoint | assert | Processing an extra reason pushes its diagnostic before this cache merge reads the first element. |
-| programDiagnostics.ts:365:60 | `rootNames[reason.index]` | U-position | assert | The root-file inclusion reason records an index into this program root-name list. |
-| programDiagnostics.ts:382:66 | `resolvedProjectReferences?.[reason.index]` | U-position | decline | Debug.checkDefined already checks the optional indexed result. |
-| programDiagnostics.ts:397:25 | `referencesSyntax.elements[index]` | U-position | assert | The syntax array length guard covers the project-reference index recorded during reference traversal. |
-| programDiagnostics.ts:410:122 | `options.lib[reason.index]` | U-position | assert | A LibFile reason with an index refers to the populated explicit compiler-options lib list. |
-| semver.ts:171:32 | `left[i]` | U-parallel | assert | The loop uses the minimum length of populated prerelease identifier arrays. |
-| semver.ts:172:33 | `right[i]` | U-parallel | assert | The loop uses the minimum length of populated prerelease identifier arrays. |
-| semver.ts:283:30 | `match[1]` | U-regex | assert | A successful hyphenRegExp match requires the nonempty left partial-version capture. |
-| semver.ts:283:40 | `match[2]` | U-regex | assert | A successful hyphenRegExp match requires the nonempty right partial-version capture. |
-| semver.ts:288:48 | `match[1]` | U-regex | decline | rangeRegExp capture 1 is optional; parseComparator handles undefined in its switch. |
-| semver.ts:288:58 | `match[2]` | U-regex | assert | A successful rangeRegExp match requires the nonempty partial-version capture 2. |
-| symbolWalker.ts:76:17 | `visitedTypes[type.id]` | U-table | decline | The visited-type table is deliberately sparse; absence means not yet visited. |
-| symbolWalker.ts:79:13 | `visitedTypes[type.id]` | U-table | decline | This is a pure store marking the type visited, not an indexed read. |
-| symbolWalker.ts:190:17 | `visitedSymbols[symbolId]` | U-table | decline | The visited-symbol table is deliberately sparse; absence means not yet visited. |
-| symbolWalker.ts:193:13 | `visitedSymbols[symbolId]` | U-table | decline | This is a pure store marking the symbol visited, not an indexed read. |
-| tracing.ts:122:13 | `legend[legend.length - 1]` | U-endpoint | assert | startTracing pushes the current trace record before stopTracing updates it. |
-| tracing.ts:175:66 | `eventStack[index]` | U-position | assert | pop and popAll pass an in-range index into stack entries populated by push. |
-| tracing.ts:220:27 | `legend[legend.length - 1]` | U-endpoint | assert | startTracing pushes the current trace record before dumpTypes reads its path. |
-| tracing.ts:230:26 | `types[i]` | U-loop | assert | dumpTypes traverses the populated catalog built by recordType at its bounded index. |
-| tracing.ts:332:47 | `symbol?.declarations?.[0]` | U-endpoint | decline | getLocation accepts undefined for a missing symbol or first declaration. |
+| Site                          | Read                                        | Class      | Action  | Invariant or decline reason                                                                           |
+| ----------------------------- | ------------------------------------------- | ---------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| types.ts:7321:18              | `DiagnosticCategory[d.category]`            | U-typed    | assert  | Every DiagnosticCategory member has an enum reverse name.                                             |
+| programDiagnostics.ts:192:30  | `file.libReferenceDirectives[reason.index]` | U-position | assert  | The lib-reference reason index comes from this source file directive list.                            |
+| programDiagnostics.ts:253:94  | `fileIncludeReasons[0]`                     | U-endpoint | assert  | Processing an extra reason pushes its diagnostic before this cache merge reads the first element.     |
+| programDiagnostics.ts:256:123 | `fileIncludeReasons[0]`                     | U-endpoint | assert  | Processing an extra reason pushes its diagnostic before this cache merge reads the first element.     |
+| programDiagnostics.ts:365:60  | `rootNames[reason.index]`                   | U-position | assert  | The root-file inclusion reason records an index into this program root-name list.                     |
+| programDiagnostics.ts:382:66  | `resolvedProjectReferences?.[reason.index]` | U-position | decline | Debug.checkDefined already checks the optional indexed result.                                        |
+| programDiagnostics.ts:397:25  | `referencesSyntax.elements[index]`          | U-position | assert  | The syntax array length guard covers the project-reference index recorded during reference traversal. |
+| programDiagnostics.ts:410:122 | `options.lib[reason.index]`                 | U-position | assert  | A LibFile reason with an index refers to the populated explicit compiler-options lib list.            |
+| semver.ts:171:32              | `left[i]`                                   | U-parallel | assert  | The loop uses the minimum length of populated prerelease identifier arrays.                           |
+| semver.ts:172:33              | `right[i]`                                  | U-parallel | assert  | The loop uses the minimum length of populated prerelease identifier arrays.                           |
+| semver.ts:283:30              | `match[1]`                                  | U-regex    | assert  | A successful hyphenRegExp match requires the nonempty left partial-version capture.                   |
+| semver.ts:283:40              | `match[2]`                                  | U-regex    | assert  | A successful hyphenRegExp match requires the nonempty right partial-version capture.                  |
+| semver.ts:288:48              | `match[1]`                                  | U-regex    | decline | rangeRegExp capture 1 is optional; parseComparator handles undefined in its switch.                   |
+| semver.ts:288:58              | `match[2]`                                  | U-regex    | assert  | A successful rangeRegExp match requires the nonempty partial-version capture 2.                       |
+| symbolWalker.ts:76:17         | `visitedTypes[type.id]`                     | U-table    | decline | The visited-type table is deliberately sparse; absence means not yet visited.                         |
+| symbolWalker.ts:79:13         | `visitedTypes[type.id]`                     | U-table    | decline | This is a pure store marking the type visited, not an indexed read.                                   |
+| symbolWalker.ts:190:17        | `visitedSymbols[symbolId]`                  | U-table    | decline | The visited-symbol table is deliberately sparse; absence means not yet visited.                       |
+| symbolWalker.ts:193:13        | `visitedSymbols[symbolId]`                  | U-table    | decline | This is a pure store marking the symbol visited, not an indexed read.                                 |
+| tracing.ts:122:13             | `legend[legend.length - 1]`                 | U-endpoint | assert  | startTracing pushes the current trace record before stopTracing updates it.                           |
+| tracing.ts:175:66             | `eventStack[index]`                         | U-position | assert  | pop and popAll pass an in-range index into stack entries populated by push.                           |
+| tracing.ts:220:27             | `legend[legend.length - 1]`                 | U-endpoint | assert  | startTracing pushes the current trace record before dumpTypes reads its path.                         |
+| tracing.ts:230:26             | `types[i]`                                  | U-loop     | assert  | dumpTypes traverses the populated catalog built by recordType at its bounded index.                   |
+| tracing.ts:332:47             | `symbol?.declarations?.[0]`                 | U-endpoint | decline | getLocation accepts undefined for a missing symbol or first declaration.                              |
 
 | binder.ts:1428:20 | `antecedents[0]` | U-endpoint | assert | addAntecedent builds a populated flow list and length === 1 selects its sole flow node. |
 | binder.ts:1746:21 | `clauses[i]` | U-loop | assert | The outer loop and guarded increment keep i inside the parser-built populated switch-clause list. |
@@ -597,286 +597,286 @@ are not run for this source-adaptation-only wave.
 
 ## Wave 3 site ledger
 
-| Site | Read | Class | Action | Invariant or decline reason |
-| --- | --- | --- | --- | --- |
-| program.ts:357:38 | `commonPathComponents[i]` | U-parallel | assert | The minimum-length loop traverses both populated normalized path-component arrays. |
-| program.ts:357:88 | `sourcePathComponents[i]` | U-parallel | assert | The minimum-length loop traverses both populated normalized path-component arrays. |
-| program.ts:996:18 | `node.elements[0]` | U-endpoint | assert | The import-attribute length-one guard selects the sole parser-populated attribute. |
-| program.ts:1152:16 | `components[1]` | U-endpoint | decline | The component is used only in string concatenation, which already accepts absence; no required-value indexed finding exists. |
-| program.ts:1154:12 | `components[i]` | U-loop | decline | The while condition tests component presence before comparison and concatenation; absence terminates traversal. |
-| program.ts:1154:29 | `components[i]` | U-loop | decline | The while condition tests component presence before comparison and concatenation; absence terminates traversal. |
-| program.ts:1155:41 | `components[i]` | U-loop | decline | The while condition tests component presence before comparison and concatenation; absence terminates traversal. |
-| program.ts:1208:29 | `file.referencedFiles[index]` | U-position | assert | The ReferencedFile reason records an index into the corresponding populated source-file reference list. |
-| program.ts:1211:29 | `file.typeReferenceDirectives[index]` | U-position | assert | The ReferencedFile reason records an index into the corresponding populated source-file reference list. |
-| program.ts:1212:93 | `file.typeReferenceDirectives[index]` | U-position | assert | The ReferencedFile reason records an index into the corresponding populated source-file reference list. |
-| program.ts:1215:29 | `file.libReferenceDirectives[index]` | U-position | assert | The ReferencedFile reason records an index into the corresponding populated source-file reference list. |
-| program.ts:1282:46 | `program.getResolvedProjectReferences()[index]` | U-parallel | decline | resolvedProjectReferenceUptoDate accepts undefined for unresolved references and handles it nearby. |
-| program.ts:1311:25 | `oldResolvedRef.commandLine.projectReferences[index]` | U-parallel | assert | Resolved child references and commandLine.projectReferences share their recorded index; the original reference list is populated. |
-| program.ts:1525:24 | `options[option.name]` | U-table | decline | typeof deliberately inspects an optional compiler option value. |
-| program.ts:1796:55 | `automaticTypeDirectiveNames[i]` | U-loop | assert | The bounded loop indexes the populated automatic type-directive name list. |
-| program.ts:1796:107 | `resolutions[i]` | U-parallel | assert | The resolution worker returns one record per automatic type-directive name, including failed resolutions; the cache setter requires that record. |
-| program.ts:1798:21 | `automaticTypeDirectiveNames[i]` | U-loop | assert | The bounded loop indexes the populated automatic type-directive name list. |
-| program.ts:1800:21 | `resolutions[i]` | U-parallel | assert | The resolution worker returns one resolution record per automatic type-directive name, including unsuccessful resolutions. |
-| program.ts:1803:40 | `automaticTypeDirectiveNames[i]` | U-loop | assert | The bounded loop indexes the populated automatic type-directive name list. |
-| program.ts:1804:36 | `resolutions[i]` | U-parallel | decline | The existing optional chain explicitly handles a missing resolution record or resolved directive. |
-| program.ts:1861:38 | `parent?.commandLine.projectReferences[index]` | U-parallel | decline | The optional parent reference is tested by the existing root-reference fallback. |
-| program.ts:1861:87 | `oldProgram.getProjectReferences()[index]` | U-parallel | assert | When the optional parent reference is absent, the callback index addresses the populated old root-reference list. |
-| program.ts:2261:27 | `entries[i]` | U-loop | assert | The bounded loop traverses the populated resolution-entry input list. |
-| program.ts:2284:21 | `(result ??= new Array(entries.length))[i]` | U-position | decline | The indexed target is a pure store assembling the resolution list, not an indexed read. |
-| program.ts:2302:21 | `(result ??= new Array(entries.length))[i]` | U-position | decline | The indexed target is a pure store assembling the resolution list, not an indexed read. |
-| program.ts:2315:52 | `result[unknownEntryIndices[index]]` | U-position | decline | The indexed target is a pure store assembling the resolution list, not an indexed read. |
-| program.ts:2315:59 | `unknownEntryIndices[index]` | U-parallel | assert | Unknown entries and their original indices are pushed together and the resolution worker returns one record per unknown entry. |
-| program.ts:2324:32 | `(parent ? parent.commandLine.projectReferences : projectReferences)[index]` | U-parallel | assert | forEachProjectReference supplies the index shared by the populated original project-reference list and its resolution list. |
-| program.ts:2981:46 | `lineStarts[line]` | U-position | decline | String.slice accepts an absent offset; its existing end-of-file handling remains unchanged. |
-| program.ts:2981:64 | `lineStarts[line + 1]` | U-position | decline | String.slice accepts an absent offset; its existing end-of-file handling remains unchanged. |
-| program.ts:3116:70 | `parent.modifiers[decoratorIndex]` | U-position | assert | A successful guarded findIndex supplies the index of an existing parser-populated modifier. |
-| program.ts:3124:78 | `parent.modifiers[decoratorIndex]` | U-position | assert | A successful guarded findIndex supplies the index of an existing parser-populated modifier. |
-| program.ts:3130:69 | `parent.modifiers[trailingDecoratorIndex]` | U-position | assert | A successful guarded findIndex supplies the index of an existing parser-populated modifier. |
-| program.ts:3131:69 | `parent.modifiers[decoratorIndex]` | U-position | assert | A successful guarded findIndex supplies the index of an existing parser-populated modifier. |
-| program.ts:3479:58 | `supportedExtensions[0]` | U-endpoint | decline | forEach accepts an absent extension group and handles it without dereferencing the result. |
-| program.ts:3526:30 | `(FileIncludeKind as any)[reason.kind]` | U-table | decline | The existing any cast is a tracing enum-name lookup, not a required indexed-absence finding. |
-| program.ts:3780:25 | `file.typeReferenceDirectives[index]` | U-loop | assert | The bounded type-directive loop traverses the populated source-file directive list. |
-| program.ts:3781:52 | `resolutions[index]` | U-parallel | assert | The type-resolution worker returns one resolution record per type directive, even for failed resolutions. |
-| program.ts:3923:36 | `resolutions[index]` | U-parallel | assert | The resolution worker returns one record per module name and the adjacent assertion checks equal list lengths. |
-| program.ts:3924:36 | `moduleNames[index]` | U-loop | assert | The bounded module-resolution loop traverses the populated module-name list. |
-| program.ts:3925:66 | `moduleNames[index]` | U-loop | assert | The bounded module-resolution loop traverses the populated module-name list. |
-| program.ts:3926:57 | `resolutions[index]` | U-parallel | assert | The resolution worker returns one record per module name and the adjacent assertion checks equal list lengths. |
-| program.ts:3927:81 | `resolutions[index]` | U-parallel | assert | The resolution worker returns one record per module name and the adjacent assertion checks equal list lengths. |
-| program.ts:3957:36 | `file.imports[index]` | U-parallel | decline | isInJSFile explicitly accepts undefined; the adjacent required flags read carries the populated-import obligation. |
-| program.ts:3957:62 | `file.imports[index]` | U-parallel | assert | The earlier index < file.imports.length condition guards this read in the populated imports portion of moduleNames. |
-| program.ts:4148:29 | `options.paths[key]` | U-table | decline | isArray validates the optional or malformed path-option value and diagnoses invalid values in the else branch. |
-| program.ts:4149:33 | `options.paths[key]` | U-table | assert | The preceding isArray check establishes that the paths entry exists and is an array. |
-| program.ts:4154:39 | `options.paths[key][i]` | U-loop | decline | The substitution value is deliberately validated with typeof and diagnosed when absent or malformed. |
-| program.ts:4154:39 | `options.paths[key]` | U-table | assert | The preceding isArray check establishes that the paths entry exists and is an array. |
-| program.ts:4374:13 | `ModuleKind[moduleKind]` | U-table | decline | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted. |
-| program.ts:4378:36 | `ModuleKind[moduleKind]` | U-table | decline | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted. |
-| program.ts:4379:42 | `ModuleResolutionKind[moduleKindName as any]` | U-table | decline | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted. |
-| program.ts:4383:13 | `ModuleResolutionKind[moduleResolution]` | U-table | decline | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted. |
-| program.ts:4387:42 | `ModuleResolutionKind[moduleResolution]` | U-table | decline | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted. |
-| program.ts:4557:54 | `ModuleKind[options.module]` | U-table | decline | createDeprecatedDiagnostic explicitly accepts an absent diagnostic value. |
-| program.ts:4593:29 | `(parent ? parent.commandLine.projectReferences : projectReferences)[index]` | U-parallel | assert | forEachProjectReference supplies the index shared by the populated original project-reference list and its resolution list. |
-| program.ts:4624:121 | `initializer.elements[valueIndex]` | U-position | assert | The syntax-array length guard covers the recorded nonnegative option/reference index in a populated parser array. |
-| program.ts:4673:123 | `referencesSyntax.elements[index]` | U-position | assert | The syntax-array length guard covers the recorded nonnegative option/reference index in a populated parser array. |
-| program.ts:5099:53 | `option[d.skippedOn]` | U-table | decline | The optional compiler flag is deliberately tested for truthiness. |
-| program.ts:5191:40 | `imports[index]` | U-position | assert | The resolution-index contract and imports.length guard select a populated import string literal. |
-| commandLineParser.ts:274:55 | `entry[0]` | U-endpoint | decline | libEntries is already typed as fixed two-element tuples, so entry[0] is a required string in the checker. |
-| commandLineParser.ts:1979:23 | `args[i]` | U-loop | assert | The while-loop bound covers the populated command-line or response-file argument list before i is incremented. |
-| commandLineParser.ts:2048:26 | `args[i]` | U-position | decline | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence. |
-| commandLineParser.ts:2050:13 | `options[opt.name]` | U-table | decline | This indexed option target is a pure store, not an indexed read. |
-| commandLineParser.ts:2055:17 | `options[opt.name]` | U-table | decline | This indexed option target is a pure store, not an indexed read. |
-| commandLineParser.ts:2070:14 | `args[i]` | U-position | decline | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence. |
-| commandLineParser.ts:2074:13 | `args[i]` | U-position | decline | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence. |
-| commandLineParser.ts:2077:21 | `options[opt.name]` | U-table | decline | This indexed option target is a pure store, not an indexed read. |
-| commandLineParser.ts:2077:79 | `args[i]` | U-position | decline | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence. |
-| commandLineParser.ts:2082:38 | `args[i]` | U-position | decline | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence. |
-| commandLineParser.ts:2083:21 | `options[opt.name]` | U-table | decline | This indexed option target is a pure store, not an indexed read. |
-| commandLineParser.ts:2090:21 | `options[opt.name]` | U-table | decline | This indexed option target is a pure store, not an indexed read. |
-| commandLineParser.ts:2090:70 | `args[i]` | U-position | decline | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence. |
-| commandLineParser.ts:2094:61 | `args[i]` | U-position | decline | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence. |
-| commandLineParser.ts:2095:21 | `options[opt.name]` | U-table | decline | This indexed option target is a pure store, not an indexed read. |
-| commandLineParser.ts:2105:21 | `options[opt.name]` | U-table | decline | This indexed option target is a pure store, not an indexed read. |
-| commandLineParser.ts:2105:101 | `args[i]` | U-position | decline | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence. |
-| commandLineParser.ts:2111:13 | `options[opt.name]` | U-table | decline | This indexed option target is a pure store, not an indexed read. |
-| commandLineParser.ts:2281:57 | `jsonSourceFile.parseDiagnostics[0]` | U-endpoint | decline | The conditional selects the optional first parse diagnostic; the returned error field already accepts undefined. |
-| commandLineParser.ts:2442:52 | `sourceFile.statements[0]` | U-endpoint | decline | The existing optional chain handles an empty JSON statement list. |
-| commandLineParser.ts:2468:38 | `sourceFile.statements[0]` | U-endpoint | decline | The existing optional chain handles an empty JSON statement list. |
-| commandLineParser.ts:2515:21 | `result[keyText]` | U-table | decline | This indexed target is a pure store, not an indexed read. |
-| commandLineParser.ts:2690:29 | `computedOptions[option]` | U-table | assert | for-in enumerates populated entries in the compiler-created computedOptions table. |
-| commandLineParser.ts:2691:34 | `computedOptions[option]` | U-table | assert | for-in enumerates populated entries in the compiler-created computedOptions table. |
-| commandLineParser.ts:2693:17 | `impliedCompilerOptions[option]` | U-table | decline | This indexed target is a pure store, not an indexed read. |
-| commandLineParser.ts:2693:50 | `computedOptions[option]` | U-table | assert | for-in enumerates populated entries in the compiler-created computedOptions table. |
-| commandLineParser.ts:2707:25 | `computedOptions[option]` | U-table | decline | The existing optional chain handles a dependency name absent from computedOptions. |
-| commandLineParser.ts:2721:9 | `specs[0]` | U-endpoint | decline | The equality test already accepts an absent first specification and preserves the existing branch result. |
-| commandLineParser.ts:2795:27 | `options[name]` | U-table | decline | The existing CompilerOptionsValue cast includes undefined; the optional option value is handled by its converter. |
-| commandLineParser.ts:2901:24 | `allSetOptions[0]` | U-endpoint | assert | The nonempty allSetOptions guard selects its first remaining key before emitOption removes that key. |
-| commandLineParser.ts:2901:42 | `options[allSetOptions[0]]` | U-table | decline | emitOption accepts an optional option value and applies its existing default after selecting the populated key. |
-| commandLineParser.ts:2901:50 | `allSetOptions[0]` | U-endpoint | assert | The nonempty allSetOptions guard selects its first remaining key before emitOption removes that key. |
-| commandLineParser.ts:2933:24 | `options[setting]` | U-table | decline | The existing nullish default handles absence and must remain at this evaluation point. |
-| commandLineParser.ts:2943:24 | `optionDeclarations.filter(c => c.name === settingName)[0]` | U-endpoint | decline | The following explicit Debug.fail handles a missing filtered option. |
-| commandLineParser.ts:2977:13 | `result[name]` | U-table | decline | This indexed target is a pure store, not an indexed read. |
-| commandLineParser.ts:2979:17 | `options[name]` | U-table | decline | The existing CompilerOptionsValue cast includes undefined; the optional option value is handled by its converter. |
-| commandLineParser.ts:3229:58 | `raw[prop]` | U-table | decline | The raw JSON value is validated with null/array checks and its existing cast; malformed or absent values are handled nearby. |
-| commandLineParser.ts:3230:25 | `raw[prop]` | U-table | decline | The raw JSON value is validated with null/array checks and its existing cast; malformed or absent values are handled nearby. |
-| commandLineParser.ts:3231:32 | `raw[prop]` | U-table | decline | The raw JSON value is validated with null/array checks and its existing cast; malformed or absent values are handled nearby. |
-| commandLineParser.ts:3268:13 | `options[option.name]` | U-table | decline | The explicit undefined test guards this optional option value and downstream type checks handle malformed values. |
-| commandLineParser.ts:3269:27 | `options[option.name]` | U-table | decline | The explicit undefined test guards this optional option value and downstream type checks handle malformed values. |
-| commandLineParser.ts:3295:9 | `(result ??= assign({}, options))[option.name]` | U-position | decline | This indexed target is a pure store, not an indexed read. |
-| commandLineParser.ts:3313:9 | `(result ??= list.slice())[index]` | U-position | decline | This indexed target is a pure store, not an indexed read. |
-| commandLineParser.ts:3322:22 | `mapLike[key]` | U-table | decline | The array check and substitution helper explicitly accept absent map entries. |
-| commandLineParser.ts:3323:77 | `mapLike[key]` | U-table | decline | The array check and substitution helper explicitly accept absent map entries. |
-| commandLineParser.ts:3325:9 | `(result ??= assign({}, mapLike))[key]` | U-position | decline | This indexed target is a pure store, not an indexed read. |
-| commandLineParser.ts:3464:21 | `ownConfig.raw[propertyName]` | U-table | decline | The inherited raw option is tested for presence and map accepts undefined; the result target is a pure store. |
-| commandLineParser.ts:3465:21 | `extendsRaw[propertyName]` | U-table | decline | The inherited raw option is tested for presence and map accepts undefined; the result target is a pure store. |
-| commandLineParser.ts:3466:21 | `result[propertyName]` | U-table | decline | The inherited raw option is tested for presence and map accepts undefined; the result target is a pure store. |
-| commandLineParser.ts:3466:48 | `extendsRaw[propertyName]` | U-table | decline | The inherited raw option is tested for presence and map accepts undefined; the result target is a pure store. |
-| commandLineParser.ts:3542:30 | `(value as unknown[])[index]` | U-loop | decline | The unknown extends entry is deliberately checked with isString and invalid entries follow the diagnostic path. |
-| commandLineParser.ts:3551:25 | `(valueExpression as ArrayLiteralExpression | undefined)?.elements[index]` | U-position | decline | The optional syntax node is accepted by diagnostic conversion, which falls back to a compiler diagnostic. |
-| commandLineParser.ts:3557:114 | `(valueExpression as ArrayLiteralExpression | undefined)?.elements[index]` | U-position | decline | The optional syntax node is accepted by diagnostic conversion, which falls back to a compiler diagnostic. |
-| commandLineParser.ts:3592:69 | `rootCompilerOptions[0]` | U-endpoint | assert | rootCompilerOptions exists only after append adds a root option property, so its first property name is populated. |
-| commandLineParser.ts:3592:203 | `rootCompilerOptions[0]` | U-endpoint | assert | rootCompilerOptions exists only after append adds a root option property, so its first property name is populated. |
-| commandLineParser.ts:3613:17 | `currentOption[option.name]` | U-table | decline | The option target is a pure store; the raw JSON argument value is accepted by the converter, including absence. |
-| commandLineParser.ts:3785:13 | `(defaultOptions || (defaultOptions = {}))[opt.name]` | U-table | decline | The option target is a pure store; the raw JSON argument value is accepted by the converter, including absence. |
-| commandLineParser.ts:3785:90 | `jsonOptions[id]` | U-table | decline | The option target is a pure store; the raw JSON argument value is accepted by the converter, including absence. |
-| commandLineParser.ts:3887:120 | `valueExpression?.elements[index]` | U-position | decline | The optional syntax node is accepted by diagnostic conversion, which falls back to a compiler diagnostic. |
-| commandLineParser.ts:4142:68 | `wildcardDirectories[existingPath]` | U-table | decline | existingFlags is explicitly tested for undefined before comparison and replacement. |
-| commandLineParser.ts:4144:21 | `wildcardDirectories[existingPath == undefined ? existingPath : path]` | U-table | decline | This is a pure store or delete of a table entry, not an indexed read. |
-| commandLineParser.ts:4159:32 | `wildcardDirectories[path]` | U-table | decline | This is a pure store or delete of a table entry, not an indexed read. |
-| commandLineParser.ts:4185:33 | `match[0]` | U-regex | assert | A successful wildcardDirectoryPattern.exec always populates match[0] with the entire match. |
-| commandLineParser.ts:4186:19 | `match[0]` | U-regex | assert | A successful wildcardDirectoryPattern.exec always populates match[0] with the entire match. |
-| commandLineParser.ts:4248:21 | `extensionGroup[i]` | U-loop | assert | The bounded descending loop traverses the populated built-in extension group selected for this file. |
-| commandLineParser.ts:4269:17 | `out[key]` | U-table | decline | The output target is a pure store and the input converter explicitly returns undefined for an absent option. |
-| commandLineParser.ts:4269:59 | `opts[key]` | U-table | decline | The output target is a pure store and the input converter explicitly returns undefined for an absent option. |
+| Site                          | Read                                                                         | Class                        | Action                            | Invariant or decline reason                                                                                                                      |
+| ----------------------------- | ---------------------------------------------------------------------------- | ---------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| program.ts:357:38             | `commonPathComponents[i]`                                                    | U-parallel                   | assert                            | The minimum-length loop traverses both populated normalized path-component arrays.                                                               |
+| program.ts:357:88             | `sourcePathComponents[i]`                                                    | U-parallel                   | assert                            | The minimum-length loop traverses both populated normalized path-component arrays.                                                               |
+| program.ts:996:18             | `node.elements[0]`                                                           | U-endpoint                   | assert                            | The import-attribute length-one guard selects the sole parser-populated attribute.                                                               |
+| program.ts:1152:16            | `components[1]`                                                              | U-endpoint                   | decline                           | The component is used only in string concatenation, which already accepts absence; no required-value indexed finding exists.                     |
+| program.ts:1154:12            | `components[i]`                                                              | U-loop                       | decline                           | The while condition tests component presence before comparison and concatenation; absence terminates traversal.                                  |
+| program.ts:1154:29            | `components[i]`                                                              | U-loop                       | decline                           | The while condition tests component presence before comparison and concatenation; absence terminates traversal.                                  |
+| program.ts:1155:41            | `components[i]`                                                              | U-loop                       | decline                           | The while condition tests component presence before comparison and concatenation; absence terminates traversal.                                  |
+| program.ts:1208:29            | `file.referencedFiles[index]`                                                | U-position                   | assert                            | The ReferencedFile reason records an index into the corresponding populated source-file reference list.                                          |
+| program.ts:1211:29            | `file.typeReferenceDirectives[index]`                                        | U-position                   | assert                            | The ReferencedFile reason records an index into the corresponding populated source-file reference list.                                          |
+| program.ts:1212:93            | `file.typeReferenceDirectives[index]`                                        | U-position                   | assert                            | The ReferencedFile reason records an index into the corresponding populated source-file reference list.                                          |
+| program.ts:1215:29            | `file.libReferenceDirectives[index]`                                         | U-position                   | assert                            | The ReferencedFile reason records an index into the corresponding populated source-file reference list.                                          |
+| program.ts:1282:46            | `program.getResolvedProjectReferences()[index]`                              | U-parallel                   | decline                           | resolvedProjectReferenceUptoDate accepts undefined for unresolved references and handles it nearby.                                              |
+| program.ts:1311:25            | `oldResolvedRef.commandLine.projectReferences[index]`                        | U-parallel                   | assert                            | Resolved child references and commandLine.projectReferences share their recorded index; the original reference list is populated.                |
+| program.ts:1525:24            | `options[option.name]`                                                       | U-table                      | decline                           | typeof deliberately inspects an optional compiler option value.                                                                                  |
+| program.ts:1796:55            | `automaticTypeDirectiveNames[i]`                                             | U-loop                       | assert                            | The bounded loop indexes the populated automatic type-directive name list.                                                                       |
+| program.ts:1796:107           | `resolutions[i]`                                                             | U-parallel                   | assert                            | The resolution worker returns one record per automatic type-directive name, including failed resolutions; the cache setter requires that record. |
+| program.ts:1798:21            | `automaticTypeDirectiveNames[i]`                                             | U-loop                       | assert                            | The bounded loop indexes the populated automatic type-directive name list.                                                                       |
+| program.ts:1800:21            | `resolutions[i]`                                                             | U-parallel                   | assert                            | The resolution worker returns one resolution record per automatic type-directive name, including unsuccessful resolutions.                       |
+| program.ts:1803:40            | `automaticTypeDirectiveNames[i]`                                             | U-loop                       | assert                            | The bounded loop indexes the populated automatic type-directive name list.                                                                       |
+| program.ts:1804:36            | `resolutions[i]`                                                             | U-parallel                   | decline                           | The existing optional chain explicitly handles a missing resolution record or resolved directive.                                                |
+| program.ts:1861:38            | `parent?.commandLine.projectReferences[index]`                               | U-parallel                   | decline                           | The optional parent reference is tested by the existing root-reference fallback.                                                                 |
+| program.ts:1861:87            | `oldProgram.getProjectReferences()[index]`                                   | U-parallel                   | assert                            | When the optional parent reference is absent, the callback index addresses the populated old root-reference list.                                |
+| program.ts:2261:27            | `entries[i]`                                                                 | U-loop                       | assert                            | The bounded loop traverses the populated resolution-entry input list.                                                                            |
+| program.ts:2284:21            | `(result ??= new Array(entries.length))[i]`                                  | U-position                   | decline                           | The indexed target is a pure store assembling the resolution list, not an indexed read.                                                          |
+| program.ts:2302:21            | `(result ??= new Array(entries.length))[i]`                                  | U-position                   | decline                           | The indexed target is a pure store assembling the resolution list, not an indexed read.                                                          |
+| program.ts:2315:52            | `result[unknownEntryIndices[index]]`                                         | U-position                   | decline                           | The indexed target is a pure store assembling the resolution list, not an indexed read.                                                          |
+| program.ts:2315:59            | `unknownEntryIndices[index]`                                                 | U-parallel                   | assert                            | Unknown entries and their original indices are pushed together and the resolution worker returns one record per unknown entry.                   |
+| program.ts:2324:32            | `(parent ? parent.commandLine.projectReferences : projectReferences)[index]` | U-parallel                   | assert                            | forEachProjectReference supplies the index shared by the populated original project-reference list and its resolution list.                      |
+| program.ts:2981:46            | `lineStarts[line]`                                                           | U-position                   | decline                           | String.slice accepts an absent offset; its existing end-of-file handling remains unchanged.                                                      |
+| program.ts:2981:64            | `lineStarts[line + 1]`                                                       | U-position                   | decline                           | String.slice accepts an absent offset; its existing end-of-file handling remains unchanged.                                                      |
+| program.ts:3116:70            | `parent.modifiers[decoratorIndex]`                                           | U-position                   | assert                            | A successful guarded findIndex supplies the index of an existing parser-populated modifier.                                                      |
+| program.ts:3124:78            | `parent.modifiers[decoratorIndex]`                                           | U-position                   | assert                            | A successful guarded findIndex supplies the index of an existing parser-populated modifier.                                                      |
+| program.ts:3130:69            | `parent.modifiers[trailingDecoratorIndex]`                                   | U-position                   | assert                            | A successful guarded findIndex supplies the index of an existing parser-populated modifier.                                                      |
+| program.ts:3131:69            | `parent.modifiers[decoratorIndex]`                                           | U-position                   | assert                            | A successful guarded findIndex supplies the index of an existing parser-populated modifier.                                                      |
+| program.ts:3479:58            | `supportedExtensions[0]`                                                     | U-endpoint                   | decline                           | forEach accepts an absent extension group and handles it without dereferencing the result.                                                       |
+| program.ts:3526:30            | `(FileIncludeKind as any)[reason.kind]`                                      | U-table                      | decline                           | The existing any cast is a tracing enum-name lookup, not a required indexed-absence finding.                                                     |
+| program.ts:3780:25            | `file.typeReferenceDirectives[index]`                                        | U-loop                       | assert                            | The bounded type-directive loop traverses the populated source-file directive list.                                                              |
+| program.ts:3781:52            | `resolutions[index]`                                                         | U-parallel                   | assert                            | The type-resolution worker returns one resolution record per type directive, even for failed resolutions.                                        |
+| program.ts:3923:36            | `resolutions[index]`                                                         | U-parallel                   | assert                            | The resolution worker returns one record per module name and the adjacent assertion checks equal list lengths.                                   |
+| program.ts:3924:36            | `moduleNames[index]`                                                         | U-loop                       | assert                            | The bounded module-resolution loop traverses the populated module-name list.                                                                     |
+| program.ts:3925:66            | `moduleNames[index]`                                                         | U-loop                       | assert                            | The bounded module-resolution loop traverses the populated module-name list.                                                                     |
+| program.ts:3926:57            | `resolutions[index]`                                                         | U-parallel                   | assert                            | The resolution worker returns one record per module name and the adjacent assertion checks equal list lengths.                                   |
+| program.ts:3927:81            | `resolutions[index]`                                                         | U-parallel                   | assert                            | The resolution worker returns one record per module name and the adjacent assertion checks equal list lengths.                                   |
+| program.ts:3957:36            | `file.imports[index]`                                                        | U-parallel                   | decline                           | isInJSFile explicitly accepts undefined; the adjacent required flags read carries the populated-import obligation.                               |
+| program.ts:3957:62            | `file.imports[index]`                                                        | U-parallel                   | assert                            | The earlier index < file.imports.length condition guards this read in the populated imports portion of moduleNames.                              |
+| program.ts:4148:29            | `options.paths[key]`                                                         | U-table                      | decline                           | isArray validates the optional or malformed path-option value and diagnoses invalid values in the else branch.                                   |
+| program.ts:4149:33            | `options.paths[key]`                                                         | U-table                      | assert                            | The preceding isArray check establishes that the paths entry exists and is an array.                                                             |
+| program.ts:4154:39            | `options.paths[key][i]`                                                      | U-loop                       | decline                           | The substitution value is deliberately validated with typeof and diagnosed when absent or malformed.                                             |
+| program.ts:4154:39            | `options.paths[key]`                                                         | U-table                      | assert                            | The preceding isArray check establishes that the paths entry exists and is an array.                                                             |
+| program.ts:4374:13            | `ModuleKind[moduleKind]`                                                     | U-table                      | decline                           | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted.                                  |
+| program.ts:4378:36            | `ModuleKind[moduleKind]`                                                     | U-table                      | decline                           | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted.                                  |
+| program.ts:4379:42            | `ModuleResolutionKind[moduleKindName as any]`                                | U-table                      | decline                           | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted.                                  |
+| program.ts:4383:13            | `ModuleResolutionKind[moduleResolution]`                                     | U-table                      | decline                           | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted.                                  |
+| program.ts:4387:42            | `ModuleResolutionKind[moduleResolution]`                                     | U-table                      | decline                           | The existing enum lookup condition or fallback handles absence; the optional diagnostic-name value is accepted.                                  |
+| program.ts:4557:54            | `ModuleKind[options.module]`                                                 | U-table                      | decline                           | createDeprecatedDiagnostic explicitly accepts an absent diagnostic value.                                                                        |
+| program.ts:4593:29            | `(parent ? parent.commandLine.projectReferences : projectReferences)[index]` | U-parallel                   | assert                            | forEachProjectReference supplies the index shared by the populated original project-reference list and its resolution list.                      |
+| program.ts:4624:121           | `initializer.elements[valueIndex]`                                           | U-position                   | assert                            | The syntax-array length guard covers the recorded nonnegative option/reference index in a populated parser array.                                |
+| program.ts:4673:123           | `referencesSyntax.elements[index]`                                           | U-position                   | assert                            | The syntax-array length guard covers the recorded nonnegative option/reference index in a populated parser array.                                |
+| program.ts:5099:53            | `option[d.skippedOn]`                                                        | U-table                      | decline                           | The optional compiler flag is deliberately tested for truthiness.                                                                                |
+| program.ts:5191:40            | `imports[index]`                                                             | U-position                   | assert                            | The resolution-index contract and imports.length guard select a populated import string literal.                                                 |
+| commandLineParser.ts:274:55   | `entry[0]`                                                                   | U-endpoint                   | decline                           | libEntries is already typed as fixed two-element tuples, so entry[0] is a required string in the checker.                                        |
+| commandLineParser.ts:1979:23  | `args[i]`                                                                    | U-loop                       | assert                            | The while-loop bound covers the populated command-line or response-file argument list before i is incremented.                                   |
+| commandLineParser.ts:2048:26  | `args[i]`                                                                    | U-position                   | decline                           | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence.                |
+| commandLineParser.ts:2050:13  | `options[opt.name]`                                                          | U-table                      | decline                           | This indexed option target is a pure store, not an indexed read.                                                                                 |
+| commandLineParser.ts:2055:17  | `options[opt.name]`                                                          | U-table                      | decline                           | This indexed option target is a pure store, not an indexed read.                                                                                 |
+| commandLineParser.ts:2070:14  | `args[i]`                                                                    | U-position                   | decline                           | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence.                |
+| commandLineParser.ts:2074:13  | `args[i]`                                                                    | U-position                   | decline                           | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence.                |
+| commandLineParser.ts:2077:21  | `options[opt.name]`                                                          | U-table                      | decline                           | This indexed option target is a pure store, not an indexed read.                                                                                 |
+| commandLineParser.ts:2077:79  | `args[i]`                                                                    | U-position                   | decline                           | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence.                |
+| commandLineParser.ts:2082:38  | `args[i]`                                                                    | U-position                   | decline                           | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence.                |
+| commandLineParser.ts:2083:21  | `options[opt.name]`                                                          | U-table                      | decline                           | This indexed option target is a pure store, not an indexed read.                                                                                 |
+| commandLineParser.ts:2090:21  | `options[opt.name]`                                                          | U-table                      | decline                           | This indexed option target is a pure store, not an indexed read.                                                                                 |
+| commandLineParser.ts:2090:70  | `args[i]`                                                                    | U-position                   | decline                           | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence.                |
+| commandLineParser.ts:2094:61  | `args[i]`                                                                    | U-position                   | decline                           | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence.                |
+| commandLineParser.ts:2095:21  | `options[opt.name]`                                                          | U-table                      | decline                           | This indexed option target is a pure store, not an indexed read.                                                                                 |
+| commandLineParser.ts:2105:21  | `options[opt.name]`                                                          | U-table                      | decline                           | This indexed option target is a pure store, not an indexed read.                                                                                 |
+| commandLineParser.ts:2105:101 | `args[i]`                                                                    | U-position                   | decline                           | The next option argument may be absent; nearby diagnostics, comparisons, defaults or converters deliberately handle that absence.                |
+| commandLineParser.ts:2111:13  | `options[opt.name]`                                                          | U-table                      | decline                           | This indexed option target is a pure store, not an indexed read.                                                                                 |
+| commandLineParser.ts:2281:57  | `jsonSourceFile.parseDiagnostics[0]`                                         | U-endpoint                   | decline                           | The conditional selects the optional first parse diagnostic; the returned error field already accepts undefined.                                 |
+| commandLineParser.ts:2442:52  | `sourceFile.statements[0]`                                                   | U-endpoint                   | decline                           | The existing optional chain handles an empty JSON statement list.                                                                                |
+| commandLineParser.ts:2468:38  | `sourceFile.statements[0]`                                                   | U-endpoint                   | decline                           | The existing optional chain handles an empty JSON statement list.                                                                                |
+| commandLineParser.ts:2515:21  | `result[keyText]`                                                            | U-table                      | decline                           | This indexed target is a pure store, not an indexed read.                                                                                        |
+| commandLineParser.ts:2690:29  | `computedOptions[option]`                                                    | U-table                      | assert                            | for-in enumerates populated entries in the compiler-created computedOptions table.                                                               |
+| commandLineParser.ts:2691:34  | `computedOptions[option]`                                                    | U-table                      | assert                            | for-in enumerates populated entries in the compiler-created computedOptions table.                                                               |
+| commandLineParser.ts:2693:17  | `impliedCompilerOptions[option]`                                             | U-table                      | decline                           | This indexed target is a pure store, not an indexed read.                                                                                        |
+| commandLineParser.ts:2693:50  | `computedOptions[option]`                                                    | U-table                      | assert                            | for-in enumerates populated entries in the compiler-created computedOptions table.                                                               |
+| commandLineParser.ts:2707:25  | `computedOptions[option]`                                                    | U-table                      | decline                           | The existing optional chain handles a dependency name absent from computedOptions.                                                               |
+| commandLineParser.ts:2721:9   | `specs[0]`                                                                   | U-endpoint                   | decline                           | The equality test already accepts an absent first specification and preserves the existing branch result.                                        |
+| commandLineParser.ts:2795:27  | `options[name]`                                                              | U-table                      | decline                           | The existing CompilerOptionsValue cast includes undefined; the optional option value is handled by its converter.                                |
+| commandLineParser.ts:2901:24  | `allSetOptions[0]`                                                           | U-endpoint                   | assert                            | The nonempty allSetOptions guard selects its first remaining key before emitOption removes that key.                                             |
+| commandLineParser.ts:2901:42  | `options[allSetOptions[0]]`                                                  | U-table                      | decline                           | emitOption accepts an optional option value and applies its existing default after selecting the populated key.                                  |
+| commandLineParser.ts:2901:50  | `allSetOptions[0]`                                                           | U-endpoint                   | assert                            | The nonempty allSetOptions guard selects its first remaining key before emitOption removes that key.                                             |
+| commandLineParser.ts:2933:24  | `options[setting]`                                                           | U-table                      | decline                           | The existing nullish default handles absence and must remain at this evaluation point.                                                           |
+| commandLineParser.ts:2943:24  | `optionDeclarations.filter(c => c.name === settingName)[0]`                  | U-endpoint                   | decline                           | The following explicit Debug.fail handles a missing filtered option.                                                                             |
+| commandLineParser.ts:2977:13  | `result[name]`                                                               | U-table                      | decline                           | This indexed target is a pure store, not an indexed read.                                                                                        |
+| commandLineParser.ts:2979:17  | `options[name]`                                                              | U-table                      | decline                           | The existing CompilerOptionsValue cast includes undefined; the optional option value is handled by its converter.                                |
+| commandLineParser.ts:3229:58  | `raw[prop]`                                                                  | U-table                      | decline                           | The raw JSON value is validated with null/array checks and its existing cast; malformed or absent values are handled nearby.                     |
+| commandLineParser.ts:3230:25  | `raw[prop]`                                                                  | U-table                      | decline                           | The raw JSON value is validated with null/array checks and its existing cast; malformed or absent values are handled nearby.                     |
+| commandLineParser.ts:3231:32  | `raw[prop]`                                                                  | U-table                      | decline                           | The raw JSON value is validated with null/array checks and its existing cast; malformed or absent values are handled nearby.                     |
+| commandLineParser.ts:3268:13  | `options[option.name]`                                                       | U-table                      | decline                           | The explicit undefined test guards this optional option value and downstream type checks handle malformed values.                                |
+| commandLineParser.ts:3269:27  | `options[option.name]`                                                       | U-table                      | decline                           | The explicit undefined test guards this optional option value and downstream type checks handle malformed values.                                |
+| commandLineParser.ts:3295:9   | `(result ??= assign({}, options))[option.name]`                              | U-position                   | decline                           | This indexed target is a pure store, not an indexed read.                                                                                        |
+| commandLineParser.ts:3313:9   | `(result ??= list.slice())[index]`                                           | U-position                   | decline                           | This indexed target is a pure store, not an indexed read.                                                                                        |
+| commandLineParser.ts:3322:22  | `mapLike[key]`                                                               | U-table                      | decline                           | The array check and substitution helper explicitly accept absent map entries.                                                                    |
+| commandLineParser.ts:3323:77  | `mapLike[key]`                                                               | U-table                      | decline                           | The array check and substitution helper explicitly accept absent map entries.                                                                    |
+| commandLineParser.ts:3325:9   | `(result ??= assign({}, mapLike))[key]`                                      | U-position                   | decline                           | This indexed target is a pure store, not an indexed read.                                                                                        |
+| commandLineParser.ts:3464:21  | `ownConfig.raw[propertyName]`                                                | U-table                      | decline                           | The inherited raw option is tested for presence and map accepts undefined; the result target is a pure store.                                    |
+| commandLineParser.ts:3465:21  | `extendsRaw[propertyName]`                                                   | U-table                      | decline                           | The inherited raw option is tested for presence and map accepts undefined; the result target is a pure store.                                    |
+| commandLineParser.ts:3466:21  | `result[propertyName]`                                                       | U-table                      | decline                           | The inherited raw option is tested for presence and map accepts undefined; the result target is a pure store.                                    |
+| commandLineParser.ts:3466:48  | `extendsRaw[propertyName]`                                                   | U-table                      | decline                           | The inherited raw option is tested for presence and map accepts undefined; the result target is a pure store.                                    |
+| commandLineParser.ts:3542:30  | `(value as unknown[])[index]`                                                | U-loop                       | decline                           | The unknown extends entry is deliberately checked with isString and invalid entries follow the diagnostic path.                                  |
+| commandLineParser.ts:3551:25  | `(valueExpression as ArrayLiteralExpression                                  | undefined)?.elements[index]` | U-position                        | decline                                                                                                                                          | The optional syntax node is accepted by diagnostic conversion, which falls back to a compiler diagnostic. |
+| commandLineParser.ts:3557:114 | `(valueExpression as ArrayLiteralExpression                                  | undefined)?.elements[index]` | U-position                        | decline                                                                                                                                          | The optional syntax node is accepted by diagnostic conversion, which falls back to a compiler diagnostic. |
+| commandLineParser.ts:3592:69  | `rootCompilerOptions[0]`                                                     | U-endpoint                   | assert                            | rootCompilerOptions exists only after append adds a root option property, so its first property name is populated.                               |
+| commandLineParser.ts:3592:203 | `rootCompilerOptions[0]`                                                     | U-endpoint                   | assert                            | rootCompilerOptions exists only after append adds a root option property, so its first property name is populated.                               |
+| commandLineParser.ts:3613:17  | `currentOption[option.name]`                                                 | U-table                      | decline                           | The option target is a pure store; the raw JSON argument value is accepted by the converter, including absence.                                  |
+| commandLineParser.ts:3785:13  | `(defaultOptions                                                             |                              | (defaultOptions = {}))[opt.name]` | U-table                                                                                                                                          | decline                                                                                                   | The option target is a pure store; the raw JSON argument value is accepted by the converter, including absence. |
+| commandLineParser.ts:3785:90  | `jsonOptions[id]`                                                            | U-table                      | decline                           | The option target is a pure store; the raw JSON argument value is accepted by the converter, including absence.                                  |
+| commandLineParser.ts:3887:120 | `valueExpression?.elements[index]`                                           | U-position                   | decline                           | The optional syntax node is accepted by diagnostic conversion, which falls back to a compiler diagnostic.                                        |
+| commandLineParser.ts:4142:68  | `wildcardDirectories[existingPath]`                                          | U-table                      | decline                           | existingFlags is explicitly tested for undefined before comparison and replacement.                                                              |
+| commandLineParser.ts:4144:21  | `wildcardDirectories[existingPath == undefined ? existingPath : path]`       | U-table                      | decline                           | This is a pure store or delete of a table entry, not an indexed read.                                                                            |
+| commandLineParser.ts:4159:32  | `wildcardDirectories[path]`                                                  | U-table                      | decline                           | This is a pure store or delete of a table entry, not an indexed read.                                                                            |
+| commandLineParser.ts:4185:33  | `match[0]`                                                                   | U-regex                      | assert                            | A successful wildcardDirectoryPattern.exec always populates match[0] with the entire match.                                                      |
+| commandLineParser.ts:4186:19  | `match[0]`                                                                   | U-regex                      | assert                            | A successful wildcardDirectoryPattern.exec always populates match[0] with the entire match.                                                      |
+| commandLineParser.ts:4248:21  | `extensionGroup[i]`                                                          | U-loop                       | assert                            | The bounded descending loop traverses the populated built-in extension group selected for this file.                                             |
+| commandLineParser.ts:4269:17  | `out[key]`                                                                   | U-table                      | decline                           | The output target is a pure store and the input converter explicitly returns undefined for an absent option.                                     |
+| commandLineParser.ts:4269:59  | `opts[key]`                                                                  | U-table                      | decline                           | The output target is a pure store and the input converter explicitly returns undefined for an absent option.                                     |
 
 ## Wave 4 site ledger
 
-| File:line:column | Class | Decision | Invariant / decline reason |
-| --- | --- | --- | --- |
-| moduleNameResolver.ts:368:19 | U-table | decline | readPackageJsonField deliberately validates absent or malformed JSON fields with typeof before returning. |
-| moduleNameResolver.ts:474:43 | U-table | decline | readPackageJsonTypesVersionPaths validates the returned paths with typeof and diagnoses absent or malformed version entries. |
-| moduleNameResolver.ts:954:59 | U-table | decline | The any-cast value is serialized by a helper that accepts undefined; this is not a required indexed value. |
-| moduleNameResolver.ts:1255:80 | U-position | decline | The equality comparison accepts an absent character and uses it to reject a directory boundary. |
-| moduleNameResolver.ts:1430:90 | U-table | decline | The enum-name diagnostic argument is optional and trace already accepts an absent name. |
-| moduleNameResolver.ts:1435:94 | U-table | decline | The enum-name diagnostic argument is optional and trace already accepts an absent name. |
-| moduleNameResolver.ts:2295:46 | U-table | decline | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby. |
-| moduleNameResolver.ts:2351:54 | U-table | decline | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby. |
-| moduleNameResolver.ts:2566:9 | U-endpoint | decline | The equality test accepts absence for an empty module name and retains the unscoped-package path. |
-| moduleNameResolver.ts:2592:37 | U-parallel | decline | A shorter candidate path legitimately has no component here; the comparison rejects the self-name match. |
-| moduleNameResolver.ts:2630:26 | U-table | decline | The resulting mainExport is explicitly tested for truthiness before loading. |
-| moduleNameResolver.ts:2712:24 | U-table | decline | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby. |
-| moduleNameResolver.ts:2718:28 | U-table | decline | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby. |
-| moduleNameResolver.ts:2724:28 | U-table | decline | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby. |
-| moduleNameResolver.ts:2729:28 | U-table | decline | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby. |
-| moduleNameResolver.ts:2820:43 | U-table | decline | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby. |
-| moduleNameResolver.ts:3177:34 | U-table | decline | forEach accepts an absent substitution list; malformed path mappings preserve their existing resolution behavior. |
-| moduleSpecifiers.ts:146:17 | U-position | decline | The character comparison tests escape syntax and already handles an absent character without dereferencing it. |
-| moduleSpecifiers.ts:332:12 | U-endpoint | decline | The optional tuple result can be empty; the result[1] guard and optional kind contract handle absence. |
-| moduleSpecifiers.ts:332:33 | U-endpoint | decline | The optional tuple result can be empty; the result[1] guard and optional kind contract handle absence. |
-| moduleSpecifiers.ts:332:62 | U-endpoint | decline | The optional tuple result can be empty; the result[1] guard and optional kind contract handle absence. |
-| moduleSpecifiers.ts:801:22 | U-table | decline | Optional dependency fields are tested for presence and object type before enumeration. |
-| moduleSpecifiers.ts:920:34 | U-endpoint | decline | The optional first ambient-module candidate is tested for presence before dereference. |
-| moduleSpecifiers.ts:928:35 | U-table | assert | for-in traverses the populated compiler path-mapping entries, whose substitution arrays are required by this iterator. |
-| moduleSpecifiers.ts:1111:35 | U-table | decline | The export/import target helper accepts unknown and explicitly checks its type, preserving absent or malformed targets. |
-| moduleSpecifiers.ts:1134:122 | U-table | decline | The export/import target helper accepts unknown and explicitly checks its type, preserving absent or malformed targets. |
-| moduleSpecifiers.ts:1165:121 | U-table | decline | The export/import target helper accepts unknown and explicitly checks its type, preserving absent or malformed targets. |
-| moduleSpecifiers.ts:1387:13 | U-endpoint | decline | The existing switch default calls Debug.assertNever for an absent or invalid preferred ending; that failure handling remains unchanged. |
-| moduleSpecifiers.ts:1411:38 | U-endpoint | decline | The existing switch default calls Debug.assertNever for an absent or invalid preferred ending; that failure handling remains unchanged. |
-| sys.ts:155:17 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:171:13 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:171:29 | U-table | decline | The partial custom level may be absent; the existing || falls back to the default level. |
-| sys.ts:171:53 | U-table | decline | The level key is keyof Levels and addresses an already required declared property; no indexed-absence finding exists. |
-| sys.ts:195:29 | U-position | decline | Polling queues intentionally contain holes, and the nearby presence check handles them. |
-| sys.ts:200:13 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:209:13 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:215:13 | U-position | decline | Polling queues intentionally contain holes, and the nearby presence check handles them. |
-| sys.ts:218:17 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:219:17 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:290:84 | U-table | decline | The mapped polling-interval table declares every PollingInterval key as required; this read already has a required number type. |
-| sys.ts:328:21 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:332:53 | U-table | decline | The mapped polling-interval table declares every PollingInterval key as required; this read already has a required number type. |
-| sys.ts:338:17 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:343:17 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:484:73 | U-table | decline | The mapped polling-interval table declares every PollingInterval key as required; this read already has a required number type. |
-| sys.ts:712:81 | U-position | decline | The equality test accepts an absent boundary character to reject an unrelated directory. |
-| sys.ts:1566:24 | U-table | decline | The environment entry is optional and the existing || supplies the empty string. |
-| sys.ts:1796:29 | U-typed | decline | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists. |
-| sys.ts:1796:51 | U-typed | decline | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists. |
-| sys.ts:1801:34 | U-typed | assert | The byte-pair loop rounds Buffer length down to an even number and advances by two, so both bytes are within the dense Buffer. |
-| sys.ts:1802:21 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:1802:33 | U-typed | assert | The byte-pair loop rounds Buffer length down to an even number and advances by two, so both bytes are within the dense Buffer. |
-| sys.ts:1803:21 | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| sys.ts:1807:29 | U-typed | decline | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists. |
-| sys.ts:1807:51 | U-typed | decline | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists. |
-| sys.ts:1811:29 | U-typed | decline | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists. |
-| sys.ts:1811:51 | U-typed | decline | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists. |
-| sys.ts:1811:73 | U-typed | decline | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists. |
+| File:line:column              | Class      | Decision | Invariant / decline reason                                                                                                              |
+| ----------------------------- | ---------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| moduleNameResolver.ts:368:19  | U-table    | decline  | readPackageJsonField deliberately validates absent or malformed JSON fields with typeof before returning.                               |
+| moduleNameResolver.ts:474:43  | U-table    | decline  | readPackageJsonTypesVersionPaths validates the returned paths with typeof and diagnoses absent or malformed version entries.            |
+| moduleNameResolver.ts:954:59  | U-table    | decline  | The any-cast value is serialized by a helper that accepts undefined; this is not a required indexed value.                              |
+| moduleNameResolver.ts:1255:80 | U-position | decline  | The equality comparison accepts an absent character and uses it to reject a directory boundary.                                         |
+| moduleNameResolver.ts:1430:90 | U-table    | decline  | The enum-name diagnostic argument is optional and trace already accepts an absent name.                                                 |
+| moduleNameResolver.ts:1435:94 | U-table    | decline  | The enum-name diagnostic argument is optional and trace already accepts an absent name.                                                 |
+| moduleNameResolver.ts:2295:46 | U-table    | decline  | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby.                          |
+| moduleNameResolver.ts:2351:54 | U-table    | decline  | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby.                          |
+| moduleNameResolver.ts:2566:9  | U-endpoint | decline  | The equality test accepts absence for an empty module name and retains the unscoped-package path.                                       |
+| moduleNameResolver.ts:2592:37 | U-parallel | decline  | A shorter candidate path legitimately has no component here; the comparison rejects the self-name match.                                |
+| moduleNameResolver.ts:2630:26 | U-table    | decline  | The resulting mainExport is explicitly tested for truthiness before loading.                                                            |
+| moduleNameResolver.ts:2712:24 | U-table    | decline  | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby.                          |
+| moduleNameResolver.ts:2718:28 | U-table    | decline  | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby.                          |
+| moduleNameResolver.ts:2724:28 | U-table    | decline  | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby.                          |
+| moduleNameResolver.ts:2729:28 | U-table    | decline  | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby.                          |
+| moduleNameResolver.ts:2820:43 | U-table    | decline  | The target loader accepts unknown, including undefined, and explicitly validates or rejects the target nearby.                          |
+| moduleNameResolver.ts:3177:34 | U-table    | decline  | forEach accepts an absent substitution list; malformed path mappings preserve their existing resolution behavior.                       |
+| moduleSpecifiers.ts:146:17    | U-position | decline  | The character comparison tests escape syntax and already handles an absent character without dereferencing it.                          |
+| moduleSpecifiers.ts:332:12    | U-endpoint | decline  | The optional tuple result can be empty; the result[1] guard and optional kind contract handle absence.                                  |
+| moduleSpecifiers.ts:332:33    | U-endpoint | decline  | The optional tuple result can be empty; the result[1] guard and optional kind contract handle absence.                                  |
+| moduleSpecifiers.ts:332:62    | U-endpoint | decline  | The optional tuple result can be empty; the result[1] guard and optional kind contract handle absence.                                  |
+| moduleSpecifiers.ts:801:22    | U-table    | decline  | Optional dependency fields are tested for presence and object type before enumeration.                                                  |
+| moduleSpecifiers.ts:920:34    | U-endpoint | decline  | The optional first ambient-module candidate is tested for presence before dereference.                                                  |
+| moduleSpecifiers.ts:928:35    | U-table    | assert   | for-in traverses the populated compiler path-mapping entries, whose substitution arrays are required by this iterator.                  |
+| moduleSpecifiers.ts:1111:35   | U-table    | decline  | The export/import target helper accepts unknown and explicitly checks its type, preserving absent or malformed targets.                 |
+| moduleSpecifiers.ts:1134:122  | U-table    | decline  | The export/import target helper accepts unknown and explicitly checks its type, preserving absent or malformed targets.                 |
+| moduleSpecifiers.ts:1165:121  | U-table    | decline  | The export/import target helper accepts unknown and explicitly checks its type, preserving absent or malformed targets.                 |
+| moduleSpecifiers.ts:1387:13   | U-endpoint | decline  | The existing switch default calls Debug.assertNever for an absent or invalid preferred ending; that failure handling remains unchanged. |
+| moduleSpecifiers.ts:1411:38   | U-endpoint | decline  | The existing switch default calls Debug.assertNever for an absent or invalid preferred ending; that failure handling remains unchanged. |
+| sys.ts:155:17                 | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:171:13                 | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:171:29                 | U-table    | decline  | The partial custom level may be absent; the existing                                                                                    |     | falls back to the default level. |
+| sys.ts:171:53                 | U-table    | decline  | The level key is keyof Levels and addresses an already required declared property; no indexed-absence finding exists.                   |
+| sys.ts:195:29                 | U-position | decline  | Polling queues intentionally contain holes, and the nearby presence check handles them.                                                 |
+| sys.ts:200:13                 | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:209:13                 | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:215:13                 | U-position | decline  | Polling queues intentionally contain holes, and the nearby presence check handles them.                                                 |
+| sys.ts:218:17                 | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:219:17                 | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:290:84                 | U-table    | decline  | The mapped polling-interval table declares every PollingInterval key as required; this read already has a required number type.         |
+| sys.ts:328:21                 | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:332:53                 | U-table    | decline  | The mapped polling-interval table declares every PollingInterval key as required; this read already has a required number type.         |
+| sys.ts:338:17                 | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:343:17                 | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:484:73                 | U-table    | decline  | The mapped polling-interval table declares every PollingInterval key as required; this read already has a required number type.         |
+| sys.ts:712:81                 | U-position | decline  | The equality test accepts an absent boundary character to reject an unrelated directory.                                                |
+| sys.ts:1566:24                | U-table    | decline  | The environment entry is optional and the existing                                                                                      |     | supplies the empty string.       |
+| sys.ts:1796:29                | U-typed    | decline  | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.                |
+| sys.ts:1796:51                | U-typed    | decline  | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.                |
+| sys.ts:1801:34                | U-typed    | assert   | The byte-pair loop rounds Buffer length down to an even number and advances by two, so both bytes are within the dense Buffer.          |
+| sys.ts:1802:21                | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:1802:33                | U-typed    | assert   | The byte-pair loop rounds Buffer length down to an even number and advances by two, so both bytes are within the dense Buffer.          |
+| sys.ts:1803:21                | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                |
+| sys.ts:1807:29                | U-typed    | decline  | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.                |
+| sys.ts:1807:51                | U-typed    | decline  | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.                |
+| sys.ts:1811:29                | U-typed    | decline  | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.                |
+| sys.ts:1811:51                | U-typed    | decline  | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.                |
+| sys.ts:1811:73                | U-typed    | decline  | The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.                |
 
 ## Wave 5 site ledger
 
-| File:line:column | Expression | Class | Decision | Invariant / reason |
-| --- | --- | --- | --- | --- |
-| builder.ts:518:59 | `oldEmitSignature[0]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:626:57 | `state.affectedFiles[state.affectedFilesIndex - 1]` | U-position | decline | The comparison intentionally accepts absence when there is no previous affected file. |
-| builder.ts:646:38 | `affectedFiles[affectedFilesIndex]` | U-loop | assert | The affected-file cursor is bounded by the dense affectedFiles array length before the file is read. |
-| builder.ts:1296:22 | `fileNames[fileId - 1]` | U-position | decline | The debug equality assertion already handles an absent file-ID entry by reporting the mismatch. |
-| builder.ts:1309:66 | `emitSignature[0]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:1413:22 | `root[root.length - 1]` | U-endpoint | assert | The preceding empty-root return leaves a populated last entry in the dense root list. |
-| builder.ts:1416:31 | `last[1]` | U-position | decline | The isArray branch selects a required start/end tuple member, already typed without indexed absence. |
-| builder.ts:1416:62 | `last[1]` | U-position | decline | This tuple member is a pure store, not an indexed read. |
-| builder.ts:1419:28 | `root[root.length - 2]` | U-endpoint | assert | The preceding length-one return leaves at least two populated root entries before reading the penultimate entry. |
-| builder.ts:1423:9 | `root[root.length - 2]` | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| builder.ts:1447:17 | `(result \|\|= {})[name]` | U-position | decline | The indexed target is a pure store, not an indexed read. |
-| builder.ts:1449:21 | `options[name]` | U-table | decline | The option converter accepts optional compiler-option values, including undefined. |
-| builder.ts:1552:62 | `array[i]` | U-loop | assert | The forward loop is bounded by the dense diagnostic-chain array length. |
-| builder.ts:1631:82 | `DiagnosticCategory[diagnostic.category]` | U-table | decline | The enum lookup is an optional serialized diagnostic argument and does not require an indexed assertion. |
-| builder.ts:1921:38 | `sourceFiles[0]` | U-endpoint | assert | The declaration emit callback asserts exactly one source file before either read of its first element. |
-| builder.ts:1953:42 | `sourceFiles[0]` | U-endpoint | assert | The declaration emit callback asserts exactly one source file before either read of its first element. |
-| builder.ts:1974:113 | `oldSignatureFormat[0]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2242:51 | `value[1]` | U-position | decline | The optional pending-emit tuple member is deliberately handled by the existing || fallback. |
-| builder.ts:2299:40 | `value[0]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2302:31 | `value[1]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2302:45 | `value[1]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2305:25 | `value[1]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2318:170 | `value[0]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2359:16 | `filePaths[fileId - 1]` | U-position | assert | Serialized file IDs are one-based positions allocated from the same populated file-name table. |
-| builder.ts:2363:16 | `filePathsSetList[fileIdsListId - 1]` | U-position | assert | Serialized list IDs are one-based positions allocated from the same populated file-ID-list table. |
-| builder.ts:2384:53 | `value[0]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2384:64 | `value[1]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2390:75 | `value[0]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2390:95 | `value[1]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2408:29 | `program.fileNames[index]` | U-parallel | assert | The serialized fileInfos and fileNames tables share the same dense file-ID ordering. |
-| builder.ts:2412:29 | `program.root[rootIndex]` | U-loop | assert | The root cursor is checked against the dense serialized root list length before its current entry is read. |
-| builder.ts:2415:21 | `current[0]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2415:55 | `current[1]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2417:25 | `current[1]` | U-position | decline | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence. |
-| builder.ts:2431:30 | `program.fileNames[root - 1]` | U-position | assert | A resolved-root file ID addresses its populated entry in the serialized file-name table. |
-| watch.ts:137:9 | `diagnostics[0]` | U-position | decline | The indexed target is a pure store, not an indexed read; no initializer is added. |
-| watch.ts:139:9 | `diagnostics[0]` | U-position | decline | The indexed target is a pure store, not an indexed read; no initializer is added. |
-| watch.ts:287:32 | `nonNilFiles[0]` | U-endpoint | decline | The first-file presence guard explicitly handles empty or absent error entries. |
-| watch.ts:287:73 | `nonNilFiles[0]` | U-endpoint | decline | The first-file presence guard explicitly handles empty or absent error entries. |
-| watch.ts:291:26 | `filesInError[0]` | U-endpoint | decline | The first-file presence guard explicitly handles empty or absent error entries. |
-| watch.ts:310:59 | `value[1]` | U-position | decline | The error-count pair has a required second tuple member, already typed without indexed absence. |
-| watch.ts:313:37 | `headerRow.split(" ")[0]` | U-endpoint | assert | String.split always returns at least one populated string, including for an empty header. |
-| watch.ts:423:27 | `configFile.configFileSpecs.validatedFilesSpecBeforeSubstitution[index]` | U-parallel | decline | This optional-result helper returns string or undefined and already accepts absence at the matched-spec position. |
-| watch.ts:442:27 | `configFile.configFileSpecs.validatedIncludeSpecsBeforeSubstitution[index]` | U-parallel | decline | This optional-result helper returns string or undefined and already accepts absence at the matched-spec position. |
-| watch.ts:498:56 | `program.getRootFileNames()[reason.index]` | U-position | assert | A RootFile include reason stores the index allocated from this program root-file-name array. |
-| watch.ts:519:62 | `program.getResolvedProjectReferences()?.[reason.index]` | U-position | decline | The existing Debug.checkDefined handles absent project-reference entries at this indexed read. |
-| watch.ts:544:151 | `options.lib[reason.index]` | U-position | assert | A LibFile include reason with an index records the populated compilerOptions.lib entry that introduced this library. |
-| watchUtilities.ts:736:13 | `factory[key]` | U-table | decline | The key is keyof WatchFactory and addresses a required declared watcher method, already typed without indexed absence. |
-| watchUtilities.ts:811:14 | `plainInvokeFactory[key]` | U-table | decline | The key is keyof WatchFactory and addresses a required declared watcher method, already typed without indexed absence. |
-| watchUtilities.ts:815:120 | `args[0]` | U-position | decline | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
-| watchUtilities.ts:815:131 | `args[1]` | U-position | decline | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
-| watchUtilities.ts:815:155 | `args[1]` | U-position | decline | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
-| resolutionCache.ts:273:22 | `pathComponents[0]` | U-endpoint | assert | The preceding length-at-most-one return guarantees a populated root component at position zero. |
-| resolutionCache.ts:275:9 | `pathComponents[0]` | U-endpoint | decline | The root-character equality comparison accepts absence without dereferencing the indexed result. |
-| resolutionCache.ts:277:9 | `pathComponents[1]` | U-position | assert | The earlier length-at-most-one return guarantees a populated second path component. |
-| resolutionCache.ts:287:10 | `pathComponents[indexAfterOsRoot]` | U-position | assert | The initial length guard and the length-two UNC return leave a populated component at indexAfterOsRoot. |
-| resolutionCache.ts:293:9 | `pathComponents[indexAfterOsRoot]` | U-position | assert | The initial length guard and the length-two UNC return leave a populated component at indexAfterOsRoot. |
-| resolutionCache.ts:333:13 | `fileOrDirComponents[i]` | U-parallel | decline | The path-component equality comparison already accepts absence and rejects a nonmatching prefix. |
-| resolutionCache.ts:333:40 | `dirComponents[i]` | U-parallel | decline | The path-component equality comparison already accepts absence and rejects a nonmatching prefix. |
-| resolutionCache.ts:426:17 | `dirPathComponents[i]` | U-parallel | decline | A shorter root path legitimately has no component at this position; equality detects the first divergent ancestor. |
-| resolutionCache.ts:426:42 | `rootPathComponents[i]` | U-parallel | decline | A shorter root path legitimately has no component at this position; equality detects the first divergent ancestor. |
-| resolutionCache.ts:451:25 | `dirPathComponents[lastNodeModulesIndex + 1]` | U-position | assert | The node_modules index is present and its package-component index is bounded by the component-array length. |
-| resolutionCache.ts:795:58 | `newFile.packageJsonLocations[i]` | U-loop | assert | The expected count is this file packageJsonLocations length and the loop cursor is bounded by that count. |
-| resolutionCache.ts:799:61 | `existing[i]` | U-loop | assert | The forward loop is bounded by the dense existing affecting-location array length. |
-| resolutionCache.ts:1619:86 | `locationPath[dirPath.length]` | U-position | decline | The separator equality comparison already accepts absence and rejects an unrelated location prefix. |
-| tsbuildPublic.ts:334:53 | `result[option.name]` | U-table | decline | The indexed target is a pure store, not an indexed read. |
-| tsbuildPublic.ts:334:75 | `buildOptions[option.name]` | U-table | decline | The copied compiler option may explicitly be undefined; this is an optional-option contract. |
-| tsbuildPublic.ts:737:37 | `buildOrder[buildOrder.length - 1]` | U-endpoint | decline | The existing debug equality assertion handles absence by checking the requested final project. |
-| tsbuildPublic.ts:1213:25 | `buildOrder[projectIndex]` | U-loop | assert | The build-order cursor is bounded by the dense buildOrder array length before reading the project. |
-| tsbuildPublic.ts:1905:29 | `buildOrder[index]` | U-loop | assert | The build-order cursor is bounded by the dense buildOrder array length before reading the project. |
+| File:line:column           | Expression                                                                  | Class      | Decision | Invariant / reason                                                                                                                                |
+| -------------------------- | --------------------------------------------------------------------------- | ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| builder.ts:518:59          | `oldEmitSignature[0]`                                                       | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:626:57          | `state.affectedFiles[state.affectedFilesIndex - 1]`                         | U-position | decline  | The comparison intentionally accepts absence when there is no previous affected file.                                                             |
+| builder.ts:646:38          | `affectedFiles[affectedFilesIndex]`                                         | U-loop     | assert   | The affected-file cursor is bounded by the dense affectedFiles array length before the file is read.                                              |
+| builder.ts:1296:22         | `fileNames[fileId - 1]`                                                     | U-position | decline  | The debug equality assertion already handles an absent file-ID entry by reporting the mismatch.                                                   |
+| builder.ts:1309:66         | `emitSignature[0]`                                                          | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:1413:22         | `root[root.length - 1]`                                                     | U-endpoint | assert   | The preceding empty-root return leaves a populated last entry in the dense root list.                                                             |
+| builder.ts:1416:31         | `last[1]`                                                                   | U-position | decline  | The isArray branch selects a required start/end tuple member, already typed without indexed absence.                                              |
+| builder.ts:1416:62         | `last[1]`                                                                   | U-position | decline  | This tuple member is a pure store, not an indexed read.                                                                                           |
+| builder.ts:1419:28         | `root[root.length - 2]`                                                     | U-endpoint | assert   | The preceding length-one return leaves at least two populated root entries before reading the penultimate entry.                                  |
+| builder.ts:1423:9          | `root[root.length - 2]`                                                     | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                          |
+| builder.ts:1447:17         | `(result \|\|= {})[name]`                                                   | U-position | decline  | The indexed target is a pure store, not an indexed read.                                                                                          |
+| builder.ts:1449:21         | `options[name]`                                                             | U-table    | decline  | The option converter accepts optional compiler-option values, including undefined.                                                                |
+| builder.ts:1552:62         | `array[i]`                                                                  | U-loop     | assert   | The forward loop is bounded by the dense diagnostic-chain array length.                                                                           |
+| builder.ts:1631:82         | `DiagnosticCategory[diagnostic.category]`                                   | U-table    | decline  | The enum lookup is an optional serialized diagnostic argument and does not require an indexed assertion.                                          |
+| builder.ts:1921:38         | `sourceFiles[0]`                                                            | U-endpoint | assert   | The declaration emit callback asserts exactly one source file before either read of its first element.                                            |
+| builder.ts:1953:42         | `sourceFiles[0]`                                                            | U-endpoint | assert   | The declaration emit callback asserts exactly one source file before either read of its first element.                                            |
+| builder.ts:1974:113        | `oldSignatureFormat[0]`                                                     | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2242:51         | `value[1]`                                                                  | U-position | decline  | The optional pending-emit tuple member is deliberately handled by the existing                                                                    |     | fallback. |
+| builder.ts:2299:40         | `value[0]`                                                                  | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2302:31         | `value[1]`                                                                  | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2302:45         | `value[1]`                                                                  | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2305:25         | `value[1]`                                                                  | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2318:170        | `value[0]`                                                                  | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2359:16         | `filePaths[fileId - 1]`                                                     | U-position | assert   | Serialized file IDs are one-based positions allocated from the same populated file-name table.                                                    |
+| builder.ts:2363:16         | `filePathsSetList[fileIdsListId - 1]`                                       | U-position | assert   | Serialized list IDs are one-based positions allocated from the same populated file-ID-list table.                                                 |
+| builder.ts:2384:53         | `value[0]`                                                                  | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2384:64         | `value[1]`                                                                  | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2390:75         | `value[0]`                                                                  | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2390:95         | `value[1]`                                                                  | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2408:29         | `program.fileNames[index]`                                                  | U-parallel | assert   | The serialized fileInfos and fileNames tables share the same dense file-ID ordering.                                                              |
+| builder.ts:2412:29         | `program.root[rootIndex]`                                                   | U-loop     | assert   | The root cursor is checked against the dense serialized root list length before its current entry is read.                                        |
+| builder.ts:2415:21         | `current[0]`                                                                | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2415:55         | `current[1]`                                                                | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2417:25         | `current[1]`                                                                | U-position | decline  | The discriminated serialized value has a required tuple member at this constant position, already typed without indexed absence.                  |
+| builder.ts:2431:30         | `program.fileNames[root - 1]`                                               | U-position | assert   | A resolved-root file ID addresses its populated entry in the serialized file-name table.                                                          |
+| watch.ts:137:9             | `diagnostics[0]`                                                            | U-position | decline  | The indexed target is a pure store, not an indexed read; no initializer is added.                                                                 |
+| watch.ts:139:9             | `diagnostics[0]`                                                            | U-position | decline  | The indexed target is a pure store, not an indexed read; no initializer is added.                                                                 |
+| watch.ts:287:32            | `nonNilFiles[0]`                                                            | U-endpoint | decline  | The first-file presence guard explicitly handles empty or absent error entries.                                                                   |
+| watch.ts:287:73            | `nonNilFiles[0]`                                                            | U-endpoint | decline  | The first-file presence guard explicitly handles empty or absent error entries.                                                                   |
+| watch.ts:291:26            | `filesInError[0]`                                                           | U-endpoint | decline  | The first-file presence guard explicitly handles empty or absent error entries.                                                                   |
+| watch.ts:310:59            | `value[1]`                                                                  | U-position | decline  | The error-count pair has a required second tuple member, already typed without indexed absence.                                                   |
+| watch.ts:313:37            | `headerRow.split(" ")[0]`                                                   | U-endpoint | assert   | String.split always returns at least one populated string, including for an empty header.                                                         |
+| watch.ts:423:27            | `configFile.configFileSpecs.validatedFilesSpecBeforeSubstitution[index]`    | U-parallel | decline  | This optional-result helper returns string or undefined and already accepts absence at the matched-spec position.                                 |
+| watch.ts:442:27            | `configFile.configFileSpecs.validatedIncludeSpecsBeforeSubstitution[index]` | U-parallel | decline  | This optional-result helper returns string or undefined and already accepts absence at the matched-spec position.                                 |
+| watch.ts:498:56            | `program.getRootFileNames()[reason.index]`                                  | U-position | assert   | A RootFile include reason stores the index allocated from this program root-file-name array.                                                      |
+| watch.ts:519:62            | `program.getResolvedProjectReferences()?.[reason.index]`                    | U-position | decline  | The existing Debug.checkDefined handles absent project-reference entries at this indexed read.                                                    |
+| watch.ts:544:151           | `options.lib[reason.index]`                                                 | U-position | assert   | A LibFile include reason with an index records the populated compilerOptions.lib entry that introduced this library.                              |
+| watchUtilities.ts:736:13   | `factory[key]`                                                              | U-table    | decline  | The key is keyof WatchFactory and addresses a required declared watcher method, already typed without indexed absence.                            |
+| watchUtilities.ts:811:14   | `plainInvokeFactory[key]`                                                   | U-table    | decline  | The key is keyof WatchFactory and addresses a required declared watcher method, already typed without indexed absence.                            |
+| watchUtilities.ts:815:120  | `args[0]`                                                                   | U-position | decline  | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
+| watchUtilities.ts:815:131  | `args[1]`                                                                   | U-position | decline  | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
+| watchUtilities.ts:815:155  | `args[1]`                                                                   | U-position | decline  | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
+| resolutionCache.ts:273:22  | `pathComponents[0]`                                                         | U-endpoint | assert   | The preceding length-at-most-one return guarantees a populated root component at position zero.                                                   |
+| resolutionCache.ts:275:9   | `pathComponents[0]`                                                         | U-endpoint | decline  | The root-character equality comparison accepts absence without dereferencing the indexed result.                                                  |
+| resolutionCache.ts:277:9   | `pathComponents[1]`                                                         | U-position | assert   | The earlier length-at-most-one return guarantees a populated second path component.                                                               |
+| resolutionCache.ts:287:10  | `pathComponents[indexAfterOsRoot]`                                          | U-position | assert   | The initial length guard and the length-two UNC return leave a populated component at indexAfterOsRoot.                                           |
+| resolutionCache.ts:293:9   | `pathComponents[indexAfterOsRoot]`                                          | U-position | assert   | The initial length guard and the length-two UNC return leave a populated component at indexAfterOsRoot.                                           |
+| resolutionCache.ts:333:13  | `fileOrDirComponents[i]`                                                    | U-parallel | decline  | The path-component equality comparison already accepts absence and rejects a nonmatching prefix.                                                  |
+| resolutionCache.ts:333:40  | `dirComponents[i]`                                                          | U-parallel | decline  | The path-component equality comparison already accepts absence and rejects a nonmatching prefix.                                                  |
+| resolutionCache.ts:426:17  | `dirPathComponents[i]`                                                      | U-parallel | decline  | A shorter root path legitimately has no component at this position; equality detects the first divergent ancestor.                                |
+| resolutionCache.ts:426:42  | `rootPathComponents[i]`                                                     | U-parallel | decline  | A shorter root path legitimately has no component at this position; equality detects the first divergent ancestor.                                |
+| resolutionCache.ts:451:25  | `dirPathComponents[lastNodeModulesIndex + 1]`                               | U-position | assert   | The node_modules index is present and its package-component index is bounded by the component-array length.                                       |
+| resolutionCache.ts:795:58  | `newFile.packageJsonLocations[i]`                                           | U-loop     | assert   | The expected count is this file packageJsonLocations length and the loop cursor is bounded by that count.                                         |
+| resolutionCache.ts:799:61  | `existing[i]`                                                               | U-loop     | assert   | The forward loop is bounded by the dense existing affecting-location array length.                                                                |
+| resolutionCache.ts:1619:86 | `locationPath[dirPath.length]`                                              | U-position | decline  | The separator equality comparison already accepts absence and rejects an unrelated location prefix.                                               |
+| tsbuildPublic.ts:334:53    | `result[option.name]`                                                       | U-table    | decline  | The indexed target is a pure store, not an indexed read.                                                                                          |
+| tsbuildPublic.ts:334:75    | `buildOptions[option.name]`                                                 | U-table    | decline  | The copied compiler option may explicitly be undefined; this is an optional-option contract.                                                      |
+| tsbuildPublic.ts:737:37    | `buildOrder[buildOrder.length - 1]`                                         | U-endpoint | decline  | The existing debug equality assertion handles absence by checking the requested final project.                                                    |
+| tsbuildPublic.ts:1213:25   | `buildOrder[projectIndex]`                                                  | U-loop     | assert   | The build-order cursor is bounded by the dense buildOrder array length before reading the project.                                                |
+| tsbuildPublic.ts:1905:29   | `buildOrder[index]`                                                         | U-loop     | assert   | The build-order cursor is bounded by the dense buildOrder array length before reading the project.                                                |
 
 ## Wave 6 site ledger
 
-| File:line:column | Expression | Class | Decision | Invariant / reason |
-| --- | --- | --- | --- | --- |
-| expressionToTypeNode.ts:354:35 | `node.typeArguments[0]` | U-position | decline | The existing visitNode overload accepts an absent type argument; no required indexed-value contract exists. |
-| expressionToTypeNode.ts:356:31 | `node.typeArguments[1]` | U-position | decline | The existing visitNode overload accepts an absent type argument; no required indexed-value contract exists. |
-| expressionToTypeNode.ts:1272:95 | `fn.parameters[0]` | U-endpoint | assert | isJSDocConstructSignature returns true only when a populated first parameter has the identifier name new. |
-| executeCommandLine.ts:408:30 | `inverted[value]` | U-table | decline | The existing ||= initializes an absent synonyms array before push; its indexed target is a compound store with explicit absence handling. |
-| executeCommandLine.ts:439:9 | `lines[lines.length - 2]` | U-endpoint | decline | The newline comparison accepts absence when no option output populated the preceding line. |
-| executeCommandLine.ts:746:39 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
-| executeCommandLine.ts:747:29 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
-| executeCommandLine.ts:747:54 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
+| File:line:column                | Expression                | Class      | Decision | Invariant / reason                                                                                                  |
+| ------------------------------- | ------------------------- | ---------- | -------- | ------------------------------------------------------------------------------------------------------------------- |
+| expressionToTypeNode.ts:354:35  | `node.typeArguments[0]`   | U-position | decline  | The existing visitNode overload accepts an absent type argument; no required indexed-value contract exists.         |
+| expressionToTypeNode.ts:356:31  | `node.typeArguments[1]`   | U-position | decline  | The existing visitNode overload accepts an absent type argument; no required indexed-value contract exists.         |
+| expressionToTypeNode.ts:1272:95 | `fn.parameters[0]`        | U-endpoint | assert   | isJSDocConstructSignature returns true only when a populated first parameter has the identifier name new.           |
+| executeCommandLine.ts:408:30    | `inverted[value]`         | U-table    | decline  | The existing                                                                                                        |     | = initializes an absent synonyms array before push; its indexed target is a compound store with explicit absence handling. |
+| executeCommandLine.ts:439:9     | `lines[lines.length - 2]` | U-endpoint | decline  | The newline comparison accepts absence when no option output populated the preceding line.                          |
+| executeCommandLine.ts:746:39    | `commandLineArgs[0]`      | U-endpoint | assert   | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
+| executeCommandLine.ts:747:29    | `commandLineArgs[0]`      | U-endpoint | assert   | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
+| executeCommandLine.ts:747:54    | `commandLineArgs[0]`      | U-endpoint | assert   | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
 
 ## Whole-file closure: watchUtilities.ts
 
@@ -999,23 +999,23 @@ they already had before the cast was reached. "No recorded stop" is an isolated
 census-unit observation, not a whole-program native compilation claim. The
 primaryLookup row is measured within the resolveTypeReferenceDirective unit.
 
-| Baseline call line | Enclosing function | Bare call | Unit's current stop |
-| --- | --- | --- | --- |
-| 670 | resolveTypeReferenceDirective / primaryLookup | `directoryProbablyExists(typeRoot, host)` | NotYet 674:21: a dictionary member narrowed to an array without an element-checked view |
-| 1625 | tryLoadModuleUsingRootDirs | `directoryProbablyExists(containingDirectory, state.host)` | NotYet 1583:10: a dictionary member narrowed to an array without an element-checked view |
-| 1644 | tryLoadModuleUsingRootDirs | `directoryProbablyExists(baseDirectory, state.host)` | NotYet 1583:10: a dictionary member narrowed to an array without an element-checked view |
-| 1668 | tryLoadModuleUsingBaseUrl | `directoryProbablyExists(getDirectoryPath(candidate), state.host)` | NotYet 1657:11: destructuring a value |
-| 1993 | nodeLoadModuleByRelativeName | `directoryProbablyExists(parentOfCandidate, state.host)` | No recorded stop (attempted) |
-| 2008 | nodeLoadModuleByRelativeName | `directoryProbablyExists(candidate, state.host)` | No recorded stop (attempted) |
-| 2136 | tryAddingExtensions | `directoryProbablyExists(directory, state.host)` | No recorded stop (attempted) |
-| 2468 | getPackageJsonInfo | `directoryProbablyExists(packageDirectory, host)` | NotYet 2449:9: a call through ?. (an optional call) |
-| 2528 | loadNodeModuleFromDirectoryWorker | `directoryProbablyExists(getDirectoryPath(packageFile), state.host)` | NotYet 2519:13: an optional chain longer than one step |
-| 2529 | loadNodeModuleFromDirectoryWorker | `directoryProbablyExists(candidate, state.host)` | NotYet 2519:13: an optional chain longer than one step |
-| 3066 | loadModuleFromImmediateNodeModulesDirectory | `directoryProbablyExists(nodeModulesFolder, state.host)` | No recorded stop (attempted) |
-| 3081 | loadModuleFromImmediateNodeModulesDirectory | `directoryProbablyExists(nodeModulesAtTypes, state.host)` | No recorded stop (attempted) |
-| 3159 | loadModuleFromSpecificNodeModulesDirectory | `directoryProbablyExists(packageDirectory, state.host)` | NotYet 3103:26: an optional chain longer than one step |
-| 3192 | tryLoadModuleUsingPaths | `directoryProbablyExists(getDirectoryPath(candidate), state.host)` | No recorded stop (attempted) |
-| 3336 | resolveFromTypeRoot | `directoryProbablyExists(typeRoot, state.host)` | NotYet 3333:10: a dictionary member narrowed to an array without an element-checked view |
+| Baseline call line | Enclosing function                            | Bare call                                                            | Unit's current stop                                                                      |
+| ------------------ | --------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| 670                | resolveTypeReferenceDirective / primaryLookup | `directoryProbablyExists(typeRoot, host)`                            | NotYet 674:21: a dictionary member narrowed to an array without an element-checked view  |
+| 1625               | tryLoadModuleUsingRootDirs                    | `directoryProbablyExists(containingDirectory, state.host)`           | NotYet 1583:10: a dictionary member narrowed to an array without an element-checked view |
+| 1644               | tryLoadModuleUsingRootDirs                    | `directoryProbablyExists(baseDirectory, state.host)`                 | NotYet 1583:10: a dictionary member narrowed to an array without an element-checked view |
+| 1668               | tryLoadModuleUsingBaseUrl                     | `directoryProbablyExists(getDirectoryPath(candidate), state.host)`   | NotYet 1657:11: destructuring a value                                                    |
+| 1993               | nodeLoadModuleByRelativeName                  | `directoryProbablyExists(parentOfCandidate, state.host)`             | No recorded stop (attempted)                                                             |
+| 2008               | nodeLoadModuleByRelativeName                  | `directoryProbablyExists(candidate, state.host)`                     | No recorded stop (attempted)                                                             |
+| 2136               | tryAddingExtensions                           | `directoryProbablyExists(directory, state.host)`                     | No recorded stop (attempted)                                                             |
+| 2468               | getPackageJsonInfo                            | `directoryProbablyExists(packageDirectory, host)`                    | NotYet 2449:9: a call through ?. (an optional call)                                      |
+| 2528               | loadNodeModuleFromDirectoryWorker             | `directoryProbablyExists(getDirectoryPath(packageFile), state.host)` | NotYet 2519:13: an optional chain longer than one step                                   |
+| 2529               | loadNodeModuleFromDirectoryWorker             | `directoryProbablyExists(candidate, state.host)`                     | NotYet 2519:13: an optional chain longer than one step                                   |
+| 3066               | loadModuleFromImmediateNodeModulesDirectory   | `directoryProbablyExists(nodeModulesFolder, state.host)`             | No recorded stop (attempted)                                                             |
+| 3081               | loadModuleFromImmediateNodeModulesDirectory   | `directoryProbablyExists(nodeModulesAtTypes, state.host)`            | No recorded stop (attempted)                                                             |
+| 3159               | loadModuleFromSpecificNodeModulesDirectory    | `directoryProbablyExists(packageDirectory, state.host)`              | NotYet 3103:26: an optional chain longer than one step                                   |
+| 3192               | tryLoadModuleUsingPaths                       | `directoryProbablyExists(getDirectoryPath(candidate), state.host)`   | No recorded stop (attempted)                                                             |
+| 3336               | resolveFromTypeRoot                           | `directoryProbablyExists(typeRoot, state.host)`                      | NotYet 3333:10: a dictionary member narrowed to an array without an element-checked view |
 
 The public files are 593,502-byte typescript.d.ts and 866-byte tsserverlibrary.d.ts;
 both are byte-identical before/after. The lane has 106,366 passing, one sanctioned

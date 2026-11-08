@@ -1,14 +1,22 @@
 #!/usr/bin/env node
-"use strict";
+'use strict';
 // Compose stock parsed-owner proofs; reconstruct solely from pristine API text.
-const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm"),{createRequire}=require("node:module");
-const checker=path.join(__dirname,"../70-readonly-views/check-api.cjs");
-let code=fs.readFileSync(checker,"utf8");
-if(!code.startsWith("#!/usr/bin/env node\n"))throw new Error("API proof header drift");
-code=code.slice(code.indexOf("\n")+1);
-function replaceOnce(before,after){if(code.split(before).length!==2)throw new Error("API proof composition drift: "+before);code=code.replace(before,after);}
-replaceOnce("let optionalExpected = original;",`
-const api40Sites=JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname,'api40-sites.json'))},'utf8'));
+const fs = require('node:fs'),
+    path = require('node:path'),
+    vm = require('node:vm'),
+    { createRequire } = require('node:module');
+const checker = path.join(__dirname, '../70-readonly-views/check-api.cjs');
+let code = fs.readFileSync(checker, 'utf8');
+if(!code.startsWith('#!/usr/bin/env node\n')) throw new Error('API proof header drift');
+code = code.slice(code.indexOf('\n') + 1);
+function replaceOnce(before, after) {
+    if(code.split(before).length !== 2) throw new Error('API proof composition drift: ' + before);
+    code = code.replace(before, after);
+}
+replaceOnce(
+    'let optionalExpected = original;',
+    `
+const api40Sites=JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname, 'api40-sites.json'))},'utf8'));
 assert.equal(api40Sites.length,28);
 assert.equal(api40Sites.filter(r=>r.kind==='brand').length,27);
 const seen40=new Set();
@@ -24,7 +32,7 @@ for(const site of api40Sites){
 let api40Only=original;
 for(const e of edits.filter(e=>e.adaptation===40).sort((a,b)=>b.at-a.at))api40Only=api40Only.slice(0,e.at)+e.text+api40Only.slice(e.end);
 const public32=[];
-for(const site of JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname,'public-host-sites.json'))},'utf8')).filter(r=>r.public && r.kind !== 'restored-public-method')){
+for(const site of JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname, 'public-host-sites.json'))},'utf8')).filter(r=>r.public && r.kind !== 'restored-public-method')){
  assert.equal(site.kind,'public-method');
  const source=parse(site.file,fs.readFileSync(path.join(pristine,'src/compiler',site.file),'utf8'));
  const iface=source.statements.filter(n=>ts.isInterfaceDeclaration(n)&&n.name.text===site.interface);assert.equal(iface.length,1);
@@ -48,7 +56,7 @@ for(const site of JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirnam
  public32.push({owner:[site.interface,site.name],before:n.getText(before),after:site.after,line:before.getLineAndCharacterOfPosition(n.getStart(before)).line+1});
 }
 assert.equal(public32.length,1,'public property owner census drift');
-const restored32=JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname,'public-host-sites.json'))},'utf8')).filter(r=>r.kind==='restored-public-method');assert.equal(restored32.length,10);
+const restored32=JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname, 'public-host-sites.json'))},'utf8')).filter(r=>r.kind==='restored-public-method');assert.equal(restored32.length,10);
 for(const site of restored32){
  const n=findOwned(n=>ts.isMethodSignature(n),[site.interface,site.name]);assert.equal(tokens(n.getText(before)),tokens(site.before));
  const src=parse(site.file,fs.readFileSync(path.join(adapted,'src/compiler',site.file),'utf8'));
@@ -65,15 +73,18 @@ assert.equal(configurations.length,1);assert.deepEqual(configurations[0].argumen
 formatter.setConfig({indentWidth:4,lineWidth:1000,newLineKind:'auto',useTabs:false},{quoteStyle:'preferDouble'});
 function format(text){return formatter.formatText({filePath:'dummy.d.ts',fileText:text}).replaceAll('\\r\\n','\\n');}
 assert.equal(format(original),original,'formatter does not reproduce pristine API');
-let optionalExpected = original;`);
-replaceOnce("let expected = original;", `const handoffSites = JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname, "handoff-sites.json"))}, "utf8"));
+let optionalExpected = original;`,
+);
+replaceOnce(
+    'let expected = original;',
+    `const handoffSites = JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname, 'handoff-sites.json'))}, "utf8"));
 assert.equal(handoffSites.length, 6);
 assert.equal(handoffSites.filter(s => s.public).length, 2);
 const sourceText32 = fs.readFileSync(path.join(adapted, "src/compiler/types.ts"), "utf8");
 const source32 = parse("types.ts", sourceText32);
 const handoffProof = [];
 for (const site of handoffSites) {
-    const sourceNode = require(${JSON.stringify(path.join(__dirname, "handoffs.cjs"))}).owners(ts, source32, site);
+    const sourceNode = require(${JSON.stringify(path.join(__dirname, 'handoffs.cjs'))}).owners(ts, source32, site);
     assert.equal(sourceNode.type.getText(source32), site.action === "decline" ? site.before : site.after, "handoff source type drift");
     const candidates = properties(before).filter(n => ownerPath(n) === JSON.stringify([site.interface, site.name]));
     assert.equal(candidates.length, site.public ? 1 : 0, "handoff public owner drift");
@@ -90,11 +101,24 @@ edits.push({at:jsonLast.end,text:"\\n        extendedSourceFiles?: string[];",ad
 let previous32Expected=original;
 for(const e of edits.filter(e=>e.adaptation!==32).sort((a,b)=>b.at-a.at))previous32Expected=previous32Expected.slice(0,e.at)+e.text+previous32Expected.slice(e.end===undefined?e.at:e.end);
 previous32Expected=format(previous32Expected);
-let expected = original;`);
-replaceOnce("expected.slice(edit.at);", "expected.slice(edit.end === undefined ? edit.at : edit.end);");
-replaceOnce("if (actual !== expected) {", "expected=format(expected);\nif (actual !== expected) {");
-replaceOnce("assert.equal(newLines.length, oldLines.length, 'API additions must retain existing lines');", "assert(newLines.length >= oldLines.length, 'host unions cannot delete API declarations');");
-replaceOnce("assert(changedLines.every(line => allowedLines.has(line)), 'a changed line lies outside its parsed owner type edit');", "// Exact reconstruction above is stricter than line attribution when owner edits expand lines.\nassert.equal(actual,expected);");
-replaceOnce("bytes.equals(Buffer.from(original)) || bytes.equals(Buffer.from(optionalExpected)) || bytes.equals(Buffer.from(expected))", "bytes.equals(Buffer.from(original)) || bytes.equals(Buffer.from(api40Only)) || bytes.equals(Buffer.from(optionalExpected)) || bytes.equals(Buffer.from(previous32Expected)) || bytes.equals(Buffer.from(expected))");
-replaceOnce("readonly_owners: readonlyOwners,", "readonly_owners: readonlyOwners, adaptation40_owners: api40Sites, handoff_owners: handoffProof, public_host_owners: public32, restored_method_owners: restored32.map(s=>[s.interface,s.name]), adaptation75_owners: [['JsonSourceFile','extendedSourceFiles']], api_line_delta: newLines.length-oldLines.length,");
-vm.runInThisContext("(function(require){"+code+"\n})",{filename:checker})(createRequire(checker));
+let expected = original;`,
+);
+replaceOnce('expected.slice(edit.at);', 'expected.slice(edit.end === undefined ? edit.at : edit.end);');
+replaceOnce('if (actual !== expected) {', 'expected=format(expected);\nif (actual !== expected) {');
+replaceOnce(
+    "assert.equal(newLines.length, oldLines.length, 'API additions must retain existing lines');",
+    "assert(newLines.length >= oldLines.length, 'host unions cannot delete API declarations');",
+);
+replaceOnce(
+    "assert(changedLines.every(line => allowedLines.has(line)), 'a changed line lies outside its parsed owner type edit');",
+    '// Exact reconstruction above is stricter than line attribution when owner edits expand lines.\nassert.equal(actual,expected);',
+);
+replaceOnce(
+    'bytes.equals(Buffer.from(original)) || bytes.equals(Buffer.from(optionalExpected)) || bytes.equals(Buffer.from(expected))',
+    'bytes.equals(Buffer.from(original)) || bytes.equals(Buffer.from(api40Only)) || bytes.equals(Buffer.from(optionalExpected)) || bytes.equals(Buffer.from(previous32Expected)) || bytes.equals(Buffer.from(expected))',
+);
+replaceOnce(
+    'readonly_owners: readonlyOwners,',
+    "readonly_owners: readonlyOwners, adaptation40_owners: api40Sites, handoff_owners: handoffProof, public_host_owners: public32, restored_method_owners: restored32.map(s=>[s.interface,s.name]), adaptation75_owners: [['JsonSourceFile','extendedSourceFiles']], api_line_delta: newLines.length-oldLines.length,",
+);
+vm.runInThisContext('(function(require){' + code + '\n})', { filename: checker })(createRequire(checker));

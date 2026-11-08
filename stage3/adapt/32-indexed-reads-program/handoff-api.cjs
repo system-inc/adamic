@@ -1,20 +1,22 @@
 #!/usr/bin/env node
-"use strict";
+'use strict';
 // Reconstruct exactly the sanctioned 20, 40, 70 and two public handoff unions.
-const fs = require("node:fs");
-const path = require("node:path");
-const vm = require("node:vm");
-const {createRequire} = require("node:module");
-const checker = path.join(__dirname, "../70-readonly-views/check-api.cjs");
-let code = fs.readFileSync(checker, "utf8");
-if (!code.startsWith("#!/usr/bin/env node\n")) throw new Error("API proof header drift");
-code = code.slice(code.indexOf("\n") + 1);
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const { createRequire } = require('node:module');
+const checker = path.join(__dirname, '../70-readonly-views/check-api.cjs');
+let code = fs.readFileSync(checker, 'utf8');
+if(!code.startsWith('#!/usr/bin/env node\n')) throw new Error('API proof header drift');
+code = code.slice(code.indexOf('\n') + 1);
 function replaceOnce(before, after) {
-    if (code.split(before).length !== 2) throw new Error("API proof composition drift");
+    if(code.split(before).length !== 2) throw new Error('API proof composition drift');
     code = code.replace(before, after);
 }
-replaceOnce("let expected = original;", `
-const api40Sites = JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname, "api40-sites.json"))}, "utf8"));
+replaceOnce(
+    'let expected = original;',
+    `
+const api40Sites = JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname, 'api40-sites.json'))}, "utf8"));
 assert.equal(api40Sites.length, 28);
 assert.equal(api40Sites.filter(s => s.kind === "brand").length, 27);
 const api40Owners = new Set();
@@ -39,14 +41,14 @@ for (const site of api40Sites) {
 }
 let api40Only = original;
 for (const e of edits.filter(e => e.adaptation === 40).sort((a,b) => b.at-a.at)) api40Only = api40Only.slice(0,e.at)+e.text+api40Only.slice(e.end);
-const handoffSites = JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname, "handoff-sites.json"))}, "utf8"));
+const handoffSites = JSON.parse(fs.readFileSync(${JSON.stringify(path.join(__dirname, 'handoff-sites.json'))}, "utf8"));
 assert.equal(handoffSites.length, 6);
 assert.equal(handoffSites.filter(s => s.public).length, 2);
 const sourceText32 = fs.readFileSync(path.join(adapted, "src/compiler/types.ts"), "utf8");
 const source32 = parse("types.ts", sourceText32);
 const handoffProof = [];
 for (const site of handoffSites) {
-    const sourceNode = require(${JSON.stringify(path.join(__dirname, "handoffs.cjs"))}).owners(ts, source32, site);
+    const sourceNode = require(${JSON.stringify(path.join(__dirname, 'handoffs.cjs'))}).owners(ts, source32, site);
     assert.equal(sourceNode.type.getText(source32), site.action === "decline" ? site.before : site.after, "handoff source type drift");
     const candidates = properties(before).filter(n => ownerPath(n) === JSON.stringify([site.interface, site.name]));
     assert.equal(candidates.length, site.public ? 1 : 0, "handoff public owner drift");
@@ -58,8 +60,18 @@ for (const site of handoffSites) {
 }
 let priorHandoffExpected = original;
 for (const e of edits.filter(e => e.handoffOwner !== "CommentRange").sort((a,b) => b.at-a.at)) priorHandoffExpected = priorHandoffExpected.slice(0,e.at)+e.text+priorHandoffExpected.slice(e.end === undefined ? e.at : e.end);
-let expected = original;`);
-replaceOnce("edit.text + expected.slice(edit.at);", "edit.text + expected.slice(edit.end === undefined ? edit.at : edit.end);");
-replaceOnce("bytes.equals(Buffer.from(optionalExpected)) || bytes.equals(Buffer.from(expected))", "bytes.equals(Buffer.from(optionalExpected)) || bytes.equals(Buffer.from(api40Only)) || bytes.equals(Buffer.from(priorHandoffExpected)) || bytes.equals(Buffer.from(expected))");
-replaceOnce("snapshot_declarations: owners.length,", "snapshot_declarations: 189, sanctioned_40: 28, handoff_owners: handoffProof, reconstructed_owners: owners.length,");
-vm.runInThisContext("(function(require){" + code + "\n})", {filename: checker})(createRequire(checker));
+let expected = original;`,
+);
+replaceOnce(
+    'edit.text + expected.slice(edit.at);',
+    'edit.text + expected.slice(edit.end === undefined ? edit.at : edit.end);',
+);
+replaceOnce(
+    'bytes.equals(Buffer.from(optionalExpected)) || bytes.equals(Buffer.from(expected))',
+    'bytes.equals(Buffer.from(optionalExpected)) || bytes.equals(Buffer.from(api40Only)) || bytes.equals(Buffer.from(priorHandoffExpected)) || bytes.equals(Buffer.from(expected))',
+);
+replaceOnce(
+    'snapshot_declarations: owners.length,',
+    'snapshot_declarations: 189, sanctioned_40: 28, handoff_owners: handoffProof, reconstructed_owners: owners.length,',
+);
+vm.runInThisContext('(function(require){' + code + '\n})', { filename: checker })(createRequire(checker));
