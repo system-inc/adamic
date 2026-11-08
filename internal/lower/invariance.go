@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"os"
 	"slices"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -1108,6 +1110,9 @@ func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checke
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+	if probeWidenedAt(l.program.Where(node)) {
+		fmt.Fprintf(os.Stderr, "probe-widened\trefusal\t%s\town=%s\tcontextual=%s\tsource=%s\ttarget=%s\tsame=%t\n", l.program.Where(node), probeTypeText(l.checker, own), probeTypeText(l.checker, contextual), probeTypeText(l.checker, found.source), probeTypeText(l.checker, found.target), own == contextual)
+	}
 	if found.declaredKey != "" {
 		return l.declaredKeyRefusal(node, own, contextual, found)
 	}
