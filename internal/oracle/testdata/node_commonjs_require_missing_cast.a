@@ -1,7 +1,7 @@
 // tsc's sys.ts:1597 casts what require("source-map-support") gives to the module's type before it
 // calls install, inside a try whose catch ignores the error. The require throws before the cast is
 // had, so the cast checks nothing (host-any.md's Modelled row), and native throws Node's
-// MODULE_NOT_FOUND where tsc 6.0.3 is installed (installed-layout, backend_divergences_test.go). The
+// MODULE_NOT_FOUND where tsc 6.0.3 is installed (installed-layout, backend_divergences.json). The
 // source on Node, an ES module, has no require.
 import 'node:process';
 

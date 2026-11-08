@@ -828,7 +828,7 @@ func runNativeAgreesShard(t *testing.T, shard int) {
 				return
 			}
 			// A ruled fixture that pins Node's side holds each side to its own pinned outcome
-			// (backend_divergences_test.go); any other is held to the source byte for byte.
+			// (testdata/backend_divergences.json); any other is held to the source byte for byte.
 			if difference := sourceDisagreement(fixture.path, oracle, native, false); difference != "" {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)

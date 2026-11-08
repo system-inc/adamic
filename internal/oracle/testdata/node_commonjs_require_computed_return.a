@@ -2,7 +2,7 @@
 // inside a try whose catch returns the error. The require throws before the object is built, so no
 // member typed any reaches the return (host-any.md's Modelled row), and native throws the Error
 // naming the path, where stock Node would load the plugin (no-javascript-plugins,
-// backend_divergences_test.go). The source on Node, an ES module, has no require.
+// backend_divergences.json). The source on Node, an ES module, has no require.
 import 'node:process';
 
 type ModuleImportResult<T = {}> =
