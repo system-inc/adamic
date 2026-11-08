@@ -35,7 +35,7 @@ Reference field means a cycleFinder.fields field whose lowering representation i
 
 ## Coverage
 
-Observed **5380 unit results**: `{'lowered': 3618, 'stopped': 1762}`. Deferred standalone units in emitted inventories: **28**. Unobserved stock units by status: `{'deferred_generic_instantiation': 28}`. Full-mode files attempted: **9/81**; emitted complete full-mode file inventories: 8. Stock inventory has 719 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
+Observed **5380 unit results**: `{'lowered': 3618, 'stopped': 1762}`. Deferred standalone units in emitted inventories: **28**. Unobserved stock units by status: `{'deferred_generic_instantiation': 28}`. Full-mode files attempted: **10/81**; emitted complete full-mode file inventories: 9. Stock inventory has 722 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
 
 One result per (unit file, unit position) is selected: full mode supersedes first-error mode, and later full pieces supersede earlier ones. Repeated dependency pairs in different units remain repeated observations. TypeToString text can be truncated or reused for distinct checker identities; the distinct-pair list groups displayed source/target strings plus the full first-encountered nested path, not globally shared checker identities.
 
@@ -77,7 +77,7 @@ Each observation is retained, including repeats in one unit, in [nil-source-refe
 | core.ts | 54 | 3 | 0 | not yet attempted |
 | corePublic.ts | 9 | 0 | 0 | not yet attempted |
 | debug.ts | 5 | 0 | 0 | not yet attempted |
-| diagnosticInformationMap.generated.ts | 3 | 0 | 0 | not yet attempted |
+| diagnosticInformationMap.generated.ts | 3 | 0 | 0 | complete traversal |
 | emitter.ts | 0 | 0 | 0 | not yet attempted |
 | executeCommandLine.ts | 42 | 26 | 29 | complete traversal |
 | expressionToTypeNode.ts | 0 | 0 | 0 | not yet attempted |
@@ -162,6 +162,7 @@ Each child is capped at 1490 seconds with five seconds for forced cleanup, below
 | full-006 | 0 | 77.234 | completed |
 | full-007 | 0 | 84.082 | completed |
 | full-008 | -15 | 1490.747 | configured elapsed bound |
+| full-009 | 0 | 24.033 | completed |
 
 ## Evidence and replay
 
