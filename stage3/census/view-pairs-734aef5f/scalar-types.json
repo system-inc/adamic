@@ -3642,6 +3642,10 @@
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.FalseKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.ForStatement": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
@@ -3970,6 +3974,10 @@
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.MethodDeclaration | SyntaxKind.GetAccessor | SyntaxKind.SetAccessor | SyntaxKind.PropertyAssignment | SyntaxKind.ShorthandPropertyAssignment | SyntaxKind.SpreadAssignment": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.MinusToken": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
@@ -4243,6 +4251,10 @@
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
     "SyntaxKind.TemplateSpan": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TrueKeyword": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
