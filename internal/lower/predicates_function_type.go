@@ -138,7 +138,7 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, closure ir.Expression
 	// method off it; any other callee is the function value itself.
 	var callee ir.Expression
 	var checked ir.CallClosure = call
-	if property, defined, isMethod := ir.MethodCallee(closure); isMethod {
+	if property, check, isMethod := ir.MethodCallee(closure); isMethod {
 		// JavaScript reads a.m before it evaluates the arguments, and the check reads m off the receiver
 		// after them, so an argument that runs code (a write to a.m, a getter) would call a different
 		// function from Node's. Only arguments that run nothing keep the order (Lower's must 1).
@@ -148,12 +148,8 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, closure ir.Expression
 		receiver := local("receiver", property.Object.Type())
 		callee = property.Object
 		property.Object = ir.Read{Local: receiver, Of: property.Object.Type()}
-		checked.Closure = property
-		if defined != nil {
-			// A narrowed method keeps its Defined around the read the check makes (ir.MethodCallee).
-			defined.Value = property
-			checked.Closure = *defined
-		}
+		// A narrowed or asserted method keeps its check around the read this one makes (ir.MethodCallee).
+		checked.Closure = ir.MethodCalleeWith(check, property)
 		l.result.Functions[wrapper].Parameters = append(l.result.Functions[wrapper].Parameters, receiver)
 	} else {
 		function := local("function", ir.Closure)
