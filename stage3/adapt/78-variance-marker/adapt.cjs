@@ -59,7 +59,7 @@ function plan(program, tree) {
     assert(['void', 'boolean'].includes(before), 'marker return type drift');
     assert.equal(checker.typeToString(checker.getReturnTypeOfSignature(signature)), before);
     const start = callback.type.getStart(file);
-    const changed = file.text.slice(0, start) + 'boolean' + file.text.slice(callback.type.end);
+    const changed = file.text.slice(0, start) + 'boolean ' + file.text.slice(callback.type.end);
     for(const removeComments of [false, true]) {
         const compilerOptions = { target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, removeComments };
         assert.equal(
