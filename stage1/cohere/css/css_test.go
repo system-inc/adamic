@@ -82,7 +82,7 @@ func portDirectory(test *testing.T, applied *mutant) string {
 			test.Fatal(readDirectoryError)
 		}
 		target := filepath.Join(directory, slice)
-		if createDirectoryError := os.MkdirAll(target, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(target, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		for _, entry := range entries {
@@ -103,7 +103,7 @@ func portDirectory(test *testing.T, applied *mutant) string {
 			if writeError := os.WriteFile(
 				filepath.Join(target, entry.Name()),
 				[]byte(source),
-				0644,
+				0o644,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
@@ -131,7 +131,7 @@ func askedCasesIn(test *testing.T, directory, oracle string) (string, string) {
 	}
 	encoded, _ := json.Marshal(request)
 	requestPath := filepath.Join(directory, "request.json")
-	if writeError := os.WriteFile(requestPath, encoded, 0644); writeError != nil {
+	if writeError := os.WriteFile(requestPath, encoded, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	// The Go oracle is css-printer-oracle-0, cohere's postcss with testdata/cohere_side_test.go laid over it, built
@@ -155,7 +155,7 @@ func askedCasesIn(test *testing.T, directory, oracle string) (string, string) {
 		test.Fatal(readError)
 	}
 	if keep := os.Getenv("ADAMIC_CSS_KEEP_RAW"); keep != "" {
-		if writeError := os.WriteFile(keep, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(keep, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -164,7 +164,7 @@ func askedCasesIn(test *testing.T, directory, oracle string) (string, string) {
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if writeError := os.WriteFile(keep, contents, 0644); writeError != nil {
+		if writeError := os.WriteFile(keep, contents, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

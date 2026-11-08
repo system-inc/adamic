@@ -62,7 +62,7 @@ func tsgoCacheWitness(test *testing.T, options Options) {
 	if writeError := os.WriteFile(
 		filepath.Join(directory, "stubs.c"),
 		[]byte(stubs.String()),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -89,7 +89,7 @@ func tsgoCacheWitness(test *testing.T, options Options) {
 	var first []byte
 	for _, round := range []string{"first", "warm"} {
 		binary := filepath.Join(directory, round, "program")
-		if createDirectoryError := os.Mkdir(filepath.Dir(binary), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(filepath.Dir(binary), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		if buildTsGoError := BuildTSGo(

@@ -17,11 +17,11 @@ func TestDiffCoverage(test *testing.T) {
 		test.Helper()
 		if createDirectoryError := os.MkdirAll(
 			filepath.Dir(filepath.Join(dir, path)),
-			0755,
+			0o755,
 		); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(text), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -138,11 +138,11 @@ func TestDiffCoverageTakesListedTsPrograms(test *testing.T) {
 	} {
 		if createDirectoryError := os.MkdirAll(
 			filepath.Dir(filepath.Join(dir, step.path)),
-			0755,
+			0o755,
 		); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(filepath.Join(dir, step.path), []byte(step.text), 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, step.path), []byte(step.text), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -170,7 +170,7 @@ func TestDiffCoverageTakesListedTsPrograms(test *testing.T) {
 		test.Fatal(encodeError)
 	}
 	listing := filepath.Join(test.TempDir(), "manifest.json")
-	if writeError := os.WriteFile(listing, data, 0600); writeError != nil {
+	if writeError := os.WriteFile(listing, data, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	observation := invokeCommand(

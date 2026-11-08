@@ -28,7 +28,7 @@ func TestCompilerWorkerMatchesSubprocess(test *testing.T) {
 		"throw new Error('fixture');",
 	} {
 		source := filepath.Join(test.TempDir(), "program.a")
-		if writeError := os.WriteFile(source, []byte(program(body)), 0600); writeError != nil {
+		if writeError := os.WriteFile(source, []byte(program(body)), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		// The reference is our own compiler. Drain both streams completely while

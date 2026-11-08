@@ -71,7 +71,7 @@ func build(test *testing.T, path string, sanitize bool) (string, string) {
 		test.Fatal(buildError)
 	}
 	script := filepath.Join(dir, "port.mjs")
-	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(lowered)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return binary, script
@@ -170,13 +170,13 @@ func manifest(test *testing.T, cases []string) string {
 	var listing strings.Builder
 	for index, text := range cases {
 		path := filepath.Join(dir, fmt.Sprintf("%04d.ts", index))
-		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		listing.WriteString(path + "\n")
 	}
 	path := filepath.Join(dir, "manifest")
-	if writeError := os.WriteFile(path, []byte(listing.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(listing.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path
@@ -244,7 +244,7 @@ func mutantPort(test *testing.T, file, from, to string) string {
 			"'../../typescript/",
 			"'"+filepath.ToSlash(filepath.Join(root(test), "stage1/typescript"))+"/",
 		)
-		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

@@ -172,7 +172,7 @@ func runJSONDecodeValidationMutantsShard(test *testing.T, shard int) {
 			if writeError := os.WriteFile(
 				path,
 				[]byte("import { decodeJson } from 'adamic';\n"+validationCase.source),
-				0600,
+				0o600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
@@ -262,7 +262,7 @@ func TestJsonDecodeErrorLeakMutant(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "error.a")
 	if writeError := os.WriteFile(path, []byte(
 		`import {decodeJson} from 'adamic'; const r=decodeJson<readonly string[]>('["half built",42]'); console.log(r.kind);`,
-	), 0600); writeError != nil {
+	), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)
@@ -341,7 +341,7 @@ func TestJsonDecodeFieldPresenceMutants(test *testing.T) {
 			if writeError := os.WriteFile(
 				path,
 				[]byte("import {decodeJson} from 'adamic';\n"+testCase.source),
-				0600,
+				0o600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
@@ -380,7 +380,7 @@ func TestJsonDecodeEmptyFieldsMutant(test *testing.T) {
 				// Retain the empty-object descriptor witness without Object.keys, which main refuses.
 				path = filepath.Join(test.TempDir(), "empty-object.a")
 				source := "import { decodeJson } from 'adamic'; console.log(decodeJson<{}>('{}').kind);"
-				if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+				if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 					test.Fatal(writeError)
 				}
 			}
@@ -398,7 +398,7 @@ func TestJsonDecodeEmptyFieldsMutant(test *testing.T) {
 				test.Fatal("mutant changed nothing")
 			}
 			mutantPath := filepath.Join(test.TempDir(), "omitted-fields.mjs")
-			if writeError := os.WriteFile(mutantPath, []byte(mutant), 0600); writeError != nil {
+			if writeError := os.WriteFile(mutantPath, []byte(mutant), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			got := onNode(test, mutantPath)

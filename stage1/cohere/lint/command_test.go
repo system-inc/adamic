@@ -63,11 +63,11 @@ func TestExecuteFailsOnStderrOtherThanModuleDownloads(test *testing.T) {
 		// execute resolves go through toolchain, under ADAMIC_TOOLS and toolchain's environment, so the fake is the
 		// tools directory's go and carries its stderr in a file of its own rather than in an environment variable.
 		tools := test.TempDir()
-		if createDirectoryError := os.MkdirAll(filepath.Join(tools, "bin"), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		stderr := filepath.Join(tools, "stderr")
-		if writeError := os.WriteFile(stderr, []byte(lines), 0644); writeError != nil {
+		if writeError := os.WriteFile(stderr, []byte(lines), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		script := "#!/bin/sh\ncat '" + stderr + "' >&2\n"

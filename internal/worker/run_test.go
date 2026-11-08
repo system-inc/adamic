@@ -38,11 +38,11 @@ func TestOraclePanicPolicy(test *testing.T) {
 			test.Parallel()
 			directory := test.TempDir()
 			harness := filepath.Join(directory, "internal", "worker")
-			if createDirectoryError := os.MkdirAll(harness, 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(harness, 0o755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			oracle := filepath.Join(directory, "oracle")
-			if createDirectoryError := os.Mkdir(oracle, 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(oracle, 0o755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			for _, name := range []string{"run.mjs", "wasm-node.mjs"} {

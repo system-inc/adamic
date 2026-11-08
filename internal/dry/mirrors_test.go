@@ -544,10 +544,10 @@ func mirrorMutant(test *testing.T, mutation string) {
 	write := func(path string, data []byte) {
 		test.Helper()
 		target := filepath.Join(root, path)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(target, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

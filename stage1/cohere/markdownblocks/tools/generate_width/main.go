@@ -224,7 +224,7 @@ func main() {
 				panic("generated tables changed")
 			}
 		} else {
-			must(os.WriteFile(item.path, result, 0644))
+			must(os.WriteFile(item.path, result, 0o644))
 		}
 	}
 }

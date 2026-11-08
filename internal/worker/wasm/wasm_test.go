@@ -22,7 +22,7 @@ func workersWasmProduct(test *testing.T) string {
 		}
 		write := func(path, text string) {
 			test.Helper()
-			if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
@@ -92,7 +92,7 @@ func workersWasmProduct(test *testing.T) string {
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if writeError := os.WriteFile(filepath.Join(generated, "handler.wasm"), binary, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(generated, "handler.wasm"), binary, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 
@@ -124,7 +124,7 @@ func TestWorkersWasm(test *testing.T) {
 	run := commandRunner(test, root)
 	write := func(path, text string) {
 		test.Helper()
-		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

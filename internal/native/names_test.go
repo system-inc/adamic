@@ -58,7 +58,7 @@ func TestSourceNamesDoNotMove(test *testing.T) {
 		): `export const marker = [14].length; export const container = { get value(): number { return 14; } }; export function same(value: number): number { const callback = () => value + 14; return callback(); }`,
 	}
 	for path, source := range sources {
-		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -248,7 +248,7 @@ func TestImportedSpecializationsHaveSourceIdentity(test *testing.T) {
 		): `export class Box { readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value + 1; } }`,
 	}
 	for path, source := range sources {
-		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -280,7 +280,7 @@ func TestImportedSpecializationsHaveSourceIdentity(test *testing.T) {
 		if writeError := os.WriteFile(
 			filepath.Join(relocated, filepath.Base(path)),
 			[]byte(source),
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -326,7 +326,7 @@ func TestGeneratedRolesDoNotCollide(test *testing.T) {
 	test.Parallel()
 	entry := filepath.Join(test.TempDir(), "roles.a")
 	source := `class Box { readonly value: number; constructor(value: number) { this.value = value; } allocate(value: number): Box { return new Box(value); } initialize(): number { return this.value + 1; } } function outer(): number { return 17; } const fn = outer; console.log((new Box(1).allocate(2).initialize() + fn()).toString());`
-	if writeError := os.WriteFile(entry, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
@@ -356,7 +356,7 @@ func TestGenericSpecializationsHaveSourceIdentity(test *testing.T) {
 	test.Parallel()
 	entry := filepath.Join(test.TempDir(), "generic.a")
 	source := `function identity<T>(value:T):T {return value;} console.log(identity<number>(7).toString()); console.log(identity<string>('seven'));`
-	if writeError := os.WriteFile(entry, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
@@ -634,7 +634,7 @@ func TestStableUnitsSurviveMiddleDeclaration(test *testing.T) {
 async function middle(n: number): Promise<number> { return await Promise.resolve(n + 2); }
 function last(n: number): number { return first(n) + 3; }
 console.log(last(4).toString()); console.log((await middle(5)).toString());`
-	if writeError := os.WriteFile(entry, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	before := namedProgram(test, entry, nil)
@@ -648,7 +648,7 @@ console.log(last(4).toString()); console.log((await middle(5)).toString());`
 	original, next := C(before), C(after)
 	stableDefinitionsSurvive(test, original, next, len(before.Functions))
 	stableProgramMatchesNode(test, entry, original)
-	if writeError := os.WriteFile(entry, []byte(changed), 0600); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(changed), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	stableProgramMatchesNode(test, entry, next)
@@ -698,7 +698,7 @@ func TestStablePredicateHelperUnits(test *testing.T) {
 	safe := strings.Replace(string(source), `use("text");`, "use(7);", 1)
 	entry := filepath.Join(test.TempDir(), "main.ts")
 	safe = "\n" + safe // Reserve a line so insertion leaves checked diagnostics unchanged.
-	if writeError := os.WriteFile(entry, []byte(safe), 0600); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(safe), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	before := namedProgram(test, entry, nil)
@@ -719,7 +719,7 @@ func TestStablePredicateHelperUnits(test *testing.T) {
 	original, next := C(before), C(after)
 	stableDefinitionsSurvive(test, original, next, len(before.Functions))
 	stableProgramMatchesNode(test, entry, original)
-	if writeError := os.WriteFile(entry, []byte(changed), 0600); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(changed), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	stableProgramMatchesNode(test, entry, next)
@@ -736,7 +736,7 @@ func TestStableSameNamedCheckedPredicates(test *testing.T) {
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, name), source, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), source, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -767,7 +767,7 @@ func TestStableSameNamedCheckedPredicates(test *testing.T) {
 	next := C(after)
 	stableDefinitionsSurvive(test, original, next, len(before.Functions))
 	stableProgramMatchesNode(test, entry, original)
-	if writeError := os.WriteFile(entry, []byte(changed), 0600); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(changed), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	stableProgramMatchesNode(test, entry, next)
@@ -800,7 +800,7 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 	entries := []string{}
 	for _, checkout := range checkouts {
 		for _, name := range []string{"src", "shared/left", "shared/right", "private/tree", "private/entry"} {
-			if createDirectoryError := os.MkdirAll(filepath.Join(checkout, name), 0700); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Join(checkout, name), 0o700); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 		}
@@ -822,7 +822,7 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 			"shared/right/library.a": "export function value(): number { return 22; }\n",
 		}
 		for name, text := range files {
-			if writeError := os.WriteFile(filepath.Join(checkout, name), []byte(text), 0600); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(checkout, name), []byte(text), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
@@ -839,14 +839,14 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 		if writeError := os.WriteFile(
 			filepath.Join(checkout, "private/tree/main.a"),
 			[]byte(copied),
-			0600,
+			0o600,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
 		if writeError := os.WriteFile(
 			filepath.Join(checkout, "private/tree/library.a"),
 			library,
-			0600,
+			0o600,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -856,14 +856,14 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 		if writeError := os.WriteFile(
 			filepath.Join(checkout, "private/entry/main.a"),
 			[]byte(copied),
-			0600,
+			0o600,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
 		entries = append(entries, filepath.Join(checkout, "private/entry/main.a"))
 	}
 	for _, cwd := range working {
-		if createDirectoryError := os.MkdirAll(cwd, 0700); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(cwd, 0o700); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 	}
@@ -924,7 +924,7 @@ class Box<T> {
 function run<T>(value: T): T[] { return new Box<T>(value).run(); }
 console.log((collect(11)[0] ?? 0).toString());
 console.log((run(22)[0] ?? 0).toString());`
-	if writeError := os.WriteFile(entry, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)

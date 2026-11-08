@@ -151,7 +151,7 @@ func TestEmittedJavaScriptMismatch_000(test *testing.T) {
 			}
 			module = filepath.Join(test.TempDir(), "lint.mjs")
 			data = append(data, []byte("\nconsole.log('planted emitted JavaScript mismatch');\n")...)
-			if writeError := os.WriteFile(module, data, 0644); writeError != nil {
+			if writeError := os.WriteFile(module, data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			compareWithJavaScript(
@@ -323,11 +323,11 @@ func emittedMismatchLowered(test *testing.T) string {
 			if writeError := os.WriteFile(
 				filepath.Join(out, "lint.mjs"),
 				[]byte(javascript.JavaScript(lowered)),
-				0644,
+				0o644,
 			); writeError != nil {
 				return writeError
 			}
-			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
+			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0o644)
 		})
 		value.path = lowered
 	})

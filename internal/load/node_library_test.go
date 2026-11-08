@@ -16,7 +16,7 @@ import (
 func nodeSource(test *testing.T, source string) (*Program, error) {
 	test.Helper()
 	file := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(file, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return Load([]string{file})
@@ -57,10 +57,10 @@ func TestNodeLibraryIgnoresCallerPackage(test *testing.T) {
 	)
 	for name, data := range files {
 		path := filepath.Join(directory, "node_modules", "@types", "node", filepath.FromSlash(name))
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o700); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+		if writeError := os.WriteFile(path, data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

@@ -152,7 +152,7 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(test *testing.T) {
 {"Action":"fail","Package":"p","Test":"TestFail","Elapsed":0.2}
 {"Action":"output","Package":"p","Output":"gate cache: native hits=1 misses=0\n"}
 `
-	if writeError := os.WriteFile(path, []byte(log), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(log), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	results, cache, count, readLogError := readLog(path)
@@ -168,7 +168,7 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(test *testing.T) {
 	if len(cache) != 1 || cacheHits.FindStringSubmatch(cache[0])[2] != "1" {
 		test.Fatal("lost hit evidence")
 	}
-	if writeError := os.WriteFile(path, []byte("truncated JSON"), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte("truncated JSON"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if _, _, _, readLogError := readLog(path); readLogError == nil {

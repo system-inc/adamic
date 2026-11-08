@@ -85,7 +85,7 @@ func scannerPortProduct(test *testing.T, source string, sanitize bool) string {
 	}
 	return scannerFetch(test, inputs, func(directory string) error {
 		for _, name := range portFiles {
-			if writeError := os.WriteFile(filepath.Join(directory, name), contents[name], 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(directory, name), contents[name], 0o644); writeError != nil {
 				return writeError
 			}
 		}
@@ -229,7 +229,7 @@ func scannerShard(test *testing.T, shard int) {
 	asked := askedCorpus(test)
 	lines := scannerSelect(scannerManifestLines(test, asked.all), shard)
 	manifest := filepath.Join(test.TempDir(), "shard.txt")
-	if writeError := os.WriteFile(manifest, []byte(strings.Join(lines, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(manifest, []byte(strings.Join(lines, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	setupTime := time.Since(setup)

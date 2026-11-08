@@ -74,7 +74,7 @@ func expressionGateProofShard(test *testing.T, number int) {
 		}
 	}
 	path := filepath.Join(test.TempDir(), "proof.txt")
-	if writeError := os.WriteFile(path, []byte(input.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(input.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	port, _ := filepath.Abs("main.ts")

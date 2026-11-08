@@ -142,7 +142,7 @@ func TestJsonDecodeShapeKindMutant(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "kind.a")
 	if writeError := os.WriteFile(path, []byte(
 		`import {decodeJson} from 'adamic'; const value=decodeJson<{readonly value:boolean}>('{"value":true}'); console.log(value.kind);`,
-	), 0600); writeError != nil {
+	), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)

@@ -56,7 +56,7 @@ func scalarCases(test *testing.T) (string, int, int) {
 		}
 	}
 	target := filepath.Join(test.TempDir(), "scalar-cases.txt")
-	if writeError := os.WriteFile(target, append(source, []byte(extra.String())...), 0644); writeError != nil {
+	if writeError := os.WriteFile(target, append(source, []byte(extra.String())...), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return target, files, count
@@ -68,7 +68,7 @@ func goScalars(test *testing.T, cases string) []byte {
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
-		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(artifacts, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		executable, readError := os.ReadFile(binary)
@@ -84,9 +84,9 @@ func goScalars(test *testing.T, cases string) []byte {
 			data []byte
 			mode os.FileMode
 		}{
-			{"go-scalar", executable, 0755},
-			{"scalar-cases.txt", inputs, 0644},
-			{"scalar-expected.txt", expected, 0644},
+			{"go-scalar", executable, 0o755},
+			{"scalar-cases.txt", inputs, 0o644},
+			{"scalar-expected.txt", expected, 0o644},
 		} {
 			if writeError := os.WriteFile(
 				filepath.Join(artifacts, file.name),

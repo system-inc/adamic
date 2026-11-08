@@ -78,7 +78,7 @@ func copyPort(test *testing.T, file, from, to string) string {
 			}
 			source = strings.Replace(source, from, to, 1)
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -195,7 +195,7 @@ func askedCorpus(test *testing.T) corpus {
 	add := func(mode, text string) {
 		path := filepath.Join(directory, fmt.Sprintf("edge-%05d.ts", generated))
 		generated++
-		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		fmt.Fprintf(&edges, "%s\t%s\n", mode, path)
@@ -444,7 +444,7 @@ func askedCorpus(test *testing.T) corpus {
 	all.WriteString(edges.String())
 	write := func(name, text string) string {
 		path := filepath.Join(directory, name)
-		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		return path

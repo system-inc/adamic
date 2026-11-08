@@ -86,13 +86,13 @@ func cssPrinterProduct(test *testing.T, variant int) cssExecutable {
 				return lowerError
 			}
 			code := native.C(program)
-			if writeError := os.WriteFile(filepath.Join(dir, "main.c"), []byte(code), 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(dir, "main.c"), []byte(code), 0o644); writeError != nil {
 				return writeError
 			}
 			if writeError := os.WriteFile(
 				filepath.Join(dir, "main.mjs"),
 				[]byte(javascript.JavaScript(program)),
-				0644,
+				0o644,
 			); writeError != nil {
 				return writeError
 			}
@@ -120,7 +120,7 @@ func cssOracleRun(t *testing.T, binary, test string, request any) {
 		t.Fatal(encodeError)
 	}
 	path := filepath.Join(t.TempDir(), "request.json")
-	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 		t.Fatal(writeError)
 	}
 	command := bounded(t, binary, "-test.run=^"+test+"$", "-test.timeout=0", "-test.v")
@@ -249,7 +249,7 @@ func cssShardFile(test *testing.T, cases []cssCase) string {
 		builder.WriteByte('\n')
 	}
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(builder.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(builder.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path

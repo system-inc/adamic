@@ -20,7 +20,7 @@ func TestProfileArtifacts(test *testing.T) {
 	if directory == "" {
 		test.Skip("set ADAMIC_LINT_PROFILE_DIR to a scratch directory")
 	}
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	sourceRoot := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
@@ -53,7 +53,7 @@ func TestProfileArtifacts(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(directory, "compiler.txt"),
 		[]byte(manifest.String()),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -78,7 +78,7 @@ func buildProfile(test *testing.T, directory string) {
 		test.Fatal(lowerError)
 	}
 	source := native.C(lowered)
-	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if buildError := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); buildError != nil {
@@ -107,7 +107,7 @@ func buildProfile(test *testing.T, directory string) {
 			test.Fatal(readError)
 		}
 		path := filepath.Join(directory, entry.Name())
-		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		if strings.HasSuffix(entry.Name(), ".c") {

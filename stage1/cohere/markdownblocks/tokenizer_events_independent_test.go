@@ -57,7 +57,7 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 
 		cases, want, names := fullCases, fullWant, fullNames
 		scratch := test.TempDir()
-		if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		for _, file := range []string{

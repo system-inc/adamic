@@ -127,7 +127,7 @@ func TestTerminalStackStopMarkedJavaScript(test *testing.T) {
 		return ""
 	}})
 	generated := filepath.Join(test.TempDir(), "marked.mjs")
-	if writeError := os.WriteFile(generated, []byte(code), 0644); writeError != nil {
+	if writeError := os.WriteFile(generated, []byte(code), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if difference := disagreement(
@@ -160,7 +160,7 @@ func TestNonOverflowRangeErrorCatch(test *testing.T) {
 	}
 	code = strings.Replace(code, original, `throw new RangeError("ordinary");`, 1)
 	generated := filepath.Join(test.TempDir(), "range-error.mjs")
-	if writeError := os.WriteFile(generated, []byte(code), 0644); writeError != nil {
+	if writeError := os.WriteFile(generated, []byte(code), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	want := onSliceNode(test, path)

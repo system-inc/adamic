@@ -77,7 +77,7 @@ func cssPrinterWitnesses(test *testing.T, variant int) [][]int {
 				if writeError := os.WriteFile(
 					filepath.Join(dir, cssPrinterModes[mode]+".txt"),
 					[]byte(builder.String()),
-					0644,
+					0o644,
 				); writeError != nil {
 					return writeError
 				}
@@ -209,7 +209,7 @@ func TestCssPrinterMutantWitnessesRekey(test *testing.T) {
 			test.Fatal(readError)
 		}
 		edited := filepath.Join(test.TempDir(), name)
-		if writeError := os.WriteFile(edited, append(content, 'x'), 0644); writeError != nil {
+		if writeError := os.WriteFile(edited, append(content, 'x'), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		moved := map[string]string{"port": inputs["port"], "corpus": inputs["corpus"], "oracle": inputs["oracle"]}

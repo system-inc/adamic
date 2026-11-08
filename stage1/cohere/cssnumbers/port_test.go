@@ -302,7 +302,7 @@ func runCssNumbersShard(test *testing.T, ordinal int) {
 
 func write(test *testing.T, path string, b []byte) {
 	test.Helper()
-	if writeError := os.WriteFile(path, b, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, b, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 }

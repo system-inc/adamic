@@ -44,7 +44,7 @@ func TestBoundaryPreservesErasedFacts(test *testing.T) {
 		module := filepath.Join(directory, "compiled.mjs")
 		binary := filepath.Join(directory, "compiled")
 		for path, content := range map[string]string{ordinary: text, module: javascript.JavaScript(program)} {
-			if writeError := os.WriteFile(path, []byte(content), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}

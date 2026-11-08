@@ -136,7 +136,7 @@ func TestJsonDecodeRefusals(test *testing.T) {
 			if writeError := os.WriteFile(
 				path,
 				[]byte("import { decodeJson } from 'adamic';\n"+testCase.source),
-				0600,
+				0o600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}

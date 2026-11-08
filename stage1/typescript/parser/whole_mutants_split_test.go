@@ -122,7 +122,7 @@ func wholeMutantLowerProduct(test *testing.T, directory string) string {
 		if lowerError != nil {
 			return lowerError
 		}
-		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644)
+		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0o644)
 	})
 	return lowered
 }

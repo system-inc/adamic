@@ -72,7 +72,7 @@ func TestNodeFileSystemRealpathClosureOptionsMutant(test *testing.T) {
 		strconv.Quote(input) +
 		",'latin1'));"
 	path := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	_, loweredError := lowered(test, path)
@@ -86,7 +86,7 @@ func TestNodeFileSystemRealpathClosureOptionsMutant(test *testing.T) {
 	if writeError := os.WriteFile(
 		mutantPath,
 		[]byte(strings.Replace(source, ",'latin1'", "", 1)),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

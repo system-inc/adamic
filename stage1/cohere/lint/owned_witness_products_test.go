@@ -121,10 +121,10 @@ func buildOwnedWitnessLowered(test *testing.T, directory string) string {
 		if lowerError != nil {
 			return lowerError
 		}
-		if writeError := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0o644); writeError != nil {
 			return writeError
 		}
-		writeError := os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(ir)), 0644)
+		writeError := os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(ir)), 0o644)
 		test.Logf("cold build lowered=%s", time.Since(started))
 		return writeError
 	})

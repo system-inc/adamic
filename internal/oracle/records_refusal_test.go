@@ -39,7 +39,7 @@ func recordRefusalMutant(test *testing.T, name string) bool {
 	}
 	for _, extension := range []string{".a", ".ts"} {
 		probe := filepath.Join(test.TempDir(), "records_"+name+extension)
-		if writeError := os.WriteFile(probe, source, 0600); writeError != nil {
+		if writeError := os.WriteFile(probe, source, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		_, loweredError := lowered(test, probe)

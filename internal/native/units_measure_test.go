@@ -78,7 +78,7 @@ func TestMeasureClangUnits(test *testing.T) {
 				test.Fatal(err)
 			}
 			filename := filepath.Join(directory, "main.c")
-			if writeError := os.WriteFile(filename, []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(filename, []byte(source), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			commandArguments := sourceFlags(source, options)

@@ -81,7 +81,7 @@ new B();`, "abstract"},
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if writeError := os.WriteFile(path, []byte(probe.source), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(probe.source), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			_, loadError := load.Load([]string{path})
@@ -120,7 +120,7 @@ func TestInheritanceCycleFinderIncludesInheritedFields(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	if writeError := os.WriteFile(path, []byte(`class Base { parent: Base | undefined = undefined; }
-class Child extends Base { readonly label = 'child'; }`), 0644); writeError != nil {
+class Child extends Base { readonly label = 'child'; }`), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

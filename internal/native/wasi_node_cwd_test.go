@@ -134,11 +134,11 @@ func nodeWasiWorkingDirectoryAgreement(test *testing.T, variant int) {
 	directory := test.TempDir()
 	first := filepath.Join(directory, "first")
 	moved := filepath.Join(first, "nested")
-	if createDirectoryError := os.MkdirAll(moved, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(moved, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	for _, path := range []string{filepath.Join(first, "marker"), filepath.Join(moved, "marker")} {
-		if writeError := os.WriteFile(path, []byte("marker"), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte("marker"), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

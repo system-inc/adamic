@@ -62,11 +62,11 @@ func TestShapeAndNameFacts(test *testing.T) {
 	if writeError := os.WriteFile(
 		configuration,
 		[]byte(`{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if writeError := os.WriteFile(file, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, openError := Open(configuration, []string{file})

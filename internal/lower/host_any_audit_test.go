@@ -58,7 +58,7 @@ func newHostAnyAudit(test *testing.T) *hostAnyAudit {
 import 'node:fs'; import 'node:perf_hooks'; import 'node:console';
 import 'node:buffer'; import 'node:tty'; import 'node:stream';
 import 'node:net'; import 'node:path'; import 'node:os';`
-	if writeError := os.WriteFile(file, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{file})

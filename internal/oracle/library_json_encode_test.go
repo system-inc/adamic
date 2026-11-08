@@ -118,7 +118,7 @@ func TestJsonEncodeRefusals(test *testing.T) {
 			if writeError := os.WriteFile(
 				path,
 				[]byte("import {encodeJson} from 'adamic';\n"+testCase.source),
-				0600,
+				0o600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
@@ -178,7 +178,7 @@ const source=stripTypeScriptTypes(` + string(encoded) + `);
 await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
 `
 	file := filepath.Join(test.TempDir(), "witness.mjs")
-	if writeError := os.WriteFile(file, []byte(script), 0600); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(script), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return file
@@ -279,7 +279,7 @@ func runJSONEncodeNonfinitePinnedShard(test *testing.T, shard int) {
 func jsonEncodeNonfinitePinned(test *testing.T, key string) {
 	dir := test.TempDir()
 	witness := filepath.Join(dir, "witness.mjs")
-	if writeError := os.WriteFile(witness, []byte(`console.log(JSON.stringify(`+key+`));`), 0600); writeError != nil {
+	if writeError := os.WriteFile(witness, []byte(`console.log(JSON.stringify(`+key+`));`), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	truth := onNode(test, witness)
@@ -293,7 +293,7 @@ for (const value of [`+key+`]) {
  if (text !== 'null') panic('nonfinite encoding must be null');
  if (decodeJson<number>(text).kind !== 'Error') panic('numeric decode must reject null');
  console.log(text);
-}`), 0600); writeError != nil {
+}`), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)

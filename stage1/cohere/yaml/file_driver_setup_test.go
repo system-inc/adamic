@@ -90,7 +90,7 @@ func fileDriverPublish(test *testing.T, state *fileDriverState) {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 }

@@ -18,14 +18,14 @@ func TestPublishedCopyModeIsPrivate(test *testing.T) {
 	defer syscall.Umask(previous)
 	root := test.TempDir()
 	folder := filepath.Join(root, "internal", "lower")
-	if createDirectoryError := os.MkdirAll(folder, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(folder, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	input := filepath.Join(folder, "lower.go")
 	if writeError := os.WriteFile(
 		input,
 		[]byte("package lower\ntype lowering struct { state int }\n"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -53,7 +53,7 @@ func TestPublishedCopyModeIsPrivate(test *testing.T) {
 	if statError != nil {
 		test.Fatal(statError)
 	}
-	if got := info.Mode().Perm(); got != 0600 {
+	if got := info.Mode().Perm(); got != 0o600 {
 		test.Fatalf("published output mode = %04o, want 0600 with umask 000", got)
 	}
 }

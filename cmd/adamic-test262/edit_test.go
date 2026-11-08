@@ -91,7 +91,7 @@ func TestWorkerLazyFallback(test *testing.T) {
 		test.Fatal("unused backup compiler was built")
 	}
 	source := filepath.Join(engine.work, "fallback.a")
-	if writeError := os.WriteFile(source, []byte(program("assertSameValue(1, 1);")), 0600); writeError != nil {
+	if writeError := os.WriteFile(source, []byte(program("assertSameValue(1, 1);")), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	result := engine.fallbackCompile(source)
@@ -112,7 +112,7 @@ func TestLoweringSourceEdit(test *testing.T) {
 	}
 	if createDirectoryError := os.MkdirAll(
 		filepath.Join(root, "internal", "native"),
-		0700,
+		0o700,
 	); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
@@ -120,13 +120,13 @@ func TestLoweringSourceEdit(test *testing.T) {
 		test.Fatal(symlinkError)
 	}
 	lower := filepath.Join(root, "internal", "lower")
-	if createDirectoryError := os.MkdirAll(lower, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(lower, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	cache := &resultCache{directory: test.TempDir()}
 	var previousContext string
 	for _, text := range []string{"// A\n", "// B\n"} {
-		if writeError := os.WriteFile(filepath.Join(lower, "probe.go"), []byte(text), 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(lower, "probe.go"), []byte(text), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		profile := newRunProfile()
@@ -200,7 +200,7 @@ func TestRunnerLocationIdentity(test *testing.T) {
 		test.Fatal(readError)
 	}
 	relocated := filepath.Join(test.TempDir(), "runner")
-	if writeError := os.WriteFile(relocated, contents, 0700); writeError != nil {
+	if writeError := os.WriteFile(relocated, contents, 0o700); writeError != nil {
 		test.Fatal(writeError)
 	}
 	var before []byte

@@ -15,7 +15,7 @@ func flakyCheckout(test *testing.T, stage string, always bool, silent bool) (*Ch
 	test.Helper()
 	root := test.TempDir()
 	tools := filepath.Join(root, "tools", "bin")
-	if createDirectoryError := os.MkdirAll(tools, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(tools, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	test.Setenv("ADAMIC_TOOLS", filepath.Dir(tools))
@@ -48,7 +48,7 @@ fi
 	)
 	write := func(path, body string) {
 		test.Helper()
-		if writeError := os.WriteFile(path, []byte("#!/bin/sh\n"+settings+body), 0755); writeError != nil {
+		if writeError := os.WriteFile(path, []byte("#!/bin/sh\n"+settings+body), 0o755); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -199,14 +199,18 @@ func TestCompileFindingConfirmation(test *testing.T) {
 		test.Run(testCase.name, func(test *testing.T) {
 			directory := test.TempDir()
 			compiler := filepath.Join(directory, "compiler")
-			if writeError := os.WriteFile(compiler, []byte("#!/bin/sh\n"+testCase.body+"\n"), 0755); writeError != nil {
+			if writeError := os.WriteFile(
+				compiler,
+				[]byte("#!/bin/sh\n"+testCase.body+"\n"),
+				0o755,
+			); writeError != nil {
 				test.Fatal(writeError)
 			}
 			path := filepath.Join(directory, "program.a")
 			if writeError := os.WriteFile(
 				path,
 				[]byte("// parallel-refuse: expected path\n"),
-				0644,
+				0o644,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}

@@ -14,11 +14,11 @@ func TestUnknownMutableContainerFailsLoudly(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	folder := filepath.Join(root, "internal", "lower")
-	os.MkdirAll(folder, 0700)
+	os.MkdirAll(folder, 0o700)
 	input := filepath.Join(folder, "lower.go")
 	output := filepath.Join(root, "copy.go")
 	source := "package lower\ntype hidden []int\ntype lowering struct {state hidden}\n"
-	if writeError := os.WriteFile(input, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(input, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	log, createError := os.Create(filepath.Join(root, "generation.log"))
@@ -44,13 +44,13 @@ func TestUnknownForeignPointerFailsLoudly(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	folder := filepath.Join(root, "internal", "lower")
-	if createDirectoryError := os.MkdirAll(folder, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(folder, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	input := filepath.Join(folder, "lower.go")
 	output := filepath.Join(root, "copy.go")
 	source := "package lower\nimport \"sync\"\ntype lowering struct {state *sync.Mutex}\n"
-	if writeError := os.WriteFile(input, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(input, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	log, createError := os.Create(filepath.Join(root, "generation.log"))

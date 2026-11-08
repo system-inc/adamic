@@ -145,7 +145,7 @@ func TestProgramRegionConstructedOrderMutant(test *testing.T) {
 			data = []byte(strings.Replace(string(data), before, "\t\t(void)order_offset;\n", 1))
 			changed = true
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

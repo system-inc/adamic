@@ -70,13 +70,13 @@ func stableSplitProduct(test *testing.T, name string) string {
 			}
 		}
 		code := native.C(program)
-		if writeError := os.WriteFile(filepath.Join(directory, "program.c"), []byte(code), 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, "program.c"), []byte(code), 0o600); writeError != nil {
 			return writeError
 		}
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "program.mjs"),
 			[]byte(javascript.JavaScript(program)),
-			0600,
+			0o600,
 		); writeError != nil {
 			return writeError
 		}

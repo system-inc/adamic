@@ -46,7 +46,7 @@ func main() {
 	if encodeError != nil {
 		panic(encodeError)
 	}
-	if writeError := os.WriteFile(os.Args[2], append(data, '\n'), 0644); writeError != nil {
+	if writeError := os.WriteFile(os.Args[2], append(data, '\n'), 0o644); writeError != nil {
 		panic(writeError)
 	}
 }

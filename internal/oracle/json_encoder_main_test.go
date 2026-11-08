@@ -45,7 +45,7 @@ func jsonEncoderMainFixture(test *testing.T, index, backend int) {
 	var actual run
 	if backend == 2 {
 		script := filepath.Join(test.TempDir(), "program.mjs")
-		if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		actual = onNodeWith(test, inputRun{}, script)

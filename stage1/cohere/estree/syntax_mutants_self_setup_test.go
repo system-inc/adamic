@@ -108,11 +108,11 @@ func syntaxMutantLoweredProduct(test *testing.T, item syntaxMutant) string {
 			if readError != nil {
 				return readError
 			}
-			if writeError := os.WriteFile(filepath.Join(dir, filepath.Base(file)), data, 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(dir, filepath.Base(file)), data, 0o644); writeError != nil {
 				return writeError
 			}
 		}
-		return os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(program)), 0644)
+		return os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(program)), 0o644)
 	})
 }
 
@@ -218,7 +218,7 @@ func syntaxMutantPreparedProduct(test *testing.T, index int) string {
 		if encodeError != nil {
 			return encodeError
 		}
-		return os.WriteFile(filepath.Join(dir, "ready.json"), data, 0644)
+		return os.WriteFile(filepath.Join(dir, "ready.json"), data, 0o644)
 	})
 }
 
@@ -396,7 +396,7 @@ func TestSyntaxMutantsUnion(test *testing.T) {
 		test.Fatal(encodeError)
 	}
 	descriptor := filepath.Join(test.TempDir(), "prepared.json")
-	if writeError := os.WriteFile(descriptor, encoded, 0644); writeError != nil {
+	if writeError := os.WriteFile(descriptor, encoded, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	caught := []int{}

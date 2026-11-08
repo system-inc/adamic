@@ -12,17 +12,17 @@ func TestNodeDeclarationsArePinned(test *testing.T) {
 	test.Parallel()
 	api := test.TempDir()
 	dir := filepath.Join(api, "node_modules/@types/node")
-	if createDirectoryError := os.MkdirAll(dir, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(dir, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if writeError := os.WriteFile(filepath.Join(dir, "index.d.ts"), nil, 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(dir, "index.d.ts"), nil, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	metadata := filepath.Join(dir, "package.json")
 	if writeError := os.WriteFile(
 		metadata,
 		[]byte(`{"name":"@types/node","version":"25.3.3"}`),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -32,7 +32,7 @@ func TestNodeDeclarationsArePinned(test *testing.T) {
 	if writeError := os.WriteFile(
 		metadata,
 		[]byte(`{"name":"@types/node","version":"24.0.0"}`),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -50,10 +50,10 @@ func TestNodeDeclarationsArePinned(test *testing.T) {
 func TestProvisioningFindsNpmAsBuildsFindTools(test *testing.T) {
 	tree := test.TempDir()
 	api := filepath.Join(tree, "stage3", "api")
-	if createDirectoryError := os.MkdirAll(api, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(api, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if writeError := os.WriteFile(filepath.Join(api, "package-lock.json"), []byte("{}\n"), 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(api, "package-lock.json"), []byte("{}\n"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_SANDBOX", "1")
@@ -82,10 +82,10 @@ func TestPreparedNodeTypesUseHostAxioms(test *testing.T) {
 			test.Fatal(readError)
 		}
 		name := filepath.Join(api, "node_modules", "@types", "node", file)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0700); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0o700); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(name, published, 0600); writeError != nil {
+		if writeError := os.WriteFile(name, published, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

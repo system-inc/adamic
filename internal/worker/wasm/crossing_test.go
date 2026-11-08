@@ -58,7 +58,7 @@ func TestGeneratedCrossing(test *testing.T) {
 	run := commandRunner(test, root)
 	write := func(path, text string) {
 		test.Helper()
-		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

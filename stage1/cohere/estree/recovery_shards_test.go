@@ -76,10 +76,10 @@ func recoveryPort(test *testing.T, setup *recoverySetup, path string) (string, s
 		if lowerError != nil {
 			return lowerError
 		}
-		if writeError := os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(ir)), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(ir)), 0o644); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0644)
+		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0o644)
 	})
 	code, readError := os.ReadFile(filepath.Join(lowered, "port.c"))
 	if readError != nil {

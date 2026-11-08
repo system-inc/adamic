@@ -13,10 +13,10 @@ import (
 func TestSelection(test *testing.T) {
 	root := test.TempDir()
 	paths := []string{"pkg/testdata/b.md", "other/b.md", "pkg/fixtures/a.md", "other/a.md", "pkg/testdata/a.md"}
-	if createDirectoryError := os.MkdirAll(filepath.Join(root, "pkg"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Join(root, "pkg"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if writeError := os.WriteFile(filepath.Join(root, "pkg", "source_test.go"), nil, 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(root, "pkg", "source_test.go"), nil, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_GATE_SAMPLE", strings.Repeat("0", 40))
@@ -75,7 +75,7 @@ func TestSelection(test *testing.T) {
 	}
 	test.Setenv("ADAMIC_GATE_SAMPLE", strings.Repeat("0", 40))
 	list := filepath.Join(root, "changed.txt")
-	if writeError := os.WriteFile(list, []byte("other/b.md\npkg/new.ts\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(list, []byte("other/b.md\npkg/new.ts\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_GATE_CHANGED", list)
@@ -86,13 +86,13 @@ func TestSelection(test *testing.T) {
 	if len(selected.Paths) != len(paths) {
 		test.Fatalf("changed file and package fixtures must all be included: %v", selected.Paths)
 	}
-	if createDirectoryError := os.MkdirAll(filepath.Join(root, "pkg", "testdata"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Join(root, "pkg", "testdata"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if writeError := os.WriteFile(filepath.Join(root, "pkg", "testdata", "adapter.go"), nil, 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(root, "pkg", "testdata", "adapter.go"), nil, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if writeError := os.WriteFile(list, []byte("pkg/testdata/adapter.go\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(list, []byte("pkg/testdata/adapter.go\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	selected, selectError = Select(root, paths, 3)
@@ -108,7 +108,7 @@ func TestSelection(test *testing.T) {
 		test.Fatalf("fixture adapter lost owning package: %v", selected.Paths)
 	}
 	// Changed paths outside the stride must also work without any owning package.
-	if writeError := os.WriteFile(list, []byte("other/b.md\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(list, []byte("other/b.md\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	selected, selectError = Select(root, paths, 3)
@@ -167,7 +167,7 @@ func TestBadChangedList(test *testing.T) {
 	list := filepath.Join(root, "changed.txt")
 	test.Setenv("ADAMIC_GATE_CHANGED", list)
 	for _, path := range []string{"../outside.md", filepath.Join(root, "absolute.md")} {
-		if writeError := os.WriteFile(list, []byte(path+"\n"), 0644); writeError != nil {
+		if writeError := os.WriteFile(list, []byte(path+"\n"), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		if _, selectError := Select(root, []string{"a.md"}, 3); selectError == nil {

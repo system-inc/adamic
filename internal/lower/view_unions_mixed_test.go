@@ -16,7 +16,7 @@ import (
 func mixedUnionLowering(test *testing.T, source string) (*lowering, *checker.Type, func()) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "contract.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

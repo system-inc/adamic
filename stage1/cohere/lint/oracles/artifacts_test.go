@@ -29,7 +29,7 @@ func requireOracleExecutable(test *testing.T, binary string, commandArguments ..
 func requireManifestOracle(test *testing.T, binary string) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "empty-manifest")
-	if writeError := os.WriteFile(path, nil, 0600); writeError != nil {
+	if writeError := os.WriteFile(path, nil, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	requireOracleExecutable(test, binary, "--manifest", path)
@@ -40,10 +40,10 @@ func requireMembershipOracle(test *testing.T, binary string) {
 	test.Helper()
 	directory := test.TempDir()
 	source, manifest := filepath.Join(directory, "probe.tsx"), filepath.Join(directory, "manifest")
-	if writeError := os.WriteFile(source, []byte("const value = <div />;\n"), 0600); writeError != nil {
+	if writeError := os.WriteFile(source, []byte("const value = <div />;\n"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if writeError := os.WriteFile(manifest, []byte(source+"\n"), 0600); writeError != nil {
+	if writeError := os.WriteFile(manifest, []byte(source+"\n"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	requireOracleExecutable(test, binary, manifest)

@@ -368,11 +368,11 @@ func textBuildProduct(test *testing.T, root, target string) textProducts {
 			if writeError := os.WriteFile(
 				filepath.Join(dir, "program.c"),
 				[]byte(native.C(program)),
-				0644,
+				0o644,
 			); writeError != nil {
 				return writeError
 			}
-			return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+			return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 		})
 		source, readError := os.ReadFile(filepath.Join(lowerDirectory, "program.c"))
 		if readError != nil {

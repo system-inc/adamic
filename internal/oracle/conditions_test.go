@@ -50,7 +50,7 @@ func TestTypeScriptConditionsAgreeWithNode(test *testing.T) {
 			}
 			// Store source as .a in the repository; exercise the TypeScript loader explicitly.
 			path := filepath.Join(test.TempDir(), "conditions.ts")
-			if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+			if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			program, loweredError := lowered(test, path)
@@ -213,7 +213,7 @@ func TestConditionLedgerMissingSiteMutant(test *testing.T) {
 	}
 	path := filepath.Join(test.TempDir(), "missing-site.ts")
 	mutantSource := []byte(strings.Join(lines, "\n"))
-	if writeError := os.WriteFile(path, mutantSource, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, mutantSource, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	mutant := onNode(test, path)

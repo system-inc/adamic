@@ -42,7 +42,7 @@ func TestAdamicNullishAssertionsAreRefused(test *testing.T) {
 				test.Run(extension+"/"+operand+"/"+source, func(test *testing.T) {
 					test.Parallel()
 					path := filepath.Join(test.TempDir(), "main."+extension)
-					if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+					if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 						test.Fatal(writeError)
 					}
 					program, loadError := load.Load([]string{path})

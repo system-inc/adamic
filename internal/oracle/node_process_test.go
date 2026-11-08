@@ -480,7 +480,7 @@ func TestNodeProcessRawWriteFileModeMutant(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := `import fs from 'node:fs'; process.stdout.write('raw|'); console.log('line'); console.log(String(fs.fstatSync(1).size));`
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	observe := func(name string, arguments ...string) run {

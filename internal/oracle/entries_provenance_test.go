@@ -178,7 +178,7 @@ func TestEntriesRuntimeReadiness(test *testing.T) {
 	if writeError := os.WriteFile(
 		path,
 		[]byte("const source = {z: undefined}; Object.entries(source); console.log('completed');\n"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

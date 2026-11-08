@@ -28,13 +28,13 @@ func copyRules(test *testing.T) string {
 			if parts := strings.Split(filepath.ToSlash(relative), "/"); len(parts) == 3 && parts[2] != "testdata" {
 				return filepath.SkipDir
 			}
-			return os.MkdirAll(target, 0755)
+			return os.MkdirAll(target, 0o755)
 		}
 		data, readError := os.ReadFile(path)
 		if readError != nil {
 			return readError
 		}
-		return os.WriteFile(target, data, 0644)
+		return os.WriteFile(target, data, 0o644)
 	})
 	if walkError != nil {
 		test.Fatal(walkError)
@@ -77,7 +77,7 @@ func TestDescriptorRejections(test *testing.T) {
 			if encodeError != nil {
 				test.Fatal(encodeError)
 			}
-			if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+			if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			_, generateError := Generate(root)
@@ -100,7 +100,7 @@ func TestDuplicateOracleAdapter(test *testing.T) {
 	if writeError := os.WriteFile(
 		path,
 		bytes.ReplaceAll(data, []byte("oracleNoEmpty"), []byte("oracleNoDebugger")),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -112,7 +112,7 @@ func TestDuplicateOracleAdapter(test *testing.T) {
 	if writeError := os.WriteFile(
 		path,
 		bytes.ReplaceAll(data, []byte("oracleNoEmpty"), []byte("oracleNoDebugger")),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -144,7 +144,7 @@ func TestAdamicRuleModule(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(directory, "rule.ts"),
 		[]byte("stale rename"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

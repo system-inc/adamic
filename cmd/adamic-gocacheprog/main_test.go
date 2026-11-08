@@ -106,7 +106,7 @@ func helperEnvironment(dir, url, trust, token string) []string {
 func tokenFile(test *testing.T) string {
 	test.Helper()
 	p := filepath.Join(test.TempDir(), "token")
-	if writeError := os.WriteFile(p, []byte("test-token\n"), 0600); writeError != nil {
+	if writeError := os.WriteFile(p, []byte("test-token\n"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return p
@@ -314,14 +314,14 @@ func TestGoBuildEndToEnd(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(dir, "go.mod"),
 		[]byte("module cachetest\n\ngo 1.24\n"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if writeError := os.WriteFile(
 		filepath.Join(dir, "tiny.go"),
 		[]byte("package cachetest\nfunc Add(a,b int) int { return a+b }\n"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -370,7 +370,7 @@ func TestLocalPoisoning(test *testing.T) {
 	body := []byte("compiled output")
 	dir := test.TempDir()
 	out, _ := transact(test, dir, "off", "main", "", putRequest(body), body)
-	if writeError := os.WriteFile(out.DiskPath, []byte("tampered"), 0600); writeError != nil {
+	if writeError := os.WriteFile(out.DiskPath, []byte("tampered"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	out, log := transact(test, dir, "off", "main", "", getRequest(), nil)

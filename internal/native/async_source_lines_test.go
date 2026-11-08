@@ -16,7 +16,7 @@ import (
 func TestDebugAsyncTerminals(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "fixture.a")
-	if writeError := os.WriteFile(path, []byte(debugLineFixture), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(debugLineFixture), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, debugProgramError := debugProgram(test, path, true)

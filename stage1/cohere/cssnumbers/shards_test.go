@@ -268,11 +268,11 @@ func buildNumbersProgram(test *testing.T, name, main string) numbersProgram {
 		if writeError := os.WriteFile(
 			filepath.Join(dir, "program.c"),
 			[]byte(native.C(program)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 	})
 	return numbersProgram{
 		dir:        dir,
@@ -326,10 +326,10 @@ func prepareNumbersMutant(test *testing.T, mutation numbersMutation) string {
 	test.Helper()
 	parent := numbersTopTempDirectory(test)
 	scratch := filepath.Join(parent, "cssnumbers")
-	if createDirectoryError := os.Mkdir(scratch, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(scratch, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if createDirectoryError := os.Mkdir(filepath.Join(parent, "cssstrings"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(filepath.Join(parent, "cssstrings"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	dependency, readError := os.ReadFile("../cssstrings/strings.ts")
@@ -561,7 +561,7 @@ func numbersOracleAnswersWithCommand(
 		Toolchain: buildcache.Tool("node", "--version"),
 	}, func(dir string) error {
 		path := filepath.Join(dir, "input.txt")
-		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 			return writeError
 		}
 		// Read through childguard.Capture for numbersExecute's reason: a WaitDelay could fail a run that had
@@ -572,7 +572,7 @@ func numbersOracleAnswersWithCommand(
 		if captureError != nil || len(stderr) != 0 {
 			return fmt.Errorf("%s oracle: %v; %s", name, captureError, stderr)
 		}
-		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0644)
+		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0o644)
 	})
 	answer, readError := os.ReadFile(filepath.Join(dir, "answers.txt"))
 	if readError != nil {

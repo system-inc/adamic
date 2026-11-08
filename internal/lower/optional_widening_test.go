@@ -77,7 +77,7 @@ func TestOptionalWideningSpreadOverwrite(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "const original = { x: 1, y: 'wrong', z: 'wrong' }; const view: { x: number } = original; const wider: { x: number; y?: number } = { ...view, y: 3 };"
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

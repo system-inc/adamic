@@ -51,7 +51,7 @@ func TestArgumentsLengthTypeScriptSource(test *testing.T) {
 				test.Fatal(readError)
 			}
 			path := filepath.Join(test.TempDir(), "main.ts")
-			if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+			if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			checked, loadError := load.Load([]string{path})

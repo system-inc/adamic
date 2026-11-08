@@ -153,7 +153,7 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 	}
 	dir := test.TempDir()
 	main := filepath.Join(dir, "main.c")
-	if writeError := os.WriteFile(main, []byte(source.String()), 0600); writeError != nil {
+	if writeError := os.WriteFile(main, []byte(source.String()), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	runtimeDirectory, _ := filepath.Abs("runtime")
@@ -170,7 +170,7 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		}
 		changed := bytes.Replace(data, []byte(old), []byte("base.op=5;base.ranges"), 1)
 		bytecode = filepath.Join(dir, "mutant.c")
-		if writeError := os.WriteFile(bytecode, changed, 0600); writeError != nil {
+		if writeError := os.WriteFile(bytecode, changed, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -190,7 +190,7 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 			1,
 		)
 		parser = filepath.Join(dir, "parser-mutant.c")
-		if writeError := os.WriteFile(parser, changed, 0600); writeError != nil {
+		if writeError := os.WriteFile(parser, changed, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -206,7 +206,7 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		}
 		data = bytes.Replace(data, old, []byte("false"), 1)
 		v8 = filepath.Join(dir, "v8-mutant.c")
-		if writeError := os.WriteFile(v8, data, 0600); writeError != nil {
+		if writeError := os.WriteFile(v8, data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

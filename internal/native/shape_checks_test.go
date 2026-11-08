@@ -29,7 +29,7 @@ func TestShapeChecksUseDeclaredNames(test *testing.T) {
 func checkUnallocatedShapeStartup(test *testing.T, source, kind string) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "shapes.a")
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError := load.Load([]string{path})

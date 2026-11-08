@@ -548,7 +548,7 @@ func run(commandArguments []string) error {
 		jsPath := filepath.Join(scratch, name+".mjs")
 		javascript = observation{Exit: -1, Error: "JavaScript compilation failed"}
 		if jsCompile.Exit == 0 && jsCompile.Error == "" {
-			if err = os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); err != nil {
+			if err = os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0o600); err != nil {
 				return
 			}
 			javascript = execute(
@@ -603,7 +603,7 @@ func run(commandArguments []string) error {
 				// The repair is the stop's mutant: storing a value of the declared type, it agrees with Node. It keeps
 				// the witness's extension, so it compiles in the witness's own mode: a .ts witness's repair as .ts.
 				repairPath := filepath.Join(scratch, fmt.Sprintf("repair-%d%s", index, filepath.Ext(source)))
-				if writeError := os.WriteFile(repairPath, repairedSource(data, witness), 0600); writeError != nil {
+				if writeError := os.WriteFile(repairPath, repairedSource(data, witness), 0o600); writeError != nil {
 					return writeError
 				}
 				repairNode, _, repairJavaScript, _, repairNative, observeError := observe(

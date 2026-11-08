@@ -247,7 +247,7 @@ func compilationProductKinds(test *testing.T, kinds []string) string {
 				if kind != "profiled" {
 					return native.Build(string(source), filepath.Join(dir, kind), options)
 				}
-				if writeError := os.WriteFile(filepath.Join(dir, "main.c"), source, 0644); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(dir, "main.c"), source, 0o644); writeError != nil {
 					return writeError
 				}
 				// Reads: internal/native/runtime/*.[ch]
@@ -265,7 +265,7 @@ func compilationProductKinds(test *testing.T, kinds []string) string {
 						return readError
 					}
 					path := filepath.Join(dir, entry.Name())
-					if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+					if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 						return writeError
 					}
 					if strings.HasSuffix(path, ".c") {
@@ -311,7 +311,7 @@ func compilationProductKinds(test *testing.T, kinds []string) string {
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	if writeError := os.WriteFile(filepath.Join(directory, "lint.mjs"), module, 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "lint.mjs"), module, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return directory
@@ -359,9 +359,9 @@ func compilationEmission(test *testing.T, inputs buildcache.Inputs, kind string)
 			return decodeError
 		}
 		if kind == "c" {
-			return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(&value)), 0644)
+			return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(&value)), 0o644)
 		}
-		return os.WriteFile(filepath.Join(dir, "lint.mjs"), []byte(javascript.JavaScript(&value)), 0644)
+		return os.WriteFile(filepath.Join(dir, "lint.mjs"), []byte(javascript.JavaScript(&value)), 0o644)
 	})
 }
 

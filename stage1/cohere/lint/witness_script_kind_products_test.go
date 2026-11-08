@@ -44,7 +44,7 @@ func witnessScriptKindLoweredProduct(test *testing.T) string {
 			return fmt.Errorf("no-debugger descriptor count: %d", len(selected))
 		}
 		ts, _ := registry.Render(selected)
-		if writeError := os.WriteFile(filepath.Join(source, ".generated/registry.ts"), ts, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(source, ".generated/registry.ts"), ts, 0o644); writeError != nil {
 			return writeError
 		}
 		program, loadError := load.Load([]string{filepath.Join(source, "main.ts")})
@@ -55,13 +55,17 @@ func witnessScriptKindLoweredProduct(test *testing.T) string {
 		if lowerError != nil {
 			return lowerError
 		}
-		if writeError := os.WriteFile(filepath.Join(out, "main.c"), []byte(native.C(result)), 0644); writeError != nil {
+		if writeError := os.WriteFile(
+			filepath.Join(out, "main.c"),
+			[]byte(native.C(result)),
+			0o644,
+		); writeError != nil {
 			return writeError
 		}
 		if writeError := os.WriteFile(
 			filepath.Join(out, "lint.mjs"),
 			[]byte(javascript.JavaScript(result)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}

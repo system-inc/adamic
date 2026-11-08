@@ -123,7 +123,7 @@ func startWorkerdAttempt(test *testing.T, directory, address string) (*workerdSe
 		if readError != nil {
 			return nil, readError
 		}
-		if writeError := os.WriteFile(filepath.Join(scratch, name), contents, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(scratch, name), contents, 0o600); writeError != nil {
 			return nil, writeError
 		}
 		modules = append(
@@ -134,7 +134,7 @@ func startWorkerdAttempt(test *testing.T, directory, address string) (*workerdSe
 	configuration := `using Workerd = import "/workerd/workerd.capnp";
 const config :Workerd.Config = (services = [(name = "compute", worker = (modules = [` + strings.Join(modules, ",") + `], compatibilityDate = "2026-10-07"))], sockets = [(name = "http", address = ` + strconv.Quote(address) + `, http = (), service = "compute")]);`
 	configurationPath := filepath.Join(scratch, "config.capnp")
-	if writeError := os.WriteFile(configurationPath, []byte(configuration), 0600); writeError != nil {
+	if writeError := os.WriteFile(configurationPath, []byte(configuration), 0o600); writeError != nil {
 		return nil, writeError
 	}
 	logPath := filepath.Join(scratch, "server.log")

@@ -327,7 +327,7 @@ func cycleScanningCensusProduct(test *testing.T) string {
 		"internal/programsource",
 		"internal/oracle/testdata/program_region/parse_manifest.json",
 	}}, func(directory string) error {
-		return os.WriteFile(filepath.Join(directory, "membership.csv"), scanProgramRegionCensus(test, true), 0600)
+		return os.WriteFile(filepath.Join(directory, "membership.csv"), scanProgramRegionCensus(test, true), 0o600)
 	})
 }
 func TestProduct_CycleScanningCensus(test *testing.T) {

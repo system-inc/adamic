@@ -114,7 +114,7 @@ func nodeProcessEnvironmentRuntime(test *testing.T, shard int) {
 				if entry.Name() == "host_runtime.c" {
 					data = []byte(strings.Replace(string(data), anchor, "(void)key;", 1))
 				}
-				if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0o600); writeError != nil {
 					test.Fatal(writeError)
 				}
 			}

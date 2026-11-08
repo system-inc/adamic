@@ -291,11 +291,11 @@ func BuildWith(entry, output string, options Options) error {
 		{"wrangler.toml", configuration},
 	}
 	files = append(files, wasm...)
-	if createDirectoryError := os.MkdirAll(output, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(output, 0o755); createDirectoryError != nil {
 		return createDirectoryError
 	}
 	for _, file := range files {
-		if writeError := os.WriteFile(filepath.Join(output, file.name), []byte(file.text), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(output, file.name), []byte(file.text), 0o644); writeError != nil {
 			return writeError
 		}
 	}

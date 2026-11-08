@@ -117,7 +117,7 @@ func TestRulesAgreeLoweringCacheKey(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	for _, directory := range []string{"internal", "bridge", "stage1/typescript", "stage1/cohere/lint", "cohere"} {
-		if createDirectoryError := os.MkdirAll(filepath.Join(root, directory), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Join(root, directory), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 	}
@@ -135,10 +135,10 @@ func TestRulesAgreeLoweringCacheKey(test *testing.T) {
 	}
 	write := func(name, content string) {
 		path := filepath.Join(root, name)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(path, []byte(content), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -217,14 +217,14 @@ func rulesAgreeLowered(test *testing.T) string {
 			if writeError := os.WriteFile(
 				filepath.Join(output, "lint.c"),
 				[]byte(native.C(result)),
-				0644,
+				0o644,
 			); writeError != nil {
 				return writeError
 			}
 			test.Logf("rules native emit: %.3fs", time.Since(phase).Seconds())
 			phase = time.Now()
 			defer func() { test.Logf("rules JavaScript emit: %.3fs", time.Since(phase).Seconds()) }()
-			return os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644)
+			return os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(result)), 0o644)
 		})
 
 	})
@@ -284,10 +284,10 @@ func rulesAgreeCorpus(test *testing.T) *rulesAgreeProducts {
 				test.Fatal(readError)
 			}
 			path := filepath.Join(corpus, fmt.Sprintf("generated-%03d", index), filepath.Base(fields[0]))
-			if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
-			if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+			if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			if len(fields) == 2 {
@@ -521,7 +521,7 @@ func TestRulesAgreePlantedFailure(test *testing.T) {
 	if writeError := os.WriteFile(
 		module,
 		append(data, []byte(fmt.Sprintf("\nconsole.log(%q);\n", marker))...),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -532,7 +532,7 @@ func TestRulesAgreePlantedFailure(test *testing.T) {
 		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "products.json")
-	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	caught, owner := 0, -1

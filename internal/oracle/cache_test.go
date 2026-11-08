@@ -558,15 +558,15 @@ func TestGateCacheNodeInputs(test *testing.T) {
 	if writeError := os.WriteFile(
 		entry,
 		[]byte("import { value } from './part.ts';\nconsole.log(value);\n"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if writeError := os.WriteFile(dependency, []byte("export const value = 'first';\n"), 0600); writeError != nil {
+	if writeError := os.WriteFile(dependency, []byte("export const value = 'first';\n"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	before := sourceIdentity(test, entry)
-	if writeError := os.WriteFile(dependency, []byte("export const value = 'other';\n"), 0600); writeError != nil {
+	if writeError := os.WriteFile(dependency, []byte("export const value = 'other';\n"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if sourceIdentity(test, entry) == before {
@@ -603,7 +603,7 @@ func TestGateCacheAtomicEvidence(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(cache.directory, key+".json"),
 		[]byte(`{"Key":"wrong","Value":null}`),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

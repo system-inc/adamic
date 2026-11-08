@@ -137,7 +137,7 @@ func TestPlaceholderNonliteralAssertionStillChecks(test *testing.T) {
 	// The extension chooses the existing checked .ts policy. The committed witness
 	// remains .a; no compiler adaptation changes its non-literal assertion.
 	path := filepath.Join(test.TempDir(), "checked-input.ts")
-	if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)
@@ -454,7 +454,7 @@ func assertSlice5Witness(test *testing.T, fixture string) {
 		test.Fatal("type-correct repair is listed as a negative witness")
 	}
 	repairPath := filepath.Join(test.TempDir(), filepath.Base(path))
-	if writeError := os.WriteFile(repairPath, []byte(repaired), 0600); writeError != nil {
+	if writeError := os.WriteFile(repairPath, []byte(repaired), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	repairProgram, loweredError := lowered(test, repairPath)

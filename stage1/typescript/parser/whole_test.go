@@ -37,7 +37,7 @@ func wholeCompilerShard(test *testing.T, index int) {
 	shards, planted, _ := compilerExpressionsEnumeration(test)
 	paths := shards[index]
 	manifest := filepath.Join(test.TempDir(), "compiler.txt")
-	if writeError := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	oracle := goOracle(test)
@@ -159,13 +159,13 @@ func wholeManifest(test *testing.T, cases []string) string {
 	var manifest strings.Builder
 	for index, source := range cases {
 		path := filepath.Join(directory, fmt.Sprintf("whole-%d.ts", index))
-		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		manifest.WriteString(path + "\n")
 	}
 	path := filepath.Join(directory, "manifest")
-	if writeError := os.WriteFile(path, []byte(manifest.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(manifest.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path

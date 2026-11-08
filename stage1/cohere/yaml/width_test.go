@@ -72,7 +72,7 @@ func TestWidthsMatchGo(test *testing.T) {
 		}
 	}
 	cases := filepath.Join(test.TempDir(), "width-cases.txt")
-	if writeError := os.WriteFile(cases, []byte(input.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(cases, []byte(input.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	expected := goWidth(test, cases)

@@ -76,7 +76,7 @@ func (comparison yamlMatchGo) run(test *testing.T, shard int) yamlShardRun {
 		cases[indexIndex] = all[index]
 	}
 	path := filepath.Join(test.TempDir(), comparison.family+"-cases.txt")
-	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	root, absolutePathError := filepath.Abs(repository)
@@ -147,7 +147,7 @@ func (comparison yamlMatchGo) planted(test *testing.T) {
 	binary := comparison.build.binary(test, comparison.entry)
 	cases, _ := comparison.corpus(test)
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(cases[0]+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(cases[0]+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	arguments := append(append([]string(nil), comparison.arguments...), path)

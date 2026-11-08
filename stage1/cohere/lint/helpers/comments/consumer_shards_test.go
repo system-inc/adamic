@@ -135,13 +135,13 @@ func runConsumerShard(test *testing.T, shard int) {
 		test.Fatal(encodeError)
 	}
 	original := filepath.Join(test.TempDir(), "consumers.json")
-	if writeError := os.WriteFile(original, corpus, 0644); writeError != nil {
+	if writeError := os.WriteFile(original, corpus, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	goOracle := oracle(test)
 	adapted := run(test, "", goOracle, "--ast", original)
 	path := filepath.Join(test.TempDir(), "adapted.json")
-	if writeError := os.WriteFile(path, adapted, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, adapted, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	want := run(test, "", goOracle, original)

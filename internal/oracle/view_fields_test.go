@@ -126,7 +126,7 @@ func assertRequiredViewFieldPrimitive(t *testing.T, test requiredViewProbe) {
 			source = "const node = {value: \"name\"}; console.log(String(node.value));\n"
 		}
 		path := filepath.Join(t.TempDir(), "field.a")
-		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 			t.Fatal(writeError)
 		}
 		if difference := disagreement(test.want, onSliceNode(t, path)); difference != "" {
@@ -187,7 +187,7 @@ func TestRequiredViewFieldOperandOnce(test *testing.T) {
 	}
 	source := "let calls = 0; function make() { calls++; return {value: 7}; } console.log(String(make().value)); console.log(String(calls));\n"
 	path := filepath.Join(test.TempDir(), "once.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	want := onSliceNode(test, path)

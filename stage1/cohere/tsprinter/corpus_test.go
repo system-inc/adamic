@@ -46,11 +46,11 @@ func TestTrackedCorpusRoots(test *testing.T) {
 	if result := execute(test, nil, "git", "-C", directory, "init", "-q"); result.ExitCode != 0 {
 		test.Fatal(string(result.Stderr))
 	}
-	if createDirectoryError := os.Mkdir(filepath.Join(directory, "named"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(filepath.Join(directory, "named"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	for _, name := range []string{"named/tracked.ts", "named/untracked.ts", "outside.ts"} {
-		if writeError := os.WriteFile(filepath.Join(directory, name), []byte("x;\n"), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte("x;\n"), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -77,7 +77,7 @@ func TestTrackedCorpusRoots(test *testing.T) {
 	); trackedRootFilesError == nil || !strings.Contains(trackedRootFilesError.Error(), "missing") {
 		test.Fatalf("missing root was not named: %v", trackedRootFilesError)
 	}
-	if createDirectoryError := os.Mkdir(filepath.Join(directory, "empty"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(filepath.Join(directory, "empty"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	if _, trackedRootFilesError := oracles.TrackedRootFiles(
@@ -110,11 +110,11 @@ func TestTrackedCorpusRoots(test *testing.T) {
 	for _, name := range []string{"named/tracked.ts", "named/untracked.ts", "outside.ts"} {
 		if createDirectoryError := os.MkdirAll(
 			filepath.Join(source, filepath.Dir(name)),
-			0755,
+			0o755,
 		); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(filepath.Join(source, name), []byte("x;\n"), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(source, name), []byte("x;\n"), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

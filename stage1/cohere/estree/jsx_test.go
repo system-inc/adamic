@@ -19,13 +19,13 @@ func jsxManifestCases(test *testing.T, cases []string) string {
 	var list strings.Builder
 	for index, text := range cases {
 		path := filepath.Join(dir, fmt.Sprintf("%04d.tsx", index))
-		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		list.WriteString(path + "\n")
 	}
 	path := filepath.Join(dir, "manifest")
-	if writeError := os.WriteFile(path, []byte(list.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(list.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path

@@ -117,7 +117,7 @@ func TestCssPrinterSanitizedRunNamesEachFailure(test *testing.T) {
 	if writeError := os.WriteFile(
 		cases,
 		[]byte(">Ca{color:red;margin:0.50px}\n>Sa{--x:{b:c};color:rgb(1,2,3)}\n"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

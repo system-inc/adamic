@@ -159,7 +159,7 @@ func AuditOracle(test *testing.T) string {
 			test.Fatal(encodeError)
 		}
 		path := filepath.Join(test.TempDir(), "overlay.json")
-		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		upstreamParityOracleBuild.path = stockOracle(
@@ -199,7 +199,7 @@ func FormatterOracle(test *testing.T) string {
 		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "overlay.json")
-	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return stockOracle(
@@ -286,7 +286,7 @@ func buildJsonClassOrderAnswer(oracle string, item ComparisonCase) func(string) 
 	return func(directory string) error {
 		input, _ := Protocol([]ComparisonCase{item}, make([]ComparisonAnswer, 1))
 		cases := filepath.Join(directory, "cases.txt")
-		if writeError := os.WriteFile(cases, []byte(input), 0644); writeError != nil {
+		if writeError := os.WriteFile(cases, []byte(input), 0o644); writeError != nil {
 			return writeError
 		}
 		reference, executeResultError := executeResult(nil, oracle, "--cases", cases)
@@ -299,7 +299,7 @@ func buildJsonClassOrderAnswer(oracle string, item ComparisonCase) func(string) 
 		if _, parseAnswersError := ParseAnswers(string(reference.stdout), 1); parseAnswersError != nil {
 			return parseAnswersError
 		}
-		return os.WriteFile(filepath.Join(directory, "answer.txt"), reference.stdout, 0644)
+		return os.WriteFile(filepath.Join(directory, "answer.txt"), reference.stdout, 0o644)
 	}
 }
 

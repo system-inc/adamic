@@ -150,7 +150,7 @@ int main(void) {
 		}
 		test.Run(name, func(test *testing.T) {
 			directory := test.TempDir()
-			if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(code), 0600); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(code), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			binary := filepath.Join(directory, "sanitized")

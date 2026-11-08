@@ -62,7 +62,7 @@ func goLexer(test *testing.T, cases string) []byte {
 	if directory := os.Getenv("ADAMIC_YAML_ARTIFACTS"); directory != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
-		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		data, readError := os.ReadFile(binary)
@@ -221,7 +221,7 @@ func lexerMutantsShard(test *testing.T, index int) {
 	product := lexerMutants.product(test, index)
 	corpus, expected := lexerMutantsExpected(test)
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(cases, corpus, 0644); writeError != nil {
+	if writeError := os.WriteFile(cases, corpus, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))

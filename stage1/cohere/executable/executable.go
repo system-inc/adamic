@@ -30,7 +30,7 @@ func Write(path string, data []byte) error {
 			file.Close()
 			return writeError
 		}
-		if chmodError := file.Chmod(0755); chmodError != nil {
+		if chmodError := file.Chmod(0o755); chmodError != nil {
 			file.Close()
 			return chmodError
 		}

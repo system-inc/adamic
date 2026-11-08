@@ -69,7 +69,7 @@ func cssParserWitnesses(test *testing.T, mutation int) []int {
 			for _, id := range ids {
 				fmt.Fprintf(&builder, "%d\n", id)
 			}
-			return os.WriteFile(filepath.Join(dir, "witnesses.txt"), []byte(builder.String()), 0644)
+			return os.WriteFile(filepath.Join(dir, "witnesses.txt"), []byte(builder.String()), 0o644)
 		})
 		data, readError := os.ReadFile(filepath.Join(directory, "witnesses.txt"))
 		if readError != nil {
@@ -192,7 +192,7 @@ func TestCssParserMutantWitnessesRekey(test *testing.T) {
 			test.Fatal(readError)
 		}
 		edited := filepath.Join(test.TempDir(), name)
-		if writeError := os.WriteFile(edited, append(content, 'x'), 0644); writeError != nil {
+		if writeError := os.WriteFile(edited, append(content, 'x'), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		moved := map[string]string{"port": inputs["port"], "cases": inputs["cases"], "answers": inputs["answers"]}

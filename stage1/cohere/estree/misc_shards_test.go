@@ -184,7 +184,7 @@ func miscBuild(test *testing.T, path string) (string, string) {
 		); buildError != nil {
 			return buildError
 		}
-		return os.WriteFile(filepath.Join(directory, "port.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+		return os.WriteFile(filepath.Join(directory, "port.mjs"), []byte(javascript.JavaScript(lowered)), 0o644)
 	}
 	start := time.Now()
 	flags := append([]string{"main=" + path}, native.Flags(native.Options{Sanitize: true})...)
@@ -285,7 +285,7 @@ func miscMutant(test *testing.T, file, from, to string) string {
 				"'../../typescript/",
 				"'"+filepath.ToSlash(filepath.Join(repo, "stage1/typescript"))+"/",
 			)
-			if writeError := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(directory, name), []byte(text), 0o644); writeError != nil {
 				return writeError
 			}
 		}
@@ -331,7 +331,7 @@ func miscArchiverTool() string {
 		candidate := filepath.Join(filepath.Dir(compiler), "llvm-ar")
 		if info, statError := os.Stat(
 			candidate,
-		); statError == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {
+		); statError == nil && info.Mode().IsRegular() && info.Mode().Perm()&0o111 != 0 {
 			return buildcache.Tool(candidate, "--version")
 		}
 	}

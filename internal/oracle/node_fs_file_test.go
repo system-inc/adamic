@@ -35,14 +35,14 @@ var fileSystemFileRefusedFixtures = []string{
 func fileSystemFilePrepare(test *testing.T, shared, name string) inputRun {
 	test.Helper()
 	root := filepath.Join(shared, name)
-	if createDirectoryError := os.Mkdir(root, 0777); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(root, 0o777); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if changeModeError := os.Chmod(root, 0777); changeModeError != nil {
+	if changeModeError := os.Chmod(root, 0o777); changeModeError != nil {
 		test.Fatal(changeModeError)
 	}
 	for _, dir := range []string{"directory", "locked", "closed"} {
-		if createDirectoryError := os.Mkdir(filepath.Join(root, dir), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(filepath.Join(root, dir), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 	}
@@ -58,7 +58,7 @@ func fileSystemFilePrepare(test *testing.T, shared, name string) inputRun {
 		"locked/file": []byte("locked"),
 		"closed/file": []byte("closed"),
 	} {
-		if writeError := os.WriteFile(filepath.Join(root, name), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(root, name), data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -67,10 +67,10 @@ func fileSystemFilePrepare(test *testing.T, shared, name string) inputRun {
 			test.Fatal(symlinkError)
 		}
 	}
-	if changeModeError := os.Chmod(filepath.Join(root, "locked"), 0555); changeModeError != nil {
+	if changeModeError := os.Chmod(filepath.Join(root, "locked"), 0o555); changeModeError != nil {
 		test.Fatal(changeModeError)
 	}
-	if changeModeError := os.Chmod(filepath.Join(root, "closed"), 0000); changeModeError != nil {
+	if changeModeError := os.Chmod(filepath.Join(root, "closed"), 0o000); changeModeError != nil {
 		test.Fatal(changeModeError)
 	}
 	// locked and closed keep their files from RemoveAll, so they get their permissions back first: this cleanup runs

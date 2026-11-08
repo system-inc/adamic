@@ -40,7 +40,7 @@ func TestDetachedOwnInheritedMutant(test *testing.T) {
 			}
 			changed = "const detachedOwnMutant = (target,key) => key in target;\n" + changed
 			file := filepath.Join(test.TempDir(), "mutant.mjs")
-			if writeError := os.WriteFile(file, []byte(changed), 0644); writeError != nil {
+			if writeError := os.WriteFile(file, []byte(changed), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			got, want := onNode(test, file), onNode(test, path)

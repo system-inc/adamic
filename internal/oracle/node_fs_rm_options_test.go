@@ -69,7 +69,7 @@ func TestNodeFileSystemRmOptionsValidation(test *testing.T) {
 				// declared legal, so it must reach a named NotYet instead of a default.
 				path := filepath.Join(test.TempDir(), "main.a")
 				source := "import {rmSync} from 'node:fs'; rmSync(" + strconv.Quote(directory) + "," + options + ");"
-				if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+				if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 					test.Fatal(writeError)
 				}
 				checked, loadError := load.Load([]string{path})
@@ -109,7 +109,7 @@ func TestNodeFileSystemRmOptionsUndefinedBinding(test *testing.T) {
 				"import {rmSync} from 'node:fs'; const options=%s; rmSync('missing',options);",
 				options,
 			)
-			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			_, loweredError := lowered(test, path)

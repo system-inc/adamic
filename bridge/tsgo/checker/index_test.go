@@ -17,7 +17,7 @@ func TestExactIndexMatchesCompilerNodes(test *testing.T) {
 	if writeError := os.WriteFile(
 		configuration,
 		[]byte(`{"compilerOptions":{"strict":true}}`),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -29,7 +29,7 @@ func TestExactIndexMatchesCompilerNodes(test *testing.T) {
 		"empty.ts":  "",
 	} {
 		path := filepath.Join(directory, name)
-		if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		paths = append(paths, path)

@@ -81,13 +81,13 @@ func TestStatementsShardAssignmentStable(test *testing.T) {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(filepath.Join(product, "cases.json"), data, 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(product, "cases.json"), data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if writeError := os.WriteFile(
 		filepath.Join(product, "coverage.json"),
 		[]byte(`{"file_refusals":{"`+root+`/stage1/bad.ts":"`+root+`/stage1/bad.ts: refused"}}`),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -316,7 +316,7 @@ func statementRunShardProof(test *testing.T, number int) {
 		}
 	}
 	path := filepath.Join(test.TempDir(), "proof.txt")
-	if writeError := os.WriteFile(path, []byte(input.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(input.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	result := statementOnNode(test, port, "--cases", path, "80")

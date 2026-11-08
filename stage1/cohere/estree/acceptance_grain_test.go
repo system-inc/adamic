@@ -79,7 +79,7 @@ func acceptanceMutantProducts(test *testing.T, item acceptanceMutant, compile bo
 		if writeError := os.WriteFile(
 			filepath.Join(dir, "port.c"),
 			[]byte(native.C(lowered)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
@@ -93,7 +93,7 @@ func acceptanceMutantProducts(test *testing.T, item acceptanceMutant, compile bo
 			if readError != nil {
 				return readError
 			}
-			if writeError := os.WriteFile(filepath.Join(dir, filepath.Base(file)), data, 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(dir, filepath.Base(file)), data, 0o644); writeError != nil {
 				return writeError
 			}
 		}

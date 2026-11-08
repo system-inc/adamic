@@ -26,7 +26,7 @@ func TestTypeAwareUnitDeadline(test *testing.T) {
 	marker := os.Getenv("ADAMIC_TYPEAWARE_DEADLINE_MARKER")
 	if mode == "marker" {
 		time.Sleep(time.Second)
-		if writeError := os.WriteFile(marker, []byte("survived"), 0600); writeError != nil {
+		if writeError := os.WriteFile(marker, []byte("survived"), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		return

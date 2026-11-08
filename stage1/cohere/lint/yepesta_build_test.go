@@ -96,13 +96,13 @@ func jsxTextnodesLoweredRecipe(test *testing.T) (buildcache.Inputs, func(out str
 		if writeError := os.WriteFile(
 			filepath.Join(out, "main.c"),
 			[]byte(native.C(lowered)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
 		test.Logf("emit C: %.3fs", time.Since(started).Seconds())
 		started = time.Now()
-		writeError := os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+		writeError := os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0o644)
 		test.Logf("emit JS: %.3fs", time.Since(started).Seconds())
 		if writeError != nil {
 			return writeError
@@ -182,10 +182,10 @@ func portTree(test *testing.T, tree, from, to string, targets ...string) (string
 			return "", readError
 		}
 		destination := filepath.Join(tree, filepath.FromSlash(file))
-		if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0o755); createDirectoryError != nil {
 			return "", createDirectoryError
 		}
-		if writeError := os.WriteFile(destination, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(destination, data, 0o644); writeError != nil {
 			return "", writeError
 		}
 		if reachError := reach(file, string(data)); reachError != nil {

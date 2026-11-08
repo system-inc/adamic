@@ -57,7 +57,7 @@ func witnessScriptKindSetup(test *testing.T) {
 		if renameError := os.Rename(witness, renamed); renameError != nil {
 			test.Fatal(renameError)
 		}
-		if writeError := os.WriteFile(renamed, []byte("const node = 1; debugger;\n"), 0644); writeError != nil {
+		if writeError := os.WriteFile(renamed, []byte("const node = 1; debugger;\n"), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		paths, witnessesError := registry.Witnesses(filepath.Join(directory, "rules/no-debugger"))
@@ -77,7 +77,7 @@ func witnessScriptKindSetup(test *testing.T) {
 				directory,
 				fmt.Sprintf("source-%d%s", index, filepath.Ext(strings.TrimSuffix(path, ".txt"))),
 			)
-			if writeError := os.WriteFile(source, data, 0644); writeError != nil {
+			if writeError := os.WriteFile(source, data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			if path == renamed && filepath.Ext(source) != ".tsx" {
@@ -182,7 +182,7 @@ func witnessScriptKindRun(test *testing.T, shard int) {
 			}
 			module := filepath.Join(test.TempDir(), "planted.mjs")
 			data = append(data, []byte("\nconsole.log('planted witness script kind mismatch');\n")...)
-			if writeError := os.WriteFile(module, data, 0644); writeError != nil {
+			if writeError := os.WriteFile(module, data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			compareWithJavaScript(test, products.Oracle, products.Binary, products.Directory, path, module)

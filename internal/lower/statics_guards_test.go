@@ -60,7 +60,7 @@ func TestReadinessErrorIncludesReceiverExpression(test *testing.T) {
 		test.Fatal(lowerSourceError)
 	}
 	path := filepath.Join(test.TempDir(), "generated.mjs")
-	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	result := runAgreementNode(test, path)

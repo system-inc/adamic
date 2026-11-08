@@ -215,7 +215,7 @@ func numbersAnswerRun(
 	oracleCommand func(test *testing.T, input string) (*exec.Cmd, context.Context),
 ) error {
 	input := filepath.Join(dir, each.file+".input")
-	if writeError := os.WriteFile(input, each.input, 0644); writeError != nil {
+	if writeError := os.WriteFile(input, each.input, 0o644); writeError != nil {
 		return writeError
 	}
 	defer os.Remove(input)
@@ -224,7 +224,7 @@ func numbersAnswerRun(
 	if captureError != nil || len(stderr) != 0 {
 		return fmt.Errorf("oracle on %s: %v; %s", each.file, captureError, stderr)
 	}
-	return os.WriteFile(filepath.Join(dir, each.file), stdout, 0644)
+	return os.WriteFile(filepath.Join(dir, each.file), stdout, 0o644)
 }
 
 func numbersGoBatchAnswersDirectory(test *testing.T, oracle, oracleIdentity string, corpus numbersCorpus) string {

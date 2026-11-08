@@ -152,11 +152,11 @@ static adamic_object *make(void) {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, family+".c"),
 			[]byte(builder.String()),
-			0600,
+			0o600,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, family+".node"), want, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, family+".node"), want, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

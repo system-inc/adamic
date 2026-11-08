@@ -109,7 +109,7 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 						if writeError := os.WriteFile(
 							filepath.Join(scratch, "heap.c"),
 							file.contents,
-							0600,
+							0o600,
 						); writeError != nil {
 							return writeError
 						}
@@ -131,7 +131,7 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 					return readError
 				}
 				library = filepath.Join(scratch, "runtime.a")
-				if writeError := os.WriteFile(library, data, 0600); writeError != nil {
+				if writeError := os.WriteFile(library, data, 0o600); writeError != nil {
 					return writeError
 				}
 				staticsCompile(test, archiverName(compiler), "r", library, object)
@@ -147,7 +147,7 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 			if readError != nil {
 				return readError
 			}
-			if writeError := os.WriteFile(filepath.Join(directory, variant.name), data, 0755); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(directory, variant.name), data, 0o755); writeError != nil {
 				return writeError
 			}
 		}

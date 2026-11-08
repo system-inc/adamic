@@ -113,11 +113,11 @@ func completeSuggestionPrepare(test *testing.T) {
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	if writeError := os.WriteFile(source, text, 0644); writeError != nil {
+	if writeError := os.WriteFile(source, text, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	products.path = filepath.Join(directory, "manifest.txt")
-	if writeError := os.WriteFile(products.path, []byte(source+"\tno-debugger\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(products.path, []byte(source+"\tno-debugger\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	products.oracle = filepath.Join(completeSuggestionOracleProduct(cancelContext, test, directory), "oracle")
@@ -163,7 +163,7 @@ func completeSuggestionFixture(test *testing.T, mutant bool) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "rules/no-debugger", name),
 			data,
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -219,11 +219,11 @@ func completeSuggestionLoweredProduct(
 		if writeError := os.WriteFile(
 			filepath.Join(out, "lint.mjs"),
 			[]byte(javascript.JavaScript(lowered)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
+		return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0o644)
 	})
 }
 

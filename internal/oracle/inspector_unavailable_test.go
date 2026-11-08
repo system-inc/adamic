@@ -30,7 +30,7 @@ func TestInspectorUnavailableIsNodes(test *testing.T) {
  try { require(name); console.log('unexpected success'); }
  catch (error) { console.log([error.name,error.code,error.message,String(error),Object.keys(error).join(',')].join('\n')); }
  }`
-	if writeError := os.WriteFile(probe, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(probe, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	actual := executeWith(test, []string{"NODE_PATH="}, binary, probe)

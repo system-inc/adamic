@@ -250,13 +250,13 @@ func TestMiniRunner(test *testing.T) {
 func TestLargeCompilerOutputIsComplete(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
-	if createDirectoryError := os.MkdirAll(filepath.Join(root, "test"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Join(root, "test"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	// Each line is about 442 bytes of C, so 1000 lines are about 455 KB, 1.7 times the old limit: room for a
 	// leaner emitter, without the 800 KB main of 1800 lines, which made this test 23 s alone on one core.
 	source := strings.Repeat("assert.sameValue(1, 1);\n", 1000)
-	if writeError := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	engine, prepareError := prepare(test, root, test.TempDir())

@@ -37,10 +37,10 @@ func printerDirectoryAt(test *testing.T, directory, file, from, to string) strin
 			data = []byte(strings.Replace(string(data), from, to, 1))
 		}
 		target := filepath.Join(directory, filepath.FromSlash(name))
-		if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(target, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -51,7 +51,7 @@ func printerDirectoryAt(test *testing.T, directory, file, from, to string) strin
 func TestPrinterFileDriver(test *testing.T) {
 	test.Parallel()
 	source := filepath.Join(test.TempDir(), "probe.graphql")
-	if writeError := os.WriteFile(source, []byte("query{hello(a:1,b:2)}"), 0644); writeError != nil {
+	if writeError := os.WriteFile(source, []byte("query{hello(a:1,b:2)}"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	products := printerInTreeProducts(test)

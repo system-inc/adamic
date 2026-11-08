@@ -27,7 +27,7 @@ func statementPrepareCommon(test *testing.T, shards *oracles.StatementGateShards
 	binary, release := printerGateNative(test, "statements", true)+
 		"/port", printerGateNative(test, "statements", false)+"/port"
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_ARTIFACTS"); keep != "" {
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		for name, source := range map[string]string{
@@ -38,9 +38,9 @@ func statementPrepareCommon(test *testing.T, shards *oracles.StatementGateShards
 			if readError != nil {
 				test.Fatal(readError)
 			}
-			mode := os.FileMode(0644)
+			mode := os.FileMode(0o644)
 			if name == "port" {
-				mode = 0755
+				mode = 0o755
 			}
 			if writeError := os.WriteFile(filepath.Join(keep, name), data, mode); writeError != nil {
 				test.Fatal(writeError)
@@ -88,7 +88,7 @@ func statementAgainstGoAndPrettierShard(test *testing.T, shardNumber int) {
 	gapInput := ">const x:number=1;\n>const {x}=value;\n>export const x=1;\n>if(x)f();\n>#!/usr/bin/env node\\nf();\n"
 	gapWant := "notyet\tvariable-types\nnotyet\tvariable-pattern\nnotyet\tvariable-modifiers\nnotyet\tIfStatement\nnotyet\tcomment-attachment\n"
 	gapPath := filepath.Join(test.TempDir(), "statement-gaps.txt")
-	if writeError := os.WriteFile(gapPath, []byte(gapInput), 0644); writeError != nil {
+	if writeError := os.WriteFile(gapPath, []byte(gapInput), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	backend := filepath.Join(loweredDirectory, "program.mjs")

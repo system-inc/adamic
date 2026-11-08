@@ -70,7 +70,7 @@ func schemaCases(test *testing.T) (string, int, int) {
 		}
 	}
 	target := filepath.Join(test.TempDir(), "schema-cases.txt")
-	if writeError := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); writeError != nil {
+	if writeError := os.WriteFile(target, append(data, []byte(extra.String())...), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return target, files, count

@@ -20,7 +20,7 @@ func TestRecordStorageComparesGenericArguments(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "function store(holder: Promise<() => void>, wide: Promise<() => unknown>, same: Promise<() => void>): void {}\n"
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

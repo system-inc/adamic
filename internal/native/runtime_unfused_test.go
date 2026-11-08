@@ -47,7 +47,7 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 			quote(scratch),
 			quote(compiler),
 		)
-		if writeError := os.WriteFile(wrapper, []byte(script), 0700); writeError != nil {
+		if writeError := os.WriteFile(wrapper, []byte(script), 0o700); writeError != nil {
 			return writeError
 		}
 		jobserver, defaultJobserverError := defaultJobserver()
@@ -87,7 +87,7 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "audit"),
 			[]byte(audit.String()),
-			0600,
+			0o600,
 		); writeError != nil {
 			return writeError
 		}
@@ -122,7 +122,7 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 			if writeError := os.WriteFile(
 				filepath.Join(directory, "omission-audit"),
 				[]byte(omitted),
-				0600,
+				0o600,
 			); writeError != nil {
 				return writeError
 			}

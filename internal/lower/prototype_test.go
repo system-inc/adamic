@@ -198,7 +198,7 @@ func sweepInheritedLibraryReads(test *testing.T, receiver string) {
 					read = fmt.Sprintf("value['%s']", member)
 				}
 				path := filepath.Join(test.TempDir(), "sweep.a")
-				if writeError := os.WriteFile(path, []byte(source+"\n"+read+";\n"), 0644); writeError != nil {
+				if writeError := os.WriteFile(path, []byte(source+"\n"+read+";\n"), 0o644); writeError != nil {
 					test.Fatal(writeError)
 				}
 				program, err := load.Load([]string{path})
@@ -289,7 +289,7 @@ func TestNullishPrototypeReadsAreRejectedByChecker(test *testing.T) {
 			if writeError := os.WriteFile(
 				path,
 				[]byte("const value = "+value+"; value."+member+";"),
-				0644,
+				0o644,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}

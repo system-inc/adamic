@@ -198,7 +198,7 @@ func volumeProfileMutantOracle(harness *harness) string {
 func volumeProfileSourceMutant(harness *harness, stage0, archive, name, from, to string) string {
 	harness.t.Helper()
 	directory := filepath.Join(harness.directory, name+"-source")
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		harness.t.Fatal(createDirectoryError)
 	}
 	sourceDirectory := filepath.Join(harness.repository, "stage1/cohere/typeaware")
@@ -227,7 +227,7 @@ func volumeProfileSourceMutant(harness *harness, stage0, archive, name, from, to
 		if writeError := os.WriteFile(
 			filepath.Join(directory, filepath.Base(path)),
 			[]byte(source),
-			0600,
+			0o600,
 		); writeError != nil {
 			harness.t.Fatal(writeError)
 		}

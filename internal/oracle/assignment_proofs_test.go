@@ -134,7 +134,7 @@ func assignmentProofMutant(test *testing.T, file string) {
 	}
 	path := filepath.Join(test.TempDir(), file)
 	changed := strings.Replace(string(source), record.Mutant.Replace, record.Mutant.With, 1)
-	if writeError := os.WriteFile(path, []byte(changed), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(changed), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	truth := assignmentProofExecution(test, path)

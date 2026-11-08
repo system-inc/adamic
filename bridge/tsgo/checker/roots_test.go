@@ -17,7 +17,7 @@ func TestAdamicRootKeepsConfigDeclarations(test *testing.T) {
 		declaration:   `declare const ambient: "世界🌍";`,
 		source:        "ambient;\n",
 	} {
-		if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

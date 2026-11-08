@@ -124,7 +124,7 @@ func (local *harness) must(name string, command *exec.Cmd) result {
 func (local *harness) write(name, text string) string {
 	local.t.Helper()
 	path := filepath.Join(local.directory, name)
-	if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 		local.t.Fatal(writeError)
 	}
 	return path
@@ -393,13 +393,13 @@ func TestTypeAwareKeysCarryNoMachinePath(test *testing.T) {
 	for _, machine := range []string{test.TempDir(), test.TempDir()} {
 		// Where the archive product sits under this machine's ADAMIC_BUILD_CACHE_DIR, and where its checkout is.
 		archive := filepath.Join(machine, "cache", "local", "d91f8adc3a72", "checker.a")
-		if createDirectoryError := os.MkdirAll(filepath.Dir(archive), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(archive), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		if writeError := os.WriteFile(
 			archive,
 			[]byte("the same archive bytes on both machines"),
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -558,7 +558,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		test.Fatal(absolutePathError)
 	}
 	directory := filepath.Join(productDirectory, "typeaware-plan")
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	if artifacts := os.Getenv("ADAMIC_TYPEAWARE_ARTIFACTS"); artifacts != "" {
@@ -566,7 +566,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)
 		}
-		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 	}

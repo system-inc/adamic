@@ -49,10 +49,10 @@ func printerGateLowered(test *testing.T, family string) string {
 			Toolchain: []string{buildcache.Tool("go", "version"), runtime.Version(), runtime.GOOS, runtime.GOARCH},
 		}, func(dir string) error {
 			program := lowered(test, path)
-			if writeError := os.WriteFile(dir+"/port.c", []byte(native.C(program)), 0644); writeError != nil {
+			if writeError := os.WriteFile(dir+"/port.c", []byte(native.C(program)), 0o644); writeError != nil {
 				return writeError
 			}
-			return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
+			return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0o644)
 		})
 	})
 }

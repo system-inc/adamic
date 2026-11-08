@@ -18,7 +18,7 @@ func TestOptionalPositionCountsUtf16Surrogates(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	const source = "const glyph='😀'; const items: string[]=[]; const item:string=items[0];"
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, _, optionalProgramError := optionalProgram([]string{path}, nil)
@@ -49,7 +49,7 @@ func TestOptionalResolverPreservesUncheckedIndexDiagnostic(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	const source = "const items: string[] = []; const item: string = items[0];"
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{path})
@@ -79,7 +79,7 @@ func TestReturnAdaptationRewritesTs7030AndPreservesBehavior(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "main.a")
 	const source = "function f(flag: boolean, undefined: number): number | undefined { if (flag) return 1; }"
 	const want = "function f(flag: boolean, undefined: number): number | undefined { if (flag) return 1; \nreturn void 0;\n}"
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	before := meterReturnDiagnostics(test, []string{path}, nil)

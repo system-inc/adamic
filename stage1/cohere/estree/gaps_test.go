@@ -64,7 +64,7 @@ func TestRawInputGap(test *testing.T) {
 	a = append(a, []byte("\nx;")...)
 	b = append(b, []byte("\nx;")...)
 	for path, data := range map[string][]byte{first: a, second: b} {
-		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

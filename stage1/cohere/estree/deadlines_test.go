@@ -162,7 +162,7 @@ func estreeRefusalBudget(test *testing.T, argv []string) time.Duration {
 		}
 		defer os.RemoveAll(directory)
 		input := filepath.Join(directory, "accepted.ts")
-		if writeError := os.WriteFile(input, []byte(estreeCalibrationSource), 0644); writeError != nil {
+		if writeError := os.WriteFile(input, []byte(estreeCalibrationSource), 0o644); writeError != nil {
 			calibration.err = writeError
 			return
 		}

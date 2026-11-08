@@ -148,7 +148,7 @@ func performance(test *testing.T, whole bool) {
 		best[2].Seconds()/best[1].Seconds(),
 	)
 	if destination := os.Getenv("ADAMIC_PARSER_ARTIFACTS"); destination != "" {
-		if createDirectoryError := os.MkdirAll(destination, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(destination, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		for _, file := range []struct{ from, name string }{
@@ -160,7 +160,7 @@ func performance(test *testing.T, whole bool) {
 			if readError != nil {
 				test.Fatal(readError)
 			}
-			if writeError := os.WriteFile(filepath.Join(destination, file.name), data, 0755); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(destination, file.name), data, 0o755); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
@@ -174,11 +174,11 @@ func TestNodeCountCheckCatchesMutant(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
 	source := filepath.Join(directory, "expressions.ts")
-	if writeError := os.WriteFile(source, []byte("x + y * z; a?.b(x); (x) => x;"), 0644); writeError != nil {
+	if writeError := os.WriteFile(source, []byte("x + y * z; a?.b(x); (x) => x;"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	manifest := filepath.Join(directory, "manifest")
-	if writeError := os.WriteFile(manifest, []byte(source+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(manifest, []byte(source+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	oracle := goOracle(test)

@@ -177,7 +177,7 @@ func sixRunShards(test *testing.T, h *harness, expected []string, shards []sixSh
 				mutex.Unlock()
 			}()
 			directory := filepath.Join(h.directory, "shards", unit)
-			if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			local := &harness{t: test, repository: h.repository, directory: directory, parallel: true}

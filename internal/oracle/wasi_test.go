@@ -202,7 +202,7 @@ func TestWASIRunnerCatchesMutants(test *testing.T) {
 		if writeError := os.WriteFile(
 			source,
 			[]byte(fmt.Sprintf("#include <stdio.h>\nint main(void) { fputs(%q, stdout); return %d; }\n", text, exit)),
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}

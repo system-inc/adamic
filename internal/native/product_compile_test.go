@@ -116,13 +116,13 @@ func TestProductCompilerBytesAreIndependentOfDirectory(test *testing.T) {
 			extra := filepath.Join(root, "extra")
 			scratch := filepath.Join(root, "scratch")
 			for _, directory := range []string{include, extra, scratch} {
-				if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+				if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 					test.Fatal(createDirectoryError)
 				}
 			}
 			write := func(name, text string) {
 				test.Helper()
-				if writeError := os.WriteFile(name, []byte(text), 0600); writeError != nil {
+				if writeError := os.WriteFile(name, []byte(text), 0o600); writeError != nil {
 					test.Fatal(writeError)
 				}
 			}

@@ -18,7 +18,7 @@ func TestParserNonNullSourceExtension(test *testing.T) {
 		test.Fatal(readError)
 	}
 	checkedPath := filepath.Join(test.TempDir(), "parser_index.ts")
-	if writeError := os.WriteFile(checkedPath, source, 0644); writeError != nil {
+	if writeError := os.WriteFile(checkedPath, source, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, checkedPath)

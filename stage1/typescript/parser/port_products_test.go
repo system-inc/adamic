@@ -55,7 +55,7 @@ func jsxScannerMutant(test *testing.T, change jsxScannerChange) string {
 	test.Helper()
 	mutant := copyPort(test, "", "", "")
 	scannerDirectory := filepath.Join(mutant, "scanner")
-	if createDirectoryError := os.Mkdir(scannerDirectory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(scannerDirectory, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	originalScanner, _ := filepath.Abs("../scanner/scanner.ts")
@@ -71,7 +71,7 @@ func jsxScannerMutant(test *testing.T, change jsxScannerChange) string {
 			}
 			source = strings.Replace(source, change.from, change.to, 1)
 		}
-		if writeError := os.WriteFile(filepath.Join(scannerDirectory, file), []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(scannerDirectory, file), []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -82,7 +82,7 @@ func jsxScannerMutant(test *testing.T, change jsxScannerChange) string {
 			test.Fatal(readError)
 		}
 		source := strings.ReplaceAll(string(data), originalScanner, filepath.Join(scannerDirectory, "scanner.ts"))
-		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

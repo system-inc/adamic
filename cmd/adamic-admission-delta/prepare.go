@@ -72,7 +72,7 @@ func correctPreparedNodeTypes(api string) error {
 		if correctNodeHostAxiomsError != nil {
 			return correctNodeHostAxiomsError
 		}
-		if writeError := os.WriteFile(name, []byte(corrected), 0600); writeError != nil {
+		if writeError := os.WriteFile(name, []byte(corrected), 0o600); writeError != nil {
 			return writeError
 		}
 	}

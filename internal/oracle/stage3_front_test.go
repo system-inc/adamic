@@ -52,7 +52,7 @@ console.log(` + "`${reads}`" + `);
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "enum_fallthrough.a")
-			if writeError := os.WriteFile(path, []byte(programSource), 0600); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(programSource), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			if got := onNode(test, path); disagreement(truth, got) != "" {

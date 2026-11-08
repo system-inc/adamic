@@ -225,7 +225,7 @@ func volumeProfileControlsLowered(harness *harness, stage0 string) string {
 		if tsGoCError != nil {
 			return tsGoCError
 		}
-		return os.WriteFile(filepath.Join(directory, "volume.c"), []byte(source), 0600)
+		return os.WriteFile(filepath.Join(directory, "volume.c"), []byte(source), 0o600)
 	})
 	return filepath.Join(directory, "volume.c")
 }

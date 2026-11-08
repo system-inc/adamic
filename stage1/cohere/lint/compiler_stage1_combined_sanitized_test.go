@@ -346,7 +346,7 @@ func compilerAgreementCombinedOutputNative(test *testing.T) string {
 			return lowerError
 		}
 		c := native.C(lowered)
-		if writeError := os.WriteFile(filepath.Join(directory, "lint.c"), []byte(c), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, "lint.c"), []byte(c), 0o644); writeError != nil {
 			return writeError
 		}
 		return native.Build(c, filepath.Join(directory, "lint"), options)

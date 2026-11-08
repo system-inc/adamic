@@ -110,7 +110,7 @@ func mutantRuleProduct(test *testing.T, slug string) string {
 			if writeError := os.WriteFile(
 				filepath.Join(out, "program.mjs"),
 				[]byte(javascript.JavaScript(lowered)),
-				0644,
+				0o644,
 			); writeError != nil {
 				return writeError
 			}

@@ -87,7 +87,7 @@ func inlineBuild(test *testing.T, in buildcache.Inputs, build func(string) error
 // checkout's paths, so it sits in a temporary directory and is never part of the product (#tqrqx60).
 func inlineOverlayBuild(test *testing.T) string { return oracles.Printer(test) }
 func inlineWrite(dir, name string, data []byte) error {
-	return os.WriteFile(filepath.Join(dir, name), data, 0644)
+	return os.WriteFile(filepath.Join(dir, name), data, 0o644)
 }
 func buildInlineProgram(main, dir string) error {
 	p, loadError := load.Load([]string{main})

@@ -81,7 +81,7 @@ func suggestionAlongsidePrepare(test *testing.T) {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "rules/no-debugger", name),
 			bytes.Replace(data, []byte(from), []byte(to), 1),
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -91,12 +91,12 @@ func suggestionAlongsidePrepare(test *testing.T) {
 	}
 	prepareRegistry(test, directory)
 	source := filepath.Join(directory, "mixed.ts")
-	if writeError := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	// Keep the manifest alive after the setup test returns.
 	path := filepath.Join(directory, "manifest.txt")
-	if writeError := os.WriteFile(path, []byte(source+"\tno-debugger\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source+"\tno-debugger\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	inputs := buildcache.Inputs{Name: "suggestion-alongside-lowered-v2", Files: []string{
@@ -120,10 +120,10 @@ func suggestionAlongsidePrepare(test *testing.T) {
 		if lowerError != nil {
 			return lowerError
 		}
-		if writeError := os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(ir)), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(ir)), 0o644); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(ir)), 0644)
+		return os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(ir)), 0o644)
 	})
 	inputs.Name = "suggestion-alongside-native-v2"
 	inputs.Flags = append(inputs.Flags, "split=true", "jobs=4")

@@ -128,7 +128,7 @@ func emitJavaScriptTo(directory, module string) error {
 	if lowerError != nil {
 		return lowerError
 	}
-	return os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0644)
+	return os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0o644)
 }
 
 // lintGoSettings is every go setting a go run under toolchain.Env builds with, as go reports it there: its CC is the
@@ -201,13 +201,13 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	if writeError := os.WriteFile(
 		side,
 		[]byte(strings.Replace(string(data), original, replacement, 1)),
-		0644,
+		0o644,
 	); writeError != nil {
 		return nil, writeError
 	}
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
 	overlayPath := filepath.Join(directory, "overlay.json")
-	if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 		return nil, writeError
 	}
 	capture := filepath.Join(directory, "capture")
@@ -295,10 +295,10 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 		}
 		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", index))
 		path := filepath.Join(caseDirectory, name)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
 			return nil, createDirectoryError
 		}
-		if writeError := os.WriteFile(path, []byte(row.Source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(row.Source), 0o644); writeError != nil {
 			return nil, writeError
 		}
 		var legacy struct {

@@ -67,7 +67,7 @@ func TestGenerateCrossingMissingOutput(test *testing.T) {
 	directory := test.TempDir()
 	node := filepath.Join(directory, "node")
 	write(test, node, "#!/bin/sh\nexit 0\n")
-	if changeModeError := os.Chmod(node, 0755); changeModeError != nil {
+	if changeModeError := os.Chmod(node, 0o755); changeModeError != nil {
 		test.Fatal(changeModeError)
 	}
 	test.Setenv("PATH", directory)

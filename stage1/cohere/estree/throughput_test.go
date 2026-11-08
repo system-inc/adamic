@@ -25,7 +25,7 @@ func TestThroughput(test *testing.T) {
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	if writeError := os.WriteFile(list, []byte(strings.Repeat(string(listing), 20)), 0644); writeError != nil {
+	if writeError := os.WriteFile(list, []byte(strings.Repeat(string(listing), 20)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	count := len(generated()) * 20

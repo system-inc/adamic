@@ -78,7 +78,7 @@ func fileDriverSetup(test *testing.T) *fileDriverState {
 		inputs = append(inputs, "0\t"+escape.Replace(text))
 	}
 	path := filepath.Join(test.TempDir(), "driver-cases.txt")
-	if writeError := os.WriteFile(path, []byte(strings.Join(inputs, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(strings.Join(inputs, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	expected := bytes.Split(bytes.TrimSuffix(fileDriverGoFormat(test, path), []byte("\n")), []byte("\n"))
@@ -131,7 +131,7 @@ func TestFileDriverUnion(test *testing.T) {
 	// Plant one disagreement in the actual native stdout and exercise the byte oracle
 	// over every enumerated slice; precisely one owning shard must detect it.
 	file := filepath.Join(test.TempDir(), "input.yaml")
-	if writeError := os.WriteFile(file, []byte(unescapeCase(state.inputs[0])), 0644); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(unescapeCase(state.inputs[0])), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	actual := fileDriverRun(test, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, state.binary, file)
@@ -175,7 +175,7 @@ func fileDriverRunShard(test *testing.T, shard int) {
 		}
 		wanted := []byte(unescapeCase("0\t" + strings.TrimPrefix(answer, "ok\t")))
 		file := filepath.Join(test.TempDir(), "input.yaml")
-		if writeError := os.WriteFile(file, []byte(unescapeCase(state.inputs[index])), 0644); writeError != nil {
+		if writeError := os.WriteFile(file, []byte(unescapeCase(state.inputs[index])), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		for _, side := range []struct {
@@ -294,7 +294,7 @@ func fileDriverGoFormat(test *testing.T, cases string) []byte {
 	goBinary := goFormatOracle(test)
 	expected := fileDriverRun(test, "", nil, goBinary, "--cases", cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
-		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(artifacts, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		executable, readError := os.ReadFile(goBinary)
@@ -310,9 +310,9 @@ func fileDriverGoFormat(test *testing.T, cases string) []byte {
 			data []byte
 			mode os.FileMode
 		}{
-			{"go-format", executable, 0755},
-			{"format-cases.txt", inputs, 0644},
-			{"format-expected.txt", expected, 0644},
+			{"go-format", executable, 0o755},
+			{"format-cases.txt", inputs, 0o644},
+			{"format-expected.txt", expected, 0o644},
 		} {
 			if writeError := os.WriteFile(
 				filepath.Join(artifacts, file.name),

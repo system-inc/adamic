@@ -75,7 +75,7 @@ func TestNonNullLiteralUnionInitializers(test *testing.T) {
 		test.Run(literal, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "main.ts")
 			source := "let value: string | number = " + literal + "!; value = 1; console.log(value.toString());\n"
-			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			program, loweredError := lowered(test, path)

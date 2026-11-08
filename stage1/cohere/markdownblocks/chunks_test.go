@@ -133,7 +133,10 @@ func TestMicromarkInputChunks(test *testing.T) {
 		test.Run(testCase.name, func(test *testing.T) {
 			cases, want, names := fullCases, fullWant, fullNames
 			scratch := test.TempDir()
-			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(scratch, "testdata"),
+				0o755,
+			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			for _, file := range []string{"inputChunks.ts", "testdata/chunks_probe.ts"} {

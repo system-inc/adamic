@@ -47,7 +47,7 @@ func jsxManifest(test *testing.T) (string, int) {
 	for i, source := range cases {
 		for j, variant := range []string{source, "/* é 😀 */\r\n" + strings.ReplaceAll(source, "\n", "\r\n")} {
 			path := filepath.Join(directory, fmt.Sprintf("jsx-%d-%d.tsx", i, j))
-			if writeError := os.WriteFile(path, []byte(variant), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(variant), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			rows = append(rows, path)
@@ -58,14 +58,14 @@ func jsxManifest(test *testing.T) (string, int) {
 		if writeError := os.WriteFile(
 			path,
 			[]byte(`const x = <div data-x='raw\n'>{value}</div>;`),
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
 		rows = append(rows, path)
 	}
 	path := filepath.Join(directory, "manifest")
-	if writeError := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path, len(rows)

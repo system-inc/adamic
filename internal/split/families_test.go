@@ -49,7 +49,7 @@ func TestSplitFamilyWrappersAreCurrent(test *testing.T) {
 	}
 	const path = "families_generated_test.go"
 	if *updateSplitFamilies {
-		if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

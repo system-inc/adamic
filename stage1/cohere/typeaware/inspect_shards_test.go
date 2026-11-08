@@ -26,7 +26,7 @@ func TestInspectRequestRefusals(test *testing.T) {
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)
 		}
-		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 	}

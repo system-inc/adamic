@@ -207,11 +207,11 @@ func moveSource(test *testing.T) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "program.c"),
 			[]byte(native.C(program)),
-			0600,
+			0o600,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0600)
+		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0o600)
 	})
 }
 
@@ -368,7 +368,7 @@ func moveDeterminism(test *testing.T) string {
 				firstDifferingLine(first.output, second.output),
 			)
 		}
-		return os.WriteFile(filepath.Join(directory, "program.c"), first.output, 0600)
+		return os.WriteFile(filepath.Join(directory, "program.c"), first.output, 0o600)
 	})
 }
 

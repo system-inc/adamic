@@ -244,12 +244,15 @@ func grainLayoutMutation(test *testing.T, fixture *layoutFixture, slice string, 
 			nativeCases, inputs := fixture.mutantNativeCases, fixture.mutantInputs
 			want := run{stdout: fixture.mutantWant}
 			scratch := test.TempDir()
-			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(scratch, "testdata"),
+				0o755,
+			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			if createDirectoryError := os.Mkdir(
 				filepath.Join(scratch, "markdowninline"),
-				0755,
+				0o755,
 			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}

@@ -20,7 +20,7 @@ func TestProfileSnapshotsAgree(test *testing.T) {
 	answers, _ := cohereAnswers(test, cases, false)
 	input, expected := protocol(cases, answers)
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(input), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(input), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	for _, binary := range filepath.SplitList(snapshots) {
@@ -41,7 +41,7 @@ func TestCachedWidthMutantIsCaught(test *testing.T) {
 	answers, _ := cohereAnswers(test, cases, false)
 	input, expected := protocol(cases, answers)
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(input), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(input), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	mutation := cachedWidthMutant

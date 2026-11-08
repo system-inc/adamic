@@ -212,7 +212,7 @@ func jsonPortClassOrderRun(test *testing.T, side jsonClassOrderSide) {
 	start := time.Now()
 	input, _ := protocol(items, make([]answer, len(items)))
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(input), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(input), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	// _000 runs the Go oracle live and holds the stored answer to it, so every other side, which compares against the

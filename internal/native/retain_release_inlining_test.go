@@ -30,7 +30,7 @@ func TestRetainReleaseInliningBoundary(test *testing.T) {
 					if writeError := os.WriteFile(
 						filepath.Join(directory, file.name),
 						file.contents,
-						0644,
+						0o644,
 					); writeError != nil {
 						test.Fatal(writeError)
 					}
@@ -43,7 +43,7 @@ void release_probe(void *value) { adamic_release(value); }
 			if writeError := os.WriteFile(
 				filepath.Join(directory, "probe.c"),
 				[]byte(source),
-				0644,
+				0o644,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
@@ -94,7 +94,7 @@ void release_probe(void *value) { adamic_release(value); }
 			if writeError := os.WriteFile(
 				filepath.Join(directory, "unused.c"),
 				[]byte("#include \"adamic.h\"\n"),
-				0644,
+				0o644,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}

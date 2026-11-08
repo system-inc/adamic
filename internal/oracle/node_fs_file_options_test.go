@@ -98,7 +98,7 @@ func TestNodeFileSystemConsumedOptionsMutants(test *testing.T) {
 				// required missing-file exception, while the mutant returns instead.
 				path = filepath.Join(test.TempDir(), "main.a")
 				source := `import {statSync} from 'node:fs'; const options={throwIfNoEntry:true} as const; try {statSync('missing-host-options-mutant-entry',options); console.log('returned');} catch(error) {if(error instanceof Error)console.log('threw');}`
-				if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+				if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 					test.Fatal(writeError)
 				}
 			}
@@ -170,7 +170,7 @@ func TestNodeFileSystemRmUndefinedNodeMutant(test *testing.T) {
 			source := "import {rmSync} from 'node:fs'; try {rmSync('missing-host-rm-option-entry',{" +
 				name +
 				":undefined});} catch(error) {if(error instanceof Error)console.log(error.message);}"
-			if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			_, loweredError := lowered(test, path)
@@ -194,7 +194,7 @@ func TestNodeFileSystemRmUndefinedNodeMutant(test *testing.T) {
 			if writeError := os.WriteFile(
 				mutantPath,
 				[]byte(strings.Replace(source, name+":undefined", name+":"+fallback, 1)),
-				0600,
+				0o600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}

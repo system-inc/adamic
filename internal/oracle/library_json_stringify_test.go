@@ -36,7 +36,7 @@ func TestJsonStringifyRefusals(test *testing.T) {
 	for _, testCase := range cases {
 		test.Run(testCase.name, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "probe.ts")
-			if writeError := os.WriteFile(path, []byte(testCase.source), 0600); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(testCase.source), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			program, loadError := load.Load([]string{path})
@@ -66,7 +66,7 @@ func TestJsonStringifyResultMayBeUndefined(test *testing.T) {
 	if writeError := os.WriteFile(
 		path,
 		[]byte(`const result: string = JSON.stringify(undefined); console.log(result);`),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -82,7 +82,7 @@ func TestJsonStringifyOracleCatchesKeyOrder(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "mutant.ts")
 	source := `console.log(JSON.stringify({ '2': 2, '1': 1, z: 'built'.repeat(2), a: 3 }) ?? 'missing');`
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)

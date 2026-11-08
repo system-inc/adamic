@@ -31,7 +31,7 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 	if writeError := os.WriteFile(
 		stub,
 		[]byte("#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nexec '"+node+"' \"$@\"\n"),
-		0700,
+		0o700,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -62,7 +62,7 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 					}
 					target := filepath.Join(root, path)
 					if entry.IsDir() {
-						return os.MkdirAll(target, 0700)
+						return os.MkdirAll(target, 0o700)
 					}
 					if entry.Name() != "status.json" && filepath.Ext(path) != ".a" && filepath.Ext(path) != ".ts" {
 						return nil
@@ -71,7 +71,7 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 					if readError != nil {
 						return readError
 					}
-					return os.WriteFile(target, data, 0600)
+					return os.WriteFile(target, data, 0o600)
 				})
 				if walkError != nil {
 					test.Fatal(walkError)
@@ -93,7 +93,7 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 				if writeError := os.WriteFile(
 					filepath.Join(root, "host/configuration.a"),
 					proof,
-					0600,
+					0o600,
 				); writeError != nil {
 					test.Fatal(writeError)
 				}
@@ -110,7 +110,7 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 				if writeError := os.WriteFile(
 					filepath.Join(root, "host/status.json"),
 					encoded,
-					0600,
+					0o600,
 				); writeError != nil {
 					test.Fatal(writeError)
 				}

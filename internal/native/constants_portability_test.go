@@ -65,7 +65,7 @@ func portabilityHeaders(test *testing.T) string {
 		if readFileError != nil {
 			test.Fatal(readFileError)
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -76,7 +76,7 @@ func compilePortability(test *testing.T, compiler, source string, fatalWarnings 
 	test.Helper()
 	directory := portabilityHeaders(test)
 	file := filepath.Join(directory, "main.c")
-	if writeError := os.WriteFile(file, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	flags := []string{"-std=c11", "-Wpedantic", "-Wconversion", "-fsyntax-only", "-fsigned-char", "-I", directory, file}

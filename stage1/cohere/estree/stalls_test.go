@@ -93,7 +93,7 @@ func boundedPortParserShard(test *testing.T, shard int) {
 	for _, index := range indexes {
 		item := cases[index]
 		path := filepath.Join(test.TempDir(), item.filename)
-		if writeError := os.WriteFile(path, []byte(item.text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(item.text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		accepted := item.audit && byId[item.id].Status == "ok"
@@ -166,7 +166,7 @@ func portStallControlShard(test *testing.T, shard int) {
 	finishSetup()
 	for range indexes {
 		path := filepath.Join(test.TempDir(), "input.ts")
-		if writeError := os.WriteFile(path, []byte("class C { ) }"), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte("class C { ) }"), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		// The guard-disabled port held to the calibrated budget a refusal gets: it must run until the budget stops it.

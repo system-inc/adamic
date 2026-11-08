@@ -67,7 +67,7 @@ func regExpRunnerWasiShard(test *testing.T, name string) {
 	if writeError := os.WriteFile(
 		filepath.Join(engine.work, "program.a"),
 		[]byte(one.Program),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -95,7 +95,7 @@ func regExpWasiAgrees(test testing.TB, engine *engine, one classified) {
 		test.Fatalf("undeclared RegExp runner runtime features: %v", features)
 	}
 	cPath := filepath.Join(engine.work, "program.c")
-	if writeError := os.WriteFile(cPath, []byte(compiled.Stdout), 0600); writeError != nil {
+	if writeError := os.WriteFile(cPath, []byte(compiled.Stdout), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	binary := filepath.Join(engine.work, "program.wasm")
@@ -117,7 +117,7 @@ func regExpWasiAgrees(test testing.TB, engine *engine, one classified) {
 	)
 	original := engine.originalRegExp(one)
 	module := filepath.Join(engine.work, "program.mts")
-	if writeError := os.WriteFile(module, []byte(one.Program), 0600); writeError != nil {
+	if writeError := os.WriteFile(module, []byte(one.Program), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	adapted := runProgram(15*time.Second, nil, engine.tools.node, "--disable-warning=ExperimentalWarning", module)

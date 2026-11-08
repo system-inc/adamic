@@ -116,7 +116,7 @@ func predicateInputFrom(test *testing.T, directory, name string) (string, string
 		test.Fatal(readError)
 	}
 	checked := filepath.Join(test.TempDir(), name+".ts")
-	if writeError := os.WriteFile(checked, source, 0644); writeError != nil {
+	if writeError := os.WriteFile(checked, source, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return witness, checked

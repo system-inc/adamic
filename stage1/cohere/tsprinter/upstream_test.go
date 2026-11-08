@@ -48,7 +48,7 @@ func TestStatementUpstreamDifferences(test *testing.T) {
 	}
 	specs, _ := json.Marshal(cases)
 	specsPath := filepath.Join(directory, "cases.json")
-	if writeError := os.WriteFile(specsPath, specs, 0644); writeError != nil {
+	if writeError := os.WriteFile(specsPath, specs, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	script, _ := filepath.Abs("testdata/embedded.mjs")

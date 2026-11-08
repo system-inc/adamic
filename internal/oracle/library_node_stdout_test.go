@@ -132,7 +132,7 @@ func TestStdoutWriteParenthesizedReceiverMatchesNode(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "import process from 'node:process';\n(process.stdout).write('x');\n"
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)

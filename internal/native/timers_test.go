@@ -230,7 +230,7 @@ func (runtime timerRuntime) build(code, output string, options native.Options) e
 // by a bare clang. It stays only as the pin's mutant.
 func timerBuildBare(code, output string, options native.Options, library string) error {
 	source := output + ".c"
-	if writeError := os.WriteFile(source, []byte(code), 0600); writeError != nil {
+	if writeError := os.WriteFile(source, []byte(code), 0o600); writeError != nil {
 		return writeError
 	}
 	commandArguments := append(native.LinkFlags(options), "-I", filepath.Dir(library), "-o", output, source)
@@ -320,7 +320,7 @@ func timerMutant(test *testing.T, file, before, after string) timerRuntime {
 			data = []byte(strings.Replace(string(data), before, after, 1))
 			found = true
 		}
-		if writeError := os.WriteFile(filepath.Join(runtime.directory, entry.Name()), data, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(runtime.directory, entry.Name()), data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -533,7 +533,7 @@ func copyTimerProduct(source, destination string) error {
 	if readError != nil {
 		return readError
 	}
-	return os.WriteFile(destination, data, 0700)
+	return os.WriteFile(destination, data, 0o700)
 }
 func TestProduct_TimersSanitized(test *testing.T) {
 	test.Parallel()

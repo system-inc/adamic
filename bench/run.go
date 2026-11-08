@@ -100,18 +100,22 @@ func main() {
 	// Bun uses ordinary package resolution; its shim is outside the repository and never changes source.
 	modules := filepath.Join(work, "node_modules")
 	packageDirectory := filepath.Join(modules, "adamic")
-	if createDirectoryError := os.MkdirAll(packageDirectory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(packageDirectory, 0o755); createDirectoryError != nil {
 		fail(createDirectoryError)
 	}
 	if writeError := os.WriteFile(
 		filepath.Join(packageDirectory, "package.json"),
 		[]byte(`{"type":"module","exports":"./index.mjs"}`),
-		0644,
+		0o644,
 	); writeError != nil {
 		fail(writeError)
 	}
 	shim := "export * from " + strconv.Quote(filepath.Join(filepath.Dir(directory), "oracle", "adamic.mjs")) + ";\n"
-	if writeError := os.WriteFile(filepath.Join(packageDirectory, "index.mjs"), []byte(shim), 0644); writeError != nil {
+	if writeError := os.WriteFile(
+		filepath.Join(packageDirectory, "index.mjs"),
+		[]byte(shim),
+		0o644,
+	); writeError != nil {
 		fail(writeError)
 	}
 	runtimes := availableRuntimes(*threads, modules)
@@ -130,7 +134,7 @@ func main() {
 		fail(fmt.Errorf("building adamic: %v\n%s", combinedOutputError, output))
 	}
 	floorSource := filepath.Join(work, "floor.ts")
-	if writeError := os.WriteFile(floorSource, []byte("console.log(\"0\");\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(floorSource, []byte("console.log(\"0\");\n"), 0o644); writeError != nil {
 		fail(writeError)
 	}
 	floor := program{name: "floor", source: floorSource, native: filepath.Join(work, "floor")}

@@ -70,7 +70,7 @@ func TestCacheAtomicBytes(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(cache.directory, "same.json"),
 		[]byte(`{"Key":"same","Digest":"wrong","Value":{}}`),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -196,7 +196,7 @@ func TestOrderedProgress(test *testing.T) {
 	test.Parallel()
 	corpus := test.TempDir()
 	directory := filepath.Join(corpus, "test")
-	if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	skipped, readError := os.ReadFile("testdata/mini/test/skip/negative.js")
@@ -207,7 +207,7 @@ func TestOrderedProgress(test *testing.T) {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, fmt.Sprintf("%02d.js", index)),
 			skipped,
-			0600,
+			0o600,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -216,7 +216,7 @@ func TestOrderedProgress(test *testing.T) {
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	if writeError := os.WriteFile(filepath.Join(directory, "50.js"), passed, 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "50.js"), passed, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	engine, prepareError := prepare(test, corpus, test.TempDir())
@@ -244,7 +244,7 @@ func TestUnavailableCacheStillRuns(test *testing.T) {
 		test.Fatal(prepareError)
 	}
 	path := filepath.Join(test.TempDir(), "not-a-directory")
-	if writeError := os.WriteFile(path, []byte("file"), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte("file"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	engine.cache = &resultCache{directory: path}
@@ -273,7 +273,7 @@ func TestImportedInputsRunFresh(t *testing.T) {
 	test := classify("input.js", source, false)
 	var reasons []string
 	for _, word := range []string{"before", "after"} {
-		if writeError := os.WriteFile(input, []byte(word), 0600); writeError != nil {
+		if writeError := os.WriteFile(input, []byte(word), 0o600); writeError != nil {
 			t.Fatal(writeError)
 		}
 		result := engine.attempt(test)
@@ -293,7 +293,7 @@ func TestCompilerCacheProgram(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "program.a")
 	for _, word := range []string{"before", "after"} {
 		source := program(fmt.Sprintf("console.log(%q);", word))
-		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		key := compilerResultKey(source, "compiler", path, "context")
@@ -431,7 +431,7 @@ func TestContextIgnoresCheckoutLocation(test *testing.T) {
 	var packages []string
 	for _, checkout := range []string{"a/adamic", "bb/cc/adamic"} {
 		directory := filepath.Join(scratch, filepath.FromSlash(checkout), "cmd", "adamic-test262")
-		if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0o700); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		packages = append(packages, directory)

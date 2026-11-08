@@ -40,7 +40,7 @@ func nodeProcessDirectoryRuntime(test *testing.T, shard int) {
 		test.Fatal(resolveSymlinksError)
 	}
 	child, missing := filepath.Join(scratch, "child"), filepath.Join(scratch, "absent")
-	if createDirectoryError := os.Mkdir(child, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(child, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	source, absolutePathError := filepath.Abs(
@@ -165,7 +165,7 @@ func nodeProcessDirectorySymlinksRuntime(test *testing.T, shard int) {
 		test.Fatal(resolveSymlinksError)
 	}
 	child, link := filepath.Join(scratch, "child"), filepath.Join(scratch, "link")
-	if createDirectoryError := os.Mkdir(child, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(child, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	if symlinkError := os.Symlink("child", link); symlinkError != nil {
@@ -174,7 +174,7 @@ func nodeProcessDirectorySymlinksRuntime(test *testing.T, shard int) {
 	source := filepath.Join(test.TempDir(), "main.a")
 	if writeError := os.WriteFile(source, []byte(
 		"process.chdir(process.argv[2]); console.log(process.cwd()); process.chdir('..'); console.log(process.cwd());",
-	), 0600); writeError != nil {
+	), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{arguments: []string{link}}, source)
@@ -251,7 +251,7 @@ func nodeProcessRuntimeAgreement(test *testing.T, program *ir.Program, truth run
 func nodeProcessJavaScript(test *testing.T, program *ir.Program) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return onNodeWith(test, inputRun{}, path)

@@ -17,7 +17,7 @@ import (
 func cycleIndexTypes(test *testing.T, source string) (*cycleFinder, map[string]*checker.Type) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

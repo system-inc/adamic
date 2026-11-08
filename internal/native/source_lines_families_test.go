@@ -113,7 +113,7 @@ func TestDebugFamilyWrappersAreCurrent(test *testing.T) {
 		test.Fatal(debugFamilyWrappersError)
 	}
 	if *updateDebugFamilies {
-		if writeError := os.WriteFile("source_lines_families_generated_test.go", want, 0644); writeError != nil {
+		if writeError := os.WriteFile("source_lines_families_generated_test.go", want, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		return

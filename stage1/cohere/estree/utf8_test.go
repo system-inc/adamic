@@ -82,7 +82,7 @@ func TestLossyInputRefusal(test *testing.T) {
 	binary, script := build(test, main, true)
 	for _, body := range [][]byte{{47, 47, 240, 144, 128, 10, 120, 59}, {47, 47, 239, 191, 189, 10, 120, 59}} {
 		path := filepath.Join(test.TempDir(), "input.ts")
-		os.WriteFile(path, body, 0644)
+		os.WriteFile(path, body, 0o644)
 		for _, argv := range [][]string{
 			{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(test), "oracle/node.mjs"), main, path},
 			{binary, path},

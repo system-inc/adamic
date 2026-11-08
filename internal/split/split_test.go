@@ -73,7 +73,7 @@ func ordinaryOracle(test *testing.T, path string, program *ir.Program) {
 	}
 	directory := test.TempDir()
 	module, binary := filepath.Join(directory, "program.mjs"), filepath.Join(directory, "program")
-	if writeError := os.WriteFile(module, []byte(javascript.JavaScript(program)), 0644); writeError != nil {
+	if writeError := os.WriteFile(module, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {

@@ -213,7 +213,7 @@ func TestEnumIdentityAcrossModules(test *testing.T) {
 		main:  "import { E as Other } from './other.a'; enum E { A = 'a', B = 'b' } const value: E = Other.A;",
 		other: "export enum E { A = 'a', B = 'b' }",
 	} {
-		if writeError := os.WriteFile(name, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(name, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

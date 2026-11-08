@@ -25,7 +25,7 @@ func Helpers(test *testing.T) string {
 		filepath.Join(root, "adamic_helper_descriptors.go"): descriptors,
 	}})
 	path := filepath.Join(test.TempDir(), "overlay.json")
-	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	// Cohere with the oracle laid over it is a product built ahead, keyed through the overlay (#5qykzj5).

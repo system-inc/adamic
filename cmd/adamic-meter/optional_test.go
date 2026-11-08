@@ -104,7 +104,7 @@ func TestOptionalAdaptationLeavesUnsafeContractsRejected(test *testing.T) {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.ts")
-			if writeError := os.WriteFile(path, []byte(testCase.source), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(testCase.source), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			_, before := load.Load([]string{path})
@@ -130,7 +130,7 @@ func TestOptionalAdaptationRechecksPresenceNarrowing(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.ts")
 	source := "interface S { p?: string }; const s: S = {}; s.p = undefined; function f(s: S): number { if ('p' in s) return s.p.length; return 0; }"
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{path})
@@ -163,7 +163,7 @@ func TestOptionalAdaptationContextualDeclarations(test *testing.T) {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.ts")
-			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			_, before := load.Load([]string{path})
@@ -189,13 +189,13 @@ func TestOptionalAdaptationOwnsOnlyNamedRoots(test *testing.T) {
 	dir := test.TempDir()
 	external := filepath.Join(dir, "external.ts")
 	main := filepath.Join(dir, "main.ts")
-	if writeError := os.WriteFile(external, []byte("export interface S {p?: string}"), 0644); writeError != nil {
+	if writeError := os.WriteFile(external, []byte("export interface S {p?: string}"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if writeError := os.WriteFile(
 		main,
 		[]byte("import type {S} from './external.ts'; const s:S={};s.p=undefined;"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -217,7 +217,7 @@ func TestOptionalAdaptationPreservesLiveMethodPlacement(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.ts")
 	source := "class Action { optional?(): string { return 'x'; } }; const action = new Action(); console.log(`${Object.hasOwn(action, 'optional')} ${Object.hasOwn(Action.prototype, 'optional')}`); action.optional = undefined; interface Settings { value?: string }; const settings: Settings = {}; settings.value = undefined;"
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{path})
@@ -259,7 +259,7 @@ func TestOptionalAdaptationUtf16AndAdamicExtension(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main"+extension)
 			source := "const glyph = '😀'; interface S {p?: string}; const s: S = {}; s.p = undefined; void glyph;"
-			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			_, before := load.Load([]string{path})

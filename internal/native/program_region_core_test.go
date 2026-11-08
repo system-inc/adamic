@@ -145,7 +145,7 @@ func programRegionCoreUnit(test *testing.T, index int) {
 			if readError != nil {
 				return readError
 			}
-			return os.WriteFile(output, data, 0755)
+			return os.WriteFile(output, data, 0o755)
 		}); report != "" {
 			test.Fatal(report)
 		}
@@ -154,7 +154,7 @@ func programRegionCoreUnit(test *testing.T, index int) {
 			if readError != nil {
 				return readError
 			}
-			return os.WriteFile(output, data, 0755)
+			return os.WriteFile(output, data, 0o755)
 		}); report != "" {
 			test.Fatal(report)
 		}

@@ -54,7 +54,7 @@ func writeExecutable(test *testing.T, path, script string) {
 			file.Close()
 			test.Fatal(writeStringError)
 		}
-		if chmodError := file.Chmod(0700); chmodError != nil {
+		if chmodError := file.Chmod(0o700); chmodError != nil {
 			file.Close()
 			test.Fatal(chmodError)
 		}
@@ -74,11 +74,11 @@ func commandFixture(test *testing.T) (string, string, string, string) {
 		test.Helper()
 		if createDirectoryError := os.MkdirAll(
 			filepath.Dir(filepath.Join(dir, path)),
-			0755,
+			0o755,
 		); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(text), 0755); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(text), 0o755); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -235,7 +235,7 @@ func TestNewAdmissionMismatch(test *testing.T) {
 func TestHeadInputIsolation(test *testing.T) {
 	test.Parallel()
 	dir, sha, base, head := commandFixture(test)
-	if writeError := os.WriteFile(filepath.Join(dir, "corpus/input.a"), []byte("changed"), 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(dir, "corpus/input.a"), []byte("changed"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	observation := invokeCommand(
@@ -349,7 +349,7 @@ func TestManifestMismatch(test *testing.T) {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	observation := invokeCommand(
@@ -409,7 +409,7 @@ func TestEmptyCorpus(test *testing.T) {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	observation := invokeCommand(
@@ -450,14 +450,14 @@ func TestCompilerTimeoutIsError(test *testing.T) {
 func compilerFixture(test *testing.T) (string, string) {
 	test.Helper()
 	dir, _, _, _ := commandFixture(test)
-	if createDirectoryError := os.MkdirAll(filepath.Join(dir, "cmd/adamic"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Join(dir, "cmd/adamic"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	for path, text := range map[string]string{
 		"go.mod":             "module github.com/system-inc/adamic\n\ngo 1.27\n",
 		"cmd/adamic/main.go": "package main\nimport \"fmt\"\nfunc main(){fmt.Println(\"C\")}\nfunc compile(string)(*int,int){n:=0;return &n,0}\n",
 	} {
-		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(text), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

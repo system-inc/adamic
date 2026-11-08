@@ -136,7 +136,7 @@ func asyncCountProtocolProduct(test *testing.T) string {
 					if writeError := os.WriteFile(
 						filepath.Join(scratch, file.name),
 						file.contents,
-						0600,
+						0o600,
 					); writeError != nil {
 						return writeError
 					}
@@ -145,7 +145,7 @@ func asyncCountProtocolProduct(test *testing.T) string {
 			if writeError := os.WriteFile(
 				filepath.Join(scratch, "async.c"),
 				[]byte(strings.ReplaceAll(text, mutant.before, mutant.after)),
-				0600,
+				0o600,
 			); writeError != nil {
 				return writeError
 			}
@@ -171,7 +171,7 @@ func asyncCountProtocolProduct(test *testing.T) string {
 				return readError
 			}
 			library := filepath.Join(scratch, "runtime.a")
-			if writeError := os.WriteFile(library, archive, 0600); writeError != nil {
+			if writeError := os.WriteFile(library, archive, 0o600); writeError != nil {
 				return writeError
 			}
 			staticsCompile(test, archiverName(compiler), "r", library, object)

@@ -93,7 +93,7 @@ func TestOracleHostStatusMutants(test *testing.T) {
 					test.Fatal(marshalError)
 				}
 				input = filepath.Join(test.TempDir(), "status.json")
-				if writeError := os.WriteFile(input, planted, 0600); writeError != nil {
+				if writeError := os.WriteFile(input, planted, 0o600); writeError != nil {
 					test.Fatal(writeError)
 				}
 			}

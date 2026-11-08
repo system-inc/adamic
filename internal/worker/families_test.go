@@ -132,7 +132,7 @@ func workerFamilyWrappers(test *testing.T) []byte {
 func TestWorkerFamilyWrappersAreCurrent(test *testing.T) {
 	want := workerFamilyWrappers(test)
 	if *updateWorkerFamilyWrappers {
-		if writeError := os.WriteFile("families_generated_test.go", want, 0644); writeError != nil {
+		if writeError := os.WriteFile("families_generated_test.go", want, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		return

@@ -86,7 +86,7 @@ func TestQualifiedPredicateCallsAreNotValueEscapes(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.ts")
 	source := `namespace ts { export function isNumber(v: number | string): v is number { return true; } } function use(v: number | string): void { if (ts.isNumber(v)) console.log("yes"); } use(7);`
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

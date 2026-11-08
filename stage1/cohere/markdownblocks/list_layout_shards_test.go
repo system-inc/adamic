@@ -154,7 +154,7 @@ func buildListLayoutSetup(test *testing.T) {
 			if encodeError != nil {
 				return encodeError
 			}
-			return os.WriteFile(filepath.Join(directory, "manifest.json"), data, 0644)
+			return os.WriteFile(filepath.Join(directory, "manifest.json"), data, 0o644)
 		})
 		listLayoutOnce.Do(func() { loadListLayoutSetup(test, directory) })
 	})
@@ -362,7 +362,7 @@ func TestMarkdownListLayout_015(test *testing.T) {
 func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProducts {
 	test.Helper()
 	var products listLayoutProducts
-	if createDirectoryError := os.MkdirAll(dir, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(dir, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	cohere := filepath.Join(root, "cohere")
@@ -444,11 +444,11 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 			if writeError := os.WriteFile(
 				filepath.Join(directory, "program.c"),
 				[]byte(native.C(program)),
-				0644,
+				0o644,
 			); writeError != nil {
 				return writeError
 			}
-			return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+			return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 		})
 	}
 	buildNative := func(emitted, name string, sanitize bool) string {
@@ -469,7 +469,7 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 			),
 			Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()},
 		}, func(directory string) error {
-			if writeError := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(directory, "main.c"), source, 0o644); writeError != nil {
 				return writeError
 			}
 			// native.Build compiles in a directory of its own and gives clang no absolute path, so the binary names no
@@ -505,12 +505,12 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 	}
 	for index, mutation := range mutations {
 		scratch := filepath.Join(dir, fmt.Sprintf("mutant-%d", index))
-		if createDirectoryError := os.MkdirAll(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Join(scratch, "testdata"), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		if createDirectoryError := os.Mkdir(
 			filepath.Join(scratch, "markdowninline"),
-			0755,
+			0o755,
 		); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
@@ -584,7 +584,7 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 				if loweredResultError != nil {
 					return loweredResultError
 				}
-				return os.WriteFile(filepath.Join(directory, "program.c"), []byte(native.C(program)), 0644)
+				return os.WriteFile(filepath.Join(directory, "program.c"), []byte(native.C(program)), 0o644)
 			})
 			source, readError := os.ReadFile(filepath.Join(product, "program.c"))
 			if readError != nil {
@@ -604,7 +604,7 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 				Flags:     append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)),
 				Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()},
 			}, func(directory string) error {
-				if writeError := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(directory, "main.c"), source, 0o644); writeError != nil {
 					return writeError
 				}
 				if buildFlagsError := native.BuildFlags(
@@ -642,7 +642,7 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 	selection := gatesample.Selection{}
 	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	dir := test.TempDir()
-	if createDirectoryError := os.MkdirAll(dir, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(dir, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	var batch bytes.Buffer
@@ -766,7 +766,7 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
 		keep = filepath.Join(keep, filepath.Base(test.Name()))
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())

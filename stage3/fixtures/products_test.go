@@ -164,7 +164,7 @@ func fixtureOracleHook(test testing.TB, repository string) string {
 		if removeError := os.Remove(store); removeError != nil {
 			return removeError
 		}
-		return os.WriteFile(filepath.Join(directory, "product-name"), []byte(name), 0644)
+		return os.WriteFile(filepath.Join(directory, "product-name"), []byte(name), 0o644)
 	})
 	name, readError := os.ReadFile(filepath.Join(directory, "product-name"))
 	if readError != nil {
@@ -241,10 +241,10 @@ func TestFixtureOracleProductTracksInputs(test *testing.T) {
 			test.Fatal(readError)
 		}
 		path := filepath.Join(scratch, name)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -255,10 +255,10 @@ func TestFixtureOracleProductTracksInputs(test *testing.T) {
 	// Changing the build helper is a changed recipe, even if the Go sources did
 	// not change. Dropping this input must serve the old key and fail this check.
 	helper := filepath.Join(scratch, "stage3/fixtures/build-hook.py")
-	if createDirectoryError := os.MkdirAll(filepath.Dir(helper), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Dir(helper), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if writeError := os.WriteFile(helper, []byte("# changed oracle build recipe\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(helper, []byte("# changed oracle build recipe\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	after, keyError := buildcache.Key(scratch, inputs)
@@ -320,11 +320,11 @@ func TestTheFixtureOracleHookWritesNoBytecode(test *testing.T) {
 		}
 		if createDirectoryError := os.MkdirAll(
 			filepath.Dir(filepath.Join(scratch, name)),
-			0755,
+			0o755,
 		); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(filepath.Join(scratch, name), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(scratch, name), data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

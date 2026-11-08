@@ -67,7 +67,7 @@ func CompositionOracle(test *testing.T, name, sidePath, overlayTarget, packagePa
 			return encodeError
 		}
 		overlayPath := filepath.Join(dir, "overlay.json")
-		if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+		if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -244,7 +244,7 @@ func WriteParserSlice(test *testing.T, corpus ParserCorpus, indices []int) (stri
 		fmt.Fprintf(&inputs, "%s\n", corpus.Inputs[index])
 		fmt.Fprintf(&answers, "case %d\n%s\n", local, corpus.Answers[index])
 	}
-	if writeError := os.WriteFile(path, []byte(inputs.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(inputs.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path, answers.String()
@@ -362,7 +362,7 @@ func cssParserOracle(test *testing.T) string {
 			return encodeError
 		}
 		path := filepath.Join(dir, "overlay.json")
-		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -494,7 +494,7 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 			return encodeError
 		}
 		requestPath := filepath.Join(TemporaryDirectory(test), "request.json")
-		if writeError := os.WriteFile(requestPath, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(requestPath, data, 0o644); writeError != nil {
 			return writeError
 		}
 		command := toolchain.CommandContextIn(
@@ -524,7 +524,7 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 		test.Fatal(readError)
 	}
 	if keep := os.Getenv("ADAMIC_CSS_KEEP_RAW"); keep != "" {
-		if writeError := os.WriteFile(keep, answers, 0644); writeError != nil {
+		if writeError := os.WriteFile(keep, answers, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -533,7 +533,7 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if writeError := os.WriteFile(keep, content, 0644); writeError != nil {
+		if writeError := os.WriteFile(keep, content, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -554,7 +554,7 @@ func CachedPostCSSAnswers(test *testing.T, script, library, path, identity strin
 		Toolchain: buildcache.Tool("node", "--version"),
 	}, func(dir string) error {
 		input := filepath.Join(dir, "input.txt")
-		if writeError := os.WriteFile(input, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(input, data, 0o644); writeError != nil {
 			return writeError
 		}
 		// Read through childguard.Capture for CompositionOracle's reason: a WaitDelay could fail a run that had
@@ -568,7 +568,7 @@ func CachedPostCSSAnswers(test *testing.T, script, library, path, identity strin
 		if captureError != nil || len(stderr) != 0 {
 			return fmt.Errorf("PostCSS oracle: %v; %s", captureError, stderr)
 		}
-		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0644)
+		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0o644)
 	})
 	answer, readError := os.ReadFile(filepath.Join(dir, "answers.txt"))
 	if readError != nil {
@@ -666,7 +666,7 @@ func ComparisonOracle(test *testing.T, printer bool) string {
 				return encodeError
 			}
 			overlayPath := filepath.Join(dir, "overlay.json")
-			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+			if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 				return writeError
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).

@@ -59,11 +59,11 @@ func TestProduct_SyntaxMutantsSetup_002(test *testing.T) {
 // remain stable for Node execution.
 func estreeFamilyLowerCheckpoint(dir string, snapshot map[string][]byte) error {
 	source := filepath.Join(dir, "source")
-	if createDirectoryError := os.Mkdir(source, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(source, 0o755); createDirectoryError != nil {
 		return createDirectoryError
 	}
 	for name, data := range snapshot {
-		if writeError := os.WriteFile(filepath.Join(source, name), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(source, name), data, 0o644); writeError != nil {
 			return writeError
 		}
 	}
@@ -106,7 +106,7 @@ func estreeFamilyReadCheckpoint(dir string) (*ir.Program, error) {
 	return &program, nil
 }
 func estreeFamilyCopySource(from, to string) error {
-	if createDirectoryError := os.Mkdir(filepath.Join(to, "source"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(filepath.Join(to, "source"), 0o755); createDirectoryError != nil {
 		return createDirectoryError
 	}
 	files, globError := filepath.Glob(filepath.Join(from, "source", "*.ts"))
@@ -118,7 +118,11 @@ func estreeFamilyCopySource(from, to string) error {
 		if readError != nil {
 			return readError
 		}
-		if writeError := os.WriteFile(filepath.Join(to, "source", filepath.Base(file)), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(
+			filepath.Join(to, "source", filepath.Base(file)),
+			data,
+			0o644,
+		); writeError != nil {
 			return writeError
 		}
 	}

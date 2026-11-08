@@ -361,11 +361,11 @@ func TestReviewProgramsSelfTest(test *testing.T) {
 	test.Run("accepted_refused", func(test *testing.T) {
 		root := test.TempDir()
 		root = filepath.Join(root, "refused")
-		if createDirectoryError := os.Mkdir(root, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(root, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		path := filepath.Join(root, "accepted.a")
-		if writeError := os.WriteFile(path, []byte("console.log(\"accepted\");\n"), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte("console.log(\"accepted\");\n"), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		if reviewRefusalError := reviewRefusal(
@@ -417,7 +417,7 @@ func TestReviewProgramsSelfTest(test *testing.T) {
 			if writeError := os.WriteFile(
 				filepath.Join(root, name),
 				[]byte("console.log(\"accepted\");\n"),
-				0644,
+				0o644,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
@@ -428,14 +428,14 @@ func TestReviewProgramsSelfTest(test *testing.T) {
 	})
 	test.Run("one_name_twice", func(test *testing.T) {
 		root := test.TempDir()
-		if createDirectoryError := os.Mkdir(filepath.Join(root, "agree"), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(filepath.Join(root, "agree"), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		for _, name := range []string{"twin.a", "twin.ts"} {
 			if writeError := os.WriteFile(
 				filepath.Join(root, "agree", name),
 				[]byte("console.log(\"accepted\");\n"),
-				0644,
+				0o644,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}

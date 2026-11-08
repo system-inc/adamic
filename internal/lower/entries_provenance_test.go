@@ -126,7 +126,7 @@ func TestEntriesRecordMemoAnswersAsAFreshLowering(test *testing.T) {
 		},
 	} {
 		path := filepath.Join(test.TempDir(), "main.a")
-		if writeError := os.WriteFile(path, []byte(probe.source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(probe.source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		program, loadError := load.Load([]string{path})

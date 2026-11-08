@@ -26,7 +26,7 @@ func hostBuild(test *testing.T, source, output, directory string, options native
 		test.Fatal(runtimeLibraryError)
 	}
 	main := filepath.Join(test.TempDir(), "main.c")
-	if writeError := os.WriteFile(main, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(main, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	commandArguments := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, main)
@@ -91,7 +91,7 @@ func hostMutant(test *testing.T, file, before, after string) string {
 			}
 			data = []byte(strings.Replace(string(data), before, after, 1))
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -111,7 +111,7 @@ func hostFixture(test *testing.T) (source, dir, oracle string, env []string) {
 	}
 	dir = test.TempDir()
 	oracle = filepath.Join(dir, "oracle.mjs")
-	if writeError := os.WriteFile(oracle, oracleData, 0600); writeError != nil {
+	if writeError := os.WriteFile(oracle, oracleData, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	// Actual default-library entry, alongside both executable and Node bundle.
@@ -119,18 +119,18 @@ func hostFixture(test *testing.T) (source, dir, oracle string, env []string) {
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	if writeError := os.WriteFile(filepath.Join(dir, "lib.d.ts"), lib, 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(dir, "lib.d.ts"), lib, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	child := filepath.Join(dir, "child")
-	if createDirectoryError := os.Mkdir(child, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(child, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	cwd, workingDirectoryError := os.Getwd()
 	if workingDirectoryError != nil {
 		test.Fatal(workingDirectoryError)
 	}
-	if writeError := os.WriteFile(filepath.Join(child, "file"), []byte("data"), 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(child, "file"), []byte("data"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	for name, target := range map[string]string{

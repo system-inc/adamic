@@ -273,11 +273,11 @@ func compilerAgreementLowered(test *testing.T) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "lint.c"),
 			[]byte(native.C(lowered)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(directory, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+		return os.WriteFile(filepath.Join(directory, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0o644)
 	})
 }
 

@@ -191,14 +191,14 @@ var recoveryDiscovered struct {
 // survive Product's byte-for-byte audit on another machine.
 func recoveryStableNative(repo, directory, source string) error {
 	work := filepath.Join(directory, "compile")
-	if createDirectoryError := os.MkdirAll(filepath.Join(work, "runtime"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Join(work, "runtime"), 0o755); createDirectoryError != nil {
 		return createDirectoryError
 	}
 	defer os.RemoveAll(work)
 	if writeError := os.WriteFile(
 		filepath.Join(work, "port.c"),
 		[]byte("#line 1 \"/adamic-estree/port.c\"\n"+source),
-		0644,
+		0o644,
 	); writeError != nil {
 		return writeError
 	}
@@ -237,7 +237,7 @@ func recoveryStableNative(repo, directory, source string) error {
 		if readError != nil {
 			return readError
 		}
-		if writeError := os.WriteFile(filepath.Join(work, "runtime", name), content, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(work, "runtime", name), content, 0o644); writeError != nil {
 			return writeError
 		}
 		if strings.HasSuffix(name, ".c") {

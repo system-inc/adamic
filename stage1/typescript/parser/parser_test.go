@@ -73,7 +73,7 @@ func copyPort(test *testing.T, file, from, to string) string {
 			}
 			source = strings.Replace(source, from, to, 1)
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -170,7 +170,7 @@ func compilerManifest(test *testing.T) (string, int) {
 		test.Fatal(walkError)
 	}
 	path := filepath.Join(test.TempDir(), "compiler.txt")
-	if writeError := os.WriteFile(path, []byte(manifest.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(manifest.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path, files

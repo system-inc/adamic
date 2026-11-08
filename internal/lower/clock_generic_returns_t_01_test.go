@@ -87,7 +87,7 @@ func TestClockGenericReturnsT01RejectsNullBeforeBody(test *testing.T) {
 	source := `interface Base<T> { readonly token: T; }
 function make(): (Base<"="> & { readonly left: { readonly text: string } }) | undefined | null { return null; }
 console.log(typeof make());`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})
@@ -126,7 +126,7 @@ func TestClockGenericReturnsT01RejectsIndexBeforeBody(test *testing.T) {
 	source := `interface Base<T> { readonly token: T; }
 function make(): (Base<"="> & { readonly [key: string]: unknown; readonly left: { readonly text: string } }) | undefined { return undefined; }
 console.log(typeof make());`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

@@ -68,7 +68,7 @@ func estreeInterfaceControlPath(test *testing.T) string {
 			"const parser = new ParserLike();\nconsole.log(parse({type: (minimum: number, conditional: boolean) => parser.typeValue(minimum, conditional)}).toString());",
 			1,
 		)
-		return os.WriteFile(filepath.Join(directory, "control.ts"), []byte(control), 0644)
+		return os.WriteFile(filepath.Join(directory, "control.ts"), []byte(control), 0o644)
 	})
 	return filepath.Join(directory, "control.ts")
 }

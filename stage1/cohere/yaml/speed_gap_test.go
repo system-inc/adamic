@@ -11,7 +11,7 @@ import (
 func TestSpeedCostProbes(test *testing.T) {
 	test.Parallel()
 	input := filepath.Join(test.TempDir(), "units.txt")
-	if writeError := os.WriteFile(input, []byte(strings.Repeat("abc中😀", 4000)), 0644); writeError != nil {
+	if writeError := os.WriteFile(input, []byte(strings.Repeat("abc中😀", 4000)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	root, absolutePathError := filepath.Abs(repository)

@@ -33,7 +33,7 @@ func writeNegativeList(test *testing.T, path string, list negativeWitnessList) {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 }
@@ -131,7 +131,7 @@ func negativeCommand(test *testing.T, corrected, alreadyAccepted bool) (observat
 		"corpus/input.a":  string(source),
 		"oracle/node.mjs": "import {readFileSync} from 'node:fs';const s=readFileSync(process.argv[2],'utf8');console.log('42');if(s.includes('STOP')){console.error('adamic: panic: unset');process.exit(70);}\n",
 	} {
-		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(data), 0o755); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -458,7 +458,7 @@ func checkedBoundaryCommand(test *testing.T, repairAgrees bool, name string) (ob
 		"corpus/" + name:  string(source),
 		"oracle/node.mjs": "import {readFileSync} from 'node:fs';const s=readFileSync(process.argv[2],'utf8');console.log('42');if(s.includes('STOP')){console.error('adamic: panic: field read failed: viewed.count is not a number; expected number, found string');process.exit(70);}\n",
 	} {
-		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(data), 0o755); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

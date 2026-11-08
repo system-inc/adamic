@@ -91,7 +91,7 @@ func TestCorpusPinBeforeSampling(test *testing.T) {
 	test.Setenv("ADAMIC_GATE_SAMPLE", "00000008"+strings.Repeat("0", 32))
 	changed := test.TempDir() + "/changed.txt"
 	named := "stage3/api/node_modules/typescript/package.json"
-	if writeError := os.WriteFile(changed, []byte(named+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(changed, []byte(named+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_GATE_CHANGED", changed)

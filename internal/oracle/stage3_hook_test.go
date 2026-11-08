@@ -29,7 +29,7 @@ func TestStage3FixtureHook(test *testing.T) {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(os.Getenv("ADAMIC_STAGE3_RESULT"), data, 0600); writeError != nil {
+	if writeError := os.WriteFile(os.Getenv("ADAMIC_STAGE3_RESULT"), data, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 }

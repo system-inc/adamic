@@ -425,7 +425,7 @@ func programRegionCensusProduct(test *testing.T, indexed bool) string {
 			"internal/oracle/testdata/program_region/parse_manifest.json",
 		},
 	}, func(directory string) error {
-		return os.WriteFile(path.Join(directory, "membership.csv"), programRegionCensus(test, indexed), 0600)
+		return os.WriteFile(path.Join(directory, "membership.csv"), programRegionCensus(test, indexed), 0o600)
 	})
 }
 func TestProduct_ProgramRegionCensusIndexed(test *testing.T) {

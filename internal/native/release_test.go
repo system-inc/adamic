@@ -57,7 +57,7 @@ func TestReleaseSharedValueAndUnsafeMutant(test *testing.T) {
 				}
 				data = []byte(strings.Replace(string(data), old, changed, 1))
 			}
-			if writeError := os.WriteFile(filepath.Join(directory, file.name), data, 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(directory, file.name), data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
@@ -66,7 +66,7 @@ func TestReleaseSharedValueAndUnsafeMutant(test *testing.T) {
 			test.Fatal(runtimeLibraryError)
 		}
 		main := filepath.Join(directory, "main.c")
-		if writeError := os.WriteFile(main, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(main, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		binary := filepath.Join(directory, "program")
@@ -110,7 +110,11 @@ func TestOwnershipInlining(test *testing.T) {
 	}
 	for _, file := range files {
 		if strings.HasSuffix(file.name, ".h") {
-			if writeError := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0600); writeError != nil {
+			if writeError := os.WriteFile(
+				filepath.Join(directory, file.name),
+				file.contents,
+				0o600,
+			); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
@@ -119,7 +123,7 @@ func TestOwnershipInlining(test *testing.T) {
 	if writeError := os.WriteFile(source, []byte(`#include "adamic.h"
 void *hold(void *value) { return adamic_retain(value); }
 void drop(void *value) { adamic_release(value); }
-`), 0600); writeError != nil {
+`), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	for _, options := range []Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}, {ThreadSanitize: true}} {
@@ -149,7 +153,7 @@ void drop(void *value) { adamic_release(value); }
 	if writeError := os.WriteFile(
 		quiet,
 		[]byte("#include \"adamic.h\"\nint quiet(void) { return 0; }\n"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

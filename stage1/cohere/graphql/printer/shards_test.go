@@ -267,10 +267,10 @@ func printerLoweredProduct(test *testing.T, path string) string {
 		start = time.Now()
 		source := native.C(program)
 		test.Logf("C emission wall %.3fs", time.Since(start).Seconds())
-		if writeError := os.WriteFile(dir+"/port.c", []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(dir+"/port.c", []byte(source), 0o644); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
+		return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0o644)
 	})
 }
 

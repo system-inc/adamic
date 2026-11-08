@@ -174,7 +174,7 @@ func buildWithNativeExports(
 	if abiPath != "" {
 		bytes, err := json.MarshalIndent(native.AbiTable{Version: 1, Exports: exports}, "", "  ")
 		if err == nil {
-			err = os.WriteFile(abiPath, append(bytes, '\n'), 0644)
+			err = os.WriteFile(abiPath, append(bytes, '\n'), 0o644)
 		}
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "adamic: ABI JSON: %v\n", err)

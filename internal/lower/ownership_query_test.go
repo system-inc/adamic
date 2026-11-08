@@ -449,7 +449,7 @@ func ownershipObjectsAgreementProduct(test *testing.T) string {
 		return os.WriteFile(
 			filepath.Join(directory, "agreement"),
 			[]byte("admission and extracted query agree\n"),
-			0600,
+			0o600,
 		)
 	})
 }
@@ -470,7 +470,7 @@ func TestOwnershipQueryDemandDoesNotCrossSites(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "sites.a")
 	source := "import { parallelMap } from 'adamic'; const objects = [{value: 1}]; const numbers = [1]; parallelMap(objects, item => item); parallelMap(numbers, item => item);"
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError := load.Load([]string{path})

@@ -36,10 +36,10 @@ func runGit(test *testing.T, directory string, commandArguments ...string) strin
 
 func writeFile(test *testing.T, name, text string) {
 	test.Helper()
-	if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if writeError := os.WriteFile(name, []byte(text), 0644); writeError != nil {
+	if writeError := os.WriteFile(name, []byte(text), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 }
@@ -144,7 +144,7 @@ func TestSparseCheckoutCannotShrinkCorpus(test *testing.T) {
 	// Keep its named directory present, so the per-file check is what catches it.
 	if createDirectoryError := os.MkdirAll(
 		filepath.Join(directory, "tests/format/css"),
-		0755,
+		0o755,
 	); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
@@ -246,11 +246,11 @@ func TestManifestPackageContracts(test *testing.T) {
 			requireFailure(test, directory, "", testCase.root, pattern, "worktree", filepath.ToSlash(tracked))
 			requireFailure(test, directory, pin, testCase.root, pattern, "dirty", filepath.ToSlash(tracked))
 			writeFile(test, filepath.Join(directory, tracked), "original\n")
-			if changeModeError := os.Chmod(filepath.Join(directory, tracked), 0755); changeModeError != nil {
+			if changeModeError := os.Chmod(filepath.Join(directory, tracked), 0o755); changeModeError != nil {
 				test.Fatal(changeModeError)
 			}
 			requireFailure(test, directory, "", testCase.root, pattern, "worktree", filepath.ToSlash(tracked))
-			if changeModeError := os.Chmod(filepath.Join(directory, tracked), 0644); changeModeError != nil {
+			if changeModeError := os.Chmod(filepath.Join(directory, tracked), 0o644); changeModeError != nil {
 				test.Fatal(changeModeError)
 			}
 			requireFailure(test, directory, strings.Repeat("0", 40), testCase.root, pattern, "HEAD", "pin")

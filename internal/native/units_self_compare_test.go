@@ -31,7 +31,7 @@ func TestSplitSelfCompareAgreesWithNode(test *testing.T) {
 		))...)
 	}
 	path := filepath.Join(test.TempDir(), "sweep.a")
-	if writeError := os.WriteFile(path, fixture, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, fixture, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	// Node executes the source fixture with its TypeScript syntax stripped.

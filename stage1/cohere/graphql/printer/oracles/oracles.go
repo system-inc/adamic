@@ -48,7 +48,7 @@ func Printer(test *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it keys and builds the product and is never part of it (#tqrqx60).
 		path := filepath.Join(test.TempDir(), "overlay.json")
-		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		// Each corpus keys the owner-suffixed binary by its name and bytes.
@@ -164,7 +164,7 @@ func printerCorpusProduct(test *testing.T, mode string) (string, string) {
 			return encodeError
 		}
 		path := filepath.Join(test.TempDir(), "request.json")
-		if writeError := os.WriteFile(path, request, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, request, 0o644); writeError != nil {
 			return writeError
 		}
 		command := toolchain.CommandContextIn(
@@ -208,7 +208,7 @@ func printerCorpusProduct(test *testing.T, mode string) (string, string) {
 			if readError != nil {
 				test.Fatal(readError)
 			}
-			if writeError := os.WriteFile(filepath.Join(keep, name), data, 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(keep, name), data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}

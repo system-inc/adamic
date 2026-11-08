@@ -18,13 +18,13 @@ func TestTsPrinterCachedMetadataRelocation(test *testing.T) {
 		Want:   "typescript/keep.ts",
 	}
 	data, _ := json.Marshal([]oracles.PrinterCase{original})
-	if writeError := os.WriteFile(product+"/cases.json", data, 0644); writeError != nil {
+	if writeError := os.WriteFile(product+"/cases.json", data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	report, _ := json.Marshal(
 		map[string]any{"file_refusals": map[string]string{first + "/case.ts": first + "/case.ts: refused"}, "cases": 1},
 	)
-	if writeError := os.WriteFile(product+"/coverage.json", report, 0644); writeError != nil {
+	if writeError := os.WriteFile(product+"/coverage.json", report, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if tsPrinterRewriteMetadataError := oracles.TSPrinterRewriteMetadata(
@@ -44,7 +44,7 @@ func TestTsPrinterCachedMetadataRelocation(test *testing.T) {
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if writeError := os.WriteFile(copy+"/"+name, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(copy+"/"+name, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

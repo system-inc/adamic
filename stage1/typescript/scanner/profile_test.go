@@ -21,7 +21,7 @@ func TestProfileArtifacts(test *testing.T) {
 	if directory == "" {
 		test.Skip("set ADAMIC_SCANNER_PROFILE_DIR to a scratch directory")
 	}
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	for _, name := range portFiles {
@@ -29,7 +29,7 @@ func TestProfileArtifacts(test *testing.T) {
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -41,7 +41,7 @@ func TestProfileArtifacts(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(directory, "compiler.txt"),
 		[]byte(manifest.String()),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -49,7 +49,7 @@ func TestProfileArtifacts(test *testing.T) {
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	if writeError := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0755); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0o755); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
@@ -61,7 +61,7 @@ func TestProfileArtifacts(test *testing.T) {
 		test.Fatal(lowerError)
 	}
 	source := native.C(lowered)
-	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if buildError := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); buildError != nil {
@@ -83,7 +83,7 @@ func TestProfileArtifacts(test *testing.T) {
 			test.Fatal(readError)
 		}
 		path := filepath.Join(directory, name)
-		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		if strings.HasSuffix(name, ".c") {

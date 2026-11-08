@@ -15,7 +15,7 @@ import (
 func requestSource(test *testing.T, source string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.a")
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path
@@ -184,7 +184,7 @@ func TestWasiRequestModuleSelection(test *testing.T) {
 	if writeError := os.WriteFile(
 		dependency,
 		[]byte("export function handleRequest(request: string): string { return request; }"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -199,7 +199,7 @@ func TestWasiRequestModuleSelection(test *testing.T) {
 			true,
 		},
 	} {
-		if writeError := os.WriteFile(path, []byte(testCase.source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(testCase.source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		program, handler, code := compileWasi(path)

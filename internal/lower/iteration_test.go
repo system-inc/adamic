@@ -172,7 +172,7 @@ func TestRepresentedMethodReplacementIsNotYet(test *testing.T) {
 	if writeError := os.WriteFile(
 		path,
 		[]byte("class Box{next():number{return 1;}}const value=new Box();value.next=():number=>2;"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

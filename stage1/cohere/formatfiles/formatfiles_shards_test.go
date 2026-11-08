@@ -184,7 +184,7 @@ func formatfilesPartition(test *testing.T, path, answers string) []formatfilesPa
 func formatfilesCaseFile(test *testing.T, part formatfilesPart) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(part.cases), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(part.cases), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path
@@ -284,7 +284,7 @@ func TestFormatfilesShardPlantedDisagreement(test *testing.T) {
 		fmt.Fprintf(&cases, "tree\t%s\t/fixture\nhouse\t0\n", key)
 		fmt.Fprintf(&answers, "tree %s\nsame\n", key)
 	}
-	if writeError := os.WriteFile(path, []byte(cases.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(cases.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	parts := formatfilesPartition(test, path, answers.String())

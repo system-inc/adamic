@@ -235,16 +235,16 @@ func TestNodeFileSystemDirectoryPermissions(test *testing.T) {
 	}
 	shared := sharedDirectory(test)
 	blocked := filepath.Join(shared, "blocked")
-	if createDirectoryError := os.Mkdir(blocked, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(blocked, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if writeError := os.WriteFile(filepath.Join(blocked, "child"), nil, 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(blocked, "child"), nil, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if changeModeError := os.Chmod(blocked, 0000); changeModeError != nil {
+	if changeModeError := os.Chmod(blocked, 0o000); changeModeError != nil {
 		test.Fatal(changeModeError)
 	}
-	test.Cleanup(func() { os.Chmod(blocked, 0700) })
+	test.Cleanup(func() { os.Chmod(blocked, 0o700) })
 	how := inputRun{directory: filepath.Dir(path), arguments: []string{blocked}}
 	if os.Geteuid() == 0 {
 		how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}

@@ -199,7 +199,7 @@ func jsxMutantsPlantedProof(test *testing.T, shard int, prepared jsxMutantsPrepa
 		test.Fatal(encodeError)
 	}
 	descriptor := filepath.Join(test.TempDir(), "prepared.json")
-	if writeError := os.WriteFile(descriptor, encoded, 0644); writeError != nil {
+	if writeError := os.WriteFile(descriptor, encoded, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)

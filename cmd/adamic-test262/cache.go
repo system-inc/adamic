@@ -100,7 +100,7 @@ func (cache *resultCache) reuse(key string, execute func() (execution, bool)) ex
 		return result
 	}
 	contents, encodeError := json.Marshal(cacheEnvelope{key, cacheKey(string(encoded)), encoded})
-	if encodeError != nil || os.MkdirAll(cache.directory, 0700) != nil {
+	if encodeError != nil || os.MkdirAll(cache.directory, 0o700) != nil {
 		return result
 	}
 	temporary, temporaryFileError := os.CreateTemp(cache.directory, ".result-")

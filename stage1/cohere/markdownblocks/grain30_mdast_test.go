@@ -97,7 +97,7 @@ func runGrainMdast(test *testing.T, shard int) {
 	clean(test, "actual Go mdast", want)
 	if keep := os.Getenv("ADAMIC_MDAST_KEEP"); keep != "" {
 		keep = filepath.Join(keep, test.Name())
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		data, readError := os.ReadFile(transport)
@@ -181,7 +181,10 @@ func runGrainMdast(test *testing.T, shard int) {
 		}
 		func(test *testing.T) {
 			scratch := test.TempDir()
-			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(scratch, "testdata"),
+				0o755,
+			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			for _, file := range []string{

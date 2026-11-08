@@ -89,7 +89,7 @@ func TestRecordCensusComparisonBuckets(test *testing.T) {
 			// Stock Node executes the unchanged TypeScript source. Adamic's own
 			// console declaration accepts strings only, unlike stock tsc's.
 			stock := filepath.Join(test.TempDir(), "bucket.ts")
-			if writeError := os.WriteFile(stock, contents, 0644); writeError != nil {
+			if writeError := os.WriteFile(stock, contents, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			node, lookPathError := exec.LookPath("node")
@@ -119,7 +119,7 @@ func TestRecordCensusComparisonBuckets(test *testing.T) {
 				"console.log(String(compareDataObjects(dst, own)));",
 			)
 			checked := filepath.Join(test.TempDir(), "bucket.a")
-			if writeError := os.WriteFile(checked, []byte(adapted), 0644); writeError != nil {
+			if writeError := os.WriteFile(checked, []byte(adapted), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			program, loadError := load.Load([]string{checked})
@@ -141,7 +141,7 @@ func TestRecordHostEnvironmentObservation(test *testing.T) {
 	if writeError := os.WriteFile(
 		file,
 		[]byte(`console.log(Object.hasOwn(process.env, 'toString')); console.log(typeof process.env['toString']);`),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

@@ -61,7 +61,7 @@ func cycleEqualityProduct(test *testing.T, path string) string {
 		Toolchain: []string{runtime.Version()},
 	}, func(directory string) error {
 		cycleCompareProgramModes(test, path, modes...)
-		return os.WriteFile(filepath.Join(directory, "outcome"), []byte(expected), 0600)
+		return os.WriteFile(filepath.Join(directory, "outcome"), []byte(expected), 0o600)
 	})
 	data, readError := os.ReadFile(filepath.Join(directory, "outcome"))
 	if readError != nil || string(data) != expected {

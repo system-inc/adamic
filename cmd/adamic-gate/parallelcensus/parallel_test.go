@@ -60,14 +60,14 @@ func TestEveryTestIsParallelOrSaysWhy(test *testing.T) {
 	test.Logf("checked %d top-level tests; %d fail the parallel rule", tests, len(keys))
 	baselinePath := filepath.Join(root, "cmd", "adamic-gate", "parallelcensus", "testdata", "serial-baseline.txt")
 	if *updateSerialBaseline {
-		if createDirectoryError := os.MkdirAll(filepath.Dir(baselinePath), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(baselinePath), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		content := strings.Join(keys, "\n")
 		if len(keys) > 0 {
 			content += "\n"
 		}
-		if writeError := os.WriteFile(baselinePath, []byte(content), 0644); writeError != nil {
+		if writeError := os.WriteFile(baselinePath, []byte(content), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		test.Logf("wrote %d serial baseline entries", len(keys))

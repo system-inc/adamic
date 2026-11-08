@@ -165,10 +165,10 @@ type repositoryFixture struct {
 func fixtureWrite(test *testing.T, root, path, text string) {
 	test.Helper()
 	absolute := filepath.Join(root, filepath.FromSlash(path))
-	if createDirectoryError := os.MkdirAll(filepath.Dir(absolute), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Dir(absolute), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if writeError := os.WriteFile(absolute, []byte(text), 0644); writeError != nil {
+	if writeError := os.WriteFile(absolute, []byte(text), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 }

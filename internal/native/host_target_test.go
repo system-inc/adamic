@@ -14,7 +14,7 @@ func TestWasiHostTargetRefusals(test *testing.T) {
 	// Isolate it from the SDK version probe, tested separately and by the real WASI gate.
 	sdk := test.TempDir()
 	sysroot := filepath.Join(sdk, "share", "wasi-sysroot")
-	if createDirectoryError := os.MkdirAll(sysroot, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(sysroot, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	test.Setenv("WASI_SYSROOT", sysroot)

@@ -35,7 +35,7 @@ func mutatedPort(test *testing.T, change oracles.Mutation) string {
 			applied = true
 		}
 		source = strings.ReplaceAll(source, "../../typescript/parser/", parser+"/")
-		if writeError := os.WriteFile(filepath.Join(directory, file), []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, file), []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

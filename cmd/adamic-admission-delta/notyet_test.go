@@ -29,7 +29,7 @@ func writeRuntimeNotYetList(test *testing.T, path string, list runtimeNotYetStop
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 }
@@ -356,7 +356,7 @@ func runtimeNotYetCommand(
 			string(message) +
 			");process.exit(70);}console.log('number');\n",
 	} {
-		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(data), 0o755); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

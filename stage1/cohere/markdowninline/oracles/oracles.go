@@ -41,7 +41,7 @@ func Printer(test *testing.T) string {
 		test.Fatal(encodeError)
 	}
 	overlayPath := filepath.Join(test.TempDir(), "overlay.json")
-	if writeError := os.WriteFile(overlayPath, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(overlayPath, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	const output = "go-printer-oracle-owner-v1"

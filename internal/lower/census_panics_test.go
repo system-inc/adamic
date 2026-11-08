@@ -20,11 +20,11 @@ func TestCensusQualifiedCast(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(filepath.Dir(path), "types.a"),
 		[]byte(censusPanicSource(test, "types.a")),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

@@ -52,7 +52,7 @@ func TestCompilerGuardBackend(test *testing.T) {
 func TestChildCpuHangGuard(test *testing.T) {
 	test.Parallel()
 	loop := filepath.Join(test.TempDir(), "planted-endless-loop.js")
-	if writeError := os.WriteFile(loop, []byte("for (;;) {}"), 0644); writeError != nil {
+	if writeError := os.WriteFile(loop, []byte("for (;;) {}"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	command := toolchain.Command("node", loop)

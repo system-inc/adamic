@@ -137,11 +137,15 @@ func whitespaceLayoutPrepare(test *testing.T) {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "layout.mjs"),
 			products.backend,
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, "policy.mjs"), policy.backend, 0644); writeError != nil {
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "policy.mjs"),
+			policy.backend,
+			0o644,
+		); writeError != nil {
 			return writeError
 		}
 		// Each is another product, named by its key so a runner finds it in its own cache (#tqrqx60).
@@ -159,7 +163,7 @@ func whitespaceLayoutPrepare(test *testing.T) {
 		if encodeError != nil {
 			return encodeError
 		}
-		return os.WriteFile(filepath.Join(directory, "products.json"), data, 0644)
+		return os.WriteFile(filepath.Join(directory, "products.json"), data, 0o644)
 	})
 	whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared = whitespaceLayoutReadProducts(test, directory)
 }
@@ -338,11 +342,11 @@ func whitespaceLayoutBuildProduct(
 		if writeError := os.WriteFile(
 			filepath.Join(dir, "program.c"),
 			[]byte(native.C(program)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 	})
 	source, readError := os.ReadFile(filepath.Join(loweredDirectory, "program.c"))
 	if readError != nil {
@@ -383,10 +387,10 @@ func whitespaceLayoutMutant(
 	main, nativeCases, inputs := fixture.main, fixture.nativeCases, fixture.inputs
 	want := run{stdout: fixture.want}
 	scratch := test.TempDir()
-	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	for _, name := range []string{"inline.ts", "classes.ts"} {
@@ -474,7 +478,7 @@ func whitespaceLayoutFixture(
 		test.Fatal(absolutePathError)
 	}
 	dir := test.TempDir()
-	if createDirectoryError := os.MkdirAll(dir, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(dir, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	var batch bytes.Buffer
@@ -565,7 +569,7 @@ func whitespaceLayoutFixture(
 		write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
@@ -786,7 +790,7 @@ func whitespaceLayoutPolicyMutant(
 	test.Helper()
 	want, _ := whitespaceLayoutPolicyWant(test, cases)
 	scratch := test.TempDir()
-	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	for _, file := range []string{
@@ -1392,7 +1396,7 @@ type whitespaceLayoutBuildRequest struct {
 
 func whitespaceLayoutNativeBuild(callerContext context.Context, source, output string, options native.Options) error {
 	sourcePath := output + ".c"
-	if writeError := os.WriteFile(sourcePath, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(sourcePath, []byte(source), 0o644); writeError != nil {
 		return writeError
 	}
 	defer os.Remove(sourcePath)

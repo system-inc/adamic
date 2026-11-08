@@ -40,7 +40,7 @@ console.log(describe({}));
 func TestRecordMemberHeapReadsMatchNode(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(path, []byte(recordMemberHeapSource), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(recordMemberHeapSource), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	truth, outputError := exec.Command(
@@ -66,7 +66,7 @@ func TestRecordMemberHeapReadsMatchNode(test *testing.T) {
 		test.Fatalf("checked arms %v, want a fixed object's and a dictionary's", arms)
 	}
 	js := filepath.Join(test.TempDir(), "main.mjs")
-	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if got, outputError := exec.Command(
@@ -154,7 +154,7 @@ console.log(read ? "present" : "absent");
 func recordMemberHeapC(test *testing.T, source string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "main.ts")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return native.C(recordMemberHeapLowered(test, path))

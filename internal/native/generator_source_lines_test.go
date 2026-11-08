@@ -38,7 +38,7 @@ for(const step of steps(2)) {
 func TestDebugGeneratorSourceLines(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "fixture.a")
-	if writeError := os.WriteFile(path, []byte(debugGeneratorFixture), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(debugGeneratorFixture), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, debugProgramError := debugProgram(test, path, true)

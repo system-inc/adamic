@@ -65,7 +65,7 @@ func newCache() (*cache, error) {
 	if absolutePathError != nil {
 		return nil, absolutePathError
 	}
-	if createDirectoryError := os.MkdirAll(dir, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(dir, 0o700); createDirectoryError != nil {
 		return nil, createDirectoryError
 	}
 	cache := &cache{
@@ -111,7 +111,7 @@ func validHash(text string) bool {
 }
 
 func atomicFile(path string, b []byte) error {
-	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o700); createDirectoryError != nil {
 		return createDirectoryError
 	}
 	file, temporaryFileError := os.CreateTemp(filepath.Dir(path), ".tmp-")

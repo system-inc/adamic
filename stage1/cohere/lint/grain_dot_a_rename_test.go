@@ -153,13 +153,17 @@ func dotARenameLowered(test *testing.T, renamed bool) string {
 		}
 		test.Logf("%s lower: %.3fs", name, time.Since(phase).Seconds())
 		phase = time.Now()
-		if writeError := os.WriteFile(filepath.Join(dir, "lint.c"), []byte(native.C(result)), 0644); writeError != nil {
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "lint.c"),
+			[]byte(native.C(result)),
+			0o644,
+		); writeError != nil {
 			return writeError
 		}
 		test.Logf("%s native emit: %.3fs", name, time.Since(phase).Seconds())
 		phase = time.Now()
 		defer func() { test.Logf("%s JavaScript emit: %.3fs", name, time.Since(phase).Seconds()) }()
-		return os.WriteFile(filepath.Join(dir, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644)
+		return os.WriteFile(filepath.Join(dir, "lint.mjs"), []byte(javascript.JavaScript(result)), 0o644)
 	})
 }
 
@@ -488,7 +492,7 @@ func dotARenamePlant(test *testing.T, key string, renameProducts dotARenameProdu
 	if writeError := os.WriteFile(
 		planted,
 		append(data, []byte(fmt.Sprintf("\nconsole.log(%q);\n", marker))...),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -502,7 +506,7 @@ func dotARenamePlant(test *testing.T, key string, renameProducts dotARenameProdu
 		test.Fatal(encodeError)
 	}
 	products := filepath.Join(test.TempDir(), "products.json")
-	if writeError := os.WriteFile(products, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(products, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	caught := 0

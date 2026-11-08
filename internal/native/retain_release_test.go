@@ -169,7 +169,7 @@ func retainReleaseProduct(test *testing.T, tsan bool) string {
 				if writeError := os.WriteFile(
 					filepath.Join(scratch, file.name),
 					file.contents,
-					0644,
+					0o644,
 				); writeError != nil {
 					return writeError
 				}
@@ -182,7 +182,7 @@ func retainReleaseProduct(test *testing.T, tsan bool) string {
 		if writeError := os.WriteFile(
 			filepath.Join(scratch, "main.c"),
 			[]byte(retainReleaseSource),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
@@ -235,7 +235,7 @@ func retainReleaseProduct(test *testing.T, tsan bool) string {
 			if writeError := os.WriteFile(
 				filepath.Join(scratch, "adamic.h"),
 				[]byte(changed),
-				0644,
+				0o644,
 			); writeError != nil {
 				return writeError
 			}

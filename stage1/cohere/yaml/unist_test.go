@@ -55,8 +55,8 @@ func unistMatchesGoShard(test *testing.T, shard int) {
 		out  []byte
 	}{{"native ASan/UBSan/LSan", result.native}, {"Node", result.node}, {"emitted JavaScript", result.emitted}} {
 		if !bytes.Equal(side.out, expected) {
-			os.WriteFile(unistMatchGo.diagnostic(shard, "expected"), expected, 0644)
-			os.WriteFile(unistMatchGo.diagnostic(shard, "actual"), side.out, 0644)
+			os.WriteFile(unistMatchGo.diagnostic(shard, "expected"), expected, 0o644)
+			os.WriteFile(unistMatchGo.diagnostic(shard, "actual"), side.out, 0o644)
 			test.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
 		}
 	}

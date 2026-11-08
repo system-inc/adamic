@@ -215,7 +215,7 @@ func TestNodeHostConsumesArgument(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			file := filepath.Join(test.TempDir(), "main.a")
-			if writeError := os.WriteFile(file, []byte(probe.source), 0600); writeError != nil {
+			if writeError := os.WriteFile(file, []byte(probe.source), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			program, loadError := load.Load([]string{file})
@@ -342,7 +342,7 @@ func TestNodeHostOptionsReferencesAcrossFiles(test *testing.T) {
 			"import {status} from './options.a'; status('.');",
 			other,
 		} {
-			if writeError := os.WriteFile(files[index], []byte(source), 0600); writeError != nil {
+			if writeError := os.WriteFile(files[index], []byte(source), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}

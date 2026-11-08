@@ -116,7 +116,7 @@ func assertParserFactoryCompletion(test *testing.T, body string, proven, unknown
 	source := `interface Target {kind:number;pos:number;end:number;text:string;} function expose(value:Target):void{} function factory(flag:boolean):Target {` +
 		body +
 		`}`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})
@@ -148,7 +148,7 @@ func TestParserFactoryReadBeforeCompletion(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "read.a")
 	source := `interface Target {text:string;} function factory():Target {const node={} as Target; const earlier=node.text; node.text='ready'; return node;}`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

@@ -92,7 +92,7 @@ func helperMutantProduct(test *testing.T, index int) string {
 			Toolchain: tools,
 		}, func(directory string) error {
 			source := filepath.Join(directory, "source")
-			if createDirectoryError := os.Mkdir(source, 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(source, 0o755); createDirectoryError != nil {
 				return createDirectoryError
 			}
 			for _, file := range []string{
@@ -112,7 +112,7 @@ func helperMutantProduct(test *testing.T, index int) string {
 					}
 					data = []byte(strings.Replace(string(data), helperMutation.old, helperMutation.replacement, 1))
 				}
-				if writeError := os.WriteFile(filepath.Join(source, file), data, 0644); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(source, file), data, 0o644); writeError != nil {
 					return writeError
 				}
 			}
@@ -124,7 +124,7 @@ func helperMutantProduct(test *testing.T, index int) string {
 			if readError != nil {
 				return readError
 			}
-			return os.WriteFile(filepath.Join(directory, "binary"), data, 0755)
+			return os.WriteFile(filepath.Join(directory, "binary"), data, 0o755)
 		})
 		product.binary = filepath.Join(directory, "binary")
 	})

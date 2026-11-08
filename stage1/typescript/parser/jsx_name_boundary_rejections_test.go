@@ -48,7 +48,7 @@ func TestJsxNameBoundaryRejections(test *testing.T) {
 	for _, item := range cases {
 		path := filepath.Join(test.TempDir(), "name.tsx")
 		paths[item.name] = path
-		if writeError := os.WriteFile(path, []byte(item.source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(item.source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		code, diagnostics := jsxFailure(test, oracle, path, "--whole")

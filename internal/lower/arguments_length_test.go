@@ -59,7 +59,7 @@ func TestArgumentsLengthRefusalFixtures(test *testing.T) {
 			}
 			for _, extension := range []string{".a", ".ts"} {
 				path := filepath.Join(test.TempDir(), "main"+extension)
-				if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+				if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
 					test.Fatal(writeError)
 				}
 				checked, loadError := load.Load([]string{path})

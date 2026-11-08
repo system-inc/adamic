@@ -21,7 +21,7 @@ func TestCSSProfileArtifacts(test *testing.T) {
 	if directory == "" {
 		test.Skip("set ADAMIC_CSS_PROFILE_DIR")
 	}
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	cases, _ := askedCases(test)
@@ -83,13 +83,13 @@ func TestCSSProfileArtifacts(test *testing.T) {
 			fmt.Sprintf("%d of %d stylesheets formatted, %d units\n", len(sample), len(sample), totalUnits),
 		),
 	} {
-		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
 	copied := portDirectory(test, nil)
 	snapshot := filepath.Join(directory, "source")
-	if createDirectoryError := os.MkdirAll(snapshot, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(snapshot, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	parent := filepath.Dir(copied)
@@ -98,7 +98,7 @@ func TestCSSProfileArtifacts(test *testing.T) {
 		if readDirectoryError != nil {
 			test.Fatal(readDirectoryError)
 		}
-		if createDirectoryError := os.MkdirAll(filepath.Join(snapshot, slice), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Join(snapshot, slice), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		for _, entry := range entries {
@@ -106,7 +106,11 @@ func TestCSSProfileArtifacts(test *testing.T) {
 			if readError != nil {
 				test.Fatal(readError)
 			}
-			if writeError := os.WriteFile(filepath.Join(snapshot, slice, entry.Name()), data, 0644); writeError != nil {
+			if writeError := os.WriteFile(
+				filepath.Join(snapshot, slice, entry.Name()),
+				data,
+				0o644,
+			); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
@@ -114,7 +118,7 @@ func TestCSSProfileArtifacts(test *testing.T) {
 	program := lowered(test, filepath.Join(snapshot, "css/print_main.ts"))
 	code := native.C(program)
 	source := filepath.Join(directory, "main.c")
-	if writeError := os.WriteFile(source, []byte(code), 0644); writeError != nil {
+	if writeError := os.WriteFile(source, []byte(code), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	for _, build := range []struct {
@@ -147,7 +151,7 @@ func TestCSSProfileArtifacts(test *testing.T) {
 	request, _ := json.Marshal(
 		map[string]any{"Cases": filepath.Join(directory, "shared.txt"), "Repeat": "once", "Rounds": 1},
 	)
-	if writeError := os.WriteFile(filepath.Join(directory, "go-request.json"), request, 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "go-request.json"), request, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	side, _ := filepath.Abs("testdata/print_side_test.go")
@@ -155,7 +159,7 @@ func TestCSSProfileArtifacts(test *testing.T) {
 		"Replace": map[string]string{filepath.Join(repo, "cohere/internal/format/css/adamic_print_side_test.go"): side},
 	})
 	overlayPath := filepath.Join(directory, "go-overlay.json")
-	if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	command := bounded(

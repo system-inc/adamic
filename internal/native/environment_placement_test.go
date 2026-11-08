@@ -398,7 +398,7 @@ function fill(user: User, start: number): string {
  return user.use(read);
 }
 console.log(fill(new Other(), 3));`
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError := load.Load([]string{path})
@@ -499,7 +499,7 @@ func TestEnvironmentPlacementNestedGenerator(test *testing.T) {
 		"    return both();\n" +
 		"}\n" +
 		"console.log(host(`a${String(1)}`, `b${String(2)}`));\n"
-	if writeError := os.WriteFile(control, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(control, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if got := placements(control); got[0] != environmentStack {

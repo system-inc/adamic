@@ -48,7 +48,7 @@ func driverSource(test *testing.T, root string) string {
 		if lowerError != nil {
 			return lowerError
 		}
-		return os.WriteFile(filepath.Join(directory, "main.c"), []byte(native.C(ir)), 0644)
+		return os.WriteFile(filepath.Join(directory, "main.c"), []byte(native.C(ir)), 0o644)
 	})
 	data, readError := os.ReadFile(filepath.Join(directory, "main.c"))
 	if readError != nil {
@@ -82,7 +82,7 @@ func parseOracle(test *testing.T) string {
 		test.Fatal(encodeError)
 	}
 	overlay := filepath.Join(test.TempDir(), "overlay.json")
-	if writeError := os.WriteFile(overlay, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(overlay, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return buildcache.GoBuildIn(
@@ -117,11 +117,11 @@ func TestProduct_ParseGoOracle(test *testing.T)     { test.Parallel(); parseOrac
 func checkAst(test *testing.T, source string) {
 	test.Helper()
 	fixture := filepath.Join(test.TempDir(), "fixture.a")
-	if writeError := os.WriteFile(fixture, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(fixture, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	manifest := filepath.Join(test.TempDir(), "manifest.txt")
-	if writeError := os.WriteFile(manifest, []byte(fixture+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(manifest, []byte(fixture+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	want := execute(test, parseOracle(test), "--manifest", manifest, "--ast")
@@ -159,11 +159,11 @@ func TestParseDriverUnicodeAst(test *testing.T) {
 func TestParseDriverDoesNotLint(test *testing.T) {
 	test.Parallel()
 	fixture := filepath.Join(test.TempDir(), "fixture.a")
-	if writeError := os.WriteFile(fixture, []byte("ReactDOM.findDOMNode(element);\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(fixture, []byte("ReactDOM.findDOMNode(element);\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	manifest := filepath.Join(test.TempDir(), "manifest.txt")
-	if writeError := os.WriteFile(manifest, []byte(fixture+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(manifest, []byte(fixture+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	got := execute(test, driverBinary(test, "parse"), "--manifest", manifest, "--count")
@@ -180,7 +180,7 @@ func TestParseDriverNodeControls(test *testing.T) {
 	test.Parallel()
 	for _, root := range []string{"main", "parse"} {
 		fixture := filepath.Join(test.TempDir(), "fixture.a")
-		if writeError := os.WriteFile(fixture, []byte("ReactDOM.findDOMNode(element);\n"), 0644); writeError != nil {
+		if writeError := os.WriteFile(fixture, []byte("ReactDOM.findDOMNode(element);\n"), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		got := execute(test, driverBinary(test, root), fixture)
@@ -656,10 +656,10 @@ func compilerCorpus(test *testing.T) string {
 		}
 		for _, file := range files {
 			path := filepath.Join(directory, filepath.FromSlash(file.Path))
-			if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
 				return createDirectoryError
 			}
-			if writeError := os.WriteFile(path, file.Data, 0644); writeError != nil {
+			if writeError := os.WriteFile(path, file.Data, 0o644); writeError != nil {
 				return writeError
 			}
 		}

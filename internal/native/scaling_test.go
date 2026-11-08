@@ -75,7 +75,7 @@ func scalingSnapshot(test *testing.T, harness, file string, rewrite func(string)
 		if entry.Name() == file {
 			data = []byte(rewrite(string(data)))
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -88,7 +88,7 @@ func scalingSnapshot(test *testing.T, harness, file string, rewrite func(string)
 		test.Fatal(readError)
 	}
 	path := filepath.Join(directory, "main.c")
-	if writeError := os.WriteFile(path, source, 0600); writeError != nil {
+	if writeError := os.WriteFile(path, source, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	name := "harness"

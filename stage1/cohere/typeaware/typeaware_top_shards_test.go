@@ -70,7 +70,7 @@ func typeAwareTopShard(test *testing.T, key string, index int) {
 	defer typeAwareDeadline(test, test.Name())()
 	shard := plan.shards[index]
 	directory := filepath.Join(productDirectory, "top-shards", test.Name())
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	harness := &harness{t: test, repository: plan.h.repository, directory: directory, parallel: true}

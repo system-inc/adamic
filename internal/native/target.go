@@ -72,7 +72,7 @@ func WasiClang() (string, error) {
 
 func checkWasiClang(path string) error {
 	info, statError := os.Stat(path)
-	if statError != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0111 == 0 {
+	if statError != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0o111 == 0 {
 		return fmt.Errorf(
 			"native: wasm32-wasi is pinned to wasi-sdk %s, whose clang belongs at %s beside WASI_SYSROOT, and none is there; run bash cloud/setup.sh --wasi-sdk",
 			WasisdkVersion,
@@ -116,7 +116,7 @@ func archiverName(compiler string) string {
 	candidate := filepath.Join(filepath.Dir(compiler), "llvm-ar")
 	if info, statError := os.Stat(
 		candidate,
-	); statError == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {
+	); statError == nil && info.Mode().IsRegular() && info.Mode().Perm()&0o111 != 0 {
 		return candidate
 	}
 	return "ar"

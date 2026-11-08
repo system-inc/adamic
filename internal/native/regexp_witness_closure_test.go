@@ -206,7 +206,7 @@ func regexpWitnessClosureInventory(test testing.TB) string {
 				return "", runtimeRequestError
 			}
 			root := filepath.Join(directory, subdirectory)
-			if createDirectoryError := os.MkdirAll(root, 0700); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(root, 0o700); createDirectoryError != nil {
 				return "", createDirectoryError
 			}
 			if buildError := request.Build(root, 4, nil); buildError != nil {
@@ -252,7 +252,7 @@ func regexpWitnessClosureInventory(test testing.TB) string {
 		if regexpWitnessClosureBytesError != nil {
 			return regexpWitnessClosureBytesError
 		}
-		return os.WriteFile(filepath.Join(directory, "symbols.json"), data, 0600)
+		return os.WriteFile(filepath.Join(directory, "symbols.json"), data, 0o600)
 	})
 }
 

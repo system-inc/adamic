@@ -41,7 +41,7 @@ int main(void) {
 }
 `, initializer, expression, expression, len(value)+1)
 	path := filepath.Join(directory, "names.c")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)

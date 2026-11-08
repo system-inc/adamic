@@ -122,7 +122,7 @@ func TestPredicateBodyProof(test *testing.T) {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if writeError := os.WriteFile(path, []byte(probe.source), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(probe.source), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			program, loadError := load.Load([]string{path})
@@ -262,7 +262,7 @@ func TestEveryNeedsCallbackEffects(test *testing.T) {
 		test.Fatal(readError)
 	}
 	path := filepath.Join(test.TempDir(), "every.a")
-	if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})
@@ -408,7 +408,7 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "uses.a")
-			if writeError := os.WriteFile(path, []byte(prefix+probe.body), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(prefix+probe.body), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			program, loadError := load.Load([]string{path})
@@ -451,7 +451,7 @@ function use(xs: readonly number[] | undefined): void {
  if (some(xs)) console.log(xs.length.toString());
  if (some(xs)) {} else { const later = () => xs === undefined ? "no" : "yes"; console.log(later()); }
 }`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})
@@ -503,7 +503,7 @@ function lies(x: unknown): x is number { return typeof x === "string"; }
 function recursive(x: unknown): x is number { return recursive(x); }
 `
 	path := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

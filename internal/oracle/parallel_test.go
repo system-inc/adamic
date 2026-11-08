@@ -444,7 +444,7 @@ func buildParallelProgram(test *testing.T, code, binary string, options native.O
 		if file.Name() == "adamic.h" || filepath.Ext(file.Name()) == ".c" {
 			data = append([]byte("#define "+allocator+" 1\n"), data...)
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, file.Name()), data, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, file.Name()), data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

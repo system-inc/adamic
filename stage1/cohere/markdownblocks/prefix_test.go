@@ -118,7 +118,10 @@ func TestMarkdownParserPrefixes(test *testing.T) {
 	} {
 		test.Run(mutation.name, func(test *testing.T) {
 			scratch := test.TempDir()
-			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(scratch, "testdata"),
+				0o755,
+			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			for _, name := range []string{"preprocess.ts", "quotePrefix.ts", "codec.ts"} {

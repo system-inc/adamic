@@ -52,7 +52,7 @@ func main() {
 		if cleanError != nil {
 			panic(cleanError)
 		}
-		if writeError := os.WriteFile(path, output, 0600); writeError != nil {
+		if writeError := os.WriteFile(path, output, 0o600); writeError != nil {
 			panic(writeError)
 		}
 	}

@@ -139,10 +139,10 @@ func debugLineProduct(test *testing.T, build bool) string {
 		// require both to match byte for byte across entry directories.
 		for index, copy := range []string{"one", "two"} {
 			entry := filepath.Join(directory, copy, "fixture.a")
-			if createDirectoryError := os.MkdirAll(filepath.Dir(entry), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(entry), 0o755); createDirectoryError != nil {
 				return createDirectoryError
 			}
-			if writeError := os.WriteFile(entry, []byte(debugLineFixture), 0644); writeError != nil {
+			if writeError := os.WriteFile(entry, []byte(debugLineFixture), 0o644); writeError != nil {
 				return writeError
 			}
 			for _, mode := range []struct {
@@ -222,7 +222,7 @@ func debugCommandProduct(test *testing.T, build bool) string {
 		if readError != nil {
 			return readError
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, "command.test"), contents, 0755); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, "command.test"), contents, 0o755); writeError != nil {
 			return writeError
 		}
 		// Read the runtime dependency in this build's window, so native's test units
@@ -237,10 +237,10 @@ func debugCommandProduct(test *testing.T, build bool) string {
 		)
 		for index, copy := range []string{"one", "two"} {
 			entry := filepath.Join(directory, copy, "driver-witness.a")
-			if createDirectoryError := os.MkdirAll(filepath.Dir(entry), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(entry), 0o755); createDirectoryError != nil {
 				return createDirectoryError
 			}
-			if writeError := os.WriteFile(entry, []byte("console.log('driver');\n"), 0644); writeError != nil {
+			if writeError := os.WriteFile(entry, []byte("console.log('driver');\n"), 0o644); writeError != nil {
 				return writeError
 			}
 			name := []string{"witness", "witness-again"}[index]
@@ -332,7 +332,7 @@ func debugSharingProduct(test *testing.T, build bool) string {
 				fmt.Fprintf(&outcomes, "%s 0.000\n", strings.Join(fields[:4], " "))
 			}
 		}
-		return os.WriteFile(path, []byte(outcomes.String()), 0644)
+		return os.WriteFile(path, []byte(outcomes.String()), 0o644)
 	})
 }
 func TestProduct_DebugRuntimeSharing(test *testing.T) {

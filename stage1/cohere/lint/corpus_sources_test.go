@@ -57,7 +57,7 @@ func TestCompilerCorpusSourcesExcludeOnlyNamedFolders(test *testing.T) {
 	for selected, group := range [][]string{retained, excluded} {
 		for _, name := range group {
 			file := filepath.Join(checkout, name)
-			if createDirectoryError := os.MkdirAll(filepath.Dir(file), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(file), 0o755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			// No oracle should ever parse the deliberately invalid fixture content.
@@ -65,7 +65,7 @@ func TestCompilerCorpusSourcesExcludeOnlyNamedFolders(test *testing.T) {
 			if selected == 1 {
 				content = "new Promise(@dec async () => {})\n"
 			}
-			if writeError := os.WriteFile(file, []byte(content), 0644); writeError != nil {
+			if writeError := os.WriteFile(file, []byte(content), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}

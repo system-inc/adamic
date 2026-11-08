@@ -12,7 +12,7 @@ func TestParseIntMapIndexRadixAgreesWithNode(test *testing.T) {
 	if writeError := os.WriteFile(
 		path,
 		[]byte("console.log(['10','10','10'].map(Number.parseInt).join(','));"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

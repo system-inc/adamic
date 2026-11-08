@@ -62,7 +62,7 @@ func buildJsonLoweredPortMutation(dir string, mutation *printerMutation) error {
 			}
 			contents = []byte(strings.Replace(string(contents), mutation.from, mutation.to, 1))
 		}
-		if writeError := os.WriteFile(filepath.Join(dir, name), contents, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, name), contents, 0o644); writeError != nil {
 			return writeError
 		}
 	}
@@ -74,10 +74,10 @@ func buildJsonLoweredPortMutation(dir string, mutation *printerMutation) error {
 	if lowerError != nil {
 		return fmt.Errorf("Lower: %w", lowerError)
 	}
-	if writeError := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0o644); writeError != nil {
 		return writeError
 	}
-	return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+	return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0o644)
 }
 
 func jsonNativePortInputs(source string, sanitize bool, toolchain []string) jsonBuildInputs {
@@ -161,7 +161,7 @@ func jsonOracleAnswers(test *testing.T, oracle string, cases []textCase) []answe
 	test.Helper()
 	input, _ := protocol(cases, make([]answer, len(cases)))
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(input), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(input), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	result := execute(test, nil, oracle, "--cases", path)

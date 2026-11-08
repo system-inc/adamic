@@ -15,14 +15,14 @@ func TestWasiLegacyFileWorkingDirectoryNodeMutant(test *testing.T) {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	directory := test.TempDir()
-	if writeError := os.WriteFile(filepath.Join(directory, "marker"), []byte("present"), 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "marker"), []byte("present"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	path := filepath.Join(directory, "main.a")
 	if writeError := os.WriteFile(
 		path,
 		[]byte(`import {readTextFile} from 'adamic'; console.log(readTextFile('marker').kind);`),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

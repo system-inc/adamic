@@ -59,7 +59,7 @@ func arrayElementWitness(
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	run := func(env []string, name string, commandArguments ...string) ([]byte, []byte, error) {
@@ -93,7 +93,7 @@ func arrayElementWitness(
 		test.Fatal(lowerWithOptionsError)
 	}
 	js := filepath.Join(directory, "main.mjs")
-	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	got, diagnostic, runError := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)
@@ -418,7 +418,7 @@ console.log(` + "`${mixed.length}`" + `);
 		test.Run(row.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if writeError := os.WriteFile(path, []byte(row.source), 0600); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(row.source), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			checked, loadError := load.Load([]string{path})

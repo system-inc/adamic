@@ -87,7 +87,7 @@ func LeafCompositionGoProduct(test *testing.T, root, name, driverName string) st
 			return encodeError
 		}
 		overlayPath := filepath.Join(out, "overlay.json")
-		if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+		if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -160,7 +160,7 @@ func QuoteLayoutGoProducts(test *testing.T, root, target string) LayoutGoProduct
 		}
 		dir := oracleProduct(test, goInputs, func(dir string) error {
 			overlayPath := filepath.Join(dir, mode.name+".json")
-			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+			if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 				return writeError
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -250,7 +250,7 @@ func StructureLayoutGoProducts(test *testing.T, root, target string) LayoutGoPro
 			Toolchain: []string{buildcache.Tool("go", "version")},
 		}, func(dir string) error {
 			overlayPath := filepath.Join(dir, "overlay.json")
-			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+			if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 				return writeError
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -323,7 +323,7 @@ func TableLayoutGoProducts(test *testing.T, root, target string) LayoutGoProduct
 		}
 		product := oracleProduct(test, goInputs, func(product string) error {
 			overlayPath := filepath.Join(product, mode+".json")
-			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+			if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 				return writeError
 			}
 			defer os.Remove(overlayPath)
@@ -392,7 +392,7 @@ func WhitespaceLayoutGoProducts(test *testing.T, callerContext context.Context, 
 		)
 		product := oracleProduct(test, goInputs, func(product string) error {
 			overlayPath := filepath.Join(product, mode.name+".json")
-			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+			if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 				return writeError
 			}
 			defer os.Remove(overlayPath)
@@ -1099,7 +1099,7 @@ func writeOverlay(directory, name string, replace map[string]string) (string, er
 		return "", encodeError
 	}
 	overlayPath := filepath.Join(directory, name)
-	return overlayPath, os.WriteFile(overlayPath, overlay, 0644)
+	return overlayPath, os.WriteFile(overlayPath, overlay, 0o644)
 }
 
 // toolchainGo runs the toolchain's go in directory and returns its stdout, then its stderr, for an error message.
@@ -1321,7 +1321,7 @@ func TokenizerEventAnswers(test *testing.T, goBinary string, batch []byte) []byt
 		}
 		defer os.RemoveAll(scratch)
 		cases := filepath.Join(scratch, "cases.txt")
-		if writeError := os.WriteFile(cases, batch, 0644); writeError != nil {
+		if writeError := os.WriteFile(cases, batch, 0o644); writeError != nil {
 			return writeError
 		}
 		want, executeError := execute(test.Context(), nil, goBinary, cases)
@@ -1331,7 +1331,7 @@ func TokenizerEventAnswers(test *testing.T, goBinary string, batch []byte) []byt
 		if want.exitCode != 0 || len(want.stderr) > 0 {
 			return fmt.Errorf("full Go mutant oracle exit %d stderr %s", want.exitCode, want.stderr)
 		}
-		return os.WriteFile(filepath.Join(directory, "answers.txt"), want.stdout, 0644)
+		return os.WriteFile(filepath.Join(directory, "answers.txt"), want.stdout, 0o644)
 	})
 	answers, readError := os.ReadFile(filepath.Join(directory, "answers.txt"))
 	if readError != nil {
@@ -1633,7 +1633,7 @@ func GrainWidthFullAnswers(test *testing.T, goBinary, fork string, batch []byte)
 		}
 		defer os.RemoveAll(scratch)
 		cases := filepath.Join(scratch, "cases.txt")
-		if writeError := os.WriteFile(cases, batch, 0644); writeError != nil {
+		if writeError := os.WriteFile(cases, batch, 0o644); writeError != nil {
 			return writeError
 		}
 		for _, side := range []struct {
@@ -1650,7 +1650,11 @@ func GrainWidthFullAnswers(test *testing.T, goBinary, fork string, batch []byte)
 			if result.exitCode != 0 || len(result.stderr) > 0 {
 				return fmt.Errorf("%s exit %d stderr %s", side.name, result.exitCode, result.stderr)
 			}
-			if writeError := os.WriteFile(filepath.Join(directory, side.file), result.stdout, 0644); writeError != nil {
+			if writeError := os.WriteFile(
+				filepath.Join(directory, side.file),
+				result.stdout,
+				0o644,
+			); writeError != nil {
 				return writeError
 			}
 		}
@@ -1772,7 +1776,7 @@ func PreflightGoProducts(test *testing.T) (string, []string) {
 		}
 		for index, mutation := range preflightMutations {
 			altered := filepath.Join(dir, mutation.path)
-			if writeError := os.WriteFile(altered, alteredSources[index], 0644); writeError != nil {
+			if writeError := os.WriteFile(altered, alteredSources[index], 0o644); writeError != nil {
 				return writeError
 			}
 			source := filepath.Join(cohere, "internal/format/markdown", mutation.path)

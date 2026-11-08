@@ -15,7 +15,7 @@ func BuildSharedProbe(source, output string) error {
 		return err
 	}
 	defer os.RemoveAll(directory)
-	if err := os.WriteFile(filepath.Join(directory, "probe.c"), []byte(source), 0600); err != nil {
+	if err := os.WriteFile(filepath.Join(directory, "probe.c"), []byte(source), 0o600); err != nil {
 		return err
 	}
 	server, err := defaultJobserver()
@@ -25,7 +25,9 @@ func BuildSharedProbe(source, output string) error {
 	flags := append(Flags(Options{}), "-fPIC", "-shared", "probe.c", "-ldl", "-o", output)
 	command := clangIn(directory, compilerName(Options{}), flags...)
 	var result []byte
-	if err := server.Hold(func() error { var err error; result, err = command.CombinedOutput(); return err }); err != nil {
+	if err := server.Hold(
+		func() error { var err error; result, err = command.CombinedOutput(); return err },
+	); err != nil {
 		return fmt.Errorf("native: shared probe: %w\n%s", err, result)
 	}
 	return nil

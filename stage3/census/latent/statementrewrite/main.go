@@ -81,7 +81,7 @@ func main() {
 	if nodeError := format.Node(&out, fs, file); nodeError != nil {
 		panic(nodeError)
 	}
-	if writeError := os.WriteFile(os.Args[2], out.Bytes(), 0600); writeError != nil {
+	if writeError := os.WriteFile(os.Args[2], out.Bytes(), 0o600); writeError != nil {
 		panic(writeError)
 	}
 }

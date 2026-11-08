@@ -75,7 +75,7 @@ func TestEntriesAcceptance(test *testing.T) {
 			test.Run(contract.File+"/"+variant.name, func(test *testing.T) {
 				test.Parallel()
 				path := filepath.Join(test.TempDir(), contract.File)
-				if writeError := os.WriteFile(path, []byte(variant.source), 0600); writeError != nil {
+				if writeError := os.WriteFile(path, []byte(variant.source), 0o600); writeError != nil {
 					test.Fatal(writeError)
 				}
 				node := onNode(test, path)

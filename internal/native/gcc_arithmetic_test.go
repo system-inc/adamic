@@ -47,7 +47,7 @@ func gccArithmeticProduct(test *testing.T) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "main.c"),
 			[]byte(fusedHarness),
-			0600,
+			0o600,
 		); writeError != nil {
 			return writeError
 		}

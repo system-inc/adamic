@@ -21,7 +21,7 @@ func TestClassInterfaceMethodGap(test *testing.T) {
 	}
 	directory := test.TempDir()
 	port := filepath.Join(directory, "gap.ts")
-	if writeError := os.WriteFile(port, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(port, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	node := onNode(test, port)
@@ -49,7 +49,7 @@ func TestClassInterfaceMethodGap(test *testing.T) {
 		test.Fatal(rewrittenError)
 	}
 	workaround := filepath.Join(directory, "workaround.ts")
-	if writeError := os.WriteFile(workaround, []byte(fixed), 0644); writeError != nil {
+	if writeError := os.WriteFile(workaround, []byte(fixed), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError = load.Load([]string{workaround})
@@ -82,7 +82,7 @@ func TestClosedOptionalBooleanFunctionGap(test *testing.T) {
 		test.Fatal(readError)
 	}
 	path := filepath.Join(test.TempDir(), "gap.a")
-	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program := lowered(test, path)

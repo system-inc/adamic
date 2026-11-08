@@ -54,10 +54,10 @@ func Request(test testing.TB, repository string) (buildcache.Inputs, func(string
 		}
 		for _, file := range files {
 			destination := filepath.Join(directory, filepath.FromSlash(file.Path))
-			if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0o755); createDirectoryError != nil {
 				return createDirectoryError
 			}
-			if writeError := os.WriteFile(destination, file.Data, 0644); writeError != nil {
+			if writeError := os.WriteFile(destination, file.Data, 0o644); writeError != nil {
 				return writeError
 			}
 		}

@@ -228,7 +228,7 @@ func portBuildProduct(test *testing.T, applied *mutant) string {
 				}
 				source = strings.Replace(source, applied.from, applied.to, 1)
 			}
-			if writeError := os.WriteFile(filepath.Join(dir, portFile), []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(dir, portFile), []byte(source), 0o644); writeError != nil {
 				return writeError
 			}
 		}
@@ -236,7 +236,7 @@ func portBuildProduct(test *testing.T, applied *mutant) string {
 		if writeError := os.WriteFile(
 			filepath.Join(dir, "program.mjs"),
 			[]byte(javascript.JavaScript(program)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
@@ -268,7 +268,7 @@ func portOracle(test *testing.T, binary string, request map[string]any) {
 		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "request.json")
-	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	result := portExecute(
@@ -347,7 +347,7 @@ func portGoAnswers(test *testing.T, binary string, asked cases) string {
 		test.Fatal(encodeError)
 	}
 	path := filepath.Join(dir, "cases.json")
-	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	output := filepath.Join(dir, "answers.txt")

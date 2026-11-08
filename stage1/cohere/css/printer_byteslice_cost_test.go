@@ -157,7 +157,7 @@ func cssPrinterPreflightCases(test *testing.T) [2]string {
 		if writeError := os.WriteFile(
 			paths[index],
 			[]byte(">C"+escape.Replace(text)+"\n>S"+escape.Replace(text)+"\n"),
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}

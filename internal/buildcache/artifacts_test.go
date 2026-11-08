@@ -16,7 +16,7 @@ func TestRequireArtifacts(test *testing.T) {
 			write(test, directory, name, "")
 		}
 		if name == "directory" {
-			if createDirectoryError := os.Mkdir(filepath.Join(directory, name), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(filepath.Join(directory, name), 0o755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 		}

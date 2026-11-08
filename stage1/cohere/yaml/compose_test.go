@@ -25,7 +25,7 @@ func goCompose(test *testing.T, cases string) []byte {
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
-		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(artifacts, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		program, readError := os.ReadFile(binary)
@@ -45,7 +45,7 @@ func goCompose(test *testing.T, cases string) []byte {
 			name string
 			data []byte
 			mode os.FileMode
-		}{{"compose-cases.txt", inputs, 0644}, {"compose-expected.txt", expected, 0644}} {
+		}{{"compose-cases.txt", inputs, 0o644}, {"compose-expected.txt", expected, 0o644}} {
 			if writeError := os.WriteFile(
 				filepath.Join(artifacts, file.name),
 				file.data,
@@ -112,8 +112,8 @@ func composeMatchGoShard(test *testing.T, shard int) {
 		{"yaml@2.9.0", external},
 	} {
 		if !bytes.Equal(side.out, expected) {
-			os.WriteFile(composeMatchGo.diagnostic(shard, "expected"), expected, 0644)
-			os.WriteFile(composeMatchGo.diagnostic(shard, "actual"), side.out, 0644)
+			os.WriteFile(composeMatchGo.diagnostic(shard, "expected"), expected, 0o644)
+			os.WriteFile(composeMatchGo.diagnostic(shard, "actual"), side.out, 0o644)
 			test.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
 		}
 	}
@@ -263,7 +263,7 @@ func composeMutantsShard(test *testing.T, index int) {
 	product := composeMutants.product(test, index)
 	corpus, expected := composeMutantsExpected(test)
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(cases, corpus, 0644); writeError != nil {
+	if writeError := os.WriteFile(cases, corpus, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))

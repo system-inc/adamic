@@ -198,7 +198,7 @@ func testShardsAgreeLeafFor(test *testing.T, products testShardsAgreeProducts, r
 			if writeError := os.WriteFile(
 				*file.path,
 				[]byte(buildcache.Absolute(string(data))),
-				0644,
+				0o644,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
@@ -209,7 +209,7 @@ func testShardsAgreeLeafFor(test *testing.T, products testShardsAgreeProducts, r
 		test.Fatal(encodeError)
 	}
 	path := filepath.Join(directory, "leaf.json")
-	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path
@@ -322,7 +322,7 @@ func testShardsAgreeLowered(test *testing.T, directory string) string {
 		if lowerError != nil {
 			return lowerError
 		}
-		return os.WriteFile(filepath.Join(d, "main.c"), []byte(native.C(lowered)), 0644)
+		return os.WriteFile(filepath.Join(d, "main.c"), []byte(native.C(lowered)), 0o644)
 	})
 }
 func testShardsAgreeBinary(test *testing.T, directory string) string {
@@ -455,7 +455,7 @@ func testShardsAgreePrepare(test *testing.T) string {
 			generatedPaths[strings.SplitN(row, "\t", 2)[0]] = true
 		}
 		rows := testShardsAgreeRows(test, generatedRows)
-		if createDirectoryError := os.Mkdir(filepath.Join(d, "generated"), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(filepath.Join(d, "generated"), 0o755); createDirectoryError != nil {
 			return createDirectoryError
 		}
 		// generated(t) owns temporary sources: copy them into this persistent product.
@@ -473,7 +473,7 @@ func testShardsAgreePrepare(test *testing.T) string {
 					if readError != nil {
 						return readError
 					}
-					if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+					if writeError := os.WriteFile(target, data, 0o644); writeError != nil {
 						return writeError
 					}
 					copies[original] = target
@@ -497,7 +497,7 @@ func testShardsAgreePrepare(test *testing.T) string {
 		// This product, the scanner, the capture's cases and TypeScript's sources are each named by a root the reader
 		// supplies: Product publishes this scratch directory by rename, and a runner holds all four elsewhere
 		// (#tqrqx60).
-		return os.WriteFile(filepath.Join(d, "prepared.json"), []byte(buildcache.Relative(string(data))), 0644)
+		return os.WriteFile(filepath.Join(d, "prepared.json"), []byte(buildcache.Relative(string(data))), 0o644)
 	})
 	test.Logf("TestShardsAgree (setup): %.3fs; %s", time.Since(started).Seconds(), d)
 	return d
@@ -650,7 +650,7 @@ func testShardsAgreeReferences(test *testing.T) string {
 						if buildcache.Absolute(relative) != string(output) {
 							err = fmt.Errorf("%s%s does not read back through Absolute", job.label, mode.extension)
 						} else {
-							err = os.WriteFile(filepath.Join(d, job.label+mode.extension), []byte(relative), 0644)
+							err = os.WriteFile(filepath.Join(d, job.label+mode.extension), []byte(relative), 0o644)
 						}
 					}
 					failures[2*index+m] = err
@@ -872,10 +872,10 @@ func testShardsAgreeSourceSnapshots(
 		target, ok := paths[fields[0]]
 		if !ok {
 			target = filepath.Join(directory, fmt.Sprint(index), filepath.Base(fields[0]))
-			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0o755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
-			if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+			if writeError := os.WriteFile(target, data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			paths[fields[0]] = target

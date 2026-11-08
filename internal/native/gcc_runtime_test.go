@@ -87,7 +87,7 @@ func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 				if writeError := os.WriteFile(
 					filepath.Join(directory, file.name),
 					file.contents,
-					0600,
+					0o600,
 				); writeError != nil {
 					return writeError
 				}
@@ -117,7 +117,7 @@ func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 				return fmt.Errorf("GCC mutant %s survived: %v\n%s", mutant, combinedOutputError, output)
 			}
 		}
-		return os.WriteFile(filepath.Join(directory, "diagnostics"), output, 0600)
+		return os.WriteFile(filepath.Join(directory, "diagnostics"), output, 0o600)
 	})
 }
 

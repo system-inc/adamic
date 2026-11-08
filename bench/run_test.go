@@ -12,7 +12,7 @@ import (
 func benchFixture(test *testing.T, name, source string) []string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), name)
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return []string{"node", path}

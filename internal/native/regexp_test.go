@@ -424,7 +424,7 @@ func buildRegexWitness(test *testing.T, source, binary string, options Options) 
 	runtime0 := regexWitnessRuntime(test, request, 0)
 	runtime1 := regexWitnessRuntime(test, regexWitnessRequest(test, options, 1), 1)
 	directory := test.TempDir()
-	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if symlinkError := os.Symlink(runtime0, filepath.Join(directory, "runtime")); symlinkError != nil {

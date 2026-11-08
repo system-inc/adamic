@@ -84,7 +84,7 @@ func TestUnitCacheFlagsHoldSanitizer(test *testing.T) {
 	main := filepath.Join(directory, "main.c")
 	if writeError := os.WriteFile(main, []byte(
 		`int adamic_probe(int); int main(void) { volatile int input = 1; volatile int result = adamic_probe(input); (void)result; return 0; }`+"\n",
-	), 0644); writeError != nil {
+	), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	binary := filepath.Join(directory, "probe")
@@ -186,7 +186,7 @@ func TestUnitSystemHeaderProvenance(test *testing.T) {
 		main := filepath.Join(directory, "main.c")
 		if writeError := os.WriteFile(main, []byte(
 			"#include <stdio.h>\nint adamic_probe(void); int main(void) { printf(\"%d\\n\", adamic_probe()); return 0; }\n",
-		), 0644); writeError != nil {
+		), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		binary := filepath.Join(directory, "probe")

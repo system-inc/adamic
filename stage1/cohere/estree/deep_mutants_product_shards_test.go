@@ -171,11 +171,11 @@ func deepMutantsLowered(test *testing.T, mutation deepMutantsMutation) (string, 
 		if writeError := os.WriteFile(
 			filepath.Join(dir, "program.c"),
 			[]byte(native.C(program)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(program)), 0644)
+		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 	})
 	return lowered, inputs
 }

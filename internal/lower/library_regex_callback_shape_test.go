@@ -18,7 +18,7 @@ func TestLibraryRegexOffsetRequiresNoCaptures(test *testing.T) {
 		"let pattern = /a/; console.log('a'.replace(pattern, (match: string, offset: number) => `${match}:${offset}`));",
 	} {
 		path := filepath.Join(test.TempDir(), "main.a")
-		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		program, loadError := load.Load([]string{path})

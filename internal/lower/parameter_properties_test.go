@@ -62,7 +62,7 @@ func TestParameterPropertyCheckerContracts(test *testing.T) {
 		"class C {constructor(protected value:number){}} const c=new C(1); console.log(`${c.value}`);",
 	} {
 		path := filepath.Join(test.TempDir(), "main.a")
-		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		_, loadError := load.Load([]string{path})

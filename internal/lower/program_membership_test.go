@@ -25,7 +25,7 @@ function run():void {
  const scratch:number[]=[1,2];console.log('scratch');
  console.log('tree');
 }run();`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError := load.Load([]string{path})
@@ -104,7 +104,7 @@ console.log('start');
 const items: readonly number[] = [1,2];
 const values = parallelMap(items, (value:number):number => value+1);
 console.log('end');`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError := load.Load([]string{path})
@@ -136,7 +136,7 @@ function run():void {
  const tuple:[Node,number] = [node,1];
  console.log('containers');
 } run();`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError := load.Load([]string{path})
@@ -189,7 +189,7 @@ func TestProgramRegionEntryPairsRefused(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := `interface Node {next:Node|undefined;} const node:Node={next:undefined};node.next=node;const items=new Map<Node,string>();items.set(node,'x');const pairs=[...items.entries()];console.log(String(pairs.length));`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError := load.Load([]string{path})
@@ -205,7 +205,7 @@ func TestProgramRegionEntryPairsRefused(test *testing.T) {
 func programLowerSource(test *testing.T, source string) (*ir.Program, error) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError := load.Load([]string{path})

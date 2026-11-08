@@ -49,7 +49,7 @@ func rulingProgramAt(test *testing.T, file string, typescript bool) (*ir.Program
 			test.Fatal(readError)
 		}
 		path = filepath.Join(test.TempDir(), strings.TrimSuffix(file, ".a")+".ts")
-		if writeError := os.WriteFile(path, source, 0600); writeError != nil {
+		if writeError := os.WriteFile(path, source, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

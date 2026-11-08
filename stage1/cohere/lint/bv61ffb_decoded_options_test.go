@@ -277,12 +277,12 @@ func decodedOptionsSetupTest(test *testing.T) {
 	// The fixture and manifest belong to TestMain's directory and remain valid
 	// after the shard that prepares them finishes, until the process exits.
 	fixture := filepath.Join(filepath.Dir(path), "catch.ts")
-	if writeError := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	manifestPath := filepath.Join(filepath.Dir(path), "decoded-options-manifest.txt")
 	row := fixture + "\tno-empty\t\t\tfalse\t{\"AllowEmptyCatch\":true}\n"
-	if writeError := os.WriteFile(manifestPath, []byte(row), 0644); writeError != nil {
+	if writeError := os.WriteFile(manifestPath, []byte(row), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	ready := decodedOptionsProducts{
@@ -388,14 +388,14 @@ func decodedOptionsLowered(test *testing.T, mutated bool) (buildcache.Inputs, fu
 		if writeError := os.WriteFile(
 			filepath.Join(output, "lint.c"),
 			[]byte(native.C(lowered)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
 		if writeError := os.WriteFile(
 			filepath.Join(output, "lint.mjs"),
 			[]byte(javascript.JavaScript(lowered)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}

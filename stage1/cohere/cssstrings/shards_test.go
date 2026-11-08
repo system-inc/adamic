@@ -263,11 +263,11 @@ func buildStringsProgram(test *testing.T, name, main string) stringsProgram {
 		if writeError := os.WriteFile(
 			filepath.Join(dir, "program.c"),
 			[]byte(native.C(program)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 	})
 	return stringsProgram{
 		dir:        dir,
@@ -360,7 +360,7 @@ func prepareStringsMutant(test *testing.T, mutation stringsMutation) string {
 	// stringsCacheInputs keys a generated .ts by its directory's name and its own, so the mutant sits in cssstrings/, a
 	// name every checkout gives it, never in the temporary directory's random one (#sgemgmn).
 	scratch := filepath.Join(stringsTopTempDirectory(test), "cssstrings")
-	if createDirectoryError := os.Mkdir(scratch, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(scratch, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	source, readError := os.ReadFile("strings.ts")
@@ -587,7 +587,7 @@ func stringsOracleAnswersWithCommand(
 		Toolchain: buildcache.Tool("node", "--version"),
 	}, func(dir string) error {
 		path := filepath.Join(dir, "input.txt")
-		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 			return writeError
 		}
 		// Read through childguard.Capture for stringsExecute's reason: a WaitDelay could fail a run that had
@@ -598,7 +598,7 @@ func stringsOracleAnswersWithCommand(
 		if captureError != nil || len(stderr) != 0 {
 			return fmt.Errorf("%s oracle: %v; %s", name, captureError, stderr)
 		}
-		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0644)
+		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0o644)
 	})
 	answer, readError := os.ReadFile(filepath.Join(dir, "answers.txt"))
 	if readError != nil {

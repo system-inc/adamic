@@ -13,7 +13,7 @@ func TestProgramRegionCommandLineInterfaceHandsMembershipAndRuntimeOneMode(test 
 	test.Setenv("ADAMIC_PROGRAM_REGION", "1")
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := `interface Link {next:Link|undefined} const root:Link={next:undefined}; root.next=root; console.log('ok');`
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	called := false

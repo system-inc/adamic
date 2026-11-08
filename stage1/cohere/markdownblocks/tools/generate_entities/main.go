@@ -121,6 +121,6 @@ func formatData(formatter, output string, data []byte, check bool) {
 			panic("generated entities changed")
 		}
 	} else {
-		must(os.WriteFile(output, result, 0644))
+		must(os.WriteFile(output, result, 0o644))
 	}
 }

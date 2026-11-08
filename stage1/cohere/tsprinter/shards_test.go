@@ -173,10 +173,10 @@ func TestCorpusShardTransport(test *testing.T) {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(path, []byte(input.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(input.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if writeError := os.WriteFile(filepath.Join(directory, "cases.json"), data, 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "cases.json"), data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	script := filepath.Join(directory, "driver.mjs")
@@ -185,7 +185,7 @@ for(const row of readFileSync(process.argv[2],'utf8').trimEnd().split('\n')) {
  process.stdout.write('ok\t'+row.slice(1)+'\n');
 }
 `
-	if writeError := os.WriteFile(script, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(script, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	result := execute(test, nil, "node", script, path)

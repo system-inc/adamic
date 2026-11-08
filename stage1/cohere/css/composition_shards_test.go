@@ -131,12 +131,12 @@ func compositionRunShard(test *testing.T, index int) {
 	dir := test.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
 	answers := filepath.Join(dir, "answers.txt")
-	if writeError := os.WriteFile(cases, []byte(strings.Join(shard, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(cases, []byte(strings.Join(shard, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	request, _ := json.Marshal(map[string]string{"Cases": cases, "Answers": answers})
 	requestPath := filepath.Join(dir, "request.json")
-	if writeError := os.WriteFile(requestPath, request, 0644); writeError != nil {
+	if writeError := os.WriteFile(requestPath, request, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	result := compositionExecute(
@@ -241,7 +241,7 @@ func compositionCatchesMutant(test *testing.T, index int) {
 	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition mutant exceeded 90s") })
 	defer timer.Stop()
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(cases, []byte(strings.Join(state.lines, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(cases, []byte(strings.Join(state.lines, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	source, _ := filepath.Abs("compose_main.ts")
@@ -270,7 +270,7 @@ func compositionCatchesMutant(test *testing.T, index int) {
 		test.Fatalf("Node baseline: %d %s", baseline.exitCode, baseline.stderr)
 	}
 	if keep := os.Getenv("ADAMIC_CSS_KEEP_COMPOSED"); keep != "" && index == 0 {
-		if writeError := os.WriteFile(keep, baseline.stdout, 0644); writeError != nil {
+		if writeError := os.WriteFile(keep, baseline.stdout, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -326,7 +326,7 @@ func compositionCases(test *testing.T) string {
 		"fixtures":   os.Getenv("ADAMIC_CSS_FIXTURES"),
 	})
 	requestPath := filepath.Join(dir, "request.json")
-	if writeError := os.WriteFile(requestPath, request, 0644); writeError != nil {
+	if writeError := os.WriteFile(requestPath, request, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	oracle := oracles.CompositionOracle(
@@ -760,11 +760,11 @@ func compositionLoweredProduct(test *testing.T) (string, string) {
 		if writeError := os.WriteFile(
 			filepath.Join(dir, "program.c"),
 			[]byte(native.C(program)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 	})
 	return source, product
 }

@@ -24,7 +24,7 @@ func TestHostPlatformNames(test *testing.T) {
 	if writeError := os.WriteFile(
 		probe,
 		[]byte("#include \""+header+"\"\nname ADAMIC_HOST_PLATFORM\n"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

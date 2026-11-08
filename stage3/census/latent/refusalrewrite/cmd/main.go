@@ -16,7 +16,7 @@ func main() {
 		var rewritten []byte
 		rewritten, err = refusalrewrite.Rewrite(source)
 		if err == nil {
-			err = os.WriteFile(*output, rewritten, 0600)
+			err = os.WriteFile(*output, rewritten, 0o600)
 		}
 	}
 	if err != nil {

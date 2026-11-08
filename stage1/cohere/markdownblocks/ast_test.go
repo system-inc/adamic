@@ -22,7 +22,7 @@ func TestMarkdownAstPreprocessing(test *testing.T) {
 	fixture := markdownAstPrepare(test)
 	inputs, files, goBinary, nativeCases, fork, want := fixture.inputs, fixture.files, fixture.goBinary, fixture.nativeCases, fixture.fork, fixture.want
 	if keep := os.Getenv("ADAMIC_MARKDOWNAST_KEEP"); keep != "" {
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		data, readError := os.ReadFile(nativeCases)
@@ -107,7 +107,10 @@ func TestMarkdownAstPreprocessing(test *testing.T) {
 	} {
 		test.Run(testCase.name, func(test *testing.T) {
 			scratch := test.TempDir()
-			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(scratch, "testdata"),
+				0o755,
+			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			for _, file := range []string{

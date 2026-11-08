@@ -114,7 +114,7 @@ func probeEmitted(test *testing.T, path string) string {
 		if loweredResultError != nil {
 			return loweredResultError
 		}
-		return os.WriteFile(filepath.Join(directory, "port.mjs"), []byte(javascript.JavaScript(program)), 0644)
+		return os.WriteFile(filepath.Join(directory, "port.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 	})
 }
 

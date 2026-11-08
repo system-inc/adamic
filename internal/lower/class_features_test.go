@@ -14,7 +14,7 @@ func TestClassFeaturesPrivateChecker(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "main.a")
 	if writeError := os.WriteFile(path, []byte(
 		`class Box { #value = 'private'; #method(): string { return this.#value; } read(): string { return this.#method(); } } const box = new Box(); console.log(box.#value); console.log(box.#method());`,
-	), 0644); writeError != nil {
+	), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	_, loadError := load.Load([]string{path})

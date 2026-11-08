@@ -115,7 +115,7 @@ func TestNodeFileSystemDirectoryWasicwdMutant(test *testing.T) {
 		test.Fatal("cwd mutant changed nothing")
 	}
 	mutant := filepath.Join(shared, "runner.mjs")
-	if writeError := os.WriteFile(mutant, []byte(mutated), 0644); writeError != nil {
+	if writeError := os.WriteFile(mutant, []byte(mutated), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	how := inputRun{directory: filepath.Dir(path)}

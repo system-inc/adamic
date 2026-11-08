@@ -442,7 +442,7 @@ func jsxTreeLowered(test *testing.T, entry string) string {
 		if lowerError != nil {
 			return lowerError
 		}
-		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(lowered)), 0644)
+		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(lowered)), 0o644)
 	})
 }
 
@@ -609,14 +609,14 @@ func jsxPrepareTrees(test *testing.T) string {
 					return fmt.Errorf("case has no capture directory: %s", path)
 				}
 				target := filepath.Join(directory, relative)
-				if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+				if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0o755); createDirectoryError != nil {
 					return createDirectoryError
 				}
 				data, readError := os.ReadFile(path)
 				if readError != nil {
 					return readError
 				}
-				if writeError := os.WriteFile(target, data, 0444); writeError != nil {
+				if writeError := os.WriteFile(target, data, 0o444); writeError != nil {
 					return writeError
 				}
 				copied[path] = relative
@@ -635,7 +635,7 @@ func jsxPrepareTrees(test *testing.T) string {
 				if readError != nil {
 					return readError
 				}
-				if writeError := os.WriteFile(filepath.Join(directory, name), data, 0555); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(directory, name), data, 0o555); writeError != nil {
 					return writeError
 				}
 			}
@@ -643,7 +643,7 @@ func jsxPrepareTrees(test *testing.T) string {
 			if encodeError != nil {
 				return encodeError
 			}
-			return os.WriteFile(filepath.Join(directory, "bundle.json"), data, 0444)
+			return os.WriteFile(filepath.Join(directory, "bundle.json"), data, 0o444)
 		})
 	})
 	// A failed builder may have called Fatal inside Once; do not let another
@@ -975,13 +975,13 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 	if writeError := os.WriteFile(
 		side,
 		[]byte(strings.Replace(string(data), original, replacement, 1)),
-		0644,
+		0o644,
 	); writeError != nil {
 		return nil, writeError
 	}
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
 	overlayPath := filepath.Join(directory, "overlay.json")
-	if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 		return nil, writeError
 	}
 	capture := filepath.Join(directory, "capture")
@@ -1069,10 +1069,10 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		}
 		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", index))
 		path := filepath.Join(caseDirectory, name)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
 			return nil, createDirectoryError
 		}
-		if writeError := os.WriteFile(path, []byte(row.Source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(row.Source), 0o644); writeError != nil {
 			return nil, writeError
 		}
 		var legacy struct {

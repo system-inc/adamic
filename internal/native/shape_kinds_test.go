@@ -95,7 +95,7 @@ func producerSource(test *testing.T, name, path string) string {
 			text = "export function echo(value: {n:number,b:boolean,s:string}): {n:number,b:boolean,s:string} {return value;}"
 		}
 		path := filepath.Join(test.TempDir(), "shape.a")
-		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		source, loadError := load.Load([]string{path})

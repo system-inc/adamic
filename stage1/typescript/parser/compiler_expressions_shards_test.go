@@ -79,7 +79,7 @@ func compilerExpressionsLower(test *testing.T, absolute string) string {
 		if lowerError != nil {
 			return lowerError
 		}
-		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(ir)), 0644)
+		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(ir)), 0o644)
 	})
 	return lowered
 }
@@ -243,7 +243,7 @@ func compilerExpressionsShard(test *testing.T, index int) {
 	shards, planted, _ := compilerExpressionsEnumeration(test)
 	paths := shards[index]
 	manifest := filepath.Join(test.TempDir(), "compiler.txt")
-	if writeError := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	want := execute(test, "", oracle, "--manifest", manifest)

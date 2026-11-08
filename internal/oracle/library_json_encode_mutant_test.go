@@ -86,7 +86,7 @@ if (!isfinite(value.number)) { ascii(builder,"null");return; }`,
 			if writeError := os.WriteFile(
 				path,
 				[]byte("import {encodeJson} from 'adamic';\n"+testCase.source),
-				0600,
+				0o600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
@@ -124,7 +124,7 @@ func TestJsonEncodePlainStringifyMutant(test *testing.T) {
 		test.Fatal("mutant changed nothing")
 	}
 	file := filepath.Join(test.TempDir(), "mutant.mjs")
-	if writeError := os.WriteFile(file, []byte(mutant), 0600); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(mutant), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	got := onNode(test, file)
@@ -146,7 +146,7 @@ func TestJsonEncodeNativeStringMetadata(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "metadata.a")
 	if writeError := os.WriteFile(path, []byte(
 		"import {encodeJson} from 'adamic'; console.log(encodeJson<string>('x🌍é\\ud800')); console.log(encodeJson<string>('abc'));",
-	), 0600); writeError != nil {
+	), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)

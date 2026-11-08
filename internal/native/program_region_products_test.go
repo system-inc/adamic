@@ -120,12 +120,12 @@ func programCoreProduct(test *testing.T, index int) string {
 		}
 		defer os.RemoveAll(scratch)
 		within := filepath.Join(scratch, "runtime")
-		if createDirectoryError := os.MkdirAll(within, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(within, 0o755); createDirectoryError != nil {
 			return createDirectoryError
 		}
 		var sources []string
 		for _, file := range files {
-			if writeError := os.WriteFile(filepath.Join(within, file.name), file.contents, 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(within, file.name), file.contents, 0o644); writeError != nil {
 				return writeError
 			}
 			if strings.HasSuffix(file.name, ".c") {
@@ -148,7 +148,7 @@ func programCoreProduct(test *testing.T, index int) string {
 			return eachInParallelError
 		}
 		link := func(name, changed, object, source string) error {
-			if writeError := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(source), 0o644); writeError != nil {
 				return writeError
 			}
 			commandArguments := append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...)
@@ -200,7 +200,7 @@ func programCoreProduct(test *testing.T, index int) string {
 		}
 		for _, mutation := range programCoreMutations {
 			changed := filepath.Join(scratch, mutation.name)
-			if createDirectoryError := os.MkdirAll(changed, 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(changed, 0o755); createDirectoryError != nil {
 				return createDirectoryError
 			}
 			for _, file := range files {
@@ -214,7 +214,7 @@ func programCoreProduct(test *testing.T, index int) string {
 					}
 					data = []byte(strings.Replace(string(data), mutation.before, mutation.after, 1))
 				}
-				if writeError := os.WriteFile(filepath.Join(changed, file.name), data, 0644); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(changed, file.name), data, 0o644); writeError != nil {
 					return writeError
 				}
 			}

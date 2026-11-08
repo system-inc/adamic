@@ -26,7 +26,7 @@ declare const stringSource: string;
 function inspect<Source extends CompilerType>(source: Source): void {}
 function lengthOnly<Length extends { readonly length: number }>(lengthSource: Length): void {}
 `
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

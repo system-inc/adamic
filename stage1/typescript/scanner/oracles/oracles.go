@@ -85,7 +85,7 @@ func buildOracle(test *testing.T, directory string) error {
 		return encodeError
 	}
 	path := filepath.Join(directory, "overlay.json")
-	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 		return writeError
 	}
 	// Checkout paths are build inputs, never artifacts.

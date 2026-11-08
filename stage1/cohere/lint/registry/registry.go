@@ -422,7 +422,7 @@ func Generate(root string) ([]Descriptor, error) {
 	}
 	ts, goSource := Render(descriptors)
 	directory := filepath.Join(root, ".generated")
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		return nil, createDirectoryError
 	}
 	for _, file := range []struct {

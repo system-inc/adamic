@@ -43,7 +43,7 @@ func snapshotOracleFixture(test *testing.T, directory, path string) {
 			return relativePathError
 		}
 		output := filepath.Join(directory, relative)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(output), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(output), 0o755); createDirectoryError != nil {
 			return createDirectoryError
 		}
 		loaded, problem := load.Load([]string{path})
@@ -58,7 +58,7 @@ func snapshotOracleFixture(test *testing.T, directory, path string) {
 			if encodeError != nil {
 				return encodeError
 			}
-			if writeError := os.WriteFile(output+".oracle.json", encoded, 0644); writeError != nil {
+			if writeError := os.WriteFile(output+".oracle.json", encoded, 0o644); writeError != nil {
 				return writeError
 			}
 			program, lowerError := lower.Lower(context.Background(), loaded)
@@ -69,7 +69,7 @@ func snapshotOracleFixture(test *testing.T, directory, path string) {
 					".c":   native.C(program),
 					".mjs": javascript.JavaScript(program),
 				} {
-					if writeError := os.WriteFile(output+extension, []byte(source), 0644); writeError != nil {
+					if writeError := os.WriteFile(output+extension, []byte(source), 0o644); writeError != nil {
 						return writeError
 					}
 				}
@@ -78,7 +78,7 @@ func snapshotOracleFixture(test *testing.T, directory, path string) {
 		if problem != nil {
 			return problem
 		}
-		if writeError := os.WriteFile(output+".status", []byte(status), 0644); writeError != nil {
+		if writeError := os.WriteFile(output+".status", []byte(status), 0o644); writeError != nil {
 			return writeError
 		}
 		return nil

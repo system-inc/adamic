@@ -375,7 +375,7 @@ func parallelCheckMutant(test *testing.T, name string) {
 				if writeError := os.WriteFile(
 					filepath.Join(directory, file.Name()),
 					contents,
-					0600,
+					0o600,
 				); writeError != nil {
 					test.Fatal(writeError)
 				}
@@ -394,7 +394,7 @@ func parallelCheckMutant(test *testing.T, name string) {
 				test.Fatal(runtimeLibraryError)
 			}
 			path := filepath.Join(directory, "main.c")
-			if writeError := os.WriteFile(path, source, 0600); writeError != nil {
+			if writeError := os.WriteFile(path, source, 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			binary := filepath.Join(directory, "mutant")
@@ -532,7 +532,7 @@ func parallelTSan(test *testing.T) bool {
 		defer os.RemoveAll(directory)
 		source := filepath.Join(directory, "probe.c")
 		binary := filepath.Join(directory, "probe")
-		if writeError := os.WriteFile(source, []byte("int main(void) { return 0; }\n"), 0600); writeError != nil {
+		if writeError := os.WriteFile(source, []byte("int main(void) { return 0; }\n"), 0o600); writeError != nil {
 			parallelTSanProbe.reason = writeError.Error()
 			return
 		}

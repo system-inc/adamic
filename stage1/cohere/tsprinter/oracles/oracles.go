@@ -298,7 +298,7 @@ func documentOracleArguments(test *testing.T) []string {
 		map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}},
 	)
 	path := test.TempDir() + "/overlay.json"
-	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return []string{"-overlay=" + path}
@@ -398,7 +398,7 @@ func tsPrinterOracleProduct(t *testing.T, root string, files []string, gaps, fam
 		}
 		// Requests name this builder's paths and must never become shared outputs.
 		requestPath := filepath.Join(t.TempDir(), "request.json")
-		if writeError := os.WriteFile(requestPath, request, 0644); writeError != nil {
+		if writeError := os.WriteFile(requestPath, request, 0o644); writeError != nil {
 			return writeError
 		}
 		command := toolchain.Command(oracle, "-test.v", "-test.count=1", "-test.run=^"+test+"$", "-test.timeout=0")
@@ -436,7 +436,7 @@ func tsPrinterOracleOutputs(test *testing.T, root string, files []string, gaps, 
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -502,7 +502,7 @@ func TSPrinterRewriteMetadata(directory, root, external string, canonical bool) 
 	if encodeError != nil {
 		return encodeError
 	}
-	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 		return writeError
 	}
 	path = filepath.Join(directory, "coverage.json")
@@ -544,7 +544,7 @@ func TSPrinterRewriteMetadata(directory, root, external string, canonical bool) 
 	if encodeError != nil {
 		return encodeError
 	}
-	return os.WriteFile(path, data, 0644)
+	return os.WriteFile(path, data, 0o644)
 }
 
 func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan, [][]byte) {
@@ -609,10 +609,10 @@ func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan
 		if encodeError != nil {
 			test.Fatal(encodeError)
 		}
-		if writeError := os.WriteFile(shard.Text, protocol.Bytes(), 0644); writeError != nil {
+		if writeError := os.WriteFile(shard.Text, protocol.Bytes(), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
-		if writeError := os.WriteFile(shard.Specs, encoded, 0644); writeError != nil {
+		if writeError := os.WriteFile(shard.Specs, encoded, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		plan.Shards = append(plan.Shards, shard)
@@ -747,10 +747,10 @@ func (units *expressionGateUnits) Unit(test *testing.T, number int) CorpusShard 
 		Text:    filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)),
 		Specs:   filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number)),
 	}
-	if writeError := os.WriteFile(shard.Text, units.texts[number], 0644); writeError != nil {
+	if writeError := os.WriteFile(shard.Text, units.texts[number], 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if writeError := os.WriteFile(shard.Specs, units.specs[number], 0644); writeError != nil {
+	if writeError := os.WriteFile(shard.Specs, units.specs[number], 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return shard
@@ -761,7 +761,7 @@ func (units *expressionGateUnits) Gaps(test *testing.T) string {
 	test.Helper()
 	directory := test.TempDir()
 	for name, data := range map[string][]byte{"gaps.txt": units.gapText, "gaps.json": units.gapSpecs} {
-		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -810,7 +810,7 @@ func ExpressionCorpus(test *testing.T, processPlan ...bool) (string, string, str
 		test.Fatal(readError)
 	}
 	if keep := os.Getenv("ADAMIC_TS_PRINTER_KEEP"); keep != "" {
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		for _, name := range []string{
@@ -826,7 +826,7 @@ func ExpressionCorpus(test *testing.T, processPlan ...bool) (string, string, str
 			if readError != nil {
 				test.Fatal(readError)
 			}
-			if writeError := os.WriteFile(keep+"/"+name, data, 0644); writeError != nil {
+			if writeError := os.WriteFile(keep+"/"+name, data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
@@ -962,7 +962,7 @@ func mutantOracle(test *testing.T, change Mutation, binary string) (string, stri
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(directory+"/request.json", request, 0644); writeError != nil {
+	if writeError := os.WriteFile(directory+"/request.json", request, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	kind := "Expression"
@@ -1116,7 +1116,7 @@ func MutantOracleProduct(test *testing.T, index int) (string, string) {
 				if readError != nil {
 					return readError
 				}
-				if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(directory, name), data, 0o644); writeError != nil {
 					return writeError
 				}
 			}
@@ -1599,14 +1599,14 @@ func PlanCorpus(test *testing.T, path string) *CorpusPlan {
 			Text:    filepath.Join(directory, fmt.Sprintf("shard-%d.txt", number)),
 			Specs:   filepath.Join(directory, fmt.Sprintf("shard-%d.json", number)),
 		}
-		if writeError := os.WriteFile(shard.Text, []byte(batch.String()), 0644); writeError != nil {
+		if writeError := os.WriteFile(shard.Text, []byte(batch.String()), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		encoded, encodeError := json.Marshal(subset)
 		if encodeError != nil {
 			test.Fatal(encodeError)
 		}
-		if writeError := os.WriteFile(shard.Specs, encoded, 0644); writeError != nil {
+		if writeError := os.WriteFile(shard.Specs, encoded, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		plan.Shards = append(plan.Shards, shard)
@@ -1738,10 +1738,10 @@ func (gate *StatementGateShards) Shard(test *testing.T, number int) statementSha
 	shard := gate.Shards[number]
 	shard.Text = filepath.Join(directory, fmt.Sprintf("statement-shard-%03d.txt", number))
 	shard.Specs = filepath.Join(directory, fmt.Sprintf("statement-shard-%03d.json", number))
-	if writeError := os.WriteFile(shard.Text, gate.texts[number], 0644); writeError != nil {
+	if writeError := os.WriteFile(shard.Text, gate.texts[number], 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if writeError := os.WriteFile(shard.Specs, gate.specifications[number], 0644); writeError != nil {
+	if writeError := os.WriteFile(shard.Specs, gate.specifications[number], 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return shard
@@ -2016,10 +2016,10 @@ func StatementShards(test *testing.T, cases, want, specs string) []statementShar
 		if encodeError != nil {
 			test.Fatal(encodeError)
 		}
-		if writeError := os.WriteFile(shard.Text, []byte(input.String()), 0644); writeError != nil {
+		if writeError := os.WriteFile(shard.Text, []byte(input.String()), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
-		if writeError := os.WriteFile(shard.Specs, encoded, 0644); writeError != nil {
+		if writeError := os.WriteFile(shard.Specs, encoded, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		result[number] = shard
@@ -2120,7 +2120,7 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 		if encodeError != nil {
 			return encodeError
 		}
-		if writeError := os.WriteFile(directory+"/request.json", request, 0644); writeError != nil {
+		if writeError := os.WriteFile(directory+"/request.json", request, 0o644); writeError != nil {
 			return writeError
 		}
 		ctx := statementContext(test)
@@ -2150,7 +2150,7 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 	})
 	directory = product
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_KEEP"); keep != "" {
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		for _, name := range []string{"cases.txt", "answers.txt", "cases.json", "coverage.json"} {
@@ -2158,7 +2158,7 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 			if readError != nil {
 				test.Fatal(readError)
 			}
-			if writeError := os.WriteFile(keep+"/"+name, data, 0644); writeError != nil {
+			if writeError := os.WriteFile(keep+"/"+name, data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
@@ -2492,7 +2492,7 @@ func TSCAgreementPrepare(test *testing.T) string {
 			}
 			cases, original := tscCorpus(test, root, files, family, statements, oracle)
 			output := filepath.Join(directory, family)
-			if createDirectoryError := os.MkdirAll(output, 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(output, 0o755); createDirectoryError != nil {
 				return createDirectoryError
 			}
 			for _, name := range []string{"coverage.json"} {
@@ -2504,7 +2504,7 @@ func TSCAgreementPrepare(test *testing.T) string {
 				if writeError := os.WriteFile(
 					filepath.Join(output, name),
 					[]byte(buildcache.Relative(string(content))),
-					0644,
+					0o644,
 				); writeError != nil {
 					return writeError
 				}
@@ -2522,7 +2522,7 @@ func TSCAgreementPrepare(test *testing.T) string {
 		if encodeError != nil {
 			return encodeError
 		}
-		return os.WriteFile(filepath.Join(directory, "manifest.json"), encoded, 0644)
+		return os.WriteFile(filepath.Join(directory, "manifest.json"), encoded, 0o644)
 	})
 }
 
@@ -2557,14 +2557,14 @@ func tscCorpus(
 		}
 	}
 	path := filepath.Join(directory, "tsc-cases.txt")
-	if writeError := os.WriteFile(path, []byte(batch.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(batch.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	encoded, encodeError := json.Marshal(cases)
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	if writeError := os.WriteFile(filepath.Join(directory, "tsc-cases.json"), encoded, 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "tsc-cases.json"), encoded, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 

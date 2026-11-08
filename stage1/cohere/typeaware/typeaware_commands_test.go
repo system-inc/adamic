@@ -98,7 +98,7 @@ func typeAwareNativeBuild(source, output, archive string, sanitize bool) error {
 		return encodeError
 	}
 	path := filepath.Join(directory, "request.json")
-	if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o600); writeError != nil {
 		return writeError
 	}
 	command := exec.Command(os.Args[0], "-test.run=^TestTypeAwareNativeBuildChild$")
@@ -148,7 +148,7 @@ func TestTypeAwareContextKillsCompilerGroup(test *testing.T) {
 	marker := os.Getenv("ADAMIC_TYPEAWARE_GROUP_MARKER")
 	if mode == "marker" {
 		time.Sleep(time.Second)
-		if writeError := os.WriteFile(marker, []byte("survived"), 0600); writeError != nil {
+		if writeError := os.WriteFile(marker, []byte("survived"), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		return

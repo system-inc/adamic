@@ -32,6 +32,6 @@ func TestProduct_OracleCompilingFixtures(test *testing.T) {
 		if encodeError != nil {
 			return encodeError
 		}
-		return os.WriteFile(filepath.Join(directory, "fixtures.json"), data, 0644)
+		return os.WriteFile(filepath.Join(directory, "fixtures.json"), data, 0o644)
 	})
 }

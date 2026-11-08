@@ -17,7 +17,7 @@ func goFormat(test *testing.T, cases string) []byte {
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
-		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(artifacts, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		executable, readError := os.ReadFile(goBinary)
@@ -33,9 +33,9 @@ func goFormat(test *testing.T, cases string) []byte {
 			data []byte
 			mode os.FileMode
 		}{
-			{"go-format", executable, 0755},
-			{"format-cases.txt", inputs, 0644},
-			{"format-expected.txt", expected, 0644},
+			{"go-format", executable, 0o755},
+			{"format-cases.txt", inputs, 0o644},
+			{"format-expected.txt", expected, 0o644},
 		} {
 			if writeError := os.WriteFile(
 				filepath.Join(artifacts, file.name),
@@ -83,7 +83,7 @@ func TestFormatterMatchesGoUnion(test *testing.T) {
 	test.Parallel()
 	cases := formatterMatchesGo.union(test)
 	path := filepath.Join(test.TempDir(), "format-cases.txt")
-	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	expected := goFormat(test, path)
@@ -136,8 +136,8 @@ func formatterMatchesGoShard(test *testing.T, shard int) {
 		out  []byte
 	}{{"native ASan/UBSan/LSan", result.native}, {"Node", result.node}, {"emitted JavaScript", result.emitted}} {
 		if !bytes.Equal(side.out, expected) {
-			os.WriteFile(formatterMatchesGo.diagnostic(shard, "expected"), expected, 0644)
-			os.WriteFile(formatterMatchesGo.diagnostic(shard, "actual"), side.out, 0644)
+			os.WriteFile(formatterMatchesGo.diagnostic(shard, "expected"), expected, 0o644)
+			os.WriteFile(formatterMatchesGo.diagnostic(shard, "actual"), side.out, 0o644)
 			test.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
 		}
 	}
@@ -178,8 +178,8 @@ func formatterMatchesGoShard(test *testing.T, shard int) {
 			string(wanted) == "error\ttag.resolve is not a function"
 		if !(knownBinary && string(actual) == "error\tInvalid character" && bytes.HasPrefix(wanted, []byte("ok\t"))) &&
 			!knownMinification {
-			os.WriteFile(formatterMatchesGo.diagnostic(shard, "library"), external, 0644)
-			os.WriteFile(formatterMatchesGo.diagnostic(shard, "expected"), expected, 0644)
+			os.WriteFile(formatterMatchesGo.diagnostic(shard, "library"), external, 0o644)
+			os.WriteFile(formatterMatchesGo.diagnostic(shard, "expected"), expected, 0o644)
 			test.Fatalf("new library difference, case %d input %q: %s", index, input, firstDifference(actual, wanted))
 		}
 		differences++

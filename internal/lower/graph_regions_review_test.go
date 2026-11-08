@@ -31,7 +31,7 @@ func graphAccepted(test *testing.T, source string) *ir.Program {
 		test.Fatal("cycle was accepted without graph ownership")
 	}
 	js := filepath.Join(test.TempDir(), "main.mjs")
-	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	compareAgreement(test, runAgreementNode(test, js), truth)

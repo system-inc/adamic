@@ -15,7 +15,7 @@ func TestCycleEqualityProgramInputsTrackSiblingChanges(test *testing.T) {
 	const path = "internal/oracle/testdata/program_region/parse.a"
 	root := test.TempDir()
 	for _, directory := range []string{"review", "stage1", "stage3/fixtures/cycles", filepath.Dir(path)} {
-		if createDirectoryError := os.MkdirAll(filepath.Join(root, directory), 0700); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Join(root, directory), 0o700); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 	}
@@ -24,7 +24,7 @@ func TestCycleEqualityProgramInputsTrackSiblingChanges(test *testing.T) {
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if writeError := os.WriteFile(filepath.Join(root, filepath.Dir(path), name), source, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(root, filepath.Dir(path), name), source, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -34,7 +34,7 @@ func TestCycleEqualityProgramInputsTrackSiblingChanges(test *testing.T) {
 		test.Fatal(keyError)
 	}
 	context := filepath.Join(root, filepath.Dir(path), "context.a")
-	file, openError := os.OpenFile(context, os.O_APPEND|os.O_WRONLY, 0600)
+	file, openError := os.OpenFile(context, os.O_APPEND|os.O_WRONLY, 0o600)
 	if openError != nil {
 		test.Fatal(openError)
 	}

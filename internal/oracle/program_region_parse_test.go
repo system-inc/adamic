@@ -89,7 +89,7 @@ func programParseArguments(test *testing.T) []string {
 		lines = append(lines, filepath.Join(source, strings.TrimPrefix(file.Path, "typescript/")))
 	}
 	path := filepath.Join(test.TempDir(), "manifest")
-	if writeError := os.WriteFile(path, []byte(strings.Join(lines, "\n")+"\n"), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(strings.Join(lines, "\n")+"\n"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return []string{"--manifest", path, "--count"}
@@ -212,11 +212,11 @@ func programParseLower(test *testing.T, enabled bool) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "code.c"),
 			[]byte(native.C(program)),
-			0600,
+			0o600,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0600)
+		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0o600)
 	})
 }
 func TestProduct_ProgramParseLowerOn(test *testing.T) { test.Parallel(); programParseLower(test, true) }

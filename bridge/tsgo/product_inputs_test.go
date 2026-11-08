@@ -24,20 +24,20 @@ func checkBridgeProductInput(test *testing.T, name string) {
 	}
 	for _, file := range inputs.Files {
 		path := filepath.Join(root, file)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o700); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(path, []byte("dependency"), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte("dependency"), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
 	recipe := filepath.Join(root, "bridge/tsgo/products_test.go")
-	if createDirectoryError := os.MkdirAll(filepath.Dir(recipe), 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Dir(recipe), 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	var keys []string
 	fetch := func(version string) string {
-		if writeError := os.WriteFile(recipe, []byte(version), 0600); writeError != nil {
+		if writeError := os.WriteFile(recipe, []byte(version), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		key, keyError := buildcache.Key(root, inputs)
@@ -53,7 +53,7 @@ func checkBridgeProductInput(test *testing.T, name string) {
 			if readError != nil {
 				return readError
 			}
-			return os.WriteFile(filepath.Join(directory, "product"), source, 0600)
+			return os.WriteFile(filepath.Join(directory, "product"), source, 0o600)
 		})
 		if getError != nil {
 			test.Fatal(getError)

@@ -187,7 +187,7 @@ func watchFileProduct(test *testing.T, fixture, variant string) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "program.mjs"),
 			[]byte(javascript.JavaScript(program)),
-			0600,
+			0o600,
 		); writeError != nil {
 			return writeError
 		}
@@ -205,7 +205,7 @@ func watchFileProduct(test *testing.T, fixture, variant string) string {
 			return fmt.Errorf("unknown watchFile variant %s", variant)
 		}
 		runtimeDirectory := filepath.Join(directory, "runtime-mutant")
-		if createDirectoryError := os.Mkdir(runtimeDirectory, 0700); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(runtimeDirectory, 0o700); createDirectoryError != nil {
 			return createDirectoryError
 		}
 		entries, readDirectoryError := os.ReadDir("../native/runtime")
@@ -231,7 +231,7 @@ func watchFileProduct(test *testing.T, fixture, variant string) string {
 			if writeError := os.WriteFile(
 				filepath.Join(runtimeDirectory, entry.Name()),
 				data,
-				0600,
+				0o600,
 			); writeError != nil {
 				return writeError
 			}

@@ -188,7 +188,7 @@ func TestSplitTsGoAgrees(test *testing.T) {
 		configuration: `{"compilerOptions":{"strict":true,"target":"esnext"},"files":["sample.a"]}`,
 		manifest:      input + "\n",
 	} {
-		if writeError := os.WriteFile(name, []byte(contents), 0644); writeError != nil {
+		if writeError := os.WriteFile(name, []byte(contents), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

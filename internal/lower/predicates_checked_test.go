@@ -104,7 +104,7 @@ func TestCheckedPredicateBranches(test *testing.T) {
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 			run(command, stdout, stderr, code)
 			generated := filepath.Join(test.TempDir(), "generated.mjs")
-			if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0644); writeError != nil {
+			if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			run(exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated), stdout, stderr, code)

@@ -57,13 +57,13 @@ func TestTransformedNodeRunnerGuard(test *testing.T) {
 			test.Parallel()
 			repository := test.TempDir()
 			oracle := filepath.Join(repository, "oracle")
-			if createDirectoryError := os.Mkdir(oracle, 0700); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(oracle, 0o700); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			if writeError := os.WriteFile(
 				filepath.Join(oracle, "node.mjs"),
 				[]byte(probe.source),
-				0600,
+				0o600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}

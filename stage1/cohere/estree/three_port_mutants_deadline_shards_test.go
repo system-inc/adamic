@@ -204,7 +204,7 @@ func threePortLoweredProduct(test *testing.T, mutation threePortMutation) string
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	lowered := buildcache.Product(test, inputs, func(dir string) error {
 		source := filepath.Join(dir, "source")
-		if createDirectoryError := os.Mkdir(source, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(source, 0o755); createDirectoryError != nil {
 			return createDirectoryError
 		}
 		files, globError := filepath.Glob("*.ts")
@@ -228,7 +228,7 @@ func threePortLoweredProduct(test *testing.T, mutation threePortMutation) string
 				"'../../typescript/",
 				"'"+filepath.ToSlash(filepath.Join(root(test), "stage1/typescript"))+"/",
 			)
-			if writeError := os.WriteFile(filepath.Join(source, name), []byte(text), 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(source, name), []byte(text), 0o644); writeError != nil {
 				return writeError
 			}
 		}
@@ -240,7 +240,7 @@ func threePortLoweredProduct(test *testing.T, mutation threePortMutation) string
 		if lowerError != nil {
 			return lowerError
 		}
-		if writeError := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0o644); writeError != nil {
 			return writeError
 		}
 		// The source's imports name this checkout for the lowering above; the product names it <repository> (#tqrqx60).

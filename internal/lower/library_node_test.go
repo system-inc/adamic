@@ -49,7 +49,7 @@ func TestNodeLibraryDistinguishesReceiverOwners(test *testing.T) {
 	test.Parallel()
 	file := filepath.Join(test.TempDir(), "main.a")
 	source := `import type {Stats,Dirent} from 'node:fs'; function stats(value:Stats):void{value.isFile();} function dirent(value:Dirent):void{value.isFile();}`
-	if writeError := os.WriteFile(file, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{file})

@@ -48,7 +48,7 @@ func TestNoUnderscoreDangleProfileEmitsJavaScript(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(test.TempDir(), "emitted.mjs"),
 		[]byte(javascript.JavaScript(lowered)),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

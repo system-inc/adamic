@@ -65,7 +65,7 @@ func computeCorpusProduct(test *testing.T, mutant, build bool) string {
 			)
 		}
 		entry := filepath.Join(directory, "handler.a")
-		if writeError := os.WriteFile(entry, source, 0600); writeError != nil {
+		if writeError := os.WriteFile(entry, source, 0o600); writeError != nil {
 			return writeError
 		}
 		driver, readError := os.ReadFile(filepath.Join(root, "workers/compute/native-driver.a"))
@@ -73,7 +73,7 @@ func computeCorpusProduct(test *testing.T, mutant, build bool) string {
 			return readError
 		}
 		driverPath := filepath.Join(directory, "native-driver.a")
-		if writeError := os.WriteFile(driverPath, driver, 0600); writeError != nil {
+		if writeError := os.WriteFile(driverPath, driver, 0o600); writeError != nil {
 			return writeError
 		}
 		for _, commandArguments := range [][]string{

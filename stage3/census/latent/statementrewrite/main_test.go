@@ -18,7 +18,7 @@ func TestMissingStatementFailsWithMethodName(test *testing.T) {
 	if writeError := os.WriteFile(
 		input,
 		[]byte("package lower\nfunc (l *lowering) another() {}\n"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -47,7 +47,7 @@ func rewritten(test *testing.T, source string) (string, string, error) {
 	root := test.TempDir()
 	input := filepath.Join(root, "source.go")
 	output := filepath.Join(root, "output.go")
-	if writeError := os.WriteFile(input, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(input, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return rewrittenFile(test, input, output)

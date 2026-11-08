@@ -63,7 +63,7 @@ func TestUnattachedDecorator(test *testing.T) {
 	binary, script := recoveryBuild(test, main, true)
 	for _, body := range []string{"@dec\nawait 1", "@dec\nx"} {
 		path := filepath.Join(test.TempDir(), "input.ts")
-		os.WriteFile(path, []byte(body), 0644)
+		os.WriteFile(path, []byte(body), 0o644)
 		for _, argv := range [][]string{
 			{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(test), "oracle/node.mjs"), main, path},
 			{binary, path},

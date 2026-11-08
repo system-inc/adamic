@@ -23,10 +23,10 @@ func TestLatentStatecopySortedMapProgramMembership(test *testing.T) {
 		"internal/lower/program_region.go": "package lower; type programMembership struct {types ir.SortedMap[int, []bool]}",
 	} {
 		path := filepath.Join(root, name)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o700); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -147,10 +147,10 @@ func TestLatentStatecopyRefusesAnUnnamedPrivateIrField(test *testing.T) {
 		"internal/lower/lower.go": "package lower; type lowering struct {result *ir.Program}",
 	} {
 		path := filepath.Join(root, name)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o700); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -282,7 +282,7 @@ func TestLatentCarryFactsIgnoresUncarriedFields(test *testing.T) {
 	}
 	path := filepath.Join(test.TempDir(), "lower.go")
 	source := strings.Replace(string(input), "type lowering struct {", "type lowering struct {\n futureMemo bool", 1)
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if gaps := carryFactGuardGaps(root, path); len(gaps) > 0 {
@@ -409,13 +409,13 @@ func TestLatentSpeculativeRefusesUnnamedExportedIrField(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	path := filepath.Join(root, "internal/ir/ir.go")
-	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	if writeError := os.WriteFile(
 		path,
 		[]byte("package ir; type Function struct { AddedLater []int }"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

@@ -174,7 +174,7 @@ func TestProgramRegionCapturedCell(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "capture.a")
 	source := `function make(): () => string {let current:(()=>string)|undefined=undefined;const result=()=>current===undefined?'empty':'set';current=result;return result;}console.log(make()());`
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	counts := checkProgramRegion(test, programRegionLowered(test, path, true), path)

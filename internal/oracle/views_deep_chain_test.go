@@ -86,7 +86,7 @@ func TestViewsDeepChainRecursiveWalkMutant(test *testing.T) {
 			}
 			data = []byte(text[:start] + string(recursive) + text[end:])
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, file.Name()), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, file.Name()), data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

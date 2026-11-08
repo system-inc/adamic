@@ -54,7 +54,7 @@ func main() {
 	check(temporaryDirectoryError)
 	defer os.RemoveAll(directory)
 	path := filepath.Join(directory, "main.c")
-	check(os.WriteFile(path, []byte(source), 0644))
+	check(os.WriteFile(path, []byte(source), 0o644))
 	arguments := append(native.SourceFlags(source, options), "-I", filepath.Dir(library), "-o", os.Args[4])
 	if !options.Request {
 		arguments = append(arguments, path)

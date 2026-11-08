@@ -69,7 +69,7 @@ var translationMutant = [2]string{"/PaginationInput(", "/PaginationInputBROKEN("
 
 // writeTranslationMutant writes the runner's source tree into directory with translationMutant applied.
 func writeTranslationMutant(directory string) error {
-	if createDirectoryError := os.MkdirAll(filepath.Join(directory, "testdata"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Join(directory, "testdata"), 0o755); createDirectoryError != nil {
 		return createDirectoryError
 	}
 	for _, name := range []string{"patterns.a", "testdata/runner.a", "testdata/corpus.a"} {
@@ -80,7 +80,7 @@ func writeTranslationMutant(directory string) error {
 		if name == "patterns.a" {
 			content = bytes.Replace(content, []byte(translationMutant[0]), []byte(translationMutant[1]), 1)
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, name), content, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), content, 0o644); writeError != nil {
 			return writeError
 		}
 	}
@@ -165,7 +165,7 @@ func buildRunnerProduct(test *testing.T, mutant bool) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "runner.js"),
 			[]byte(javascript.JavaScript(ir)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}

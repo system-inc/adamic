@@ -408,7 +408,7 @@ func processLargePipeExit(test *testing.T, shard int) {
 				if writeError := os.WriteFile(
 					control,
 					[]byte(strings.Replace(string(original), ending, "process.exitCode = 37;", 1)),
-					0600,
+					0o600,
 				); writeError != nil {
 					test.Fatal(writeError)
 				}
@@ -814,7 +814,7 @@ func TestProcessExitAssignmentResult_002(test *testing.T) {
 func processExitAssignmentResult(test *testing.T, shard int) {
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "import 'node:process'; const assigned=(process.exitCode=4294967297); console.log(String(assigned)); console.log(String(process.exitCode)); const cleared=(process.exitCode=undefined); console.log(String(cleared===undefined)); console.log(String(process.exitCode));"
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)
@@ -836,7 +836,7 @@ func TestProcessExitNonnumericAbi(test *testing.T) {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if writeError := os.WriteFile(path, []byte("import 'node:process'; "+source), 0600); writeError != nil {
+			if writeError := os.WriteFile(path, []byte("import 'node:process'; "+source), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			_, loweredError := lowered(test, path)
@@ -878,7 +878,7 @@ func processExitWasiDrain(test *testing.T, method, destination string) {
 	if writeError := os.WriteFile(
 		control,
 		[]byte(strings.Replace(string(original), "process.exit(37);", "process.exitCode=37;", 1)),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -972,7 +972,7 @@ func TestProcessExitValidationCode_003(test *testing.T) {
 func processExitValidationCode(test *testing.T, shard int) {
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "try {process.exitCode=NaN;} catch(error) {console.log((error as {code:string}).code);}"
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{}, path)
@@ -1136,7 +1136,7 @@ func processExitClosedStdout(test *testing.T, shard int) {
 		if writeError := os.WriteFile(
 			runtimePath,
 			[]byte(strings.Replace(string(data), anchor, "stream.on('error', () => process.exit(70));", 1)),
-			0600,
+			0o600,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -1151,7 +1151,7 @@ func processExitClosedStdout(test *testing.T, shard int) {
 			if writeError := os.WriteFile(
 				filepath.Join(filepath.Dir(runtimePath), name),
 				data,
-				0600,
+				0o600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
@@ -1164,7 +1164,7 @@ func processExitClosedStdout(test *testing.T, shard int) {
 		if writeError := os.WriteFile(
 			mutant,
 			[]byte(strings.ReplaceAll(string(code), "'adamic'", fmt.Sprintf("%q", runtimePath))),
-			0600,
+			0o600,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}

@@ -252,7 +252,7 @@ func rulesAgreeCapture(test *testing.T) string {
 			if err != nil {
 				return err
 			}
-			return os.WriteFile(filepath.Join(output, "rows.json"), data, 0644)
+			return os.WriteFile(filepath.Join(output, "rows.json"), data, 0o644)
 		})
 
 	})
@@ -328,7 +328,7 @@ func compilationOracleOutputs(test *testing.T, oracle, manifestPath string) ([]b
 			}
 			data := execute(test, "", oracle, commandArguments...).output
 			data = bytes.ReplaceAll(data, []byte(sourcePath), []byte("@profile-case@"))
-			if err := os.WriteFile(filepath.Join(dir, mode), data, 0644); err != nil {
+			if err := os.WriteFile(filepath.Join(dir, mode), data, 0o644); err != nil {
 				return err
 			}
 		}
@@ -367,10 +367,10 @@ func yepestaPrepare(test *testing.T) string {
 					return nil, err
 				}
 				name := filepath.Join(prefix, fmt.Sprintf("%03d", index), filepath.Base(fields[0]))
-				if err := os.MkdirAll(filepath.Dir(filepath.Join(out, name)), 0755); err != nil {
+				if err := os.MkdirAll(filepath.Dir(filepath.Join(out, name)), 0o755); err != nil {
 					return nil, err
 				}
-				if err := os.WriteFile(filepath.Join(out, name), data, 0644); err != nil {
+				if err := os.WriteFile(filepath.Join(out, name), data, 0o644); err != nil {
 					return nil, err
 				}
 				fields[0] = name
@@ -391,7 +391,7 @@ func yepestaPrepare(test *testing.T) string {
 		if err != nil {
 			return err
 		}
-		return os.WriteFile(filepath.Join(out, "bundle.json"), data, 0644)
+		return os.WriteFile(filepath.Join(out, "bundle.json"), data, 0o644)
 	})
 	return directory
 }
@@ -424,7 +424,7 @@ func jsxGoOracle(test *testing.T, name, root, side, virtualName string) string {
 			return err
 		}
 		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 			return err
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -492,7 +492,7 @@ func completeSuggestionBuildOracle(callerContext context.Context, sourceRoot, di
 		return err
 	}
 	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
+	if err := os.WriteFile(path, overlay, 0o644); err != nil {
 		return err
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -554,7 +554,7 @@ func suggestionAlongsideGoOracle(test *testing.T, sourceRoot, directory string) 
 		return "", err
 	}
 	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
+	if err := os.WriteFile(path, overlay, 0o644); err != nil {
 		return "", err
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -619,7 +619,7 @@ func suggestionAlongsideFixture(test *testing.T) (string, string) {
 		if err := os.WriteFile(
 			filepath.Join(directory, "rules/no-debugger", name),
 			bytes.Replace(data, []byte(from), []byte(to), 1),
-			0644,
+			0o644,
 		); err != nil {
 			test.Fatal(err)
 		}
@@ -629,12 +629,12 @@ func suggestionAlongsideFixture(test *testing.T) (string, string) {
 	}
 	prepareRegistry(test, directory)
 	source := filepath.Join(directory, "mixed.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
+	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0o644); err != nil {
 		test.Fatal(err)
 	}
 	// Keep the manifest alive after the setup test returns.
 	path := filepath.Join(directory, "manifest.txt")
-	if err := os.WriteFile(path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
+	if err := os.WriteFile(path, []byte(source+"\tno-debugger\n"), 0o644); err != nil {
 		test.Fatal(err)
 	}
 	return directory, path
@@ -691,10 +691,10 @@ func compilerAgreementCheckerAllAnswer(test *testing.T, owned []compilerAgreemen
 		defer os.RemoveAll(scratch)
 		path := filepath.Join(scratch, "manifest.txt")
 		source := filepath.Join(scratch, "checker.ts")
-		if err := os.WriteFile(source, files[0], 0644); err != nil {
+		if err := os.WriteFile(source, files[0], 0o644); err != nil {
 			return err
 		}
-		if err := os.WriteFile(path, []byte(source+"\tall\n"), 0644); err != nil {
+		if err := os.WriteFile(path, []byte(source+"\tall\n"), 0o644); err != nil {
 			return err
 		}
 		output, err := testShardsAgreeRun("", nil, oracle, "--manifest", path)
@@ -710,7 +710,7 @@ func compilerAgreementCheckerAllAnswer(test *testing.T, owned []compilerAgreemen
 		return os.WriteFile(
 			filepath.Join(directory, "answer"),
 			bytes.ReplaceAll(output, []byte(source), []byte(compilerAgreementCheckerPath)),
-			0644,
+			0o644,
 		)
 	})
 	answer, err := os.ReadFile(filepath.Join(directory, "answer"))
@@ -784,7 +784,7 @@ func completeSuggestionFixture(test *testing.T, mutant bool) string {
 			}
 			data = bytes.Replace(data, from, []byte("start + 1, start + 3, ''"), 1)
 		}
-		if err = os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), data, 0644); err != nil {
+		if err = os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), data, 0o644); err != nil {
 			test.Fatal(err)
 		}
 	}
@@ -831,12 +831,12 @@ func rulesAgreeCaptureUpstream(test *testing.T, sourceRoot, directory string) ([
 		return nil, fmt.Errorf("capture overlay anchor changed")
 	}
 	side := filepath.Join(directory, "rule_testing.go")
-	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
+	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0o644); err != nil {
 		return nil, err
 	}
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
 	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 		return nil, err
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -970,10 +970,10 @@ func rulesAgreeCaptureUpstream(test *testing.T, sourceRoot, directory string) ([
 		}
 		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", index))
 		path := filepath.Join(caseDirectory, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 			return nil, err
 		}
-		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
+		if err := os.WriteFile(path, []byte(row.Source), 0o644); err != nil {
 			return nil, err
 		}
 		var legacy struct {
@@ -1155,7 +1155,7 @@ func commandDiagnostics(name string, stderr []byte) []byte {
 func manifest(test *testing.T, rows []string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "manifest.txt")
-	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
+	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0o644); err != nil {
 		test.Fatal(err)
 	}
 	return path
@@ -1209,7 +1209,7 @@ func generated(test *testing.T) []string {
 	var rows []string
 	for index, source := range sources {
 		path := filepath.Join(test.TempDir(), fmt.Sprintf("generated-%d.ts", index))
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
 			test.Fatal(err)
 		}
 		for _, options := range []string{
@@ -1232,7 +1232,7 @@ func generated(test *testing.T) []string {
 	path := filepath.Join(test.TempDir(), "options.ts")
 	if err := os.WriteFile(path, []byte(
 		"interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n",
-	), 0644); err != nil {
+	), 0o644); err != nil {
 		test.Fatal(err)
 	}
 	return append(rows, path,
@@ -1277,10 +1277,10 @@ func copyPortImporting(
 			source = imports(test, file, source)
 		}
 		destination := filepath.Join(directory, file)
-		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(destination), 0o755); err != nil {
 			test.Fatal(err)
 		}
-		if err := os.WriteFile(destination, []byte(source), 0644); err != nil {
+		if err := os.WriteFile(destination, []byte(source), 0o644); err != nil {
 			test.Fatal(err)
 		}
 	}
@@ -1296,10 +1296,10 @@ func copyPortImporting(
 				test.Fatal(err)
 			}
 			target := filepath.Join(directory, path)
-			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+			if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
 				test.Fatal(err)
 			}
-			if err := os.WriteFile(target, data, 0644); err != nil {
+			if err := os.WriteFile(target, data, 0o644); err != nil {
 				test.Fatal(err)
 			}
 		}
@@ -1376,11 +1376,11 @@ func ownedWitnesses(test *testing.T, directory, slug string) []string {
 		}
 		if filepath.Dir(relative) != "." {
 			target = filepath.Join(test.TempDir(), strings.TrimSuffix(relative, ".txt"))
-			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+			if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
 				test.Fatal(err)
 			}
 		}
-		if err := os.WriteFile(target, data, 0644); err != nil {
+		if err := os.WriteFile(target, data, 0o644); err != nil {
 			test.Fatal(err)
 		}
 		sources = append(sources, target)
@@ -1467,7 +1467,7 @@ func goOracleOverlay(sourceRoot, directory string) (string, error) {
 		return "", err
 	}
 	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
+	if err := os.WriteFile(path, overlay, 0o644); err != nil {
 		return "", err
 	}
 	return path, nil

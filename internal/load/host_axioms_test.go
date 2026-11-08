@@ -143,13 +143,13 @@ func TestHostAxiomsAreBuildCacheInputs(test *testing.T) {
 	}
 	directory := test.TempDir()
 	name := filepath.Join(directory, filepath.FromSlash(table))
-	if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	inputs.Files = []string{table}
 	key := func(data []byte) string {
 		test.Helper()
-		if writeError := os.WriteFile(name, data, 0600); writeError != nil {
+		if writeError := os.WriteFile(name, data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		value, keyError := buildcache.Key(directory, inputs)
@@ -175,25 +175,25 @@ func TestHostAxiomsAreLoweringProductInputs(test *testing.T) {
 	for _, name := range inputs.Files {
 		full := filepath.Join(directory, filepath.FromSlash(name))
 		if filepath.Ext(name) == "" {
-			if createDirectoryError := os.MkdirAll(full, 0700); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(full, 0o700); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 		} else {
-			if createDirectoryError := os.MkdirAll(filepath.Dir(full), 0700); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(full), 0o700); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
-			if writeError := os.WriteFile(full, nil, 0600); writeError != nil {
+			if writeError := os.WriteFile(full, nil, 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
 	}
 	name := filepath.Join(directory, "internal", "load", "host_axioms.json")
-	if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	key := func(data []byte) string {
 		test.Helper()
-		if writeError := os.WriteFile(name, data, 0600); writeError != nil {
+		if writeError := os.WriteFile(name, data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		got, keyError := buildcache.Key(directory, inputs)

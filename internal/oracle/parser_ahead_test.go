@@ -194,7 +194,7 @@ func assertParserProductsUseDisplayedPaths(test *testing.T, fixture string) {
 	var previous *ir.Program
 	for range 2 {
 		path := filepath.Join(test.TempDir(), "main.a")
-		if writeError := os.WriteFile(path, source, 0600); writeError != nil {
+		if writeError := os.WriteFile(path, source, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		checked, loadDisplayedError := load.LoadDisplayed([]string{path}, filepath.Base)
@@ -233,7 +233,7 @@ func onSliceNode(test *testing.T, path string) run {
 func onSliceJavaScript(test *testing.T, program *ir.Program) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return onSliceNode(test, path)

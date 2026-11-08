@@ -77,7 +77,7 @@ func TestGitSnapshotAndEvidenceBoundary(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	cohere := filepath.Join(root, "cohere")
-	if createDirectoryError := os.MkdirAll(cohere, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(cohere, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	command := func(directory string, commandArguments ...string) string {
@@ -92,10 +92,10 @@ func TestGitSnapshotAndEvidenceBoundary(test *testing.T) {
 	write := func(name, text string) {
 		test.Helper()
 		name = filepath.Join(root, name)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(name, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(name, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

@@ -36,7 +36,7 @@ func main() {
 	}
 }
 func run(directory string, buildOnly bool) error {
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		return createDirectoryError
 	}
 	var probes []probe
@@ -193,7 +193,7 @@ func run(directory string, buildOnly bool) error {
 	if encodeError != nil {
 		return encodeError
 	}
-	if writeError := os.WriteFile(filepath.Join(directory, "cases.json"), data, 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "cases.json"), data, 0o644); writeError != nil {
 		return writeError
 	}
 	var source strings.Builder
@@ -257,7 +257,7 @@ func run(directory string, buildOnly bool) error {
 	if writeError := os.WriteFile(
 		filepath.Join(directory, "main.c"),
 		[]byte(source.String()),
-		0644,
+		0o644,
 	); writeError != nil {
 		return writeError
 	}
@@ -271,7 +271,7 @@ func run(directory string, buildOnly bool) error {
 		}
 	}
 	js := `const cases=require('./cases.json');if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const p=cases[+process.argv[2]],n=+process.argv[3],r=new RegExp(p.Pattern,p.Flags);for(let k=0;k<10000;k++)r.test(p.Inputs[k%p.Inputs.length]);let sum=0;const start=process.hrtime.bigint();for(let k=0;k<n;k++)sum+=r.test(p.Inputs[k%p.Inputs.length]);const elapsed=Number(process.hrtime.bigint()-start)/1e9;let step=Infinity;for(let k=0;k<1000;k++){const t=process.hrtime.bigint();let u;do{u=process.hrtime.bigint();}while(u===t);step=Math.min(step,Number(u-t)/1e9);}console.log(elapsed,sum,step);`
-	if writeError := os.WriteFile(filepath.Join(directory, "node.cjs"), []byte(js), 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "node.cjs"), []byte(js), 0o644); writeError != nil {
 		return writeError
 	}
 	if buildOnly {

@@ -26,7 +26,7 @@ func jsxSpansOracle(test *testing.T) string {
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
 	directory := test.TempDir()
 	path := filepath.Join(directory, "overlay.json")
-	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	binary := filepath.Join(directory, "jsx-spans")

@@ -104,7 +104,7 @@ func TestObjectAssignOntoAStaticClassIsRefusedInLowering(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "class Base { static count = 1; }\nclass Child extends Base {}\nObject.assign(Child, { count: 2 });\nconsole.log(Base.count + ' ' + Child.count);\n"
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	checked, loadError := load.Load([]string{path})

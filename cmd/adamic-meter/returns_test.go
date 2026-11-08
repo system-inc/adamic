@@ -34,7 +34,7 @@ console.log("value " + arrow(0)); console.log("value " + arrow(1)); console.log(
 	for _, extension := range []string{".ts", ".a", ".a.ts"} {
 		test.Run(extension, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "main"+extension)
-			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			_, before := load.Load([]string{path})
@@ -80,7 +80,7 @@ function* generator(flag: boolean): Generator<number, number | undefined> { if (
 function admitted(flag: boolean): number | undefined { if (flag) return 1; }
 `
 	path := filepath.Join(test.TempDir(), "main.ts")
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{path})
@@ -111,12 +111,12 @@ func TestReturnAdaptationOwnsOnlyRoots(test *testing.T) {
 	if writeError := os.WriteFile(
 		external,
 		[]byte(`export function f(flag: boolean): number | undefined { if (flag) return 1; }`),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if writeError := os.WriteFile(root, []byte(`import {f} from "./external.ts"; console.log('' + f(false));
-function local(flag: boolean): number | undefined { if (flag) return 2; }`), 0644); writeError != nil {
+function local(flag: boolean): number | undefined { if (flag) return 2; }`), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{root})

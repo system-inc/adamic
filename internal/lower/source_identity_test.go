@@ -21,7 +21,7 @@ func TestSourceIdentitySubstitutedObjectShapes(test *testing.T) {
 type Second = { value: number };
 function hold<T>(value: T): T { const read = <U>(item: T): T => item; return read(value); }
 `
-	if writeError := os.WriteFile(entry, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{entry})

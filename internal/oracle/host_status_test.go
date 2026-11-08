@@ -141,7 +141,7 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 			})
 			test.Run("javascript", func(test *testing.T) {
 				js := filepath.Join(directory, "program.mjs")
-				if writeError := os.WriteFile(js, []byte(script), 0600); writeError != nil {
+				if writeError := os.WriteFile(js, []byte(script), 0o600); writeError != nil {
 					test.Fatal(writeError)
 				}
 				if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
@@ -240,7 +240,7 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 		raw[position+len(fields["stage0"]):]...,
 	)
 	data = bytes.Replace(data, raw, changed, 1)
-	if writeError := os.WriteFile(statusPath, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(statusPath, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 }

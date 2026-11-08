@@ -32,7 +32,7 @@ var crossingGenerator embed.FS
 // generateCrossing is the build-time seam to the ABI crossing generator.
 func generateCrossing(abiPath, outputPath string) error {
 	directory := filepath.Join(filepath.Dir(outputPath), "generator")
-	if createDirectoryError := os.Mkdir(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(directory, 0o755); createDirectoryError != nil {
 		return createDirectoryError
 	}
 	for _, name := range []string{"generate-crossing.mjs", "wtf8.mjs", "crossing-runtime.mjs", "wasi.mjs"} {
@@ -40,7 +40,7 @@ func generateCrossing(abiPath, outputPath string) error {
 		if readFileError != nil {
 			return readFileError
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, name), source, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, name), source, 0o644); writeError != nil {
 			return writeError
 		}
 	}

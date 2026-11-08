@@ -34,7 +34,7 @@ func calibrateNativeCases(test *testing.T, binary string, cases []textCase, answ
 			path := filepath.Join(directory, fmt.Sprintf("single-%d.txt", worker))
 			for index := range jobs {
 				input, expected := protocol(cases[index:index+1], answers[index:index+1])
-				if writeError := os.WriteFile(path, []byte(input), 0644); writeError != nil {
+				if writeError := os.WriteFile(path, []byte(input), 0o644); writeError != nil {
 					failures[index] = writeError
 					continue
 				}

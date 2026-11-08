@@ -46,7 +46,7 @@ func Tree(test *testing.T, name string, startupDelay ...time.Duration) (string, 
 		heartbeat,
 		heartbeat+".ready",
 	)
-	if writeError := os.WriteFile(child, []byte(script), 0700); writeError != nil {
+	if writeError := os.WriteFile(child, []byte(script), 0o700); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return child, heartbeat

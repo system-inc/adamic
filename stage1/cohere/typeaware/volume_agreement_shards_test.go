@@ -243,7 +243,7 @@ const program = tsgoProgram(config, rootsManifest.text.split('\n').filter((path)
 		if tsGoCError != nil {
 			return tsGoCError
 		}
-		return os.WriteFile(filepath.Join(dir, "source.c"), []byte(source), 0444)
+		return os.WriteFile(filepath.Join(dir, "source.c"), []byte(source), 0o444)
 	})
 	return filepath.Join(dir, "source.c")
 }

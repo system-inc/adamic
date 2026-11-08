@@ -69,10 +69,10 @@ func TestNodeFileSystemDirectoryUnionSpecialKinds(test *testing.T) {
 	// Gate scratch paths can exceed sockaddr_un's limit. Keep that case in
 	// every run; bind the socket by its relative name from a child directory.
 	root := filepath.Join(shared, strings.Repeat("long-scratch-", 10), "kinds")
-	if createDirectoryError := os.MkdirAll(root, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(root, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	if mkfifoError := syscall.Mkfifo(filepath.Join(root, "fifo"), 0600); mkfifoError != nil {
+	if mkfifoError := syscall.Mkfifo(filepath.Join(root, "fifo"), 0o600); mkfifoError != nil {
 		test.Fatal(mkfifoError)
 	}
 	socket := executeInput(test, inputRun{directory: root}, nil, "node", "--input-type=module", "-e",

@@ -283,12 +283,15 @@ func testLeafCompositionMutation(test *testing.T, fixture *layoutFixture, shard 
 			nativeCases, inputs := fixture.mutantNativeCases, fixture.mutantInputs
 			want := run{stdout: fixture.mutantWant}
 			scratch := test.TempDir()
-			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(scratch, "testdata"),
+				0o755,
+			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			if createDirectoryError := os.Mkdir(
 				filepath.Join(scratch, "markdowninline"),
-				0755,
+				0o755,
 			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
@@ -449,7 +452,7 @@ func buildLeafCompositionFixture(
 		poisonLeafCompositionCases(test, protocolPath)
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
@@ -605,11 +608,11 @@ func prepareLeafCompositionLowered(test *testing.T, products *leafCompositionPro
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "program.c"),
 			[]byte(native.C(program)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 	})
 	data, readError := os.ReadFile(filepath.Join(loweredDirectory, "program.c"))
 	if readError != nil {

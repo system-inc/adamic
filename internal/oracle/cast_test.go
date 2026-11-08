@@ -70,7 +70,7 @@ type B = { readonly kind: Kind.B; readonly n: string };
 function cast(value: A | B): A { return value as A; }
 console.log(String(cast({ kind: Kind.B, n: 'wrong'.repeat(2) }).n + 1));
 `
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)
@@ -115,7 +115,7 @@ func TestCheckedCastRunsNoCatchOrFinally(test *testing.T) {
 				)
 			}
 			path := filepath.Join(directory, "program.mjs")
-			if writeError := os.WriteFile(path, []byte(code), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(code), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			result := onNode(test, path)

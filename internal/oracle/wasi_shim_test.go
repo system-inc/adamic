@@ -352,11 +352,11 @@ if(check==='iovecs') {
 	for _, check := range []string{"iovecs", "exit", "preopens", "empty", "clock", "monotonic"} {
 		test.Run(check, func(test *testing.T) {
 			directory := test.TempDir()
-			if writeError := os.WriteFile(filepath.Join(directory, "shim.mjs"), original, 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(directory, "shim.mjs"), original, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			script := filepath.Join(directory, "check.mjs")
-			if writeError := os.WriteFile(script, []byte(checks), 0644); writeError != nil {
+			if writeError := os.WriteFile(script, []byte(checks), 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 			actual := execute(test, "node", script, check)
@@ -388,7 +388,7 @@ if(check==='iovecs') {
 				if writeError := os.WriteFile(
 					filepath.Join(directory, "shim.mjs"),
 					[]byte(mutant),
-					0644,
+					0o644,
 				); writeError != nil {
 					test.Fatal(writeError)
 				}
@@ -468,7 +468,7 @@ if(mode==='source') {
  }
 }
 `
-	if writeError := os.WriteFile(script, []byte(probe), 0644); writeError != nil {
+	if writeError := os.WriteFile(script, []byte(probe), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	shim := execute(test, "node", "--disable-warning=ExperimentalWarning", script, "shim", binary, root)

@@ -40,7 +40,7 @@ func scalarsMatchGoCases(test *testing.T) ([]string, int) {
 func scalarsMatchGoWriteCases(test *testing.T, cases []string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path

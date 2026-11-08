@@ -30,12 +30,12 @@ func TestCheckpointKeysIncludeAllExecutionInputs(test *testing.T) {
 	}
 	dir := test.TempDir()
 	path := filepath.Join(dir, "input")
-	os.WriteFile(path, []byte("first"), 0600)
+	os.WriteFile(path, []byte("first"), 0o600)
 	first, pathDigestError := pathDigest(dir)
 	if pathDigestError != nil {
 		test.Fatal(pathDigestError)
 	}
-	os.WriteFile(path, []byte("second"), 0600)
+	os.WriteFile(path, []byte("second"), 0o600)
 	second, pathDigestError := pathDigest(dir)
 	if pathDigestError != nil {
 		test.Fatal(pathDigestError)
@@ -43,7 +43,7 @@ func TestCheckpointKeysIncludeAllExecutionInputs(test *testing.T) {
 	if first == second {
 		test.Fatal("external input bytes absent from key")
 	}
-	os.Chmod(path, 0644)
+	os.Chmod(path, 0o644)
 	third, pathDigestError := pathDigest(dir)
 	if pathDigestError != nil {
 		test.Fatal(pathDigestError)
@@ -96,10 +96,10 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 	}
 	save := func(text string) {
 		test.Helper()
-		if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
-		if writeError := os.WriteFile(stderr, nil, 0600); writeError != nil {
+		if writeError := os.WriteFile(stderr, nil, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		evidence.LogDigest, _ = fileDigest(path)
@@ -115,7 +115,7 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 	if _, _, loadPackageError := loadPackage(dir, "different-plan", plan, 0, "p"); loadPackageError == nil {
 		test.Fatal("stale key accepted")
 	}
-	os.WriteFile(path, []byte(log+"{\"Action\":\"output\",\"Package\":\"p\",\"Output\":\"changed bytes\"}\n"), 0600)
+	os.WriteFile(path, []byte(log+"{\"Action\":\"output\",\"Package\":\"p\",\"Output\":\"changed bytes\"}\n"), 0o600)
 	if _, _, loadPackageError := loadPackage(
 		dir,
 		"key",
@@ -126,7 +126,7 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 		test.Fatal("changed log accepted", loadPackageError)
 	}
 	save(log)
-	os.WriteFile(stderr, []byte("changed stderr"), 0600)
+	os.WriteFile(stderr, []byte("changed stderr"), 0o600)
 	if _, _, loadPackageError := loadPackage(
 		dir,
 		"key",
@@ -216,9 +216,9 @@ func TestResumeCleanupPreservesForeignPaths(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	checkpoint := filepath.Join(root, "checkpoint")
-	os.Mkdir(checkpoint, 0700)
+	os.Mkdir(checkpoint, 0o700)
 	foreign := filepath.Join(root, "foreign")
-	os.Mkdir(foreign, 0700)
+	os.Mkdir(foreign, 0o700)
 	if atomicJsonError := atomicJson(
 		filepath.Join(checkpoint, "scratch.json"),
 		scratchRecord{Key: "key", Path: foreign},

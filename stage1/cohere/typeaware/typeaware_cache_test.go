@@ -151,7 +151,7 @@ func cachedTypeAwareProduct(key string, build func(string) (string, error)) (str
 			if encodeError != nil {
 				return encodeError
 			}
-			return os.WriteFile(filepath.Join(directory, "product.json"), data, 0644)
+			return os.WriteFile(filepath.Join(directory, "product.json"), data, 0o644)
 		})
 		if getError != nil {
 			return "", getError

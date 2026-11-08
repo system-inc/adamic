@@ -213,7 +213,7 @@ func difference(got, want []byte) string {
 func manifest(test *testing.T, rows []string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "manifest.txt")
-	if writeError := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path
@@ -270,7 +270,7 @@ func generated(test *testing.T) []string {
 	var rows []string
 	for index, source := range sources {
 		path := filepath.Join(test.TempDir(), fmt.Sprintf("generated-%d.ts", index))
-		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		for _, options := range []string{
@@ -293,7 +293,7 @@ func generated(test *testing.T) []string {
 	path := filepath.Join(test.TempDir(), "options.ts")
 	if writeError := os.WriteFile(path, []byte(
 		"interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n",
-	), 0644); writeError != nil {
+	), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return append(rows, path,
@@ -485,7 +485,7 @@ func compilerShardLauncher(
 		if writeError := os.WriteFile(
 			filepath.Join(directory, fmt.Sprintf("%d.manifest", shard)),
 			[]byte(strings.Join(local, "\n")+"\n"),
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -575,10 +575,10 @@ func copyPortImporting(
 			source = imports(test, file, source)
 		}
 		destination := filepath.Join(directory, file)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(destination, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(destination, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -594,10 +594,10 @@ func copyPortImporting(
 				test.Fatal(readError)
 			}
 			target := filepath.Join(directory, path)
-			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0o755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
-			if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+			if writeError := os.WriteFile(target, data, 0o644); writeError != nil {
 				test.Fatal(writeError)
 			}
 		}
@@ -637,7 +637,7 @@ func TestLegacyMutants(test *testing.T) {
 func TestCountGuardMutant(test *testing.T) {
 	test.Parallel()
 	source := filepath.Join(test.TempDir(), "count.ts")
-	if writeError := os.WriteFile(source, []byte("var a; debugger;"), 0644); writeError != nil {
+	if writeError := os.WriteFile(source, []byte("var a; debugger;"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	path := manifest(test, []string{source})

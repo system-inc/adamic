@@ -90,7 +90,7 @@ func compilerAgreementHeapWitnessNative(test *testing.T) string {
 			source,
 			[]byte("${1}"+compilerAgreementHeapWitnessPlant),
 		)
-		if writeError := os.WriteFile(filepath.Join(directory, "lint.c"), planted, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, "lint.c"), planted, 0o644); writeError != nil {
 			return writeError
 		}
 		return native.Build(string(planted), filepath.Join(directory, "lint"), options)

@@ -421,7 +421,7 @@ func main() {
 		panic("usage: statecopy repository overlaid-lower.go output.go")
 	}
 	text := generate(os.Args[1], os.Args[2])
-	if writeError := os.WriteFile(os.Args[3], text, 0600); writeError != nil {
+	if writeError := os.WriteFile(os.Args[3], text, 0o600); writeError != nil {
 		panic(writeError)
 	}
 }

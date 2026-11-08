@@ -41,7 +41,7 @@ func TestGapStandsWhereGapsMdSays(test *testing.T) {
 	}
 	actual := execute(test, "", binary)
 	emitted := filepath.Join(test.TempDir(), "push.mjs")
-	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	backend := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted)

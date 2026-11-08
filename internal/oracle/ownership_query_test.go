@@ -63,7 +63,7 @@ func ownershipProgram(test *testing.T, path string) (string, run) {
 		}
 	}
 	script := filepath.Join(test.TempDir(), "main.mjs")
-	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if difference := disagreement(truth, onNode(test, script)); difference != "" {
@@ -100,7 +100,7 @@ func ownershipProduct(test *testing.T, tsan bool) string {
 			if writeError := os.WriteFile(
 				filepath.Join(directory, fmt.Sprintf("truth%d", index)),
 				truth.stdout,
-				0600,
+				0o600,
 			); writeError != nil {
 				return writeError
 			}

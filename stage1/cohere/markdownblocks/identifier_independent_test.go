@@ -107,7 +107,7 @@ func identifierScalarsLeaks(test *testing.T, callerContext context.Context, prod
 func identifierScalarsMutant(test *testing.T, callerContext context.Context, products pilotProducts, truth run) {
 	test.Helper()
 	scratch := test.TempDir()
-	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	for _, file := range []string{

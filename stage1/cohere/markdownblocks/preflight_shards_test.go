@@ -170,7 +170,7 @@ func runWholeDocumentPreflightShard(
 		}
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNBLOCKS_KEEP"); keep != "" {
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, fmt.Sprintf("shard-%03d-cases.jsonl", shard)), batch.Bytes())

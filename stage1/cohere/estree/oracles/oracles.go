@@ -182,13 +182,13 @@ func manifest(test *testing.T, cases []string) string {
 	var listing strings.Builder
 	for index, text := range cases {
 		path := filepath.Join(dir, fmt.Sprintf("%04d.ts", index))
-		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		listing.WriteString(path + "\n")
 	}
 	path := filepath.Join(dir, "manifest")
-	if writeError := os.WriteFile(path, []byte(listing.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(listing.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path
@@ -235,7 +235,7 @@ func estreeGoOracleBuild(test *testing.T, dir string) string {
 		test.Fatal(encodeError)
 	}
 	path := filepath.Join(dir, "overlay.json")
-	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -276,7 +276,7 @@ func AcceptanceMutantsOracle(test *testing.T) string {
 			if readError != nil {
 				return readError
 			}
-			return os.WriteFile(filepath.Join(directory, "oracle"), data, 0755)
+			return os.WriteFile(filepath.Join(directory, "oracle"), data, 0o755)
 		})
 		acceptanceOraclePath = filepath.Join(directory, "oracle")
 	})
@@ -300,7 +300,7 @@ func ScalarEdgesOracle(test *testing.T) string {
 			return encodeError
 		}
 		path := filepath.Join(dir, "overlay.json")
-		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -332,7 +332,7 @@ func SyntaxMutantsOracle(test *testing.T) string {
 		if readError != nil {
 			return readError
 		}
-		return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
+		return os.WriteFile(filepath.Join(dir, "oracle"), data, 0o755)
 	})
 }
 
@@ -349,7 +349,7 @@ func ThreePortMutantsOracle(test *testing.T) string {
 			return encodeError
 		}
 		path := filepath.Join(dir, "overlay.json")
-		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
@@ -395,7 +395,7 @@ func DeepMutantsFixture(test *testing.T) string {
 			list := manifest(test, []string{DeepMutantsInput})
 			// Shared setup has no deadline of its own. Loom bounds the entire unit.
 			output := oracleExecute(test, oracle, "--manifest", list)
-			return os.WriteFile(filepath.Join(dir, "want"), output, 0644)
+			return os.WriteFile(filepath.Join(dir, "want"), output, 0o644)
 		})
 	})
 	if deepMutantsFixturePrepared.directory == "" {
@@ -427,16 +427,16 @@ func CachedComparisonAnswers(test *testing.T, oracle string, cases []ComparisonI
 		answers := make([]ComparisonAnswer, len(cases))
 		for index, item := range cases {
 			subdir := filepath.Join(directory, fmt.Sprintf("case-%03d", index))
-			if createDirectoryError := os.Mkdir(subdir, 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(subdir, 0o755); createDirectoryError != nil {
 				return createDirectoryError
 			}
 			path := filepath.Join(subdir, item.Filename)
-			if writeError := os.WriteFile(path, []byte(item.Text), 0644); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(item.Text), 0o644); writeError != nil {
 				return writeError
 			}
 			if item.Audit {
 				list := filepath.Join(subdir, "manifest")
-				if writeError := os.WriteFile(list, []byte(path+"\n"), 0644); writeError != nil {
+				if writeError := os.WriteFile(list, []byte(path+"\n"), 0o644); writeError != nil {
 					return writeError
 				}
 				output, miscReferenceCommandError := miscReferenceCommand(test, oracle, "--audit", list, subdir)
@@ -464,7 +464,7 @@ func CachedComparisonAnswers(test *testing.T, oracle string, cases []ComparisonI
 		if encodeError != nil {
 			return encodeError
 		}
-		return os.WriteFile(filepath.Join(directory, "answers.json"), data, 0644)
+		return os.WriteFile(filepath.Join(directory, "answers.json"), data, 0o644)
 	})
 	data, readError := os.ReadFile(filepath.Join(directory, "answers.json"))
 	if readError != nil {
@@ -537,14 +537,14 @@ func CachedRecoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
 	}
 	directory := oracleProduct(test, inputs, func(directory string) error {
 		work := filepath.Join(directory, "run")
-		if createDirectoryError := os.MkdirAll(work, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(work, 0o755); createDirectoryError != nil {
 			return createDirectoryError
 		}
 		defer os.RemoveAll(work)
 		var names []string
 		for index, source := range sources {
 			name := fmt.Sprintf("input-%06d.ts", index)
-			if writeError := os.WriteFile(filepath.Join(work, name), []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(work, name), []byte(source), 0o644); writeError != nil {
 				return writeError
 			}
 			names = append(names, name)
@@ -552,7 +552,7 @@ func CachedRecoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
 		if writeError := os.WriteFile(
 			filepath.Join(work, "manifest"),
 			[]byte(strings.Join(names, "\n")+"\n"),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
@@ -573,7 +573,7 @@ func CachedRecoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
 		if runError != nil || stderr.Len() != 0 {
 			return fmt.Errorf("oracle answer: %v: %s", runError, &stderr)
 		}
-		return os.WriteFile(filepath.Join(directory, "answer"), answer, 0644)
+		return os.WriteFile(filepath.Join(directory, "answer"), answer, 0o644)
 	})
 	answer, readError := os.ReadFile(filepath.Join(directory, "answer"))
 	if readError != nil {

@@ -44,14 +44,14 @@ func TestInitializerUnitOwnership(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(directory, "table.a"),
 		[]byte("function next(n: number): number { return n; } export const table = ["+strings.Join(values, ",")+"];"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if writeError := os.WriteFile(
 		entry,
 		[]byte("import { table } from './table.a'; console.log(table.length.toString());"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

@@ -30,7 +30,7 @@ func serializationPort(test *testing.T) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "rules/no-debugger", name),
 			data,
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}

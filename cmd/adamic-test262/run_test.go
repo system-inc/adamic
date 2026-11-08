@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
         }
     }
 }
-`), 0600); writeError != nil {
+`), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if output, combinedOutputError := toolchain.Command(

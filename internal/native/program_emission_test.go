@@ -26,7 +26,7 @@ func programCompilerWitness(test *testing.T, source string, mutant func(string) 
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	run := func(env []string, name string, commandArguments ...string) ([]byte, []byte, error) {
@@ -63,7 +63,7 @@ func programCompilerWitness(test *testing.T, source string, mutant func(string) 
 		test.Fatal(lowerWithOptionsError)
 	}
 	js := filepath.Join(directory, "main.mjs")
-	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	got, diagnostic, runError := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)

@@ -17,7 +17,7 @@ func runRegExpLiteralInputNodeUnit(test *testing.T, target string) {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	path := filepath.Join(test.TempDir(), "literal.a")
-	if writeError := os.WriteFile(path, []byte(regexpLiteralInputSource), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(regexpLiteralInputSource), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	want := execute(test, "node", "-e", regexpLiteralInputSource)
@@ -66,7 +66,7 @@ func TestRegExpLiteralInputUnsafeNode(test *testing.T) {
 	if writeError := os.WriteFile(
 		path,
 		[]byte("console.log( /[\\q{Ss|x}]/iv.test('X') ? 'true' : 'false');"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

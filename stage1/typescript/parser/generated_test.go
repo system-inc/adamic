@@ -160,13 +160,13 @@ func TestGeneratedExpressionsAgree(test *testing.T) {
 	var manifest strings.Builder
 	for index, source := range cases {
 		path := filepath.Join(directory, fmt.Sprintf("generated-%d.ts", index))
-		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		manifest.WriteString(path + "\n")
 	}
 	path := filepath.Join(directory, "manifest")
-	if writeError := os.WriteFile(path, []byte(manifest.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(manifest.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	oracle := goOracle(test)

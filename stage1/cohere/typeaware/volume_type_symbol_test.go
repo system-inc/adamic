@@ -302,7 +302,7 @@ func typeSymbolTruth(harness *harness, oracle string, paths []string, manifest s
 			return fmt.Errorf("oracle: %w %s", captureError, stderr)
 		}
 		// Each finding names its fixture in the fixtures product, by that product's key (#tqrqx60).
-		return os.WriteFile(filepath.Join(dir, "findings"), []byte(buildcache.Relative(string(stdout))), 0444)
+		return os.WriteFile(filepath.Join(dir, "findings"), []byte(buildcache.Relative(string(stdout))), 0o444)
 	})
 	truthBytes, readError := os.ReadFile(filepath.Join(outputDirectory, "findings"))
 	if readError != nil {

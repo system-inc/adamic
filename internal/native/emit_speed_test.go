@@ -43,7 +43,7 @@ func initializerWitness(test *testing.T, split bool, exceptions bool) {
 			"values.a",
 		): `export const values=[` + strings.Join(elements, ",") + `];console.log('values first');`,
 	} {
-		if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -77,7 +77,7 @@ func initializerCompiledWitness(test *testing.T, entry string, program *ir.Progr
 		test.Fatal(buildError)
 	}
 	js := filepath.Join(directory, "program.mjs")
-	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	run := func(command string, commandArguments ...string) []byte {

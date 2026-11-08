@@ -16,7 +16,7 @@ import (
 func namespaceGraphForTest(test *testing.T, source string) (*namespaceCallGraph, []*ast.Node) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "graph.a")
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loadError := load.Load([]string{path})

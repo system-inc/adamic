@@ -83,7 +83,7 @@ func mutantPortProduct(test *testing.T, mutation printerMutation, options native
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	return buildcache.Product(test, inputs, func(directory string) error {
 		source := filepath.Join(directory, "source")
-		if createDirectoryError := os.Mkdir(source, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(source, 0o755); createDirectoryError != nil {
 			return createDirectoryError
 		}
 		if buildJsonLoweredPortMutationError := buildJsonLoweredPortMutation(

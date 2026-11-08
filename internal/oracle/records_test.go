@@ -191,7 +191,7 @@ func TestRecordPrototypeMutant(test *testing.T) {
 	end := strings.Index(code[start:], "const adamicRecordHas =") + start
 	mutated := code[:start] + "const adamicRecordGet = (record,key) => record[key];\n" + code[end:]
 	file := filepath.Join(test.TempDir(), "mutant.mjs")
-	if writeError := os.WriteFile(file, []byte(mutated), 0644); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(mutated), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	got, want := onNode(test, file), onJavaScriptBackend(test, program)
@@ -255,7 +255,7 @@ func TestRecordCoalesceMutant(test *testing.T) {
 		test.Fatal("mutant changed no coalescing write")
 	}
 	file := filepath.Join(test.TempDir(), "mutant.mjs")
-	if writeError := os.WriteFile(file, []byte(changed), 0644); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(changed), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	got := onNode(test, file)
@@ -286,7 +286,7 @@ func TestRecordNarrowingMutant(test *testing.T) {
 		test.Fatal("mutant changed no narrowed read check")
 	}
 	file := filepath.Join(test.TempDir(), "mutant.mjs")
-	if writeError := os.WriteFile(file, []byte(changed), 0644); writeError != nil {
+	if writeError := os.WriteFile(file, []byte(changed), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	got, want := onNode(test, file), onJavaScriptBackend(test, program)

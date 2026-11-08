@@ -197,7 +197,7 @@ func (mainEngine *engine) runFilter(filter string, limit int, classifyOnly bool)
 		// Preserve the serial artifact path when there is just one worker.
 		if jobs > 1 {
 			local.work = filepath.Join(mainEngine.work, fmt.Sprintf("worker-%d", worker))
-			if createDirectoryError := os.MkdirAll(local.work, 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(local.work, 0o755); createDirectoryError != nil {
 				return report, createDirectoryError
 			}
 		}
@@ -253,19 +253,19 @@ func (mainEngine *engine) attempt(test classified) result {
 	defer profile.finish()
 	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}
 	directory := mainEngine.programDirectory(test)
-	if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o700); createDirectoryError != nil {
 		// A broken observation cache must not prevent the uncached program from running.
 		directory = mainEngine.work
-		if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0o700); createDirectoryError != nil {
 			base.Kind = outcomeCrashed
 			base.Reason = createDirectoryError.Error()
 			return base
 		}
 	}
-	lock, err := os.OpenFile(filepath.Join(directory, ".lock"), os.O_CREATE|os.O_RDWR, 0600)
+	lock, err := os.OpenFile(filepath.Join(directory, ".lock"), os.O_CREATE|os.O_RDWR, 0o600)
 	if err != nil && directory != mainEngine.work {
 		directory = mainEngine.work
-		lock, err = os.OpenFile(filepath.Join(directory, ".lock"), os.O_CREATE|os.O_RDWR, 0600)
+		lock, err = os.OpenFile(filepath.Join(directory, ".lock"), os.O_CREATE|os.O_RDWR, 0o600)
 	}
 	if err != nil {
 		base.Kind = outcomeCrashed

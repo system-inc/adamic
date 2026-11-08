@@ -95,7 +95,7 @@ func workerJsonProduct(test *testing.T, key string, build bool) string {
 			source = append(source, []byte(
 				"\nimport type { HttpRequest, HttpResponse } from 'adamic/http';\nexport function handle(request: HttpRequest): HttpResponse { return {status:200,headers:[],body:request.body}; }\n",
 			)...)
-			if writeError := os.WriteFile(entry, source, 0644); writeError != nil {
+			if writeError := os.WriteFile(entry, source, 0o644); writeError != nil {
 				return writeError
 			}
 		}

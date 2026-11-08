@@ -39,7 +39,7 @@ func stdoutRuntimeMutant(test *testing.T, fixture, before, after, catcher string
 			}
 			data = []byte(strings.Replace(string(data), before, after, 1))
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

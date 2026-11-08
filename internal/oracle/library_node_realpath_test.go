@@ -17,16 +17,16 @@ import (
 func realpathDirectory(test *testing.T) string {
 	test.Helper()
 	root := test.TempDir()
-	if createDirectoryError := os.Mkdir(filepath.Join(root, "dir"), 0700); createDirectoryError != nil {
+	if createDirectoryError := os.Mkdir(filepath.Join(root, "dir"), 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	for _, name := range []string{"file", "café-雪"} {
-		if writeError := os.WriteFile(filepath.Join(root, "dir", name), []byte("data"), 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(root, "dir", name), []byte("data"), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
 	// The NUL mutant must resolve the truncated path, rather than fail ENOENT.
-	if writeError := os.WriteFile(filepath.Join(root, "a"), []byte("data"), 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(root, "a"), []byte("data"), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	for name, target := range map[string]string{
@@ -80,7 +80,7 @@ func realpathAgreement(test *testing.T, name string) {
 		test.Fatal(buildError)
 	}
 	script := filepath.Join(test.TempDir(), "program.mjs")
-	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	for backend, got := range map[string]run{

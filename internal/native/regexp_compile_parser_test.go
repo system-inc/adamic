@@ -95,7 +95,7 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 	)
 	directory := test.TempDir()
 	main := filepath.Join(directory, "main.c")
-	if writeError := os.WriteFile(main, []byte(source.String()), 0600); writeError != nil {
+	if writeError := os.WriteFile(main, []byte(source.String()), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	runtimeDirectory, _ := filepath.Abs("runtime")
@@ -165,7 +165,7 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 			1,
 		)
 		replacement := filepath.Join(directory, "parser-mutant.c")
-		if writeError := os.WriteFile(replacement, data, 0600); writeError != nil {
+		if writeError := os.WriteFile(replacement, data, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		for index, argument := range commandArguments {

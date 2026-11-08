@@ -38,7 +38,7 @@ p.mark('x'); p.measure('x'); p.clearMarks();
 console.log(String(p.now()>=0));
 `
 	path := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)
@@ -61,7 +61,7 @@ func TestNodeProcessPerformanceOptionsMutant_001(test *testing.T) {
 func nodeProcessPerformanceOptionsMutant(test *testing.T, shard int) {
 	source := `import {performance} from 'node:perf_hooks'; const p=performance; const m=p.measure('x',{start:0,end:0}); console.log(String(m.duration===0));`
 	path := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	_, loweredError := lowered(test, path)
@@ -74,7 +74,7 @@ func nodeProcessPerformanceOptionsMutant(test *testing.T, shard int) {
 	if writeError := os.WriteFile(
 		mutantPath,
 		[]byte(strings.Replace(source, ",{start:0,end:0}", "", 1)),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -118,7 +118,7 @@ func TestNodeProcessPerformanceMutationMutant_001(test *testing.T) {
 func nodeProcessPerformanceMutationMutant(test *testing.T, shard int) {
 	source := `import {performance} from 'node:perf_hooks'; const p:{now:()=>number}=performance; p.now=()=>-1; console.log(String(performance.now()===-1));`
 	path := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	_, loweredError := lowered(test, path)

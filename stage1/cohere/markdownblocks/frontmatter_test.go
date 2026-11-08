@@ -203,7 +203,10 @@ func TestFrontMatterStage(test *testing.T) {
 				}
 				write(test, filepath.Join(scratch, name), source)
 			}
-			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(scratch, "testdata"),
+				0o755,
+			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 			source, readError := os.ReadFile(main)

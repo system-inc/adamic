@@ -221,21 +221,21 @@ func TestDebugTwoDirectories(test *testing.T) {
 				path := filepath.Join(test.TempDir(), "fixture.a")
 				if createDirectoryError := os.Mkdir(
 					filepath.Join(filepath.Dir(path), "lib"),
-					0755,
+					0o755,
 				); createDirectoryError != nil {
 					test.Fatal(createDirectoryError)
 				}
 				if writeError := os.WriteFile(
 					filepath.Join(filepath.Dir(path), "lib", "value.a"),
 					[]byte("export function f(n: number): number { return n + 1; }\n"),
-					0644,
+					0o644,
 				); writeError != nil {
 					test.Fatal(writeError)
 				}
 				if writeError := os.WriteFile(
 					path,
 					[]byte("import { f } from './lib/value.a';\nconsole.log((f(4)).toString());\n"),
-					0644,
+					0o644,
 				); writeError != nil {
 					test.Fatal(writeError)
 				}
@@ -338,7 +338,7 @@ func TestDebugCounterType(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "counter.a")
 	if writeError := os.WriteFile(path, []byte(
 		"function sum(n: number): number { let total = 0; for (let i = 0; i < 10; i++) { total += i; } return total + n; }\nconsole.log((sum(2)).toString());\n",
-	), 0644); writeError != nil {
+	), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	for _, debug := range []bool{false, true} {

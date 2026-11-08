@@ -58,7 +58,7 @@ int main(void) {
 		directory := test.TempDir()
 		path := filepath.Join(directory, "probe.c")
 		binary := filepath.Join(directory, "probe")
-		if writeError := os.WriteFile(path, []byte(harness), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(harness), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		ctx, command := bounded(

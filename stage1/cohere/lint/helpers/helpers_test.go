@@ -152,7 +152,7 @@ func smallFixture(test *testing.T, corpus any) string {
 		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "cases.json")
-	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path

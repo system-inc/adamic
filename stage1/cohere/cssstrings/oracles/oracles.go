@@ -93,7 +93,7 @@ func runOracle(
 	path string,
 	bounded bool,
 ) ([]byte, error) {
-	if writeError := os.WriteFile(path, input, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, input, 0o644); writeError != nil {
 		return nil, writeError
 	}
 	defer os.Remove(path)
@@ -146,7 +146,7 @@ func FullAnswers(test *testing.T, binary string, commandArguments []string, data
 		if runOracleError != nil {
 			return runOracleError
 		}
-		return os.WriteFile(filepath.Join(dir, "answers.txt"), out, 0644)
+		return os.WriteFile(filepath.Join(dir, "answers.txt"), out, 0o644)
 	})
 	out, readError := os.ReadFile(filepath.Join(dir, "answers.txt"))
 	if readError != nil {
@@ -189,7 +189,7 @@ func answersDirectory(test *testing.T, state *answerProduct, name, binary, ident
 							true,
 						)
 						if err == nil {
-							err = os.WriteFile(filepath.Join(dir, answerCase.File), out, 0644)
+							err = os.WriteFile(filepath.Join(dir, answerCase.File), out, 0o644)
 						}
 						if err != nil {
 							failures <- err
@@ -292,7 +292,7 @@ func Printer(test *testing.T) string {
 		test.Fatal(encodeError)
 	}
 	overlayPath := filepath.Join(test.TempDir(), "overlay.json")
-	if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	const output = "go-printer-oracle-owner-v1"

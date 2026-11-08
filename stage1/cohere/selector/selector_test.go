@@ -100,7 +100,7 @@ func TestPostcssSelectorParserParsesAsGoCohereDoes(test *testing.T) {
 		test.Fatal(absolutePathError)
 	}
 	answersPath := filepath.Join(test.TempDir(), "go-answers.txt")
-	if writeError := os.WriteFile(answersPath, []byte(goAnswers), 0644); writeError != nil {
+	if writeError := os.WriteFile(answersPath, []byte(goAnswers), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	libraryRun := execute(test, nil, "node", script, library, casesPath, answersPath)
@@ -421,7 +421,7 @@ func TestSelectorThroughput(test *testing.T) {
 	}
 	count := strings.Count(answers, "case ") * 10
 	answersPath := filepath.Join(test.TempDir(), "answers.txt")
-	if writeError := os.WriteFile(answersPath, []byte(answers), 0644); writeError != nil {
+	if writeError := os.WriteFile(answersPath, []byte(answers), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	script, _ := filepath.Abs(filepath.Join("testdata", "library.mjs"))
@@ -491,10 +491,10 @@ func TestCorpusKeepsEveryParseableFile(test *testing.T) {
 		excluded:             "a {.bordered();}",
 	} {
 		path := filepath.Join(root, name)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -515,7 +515,7 @@ func TestCorpusKeepsEveryParseableFile(test *testing.T) {
 		if encodeError != nil {
 			test.Fatal(encodeError)
 		}
-		if writeError := os.WriteFile(fileList, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(fileList, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -535,7 +535,7 @@ func TestCorpusKeepsEveryParseableFile(test *testing.T) {
 		test.Fatalf("expected CSS error was not counted: %s", result.stdout)
 	}
 	// A file not named by the Git manifest cannot silently join the corpus.
-	if writeError := os.WriteFile(filepath.Join(root, "unlisted.css"), []byte(".stray {}"), 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(root, "unlisted.css"), []byte(".stray {}"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	unchanged := execute(test, nil, "node", script, library, "corpus", root, corpus, "", fileList)
@@ -545,7 +545,7 @@ func TestCorpusKeepsEveryParseableFile(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(root, excluded),
 		[]byte(".newly-parseable {}"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -553,13 +553,13 @@ func TestCorpusKeepsEveryParseableFile(test *testing.T) {
 	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "expected CSS error became parseable") {
 		test.Fatalf("parseable exclusion was omitted: exit %d, %s", result.exitCode, result.stderr)
 	}
-	if writeError := os.WriteFile(filepath.Join(root, excluded), []byte("a {.bordered();}"), 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(root, excluded), []byte("a {.bordered();}"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if writeError := os.WriteFile(
 		filepath.Join(root, "unexpected.css"),
 		[]byte("a {.bordered();}"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

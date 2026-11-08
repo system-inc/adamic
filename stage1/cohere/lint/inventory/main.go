@@ -24,7 +24,7 @@ func main() {
 	if !filepath.IsAbs(destination) {
 		destination = filepath.Join(absolute, destination)
 	}
-	must(os.MkdirAll(destination, 0755))
+	must(os.MkdirAll(destination, 0o755))
 	scratch, temporaryDirectoryError := os.MkdirTemp("", "adamic-lint-inventory-")
 	must(temporaryDirectoryError)
 	// Keep scratch paths in the log for inspection. Never remove another worker's files.
@@ -35,7 +35,7 @@ func main() {
 	overlay := filepath.Join(scratch, "build-overlay.json")
 	data, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{virtual: engine}})
 	must(encodeError)
-	must(os.WriteFile(overlay, data, 0644))
+	must(os.WriteFile(overlay, data, 0o644))
 	binary := filepath.Join(scratch, "inventory-engine")
 	run(cohere, filepath.Join(destination, "build.log"), nil, "go", "build", "-overlay="+overlay, "-o", binary, virtual)
 	commandArguments := []string{"-root", absolute, "-output", destination, "-compiler", *compiler}

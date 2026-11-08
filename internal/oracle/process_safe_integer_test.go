@@ -52,7 +52,7 @@ func processExitSafeInteger(test *testing.T, shard int) {
 			value,
 		)
 		path := filepath.Join(test.TempDir(), "main.a")
-		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		truth := onNodeWith(test, inputRun{}, path)

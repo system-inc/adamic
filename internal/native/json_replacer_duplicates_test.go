@@ -97,7 +97,7 @@ func jsonReplacerDedupMutant(test *testing.T, fixture string) {
 	directory := test.TempDir()
 	main := filepath.Join(directory, "main.c")
 	binary := filepath.Join(directory, "mutant")
-	if writeError := os.WriteFile(main, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(main, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(library), main, "-o", binary)

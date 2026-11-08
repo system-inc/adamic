@@ -411,7 +411,7 @@ func staticsRaceLibrary(test *testing.T, mutantFile, old, changed string) (strin
 				))
 			}
 		}
-		if writeError := os.WriteFile(filepath.Join(root, filepath.Base(file)), source, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(root, filepath.Base(file)), source, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -419,7 +419,7 @@ func staticsRaceLibrary(test *testing.T, mutantFile, old, changed string) (strin
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	if writeError := os.WriteFile(filepath.Join(root, "tsgo.h"), header, 0600); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(root, "tsgo.h"), header, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	filesSnapshot, readRuntimeError := readRuntime(os.DirFS(root), ".")
@@ -558,7 +558,7 @@ func staticsRaceFixture(test *testing.T, root, library, fixture string) string {
 	flags := staticsRaceFlags()
 	if fixture == "shape_types_contended" {
 		source = filepath.Join(test.TempDir(), "shape_types.c")
-		if writeError := os.WriteFile(source, []byte(staticsShapeTypesContended), 0600); writeError != nil {
+		if writeError := os.WriteFile(source, []byte(staticsShapeTypesContended), 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		flags = append(flags, "-I", "testdata/runtime-statics")

@@ -60,10 +60,10 @@ func programNodeApi(test *testing.T) string {
 		if readError != nil {
 			return readError
 		}
-		if createDirectoryError := os.MkdirAll(filepath.Join(directory, "lib"), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Join(directory, "lib"), 0o755); createDirectoryError != nil {
 			return createDirectoryError
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, "lib/typescript.js"), data, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, "lib/typescript.js"), data, 0o644); writeError != nil {
 			return writeError
 		}
 		return nil

@@ -187,7 +187,7 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 				expected = append([]byte("planted wrong case\n"), expected...)
 			}
 			observations := filepath.Join(test.TempDir(), "expected.txt")
-			if writeError := os.WriteFile(observations, expected, 0600); writeError != nil {
+			if writeError := os.WriteFile(observations, expected, 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			test.Log(string(run(
@@ -255,7 +255,7 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 					expected = append(expected, run(native, part, strconv.Itoa(original))...)
 				}
 				observations := filepath.Join(test.TempDir(), "expected.txt")
-				if writeError := os.WriteFile(observations, expected, 0600); writeError != nil {
+				if writeError := os.WriteFile(observations, expected, 0o600); writeError != nil {
 					test.Fatal(writeError)
 				}
 				command := exec.CommandContext(

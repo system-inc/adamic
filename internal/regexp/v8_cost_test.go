@@ -153,7 +153,7 @@ func TestV8RefusalCost(test *testing.T) {
 		if encodeError != nil {
 			test.Fatal(encodeError)
 		}
-		if writeError := os.WriteFile(path, append(text, '\n'), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, append(text, '\n'), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

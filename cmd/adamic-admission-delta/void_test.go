@@ -226,7 +226,7 @@ func TestUnrecognisedCompilerErrorStaysRed(test *testing.T) {
 	if writeError := os.WriteFile(
 		filepath.Join(dir, "corpus/slow.a"),
 		[]byte("console.log('slow');\n"),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

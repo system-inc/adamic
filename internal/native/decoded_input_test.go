@@ -117,7 +117,7 @@ func decodedBackendProduct(test *testing.T) string {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, "program.mjs"),
 			[]byte(javascript.JavaScript(lowered)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
@@ -129,7 +129,7 @@ func TestProduct_DecodedInputBackends(test *testing.T) { test.Parallel(); decode
 func checkDecodedInput(test *testing.T, data []byte) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "source.a")
-	if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+	if writeError := os.WriteFile(path, data, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	script := `const fs=require('node:fs');const s=fs.readFileSync(process.argv[1],'utf8');console.log([s.length,...Array.from({length:s.length},(_,i)=>s.charCodeAt(i))].join(' '));`

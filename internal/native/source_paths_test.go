@@ -29,10 +29,10 @@ func debugPathFixture(test *testing.T, root string) string {
 			"value.a",
 		): "export function imported(n: number): number {\n if (n > 0) return imported(n - 1) + n;\n return n + 2;\n}\n",
 	} {
-		if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(name, []byte(contents), 0644); writeError != nil {
+		if writeError := os.WriteFile(name, []byte(contents), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -168,10 +168,10 @@ func checkDebugSourcePaths(test *testing.T, split bool) {
 	entry := debugPathFixture(test, test.TempDir())
 	for _, relative := range []string{"main.c", "runtime/adamic.h"} {
 		path := filepath.Join(filepath.Dir(entry), relative)
-		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		if writeError := os.WriteFile(path, []byte("decoy, never generated code\n"), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte("decoy, never generated code\n"), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}

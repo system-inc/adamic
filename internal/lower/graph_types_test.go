@@ -113,13 +113,13 @@ show({visible:1});`, "Object.entries(view)", "a dynamic-shape object in a graph 
 			main := filepath.Join(directory, "main"+extension)
 			cause := filepath.Join(directory, "cause"+extension)
 			source := "// The offending node is in an imported module.\n\n" + probe.source + "\nexport {};\n"
-			if writeError := os.WriteFile(cause, []byte(source), 0600); writeError != nil {
+			if writeError := os.WriteFile(cause, []byte(source), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			if writeError := os.WriteFile(
 				main,
 				[]byte("import './cause"+extension+"';\n"+graphReviewCycle),
-				0600,
+				0o600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}

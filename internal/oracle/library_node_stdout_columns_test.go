@@ -197,7 +197,7 @@ void __wrap_adamic_async_run(void) {
 		return os.WriteFile(
 			filepath.Join(directory, "resolved-await.mjs"),
 			[]byte(javascript.JavaScript(program)),
-			0600,
+			0o600,
 		)
 	})
 }

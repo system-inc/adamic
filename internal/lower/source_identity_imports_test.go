@@ -100,7 +100,7 @@ func TestStableImportEqualsRouteBindings(test *testing.T) {
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if writeError := os.WriteFile(target, model, 0600); writeError != nil {
+		if writeError := os.WriteFile(target, model, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		specifier := "./model.a"
@@ -111,7 +111,7 @@ func TestStableImportEqualsRouteBindings(test *testing.T) {
 		if writeError := os.WriteFile(
 			entry,
 			[]byte("import type "+binding+" = require("+strconv.Quote(specifier)+");"),
-			0600,
+			0o600,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}

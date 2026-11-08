@@ -113,7 +113,7 @@ func factoryHooksDirectory(test *testing.T) string {
 func factoryHooksManifest(test *testing.T, directory string, rows []string) string {
 	test.Helper()
 	path := filepath.Join(directory, "manifest")
-	if writeError := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path
@@ -155,7 +155,7 @@ func factoryHooksPrepare(test *testing.T, mutated bool) (string, string) {
 		1,
 	)
 	source = "import { panic } from 'adamic';\n" + source
-	if writeError := os.WriteFile(module, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(module, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	descriptor := filepath.Join(directory, "rules/no-debugger/rule.json")
@@ -174,7 +174,7 @@ func factoryHooksPrepare(test *testing.T, mutated bool) (string, string) {
 		if encodeError != nil {
 			test.Fatal(encodeError)
 		}
-		if writeError := os.WriteFile(descriptor, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(descriptor, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -183,7 +183,7 @@ func factoryHooksPrepare(test *testing.T, mutated bool) (string, string) {
 	}
 	write()
 	fixture := filepath.Join(directory, "hooks.ts")
-	if writeError := os.WriteFile(fixture, []byte("debugger;\n"), 0644); writeError != nil {
+	if writeError := os.WriteFile(fixture, []byte("debugger;\n"), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	path := factoryHooksManifest(
@@ -282,11 +282,11 @@ func factoryHooksLowered(test *testing.T, callerContext context.Context, index i
 			if writeError := os.WriteFile(
 				filepath.Join(destination, "lint.mjs"),
 				[]byte(javascript.JavaScript(lowered)),
-				0644,
+				0o644,
 			); writeError != nil {
 				return writeError
 			}
-			return os.WriteFile(filepath.Join(destination, "lint.c"), []byte(native.C(lowered)), 0644)
+			return os.WriteFile(filepath.Join(destination, "lint.c"), []byte(native.C(lowered)), 0o644)
 		})
 		value.path = filepath.Join(product, "lint.mjs")
 	})

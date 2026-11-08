@@ -38,7 +38,7 @@ func TestHostStatusMutants(test *testing.T) {
 				test.Parallel()
 				root := test.TempDir()
 				directory := filepath.Join(root, "host")
-				if createDirectoryError := os.Mkdir(directory, 0700); createDirectoryError != nil {
+				if createDirectoryError := os.Mkdir(directory, 0o700); createDirectoryError != nil {
 					test.Fatal(createDirectoryError)
 				}
 				row := rows[index]
@@ -46,7 +46,7 @@ func TestHostStatusMutants(test *testing.T) {
 				if readError != nil {
 					test.Fatal(readError)
 				}
-				if writeError := os.WriteFile(filepath.Join(directory, row.File), source, 0600); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(directory, row.File), source, 0o600); writeError != nil {
 					test.Fatal(writeError)
 				}
 				switch mutation {
@@ -62,7 +62,7 @@ func TestHostStatusMutants(test *testing.T) {
 				if writeError := os.WriteFile(
 					filepath.Join(directory, "status.json"),
 					encoded,
-					0600,
+					0o600,
 				); writeError != nil {
 					test.Fatal(writeError)
 				}

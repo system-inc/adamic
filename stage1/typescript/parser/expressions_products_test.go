@@ -78,7 +78,7 @@ func expressionSource(test *testing.T, index int) string {
 				if readError != nil {
 					return readError
 				}
-				if writeError := os.WriteFile(filepath.Join(dir, name), data, 0644); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(dir, name), data, 0o644); writeError != nil {
 					return writeError
 				}
 			}
@@ -267,13 +267,13 @@ func TestExpressionsAgree(test *testing.T) {
 	var manifest strings.Builder
 	for index, text := range cases {
 		path := filepath.Join(dir, fmt.Sprintf("case-%d.ts", index))
-		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		manifest.WriteString(path + "\n")
 	}
 	path := filepath.Join(dir, "manifest")
-	if writeError := os.WriteFile(path, []byte(manifest.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(manifest.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	oracle := products.oracle

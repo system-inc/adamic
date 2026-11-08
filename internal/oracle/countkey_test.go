@@ -18,11 +18,11 @@ func TestCountDigestIgnoresSourceDirectory(test *testing.T) {
 		test.Fatal(absolutePathError)
 	}
 	digest := func(directory string) string {
-		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		path := filepath.Join(directory, "witness.ts")
-		if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		relative, relativePathError := filepath.Rel(root, path)

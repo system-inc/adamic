@@ -72,14 +72,14 @@ func TestRunMergesAManifestThatOpensAProgram(test *testing.T) {
 	script := "#!/bin/sh\n" +
 		"shard=$4\n" +
 		"awk -v shard_index=\"${shard%/*}\" -v shard_count=\"${shard#*/}\" 'BEGIN { cases = 0 } $0 == \"\" { next } /^program / { next } { if (cases % shard_count == shard_index) print \"case \" cases; cases++ }' \"$2\"\n"
-	if writeError := os.WriteFile(driver, []byte(script), 0755); writeError != nil {
+	if writeError := os.WriteFile(driver, []byte(script), 0o755); writeError != nil {
 		test.Fatal(writeError)
 	}
 	manifest := filepath.Join(directory, "manifest.txt")
 	if writeError := os.WriteFile(
 		manifest,
 		[]byte("program /repository/tsconfig.json\na.ts\tall\n\nb.ts\tall\nc.ts\tall\n"),
-		0644,
+		0o644,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

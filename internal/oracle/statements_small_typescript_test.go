@@ -27,7 +27,7 @@ func statementsSmallTypeScript(test *testing.T, path string) string {
 		test.Fatal(readError)
 	}
 	typed := filepath.Join(test.TempDir(), strings.TrimSuffix(filepath.Base(path), ".a")+".ts")
-	if writeError := os.WriteFile(typed, source, 0644); writeError != nil {
+	if writeError := os.WriteFile(typed, source, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return typed

@@ -85,7 +85,7 @@ func TestNodeProcessOsNamespace(test *testing.T) {
 	if writeError := os.WriteFile(
 		javascriptMutant,
 		[]byte(strings.ReplaceAll(string(data), `"\n"`, `"\r\n"`)),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}

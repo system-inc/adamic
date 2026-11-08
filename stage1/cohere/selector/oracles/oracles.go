@@ -174,7 +174,7 @@ func selectorAnswers(test *testing.T, seed int64, generated int, root string, fi
 			if encodeError != nil {
 				return encodeError
 			}
-			if writeError := os.WriteFile(fileList, encoded, 0644); writeError != nil {
+			if writeError := os.WriteFile(fileList, encoded, 0o644); writeError != nil {
 				return writeError
 			}
 			command := toolchain.CommandIn("", "node", script, library, "corpus", root, corpus, testTexts, fileList)

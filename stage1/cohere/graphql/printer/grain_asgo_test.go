@@ -330,7 +330,7 @@ func printerShardFile(test *testing.T, shard printerShard) string {
 		protocol.WriteString(item.input + "\n")
 	}
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(protocol.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(protocol.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path

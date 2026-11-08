@@ -60,7 +60,7 @@ func wasiFileAdapter(test *testing.T, index int, wasm bool) {
 	probe := wasiFileAdapters[index]
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := `import * as fs from 'node:fs'; try {` + probe.node + `} catch(error) {console.log(error.code);}`
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{}, path)
@@ -132,7 +132,7 @@ func TestWasiHostBuildBoundaryNodeMutant(test *testing.T) {
 	if writeError := os.WriteFile(
 		path,
 		[]byte(`import process from 'node:process'; console.log(process.pid > 0 ? "true" : "false");`),
-		0600,
+		0o600,
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
@@ -193,7 +193,7 @@ func TestWasiHostTimestampPrecisionNodeMutant(test *testing.T) {
 	path := filepath.Join(directory, "main.a")
 	if writeError := os.WriteFile(path, []byte(
 		`import * as fs from 'node:fs'; const path=process.argv[2]; fs.writeFileSync(path,''); fs.utimesSync(path,1000.5,1000.5); console.log(fs.statSync(path).mtimeMs === 1000500 ? 'true' : 'false');`,
-	), 0600); writeError != nil {
+	), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{arguments: []string{file}}, path)

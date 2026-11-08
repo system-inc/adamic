@@ -68,7 +68,7 @@ func formatfilesPreparePort(test *testing.T, applied *mutant) formatfilesPrepare
 		if writeError := os.WriteFile(
 			prepared.javascript,
 			[]byte(javascript.JavaScript(prepared.program)),
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -278,7 +278,7 @@ func init() {
 
 func formatfilesBuildNative(test *testing.T, source, output string, sanitize bool) error {
 	path := filepath.Join(filepath.Dir(output), "program.c")
-	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		return writeError
 	}
 	command := formatfilesContextCommand(test.Context(), os.Args[0])

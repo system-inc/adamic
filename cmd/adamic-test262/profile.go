@@ -93,5 +93,5 @@ func (profile *runProfile) write(path string) error {
 	if encodeError != nil {
 		return encodeError
 	}
-	return os.WriteFile(path, append(data, '\n'), 0600)
+	return os.WriteFile(path, append(data, '\n'), 0o600)
 }

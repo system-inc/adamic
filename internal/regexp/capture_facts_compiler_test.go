@@ -81,7 +81,7 @@ func TestCaptureFactsCompilerTable(test *testing.T) {
 		if encodeError != nil {
 			test.Fatal(encodeError)
 		}
-		if writeError := os.WriteFile("testdata/capture-tsc.json", append(data, '\n'), 0644); writeError != nil {
+		if writeError := os.WriteFile("testdata/capture-tsc.json", append(data, '\n'), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		return

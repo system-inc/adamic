@@ -104,7 +104,7 @@ func (local *harness) stage0() string {
 func (local *harness) child(test *testing.T) *harness {
 	test.Helper()
 	directory := filepath.Join(local.directory, filepath.Base(test.Name()))
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	return &harness{t: test, repository: local.repository, directory: directory, parallel: true}
@@ -128,7 +128,7 @@ func TestSharedProductPublication(test *testing.T) {
 				builds++
 				lock.Unlock()
 				path := filepath.Join(directory, "ready")
-				return path, os.WriteFile(path, []byte("complete"), 0644)
+				return path, os.WriteFile(path, []byte("complete"), 0o644)
 			})
 			if sharedProductError != nil {
 				test.Error(sharedProductError)

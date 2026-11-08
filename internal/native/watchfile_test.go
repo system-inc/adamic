@@ -239,21 +239,25 @@ func TestWatchFileProductKeyIncludesItsHarness(test *testing.T) {
 	inputs.Files = []string{harness}
 	root := test.TempDir()
 	path := filepath.Join(root, harness)
-	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	code, readError := os.ReadFile("testdata/watchfile/hooks.c")
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	if writeError := os.WriteFile(path, code, 0600); writeError != nil {
+	if writeError := os.WriteFile(path, code, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	before, keyError := buildcache.Key(root, inputs)
 	if keyError != nil {
 		test.Fatal(keyError)
 	}
-	if writeError := os.WriteFile(path, append(code, []byte("\n/* changed harness */\n")...), 0600); writeError != nil {
+	if writeError := os.WriteFile(
+		path,
+		append(code, []byte("\n/* changed harness */\n")...),
+		0o600,
+	); writeError != nil {
 		test.Fatal(writeError)
 	}
 	after, keyError := buildcache.Key(root, inputs)

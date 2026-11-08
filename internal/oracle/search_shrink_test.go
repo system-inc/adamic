@@ -132,7 +132,7 @@ func searchShrinkOnNode(test *testing.T, path string) run {
 func searchShrinkJavaScript(test *testing.T, script string) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if writeError := os.WriteFile(path, []byte(script), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(script), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return searchShrinkOnNode(test, path)
@@ -240,7 +240,7 @@ func checkSearchShrinkMutant(test *testing.T, mutant string) {
 	}
 	nativeRun := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	jsPath := filepath.Join(test.TempDir(), "mutant.mjs")
-	if writeError := os.WriteFile(jsPath, []byte(script), 0600); writeError != nil {
+	if writeError := os.WriteFile(jsPath, []byte(script), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	for backend, got := range map[string]run{"native": nativeRun, "javascript": searchShrinkOnNode(test, jsPath)} {

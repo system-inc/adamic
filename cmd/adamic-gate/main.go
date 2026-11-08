@@ -688,10 +688,10 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if root == repo || strings.HasPrefix(root, repo+string(os.PathSeparator)) {
 		return errors.New("scratch must be outside repository corpus")
 	}
-	if createDirectoryError := os.MkdirAll(root, 0777); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(root, 0o777); createDirectoryError != nil {
 		return createDirectoryError
 	}
-	if changeModeError := os.Chmod(root, 0777|os.ModeSticky); changeModeError != nil {
+	if changeModeError := os.Chmod(root, 0o777|os.ModeSticky); changeModeError != nil {
 		return changeModeError
 	}
 	resolved, resolveSymlinksError := filepath.EvalSymlinks(root)
@@ -732,10 +732,10 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	} else if !os.IsNotExist(statError) {
 		return statError
 	}
-	if createDirectoryError := os.MkdirAll(out, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(out, 0o755); createDirectoryError != nil {
 		return createDirectoryError
 	}
-	lock, openError := os.OpenFile(filepath.Join(out, ".lock"), os.O_CREATE|os.O_RDWR, 0600)
+	lock, openError := os.OpenFile(filepath.Join(out, ".lock"), os.O_CREATE|os.O_RDWR, 0o600)
 	if openError != nil {
 		return openError
 	}
@@ -797,7 +797,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if temporaryDirectoryError != nil {
 			return temporaryDirectoryError
 		}
-		os.Chmod(temp, 0755)
+		os.Chmod(temp, 0o755)
 		formatPath := filepath.Join(out, "gofmt.log")
 		file, createError := os.Create(formatPath)
 		if createError != nil {
@@ -877,7 +877,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 				continue
 			}
 		}
-		if createDirectoryError := os.MkdirAll(packageDirectory, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(packageDirectory, 0o755); createDirectoryError != nil {
 			return createDirectoryError
 		}
 		packageLog, err := os.Create(filepath.Join(packageDirectory, "test.jsonl.partial"))
@@ -893,7 +893,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if err != nil {
 			return err
 		}
-		if changeModeError := os.Chmod(temporary, 0755); changeModeError != nil {
+		if changeModeError := os.Chmod(temporary, 0o755); changeModeError != nil {
 			return changeModeError
 		}
 		if atomicJsonError := atomicJson(
@@ -1283,7 +1283,7 @@ func merge(dirs []string, out string) error {
 	if _, statError := os.Stat(out); statError == nil {
 		return errors.New("merged output already exists")
 	}
-	if createDirectoryError := os.MkdirAll(out, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(out, 0o755); createDirectoryError != nil {
 		return createDirectoryError
 	}
 	if saveJsonError := saveJson(filepath.Join(out, "merged.json"), merged); saveJsonError != nil {

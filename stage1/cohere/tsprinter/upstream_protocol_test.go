@@ -105,7 +105,7 @@ func TestTscCorpusUpstreamDifferences(test *testing.T) {
 		}
 		data, _ := json.Marshal(cases)
 		specs := filepath.Join(test.TempDir(), "cases.json")
-		if writeError := os.WriteFile(specs, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(specs, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		npm, _ := filepath.Abs("testdata/expressions.mjs")

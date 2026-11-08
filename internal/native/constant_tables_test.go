@@ -30,7 +30,7 @@ func constantTableConfiguredWitness(
 	test.Helper()
 	directory := test.TempDir()
 	entry := filepath.Join(directory, "tables.a")
-	if writeError := os.WriteFile(entry, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(entry, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
@@ -72,7 +72,7 @@ func constantTableConfiguredWitness(
 		test.Fatalf("native %q Node %q", actual, truth)
 	}
 	js := filepath.Join(directory, "program.mjs")
-	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if actual, _ := run("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js); actual != truth {

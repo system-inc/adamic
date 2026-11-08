@@ -81,7 +81,7 @@ func TestHostConfigurationReaderUsesDeclaredNode(test *testing.T) {
 			test.Fatal(encodeError)
 		}
 		input := filepath.Join(test.TempDir(), "status.json")
-		if writeError := os.WriteFile(input, raw, 0600); writeError != nil {
+		if writeError := os.WriteFile(input, raw, 0o600); writeError != nil {
 			test.Fatal(writeError)
 		}
 		command := exec.Command(
@@ -381,7 +381,7 @@ func writeExecutable(test *testing.T, path, script string) {
 			file.Close()
 			test.Fatal(writeStringError)
 		}
-		if chmodError := file.Chmod(0700); chmodError != nil {
+		if chmodError := file.Chmod(0o700); chmodError != nil {
 			file.Close()
 			test.Fatal(chmodError)
 		}

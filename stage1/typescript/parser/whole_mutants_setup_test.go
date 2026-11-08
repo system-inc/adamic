@@ -225,7 +225,7 @@ func wholeMutantsChildEnvironment(test *testing.T) []string {
 		test.Fatal(encodeError)
 	}
 	descriptor := filepath.Join(test.TempDir(), "inputs.json")
-	if writeError := os.WriteFile(descriptor, data, 0600); writeError != nil {
+	if writeError := os.WriteFile(descriptor, data, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	var environment []string

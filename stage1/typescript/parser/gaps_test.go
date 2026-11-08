@@ -49,7 +49,7 @@ func TestClosedStrongAstParentGap(test *testing.T) {
 	test.Setenv("UBSAN_OPTIONS", "halt_on_error=1")
 	actual := execute(test, "", binary).output
 	emitted := filepath.Join(test.TempDir(), "strong-parent.mjs")
-	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	backend := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
@@ -103,7 +103,7 @@ func TestPushSpreadGap(test *testing.T) {
 	test.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	actual := execute(test, "", binary).output
 	emitted := filepath.Join(test.TempDir(), "spread.mjs")
-	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	backend := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
@@ -170,7 +170,7 @@ func TestClosedOptionalFunctionValueGap(test *testing.T) {
 	test.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	actual := execute(test, "", binary).output
 	emitted := filepath.Join(test.TempDir(), "optional.mjs")
-	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	backend := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
@@ -213,7 +213,7 @@ func TestClosedConditionalEmptyArrayGap(test *testing.T) {
 	test.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	actual := execute(test, "", binary).output
 	emitted := filepath.Join(test.TempDir(), "conditional.mjs")
-	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	backend := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output

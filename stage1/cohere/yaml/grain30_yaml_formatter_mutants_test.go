@@ -253,7 +253,7 @@ func formatterMutantsShard(test *testing.T, index int) {
 	formatterMutantsUnion(test, corpus)
 	entry := filepath.Join(sources, "main.ts")
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(cases, corpus, 0644); writeError != nil {
+	if writeError := os.WriteFile(cases, corpus, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -341,7 +341,7 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 					}
 					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
 				}
-				if writeError := os.WriteFile(filepath.Join(directory, file), source, 0644); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(directory, file), source, 0o644); writeError != nil {
 					return writeError
 				}
 			}
@@ -370,7 +370,7 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 			if lowerError != nil {
 				return lowerError
 			}
-			return os.WriteFile(filepath.Join(directory, "mutant.c"), []byte(native.C(lowered)), 0644)
+			return os.WriteFile(filepath.Join(directory, "mutant.c"), []byte(native.C(lowered)), 0o644)
 		})
 	}
 	if level == 1 {

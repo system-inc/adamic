@@ -19,7 +19,7 @@ func TestDebugIrFlow(test *testing.T) {
 		test.Fatal(readError)
 	}
 	path := filepath.Join(test.TempDir(), "debug.a")
-	if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	loaded, loadError := load.Load([]string{path})

@@ -42,7 +42,7 @@ func typeAwareOverlayOracle(
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	overlay := filepath.Join(harness.t.TempDir(), "overlay.json")
-	if writeError := os.WriteFile(overlay, data, 0644); writeError != nil {
+	if writeError := os.WriteFile(overlay, data, 0o644); writeError != nil {
 		harness.t.Fatal(writeError)
 	}
 	return buildcache.GoBuildInMutated(

@@ -185,7 +185,7 @@ func LexicalCases(test *testing.T) (string, int, int) {
 		}
 	}
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(source.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path, files, cases
@@ -246,7 +246,7 @@ func CompositionCases(test *testing.T) (string, int, int) {
 		count++
 	}
 	target := filepath.Join(test.TempDir(), "compose-cases.txt")
-	if writeError := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); writeError != nil {
+	if writeError := os.WriteFile(target, append(data, []byte(extra.String())...), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return target, files, count
@@ -313,7 +313,7 @@ func FormatterCases(test *testing.T) (string, int, int) {
 		add(text)
 	}
 	target := filepath.Join(test.TempDir(), "format-cases.txt")
-	if writeError := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); writeError != nil {
+	if writeError := os.WriteFile(target, append(data, []byte(extra.String())...), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return target, files, count
@@ -402,7 +402,7 @@ func formatterComparisonBuild(test *testing.T, output, adapter string, mutations
 		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "overlay.json")
-	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	arguments := []string{"-overlay=" + path}
@@ -514,10 +514,10 @@ func FormatterMutantAnswers(test *testing.T) string {
 			if oracleCommandError != nil {
 				return oracleCommandError
 			}
-			if writeError := os.WriteFile(filepath.Join(directory, "cases.txt"), data, 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(directory, "cases.txt"), data, 0o644); writeError != nil {
 				return writeError
 			}
-			return os.WriteFile(filepath.Join(directory, "expected.txt"), expected, 0644)
+			return os.WriteFile(filepath.Join(directory, "expected.txt"), expected, 0o644)
 		})
 		formatterMutantsOracle.product = product
 		test.Logf("TestFormatterMutants (setup): %.3fs", time.Since(started).Seconds())

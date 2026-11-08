@@ -220,7 +220,7 @@ func transformedNodeRunner(test *testing.T, repository string) string {
 		1,
 	)
 	transformed := filepath.Join(test.TempDir(), "node-transform.mjs")
-	if writeError := os.WriteFile(transformed, []byte(text), 0600); writeError != nil {
+	if writeError := os.WriteFile(transformed, []byte(text), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return transformed
@@ -507,7 +507,7 @@ func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...st
 								if writeError := os.WriteFile(
 									checkedPath,
 									[]byte(checkedJavaScript),
-									0600,
+									0o600,
 								); writeError != nil {
 									test.Fatal(writeError)
 								}

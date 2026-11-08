@@ -30,7 +30,7 @@ func TestProduct_scalar_edges_sanitized_native(test *testing.T) {
 func requireScalarEdgeBinary(test *testing.T, binary string) {
 	test.Helper()
 	manifest := filepath.Join(test.TempDir(), "empty-manifest")
-	if writeError := os.WriteFile(manifest, nil, 0600); writeError != nil {
+	if writeError := os.WriteFile(manifest, nil, 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	buildcache.RequireArtifacts(

@@ -111,7 +111,7 @@ func TestNodeProcessFreshRemovedWorkingDirectoryWasiRefusal(test *testing.T) {
 	text := strings.Replace(string(source), "const first = process.cwd();", "process.chdir('.');", 1)
 	text = strings.Replace(text, "process.cwd() === first", "process.cwd().length > 0", 1)
 	path := filepath.Join(test.TempDir(), "main.a")
-	if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(text), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	program, loweredError := lowered(test, path)

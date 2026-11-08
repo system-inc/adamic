@@ -159,7 +159,7 @@ func yamlLower(directory, entry string) (yamlLowerError error) {
 	if writeError := os.WriteFile(
 		filepath.Join(directory, yamlStem(entry)+".mjs"),
 		[]byte(javascript.JavaScript(lowered)),
-		0644,
+		0o644,
 	); writeError != nil {
 		return writeError
 	}
@@ -170,7 +170,7 @@ func yamlLower(directory, entry string) (yamlLowerError error) {
 			yamlLowerError = fmt.Errorf("%s lowers, but emitting its C panics: %v", entry, recovered)
 		}
 	}()
-	return os.WriteFile(filepath.Join(directory, yamlStem(entry)+".c"), []byte(native.C(lowered)), 0644)
+	return os.WriteFile(filepath.Join(directory, yamlStem(entry)+".c"), []byte(native.C(lowered)), 0o644)
 }
 
 // The port builds every comparison runs: each MatchGo entry under the sanitizers, the closed gaps, the speed probes and
@@ -294,7 +294,7 @@ func (mutants yamlMutants) product(test *testing.T, index int) string {
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 		return buildcache.Product(test, inputs, func(directory string) error {
 			sources := filepath.Join(directory, "sources")
-			if createDirectoryError := os.Mkdir(sources, 0755); createDirectoryError != nil {
+			if createDirectoryError := os.Mkdir(sources, 0o755); createDirectoryError != nil {
 				return createDirectoryError
 			}
 			for _, file := range files {
@@ -309,7 +309,7 @@ func (mutants yamlMutants) product(test *testing.T, index int) string {
 					}
 					source = []byte(strings.Replace(string(source), mutation.from, mutation.to, 1))
 				}
-				if writeError := os.WriteFile(filepath.Join(sources, file), source, 0644); writeError != nil {
+				if writeError := os.WriteFile(filepath.Join(sources, file), source, 0o644); writeError != nil {
 					return writeError
 				}
 			}
@@ -326,7 +326,7 @@ func (mutants yamlMutants) product(test *testing.T, index int) string {
 			if writeError := os.WriteFile(
 				filepath.Join(directory, "mutant.mjs"),
 				[]byte(javascript.JavaScript(lowered)),
-				0644,
+				0o644,
 			); writeError != nil {
 				return writeError
 			}

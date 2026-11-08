@@ -95,7 +95,7 @@ func portMatchesJsonClangToolchain() ([]string, error) {
 	archiver := filepath.Join(filepath.Dir(clang), "llvm-ar")
 	if info, statError := os.Stat(
 		archiver,
-	); statError != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0111 == 0 {
+	); statError != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0o111 == 0 {
 		var lookPathError error
 		archiver, lookPathError = exec.LookPath("ar")
 		if lookPathError != nil {
@@ -136,7 +136,7 @@ func portMatchesBuildJsonLoweredPort(dir string) error {
 		if readError != nil {
 			return readError
 		}
-		if writeError := os.WriteFile(filepath.Join(dir, name), contents, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(dir, name), contents, 0o644); writeError != nil {
 			return writeError
 		}
 	}
@@ -148,10 +148,10 @@ func portMatchesBuildJsonLoweredPort(dir string) error {
 	if lowerError != nil {
 		return fmt.Errorf("Lower: %w", lowerError)
 	}
-	if writeError := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0o644); writeError != nil {
 		return writeError
 	}
-	return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+	return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0o644)
 }
 
 func portMatchesJsonNativePortInputs(source string, sanitize bool, toolchain []string) portMatchesJsonBuildInputs {

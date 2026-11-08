@@ -41,7 +41,7 @@ func printerAnswers(test *testing.T, cases, mode string) string {
 	answers := filepath.Join(directory, "answers.txt")
 	request, _ := json.Marshal(map[string]string{"Cases": cases, "Answers": answers, "Mode": mode})
 	requestPath := filepath.Join(directory, "request.json")
-	if writeError := os.WriteFile(requestPath, request, 0644); writeError != nil {
+	if writeError := os.WriteFile(requestPath, request, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	// The Go printer is css-printer-oracle-1, cohere's css package with testdata/print_side_test.go laid over it, built

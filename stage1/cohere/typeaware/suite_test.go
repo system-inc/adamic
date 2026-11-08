@@ -187,7 +187,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		test.Fatal(absolutePathError)
 	}
 	directory := filepath.Join(productDirectory, "six-plan")
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	if path := os.Getenv("ADAMIC_SIX_ARTIFACTS"); path != "" {
@@ -195,7 +195,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)
 		}
-		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 	}
@@ -607,7 +607,7 @@ func TestFactsDecoderGuards(test *testing.T) {
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)
 		}
-		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 	}
@@ -747,7 +747,7 @@ func sixCorpusOnce(test *testing.T) *sixCorpus {
 			test.Fatal(absolutePathError)
 		}
 		directory := filepath.Join(productDirectory, "six-corpus")
-		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		harness := &harness{
@@ -967,7 +967,7 @@ func (corpus *sixCorpus) witnesses(harness *harness, name string, mutant func() 
 			}
 		}
 		file := filepath.Join(directory, "witnesses.txt")
-		return file, os.WriteFile(file, []byte(strings.Join(found, "\n")), 0644)
+		return file, os.WriteFile(file, []byte(strings.Join(found, "\n")), 0o644)
 	})
 	if cachedTypeAwareProductError != nil {
 		harness.t.Fatal(cachedTypeAwareProductError)
@@ -1039,7 +1039,7 @@ func sixWitnessProduct(test *testing.T, name string) {
 		test.Fatal(absolutePathError)
 	}
 	directory := filepath.Join(productDirectory, "six-witnesses", test.Name())
-	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	// The witness search is the product's fill, shared setup the unit's own budget bounds, as six's corpus harness is,

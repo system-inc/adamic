@@ -122,7 +122,7 @@ func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...stri
 		Name:  "GraphQL JavaScript backend",
 		Files: printerInputFiles(test, filepath.Join(repository, "internal/javascript")),
 		Flags: []string{fmt.Sprintf("source:%x", sha256.Sum256([]byte(source)))}, Toolchain: runtime.Version(),
-	}, func(directory string) error { return os.WriteFile(directory+"/program.mjs", []byte(source), 0644) })
+	}, func(directory string) error { return os.WriteFile(directory+"/program.mjs", []byte(source), 0o644) })
 	path := product + "/program.mjs"
 	return onNode(test, path, arguments...)
 }

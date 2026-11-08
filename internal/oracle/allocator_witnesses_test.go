@@ -61,7 +61,7 @@ func allocatorSlabProduct(test *testing.T) string {
 		if truth.exitCode != 0 || len(truth.stderr) != 0 {
 			return fmt.Errorf("Node failed: %+v", truth)
 		}
-		if writeError := os.WriteFile(filepath.Join(output, "truth"), truth.stdout, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(output, "truth"), truth.stdout, 0o600); writeError != nil {
 			return writeError
 		}
 		snapshot := test.TempDir()
@@ -81,7 +81,7 @@ func allocatorSlabProduct(test *testing.T) string {
 			if file.Name() == "adamic.h" || filepath.Ext(file.Name()) == ".c" {
 				data = append([]byte("#define ADAMIC_SLABS 1\n"), data...)
 			}
-			if writeError := os.WriteFile(filepath.Join(snapshot, file.Name()), data, 0600); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(snapshot, file.Name()), data, 0o600); writeError != nil {
 				return writeError
 			}
 		}
@@ -112,7 +112,7 @@ func allocatorSlabProduct(test *testing.T) string {
 			if readError != nil {
 				return readError
 			}
-			if writeError := os.WriteFile(filepath.Join(changed, header.Name()), data, 0600); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(changed, header.Name()), data, 0o600); writeError != nil {
 				return writeError
 			}
 		}
@@ -130,7 +130,7 @@ func allocatorSlabProduct(test *testing.T) string {
 			"heap = take((size - 1) / GRANULE == 0 ? 0 : (size - 1) / GRANULE - 1, &number);",
 			1,
 		)
-		if writeError := os.WriteFile(filepath.Join(changed, "heap.c"), []byte(text), 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(changed, "heap.c"), []byte(text), 0o600); writeError != nil {
 			return writeError
 		}
 		object := filepath.Join(changed, "heap.o")
@@ -157,7 +157,7 @@ func allocatorSlabProduct(test *testing.T) string {
 			return readError
 		}
 		mutant := filepath.Join(changed, "runtime.a")
-		if writeError := os.WriteFile(mutant, archive, 0600); writeError != nil {
+		if writeError := os.WriteFile(mutant, archive, 0o600); writeError != nil {
 			return writeError
 		}
 		if data, combinedOutputError := toolchain.Command(

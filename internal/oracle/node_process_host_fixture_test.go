@@ -108,7 +108,7 @@ func nodeProcessHostNewLine(test *testing.T, statusPath string) {
 		if writeError := os.WriteFile(
 			jsMutant,
 			[]byte(strings.Replace(string(source), anchor, `"\r\n"`, 1)),
-			0600,
+			0o600,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}

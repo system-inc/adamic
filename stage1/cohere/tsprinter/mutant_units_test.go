@@ -62,7 +62,7 @@ func mutantCorpus(test *testing.T, change oracles.Mutation, path, want string) (
 	}
 	// A distinct basename bypasses executeShards: these already are small units.
 	subset := filepath.Join(test.TempDir(), "witnesses.txt")
-	if writeError := os.WriteFile(subset, []byte(input.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(subset, []byte(input.String()), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	test.Logf("%s: %d Go-oracle witnesses from %v", change.Name, len(selected), families)

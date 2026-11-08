@@ -262,7 +262,7 @@ func TestOriginalCycleLedger(test *testing.T) {
 	if destination == "" {
 		test.Fatal("set ADAMIC_CYCLE_LEDGER_OUTPUT")
 	}
-	if writeError := os.WriteFile(destination, append(encoded, '\n'), 0644); writeError != nil {
+	if writeError := os.WriteFile(destination, append(encoded, '\n'), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	test.Logf("statements=%v reads=%v findings=%d", statementCounts, counts, len(findings))

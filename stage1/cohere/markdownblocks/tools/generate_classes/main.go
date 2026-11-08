@@ -82,7 +82,7 @@ func main() {
 			panic("generated classes changed")
 		}
 	} else {
-		must(os.WriteFile(*output, result, 0644))
+		must(os.WriteFile(*output, result, 0o644))
 	}
 }
 func must(sourceError error) {

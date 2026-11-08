@@ -163,7 +163,7 @@ func writeMutant(directory string, mutation nativeMutation) error {
 		}
 		text = strings.ReplaceAll(text, "../../../../typescript", filepath.ToSlash(parserRoot))
 		text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(options))
-		if writeError := os.WriteFile(filepath.Join(directory, file), []byte(text), 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, file), []byte(text), 0o644); writeError != nil {
 			return writeError
 		}
 	}
@@ -235,7 +235,7 @@ func TestJsxParserGapIsExplicit(test *testing.T) {
 	for _, row := range rows {
 		corpus, _ := json.Marshal([]any{row})
 		path := filepath.Join(test.TempDir(), "gap.json")
-		if writeError := os.WriteFile(path, corpus, 0644); writeError != nil {
+		if writeError := os.WriteFile(path, corpus, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		adapted := run(test, "", goOracle, "--ast", path)
@@ -281,7 +281,7 @@ func TestJsxAdapterGuardMutant(test *testing.T) {
 	}
 	corpus, _ := json.Marshal(rows[:1])
 	path := filepath.Join(test.TempDir(), "gap.json")
-	if writeError := os.WriteFile(path, corpus, 0644); writeError != nil {
+	if writeError := os.WriteFile(path, corpus, 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	output, stderr, gapRunError := gapRun(test, []string{helpersNative(test, jsxGuardMutant), path})

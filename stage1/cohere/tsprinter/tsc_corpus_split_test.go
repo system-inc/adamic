@@ -142,7 +142,7 @@ func tscAgreementPartition(
 	}
 	for index := range shards {
 		shards[index].Text = filepath.Join(test.TempDir(), fmt.Sprintf("%s-%03d.txt", family, index))
-		if writeError := os.WriteFile(shards[index].Text, []byte(inputs[index].String()), 0644); writeError != nil {
+		if writeError := os.WriteFile(shards[index].Text, []byte(inputs[index].String()), 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -292,14 +292,14 @@ func tscAgreementRun(test *testing.T, number int) {
 		test.Fatalf("no leak check for %s", runtime.GOOS)
 	}
 	if keep := os.Getenv("ADAMIC_TSC_PRINTER_AUDIT"); keep != "" {
-		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(keep, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		cases, encodeError := json.Marshal(family.Cases)
 		if encodeError != nil {
 			test.Fatal(encodeError)
 		}
-		if writeError := os.WriteFile(filepath.Join(keep, family.Name+"-cases.json"), cases, 0644); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(keep, family.Name+"-cases.json"), cases, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		coverage, readError := os.ReadFile(filepath.Join(family.Directory, "coverage.json"))
@@ -309,7 +309,7 @@ func tscAgreementRun(test *testing.T, number int) {
 		if writeError := os.WriteFile(
 			filepath.Join(keep, family.Name+"-coverage.json"),
 			coverage,
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -320,7 +320,7 @@ func tscAgreementRun(test *testing.T, number int) {
 		if writeError := os.WriteFile(
 			filepath.Join(keep, fmt.Sprintf("%s-%03d.json", family.Name, number)),
 			encoded,
-			0644,
+			0o644,
 		); writeError != nil {
 			test.Fatal(writeError)
 		}

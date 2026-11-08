@@ -108,11 +108,11 @@ func malformedEventsBuildProduct(
 		if writeError := os.WriteFile(
 			filepath.Join(dir, "main.c"),
 			[]byte(native.C(program)),
-			0644,
+			0o644,
 		); writeError != nil {
 			return writeError
 		}
-		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0o644)
 	})
 	if lowerOnly {
 		return "", filepath.Join(loweredDirectory, "program.mjs")
@@ -222,7 +222,7 @@ func malformedEventsRun(test *testing.T) {
 			equal(test, "normalized actual error", side.stderr, malformedEventsExpected(name, truth.stdout))
 		}
 		scratch := test.TempDir()
-		if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+		if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		from, to := "Cannot close document, a token", "Cannot close document, token"
@@ -390,7 +390,7 @@ func malformedEventsNativeBuild(callerContext context.Context, source, output st
 	if writeError := os.WriteFile(
 		filepath.Join(filepath.Dir(output), "main.c"),
 		[]byte(source),
-		0644,
+		0o644,
 	); writeError != nil {
 		return writeError
 	}

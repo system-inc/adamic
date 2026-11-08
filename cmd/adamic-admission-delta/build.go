@@ -100,7 +100,7 @@ func buildCompiler(root, scratch, sha, name, product string) error {
 	if writeError := os.WriteFile(
 		filepath.Join(tree, "cmd", "adamic", "admission_adapter.go"),
 		[]byte(loweringAdapter),
-		0600,
+		0o600,
 	); writeError != nil {
 		return writeError
 	}

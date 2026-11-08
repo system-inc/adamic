@@ -90,11 +90,11 @@ func ownedWitnesses(test *testing.T, directory, slug string) []string {
 		}
 		if filepath.Dir(relative) != "." {
 			target = filepath.Join(test.TempDir(), strings.TrimSuffix(relative, ".txt"))
-			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0o755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
 		}
-		if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+		if writeError := os.WriteFile(target, data, 0o644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		sources = append(sources, target)
@@ -152,7 +152,7 @@ func TestNestedOutsideModuleCopy(test *testing.T) {
 console.log(written('copied'));
 `
 	source := rewritePortImports(test, "rules/probe/rule.ts", original)
-	if writeError := os.WriteFile(filepath.Join(directory, "main.ts"), []byte(source), 0644); writeError != nil {
+	if writeError := os.WriteFile(filepath.Join(directory, "main.ts"), []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	path := manifest(test, nil)
@@ -174,7 +174,7 @@ console.log(written('copied'));
 	}
 	bad := strings.ReplaceAll(original, "../../typescript", parserDirectory)
 	main := filepath.Join(directory, "main.ts")
-	if writeError := os.WriteFile(main, []byte(bad), 0644); writeError != nil {
+	if writeError := os.WriteFile(main, []byte(bad), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))

@@ -16,7 +16,7 @@ func goProperties(test *testing.T, cases string) []byte {
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
-		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(artifacts, 0o755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
 		executable, readError := os.ReadFile(binary)
@@ -31,7 +31,11 @@ func goProperties(test *testing.T, cases string) []byte {
 			name string
 			data []byte
 			mode os.FileMode
-		}{{"go-props", executable, 0755}, {"props-cases.txt", inputs, 0644}, {"props-expected.txt", expected, 0644}} {
+		}{
+			{"go-props", executable, 0o755},
+			{"props-cases.txt", inputs, 0o644},
+			{"props-expected.txt", expected, 0o644},
+		} {
 			if writeError := os.WriteFile(
 				filepath.Join(artifacts, file.name),
 				file.data,
@@ -85,8 +89,8 @@ func TestPropsMatchGo(test *testing.T) {
 		out  []byte
 	}{{"native ASan/UBSan/LSan", actual}, {"Node", node}, {"emitted JavaScript", backend}, {"yaml@2.9.0", external}} {
 		if !bytes.Equal(side.out, expected) {
-			os.WriteFile("/tmp/stage1-yaml-props-expected.txt", expected, 0644)
-			os.WriteFile("/tmp/stage1-yaml-props-actual.txt", side.out, 0644)
+			os.WriteFile("/tmp/stage1-yaml-props-expected.txt", expected, 0o644)
+			os.WriteFile("/tmp/stage1-yaml-props-actual.txt", side.out, 0o644)
 			test.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
 		}
 	}

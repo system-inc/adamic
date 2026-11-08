@@ -83,7 +83,7 @@ func recordUncaughtWitness(test *testing.T, source string, mutant func(string) s
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
-	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	type ran struct {
@@ -127,7 +127,7 @@ func recordUncaughtWitness(test *testing.T, source string, mutant func(string) s
 		test.Fatal(lowerWithOptionsError)
 	}
 	js := filepath.Join(directory, "main.mjs")
-	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if got := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js); !agrees(got) {
@@ -276,7 +276,7 @@ catch(error) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "main.a")
-			if writeError := os.WriteFile(path, []byte(probe.source), 0600); writeError != nil {
+			if writeError := os.WriteFile(path, []byte(probe.source), 0o600); writeError != nil {
 				test.Fatal(writeError)
 			}
 			checked, loadError := load.Load([]string{path})

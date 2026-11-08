@@ -16,7 +16,7 @@ import (
 
 func write(test *testing.T, path, text string) {
 	test.Helper()
-	if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
 		test.Fatal(writeError)
 	}
 }
