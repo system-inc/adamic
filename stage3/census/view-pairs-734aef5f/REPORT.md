@@ -35,7 +35,7 @@ Reference field means a cycleFinder.fields field whose lowering representation i
 
 ## Coverage
 
-Observed **3790 unit results**: `{'lowered': 2859, 'stopped': 931}`. Deferred standalone units in emitted inventories: **16**. Unobserved stock units by status: `{'deferred_generic_instantiation': 16}`. Full-mode files attempted: **2/81**; emitted complete full-mode file inventories: 2. Stock inventory has 375 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
+Observed **3806 unit results**: `{'lowered': 2869, 'stopped': 937}`. Deferred standalone units in emitted inventories: **16**. Unobserved stock units by status: `{'deferred_generic_instantiation': 16}`. Full-mode files attempted: **3/81**; emitted complete full-mode file inventories: 3. Stock inventory has 391 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
 
 One result per (unit file, unit position) is selected: full mode supersedes first-error mode, and later full pieces supersede earlier ones. Repeated dependency pairs in different units remain repeated observations. TypeToString text can be truncated or reused for distinct checker identities; the distinct-pair list groups displayed source/target strings plus the full first-encountered nested path, not globally shared checker identities.
 
@@ -68,7 +68,7 @@ Each observation is retained, including repeats in one unit, in [nil-source-refe
 | _namespaces/ts.ts | 0 | 0 | 0 | not yet attempted |
 | binder.ts | 8 | 8 | 217 | not yet attempted |
 | builder.ts | 73 | 51 | 0 | complete traversal |
-| builderPublic.ts | 0 | 0 | 0 | not yet attempted |
+| builderPublic.ts | 10 | 6 | 0 | complete traversal |
 | builderState.ts | 0 | 0 | 0 | not yet attempted |
 | builderStatePublic.ts | 0 | 0 | 0 | not yet attempted |
 | checker.ts | 42 | 9 | 210 | not yet attempted |
@@ -154,6 +154,7 @@ Each child is capped at 1490 seconds with five seconds for forced cleanup, below
 | first | -15 | 1491.012 | configured elapsed bound |
 | full-000 | 0 | 621.917 | completed |
 | full-001 | 0 | 82.12 | completed |
+| full-002 | 0 | 20.013 | completed |
 
 ## Evidence and replay
 
