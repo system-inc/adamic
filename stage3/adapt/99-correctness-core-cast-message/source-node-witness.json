@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "method": "Pinned owner source transpiled in scratch against the unchanged existing Debug.fail; not a completed adapted-tree build witness",
+  "failureClasses": [
+    {
+      "kind": "undefined",
+      "before": "Debug Failure. Invalid cast. The supplied value undefined did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value undefined did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 0,
+      "throwPoint": "    at cast (cast-witness.cjs:7:18)"
+    },
+    {
+      "kind": "null",
+      "before": "Debug Failure. Invalid cast. The supplied value null did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value null did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at cast (cast-witness.cjs:7:18)"
+    },
+    {
+      "kind": "number",
+      "before": "Debug Failure. Invalid cast. The supplied value 42 did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value 42 did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at cast (cast-witness.cjs:7:18)"
+    },
+    {
+      "kind": "string",
+      "before": "Debug Failure. Invalid cast. The supplied value text did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value text did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at cast (cast-witness.cjs:7:18)"
+    },
+    {
+      "kind": "object",
+      "before": "Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at cast (cast-witness.cjs:7:18)"
+    },
+    {
+      "kind": "custom stringification",
+      "before": "Debug Failure. Invalid cast. The supplied value value kept did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value value kept did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at cast (cast-witness.cjs:7:18)"
+    }
+  ],
+  "passingIdentityCases": 4
+}

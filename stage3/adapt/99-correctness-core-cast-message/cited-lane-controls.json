@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "measurementOnlyExposure": "A control-only copy exposes the existing compiled deprecate function; the oracle product does not.",
+  "controls": [
+    {
+      "site": "src/compiler/core.ts:1791:97",
+      "delta": 1,
+      "before": {
+        "counts": {
+          "src/compiler/core.ts:1791:97": 0,
+          "src/deprecatedCompat/deprecate.ts:71:66": 0
+        },
+        "attempts": {
+          "src/compiler/core.ts:1791:97": 0,
+          "src/deprecatedCompat/deprecate.ts:71:66": 0
+        },
+        "entries": 0,
+        "unknown": {}
+      },
+      "after": {
+        "counts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 0
+        },
+        "attempts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 0
+        },
+        "entries": 1,
+        "unknown": {}
+      },
+      "thrownClass": "Error",
+      "message": "Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'reject'."
+    },
+    {
+      "site": "src/deprecatedCompat/deprecate.ts:71:66",
+      "delta": 1,
+      "before": {
+        "counts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 0
+        },
+        "attempts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 0
+        },
+        "entries": 1,
+        "unknown": {}
+      },
+      "after": {
+        "counts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 1
+        },
+        "attempts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 1
+        },
+        "entries": 2,
+        "unknown": {}
+      }
+    },
+    {
+      "site": "control-only alias",
+      "deltaUnknown": 1,
+      "before": {
+        "counts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 1
+        },
+        "attempts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 1
+        },
+        "entries": 2,
+        "unknown": {}
+      },
+      "after": {
+        "counts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 1
+        },
+        "attempts": {
+          "src/compiler/core.ts:1791:97": 1,
+          "src/deprecatedCompat/deprecate.ts:71:66": 1
+        },
+        "entries": 3,
+        "unknown": {
+          "66691355f25e397624204d7d21390c40e01a4406e78a3200b90fd8ba4b1c6f22": {
+            "count": 1,
+            "bundle": "built/local/typescript.js",
+            "stack": "Error: unattributed getFunctionName entry\n    at enter (/workspace/adamic/stage3/census/getfunctionname/preload.cjs:5:144)\n    at getFunctionName (/workspace/scratch/getfunctionname/raw/control-library.cjs:3993:47)\n    at Object.<anonymous> (/workspace/adamic/stage3/census/getfunctionname/control.cjs:7:90)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+          }
+        }
+      }
+    }
+  ]
+}

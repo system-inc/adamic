@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "diagnostics": 0,
+  "distinctNonBoundarySites": 17,
+  "added": [],
+  "removed": [],
+  "castUnits": {
+    "baseline": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/core-finish/baseline/src/compiler/core.ts:1786:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 62619,
+      "body_end": 62810,
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "cast",
+      "top": "/workspace/scratch/core-finish/baseline/src/compiler/core.ts:1786:1"
+    },
+    "head1": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/core-finish/head1/src/compiler/core.ts:1786:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 62619,
+      "body_end": 62777,
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "cast",
+      "top": "/workspace/scratch/core-finish/head1/src/compiler/core.ts:1786:1"
+    }
+  },
+  "mutantProof": "revised by user: missing Debug member after move, recorded on head 2"
+}

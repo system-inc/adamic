@@ -1,0 +1,36 @@
+{
+  "complete": true,
+  "acceptedUnitsExactlyOnce": 398,
+  "countsPerSourceCallSite": {
+    "src/compiler/core.ts:1791:97": 0,
+    "src/deprecatedCompat/deprecate.ts:71:66": 6
+  },
+  "wrappedCallsPerSourceSite": {
+    "src/compiler/core.ts:1791:97": 0,
+    "src/deprecatedCompat/deprecate.ts:71:66": 6
+  },
+  "totalHelperEntries": 6,
+  "unknownEntries": {},
+  "observedNodeProcesses": 797,
+  "oracle": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "unitsWithEntries": [
+    {
+      "unit": "stage3-lane-file-293",
+      "counts": {
+        "src/compiler/core.ts:1791:97": 0,
+        "src/deprecatedCompat/deprecate.ts:71:66": 6
+      },
+      "totalHelperEntries": 6
+    }
+  ],
+  "pieces": 20,
+  "sumPieceSeconds": 1472.8648619569994,
+  "largestPieceSeconds": 100.71803826399992,
+  "allArchiveAndInnerHashesVerified": true,
+  "allRawGuardReportsMatch": true,
+  "allCallAttemptsMatchActualEntries": true
+}

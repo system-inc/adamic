@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "sourceDifferences": [
+    "src/compiler/core.ts"
+  ],
+  "allJavaScript": [
+    {
+      "file": "_tsc.js",
+      "beforeSha256": "884b34e804ea3bd3d740d9d06c25f9968eee78b28c7e1c5090bb0610a0950684",
+      "afterSha256": "2c000cb2cd1e15d7ea191ac84c5f8a2cce660725049556540c702ff7f3e6ad86",
+      "changed": true,
+      "onlyCastMessagePhrase": true
+    },
+    {
+      "file": "_tsserver.js",
+      "beforeSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "afterSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "changed": false
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "beforeSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "afterSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "changed": false
+    },
+    {
+      "file": "run.js",
+      "beforeSha256": "1bb51c52b7e3aa6e3db071082dc48c47ce854dbac759a392fb1cd89cb7e84b4b",
+      "afterSha256": "d55f08c8c7ab1965e14808cd14e0a449d8a13f8a9bc296e278d2e4fb4dac5e99",
+      "changed": true,
+      "onlyCastMessagePhrase": true
+    },
+    {
+      "file": "tsc.js",
+      "beforeSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "afterSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "changed": false
+    },
+    {
+      "file": "tsserver.js",
+      "beforeSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "afterSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "changed": false
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "beforeSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "afterSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "changed": false
+    },
+    {
+      "file": "typescript.js",
+      "beforeSha256": "c075e9a83c78438c4c5e8ca1494f258a920e0f9c2896b93707b39702048fdcd9",
+      "afterSha256": "5a08fdd7418ad2c0656e0c7a03409f8e766fd85060885e208f2b6cd45ad35398",
+      "changed": true,
+      "onlyCastMessagePhrase": true
+    },
+    {
+      "file": "typingsInstaller.js",
+      "beforeSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "afterSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "changed": false
+    },
+    {
+      "file": "watchGuard.js",
+      "beforeSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "afterSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "changed": false
+    }
+  ],
+  "publicDeclarations": [
+    {
+      "file": "typescript.d.ts",
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "bytes": 593502,
+      "byteIdentical": true
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "bytes": 866,
+      "byteIdentical": true
+    }
+  ]
+}

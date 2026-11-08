@@ -1,0 +1,9 @@
+{
+  "file": "src/compiler/core.ts",
+  "owner": "cast",
+  "before": "export function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut {\n    if (value !== undefined && test(value)) return value;\n\n    return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test '${Debug.getFunctionName(test)}'.`);\n}",
+  "after": "export function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut {\n    if (value !== undefined && test(value)) return value;\n\n    return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test.`);\n}",
+  "beforeSha256": "af95024824bfe8bdeb782b6ad12adcc6998c3d787a4a9c3cb08f6b1ca74b552f",
+  "afterSha256": "8a0856889f12c54f24dcb8bab8460a8b62f10439c60f2b62093eec772c02cdd0",
+  "removedPhrase": " '${Debug.getFunctionName(test)}'"
+}
