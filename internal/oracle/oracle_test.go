@@ -42,6 +42,7 @@ var fixtures = []struct {
 }{
 	{"internal/oracle/testdata/array_slice_bounds.a", true, false},
 	{"internal/oracle/testdata/array_union.a", true, false},
+	{"internal/oracle/testdata/process_optional_present_read.a", true, false},
 	{"internal/oracle/testdata/release_fma.a", true, false},
 	{"internal/oracle/testdata/async_catch_return.a", true, false},
 	{"internal/oracle/testdata/async_catches.a", true, false},
