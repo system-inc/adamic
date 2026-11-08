@@ -23,6 +23,8 @@ Long pole by observed count: **views, 24525**. Coverage caveat: lowered IR only;
 
 ## Coverage and interpretation
 
+60-minute full-piece budget exhausted; 51 selected files in unstarted full pieces. First-error observations for those files remain where available.
+
 Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 seconds; full-01: child exit -15, configured elapsed bound, 1791.304 seconds; full-07: child exit -15, configured elapsed bound, 571.096 seconds. Interrupted active units are excluded from completed observation counts.
 
 Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
@@ -420,6 +422,12 @@ function bindingOrAssignmentElementContainsNonLiteralComputedName(element: Bindi
 | full-06-snapshot-final | 0 | 1.001 | completed |
 | full-06-snapshot | 0 | 1.003 | completed |
 | full-06 | 0 | 454.859 | completed |
+| full-07-add | 0 | 1.003 | completed |
+| full-07-commit | 0 | 1.002 | completed |
+| full-07-push | 0 | 3.004 | completed |
+| full-07-report | 0 | 1.005 | completed |
+| full-07-snapshot-final | 0 | 1.002 | completed |
+| full-07-snapshot | 0 | 1.003 | completed |
 | full-07 | -15 | 571.096 | configured elapsed bound |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
