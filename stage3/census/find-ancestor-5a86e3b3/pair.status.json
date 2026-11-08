@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "/tmp/fa-report/stage3/census/pair/pair.py",
+    "/tmp/fa-report/stage3/census/find-ancestor-5a86e3b3/parent-run.jsonl",
+    "/tmp/fa-report/stage3/census/find-ancestor-5a86e3b3/head-run.jsonl",
+    "/tmp/fa-adapted",
+    "--typescript",
+    "/tmp/fa-report/stage3/api/node_modules/typescript",
+    "--json",
+    "/tmp/fa-report/stage3/census/find-ancestor-5a86e3b3/paired.json",
+    "--report",
+    "/tmp/fa-report/stage3/census/find-ancestor-5a86e3b3/paired.md"
+  ],
+  "cwd": "/tmp/fa-report",
+  "exit": 0,
+  "wall_seconds": 16.038,
+  "stopped": null
+}

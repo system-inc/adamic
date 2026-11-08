@@ -1,0 +1,25 @@
+{
+  "Replace": {
+    "/tmp/fa-head/internal/lower/lower.go": "/tmp/fa-head-overlay/internal_lower_lower.go",
+    "/tmp/fa-head/internal/lower/entries_records.go": "/tmp/fa-head-overlay/internal_lower_entries_records.go",
+    "/tmp/fa-head/internal/lower/latent_state.go": "/tmp/fa-head-overlay/internal_lower_latent_state.go",
+    "/tmp/fa-head/internal/lower/statements.go": "/tmp/fa-head-overlay/internal_lower_statements.go",
+    "/tmp/fa-head/internal/lower/latent_full.go": "/tmp/fa-head-overlay/internal_lower_latent_full.go",
+    "/tmp/fa-head/internal/lower/latent_units.go": "/tmp/fa-head-overlay/internal_lower_latent_units.go",
+    "/tmp/fa-head/internal/lower/latent_timing.go": "/tmp/fa-head-overlay/internal_lower_latent_timing.go",
+    "/tmp/fa-head/internal/lower/latent_replay.go": "/tmp/fa-head-overlay/internal_lower_latent_replay.go",
+    "/tmp/fa-head/internal/lower/refusals.go": "/tmp/fa-head-overlay/internal_lower_refusals.go",
+    "/tmp/fa-head/internal/load/load.go": "/tmp/fa-head-overlay/internal_load_load.go",
+    "/tmp/fa-head/internal/load/latent_hook.go": "/tmp/fa-head-entry/entry_load_hook.go",
+    "/tmp/fa-head/internal/lower/expression.go": "/tmp/fa-head-overlay/internal_lower_expression.go",
+    "/tmp/fa-head/internal/lower/functions.go": "/tmp/fa-head-overlay/internal_lower_functions.go",
+    "/tmp/fa-head/internal/lower/generic.go": "/tmp/fa-head-overlay/internal_lower_generic.go",
+    "/tmp/fa-head/internal/lower/locals.go": "/tmp/fa-head-overlay/internal_lower_locals.go",
+    "/tmp/fa-head/internal/lower/latent_hook.go": "/tmp/fa-head-overlay/internal_lower_latent_hook.go",
+    "/tmp/fa-head/stage3/census/latent/tool/main.go": "/tmp/fa-head-entry/entry_main.go",
+    "/tmp/fa-head/stage3/census/latent/replay/worker/main.go": "/tmp/fa-report/stage3/census/find-ancestor-5a86e3b3/focus-driver.go.txt",
+    "/tmp/fa-head/internal/lower/latent_piece.go": "/tmp/fa-head-overlay/internal_lower_latent_piece.go",
+    "/tmp/fa-head/internal/lower/latent_progress.go": "/tmp/fa-head-overlay/internal_lower_latent_progress.go",
+    "/tmp/fa-head/internal/lower/latent_speculative.go": "/tmp/fa-head-overlay/internal_lower_latent_speculative.go"
+  }
+}

@@ -1,0 +1,130 @@
+A-apply-key child_exit=0 wall_seconds=5.011
+B-apply-key child_exit=0 wall_seconds=4.006
+The following paths and/or pathspecs matched paths that exist
+outside of your sparse-checkout definition, so will not be
+updated in the index:
+stage3/census/find-ancestor-5a86e3b3/A-apply-key.log
+stage3/census/find-ancestor-5a86e3b3/A-apply-key.status.json
+stage3/census/find-ancestor-5a86e3b3/A-apply-key.time.json
+stage3/census/find-ancestor-5a86e3b3/AB-equivalence.json
+stage3/census/find-ancestor-5a86e3b3/B-apply-key.log
+stage3/census/find-ancestor-5a86e3b3/B-apply-key.status.json
+stage3/census/find-ancestor-5a86e3b3/B-apply-key.time.json
+stage3/census/find-ancestor-5a86e3b3/B-apply.log
+stage3/census/find-ancestor-5a86e3b3/B-apply.status.json
+stage3/census/find-ancestor-5a86e3b3/B-apply.time.json
+stage3/census/find-ancestor-5a86e3b3/B-patch-set.md
+stage3/census/find-ancestor-5a86e3b3/B-source-hashes.json
+stage3/census/find-ancestor-5a86e3b3/REPORT.md
+stage3/census/find-ancestor-5a86e3b3/apply.log
+stage3/census/find-ancestor-5a86e3b3/apply.status.json
+stage3/census/find-ancestor-5a86e3b3/apply.time.json
+stage3/census/find-ancestor-5a86e3b3/build-environment.json
+stage3/census/find-ancestor-5a86e3b3/build-head.py
+stage3/census/find-ancestor-5a86e3b3/build.py
+stage3/census/find-ancestor-5a86e3b3/checkpoint-apply.json
+stage3/census/find-ancestor-5a86e3b3/checkpoint-apply.log
+stage3/census/find-ancestor-5a86e3b3/control.py
+stage3/census/find-ancestor-5a86e3b3/finish.py
+stage3/census/find-ancestor-5a86e3b3/focus-driver.go.txt
+stage3/census/find-ancestor-5a86e3b3/focus.py
+stage3/census/find-ancestor-5a86e3b3/head-build.log
+stage3/census/find-ancestor-5a86e3b3/head-build.status.json
+stage3/census/find-ancestor-5a86e3b3/head-build.time.json
+stage3/census/find-ancestor-5a86e3b3/head-entry-overlay.log
+stage3/census/find-ancestor-5a86e3b3/head-entry-overlay.status.json
+stage3/census/find-ancestor-5a86e3b3/head-entry-overlay.time.json
+stage3/census/find-ancestor-5a86e3b3/head-overlay.log
+stage3/census/find-ancestor-5a86e3b3/head-overlay.status.json
+stage3/census/find-ancestor-5a86e3b3/head-overlay.time.json
+stage3/census/find-ancestor-5a86e3b3/head-start.json
+stage3/census/find-ancestor-5a86e3b3/head-workspace.txt
+stage3/census/find-ancestor-5a86e3b3/named.py
+stage3/census/find-ancestor-5a86e3b3/npm-ci.log
+stage3/census/find-ancestor-5a86e3b3/npm-ci.status.json
+stage3/census/find-ancestor-5a86e3b3/npm-ci.time.json
+stage3/census/find-ancestor-5a86e3b3/overlays/head/00-entry_load_hook.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/01-internal_load_load.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/02-internal_lower_entries_records.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/03-internal_lower_expression.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/04-internal_lower_functions.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/05-internal_lower_generic.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/06-internal_lower_latent_full.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/07-internal_lower_latent_hook.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/08-internal_lower_latent_piece.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/09-internal_lower_latent_progress.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/10-internal_lower_latent_replay.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/11-internal_lower_latent_speculative.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/12-internal_lower_latent_state.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/13-internal_lower_latent_timing.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/14-internal_lower_latent_units.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/15-internal_lower_locals.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/16-internal_lower_lower.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/17-internal_lower_refusals.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/18-internal_lower_statements.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/19-stage3_census_latent_replay_worker_main.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/20-entry_main.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/head/manifest.json
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/00-entry_load_hook.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/01-internal_load_load.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/02-internal_lower_entries_records.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/03-internal_lower_expression.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/04-internal_lower_functions.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/05-internal_lower_generic.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/06-internal_lower_latent_full.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/07-internal_lower_latent_hook.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/08-internal_lower_latent_piece.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/09-internal_lower_latent_progress.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/10-internal_lower_latent_replay.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/11-internal_lower_latent_speculative.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/12-internal_lower_latent_state.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/13-internal_lower_latent_timing.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/14-internal_lower_latent_units.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/15-internal_lower_locals.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/16-internal_lower_lower.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/17-internal_lower_refusals.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/18-internal_lower_statements.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/19-stage3_census_latent_replay_worker_main.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/20-entry_main.go.txt
+stage3/census/find-ancestor-5a86e3b3/overlays/parent/manifest.json
+stage3/census/find-ancestor-5a86e3b3/pair-tests.log
+stage3/census/find-ancestor-5a86e3b3/pair-tests.status.json
+stage3/census/find-ancestor-5a86e3b3/pair-tests.time.json
+stage3/census/find-ancestor-5a86e3b3/parent-build.log
+stage3/census/find-ancestor-5a86e3b3/parent-build.status.json
+stage3/census/find-ancestor-5a86e3b3/parent-build.time.json
+stage3/census/find-ancestor-5a86e3b3/parent-entry-overlay.log
+stage3/census/find-ancestor-5a86e3b3/parent-entry-overlay.status.json
+stage3/census/find-ancestor-5a86e3b3/parent-entry-overlay.time.json
+stage3/census/find-ancestor-5a86e3b3/parent-overlay.log
+stage3/census/find-ancestor-5a86e3b3/parent-overlay.status.json
+stage3/census/find-ancestor-5a86e3b3/parent-overlay.time.json
+stage3/census/find-ancestor-5a86e3b3/parent-run-units.jsonl
+stage3/census/find-ancestor-5a86e3b3/parent-run.jsonl
+stage3/census/find-ancestor-5a86e3b3/parent-run.log
+stage3/census/find-ancestor-5a86e3b3/parent-workspace.txt
+stage3/census/find-ancestor-5a86e3b3/patch-set.md
+stage3/census/find-ancestor-5a86e3b3/prepare.py
+stage3/census/find-ancestor-5a86e3b3/provenance.json
+stage3/census/find-ancestor-5a86e3b3/resume.py
+stage3/census/find-ancestor-5a86e3b3/run.py
+stage3/census/find-ancestor-5a86e3b3/setup.log
+stage3/census/find-ancestor-5a86e3b3/setup.status.json
+stage3/census/find-ancestor-5a86e3b3/sites.cjs
+stage3/census/find-ancestor-5a86e3b3/source-hashes.json
+stage3/census/find-ancestor-5a86e3b3/superseded.json
+stage3/census/find-ancestor-5a86e3b3/superseded/head-run-units.jsonl
+stage3/census/find-ancestor-5a86e3b3/superseded/head-run.jsonl
+stage3/census/find-ancestor-5a86e3b3/superseded/head-run.log
+stage3/census/find-ancestor-5a86e3b3/superseded/head-run.status.json
+stage3/census/find-ancestor-5a86e3b3/superseded/head-run.time.json
+hint: If you intend to update such entries, try one of the following:
+hint: * Use the --sparse option.
+hint: * Disable or modify the sparsity rules.
+hint: Disable this message with "git config set advice.updateSparsePath false"
+Traceback (most recent call last):
+  File "/tmp/fa-report/stage3/census/find-ancestor-5a86e3b3/resume.py", line 35, in <module>
+    subprocess.run(['git','add','-f','--',str(out)],cwd=repo,check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'add', '-f', '--', '/tmp/fa-report/stage3/census/find-ancestor-5a86e3b3']' returned non-zero exit status 1.

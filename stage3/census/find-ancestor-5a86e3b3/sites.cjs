@@ -1,0 +1,22 @@
+const fs=require('fs'),path=require('path'),ts=require('typescript');
+const tree=path.resolve(process.argv[2]);
+const file=path.join(tree,'src/compiler/checker.ts');
+const raw=fs.readFileSync(file,'utf8'),sf=ts.createSourceFile(file,raw,ts.ScriptTarget.Latest,true);
+const targets=[4748,4767,4778,48433,50073,50082],calls=[];
+function loc(n){const p=sf.getLineAndCharacterOfPosition(n.getStart(sf));return {line:p.line+1,column:p.character+1};}
+function visit(n){if(ts.isCallExpression(n))calls.push(n);ts.forEachChild(n,visit);}visit(sf);
+const rows=targets.map(target=>{
+ let candidates=calls.filter(n=>Math.abs(loc(n).line-target)<16 && ((n.expression.getText(sf)==='findAncestor' && n.arguments[1] && ts.isCallExpression(n.arguments[1]) && /^or(?:Predicate[23])?$/.test(n.arguments[1].expression.getText(sf))) || (target===10911 && n.expression.getText(sf).endsWith('.find') && n.arguments[0] && ts.isCallExpression(n.arguments[0]) && /^or(?:Predicate[23])?$/.test(n.arguments[0].expression.getText(sf)))));
+ if(candidates.length){const distance=Math.min(...candidates.map(n=>Math.abs(loc(n).line-target)));candidates=candidates.filter(n=>Math.abs(loc(n).line-target)===distance);}
+ if(candidates.length!==1)throw Error('ambiguous target '+target+': '+candidates.map(n=>n.getText(sf)));
+ const n=candidates[0],owners=[];let unit,observingUnit;
+ for(let p=n.parent;p;p=p.parent)if(ts.isFunctionDeclaration(p)){owners.unshift(p.name?.text||'<anonymous>');if(!unit)unit=p;if(!observingUnit && !p.typeParameters?.length)observingUnit=p;}
+ const p=loc(n),u=loc(unit),o=loc(observingUnit);
+ const predicate=n.arguments[1];const helper=/^orPredicate[23]$/.test(predicate.expression.getText(sf))?predicate.expression.getText(sf):'orPredicate'+predicate.arguments.length;
+ return {predicate_helper:helper,requested_line:target,site:file+':'+p.line+':'+p.column,unit:file+':'+u.line+':'+u.column,observing_unit:file+':'+o.line+':'+o.column,observing_unit_name:observingUnit.name?.text,owners,text:n.getText(sf)};
+});
+const uf=path.join(tree,'src/compiler/utilitiesPublic.ts'),ur=fs.readFileSync(uf,'utf8'),us=ts.createSourceFile(uf,ur,ts.ScriptTarget.Latest,true);
+const funcs=us.statements.filter(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='findAncestor').map(n=>{const l=us.getLineAndCharacterOfPosition(n.getStart(us));return {name:n.name.text,site:uf+':'+(l.line+1)+':'+(l.character+1),has_body:!!n.body,text:n.getText(us)};});
+const cf=path.join(tree,'src/compiler/core.ts'),cr=fs.readFileSync(cf,'utf8'),cs=ts.createSourceFile(cf,cr,ts.ScriptTarget.Latest,true);
+const helpers=cs.statements.filter(n=>ts.isFunctionDeclaration(n)&&/^orPredicate[23]$/.test(n.name?.text)).map(n=>({name:n.name.text,file:cf,start:Buffer.byteLength(cr.slice(0,n.getStart(cs))),end:Buffer.byteLength(cr.slice(0,n.end)),text:n.getText(cs)}));
+console.log(JSON.stringify({tree,checker:rows,findAncestor:funcs,helpers},null,2));

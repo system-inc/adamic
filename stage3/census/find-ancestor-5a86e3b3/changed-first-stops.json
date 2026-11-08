@@ -1,0 +1,362 @@
+[
+  {
+    "identity": [
+      "src/compiler/transformers/es2016.ts",
+      "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7",
+      420
+    ],
+    "unit": {
+      "body_end": 4517,
+      "body_start": 532,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "transformES2016",
+      "status": "attempted",
+      "where": "/tmp/fa-adapted/src/compiler/transformers/es2016.ts:21:1"
+    },
+    "base": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/es2016.ts:21:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/es2016.ts:21:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/es2019.ts",
+      "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293",
+      304
+    ],
+    "unit": {
+      "body_end": 1561,
+      "body_start": 416,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "transformES2019",
+      "status": "attempted",
+      "where": "/tmp/fa-adapted/src/compiler/transformers/es2019.ts:17:1"
+    },
+    "base": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/es2019.ts:17:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/es2019.ts:17:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/es2020.ts",
+      "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a",
+      914
+    ],
+    "unit": {
+      "body_end": 13126,
+      "body_start": 1026,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "transformES2020",
+      "status": "attempted",
+      "where": "/tmp/fa-adapted/src/compiler/transformers/es2020.ts:42:1"
+    },
+    "base": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/es2020.ts:42:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/es2020.ts:42:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/es2021.ts",
+      "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684",
+      611
+    ],
+    "unit": {
+      "body_end": 4142,
+      "body_start": 723,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "transformES2021",
+      "status": "attempted",
+      "where": "/tmp/fa-adapted/src/compiler/transformers/es2021.ts:25:1"
+    },
+    "base": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/es2021.ts:25:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/es2021.ts:25:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/legacyDecorators.ts",
+      "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0",
+      1929
+    ],
+    "unit": {
+      "body_end": 36738,
+      "body_start": 2051,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "transformLegacyDecorators",
+      "status": "attempted",
+      "where": "/tmp/fa-adapted/src/compiler/transformers/legacyDecorators.ts:88:1"
+    },
+    "base": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/legacyDecorators.ts:88:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:587:119"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/tmp/fa-adapted/src/compiler/transformers/legacyDecorators.ts:88:1",
+      "where": "/tmp/fa-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+      114993
+    ],
+    "unit": {
+      "body_end": 115136,
+      "body_start": 115076,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "getContainingFunction",
+      "status": "attempted",
+      "where": "/tmp/fa-adapted/src/compiler/utilities.ts:3125:1"
+    },
+    "base": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/tmp/fa-adapted/src/compiler/utilities.ts:3125:1",
+      "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "/tmp/fa-adapted/src/compiler/utilities.ts:3125:1",
+      "where": "/tmp/fa-adapted/src/compiler/binder.ts:1034:17"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+      115158
+    ],
+    "unit": {
+      "body_end": 115326,
+      "body_start": 115255,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "getContainingFunctionDeclaration",
+      "status": "attempted",
+      "where": "/tmp/fa-adapted/src/compiler/utilities.ts:3130:1"
+    },
+    "base": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/tmp/fa-adapted/src/compiler/utilities.ts:3130:1",
+      "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "/tmp/fa-adapted/src/compiler/utilities.ts:3130:1",
+      "where": "/tmp/fa-adapted/src/compiler/binder.ts:1034:17"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+      115804
+    ],
+    "unit": {
+      "body_end": 116024,
+      "body_start": 115935,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "getContainingFunctionOrClassStaticBlock",
+      "status": "attempted",
+      "where": "/tmp/fa-adapted/src/compiler/utilities.ts:3150:1"
+    },
+    "base": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/tmp/fa-adapted/src/compiler/utilities.ts:3150:1",
+      "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "/tmp/fa-adapted/src/compiler/utilities.ts:3150:1",
+      "where": "/tmp/fa-adapted/src/compiler/binder.ts:1034:17"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilitiesPublic.ts",
+      "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      63227
+    ],
+    "unit": {
+      "body_end": 63393,
+      "body_start": 63305,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "isPartOfTypeOnlyImportOrExportDeclaration",
+      "status": "attempted",
+      "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1"
+    },
+    "base": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/fa-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+      "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+      "root_kind": "",
+      "text": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet",
+      "unit": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+      "where": "/tmp/fa-adapted/src/compiler/utilitiesPublic.ts:1562:1"
+    }
+  }
+]

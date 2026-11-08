@@ -1,0 +1,20 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_FULL",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "-u",
+    "LATENT_ONLY_FILE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/tmp/fa-report/stage3/census/find-ancestor-e6887750/head-run-units.jsonl",
+    "/tmp/fa-head-census",
+    "/tmp/fa-adapted/src/tsc/tsc.ts",
+    "/tmp/fa-report/stage3/census/find-ancestor-e6887750/head-run.jsonl"
+  ],
+  "cwd": "/tmp/fa-report",
+  "exit": -15,
+  "wall_seconds": 1660.887,
+  "stopped": null
+}

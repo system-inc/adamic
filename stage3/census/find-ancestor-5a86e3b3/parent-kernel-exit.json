@@ -1,0 +1,10 @@
+{
+  "pid": 7838,
+  "proc_stat": "7838 (fa-parent-censu) Z 1 7838 7838 0 -1 4228364 2588046 0 0 0 378668 7962 0 0 20 0 1 0 97828 0 0 18446744073709551615 0 0 0 0 0 0 0 0 2143420159 1 0 0 17 4 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+  "proc_status": "Name:\tfa-parent-censu\nState:\tZ (zombie)\nTgid:\t7838\nNgid:\t0\nPid:\t7838\nPPid:\t1\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t0\nGroups:\t \nNStgid:\t7838\nNSpid:\t7838\nNSpgid:\t7838\nNSsid:\t7838\nKthread:\t0\nThreads:\t1\nSigQ:\t1/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000000000\nSigCgt:\tfffffffd7fc1feff\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t37141\nnonvoluntary_ctxt_switches:\t56550\n",
+  "clock_ticks_per_second": 100,
+  "exit_wait_status": 0,
+  "exit": 0,
+  "stream_complete": true,
+  "note": "The obsolete controller cancellation also closed its resource wrapper. The compiler remained running in its own session and completed. Its actual own exit is recovered from /proc/PID/stat field 52; no peak RSS is recoverable after exit. Wall time is estimated from stream final-write time minus kernel process start."
+}
