@@ -1,11 +1,13 @@
 """Independently recount raw evidence, verify body eligibility, and kill report mutants."""
+
+from stream_records import census_records
 from unit_status import attempted, body_eligible, audit_deferred
 import collections, copy, gzip, hashlib, json, pathlib, sys
 root=pathlib.Path(__file__).resolve().parent; adapted=pathlib.Path(sys.argv[1]).resolve()
 report=json.loads((root/'REPORT.json').read_text()); LABEL='measured on a checker-rejected program'
 raw_by_name={}
 for run in report['runs']:
-    with gzip.open(root/'data'/(run['name']+'.jsonl.gz'),'rt') as f: raw_by_name[run['name']]=[json.loads(line) for line in f]
+    with gzip.open(root/'data'/(run['name']+'.jsonl.gz'),'rt') as f: raw_by_name[run['name']]=census_records([json.loads(line) for line in f])
 def keys(raw): return {(f['kind'],f['where'],f['reason'],f['text']) for row in raw[1:] for f in row['findings']}
 def kinds(s):
     c=collections.Counter(k[0] for k in s)
@@ -78,7 +80,7 @@ def check(value):
             assert {k:delta['per_file'][file][k] for k in baseline['lowering_counts']}=={k:run['per_file'][file][k]-baseline['per_file'][file][k] for k in baseline['lowering_counts']},'delta recount'
 check(report)
 with gzip.open(root/'data/corpus-mutant.jsonl.gz','rt') as f:
-    planted=[json.loads(line) for line in f]
+    planted=census_records([json.loads(line) for line in f])
 before=raw_by_name['main']
 assert planted[0]==before[0]
 assert len(planted)==len(before)

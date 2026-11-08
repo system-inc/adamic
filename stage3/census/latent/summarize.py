@@ -1,4 +1,6 @@
 """Unique finding sites, unit eligibility, and feature deltas from raw measurement events."""
+
+from stream_records import census_records
 from unit_status import attempted
 import collections, gzip, hashlib, json, pathlib, shutil, subprocess, sys
 scratch=pathlib.Path(sys.argv[1]).resolve(); adapted=pathlib.Path(sys.argv[2]).resolve()
@@ -25,7 +27,7 @@ for run in runs:
     assert run['status']=='complete',run
     for phase in ['overlay','build','run']:
         shutil.copyfile(scratch/(name+'-'+phase+'.log'),data/(name+'-'+phase+'.log'))
-    raw=[normalize(json.loads(line)) for line in (scratch/(name+'.jsonl')).read_text().splitlines()]
+    raw=census_records([normalize(json.loads(line)) for line in (scratch/(name+'.jsonl')).read_text().splitlines()])
     with gzip.open(data/(name+'.jsonl.gz'),'wt') as f:
         for row in raw: f.write(json.dumps(row)+'\n')
     header=raw[0]; assert header['checker_rejected'] and header['status']=='measurement'

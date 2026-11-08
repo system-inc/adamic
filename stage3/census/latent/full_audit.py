@@ -1,4 +1,6 @@
 """Exercise real lowering continuation, diagnosed nested exclusions, and rollback."""
+
+from stream_records import census_records
 import json
 import os
 from pathlib import Path
@@ -72,7 +74,7 @@ export function outerOnly(): void {
             subprocess.run([str(binary), str(source), str(destination)],
                            env=dict(os.environ, LATENT_FULL='1', LATENT_ASSERT_NO_OUTPUT='1', **extra),
                            stdout=log, stderr=subprocess.STDOUT, check=True)
-        observations[name] = [json.loads(line) for line in destination.read_text().splitlines()]
+        observations[name] = census_records([json.loads(line) for line in destination.read_text().splitlines()])
     check(observations['full'])
     try:
         check(observations['first-error-mutant'])
