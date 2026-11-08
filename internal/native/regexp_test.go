@@ -295,7 +295,7 @@ func runRegExpTest262Bucket(t *testing.T, name string) {
 // from_codes in the ordinary archive (nm -g); their C sources are unchanged.
 var regexWitnessRuntimeSources = map[string]bool{
 	"adamic.c": true, "array.c": true, "async.c": true, "bitwise.c": true,
-	"class_features.c": true, "class_inheritance.c": true, "class_static.c": true,
+	"census_small.c": true, "class_features.c": true, "class_inheritance.c": true, "class_static.c": true,
 	"closure.c": true, "construction.c": true, "dtoa.c": true, "exceptions.c": true, "from_codes.c": true,
 	"program_region.c": true, "graph_regions.c": true, "heap.c": true, "host_runtime.c": true, "input.c": true, "library_object.c": true, "map.c": true, "map_set.c": true,
 	"maybe.c": true, "node_process.c": true, "number.c": true, "object.c": true, "parallel.c": true, "record.c": true,
