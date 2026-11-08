@@ -1,0 +1,33 @@
+// tsc's performance.ts:189, system?.cpuProfilingEnabled?.() between a flag and system?.debugMode, on
+// System's optional method (sys.ts:1434), which sys.ts:1592 fills with an arrow (#tvq1eqm): undefined
+// where the system is missing and where its method is, and the method's answer where it's there.
+interface System {
+	readonly name: string;
+	readonly debugMode?: boolean;
+	cpuProfilingEnabled?(): boolean;
+}
+
+function performanceImpl(shouldWriteNativeEvents: boolean, system: System | undefined): string {
+	if (shouldWriteNativeEvents || system?.cpuProfilingEnabled?.() || system?.debugMode) {
+		return 'native';
+	}
+	return 'none';
+}
+
+let profiles = 0;
+const systems: (System | undefined)[] = [
+	undefined,
+	{ name: ['ba', 're'].join('') },
+	{ name: ['debug', 'ging'].join(''), debugMode: true },
+	{
+		name: ['profil', 'ing'].join(''),
+		cpuProfilingEnabled: (): boolean => {
+			profiles += 1;
+			return true;
+		},
+	},
+	{ name: ['qui', 'et'].join(''), debugMode: false, cpuProfilingEnabled: (): boolean => profiles > 9 },
+];
+for (const system of systems) {
+	console.log(`${system?.name ?? 'no system'}: ${performanceImpl(false, system)} ${performanceImpl(true, system)} ${String(system?.cpuProfilingEnabled?.())} ${profiles}`);
+}
