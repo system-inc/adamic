@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/tmp/fa-head",
+    "/tmp/fa-head-overlay"
+  ],
+  "cwd": "/tmp/fa-head",
+  "exit": 0,
+  "wall_seconds": 2.002,
+  "stopped": null
+}
