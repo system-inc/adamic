@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 )
 
 // auditProgressEvery is how many texts pass between progress lines: about 16 over the corpus.
@@ -38,7 +38,7 @@ func TestAdamicJSONAudit(t *testing.T) {
 	answers := make([]answer, 0, len(cases))
 	start := time.Now()
 	for index, item := range cases {
-		output, err := FormatJSON(item.Name, item.Text, formatoptions.PrettierDefaults())
+		output, err := FormatJSON(item.Name, item.Text, format_options.PrettierDefaults())
 		result := answer{Output: output}
 		if err != nil {
 			result.Error = err.Error()

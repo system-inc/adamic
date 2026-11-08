@@ -27,7 +27,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 )
 
 // adamicRequest is what formatfiles_test.go asks.
@@ -233,7 +233,7 @@ func adamicGenerated(t *testing.T, random *rand.Rand, root string) []string {
 		}
 		for range random.Intn(5) {
 			name := pick(adamicFileNames)
-			// What formatoptions.Resolve reads at the root is left out: the port is given its answer.
+			// What format_options.Resolve reads at the root is left out: the port is given its answer.
 			if directory == "" && name == "package.json" {
 				continue
 			}
@@ -341,9 +341,9 @@ func TestAdamicPortCases(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		resolution, err := formatoptions.Resolve(root)
+		resolution, err := format_options.Resolve(root)
 		if err != nil {
-			t.Fatalf("%s: formatoptions.Resolve, whose answer the port is given, refuses the tree: %v", tree.name, err)
+			t.Fatalf("%s: format_options.Resolve, whose answer the port is given, refuses the tree: %v", tree.name, err)
 		}
 		if len(resolution.IgnorePatterns) > 0 {
 			t.Fatalf("%s: its settings name ignorePatterns, which the port doesn't carry", tree.name)

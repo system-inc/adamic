@@ -7,7 +7,7 @@ import (
 
 	"github.com/system-inc/cohere/internal/format/arena"
 	"github.com/system-inc/cohere/internal/format/doc"
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 	"github.com/system-inc/cohere/internal/format/markdown/mdast"
 	"github.com/system-inc/cohere/internal/format/printing"
 )
@@ -629,7 +629,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	if bom {
 		formatted = "\ufeff" + formatted
 	}
-	baseline, err := Format(text, formatoptions.Default(), nil)
+	baseline, err := Format(text, format_options.Default(), nil)
 	if err != nil {
 		return "", "", "", err
 	}
