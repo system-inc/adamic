@@ -13,5 +13,5 @@ function spread(node: SpreadElement): number {
 }
 const array: ArrayLiteralExpression = { kind: 210, pos: 0, brandExpression: true, elements: [] };
 const element: SpreadElement = { kind: 231, pos: 1, brandExpression: true, parent: array };
-console.log(spread(element));
+console.log(`${spread(element)}`);
 export {};
