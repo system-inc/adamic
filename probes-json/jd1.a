@@ -1,0 +1,18 @@
+// JD1: a recursive data type decoded, then given a cycle by a later write: a graph program whose
+// decoded objects were made outside any region.
+import { decodeJson } from 'adamic';
+interface Link {
+	name: string;
+	next?: Link;
+}
+const result = decodeJson<Link>('{"name":"a","next":{"name":"b"}}');
+if (result.kind === 'Error') {
+	console.log(result.message);
+} else {
+	const a = result.value;
+	const b = a.next;
+	if (b !== undefined) {
+		b.next = a;
+		console.log(`${a.name} ${b.name} ${b.next === a}`);
+	}
+}

@@ -1,0 +1,10 @@
+// JD0: JD1's control, the same cycle built from literals.
+interface Link {
+	name: string;
+	next?: Link;
+}
+const a: Link = { name: 'a' + '' };
+const b: Link = { name: 'b' + '' };
+a.next = b;
+b.next = a;
+console.log(`${a.name} ${b.name} ${b.next === a}`);
