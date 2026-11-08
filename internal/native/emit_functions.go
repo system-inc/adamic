@@ -341,7 +341,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		}
 	}
 	if receiver != "" {
-		property := expression.Closure.(ir.Property)
+		// A narrowed callee's Defined checks what the lookup finds, in its own words, before the
+		// arguments run (ir.MethodCallee). A class's proven method is always there.
+		property, defined, _ := ir.MethodCallee(expression.Closure)
 		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
@@ -371,13 +373,22 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				if !checked {
 					panic("compiler bug: unavailable callable view read")
 				}
+				if defined != nil {
+					e.checkDefined(closure, defined.Message)
+				}
 			} else {
 				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
 				if expression.Optional {
+					// The call's ?. tests what the lookup finds, a narrowed callee's own check (defined)
+					// included, as Node's o.m?.() does.
 					return e.optionalCallThrough(expression, closure, receiver, method, closureArm, methodArm)
 				}
-				const missing = "compiler bug: a method the checker proved is there is missing"
-				e.line("if (%s == NULL && !(%s)) adamic_panic(%s, %d);", closure, e.methodPresent(method), cString(missing), len(missing))
+				if defined != nil {
+					e.checkDefinedWhen(fmt.Sprintf("%s == NULL && !(%s)", closure, e.methodPresent(method)), defined.Message)
+				} else {
+					const missing = "compiler bug: a method the checker proved is there is missing"
+					e.line("if (%s == NULL && !(%s)) adamic_panic(%s, %d);", closure, e.methodPresent(method), cString(missing), len(missing))
+				}
 			}
 		}
 	} else if expression.Optional {
@@ -431,6 +442,9 @@ func (e *emitter) optionalCallThrough(expression ir.CallClosure, closure, receiv
 // the proven method alone (method, called with its count where exactCount says so).
 func (e *emitter) calledThrough(expression ir.CallClosure, closure, receiver, method string, exactCount bool, closureArm, methodArm ir.Discard) string {
 	var packed, count string
+	// A bare field's call through a checked callable view packs by the view's signature. A narrowed
+	// one packs as the plain road did before it took this one (#0bxc4jh), as lowering's spread stop
+	// asks only of a bare field.
 	if property, ok := expression.Closure.(ir.Property); ok && property.View != "" {
 		packed, count = e.checkedCallableArguments(expression, closure)
 	} else {

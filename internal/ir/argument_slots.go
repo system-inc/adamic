@@ -73,8 +73,8 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
 			continue
 		}
 		if !function.Closure && function.Receiver {
-			property, method := call.Closure.(Property)
-			if !method || !property.Method || property.Name != function.MethodName {
+			property, _, method := MethodCallee(call.Closure)
+			if !method || property.Name != function.MethodName {
 				continue
 			}
 		}
