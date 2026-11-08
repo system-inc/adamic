@@ -67,34 +67,51 @@ func TestNodeProcessTerminal(t *testing.T) {
 	}
 }
 
-// tsc's sys.ts guard on stdout's handle, a plain dot where sys.ts has ?. (#qa1g5f3): setBlocking is a
-// function-typed field, read and then called, so it reaches adamicCall without the method call's
-// adamicCallee. The JavaScript backend's handle once held Node's bare function there and panicked with
-// closure.code is not a function. Held to Node on a file, where Node has no handle, a pipe and a
-// terminal, natively sanitized and released and on the JavaScript backend.
+// Each fixture is held to Node on a file, where Node has no handle, a pipe and a terminal, natively
+// sanitized and released and on the JavaScript backend (#qa1g5f3). node_process_handle_view.a is tsc's
+// sys.ts guard with a plain dot where sys.ts has ?.: setBlocking is a function-typed field, read and
+// then called, so it reaches adamicCall without the method call's adamicCallee, where the JavaScript
+// backend's handle once held Node's bare function and panicked with closure.code is not a function.
+// node_process_handle_identity.a reads the handle twice: Node's is one object for the process, where
+// both backends once made a new one on each read and printed same false.
 func TestNodeProcessHandleView(t *testing.T) {
 	t.Parallel()
-	path, binary, script := sanitized(t, "internal/oracle/testdata/node_process_handle_view.a")
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	release := filepath.Join(t.TempDir(), "release")
-	if err := native.Build(native.C(program), release, native.Options{Release: true}); err != nil {
-		t.Fatal(err)
-	}
-	runner := filepath.Join(repository, "oracle/node.mjs")
-	for _, destination := range []string{"file", "pipe", "tty"} {
-		truth := nodeProcessTerminal(t, destination, "node", "--disable-warning=ExperimentalWarning", runner, path)
-		if truth.exitCode != 0 || string(truth.stdout) != "set blocking\n" || len(truth.stderr) != 0 {
-			t.Fatalf("%s: unexpected Node result %d %q %q", destination, truth.exitCode, truth.stdout, truth.stderr)
-		}
-		for _, command := range [][]string{{binary}, {release}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
-			got := nodeProcessTerminal(t, destination, command...)
-			if difference := disagreement(truth, got); difference != "" {
-				t.Fatalf("%s %s: %s\nNode %q\ngot %q %q", destination, filepath.Base(command[len(command)-1]), difference, truth.stdout, got.stdout, got.stderr)
+	for _, fixture := range []struct {
+		name          string
+		file, present string
+	}{
+		{"node_process_handle_view.a", "set blocking\n", "set blocking\n"},
+		{"node_process_handle_identity.a", "handle false\nsame true\n", "handle true\nsame true\n"},
+	} {
+		t.Run(fixture.name, func(t *testing.T) {
+			t.Parallel()
+			path, binary, script := sanitized(t, "internal/oracle/testdata/"+fixture.name)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
 			}
-		}
+			release := filepath.Join(t.TempDir(), "release")
+			if err := native.Build(native.C(program), release, native.Options{Release: true}); err != nil {
+				t.Fatal(err)
+			}
+			runner := filepath.Join(repository, "oracle/node.mjs")
+			for _, destination := range []string{"file", "pipe", "tty"} {
+				expected := fixture.present
+				if destination == "file" {
+					expected = fixture.file
+				}
+				truth := nodeProcessTerminal(t, destination, "node", "--disable-warning=ExperimentalWarning", runner, path)
+				if truth.exitCode != 0 || string(truth.stdout) != expected || len(truth.stderr) != 0 {
+					t.Fatalf("%s: unexpected Node result %d %q %q", destination, truth.exitCode, truth.stdout, truth.stderr)
+				}
+				for _, command := range [][]string{{binary}, {release}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
+					got := nodeProcessTerminal(t, destination, command...)
+					if difference := disagreement(truth, got); difference != "" {
+						t.Fatalf("%s %s: %s\nNode %q\ngot %q %q", destination, filepath.Base(command[len(command)-1]), difference, truth.stdout, got.stdout, got.stderr)
+					}
+				}
+			}
+		})
 	}
 }
 
