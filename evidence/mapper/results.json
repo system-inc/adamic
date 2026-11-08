@@ -1,0 +1,38 @@
+[
+  {
+    "revision": "main",
+    "extension": "a",
+    "compile_exit": 1,
+    "compile_stderr": "/tmp/mapper.a:6:7: error TS2322: Type 'Animal[]' is not assignable to type 'Mapper'.\n  Types of property 'map' are incompatible.\n    Type '<U>(callbackfn: (value: Animal, index: number, array: Animal[]) => U, thisArg?: any) => U[]' is not assignable to type '<U>(f: (x: Dog) => U) => U[]'.\n      Types of parameters 'callbackfn' and 'f' are incompatible.\n        Types of parameters 'x' and 'value' are incompatible.\n          Property 'bark' is missing in type 'Animal' but required in type 'Dog'.\n/tmp/mapper.a:7:13: error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'string'.\n",
+    "run_exit": null,
+    "run_stdout": null,
+    "run_stderr": null
+  },
+  {
+    "revision": "main",
+    "extension": "ts",
+    "compile_exit": 1,
+    "compile_stderr": "/tmp/mapper.ts:6:7: error TS2322: Type 'Animal[]' is not assignable to type 'Mapper'.\n  Types of property 'map' are incompatible.\n    Type '<U>(callbackfn: (value: Animal, index: number, array: Animal[]) => U, thisArg?: any) => U[]' is not assignable to type '<U>(f: (x: Dog) => U) => U[]'.\n      Types of parameters 'callbackfn' and 'f' are incompatible.\n        Types of parameters 'x' and 'value' are incompatible.\n          Property 'bark' is missing in type 'Animal' but required in type 'Dog'.\n/tmp/mapper.ts:7:13: error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'string'.\n",
+    "run_exit": null,
+    "run_stdout": null,
+    "run_stderr": null
+  },
+  {
+    "revision": "c9fa1ea",
+    "extension": "a",
+    "compile_exit": 1,
+    "compile_stderr": "/tmp/mapper.a:6:7: error TS2322: Type 'Animal[]' is not assignable to type 'Mapper'.\n  Types of property 'map' are incompatible.\n    Type '<U>(callbackfn: (value: Animal, index: number, array: Animal[]) => U, thisArg?: any) => U[]' is not assignable to type '<U>(f: (x: Dog) => U) => U[]'.\n      Types of parameters 'callbackfn' and 'f' are incompatible.\n        Types of parameters 'x' and 'value' are incompatible.\n          Property 'bark' is missing in type 'Animal' but required in type 'Dog'.\n/tmp/mapper.a:7:13: error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'string'.\n",
+    "run_exit": null,
+    "run_stdout": null,
+    "run_stderr": null
+  },
+  {
+    "revision": "c9fa1ea",
+    "extension": "ts",
+    "compile_exit": 1,
+    "compile_stderr": "/tmp/mapper.ts:6:7: error TS2322: Type 'Animal[]' is not assignable to type 'Mapper'.\n  Types of property 'map' are incompatible.\n    Type '<U>(callbackfn: (value: Animal, index: number, array: Animal[]) => U, thisArg?: any) => U[]' is not assignable to type '<U>(f: (x: Dog) => U) => U[]'.\n      Types of parameters 'callbackfn' and 'f' are incompatible.\n        Types of parameters 'x' and 'value' are incompatible.\n          Property 'bark' is missing in type 'Animal' but required in type 'Dog'.\n/tmp/mapper.ts:7:13: error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'string'.\n",
+    "run_exit": null,
+    "run_stdout": null,
+    "run_stderr": null
+  }
+]

@@ -1,0 +1,7 @@
+/tmp/mapper.a:6:7: error TS2322: Type 'Animal[]' is not assignable to type 'Mapper'.
+  Types of property 'map' are incompatible.
+    Type '<U>(callbackfn: (value: Animal, index: number, array: Animal[]) => U, thisArg?: any) => U[]' is not assignable to type '<U>(f: (x: Dog) => U) => U[]'.
+      Types of parameters 'callbackfn' and 'f' are incompatible.
+        Types of parameters 'x' and 'value' are incompatible.
+          Property 'bark' is missing in type 'Animal' but required in type 'Dog'.
+/tmp/mapper.a:7:13: error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'string'.
