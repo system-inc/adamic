@@ -234,12 +234,13 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 				// are related, and tsc relates a method's parameters both ways: a handle<T>(x: Dog) seen as
 				// handle<T>(x: Animal) is handed a Cat (#q6gs98r). Only a method type identical to the
 				// view's, under the checker's identity relation, is the same method; any other view of a
-				// generic method stops here, unjudged, rather than passing. A host's method (FSWatcher's on,
-				// seen as sys.ts's FsWatchWorkerWatcher's) runs on the host, which reads its arguments by its
-				// own registration (library_node.go). So a method declared only in TypeScript's library or
-				// Node's (hostDeclaredSymbol) is left as it was before this stop: the hole was a program's
-				// own body.
-				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) || l.hostDeclaredSymbol(inside) {
+				// generic method stops here, unjudged, rather than passing. A host's own generic method,
+				// declared only in TypeScript's library or Node's (hostDeclaredSymbol), keeps the path it had
+				// before this stop: FSWatcher's on, seen as sys.ts's FsWatchWorkerWatcher's, is judged by its
+				// run-time event check and its any overload's relation, and Performance's members by
+				// nodeProcessStorageABI's signature scan. A generic the view alone brings (process.chdir
+				// seen as chdir<T>(directory: string | number)) isn't the host's, so that view stops too.
+				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) || l.hostDeclaredSymbol(inside) && l.generic(source) {
 					continue
 				}
 				return &widening{source: source, target: target, genericMethod: viewed.Name}
