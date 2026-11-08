@@ -1,0 +1,50 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/overlaytext",
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/importclean",
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/replay",
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/replay/worker",
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/timing",
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/predicates/tools/tool",
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/tool",
+    "action": "skip"
+  }
+]

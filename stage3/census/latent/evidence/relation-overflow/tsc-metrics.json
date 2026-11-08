@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/tmp/latent-endpoint-census",
+    "/tmp/latent-adapted/src/tsc/tsc.ts",
+    "/tmp/latent-endpoint-tsc.jsonl"
+  ],
+  "wall_seconds": 1800.3759940290001,
+  "peak_rss_kib": 4005588,
+  "exit": 124,
+  "user_cpu_seconds": 1977.410306,
+  "system_cpu_seconds": 51.980458,
+  "phase_first_wall_seconds": {},
+  "time_limit_seconds": 1800.0,
+  "rss_limit_mib": 10240,
+  "address_space_limit_mib": 20480,
+  "rss_limit_killed": false
+}

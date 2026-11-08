@@ -574,6 +574,20 @@ class RootOrderTests(unittest.TestCase):
         self.assertIn('Refused src/compiler/later.ts:167:31: a cast the runtime cannot check (read from the entry census; source order)', text)
         self.assertIn('root-order artifact', text)
 
+    def test_program_relation_stop_prevents_artifact_lowering_credit(self):
+        from report import ENTRY_MEASUREMENT
+        self.readiness()
+        path = self.run / 'tsc/latent.jsonl'
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        rows.append(dict(status='relation_report', measurement=ENTRY_MEASUREMENT,
+                         relation_overflow=dict(after_load='', end='overflow'),
+                         findings=[dict(measurement=ENTRY_MEASUREMENT, kind='NotYet', where='program',
+                                        reason='relation limit', text='relation limit')]))
+        path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(self.root_row(result)['lowering_stop']['where'], 'program')
+
     def test_artifact_without_attempted_root_units_does_not_lower_whole(self):
         self.readiness()
         path = self.run / 'tsc/latent.jsonl'
@@ -620,3 +634,47 @@ class RootOrderTests(unittest.TestCase):
         self.assertEqual(result['totals']['lowering'], 1)
         self.assertEqual(result['root_order_artifacts'][0]['entry_unattempted_sources'],
                          ['src/compiler/refused.ts'])
+
+class RelationTrailerReportTests(unittest.TestCase):
+    def summary(self, trailer=True, findings=None):
+        from report import lowering_summary
+        rows = [{'status': 'measurement', 'measurement': MEASUREMENT, 'checker_rejected': True},
+                {'file': '/only.a', 'measurement': MEASUREMENT, 'findings': []}]
+        if trailer:
+            rows.append({'status': 'relation_report', 'measurement': MEASUREMENT,
+                         'relation_overflow': {'after_load': '', 'end': 'planted overflow'},
+                         'findings': findings or []})
+        return lowering_summary(rows, {'/only.a'}, MEASUREMENT)
+
+    def test_relation_trailer_is_not_a_source_file(self):
+        summary = self.summary()
+        self.assertEqual(summary['source_files'], 1)
+        self.assertTrue(summary['relation_report_complete'])
+        self.assertEqual(summary['relation_overflow']['end'], 'planted overflow')
+        self.assertNotIn('run did not complete', '\n'.join(latent_table('main', summary)))
+
+    def test_relation_trailer_findings_count_as_notyet_sites(self):
+        reason = 'a type relation the checker gave up on as too complex, whose answer lowering read (planted overflow)'
+        finding = dict(measurement=MEASUREMENT, kind='NotYet', where='program', reason=reason, text=reason)
+        summary = self.summary(findings=[finding, finding])
+        self.assertEqual(summary['totals']['NotYet'], 1)
+        self.assertEqual(summary['recorded_events'], 2)
+        self.assertEqual(summary['per_reason'], {'NotYet: ' + reason: 1})
+        self.assertIn(reason, '\n'.join(latent_table('main', summary)))
+
+    def test_missing_relation_trailer_reports_incomplete_run(self):
+        summary = self.summary(trailer=False)
+        self.assertFalse(summary['relation_report_complete'])
+        self.assertIsNone(summary['relation_overflow'])
+        self.assertIn('run did not complete; end answer unavailable', '\n'.join(latent_table('main', summary)))
+
+    def test_misplaced_duplicate_or_unfinished_relation_trailer_is_rejected(self):
+        from report import lowering_summary
+        header = dict(status='measurement', measurement=MEASUREMENT, checker_rejected=True)
+        file = dict(file='/only.a', measurement=MEASUREMENT, findings=[])
+        trailer = dict(status='relation_report', measurement=MEASUREMENT,
+                       relation_overflow=dict(after_load='', end=''), findings=[])
+        for rows in ([header, trailer, file], [header, file, trailer, trailer],
+                     [header, file, dict(trailer, relation_overflow=dict(after_load=''))]):
+            with self.subTest(rows=rows), self.assertRaises(ValueError):
+                lowering_summary(rows, {'/only.a'}, MEASUREMENT)

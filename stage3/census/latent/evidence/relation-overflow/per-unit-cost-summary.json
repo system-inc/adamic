@@ -1,0 +1,15 @@
+{
+  "complete": false,
+  "reason": "stopped after checker.ts because per-unit queries were too costly; final driver defaults to endpoint checks",
+  "after_load": "",
+  "end": null,
+  "completed_unit_queries": 3362,
+  "checker_queries": 51,
+  "checker_query_seconds": 32.598781933,
+  "checker_query_mean_ms": 639.1918026078431,
+  "checker_lowering_seconds": 10.569839224,
+  "all_query_seconds": 972.055675002,
+  "nonempty_answers": 0,
+  "supervised_process_exit": -15,
+  "wrapper_exit": 241
+}
