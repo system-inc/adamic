@@ -18,8 +18,8 @@ import (
 // and console.log(typeof <name>). Node, running it as oracle/node.mjs runs every program, an ES module,
 // must print the row's recorded answer; a column saying Absent where Node prints anything else fails,
 // and so does a column saying Provided where Node prints "undefined", unless the row names a ruled
-// divergence (ruledBackendDivergences). A row every column of which is Absent lowers, and each backend
-// must print Node's answer; any other row stops as not yet, naming itself, and never prints. Mutant (d),
+// divergence (ruledBackendDivergences). A row whose columns are cleared lowers, and each backend
+// must print Node's answer; a Pending row stops as not yet, naming itself, and never prints. Mutant (d),
 // testdata/host_bindings/mutants.md: process folded Absent goes red here.
 func TestHostBindingsHeldToNode(t *testing.T) {
 	t.Parallel()
@@ -64,9 +64,9 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 			if row.Divergence != "" && !divergence {
 				t.Fatalf("the row names the divergence %q, which no ruled backend divergence is", row.Divergence)
 			}
-			absent := true
+			cleared := true
 			for _, target := range row.Targets() {
-				absent = absent && target.Column.Answer == load.HostBindingAbsent
+				cleared = cleared && target.Column.Answer != load.HostBindingPending
 				if divergence {
 					continue
 				}
@@ -78,7 +78,7 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 				}
 			}
 			_, err = lowered(t, path)
-			if !absent {
+			if !cleared {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "stage 0 can't lower the host binding "+row.Name+", ") {
 					t.Errorf("got %v, want a not-yet naming the host binding %s", err, row.Name)
@@ -86,7 +86,7 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 				return
 			}
 			if err != nil {
-				t.Fatalf("a row Absent on every target stops: %v", err)
+				t.Fatalf("a row cleared on every target stops: %v", err)
 			}
 			generatorAgrees(t, relative)
 		})
@@ -102,7 +102,7 @@ func TestHostBindingsAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/host_bindings"
 	programs := 0
-	for _, name := range []string{"if", "and", "conditional", "shadow"} {
+	for _, name := range []string{"if", "and", "conditional", "shadow", "performance_provided"} {
 		programs++
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
