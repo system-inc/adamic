@@ -7,23 +7,23 @@ Both active adapter files, adapt.cjs and owners.json, are byte-identical to
 those checkpoints. Later proof files change product keys without changing the
 frozen transformation.
 
-| Check | Result |
-| --- | --- |
-| Full apply, main and main plus this directory | Both exit 0 |
-| Ordinary Adamic types, 79 sorted compiler roots together | Both exit 0, zero diagnostics |
-| Owner contract | Pass; idempotent, zero replay writes, drift refusal before writes, LF/CRLF preserved |
-| Complete source scope | 746 files compared; only the pinned owner differs |
-| Complete core.ts JavaScript, comments kept and removed | Byte-identical |
-| All 9 emitted JavaScript files | Byte-identical; zero hunks |
-| typescript.d.ts and tsserverlibrary.d.ts | Byte-identical |
-| typescript.internal.d.ts | Byte-identical; both functions occur only here |
-| Every adapter paired replay | 84 adapters; only this adapter's outcome differs |
-| Full core.ts site census | 59 distinct sites before, 58 after; target gone, zero new sites |
-| Original-owner mutant | Exact main core.ts bytes restored; original site set returns |
-| Unchanged whole lane control | Pass with the sanctioned API failure |
-| Counted lane union | 398 guarded shards in 20 bounded pieces; same test identities and baseline bytes |
-| Counted behavior equivalence | Zero counterexamples; selected JavaScript is byte-identical |
-| Node witnesses | Equal before/after results and exceptions on all retained input classes |
+| Check                                                    | Result                                                                               |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Full apply, main and main plus this directory            | Both exit 0                                                                          |
+| Ordinary Adamic types, 79 sorted compiler roots together | Both exit 0, zero diagnostics                                                        |
+| Owner contract                                           | Pass; idempotent, zero replay writes, drift refusal before writes, LF/CRLF preserved |
+| Complete source scope                                    | 746 files compared; only the pinned owner differs                                    |
+| Complete core.ts JavaScript, comments kept and removed   | Byte-identical                                                                       |
+| All 9 emitted JavaScript files                           | Byte-identical; zero hunks                                                           |
+| typescript.d.ts and tsserverlibrary.d.ts                 | Byte-identical                                                                       |
+| typescript.internal.d.ts                                 | Byte-identical; both functions occur only here                                       |
+| Every adapter paired replay                              | 84 adapters; only this adapter's outcome differs                                     |
+| Full core.ts site census                                 | 59 distinct sites before, 58 after; target gone, zero new sites                      |
+| Original-owner mutant                                    | Exact main core.ts bytes restored; original site set returns                         |
+| Unchanged whole lane control                             | Pass with the sanctioned API failure                                                 |
+| Counted lane union                                       | 398 guarded shards in 20 bounded pieces; same test identities and baseline bytes     |
+| Counted behavior equivalence                             | Zero counterexamples; selected JavaScript is byte-identical                          |
+| Node witnesses                                           | Equal before/after results and exceptions on all retained input classes              |
 
 The paired replay retains these pre-existing, identical baseline refusals:
 30-indexed-reads, 32-indexed-reads-program, 33-indexed-reads-emit, 40-explicit-any, 41-explicit-any-remaining, 43-any-returns, 47-host-errors, 65-temporary-node-builtins, 76-truthful-casts, 93-builtin-imports, 95-checker-axolotl-b, 95-checker-axolotl-h, 98-axolotl-e, 99-correctness-axolotl-g. They have identical exit status, normalized stdout,

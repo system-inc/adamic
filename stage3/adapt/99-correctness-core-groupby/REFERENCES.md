@@ -10,28 +10,28 @@ to these core functions. Star namespace exports expose the same symbols.
 
 ## groupBy
 
-| File | Line | Use |
-| --- | ---: | --- |
-| src/compiler/core.ts | 1471 | declaration |
-| src/compiler/core.ts | 1473 | declaration |
-| src/compiler/core.ts | 1474 | declaration |
-| src/compiler/transformers/legacyDecorators.ts | 31 | import |
-| src/compiler/transformers/legacyDecorators.ts | 538 | call |
-| src/services/organizeImports.ts | 25 | import |
-| src/services/organizeImports.ts | 427 | call |
+| File                                          | Line | Use         |
+| --------------------------------------------- | ---: | ----------- |
+| src/compiler/core.ts                          | 1471 | declaration |
+| src/compiler/core.ts                          | 1473 | declaration |
+| src/compiler/core.ts                          | 1474 | declaration |
+| src/compiler/transformers/legacyDecorators.ts |   31 | import      |
+| src/compiler/transformers/legacyDecorators.ts |  538 | call        |
+| src/services/organizeImports.ts               |   25 | import      |
+| src/services/organizeImports.ts               |  427 | call        |
 
 ## clone
 
-| File | Line | Use |
-| --- | ---: | --- |
-| src/compiler/core.ts | 1488 | declaration |
-| src/services/utilities.ts | 21 | import |
-| src/services/utilities.ts | 2245 | call |
-| src/harness/fourslashImpl.ts | 2914 | call |
-| src/harness/fourslashImpl.ts | 3022 | call |
-| src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts | 20 | import |
-| src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts | 383 | call |
-| src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts | 386 | callback argument |
+| File                                                           | Line | Use               |
+| -------------------------------------------------------------- | ---: | ----------------- |
+| src/compiler/core.ts                                           | 1488 | declaration       |
+| src/services/utilities.ts                                      |   21 | import            |
+| src/services/utilities.ts                                      | 2245 | call              |
+| src/harness/fourslashImpl.ts                                   | 2914 | call              |
+| src/harness/fourslashImpl.ts                                   | 3022 | call              |
+| src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts |   20 | import            |
+| src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts |  383 | call              |
+| src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts |  386 | callback argument |
 
 The compiler's only groupBy call, legacyDecorators.ts:538, resolves to the
 key-selector overload with K = boolean. isSyntheticMetadataDecorator returns
