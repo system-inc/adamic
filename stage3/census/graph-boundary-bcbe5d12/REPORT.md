@@ -10,16 +10,16 @@ Box: `755daee0c6ba`; cgroup CPU quota `400000 100000`; memory limit `17179869184
 
 | Kind | Observations | Distinct reported locations |
 | --- | ---: | ---: |
-| views | 29006 | 312 |
+| views | 29166 | 314 |
 | record_literals | 0 | 0 |
 | dynamic_reads | 27 | 20 |
 | checked_object_calls | 0 | 0 |
 
-Views combine 1051 ViewOrigins entries and 27955 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
+Views combine 1055 ViewOrigins entries and 28111 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
 
-The 79 compiler-file subtotal is `{'views': 29006, 'record_literals': 0, 'dynamic_reads': 27, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
+The 79 compiler-file subtotal is `{'views': 29166, 'record_literals': 0, 'dynamic_reads': 27, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
 
-Long pole by observed count: **views, 29006**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
+Long pole by observed count: **views, 29166**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
 
 ## Coverage and interpretation
 
@@ -29,9 +29,9 @@ Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 se
 
 Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
 
-Observed 6448 unit results: {'lowered': 4064, 'stopped': 2384}. First-error pass observed 3447 results; full pieces observed 4065. The summed table uses one result per unit, preferring full mode over first-error mode and later full observations over earlier ones. Earlier completed unit results remain when a later attempt does not reach that unit. Repeated sites in different units are repeated observations, not independent source sites.
+Observed 6516 unit results: {'lowered': 4106, 'stopped': 2410}. First-error pass observed 3447 results; full pieces observed 4133. The summed table uses one result per unit, preferring full mode over first-error mode and later full observations over earlier ones. Earlier completed unit results remain when a later attempt does not reach that unit. Repeated sites in different units are repeated observations, not independent source sites.
 
-Stock unit inventory has 2735 units in 27 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 534}`. Missing stock file records after an interrupted pass are not evidence of zero units.
+Stock unit inventory has 2804 units in 28 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 535}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
 In first-error mode a unit with a lowering finding contributes zero sites: its body is discarded. In full mode the stock hook rolls failed statements back and continues. A `stopped` full-mode observation can therefore contain retained successful statements; its failed statements contribute no sites. Panicked unit results contribute zero sites. `lowered` means no new lowering finding in that unit, not whole-program acceptance. File-level refusal-scan findings do not suppress independent-unit examination.
 
@@ -60,7 +60,7 @@ Attribution is to the unit's file, not an independent root. Complete traversal m
 | debug.ts | 0 | 0 | 0 | 0 | 85 | complete traversal | no, not computed |
 | diagnosticInformationMap.generated.ts | 0 | 0 | 0 | 0 | 3 | not yet attempted | no, not computed |
 | emitter.ts | 3433 | 0 | 9 | 0 | 346 | partial | no, not computed |
-| executeCommandLine.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| executeCommandLine.ts | 160 | 0 | 0 | 0 | 68 | complete traversal | no, not computed |
 | expressionToTypeNode.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
 | factory/baseNodeFactory.ts | 0 | 0 | 0 | 0 | 8 | partial | no, not computed |
 | factory/emitHelpers.ts | 0 | 0 | 0 | 0 | 83 | partial | no, not computed |
@@ -492,7 +492,15 @@ export function createNodeConverters(factory: NodeFactory): NodeConverters {
 | full-20-004-snapshot-final | 0 | 1.004 | completed |
 | full-20-004-snapshot | 0 | 1.001 | completed |
 | full-20-004 | 0 | 17.014 | completed |
+| full-20-005-add | 0 | 1.004 | completed |
+| full-20-005-audit | 0 | 2.004 | completed |
+| full-20-005-commit | 0 | 1.004 | completed |
+| full-20-005-push | 0 | 2.008 | completed |
+| full-20-005-report | 0 | 1.004 | completed |
+| full-20-005-snapshot-final | 0 | 1.002 | completed |
+| full-20-005-snapshot | 0 | 1.001 | completed |
 | full-20-005 | 0 | 41.043 | completed |
+| full-20-006 | 0 | 71.166 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
 | interim-audit | 0 | 3.002 | completed |
