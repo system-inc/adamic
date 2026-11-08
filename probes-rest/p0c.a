@@ -1,0 +1,22 @@
+// P0c: P0 with or written over one concrete function type, no generics.
+type Test = (n: number) => boolean | undefined;
+function or(...fs: Test[]): Test {
+	return (n: number): boolean | undefined => {
+		let lastResult: boolean | undefined;
+		for (const f of fs) {
+			lastResult = f(n);
+			if (lastResult) {
+				return lastResult;
+			}
+		}
+		return lastResult;
+	};
+}
+function isEven(n: number): boolean {
+	return n % 2 === 0;
+}
+function isBig(n: number): boolean {
+	return n > 10;
+}
+const either = or(isEven, isBig);
+console.log(`${either(3)} ${either(4)} ${either(11)}`);

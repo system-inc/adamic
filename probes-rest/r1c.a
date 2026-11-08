@@ -1,0 +1,31 @@
+// R1c: an element of fs captures slot, and slot is then given or's result: a real cycle closed by a cell write.
+type Test = (n: number) => boolean | undefined;
+function or(...fs: Test[]): Test {
+	return (n: number): boolean | undefined => {
+		let lastResult: boolean | undefined;
+		for (const f of fs) {
+			lastResult = f(n);
+			if (lastResult) {
+				return lastResult;
+			}
+		}
+		return lastResult;
+	};
+}
+function isEven(n: number): boolean {
+	return n % 2 === 0;
+}
+function isBig(n: number): boolean {
+	return n > 10;
+}
+function isSeven(n: number): boolean {
+	return n === 7;
+}
+function run(): void {
+	let slot: Test | undefined;
+	const watcher = (n: number): boolean => slot !== undefined && n > 100;
+	const g = or(watcher, isEven);
+	slot = g; // closes the cycle
+	console.log(`${g(3)} ${g(4)} ${g(101)}`);
+}
+run();

@@ -1,0 +1,25 @@
+// R1l: R1c's cycle with fs given as an array literal, not rest-packed: the control for the rest pack's region.
+type Test = (n: number) => boolean | undefined;
+function any(fs: Test[]): Test {
+	return (n: number): boolean | undefined => {
+		let lastResult: boolean | undefined;
+		for (const f of fs) {
+			lastResult = f(n);
+			if (lastResult) {
+				return lastResult;
+			}
+		}
+		return lastResult;
+	};
+}
+function isEven(n: number): boolean {
+	return n % 2 === 0;
+}
+function run(): void {
+	let slot: Test | undefined;
+	const watcher = (n: number): boolean => slot !== undefined && n > 100;
+	const g = any([watcher, isEven]);
+	slot = g; // closes the cycle
+	console.log(`${g(3)} ${g(4)} ${g(101)}`);
+}
+run();

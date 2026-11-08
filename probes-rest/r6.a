@@ -1,0 +1,32 @@
+// R6: a closure capturing fs is stored into a let that an element of fs captured: a real cycle.
+type Test = (n: number) => boolean | undefined;
+function or(keep: (count: () => number) => void, ...fs: Test[]): Test {
+	const count = (): number => fs.length;
+	keep(count);
+	return (n: number): boolean | undefined => {
+		let lastResult: boolean | undefined;
+		for (const f of fs) {
+			lastResult = f(n);
+			if (lastResult) {
+				return lastResult;
+			}
+		}
+		return lastResult;
+	};
+}
+function isEven(n: number): boolean {
+	return n % 2 === 0;
+}
+function isBig(n: number): boolean {
+	return n > 10;
+}
+function run(): void {
+	let slot: (() => number) | undefined;
+	const watcher = (n: number): boolean => slot !== undefined && n > 100;
+	const keep = (count: () => number): void => {
+		slot = count; // closes the cycle
+	};
+	const g = or(keep, watcher, isEven);
+	console.log(`${g(3)} ${g(4)} ${g(101)} ${slot === undefined ? 0 : slot()}`);
+}
+run();

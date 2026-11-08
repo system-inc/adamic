@@ -1,0 +1,25 @@
+// R2c: or's body pushes its own result closure into fs through an alias: a real cycle.
+type Test = (n: number) => boolean | undefined;
+function or(...fs: Test[]): Test {
+	const result = (n: number): boolean | undefined => {
+		let lastResult: boolean | undefined;
+		for (const f of fs) {
+			lastResult = f(n);
+			if (lastResult) {
+				return lastResult;
+			}
+		}
+		return lastResult;
+	};
+	const a = fs;
+	a.push(result); // closes the cycle
+	return result;
+}
+function isEven(n: number): boolean {
+	return n % 2 === 0;
+}
+function isBig(n: number): boolean {
+	return n > 10;
+}
+const either = or(isEven, isBig);
+console.log(`${either(4)} ${either(11)}`);
