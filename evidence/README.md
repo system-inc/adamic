@@ -34,3 +34,7 @@ Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made
 ## Follow-up at 2594029
 
 [Latest steps 2–4 rerun](2594029/results.md): the corrected timer pin passes and newly fails under mutant A; L2 still fails with `got <nil>` at baseline and under mutant B. See that report for full diagnostics and exact timer stops. No step 5 rerun was requested.
+
+## L2 follow-up at ec5e9b2
+
+[Baseline, condition-3 mutant, and stock tsc 6.0.3](ec5e9b2/results.md): baseline and mutant both fail during Load with TS2322; stock 6.0.3 also rejects the exact program with default and strict settings. Source restored exactly.

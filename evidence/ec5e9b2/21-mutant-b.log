@@ -1,0 +1,14 @@
+=== RUN   TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== PAUSE TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== CONT  TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+    rule_g_test.go:71: Load: /tmp/adamic-gate/TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet2212002036/001/main.ts:7:7: error TS2322: Type 'Provider' is not assignable to type 'Slot'.
+          Types of property 'run' are incompatible.
+            Type '<T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: unknown[]) => void' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ...args: A) => void'.
+              Types of parameters 'callback' and 'callback' are incompatible.
+                Types of parameters 'args' and 'args' are incompatible.
+                  Type 'any[]' is not assignable to type 'A'.
+                    'any[]' is assignable to the constraint of type 'A', but 'A' could be instantiated with a different subtype of constraint 'unknown[]'.
+--- FAIL: TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.109s
+FAIL
