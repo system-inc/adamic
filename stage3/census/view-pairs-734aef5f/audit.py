@@ -6,7 +6,7 @@ def read(p):
  if not p.exists():return []
  return [json.loads(l) for l in gzip.decompress(p.read_bytes()).decode().splitlines() if l]
 summary=json.loads((here/'summary.json').read_text());selected=read(here/'selected-pairs.jsonl.gz');units=read(here/'selected-units.jsonl.gz')
-passes=sorted([p.name.removesuffix('-boundary.jsonl.gz') for p in raw.glob('*-boundary.jsonl.gz')],key=lambda n:(n!='first',n))
+passes=sorted([p.name.removesuffix('-status.json.gz') for p in raw.glob('*-status.json.gz') if re.fullmatch(r'first|full-\d+',p.name.removesuffix('-status.json.gz'))],key=lambda n:(n!='first',n))
 chosen={};raw_pairs={};unit_maps={}
 for name in passes:
  for r in read(raw/(name+'-boundary.jsonl.gz')):chosen[r['file'],r['unit']]=name

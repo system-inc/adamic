@@ -16,16 +16,16 @@ Scalar enum/boolean unions are classified as scalar fields using the adapted sou
 
 **Unrelated object pair observations: 1; distinct textual (source, target, nested path) pairs: 1. Nil-source views with a known runtime reference field: 0.** The object-capable reference companion is 0. Nil-source views with no proven reference field but unknown fields or missing target: 0.
 
-Selected-unit pair observations: **42336**. Raw lines across all passes, including superseded first-error and retry observations: **62366**. Selected units held 2463 viewSources entries; pointer deduplication suppressed 237920 repeat visits and the depth bound suppressed 20974 visits.
+Selected-unit pair observations: **42721**. Raw lines across all passes, including superseded first-error and retry observations: **62751**. Selected units held 2485 viewSources entries; pointer deduplication suppressed 239945 repeat visits and the depth bound suppressed 21343 visits.
 
 | Split | Selected unit observations | All raw lines |
 | --- | ---: | ---: |
-| object_related_top | 1630 | 2099 |
-| object_related_nested | 26040 | 38705 |
+| object_related_top | 1650 | 2119 |
+| object_related_nested | 26268 | 38933 |
 | object_unrelated_top | 1 | 1 |
 | object_unrelated_nested | 0 | 0 |
 | scalar_top | 0 | 3 |
-| scalar_nested | 14665 | 21558 |
+| scalar_nested | 14802 | 21695 |
 | nil_source | 0 | 0 |
 | nil_target_only | 0 | 0 |
 
@@ -35,7 +35,7 @@ Reference field means a cycleFinder.fields field whose lowering representation i
 
 ## Coverage
 
-Observed **8224 unit results**: `{'lowered': 4784, 'stopped': 3440}`. Deferred standalone units in emitted inventories: **709**. Unobserved stock units by status: `{'deferred_generic_instantiation': 709}`. Full-mode files attempted: **38/81**; emitted complete full-mode file inventories: 37. Stock inventory has 6993 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
+Observed **8311 unit results**: `{'lowered': 4813, 'stopped': 3498}`. Deferred standalone units in emitted inventories: **710**. Unobserved stock units by status: `{'deferred_generic_instantiation': 710}`. Full-mode files attempted: **40/81**; emitted complete full-mode file inventories: 39. Stock inventory has 7081 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
 
 One result per (unit file, unit position) is selected: full mode supersedes first-error mode, and later full pieces supersede earlier ones. Repeated dependency pairs in different units remain repeated observations. TypeToString text can be truncated or reused for distinct checker identities; the distinct-pair list groups displayed source/target strings plus the full first-encountered nested path, not globally shared checker identities.
 
@@ -110,11 +110,11 @@ Each observation is retained, including repeats in one unit, in [nil-source-refe
 | transformers/classFields.ts | 44 | 83 | 2623 | complete traversal |
 | transformers/classThis.ts | 2 | 3 | 56 | not yet attempted |
 | transformers/declarations.ts | 33 | 36 | 505 | complete traversal |
-| transformers/declarations/diagnostics.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/declarations/diagnostics.ts | 16 | 19 | 152 | complete traversal |
 | transformers/destructuring.ts | 9 | 13 | 194 | not yet attempted |
 | transformers/es2015.ts | 53 | 129 | 1936 | complete traversal |
 | transformers/es2016.ts | 0 | 0 | 0 | not yet attempted |
-| transformers/es2017.ts | 0 | 0 | 0 | not yet attempted |
+| transformers/es2017.ts | 13 | 39 | 233 | complete traversal |
 | transformers/es2018.ts | 21 | 41 | 554 | complete traversal |
 | transformers/es2019.ts | 0 | 0 | 0 | not yet attempted |
 | transformers/es2020.ts | 0 | 0 | 0 | not yet attempted |
@@ -190,6 +190,8 @@ Each child is capped at 1490 seconds with five seconds for forced cleanup, below
 | full-035 | 0 | 53.052 | completed |
 | full-036 | 0 | 29.052 | completed |
 | full-037 | 0 | 52.192 | completed |
+| full-038 | 0 | 67.192 | completed |
+| full-039 | 0 | 68.188 | completed |
 
 ## Evidence and replay
 

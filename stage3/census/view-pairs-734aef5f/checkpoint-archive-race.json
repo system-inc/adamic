@@ -1,0 +1,10 @@
+{
+  "piece": "full-038 es2017.ts",
+  "finding": "Independent raw-event membership audit rejected a mixed checkpoint snapshot. The sibling full-039 finished while files were copied, so some sibling streams entered raw without its status marker.",
+  "measurement_children": {
+    "full-038": 0,
+    "full-039": 0
+  },
+  "measurement_data_rerun": false,
+  "fix": "Freeze complete measurement marker names before copying any files; independent audit selects the same completed-pass population from archived status markers. Both finished streams are preserved and recounted before resume."
+}

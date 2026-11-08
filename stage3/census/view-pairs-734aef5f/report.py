@@ -8,10 +8,19 @@ def read(path):
  data=gzip.decompress(path.read_bytes()).decode() if path.suffix=='.gz' else path.read_text()
  return [json.loads(l) for l in data.splitlines() if l]
 def rel(s):return s.replace(str(source/'src/compiler')+'/','').replace(str(source/'src')+'/','')
-# Never archive the active sibling's partially written stream.
+# Freeze completion markers once: a sibling finishing during this loop must
+# enter the next snapshot as a whole, never as a mixture of early/late files.
+finished_at_start=set()
+for marker in scratch.glob('*-status.json'):
+ name=marker.name.removesuffix('-status.json')
+ if not re.fullmatch(r'first|full-\d+',name):continue
+ try:
+  status=json.loads(marker.read_text());status['exit_code']
+ except (ValueError,KeyError):continue
+ finished_at_start.add(name)
 for p in scratch.iterdir():
  match=re.match(r'(first|full-\d+)(?:-|\.)',p.name)
- if match and not (scratch/(match[1]+'-status.json')).exists():continue
+ if match and match[1] not in finished_at_start:continue
  if p.is_file() and p.suffix in ('.log','.jsonl','.json'):(raw/(p.name+'.gz')).write_bytes(gzip.compress(p.read_bytes(),mtime=0))
 for p in (scratch/'overlay').rglob('*'):
  if not p.is_file():continue
