@@ -1,0 +1,1322 @@
+[
+  {
+    "pairing": "A",
+    "requested_line": 4748,
+    "site": "/tmp/branded-A/src/compiler/checker.ts:4749:17",
+    "observing_unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+    "owners": [
+      "createTypeChecker",
+      "resolveExternalModule"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "A-parent-focus-2",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233689,
+        "body_end": 250253,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-A/src/compiler/binder.ts:2258:13",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "text": "/tmp/branded-A/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4743:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "start": 234280,
+        "end": 235103
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "A-head-focus-2",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233689,
+        "body_end": 250253,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-A/src/compiler/binder.ts:2258:13",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "text": "/tmp/branded-A/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4743:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "start": 234280,
+        "end": 235103
+      }
+    }
+  },
+  {
+    "pairing": "A",
+    "requested_line": 4767,
+    "site": "/tmp/branded-A/src/compiler/checker.ts:4768:21",
+    "observing_unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+    "owners": [
+      "createTypeChecker",
+      "resolveExternalModule"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "A-parent-focus-2",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233689,
+        "body_end": 250253,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4767:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 236314,
+        "end": 236512
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "A-head-focus-2",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233689,
+        "body_end": 250253,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4767:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 236314,
+        "end": 236512
+      }
+    }
+  },
+  {
+    "pairing": "A",
+    "requested_line": 4778,
+    "site": "/tmp/branded-A/src/compiler/checker.ts:4779:21",
+    "observing_unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+    "owners": [
+      "createTypeChecker",
+      "resolveExternalModule"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "A-parent-focus-2",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233689,
+        "body_end": 250253,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4778:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 237165,
+        "end": 237363
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "A-head-focus-2",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233689,
+        "body_end": 250253,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:4778:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 237165,
+        "end": 237363
+      }
+    }
+  },
+  {
+    "pairing": "A",
+    "requested_line": 10911,
+    "site": "/tmp/branded-A/src/compiler/checker.ts:10912:29",
+    "observing_unit": "/tmp/branded-A/src/compiler/checker.ts:9347:9",
+    "owners": [
+      "createTypeChecker",
+      "createNodeBuilder",
+      "symbolTableToDeclarationStatements",
+      "makeSerializePropertySymbol"
+    ],
+    "parent": {
+      "state": "unit prologue",
+      "run": "A-parent-serializer",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:9347:9",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 526974,
+        "body_end": 652741,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "symbolTableToDeclarationStatements",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:6310:5",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 2
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:9347:9",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:9954:13",
+        "reason": "overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:9954:13: Adamic 0.1 refuses overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]; make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:9347:9",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:9347:9",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:9954:13: Adamic 0.1 refuses overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]; make the implementation result covariant with every overload result",
+        "start": 526974,
+        "end": 652741
+      }
+    },
+    "head": {
+      "state": "unit prologue",
+      "run": "A-head-serializer",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:9347:9",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 526974,
+        "body_end": 652741,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "symbolTableToDeclarationStatements",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:6310:5",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 2
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:9347:9",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:9954:13",
+        "reason": "overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:9954:13: Adamic 0.1 refuses overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]; make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:9347:9",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:9347:9",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:9954:13: Adamic 0.1 refuses overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]; make the implementation result covariant with every overload result",
+        "start": 526974,
+        "end": 652741
+      }
+    }
+  },
+  {
+    "pairing": "A",
+    "requested_line": 48433,
+    "site": "/tmp/branded-A/src/compiler/checker.ts:48435:47",
+    "observing_unit": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+    "owners": [
+      "createTypeChecker",
+      "checkAliasSymbol"
+    ],
+    "parent": {
+      "state": "unit prologue",
+      "run": "A-parent-focus-3",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2826689,
+        "body_end": 2838128,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "checkAliasSymbol",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:48396:31",
+        "reason": "a value of type AliasDeclarationNode",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:48396:31: stage 0 can't lower a value of type AliasDeclarationNode yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:48396:31: stage 0 can't lower a value of type AliasDeclarationNode yet",
+        "start": 2826689,
+        "end": 2838128
+      }
+    },
+    "head": {
+      "state": "unit prologue",
+      "run": "A-head-focus-3",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2826689,
+        "body_end": 2838128,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "checkAliasSymbol",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:48396:31",
+        "reason": "a value of type AliasDeclarationNode",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:48396:31: stage 0 can't lower a value of type AliasDeclarationNode yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:48396:31: stage 0 can't lower a value of type AliasDeclarationNode yet",
+        "start": 2826689,
+        "end": 2838128
+      }
+    }
+  },
+  {
+    "pairing": "A",
+    "requested_line": 50073,
+    "site": "/tmp/branded-A/src/compiler/checker.ts:50075:29",
+    "observing_unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+    "owners": [
+      "createTypeChecker",
+      "getSymbolOfNameOrPropertyAccessExpression"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "A-parent-focus-4",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2911996,
+        "body_end": 2919679,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getSymbolOfNameOrPropertyAccessExpression",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:50075:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 2916241,
+        "end": 2916354
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "A-head-focus-4",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2911996,
+        "body_end": 2919679,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getSymbolOfNameOrPropertyAccessExpression",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:50075:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-A/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 2916241,
+        "end": 2916354
+      }
+    }
+  },
+  {
+    "pairing": "A",
+    "requested_line": 50082,
+    "site": "/tmp/branded-A/src/compiler/checker.ts:50084:39",
+    "observing_unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+    "owners": [
+      "createTypeChecker",
+      "getSymbolOfNameOrPropertyAccessExpression"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "A-parent-focus-4",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2911996,
+        "body_end": 2919679,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getSymbolOfNameOrPropertyAccessExpression",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:50083:22",
+        "reason": "reading result",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:50083:22: stage 0 can't lower reading result yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:50083:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:50083:22: stage 0 can't lower reading result yet",
+        "start": 2916945,
+        "end": 2917288
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "A-head-focus-4",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2911996,
+        "body_end": 2919679,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getSymbolOfNameOrPropertyAccessExpression",
+        "parent": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "top": "/tmp/branded-A/src/compiler/checker.ts:1487:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:50083:22",
+        "reason": "reading result",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:50083:22: stage 0 can't lower reading result yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-A/src/compiler/checker.ts:50083:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-A/src/compiler/checker.ts:50083:22: stage 0 can't lower reading result yet",
+        "start": 2916945,
+        "end": 2917288
+      }
+    }
+  },
+  {
+    "pairing": "B",
+    "requested_line": 4748,
+    "site": "/tmp/branded-B/src/compiler/checker.ts:4751:17",
+    "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+    "owners": [
+      "createTypeChecker",
+      "resolveExternalModule"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "B-parent-focus-1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233727,
+        "body_end": 250321,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-B/src/compiler/binder.ts:2258:13",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "text": "/tmp/branded-B/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4745:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "start": 234318,
+        "end": 235151
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "B-head-focus-1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233727,
+        "body_end": 250321,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-B/src/compiler/binder.ts:2258:13",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "text": "/tmp/branded-B/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4745:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "start": 234318,
+        "end": 235151
+      }
+    }
+  },
+  {
+    "pairing": "B",
+    "requested_line": 4767,
+    "site": "/tmp/branded-B/src/compiler/checker.ts:4770:21",
+    "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+    "owners": [
+      "createTypeChecker",
+      "resolveExternalModule"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "B-parent-focus-1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233727,
+        "body_end": 250321,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4769:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 236362,
+        "end": 236570
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "B-head-focus-1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233727,
+        "body_end": 250321,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4769:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 236362,
+        "end": 236570
+      }
+    }
+  },
+  {
+    "pairing": "B",
+    "requested_line": 4778,
+    "site": "/tmp/branded-B/src/compiler/checker.ts:4781:21",
+    "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+    "owners": [
+      "createTypeChecker",
+      "resolveExternalModule"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "B-parent-focus-1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233727,
+        "body_end": 250321,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4780:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 237223,
+        "end": 237431
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "B-head-focus-1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 233727,
+        "body_end": 250321,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveExternalModule",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:4780:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 237223,
+        "end": 237431
+      }
+    }
+  },
+  {
+    "pairing": "B",
+    "requested_line": 10911,
+    "site": "/tmp/branded-B/src/compiler/checker.ts:10914:29",
+    "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+    "owners": [
+      "createTypeChecker",
+      "createNodeBuilder",
+      "symbolTableToDeclarationStatements",
+      "makeSerializePropertySymbol"
+    ],
+    "parent": {
+      "state": "unit prologue",
+      "run": "B-parent-focus-4",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 527042,
+        "body_end": 652819,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "symbolTableToDeclarationStatements",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:6312:5",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 2
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:9956:13",
+        "reason": "overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:9956:13: Adamic 0.1 refuses overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]; make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:9956:13: Adamic 0.1 refuses overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]; make the implementation result covariant with every overload result",
+        "start": 527042,
+        "end": 652819
+      }
+    },
+    "head": {
+      "state": "unit prologue",
+      "run": "B-head-focus-4",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 527042,
+        "body_end": 652819,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "symbolTableToDeclarationStatements",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:6312:5",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 2
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:9956:13",
+        "reason": "overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:9956:13: Adamic 0.1 refuses overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]; make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:9349:9",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:9956:13: Adamic 0.1 refuses overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]; make the implementation result covariant with every overload result",
+        "start": 527042,
+        "end": 652819
+      }
+    }
+  },
+  {
+    "pairing": "B",
+    "requested_line": 48433,
+    "site": "/tmp/branded-B/src/compiler/checker.ts:48437:47",
+    "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+    "owners": [
+      "createTypeChecker",
+      "checkAliasSymbol"
+    ],
+    "parent": {
+      "state": "unit prologue",
+      "run": "B-parent-focus-2",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2826767,
+        "body_end": 2838216,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "checkAliasSymbol",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:48398:31",
+        "reason": "a value of type AliasDeclarationNode",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet",
+        "start": 2826767,
+        "end": 2838216
+      }
+    },
+    "head": {
+      "state": "unit prologue",
+      "run": "B-head-focus-2",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2826767,
+        "body_end": 2838216,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "checkAliasSymbol",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:48398:31",
+        "reason": "a value of type AliasDeclarationNode",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:48398:5",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:48398:31: stage 0 can't lower a value of type AliasDeclarationNode yet",
+        "start": 2826767,
+        "end": 2838216
+      }
+    }
+  },
+  {
+    "pairing": "B",
+    "requested_line": 50073,
+    "site": "/tmp/branded-B/src/compiler/checker.ts:50077:29",
+    "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+    "owners": [
+      "createTypeChecker",
+      "getSymbolOfNameOrPropertyAccessExpression"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "B-parent-focus-3",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2912084,
+        "body_end": 2919787,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getSymbolOfNameOrPropertyAccessExpression",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:50077:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 2916329,
+        "end": 2916452
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "B-head-focus-3",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2912084,
+        "body_end": 2919787,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getSymbolOfNameOrPropertyAccessExpression",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1",
+        "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:50077:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+        "start": 2916329,
+        "end": 2916452
+      }
+    }
+  },
+  {
+    "pairing": "B",
+    "requested_line": 50082,
+    "site": "/tmp/branded-B/src/compiler/checker.ts:50086:39",
+    "observing_unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+    "owners": [
+      "createTypeChecker",
+      "getSymbolOfNameOrPropertyAccessExpression"
+    ],
+    "parent": {
+      "state": "enclosing statement",
+      "run": "B-parent-focus-3",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2912084,
+        "body_end": 2919787,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getSymbolOfNameOrPropertyAccessExpression",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:50085:22",
+        "reason": "reading result",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:50085:22: stage 0 can't lower reading result yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:50085:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:50085:22: stage 0 can't lower reading result yet",
+        "start": 2917043,
+        "end": 2917396
+      }
+    },
+    "head": {
+      "state": "enclosing statement",
+      "run": "B-head-focus-3",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 2912084,
+        "body_end": 2919787,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getSymbolOfNameOrPropertyAccessExpression",
+        "parent": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "top": "/tmp/branded-B/src/compiler/checker.ts:1489:1",
+        "depth": 1
+      },
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:50085:22",
+        "reason": "reading result",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:50085:22: stage 0 can't lower reading result yet"
+      },
+      "boundary": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/branded-B/src/compiler/checker.ts:49992:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/branded-B/src/compiler/checker.ts:50085:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/branded-B/src/compiler/checker.ts:50085:22: stage 0 can't lower reading result yet",
+        "start": 2917043,
+        "end": 2917396
+      }
+    }
+  }
+]

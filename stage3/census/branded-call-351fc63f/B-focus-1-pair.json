@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/binder.ts": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+    "src/compiler/checker.ts": "a3c87ee5a2dd3f55fae2ced5a4c6c22bcde071db2b901af710faea85959bd9fa",
+    "src/compiler/utilitiesPublic.ts": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+    "src/compiler/utilities.ts": "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "checked predicate overload target LiteralImportTypeNode": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 9,
+        "after": 9,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading importOrExport": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading isSyncImport": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 5,
+        "Boundary": 9,
+        "Refused": 1
+      },
+      "after": {
+        "NotYet": 5,
+        "Boundary": 9,
+        "Refused": 1
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "checked predicate overload target LiteralImportTypeNode": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 9,
+        "after": 9,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /tmp/branded-B/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading importOrExport": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading isSyncImport": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 5,
+        "Boundary": 9,
+        "Refused": 1
+      },
+      "after": {
+        "NotYet": 5,
+        "Boundary": 9,
+        "Refused": 1
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}
