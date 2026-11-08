@@ -1,0 +1,16 @@
+{
+  "pid": 12839,
+  "command": [
+    "/workspace/require-row-work/stage3/census/require-row-738b3f31/raw/base-census",
+    "/workspace/require-row-adapted/src/compiler/transformers/es2019.ts",
+    "/workspace/require-row-work/stage3/census/require-row-738b3f31/raw/base-root-54.jsonl"
+  ],
+  "cwd": "/workspace/require-row-work",
+  "started_utc": "2026-11-08T21:34:07.857925+00:00",
+  "ended_utc": "2026-11-08T21:34:35.894470+00:00",
+  "seconds": 28.036559104919434,
+  "exit_code": 0,
+  "peak_rss_kib": 888416,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

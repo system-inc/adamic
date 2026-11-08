@@ -12,7 +12,7 @@ assert manifest==json.loads((out/'adapted-source-manifest.json').read_text()),'a
 cleanup=[]
 for p in sorted(raw.glob('*-status.json')):
  s=json.loads(p.read_text())
- if not any(x in p.name for x in ['-root-','-core-status']):continue
+ if '-root-' not in p.name and p.name not in ['base-core-status.json','head-core-status.json']:continue
  assert s['exit_code']==0 and s['process_group_cleaned']
  pid=s.get('pid');alive=False
  if pid:
@@ -20,6 +20,7 @@ for p in sorted(raw.glob('*-status.json')):
   except ProcessLookupError:pass
  assert not alive,(p.name,pid)
  cleanup.append(dict(run=p.name,pid=pid,process_group_exists=alive))
+assert len(cleanup)==160,len(cleanup)
 (out/'cleanup.json').write_text(json.dumps(cleanup,indent=2)+'\n')
 run('render-report',['python3',str(out/'report.py')])
 # Archive logs, exact streams and overlays, excluding the large reproducible binaries.

@@ -13,6 +13,8 @@ def readside(side):
   sites[key]=f
  return rows,sorted(sites.values(),key=lambda f:(tuple(map(int,re.search(r':(\d+):(\d+)$',f['where']).groups())),f['phase']))
 base,bs=readside('base');head,hs=readside('head')
+assert len(base)==len(head)==79
+assert len({r['roots'][0] for r in base})==79
 def norm(where):return where.replace('/workspace/require-row-adapted/src/compiler/','')
 def key(r):return (norm(r.get('where','-')),r['kind'],r.get('reason',''))
 def esc(s):return str(s).replace('|','\\|').replace('\n',' ')
