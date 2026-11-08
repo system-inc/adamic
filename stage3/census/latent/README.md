@@ -317,7 +317,8 @@ as interchangeable with multi-file records without accounting for that witness s
 The census templates track production's pre-refusal passes in order. The in-process
 AST guard follows Lower's local delegates and rejects missing
 or reordered calls. Its adjacent exemption table explains why independent units do
-not run the enum-validation and module-readiness preflights as unit first stops.
+not run the enum-validation and module-readiness preflights as unit first stops,
+and why the element collector retains the conservative nil-key mode.
 The two mutant test files prove omission and newly added production passes fail.
 
 Fact collectors use the production ESM module order from the original input roots,

@@ -4,6 +4,7 @@ func LatentPrepassCostProbe(ctx context.Context, program *load.Program) {
  checker, release := program.Checker(ctx, program.Files()[0]); defer release()
  base := &lowering{program:program, checker:checker, result:&ir.Program{}, this:-1, functionIndex:-1}
  modules := base.latentPrepassModules()
+ for _, module := range modules { fmt.Fprintln(os.Stderr,"cost module",program.FileName(module)) }
  count := 0
  for _, file := range program.Files() {
   for _, node := range file.Statements.Nodes {

@@ -1,0 +1,86 @@
+{
+  "first-error": {
+    "raw_findings": {
+      "cleared": 5,
+      "new": 18,
+      "changed": 0,
+      "newly_stopped": 8,
+      "changed_existing_stops": 13,
+      "panics_before": 0,
+      "panics_after": 0,
+      "totals": {
+        "before": {
+          "Refused": 4531,
+          "NotYet": 554
+        },
+        "after": {
+          "Refused": 4530,
+          "NotYet": 568
+        }
+      }
+    },
+    "distinct_reads": {
+      "cleared": 5,
+      "new": 18,
+      "changed": 0,
+      "newly_stopped": 8,
+      "changed_existing_stops": 13,
+      "panics_before": 0,
+      "panics_after": 0,
+      "totals": {
+        "before": {
+          "Refused": 4336,
+          "NotYet": 547
+        },
+        "after": {
+          "Refused": 4335,
+          "NotYet": 561
+        }
+      }
+    }
+  },
+  "core-full": {
+    "raw_findings": {
+      "cleared": 0,
+      "new": 0,
+      "changed": 0,
+      "newly_stopped": 0,
+      "changed_existing_stops": 0,
+      "panics_before": 0,
+      "panics_after": 0,
+      "totals": {
+        "before": {
+          "NotYet": 12,
+          "Refused": 1,
+          "Boundary": 8
+        },
+        "after": {
+          "NotYet": 12,
+          "Refused": 1,
+          "Boundary": 8
+        }
+      }
+    },
+    "distinct_reads": {
+      "cleared": 0,
+      "new": 0,
+      "changed": 0,
+      "newly_stopped": 0,
+      "changed_existing_stops": 0,
+      "panics_before": 0,
+      "panics_after": 0,
+      "totals": {
+        "before": {
+          "NotYet": 12,
+          "Refused": 1,
+          "Boundary": 8
+        },
+        "after": {
+          "NotYet": 12,
+          "Refused": 1,
+          "Boundary": 8
+        }
+      }
+    }
+  }
+}

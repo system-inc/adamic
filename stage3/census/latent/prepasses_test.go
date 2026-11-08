@@ -14,6 +14,7 @@ import (
 // Independent units do not execute module initializers. These exemptions describe
 // existing census semantics, not permission for newly added passes to be skipped.
 var latentPrepassExemptions = map[string]string{
+	"collectViewedElements":   "Templates retain the call in order, but census lowerings deliberately use a nil element key: every element read is checked conservatively. Selective key discovery and production's retry on a missed key are outside independent-unit measurement.",
 	"enumInitialization":      "Validates enum declarations before production registration. Census registration prepares enum objects lazily and reports validation at actual uses; refusing every unrelated independent unit would invent a first stop.",
 	"namespaceInitialization": "Checks readiness along the module execution schedule, including calls from initializers. Independent census units do not execute that schedule. Actual namespace and enum accesses retain production runtime readiness checks.",
 }
