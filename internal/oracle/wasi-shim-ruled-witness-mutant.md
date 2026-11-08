@@ -1,6 +1,6 @@
 # The shim's ruled native witness, and its mutant
 
-TestWASIShimAgreesWithNode holds a fixture's wasm32 build to a witness. A fixture with an entry in ruledBackendDivergences (backend_divergences_test.go) is witnessed by that entry's native outcome, through ruledNativeOutcome, since a wasm32 build is a native build. The only such fixture is internal/oracle/testdata/d96d304_try_stack.a:
+TestWASIShimAgreesWithNode holds a fixture's wasm32 build to a witness. A fixture with a row in internal/oracle/testdata/backend_divergences.json, which ruledBackendDivergences reads, is witnessed by that row's native outcome, through ruledNativeOutcome (backend_divergences_test.go), since a wasm32 build is a native build. The only such fixture is internal/oracle/testdata/d96d304_try_stack.a:
 
 - native, ruled and pinned by TestTerminalStackStopNative: exit 70, stdout empty, stderr `adamic: panic: RangeError: Maximum call stack size exceeded in depth\n`
 - JavaScript, ruled and pinned by TestTerminalStackStopJavaScript: exit 70, stdout empty, stderr `adamic: panic: RangeError: Maximum call stack size exceeded\n`

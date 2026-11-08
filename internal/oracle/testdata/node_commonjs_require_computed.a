@@ -1,7 +1,7 @@
 // tsc's sys.require loads a plugin from a path it resolved, inside a try whose catch returns the
 // error. Native tsc can't run JavaScript, so a require of a computed path evaluates the path and
 // throws an Error naming it, where stock Node would load the plugin (no-javascript-plugins,
-// backend_divergences_test.go). The source on Node runs as an ES module, with no require, so it never
+// backend_divergences.json). The source on Node runs as an ES module, with no require, so it never
 // gets to the path.
 import 'node:process';
 

@@ -129,7 +129,7 @@ func runWASIShimShard(t *testing.T, shard int) {
 				if readsPlatform {
 					return platform
 				}
-				// A ruled backend divergence differs from JavaScript by ruling (backend_divergences_test.go).
+				// A ruled backend divergence differs from JavaScript by ruling (testdata/backend_divergences.json).
 				if outcome, ruled := ruledNativeOutcome(fixture.path); ruled {
 					return outcome
 				}
