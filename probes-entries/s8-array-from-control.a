@@ -1,0 +1,8 @@
+// s8: a copy returned by Array.from's callback (control: slice, planned by graphAllocation)
+interface Node { name: string; next: Node[]; kids: Node[][]; m: Map<string, Node[]>; r: Record<string, Node[]> }
+const a: Node = { name: 'a' + '', next: [], kids: [], m: new Map<string, Node[]>(), r: {} };
+const b: Node = { name: 'b' + '', next: [a], kids: [], m: new Map<string, Node[]>(), r: {} };
+a.next.push(b); // a cycle: the program is a graph program
+const byName = (x: Node, y: Node): number => (x.name < y.name ? -1 : 1);
+a.kids = Array.from([1], (): Node[] => a.next.slice());
+console.log(`${a.kids.length} ${a.kids[0] === undefined ? -1 : a.kids[0].length}`);

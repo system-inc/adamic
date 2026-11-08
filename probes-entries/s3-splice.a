@@ -1,0 +1,8 @@
+// s3: a copy inserted by splice
+interface Node { name: string; next: Node[]; kids: Node[][]; m: Map<string, Node[]>; r: Record<string, Node[]> }
+const a: Node = { name: 'a' + '', next: [], kids: [], m: new Map<string, Node[]>(), r: {} };
+const b: Node = { name: 'b' + '', next: [a], kids: [], m: new Map<string, Node[]>(), r: {} };
+a.next.push(b); // a cycle: the program is a graph program
+const byName = (x: Node, y: Node): number => (x.name < y.name ? -1 : 1);
+a.kids.splice(0, 0, a.next.toSorted(byName));
+console.log(`${a.kids.length} ${a.kids[0] === undefined ? -1 : a.kids[0].length}`);

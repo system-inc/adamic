@@ -1,0 +1,8 @@
+// s7: a copy as a record literal's entry
+interface Node { name: string; next: Node[]; kids: Node[][]; m: Map<string, Node[]>; r: Record<string, Node[]> }
+const a: Node = { name: 'a' + '', next: [], kids: [], m: new Map<string, Node[]>(), r: {} };
+const b: Node = { name: 'b' + '', next: [a], kids: [], m: new Map<string, Node[]>(), r: {} };
+a.next.push(b); // a cycle: the program is a graph program
+const byName = (x: Node, y: Node): number => (x.name < y.name ? -1 : 1);
+a.r = { k: a.next.toSorted(byName) };
+const got = a.r['k']; console.log(`${got === undefined ? -1 : got.length}`);

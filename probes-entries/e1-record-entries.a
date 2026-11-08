@@ -1,0 +1,9 @@
+// e1: Object.entries of a Record<string, Node>, its array held by a; the pair holds b, b holds a.
+interface Node { name: string; next: Node[]; pairs: [string, Node][] }
+const a: Node = { name: 'a' + '', next: [], pairs: [] };
+const b: Node = { name: 'b' + '', next: [a], pairs: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const record: Record<string, Node> = { b: b };
+a.pairs = Object.entries(record);
+const pair = a.pairs[0];
+if (pair !== undefined) console.log(`${a.pairs.length} ${pair[0]} ${pair[1].name} ${pair[1].next[0] === a}`);
