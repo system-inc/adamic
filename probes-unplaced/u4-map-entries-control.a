@@ -1,0 +1,11 @@
+// Row 4 control: the same pairs built by an array literal of tuple literals.
+interface Node { name: string; next: Node[]; pairs: [string, Node][] }
+const a: Node = { name: 'a' + '', next: [], pairs: [] };
+const b: Node = { name: 'b' + '', next: [a], pairs: [] };
+a.next.push(b); // this cycle makes the program a graph program, so Node values must be in a region
+const map = new Map<string, Node>();
+map.set(a.name, a);
+map.set(b.name, b);
+const entries: [string, Node][] = [[a.name, a], [b.name, b]];
+a.pairs = entries; // a holds entries, entries holds the pair ['b', b], the pair holds b, b holds a
+console.log(`${a.name} ${a.pairs.length} ${a.pairs[1]?.[0]} ${a.pairs[1]?.[1].next[0] === a}`);

@@ -1,0 +1,8 @@
+// Row 10: Map.groupBy makes a new Map of new bucket arrays.
+interface Node { name: string; next: Node[]; groups: Map<string, Node[]>[] }
+const a: Node = { name: 'a' + '', next: [], groups: [] };
+const b: Node = { name: 'b' + '', next: [a], groups: [] };
+a.next.push(b); // this cycle makes the program a graph program, so Node values must be in a region
+const grouped = Map.groupBy(a.next, (node) => node.name);
+a.groups.push(grouped); // a holds grouped, grouped holds the bucket [b], the bucket holds b, b holds a
+console.log(`${a.name} ${a.groups.length} ${grouped.size} ${grouped.get('b')?.length} ${grouped.get('b')?.[0]?.next[0] === a}`);

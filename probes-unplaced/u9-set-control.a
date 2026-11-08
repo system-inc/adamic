@@ -1,0 +1,10 @@
+// Row 9 control: a Set holding b, built by the Set constructor over an array literal (there is no Set literal).
+interface Node { name: string; next: Node[]; sets: Set<Node>[] }
+const a: Node = { name: 'a' + '', next: [], sets: [] };
+const b: Node = { name: 'b' + '', next: [a], sets: [] };
+a.next.push(b); // this cycle makes the program a graph program, so Node values must be in a region
+const left = new Set<Node>([b, a]);
+const right = new Set<Node>([a]);
+const held = new Set<Node>([b]);
+a.sets.push(held); // a holds held, held holds b, b holds a
+console.log(`${a.name} ${a.sets.length} ${held.size} ${held.has(b)} ${b.next[0] === a}`);

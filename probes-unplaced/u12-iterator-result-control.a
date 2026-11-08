@@ -1,0 +1,9 @@
+// Row 12 control: the same result built by an object literal.
+interface Node { name: string; next: Node[]; steps: IteratorResult<Node, undefined>[] }
+const a: Node = { name: 'a' + '', next: [], steps: [] };
+const b: Node = { name: 'b' + '', next: [a], steps: [] };
+a.next.push(b); // this cycle makes the program a graph program, so Node values must be in a region
+const step: IteratorResult<Node, undefined> = { value: b, done: false };
+a.steps.push(step); // a holds step, step.value is b, b holds a
+const held = a.steps[0];
+console.log(`${a.name} ${a.steps.length} ${held?.done} ${held?.value?.name} ${held?.value?.next[0] === a}`);

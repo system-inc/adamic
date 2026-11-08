@@ -1,0 +1,11 @@
+// Row 8: spreading a generator into an array.
+interface Node { name: string; next: Node[] }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b); // this cycle makes the program a graph program, so Node values must be in a region
+function* only(node: Node): Generator<Node, void, unknown> {
+    yield node;
+}
+const spread = [...only(b)];
+a.next = spread; // a holds spread, spread holds b, b holds a
+console.log(`${a.name} ${a.next.length} ${a.next[0]?.name} ${a.next[0]?.next[0] === a}`);

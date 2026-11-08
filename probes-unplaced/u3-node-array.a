@@ -1,0 +1,10 @@
+// Row 3: a NodeArray literal (an interface extending Array with extra fields, made by an array literal cast).
+interface Node { name: string; next: Node[] }
+interface NodeList extends Array<Node> { tag: string }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b); // this cycle makes the program a graph program, so Node values must be in a region
+const list = [b] as NodeList;
+list.tag = 'list' + '';
+a.next = list; // a holds list, list holds b, b holds a
+console.log(`${a.name} ${a.next.length} ${a.next[0]?.name} ${a.next[0]?.next[0] === a} ${list.tag}`);
