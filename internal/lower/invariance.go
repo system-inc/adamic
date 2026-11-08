@@ -63,6 +63,15 @@ type widening struct {
 // widened finds the first mutable slot at which a value of type from, seen as type to, could be
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+	// #bv59a0r: undefined and null enter a union through their own member, not through a
+	// writable type parameter left after withoutUndefined removes the undefined member.
+	if (from.Flags() == checker.TypeFlagsUndefined || from.Flags() == checker.TypeFlagsNull) && to.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range to.Types() {
+			if member.Flags()&from.Flags() != 0 {
+				return nil
+			}
+		}
+	}
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
 	if from == to || visited[[2]*checker.Type{from, to}] || from.Flags()&checker.TypeFlagsNever != 0 {
 		return nil
