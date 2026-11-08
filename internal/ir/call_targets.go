@@ -155,8 +155,8 @@ func (p *Program) MethodDiscard(call CallClosure) Discard {
 	if call.BoundName != "" {
 		return p.ReturnsDiscard(p.MethodsNamed(call.BoundName))
 	}
-	property, isProperty := call.Closure.(Property)
-	if !isProperty || !property.Method {
+	property, _, method := MethodCallee(call.Closure)
+	if !method {
 		return DiscardNothing
 	}
 	return p.ReturnsDiscard(p.MethodsNamed(property.Name))
