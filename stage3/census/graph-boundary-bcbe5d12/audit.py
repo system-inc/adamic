@@ -17,9 +17,10 @@ source_streams={(r['file'],r['unit']):'first-boundary.jsonl' for r in first}
 for p in sorted(raw.glob('full-*-boundary.jsonl.gz')):
  part=read(p);full.extend(part)
  for r in part:source_streams[r['file'],r['unit']]=p.name[:-3]
-seen=set()
-for r in full:
- key=(r['file'],r['unit']);assert key not in seen,key;seen.add(key)
+for p in sorted(raw.glob('full-*-boundary.jsonl.gz')):
+ seen=set()
+ for r in read(p):
+  key=(r['file'],r['unit']);assert key not in seen,(p,key);seen.add(key)
 units={(r['file'],r['unit']):r for r in first}
 for r in full:units[r['file'],r['unit']]=r
 counts=collections.Counter();distinct=collections.defaultdict(set);statuses=collections.Counter();by_scope=collections.defaultdict(collections.Counter)

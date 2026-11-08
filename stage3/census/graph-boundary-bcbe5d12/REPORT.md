@@ -10,28 +10,28 @@ Box: `755daee0c6ba`; cgroup CPU quota `400000 100000`; memory limit `17179869184
 
 | Kind | Observations | Distinct reported locations |
 | --- | ---: | ---: |
-| views | 24525 | 299 |
+| views | 28977 | 311 |
 | record_literals | 0 | 0 |
-| dynamic_reads | 22 | 15 |
+| dynamic_reads | 27 | 20 |
 | checked_object_calls | 0 | 0 |
 
-Views combine 882 ViewOrigins entries and 23643 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
+Views combine 1049 ViewOrigins entries and 27928 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
 
-The 79 compiler-file subtotal is `{'views': 24525, 'record_literals': 0, 'dynamic_reads': 22, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
+The 79 compiler-file subtotal is `{'views': 28977, 'record_literals': 0, 'dynamic_reads': 27, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
 
-Long pole by observed count: **views, 24525**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
+Long pole by observed count: **views, 28977**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
 
 ## Coverage and interpretation
 
-60-minute full-piece budget exhausted; 51 selected files in unstarted full pieces. First-error observations for those files remain where available.
+Coverage continuation: 1/51 previously unstarted files now have a single-file full-mode attempt; 50 remain. executeCommandLine.ts is also retried because the earlier emitter piece ended before reaching it. Every continuation child is capped at 1490 seconds, leaving shutdown time below 25 minutes. A nonzero or timed-out single-file attempt is recorded and the runner moves on. 0 continuation files exited nonzero so far.
 
 Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 seconds; full-01: child exit -15, configured elapsed bound, 1791.304 seconds; full-07: child exit -15, configured elapsed bound, 571.096 seconds. Interrupted active units are excluded from completed observation counts.
 
 Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
 
-Observed 5962 unit results: {'lowered': 3797, 'stopped': 2165}. First-error pass observed 3447 results; full pieces observed 3579. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
+Observed 6197 unit results: {'lowered': 3920, 'stopped': 2277}. First-error pass observed 3447 results; full pieces observed 3814. The summed table uses one result per unit, preferring full mode over first-error mode and later full observations over earlier ones. Earlier completed unit results remain when a later attempt does not reach that unit. Repeated sites in different units are repeated observations, not independent source sites.
 
-Stock unit inventory has 2225 units in 21 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 510}`. Missing stock file records after an interrupted pass are not evidence of zero units.
+Stock unit inventory has 2473 units in 22 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 523}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
 In first-error mode a unit with a lowering finding contributes zero sites: its body is discarded. In full mode the stock hook rolls failed statements back and continues. A `stopped` full-mode observation can therefore contain retained successful statements; its failed statements contribute no sites. Panicked unit results contribute zero sites. `lowered` means no new lowering finding in that unit, not whole-program acceptance. File-level refusal-scan findings do not suppress independent-unit examination.
 
@@ -41,91 +41,91 @@ GraphTypes non-empty in 0 observed results. The latent hook never runs `findCycl
 
 ## Per file, lowered IR only
 
-Attribution is to the unit's file, not an independent root. A zero with zero observed unit results is a coverage gap, not evidence of an empty file. Dependency function bodies or metadata can be included in that unit's result.
+Attribution is to the unit's file, not an independent root. Complete traversal means the census visited the file's candidates; findings, rollback and deferred generic gaps still apply. A zero with zero observed unit results is a coverage gap, not evidence of an empty file. Dependency function bodies or metadata can be included in that unit's result.
 
-| Unit file | Views | Record literals | Dynamic reads | Checked object calls | Observed unit results | Any observed GraphTypes |
-| --- | ---: | ---: | ---: | ---: | ---: | --- |
-| _namespaces/ts.moduleSpecifiers.ts | 0 | 0 | 0 | 0 | 1 | no, not computed |
-| _namespaces/ts.performance.ts | 0 | 0 | 0 | 0 | 1 | no, not computed |
-| _namespaces/ts.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| binder.ts | 0 | 0 | 0 | 0 | 16 | no, not computed |
-| builder.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| builderPublic.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| builderState.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| builderStatePublic.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| checker.ts | 10465 | 0 | 0 | 0 | 1402 | no, not computed |
-| commandLineParser.ts | 0 | 0 | 0 | 0 | 159 | no, not computed |
-| core.ts | 0 | 0 | 4 | 0 | 59 | no, not computed |
-| corePublic.ts | 0 | 0 | 0 | 0 | 9 | no, not computed |
-| debug.ts | 0 | 0 | 0 | 0 | 85 | no, not computed |
-| diagnosticInformationMap.generated.ts | 0 | 0 | 0 | 0 | 3 | no, not computed |
-| emitter.ts | 3433 | 0 | 9 | 0 | 346 | no, not computed |
-| executeCommandLine.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| expressionToTypeNode.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| factory/baseNodeFactory.ts | 0 | 0 | 0 | 0 | 8 | no, not computed |
-| factory/emitHelpers.ts | 0 | 0 | 0 | 0 | 83 | no, not computed |
-| factory/emitNode.ts | 0 | 0 | 0 | 0 | 18 | no, not computed |
-| factory/nodeChildren.ts | 12 | 0 | 0 | 0 | 6 | no, not computed |
-| factory/nodeConverters.ts | 204 | 0 | 0 | 0 | 12 | no, not computed |
-| factory/nodeFactory.ts | 621 | 0 | 1 | 0 | 502 | no, not computed |
-| factory/nodeTests.ts | 0 | 0 | 0 | 0 | 228 | no, not computed |
-| factory/parenthesizerRules.ts | 224 | 0 | 0 | 0 | 42 | no, not computed |
-| factory/utilities.ts | 789 | 0 | 0 | 0 | 101 | no, not computed |
-| factory/utilitiesPublic.ts | 0 | 0 | 0 | 0 | 3 | no, not computed |
-| hostErrors.ts | 0 | 0 | 0 | 0 | 3 | no, not computed |
-| moduleNameResolver.ts | 66 | 0 | 1 | 0 | 168 | no, not computed |
-| moduleSpecifiers.ts | 0 | 0 | 0 | 0 | 52 | no, not computed |
-| parser.ts | 0 | 0 | 0 | 0 | 53 | no, not computed |
-| path.ts | 0 | 0 | 0 | 0 | 77 | no, not computed |
-| performance.ts | 0 | 0 | 0 | 0 | 24 | no, not computed |
-| performanceCore.ts | 0 | 0 | 0 | 0 | 12 | no, not computed |
-| program.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| programDiagnostics.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| resolutionCache.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| scanner.ts | 0 | 0 | 0 | 0 | 74 | no, not computed |
-| semver.ts | 0 | 0 | 0 | 0 | 29 | no, not computed |
-| sourcemap.ts | 0 | 0 | 0 | 0 | 30 | no, not computed |
-| symbolWalker.ts | 0 | 0 | 0 | 0 | 2 | no, not computed |
-| sys.ts | 0 | 0 | 0 | 0 | 60 | no, not computed |
-| tracing.ts | 0 | 0 | 0 | 0 | 10 | no, not computed |
-| transformer.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/classFields.ts | 192 | 0 | 0 | 0 | 23 | no, not computed |
-| transformers/classThis.ts | 0 | 0 | 0 | 0 | 5 | no, not computed |
-| transformers/declarations.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/declarations/diagnostics.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/destructuring.ts | 193 | 0 | 0 | 0 | 22 | no, not computed |
-| transformers/es2015.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/es2016.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/es2017.ts | 0 | 0 | 0 | 0 | 6 | no, not computed |
-| transformers/es2018.ts | 0 | 0 | 0 | 0 | 4 | no, not computed |
-| transformers/es2019.ts | 0 | 0 | 0 | 0 | 2 | no, not computed |
-| transformers/es2020.ts | 0 | 0 | 0 | 0 | 2 | no, not computed |
-| transformers/es2021.ts | 0 | 0 | 0 | 0 | 2 | no, not computed |
-| transformers/esDecorators.ts | 0 | 0 | 0 | 0 | 9 | no, not computed |
-| transformers/esnext.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/generators.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/jsx.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/legacyDecorators.ts | 0 | 0 | 0 | 0 | 2 | no, not computed |
-| transformers/module/esnextAnd2015.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/module/impliedNodeFormatDependent.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/module/module.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/module/system.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| transformers/namedEvaluation.ts | 0 | 0 | 0 | 0 | 19 | no, not computed |
-| transformers/taggedTemplate.ts | 0 | 0 | 0 | 0 | 5 | no, not computed |
-| transformers/ts.ts | 0 | 0 | 0 | 0 | 5 | no, not computed |
-| transformers/typeSerializer.ts | 0 | 0 | 0 | 0 | 6 | no, not computed |
-| transformers/utilities.ts | 1130 | 0 | 0 | 0 | 48 | no, not computed |
-| tsbuild.ts | 0 | 0 | 0 | 0 | 5 | no, not computed |
-| tsbuildPublic.ts | 0 | 0 | 0 | 0 | 34 | no, not computed |
-| tsc/_namespaces/ts.ts | 0 | 0 | 0 | 0 | 1 | no, not computed |
-| tsc/tsc.ts | 0 | 0 | 0 | 0 | 6 | no, not computed |
-| types.ts | 0 | 0 | 0 | 0 | 875 | no, not computed |
-| utilities.ts | 4668 | 0 | 7 | 0 | 834 | no, not computed |
-| utilitiesPublic.ts | 2528 | 0 | 0 | 0 | 243 | no, not computed |
-| visitorPublic.ts | 0 | 0 | 0 | 0 | 28 | no, not computed |
-| watch.ts | 0 | 0 | 0 | 0 | 36 | no, not computed |
-| watchPublic.ts | 0 | 0 | 0 | 0 | 18 | no, not computed |
-| watchUtilities.ts | 0 | 0 | 0 | 0 | 44 | no, not computed |
+| Unit file | Views | Record literals | Dynamic reads | Checked object calls | Observed unit results | Full-mode traversal | Any observed GraphTypes |
+| --- | ---: | ---: | ---: | ---: | ---: | --- | --- |
+| _namespaces/ts.moduleSpecifiers.ts | 0 | 0 | 0 | 0 | 1 | not yet attempted | no, not computed |
+| _namespaces/ts.performance.ts | 0 | 0 | 0 | 0 | 1 | not yet attempted | no, not computed |
+| _namespaces/ts.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| binder.ts | 0 | 0 | 0 | 0 | 16 | not yet attempted | no, not computed |
+| builder.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| builderPublic.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| builderState.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| builderStatePublic.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| checker.ts | 10465 | 0 | 0 | 0 | 1402 | partial | no, not computed |
+| commandLineParser.ts | 0 | 0 | 0 | 0 | 159 | not yet attempted | no, not computed |
+| core.ts | 0 | 0 | 4 | 0 | 59 | complete traversal | no, not computed |
+| corePublic.ts | 0 | 0 | 0 | 0 | 9 | complete traversal | no, not computed |
+| debug.ts | 0 | 0 | 0 | 0 | 85 | complete traversal | no, not computed |
+| diagnosticInformationMap.generated.ts | 0 | 0 | 0 | 0 | 3 | not yet attempted | no, not computed |
+| emitter.ts | 3433 | 0 | 9 | 0 | 346 | partial | no, not computed |
+| executeCommandLine.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| expressionToTypeNode.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| factory/baseNodeFactory.ts | 0 | 0 | 0 | 0 | 8 | partial | no, not computed |
+| factory/emitHelpers.ts | 0 | 0 | 0 | 0 | 83 | partial | no, not computed |
+| factory/emitNode.ts | 0 | 0 | 0 | 0 | 18 | partial | no, not computed |
+| factory/nodeChildren.ts | 12 | 0 | 0 | 0 | 6 | partial | no, not computed |
+| factory/nodeConverters.ts | 204 | 0 | 0 | 0 | 12 | partial | no, not computed |
+| factory/nodeFactory.ts | 621 | 0 | 1 | 0 | 502 | complete traversal | no, not computed |
+| factory/nodeTests.ts | 0 | 0 | 0 | 0 | 228 | complete traversal | no, not computed |
+| factory/parenthesizerRules.ts | 224 | 0 | 0 | 0 | 42 | complete traversal | no, not computed |
+| factory/utilities.ts | 789 | 0 | 0 | 0 | 101 | complete traversal | no, not computed |
+| factory/utilitiesPublic.ts | 0 | 0 | 0 | 0 | 3 | complete traversal | no, not computed |
+| hostErrors.ts | 0 | 0 | 0 | 0 | 3 | complete traversal | no, not computed |
+| moduleNameResolver.ts | 66 | 0 | 1 | 0 | 168 | complete traversal | no, not computed |
+| moduleSpecifiers.ts | 0 | 0 | 0 | 0 | 52 | complete traversal | no, not computed |
+| parser.ts | 0 | 0 | 0 | 0 | 53 | not yet attempted | no, not computed |
+| path.ts | 0 | 0 | 0 | 0 | 77 | not yet attempted | no, not computed |
+| performance.ts | 0 | 0 | 0 | 0 | 24 | not yet attempted | no, not computed |
+| performanceCore.ts | 0 | 0 | 0 | 0 | 12 | not yet attempted | no, not computed |
+| program.ts | 4452 | 0 | 5 | 0 | 235 | complete traversal | no, not computed |
+| programDiagnostics.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| resolutionCache.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| scanner.ts | 0 | 0 | 0 | 0 | 74 | not yet attempted | no, not computed |
+| semver.ts | 0 | 0 | 0 | 0 | 29 | not yet attempted | no, not computed |
+| sourcemap.ts | 0 | 0 | 0 | 0 | 30 | not yet attempted | no, not computed |
+| symbolWalker.ts | 0 | 0 | 0 | 0 | 2 | not yet attempted | no, not computed |
+| sys.ts | 0 | 0 | 0 | 0 | 60 | not yet attempted | no, not computed |
+| tracing.ts | 0 | 0 | 0 | 0 | 10 | not yet attempted | no, not computed |
+| transformer.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/classFields.ts | 192 | 0 | 0 | 0 | 23 | not yet attempted | no, not computed |
+| transformers/classThis.ts | 0 | 0 | 0 | 0 | 5 | not yet attempted | no, not computed |
+| transformers/declarations.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/declarations/diagnostics.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/destructuring.ts | 193 | 0 | 0 | 0 | 22 | not yet attempted | no, not computed |
+| transformers/es2015.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/es2016.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/es2017.ts | 0 | 0 | 0 | 0 | 6 | not yet attempted | no, not computed |
+| transformers/es2018.ts | 0 | 0 | 0 | 0 | 4 | not yet attempted | no, not computed |
+| transformers/es2019.ts | 0 | 0 | 0 | 0 | 2 | not yet attempted | no, not computed |
+| transformers/es2020.ts | 0 | 0 | 0 | 0 | 2 | not yet attempted | no, not computed |
+| transformers/es2021.ts | 0 | 0 | 0 | 0 | 2 | not yet attempted | no, not computed |
+| transformers/esDecorators.ts | 0 | 0 | 0 | 0 | 9 | not yet attempted | no, not computed |
+| transformers/esnext.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/generators.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/jsx.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/legacyDecorators.ts | 0 | 0 | 0 | 0 | 2 | not yet attempted | no, not computed |
+| transformers/module/esnextAnd2015.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/module/impliedNodeFormatDependent.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/module/module.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/module/system.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
+| transformers/namedEvaluation.ts | 0 | 0 | 0 | 0 | 19 | not yet attempted | no, not computed |
+| transformers/taggedTemplate.ts | 0 | 0 | 0 | 0 | 5 | not yet attempted | no, not computed |
+| transformers/ts.ts | 0 | 0 | 0 | 0 | 5 | not yet attempted | no, not computed |
+| transformers/typeSerializer.ts | 0 | 0 | 0 | 0 | 6 | not yet attempted | no, not computed |
+| transformers/utilities.ts | 1130 | 0 | 0 | 0 | 48 | complete traversal | no, not computed |
+| tsbuild.ts | 0 | 0 | 0 | 0 | 5 | complete traversal | no, not computed |
+| tsbuildPublic.ts | 0 | 0 | 0 | 0 | 34 | complete traversal | no, not computed |
+| tsc/_namespaces/ts.ts | 0 | 0 | 0 | 0 | 1 | complete traversal | no, not computed |
+| tsc/tsc.ts | 0 | 0 | 0 | 0 | 6 | complete traversal | no, not computed |
+| types.ts | 0 | 0 | 0 | 0 | 875 | not yet attempted | no, not computed |
+| utilities.ts | 4668 | 0 | 7 | 0 | 834 | not yet attempted | no, not computed |
+| utilitiesPublic.ts | 2528 | 0 | 0 | 0 | 243 | complete traversal | no, not computed |
+| visitorPublic.ts | 0 | 0 | 0 | 0 | 28 | complete traversal | no, not computed |
+| watch.ts | 0 | 0 | 0 | 0 | 36 | complete traversal | no, not computed |
+| watchPublic.ts | 0 | 0 | 0 | 0 | 18 | complete traversal | no, not computed |
+| watchUtilities.ts | 0 | 0 | 0 | 0 | 44 | complete traversal | no, not computed |
 
 ## Top 10 files by record_literals, lowered IR only
 
@@ -141,6 +141,7 @@ Examples, when available, use unit fallback positions and adapted unit source te
 | --- | ---: |
 | checker.ts | 10465 |
 | utilities.ts | 4668 |
+| program.ts | 4452 |
 | emitter.ts | 3433 |
 | utilitiesPublic.ts | 2528 |
 | transformers/utilities.ts | 1130 |
@@ -148,7 +149,6 @@ Examples, when available, use unit fallback positions and adapted unit source te
 | factory/nodeFactory.ts | 621 |
 | factory/parenthesizerRules.ts | 224 |
 | factory/nodeConverters.ts | 204 |
-| transformers/destructuring.ts | 193 |
 
 Examples, when available, use unit fallback positions and adapted unit source text; exact expression locations are unavailable.
 
@@ -192,6 +192,27 @@ export function isExportNamespaceAsDefaultDeclaration(node: Node): boolean {
 function canUseOriginalText(node: LiteralLikeNode, flags: GetLiteralTextFlags): boolean {
     if (nodeIsSynthesized(node) || !node.parent || (flags & GetLiteralTextFlags.TerminateUnterminatedLiterals && node.isUnterminated)) {
         return false;
+```
+
+`program.ts:937:1` (unit fallback):
+```ts
+function getModeForUsageLocationWorker(file: Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">, usage: StringLiteralLike, compilerOptions?: CompilerOptions) {
+    if (isImportDeclaration(usage.parent) || isExportDeclaration(usage.parent) || isJSDocImportTag(usage.parent)) {
+        const isTypeOnly = isExclusivelyTypeOnlyImportOrExport(usage.parent);
+```
+
+`program.ts:959:1` (unit fallback):
+```ts
+function getEmitSyntaxForUsageLocationWorker(file: Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">, usage: StringLiteralLike, compilerOptions?: CompilerOptions): ResolutionMode {
+    if (!compilerOptions) {
+        // This should always be provided, but we try to fail somewhat
+```
+
+`program.ts:986:1` (unit fallback):
+```ts
+export function getResolutionModeOverride(node: ImportAttributes | undefined, grammarErrorOnNode?: (node: Node, diagnostic: DiagnosticMessage) => void): ResolutionMode | undefined {
+    if (!node) return undefined;
+    if (length(node.elements) !== 1) {
 ```
 
 `emitter.ts:752:1` (unit fallback):
@@ -341,13 +362,6 @@ export function createNodeConverters(factory: NodeFactory): NodeConverters {
             return setOriginalNode(
 ```
 
-`transformers/destructuring.ts:218:1` (unit fallback):
-```ts
-function bindingOrAssignmentElementContainsNonLiteralComputedName(element: BindingOrAssignmentElement): boolean {
-    const propertyName = tryGetPropertyNameOfBindingOrAssignmentElement(element);
-    if (propertyName && isComputedPropertyName(propertyName) && !isLiteralExpression(propertyName.expression)) {
-```
-
 ## Pass exits and limits
 
 | Pass | Child exit | Seconds | Stopping reason |
@@ -361,11 +375,20 @@ function bindingOrAssignmentElementContainsNonLiteralComputedName(element: Bindi
 | apply | 0 | 917.51 | completed |
 | census-build | 0 | 473.132 | completed |
 | census-final-build | 0 | 1.006 | completed |
+| coverage-preflight-audit | 0 | 2.002 | completed |
+| coverage-preflight-report | 0 | 1.001 | completed |
+| coverage-preflight-snapshot | 0 | 2.006 | completed |
 | entry-build-fixed | 0 | 33.1 | completed |
 | entry-build | 1 | 10.017 | nonzero exit; cause not inferred |
 | entry-fixture | 0 | 1.007 | completed |
 | export-audit | 0 | 2.003 | completed |
 | export-report | 0 | 1.003 | completed |
+| final-audit | 0 | 2.01 | completed |
+| final-checksums-corrected | 0 | 1.002 | completed |
+| final-checksums | 1 | 1.004 | nonzero exit; cause not inferred |
+| final-report | 0 | 2.003 | completed |
+| final-snapshot-pre | 0 | 1.001 | completed |
+| final-snapshot | 0 | 2.007 | completed |
 | first-add | 0 | 1.008 | completed |
 | first-commit | 0 | 1.007 | completed |
 | first-push | 0 | 3.006 | completed |
@@ -429,6 +452,7 @@ function bindingOrAssignmentElementContainsNonLiteralComputedName(element: Bindi
 | full-07-snapshot-final | 0 | 1.002 | completed |
 | full-07-snapshot | 0 | 1.003 | completed |
 | full-07 | -15 | 571.096 | configured elapsed bound |
+| full-20-000 | 0 | 580.765 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
 | interim-audit | 0 | 3.002 | completed |
@@ -437,6 +461,20 @@ function bindingOrAssignmentElementContainsNonLiteralComputedName(element: Bindi
 | overlay-entry-fixed | 0 | 2.011 | completed |
 | overlay-entry | 0 | 3.006 | completed |
 | overlay | 0 | 6.029 | completed |
+| publish-add | 0 | 1.001 | completed |
+| publish-branch | 0 | 1.001 | completed |
+| publish-checkpoint-commit | 0 | 1.001 | completed |
+| publish-checkpoint-push | 0 | 3.007 | completed |
+| publish-commit | 0 | 1.002 | completed |
+| publish-count | 0 | 1.002 | completed |
+| publish-final-scope | 0 | 1.002 | completed |
+| publish-parent | 0 | 1.003 | completed |
+| publish-push | 0 | 4.005 | completed |
+| publish-remote | 0 | 1.002 | completed |
+| publish-scope | 0 | 1.001 | completed |
+| publish-staged-scope | 0 | 1.001 | completed |
+| publish-switch | 0 | 1.002 | completed |
+| publish-tree | 0 | 1.003 | completed |
 | selftest | 0 | 1.028 | completed |
 | setup | 0 | 758.331 | completed |
 | source | 0 | 12.004 | completed |
@@ -448,7 +486,7 @@ Read `graph_types.go:460` and its callers at `graph_types.go:355` and `program_r
 
 The entry resolves 81 implementation files: the 79 compiler files from the independent-root report plus `src/tsc/tsc.ts` and `src/tsc/_namespaces/ts.ts`. The sums cover this resolved entry program. `instrument.py` uses the meter entry overlay to keep the entry first and expand Files to its implementation dependencies. It removes only the meter driver's full-mode-only checker-rejection gate so the requested first-error latent pass can retain diagnostics and proceed. `instrument.py` extends the existing guarded latent overlay in scratch only. It retains successful top-level statement returns in the measurement result's Main, which the stock hook discards. Ordinary Load and Lower remain disabled and every real pass asserts those guards. `overlay/` contains all generated Go inputs as `.go.txt`; no production lower source is changed. The deterministic self-test exercises Main, a function body, both dynamic reads, both view sources, GraphTypes presence, and failed-unit exclusion.
 
-An initial entry build omitted the observer mapping and failed; the corrected build and entry fixture passed before the real census. Both attempts are retained. The flattened selected-site stream is [`sites.jsonl.gz`](sites.jsonl.gz), beside this report; each line includes kind, reported position, unit, owner file, GraphTypes flag and original stream. It is derived without changing the preserved raw pass streams. Raw boundary streams, original latent streams, timing streams, logs and each child's own exit status are compressed separately beside this report in `raw/`. `source-manifest.json`, `provenance.json` and `SHA256SUMS` retain source and binary identities. Piece selections and measurement environment variables are retained in raw JSON. Full pieces use Go's `GOMEMLIMIT=10GiB` soft memory limit and a 60-minute aggregate budget; each child has at most 1790 seconds. Each process group is killed and reaped by the supervisor on completion or stopping.
+An initial entry build omitted the observer mapping and failed; the corrected build and entry fixture passed before the real census. Both attempts are retained. The flattened selected-site stream is [`sites.jsonl.gz`](sites.jsonl.gz), beside this report; each line includes kind, reported position, unit, owner file, GraphTypes flag and original stream. It is derived without changing the preserved raw pass streams. Raw boundary streams, original latent streams, timing streams, logs and each child's own exit status are compressed separately beside this report in `raw/`. `source-manifest.json`, `provenance.json` and `SHA256SUMS` retain source and binary identities. Piece selections and measurement environment variables are retained in raw JSON. The initial full pieces used Go's `GOMEMLIMIT=10GiB` soft memory limit and a 60-minute aggregate budget, with at most 1790 seconds per child. Continuation pieces select one file each, use `GOMEMLIMIT=4GiB` and at most 1490 seconds per child. Priority and files larger than 300000 bytes run alone; at most two smaller files run concurrently. Only completed child streams enter a checkpoint. The continuation has no aggregate 60-minute cutoff. Each process group is killed and reaped by the supervisor on completion or stopping.
 
 ```sh
 source /workspace/adamic-tools/env.sh

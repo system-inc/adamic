@@ -1,8 +1,10 @@
 """Preserve logs, raw streams and all guarded overlay inputs inside report scope."""
 from pathlib import Path
-import gzip,json,hashlib,os,subprocess,socket
+import gzip,json,hashlib,os,subprocess,socket,re
 here=Path(__file__).parent; scratch=Path('/workspace/scratch/jawqwv7'); raw=here/'raw';raw.mkdir(exist_ok=True)
 for p in scratch.iterdir():
+ match=re.match(r'(full-20-\d{3})(?:-|\.)',p.name)
+ if match and not (scratch/(match.group(1)+'-status.json')).exists():continue
  if p.is_file() and p.suffix in ('.log','.jsonl','.json'):
   (raw/(p.name+'.gz')).write_bytes(gzip.compress(p.read_bytes(),mtime=0))
 for p in (scratch/'overlay').rglob('*'):
