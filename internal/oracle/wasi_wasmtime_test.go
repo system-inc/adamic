@@ -392,3 +392,30 @@ func TestWasmtimeWalkLimitCatchesMutants(t *testing.T) {
 	}
 	t.Log("walk empty-path and invalid-UTF-8 host assertion mutants caught")
 }
+
+// The process row's wasm32 column on a second engine (#zqz01vh): process_provided, isNodeLikeSystem's process
+// clauses as core.ts has them plus typeof, !!nextTick and !browser, built as a wasm32 command and run on wasmtime,
+// byte for byte against Node, beside TestHostBindingProcessWASIAgreesWithNode's node:wasi. typeof is a constant,
+// nextTick's presence is adamic_node_next_tick_feature with no wasm32 branch, and browser is ir.Undefined, so no
+// engine's host can change the answer; this holds that no wasm32 refusal or build gap reaches them either.
+// Mutant (d) in testdata/host_bindings/mutants.md, browser read as true, turns this red.
+func TestWasmtimeHostBindingProcessAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	requireWasmtime(t)
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/host_bindings/process_provided/main.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "process.wasm")
+	if refusal := buildWASI(t, native.C(program), binary); refusal != "" {
+		t.Fatalf("the wasm32 build refuses: %s", refusal)
+	}
+	truth, actual := onNode(t, path), onWasmtime(t, inputRun{}, binary)
+	if difference := disagreement(truth, actual); difference != "" {
+		t.Fatalf("%s: Node %+v wasmtime %+v", difference, truth, actual)
+	}
+}
