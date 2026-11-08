@@ -1,0 +1,18 @@
+// A warning a promise job's setTimeout gives prints after the whole drain, as Node's does: after the
+// job's own lines and after the job that runs when it awaits.
+import 'node:timers';
+
+async function later(): Promise<void> {
+    await Promise.resolve();
+    console.error('later');
+}
+
+const pending = later();
+console.error('main');
+await Promise.resolve();
+console.log('job stdout');
+console.error('job stderr before');
+setTimeout(() => { console.error('fired'); }, 'ab'.length * 1073741824);
+console.error('job stderr after');
+await pending;
+console.error('job stderr last');
