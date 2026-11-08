@@ -1,0 +1,12 @@
+// ??= on a graph member's empty field, storing a member of another region that reaches back
+// (#89tq0ef): held through the graph, the two regions merge, so everything is freed. A plain retain put
+// a counted edge across regions, which leaked them both. A second ??= finds the field set and writes
+// nothing.
+interface Node { name: string; next: Node[]; peer: Node | null }
+const a: Node = { name: 'a' + String(1), next: [], peer: null };
+const b: Node = { name: 'b' + String(2), next: [a], peer: null };
+a.next.push(b);
+const c: Node = { name: 'c' + String(3), next: [a], peer: null };
+a.peer ??= c;
+a.peer ??= b;
+console.log(a.name + ' ' + (a.peer === null ? '-' : a.peer.name) + ' ' + String(c.next.length));

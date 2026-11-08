@@ -1,0 +1,13 @@
+// &&= on a graph member's field, whose old value is a member of the same region (#89tq0ef): the old
+// value is an internal member edge with no count of its own, so the write drops it through the graph,
+// as = does. Released plainly it panicked "graph released without ownership" where Node exits 0. ||=
+// takes the other branch and writes nothing. Every name is built, so a freed member reads under ASan.
+interface Node { name: string; next: Node[]; peer: Node | null }
+const a: Node = { name: 'a' + String(1), next: [], peer: null };
+const b: Node = { name: 'b' + String(2), next: [a], peer: null };
+a.next.push(b);
+a.peer = b;
+const c: Node = { name: 'c' + String(3), next: [a], peer: null };
+a.peer &&= c;
+a.peer ||= b;
+console.log(a.name + ' ' + (a.peer === null ? '-' : a.peer.name) + ' ' + b.name + ' ' + c.name);
