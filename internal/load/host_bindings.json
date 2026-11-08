@@ -56,6 +56,34 @@
     "ruling": "Adamic and Lower on #zqz01vh, Nov 8 2026: native and wasm32 cleared, Provided through node:process's process export= value; browser is absent on Node and reads undefined in the IR, with every mutation and later view naming it stopped"
   },
   {
+    "name": "require",
+    "declaration": {
+      "file": "core.ts",
+      "keyword": "const",
+      "type": "unknown"
+    },
+    "node": {
+      "version": "v24.21.0",
+      "module": "ES",
+      "typeof": "undefined"
+    },
+    "native": {
+      "answer": "Absent"
+    },
+    "javascript": {
+      "answer": "Absent"
+    },
+    "wasm32": {
+      "answer": "Absent"
+    },
+    "model": {
+      "path": "",
+      "task": ""
+    },
+    "divergence": "",
+    "ruling": "@system_adamic on #baobab for #00qn5az, Nov 8 2026 20:21Z: Absent on every target, Node's own answer under the oracle's module mode, so isNodeLikeSystem reads false as it does there until 99q (#nqp4p7g) drops its typeof require test; a commonjs-bundle build's answer is #redxes2's to add"
+  },
+  {
     "name": "performance",
     "declaration": {
       "file": "performanceCore.ts",

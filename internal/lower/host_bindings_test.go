@@ -184,7 +184,7 @@ func TestHostBindingUnmatchedDeclarationIsRefused(t *testing.T) {
 		{"another keyword", "performance.ts", "declare var onProfilerEvent: ((eventName: string) => void) | undefined;\nconsole.log(typeof onProfilerEvent);\n"},
 		{"exported", "performance.ts", "export " + profilerDeclaration + "console.log(typeof onProfilerEvent);\n"},
 		{"beside an unnamed declarator", "performance.ts", "declare let onProfilerEvent: ((eventName: string) => void) | undefined, other: number;\nconsole.log(typeof onProfilerEvent);\n"},
-		{"tsc's require", "core.ts", "declare const require: unknown;\nconsole.log(typeof require);\n"},
+		{"require of another type than core.ts's", "core.ts", "declare const require: (specifier: string) => unknown;\nconsole.log(typeof require);\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -198,5 +198,27 @@ func TestHostBindingUnmatchedDeclarationIsRefused(t *testing.T) {
 				t.Errorf("got %v, want %s:1:1: %s", err, probe.file, refusal)
 			}
 		})
+	}
+}
+
+// tsc's core.ts declares require beside process and reads it only in isNodeLikeSystem's typeof test. Its
+// row is Absent on every target, Node's answer under the oracle's module mode (Adamic on #baobab, Nov 8),
+// so the declaration declares nothing, typeof is the constant "undefined", isNodeLikeSystem's test is
+// false at run time, as it is on the oracle's Node, and a read under the guard is the unreachable
+// placeholder. The oracle holds the run (TestHostBindingsHeldToNode
+// and TestHostBindingsAgreeWithNode's node_like). Mutant (k), internal/oracle/testdata/host_bindings/
+// mutants.md: the row removed, and the declaration is refused again as an ambient value declaration.
+func TestHostBindingRequireIsAbsent(t *testing.T) {
+	t.Parallel()
+	program, err := lowerModules(t, map[string]string{
+		"core.ts": "declare const require: unknown;\nexport function isNodeLikeSystem(): boolean {\n\treturn typeof require !== \"undefined\";\n}\nexport function loader(): string {\n\tif (typeof require !== \"undefined\") {\n\t\treturn String(require);\n\t}\n\treturn \"no loader\";\n}\n",
+		"main.ts": "import { isNodeLikeSystem, loader } from './core.ts';\nconsole.log(String(isNodeLikeSystem()));\nconsole.log(loader());\n",
+	})
+	if err != nil {
+		t.Fatalf("want core.ts's require to lower by its row, got %v", err)
+	}
+	const deadRead = "compiler bug: the typeof guard of require, a host binding absent on every target, was taken"
+	if !slices.Contains(program.Strings, deadRead) {
+		t.Errorf("no unreachable placeholder for require's guarded read among the program's strings %q", program.Strings)
 	}
 }
