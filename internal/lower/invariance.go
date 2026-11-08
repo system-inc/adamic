@@ -234,8 +234,11 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 				// are related, and tsc relates a method's parameters both ways: a handle<T>(x: Dog) seen as
 				// handle<T>(x: Animal) is handed a Cat (#q6gs98r). Only a method type identical to the
 				// view's, under the checker's identity relation, is the same method; any other view of a
-				// generic method stops here, unjudged, rather than passing.
-				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) {
+				// generic method stops here, unjudged, rather than passing. A library's method (FSWatcher's
+				// on, seen as sys.ts's FsWatchWorkerWatcher's) runs on the host, which reads its arguments
+				// by its own registration (library_node.go). So a method declared only in the library
+				// (librarySymbol) is left as it was before this stop: the hole was a program's own body.
+				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) || l.librarySymbol(inside) {
 					continue
 				}
 				return &widening{source: source, target: target, genericMethod: viewed.Name}
