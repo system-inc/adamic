@@ -46,3 +46,7 @@ Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made
 ## L3 comparison
 
 [Two-compiler native sanitizer and JavaScript probe](l3/results.md): e3aa0bb and e5531c8 both refuse the exact .ts and .a source with TS2532 before lowering. Source Node throws TypeError. No native or emitted JS programs could be run; no sanitizer report.
+
+## L4 comparison
+
+[Two-compiler native sanitizer and JS probe, source Node and stock tsc](l4/results.md): base refuses generic-method view; head refuses an unfixed type parameter falling back to a constraint holding any. Stock tsc 6.0.3 accepts; source Node throws TypeError. No emitted program or sanitizer report.

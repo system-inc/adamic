@@ -1,0 +1,12 @@
+[evidence/compiler/rule-g 05bdaf848] evidence: retain L3 publication and integration logs
+ 10 files changed, 183 insertions(+)
+ create mode 100644 evidence/l3/commit.exit
+ create mode 100644 evidence/l3/commit.log
+ create mode 100644 evidence/l3/fetch-evidence.exit
+ create mode 100644 evidence/l3/fetch-evidence.log
+ create mode 100644 evidence/l3/merge-evidence.exit
+ create mode 100644 evidence/l3/merge-evidence.log
+ create mode 100644 evidence/l3/push.exit
+ create mode 100644 evidence/l3/push.log
+ create mode 100644 evidence/l3/remote-new-commits.log
+ create mode 100644 evidence/l3/remote-new-stat.log

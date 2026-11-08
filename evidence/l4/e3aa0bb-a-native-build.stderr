@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/evidence/l4/l4.a:3:20: stage 0 can't lower a generic method run of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void yet

@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/evidence/l4/l4.ts:3:20: stage 0 can't lower a generic function of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void, which doesn't fix every type parameter it's instantiated with, so one falls back to a constraint holding any yet

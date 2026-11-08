@@ -1,0 +1,188 @@
+{
+  "00-node-version": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "v24.19.0\n",
+    "stderr": ""
+  },
+  "01-go-version": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "go version go1.27.1 linux/amd64\n",
+    "stderr": ""
+  },
+  "02-clang-version": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /workspace/adamic-tools/llvm/bin\n",
+    "stderr": ""
+  },
+  "03-source-node": {
+    "exit": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "file:///workspace/adamic/evidence/l4/l4.ts:4\nslot.run((...args          ) => { for (const a of args) { console.log(a.toUpperCase()); } }, 5);\n                                                                        ^\n\nTypeError: a.toUpperCase is not a function\n    at file:///workspace/adamic/evidence/l4/l4.ts:4:73\n    at Provider.run (file:///workspace/adamic/evidence/l4/l4.ts:2:109)\n    at Object.<anonymous> (file:///workspace/adamic/evidence/l4/l4.ts:4:6)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+  },
+  "04-stock-tsc-version": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "Version 6.0.3\n",
+    "stderr": ""
+  },
+  "04-stock-tsc-revision": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "050880ce59e30b356b686bd3144efe24f875ebc8\n",
+    "stderr": ""
+  },
+  "04-stock-tsc-clean": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": ""
+  },
+  "05-stock-tsc-default": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": ""
+  },
+  "06-stock-tsc-strict": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": ""
+  },
+  "e5531c8-checkout": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": "HEAD is now at e5531c8c7 lower: condition 3's pin is the generic-to-plain branch, since tsc refuses the unfixed any[] against a generic slot itself (#7fd51gk)\n"
+  },
+  "e5531c8-revision": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "e5531c8c7fd9fa0b5076bb3d0d0961e6954e9ce1\n",
+    "stderr": ""
+  },
+  "e5531c8-submodules": {
+    "exit": 0,
+    "signal": null,
+    "stdout": " 06af2e399c6c1fb93fd570b774027942747400b4 cohere (06af2e39)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)\n",
+    "stderr": ""
+  },
+  "e5531c8-clean": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": ""
+  },
+  "e5531c8-compiler-build": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": ""
+  },
+  "e5531c8-help": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "usage:\n  adamic types <file.a|file.ts>...\n  adamic c <file.a|file.ts> [--explain-checks]\n  adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]\n  adamic js <file.a|file.ts> [--explain-checks]\n  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]\n  adamic --help | -h\n  adamic --version\n",
+    "stderr": ""
+  },
+  "e5531c8-ts-native-build": {
+    "exit": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/evidence/l4/l4.ts:3:20: stage 0 can't lower a generic function of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void, which doesn't fix every type parameter it's instantiated with, so one falls back to a constraint holding any yet\n"
+  },
+  "e5531c8-ts-js-build": {
+    "exit": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/evidence/l4/l4.ts:3:20: stage 0 can't lower a generic function of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void, which doesn't fix every type parameter it's instantiated with, so one falls back to a constraint holding any yet\n"
+  },
+  "e5531c8-a-native-build": {
+    "exit": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/evidence/l4/l4.a:3:20: stage 0 can't lower a generic function of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void, which doesn't fix every type parameter it's instantiated with, so one falls back to a constraint holding any yet\n"
+  },
+  "e5531c8-a-js-build": {
+    "exit": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/evidence/l4/l4.a:3:20: stage 0 can't lower a generic function of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void, which doesn't fix every type parameter it's instantiated with, so one falls back to a constraint holding any yet\n"
+  },
+  "e3aa0bb-checkout": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": "Warning: you are leaving 3 commits behind, not connected to\nany of your branches:\n\n  e5531c8c7 lower: condition 3's pin is the generic-to-plain branch, since tsc refuses the unfixed any[] against a generic slot itself (#7fd51gk)\n  ec5e9b2bf lower: condition 3's pin puts NoInfer on the provider's side, where it leaves T unfixed (#7fd51gk)\n  2594029da lower: rule G's pins reach the relation: setTimeout imported from node:timers, L2 as a class method, and i2's lying twin dropped since tsc itself refuses it (#7fd51gk)\n\nIf you want to keep them by creating a new branch, this may be a good time\nto do so with:\n\n git branch <new-branch-name> e5531c8c7\n\nHEAD is now at e3aa0bb76 native: library_intl.c gets its own GCC audit product and test, and its row in gccRuntimeUnits and the product order, so the unfused runtime census counts it (#zjndrx5 head 1)\n"
+  },
+  "e3aa0bb-revision": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "e3aa0bb7642163ebd004a71ba40a4657d27eab71\n",
+    "stderr": ""
+  },
+  "e3aa0bb-submodules": {
+    "exit": 0,
+    "signal": null,
+    "stdout": " 06af2e399c6c1fb93fd570b774027942747400b4 cohere (06af2e39)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)\n",
+    "stderr": ""
+  },
+  "e3aa0bb-clean": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": ""
+  },
+  "e3aa0bb-compiler-build": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": ""
+  },
+  "e3aa0bb-help": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "usage:\n  adamic types <file.a|file.ts>...\n  adamic c <file.a|file.ts> [--explain-checks]\n  adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]\n  adamic js <file.a|file.ts> [--explain-checks]\n  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]\n  adamic --help | -h\n  adamic --version\n",
+    "stderr": ""
+  },
+  "e3aa0bb-ts-native-build": {
+    "exit": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/evidence/l4/l4.ts:3:20: stage 0 can't lower a generic method run of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void yet\n"
+  },
+  "e3aa0bb-ts-js-build": {
+    "exit": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/evidence/l4/l4.ts:3:20: stage 0 can't lower a generic method run of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void yet\n"
+  },
+  "e3aa0bb-a-native-build": {
+    "exit": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/evidence/l4/l4.a:3:20: stage 0 can't lower a generic method run of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void yet\n"
+  },
+  "e3aa0bb-a-js-build": {
+    "exit": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/evidence/l4/l4.a:3:20: stage 0 can't lower a generic method run of type <T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: NoInfer<T>) => void seen as (callback: (...args: string[]) => void, ...rest: unknown[]) => void yet\n"
+  },
+  "99-restore-head": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": "Previous HEAD position was e3aa0bb76 native: library_intl.c gets its own GCC audit product and test, and its row in gccRuntimeUnits and the product order, so the unfused runtime census counts it (#zjndrx5 head 1)\nHEAD is now at e5531c8c7 lower: condition 3's pin is the generic-to-plain branch, since tsc refuses the unfixed any[] against a generic slot itself (#7fd51gk)\n"
+  },
+  "99-restoration": {
+    "exit": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": ""
+  }
+}
