@@ -2,17 +2,17 @@
 
 All checks in the rerun table ran on WebAssembly's scoped-pin commit `b434890646453e5fc0895628169f10f36f253cd9` plus the 99j cherry-pick. Its parent is main `4b8634a4a498a39d254ee8c325eb2711f84359d9`. The measured cherry-pick commit is `dc07dfe2dde26e7ea03afc3f3ff65532a60931d0`; the final amendment updates evidence only. The measured 99j adapter source is unchanged from 0854785b and is pinned by SHA-256 in proof-results.json. No WebAssembly file is changed by the 99j commit.
 
-| Check rerun | Result |
-| --- | --- |
-| Full stage3/apply.sh | PASS: all 69 adapters, all 138 before/after refs and patch rows present; 99j and then 99-wasm-crypto-import both apply |
-| Second full apply | PASS: cached replay is byte-identical, excluding Git metadata |
-| Both adapters on completed tree | PASS: 99j has zero files and edits, WebAssembly has zero files, and zero writes occur; bytes and mtimes are unchanged |
-| Full landing lane oracle | PASS: 106,366 passing, one sanctioned failure, zero pending |
-| Exact oracle identities | Complete pass/fail identity multisets, including multiplicities, equal the retained main reference |
-| Oracle source | All src file bytes match the full-apply tree |
-| Public declarations | Built typescript.d.ts and local API declaration bytes match main exactly |
-| Shard check | python3 -B stage3/lane/generate_shards.py --check passes |
-| Go lane fixtures | go test -count=1 -skip 'TestShard_|TestProduct_' ./stage3/lane/ passes, with GOMAXPROCS=1 |
+| Check rerun                     | Result                                                                                                                 |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Full stage3/apply.sh            | PASS: all 69 adapters, all 138 before/after refs and patch rows present; 99j and then 99-wasm-crypto-import both apply |
+| Second full apply               | PASS: cached replay is byte-identical, excluding Git metadata                                                          |
+| Both adapters on completed tree | PASS: 99j has zero files and edits, WebAssembly has zero files, and zero writes occur; bytes and mtimes are unchanged  |
+| Full landing lane oracle        | PASS: 106,366 passing, one sanctioned failure, zero pending                                                            |
+| Exact oracle identities         | Complete pass/fail identity multisets, including multiplicities, equal the retained main reference                     |
+| Oracle source                   | All src file bytes match the full-apply tree                                                                           |
+| Public declarations             | Built typescript.d.ts and local API declaration bytes match main exactly                                               |
+| Shard check                     | python3 -B stage3/lane/generate_shards.py --check passes                                                               |
+| Go lane fixtures                | go test -count=1 -skip 'TestShard_                                                                                     | TestProduct_' ./stage3/lane/ passes, with GOMAXPROCS=1 |
 
 The first oracle attempt had one additional failure: fourslash codeFixClassImplementInterfaceNoTruncation.ts exceeded the unchanged 40-second timeout (106,365 passes, two failures including the sanctioned one). Its complete report is preserved in proof-results.json. The failed run source copy was removed, preserving its logs and report, clean scratch cache pages were released again, and the complete unmodified oracle was rerun. The retry passed with exact main identities. No timeout, worker count, test selection or expectation was changed.
 
