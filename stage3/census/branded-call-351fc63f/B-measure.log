@@ -1,0 +1,25 @@
+B-parent-entry child_exit=0 wall_seconds=2647.27
+B-parent-entry checker_diagnostics=0 file_records=81
+push child_exit=0 3a378f1be09f94e04b3a0a980fe328ded1072602 refs/heads/typescript/branded-call-census-checkpoint-B-parent-entry
+B-head-entry waiting for exclusive run lock
+B-head-entry reused recorded_child_exit=0; no new child
+B-head-entry checker_diagnostics=0 file_records=81
+B-entry-pair child_exit=0 wall_seconds=14.085
+B-parent-core reused recorded_child_exit=0; no new child
+B-parent-core checker_diagnostics=0 file_records=1
+B-head-core reused recorded_child_exit=0; no new child
+B-head-core checker_diagnostics=0 file_records=1
+B-core-pair child_exit=0 wall_seconds=1.007
+B-parent-focus-1 reused recorded_child_exit=0; no new child
+B-head-focus-1 reused recorded_child_exit=0; no new child
+B-focus-1-pair child_exit=0 wall_seconds=2.007
+B-parent-focus-2 reused recorded_child_exit=0; no new child
+B-head-focus-2 reused recorded_child_exit=0; no new child
+B-focus-2-pair child_exit=0 wall_seconds=2.007
+B-parent-focus-3 reused recorded_child_exit=0; no new child
+B-head-focus-3 reused recorded_child_exit=0; no new child
+B-focus-3-pair child_exit=0 wall_seconds=2.004
+B-parent-focus-4 reused recorded_child_exit=0; no new child
+B-head-focus-4 reused recorded_child_exit=0; no new child
+B-focus-4-pair child_exit=0 wall_seconds=2.009
+B complete

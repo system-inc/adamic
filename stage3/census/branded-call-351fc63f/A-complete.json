@@ -1,0 +1,40 @@
+{
+  "pairing": "A",
+  "tree": "/tmp/branded-A",
+  "focused_units": [
+    {
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:10810:13",
+      "site": "/tmp/branded-A/src/compiler/checker.ts:10912:29",
+      "owners": [
+        "createTypeChecker",
+        "createNodeBuilder",
+        "symbolTableToDeclarationStatements",
+        "makeSerializePropertySymbol"
+      ]
+    },
+    {
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:4731:5",
+      "site": "/tmp/branded-A/src/compiler/checker.ts:4749:17",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ]
+    },
+    {
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:48396:5",
+      "site": "/tmp/branded-A/src/compiler/checker.ts:48435:47",
+      "owners": [
+        "createTypeChecker",
+        "checkAliasSymbol"
+      ]
+    },
+    {
+      "unit": "/tmp/branded-A/src/compiler/checker.ts:49990:5",
+      "site": "/tmp/branded-A/src/compiler/checker.ts:50075:29",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ]
+    }
+  ]
+}

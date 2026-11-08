@@ -1,0 +1,153 @@
+{
+  "partial_allowed": false,
+  "source_graphs": {
+    "A": {
+      "files": 81,
+      "all_hashes_unchanged": true
+    },
+    "B": {
+      "files": 81,
+      "all_hashes_unchanged": true
+    }
+  },
+  "entry_pairings": {
+    "A": {
+      "complete": true,
+      "parent_events": 5873,
+      "head_events": 5872,
+      "raw_before": 5104,
+      "raw_after": 5103,
+      "units": 4563,
+      "changed_first_stops": 1,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "B": {
+      "complete": true,
+      "parent_events": 5873,
+      "head_events": 5865,
+      "raw_before": 5104,
+      "raw_after": 5096,
+      "units": 4563,
+      "changed_first_stops": 1,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    }
+  },
+  "core_pairings": {
+    "A": {
+      "complete": true,
+      "parent_events": 30,
+      "head_events": 30,
+      "raw_before": 26,
+      "raw_after": 26,
+      "units": 270,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "B": {
+      "complete": true,
+      "parent_events": 30,
+      "head_events": 30,
+      "raw_before": 26,
+      "raw_after": 26,
+      "units": 270,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    }
+  },
+  "focused_pairings": {
+    "A-1": {
+      "parent_events": 0,
+      "head_events": 0,
+      "raw_before": 0,
+      "raw_after": 0,
+      "units": 1,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "A-2": {
+      "parent_events": 15,
+      "head_events": 15,
+      "raw_before": 15,
+      "raw_after": 15,
+      "units": 1,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "A-3": {
+      "parent_events": 2,
+      "head_events": 2,
+      "raw_before": 2,
+      "raw_after": 2,
+      "units": 1,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "A-4": {
+      "parent_events": 34,
+      "head_events": 34,
+      "raw_before": 34,
+      "raw_after": 34,
+      "units": 1,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "B-1": {
+      "parent_events": 15,
+      "head_events": 15,
+      "raw_before": 15,
+      "raw_after": 15,
+      "units": 1,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "B-2": {
+      "parent_events": 2,
+      "head_events": 2,
+      "raw_before": 2,
+      "raw_after": 2,
+      "units": 1,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "B-3": {
+      "parent_events": 34,
+      "head_events": 34,
+      "raw_before": 34,
+      "raw_after": 34,
+      "units": 1,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "B-4": {
+      "parent_events": 2,
+      "head_events": 2,
+      "raw_before": 2,
+      "raw_after": 2,
+      "units": 1,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    },
+    "A-serializer": {
+      "parent_events": 2,
+      "head_events": 2,
+      "raw_before": 2,
+      "raw_after": 2,
+      "units": 1,
+      "changed_first_stops": 0,
+      "newly_blocked_units": 0,
+      "new_panics": 0
+    }
+  }
+}

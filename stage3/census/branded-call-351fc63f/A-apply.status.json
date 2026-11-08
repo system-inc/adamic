@@ -1,0 +1,11 @@
+{
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "/tmp/branded-A"
+  ],
+  "cwd": "/tmp/branded-report",
+  "exit": 1,
+  "wall_seconds": 425.175,
+  "stopped": null
+}
