@@ -212,7 +212,7 @@ namespace:
   `"replace": "member"`, like 97d's nineteen.
 - `["server", "ModuleImportResult", "error"]`, line 2707, kind
   PropertySignature, `"replace": "type"`, from `{ stack?: string; message?:
-  string; }` to `unknown`. The reviewer's shape named the path
+string; }` to `unknown`. The reviewer's shape named the path
   `["ModuleImportResult", "error"]`; ownerPath() keeps the `server` namespace,
   and in the pinned file it matches two nodes, the success member's
   `error: undefined` at 2704 and this one, so the row also carries its line.
@@ -239,10 +239,10 @@ with 97b and 97d applied.
 
 ## Measured
 
-| Tree | Own-file diagnostics | Files with any | sys.ts |
-| --- | ---: | ---: | ---: |
-| 98-c | 142 | 21 of 79 | 1 |
-| 98-c and 98-e | 141 | 20 of 79 | 0 |
+| Tree          | Own-file diagnostics | Files with any | sys.ts |
+| ------------- | -------------------: | -------------: | -----: |
+| 98-c          |                  142 |       21 of 79 |      1 |
+| 98-c and 98-e |                  141 |       20 of 79 |      0 |
 
 Attributed as stage3/meter/report.py attributes them, with 94's own-file.py.
 sys.ts loses 1617:13 and gains nothing; every other file's diagnostic set is
