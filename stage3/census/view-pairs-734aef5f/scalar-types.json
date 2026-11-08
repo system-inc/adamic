@@ -3686,6 +3686,10 @@
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.Identifier | SyntaxKind.JsxNamespacedName": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.Identifier | SyntaxKind.ModuleDeclaration": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
@@ -3930,6 +3934,10 @@
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.JsxAttribute | SyntaxKind.JsxSpreadAttribute": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.JsxAttributes": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
@@ -4083,6 +4091,10 @@
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
     "SyntaxKind.NumericLiteral | SyntaxKind.BigIntLiteral | SyntaxKind.StringLiteral | SyntaxKind.NoSubstitutionTemplateLiteral | SyntaxKind.Identifier | SyntaxKind.PrivateIdentifier | SyntaxKind.ComputedPropertyName": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NumericLiteral | SyntaxKind.BigIntLiteral | SyntaxKind.StringLiteral | SyntaxKind.NoSubstitutionTemplateLiteral | SyntaxKind.Identifier | SyntaxKind.PrivateIdentifier | SyntaxKind.ComputedPropertyName | SyntaxKind.JsxNamespacedName": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
