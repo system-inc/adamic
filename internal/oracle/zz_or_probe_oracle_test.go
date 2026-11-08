@@ -5,16 +5,22 @@ package oracle
 // checked (LeakSanitizer on Linux).
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
 	"testing"
+	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestZzOrProbeRuns(t *testing.T) {
@@ -54,6 +60,15 @@ func TestZzOrProbeRuns(t *testing.T) {
 			show("javascript", executeWith(t, jsonTypesEnvironment(t, script), "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), script))
 			native, binary := nativelyUncached(t, program)
 			show("native-asan", native)
+			counted := filepath.Join(t.TempDir(), "counted")
+			if err := native.Build(native.C(program), counted, native.Options{Count: true}); err != nil {
+				fmt.Fprintf(out, "counted build: %v\n", err)
+			} else {
+				ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+				_, stderr, runErr := childguard.Capture(ctx, exec.CommandContext(ctx, counted))
+				cancel()
+				fmt.Fprintf(out, "counted: err=%v %s\n", runErr, leakcheck.CountsLine.Find(stderr))
+			}
 			report := leaksUncached(t, program, binary)
 			if report == "" {
 				fmt.Fprintf(out, "leaks: none\n")
