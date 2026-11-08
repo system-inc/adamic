@@ -1,0 +1,10 @@
+// f1 control: the same copy returned by a direct call
+interface Node { name: string; next: Node[]; kids: Node[][] }
+const a: Node = { name: 'a' + '', next: [], kids: [] };
+const b: Node = { name: 'b' + '', next: [a], kids: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const byName = (x: Node, y: Node): number => (x.name < y.name ? -1 : 1);
+function apply(): Node[] { return a.next.toSorted(byName); }
+a.kids.push(apply());
+const k = a.kids[0];
+console.log(`${a.kids.length} ${k === undefined ? -1 : k.length}`);

@@ -1,0 +1,9 @@
+// f2 control: reduce over a literal callback
+interface Node { name: string; next: Node[]; kids: Node[][] }
+const a: Node = { name: 'a' + '', next: [], kids: [] };
+const b: Node = { name: 'b' + '', next: [a], kids: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const byName = (x: Node, y: Node): number => (x.name < y.name ? -1 : 1);
+a.kids.push(a.next.reduce((acc: Node[], n: Node): Node[] => (n === b ? n.next.toSorted(byName) : acc), []));
+const k = a.kids[0];
+console.log(`${a.kids.length} ${k === undefined ? -1 : k.length}`);

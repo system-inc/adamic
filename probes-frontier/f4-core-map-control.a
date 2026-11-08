@@ -1,0 +1,10 @@
+// f4 control: the same loop with the copy inline
+interface Node { name: string; next: Node[]; kids: Node[][] }
+const a: Node = { name: 'a' + '', next: [], kids: [] };
+const b: Node = { name: 'b' + '', next: [a], kids: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const byName = (x: Node, y: Node): number => (x.name < y.name ? -1 : 1);
+function mapNodes(xs: Node[]): Node[][] { const r: Node[][] = []; for (const x of xs) r.push(x.next.toSorted(byName)); return r; }
+a.kids = mapNodes([b]);
+const k = a.kids[0];
+console.log(`${a.kids.length} ${k === undefined ? -1 : k.length}`);
