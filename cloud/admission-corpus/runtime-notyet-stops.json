@@ -235,6 +235,18 @@
       "lifting_task": "#s82g5nx",
       "stderr": "adamic: panic: Intl.Collator's compare isn't built yet\n"
     },
+    "e0d7ea000bb002aaa349f2a833e79f4b2a725f2a006d8c892ca88bbc40369ce7": {
+      "path": "internal/oracle/testdata/intl_collator_compare_value/p01_tsc_shape.a",
+      "ruling_task": "#zjndrx5",
+      "lifting_task": "#s82g5nx",
+      "stderr": "adamic: panic: Intl.Collator's compare isn't built yet\n"
+    },
+    "17ba03b974e625b0e971ceedd1a4e1a642e216b3b76ed9636b3012f9d3f70864": {
+      "path": "internal/oracle/testdata/intl_collator_compare_value/p01_tsc_shape.ts",
+      "ruling_task": "#zjndrx5",
+      "lifting_task": "#s82g5nx",
+      "stderr": "adamic: panic: Intl.Collator's compare isn't built yet\n"
+    },
     "50d8e44d7dc0e61c7b90e69e26f9ed4cf052f8af0acbda1149ffa2bf635d3937": {
       "path": "internal/oracle/testdata/intl_collator/locale_en.a",
       "ruling_task": "#zjndrx5",
