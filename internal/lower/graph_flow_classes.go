@@ -219,14 +219,23 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 		return graphFlowSources{results: program.CallTargets(expression.(ir.Call))}, true
 	}},
 	reflect.TypeFor[ir.CallClosure](): {class: graphFlowForwards, why: "its targets' results (ir.go:900); a function value whose targets are Unknown is the documented leak-only frontier, as at main", sources: func(expression ir.Expression, program *ir.Program) (graphFlowSources, bool) {
-		return graphFlowSources{results: program.ClosureTargets(expression.(ir.CallClosure)).Functions}, true
+		targets := program.ClosureTargets(expression.(ir.CallClosure))
+		// Measurement for #41vb71c, never to land as is: a function value whose targets are Unknown stops.
+		if targets.Unknown && !graphFlowScalar(expression.Type()) {
+			return graphFlowSources{}, false
+		}
+		return graphFlowSources{results: targets.Functions}, true
 	}},
 	reflect.TypeFor[ir.BoundMethod](): {class: graphFlowForwards, why: "the closure its Factory function makes and returns (native emit_expressions.go:976)", sources: func(expression ir.Expression, _ *ir.Program) (graphFlowSources, bool) {
 		return graphFlowSources{results: []int{expression.(ir.BoundMethod).Factory}}, true
 	}},
 	reflect.TypeFor[ir.ArrayReduce](): {class: graphFlowForwards, why: "Initial or what the callback last returned (ir.go:855); a callback whose targets are Unknown is the leak-only frontier CallClosure's is", sources: func(expression ir.Expression, program *ir.Program) (graphFlowSources, bool) {
 		reduce := expression.(ir.ArrayReduce)
-		return graphFlowSources{operands: []ir.Expression{reduce.Initial}, results: program.ClosureTargets(reduce).Functions}, true
+		targets := program.ClosureTargets(reduce)
+		if targets.Unknown && !graphFlowScalar(expression.Type()) {
+			return graphFlowSources{}, false
+		}
+		return graphFlowSources{operands: []ir.Expression{reduce.Initial}, results: targets.Functions}, true
 	}},
 	reflect.TypeFor[ir.GeneratorNext](): {class: graphFlowForwards, why: "the value Function's body yields (generator.go:13)", sources: func(expression ir.Expression, _ *ir.Program) (graphFlowSources, bool) {
 		return graphFlowSources{yields: []int{expression.(ir.GeneratorNext).Function}}, true
