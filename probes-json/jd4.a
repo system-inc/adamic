@@ -1,0 +1,9 @@
+// JD4: JD3's control, the same cycle through literals.
+interface Tree {
+	name: string;
+	kids: Tree[];
+}
+const b: Tree = { name: 'b' + '', kids: [] };
+const a: Tree = { name: 'a' + '', kids: [b] };
+b.kids.push(a);
+console.log(`${a.name} ${b.name} ${b.kids.length}`);
