@@ -166,7 +166,7 @@ func (l *lowering) predicateOverloadReturn(implementation, statement *ast.Node, 
 		}
 		return l.predicateOverloadCallTests(implementation, condition, callbacks, local)
 	case ast.IsIdentifier(condition):
-		return l.predicateOverloadResultTested(implementation, branch, condition, callbacks, local)
+		return false
 	}
 	return false
 }
