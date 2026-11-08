@@ -21,6 +21,8 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// globalObjectValueRefusal stops the global object as a value at its consumer's visit, so its words
 		// win over the record view's, node:globals.global's and namespaceRefusal's for those uses.
 		"60 globalObjectValueRefusal",
+		// The absent member stops before generic writes, descriptors, keys or host-slot lowering.
+		"70 hostBindingAbsentMemberRefusal",
 		"100 unionSlotWriteRefusal",
 		"200 knownLoweringGap",
 		"300 functionCallRefusal",
