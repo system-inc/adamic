@@ -19,16 +19,16 @@ All operands stay at their original evaluation points. No initializer assertion,
 cast, default, optional chain, declaration change or source printer is introduced.
 Existing casts in the inventoried expressions remain unchanged.
 
-| Diagnostic site | Read | Invariant from compiler code |
-| --- | --- | --- |
-| 17946:29 | `elementTypes[unionIndex]!` | `findIndex` returns a nonnegative position only after its predicate reads that populated element's flags and identifies a union/never variadic constituent. The successful `checkCrossProductUnion` branch only reduces sizes; it neither writes the list nor invokes its error/tracing branch. The selected populated element remains there. |
-| 19044:25 | `types[unionIndex]!` | The nonnegative `findIndex` result identifies the interpolation Type whose flags the predicate just read. Successful cross-product validation does not mutate the list. Required presence is at this selected read, not an assertion over all template types. |
-| 20595:32 | `targets[i]!()` | The Deferred mapper's three producers create one callback per source, in the same order. The bounded sources loop selects the corresponding fresh callback. The Array mapper's separate, already asserted `targets[i]` is occurrence 1 and stays untouched; this edit is occurrence 2. Full producer audit below. |
-| 22498:29, 22498:32 | `...stack[0]!` | The private incompatible stack contains diagnostic tuples pushed by the relation-error reporter. The `stack.length === 1` branch selects its sole populated tuple. Resetting the captured stack variable does not change the saved local array. One read accounts for both spread/iterator diagnostics. |
-| 43517:20 | `getTypeArguments(type as GenericType)[0]!` | The branch tests reference-target identity with the validated arity-1 global Promise. Compiler-built immediate/deferred/cyclic references have a populated argument per declared parameter. Missing or malformed globals cannot introduce an emptyGenericType reference through the audited constructors. Full arity and constructor audit below. |
-| 46114:128 | `yieldType!` at `resolveIterationType` | The first fast branch recognizes only one of eight validated arity-3 globals across its two fixed resolvers. Its first destructured argument is populated. The fallback occurrence of yieldType is unchanged. |
-| 46114:208 | `returnType!` at `resolveIterationType` | The same validated arity-3 target identity guarantees the second argument. No assertion is added to nextType or to the later builtin returnType, which already has its own defined producer. |
-| 46128:128 | `yieldType!` at `resolveIterationType` | The second fast branch recognizes only the arity-1 builtin targets in the two fixed resolver lists, so its first argument is populated. The fallback yieldType read stays unchanged. |
+| Diagnostic site    | Read                                        | Invariant from compiler code                                                                                                                                                                                                                                                                                                                      |
+| ------------------ | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 17946:29           | `elementTypes[unionIndex]!`                 | `findIndex` returns a nonnegative position only after its predicate reads that populated element's flags and identifies a union/never variadic constituent. The successful `checkCrossProductUnion` branch only reduces sizes; it neither writes the list nor invokes its error/tracing branch. The selected populated element remains there.     |
+| 19044:25           | `types[unionIndex]!`                        | The nonnegative `findIndex` result identifies the interpolation Type whose flags the predicate just read. Successful cross-product validation does not mutate the list. Required presence is at this selected read, not an assertion over all template types.                                                                                     |
+| 20595:32           | `targets[i]!()`                             | The Deferred mapper's three producers create one callback per source, in the same order. The bounded sources loop selects the corresponding fresh callback. The Array mapper's separate, already asserted `targets[i]` is occurrence 1 and stays untouched; this edit is occurrence 2. Full producer audit below.                                 |
+| 22498:29, 22498:32 | `...stack[0]!`                              | The private incompatible stack contains diagnostic tuples pushed by the relation-error reporter. The `stack.length === 1` branch selects its sole populated tuple. Resetting the captured stack variable does not change the saved local array. One read accounts for both spread/iterator diagnostics.                                           |
+| 43517:20           | `getTypeArguments(type as GenericType)[0]!` | The branch tests reference-target identity with the validated arity-1 global Promise. Compiler-built immediate/deferred/cyclic references have a populated argument per declared parameter. Missing or malformed globals cannot introduce an emptyGenericType reference through the audited constructors. Full arity and constructor audit below. |
+| 46114:128          | `yieldType!` at `resolveIterationType`      | The first fast branch recognizes only one of eight validated arity-3 globals across its two fixed resolvers. Its first destructured argument is populated. The fallback occurrence of yieldType is unchanged.                                                                                                                                     |
+| 46114:208          | `returnType!` at `resolveIterationType`     | The same validated arity-3 target identity guarantees the second argument. No assertion is added to nextType or to the later builtin returnType, which already has its own defined producer.                                                                                                                                                      |
+| 46128:128          | `yieldType!` at `resolveIterationType`      | The second fast branch recognizes only the arity-1 builtin targets in the two fixed resolver lists, so its first argument is populated. The fallback yieldType read stays unchanged.                                                                                                                                                              |
 
 ## All Deferred mapper producers
 
@@ -37,11 +37,11 @@ A stock-checker symbol inventory finds exactly four references to the private
 or indirect escape. The adapter verifies that inventory, the exact call text,
 and the full function text of the producer and each caller before writing.
 
-| Caller | Sources | Targets and lifetime obligation |
-| --- | --- | --- |
+| Caller                               | Sources                                          | Targets and lifetime obligation                                                                                                                                                                                                                                    |
+| ------------------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `getInferredTypeParameterConstraint` | `typeParameters` of the enclosing type reference | `typeParameters.map((_, index) => () => getEffectiveTypeArgumentAtIndex(..., index))` supplies one fresh closure for each same-position source. The mapper is immediately consumed by constraint instantiation; no list write occurs between construction and use. |
-| `makeFixingMapperForContext` | `map(context.inferences, i => i.typeParameter)` | A second map over the same unchanged inference list produces fresh closures. Callback bodies may later fix an inference but do not mutate either of these newly allocated mapper arrays. |
-| `makeNonFixingMapperForContext` | `map(context.inferences, i => i.typeParameter)` | A second map over the same unchanged list supplies the matching fresh callback array. Neither map callback changes the inference list during construction. |
+| `makeFixingMapperForContext`         | `map(context.inferences, i => i.typeParameter)`  | A second map over the same unchanged inference list produces fresh closures. Callback bodies may later fix an inference but do not mutate either of these newly allocated mapper arrays.                                                                           |
+| `makeNonFixingMapperForContext`      | `map(context.inferences, i => i.typeParameter)`  | A second map over the same unchanged list supplies the matching fresh callback array. Neither map callback changes the inference list during construction.                                                                                                         |
 
 The Deferred object is constructed only by this private factory. Its targets
 are these fresh map results, not a caller-owned callback array subsequently
@@ -56,13 +56,13 @@ is no callback alias. The calls use only `asyncIterationTypesResolver` and
 `syncIterationTypesResolver`; both complete object declarations are pinned.
 Their resolve callbacks cannot select arbitrary global getters.
 
-| Getter group | Names | Validated arity |
-| --- | --- | ---: |
-| Promise getter | Promise | 1 |
-| Sync first fast branch | Iterable, IteratorObject, IterableIterator, Generator | 3 each |
-| Async first fast branch | AsyncIterable, AsyncIteratorObject, AsyncIterableIterator, AsyncGenerator | 3 each |
-| Sync builtin list | ArrayIterator, MapIterator, SetIterator, StringIterator | 1 each |
-| Async builtin list | ReadableStreamAsyncIterator | 1 |
+| Getter group            | Names                                                                     | Validated arity |
+| ----------------------- | ------------------------------------------------------------------------- | --------------: |
+| Promise getter          | Promise                                                                   |               1 |
+| Sync first fast branch  | Iterable, IteratorObject, IterableIterator, Generator                     |          3 each |
+| Async first fast branch | AsyncIterable, AsyncIteratorObject, AsyncIterableIterator, AsyncGenerator |          3 each |
+| Sync builtin list       | ArrayIterator, MapIterator, SetIterator, StringIterator                   |          1 each |
+| Async builtin list      | ReadableStreamAsyncIterator                                               |               1 |
 
 Each of the nine individual Promise/first-branch getters passes the literal
 arity to `getGlobalType`. Each builtin list calls `getGlobalBuiltinTypes` with
@@ -83,22 +83,22 @@ createDeferredTypeReference calls, all eight tryCreateTypeReference calls,
 and the two fast-path calls. Definition counts are 16, 4, 9 and 3 respectively;
 no additional alias is accepted. Exact calls and owners are in sites.json.
 
-| createTypeReference caller | Why it cannot supply a short argument list to the validated fast targets |
-| --- | --- |
-| `createTypeChecker`'s `getAnyAsyncIterableType` arrow | Rejects emptyGenericType, then supplies three anyType arguments. |
-| `getTypeOfPrototypeProperty` | Maps every declared type parameter to a populated anyType. |
-| `getTypeWithThisArgument` | Checks argument/parameter lengths before appending the populated this argument; it cannot remove an initial required argument. |
-| `tryCreateTypeReference` | All eight callers are the decorator context/target/result wrappers. They pass literal arrays of one or two defined types. `some(typeArguments)` is therefore true, and a missing-global emptyGenericType returns unknownType before reference construction. |
-| `getTypeFromClassOrInterfaceReference` | Invalid TypeScript argument counts return errorType. JavaScript recovery calls fillMissingTypeArguments with its JS mode, which fills the declared parameter list. Deferred references use the same effective-argument filler. |
-| `createTypeFromGenericGlobalType` | Rejects emptyGenericType before construction. Its fixed global wrappers supply arity-1 descriptor/array arguments or arity-3 iterable/generator arguments; the readonly-array initialization supplies one argument. |
-| `createNormalizedTypeReference` | Array/tuple syntax rejects emptyGenericType before this helper; tuple normalization constructs populated aligned elements. Instantiation's remaining caller maps an existing reference's complete arguments. |
-| `createNormalizedTupleType` (two calls) | Tuple targets and their aligned element lists are compiler-built tuple state, not a validated nominal global target with missing parameters. |
-| `getNormalizedType` | Reuses the original reference's resolved arguments. |
-| `createMarkerType` | Instantiates every declared type parameter into a populated marker argument. |
-| `getWidenedTypeWithContext` | sameMap widens the existing complete argument list without dropping positions. |
-| `instantiateAliasOrInterfaceWithDefaults` | Checks the supplied count against the declared parameters and fills the remaining declared parameters before creating the interface reference. |
-| `createPromiseType` | Rejects emptyGenericType, then constructs exactly `[promisedType]`, with an unknownType fallback for awaited resolution. |
-| `createPromiseLikeType` | Likewise rejects the fallback and supplies exactly one populated argument. |
+| createTypeReference caller                            | Why it cannot supply a short argument list to the validated fast targets                                                                                                                                                                                    |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `createTypeChecker`'s `getAnyAsyncIterableType` arrow | Rejects emptyGenericType, then supplies three anyType arguments.                                                                                                                                                                                            |
+| `getTypeOfPrototypeProperty`                          | Maps every declared type parameter to a populated anyType.                                                                                                                                                                                                  |
+| `getTypeWithThisArgument`                             | Checks argument/parameter lengths before appending the populated this argument; it cannot remove an initial required argument.                                                                                                                              |
+| `tryCreateTypeReference`                              | All eight callers are the decorator context/target/result wrappers. They pass literal arrays of one or two defined types. `some(typeArguments)` is therefore true, and a missing-global emptyGenericType returns unknownType before reference construction. |
+| `getTypeFromClassOrInterfaceReference`                | Invalid TypeScript argument counts return errorType. JavaScript recovery calls fillMissingTypeArguments with its JS mode, which fills the declared parameter list. Deferred references use the same effective-argument filler.                              |
+| `createTypeFromGenericGlobalType`                     | Rejects emptyGenericType before construction. Its fixed global wrappers supply arity-1 descriptor/array arguments or arity-3 iterable/generator arguments; the readonly-array initialization supplies one argument.                                         |
+| `createNormalizedTypeReference`                       | Array/tuple syntax rejects emptyGenericType before this helper; tuple normalization constructs populated aligned elements. Instantiation's remaining caller maps an existing reference's complete arguments.                                                |
+| `createNormalizedTupleType` (two calls)               | Tuple targets and their aligned element lists are compiler-built tuple state, not a validated nominal global target with missing parameters.                                                                                                                |
+| `getNormalizedType`                                   | Reuses the original reference's resolved arguments.                                                                                                                                                                                                         |
+| `createMarkerType`                                    | Instantiates every declared type parameter into a populated marker argument.                                                                                                                                                                                |
+| `getWidenedTypeWithContext`                           | sameMap widens the existing complete argument list without dropping positions.                                                                                                                                                                              |
+| `instantiateAliasOrInterfaceWithDefaults`             | Checks the supplied count against the declared parameters and fills the remaining declared parameters before creating the interface reference.                                                                                                              |
+| `createPromiseType`                                   | Rejects emptyGenericType, then constructs exactly `[promisedType]`, with an unknownType fallback for awaited resolution.                                                                                                                                    |
+| `createPromiseLikeType`                               | Likewise rejects the fallback and supplies exactly one populated argument.                                                                                                                                                                                  |
 
 The eight tryCreateTypeReference callers are createClassDecoratorContextType,
 createClassMethodDecoratorContextType, createClassGetterDecoratorContextType,
@@ -155,11 +155,11 @@ observations agree and counts one observation, rather than doubling them.
 Primary-file locations determine checker.ts attribution; elaboration lines
 are not counted as diagnostics.
 
-| Tree | Whole program | checker.ts own file |
-| --- | ---: | ---: |
-| 95a control | 131 | 17 |
-| 95a + 95b | 122 | 8 |
-| Undo stack assertion | 124 | 10 |
+| Tree                 | Whole program | checker.ts own file |
+| -------------------- | ------------: | ------------------: |
+| 95a control          |           131 |                  17 |
+| 95a + 95b            |           122 |                   8 |
+| Undo stack assertion |           124 |                  10 |
 
 proofs/census.json contains all nine exact removed diagnostics, zero added
 findings, and both exact findings restored by the one-edit mutant. The isolated
@@ -227,10 +227,10 @@ proofs/final-source.json and proofs/final-idempotence.json.
 
 Stock transpileModule output is byte-identical before/after in both modes:
 
-| Comments | Bytes | SHA-256, before and after |
-| --- | ---: | --- |
+| Comments |     Bytes | SHA-256, before and after                                          |
+| -------- | --------: | ------------------------------------------------------------------ |
 | Retained | 2,892,419 | `786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e` |
-| Removed | 2,354,716 | `3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac` |
+| Removed  | 2,354,716 | `3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac` |
 
 CRLF counts are **54,434 before and after**. Only checker.ts changes; all other
 710 source files retain their bytes. Full-file hashes in proof artifacts are
@@ -240,12 +240,12 @@ head requiring separate before/after behavioral witnesses.
 The standalone oracle used all default runners, no filter, eight workers,
 `--light=false`, and lint disabled. It completed within 15 minutes:
 
-| Phase | Exit | Seconds |
-| --- | ---: | ---: |
-| Install | 0 | 2.833 |
-| Build | 0 | 25.580 |
-| Tests | 1 | 358.988 |
-| Complete oracle | 1 | 387.489 |
+| Phase           | Exit | Seconds |
+| --------------- | ---: | ------: |
+| Install         |    0 |   2.833 |
+| Build           |    0 |  25.580 |
+| Tests           |    1 | 358.988 |
+| Complete oracle |    1 | 387.489 |
 
 **106,366 passing, 1 failing, 0 pending**, matching main. Raw oracle status is
 **fail**, solely for the standing
