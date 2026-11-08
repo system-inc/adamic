@@ -8,15 +8,17 @@ import (
 	"slices"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 var nodeWASICwdBaseline = []string{"args_get", "args_sizes_get", "clock_time_get", "fd_close", "fd_fdstat_get", "fd_prestat_dir_name", "fd_prestat_get", "fd_seek", "fd_write", "proc_exit"}
 
+// nodeWASICwdEnabled skips a test not opted in by ADAMIC_TEST_WASI=1, and fails one opted in without WASI_SYSROOT
+// rather than skipping it (#p3rd3vn).
 func nodeWASICwdEnabled(t *testing.T) {
 	t.Helper()
-	if os.Getenv("ADAMIC_TEST_WASI") != "1" || os.Getenv("WASI_SYSROOT") == "" {
-		t.Skip("set ADAMIC_TEST_WASI=1 and WASI_SYSROOT")
-	}
+	wasitest.Require(t, "ADAMIC_TEST_WASI")
 }
 
 func nodeWASICwdRuntime(t *testing.T, host bool) {
