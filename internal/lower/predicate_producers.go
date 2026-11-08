@@ -109,6 +109,35 @@ func (l *lowering) predicateProducerReturns(producer *ast.Node) []*ast.Node {
 			return nil
 		}
 	}
+	return producerReturnedFunctions(producer)
+}
+
+// producerReturnedFunctions is every function producer returns when each of its own returns, a nested
+// function's aside, is an arrow or a function expression written in place, through parentheses only, and
+// there's at least one: an arrow's expression body is its one return. Anything else, a return of a name
+// that holds the function or of any other value, is nil, since the function could then be held, stored or
+// passed before it's returned (Adamic's ruling on #fx9waqy, Nov 7).
+func producerReturnedFunctions(producer *ast.Node) []*ast.Node {
+	body := producer.Body()
+	if body == nil {
+		return nil
+	}
+	written := func(value *ast.Node) *ast.Node {
+		if value == nil {
+			return nil
+		}
+		value = ast.SkipParentheses(value)
+		if value.Kind != ast.KindArrowFunction && value.Kind != ast.KindFunctionExpression {
+			return nil
+		}
+		return value
+	}
+	if body.Kind != ast.KindBlock {
+		if value := written(body); value != nil {
+			return []*ast.Node{value}
+		}
+		return nil
+	}
 	returned := []*ast.Node{}
 	whole := true
 	var visit ast.Visitor
@@ -120,11 +149,8 @@ func (l *lowering) predicateProducerReturns(producer *ast.Node) []*ast.Node {
 			return false
 		}
 		if n.Kind == ast.KindReturnStatement {
-			value := n.AsReturnStatement().Expression
-			if value != nil {
-				value = ast.SkipParentheses(value)
-			}
-			if value == nil || (value.Kind != ast.KindArrowFunction && value.Kind != ast.KindFunctionExpression) {
+			value := written(n.AsReturnStatement().Expression)
+			if value == nil {
 				whole = false
 				return true
 			}
@@ -133,11 +159,52 @@ func (l *lowering) predicateProducerReturns(producer *ast.Node) []*ast.Node {
 		}
 		return n.ForEachChild(visit)
 	}
-	producer.Body().ForEachChild(visit)
+	body.ForEachChild(visit)
 	if !whole || len(returned) == 0 {
 		return nil
 	}
 	return returned
+}
+
+// predicateReturnedUnderWrittenClaim is whether function, an arrow or a function expression, is a value
+// its producer returns written in place, through parentheses only, from a producer whose every return is
+// one (producerReturnedFunctions) and whose written result is a function type with a claim
+// checkedFunctionTypeClaim admits, as orPredicate2's `(p: P) => p is R1 | R2`. The function then leaves
+// only through that written type, so every road that narrows by its claim is a call through a checked
+// signature, which checks the claim in the directions its caller reads (rulings.md:139 and :140), or a
+// trusted callback that takes it only from a proven producer (predicateProducerProven). Rule 1 reads this
+// (brandedResultChecked), and so does the direction walk, which then wants no further uses of an inferred
+// predicate's function (checkedPredicateInferredUse). Adamic's ruling on #fx9waqy, Nov 7, with Compiler's
+// two conditions and Language's two.
+//
+// The written result read is the producer's own, the declaration whose return holds the function, never
+// an overload's: an implementation written `(p: N) => boolean` under an overload claiming `p is A` keeps
+// today's NotYet. A function expression counts only without a name, since a name is a binding its own body
+// can store it through (`function self(p) { cache.push(self); ... }`). This proves nothing about the
+// function's body: R-T80's erasure never reads it, so a call that can reach only such a function keeps its
+// check.
+func (l *lowering) predicateReturnedUnderWrittenClaim(function *ast.Node) bool {
+	if function.Kind != ast.KindArrowFunction && function.Kind != ast.KindFunctionExpression || function.Name() != nil {
+		return false
+	}
+	value := function
+	for value.Parent != nil && value.Parent.Kind == ast.KindParenthesizedExpression {
+		value = value.Parent
+	}
+	producer := brandedChainReturner(value)
+	if producer == nil || producer.Type() == nil {
+		return false
+	}
+	written := ast.SkipTypeParentheses(producer.Type())
+	if written.Kind != ast.KindFunctionType || !l.checkedFunctionTypeClaim(written.Type()) {
+		return false
+	}
+	for _, returned := range producerReturnedFunctions(producer) {
+		if returned == function {
+			return true
+		}
+	}
+	return false
 }
 
 // predicateProducerContract is the claim a producer's parameter is written with, `f1: (p1: P) => p1 is

@@ -574,25 +574,11 @@ func brandedChainReturner(value *ast.Node) *ast.Node {
 }
 
 // brandedResultChecked is whether function's result claim is checked at every call that narrows by it:
-// a checked closure checks its own claim at each return (checkedPredicateClosure), and a function that is
-// itself the value another function returns, written with a function type whose claim is checked, as
-// orPredicate2's `(p: P) => p is R1 | R2`, is checked at every call through that type
-// (checkedFunctionTypeClaim). Its other road out, a trusted parameter that never checks, takes it only as
-// a proven producer (predicateProducerProven).
+// a checked closure checks its own claim at each return (checkedPredicateClosure), and a function its
+// producer returns under a written checked claim, as orPredicate2's `(p: P) => p is R1 | R2`, leaves only
+// through that type (predicateReturnedUnderWrittenClaim).
 func (l *lowering) brandedResultChecked(function *ast.Node) bool {
-	if l.checkedPredicateClosure(function) {
-		return true
-	}
-	value := function
-	for value.Parent != nil && value.Parent.Kind == ast.KindParenthesizedExpression {
-		value = value.Parent
-	}
-	producer := brandedChainReturner(value)
-	if producer == nil || producer.Type() == nil {
-		return false
-	}
-	written := ast.SkipTypeParentheses(producer.Type())
-	return written.Kind == ast.KindFunctionType && l.checkedFunctionTypeClaim(written.Type())
+	return l.checkedPredicateClosure(function) || l.predicateReturnedUnderWrittenClaim(function)
 }
 
 // brandedIntersection is whether read, a read's concreted type, is target intersected only with

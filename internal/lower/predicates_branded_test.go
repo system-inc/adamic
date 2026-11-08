@@ -798,9 +798,8 @@ const element = orPredicate2(isIdentifier, isTypeElement);
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 console.log(element(i) ? "element" : "other");
 `, "which isn't its supertype"},
-		// Over unbranded claims the body stops first now that f1 and f2 keep their checks inside the producer
-		// (Language's condition on #fx9waqy): the direction walk can't follow an inferred arrow's uses.
-		// Measured on Home at 37ef68b7.
+		// Over unbranded claims the body lowers, its arrow returned under orPredicate2's written claim
+		// (#fx9waqy), and the caller stops on R-T80's union check: Node's kind is a number, an open tag domain.
 		{"orPredicate2 over unbranded claims", `interface Literal extends Node { readonly kind: 9; readonly text: string; }
 function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
 function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
@@ -808,15 +807,7 @@ function isLiteral(n: Node): n is Literal { return kindOf(n) === 9; }
 const named = orPredicate2(isIdentifier, isLiteral);
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 console.log(named(i) ? "i named" : "i other");
-`, "whose uses the walk doesn't follow"},
-		// The branded instance made and never called: rule 1 admits the body's branded calls (#fx9waqy), and
-		// it stops next at the direction walk, which can't follow an inferred arrow's uses. Measured on Home
-		// at 37ef68b7.
-		{"orPredicate2's branded body alone", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
-function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
-const element = orPredicate2(isIdentifier, isTypeElement);
-console.log(typeof element);
-`, "whose uses the walk doesn't follow"},
+`, "checked predicate membership over an open tag domain"},
 		{"generic arrow", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 const pickArrow = <T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string => test(x) ? "yes" : "no";
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };

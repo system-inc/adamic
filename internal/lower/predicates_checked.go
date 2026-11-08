@@ -193,6 +193,14 @@ func (l *lowering) checkedPredicateInferredUse(call, function *ast.Node, claim *
 	if part := l.checkedPredicateInferredPart(returned, l.symbol(function.Parameters()[index].Name())); part != nil {
 		return name + ", whose returned expression holds " + describe(part) + " at " + l.program.Where(part)
 	}
+	// A function its producer returns written in place under a written checked claim leaves only through
+	// that type, where every call checks the claim in the directions its caller reads, or as a proven
+	// producer's result, so no use reads its false answer unchecked and none is wanted (Adamic's ruling on
+	// #fx9waqy, Nov 7; predicate_producers.go). Ending the walk here marks nothing provable: R-T80's erasure
+	// never reads it, so a call that can reach only this function keeps its check.
+	if l.predicateReturnedUnderWrittenClaim(function) {
+		return ""
+	}
 	// Every use of a function declaration spells its name, but an export's: a namespace object can
 	// reach it by a computed key.
 	if function.Kind != ast.KindFunctionDeclaration || function.Name() == nil {

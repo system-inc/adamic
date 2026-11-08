@@ -18,10 +18,13 @@ function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2
 function findAncestor<T extends Node>(node: Node | undefined, callback: (element: Node) => element is T): T | undefined;
 function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | "quit"): Node | undefined;
 function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | "quit"): Node | undefined {
-	if (node === undefined) { return undefined; }
-	const result = callback(node);
-	if (result === "quit") { return undefined; }
-	return result ? node : undefined;
+	while (node) {
+		const result = callback(node);
+		if (result === "quit") { return undefined; }
+		else if (result) { return node; }
+		node = undefined;
+	}
+	return undefined;
 }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 const l: Literal = { kind: 9, pos: 4, text: "t" };
@@ -41,16 +44,11 @@ const eitherIdentifier = `function eitherId(n: Node): n is Identifier | TypeElem
 // use walk dropped from brandedChainCall, and both stops lower.
 func TestBrandedCallRuleOneChain(t *testing.T) {
 	t.Parallel()
-	// The branded instance made and never called: rule 1 admits the body's own branded calls, so its first
-	// stop is the next wall, the direction walk, which can't follow an inferred arrow's uses to show its
-	// false answer, f1's and f2's, is never read unchecked (measured on Home at 37ef68b7).
-	_, err := lowerTypeScriptAssertionSource(t, brandedRulesPrelude+`const element = orPredicate2(isIdentifier, isTypeElement);
+	// The branded instance made and never called: rule 1 admits the body's own branded calls, and the
+	// direction walk wants no uses of the arrow orPredicate2 returns under its written claim.
+	lowersAndAgreesWithNodeAs(t, brandedRulesPrelude+`const element = orPredicate2(isIdentifier, isTypeElement);
 console.log(typeof element);
-`)
-	var walled *NotYet
-	if !errors.As(err, &walled) || !strings.Contains(err.Error(), "whose uses the walk doesn't follow") {
-		t.Fatalf("want the direction walk's stop past rule 1, got %v", err)
-	}
+`, ".ts")
 	for _, probe := range []struct{ name, source string }{
 		{"a field read after the chain", `function orRead<P extends Node, R1 extends P>(f1: (p1: P) => p1 is R1): (p: P) => p is R1 { return (p: P): p is R1 => f1(p) || p.pos !== 0; }
 const element = orRead(isTypeElement);
@@ -146,34 +144,111 @@ show({ kind: K.Alias, pos: 0, y: 5 });
 // branded lie stops at its read through S's view (Language's per-instance pin).
 func TestBrandedCallProducer(t *testing.T) {
 	t.Parallel()
-	// The scan admits a proven producer's call where findAncestor trusts its callback, a nested one
-	// included; on main it's refused as an unproven predicate argument. Lowering then stops at the
-	// direction walk's wall inside orPredicate2's arrow (measured on Home at 37ef68b7).
-	wantStop(t, brandedRulesPrelude+`const found = findAncestor(i, orPredicate2(isIdentifier, isLiteral));
+	// Measured on Home at 780368c5: the flow proof trusts no call, so `p => f1(p) || f2(p)` proves nothing
+	// and the scan refuses the producer. Waiting on Adamic's ruling for that wall (#fx9waqy).
+	_, refusedProducer := lowerTypeScriptAssertionSource(t, brandedRulesPrelude+`const found = findAncestor(i, orPredicate2(isIdentifier, isLiteral));
+console.log(found === undefined ? "none" : String(found.pos));
+`)
+	t.Logf("the producer today: %v", refusedProducer)
+	lowersAndAgreesWithNodeAs(t, brandedRulesPrelude+`const found = findAncestor(i, orPredicate2(isIdentifier, isLiteral));
 console.log(found === undefined ? "none" : String(found.pos));
 const nested = findAncestor(l, orPredicate2(orPredicate2(isIdentifier, isLiteral), isKeyword));
 console.log(nested === undefined ? "none" : String(nested.pos));
-`, "whose uses the walk doesn't follow")
-	_, err := lowerTypeScriptAssertionSource(t, brandedRulesPrelude+`function isLiteralLie(n: Node): n is Literal { return n.pos > 0; }
+const element = findAncestor(i, orPredicate2(isIdentifier, isTypeElement));
+console.log(element === undefined ? "none" : String(element.pos));
+`, ".ts")
+	// A lie carried in a value proves nothing, so it's refused where it's handed, an unbranded arm and a
+	// branded one alike. Mutant: predicateProducerProven without predicateArgumentProof's recursion, and the
+	// branded one lowers.
+	for _, liar := range []string{
+		`const liar: (n: Node) => n is Literal = pick ? isLiteral : isLiteralLie;
+const found = findAncestor(l, orPredicate2(liar, isKeyword));`,
+		`const liar: (n: Node) => n is TypeElement = pick ? isTypeElement : isTypeElementLie;
+const found = findAncestor(i, orPredicate2(isIdentifier, liar));`,
+	} {
+		_, err := lowerTypeScriptAssertionSource(t, brandedRulesPrelude+`function isLiteralLie(n: Node): n is Literal { return n.pos > 0; }
 const pick = kindOf(i) > 1000;
-const liar: (n: Node) => n is Literal = pick ? isLiteral : isLiteralLie;
-const found = findAncestor(l, orPredicate2(liar, isKeyword));
+`+liar+`
 console.log(found === undefined ? "none" : String(found.pos));
 `)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "an unproven predicate argument for parameter") {
-		t.Fatalf("want the lie refused where it's handed, got %v", err)
+		var refused *Refused
+		if !errors.As(err, &refused) || !strings.Contains(err.Error(), "an unproven predicate argument for parameter") {
+			t.Fatalf("want the lie refused where it's handed, got %v", err)
+		}
 	}
-	// Language's condition: the lie handed to orPredicate2 itself passes the scan, since f1's claim is
-	// checked inside the producer, and reaches lowering. Mutant: predicateProducerParameter answering no,
-	// and the scan refuses it instead.
-	wantStop(t, brandedRulesPrelude+`function isLiteralLie(n: Node): n is Literal { return n.pos > 0; }
+	// Language's condition: the lie handed to orPredicate2 itself, outside any trusted road, passes the scan,
+	// since f1's claim is checked inside the producer, and stops at that check, which nothing erases
+	// (Adamic's ruling, point 3). Mutants: predicateProducerParameter answering no, and the scan refuses it;
+	// the call marked proven, and the Keyword is read as a Literal.
+	brandedStops(t, brandedRulesPrelude+`function isLiteralLie(n: Node): n is Literal { return n.pos > 0; }
 const pick = kindOf(i) > 1000;
 const liar: (n: Node) => n is Literal = pick ? isLiteral : isLiteralLie;
 const either = orPredicate2(liar, isKeyword);
 function show(x: Node): void { either(x) && console.log(String(x.pos)); }
 show(i);
-`, "whose uses the walk doesn't follow")
+`, "adamic: panic: ")
+	// One program holds an unbranded and a branded instance, each judged at its own door: the branded lie
+	// stops at its read through S's view (Language's per-instance pin).
+	brandedStops(t, brandedRulesPrelude+`const named = orPredicate2(isIdentifier, isLiteral);
+const element = orPredicate2(isTypeElementLie, isTypeElement);
+function show(n: Node): void { element(n) && console.log(String(n.name)); }
+const w = { kind: 9, pos: 4, text: "t", name: 5 };
+show(w);
+`, "adamic: panic: ")
+}
+
+// The inferred arrow's walk (Adamic's ruling on #fx9waqy, Nov 7): the direction walk wants no uses of an
+// arrow its producer returns written in place under its own written checked claim. A caller reading a
+// lying instance's false side over a closed tag domain stops at the caller's false check. Every other
+// shape keeps today's NotYet: an arrow held in a module array before it's returned (Compiler's pin), an
+// unannotated helper whose result goes to an untyped const, an implementation written as a plain boolean
+// function under an overload that claims, and a named function expression that stores itself (Language's
+// pins). Mutants: the written-type condition dropped (the untyped const lowers), the in-place condition
+// dropped (the array lowers), overload 1's result read (the overload lowers), the name allowed (self
+// lowers).
+func TestInferredArrowUnderWrittenClaim(t *testing.T) {
+	t.Parallel()
+	brandedStops(t, brandedPrelude+`type TokenKind = 1 | 2 | 3;
+interface Token { readonly kind: TokenKind; readonly pos: number; }
+interface Name extends Token { readonly kind: 1; readonly text: string; }
+interface Count extends Token { readonly kind: 2; readonly value: number; }
+interface Operator extends Token { readonly kind: 3; readonly op: string; }
+type AnyToken = Name | Count | Operator;
+function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isName(t: AnyToken): t is Name { return t.kind === 1; }
+function isCountLie(t: AnyToken): t is Count { return t.pos > 100; }
+const either = orPredicate2(isName, isCountLie);
+function show(t: AnyToken): void { if (either(t)) { console.log("named"); } else { console.log(t.op); } }
+const c: Count = { kind: 2, pos: 5, value: 1 };
+show(c);
+`, "adamic: panic: ")
+	for _, probe := range []struct{ name, source string }{
+		{"held in a module array", `const held: ((p: Node) => p is Identifier | Literal)[] = [];
+export function orHeld(f1: (p: Node) => p is Identifier, f2: (p: Node) => p is Literal): (p: Node) => p is Identifier | Literal { const g = (p: Node) => f1(p) || f2(p); held.push(g); return g; }
+const g = orHeld(isIdentifier, isLiteral);
+console.log(typeof g);
+`},
+		{"an untyped const", `export function orBare(f1: (p: Node) => p is Identifier, f2: (p: Node) => p is Literal) { return (p: Node) => f1(p) || f2(p); }
+const g = orBare(isIdentifier, isLiteral);
+function show(x: Identifier | Literal | Keyword): void { if (!g(x)) { console.log(x.word); } }
+show({ kind: 100, pos: 1, word: "w" });
+`},
+		{"an overload's claim", `export function orOver(f: (p: Node) => p is Identifier): (p: Node) => p is Identifier;
+export function orOver(f: (p: Node) => p is Identifier): (p: Node) => boolean { return p => f(p); }
+const g = orOver(isIdentifier);
+console.log(typeof g);
+`},
+		{"a named function expression", `const cache: ((p: Node) => boolean)[] = [];
+export function orSelf(f1: (p: Node) => p is Identifier, f2: (p: Node) => p is Literal): (p: Node) => p is Identifier | Literal { return function self(p: Node) { cache.push(self); return f1(p) || f2(p); }; }
+const g = orSelf(isIdentifier, isLiteral);
+console.log(typeof g);
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			wantStop(t, brandedRulesPrelude+probe.source, "whose uses the walk doesn't follow")
+		})
+	}
 }
 
 // wantStop lowers a .ts program and wants a NotYet holding want.
