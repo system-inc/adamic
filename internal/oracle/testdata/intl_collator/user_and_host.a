@@ -1,7 +1,8 @@
-// A program's collator and the host's in one array, each called through the same call site (Runtime's
-// seam on #zjndrx5 head 1). The callee is found by the object at run time: the class's own compare for
-// the first, 2, and the host collator's #compare slot for the second, known by its shape, which stops in
-// the ruled words where Node prints -1. Sending the host to a field named compare would find none.
+// A program's collator and the host's in one array, typed Intl.Collator[], mapped through one call
+// site, c.compare('a10', 'a2') (Runtime's seam on #zjndrx5 head 1). The callee is found by the object at
+// run time: the class's own compare for the first, which answers 5, and the host collator's #compare
+// slot for the second, known by its shape's address, which stops in the ruled words where Node answers
+// 1 under numeric collation. Sending the host to a field named compare would find none.
 class Lengths implements Intl.Collator {
 	compare(x: string, y: string): number {
 		return x.length + y.length;
@@ -12,6 +13,9 @@ class Lengths implements Intl.Collator {
 }
 
 const collators: Intl.Collator[] = [new Lengths(), new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true })];
-for (const collator of collators) {
-	console.log(String(collator.compare('a', 'b')));
-}
+const answers = collators.map((collator) => {
+	const answer = collator.compare('a10', 'a2');
+	console.log(String(answer));
+	return answer;
+});
+console.log(String(answers.length));
