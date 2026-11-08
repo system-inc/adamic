@@ -627,7 +627,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
 	case ast.KindIdentifier:
 		if row, _ := l.hostBindingOf(node); row != nil {
-			// hostBindingRefusal admits only a typeof or a read its guard proves dead, and neither reaches here.
+			// hostBindingRefusal admits only a typeof or a read its guard proves dead, and neither reaches here;
+			// a Provided row's read is processValue's, through its model (nodeProcessPath).
 			return nil, errors.New("lower: compiler bug: " + l.program.Where(node) + ": a read of the host binding " + row.Name + " reached lowering")
 		}
 		if value, known, err := l.libraryGlobalValue(node); known {

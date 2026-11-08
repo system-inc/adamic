@@ -37,13 +37,23 @@ import (
 // write naming any row through the global object, `globalThis.<name>` or `globalThis[name]` by any name
 // for it, is refused.
 //
-// Provided rows (process, performance) are pending today, so no read routes through a host model yet;
-// their model is named in the row for when their columns clear.
+// Provided: every read routes through the row's model path to the host value nodeProcessPath already
+// lowers (hostBindingRoute), as Node's own global's reads do, typeof and member reads included. A row
+// whose model no path lowers stays not yet. The declaration is judged against the model export it
+// stands for (hostBindingModelRefusal): its type may name only members the model's registration names,
+// each typed as the model's is, none writable where the model's is read only. After the declaration
+// every read is typed by the program's own interface, so nodeHostObject judges a later view of that
+// interface as the model's host object (hostBindingViews). Of the rows today, process and performance
+// are Provided but pending, so none routes yet.
+
+// hostBindingRows is the table lowering reads. Only tests replace it, to lower a row the real table
+// doesn't hold yet; production never assigns it.
+var hostBindingRows = load.HostBindings
 
 // hostBindingNamed is the row for a name, or nil; a table that doesn't parse names nothing here, and
 // ambientRefusal reports its error at the first ambient value declaration.
 func hostBindingNamed(name string) *load.HostBinding {
-	rows, err := load.HostBindings()
+	rows, err := hostBindingRows()
 	if err != nil {
 		return nil
 	}
@@ -94,7 +104,7 @@ func (l *lowering) hostBindingRow(declaration *ast.Node) *load.HostBinding {
 // hostBindingStatement reports whether every declarator of an ambient variable statement is a host
 // binding's declaration, and if so, the stop for the first whose row doesn't lower, or nil.
 func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
-	if _, err := load.HostBindings(); err != nil {
+	if _, err := hostBindingRows(); err != nil {
 		return true, err
 	}
 	var stop error
@@ -103,11 +113,153 @@ func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
 		if row == nil {
 			return false, nil
 		}
-		if reason := hostBindingStop(*row); stop == nil && reason != "" {
+		if stop != nil {
+			continue
+		}
+		if reason := hostBindingStop(*row); reason != "" {
 			stop = l.notYet(declaration, reason)
+		} else if row.Native.Answer == load.HostBindingProvided {
+			stop = l.hostBindingModelRefusal(declaration, *row)
 		}
 	}
 	return true, stop
+}
+
+// hostBindingRoute is the path nodeProcessPath already lowers a Provided row's model as, the host
+// value every read of the row goes to, or "" for a model no path lowers yet.
+func hostBindingRoute(row load.HostBinding) string {
+	switch row.Model.Path {
+	case "node:perf_hooks":
+		return "performance"
+	case "node:process":
+		return "process"
+	}
+	return ""
+}
+
+// hostBindingRouted reports whether a row lowers as Provided, its reads routed (hostBindingRoute).
+func hostBindingRouted(row load.HostBinding) bool {
+	return hostBindingStop(row) == "" && row.Native.Answer == load.HostBindingProvided
+}
+
+// hostBindingModel is the type of a Provided row's model export: the value named as the row in the
+// ambient module of its model path, which a Node library file declares; nil when there's none.
+func (l *lowering) hostBindingModel(row load.HostBinding) *checker.Type {
+	module := l.checker.TryFindAmbientModule(row.Model.Path)
+	if module == nil {
+		return nil
+	}
+	declared := false
+	for _, declaration := range module.Declarations {
+		declared = declared || declaration.Kind == ast.KindModuleDeclaration && load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration))
+	}
+	if !declared {
+		return nil
+	}
+	for _, exported := range l.checker.GetExportsOfModule(module) {
+		if exported.Name != row.Name {
+			continue
+		}
+		if resolved := l.resolvedExport(exported); resolved != nil && resolved.Flags&ast.SymbolFlagsValue != 0 {
+			return l.checker.GetTypeOfSymbol(resolved)
+		}
+	}
+	return nil
+}
+
+// hostBindingModelRefusal judges a Provided row's declaration against its model export, since every
+// read of the name routes to the model while the checker types it by the declaration (Compiler's
+// condition on #yewmv46): the declared type may reach only members the model's registration names
+// (nodeHostViewReach), each typed so the model's is assignable to it, and none writable where the
+// model's is read only (widened). The declared type is taken without undefined: the host defines the
+// name on every target, as Node does. A model export it can't find fails closed.
+func (l *lowering) hostBindingModelRefusal(declaration *ast.Node, row load.HostBinding) error {
+	export := row.Model.Path + "." + row.Name
+	model := l.hostBindingModel(row)
+	if model == nil {
+		return l.notYet(declaration, "the host binding "+row.Name+"'s model export "+export+", which lowering can't find,")
+	}
+	view := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(declaration.Name()))
+	subject := "the host binding " + row.Name + ", declared as " + l.checker.TypeToString(view) + ","
+	if reached := l.nodeHostViewReach(model, view, 0, map[nodeHostViewPair]bool{}, false); reached != "" {
+		switch {
+		case strings.HasPrefix(reached, nodeHostViewOpaque):
+			return l.notYet(declaration, subject+" which hides its model export "+export+" behind any, unknown or an unbound type parameter,")
+		case strings.HasPrefix(reached, nodeHostViewTooDeep):
+			return l.notYet(declaration, subject+" which goes "+reached+" in its model export "+export+",")
+		}
+		return l.notYet(declaration, subject+" which reaches "+reached+" of its model export "+export+", a member no host registration names,")
+	}
+	// tsc never related the model to the declaration, so each member's type is related here, and the
+	// first that the model's doesn't fit is named.
+	for _, property := range l.checker.GetPropertiesOfType(view) {
+		member := l.checker.GetPropertyOfType(model, property.Name)
+		if member == nil {
+			return l.notYet(declaration, subject+" whose "+property.Name+" its model export "+export+" doesn't have,")
+		}
+		held, declared := l.checker.GetTypeOfSymbol(member), l.checker.GetTypeOfSymbol(property)
+		if !l.checker.IsTypeAssignableTo(held, declared) {
+			return l.notYet(declaration, subject+" whose "+property.Name+" is typed "+l.checker.TypeToString(declared)+" where its model export "+export+"'s is "+l.checker.TypeToString(held)+",")
+		}
+	}
+	if !l.checker.IsTypeAssignableTo(model, view) {
+		return l.notYet(declaration, subject+" which its model export "+export+", of type "+l.checker.TypeToString(model)+", isn't assignable to,")
+	}
+	if found := l.widened(model, view, map[[2]*checker.Type]bool{}); found != nil {
+		switch {
+		case found.readonlyField != "":
+			return l.notYet(declaration, subject+" whose field "+found.readonlyField+" is writable where its model export "+export+"'s is read only,")
+		case found.parameter:
+			return l.notYet(declaration, subject+" which hands its model export "+export+" "+l.checker.TypeToString(found.target)+" where it takes "+l.checker.TypeToString(found.source)+",")
+		}
+		return l.notYet(declaration, subject+" which can write "+l.checker.TypeToString(found.target)+" where its model export "+export+" holds "+l.checker.TypeToString(found.source)+",")
+	}
+	return nil
+}
+
+// hostBindingViews is, for each Provided row the program declares, its declared type's symbol (each
+// member's, for a union) by the type of the model export its reads route through, found once for the
+// lowering. A row whose declaration hostBindingModelRefusal stops is held too: that stop ends the
+// lowering at the declaration either way.
+func (l *lowering) hostBindingViews() map[*ast.Symbol]*checker.Type {
+	if l.hostBindingViewsKnown {
+		return l.hostBindingViewTypes
+	}
+	l.hostBindingViewsKnown = true
+	if l.program == nil {
+		return nil
+	}
+	for _, file := range l.program.Files() {
+		for _, statement := range file.Statements.Nodes {
+			if statement.Kind != ast.KindVariableStatement || !ambientDeclaration(statement) {
+				continue
+			}
+			for _, declaration := range statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
+				row := l.hostBindingRow(declaration)
+				if row == nil || !hostBindingRouted(*row) {
+					continue
+				}
+				model := l.hostBindingModel(*row)
+				if model == nil {
+					continue
+				}
+				declared := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(declaration.Name()))
+				members := []*checker.Type{declared}
+				if declared.Flags()&checker.TypeFlagsUnion != 0 {
+					members = declared.Types()
+				}
+				for _, member := range members {
+					if symbol := member.Symbol(); symbol != nil {
+						if l.hostBindingViewTypes == nil {
+							l.hostBindingViewTypes = map[*ast.Symbol]*checker.Type{}
+						}
+						l.hostBindingViewTypes[symbol] = model
+					}
+				}
+			}
+		}
+	}
+	return l.hostBindingViewTypes
 }
 
 // hostBindingDeclared reports whether a statement declares only host bindings that lower: it declares
@@ -141,7 +293,7 @@ func hostBindingStop(row load.HostBinding) string {
 	if row.Native.Answer != row.JavaScript.Answer || row.Native.Answer != row.WASM32.Answer {
 		return "the host binding " + row.Name + ", whose targets answer differently (native " + string(row.Native.Answer) + ", javascript " + string(row.JavaScript.Answer) + ", wasm32 " + string(row.WASM32.Answer) + ") where one IR feeds every target, until an IR presence node is ruled,"
 	}
-	if row.Native.Answer == load.HostBindingProvided {
+	if row.Native.Answer == load.HostBindingProvided && hostBindingRoute(row) == "" {
 		return "the host binding " + row.Name + "'s reads through its host model, " + row.Model.Path + ","
 	}
 	return ""
@@ -252,8 +404,8 @@ func (l *lowering) hostBindingDominated(read *ast.Node, symbol *ast.Symbol) bool
 }
 
 // hostBindingRefusal judges every use of a host binding before lowering: a write is refused, a row that
-// doesn't lower is not yet at each use, and an Absent name's read is admitted only at typeof or where a
-// guard proves it dead (hostBindingDominated).
+// doesn't lower is not yet at each use, a Provided name's read is admitted, and an Absent name's read is
+// admitted only at typeof or where a guard proves it dead (hostBindingDominated).
 func (l *lowering) hostBindingRefusal(node *ast.Node) error {
 	if !ast.IsIdentifier(node) {
 		return nil
@@ -267,6 +419,9 @@ func (l *lowering) hostBindingRefusal(node *ast.Node) error {
 	}
 	if stop := hostBindingStop(*row); stop != "" {
 		return l.notYet(node, stop)
+	}
+	if row.Native.Answer == load.HostBindingProvided {
+		return nil // its reads route through its model (nodeProcessPath), as Node's own global's do
 	}
 	operand := node
 	for operand.Parent != nil && operand.Parent.Kind == ast.KindParenthesizedExpression {
@@ -351,7 +506,8 @@ func (l *lowering) hostBindingDeadRead(symbol *ast.Symbol) ir.Statement {
 	return ir.Panic{Message: ir.StringConstant{Index: l.constant("compiler bug: the typeof guard of " + symbol.Name + ", a host binding absent on every target, was taken")}}
 }
 
-// hostBindingTypeOf lowers typeof of a host binding: "undefined" for an Absent one.
+// hostBindingTypeOf lowers typeof of a host binding: "undefined" for an Absent one. A Provided one's is
+// left to the value its read routes to (nodeProcessPath), as typeof of Node's own global is.
 func (l *lowering) hostBindingTypeOf(node *ast.Node) (ir.Expression, bool, error) {
 	row, _ := l.hostBindingOf(node.AsTypeOfExpression().Expression)
 	if row == nil {
@@ -359,6 +515,9 @@ func (l *lowering) hostBindingTypeOf(node *ast.Node) (ir.Expression, bool, error
 	}
 	if stop := hostBindingStop(*row); stop != "" {
 		return nil, true, l.notYet(node, stop)
+	}
+	if row.Native.Answer == load.HostBindingProvided {
+		return nil, false, nil
 	}
 	return ir.StringConstant{Index: l.constant("undefined")}, true, nil
 }
