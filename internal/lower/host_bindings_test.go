@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"context"
 	"errors"
 	"os"
 	"path/filepath"
@@ -220,6 +221,43 @@ func TestHostBindingRequireIsAbsent(t *testing.T) {
 	const deadRead = "compiler bug: the typeof guard of require, a host binding absent on every target, was taken"
 	if !slices.Contains(program.Strings, deadRead) {
 		t.Errorf("no unreachable placeholder for require's guarded read among the program's strings %q", program.Strings)
+	}
+}
+
+// A row's Node answer is measured in ES module mode, so a build that declares one CommonJS bundle, where
+// Node answers typeof require "function", stops at core.ts's require rather than folding it Absent, at
+// its declaration, and so does an Absent row of any name (WebAssembly's must on #00qn5az, #redxes2). The
+// same program lowers in the default ES build. Mutant (l), internal/oracle/testdata/host_bindings/
+// mutants.md: hostBindingStopIn's format test dropped, and the bundle build lowers require as Absent.
+func TestHostBindingRowsStopInACommonJSBundle(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, file, source, want string }{
+		{"core.ts's require", "core.ts", "declare const require: unknown;\nexport function isNodeLikeSystem(): boolean {\n\treturn typeof require !== \"undefined\";\n}\n",
+			"core.ts:1:15: stage 0 can't lower the host binding require in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2), yet"},
+		{"performance.ts's onProfilerEvent", "performance.ts", profilerDeclaration + "export function run(name: string): void {\n\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n}\n",
+			"performance.ts:1:13: stage 0 can't lower the host binding onProfilerEvent in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2), yet"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			for name, source := range map[string]string{probe.file: probe.source, "main.ts": "import './" + probe.file + "';\n"} {
+				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+			if err != nil {
+				t.Fatalf("Load: %v", err)
+			}
+			if _, err := LowerWithOptions(context.Background(), program, Options{}); err != nil {
+				t.Fatalf("the ES build: want it to lower, got %v", err)
+			}
+			_, err = LowerWithOptions(context.Background(), program, Options{ModuleFormat: ModuleFormatCommonJSBundle})
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
+				t.Errorf("the bundle build: got %v, want %s", err, probe.want)
+			}
+		})
 	}
 }
 
