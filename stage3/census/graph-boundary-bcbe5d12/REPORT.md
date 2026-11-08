@@ -10,16 +10,16 @@ Box: `755daee0c6ba`; cgroup CPU quota `400000 100000`; memory limit `17179869184
 
 | Kind | Observations | Distinct reported locations |
 | --- | ---: | ---: |
-| views | 19509 | 254 |
+| views | 19879 | 257 |
 | record_literals | 0 | 0 |
 | dynamic_reads | 13 | 7 |
 | checked_object_calls | 0 | 0 |
 
-Views combine 637 ViewOrigins entries and 18872 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
+Views combine 643 ViewOrigins entries and 19236 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
 
-The 79 compiler-file subtotal is `{'views': 19509, 'record_literals': 0, 'dynamic_reads': 13, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
+The 79 compiler-file subtotal is `{'views': 19879, 'record_literals': 0, 'dynamic_reads': 13, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
 
-Long pole by observed count: **views, 19509**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
+Long pole by observed count: **views, 19879**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
 
 ## Coverage and interpretation
 
@@ -27,9 +27,9 @@ Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 se
 
 Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
 
-Observed 4947 unit results: {'lowered': 3392, 'stopped': 1555}. First-error pass observed 3447 results; full pieces observed 1854. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
+Observed 5047 unit results: {'lowered': 3467, 'stopped': 1580}. First-error pass observed 3447 results; full pieces observed 2230. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
 
-Stock unit inventory has 819 units in 9 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 356}`. Missing stock file records after an interrupted pass are not evidence of zero units.
+Stock unit inventory has 1289 units in 16 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 450}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
 In first-error mode a unit with a lowering finding contributes zero sites: its body is discarded. In full mode the stock hook rolls failed statements back and continues. A `stopped` full-mode observation can therefore contain retained successful statements; its failed statements contribute no sites. Panicked unit results contribute zero sites. `lowered` means no new lowering finding in that unit, not whole-program acceptance. File-level refusal-scan findings do not suppress independent-unit examination.
 
@@ -115,15 +115,15 @@ Attribution is to the unit's file, not an independent root. A zero with zero obs
 | transformers/utilities.ts | 1130 | 0 | 0 | 0 | 48 | no, not computed |
 | tsbuild.ts | 0 | 0 | 0 | 0 | 5 | no, not computed |
 | tsbuildPublic.ts | 0 | 0 | 0 | 0 | 34 | no, not computed |
-| tsc/_namespaces/ts.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
+| tsc/_namespaces/ts.ts | 0 | 0 | 0 | 0 | 1 | no, not computed |
 | tsc/tsc.ts | 0 | 0 | 0 | 0 | 6 | no, not computed |
 | types.ts | 0 | 0 | 0 | 0 | 875 | no, not computed |
 | utilities.ts | 4668 | 0 | 7 | 0 | 834 | no, not computed |
-| utilitiesPublic.ts | 2158 | 0 | 0 | 0 | 242 | no, not computed |
+| utilitiesPublic.ts | 2528 | 0 | 0 | 0 | 243 | no, not computed |
 | visitorPublic.ts | 0 | 0 | 0 | 0 | 28 | no, not computed |
-| watch.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| watchPublic.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| watchUtilities.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
+| watch.ts | 0 | 0 | 0 | 0 | 36 | no, not computed |
+| watchPublic.ts | 0 | 0 | 0 | 0 | 18 | no, not computed |
+| watchUtilities.ts | 0 | 0 | 0 | 0 | 44 | no, not computed |
 
 ## Top 10 files by record_literals, lowered IR only
 
@@ -139,7 +139,7 @@ Examples below are unit fallback positions and adapted unit source text, not exa
 | --- | ---: |
 | checker.ts | 10465 |
 | utilities.ts | 4668 |
-| utilitiesPublic.ts | 2158 |
+| utilitiesPublic.ts | 2528 |
 | transformers/utilities.ts | 1130 |
 | factory/utilities.ts | 637 |
 | transformers/destructuring.ts | 193 |
@@ -197,18 +197,18 @@ export function isParameterPropertyDeclaration(node: Node, parent: Node): node i
 }
 ```
 
+`utilitiesPublic.ts:629:1` (unit fallback):
+```ts
+export function isEmptyBindingElement(node: BindingElement | ArrayBindingElement): boolean {
+    if (isOmittedExpression(node)) {
+        return true;
+```
+
 `utilitiesPublic.ts:870:1` (unit fallback):
 ```ts
 export function symbolName(symbol: Symbol): string {
     if (symbol.valueDeclaration && isPrivateIdentifierClassElementDeclaration(symbol.valueDeclaration)) {
         return idText(symbol.valueDeclaration.name);
-```
-
-`utilitiesPublic.ts:946:1` (unit fallback):
-```ts
-export function isNamedDeclaration(node: Node): node is NamedDeclaration & { name: DeclarationName; } {
-    return !!(node as NamedDeclaration).name; // A 'name' property should always be a DeclarationName.
-}
 ```
 
 `transformers/utilities.ts:179:1` (unit fallback):
@@ -355,7 +355,14 @@ export function createModuleResolutionCache(
 | full-03-snapshot-final | 0 | 1.002 | completed |
 | full-03-snapshot | 0 | 1.003 | completed |
 | full-03 | 0 | 119.289 | completed |
+| full-04-add | 0 | 1.003 | completed |
+| full-04-commit | 0 | 1.003 | completed |
+| full-04-push | 0 | 3.011 | completed |
+| full-04-report | 0 | 1.007 | completed |
+| full-04-snapshot-final | 0 | 1.002 | completed |
+| full-04-snapshot | 0 | 1.002 | completed |
 | full-04 | 0 | 177.329 | completed |
+| full-05 | 0 | 328.32 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
 | interim-audit | 0 | 3.002 | completed |
