@@ -52,5 +52,14 @@
       "exit": 0
     },
     "matches_node": true
+  },
+  {
+    "file": "30_host_optional_method.a",
+    "native": {
+      "stdout": "compiler\nfallback\n/project\n/base\nnone\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true
   }
 ]
