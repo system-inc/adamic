@@ -153,6 +153,52 @@ func runtimeStorage(file, source string) []runtimeStatic {
 
 var cStorageIdentifier = regexp.MustCompile(`^[A-Za-z_][A-Za-z_0-9]*$`)
 
+// storageQualifierGroups are the keywords whose parenthesized group says how a declaration is stored,
+// never that it declares a function, so the prototype test below must not read their parenthesis.
+var storageQualifierGroups = map[string]bool{"_Alignas": true, "alignas": true, "__attribute__": true, "__declspec": true}
+
+// withoutStorageGroups is a declarator's tokens with each qualifier's group and each array bound's
+// contents dropped, so `static _Alignas(adamic_object) unsigned char storage[sizeof(adamic_object)];`
+// reads as `static unsigned char storage[];` (#w74fjtz). A parenthesis left after this is a function's
+// parameter list or a function pointer's declarator, which the prototype test is about.
+func withoutStorageGroups(head []storageToken) []storageToken {
+	kept := []storageToken{}
+	for i := 0; i < len(head); i++ {
+		if storageQualifierGroups[head[i].text] && i+1 < len(head) && head[i+1].text == "(" {
+			depth := 0
+			for i++; i < len(head); i++ {
+				if head[i].text == "(" {
+					depth++
+				} else if head[i].text == ")" {
+					depth--
+					if depth == 0 {
+						break
+					}
+				}
+			}
+			continue
+		}
+		kept = append(kept, head[i])
+		if head[i].text != "[" {
+			continue
+		}
+		// The bound's contents go; its closing bracket stays, so the name test still stops at "[".
+		for depth := 1; i+1 < len(head); {
+			i++
+			if head[i].text == "[" {
+				depth++
+			} else if head[i].text == "]" {
+				depth--
+				if depth == 0 {
+					kept = append(kept, head[i])
+					break
+				}
+			}
+		}
+	}
+	return kept
+}
+
 func storageDeclarators(file string, declaration []storageToken) []runtimeStatic {
 	if len(declaration) == 0 {
 		return nil
@@ -188,7 +234,7 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 				break
 			}
 		}
-		head := part[:end]
+		head := withoutStorageGroups(part[:end])
 		if len(head) == 0 {
 			continue
 		}
@@ -314,12 +360,22 @@ static int array[2] = {1, 2};
 struct pair { int field; } record;
 void more(void) { static struct { int field; } local_record; }
 static int *const fixed_pointer = 0, scalar;
-static struct pair *maker(void) { static int nested; return 0; }`
+static struct pair *maker(void) { static int nested; return 0; }
+static _Alignas(16) unsigned char aligned[64];
+static unsigned char sized[sizeof(struct pair) + 4];
+static __attribute__((aligned(8))) int attributed;
+static int marked __attribute__((unused));
+static _Alignas(8) int aligned_function(void);
+static int bounded_function(int argument[sizeof(long)]);
+static __attribute__((unused)) int attributed_function(void);`
 	var names []string
 	for _, variable := range runtimeStorage("probe.c", source) {
 		names = append(names, variable.name)
 	}
-	if got := strings.Join(names, ","); got != "pointer,global,first,second,local,callback,array,record,local_record,scalar,nested" {
+	// The last seven lines are #w74fjtz's: an alignment, a sizeof in a bound and an attribute on either
+	// side of the name are storage, and the same spellings on a prototype aren't. Read every parenthesis
+	// before the name as a parameter list again, and aligned, sized, attributed and marked drop out.
+	if got := strings.Join(names, ","); got != "pointer,global,first,second,local,callback,array,record,local_record,scalar,nested,aligned,sized,attributed,marked" {
 		t.Fatalf("storage inventory = %s", got)
 	}
 }
