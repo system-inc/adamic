@@ -62,10 +62,10 @@ before 91 and don't after.
 746 source files. Both comments-retained and comments-removed transpilation
 have only these two arrow-body differences:
 
-| Site | Before | After |
-| --- | --- | --- |
-| factory/nodeFactory.ts:1164 | `forEach(nodeFactoryPatchers, fn => fn(factory));` | `forEach(nodeFactoryPatchers, fn => { fn(factory); });` |
-| utilities.ts:8582 | `forEach(objectAllocatorPatchers, fn => fn(objectAllocator));` | `forEach(objectAllocatorPatchers, fn => { fn(objectAllocator); });` |
+| Site                        | Before                                                         | After                                                               |
+| --------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------- |
+| factory/nodeFactory.ts:1164 | `forEach(nodeFactoryPatchers, fn => fn(factory));`             | `forEach(nodeFactoryPatchers, fn => { fn(factory); });`             |
+| utilities.ts:8582           | `forEach(objectAllocatorPatchers, fn => fn(objectAllocator));` | `forEach(objectAllocatorPatchers, fn => { fn(objectAllocator); });` |
 
 The utilities callback takes `ObjectAllocator`, rather than `NodeFactory`.
 The adapter resolves both callback signatures and requires exactly `void`,
@@ -114,8 +114,7 @@ The initial failure log is preserved.
 `typescript/stage3-void-widening`, commit
 `175f0de29e9b2334023c8b5550a6eeb3df8e4eee`. Its SHA-256 is
 `a2df41c33e68c4d9e5361dc6ddbdc851d0eb50f25cfb8b9697c7965eea70fa57`.
-It registers a factory callback returning 42 and an allocator callback returning
-17. On the control's actual built compiler, each first callback runs once and
+It registers a factory callback returning 42 and an allocator callback returning 17. On the control's actual built compiler, each first callback runs once and
 each second callback is skipped. Its original early-stop assertion fails on
 the with-91 compiler, as expected.
 
@@ -159,10 +158,10 @@ filter. `free -m` was logged immediately before each run. All cgroup memory
 counters, including OOM and OOM-kill, stayed zero. There was no concurrent
 setup, adaptation, scanner build, or other test workload during either suite.
 
-| Oracle | Passing | Failing | Pending | Wall seconds |
-| --- | ---: | ---: | ---: | ---: |
-| Control without 91 | 106,366 | 1 | 0 | 360.135 |
-| With 91 | 106,366 | 1 | 0 | 359.893 |
+| Oracle             | Passing | Failing | Pending | Wall seconds |
+| ------------------ | ------: | ------: | ------: | -----------: |
+| Control without 91 | 106,366 |       1 |       0 |      360.135 |
+| With 91            | 106,366 |       1 |       0 |      359.893 |
 
 The sole failure in each run is exactly
 `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change`.
