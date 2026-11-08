@@ -1,26 +1,26 @@
 {
   "counts": {
-    "object_related_top": 958,
-    "object_related_nested": 18487,
+    "object_related_top": 982,
+    "object_related_nested": 19284,
     "object_unrelated_top": 1,
     "object_unrelated_nested": 0,
     "scalar_top": 3,
-    "scalar_nested": 10209,
+    "scalar_nested": 10631,
     "nil_source": 0,
     "nil_target_only": 0
   },
   "raw_counts": {
-    "object_related_top": 1248,
-    "object_related_nested": 26539,
+    "object_related_top": 1272,
+    "object_related_nested": 27336,
     "object_unrelated_top": 1,
     "object_unrelated_nested": 0,
     "scalar_top": 3,
-    "scalar_nested": 14598,
+    "scalar_nested": 15020,
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "total_selected_pairs": 29658,
-  "total_raw_pairs": 42389,
+  "total_selected_pairs": 30901,
+  "total_raw_pairs": 43632,
   "unrelated_object_pairs": 1,
   "distinct_unrelated_text_pairs": 1,
   "nil_source_views": 0,
@@ -38,27 +38,27 @@
     "nil_source": 0,
     "nil_target_only": 0
   },
-  "observed_units": 5905,
+  "observed_units": 6382,
   "unit_statuses": {
-    "lowered": 3827,
-    "stopped": 2078
+    "lowered": 3890,
+    "stopped": 2492
   },
   "stock_skips_without_boundary": {
-    "deferred_generic_instantiation": 151
+    "deferred_generic_instantiation": 193
   },
-  "deferred_units_in_emitted_inventory": 151,
+  "deferred_units_in_emitted_inventory": 193,
   "resolved_files": 81,
-  "full_files_attempted": 13,
-  "full_files_complete_traversal": 12,
-  "stock_inventory_units": 3132,
+  "full_files_attempted": 14,
+  "full_files_complete_traversal": 13,
+  "stock_inventory_units": 3676,
   "probe_incomplete_units": 0,
   "orphan_pair_lines": 0,
   "probe_errors": [],
-  "view_sources_in_selected_units": 1371,
-  "deduplicated_pair_visits": 166544,
-  "over_depth_pair_visits": 15093,
+  "view_sources_in_selected_units": 1399,
+  "deduplicated_pair_visits": 173853,
+  "over_depth_pair_visits": 15480,
   "nil_reference_definition": "Known lower.representation(fieldType) with ir.Type.IsReference(); includes strings and Weak. Object-reference companion excludes ir.String and ir.Weak. Fields come from cycleFinder.fields, excluding prototype methods, accessors and static prototype.",
-  "first_error_selected_stopped_units": 433,
+  "first_error_selected_stopped_units": 426,
   "cycle_finder_ran": false,
   "graph_types_nonempty_units": 0
 }
