@@ -5,27 +5,27 @@ core.ts, with exactly one changed line in each of the four pinned owners.
 The normal compiler emits identical JavaScript and public declarations.
 comparison.json retains hashes, byte counts and exact source-scope assertions.
 
-| Check | Result |
-| --- | --- |
-| Prescribed setup, GOPROXY=https://proxy.golang.org\|direct | Exit 0, 522.384 seconds |
-| Baseline full apply from pinned TypeScript, with product packaging | Exit 0 |
-| Accepted stack full apply with product packaging | Exit 0 |
-| Direct adapter replay after full apply | Exit 0; zero files and edits |
-| Owner contract | Pass: 29 refused fixtures before any write, foreign selectIndex edit accepted, LF/CRLF preserved |
-| Contract replay | Zero writes; source bytes and mtime preserved |
-| Adamic types, all sorted 79 roots, before | Exit 0, zero diagnostics |
-| Adamic types, all sorted 79 roots, after | Exit 0, zero diagnostics |
-| Ordinary compiler build, before and after | Both exit 0 |
-| Both public declarations | typescript.d.ts and tsserverlibrary.d.ts byte-identical |
-| Whole core.ts transpile, comments retained and removed | Byte-identical in both modes |
-| All nine normally emitted JavaScript files | Byte-identical |
-| Complete applied src versus census src | All 746 source files byte-identical |
-| Added casts / any | None; total cast nodes 28 to 27 and any nodes 19 to 18 |
-| generate_shards.py --check, final | Exit 0 |
-| Stage3 lane Go fixtures, initial | Pass, 116.954 seconds |
-| Stage3 lane Go fixtures with 99q present | Pass, 103.311 seconds |
-| Direct API-generator Python tests | All 22 pass, 71.245 seconds |
-| Ordinary main per-file compiler census | All 79 roots; see CENSUS.md |
+| Check                                                              | Result                                                                                           |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| Prescribed setup, GOPROXY=https://proxy.golang.org\|direct         | Exit 0, 522.384 seconds                                                                          |
+| Baseline full apply from pinned TypeScript, with product packaging | Exit 0                                                                                           |
+| Accepted stack full apply with product packaging                   | Exit 0                                                                                           |
+| Direct adapter replay after full apply                             | Exit 0; zero files and edits                                                                     |
+| Owner contract                                                     | Pass: 29 refused fixtures before any write, foreign selectIndex edit accepted, LF/CRLF preserved |
+| Contract replay                                                    | Zero writes; source bytes and mtime preserved                                                    |
+| Adamic types, all sorted 79 roots, before                          | Exit 0, zero diagnostics                                                                         |
+| Adamic types, all sorted 79 roots, after                           | Exit 0, zero diagnostics                                                                         |
+| Ordinary compiler build, before and after                          | Both exit 0                                                                                      |
+| Both public declarations                                           | typescript.d.ts and tsserverlibrary.d.ts byte-identical                                          |
+| Whole core.ts transpile, comments retained and removed             | Byte-identical in both modes                                                                     |
+| All nine normally emitted JavaScript files                         | Byte-identical                                                                                   |
+| Complete applied src versus census src                             | All 746 source files byte-identical                                                              |
+| Added casts / any                                                  | None; total cast nodes 28 to 27 and any nodes 19 to 18                                           |
+| generate_shards.py --check, final                                  | Exit 0                                                                                           |
+| Stage3 lane Go fixtures, initial                                   | Pass, 116.954 seconds                                                                            |
+| Stage3 lane Go fixtures with 99q present                           | Pass, 103.311 seconds                                                                            |
+| Direct API-generator Python tests                                  | All 22 pass, 71.245 seconds                                                                      |
+| Ordinary main per-file compiler census                             | All 79 roots; see CENSUS.md                                                                      |
 
 Commands, with the tool environment sourced from /workspace/adamic-tools/env.sh:
 

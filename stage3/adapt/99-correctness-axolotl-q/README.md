@@ -7,15 +7,15 @@ are identical to the requested base. A later main recheck reached 006b368745e6a3
 No production compiler changes, suppression,
 backend changes, or partial-root fallback were used.
 
-| Site | Decision | Evidence |
-| --- | --- | --- |
-| H02 deduplicate | Keep one type argument: `deduplicated.map<T>(i => array[i]!)` in deduplicateRelational | Removes all remaining historical CW020-CW023 relations with no new core.ts finding. No helper return annotation or caller type argument is needed. |
-| H01 indicesOf | Keep `<T>(array: readonly T[])` | Removes erased unknown-array storage at line 684, with no new finding. |
-| H04 cartesianProductWorker | Keep `result: T[][]` | Removes the writable readonly-element view at line 2551, with no new finding. |
-| H05 isNodeLikeSystem | Keep `!process.browser` | The adapted ambient declares `browser?: unknown`; removes the cast refusal at line 2611, with no new finding. |
-| H03 elementAt | Drop | Directly removing its two any casts removes the old findings but exposes method-value and callable-ABI refusals at line 1066, and an erased any-element return at line 1329. |
-| concatenate | Drop, blocked on caller work | The two truthful mixed overload results are `T[] | undefined` and `readonly T[] | undefined`. They add six checker.ts diagnostics, so cannot meet the zero-diagnostic contract in this core-only change. Public declarations remain identical. |
-| or | Scout only | Callback predicate contracts and the returned predicate need lowering work; no edit or owner pin. |
+| Site                       | Decision                                                                               | Evidence                                                                                                                                                                     |
+| -------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| H02 deduplicate            | Keep one type argument: `deduplicated.map<T>(i => array[i]!)` in deduplicateRelational | Removes all remaining historical CW020-CW023 relations with no new core.ts finding. No helper return annotation or caller type argument is needed.                           |
+| H01 indicesOf              | Keep `<T>(array: readonly T[])`                                                        | Removes erased unknown-array storage at line 684, with no new finding.                                                                                                       |
+| H04 cartesianProductWorker | Keep `result: T[][]`                                                                   | Removes the writable readonly-element view at line 2551, with no new finding.                                                                                                |
+| H05 isNodeLikeSystem       | Keep `!process.browser`                                                                | The adapted ambient declares `browser?: unknown`; removes the cast refusal at line 2611, with no new finding.                                                                |
+| H03 elementAt              | Drop                                                                                   | Directly removing its two any casts removes the old findings but exposes method-value and callable-ABI refusals at line 1066, and an erased any-element return at line 1329. |
+| concatenate                | Drop, blocked on caller work                                                           | The two truthful mixed overload results are `T[]                                                                                                                             | undefined`and`readonly T[] | undefined`. They add six checker.ts diagnostics, so cannot meet the zero-diagnostic contract in this core-only change. Public declarations remain identical. |
+| or                         | Scout only                                                                             | Callback predicate contracts and the returned predicate need lowering work; no edit or owner pin.                                                                            |
 
 Each site was checked against current main, independently against the baseline,
 and then one at a time on the accepted stack. Complete measurement-only core.ts

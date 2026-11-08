@@ -8,13 +8,13 @@ fallback is used in this census.
 
 Grouped by exact reason, with each TypeScript root counted once:
 
-| Roots | Kind | First stop | Reason |
-| ---: | --- | --- | --- |
-| 73 | Refused | `src/compiler/core.ts:736:36` | a cast the runtime can't check |
-| 2 | NotYet | `src/compiler/commandLineParser.ts:293:35` (1); `src/compiler/diagnosticInformationMap.generated.ts:13:45` (1) | reading an enum before its runtime initialization; move the call after the enum declaration |
-| 2 | accepted | - | - |
-| 1 | NotYet | `src/compiler/debug.ts:243:59` | a generic instantiation whose type argument for T, constrained to Node, can't be read |
-| 1 | NotYet | `src/compiler/semver.ts:71:9` | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
+| Roots | Kind     | First stop                                                                                                     | Reason                                                                                                                                       |
+| ----: | -------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+|    73 | Refused  | `src/compiler/core.ts:736:36`                                                                                  | a cast the runtime can't check                                                                                                               |
+|     2 | NotYet   | `src/compiler/commandLineParser.ts:293:35` (1); `src/compiler/diagnosticInformationMap.generated.ts:13:45` (1) | reading an enum before its runtime initialization; move the call after the enum declaration                                                  |
+|     2 | accepted | -                                                                                                              | -                                                                                                                                            |
+|     1 | NotYet   | `src/compiler/debug.ts:243:59`                                                                                 | a generic instantiation whose type argument for T, constrained to Node, can't be read                                                        |
+|     1 | NotYet   | `src/compiler/semver.ts:71:9`                                                                                  | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
 
 The shared next wall is deduplicateSorted's existing double cast of emptyArray
 at core.ts:736:36. It is outside this adaptation's accepted owners. H02 removes
