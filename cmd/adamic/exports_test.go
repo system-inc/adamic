@@ -102,3 +102,34 @@ func TestWASIExports(t *testing.T) {
 		t.Fatalf("narrowed table: %s", bytes)
 	}
 }
+
+// Mutant: capture_clock_origin leaves monotonic_origin zero; TestWASIReactorPerformanceNow
+// reads 1088322.103555 >= 60000 ms under Node v24.19.0's uv_hrtime clock.
+// Not parallel: calls the process-wide compiler driver.
+func TestWASIReactorPerformanceNow(t *testing.T) {
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	directory := t.TempDir()
+	binary, table := filepath.Join(directory, "performance.wasm"), filepath.Join(directory, "performance.json")
+	source, err := filepath.Abs("../../internal/native/wasm/exports/performance.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if code := run([]string{"build", "--target", "wasm32-wasi", "--reactor", source, "-o", binary, "--abi-json", table}); code != 0 {
+		t.Fatalf("build: %d", code)
+	}
+	for _, mode := range []string{"initialized", "skipped"} {
+		t.Run(mode, func(t *testing.T) {
+			t.Parallel()
+			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+			defer cancel()
+			command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", "../../internal/native/wasm/exports/performance.mjs", binary, table, mode)
+			output, err := command.CombinedOutput()
+			if err != nil {
+				t.Fatalf("%s: %v\n%s", mode, err, output)
+			}
+			t.Log(string(output))
+		})
+	}
+}
