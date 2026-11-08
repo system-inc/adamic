@@ -91,7 +91,9 @@ func TestNodeProcessTerminal(t *testing.T) {
 // a computed key, roads #5abf5v8's origin walk doesn't follow, and call it bare, and the copy calls it
 // off another object: Node's checks its receiver and throws TypeError: Illegal invocation, where both
 // backends' closure ignored its receiver and blocked (#0bxc4jh). node_process_handle_method.a calls it
-// off the handle, unguarded, and blocks.
+// off the handle, unguarded, and blocks, and node_process_handle_asserted.ts calls it off a let-held
+// handle through a non-null assertion, handle.setBlocking!(true), which keeps its object and blocks
+// where the plain road reached the throwing closure.
 func TestNodeProcessHandleView(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range []struct {
@@ -107,6 +109,7 @@ func TestNodeProcessHandleView(t *testing.T) {
 		{"node_process_handle_detached_key.a", "no handle\n", "true\nIllegal invocation\n"},
 		{"node_process_handle_detached_copy.a", "no handle\n", "true\nIllegal invocation\n"},
 		{"node_process_handle_method.a", "no handle\n", "blocked\n"},
+		{"node_process_handle_asserted.ts", "no handle\n", "blocked\n"},
 	} {
 		t.Run(fixture.name, func(t *testing.T) {
 			t.Parallel()

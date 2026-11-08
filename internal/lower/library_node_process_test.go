@@ -93,19 +93,22 @@ func TestNodeProcessHandleSetBlockingValueStops(t *testing.T) {
 	}
 }
 
-// A call's callee and a truthiness test read setBlocking without detaching it, so they still lower.
+// A call's callee and a truthiness test read setBlocking without detaching it, so they still lower. A
+// non-null asserted callee, handle.setBlocking!(true), is a callee too, which keeps its object
+// (#0bxc4jh); a .a program refuses the !, so it's a .ts row.
 func TestNodeProcessHandleSetBlockingCallAndTestLower(t *testing.T) {
 	t.Parallel()
-	for name, source := range map[string]string{
-		"callee":      "import 'node:process'; const handle = (process.stdout as any)._handle as { setBlocking: (value: boolean) => void; }; handle.setBlocking(true); console.log('after');",
-		"if":          stdoutHandleView + "if (handle.setBlocking) { console.log('present'); }",
-		"and":         stdoutHandleView + "if (handle && handle.setBlocking) { console.log('present'); }",
-		"not":         stdoutHandleView + "if (!handle.setBlocking) { console.log('absent'); }",
-		"tsc's guard": stdoutHandleView + "if (handle && handle.setBlocking) { handle.setBlocking(true); }",
+	for _, row := range []struct{ name, source, extension string }{
+		{"callee", "import 'node:process'; const handle = (process.stdout as any)._handle as { setBlocking: (value: boolean) => void; }; handle.setBlocking(true); console.log('after');", ".a"},
+		{"if", stdoutHandleView + "if (handle.setBlocking) { console.log('present'); }", ".a"},
+		{"and", stdoutHandleView + "if (handle && handle.setBlocking) { console.log('present'); }", ".a"},
+		{"not", stdoutHandleView + "if (!handle.setBlocking) { console.log('absent'); }", ".a"},
+		{"tsc's guard", stdoutHandleView + "if (handle && handle.setBlocking) { handle.setBlocking(true); }", ".a"},
+		{"asserted callee", stdoutHandleView + "if (handle) { handle.setBlocking!(true); }", ".ts"},
 	} {
-		t.Run(name, func(t *testing.T) {
+		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
-			if _, err := lowerSource(t, source); err != nil {
+			if _, err := lowerSourceAs(t, row.source, row.extension); err != nil {
 				t.Fatal(err)
 			}
 		})
