@@ -1,0 +1,43 @@
+// The receiver of object?.method?.(...) is evaluated once (#tvq1eqm): lookups counts it, so a second
+// evaluation for the call shows. Where it's undefined or null the chain is undefined and the argument,
+// which counts itself, is never evaluated; so it isn't where the method is missing.
+interface Greeter {
+	readonly name: string;
+	greet?(greeting: string): string;
+}
+
+const people: Greeter[] = [
+	{
+		name: ['a', 'da'].join(''),
+		greet(greeting: string): string {
+			return `${greeting}, ${this.name}`;
+		},
+	},
+	{ name: ['b', 'ob'].join('') },
+];
+
+let lookups = 0;
+let evaluated = 0;
+function find(index: number): Greeter | undefined {
+	lookups += 1;
+	return people[index];
+}
+function findOrNull(index: number): Greeter | null {
+	lookups += 1;
+	return people[index] ?? null;
+}
+function word(text: string): string {
+	evaluated += 1;
+	return [text, '!'].join('');
+}
+
+for (const index of [0, 1, 2]) {
+	console.log(`${find(index)?.greet?.(word('hello')) ?? 'nobody'} lookups ${lookups} evaluated ${evaluated}`);
+}
+for (const index of [2, 0, 1]) {
+	console.log(`${findOrNull(index)?.greet?.(word('hi')) ?? 'null'} lookups ${lookups} evaluated ${evaluated}`);
+}
+for (const index of [0, 2]) {
+	find(index)?.greet?.(word('dropped'));
+	console.log(`as a statement: lookups ${lookups} evaluated ${evaluated}`);
+}
