@@ -22,17 +22,17 @@ Locations are before and after in the tree after adaptations 1 through 76;
 none of these edits inserts a newline. [exit.patch](proofs/exit.patch) records
 the complete source diff, so the surrounding functions can be reviewed.
 
-| File:line | Before | After |
-| --- | --- | --- |
-| src/compiler/sys.ts:1432 | System.exit: void | number \| undefined |
-| src/compiler/sys.ts:1588 | Node exit: void | undefined |
-| src/compiler/executeCommandLine.ts:760 | void \| SolutionBuilder<…> \| WatchOfConfigFile<…> | number \| undefined \| SolutionBuilder<…> \| WatchOfConfigFile<…> |
-| src/harness/fakesHosts.ts:131 | exit: void | number \| undefined |
-| src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1283 | exit: void | number \| undefined |
-| src/harness/harnessLanguageService.ts:563 | exit = ts.noop | exit = (_exitCode?: number): number \| undefined => undefined |
-| src/testRunner/unittests/tsserver/session.ts:41 | exit: ts.noop | exit: (_exitCode?: number): number \| undefined => undefined |
-| src/testRunner/unittests/helpers/tscWatch.ts:78 | watchOrSolution | watchOrSolution: typeof watchOrSolution === "object" ? watchOrSolution : undefined |
-| src/testRunner/unittests/tscWatch/incremental.ts:77 | if (closer) | if (typeof closer === "object") |
+| File:line                                                           | Before                                             | After                                                                              |
+| ------------------------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| src/compiler/sys.ts:1432                                            | System.exit: void                                  | number \| undefined                                                                |
+| src/compiler/sys.ts:1588                                            | Node exit: void                                    | undefined                                                                          |
+| src/compiler/executeCommandLine.ts:760                              | void \| SolutionBuilder<…> \| WatchOfConfigFile<…> | number \| undefined \| SolutionBuilder<…> \| WatchOfConfigFile<…>                  |
+| src/harness/fakesHosts.ts:131                                       | exit: void                                         | number \| undefined                                                                |
+| src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1283 | exit: void                                         | number \| undefined                                                                |
+| src/harness/harnessLanguageService.ts:563                           | exit = ts.noop                                     | exit = (_exitCode?: number): number \| undefined => undefined                      |
+| src/testRunner/unittests/tsserver/session.ts:41                     | exit: ts.noop                                      | exit: (_exitCode?: number): number \| undefined => undefined                       |
+| src/testRunner/unittests/helpers/tscWatch.ts:78                     | watchOrSolution                                    | watchOrSolution: typeof watchOrSolution === "object" ? watchOrSolution : undefined |
+| src/testRunner/unittests/tscWatch/incremental.ts:77                 | if (closer)                                        | if (typeof closer === "object")                                                    |
 
 The complete 15-definition inventory is in
 [testdata/exit-implementations.json](testdata/exit-implementations.json).
