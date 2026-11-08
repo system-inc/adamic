@@ -96,14 +96,16 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 
 // An Absent host binding's guarded reads agree with Node natively, sanitized and on the JavaScript
 // backend, and leak nothing: tsc's own if (performance.ts:80), the right of && as a statement and as a
-// boolean, the true arm of ?: holding a number and a string, and a parameter that shadows the declared
-// name, judged as the parameter, whose call is made. Mutants (a) and (c) are in
-// testdata/host_bindings/mutants.md; (c) goes red here, on shadow, as well as in lower's pin.
+// boolean, the true arm of ?: holding a number and a string, a parameter that shadows the declared
+// name, judged as the parameter, whose call is made, and core.ts's require in isNodeLikeSystem's test,
+// under a guard and in typeof (node_like), which Node in its module mode answers false, "no loader" and
+// "undefined". Mutants (a), (c) and (k) are in testdata/host_bindings/mutants.md; (c) goes red here, on
+// shadow, as well as in lower's pin, and (k) on node_like.
 func TestHostBindingsAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/host_bindings"
 	programs := 0
-	for _, name := range []string{"if", "and", "conditional", "shadow", "performance_provided", "process_provided", "process_browser_boolean", "process_browser_string", "process_browser_number"} {
+	for _, name := range []string{"if", "and", "conditional", "shadow", "performance_provided", "process_provided", "process_browser_boolean", "process_browser_string", "process_browser_number", "node_like"} {
 		programs++
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
