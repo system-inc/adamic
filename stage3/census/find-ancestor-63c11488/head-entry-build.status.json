@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/fa-head-entry/overlay.json",
+    "-o",
+    "/workspace/scratch/fa-head-entry",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/scratch/fa-head",
+  "exit": 0,
+  "wall_seconds": 34.11,
+  "stopped": null
+}
