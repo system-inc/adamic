@@ -1,0 +1,23 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/pair/pair.py",
+    "stage3/census/latent/evidence/prepasses/core-full-base.jsonl.gz",
+    "stage3/census/latent/evidence/prepasses/core-full-head.jsonl.gz",
+    "/workspace/scratch/sygfnmc-adapted",
+    "--typescript",
+    "stage3/api/node_modules/typescript",
+    "--json",
+    "stage3/census/latent/evidence/prepasses/core-full-paired.json",
+    "--report",
+    "stage3/census/latent/evidence/prepasses/core-full-paired.md"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 1.0031919329999255,
+  "peak_rss_kib": 105556,
+  "user_seconds": 0.718254,
+  "system_seconds": 0.644288,
+  "peak_observed_combined_rss_kib": 0,
+  "rss_ceiling_kib": null
+}

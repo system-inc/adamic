@@ -1,0 +1,24 @@
+{
+  "runner_pid": 19758,
+  "state": "launched; child exit is pending in the resource runner status file",
+  "arguments": [
+    "--peer-pid",
+    "19423",
+    "--rss-ceiling-kib",
+    "14680064",
+    "--watch",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/core-full-base-times.jsonl",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/core-full-base",
+    "--",
+    "env",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_FULL=1",
+    "LATENT_ONLY_FILE=/workspace/scratch/sygfnmc-adapted/src/compiler/core.ts",
+    "LATENT_TIMES=/workspace/adamic/stage3/census/latent/evidence/prepasses/core-full-base-times.jsonl",
+    "/tmp/sygfnmc-base",
+    "/workspace/scratch/sygfnmc-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/core-full-base.jsonl"
+  ]
+}

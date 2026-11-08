@@ -95,3 +95,9 @@ func (p *Program) LatentReplayEntryReach() {
 		}
 	}
 }
+
+// Original entry roots survive expansion of the observation ledger.
+func (p *Program) LatentRoots() []*ast.SourceFile {
+ if p.latentRoots != nil { return p.latentRoots }
+ return p.Files()
+}

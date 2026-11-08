@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/tmp/sygfnmc-head-overlay/overlay.json",
+    "-o",
+    "/tmp/sygfnmc-standard",
+    "./stage3/census/latent/tool"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 36.092246581999916,
+  "peak_rss_kib": 1440320,
+  "user_seconds": 61.394035,
+  "system_seconds": 10.835048
+}
