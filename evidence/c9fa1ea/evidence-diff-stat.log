@@ -1,0 +1,39 @@
+ evidence/c9fa1ea/README.md                |    56 +
+ evidence/c9fa1ea/admission-delta.exit     |     1 +
+ evidence/c9fa1ea/admission-delta.json     |     1 +
+ evidence/c9fa1ea/admission-delta.log      |     3 +
+ evidence/c9fa1ea/checkout.exit            |     1 +
+ evidence/c9fa1ea/checkout.log             |     2 +
+ evidence/c9fa1ea/fetch.exit               |     1 +
+ evidence/c9fa1ea/fetch.log                |     2 +
+ evidence/c9fa1ea/final-pins.exit          |     1 +
+ evidence/c9fa1ea/final-pins.log           |     3 +
+ evidence/c9fa1ea/final-source-diff.exit   |     1 +
+ evidence/c9fa1ea/final-source-diff.log    |     0
+ evidence/c9fa1ea/gofmt.exit               |     1 +
+ evidence/c9fa1ea/gofmt.log                |     0
+ evidence/c9fa1ea/host-mutant-red-rows.log |     4 +
+ evidence/c9fa1ea/host-mutant.exit         |     1 +
+ evidence/c9fa1ea/host-mutant.log          |   108 +
+ evidence/c9fa1ea/host-mutant.patch        |    13 +
+ evidence/c9fa1ea/lower-failure-index.log  |     0
+ evidence/c9fa1ea/lower.exit               |     1 +
+ evidence/c9fa1ea/lower.log                |     1 +
+ evidence/c9fa1ea/manifest.exit            |     1 +
+ evidence/c9fa1ea/manifest.json            | 19899 ++++++++++++++++++++++++++++
+ evidence/c9fa1ea/manifest.log             |     1 +
+ evidence/c9fa1ea/new-refusals.md          |     8 +
+ evidence/c9fa1ea/npm-restoration.exit     |     1 +
+ evidence/c9fa1ea/npm-restoration.log      |     1 +
+ evidence/c9fa1ea/pins.exit                |     1 +
+ evidence/c9fa1ea/pins.log                 |   183 +
+ evidence/c9fa1ea/restoration.exit         |     1 +
+ evidence/c9fa1ea/restoration.log          |     0
+ evidence/c9fa1ea/restored-diff-stat.log   |     0
+ evidence/c9fa1ea/restored-diff.exit       |     1 +
+ evidence/c9fa1ea/setup.exit               |     1 +
+ evidence/c9fa1ea/setup.log                |     7 +
+ evidence/c9fa1ea/step-B.md                |    10 +
+ evidence/c9fa1ea/vet.exit                 |     1 +
+ evidence/c9fa1ea/vet.log                  |     0
+ 38 files changed, 20317 insertions(+)

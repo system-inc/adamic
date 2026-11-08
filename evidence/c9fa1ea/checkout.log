@@ -1,0 +1,2 @@
+Previous HEAD position was b3a5b76b9 lower: a generic method declared only in the library keeps main's path, so the host_watch fixtures lower again (#q6gs98r)
+HEAD is now at c9fa1ea71 lower: the host exemption reads Node's types too, through hostDeclaredSymbol, since librarySymbol is TypeScript's bundled library alone (#q6gs98r)

@@ -1,0 +1,108 @@
+=== RUN   TestNodeWatchFilePollingForms
+=== PAUSE TestNodeWatchFilePollingForms
+=== RUN   TestNodeWatchFileOtherFormsRefused
+=== PAUSE TestNodeWatchFileOtherFormsRefused
+=== RUN   TestNodeWatchFileTscCloseShape
+=== PAUSE TestNodeWatchFileTscCloseShape
+=== RUN   TestNodeWatchFileVoidViewCannotHideOwnedResult
+=== PAUSE TestNodeWatchFileVoidViewCannotHideOwnedResult
+=== RUN   TestNodeWatchFileUsesLibrarySymbols
+=== PAUSE TestNodeWatchFileUsesLibrarySymbols
+=== RUN   TestNodeWatchFileCallbackViews
+=== PAUSE TestNodeWatchFileCallbackViews
+=== RUN   TestNodeWatchFileMtimeUnaryPlus
+=== PAUSE TestNodeWatchFileMtimeUnaryPlus
+=== RUN   TestNodeWatchFileOptionTypeRefusals
+=== PAUSE TestNodeWatchFileOptionTypeRefusals
+=== RUN   TestNodeWatchTscShape
+=== PAUSE TestNodeWatchTscShape
+=== RUN   TestNodeWatchDirectForms
+=== PAUSE TestNodeWatchDirectForms
+=== RUN   TestNodeWatchOtherFormsRefused
+=== PAUSE TestNodeWatchOtherFormsRefused
+=== RUN   TestNodeWatchUsesLibrarySymbols
+=== PAUSE TestNodeWatchUsesLibrarySymbols
+=== RUN   TestNodeWatchInheritedOnStaysNotYet
+=== PAUSE TestNodeWatchInheritedOnStaysNotYet
+=== RUN   TestNodeWatchInheritedOnMutant
+    library_node_watch_test.go:158: view: the mutant must let the second host type lower: /tmp/adamic-gate/TestNodeWatchInheritedOnMutant2756301725/002/main.a:2:114: stage 0 can't lower a generic method on of type { <E extends keyof ChildProcessEventMap>(eventName: E, listener: (...args: ChildProcessEventMap[E]) => void): ChildProcess; (eventName: string | symbol, listener: (...args: any[]) => void): ChildProcess; } seen as (eventName: string, listener: () => void) => void yet
+--- FAIL: TestNodeWatchInheritedOnMutant (0.51s)
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused
+=== PAUSE TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused
+=== CONT  TestNodeWatchFilePollingForms
+=== CONT  TestNodeWatchFileOptionTypeRefusals
+=== RUN   TestNodeWatchFileOptionTypeRefusals/persistent
+=== CONT  TestNodeWatchUsesLibrarySymbols
+=== CONT  TestNodeWatchDirectForms
+=== CONT  TestNodeWatchFileUsesLibrarySymbols
+--- PASS: TestNodeWatchUsesLibrarySymbols (0.08s)
+=== CONT  TestNodeWatchFileMtimeUnaryPlus
+=== RUN   TestNodeWatchFileOptionTypeRefusals/interval
+--- PASS: TestNodeWatchDirectForms (0.65s)
+=== CONT  TestNodeWatchFileCallbackViews
+=== RUN   TestNodeWatchFileCallbackViews/h11
+--- PASS: TestNodeWatchFilePollingForms (0.66s)
+=== CONT  TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/map
+--- PASS: TestNodeWatchFileUsesLibrarySymbols (0.77s)
+=== CONT  TestNodeWatchTscShape
+--- PASS: TestNodeWatchFileMtimeUnaryPlus (0.71s)
+=== CONT  TestNodeWatchFileTscCloseShape
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/class
+--- PASS: TestNodeWatchFileOptionTypeRefusals (1.19s)
+    --- PASS: TestNodeWatchFileOptionTypeRefusals/persistent (0.65s)
+    --- PASS: TestNodeWatchFileOptionTypeRefusals/interval (0.54s)
+=== CONT  TestNodeWatchFileVoidViewCannotHideOwnedResult
+=== RUN   TestNodeWatchFileCallbackViews/any
+=== NAME  TestNodeWatchTscShape
+    library_node_watch_test.go:51: /tmp/adamic-gate/TestNodeWatchTscShape1615494417/001/main.a:10:9: stage 0 can't lower a generic method on of type { <E extends keyof FSWatcherEventMap>(eventName: E, listener: (...args: FSWatcherEventMap[E]) => void): FSWatcher; (eventName: string | symbol, listener: (...args: any[]) => void): FSWatcher; } seen as (eventName: string, listener: () => void) => void yet
+--- FAIL: TestNodeWatchTscShape (0.51s)
+=== CONT  TestNodeWatchOtherFormsRefused
+=== RUN   TestNodeWatchOtherFormsRefused/arguments
+--- PASS: TestNodeWatchFileTscCloseShape (0.55s)
+=== CONT  TestNodeWatchFileOtherFormsRefused
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/primitive_union
+--- PASS: TestNodeWatchFileVoidViewCannotHideOwnedResult (0.55s)
+=== CONT  TestNodeWatchInheritedOnStaysNotYet
+=== RUN   TestNodeWatchInheritedOnStaysNotYet/direct
+=== RUN   TestNodeWatchFileCallbackViews/unknown
+=== RUN   TestNodeWatchOtherFormsRefused/option
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/string_union
+=== RUN   TestNodeWatchInheritedOnStaysNotYet/view
+--- PASS: TestNodeWatchFileCallbackViews (1.70s)
+    --- PASS: TestNodeWatchFileCallbackViews/h11 (0.54s)
+    --- PASS: TestNodeWatchFileCallbackViews/any (0.60s)
+    --- PASS: TestNodeWatchFileCallbackViews/unknown (0.56s)
+=== RUN   TestNodeWatchOtherFormsRefused/persistent_missing
+--- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused (1.96s)
+    --- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/map (0.52s)
+    --- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/class (0.56s)
+    --- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/primitive_union (0.45s)
+    --- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/string_union (0.43s)
+=== NAME  TestNodeWatchInheritedOnStaysNotYet/view
+    library_node_watch_test.go:140: want a NotYet naming "node:events.InternalEventEmitter.on, a member no host registration names", got /tmp/adamic-gate/TestNodeWatchInheritedOnStaysNotYetview3955286800/001/main.a:2:114: stage 0 can't lower a generic method on of type { <E extends keyof ChildProcessEventMap>(eventName: E, listener: (...args: ChildProcessEventMap[E]) => void): ChildProcess; (eventName: string | symbol, listener: (...args: any[]) => void): ChildProcess; } seen as (eventName: string, listener: () => void) => void yet
+--- FAIL: TestNodeWatchInheritedOnStaysNotYet (0.91s)
+    --- PASS: TestNodeWatchInheritedOnStaysNotYet/direct (0.50s)
+    --- FAIL: TestNodeWatchInheritedOnStaysNotYet/view (0.41s)
+=== RUN   TestNodeWatchOtherFormsRefused/persistent_run_time
+=== RUN   TestNodeWatchOtherFormsRefused/arms_differ
+=== RUN   TestNodeWatchOtherFormsRefused/rest_listener
+=== RUN   TestNodeWatchOtherFormsRefused/numeric_slot
+--- PASS: TestNodeWatchFileOtherFormsRefused (2.24s)
+=== RUN   TestNodeWatchOtherFormsRefused/other_event
+=== RUN   TestNodeWatchOtherFormsRefused/detached_close
+=== RUN   TestNodeWatchOtherFormsRefused/detached_on
+--- PASS: TestNodeWatchOtherFormsRefused (3.14s)
+    --- PASS: TestNodeWatchOtherFormsRefused/arguments (0.53s)
+    --- PASS: TestNodeWatchOtherFormsRefused/option (0.52s)
+    --- PASS: TestNodeWatchOtherFormsRefused/persistent_missing (0.36s)
+    --- PASS: TestNodeWatchOtherFormsRefused/persistent_run_time (0.24s)
+    --- PASS: TestNodeWatchOtherFormsRefused/arms_differ (0.26s)
+    --- PASS: TestNodeWatchOtherFormsRefused/rest_listener (0.26s)
+    --- PASS: TestNodeWatchOtherFormsRefused/numeric_slot (0.24s)
+    --- PASS: TestNodeWatchOtherFormsRefused/other_event (0.25s)
+    --- PASS: TestNodeWatchOtherFormsRefused/detached_close (0.24s)
+    --- PASS: TestNodeWatchOtherFormsRefused/detached_on (0.23s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	4.976s
+FAIL

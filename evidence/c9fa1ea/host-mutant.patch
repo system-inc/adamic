@@ -1,0 +1,13 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 75b3d7642..7603729c4 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -239,7 +239,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip
+ 				// own registration (library_node.go). So a method declared only in TypeScript's library or
+ 				// Node's (hostDeclaredSymbol) is left as it was before this stop: the hole was a program's
+ 				// own body.
+-				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) || l.hostDeclaredSymbol(inside) {
++				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) {
+ 					continue
+ 				}
+ 				return &widening{source: source, target: target, genericMethod: viewed.Name}
