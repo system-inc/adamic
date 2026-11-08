@@ -51,7 +51,7 @@ console.log(` + "`${a.name} ${a.next.length}`" + `);
 		// tsc's own shape (executeCommandLine.ts:411): a record of string arrays read by Object.entries,
 		// in a graph program. A string[] holds only strings, so nothing a cycle could run through.
 		{"a record of string arrays", graphUnplannedNode + `const inverted: { [value: string]: string[] } = {};
-(inverted['es6'] ||= []).push('es2015');
+inverted['es6'] = ['es2015', 'es6'];
 const joined = Object.entries(inverted).map(([, synonyms]) => synonyms.join('/'));
 console.log(` + "`${a.name} ${joined.join()}`" + `);
 `, ""},
