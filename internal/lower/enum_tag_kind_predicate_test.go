@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -253,6 +254,51 @@ func TestEnumTagRuntimeRefinementPosition(t *testing.T) {
 				refused.Fix != "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)" ||
 				!strings.HasSuffix(refused.Where, "/main"+extension+":4:71") {
 				t.Fatalf("want exact open-enum tag refusal at main%s:4:71, got %v", extension, err)
+			}
+		})
+	}
+}
+
+// A heritage base runs even though ExpressionWithTypeArguments is classified as a type node.
+// Judge the actual read directly so an earlier class-heritage stop cannot mask this rule.
+// Mutant run and restored: drop hasTypeAncestor's ExpressionWithTypeArguments expression case;
+// the heritage row returns nil instead of the ordinary read's enum-tag Refused.
+func TestEnumTagHeritageExpressionRefusal(t *testing.T) {
+	t.Parallel()
+	types := strings.ReplaceAll(enumTagTypePositionTypes, "readonly literal: Tagged", "readonly literal: Tagged & { readonly base: typeof Base }") + "class Base {}\n"
+	var ordinary *Refused
+	for _, probe := range []struct{ name, body string }{
+		{"ordinary", "return value.kind === Kind.B ? value.literal.base : Base;"},
+		{"heritage", "class D extends (value.kind === Kind.B ? value.literal.base : Base) {}"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			l, statements := enumGuardProof(t, types+"function use(value: X) { "+probe.body+" }\n")
+			var read *ast.Node
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if ast.IsIdentifier(node) && node.Text() == "value" && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name().Text() == "literal" {
+					read = node
+					return true
+				}
+				return node.ForEachChild(visit)
+			}
+			for _, statement := range statements {
+				if visit(statement) {
+					break
+				}
+			}
+			if read == nil {
+				t.Fatal("missing refined union read")
+			}
+			err := l.enumRefusal(read)
+			var refused *Refused
+			if !errors.As(err, &refused) || refused.What != kindPredicateRefusal || refused.Where != l.program.Where(read) {
+				t.Fatalf("want enum-tag Refused at the refined read, got %v", err)
+			}
+			if probe.name == "ordinary" {
+				ordinary = refused
+			} else if ordinary == nil || refused.What != ordinary.What || refused.Fix != ordinary.Fix {
+				t.Fatalf("want the ordinary read's exact refusal, got %v", err)
 			}
 		})
 	}
