@@ -9,8 +9,8 @@ The before and after input trees use the initial main adaptation set. Only core.
 
 Exactly **73 of 79** before roots first stop at core.ts:356:37 on the double cast. All 73 move past it. Their new first stops, grouped by reason:
 
-| Roots | Kind | New first stop | Reason |
-| ---: | --- | --- | --- |
-| 73 | Refused | src/compiler/core.ts:381:26 | a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold |
+| Roots | Kind    | New first stop              | Reason                                                                                                                                         |
+| ----: | ------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+|    73 | Refused | src/compiler/core.ts:381:26 | a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold |
 
 The core.ts:381:26 call is in flatten, whose text this adaptation does not edit. These are observed lowering stops after a clean checker, not native compilation successes. census-results.json lists every root and all other first stops. The raw JSONL, driver logs, compiler hashes, commands, and dependency pins are retained beside this report.

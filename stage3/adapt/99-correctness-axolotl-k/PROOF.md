@@ -3,21 +3,21 @@
 All measured checks below pass on initial main 6761c7374 plus this adaptation.
 The adapted upstream pin is 050880ce59e30b356b686bd3144efe24f875ebc8.
 
-| Check | Result |
-| --- | --- |
-| Count before creating the adapter | 6 identity-return calls, 0 non-full; 7 wider calls, 0 non-full |
-| Stock TypeScript 6.0.3 compiler project | 0 diagnostics |
-| Adamic types, complete sorted 79-root input | 0 diagnostics before, 0 after; both commands exit 0 |
-| Node witnesses using actual extracted functions and tsc's real repopulation helpers | 11 valid before/after rows identical; 4 invalid identity-return cases checked |
-| Mutant restoring the unchecked chain cast | Red, exit 1; all 4 invalid cases escape the guard |
-| Owner contract | 13 no-write refusals; unrelated edit accepted; second run preserves bytes and mtimes with zero writes |
-| Full stage3/lane/run.sh | PASS; apply exit 0; 106,366 passes, one sanctioned API failure, 0 pending |
-| Complete pass/fail identity lists | Byte-identical sorted lists, including multiplicities; 106,367 outcomes |
-| Both public declaration files | Byte-identical to main |
-| core.ts emitted JavaScript | Byte-identical, with comments kept and removed |
-| generate_shards.py --check | Exit 0 |
-| Go stage3/lane fixtures | Exit 0 using 99j's fixture command |
-| Per-file meter census | All 79 roots measured; all 73 core.ts:356 movers now stop at core.ts:381:26 |
+| Check                                                                               | Result                                                                                                |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Count before creating the adapter                                                   | 6 identity-return calls, 0 non-full; 7 wider calls, 0 non-full                                        |
+| Stock TypeScript 6.0.3 compiler project                                             | 0 diagnostics                                                                                         |
+| Adamic types, complete sorted 79-root input                                         | 0 diagnostics before, 0 after; both commands exit 0                                                   |
+| Node witnesses using actual extracted functions and tsc's real repopulation helpers | 11 valid before/after rows identical; 4 invalid identity-return cases checked                         |
+| Mutant restoring the unchecked chain cast                                           | Red, exit 1; all 4 invalid cases escape the guard                                                     |
+| Owner contract                                                                      | 13 no-write refusals; unrelated edit accepted; second run preserves bytes and mtimes with zero writes |
+| Full stage3/lane/run.sh                                                             | PASS; apply exit 0; 106,366 passes, one sanctioned API failure, 0 pending                             |
+| Complete pass/fail identity lists                                                   | Byte-identical sorted lists, including multiplicities; 106,367 outcomes                               |
+| Both public declaration files                                                       | Byte-identical to main                                                                                |
+| core.ts emitted JavaScript                                                          | Byte-identical, with comments kept and removed                                                        |
+| generate_shards.py --check                                                          | Exit 0                                                                                                |
+| Go stage3/lane fixtures                                                             | Exit 0 using 99j's fixture command                                                                    |
+| Per-file meter census                                                               | All 79 roots measured; all 73 core.ts:356 movers now stop at core.ts:381:26                           |
 
 The Go fixture command is `go test -count=1 -skip 'TestShard_|TestProduct_' ./stage3/lane/`,
 the same boundary as 99j's retained proof. It runs the lane fixtures; the complete
