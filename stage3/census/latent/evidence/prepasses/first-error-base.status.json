@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/tmp/sygfnmc-base",
+    "/workspace/scratch/sygfnmc-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-base.jsonl"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 2365.8,
+  "peak_rss_kib": 8169948,
+  "user_seconds": 2761.44,
+  "system_seconds": 55.77,
+  "exit_status_source": "Linux /proc/PID/stat exit_code after zombie state",
+  "resource_source": "process lifetime CPU ticks and sampled lifetime VmHWM; final sampling interval may miss a peak",
+  "recovery": "Original outer runner ended during environment reconnect; measurement process continued unchanged.",
+  "pid": 19423
+}

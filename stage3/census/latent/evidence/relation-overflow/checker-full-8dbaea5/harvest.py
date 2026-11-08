@@ -47,13 +47,13 @@ result = dict(task='8dbaea5', complete=trailer is not None, after_load=after_loa
               completed_timed_units=len(units), last_completed_timed_unit=units[-1] if units else None,
               program_relation_queries=len(program_queries), metrics=metrics, provenance=provenance)
 if trailer: result['relation_report'] = trailer
-(out / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
+(out / 'result.json.txt').write_text(json.dumps(result, indent=2) + '\n')
 for path in [run / 'latent.jsonl', run / 'unit-times.jsonl', run / 'relation-times.jsonl', run / 'run.log', base / 'apply.log', base / 'main-npm.log']:
     if path.exists():
         with path.open('rb') as inp, (out / (path.name + '.gz')).open('wb') as raw, gzip.GzipFile(filename='', mode='wb', fileobj=raw, mtime=0) as compressed:
             shutil.copyfileobj(inp, compressed)
 for path in [run / 'metrics.json', base / 'measurement-provenance.json', base / 'measure.sh', run / 'wrapper.log', base / 'measure-wrapper.log', run / 'wrapper.exit', base / 'main-npm.exit', base / 'apply.exit', run / 'stop-request.json', run / 'stop-reason.txt', run / 'process-status-at-stop.txt']:
-    if path.exists(): shutil.copyfile(path, out / (path.name + '.txt' if path.suffix == '.log' else path.name))
+    if path.exists(): shutil.copyfile(path, out / (path.name + '.txt' if path.suffix == '.log' or path.name == 'measurement-provenance.json' else path.name))
 shutil.copyfile(__file__, out / 'harvest.py')
 if (base / 'adapted/patch-set.md').exists(): shutil.copyfile(base / 'adapted/patch-set.md', out / 'adapted-patch-set.md')
 source_paths = observations[0].get('sources', []) if observations else []
