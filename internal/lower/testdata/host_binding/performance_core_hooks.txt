@@ -1,0 +1,27 @@
+function tryGetPerformanceHooks(): PerformanceHooks | undefined {
+    const p = tryGetPerformance();
+    if (!p) return undefined;
+    const { shouldWriteNativeEvents, performance } = p;
+
+    const hooks: PerformanceHooks = {
+        shouldWriteNativeEvents,
+        performance: undefined,
+        performanceTime: undefined,
+    };
+
+    if (typeof performance.timeOrigin === "number" && typeof performance.now === "function") {
+        hooks.performanceTime = performance;
+    }
+
+    if (
+        hooks.performanceTime &&
+        typeof performance.mark === "function" &&
+        typeof performance.measure === "function" &&
+        typeof performance.clearMarks === "function" &&
+        typeof performance.clearMeasures === "function"
+    ) {
+        hooks.performance = performance;
+    }
+
+    return hooks;
+}
