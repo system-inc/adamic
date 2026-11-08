@@ -1,0 +1,512 @@
+[
+  {
+    "site": "compiler/transformers/esDecorators.ts:753:41",
+    "stderr_line": 3956,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:753:34\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:914:50",
+    "stderr_line": 3971,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:914:43\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:924:46",
+    "stderr_line": 3973,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:924:39\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 4195,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:26\tTIn\tresolved=(BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike, Visitor<NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>, Node>, (node: Node) => node is PropertyName, ((node: readonly Node[]) => Node) | undefined) => PropertyName\targument=BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 4196,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:26\tTVisited\tresolved=(BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike, Visitor<NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>, Node>, (node: Node) => node is PropertyName, ((node: readonly Node[]) => Node) | undefined) => PropertyName\targument=Node\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 4197,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:26\tTOut\tresolved=(BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike, Visitor<NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>, Node>, (node: Node) => node is PropertyName, ((node: readonly Node[]) => Node) | undefined) => PropertyName\targument=PropertyName\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 4204,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:16\tTIn\tresolved=(BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral, Visitor<NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>, Node>, (node: Node) => node is PropertyName, ((node: readonly Node[]) => Node) | undefined) => PropertyName\targument=BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 4205,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:16\tTVisited\tresolved=(BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral, Visitor<NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>, Node>, (node: Node) => node is PropertyName, ((node: readonly Node[]) => Node) | undefined) => PropertyName\targument=Node\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 4206,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:16\tTOut\tresolved=(BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral, Visitor<NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>, Node>, (node: Node) => node is PropertyName, ((node: readonly Node[]) => Node) | undefined) => PropertyName\targument=PropertyName\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:218:13",
+    "stderr_line": 4388,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:217:44\tT\tresolved=(VariableDeclaration[], VariableDeclaration | undefined) => VariableDeclaration[]\targument=VariableDeclaration\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 4428,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:27\tTIn\tresolved=(MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration, Visitor<NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>, Node>, (node: Node) => node is ObjectLiteralElementLike, ((node: readonly Node[]) => Node) | undefined) => ObjectLiteralElementLike\targument=MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 4429,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:27\tTVisited\tresolved=(MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration, Visitor<NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>, Node>, (node: Node) => node is ObjectLiteralElementLike, ((node: readonly Node[]) => Node) | undefined) => ObjectLiteralElementLike\targument=Node\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 4430,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:27\tTOut\tresolved=(MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration, Visitor<NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>, Node>, (node: Node) => node is ObjectLiteralElementLike, ((node: readonly Node[]) => Node) | undefined) => ObjectLiteralElementLike\targument=ObjectLiteralElementLike\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:757:17",
+    "stderr_line": 4468,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:757:17\tT\tresolved=(Statement[], Statement | undefined) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1264:49",
+    "stderr_line": 4539,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1264:42\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1273:45",
+    "stderr_line": 4544,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1273:38\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1307:41",
+    "stderr_line": 4560,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1307:34\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1325:41",
+    "stderr_line": 4562,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1325:34\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:512:13",
+    "stderr_line": 4757,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:511:44\tT\tresolved=(VariableDeclaration[], VariableDeclaration | undefined) => VariableDeclaration[]\targument=VariableDeclaration\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:2756:35",
+    "stderr_line": 4964,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:2756:35\tT\tresolved=(Expression[] | undefined, Expression) => Expression[]\targument=Expression\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:247:57",
+    "stderr_line": 5463,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:247:57\tT\tresolved=(CallExpression[] | undefined, CallExpression) => CallExpression[]\targument=CallExpression\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 5627,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1484:30\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 5628,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1486:21\tT\tresolved=(VariableStatement, Node | undefined) => VariableStatement\targument=VariableStatement\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 5629,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1487:25\tT\tresolved=(VariableStatement, Readonly<TextRange> | undefined) => VariableStatement\targument=VariableStatement\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 5630,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1504:26\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 5631,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1510:29\tT\tresolved=(VariableDeclaration, Node | undefined) => VariableDeclaration\targument=VariableDeclaration\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 5632,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1511:33\tT\tresolved=(VariableDeclaration, Readonly<TextRange> | undefined) => VariableDeclaration\targument=VariableDeclaration\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 5633,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1513:41\tT\tresolved=(Identifier) => Identifier\targument=Identifier\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 5634,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1559:30\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 5635,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1561:21\tT\tresolved=(ExpressionStatement, Node | undefined) => ExpressionStatement\targument=ExpressionStatement\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 5636,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1562:25\tT\tresolved=(ExpressionStatement, Readonly<TextRange> | undefined) => ExpressionStatement\targument=ExpressionStatement\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 5637,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1576:30\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 5638,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1578:21\tT\tresolved=(VariableStatement, Node | undefined) => VariableStatement\targument=VariableStatement\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 5639,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1579:25\tT\tresolved=(VariableStatement, Readonly<TextRange> | undefined) => VariableStatement\targument=VariableStatement\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 5640,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1585:45\tT\tresolved=(Identifier) => Identifier\targument=Identifier\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 5641,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1603:30\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 5642,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1605:21\tT\tresolved=(ExpressionStatement, Node | undefined) => ExpressionStatement\targument=ExpressionStatement\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 5643,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1606:25\tT\tresolved=(ExpressionStatement, Readonly<TextRange> | undefined) => ExpressionStatement\targument=ExpressionStatement\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5657,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1752:26\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5658,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1754:17\tT\tresolved=(FunctionDeclaration, Node | undefined) => FunctionDeclaration\targument=FunctionDeclaration\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5659,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1755:21\tT\tresolved=(FunctionDeclaration, Readonly<TextRange> | undefined) => FunctionDeclaration\targument=FunctionDeclaration\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5660,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:29\tTIn\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is Modifier, number | undefined, number | undefined) => NodeArray<Modifier> | undefined\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5661,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:29\tTInArray\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is Modifier, number | undefined, number | undefined) => NodeArray<Modifier> | undefined\targument=NodeArray<ModifierLike> | undefined\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5662,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:29\tTOut\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is Modifier, number | undefined, number | undefined) => NodeArray<Modifier> | undefined\targument=Modifier\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5663,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:29\tTIn\tresolved=(NodeArray<ParameterDeclaration>, Visitor<Node, Node | undefined>, (node: Node) => node is ParameterDeclaration, number | undefined, number | undefined) => NodeArray<ParameterDeclaration>\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5664,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:29\tTInArray\tresolved=(NodeArray<ParameterDeclaration>, Visitor<Node, Node | undefined>, (node: Node) => node is ParameterDeclaration, number | undefined, number | undefined) => NodeArray<ParameterDeclaration>\targument=NodeArray<ParameterDeclaration>\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5665,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:29\tTOut\tresolved=(NodeArray<ParameterDeclaration>, Visitor<Node, Node | undefined>, (node: Node) => node is ParameterDeclaration, number | undefined, number | undefined) => NodeArray<ParameterDeclaration>\targument=ParameterDeclaration\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 5666,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1763:29\tT\tresolved=(Block | undefined, Visitor, TransformationContext | undefined, { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<...> | (TInArray & undefined); <TIn extends Node, TInArray extends Node..., Visitor | undefined) => Block | undefined\targument=Block\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 5667,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:26\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 5668,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:45\tT\tresolved=(FunctionDeclaration, Visitor, TransformationContext | undefined) => FunctionDeclaration\targument=FunctionDeclaration\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5669,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1787:26\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5670,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1789:17\tT\tresolved=(ClassDeclaration, Node | undefined) => ClassDeclaration\targument=ClassDeclaration\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5671,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1790:21\tT\tresolved=(ClassDeclaration, Readonly<TextRange> | undefined) => ClassDeclaration\targument=ClassDeclaration\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5672,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:29\tTIn\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is ModifierLike, number | undefined, number | undefined) => NodeArray<ModifierLike> | undefined\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5673,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:29\tTInArray\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is ModifierLike, number | undefined, number | undefined) => NodeArray<ModifierLike> | undefined\targument=NodeArray<ModifierLike> | undefined\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5674,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:29\tTOut\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is ModifierLike, number | undefined, number | undefined) => NodeArray<ModifierLike> | undefined\targument=ModifierLike\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5675,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:29\tTIn\tresolved=(NodeArray<HeritageClause> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is HeritageClause, number | undefined, number | undefined) => NodeArray<HeritageClause> | undefined\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5676,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:29\tTInArray\tresolved=(NodeArray<HeritageClause> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is HeritageClause, number | undefined, number | undefined) => NodeArray<HeritageClause> | undefined\targument=NodeArray<HeritageClause> | undefined\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5677,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:29\tTOut\tresolved=(NodeArray<HeritageClause> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is HeritageClause, number | undefined, number | undefined) => NodeArray<HeritageClause> | undefined\targument=HeritageClause\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5678,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:29\tTIn\tresolved=(NodeArray<ClassElement>, Visitor<Node, Node | undefined>, (node: Node) => node is ClassElement, number | undefined, number | undefined) => NodeArray<ClassElement>\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5679,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:29\tTInArray\tresolved=(NodeArray<ClassElement>, Visitor<Node, Node | undefined>, (node: Node) => node is ClassElement, number | undefined, number | undefined) => NodeArray<ClassElement>\targument=NodeArray<ClassElement>\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 5680,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:29\tTOut\tresolved=(NodeArray<ClassElement>, Visitor<Node, Node | undefined>, (node: Node) => node is ClassElement, number | undefined, number | undefined) => NodeArray<ClassElement>\targument=ClassElement\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 5681,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:26\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 5682,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:45\tT\tresolved=(ClassDeclaration, Visitor, TransformationContext | undefined) => ClassDeclaration\targument=ClassDeclaration\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1886:37",
+    "stderr_line": 5698,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1886:30\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1894:37",
+    "stderr_line": 5702,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1894:30\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 5703,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:26\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 5704,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:45\tT\tresolved=(VariableStatement, Visitor, TransformationContext | undefined) => VariableStatement\targument=VariableStatement\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:2138:29",
+    "stderr_line": 5713,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:2138:22\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5745,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:801:33\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5746,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:21\tTIn\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is ModifierLike, number | undefined, number | undefined) => NodeArray<ModifierLike> | undefined\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5747,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:21\tTInArray\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is ModifierLike, number | undefined, number | undefined) => NodeArray<ModifierLike> | undefined\targument=NodeArray<ModifierLike> | undefined\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5748,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:21\tTOut\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is ModifierLike, number | undefined, number | undefined) => NodeArray<ModifierLike> | undefined\targument=ModifierLike\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5749,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:21\tTIn\tresolved=(NodeArray<ParameterDeclaration>, Visitor<Node, Node | undefined>, (node: Node) => node is ParameterDeclaration, number | undefined, number | undefined) => NodeArray<ParameterDeclaration>\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5750,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:21\tTInArray\tresolved=(NodeArray<ParameterDeclaration>, Visitor<Node, Node | undefined>, (node: Node) => node is ParameterDeclaration, number | undefined, number | undefined) => NodeArray<ParameterDeclaration>\targument=NodeArray<ParameterDeclaration>\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5751,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:21\tTOut\tresolved=(NodeArray<ParameterDeclaration>, Visitor<Node, Node | undefined>, (node: Node) => node is ParameterDeclaration, number | undefined, number | undefined) => NodeArray<ParameterDeclaration>\targument=ParameterDeclaration\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5752,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:21\tTIn\tresolved=(Block | undefined, Visitor<Block, Node>, (node: Node) => node is Block, ((node: readonly Node[]) => Node) | undefined) => Block | undefined\targument=Block | undefined\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5753,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:21\tTVisited\tresolved=(Block | undefined, Visitor<Block, Node>, (node: Node) => node is Block, ((node: readonly Node[]) => Node) | undefined) => Block | undefined\targument=Node\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 5754,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:21\tTOut\tresolved=(Block | undefined, Visitor<Block, Node>, (node: Node) => node is Block, ((node: readonly Node[]) => Node) | undefined) => Block | undefined\targument=Block\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 5755,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:33\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 5756,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:59\tT\tresolved=(FunctionDeclaration, Visitor, TransformationContext | undefined) => FunctionDeclaration\targument=FunctionDeclaration\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5757,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:836:22\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5758,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:838:13\tT\tresolved=(ExpressionStatement, Readonly<TextRange> | undefined) => ExpressionStatement\targument=ExpressionStatement\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5759,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:842:25\tT\tresolved=(ClassExpression, Readonly<TextRange> | undefined) => ClassExpression\targument=ClassExpression\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5760,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:33\tTIn\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is ModifierLike, number | undefined, number | undefined) => NodeArray<ModifierLike> | undefined\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5761,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:33\tTInArray\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is ModifierLike, number | undefined, number | undefined) => NodeArray<ModifierLike> | undefined\targument=NodeArray<ModifierLike> | undefined\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5762,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:33\tTOut\tresolved=(NodeArray<ModifierLike> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is ModifierLike, number | undefined, number | undefined) => NodeArray<ModifierLike> | undefined\targument=ModifierLike\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5763,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:33\tTIn\tresolved=(NodeArray<HeritageClause> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is HeritageClause, number | undefined, number | undefined) => NodeArray<HeritageClause> | undefined\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5764,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:33\tTInArray\tresolved=(NodeArray<HeritageClause> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is HeritageClause, number | undefined, number | undefined) => NodeArray<HeritageClause> | undefined\targument=NodeArray<HeritageClause> | undefined\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5765,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:33\tTOut\tresolved=(NodeArray<HeritageClause> | undefined, Visitor<Node, Node | undefined>, (node: Node) => node is HeritageClause, number | undefined, number | undefined) => NodeArray<HeritageClause> | undefined\targument=HeritageClause\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5766,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:33\tTIn\tresolved=(NodeArray<ClassElement>, Visitor<Node, Node | undefined>, (node: Node) => node is ClassElement, number | undefined, number | undefined) => NodeArray<ClassElement>\targument=Node\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5767,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:33\tTInArray\tresolved=(NodeArray<ClassElement>, Visitor<Node, Node | undefined>, (node: Node) => node is ClassElement, number | undefined, number | undefined) => NodeArray<ClassElement>\targument=NodeArray<ClassElement>\tconstraint=NodeArray<Node> | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 5768,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:33\tTOut\tresolved=(NodeArray<ClassElement>, Visitor<Node, Node | undefined>, (node: Node) => node is ClassElement, number | undefined, number | undefined) => NodeArray<ClassElement>\targument=ClassElement\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:894:33",
+    "stderr_line": 5775,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:894:26\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 5777,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:30\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 5778,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:49\tT\tresolved=(ExpressionStatement, Readonly<TextRange> | undefined) => ExpressionStatement\targument=ExpressionStatement\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:1189:29",
+    "stderr_line": 5788,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:1189:22\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 5915,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:265:22\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 5916,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:267:13\tT\tresolved=(VariableStatement, Node | undefined) => VariableStatement\targument=VariableStatement\tconstraint=Node"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 5917,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:268:17\tT\tresolved=(VariableStatement, Readonly<TextRange> | undefined) => VariableStatement\targument=VariableStatement\tconstraint=TextRange"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 5918,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:274:37\tT\tresolved=(Identifier) => Identifier\targument=Identifier\tconstraint=Node | undefined"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:297:17",
+    "stderr_line": 5919,
+    "line": "probe-binding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:296:26\tT\tresolved=(Statement[] | undefined, Statement) => Statement[]\targument=Statement\tconstraint={}"
+  }
+]

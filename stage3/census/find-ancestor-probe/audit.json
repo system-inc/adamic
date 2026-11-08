@@ -1,0 +1,33 @@
+{
+  "source_hashes_unchanged_and_match_prior": true,
+  "parent": {
+    "stderr_sha256": "a7abf2c75fc7428e6a6bb75db6467c2c8e75d1406496729794a9a111bd14ce07",
+    "stderr_lines": 7116,
+    "probe_lines": 7035,
+    "selected_probe_occurrences": 102,
+    "filtered_index_complete": true,
+    "raw_jsonl_byte_identical": true,
+    "child_exit": 0,
+    "wall_seconds": 2021.053628861,
+    "process_exited": true
+  },
+  "head": {
+    "stderr_sha256": "c0ffac1cd67ee5e8e2db450536e1295d58304a59b2d7999a89221b78dc64692f",
+    "stderr_lines": 7116,
+    "probe_lines": 7035,
+    "selected_probe_occurrences": 102,
+    "filtered_index_complete": true,
+    "raw_jsonl_byte_identical": true,
+    "child_exit": 0,
+    "wall_seconds": 1987.1741293240002,
+    "process_exited": true
+  },
+  "sites": 38,
+  "changed_call_sites": 33,
+  "assignment_sites_without_call": 2,
+  "controls": 3,
+  "ordered_sequences_identical": true,
+  "report_quotes_exact": true,
+  "go_evidence_uses_go_txt": true,
+  "checkpoint_pushes_successful": true
+}
