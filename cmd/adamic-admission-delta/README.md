@@ -31,6 +31,35 @@ classification, runtime checks and total wall times. Corpus programs and imports
 head checkout, including when supplied binaries are used. `--corpus <dir>`
 recursively selects `.a` and `.ts` files inside head for ad hoc runs.
 
+The head checkout's `stage3/api` gets its packages by one of two roads
+(#zvaxp1x). When the invoking repository already holds an install at
+`stage3/api/node_modules` that its own `stage3/apply.py --packages-digest`
+digests to the checkout's `stage3/api/node_modules.sha256`, the tool copies it
+into the checkout: modes kept, symlinks kept as symlinks with their target text,
+never a link to the invoking repository's copy, since the checkout's
+`@types/node` is then corrected in place. The checkout's own `apply.py
+--packages-digest` must then read the copy as that same pin, before any
+correction, or the run fails. Otherwise the tool runs `npm ci --ignore-scripts`
+in the checkout, with npm found as a build's tools are, under a 90 second limit.
+A box with no npm fails, naming both roads: why npm wasn't found, and why the
+laid install wasn't used (absent, a different `package-lock.json`, a checkout
+that pins none, or `digest <actual> is not the pin <pinned>`).
+
+No house box has npm, so a proof job runs the tool from its own worktree, where
+Loom lays the pinned `stage3/api/node_modules`:
+
+```sh
+cd <proof job worktree>
+python3 cloud/admission-corpus/manifest.py --sha HEAD > /tmp/manifest.json
+go run ./cmd/adamic-admission-delta --base origin/main --head HEAD \
+  --manifest /tmp/manifest.json \
+  --manifest-generator cloud/admission-corpus/manifest.py --json
+```
+
+Only head's checkout is provisioned, against head's own pin. When head pins a
+different install from the worktree the tool runs from, head falls back to npm,
+and on a box with none it fails loud.
+
 The manifest's `sha` must equal resolved head. Its named `corpora` each have a
 `programs` list of `{ "path": "...", "blob": "git blob hash" }`. Empty corpora
 are retained in JSON. Every entry is verified against head. The result records
