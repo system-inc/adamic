@@ -413,9 +413,11 @@ type lowering struct {
 
 	// classes maps each module class's symbol to its declaration, and instances each instantiation
 	// already lowered (class.go).
-	// omittedOptionals is every optional property some object literal typed by its context leaves out:
-	// that object has no slot for it (class.go's absentOptionalWrite).
-	omittedOptionals map[*ast.Symbol]bool
+	// omittedOptionals names every optional property some producer leaves out, by name: a contextually
+	// typed object literal, or any type a decodeJson schema reaches. That object has no slot for it, and
+	// a view of it through any type naming the field reaches the same object (class.go's
+	// absentOptionalWrite).
+	omittedOptionals map[string]bool
 	classes          map[*ast.Symbol]*ast.Node
 	statics          map[*ast.Symbol]*instance
 	staticGlobals    map[*ast.Symbol]int

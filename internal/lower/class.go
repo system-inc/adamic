@@ -494,13 +494,15 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, DeclaredType: l.checker.TypeToString(declared), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression), ViewReceiverTypeID: l.viewWriteReceiverTypeID(target, target.AsPropertyAccessExpression().Expression, l.fieldName(target.Name()))}}, nil
 }
 
-// absentOptionalWrite refuses a write to an optional own field of a plain object when some literal left
-// that field out: the literal's object has no slot for it, and the write would find none ('a field the
+// absentOptionalWrite refuses a write to an optional own field of a plain object when some producer left
+// a field of that name out: that object has no slot for it, and the write would find none ('a field the
 // checker proved is there is missing'), whatever the field's representation. A field held in a Union is
 // refused wherever it's written, as before. A class instance declares every field, so it has the slot.
-// The field is matched by its declarations (fieldDeclarations), never by the type that spelled it, so an
-// interface, an intersection, an alias of either, an upcast view and a generic's constraint all reach the
-// same field (#krv1hgh). Optional presence lifts this (#r3chqza).
+// The field is matched by name, never by the declaration that spelled it: a literal typed Link, seen
+// through another interface or a generic's constraint that declares next again, is the same object with
+// no slot, which declaration keying missed (#g2aj1pb's g3 and g6, panicking on main 72f23939). Name
+// keying stops a write to a name some unrelated type left out too; that's the fail-closed price until
+// optional presence lifts this (#r3chqza).
 func (l *lowering) absentOptionalWrite(target *ast.Node) error {
 	member := l.checker.GetSymbolAtLocation(target)
 	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
@@ -509,28 +511,10 @@ func (l *lowering) absentOptionalWrite(target *ast.Node) error {
 	if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
 		return l.notYet(target, "writing a possibly absent optional own field")
 	}
-	omitted := false
-	for _, field := range fieldDeclarations(member) {
-		omitted = omitted || l.omittedOptionals[field]
-	}
-	if omitted && !presentBeforeWrite(target) && !l.literalGivesField(target) {
+	if l.omittedOptionals[member.Name] && !presentBeforeWrite(target) && !l.literalGivesField(target) {
 		return l.notYet(target, "writing a possibly absent optional own field")
 	}
 	return nil
-}
-
-// fieldDeclarations is a property's symbol and the symbols of the declarations it was made from. An
-// interface's or a type literal's property is its own declaration's. An intersection's, or an
-// instantiated or mapped type's, is a symbol the checker makes for that type alone, so Mut & { brand }
-// and Mut name one field by two symbols, and only the declarations' tie them.
-func fieldDeclarations(property *ast.Symbol) []*ast.Symbol {
-	symbols := []*ast.Symbol{property}
-	for _, declaration := range property.Declarations {
-		if declared := declaration.Symbol(); declared != nil && declared != property {
-			symbols = append(symbols, declared)
-		}
-	}
-	return symbols
 }
 
 // presentBeforeWrite is a write to object.name inside the then branch of an if that tested
@@ -630,16 +614,21 @@ func (l *lowering) literalGivesField(target *ast.Node) bool {
 	return false
 }
 
-// noteOmittedOptionals finds every object literal whose context types it and records the optional
-// properties of that type it leaves out, by their declarations (fieldDeclarations). A spread counts as
-// giving a property its source declares required. A context that's an intersection of object types is
-// one object, whose optional properties the literal leaves out as an interface's (#krv1hgh).
+// noteOmittedOptionals finds every producer that can leave an optional property out and records the
+// property's name. An object literal whose context types it leaves out the optional properties of that
+// type it doesn't give; a spread counts as giving a property its source declares required. A context
+// that's an intersection of object types is one object, whose optional properties the literal leaves out
+// as an interface's (#krv1hgh). A decodeJson call leaves out every optional property of every type its
+// schema reaches, whenever the text has no such key (#g2aj1pb).
 func (l *lowering) noteOmittedOptionals(modules []*ast.SourceFile) {
-	l.omittedOptionals = map[*ast.Symbol]bool{}
+	l.omittedOptionals = map[string]bool{}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindObjectLiteralExpression {
+		switch node.Kind {
+		case ast.KindObjectLiteralExpression:
 			l.noteOmittedOptionalsOf(node)
+		case ast.KindCallExpression:
+			l.noteDecodedOptionals(node)
 		}
 		return node.ForEachChild(visit)
 	}
@@ -683,12 +672,52 @@ func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
 				}
 			}
 			if !spread {
-				for _, field := range fieldDeclarations(property) {
-					l.omittedOptionals[field] = true
-				}
+				l.omittedOptionals[property.Name] = true
 			}
 		}
 	}
+}
+
+// noteDecodedOptionals records, for a decodeJson call, every optional property of every type its target
+// reaches: through fields, array and tuple elements, and union and intersection members. A decoded object
+// holds only the keys its text has, so each is one a decoded object can leave out. The walk reads types
+// only, never the schema (jsonDecodeSchema interns constants as it builds), and a type it can't decode is
+// left to the call's own refusal.
+func (l *lowering) noteDecodedOptionals(node *ast.Node) {
+	call := node.AsCallExpression()
+	if !l.isPreludeFunction(call.Expression, "decodeJson") || call.TypeArguments == nil || len(call.TypeArguments.Nodes) != 1 {
+		return
+	}
+	seen := map[*checker.Type]bool{}
+	var walk func(*checker.Type)
+	walk = func(proven *checker.Type) {
+		if proven == nil || seen[proven] {
+			return
+		}
+		seen[proven] = true
+		if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+			for _, member := range proven.Types() {
+				walk(member)
+			}
+			return
+		}
+		if proven.Flags()&checker.TypeFlagsObject == 0 {
+			return
+		}
+		if l.isArrayType(proven) || checker.IsTupleType(proven) {
+			for _, element := range l.checker.GetTypeArguments(proven) {
+				walk(element)
+			}
+			return
+		}
+		for _, property := range l.checker.GetPropertiesOfType(proven) {
+			if property.Flags&ast.SymbolFlagsOptional != 0 {
+				l.omittedOptionals[property.Name] = true
+			}
+			walk(l.checker.GetTypeOfSymbol(property))
+		}
+	}
+	walk(l.checker.GetTypeFromTypeNode(call.TypeArguments.Nodes[0]))
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
