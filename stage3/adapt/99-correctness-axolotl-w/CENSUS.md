@@ -6,14 +6,14 @@ No overlay, suppression, backend change or partial-root fallback.
 
 All 79 TypeScript compiler roots were measured independently.
 
-| Roots | Kind | First stop | Exact reason |
-| ---: | --- | --- | --- |
-| 73 | Refused | `core.ts:810:89` | a cast the runtime can't check |
-| 2 | accepted | `-` | - |
-| 1 | NotYet | `debug.ts:243:59` | a generic instantiation whose type argument for T, constrained to Node, can't be read |
-| 1 | NotYet | `semver.ts:71:9` | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
-| 1 | NotYet | `commandLineParser.ts:293:35` | reading an enum before its runtime initialization; move the call after the enum declaration |
-| 1 | NotYet | `diagnosticInformationMap.generated.ts:13:45` | reading an enum before its runtime initialization; move the call after the enum declaration |
+| Roots | Kind     | First stop                                    | Exact reason                                                                                                                                 |
+| ----: | -------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+|    73 | Refused  | `core.ts:810:89`                              | a cast the runtime can't check                                                                                                               |
+|     2 | accepted | `-`                                           | -                                                                                                                                            |
+|     1 | NotYet   | `debug.ts:243:59`                             | a generic instantiation whose type argument for T, constrained to Node, can't be read                                                        |
+|     1 | NotYet   | `semver.ts:71:9`                              | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
+|     1 | NotYet   | `commandLineParser.ts:293:35`                 | reading an enum before its runtime initialization; move the call after the enum declaration                                                  |
+|     1 | NotYet   | `diagnosticInformationMap.generated.ts:13:45` | reading an enum before its runtime initialization; move the call after the enum declaration                                                  |
 
 The 73 roots still stop at core.ts:810:89. The bridge is now `as unknown as`,
 but the exact ordinary compiler reason remains `a cast the runtime can't check`.

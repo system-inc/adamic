@@ -4,21 +4,21 @@ The base and ordinary compiler are unmodified main a28effb2c. No compiler overla
 refusal suppression, backend change or partial-root fallback is used.
 provenance.json retains the full commit and exact compiler binary hashes.
 
-| Check | Result |
-| --- | --- |
-| Full apply before and after, --build-product | Both exit 0 |
-| Adapter replay on full applied tree | Zero files, zero edits, javascriptChanging false |
-| Owner contract | Pass, ten no-write refusals, foreign edit and LF/CRLF preserved |
-| Replay contract | Source bytes and mtime preserved; zero writes |
-| Adamic types, all 79 sorted roots before and after | Both exit 0; zero diagnostics |
-| Ordinary compiler builds before and after | Both exit 0 |
-| Both public declarations | Byte-identical |
-| Complete core.ts JavaScript with comments kept and removed | Byte-identical |
-| All nine normally emitted JavaScript files | Byte-identical |
-| Source scope | All 746 source files compared; only the pinned core.ts edit differs |
-| generate_shards --check | Exit 0 |
-| stage3/lane Go fixtures | Exit 0, 262.678 seconds |
-| Original-cast mutant | core.ts:810:89, Refused: a cast the runtime can't check |
+| Check                                                      | Result                                                              |
+| ---------------------------------------------------------- | ------------------------------------------------------------------- |
+| Full apply before and after, --build-product               | Both exit 0                                                         |
+| Adapter replay on full applied tree                        | Zero files, zero edits, javascriptChanging false                    |
+| Owner contract                                             | Pass, ten no-write refusals, foreign edit and LF/CRLF preserved     |
+| Replay contract                                            | Source bytes and mtime preserved; zero writes                       |
+| Adamic types, all 79 sorted roots before and after         | Both exit 0; zero diagnostics                                       |
+| Ordinary compiler builds before and after                  | Both exit 0                                                         |
+| Both public declarations                                   | Byte-identical                                                      |
+| Complete core.ts JavaScript with comments kept and removed | Byte-identical                                                      |
+| All nine normally emitted JavaScript files                 | Byte-identical                                                      |
+| Source scope                                               | All 746 source files compared; only the pinned core.ts edit differs |
+| generate_shards --check                                    | Exit 0                                                              |
+| stage3/lane Go fixtures                                    | Exit 0, 262.678 seconds                                             |
+| Original-cast mutant                                       | core.ts:810:89, Refused: a cast the runtime can't check             |
 
 comparison.json contains hashes and sizes of declarations and JavaScript, and
 asserts the exact owner-only source delta. These complete-file hashes are
