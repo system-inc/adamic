@@ -21,6 +21,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 // Not parallel: this opt-in integration probe builds one complete runtime and runs a request
@@ -59,21 +60,15 @@ func wasiCompiler() string {
 	return compilerName(Options{Target: "wasm32-wasi"})
 }
 
+// runWASIUnit runs unit's share of the WASI fixtures, opted in by ADAMIC_TEST_WASI=1. Opted in, anything it needs that's
+// missing (WASI_SYSROOT, the WASI SDK's clang beside it, node, go, a probe that links, Node 24 with node:wasi) fails
+// the unit, never skips it, so a run that asked for WASI can't pass on none (#p3rd3vn).
 func runWASIUnit(t *testing.T, unit int) {
 	t.Helper()
-	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
-		t.Skip("WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH")
-	}
-	sysroot := os.Getenv("WASI_SYSROOT")
-	if sysroot == "" {
-		t.Skip("WASI toolchain missing: WASI_SYSROOT is not set")
-	}
+	sysroot := wasitest.Require(t, "ADAMIC_TEST_WASI")
 	for _, tool := range []string{wasiCompiler(), "node", "go"} {
 		if _, err := toolchain.Path(tool); err != nil {
-			if toolchain.Sandboxed() {
-				t.Fatal(err)
-			}
-			t.Skipf("WASI toolchain missing: %s: %v", tool, err)
+			t.Fatalf("WASI toolchain missing: %s: %v", tool, err)
 		}
 	}
 	// The toolchain is pinned: a clang other than wasi-sdk 27's fails here, by name, rather than skipping.
@@ -90,11 +85,11 @@ func runWASIUnit(t *testing.T, unit int) {
 	probe := filepath.Join(directory, "probe.c")
 	writeWASIFile(t, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
 	if output, err := toolchain.Command(wasiCompiler(), append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
-		t.Skipf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
+		t.Fatalf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
 	}
 	if output, err := toolchain.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e",
 		"import {WASI} from 'node:wasi'; import {registerHooks} from 'node:module'; new WASI({version:'preview1'}); if (!registerHooks || Number(process.versions.node.split('.')[0]) < 24) process.exit(1)").CombinedOutput(); err != nil {
-		t.Skipf("WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\n%s", err, output)
+		t.Fatalf("WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\n%s", err, output)
 	}
 	t.Logf("WASI toolchain probe phase %.3fs", time.Since(phase).Seconds())
 	// The runtime's objects come from the strict-wasi-runtime product, built ahead; the counted variant is the
@@ -354,15 +349,10 @@ func strictWASIRuntimeVariant(t *testing.T, product, variant string) (string, []
 }
 
 // TestProduct_StrictWASIRuntime builds the strict runtime the WASI units link, where they run, so the tree build
-// builds it ahead.
+// builds it ahead. Opted in without WASI_SYSROOT, it fails rather than skipping (#p3rd3vn).
 func TestProduct_StrictWASIRuntime(t *testing.T) {
 	t.Parallel()
-	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
-		t.Skip("set ADAMIC_TEST_WASI=1")
-	}
-	if os.Getenv("WASI_SYSROOT") == "" {
-		t.Skip("WASI toolchain missing: WASI_SYSROOT is not set")
-	}
+	wasitest.Require(t, "ADAMIC_TEST_WASI")
 	strictWASIRuntime(t)
 }
 

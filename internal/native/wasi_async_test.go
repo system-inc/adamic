@@ -1,20 +1,20 @@
 package native
 
 import (
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/wasitest"
 )
 
 // A WASI reactor supplies wake/wait hooks instead of a POSIX pipe. Exercise the
 // ownership and completion path directly, including the unsupported default.
+// Opted in without WASI_SYSROOT, it fails rather than skipping (#p3rd3vn).
 func TestWasiAsyncHostPromises(t *testing.T) {
 	t.Parallel()
-	if os.Getenv("ADAMIC_TEST_WASI") != "1" || os.Getenv("WASI_SYSROOT") == "" {
-		t.Skip("WASI integration requires ADAMIC_TEST_WASI=1 and WASI_SYSROOT")
-	}
+	wasitest.Require(t, "ADAMIC_TEST_WASI")
 	const code = `#include "async.h"
 #include <assert.h>
 #include <stdio.h>
