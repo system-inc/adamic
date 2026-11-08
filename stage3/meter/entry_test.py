@@ -159,6 +159,12 @@ class EntryCensusTests(unittest.TestCase):
                 with (run / 'latent.log').open('w') as log:
                     subprocess.run([os.environ['ENTRY_CENSUS_BINARY'], str(entry), str(run / 'latent.jsonl')],
                                    check=True, env=dict(os.environ, LATENT_ASSERT_NO_OUTPUT='1'), stdout=log, stderr=log)
+                raw = [json.loads(line) for line in (run / 'latent.jsonl').read_text().splitlines()]
+                if name == 'clean':
+                    self.assertEqual(raw[-1]['status'], 'relation_report')
+                    self.assertEqual(raw[-1]['measurement'], ENTRY_MEASUREMENT)
+                    self.assertEqual(raw[-1]['relation_overflow']['after_load'], '')
+                    self.assertEqual(raw[-1]['relation_overflow']['end'], '')
                 observations.append(entry_summary(tree, run))
             clean, planted = observations
             self.assertTrue(clean['checker_whole_program'])

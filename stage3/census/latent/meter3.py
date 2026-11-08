@@ -1,4 +1,6 @@
 """Render the pinned area/stage3 meter and the complete low-diagnostic work queue."""
+
+from stream_records import census_records
 import collections, gzip, hashlib, json, pathlib, re, shutil, sys
 from rerun2 import LABEL, normalize, summarize, delta, variance_breakdown
 ROOT=pathlib.Path(__file__).resolve().parent
@@ -14,7 +16,7 @@ def diagnostic(site):
 def build(scratch,adapted):
  DATA.mkdir(exist_ok=True)
  specs=json.loads((scratch/'runs.json').read_text());assert len(specs)==1 and specs[0]['status']=='complete'
- raw=[normalize(json.loads(l),str(adapted)) for l in (scratch/'meter-3.jsonl').read_text().splitlines()]
+ raw=census_records([normalize(json.loads(l),str(adapted)) for l in (scratch/'meter-3.jsonl').read_text().splitlines()])
  manifest=[dict(file=str(p.relative_to(adapted)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),generated='.generated.' in p.name) for p in sorted((adapted/'src/compiler').rglob('*.ts'))]
  with gzip.open(ROOT/'data/rerun2-REPORT.json.gz','rt') as f:prior=json.load(f)
  assert {f['file'] for f in manifest}=={f['file'] for f in prior['source']['files']} and len(manifest)==78
