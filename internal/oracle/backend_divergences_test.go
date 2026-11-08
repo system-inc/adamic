@@ -1,10 +1,19 @@
 package oracle
 
-import "fmt"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
 
 // installed-layout's error is Node's answer to require("source-map-support") where tsc 6.0.3 is
 // installed, which ships no dependencies: its name, code and the first line of its message. The
-// rows below pin native's output from them, and TestInstalledLayoutIsNodes measures them on Node.
+// data file's rows say native's output in them, TestRuledBackendDivergencesSayTheMeasuredErrors holds
+// the rows to them, and TestInstalledLayoutIsNodes measures them on Node.
 const (
 	inspectorUnavailableName    = "Error"
 	inspectorUnavailableCode    = "ERR_INSPECTOR_NOT_AVAILABLE"
@@ -27,11 +36,25 @@ func noJavaScriptPlugins(path string) string {
 // line, and Node adds the rest to the message as an uncaught one leaves the module.
 const requireInESModule = "ReferenceError: require is not defined"
 
+// backendDivergencesPath is the ruled rows' one home, a data file, since the admission delta
+// (cmd/adamic-admission-delta) reads the same rows (#tqm95v6). Only Adamic adds a row.
+const backendDivergencesPath = "internal/oracle/testdata/backend_divergences.json"
+
 // Only these exact fixtures have ruled differences. Each side remains pinned:
 // membership never excuses an arbitrary exit, diagnostic or output change. A row whose node is set
 // pins the source on Node too, for fixtures where native and the JavaScript backend agree with each
 // other and differ from the source; name is the ruled row's, which may hold more than one fixture.
-var ruledBackendDivergences = []struct {
+// The rows are read once, as the package loads: a list that can't be read panics there, failing every
+// test in the package rather than comparing against no rows.
+var ruledBackendDivergences = func() []ruledBackendDivergence {
+	rows, err := readRuledBackendDivergences(filepath.Join(repository, backendDivergencesPath))
+	if err != nil {
+		panic(err)
+	}
+	return rows
+}()
+
+type ruledBackendDivergence struct {
 	fixture    string
 	name       string
 	ruling     string
@@ -39,66 +62,62 @@ var ruledBackendDivergences = []struct {
 	node       *run
 	native     run
 	javascript run
-}{
-	{
-		fixture:    "internal/oracle/testdata/d96d304_try_stack.a",
-		ruling:     "@system_adamic, task #z1vjxxd, chain step 24",
-		reason:     "Native stack guards name the exhausted function; JavaScript preserves V8's unnamed overflow diagnostic. Both stops are terminal.",
-		native:     run{stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded in depth\n"), exitCode: 70},
-		javascript: run{stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70},
-	},
-
-	{fixture: "internal/oracle/testdata/node_inspector_unavailable.a", name: "node-without-inspector",
-		ruling:     "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
-		reason:     "Native and generated JavaScript model Node built --without-inspector; the source is an ES module with no require.",
-		node:       &run{stdout: []byte("ReferenceError\nnone\nrequire is not defined\nReferenceError: require is not defined\nafter\n")},
-		native:     run{stdout: []byte(inspectorUnavailableName + "\n" + inspectorUnavailableCode + "\n" + inspectorUnavailableMessage + "\n" + inspectorUnavailableString + "\nafter\n")},
-		javascript: run{stdout: []byte(inspectorUnavailableName + "\n" + inspectorUnavailableCode + "\n" + inspectorUnavailableMessage + "\n" + inspectorUnavailableString + "\nafter\n")}},
-	{fixture: "internal/oracle/testdata/node_inspector_unavailable_uncaught.a", name: "node-without-inspector",
-		ruling:     "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
-		reason:     "The no-inspector host raises on load; source Node has no CommonJS require in its ES module.",
-		node:       &run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
-		native:     run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + inspectorUnavailableString + "\n"), exitCode: 70},
-		javascript: run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + inspectorUnavailableString + "\n"), exitCode: 70}},
-	{
-		fixture:    "internal/oracle/testdata/node_commonjs_require_missing.a",
-		name:       "installed-layout",
-		ruling:     "@system_adamic, task #redxes2, Nov 3",
-		reason:     installedLayoutReason,
-		node:       &run{stdout: []byte("ReferenceError none require is not defined\nReferenceError none require is not defined\nafter\n")},
-		native:     run{stdout: []byte(installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\n" + installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\nafter\n")},
-		javascript: run{stdout: []byte(installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\n" + installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\nafter\n")},
-	},
-	{
-		fixture:    "internal/oracle/testdata/node_commonjs_require_missing_uncaught.a",
-		name:       "installed-layout",
-		ruling:     "@system_adamic, task #redxes2, Nov 3",
-		reason:     installedLayoutReason,
-		node:       &run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
-		native:     run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + installedLayoutName + ": " + installedLayoutMessage + "\n"), exitCode: 70},
-		javascript: run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + installedLayoutName + ": " + installedLayoutMessage + "\n"), exitCode: 70},
-	},
-	{
-		fixture:    "internal/oracle/testdata/node_commonjs_require_computed.a",
-		name:       "no-javascript-plugins",
-		ruling:     "@system_adamic, task #redxes2, Nov 3",
-		reason:     noJavaScriptPluginsReason,
-		node:       &run{stdout: []byte("ReferenceError none require is not defined\npaths built: 0\n")},
-		native:     run{stdout: []byte("Error none " + noJavaScriptPlugins("./plugin-1.js") + "\npaths built: 1\n")},
-		javascript: run{stdout: []byte("Error none " + noJavaScriptPlugins("./plugin-1.js") + "\npaths built: 1\n")},
-	},
-	{
-		fixture:    "internal/oracle/testdata/node_commonjs_require_computed_uncaught.a",
-		name:       "no-javascript-plugins",
-		ruling:     "@system_adamic, task #redxes2, Nov 3",
-		reason:     noJavaScriptPluginsReason,
-		node:       &run{stdout: []byte("before\ncaught: require is not defined\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
-		native:     run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
-		javascript: run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
-	},
 }
 
-// The two rows' reasons, one per row, shared by its fixtures.
+// backendDivergenceOutcome is one side of a row as the data file says it, its literal bytes.
+type backendDivergenceOutcome struct {
+	Stdout   string `json:"stdout"`
+	Stderr   string `json:"stderr"`
+	ExitCode int    `json:"exit_code"`
+}
+
+func (outcome backendDivergenceOutcome) run() run {
+	return run{stdout: []byte(outcome.Stdout), stderr: []byte(outcome.Stderr), exitCode: outcome.ExitCode}
+}
+
+// readRuledBackendDivergences reads the rows in the file's order. A row with no fixture, no ruling or no
+// reason is refused, as is a field the rows don't have.
+func readRuledBackendDivergences(path string) ([]ruledBackendDivergence, error) {
+	var list struct {
+		Comment     string `json:"_comment"`
+		Divergences []struct {
+			Fixture    string                    `json:"fixture"`
+			Name       string                    `json:"name"`
+			Ruling     string                    `json:"ruling"`
+			Reason     string                    `json:"reason"`
+			Node       *backendDivergenceOutcome `json:"node"`
+			Native     backendDivergenceOutcome  `json:"native"`
+			JavaScript backendDivergenceOutcome  `json:"javascript"`
+		} `json:"divergences"`
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	if err = decoder.Decode(&list); err != nil {
+		return nil, fmt.Errorf("%s: %w", path, err)
+	}
+	if !strings.Contains(list.Comment, "Adding a row is a ruling") || !strings.Contains(list.Comment, "@system_adamic") {
+		return nil, fmt.Errorf("%s needs its ruling header", path)
+	}
+	var rows []ruledBackendDivergence
+	for index, row := range list.Divergences {
+		if row.Fixture == "" || strings.TrimSpace(row.Ruling) == "" || row.Reason == "" {
+			return nil, fmt.Errorf("%s: row %d needs its fixture, its ruling and its reason", path, index+1)
+		}
+		divergence := ruledBackendDivergence{fixture: row.Fixture, name: row.Name, ruling: row.Ruling, reason: row.Reason, native: row.Native.run(), javascript: row.JavaScript.run()}
+		if row.Node != nil {
+			node := row.Node.run()
+			divergence.node = &node
+		}
+		rows = append(rows, divergence)
+	}
+	return rows, nil
+}
+
+// The two divergences' reasons, each shared by its fixtures' rows, which the data file must say.
 const (
 	installedLayoutReason     = "require(\"source-map-support\") throws Node's MODULE_NOT_FOUND where tsc 6.0.3 is installed, which ships no dependencies; native gives its name, code and the first line of its message. The Require stack tail and requireStack are the requiring module's own path, which has no reproducible native answer yet, and tsc's catch ignores the error, so tsc observes nothing. The source on Node, an ES module, has no require."
 	noJavaScriptPluginsReason = "A computed require evaluates its path and throws an Error naming it. Stock Node loads the plugin; native can't run JavaScript. The source on Node, an ES module, has no require."
@@ -171,5 +190,76 @@ func init() {
 			lowers  bool
 			checked bool
 		}{path, true, path == "internal/oracle/testdata/d96d304_try_stack.a"})
+	}
+}
+
+// The data file holds expanded literals, so this holds them to the constants Node was measured against
+// (TestInstalledLayoutIsNodes, the inspector measurement): each family's rows give its reason where the
+// family shares one, both backends' outcomes say one of its measured errors, and Node's says require
+// isn't defined in its ES module. A remeasured error can't leave a row saying the old one.
+func TestRuledBackendDivergencesSayTheMeasuredErrors(t *testing.T) {
+	t.Parallel()
+	families := map[string]struct {
+		reason string
+		says   []string
+	}{
+		"installed-layout": {installedLayoutReason, []string{
+			installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\n",
+			"adamic: panic: " + installedLayoutName + ": " + installedLayoutMessage + "\n",
+		}},
+		"no-javascript-plugins":  {noJavaScriptPluginsReason, []string{noJavaScriptPlugins("./plugin-1.js"), noJavaScriptPlugins("./plugin.js")}},
+		"node-without-inspector": {"", []string{inspectorUnavailableString + "\n"}},
+	}
+	rows := map[string]int{}
+	for _, row := range ruledBackendDivergences {
+		family, named := families[row.name]
+		if !named {
+			continue
+		}
+		rows[row.name]++
+		if family.reason != "" && row.reason != family.reason {
+			t.Errorf("%s: the reason isn't %s's", row.fixture, row.name)
+		}
+		for side, outcome := range map[string]run{"native": row.native, "JavaScript": row.javascript} {
+			said := false
+			for _, measured := range family.says {
+				said = said || strings.Contains(string(outcome.stdout)+string(outcome.stderr), measured)
+			}
+			if !said {
+				t.Errorf("%s: the %s outcome says none of %s's measured errors %q", row.fixture, side, row.name, family.says)
+			}
+		}
+		if row.node == nil || !strings.Contains(string(row.node.stdout)+string(row.node.stderr), strings.TrimPrefix(requireInESModule, "ReferenceError: ")) {
+			t.Errorf("%s: Node's outcome doesn't say %q", row.fixture, requireInESModule)
+		}
+	}
+	for name := range families {
+		if rows[name] == 0 {
+			t.Errorf("no row is %s", name)
+		}
+	}
+}
+
+// The loader refuses a row whose ruling is empty or only spaces, and reads one that names its ruling.
+// Mutant: readRuledBackendDivergences without its ruling check reads both.
+func TestRuledBackendDivergencesRefuseAnEmptyRuling(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "divergences.json")
+	read := func(ruling string) error {
+		t.Helper()
+		row := fmt.Sprintf(`{"fixture": "internal/oracle/testdata/d96d304_try_stack.a", "ruling": %q, "reason": "a reason", "native": {"stdout": "", "stderr": "", "exit_code": 70}, "javascript": {"stdout": "", "stderr": "", "exit_code": 70}}`, ruling)
+		if err := os.WriteFile(path, []byte(`{"_comment": "Adding a row is a ruling routed to @system_adamic", "divergences": [`+row+`]}`), 0600); err != nil {
+			t.Fatal(err)
+		}
+		_, err := readRuledBackendDivergences(path)
+		return err
+	}
+	if err := read("@system_adamic, task #z1vjxxd, chain step 24"); err != nil {
+		t.Fatal("a ruled row refused:", err)
+	}
+	for _, ruling := range []string{"", "   "} {
+		if read(ruling) == nil {
+			t.Errorf("a row whose ruling is %q read", ruling)
+		}
 	}
 }

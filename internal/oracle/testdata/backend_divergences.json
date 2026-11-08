@@ -1,0 +1,146 @@
+{
+  "_comment": "Adding a row is a ruling routed to @system_adamic, and only Adamic adds one. Each row is one fixture whose backends are ruled to differ, from each other, or, where node is set, both from the source on Node while they agree with each other; name is the ruled divergence, which may hold more than one fixture. Schema: divergences lists fixture (the program's repository path, once), name (absent for a lone row), ruling (who ruled, naming the task; a row whose ruling is empty or names no task is refused), reason, node (absent where Node's side isn't ruled), native and javascript, each outcome its exact stdout, stderr and exit_code. internal/oracle's backend divergence test holds each fixture's runs to its row byte for byte, and the admission delta reads a newly admitted program at a row's fixture as that divergence only when native and JavaScript agree and Node's and native's runs are exactly the row's. Membership never excuses any other output.",
+  "divergences": [
+    {
+      "fixture": "internal/oracle/testdata/d96d304_try_stack.a",
+      "ruling": "@system_adamic, task #z1vjxxd, chain step 24",
+      "reason": "Native stack guards name the exhausted function; JavaScript preserves V8's unnamed overflow diagnostic. Both stops are terminal.",
+      "native": {
+        "stdout": "",
+        "stderr": "adamic: panic: RangeError: Maximum call stack size exceeded in depth\n",
+        "exit_code": 70
+      },
+      "javascript": {
+        "stdout": "",
+        "stderr": "adamic: panic: RangeError: Maximum call stack size exceeded\n",
+        "exit_code": 70
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/node_inspector_unavailable.a",
+      "name": "node-without-inspector",
+      "ruling": "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
+      "reason": "Native and generated JavaScript model Node built --without-inspector; the source is an ES module with no require.",
+      "node": {
+        "stdout": "ReferenceError\nnone\nrequire is not defined\nReferenceError: require is not defined\nafter\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "Error\nERR_INSPECTOR_NOT_AVAILABLE\nInspector is not available\nError [ERR_INSPECTOR_NOT_AVAILABLE]: Inspector is not available\nafter\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "Error\nERR_INSPECTOR_NOT_AVAILABLE\nInspector is not available\nError [ERR_INSPECTOR_NOT_AVAILABLE]: Inspector is not available\nafter\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/node_inspector_unavailable_uncaught.a",
+      "name": "node-without-inspector",
+      "ruling": "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
+      "reason": "The no-inspector host raises on load; source Node has no CommonJS require in its ES module.",
+      "node": {
+        "stdout": "before\n",
+        "stderr": "adamic: panic: ReferenceError: require is not defined in ES module scope, you can use import instead\n",
+        "exit_code": 70
+      },
+      "native": {
+        "stdout": "before\n",
+        "stderr": "adamic: panic: Error [ERR_INSPECTOR_NOT_AVAILABLE]: Inspector is not available\n",
+        "exit_code": 70
+      },
+      "javascript": {
+        "stdout": "before\n",
+        "stderr": "adamic: panic: Error [ERR_INSPECTOR_NOT_AVAILABLE]: Inspector is not available\n",
+        "exit_code": 70
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/node_commonjs_require_missing.a",
+      "name": "installed-layout",
+      "ruling": "@system_adamic, task #redxes2, Nov 3",
+      "reason": "require(\"source-map-support\") throws Node's MODULE_NOT_FOUND where tsc 6.0.3 is installed, which ships no dependencies; native gives its name, code and the first line of its message. The Require stack tail and requireStack are the requiring module's own path, which has no reproducible native answer yet, and tsc's catch ignores the error, so tsc observes nothing. The source on Node, an ES module, has no require.",
+      "node": {
+        "stdout": "ReferenceError none require is not defined\nReferenceError none require is not defined\nafter\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "Error MODULE_NOT_FOUND Cannot find module 'source-map-support'\nError MODULE_NOT_FOUND Cannot find module 'source-map-support'\nafter\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "Error MODULE_NOT_FOUND Cannot find module 'source-map-support'\nError MODULE_NOT_FOUND Cannot find module 'source-map-support'\nafter\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/node_commonjs_require_missing_uncaught.a",
+      "name": "installed-layout",
+      "ruling": "@system_adamic, task #redxes2, Nov 3",
+      "reason": "require(\"source-map-support\") throws Node's MODULE_NOT_FOUND where tsc 6.0.3 is installed, which ships no dependencies; native gives its name, code and the first line of its message. The Require stack tail and requireStack are the requiring module's own path, which has no reproducible native answer yet, and tsc's catch ignores the error, so tsc observes nothing. The source on Node, an ES module, has no require.",
+      "node": {
+        "stdout": "before\n",
+        "stderr": "adamic: panic: ReferenceError: require is not defined in ES module scope, you can use import instead\n",
+        "exit_code": 70
+      },
+      "native": {
+        "stdout": "before\n",
+        "stderr": "adamic: panic: Error: Cannot find module 'source-map-support'\n",
+        "exit_code": 70
+      },
+      "javascript": {
+        "stdout": "before\n",
+        "stderr": "adamic: panic: Error: Cannot find module 'source-map-support'\n",
+        "exit_code": 70
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/node_commonjs_require_computed.a",
+      "name": "no-javascript-plugins",
+      "ruling": "@system_adamic, task #redxes2, Nov 3",
+      "reason": "A computed require evaluates its path and throws an Error naming it. Stock Node loads the plugin; native can't run JavaScript. The source on Node, an ES module, has no require.",
+      "node": {
+        "stdout": "ReferenceError none require is not defined\npaths built: 0\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "Error none Cannot load JavaScript module './plugin-1.js': a native Adamic program can't run JavaScript; run it on Node to load modules at run time\npaths built: 1\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "Error none Cannot load JavaScript module './plugin-1.js': a native Adamic program can't run JavaScript; run it on Node to load modules at run time\npaths built: 1\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/node_commonjs_require_computed_uncaught.a",
+      "name": "no-javascript-plugins",
+      "ruling": "@system_adamic, task #redxes2, Nov 3",
+      "reason": "A computed require evaluates its path and throws an Error naming it. Stock Node loads the plugin; native can't run JavaScript. The source on Node, an ES module, has no require.",
+      "node": {
+        "stdout": "before\ncaught: require is not defined\n",
+        "stderr": "adamic: panic: ReferenceError: require is not defined in ES module scope, you can use import instead\n",
+        "exit_code": 70
+      },
+      "native": {
+        "stdout": "before\nresolving first\ncaught: Cannot load JavaScript module './first.js': a native Adamic program can't run JavaScript; run it on Node to load modules at run time\nresolving plugin\n",
+        "stderr": "adamic: panic: Error: Cannot load JavaScript module './plugin.js': a native Adamic program can't run JavaScript; run it on Node to load modules at run time\n",
+        "exit_code": 70
+      },
+      "javascript": {
+        "stdout": "before\nresolving first\ncaught: Cannot load JavaScript module './first.js': a native Adamic program can't run JavaScript; run it on Node to load modules at run time\nresolving plugin\n",
+        "stderr": "adamic: panic: Error: Cannot load JavaScript module './plugin.js': a native Adamic program can't run JavaScript; run it on Node to load modules at run time\n",
+        "exit_code": 70
+      }
+    }
+  ]
+}
