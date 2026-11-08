@@ -41,8 +41,6 @@ in isolation, idempotence, and the one-edit undo mutant. Build CENSUS with
 The census normalization is the same entry-root deduplication as 95a's
 compare-census.py: root and aggregate observations must agree and count once.
 
-
-
 ## Measured scope and limitation
 
 The literal four-edit candidate fails the no-new-diagnostics rule. Its census
@@ -73,10 +71,10 @@ The independent verifier compares all **746 files under src**. Exactly two
 files change. CRLF counts stay **54,434** for checker.ts and **10,681** for
 types.ts. Complete stock transpileModule output is byte-identical in both modes:
 
-| File | Comments retained bytes / SHA-256 | Comments removed bytes / SHA-256 |
-| --- | --- | --- |
+| File       | Comments retained bytes / SHA-256                                              | Comments removed bytes / SHA-256                                               |
+| ---------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | checker.ts | 2,892,419 / `786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e` | 2,354,716 / `3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac` |
-| types.ts | 139,659 / `4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3` | 121,398 / `f041d720cfda4ccb137ffc32198ec3d2fce46dbf13404df737dc637e21290639` |
+| types.ts   | 139,659 / `4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3`   | 121,398 / `f041d720cfda4ccb137ffc32198ec3d2fce46dbf13404df737dc637e21290639`   |
 
 Toolchain setup passed. Timings: Node 0.023s, Go 0.031s, clang 0.258s,
 tsc 0.547s, Markdown 1.431s, submodules 163.991s, Go build 436.508s,
