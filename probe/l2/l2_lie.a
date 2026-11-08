@@ -8,4 +8,4 @@ class Provider {
 	}
 }
 const slot: Slot = new Provider();
-slot.run((...args: string[]) => { console.log(args[0].toUpperCase()); });
+slot.run((...args: string[]) => { for (const arg of args) { console.log(arg.toUpperCase()); } });
