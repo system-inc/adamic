@@ -35,7 +35,7 @@ func (f *cycleFinder) logViewPairs() {
 	}
 	name := ""
 	if files := f.l.program.Files(); len(files) != 0 {
-		name = files[0].FileName()
+		name = string(files[0].FileName())
 	}
 	records := []viewPairRecord{}
 	seen := map[[2]*checker.Type]bool{}
