@@ -680,3 +680,104 @@ Go source quoted as evidence has .go.txt extensions. The published declaration
 files, production host table, stage3/adapt and existing A/B/C/D evidence are
 unchanged. All commands are logged with their own exit codes, bounded below
 30 minutes, and task-owned live processes are cleaned up before completion.
+
+
+## C-prime: Head 2 methods with the same unknown-input host row
+
+Measurement only. C-prime uses accepted Head 2, 66e4051f, exactly as written:
+C-noinfer-b method spelling, unknown pollScheduled storage, and adaptation
+41's ambient timer declarations deleted. Its 746 source files match Head 2's
+accepted full-apply source ledger byte for byte; the current whole-owner
+adapter replay exits 0 with zero edits. In particular, System still declares:
+
+```ts
+setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;
+clearTimeout?(timeoutId: unknown): void;
+```
+
+The only counterfactual input is the exact D-prime scratch host row:
+web-globals/timers.d.ts:41, clearTimeout's NodeJS.Timeout/string/number/undefined
+parameter becomes unknown. C-prime reuses the byte-identical timer row, complete
+scratch host_axioms.json table, stock CompilerHost served view and already
+built scratch census binary from D-prime. No package declaration is edited
+on disk, and no production host table, Go implementation or stage3/adapt file
+changes. C-prime-source-identity.json records all source hashes, shared-input
+identity checks and the census binary hash; it matches D-prime's binary hash.
+The prior row's D-prime label is retained as provenance, not rewritten into a
+new host axiom. This is the same b5w3ycg, Nov 7 21:47Z, item 2 stand-in.
+
+### C-prime.1 Stock diagnostics
+
+The stock TypeScript API remains 6.0.3 over source pin
+050880ce59e30b356b686bd3144efe24f875ebc8. The added row is served to both the
+Adamic-options compiler-host view and the upstream solution-host view exactly
+as in D-prime. No other declaration correction or checker option changes.
+
+| Stock mode | C-prime diagnostics | Added against Head 2 |
+|---|---:|---:|
+| Adamic options, all 79 compiler roots | 0 | 0 |
+| Upstream whole-src solution, including harness/testRunner/unittests | 0 | 0 |
+
+The solution exits 0 and the stock collector exits 0. C-prime-stock.json
+retains options, diagnostics, served declaration paths and provider types.
+Both actual clearTimeout providers, sys.ts:1500:13 and 1598:13, are seen as
+`(timeout: unknown) => void`. There are no added provider or harness errors.
+
+### C-prime.2 Full sys.ts census against Head 2
+
+The reference is Head 2's recorded original-host-view census, not a baseline
+with the widened row. The same guarded scratch binary as D-prime loads all
+79 compiler roots with LATENT_FULL=1, LATENT_ONLY_FILE set to C-prime sys.ts
+and LATENT_ASSERT_NO_OUTPUT=1. The census exits 0. Its actual header has
+checker_rejected=false and diagnostics=[]. getNodeSystem at adapted 1473:5
+has status attempted and checker_diagnostics=[]. There is no checker split:
+135 units are attempted and three generic units deferred, as in Head 2.
+
+**Yes, 1502 and 1600 clear under method spelling too. The two setTimeout
+refusals at 1501 and 1599 remain unchanged.** Coordinates below retain the
+request's old-main numbering, with actual adapted coordinates in parentheses.
+
+| Provider, old main (actual) | C-prime finding |
+|---|---|
+| setTimeout 1501:13 (1499:13) | Refused / refusal_scan: a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+| clearTimeout 1502:13 (1500:13) | No Refused or NotYet finding at this provider location; prior cancellation refusal cleared |
+| setTimeout 1599:13 (1597:13) | Refused / refusal_scan: a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+| clearTimeout 1600:13 (1598:13) | No Refused or NotYet finding at this provider location; prior cancellation refusal cleared |
+
+At 1501:13 (actual 1499:13), the separate lowering NotYet also remains,
+quoting its exact reason: `reading setTimeout`. At 1599:13 (actual 1597:13),
+the record is the unchanged Refused reason above. Clearing the cancellation
+refusals does not claim that Runtime's timer read/implementation has landed
+or that getNodeSystem completely lowers.
+
+These are every gone site against Head 2, with the removed reasons quoted:
+
+| Gone site, old main (actual) | Exact Head 2 reason removed |
+|---|---|
+| src/compiler/sys.ts:1502:13 (src/compiler/sys.ts:1500:13) | Refused / refusal_scan: a function taking string &#124; number &#124; Timeout &#124; undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+| src/compiler/sys.ts:1600:13 (src/compiler/sys.ts:1598:13) | Refused / refusal_scan: a function taking string &#124; number &#124; Timeout &#124; undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+
+**New sites: none. Other gone sites: none.** Head 2 has 123 distinct walls;
+C-prime has 121, with 121 kept, exactly two gone and zero new. The distinct
+key is main-mapped file:line:column, kind, phase and exact reason, deduplicating
+repeated unit findings. C-prime-census-comparison.json contains the complete
+kept/gone/new ledger, all unit records and all four provider ledgers.
+
+The complete distinct-wall set equals D-prime's, not just its total count.
+Thus, with this same host input, optional method versus optional property
+spelling makes no difference to the observed census wall ledger in this tree.
+That is a measured comparison, not a claim that method and property variance
+are interchangeable in other programs. No diagnosis is hidden by a checker
+rejection in either prime variant.
+
+### C-prime.3 Evidence and scope
+
+C-prime.json is the full machine-readable result. C-prime-evidence.tar.gz
+contains the raw census, timings, logs, exact sys.ts, host-row inputs and
+actual command exits; C-prime-evidence.sha256 pins it. C-prime-tools contains
+the executed drivers. The source, host row, served stock view and reused
+census binary are pinned; the unchanged production host/declaration hashes
+are verified again. All measurement commands are bounded below 30 minutes,
+with logged child exit codes and live task processes cleaned up. No source,
+adaptation, production host row, runtime operation or API sanction is proposed
+for landing. Existing A/B/C/D/D-prime report evidence is preserved.
