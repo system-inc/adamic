@@ -288,7 +288,7 @@ func run(args []string) error {
 	defer git(root, "worktree", "remove", "--force", headTree)
 	result.Phases["checkout"] = time.Since(phaseStarted).Seconds()
 	provisionStarted := time.Now()
-	if err = prepareCheckout(headTree); err != nil {
+	if err = prepareCheckout(root, headTree); err != nil {
 		return err
 	}
 	result.Phases["provision"] = time.Since(provisionStarted).Seconds()
