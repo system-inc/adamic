@@ -1,0 +1,13 @@
+{
+  "env_script": "/workspace/adamic-tools/env.sh",
+  "parent_GOWORK": "/tmp/branded-parent.work",
+  "head_GOWORK": "/tmp/branded-head.work",
+  "shared_checker": "/tmp/branded-report/cohere",
+  "typescript_source": "/tmp/branded-typescript",
+  "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "runtime_go": "go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "api_typescript": "6.0.3",
+  "cpu_quota": "400000 100000",
+  "memory_limit_bytes": 17179869184
+}

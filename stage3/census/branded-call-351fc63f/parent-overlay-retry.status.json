@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/tmp/branded-report",
+    "/tmp/branded-parent-overlay"
+  ],
+  "cwd": "/tmp/branded-report",
+  "exit": 0,
+  "wall_seconds": 9.065,
+  "stopped": null
+}

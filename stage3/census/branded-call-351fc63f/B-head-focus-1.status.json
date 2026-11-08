@@ -1,0 +1,19 @@
+{
+  "command": [
+    "env",
+    "LATENT_FULL=1",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "/tmp/branded-head-focus",
+    "-project",
+    "/tmp/branded-B/src/tsc/tsc.ts",
+    "-where",
+    "/tmp/branded-B/src/compiler/checker.ts:4733:5",
+    "-output",
+    "/tmp/branded-report/stage3/census/branded-call-351fc63f/B-head-focus-1.jsonl"
+  ],
+  "cwd": "/tmp/branded-report",
+  "binary_sha256": "69ce06090d343300b32139af7ecb1f361880381669b0921ef218d2be4d94aa63",
+  "exit": 0,
+  "wall_seconds": 21.093,
+  "stopped": null
+}
