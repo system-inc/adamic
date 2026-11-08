@@ -351,8 +351,13 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			f.l.result.Classes[instance.class-1].Graph = true
 		}
 	}
-	f.graphFlows()
-	return f.graphAdoptionBoundary()
+	// The boundary's refusal comes before a plan's stop, so a program it refuses reads the refusal
+	// it always has.
+	flows := f.graphFlows()
+	if err := f.graphAdoptionBoundary(); err != nil {
+		return err
+	}
+	return flows
 }
 
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {

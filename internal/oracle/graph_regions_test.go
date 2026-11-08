@@ -27,6 +27,10 @@ var graphOracleFixtures = []string{
 	"internal/oracle/testdata/graph_regions/classification_mixed.a",
 	"internal/oracle/testdata/graph_regions/classification_override.a",
 	"internal/oracle/testdata/graph_regions/classification_return.a",
+	"internal/oracle/testdata/graph_regions/flow_group_by.a",
+	"internal/oracle/testdata/graph_regions/flow_record_values.a",
+	"internal/oracle/testdata/graph_regions/flow_to_reversed.a",
+	"internal/oracle/testdata/graph_regions/flow_to_sorted.a",
 	"internal/oracle/testdata/graph_regions_accessor.a",
 	"internal/oracle/testdata/graph_regions_anchor.a",
 	"internal/oracle/testdata/graph_regions_cache.a",
@@ -181,6 +185,28 @@ func TestGraphOracleGraphRegionsClassificationOverride(t *testing.T) {
 func TestGraphOracleGraphRegionsClassificationReturn(t *testing.T) {
 	t.Parallel()
 	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/classification_return.a")
+}
+
+// The four allocations graphFlows' follow didn't reach at main, which leaked in the counted build
+// (Memory's rows 5, 10 and 11 on #djwd1t2): each frees everything now and prints what Node prints.
+func TestGraphOracleGraphRegionsFlowGroupBy(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_group_by.a")
+}
+
+func TestGraphOracleGraphRegionsFlowRecordValues(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_record_values.a")
+}
+
+func TestGraphOracleGraphRegionsFlowToReversed(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_to_reversed.a")
+}
+
+func TestGraphOracleGraphRegionsFlowToSorted(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_to_sorted.a")
 }
 
 func TestGraphOracleGraphRegionsAccessor(t *testing.T) {

@@ -627,6 +627,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"RecordCall.Element":                 {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"RecordCall.Returns":                 {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"RecordCall.Site":                    {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"RecordCall.GraphTypes":              {"[]int", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"RecordCall.OwnOnly":                 {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"RecordCoalesce.Record":              {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"RecordCoalesce.Key":                 {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},

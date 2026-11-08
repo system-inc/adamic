@@ -70,6 +70,9 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 			}
 			e.line("adamic_array_push(%s, %s);", result, value)
 		})
+		// A planned array is adopted made and filled, as a slice's is (graphArray), so it joins the
+		// regions of the members it holds.
+		e.adoptGraph(result, "sizeof *"+result, e.graphTypes(call.GraphTypes))
 		return result
 	}
 	panic("native: unknown record operation")
