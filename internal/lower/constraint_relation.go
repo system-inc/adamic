@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"slices"
+	"strings"
 	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -59,6 +60,31 @@ func init() {
 	refusalRules.register(3350, "constraintRelationRefusal", (*lowering).constraintRelationRefusal)
 }
 
+// probeWidenedAt says whether ADAMIC_PROBE_WIDENED names where (a comma list of file:line prefixes, or
+// "all"), for #448a51k's identity probe. Never for landing.
+func probeWidenedAt(where string) bool {
+	sites := os.Getenv("ADAMIC_PROBE_WIDENED")
+	if sites == "" {
+		return false
+	}
+	if sites == "all" {
+		return true
+	}
+	for _, site := range strings.Split(sites, ",") {
+		if site != "" && strings.Contains(where, site) {
+			return true
+		}
+	}
+	return false
+}
+
+func probeTypeText(c *checker.Checker, t *checker.Type) string {
+	if t == nil {
+		return "nil"
+	}
+	return fmt.Sprintf("#%d %s", t.Id(), c.TypeToString(t))
+}
+
 // constraintRelation judges one binding, as constraintRelationRefusal says.
 func (l *lowering) constraintRelation(binding typeArgumentBinding) error {
 	if os.Getenv("ADAMIC_PROBE_BINDINGS") != "" && binding.site != nil && binding.site.Kind == ast.KindCallExpression {
@@ -84,6 +110,9 @@ func (l *lowering) constraintRelation(binding typeArgumentBinding) error {
 	}
 	if binding.argument == nil {
 		return l.notYet(binding.site, "a generic instantiation whose type argument for "+l.checker.TypeToString(binding.parameter)+", constrained to "+l.checker.TypeToString(binding.constraint)+", can't be read")
+	}
+	if binding.site != nil && probeWidenedAt(l.program.Where(binding.site)) {
+		fmt.Fprintf(os.Stderr, "probe-widened\tbinding\t%s\targument=%s\tconstraint=%s\tsame=%t\twritten=%t\n", l.program.Where(binding.site), probeTypeText(l.checker, binding.argument), probeTypeText(l.checker, binding.constraint), binding.argument == binding.constraint, binding.written != nil)
 	}
 	if binding.argument == binding.constraint {
 		return nil
@@ -126,6 +155,9 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 		}
 		declared := l.checker.GetTypeOfSymbol(parameters[at])
 		given, slot := instantiateType(l.checker, declared, binding.mapper), instantiateType(l.checker, declared, asConstraint)
+		if probeWidenedAt(l.program.Where(argument)) {
+			fmt.Fprintf(os.Stderr, "probe-widened\targument\t%s\tdeclared=%s\tgiven=%s\tslot=%s\tsame=%t\tassignable=%t\n", l.program.Where(argument), probeTypeText(l.checker, declared), probeTypeText(l.checker, given), probeTypeText(l.checker, slot), given == slot, l.checker.IsTypeAssignableTo(regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(argument)), slot))
+		}
 		if given == slot {
 			continue
 		}
@@ -146,6 +178,10 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 			continue
 		}
 		judged = true
+		if probeWidenedAt(l.program.Where(argument)) {
+			err := l.judgeBinding(argument, argument, l.checker.GetTypeAtLocation(argument), slot)
+			fmt.Fprintf(os.Stderr, "probe-widened\tjudged\t%s\tvalue=%s\tslot=%s\terr=%v\n", l.program.Where(argument), probeTypeText(l.checker, l.checker.GetTypeAtLocation(argument)), probeTypeText(l.checker, slot), err)
+		}
 		if err := l.judgeBinding(argument, argument, l.checker.GetTypeAtLocation(argument), slot); err != nil {
 			return true, err
 		}
