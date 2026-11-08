@@ -10,26 +10,26 @@ The base is 734aef5f, the main parent before Memory's first throwaway probe comm
 
 Memory's original probe is preserved as memory-probe-original.go.txt and copied into scratch. The scratch context version calls logViewPairs() at every unit end beside the boundary observer, using only &cycleFinder{l:l, where:map[*checker.Type]*ast.Node{}}. findCycles never runs. Original pair traversal, per-unit checker-pointer seen set, first encountered path and depth bound 6 are preserved. The original program field names the entry; file and unit fields supply actual owner attribution. No probe is added to production lower source.
 
-Annotations add full nested paths, nil-source target types and reference fields, and deriveRelated results for intersection records. Object classification accepts object/union shapes and intersections, with intersection targets counted as objects even when the original probe labels them target-not-object. Source intersections also qualify when the target is object/union shaped. The original skipped flags remain in raw rows. Nil-source records remain a separate bucket even when the target is an intersection. Intersections do not add a second recursive traversal, so their fields skipped by the original probe remain unwalked.
+Scalar enum/boolean unions are classified as scalar fields using the adapted source declarations, rather than treated as objects merely because TypeFlagsUnion is set. Annotations add full nested paths, nil-source target types and reference fields, and deriveRelated results for intersection records. Object classification accepts object/union shapes and intersections, with intersection targets counted as objects even when the original probe labels them target-not-object. Source intersections also qualify when the target is object/union shaped. The original skipped flags remain in raw rows. Nil-source records remain a separate bucket even when the target is an intersection. Intersections do not add a second recursive traversal, so their fields skipped by the original probe remain unwalked.
 
 ## Counts
 
-**Unrelated object pair observations: 2; distinct textual (source, target, nested path) pairs: 2. Nil-source views with a known runtime reference field: 0.** The object-capable reference companion is 0. Nil-source views with no proven reference field but unknown fields or missing target: 0.
+**Unrelated object pair observations: 1; distinct textual (source, target, nested path) pairs: 1. Nil-source views with a known runtime reference field: 0.** The object-capable reference companion is 0. Nil-source views with no proven reference field but unknown fields or missing target: 0.
 
 Selected-unit pair observations: **31794**. Raw lines across all passes, including superseded first-error and retry observations: **31794**. Selected units held 1282 viewSources entries; pointer deduplication suppressed 178863 repeat visits and the depth bound suppressed 15449 visits.
 
 | Split | Selected unit observations | All raw lines |
 | --- | ---: | ---: |
 | object_related_top | 946 | 946 |
-| object_related_nested | 27705 | 27705 |
+| object_related_nested | 19901 | 19901 |
 | object_unrelated_top | 1 | 1 |
-| object_unrelated_nested | 1 | 1 |
+| object_unrelated_nested | 0 | 0 |
 | scalar_top | 3 | 3 |
-| scalar_nested | 3138 | 3138 |
+| scalar_nested | 10943 | 10943 |
 | nil_source | 0 | 0 |
 | nil_target_only | 0 | 0 |
 
-Intersection targets are a subset of the object counts, not an added bucket: 11, split as `{'object_related_top': 0, 'object_related_nested': 11, 'object_unrelated_top': 0, 'object_unrelated_nested': 0, 'scalar_top': 0, 'scalar_nested': 0, 'nil_source': 0, 'nil_target_only': 0}`. Scalar/non-object rows use the probe's flag test; top-level non-object rows are shown separately from nested scalar fields.
+Intersection targets are a subset of the object counts, not an added bucket: 11, split as `{'object_related_top': 0, 'object_related_nested': 11, 'object_unrelated_top': 0, 'object_unrelated_nested': 0, 'scalar_top': 0, 'scalar_nested': 0, 'nil_source': 0, 'nil_target_only': 0}`. Scalar/non-object rows include source-proven primitive, enum and scalar-union fields that the probe's broad union flag test admits; scalar-types.json preserves that source-based classification. Intersection targets retain object status even when scalar-like; top-level non-object rows are shown separately from nested scalar fields.
 
 Reference field means a cycleFinder.fields field whose lowering representation is known and ir.Type.IsReference() is true. This runtime definition includes strings and Weak. The companion object-capable count excludes strings and Weak. Unknown representations remain explicitly unknown, not silently declared scalar. The nil-source count is a count of views; unlike non-nil pairs, the original probe does not deduplicate nil sources.
 
@@ -50,7 +50,6 @@ All counts and owner positions are also in [unrelated-object-pairs.json](unrelat
 | Source type | Target type | Nested path | Count | Files and units |
 | --- | --- | --- | ---: | --- |
 | ArrayLiteralExpression \| CallExpression \| NewExpression | ArrayLiteralExpression | (top level) | 1 | checker.ts:28352:5 x1 |
-| SyntaxKind | SyntaxKind.ArrayLiteralExpression \| SyntaxKind.CallExpression \| SyntaxKind.NewExpression | parent.kind | 1 | checker.ts:28364:5 x1 |
 
 ## Every nil-source view with a runtime reference field
 

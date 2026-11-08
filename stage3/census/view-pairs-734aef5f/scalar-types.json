@@ -1,0 +1,4238 @@
+{
+  "typescript_version": "6.0.3",
+  "method": "Source enum declarations and syntactically proven scalar aliases/unions; ambiguous labels remain unclassified. Intersection targets are handled as objects by the census, regardless of this scalar registry.",
+  "enums": {
+    "ModuleInstanceState": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/binder.ts",
+        "line": 315,
+        "members": [
+          "NonInstantiated",
+          "Instantiated",
+          "ConstEnumOnly"
+        ]
+      }
+    ],
+    "ContainerFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/binder.ts",
+        "line": 465,
+        "members": [
+          "None",
+          "IsContainer",
+          "IsBlockScopedContainer",
+          "IsControlFlowContainer",
+          "IsFunctionLike",
+          "IsFunctionExpression",
+          "HasLocals",
+          "IsInterface",
+          "IsObjectLiteralOrClassExpressionMethodOrAccessor",
+          "PropagatesThisKeyword"
+        ]
+      }
+    ],
+    "BuilderFileEmit": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/builder.ts",
+        "line": 186,
+        "members": [
+          "None",
+          "Js",
+          "JsMap",
+          "JsInlineMap",
+          "DtsErrors",
+          "DtsEmit",
+          "DtsMap",
+          "Dts",
+          "AllJs",
+          "AllDtsEmit",
+          "AllDts",
+          "All"
+        ]
+      }
+    ],
+    "BuilderProgramKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/builder.ts",
+        "line": 1593,
+        "members": [
+          "SemanticDiagnosticsBuilderProgram",
+          "EmitAndSemanticDiagnosticsBuilderProgram"
+        ]
+      }
+    ],
+    "SignatureInfo": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/builderState.ts",
+        "line": 56,
+        "members": [
+          "ComputedDts",
+          "StoredSignatureAtEmit",
+          "UsedVersion"
+        ]
+      }
+    ],
+    "ReferenceHint": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1160,
+        "members": [
+          "Unspecified",
+          "Identifier",
+          "Property",
+          "ExportAssignment",
+          "Jsx",
+          "AsyncFunction",
+          "ExportImportEquals",
+          "ExportSpecifier",
+          "Decorator"
+        ]
+      }
+    ],
+    "IterationUse": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1177,
+        "members": [
+          "AllowsSyncIterablesFlag",
+          "AllowsAsyncIterablesFlag",
+          "AllowsStringInputFlag",
+          "ForOfFlag",
+          "YieldStarFlag",
+          "SpreadFlag",
+          "DestructuringFlag",
+          "PossiblyOutOfBounds",
+          "Element",
+          "Spread",
+          "Destructuring",
+          "ForOf",
+          "ForAwaitOf",
+          "YieldStar",
+          "AsyncYieldStar",
+          "GeneratorReturnType",
+          "AsyncGeneratorReturnType"
+        ]
+      }
+    ],
+    "IterationTypeKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1202,
+        "members": [
+          "Yield",
+          "Return",
+          "Next"
+        ]
+      }
+    ],
+    "WideningKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1224,
+        "members": [
+          "Normal",
+          "FunctionReturn",
+          "GeneratorNext",
+          "GeneratorYield"
+        ]
+      }
+    ],
+    "TypeFacts": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1233,
+        "members": [
+          "None",
+          "TypeofEQString",
+          "TypeofEQNumber",
+          "TypeofEQBigInt",
+          "TypeofEQBoolean",
+          "TypeofEQSymbol",
+          "TypeofEQObject",
+          "TypeofEQFunction",
+          "TypeofEQHostObject",
+          "TypeofNEString",
+          "TypeofNENumber",
+          "TypeofNEBigInt",
+          "TypeofNEBoolean",
+          "TypeofNESymbol",
+          "TypeofNEObject",
+          "TypeofNEFunction",
+          "TypeofNEHostObject",
+          "EQUndefined",
+          "EQNull",
+          "EQUndefinedOrNull",
+          "NEUndefined",
+          "NENull",
+          "NEUndefinedOrNull",
+          "Truthy",
+          "Falsy",
+          "IsUndefined",
+          "IsNull",
+          "IsUndefinedOrNull",
+          "All",
+          "BaseStringStrictFacts",
+          "BaseStringFacts",
+          "StringStrictFacts",
+          "StringFacts",
+          "EmptyStringStrictFacts",
+          "EmptyStringFacts",
+          "NonEmptyStringStrictFacts",
+          "NonEmptyStringFacts",
+          "BaseNumberStrictFacts",
+          "BaseNumberFacts",
+          "NumberStrictFacts",
+          "NumberFacts",
+          "ZeroNumberStrictFacts",
+          "ZeroNumberFacts",
+          "NonZeroNumberStrictFacts",
+          "NonZeroNumberFacts",
+          "BaseBigIntStrictFacts",
+          "BaseBigIntFacts",
+          "BigIntStrictFacts",
+          "BigIntFacts",
+          "ZeroBigIntStrictFacts",
+          "ZeroBigIntFacts",
+          "NonZeroBigIntStrictFacts",
+          "NonZeroBigIntFacts",
+          "BaseBooleanStrictFacts",
+          "BaseBooleanFacts",
+          "BooleanStrictFacts",
+          "BooleanFacts",
+          "FalseStrictFacts",
+          "FalseFacts",
+          "TrueStrictFacts",
+          "TrueFacts",
+          "SymbolStrictFacts",
+          "SymbolFacts",
+          "ObjectStrictFacts",
+          "ObjectFacts",
+          "FunctionStrictFacts",
+          "FunctionFacts",
+          "VoidFacts",
+          "UndefinedFacts",
+          "NullFacts",
+          "EmptyObjectStrictFacts",
+          "EmptyObjectFacts",
+          "UnknownFacts",
+          "AllTypeofNE",
+          "OrFactsMask",
+          "AndFactsMask"
+        ]
+      }
+    ],
+    "TypeSystemPropertyName": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1329,
+        "members": [
+          "Type",
+          "ResolvedBaseConstructorType",
+          "DeclaredType",
+          "ResolvedReturnType",
+          "ImmediateBaseConstraint",
+          "ResolvedTypeArguments",
+          "ResolvedBaseTypes",
+          "WriteType",
+          "ParameterInitializerContainsUndefined"
+        ]
+      }
+    ],
+    "CheckMode": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1343,
+        "members": [
+          "Normal",
+          "Contextual",
+          "Inferential",
+          "SkipContextSensitive",
+          "SkipGenericFunctions",
+          "IsForSignatureHelp",
+          "RestBindingElement",
+          "TypeOnly"
+        ]
+      }
+    ],
+    "SignatureCheckMode": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1357,
+        "members": [
+          "None",
+          "BivariantCallback",
+          "StrictCallback",
+          "IgnoreReturnTypes",
+          "StrictArity",
+          "StrictTopSignature",
+          "Callback"
+        ]
+      }
+    ],
+    "IntersectionState": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1367,
+        "members": [
+          "None",
+          "Source",
+          "Target"
+        ]
+      }
+    ],
+    "RecursionFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1373,
+        "members": [
+          "None",
+          "Source",
+          "Target",
+          "Both"
+        ]
+      }
+    ],
+    "MappedTypeModifiers": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1380,
+        "members": [
+          "IncludeReadonly",
+          "ExcludeReadonly",
+          "IncludeOptional",
+          "ExcludeOptional"
+        ]
+      }
+    ],
+    "MappedTypeNameTypeKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1387,
+        "members": [
+          "None",
+          "Filtering",
+          "Remapping"
+        ]
+      }
+    ],
+    "ExpandingFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1393,
+        "members": [
+          "None",
+          "Source",
+          "Target",
+          "Both"
+        ]
+      }
+    ],
+    "MembersOrExportsResolutionKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1400,
+        "members": [
+          "resolvedExports",
+          "resolvedMembers"
+        ]
+      }
+    ],
+    "UnusedKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1405,
+        "members": [
+          "Local",
+          "Parameter"
+        ]
+      }
+    ],
+    "DeclarationMeaning": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1415,
+        "members": [
+          "GetAccessor",
+          "SetAccessor",
+          "PropertyAssignment",
+          "Method",
+          "PrivateStatic",
+          "GetOrSetAccessor",
+          "PropertyAssignmentOrMethod"
+        ]
+      }
+    ],
+    "DeclarationSpaces": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1425,
+        "members": [
+          "None",
+          "ExportValue",
+          "ExportType",
+          "ExportNamespace"
+        ]
+      }
+    ],
+    "MinArgumentCountFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1432,
+        "members": [
+          "None",
+          "StrongArityForUntypedJS",
+          "VoidIsNonOptional"
+        ]
+      }
+    ],
+    "IntrinsicTypeKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "line": 1438,
+        "members": [
+          "Uppercase",
+          "Lowercase",
+          "Capitalize",
+          "Uncapitalize",
+          "NoInfer"
+        ]
+      }
+    ],
+    "AssertionLevel": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/core.ts",
+        "line": 1924,
+        "members": [
+          "None",
+          "Normal",
+          "Aggressive",
+          "VeryAggressive"
+        ]
+      }
+    ],
+    "Comparison": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/corePublic.ts",
+        "line": 43,
+        "members": [
+          "LessThan",
+          "EqualTo",
+          "GreaterThan"
+        ]
+      }
+    ],
+    "LogLevel": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/debug.ts",
+        "line": 97,
+        "members": [
+          "Off",
+          "Error",
+          "Warning",
+          "Info",
+          "Verbose"
+        ]
+      }
+    ],
+    "BoxCharacter": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/debug.ts",
+        "line": 882,
+        "members": [
+          "lr",
+          "ud",
+          "dr",
+          "dl",
+          "ul",
+          "ur",
+          "udr",
+          "udl",
+          "dlr",
+          "ulr",
+          "udlr"
+        ]
+      }
+    ],
+    "Connection": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/debug.ts",
+        "line": 896,
+        "members": [
+          "None",
+          "Up",
+          "Down",
+          "Left",
+          "Right",
+          "UpDown",
+          "LeftRight",
+          "UpLeft",
+          "UpRight",
+          "DownLeft",
+          "DownRight",
+          "UpDownLeft",
+          "UpDownRight",
+          "UpLeftRight",
+          "DownLeftRight",
+          "UpDownLeftRight",
+          "NoChildren"
+        ]
+      }
+    ],
+    "PipelinePhase": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/emitter.ts",
+        "line": 1191,
+        "members": [
+          "Notification",
+          "Substitution",
+          "Comments",
+          "SourceMaps",
+          "Emit"
+        ]
+      }
+    ],
+    "TempFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/emitter.ts",
+        "line": 6345,
+        "members": [
+          "Auto",
+          "CountMask",
+          "_i"
+        ]
+      }
+    ],
+    "StatisticType": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/executeCommandLine.ts",
+        "line": 99,
+        "members": [
+          "time",
+          "count",
+          "memory"
+        ]
+      }
+    ],
+    "PrivateIdentifierKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/factory/emitHelpers.ts",
+        "line": 42,
+        "members": [
+          "Field",
+          "Method",
+          "Accessor"
+        ]
+      }
+    ],
+    "NodeFactoryFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/factory/nodeFactory.ts",
+        "line": 466,
+        "members": [
+          "None",
+          "NoParenthesizerRules",
+          "NoNodeConverters",
+          "NoIndentationOnFreshPropertyAccess",
+          "NoOriginalNode"
+        ]
+      }
+    ],
+    "Extensions": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/moduleNameResolver.ts",
+        "line": 184,
+        "members": [
+          "TypeScript",
+          "JavaScript",
+          "Declaration",
+          "Json",
+          "ImplementationFiles"
+        ]
+      }
+    ],
+    "NodeResolutionFeatures": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/moduleNameResolver.ts",
+        "line": 1687,
+        "members": [
+          "None",
+          "Imports",
+          "SelfName",
+          "Exports",
+          "ExportsPatternTrailers",
+          "ImportsPatternRoot",
+          "AllFeatures",
+          "Node16Default",
+          "NodeNextDefault",
+          "BundlerDefault",
+          "EsmMode"
+        ]
+      }
+    ],
+    "RelativePreference": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/moduleSpecifiers.ts",
+        "line": 164,
+        "members": [
+          "Relative",
+          "NonRelative",
+          "Shortest",
+          "ExternalNonRelative"
+        ]
+      }
+    ],
+    "MatchingMode": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/moduleSpecifiers.ts",
+        "line": 1014,
+        "members": [
+          "Exact",
+          "Directory",
+          "Pattern"
+        ]
+      }
+    ],
+    "SignatureFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/parser.ts",
+        "line": 405,
+        "members": [
+          "None",
+          "Yield",
+          "Await",
+          "Type",
+          "IgnoreMissingOpenBrace",
+          "JSDoc"
+        ]
+      },
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7006,
+        "members": [
+          "None",
+          "HasRestParameter",
+          "HasLiteralTypes",
+          "Abstract",
+          "IsInnerCallChain",
+          "IsOuterCallChain",
+          "IsUntypedSignatureInJSFile",
+          "IsNonInferrable",
+          "IsSignatureCandidateForOverloadFailure",
+          "PropagatingFlags",
+          "CallChainFlags"
+        ]
+      }
+    ],
+    "SpeculationKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/parser.ts",
+        "line": 414,
+        "members": [
+          "TryParse",
+          "Lookahead",
+          "Reparse"
+        ]
+      }
+    ],
+    "ParsingContext": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/parser.ts",
+        "line": 8754,
+        "members": [
+          "SourceElements",
+          "BlockStatements",
+          "SwitchClauses",
+          "SwitchClauseStatements",
+          "TypeMembers",
+          "ClassMembers",
+          "EnumMembers",
+          "HeritageClauseElement",
+          "VariableDeclarations",
+          "ObjectBindingElements",
+          "ArrayBindingElements",
+          "ArgumentExpressions",
+          "ObjectLiteralMembers",
+          "JsxAttributes",
+          "JsxChildren",
+          "ArrayLiteralMembers",
+          "Parameters",
+          "JSDocParameters",
+          "RestProperties",
+          "TypeParameters",
+          "TypeArguments",
+          "TupleElementTypes",
+          "HeritageClauses",
+          "ImportOrExportSpecifiers",
+          "ImportAttributes",
+          "JSDocComment",
+          "Count"
+        ]
+      }
+    ],
+    "Tristate": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/parser.ts",
+        "line": 8784,
+        "members": [
+          "False",
+          "True",
+          "Unknown"
+        ]
+      }
+    ],
+    "JSDocState": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/parser.ts",
+        "line": 8872,
+        "members": [
+          "BeginningOfLine",
+          "SawAsterisk",
+          "SavingComments",
+          "SavingBackticks"
+        ]
+      }
+    ],
+    "PropertyLikeParse": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/parser.ts",
+        "line": 8879,
+        "members": [
+          "Property",
+          "Parameter",
+          "CallbackParameter"
+        ]
+      }
+    ],
+    "InvalidPosition": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/parser.ts",
+        "line": 10550,
+        "members": [
+          "Value"
+        ]
+      }
+    ],
+    "ForegroundColorEscapeSequences": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/program.ts",
+        "line": 681,
+        "members": [
+          "Grey",
+          "Red",
+          "Yellow",
+          "Blue",
+          "Cyan"
+        ]
+      }
+    ],
+    "SeenPackageName": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/program.ts",
+        "line": 2385,
+        "members": [
+          "Exists",
+          "Modified"
+        ]
+      }
+    ],
+    "EscapeSequenceScanningFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/scanner.ts",
+        "line": 1002,
+        "members": [
+          "String",
+          "ReportErrors",
+          "RegularExpression",
+          "AnnexB",
+          "AnyUnicodeMode",
+          "AtomEscape",
+          "ReportInvalidEscapeErrors",
+          "AllowExtendedUnicodeEscape"
+        ]
+      }
+    ],
+    "ClassSetExpressionType": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/scanner.ts",
+        "line": 1015,
+        "members": [
+          "Unknown",
+          "ClassUnion",
+          "ClassIntersection",
+          "ClassSubtraction"
+        ]
+      }
+    ],
+    "FileWatcherEventKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/sys.ts",
+        "line": 87,
+        "members": [
+          "Created",
+          "Changed",
+          "Deleted"
+        ]
+      }
+    ],
+    "PollingInterval": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/sys.ts",
+        "line": 102,
+        "members": [
+          "High",
+          "Medium",
+          "Low"
+        ]
+      }
+    ],
+    "FileSystemEntryKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/sys.ts",
+        "line": 908,
+        "members": [
+          "File",
+          "Directory"
+        ]
+      }
+    ],
+    "Phase": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/tracing.ts",
+        "line": 133,
+        "members": [
+          "Parse",
+          "Program",
+          "Bind",
+          "Check",
+          "CheckTypes",
+          "Emit",
+          "Session"
+        ]
+      }
+    ],
+    "TransformationState": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformer.ts",
+        "line": 104,
+        "members": [
+          "Uninitialized",
+          "Initialized",
+          "Completed",
+          "Disposed"
+        ]
+      }
+    ],
+    "SyntaxKindFeatureFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformer.ts",
+        "line": 111,
+        "members": [
+          "Substitution",
+          "EmitNotifications"
+        ]
+      }
+    ],
+    "ClassPropertySubstitutionFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/classFields.ts",
+        "line": 230,
+        "members": [
+          "None",
+          "ClassAliases",
+          "ClassStaticThisOrSuperReference"
+        ]
+      }
+    ],
+    "ClassFacts": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/classFields.ts",
+        "line": 333,
+        "members": [
+          "None",
+          "ClassWasDecorated",
+          "NeedsClassConstructorReference",
+          "NeedsClassSuperReference",
+          "NeedsSubstitutionForThisInClassStaticField",
+          "WillHoistInitializersToConstructor"
+        ]
+      },
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/ts.ts",
+        "line": 219,
+        "members": [
+          "None",
+          "HasStaticInitializedProperties",
+          "HasClassOrConstructorParameterDecorators",
+          "HasMemberDecorators",
+          "IsExportOfNamespace",
+          "IsNamedExternalExport",
+          "IsDefaultExternalExport",
+          "IsDerivedClass",
+          "HasAnyDecorators",
+          "MayNeedImmediatelyInvokedFunctionExpression",
+          "IsExported"
+        ]
+      }
+    ],
+    "FlattenLevel": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/destructuring.ts",
+        "line": 81,
+        "members": [
+          "All",
+          "ObjectRest"
+        ]
+      }
+    ],
+    "ES2015SubstitutionFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2015.ts",
+        "line": 220,
+        "members": [
+          "None",
+          "CapturedThis",
+          "BlockScopedBindings"
+        ]
+      }
+    ],
+    "LoopOutParameterFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2015.ts",
+        "line": 272,
+        "members": [
+          "None",
+          "Body",
+          "Initializer"
+        ]
+      }
+    ],
+    "CopyDirection": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2015.ts",
+        "line": 278,
+        "members": [
+          "ToOriginal",
+          "ToOutParameter"
+        ]
+      }
+    ],
+    "Jump": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2015.ts",
+        "line": 283,
+        "members": [
+          "Break",
+          "Continue",
+          "Return"
+        ]
+      }
+    ],
+    "HierarchyFacts": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2015.ts",
+        "line": 371,
+        "members": [
+          "None",
+          "Function",
+          "ArrowFunction",
+          "AsyncFunctionBody",
+          "NonStaticClassElement",
+          "CapturesThis",
+          "ExportedVariableStatement",
+          "TopLevel",
+          "Block",
+          "IterationStatement",
+          "IterationStatementBlock",
+          "IterationContainer",
+          "ForStatement",
+          "ForInOrForOfStatement",
+          "ConstructorWithSuperCall",
+          "StaticInitializer",
+          "AncestorFactsMask",
+          "BlockScopeIncludes",
+          "BlockScopeExcludes",
+          "SourceFileIncludes",
+          "SourceFileExcludes",
+          "FunctionIncludes",
+          "FunctionExcludes",
+          "AsyncFunctionBodyIncludes",
+          "AsyncFunctionBodyExcludes",
+          "ArrowFunctionIncludes",
+          "ArrowFunctionExcludes",
+          "ConstructorIncludes",
+          "ConstructorExcludes",
+          "DoOrWhileStatementIncludes",
+          "DoOrWhileStatementExcludes",
+          "ForStatementIncludes",
+          "ForStatementExcludes",
+          "ForInOrForOfStatementIncludes",
+          "ForInOrForOfStatementExcludes",
+          "BlockIncludes",
+          "BlockExcludes",
+          "IterationStatementBlockIncludes",
+          "IterationStatementBlockExcludes",
+          "StaticInitializerIncludes",
+          "StaticInitializerExcludes",
+          "NewTarget",
+          "LexicalThis",
+          "CapturedLexicalThis",
+          "SubtreeFactsMask",
+          "ArrowFunctionSubtreeExcludes",
+          "FunctionSubtreeExcludes"
+        ]
+      },
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2018.ts",
+        "line": 122,
+        "members": [
+          "None",
+          "HasLexicalThis",
+          "IterationContainer",
+          "AncestorFactsMask",
+          "SourceFileIncludes",
+          "SourceFileExcludes",
+          "StrictModeSourceFileIncludes",
+          "ClassOrFunctionIncludes",
+          "ClassOrFunctionExcludes",
+          "ArrowFunctionIncludes",
+          "ArrowFunctionExcludes",
+          "IterationStatementIncludes",
+          "IterationStatementExcludes"
+        ]
+      }
+    ],
+    "SpreadSegmentKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2015.ts",
+        "line": 472,
+        "members": [
+          "None",
+          "UnpackedSpread",
+          "PackedSpread"
+        ]
+      }
+    ],
+    "ES2017SubstitutionFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2017.ts",
+        "line": 106,
+        "members": [
+          "None",
+          "AsyncMethodsWithSuper"
+        ]
+      }
+    ],
+    "ContextFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2017.ts",
+        "line": 112,
+        "members": [
+          "None",
+          "NonTopLevel",
+          "HasLexicalThis"
+        ]
+      },
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5520,
+        "members": [
+          "None",
+          "Signature",
+          "NoConstraints",
+          "IgnoreNodeInferences",
+          "SkipBindingPatterns"
+        ]
+      }
+    ],
+    "ESNextSubstitutionFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/es2018.ts",
+        "line": 115,
+        "members": [
+          "None",
+          "AsyncMethodsWithSuper"
+        ]
+      }
+    ],
+    "UsingKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/esnext.ts",
+        "line": 64,
+        "members": [
+          "None",
+          "Sync",
+          "Async"
+        ]
+      }
+    ],
+    "OpCode": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/generators.ts",
+        "line": 222,
+        "members": [
+          "Nop",
+          "Statement",
+          "Assign",
+          "Break",
+          "BreakWhenTrue",
+          "BreakWhenFalse",
+          "Yield",
+          "YieldStar",
+          "Return",
+          "Throw",
+          "Endfinally"
+        ]
+      }
+    ],
+    "BlockAction": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/generators.ts",
+        "line": 239,
+        "members": [
+          "Open",
+          "Close"
+        ]
+      }
+    ],
+    "CodeBlockKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/generators.ts",
+        "line": 245,
+        "members": [
+          "Exception",
+          "With",
+          "Switch",
+          "Loop",
+          "Labeled"
+        ]
+      }
+    ],
+    "ExceptionBlockState": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/generators.ts",
+        "line": 254,
+        "members": [
+          "Try",
+          "Catch",
+          "Finally",
+          "Done"
+        ]
+      }
+    ],
+    "Instruction": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/generators.ts",
+        "line": 307,
+        "members": [
+          "Next",
+          "Throw",
+          "Return",
+          "Break",
+          "Yield",
+          "YieldStar",
+          "Catch",
+          "Endfinally"
+        ]
+      }
+    ],
+    "ProcessLevel": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/taggedTemplate.ts",
+        "line": 29,
+        "members": [
+          "LiftRestriction",
+          "All"
+        ]
+      }
+    ],
+    "TypeScriptSubstitutionFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/transformers/ts.ts",
+        "line": 211,
+        "members": [
+          "None",
+          "NamespaceExports",
+          "NonQualifiedEnumMembers"
+        ]
+      }
+    ],
+    "UpToDateStatusType": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/tsbuild.ts",
+        "line": 10,
+        "members": [
+          "Unbuildable",
+          "UpToDate",
+          "UpToDateWithUpstreamTypes",
+          "OutputMissing",
+          "ErrorReadingFile",
+          "OutOfDateWithSelf",
+          "OutOfDateWithUpstream",
+          "OutOfDateBuildInfoWithPendingEmit",
+          "OutOfDateBuildInfoWithErrors",
+          "OutOfDateOptions",
+          "OutOfDateRoots",
+          "UpstreamOutOfDate",
+          "UpstreamBlocked",
+          "ComputingUpstream",
+          "TsVersionOutputOfDate",
+          "UpToDateWithInputFileText",
+          "ContainerOnly",
+          "ForceBuild"
+        ]
+      }
+    ],
+    "BuildResultFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/tsbuildPublic.ts",
+        "line": 168,
+        "members": [
+          "None",
+          "Success",
+          "DeclarationOutputUnchanged",
+          "AnyErrors"
+        ]
+      }
+    ],
+    "InvalidatedProjectKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/tsbuildPublic.ts",
+        "line": 830,
+        "members": [
+          "Build",
+          "UpdateOutputFileStamps"
+        ]
+      }
+    ],
+    "BuildStep": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/tsbuildPublic.ts",
+        "line": 924,
+        "members": [
+          "CreateProgram",
+          "Emit",
+          "QueueReferencingProjects",
+          "Done"
+        ]
+      }
+    ],
+    "SyntaxKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 40,
+        "members": [
+          "Unknown",
+          "EndOfFileToken",
+          "SingleLineCommentTrivia",
+          "MultiLineCommentTrivia",
+          "NewLineTrivia",
+          "WhitespaceTrivia",
+          "ShebangTrivia",
+          "ConflictMarkerTrivia",
+          "NonTextFileMarkerTrivia",
+          "NumericLiteral",
+          "BigIntLiteral",
+          "StringLiteral",
+          "JsxText",
+          "JsxTextAllWhiteSpaces",
+          "RegularExpressionLiteral",
+          "NoSubstitutionTemplateLiteral",
+          "TemplateHead",
+          "TemplateMiddle",
+          "TemplateTail",
+          "OpenBraceToken",
+          "CloseBraceToken",
+          "OpenParenToken",
+          "CloseParenToken",
+          "OpenBracketToken",
+          "CloseBracketToken",
+          "DotToken",
+          "DotDotDotToken",
+          "SemicolonToken",
+          "CommaToken",
+          "QuestionDotToken",
+          "LessThanToken",
+          "LessThanSlashToken",
+          "GreaterThanToken",
+          "LessThanEqualsToken",
+          "GreaterThanEqualsToken",
+          "EqualsEqualsToken",
+          "ExclamationEqualsToken",
+          "EqualsEqualsEqualsToken",
+          "ExclamationEqualsEqualsToken",
+          "EqualsGreaterThanToken",
+          "PlusToken",
+          "MinusToken",
+          "AsteriskToken",
+          "AsteriskAsteriskToken",
+          "SlashToken",
+          "PercentToken",
+          "PlusPlusToken",
+          "MinusMinusToken",
+          "LessThanLessThanToken",
+          "GreaterThanGreaterThanToken",
+          "GreaterThanGreaterThanGreaterThanToken",
+          "AmpersandToken",
+          "BarToken",
+          "CaretToken",
+          "ExclamationToken",
+          "TildeToken",
+          "AmpersandAmpersandToken",
+          "BarBarToken",
+          "QuestionToken",
+          "ColonToken",
+          "AtToken",
+          "QuestionQuestionToken",
+          "BacktickToken",
+          "HashToken",
+          "EqualsToken",
+          "PlusEqualsToken",
+          "MinusEqualsToken",
+          "AsteriskEqualsToken",
+          "AsteriskAsteriskEqualsToken",
+          "SlashEqualsToken",
+          "PercentEqualsToken",
+          "LessThanLessThanEqualsToken",
+          "GreaterThanGreaterThanEqualsToken",
+          "GreaterThanGreaterThanGreaterThanEqualsToken",
+          "AmpersandEqualsToken",
+          "BarEqualsToken",
+          "BarBarEqualsToken",
+          "AmpersandAmpersandEqualsToken",
+          "QuestionQuestionEqualsToken",
+          "CaretEqualsToken",
+          "Identifier",
+          "PrivateIdentifier",
+          "JSDocCommentTextToken",
+          "BreakKeyword",
+          "CaseKeyword",
+          "CatchKeyword",
+          "ClassKeyword",
+          "ConstKeyword",
+          "ContinueKeyword",
+          "DebuggerKeyword",
+          "DefaultKeyword",
+          "DeleteKeyword",
+          "DoKeyword",
+          "ElseKeyword",
+          "EnumKeyword",
+          "ExportKeyword",
+          "ExtendsKeyword",
+          "FalseKeyword",
+          "FinallyKeyword",
+          "ForKeyword",
+          "FunctionKeyword",
+          "IfKeyword",
+          "ImportKeyword",
+          "InKeyword",
+          "InstanceOfKeyword",
+          "NewKeyword",
+          "NullKeyword",
+          "ReturnKeyword",
+          "SuperKeyword",
+          "SwitchKeyword",
+          "ThisKeyword",
+          "ThrowKeyword",
+          "TrueKeyword",
+          "TryKeyword",
+          "TypeOfKeyword",
+          "VarKeyword",
+          "VoidKeyword",
+          "WhileKeyword",
+          "WithKeyword",
+          "ImplementsKeyword",
+          "InterfaceKeyword",
+          "LetKeyword",
+          "PackageKeyword",
+          "PrivateKeyword",
+          "ProtectedKeyword",
+          "PublicKeyword",
+          "StaticKeyword",
+          "YieldKeyword",
+          "AbstractKeyword",
+          "AccessorKeyword",
+          "AsKeyword",
+          "AssertsKeyword",
+          "AssertKeyword",
+          "AnyKeyword",
+          "AsyncKeyword",
+          "AwaitKeyword",
+          "BooleanKeyword",
+          "ConstructorKeyword",
+          "DeclareKeyword",
+          "GetKeyword",
+          "InferKeyword",
+          "IntrinsicKeyword",
+          "IsKeyword",
+          "KeyOfKeyword",
+          "ModuleKeyword",
+          "NamespaceKeyword",
+          "NeverKeyword",
+          "OutKeyword",
+          "ReadonlyKeyword",
+          "RequireKeyword",
+          "NumberKeyword",
+          "ObjectKeyword",
+          "SatisfiesKeyword",
+          "SetKeyword",
+          "StringKeyword",
+          "SymbolKeyword",
+          "TypeKeyword",
+          "UndefinedKeyword",
+          "UniqueKeyword",
+          "UnknownKeyword",
+          "UsingKeyword",
+          "FromKeyword",
+          "GlobalKeyword",
+          "BigIntKeyword",
+          "OverrideKeyword",
+          "OfKeyword",
+          "DeferKeyword",
+          "QualifiedName",
+          "ComputedPropertyName",
+          "TypeParameter",
+          "Parameter",
+          "Decorator",
+          "PropertySignature",
+          "PropertyDeclaration",
+          "MethodSignature",
+          "MethodDeclaration",
+          "ClassStaticBlockDeclaration",
+          "Constructor",
+          "GetAccessor",
+          "SetAccessor",
+          "CallSignature",
+          "ConstructSignature",
+          "IndexSignature",
+          "TypePredicate",
+          "TypeReference",
+          "FunctionType",
+          "ConstructorType",
+          "TypeQuery",
+          "TypeLiteral",
+          "ArrayType",
+          "TupleType",
+          "OptionalType",
+          "RestType",
+          "UnionType",
+          "IntersectionType",
+          "ConditionalType",
+          "InferType",
+          "ParenthesizedType",
+          "ThisType",
+          "TypeOperator",
+          "IndexedAccessType",
+          "MappedType",
+          "LiteralType",
+          "NamedTupleMember",
+          "TemplateLiteralType",
+          "TemplateLiteralTypeSpan",
+          "ImportType",
+          "ObjectBindingPattern",
+          "ArrayBindingPattern",
+          "BindingElement",
+          "ArrayLiteralExpression",
+          "ObjectLiteralExpression",
+          "PropertyAccessExpression",
+          "ElementAccessExpression",
+          "CallExpression",
+          "NewExpression",
+          "TaggedTemplateExpression",
+          "TypeAssertionExpression",
+          "ParenthesizedExpression",
+          "FunctionExpression",
+          "ArrowFunction",
+          "DeleteExpression",
+          "TypeOfExpression",
+          "VoidExpression",
+          "AwaitExpression",
+          "PrefixUnaryExpression",
+          "PostfixUnaryExpression",
+          "BinaryExpression",
+          "ConditionalExpression",
+          "TemplateExpression",
+          "YieldExpression",
+          "SpreadElement",
+          "ClassExpression",
+          "OmittedExpression",
+          "ExpressionWithTypeArguments",
+          "AsExpression",
+          "NonNullExpression",
+          "MetaProperty",
+          "SyntheticExpression",
+          "SatisfiesExpression",
+          "TemplateSpan",
+          "SemicolonClassElement",
+          "Block",
+          "EmptyStatement",
+          "VariableStatement",
+          "ExpressionStatement",
+          "IfStatement",
+          "DoStatement",
+          "WhileStatement",
+          "ForStatement",
+          "ForInStatement",
+          "ForOfStatement",
+          "ContinueStatement",
+          "BreakStatement",
+          "ReturnStatement",
+          "WithStatement",
+          "SwitchStatement",
+          "LabeledStatement",
+          "ThrowStatement",
+          "TryStatement",
+          "DebuggerStatement",
+          "VariableDeclaration",
+          "VariableDeclarationList",
+          "FunctionDeclaration",
+          "ClassDeclaration",
+          "InterfaceDeclaration",
+          "TypeAliasDeclaration",
+          "EnumDeclaration",
+          "ModuleDeclaration",
+          "ModuleBlock",
+          "CaseBlock",
+          "NamespaceExportDeclaration",
+          "ImportEqualsDeclaration",
+          "ImportDeclaration",
+          "ImportClause",
+          "NamespaceImport",
+          "NamedImports",
+          "ImportSpecifier",
+          "ExportAssignment",
+          "ExportDeclaration",
+          "NamedExports",
+          "NamespaceExport",
+          "ExportSpecifier",
+          "MissingDeclaration",
+          "ExternalModuleReference",
+          "JsxElement",
+          "JsxSelfClosingElement",
+          "JsxOpeningElement",
+          "JsxClosingElement",
+          "JsxFragment",
+          "JsxOpeningFragment",
+          "JsxClosingFragment",
+          "JsxAttribute",
+          "JsxAttributes",
+          "JsxSpreadAttribute",
+          "JsxExpression",
+          "JsxNamespacedName",
+          "CaseClause",
+          "DefaultClause",
+          "HeritageClause",
+          "CatchClause",
+          "ImportAttributes",
+          "ImportAttribute",
+          "AssertClause",
+          "AssertEntry",
+          "ImportTypeAssertionContainer",
+          "PropertyAssignment",
+          "ShorthandPropertyAssignment",
+          "SpreadAssignment",
+          "EnumMember",
+          "SourceFile",
+          "Bundle",
+          "JSDocTypeExpression",
+          "JSDocNameReference",
+          "JSDocMemberName",
+          "JSDocAllType",
+          "JSDocUnknownType",
+          "JSDocNullableType",
+          "JSDocNonNullableType",
+          "JSDocOptionalType",
+          "JSDocFunctionType",
+          "JSDocVariadicType",
+          "JSDocNamepathType",
+          "JSDoc",
+          "JSDocComment",
+          "JSDocText",
+          "JSDocTypeLiteral",
+          "JSDocSignature",
+          "JSDocLink",
+          "JSDocLinkCode",
+          "JSDocLinkPlain",
+          "JSDocTag",
+          "JSDocAugmentsTag",
+          "JSDocImplementsTag",
+          "JSDocAuthorTag",
+          "JSDocDeprecatedTag",
+          "JSDocClassTag",
+          "JSDocPublicTag",
+          "JSDocPrivateTag",
+          "JSDocProtectedTag",
+          "JSDocReadonlyTag",
+          "JSDocOverrideTag",
+          "JSDocCallbackTag",
+          "JSDocOverloadTag",
+          "JSDocEnumTag",
+          "JSDocParameterTag",
+          "JSDocReturnTag",
+          "JSDocThisTag",
+          "JSDocTypeTag",
+          "JSDocTemplateTag",
+          "JSDocTypedefTag",
+          "JSDocSeeTag",
+          "JSDocPropertyTag",
+          "JSDocThrowsTag",
+          "JSDocSatisfiesTag",
+          "JSDocImportTag",
+          "SyntaxList",
+          "NotEmittedStatement",
+          "NotEmittedTypeElement",
+          "PartiallyEmittedExpression",
+          "CommaListExpression",
+          "SyntheticReferenceExpression",
+          "Count",
+          "FirstAssignment",
+          "LastAssignment",
+          "FirstCompoundAssignment",
+          "LastCompoundAssignment",
+          "FirstReservedWord",
+          "LastReservedWord",
+          "FirstKeyword",
+          "LastKeyword",
+          "FirstFutureReservedWord",
+          "LastFutureReservedWord",
+          "FirstTypeNode",
+          "LastTypeNode",
+          "FirstPunctuation",
+          "LastPunctuation",
+          "FirstToken",
+          "LastToken",
+          "FirstTriviaToken",
+          "LastTriviaToken",
+          "FirstLiteralToken",
+          "LastLiteralToken",
+          "FirstTemplateToken",
+          "LastTemplateToken",
+          "FirstBinaryOperator",
+          "LastBinaryOperator",
+          "FirstStatement",
+          "LastStatement",
+          "FirstNode",
+          "FirstJSDocNode",
+          "LastJSDocNode",
+          "FirstJSDocTagNode",
+          "LastJSDocTagNode",
+          "FirstContextualKeyword",
+          "LastContextualKeyword"
+        ]
+      }
+    ],
+    "NodeFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 782,
+        "members": [
+          "None",
+          "Let",
+          "Const",
+          "Using",
+          "AwaitUsing",
+          "NestedNamespace",
+          "Synthesized",
+          "Namespace",
+          "OptionalChain",
+          "ExportContext",
+          "ContainsThis",
+          "HasImplicitReturn",
+          "HasExplicitReturn",
+          "GlobalAugmentation",
+          "HasAsyncFunctions",
+          "DisallowInContext",
+          "YieldContext",
+          "DecoratorContext",
+          "AwaitContext",
+          "DisallowConditionalTypesContext",
+          "ThisNodeHasError",
+          "JavaScriptFile",
+          "ThisNodeOrAnySubNodesHasError",
+          "HasAggregatedChildData",
+          "PossiblyContainsDynamicImport",
+          "PossiblyContainsImportMeta",
+          "JSDoc",
+          "Ambient",
+          "InWithStatement",
+          "JsonFile",
+          "TypeCached",
+          "Deprecated",
+          "Unreachable",
+          "BlockScoped",
+          "Constant",
+          "ReachabilityCheckFlags",
+          "ReachabilityAndEmitFlags",
+          "ContextFlags",
+          "TypeExcludesFlags",
+          "PermanentlySetIncrementalFlags",
+          "IdentifierHasExtendedUnicodeEscape",
+          "IdentifierIsInJSDocNamespace"
+        ]
+      }
+    ],
+    "ModifierFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 851,
+        "members": [
+          "None",
+          "Public",
+          "Private",
+          "Protected",
+          "Readonly",
+          "Override",
+          "Export",
+          "Abstract",
+          "Ambient",
+          "Static",
+          "Accessor",
+          "Async",
+          "Default",
+          "Const",
+          "In",
+          "Out",
+          "Decorator",
+          "Deprecated",
+          "JSDocPublic",
+          "JSDocPrivate",
+          "JSDocProtected",
+          "JSDocReadonly",
+          "JSDocOverride",
+          "SyntacticOrJSDocModifiers",
+          "SyntacticOnlyModifiers",
+          "SyntacticModifiers",
+          "JSDocCacheOnlyModifiers",
+          "JSDocOnlyModifiers",
+          "NonCacheOnlyModifiers",
+          "HasComputedJSDocModifiers",
+          "HasComputedFlags",
+          "AccessibilityModifier",
+          "ParameterPropertyModifier",
+          "NonPublicAccessibilityModifier",
+          "TypeScriptModifier",
+          "ExportDefault",
+          "All",
+          "Modifier"
+        ]
+      }
+    ],
+    "JsxFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 905,
+        "members": [
+          "None",
+          "IntrinsicNamedElement",
+          "IntrinsicIndexedElement",
+          "IntrinsicElement"
+        ]
+      }
+    ],
+    "RelationComparisonResult": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 917,
+        "members": [
+          "None",
+          "Succeeded",
+          "Failed",
+          "ReportsUnmeasurable",
+          "ReportsUnreliable",
+          "ReportsMask",
+          "ComplexityOverflow",
+          "StackDepthOverflow",
+          "Overflow"
+        ]
+      }
+    ],
+    "PredicateSemantics": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 932,
+        "members": [
+          "None",
+          "Always",
+          "Never",
+          "Sometimes"
+        ]
+      }
+    ],
+    "GeneratedIdentifierFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 1685,
+        "members": [
+          "None",
+          "Auto",
+          "Loop",
+          "Unique",
+          "Node",
+          "KindMask",
+          "ReservedInNestedScopes",
+          "Optimistic",
+          "FileLevel",
+          "AllowNameSubstitution"
+        ]
+      }
+    ],
+    "RegularExpressionFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 2794,
+        "members": [
+          "None",
+          "HasIndices",
+          "Global",
+          "IgnoreCase",
+          "Multiline",
+          "DotAll",
+          "Unicode",
+          "UnicodeSets",
+          "Sticky",
+          "AnyUnicodeMode",
+          "Modifiers"
+        ]
+      }
+    ],
+    "TokenFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 2815,
+        "members": [
+          "None",
+          "PrecedingLineBreak",
+          "PrecedingJSDocComment",
+          "Unterminated",
+          "ExtendedUnicodeEscape",
+          "Scientific",
+          "Octal",
+          "HexSpecifier",
+          "BinarySpecifier",
+          "OctalSpecifier",
+          "ContainsSeparator",
+          "UnicodeEscape",
+          "ContainsInvalidEscape",
+          "HexEscape",
+          "ContainsLeadingZero",
+          "ContainsInvalidSeparator",
+          "PrecedingJSDocLeadingAsterisks",
+          "BinaryOrOctalSpecifier",
+          "WithSpecifier",
+          "StringLiteralFlags",
+          "NumericLiteralFlags",
+          "TemplateLiteralLikeFlags",
+          "IsInvalid"
+        ]
+      }
+    ],
+    "FlowFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 4150,
+        "members": [
+          "Unreachable",
+          "Start",
+          "BranchLabel",
+          "LoopLabel",
+          "Assignment",
+          "TrueCondition",
+          "FalseCondition",
+          "SwitchClause",
+          "ArrayMutation",
+          "Call",
+          "ReduceLabel",
+          "Referenced",
+          "Shared",
+          "Label",
+          "Condition"
+        ]
+      }
+    ],
+    "CommentDirectiveType": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 4489,
+        "members": [
+          "ExpectError",
+          "Ignore"
+        ]
+      }
+    ],
+    "FileIncludeKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 4599,
+        "members": [
+          "RootFile",
+          "SourceFromProjectReference",
+          "OutputFromProjectReference",
+          "Import",
+          "ReferenceFile",
+          "TypeReferenceDirective",
+          "LibFile",
+          "LibReferenceDirective",
+          "AutomaticTypeDirectiveFile"
+        ]
+      }
+    ],
+    "FilePreprocessingDiagnosticsKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 4664,
+        "members": [
+          "FilePreprocessingLibReferenceDiagnostic",
+          "FilePreprocessingFileExplainingDiagnostic",
+          "ResolutionDiagnostics"
+        ]
+      }
+    ],
+    "EmitOnly": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 4695,
+        "members": [
+          "Js",
+          "Dts",
+          "BuilderSignature"
+        ]
+      }
+    ],
+    "StructureIsReused": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 4967,
+        "members": [
+          "Not",
+          "SafeModules",
+          "Completely"
+        ]
+      }
+    ],
+    "ExitStatus": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5017,
+        "members": [
+          "Success",
+          "DiagnosticsPresent_OutputsSkipped",
+          "DiagnosticsPresent_OutputsGenerated",
+          "InvalidProject_OutputsSkipped",
+          "ProjectReferenceCycle_OutputsSkipped"
+        ]
+      }
+    ],
+    "MemberOverrideStatus": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5498,
+        "members": [
+          "Ok",
+          "NeedsOverride",
+          "HasInvalidOverride"
+        ]
+      }
+    ],
+    "UnionReduction": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5505,
+        "members": [
+          "None",
+          "Literal",
+          "Subtype"
+        ]
+      }
+    ],
+    "IntersectionFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5512,
+        "members": [
+          "None",
+          "NoSupertypeReduction",
+          "NoConstraintReduction"
+        ]
+      }
+    ],
+    "NodeBuilderFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5530,
+        "members": [
+          "None",
+          "NoTruncation",
+          "WriteArrayAsGenericType",
+          "GenerateNamesForShadowedTypeParams",
+          "UseStructuralFallback",
+          "ForbidIndexedAccessSymbolReferences",
+          "WriteTypeArgumentsOfSignature",
+          "UseFullyQualifiedType",
+          "UseOnlyExternalAliasing",
+          "SuppressAnyReturnType",
+          "WriteTypeParametersInQualifiedName",
+          "MultilineObjectLiterals",
+          "WriteClassExpressionAsTypeLiteral",
+          "UseTypeOfFunction",
+          "OmitParameterModifiers",
+          "UseAliasDefinedOutsideCurrentScope",
+          "UseSingleQuotesForStringLiteralType",
+          "NoTypeReduction",
+          "OmitThisParameter",
+          "AllowThisInObjectLiteral",
+          "AllowQualifiedNameInPlaceOfIdentifier",
+          "AllowAnonymousIdentifier",
+          "AllowEmptyUnionOrIntersection",
+          "AllowEmptyTuple",
+          "AllowUniqueESSymbolType",
+          "AllowEmptyIndexInfoType",
+          "AllowNodeModulesRelativePaths",
+          "IgnoreErrors",
+          "InObjectTypeLiteral",
+          "InTypeAlias",
+          "InInitialEntityName"
+        ]
+      }
+    ],
+    "InternalNodeBuilderFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5574,
+        "members": [
+          "None",
+          "WriteComputedProps",
+          "NoSyntacticPrinter",
+          "DoNotIncludeSymbolChain",
+          "AllowUnresolvedNames"
+        ]
+      }
+    ],
+    "TypeFormatFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5584,
+        "members": [
+          "None",
+          "NoTruncation",
+          "WriteArrayAsGenericType",
+          "GenerateNamesForShadowedTypeParams",
+          "UseStructuralFallback",
+          "WriteTypeArgumentsOfSignature",
+          "UseFullyQualifiedType",
+          "SuppressAnyReturnType",
+          "MultilineObjectLiterals",
+          "WriteClassExpressionAsTypeLiteral",
+          "UseTypeOfFunction",
+          "OmitParameterModifiers",
+          "UseAliasDefinedOutsideCurrentScope",
+          "UseSingleQuotesForStringLiteralType",
+          "NoTypeReduction",
+          "OmitThisParameter",
+          "AllowUniqueESSymbolType",
+          "AddUndefined",
+          "WriteArrowStyleSignature",
+          "InArrayType",
+          "InElementType",
+          "InFirstTypeArgument",
+          "InTypeAlias",
+          "NodeBuilderFlagsMask"
+        ]
+      }
+    ],
+    "SymbolFormatFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5626,
+        "members": [
+          "None",
+          "WriteTypeParametersOrArguments",
+          "UseOnlyExternalAliasing",
+          "AllowAnyNodeKind",
+          "UseAliasDefinedOutsideCurrentScope",
+          "WriteComputedProps",
+          "DoNotIncludeSymbolChain"
+        ]
+      }
+    ],
+    "SymbolAccessibility": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5679,
+        "members": [
+          "Accessible",
+          "NotAccessible",
+          "CannotBeNamed",
+          "NotResolved"
+        ]
+      }
+    ],
+    "TypePredicateKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5686,
+        "members": [
+          "This",
+          "Identifier",
+          "AssertsThis",
+          "AssertsIdentifier"
+        ]
+      }
+    ],
+    "TypeReferenceSerializationKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5843,
+        "members": [
+          "Unknown",
+          "TypeWithConstructSignatureAndValue",
+          "VoidNullableOrNeverType",
+          "NumberLikeType",
+          "BigIntLikeType",
+          "StringLikeType",
+          "BooleanType",
+          "ArrayLikeType",
+          "ESSymbolType",
+          "Promise",
+          "TypeWithCallSignature",
+          "ObjectType"
+        ]
+      }
+    ],
+    "SymbolFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 5947,
+        "members": [
+          "None",
+          "FunctionScopedVariable",
+          "BlockScopedVariable",
+          "Property",
+          "EnumMember",
+          "Function",
+          "Class",
+          "Interface",
+          "ConstEnum",
+          "RegularEnum",
+          "ValueModule",
+          "NamespaceModule",
+          "TypeLiteral",
+          "ObjectLiteral",
+          "Method",
+          "Constructor",
+          "GetAccessor",
+          "SetAccessor",
+          "Signature",
+          "TypeParameter",
+          "TypeAlias",
+          "ExportValue",
+          "Alias",
+          "Prototype",
+          "ExportStar",
+          "Optional",
+          "Transient",
+          "Assignment",
+          "ModuleExports",
+          "All",
+          "Enum",
+          "Variable",
+          "Value",
+          "Type",
+          "Namespace",
+          "Module",
+          "Accessor",
+          "FunctionScopedVariableExcludes",
+          "BlockScopedVariableExcludes",
+          "ParameterExcludes",
+          "PropertyExcludes",
+          "EnumMemberExcludes",
+          "FunctionExcludes",
+          "ClassExcludes",
+          "InterfaceExcludes",
+          "RegularEnumExcludes",
+          "ConstEnumExcludes",
+          "ValueModuleExcludes",
+          "NamespaceModuleExcludes",
+          "MethodExcludes",
+          "GetAccessorExcludes",
+          "SetAccessorExcludes",
+          "AccessorExcludes",
+          "TypeParameterExcludes",
+          "TypeAliasExcludes",
+          "AliasExcludes",
+          "ModuleMember",
+          "ExportHasLocal",
+          "BlockScoped",
+          "PropertyOrAccessor",
+          "ClassMember",
+          "ExportSupportsDefaultModifier",
+          "ExportDoesNotSupportDefaultModifier",
+          "Classifiable",
+          "LateBindingContainer"
+        ]
+      }
+    ],
+    "CheckFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6110,
+        "members": [
+          "None",
+          "Instantiated",
+          "SyntheticProperty",
+          "SyntheticMethod",
+          "Readonly",
+          "ReadPartial",
+          "WritePartial",
+          "HasNonUniformType",
+          "HasLiteralType",
+          "ContainsPublic",
+          "ContainsProtected",
+          "ContainsPrivate",
+          "ContainsStatic",
+          "Late",
+          "ReverseMapped",
+          "OptionalParameter",
+          "RestParameter",
+          "DeferredType",
+          "HasNeverType",
+          "Mapped",
+          "StripOptional",
+          "Unresolved",
+          "Synthetic",
+          "Discriminant",
+          "Partial"
+        ]
+      }
+    ],
+    "InternalSymbolName": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6171,
+        "members": [
+          "Call",
+          "Constructor",
+          "New",
+          "Index",
+          "ExportStar",
+          "Global",
+          "Missing",
+          "Type",
+          "Object",
+          "JSXAttributes",
+          "Class",
+          "Function",
+          "Computed",
+          "Resolving",
+          "ExportEquals",
+          "Default",
+          "This",
+          "InstantiationExpression",
+          "ImportAttributes"
+        ]
+      }
+    ],
+    "NodeCheckFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6224,
+        "members": [
+          "None",
+          "TypeChecked",
+          "LexicalThis",
+          "CaptureThis",
+          "CaptureNewTarget",
+          "SuperInstance",
+          "SuperStatic",
+          "ContextChecked",
+          "MethodWithSuperPropertyAccessInAsync",
+          "MethodWithSuperPropertyAssignmentInAsync",
+          "CaptureArguments",
+          "EnumValuesComputed",
+          "LexicalModuleMergesWithClass",
+          "LoopWithCapturedBlockScopedBinding",
+          "ContainsCapturedBlockScopeBinding",
+          "CapturedBlockScopedBinding",
+          "BlockScopedBindingInLoop",
+          "NeedsLoopOutParameter",
+          "AssignmentsMarked",
+          "ContainsConstructorReference",
+          "ConstructorReference",
+          "ContainsClassWithPrivateIdentifiers",
+          "ContainsSuperPropertyInStaticInitializer",
+          "InCheckIdentifier",
+          "PartiallyTypeChecked",
+          "LazyFlags"
+        ]
+      }
+    ],
+    "TypeFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6335,
+        "members": [
+          "Any",
+          "Unknown",
+          "Undefined",
+          "Null",
+          "Void",
+          "String",
+          "Number",
+          "BigInt",
+          "Boolean",
+          "ESSymbol",
+          "StringLiteral",
+          "NumberLiteral",
+          "BigIntLiteral",
+          "BooleanLiteral",
+          "UniqueESSymbol",
+          "EnumLiteral",
+          "Enum",
+          "NonPrimitive",
+          "Never",
+          "TypeParameter",
+          "Object",
+          "Index",
+          "TemplateLiteral",
+          "StringMapping",
+          "Substitution",
+          "IndexedAccess",
+          "Conditional",
+          "Union",
+          "Intersection",
+          "Reserved1",
+          "Reserved2",
+          "Reserved3",
+          "AnyOrUnknown",
+          "Nullable",
+          "Literal",
+          "Unit",
+          "Freshable",
+          "StringOrNumberLiteral",
+          "StringOrNumberLiteralOrUnique",
+          "DefinitelyFalsy",
+          "PossiblyFalsy",
+          "Intrinsic",
+          "StringLike",
+          "NumberLike",
+          "BigIntLike",
+          "BooleanLike",
+          "EnumLike",
+          "ESSymbolLike",
+          "VoidLike",
+          "Primitive",
+          "DefinitelyNonNullable",
+          "DisjointDomains",
+          "UnionOrIntersection",
+          "StructuredType",
+          "TypeVariable",
+          "InstantiableNonPrimitive",
+          "InstantiablePrimitive",
+          "Instantiable",
+          "StructuredOrInstantiable",
+          "ObjectFlagsType",
+          "Simplifiable",
+          "Singleton",
+          "Narrowable",
+          "IncludesMask",
+          "IncludesMissingType",
+          "IncludesNonWideningType",
+          "IncludesWildcard",
+          "IncludesEmptyObject",
+          "IncludesInstantiable",
+          "IncludesConstrainedTypeVariable",
+          "IncludesError",
+          "NotPrimitiveUnion"
+        ]
+      }
+    ],
+    "ObjectFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6523,
+        "members": [
+          "None",
+          "Class",
+          "Interface",
+          "Reference",
+          "Tuple",
+          "Anonymous",
+          "Mapped",
+          "Instantiated",
+          "ObjectLiteral",
+          "EvolvingArray",
+          "ObjectLiteralPatternWithComputedProperties",
+          "ReverseMapped",
+          "JsxAttributes",
+          "JSLiteral",
+          "FreshLiteral",
+          "ArrayLiteral",
+          "PrimitiveUnion",
+          "ContainsWideningType",
+          "ContainsObjectOrArrayLiteral",
+          "NonInferrableType",
+          "CouldContainTypeVariablesComputed",
+          "CouldContainTypeVariables",
+          "SingleSignatureType",
+          "ClassOrInterface",
+          "RequiresWidening",
+          "PropagatingFlags",
+          "InstantiatedMapped",
+          "ContainsSpread",
+          "ObjectRestType",
+          "InstantiationExpressionType",
+          "ObjectTypeKindMask",
+          "IsClassInstanceClone",
+          "IdenticalBaseTypeCalculated",
+          "IdenticalBaseTypeExists",
+          "IsGenericTypeComputed",
+          "IsGenericObjectType",
+          "IsGenericIndexType",
+          "IsGenericType",
+          "ContainsIntersections",
+          "IsUnknownLikeUnionComputed",
+          "IsUnknownLikeUnion",
+          "IsNeverIntersectionComputed",
+          "IsNeverIntersection",
+          "IsConstrainedTypeVariable"
+        ]
+      }
+    ],
+    "VarianceFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6681,
+        "members": [
+          "Invariant",
+          "Covariant",
+          "Contravariant",
+          "Bivariant",
+          "Independent",
+          "VarianceMask",
+          "Unmeasurable",
+          "Unreliable",
+          "AllowsStructuralFallback"
+        ]
+      }
+    ],
+    "ElementFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6702,
+        "members": [
+          "Required",
+          "Optional",
+          "Rest",
+          "Variadic",
+          "Fixed",
+          "Variable",
+          "NonRequired",
+          "NonRest"
+        ]
+      }
+    ],
+    "AccessFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6895,
+        "members": [
+          "None",
+          "IncludeUndefined",
+          "NoIndexSignatures",
+          "Writing",
+          "CacheSymbol",
+          "AllowMissing",
+          "ExpressionPosition",
+          "ReportDeprecated",
+          "SuppressNoImplicitAnyError",
+          "Contextual",
+          "Persistent"
+        ]
+      }
+    ],
+    "IndexFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6924,
+        "members": [
+          "None",
+          "StringsOnly",
+          "NoIndexSignatures",
+          "NoReducibleCheck"
+        ]
+      }
+    ],
+    "JsxReferenceKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6993,
+        "members": [
+          "Component",
+          "Function",
+          "Mixed"
+        ]
+      }
+    ],
+    "SignatureKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 6999,
+        "members": [
+          "Call",
+          "Construct"
+        ]
+      }
+    ],
+    "IndexKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7071,
+        "members": [
+          "String",
+          "Number"
+        ]
+      }
+    ],
+    "TypeMapKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7087,
+        "members": [
+          "Simple",
+          "Array",
+          "Deferred",
+          "Function",
+          "Composite",
+          "Merged"
+        ]
+      }
+    ],
+    "InferencePriority": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7105,
+        "members": [
+          "None",
+          "NakedTypeVariable",
+          "SpeculativeTuple",
+          "SubstituteSource",
+          "HomomorphicMappedType",
+          "PartialHomomorphicMappedType",
+          "MappedTypeConstraint",
+          "ContravariantConditional",
+          "ReturnType",
+          "LiteralKeyof",
+          "NoConstraints",
+          "AlwaysStrict",
+          "MaxValue",
+          "PriorityImpliesCombination",
+          "Circularity"
+        ]
+      }
+    ],
+    "InferenceFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7139,
+        "members": [
+          "None",
+          "NoDefault",
+          "AnyDefault",
+          "SkippedGenericFunction"
+        ]
+      }
+    ],
+    "Ternary": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7156,
+        "members": [
+          "False",
+          "Unknown",
+          "Maybe",
+          "True"
+        ]
+      }
+    ],
+    "AssignmentDeclarationKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7197,
+        "members": [
+          "None",
+          "ExportsProperty",
+          "ModuleExports",
+          "PrototypeProperty",
+          "ThisProperty",
+          "Property",
+          "Prototype",
+          "ObjectDefinePropertyValue",
+          "ObjectDefinePropertyExports",
+          "ObjectDefinePrototypeProperty"
+        ]
+      }
+    ],
+    "DiagnosticCategory": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7324,
+        "members": [
+          "Warning",
+          "Error",
+          "Suggestion",
+          "Message"
+        ]
+      }
+    ],
+    "ModuleResolutionKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7336,
+        "members": [
+          "Classic",
+          "NodeJs",
+          "Node10",
+          "Node16",
+          "NodeNext",
+          "Bundler"
+        ]
+      }
+    ],
+    "ModuleDetectionKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7359,
+        "members": [
+          "Legacy",
+          "Auto",
+          "Force"
+        ]
+      }
+    ],
+    "WatchFileKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7389,
+        "members": [
+          "FixedPollingInterval",
+          "PriorityPollingInterval",
+          "DynamicPriorityPolling",
+          "FixedChunkSizePolling",
+          "UseFsEvents",
+          "UseFsEventsOnParentDirectory"
+        ]
+      }
+    ],
+    "WatchDirectoryKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7398,
+        "members": [
+          "UseFsEvents",
+          "FixedPollingInterval",
+          "DynamicPriorityPolling",
+          "FixedChunkSizePolling"
+        ]
+      }
+    ],
+    "PollingWatchKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7405,
+        "members": [
+          "FixedInterval",
+          "PriorityInterval",
+          "DynamicPriority",
+          "FixedChunkSize"
+        ]
+      }
+    ],
+    "ModuleKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7604,
+        "members": [
+          "None",
+          "CommonJS",
+          "AMD",
+          "UMD",
+          "System",
+          "ES2015",
+          "ES2020",
+          "ES2022",
+          "ESNext",
+          "Node16",
+          "Node18",
+          "Node20",
+          "NodeNext",
+          "Preserve"
+        ]
+      }
+    ],
+    "JsxEmit": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7633,
+        "members": [
+          "None",
+          "Preserve",
+          "React",
+          "ReactNative",
+          "ReactJSX",
+          "ReactJSXDev"
+        ]
+      }
+    ],
+    "ImportsNotUsedAsValues": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7643,
+        "members": [
+          "Remove",
+          "Preserve",
+          "Error"
+        ]
+      }
+    ],
+    "NewLineKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7649,
+        "members": [
+          "CarriageReturnLineFeed",
+          "LineFeed"
+        ]
+      }
+    ],
+    "ScriptKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7663,
+        "members": [
+          "Unknown",
+          "JS",
+          "JSX",
+          "TS",
+          "TSX",
+          "External",
+          "JSON",
+          "Deferred"
+        ]
+      }
+    ],
+    "ScriptTarget": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7682,
+        "members": [
+          "ES3",
+          "ES5",
+          "ES2015",
+          "ES2016",
+          "ES2017",
+          "ES2018",
+          "ES2019",
+          "ES2020",
+          "ES2021",
+          "ES2022",
+          "ES2023",
+          "ES2024",
+          "ES2025",
+          "ESNext",
+          "JSON",
+          "Latest",
+          "LatestStandard"
+        ]
+      }
+    ],
+    "LanguageVariant": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7704,
+        "members": [
+          "Standard",
+          "JSX"
+        ]
+      }
+    ],
+    "WatchDirectoryFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7722,
+        "members": [
+          "None",
+          "Recursive"
+        ]
+      }
+    ],
+    "CharacterCodes": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 7852,
+        "members": [
+          "EOF",
+          "nullCharacter",
+          "maxAsciiCharacter",
+          "lineFeed",
+          "carriageReturn",
+          "lineSeparator",
+          "paragraphSeparator",
+          "nextLine",
+          "space",
+          "nonBreakingSpace",
+          "enQuad",
+          "emQuad",
+          "enSpace",
+          "emSpace",
+          "threePerEmSpace",
+          "fourPerEmSpace",
+          "sixPerEmSpace",
+          "figureSpace",
+          "punctuationSpace",
+          "thinSpace",
+          "hairSpace",
+          "zeroWidthSpace",
+          "narrowNoBreakSpace",
+          "ideographicSpace",
+          "mathematicalSpace",
+          "ogham",
+          "replacementCharacter",
+          "_",
+          "$",
+          "_0",
+          "_1",
+          "_2",
+          "_3",
+          "_4",
+          "_5",
+          "_6",
+          "_7",
+          "_8",
+          "_9",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "ampersand",
+          "asterisk",
+          "at",
+          "backslash",
+          "backtick",
+          "bar",
+          "caret",
+          "closeBrace",
+          "closeBracket",
+          "closeParen",
+          "colon",
+          "comma",
+          "dot",
+          "doubleQuote",
+          "equals",
+          "exclamation",
+          "greaterThan",
+          "hash",
+          "lessThan",
+          "minus",
+          "openBrace",
+          "openBracket",
+          "openParen",
+          "percent",
+          "plus",
+          "question",
+          "semicolon",
+          "singleQuote",
+          "slash",
+          "tilde",
+          "backspace",
+          "formFeed",
+          "byteOrderMark",
+          "tab",
+          "verticalTab"
+        ]
+      }
+    ],
+    "Extension": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 8079,
+        "members": [
+          "Ts",
+          "Tsx",
+          "Dts",
+          "Js",
+          "Jsx",
+          "Json",
+          "TsBuildInfo",
+          "Mjs",
+          "Mts",
+          "Dmts",
+          "Cjs",
+          "Cts",
+          "Dcts"
+        ]
+      }
+    ],
+    "TransformFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 8223,
+        "members": [
+          "None",
+          "ContainsTypeScript",
+          "ContainsJsx",
+          "ContainsESNext",
+          "ContainsES2022",
+          "ContainsES2021",
+          "ContainsES2020",
+          "ContainsES2019",
+          "ContainsES2018",
+          "ContainsES2017",
+          "ContainsES2016",
+          "ContainsES2015",
+          "ContainsGenerator",
+          "ContainsDestructuringAssignment",
+          "ContainsTypeScriptClassSyntax",
+          "ContainsLexicalThis",
+          "ContainsRestOrSpread",
+          "ContainsObjectRestOrSpread",
+          "ContainsComputedPropertyName",
+          "ContainsBlockScopedBinding",
+          "ContainsBindingPattern",
+          "ContainsYield",
+          "ContainsAwait",
+          "ContainsHoistedDeclarationOrCompletion",
+          "ContainsDynamicImport",
+          "ContainsClassFields",
+          "ContainsDecorators",
+          "ContainsPossibleTopLevelAwait",
+          "ContainsLexicalSuper",
+          "ContainsUpdateExpressionForIdentifier",
+          "ContainsPrivateIdentifierInExpression",
+          "HasComputedFlags",
+          "AssertTypeScript",
+          "AssertJsx",
+          "AssertESNext",
+          "AssertES2022",
+          "AssertES2021",
+          "AssertES2020",
+          "AssertES2019",
+          "AssertES2018",
+          "AssertES2017",
+          "AssertES2016",
+          "AssertES2015",
+          "AssertGenerator",
+          "AssertDestructuringAssignment",
+          "OuterExpressionExcludes",
+          "PropertyAccessExcludes",
+          "NodeExcludes",
+          "ArrowFunctionExcludes",
+          "FunctionExcludes",
+          "ConstructorExcludes",
+          "MethodOrAccessorExcludes",
+          "PropertyExcludes",
+          "ClassExcludes",
+          "ModuleExcludes",
+          "TypeExcludes",
+          "ObjectLiteralExcludes",
+          "ArrayLiteralOrCallOrNewExcludes",
+          "VariableDeclarationListExcludes",
+          "ParameterExcludes",
+          "CatchClauseExcludes",
+          "BindingPatternExcludes",
+          "ContainsLexicalThisOrSuper",
+          "PropertyNamePropagatingFlags"
+        ]
+      }
+    ],
+    "SnippetKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 8364,
+        "members": [
+          "TabStop",
+          "Placeholder",
+          "Choice",
+          "Variable"
+        ]
+      }
+    ],
+    "EmitFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 8372,
+        "members": [
+          "None",
+          "SingleLine",
+          "MultiLine",
+          "AdviseOnEmitNode",
+          "NoSubstitution",
+          "CapturesThis",
+          "NoLeadingSourceMap",
+          "NoTrailingSourceMap",
+          "NoSourceMap",
+          "NoNestedSourceMaps",
+          "NoTokenLeadingSourceMaps",
+          "NoTokenTrailingSourceMaps",
+          "NoTokenSourceMaps",
+          "NoLeadingComments",
+          "NoTrailingComments",
+          "NoComments",
+          "NoNestedComments",
+          "HelperName",
+          "ExportName",
+          "LocalName",
+          "InternalName",
+          "Indented",
+          "NoIndentation",
+          "AsyncFunctionBody",
+          "ReuseTempVariableScope",
+          "CustomPrologue",
+          "NoHoisting",
+          "Iterator",
+          "NoAsciiEscaping"
+        ]
+      }
+    ],
+    "InternalEmitFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 8406,
+        "members": [
+          "None",
+          "TypeScriptClassWrapper",
+          "NeverApplyImportHelper",
+          "IgnoreSourceNewlines",
+          "Immutable",
+          "IndirectCall",
+          "TransformPrivateStaticElements"
+        ]
+      }
+    ],
+    "ExternalEmitHelpers": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 8543,
+        "members": [
+          "Extends",
+          "Assign",
+          "Rest",
+          "Decorate",
+          "ESDecorateAndRunInitializers",
+          "Metadata",
+          "Param",
+          "Awaiter",
+          "Generator",
+          "Values",
+          "Read",
+          "SpreadArray",
+          "Await",
+          "AsyncGenerator",
+          "AsyncDelegator",
+          "AsyncValues",
+          "ExportStar",
+          "ImportStar",
+          "ImportDefault",
+          "MakeTemplateObject",
+          "ClassPrivateFieldGet",
+          "ClassPrivateFieldSet",
+          "ClassPrivateFieldIn",
+          "SetFunctionName",
+          "PropKey",
+          "AddDisposableResourceAndDisposeResources",
+          "RewriteRelativeImportExtension",
+          "FirstEmitHelper",
+          "LastEmitHelper",
+          "ForOfIncludes",
+          "ForAwaitOfIncludes",
+          "AsyncGeneratorIncludes",
+          "AsyncDelegatorIncludes",
+          "SpreadIncludes"
+        ]
+      }
+    ],
+    "EmitHint": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 8592,
+        "members": [
+          "SourceFile",
+          "Expression",
+          "IdentifierName",
+          "MappedTypeParameter",
+          "Unspecified",
+          "EmbeddedStatement",
+          "JsxAttributeValue",
+          "ImportTypeNodeAttributes"
+        ]
+      }
+    ],
+    "OuterExpressionKinds": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 8644,
+        "members": [
+          "Parentheses",
+          "TypeAssertions",
+          "NonNullAssertions",
+          "PartiallyEmittedExpressions",
+          "ExpressionsWithTypeArguments",
+          "Satisfies",
+          "Assertions",
+          "All",
+          "ExcludeJSDocTypeAssertion"
+        ]
+      }
+    ],
+    "LexicalEnvironmentFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 9563,
+        "members": [
+          "None",
+          "InParameters",
+          "VariablesHoistedInParameters"
+        ]
+      }
+    ],
+    "ListFormat": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 10119,
+        "members": [
+          "None",
+          "SingleLine",
+          "MultiLine",
+          "PreserveLines",
+          "LinesMask",
+          "NotDelimited",
+          "BarDelimited",
+          "AmpersandDelimited",
+          "CommaDelimited",
+          "AsteriskDelimited",
+          "DelimitersMask",
+          "AllowTrailingComma",
+          "Indented",
+          "SpaceBetweenBraces",
+          "SpaceBetweenSiblings",
+          "Braces",
+          "Parenthesis",
+          "AngleBrackets",
+          "SquareBrackets",
+          "BracketsMask",
+          "OptionalIfUndefined",
+          "OptionalIfEmpty",
+          "Optional",
+          "PreferNewLine",
+          "NoTrailingNewLine",
+          "NoInterveningComments",
+          "NoSpaceIfEmpty",
+          "SingleElement",
+          "SpaceAfterList",
+          "Modifiers",
+          "HeritageClauses",
+          "SingleLineTypeLiteralMembers",
+          "MultiLineTypeLiteralMembers",
+          "SingleLineTupleTypeElements",
+          "MultiLineTupleTypeElements",
+          "UnionTypeConstituents",
+          "IntersectionTypeConstituents",
+          "ObjectBindingPatternElements",
+          "ArrayBindingPatternElements",
+          "ObjectLiteralExpressionProperties",
+          "ImportAttributes",
+          "ImportClauseEntries",
+          "ArrayLiteralExpressionElements",
+          "CommaListElements",
+          "CallExpressionArguments",
+          "NewExpressionArguments",
+          "TemplateExpressionSpans",
+          "SingleLineBlockStatements",
+          "MultiLineBlockStatements",
+          "VariableDeclarationList",
+          "SingleLineFunctionBodyStatements",
+          "MultiLineFunctionBodyStatements",
+          "ClassHeritageClauses",
+          "ClassMembers",
+          "InterfaceMembers",
+          "EnumMembers",
+          "CaseBlockClauses",
+          "NamedImportsOrExportsElements",
+          "JsxElementOrFragmentChildren",
+          "JsxElementAttributes",
+          "CaseOrDefaultClauseStatements",
+          "HeritageClauseTypes",
+          "SourceFileStatements",
+          "Decorators",
+          "TypeArguments",
+          "TypeParameters",
+          "Parameters",
+          "IndexSignatureParameters",
+          "JSDocComment"
+        ]
+      }
+    ],
+    "PragmaKindFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 10207,
+        "members": [
+          "None",
+          "TripleSlashXML",
+          "SingleLine",
+          "MultiLine",
+          "All",
+          "Default"
+        ]
+      }
+    ],
+    "JSDocParsingMode": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/types.ts",
+        "line": 10295,
+        "members": [
+          "ParseAll",
+          "ParseNone",
+          "ParseForTypeErrors",
+          "ParseForTypeInfo"
+        ]
+      }
+    ],
+    "GetLiteralTextFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/utilities.ts",
+        "line": 1972,
+        "members": [
+          "None",
+          "NeverAsciiEscape",
+          "JsxAttributeEscape",
+          "TerminateUnterminatedLiterals",
+          "AllowNumericSeparator"
+        ]
+      }
+    ],
+    "AssignmentKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/utilities.ts",
+        "line": 4840,
+        "members": [
+          "None",
+          "Definite",
+          "Compound"
+        ]
+      }
+    ],
+    "FunctionFlags": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/utilities.ts",
+        "line": 5307,
+        "members": [
+          "Normal",
+          "Generator",
+          "Async",
+          "Invalid",
+          "AsyncGenerator"
+        ]
+      }
+    ],
+    "Associativity": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/utilities.ts",
+        "line": 5629,
+        "members": [
+          "Left",
+          "Right"
+        ]
+      }
+    ],
+    "OperatorPrecedence": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/utilities.ts",
+        "line": 5701,
+        "members": [
+          "Comma",
+          "Spread",
+          "Yield",
+          "Assignment",
+          "Conditional",
+          "LogicalOR",
+          "Coalesce",
+          "LogicalAND",
+          "BitwiseOR",
+          "BitwiseXOR",
+          "BitwiseAND",
+          "Equality",
+          "Relational",
+          "Shift",
+          "Additive",
+          "Multiplicative",
+          "Exponentiation",
+          "Unary",
+          "Update",
+          "LeftHandSide",
+          "Member",
+          "Primary",
+          "Highest",
+          "Lowest",
+          "Invalid"
+        ]
+      }
+    ],
+    "AccessKind": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/utilities.ts",
+        "line": 8089,
+        "members": [
+          "Read",
+          "Write",
+          "ReadWrite"
+        ]
+      }
+    ],
+    "ModuleSpecifierEnding": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/utilities.ts",
+        "line": 10047,
+        "members": [
+          "Minimal",
+          "Index",
+          "JsExtension",
+          "TsExtension"
+        ]
+      }
+    ],
+    "States": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/utilities.ts",
+        "line": 10977,
+        "members": [
+          "BeforeNodeModules",
+          "NodeModules",
+          "Scope",
+          "PackageContent"
+        ]
+      }
+    ],
+    "ProgramUpdateLevel": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/watchUtilities.ts",
+        "line": 381,
+        "members": [
+          "Update",
+          "RootNamesAndUpdate",
+          "Full"
+        ]
+      }
+    ],
+    "WatchLogLevel": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/watchUtilities.ts",
+        "line": 677,
+        "members": [
+          "None",
+          "TriggerOnly",
+          "Verbose"
+        ]
+      }
+    ]
+  },
+  "scalar_labels": {
+    "0": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "EmitFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "FlowFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "GeneratedIdentifierFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "ImportPhaseModifierSyntaxKind | undefined": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "IndexFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "InternalEmitFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "JSDocParsingMode | undefined": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "LanguageVariant": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "ModifierFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "NodeFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "ObjectFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "ResolutionMode": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "ScriptKind": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "ScriptTarget": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SnippetKind.TabStop | SnippetKind.Placeholder": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SymbolFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SymbolFlags | undefined": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.AbstractKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.AccessorKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ArrayBindingPattern": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ArrayLiteralExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ArrayLiteralExpression | SyntaxKind.CallExpression | SyntaxKind.NewExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ArrayType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ArrowFunction": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.AsExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.AsyncKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.BigIntLiteral": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.BinaryExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.BindingElement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Block": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.CallExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.CallSignature": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ClassDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ClassExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ClassExpression | SyntaxKind.ClassDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ClassExpression | SyntaxKind.ClassDeclaration | SyntaxKind.InterfaceDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ClassStaticBlockDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ComputedPropertyName": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ConditionalExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ConstKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Constructor": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.DeclareKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Decorator": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.DefaultKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ElementAccessExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.EndOfFileToken": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.EnumDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.EnumMember": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ExclamationToken": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ExportAssignment": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ExportDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ExportKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ExportSpecifier": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ExpressionStatement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ExpressionWithTypeArguments": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.FunctionDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.FunctionExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.GetAccessor": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.HeritageClause": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Identifier": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Identifier | SyntaxKind.ModuleDeclaration | SyntaxKind.ModuleBlock | SyntaxKind.SourceFile": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Identifier | SyntaxKind.ObjectBindingPattern | SyntaxKind.ArrayBindingPattern | SyntaxKind.ArrayLiteralExpression | SyntaxKind.ObjectLiteralExpression | SyntaxKind.PropertyAccessExpression | SyntaxKind.ElementAccessExpression | SyntaxKind.OmittedExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Identifier | SyntaxKind.QualifiedName": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Identifier | SyntaxKind.ThisKeyword | SyntaxKind.PropertyAccessExpression | SyntaxKind.JsxNamespacedName": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ImportAttributes": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ImportClause": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ImportDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ImportDeclaration | SyntaxKind.ExportDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ImportDeclaration | SyntaxKind.JSDocImportTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ImportEqualsDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ImportSpecifier": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ImportType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.InKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.IndexedAccessType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.InterfaceDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDoc": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDoc | SyntaxKind.JSDocTypeLiteral": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocAugmentsTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocCallbackTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocClassTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocDeprecatedTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocEnumTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocFunctionType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocImplementsTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocImportTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocLink": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocLinkCode": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocLinkPlain": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocMemberName": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocNameReference": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocOverloadTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocOverrideTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocParameterTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocPrivateTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocProtectedTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocPublicTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocReadonlyTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocReturnTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocSatisfiesTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocTemplateTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocThisTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocTypeExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocTypeLiteral": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JSDocTypeTag": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JsxAttribute": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JsxAttributes": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JsxElement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JsxFragment": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JsxOpeningElement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JsxOpeningFragment": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JsxSelfClosingElement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.JsxSelfClosingElement | SyntaxKind.JsxOpeningElement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.LabeledStatement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.LiteralType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.MetaProperty": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.MethodDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.MethodDeclaration | SyntaxKind.Constructor | SyntaxKind.GetAccessor | SyntaxKind.SetAccessor | SyntaxKind.FunctionExpression | SyntaxKind.ArrowFunction | SyntaxKind.FunctionDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.MinusToken": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ModuleBlock": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ModuleBlock | SyntaxKind.SourceFile": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ModuleBlock | SyntaxKind.SourceFile | SyntaxKind.JSDoc": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ModuleDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NamedExports": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NamedExports | SyntaxKind.NamespaceExport": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NamedImports": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NamedTupleMember": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NamespaceExport": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NamespaceExportDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NamespaceImport": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NamespaceImport | SyntaxKind.NamedImports": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NewExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NoSubstitutionTemplateLiteral": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NonNullExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NumericLiteral": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NumericLiteral | SyntaxKind.BigIntLiteral | SyntaxKind.StringLiteral | SyntaxKind.NoSubstitutionTemplateLiteral | SyntaxKind.Identifier | SyntaxKind.PrivateIdentifier | SyntaxKind.ComputedPropertyName": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NumericLiteral | SyntaxKind.StringLiteral | SyntaxKind.FalseKeyword | SyntaxKind.NullKeyword | SyntaxKind.TrueKeyword | SyntaxKind.ArrayLiteralExpression | SyntaxKind.ObjectLiteralExpression | SyntaxKind.PrefixUnaryExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.NumericLiteral | SyntaxKind.StringLiteral | SyntaxKind.Identifier": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ObjectBindingPattern": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ObjectBindingPattern | SyntaxKind.ArrayBindingPattern": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ObjectBindingPattern | SyntaxKind.ArrayBindingPattern | SyntaxKind.ArrayLiteralExpression | SyntaxKind.ObjectLiteralExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ObjectLiteralExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ObjectLiteralExpression | SyntaxKind.ClassExpression | SyntaxKind.ClassDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.OmittedExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.OutKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.OverrideKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Parameter": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.Parameter | SyntaxKind.BindingElement | SyntaxKind.VariableDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ParenthesizedExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ParenthesizedType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PartiallyEmittedExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PlusToken": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PostfixUnaryExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PrefixUnaryExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PrivateIdentifier": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PrivateKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PropertyAccessExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PropertyAssignment": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PropertyDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PropertySignature": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ProtectedKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.PublicKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.QualifiedName": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.QuestionToken": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ReadonlyKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.RestType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.SatisfiesExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.SetAccessor": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.ShorthandPropertyAssignment": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.SourceFile": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.SpreadAssignment": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.SpreadElement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.StaticKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.StringLiteral": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.StringLiteral | SyntaxKind.Identifier": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.SyntaxList": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TaggedTemplateExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TryStatement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypeAssertionExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypeLiteral": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypeLiteral | SyntaxKind.InterfaceDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypeLiteral | SyntaxKind.ObjectLiteralExpression | SyntaxKind.ClassExpression | SyntaxKind.ClassDeclaration | SyntaxKind.InterfaceDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypeOperator": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypeParameter": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypePredicate": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypeQuery": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypeReference": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.TypeReference | SyntaxKind.ArrayType | SyntaxKind.TupleType": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.VariableDeclaration": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.VariableDeclarationList": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.VariableDeclarationList | SyntaxKind.CatchClause": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.VariableStatement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.VariableStatement | SyntaxKind.ForStatement | SyntaxKind.ForInStatement | SyntaxKind.ForOfStatement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.VariableStatement | SyntaxKind.ForStatement | SyntaxKind.ForInStatement | SyntaxKind.ForOfStatement | SyntaxKind.TryStatement": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.VoidExpression": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "SyntaxKind.WithKeyword | SyntaxKind.AssertKeyword": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "TransformFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "TypeFlags": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "TypeMapKind": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "TypeNodeSyntaxKind": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "TypePredicateKind": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "TypePredicateKind.Identifier": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "TypePredicateKind.This": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "boolean": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "boolean | undefined": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "number": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "number | undefined": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "string": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "string | false | undefined": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "string | number | undefined": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "string | undefined": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
+    "undefined": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    }
+  }
+}

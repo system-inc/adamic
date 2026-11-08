@@ -12,6 +12,7 @@ for name in passes:
  for r in read(raw/(name+'-boundary.jsonl.gz')):chosen[r['file'],r['unit']]=name
  raw_pairs[name]=read(raw/(name+'-pairs.jsonl.gz'))
  unit_maps[name]={(r['file'],r['unit']):r for r in read(raw/(name+'-units.jsonl.gz'))}
+scalar_labels=set(json.loads((here/'scalar-types.json').read_text())['scalar_labels'])
 seen=set();grouped=collections.defaultdict(list);counts=collections.Counter()
 for r in selected:
  name,index=r['pass'],r['pass_index'];key=(r['file'],r['unit']);assert chosen[key]==name
@@ -22,7 +23,7 @@ for r in selected:
  assert {k:v for k,v in r.items() if k not in ('pass','pass_index')}==raw_pairs[name][index]
  if r['source_nil']:kind='nil_source'
  elif r['target_nil']:kind='nil_target_only'
- elif r['object_pair']:
+ elif r['object_pair'] and (r['target_intersection'] or (r['source'] not in scalar_labels and r['target'] not in scalar_labels)):
   related=r['intersection_related'] if r['source_intersection'] or r['target_intersection'] else r['related']
   kind='object_'+('related' if related else 'unrelated')+('_top' if r['depth']==0 else '_nested')
  else:kind='scalar_top' if r['depth']==0 else 'scalar_nested'
