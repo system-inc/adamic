@@ -233,43 +233,43 @@
       "path": "internal/oracle/testdata/timers_source/stop_foreign_handle.a",
       "ruling_task": "#995spev",
       "lifting_task": "#6a8w6bn",
-      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet\n"
+      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined\n"
     },
     "622dc56e366ab8cf590e6ab9c53ca91210a06c6173f80af0d70d4d9dc47a92ef": {
       "path": "internal/oracle/testdata/timers_source/stop_foreign_intersection.a",
       "ruling_task": "#995spev",
       "lifting_task": "#6a8w6bn",
-      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet\n"
+      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined\n"
     },
     "2a7e37ae763d339ed31623ac5d4b3f9a548094abdf8a5b6c20c02edc6ce9bcab": {
       "path": "internal/oracle/testdata/timers_source/stop_foreign_record.a",
       "ruling_task": "#995spev",
       "lifting_task": "#6a8w6bn",
-      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet\n"
+      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined\n"
     },
     "875c4005b481833d8d9e59bbf5a06933f36d799e1b18661d43c52e997cd8ec6c": {
       "path": "internal/oracle/testdata/timers_source/stop_foreign_generic.a",
       "ruling_task": "#995spev",
       "lifting_task": "#6a8w6bn",
-      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet\n"
+      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined\n"
     },
     "812efc3e590757cce43cf25afdea90b98c9881d20e2037e5b813371a70273bb5": {
       "path": "internal/oracle/testdata/timers_source/delay_nan.a",
       "ruling_task": "#995spev",
       "lifting_task": "#zhgmbwz",
-      "stderr": "adamic: panic: a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet\n"
+      "stderr": "adamic: panic: a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing\n"
     },
     "ee662df976371220e6d6abbc8868f0da5b63de8d315e6332ddc6fef80ed3108b": {
       "path": "internal/oracle/testdata/timers_source/delay_negative.a",
       "ruling_task": "#995spev",
       "lifting_task": "#zhgmbwz",
-      "stderr": "adamic: panic: a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet\n"
+      "stderr": "adamic: panic: a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing\n"
     },
     "455c2d87e78f740608d351a766fb874ffb52548d206a4a451a23773509ba917f": {
       "path": "internal/oracle/testdata/timers_source/delay_overflow.a",
       "ruling_task": "#995spev",
       "lifting_task": "#zhgmbwz",
-      "stderr": "adamic: panic: a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet\n"
+      "stderr": "adamic: panic: a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing\n"
     }
   }
 }
