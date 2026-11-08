@@ -75,14 +75,14 @@ The wrapper gives each oracle a 2400-second hard limit. It stops on any new chec
 
 Both full apply.sh runs passed end to end. The 99g row is one file, four lines added and three removed. The exact changes are the value/formatter declarations and two output templates shown above.
 
-| Command | Before config value | After config value | Before/after readback exit | Go comparison |
-| --- | --- | --- | --- | --- |
-| --init | unchanged defaults | unchanged defaults | 0 / 0 | entire file byte-identical |
-| --init --strict false | false | false | 0 / 0 | entire file byte-identical |
-| --init --outFile null | undefined token | null | 1 / 0 | entire after file byte-identical |
-| --init --strict null | true default | null | 0 / 0 | entire after file byte-identical |
-| --init --rootDir null | "./src" default | null | 0 / 0 | entire after file byte-identical |
-| --init --target null | "esnext" default | null | 0 / 0 | Go panics and writes no file |
+| Command               | Before config value | After config value | Before/after readback exit | Go comparison                    |
+| --------------------- | ------------------- | ------------------ | -------------------------- | -------------------------------- |
+| --init                | unchanged defaults  | unchanged defaults | 0 / 0                      | entire file byte-identical       |
+| --init --strict false | false               | false              | 0 / 0                      | entire file byte-identical       |
+| --init --outFile null | undefined token     | null               | 1 / 0                      | entire after file byte-identical |
+| --init --strict null  | true default        | null               | 0 / 0                      | entire after file byte-identical |
+| --init --rootDir null | "./src" default     | null               | 0 / 0                      | entire after file byte-identical |
+| --init --target null  | "esnext" default    | null               | 0 / 0                      | Go panics and writes no file     |
 
 The full [invalid before file](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/outFile-before.tsconfig.json.txt), [valid after file](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/outFile-after.tsconfig.json.txt) and [Go file](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/outFile-go.tsconfig.json.txt) are retained. The invalid line is `"outFile": undefined,`; the after and Go line is `"outFile": null,`. The actual before readback reports:
 
@@ -98,10 +98,10 @@ Whole-program [measurement](https://github.com/system-inc/adamic/blob/7cd9e0ab09
 
 The sequential [oracle comparison](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/oracle-comparison.json) passes:
 
-| Oracle | Passing | Failing | Pending | Wrapper seconds |
-| --- | ---: | ---: | ---: | ---: |
-| Control | 106366 | 1 | 0 | 221.785 |
-| 99g | 106366 | 1 | 0 | 335.800 |
+| Oracle  | Passing | Failing | Pending | Wrapper seconds |
+| ------- | ------: | ------: | ------: | --------------: |
+| Control |  106366 |       1 |       0 |         221.785 |
+| 99g     |  106366 |       1 |       0 |         335.800 |
 
 Both install/build phases exit 0. Both test phases exit 1 solely for the sanctioned `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change` failure. The existing normalizer accepts exactly all 223 sanctioned declarations, with no missing, extra or changed declaration. No expectation or sanction was edited.
 
