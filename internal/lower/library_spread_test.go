@@ -72,9 +72,14 @@ func TestLibrarySpreadDateView(t *testing.T) {
 	_, err := lowerSource(t, `interface Time { readonly getTime: () => number; }
 function copy(value: Time): void { const result = { ...value }; }
 copy(new Date(0));`)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "library class Date") {
-		t.Fatalf("want Date refusal, got %v", err)
+	// Time names getTime, a method lib declares on Date, so the view itself stops first, at the call that
+	// hands the Date to copy (#sn788gx's census): a Date's methods live on its prototype, never in its
+	// runtime shape. The spread's library class refusal is unchanged behind it, and the typed array row
+	// below still reaches it.
+	const want = "main.a:3:6: stage 0 can't lower a view naming getTime, which lib declares on Date but the runtime's Date doesn't hold (leave getTime out of the view's type) yet"
+	var pending *NotYet
+	if !errors.As(err, &pending) || !strings.HasSuffix(err.Error(), want) {
+		t.Fatalf("want %q, got %v", want, err)
 	}
 }
 
