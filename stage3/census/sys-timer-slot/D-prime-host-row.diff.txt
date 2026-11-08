@@ -1,0 +1,14 @@
+--- unchanged/internal/load/host_axioms.json
++++ scratch/host_axioms.json
+@@ -374,0 +375,11 @@
++  },
++  {
++    "file": "web-globals/timers.d.ts",
++    "line": 41,
++    "published": "    function clearTimeout(timeout: NodeJS.Timeout | string | number | undefined): void;",
++    "corrected": "    function clearTimeout(timeout: unknown): void;",
++    "node": {
++      "measurement_only": true,
++      "stand_in_for": "Language host row; Runtime global timer implementation is outside this measurement"
++    },
++    "ruling": "Adamic, b5w3ycg, Nov 7 21:47Z, item 2: clearTimeout host input unknown; scratch D-prime stand-in only"

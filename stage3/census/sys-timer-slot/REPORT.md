@@ -551,3 +551,132 @@ D is not a clean stock build: both modes reject the two Node cancellation
 providers. The lower wall count is accompanied by checker exclusion and is
 not evidence that the native provider refusals have been resolved. The nine
 JS files are unchanged. No implementation is proposed for landing.
+
+
+## D-prime: function properties with the ruled unknown cancellation input
+
+Measurement only, following D in task 7fd51gk. The stand-in follows Adamic's
+b5w3ycg ruling, Nov 7 21:47Z, item 2: the host clearTimeout input is unknown,
+a host row Language writes and Runtime builds. No production row, runtime
+implementation, stage3/adapt edit or API sanction is introduced here.
+
+**Result: both clearTimeout provider refusals clear; both setTimeout provider
+refusals remain unchanged.** Unlike D, getNodeSystem is actually attempted,
+with no checker diagnostics or checker-body split.
+
+### D-prime.1 Stand-in and stock diagnostics
+
+I used a scratch copy of the loader's host_axioms.json, not an edit of either
+published @types/node package. The loader serves embedded Node declarations
+and ignores caller @types/node packages (internal/load/node_library_fs.go).
+Its existing CorrectNodeHostAxioms mechanism applies exact, line-anchored
+published/corrected rows (internal/load/host_axioms.go). The table is a
+go:embed input, so a scratch Go overlay mapping only that JSON input, added
+to the unchanged standard latent-census overlay, embeds the stand-in in a
+new scratch census binary. No Go implementation is changed.
+
+The sole new row pins @types/node 25.3.3, web-globals/timers.d.ts:41:
+
+```diff
+-    function clearTimeout(timeout: NodeJS.Timeout | string | number | undefined): void;
++    function clearTimeout(timeout: unknown): void;
+```
+
+D-prime-host-axioms.json preserves every existing row and appends this one.
+D-prime-timer-row.json identifies it as measurement-only rather than claiming
+to be Language's production evidence. D-prime-overlay.json records the exact
+compiler input overlay. The Node package bytes remain untouched, as does the
+tracked internal/load/host_axioms.json; their before/after hashes are verified
+in D-prime.json. Merely editing the scratch tree's caller Node package would
+not change the loader's bundled view, which is why this existing mechanism
+is the smaller semantic stand-in.
+
+For the stock compiler API checks, the same added row is served by the scratch
+CompilerHost readFile view for both modes. It pins the original line and its
+unique occurrence before replacement. Adamic's existing prelude/RegExp views
+are unchanged; the upstream solution's readFile uses the same timer-row view.
+No unrelated host row is newly applied to either stock mode. The served paths
+are the loader's disk checker package and the upstream installed package, both
+@types/node 25.3.3. The TypeScript source pin and stock API are unchanged:
+050880ce59e30b356b686bd3144efe24f875ebc8, version 6.0.3.
+
+| Stock mode | D-prime diagnostics | Added against Head 2 |
+|---|---:|---:|
+| Adamic options, all 79 compiler roots | 0 | 0 |
+| Upstream whole-src solution, including harness/testRunner/unittests | 0 | 0 |
+
+The upstream solution exits 0; the collector exits 0. Stock witnesses at
+actual sys.ts:1500:13 and 1598:13 show each provider's type as exactly
+`(timeout: unknown) => void`. The full stock diagnostics, options, served
+paths/rows and witnesses are in D-prime-stock.json. All 746 scratch source
+files are byte-identical to D, including the two optional function properties,
+the unknown pollScheduled storage and deletion of adaptation 41's ambient heads.
+
+### D-prime.2 Full census against accepted Head 2
+
+The reference remains accepted Head 2 at 66e4051f, with its original host view:
+its retained full sys.ts census has 123 distinct walls. The new scratch binary
+runs LATENT_FULL=1, LATENT_ONLY_FILE=<D-prime>/src/compiler/sys.ts and
+LATENT_ASSERT_NO_OUTPUT=1 over all 79 compiler roots. The command exits 0.
+Its header has checker_rejected=false and diagnostics=[], rather than relying
+on the legacy measurement-label string. getNodeSystem at actual 1473:5 has
+status attempted and checker_diagnostics=[]. Both Head 2 and D-prime have
+135 attempted units and three deferred generic units; there is no checker split.
+
+Coordinates below are the original-main numbers used in the request, with
+the actual declaration-deleted adapted numbers in parentheses. System's
+members are still function properties. Nevertheless, the scanner retains its
+method-bivariance wording for the setTimeout refusals; it is quoted verbatim,
+not reinterpreted as proof that the source uses methods.
+
+| Provider, old main (actual) | D-prime record |
+|---|---|
+| setTimeout 1501:13 (1499:13) | Refused / refusal_scan: a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+| clearTimeout 1502:13 (1500:13) | No provider Refused or NotYet finding at this location; the prior cancellation refusal is gone |
+| setTimeout 1599:13 (1597:13) | Refused / refusal_scan: a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+| clearTimeout 1600:13 (1598:13) | No provider Refused or NotYet finding at this location; the prior cancellation refusal is gone |
+
+At old-main 1501:13 (actual 1499:13), the additional lowering NotYet still
+records exactly `reading setTimeout`. It is retained along with that site's
+Refused finding. No additional provider finding is recorded at old-main
+1599:13 beyond its unchanged Refused reason. These facts do not claim that
+the Node system now lowers completely or that Runtime's timer-value lesson
+has landed.
+
+Every change against Head 2 is listed below; there are no others.
+
+| Gone site, old main (actual) | Exact Head 2 reason removed |
+|---|---|
+| src/compiler/sys.ts:1502:13 (src/compiler/sys.ts:1500:13) | Refused / refusal_scan: a function taking string &#124; number &#124; Timeout &#124; undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+| src/compiler/sys.ts:1600:13 (src/compiler/sys.ts:1598:13) | Refused / refusal_scan: a function taking string &#124; number &#124; Timeout &#124; undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+
+**New sites: none. Other gone sites: none.** The full ledger is 123 Head 2
+walls to 121 D-prime walls: 121 kept, exactly two gone, zero new. Distinct
+walls are keyed by main-mapped file:line:column, kind, phase and exact reason;
+repeated unit findings are deduplicated. D-prime-census-comparison.json retains
+every kept site, all unit records, both headers and the four provider ledgers.
+The two gone sites above account for the entire difference, so the prior
+require()module initializer relation, poller walls, timer read and other
+getNodeSystem walls all remain as in Head 2.
+
+Compared with D's checker-censored 101-wall census, 20 previously hidden
+walls are visible again. They are not new against Head 2. This variant removes
+the checker-split ambiguity without suppressing any checker diagnostic.
+
+### D-prime.3 Plain disposition and evidence
+
+- clearTimeout at old-main 1502 and 1600: the two identified refusals clear
+  with the ruled unknown host input. There are no stock errors in either mode.
+- setTimeout at old-main 1501 and 1599: both refusals remain, with the same
+  TArgs versus NoInfer<A> reason quoted above, despite the property spelling.
+- The separate `reading setTimeout` NotYet at 1501 remains. Nothing here
+  establishes complete native lowering or adds a timer runtime operation.
+
+D-prime.json contains the stock results, complete census comparison, host row,
+unchanged-input hashes and actual child exits. D-prime-evidence.tar.gz retains
+raw streams, timings, the exact sys.ts source and scratch inputs; its sha256
+file pins it. D-prime-tools contains the executed drivers and stock checker.
+Go source quoted as evidence has .go.txt extensions. The published declaration
+files, production host table, stage3/adapt and existing A/B/C/D evidence are
+unchanged. All commands are logged with their own exit codes, bounded below
+30 minutes, and task-owned live processes are cleaned up before completion.

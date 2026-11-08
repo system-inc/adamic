@@ -71794,5 +71794,20 @@
       "checkerSplitProviderBody": true
     },
     "nineJavascriptFilesIdentical": true
+  },
+  "D-prime": {
+    "report": "D-prime.json",
+    "stockDiagnostics": {
+      "adamic": 0,
+      "upstream": 0
+    },
+    "head2Walls": 123,
+    "walls": 121,
+    "kept": 121,
+    "gone": 2,
+    "new": 0,
+    "getNodeSystem": "attempted",
+    "setTimeoutProviderRefusals": "remain at 1501 and 1599",
+    "clearTimeoutProviderRefusals": "clear at 1502 and 1600"
   }
 }
