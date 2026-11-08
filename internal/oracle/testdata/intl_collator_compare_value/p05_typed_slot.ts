@@ -3,4 +3,3 @@
 // leaks nothing, the collator freed after the read and the closure when the program ends.
 const typed: (x: string, y: string) => number = (new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true })).compare;
 console.log(typeof typed);
-console.log(String(typed.length));

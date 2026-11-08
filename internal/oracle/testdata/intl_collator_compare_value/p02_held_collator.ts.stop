@@ -1,1 +1,1 @@
-record
+internal/oracle/testdata/intl_collator_compare_value/p02_held_collator.ts:5:14: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it); call it in an arrow that keeps the object: (x, y) => collator.compare(x, y) (unbound-method)

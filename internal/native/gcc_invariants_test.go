@@ -153,12 +153,15 @@ func TestProduct_GCCInvariantCollator(t *testing.T) {
 	t.Parallel()
 	gccInvariantProduct(t, "Collator")
 }
-func TestGCCInvariantCollator(t *testing.T)       { t.Parallel(); checkGCCInvariant(t, "Collator", false) }
-func TestGCCInvariantCollatorMutant(t *testing.T) { t.Parallel(); checkGCCInvariant(t, "Collator", true) }
-func TestGCCInvariantDTOA(t *testing.T)        { t.Parallel(); checkGCCInvariant(t, "DTOA", false) }
-func TestGCCInvariantReduction(t *testing.T)   { t.Parallel(); checkGCCInvariant(t, "Reduction", false) }
-func TestGCCInvariantMap(t *testing.T)         { t.Parallel(); checkGCCInvariant(t, "Map", false) }
-func TestGCCInvariantDTOAMutant(t *testing.T)  { t.Parallel(); checkGCCInvariant(t, "DTOA", true) }
+func TestGCCInvariantCollator(t *testing.T) { t.Parallel(); checkGCCInvariant(t, "Collator", false) }
+func TestGCCInvariantCollatorMutant(t *testing.T) {
+	t.Parallel()
+	checkGCCInvariant(t, "Collator", true)
+}
+func TestGCCInvariantDTOA(t *testing.T)       { t.Parallel(); checkGCCInvariant(t, "DTOA", false) }
+func TestGCCInvariantReduction(t *testing.T)  { t.Parallel(); checkGCCInvariant(t, "Reduction", false) }
+func TestGCCInvariantMap(t *testing.T)        { t.Parallel(); checkGCCInvariant(t, "Map", false) }
+func TestGCCInvariantDTOAMutant(t *testing.T) { t.Parallel(); checkGCCInvariant(t, "DTOA", true) }
 func TestGCCInvariantReductionMutant(t *testing.T) {
 	t.Parallel()
 	checkGCCInvariant(t, "Reduction", true)
