@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/tmp/branded-parent-focus-overlay.json",
+    "-o",
+    "/tmp/branded-parent-focus",
+    "./stage3/census/latent/replay/worker"
+  ],
+  "cwd": "/tmp/branded-report",
+  "exit": 0,
+  "wall_seconds": 11.023,
+  "stopped": null
+}

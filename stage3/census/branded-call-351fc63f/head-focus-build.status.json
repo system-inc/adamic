@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/tmp/branded-head-focus-overlay.json",
+    "-o",
+    "/tmp/branded-head-focus",
+    "./stage3/census/latent/replay/worker"
+  ],
+  "cwd": "/tmp/branded-head",
+  "exit": 0,
+  "wall_seconds": 13.089,
+  "stopped": null
+}
