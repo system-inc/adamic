@@ -204,3 +204,33 @@ fails toward showing, listed in the JSON, never toward hiding. Counted, never
 hidden: JSON records `ruled_runtime_stops`, `ruled_runtime_stop_paths`,
 `runtime_notyet_count` (the list's size) and each program's `ruled_runtime_stop`,
 with `agree` false, and every run prints `ruled run-time stops: N` to stderr.
+
+## Ruled backend divergences
+
+A ruled backend divergence is a fourth thing: a fixture whose two backends agree
+with each other and are ruled to differ from the source on Node, such as
+installed-layout and no-javascript-plugins (#redxes2), where Node, running the
+source as an ES module, has no `require`. The tool keeps no list of its own. It
+reads the oracle's rows, `internal/oracle/testdata/backend_divergences.json` in
+the invoking repository, or an explicit `--backend-divergences` path: the same
+file `internal/oracle`'s `ruledBackendDivergences` reads and holds each
+fixture's runs to (#tqm95v6). Only Adamic adds a row: adding one is a ruling
+routed to @system_adamic, and the file's `_comment` header says so. Each row
+names its `fixture` (a repository path, once), its `ruling`, which must name its
+task, its `reason`, and its `node`, `native` and `javascript` outcomes, each the
+exact `stdout`, `stderr` and `exit_code`. The tool refuses the list when a row
+lacks any of the first three, its ruling names no task, or a fixture is listed
+twice.
+
+A newly admitted program that disagrees with Node passes as a ruled divergence
+only when all three hold: native and JavaScript agree with each other, as
+`outputsAgree` reads agreement; the program's path is a row's fixture, on a row
+that sets `node`; and Node's run is exactly that row's `node` outcome, and
+native's exactly its `native` outcome, stdout, stderr and exit code. A program
+on no row fails as any disagreement does, even when it prints a row's outputs,
+and so does a row's program whose run differs from the row on any side. The
+path, not the content hash, is the key, since the row pins every output an edit
+could move. Counted, never hidden: JSON records `ruled_backend_divergences`,
+`ruled_backend_divergence_paths`, `backend_divergence_count` (the list's size)
+and each program's `ruled_backend_divergence`, with `agree` false, and every run
+prints `ruled backend divergences: N` to stderr after the run-time stops line.
