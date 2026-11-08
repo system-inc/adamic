@@ -15,10 +15,10 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-// commonJSReasonPrograms is each program under testdata/commonjs_reasons that's refused, the first
+// commonJsReasonPrograms is each program under testdata/commonjs_reasons that's refused, the first
 // NotYet it lowers to and where, in the program's own file: one per CommonJS reason the meter names
 // (#redxes2), and requires that keep node:module.require.
-var commonJSReasonPrograms = []struct{ name, where, what string }{
+var commonJsReasonPrograms = []struct{ name, where, what string }{
 	{
 		"filename",
 		"main.ts:4:35",
@@ -48,11 +48,11 @@ var commonJSReasonPrograms = []struct{ name, where, what string }{
 	},
 }
 
-// commonJSThrowPrograms is each program under testdata/commonjs_reasons whose require lowers as the
+// commonJsThrowPrograms is each program under testdata/commonjs_reasons whose require lowers as the
 // throw Adamic ruled for it (Nov 3), and what its IR holds once for it: the host's MODULE_NOT_FOUND
 // for source-map-support, alone and as install's receiver, and for a computed path, the function
 // that throws the Error naming it.
-var commonJSThrowPrograms = []struct{ name, holds string }{
+var commonJsThrowPrograms = []struct{ name, holds string }{
 	{"source-map-support", `Operation:"host_require_missing"`},
 	{"source-map-support-install", `Operation:"host_require_missing"`},
 	{"source-map-support-asserted", `Operation:"host_require_missing"`},
@@ -63,9 +63,9 @@ var commonJSThrowPrograms = []struct{ name, holds string }{
 	{"inspector-wrapped", `Operation:"host_inspector_unavailable"`},
 }
 
-func TestNodeCommonJSNamesItsReasons(test *testing.T) {
+func TestNodeCommonJsNamesItsReasons(test *testing.T) {
 	test.Parallel()
-	for _, one := range commonJSReasonPrograms {
+	for _, one := range commonJsReasonPrograms {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
 			source, readError := os.ReadFile(filepath.Join("testdata/commonjs_reasons", one.name+".ts"))
@@ -83,9 +83,9 @@ func TestNodeCommonJSNamesItsReasons(test *testing.T) {
 	}
 }
 
-func TestNodeCommonJSRequiresLowerAsThrows(test *testing.T) {
+func TestNodeCommonJsRequiresLowerAsThrows(test *testing.T) {
 	test.Parallel()
-	for _, one := range commonJSThrowPrograms {
+	for _, one := range commonJsThrowPrograms {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
 			source, readError := os.ReadFile(filepath.Join("testdata/commonjs_reasons", one.name+".ts"))
@@ -96,7 +96,7 @@ func TestNodeCommonJSRequiresLowerAsThrows(test *testing.T) {
 			if lowerSourceAsError != nil {
 				test.Fatal(lowerSourceAsError)
 			}
-			if sites := commonJSSites(test, one.name); len(sites) != 0 {
+			if sites := commonJsSites(test, one.name); len(sites) != 0 {
 				test.Fatalf("admitted require still counted by the meter: %v", sites)
 			}
 			if held := strings.Count(fmt.Sprintf("%#v", program), one.holds); held != 1 {
@@ -110,31 +110,31 @@ func TestNodeCommonJSRequiresLowerAsThrows(test *testing.T) {
 // call and its callee, both refused, are one site only while they carry one reason at one place.
 // Each refused program is one site, as it was under the generic reason, and a program whose require
 // lowers as a throw is none.
-func TestNodeCommonJSSiteCountsOnce(test *testing.T) {
+func TestNodeCommonJsSiteCountsOnce(test *testing.T) {
 	test.Parallel()
-	for _, one := range commonJSReasonPrograms {
+	for _, one := range commonJsReasonPrograms {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
 			if want, sites := []string{
 				one.where + ": " + one.what,
-			}, commonJSSites(test, one.name); !slices.Equal(sites, want) {
+			}, commonJsSites(test, one.name); !slices.Equal(sites, want) {
 				test.Fatalf("want sites %q, got %q", want, sites)
 			}
 		})
 	}
-	for _, one := range commonJSThrowPrograms {
+	for _, one := range commonJsThrowPrograms {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			if sites := commonJSSites(test, one.name); len(sites) != 0 {
+			if sites := commonJsSites(test, one.name); len(sites) != 0 {
 				test.Fatalf("want no sites, got %q", sites)
 			}
 		})
 	}
 }
 
-// commonJSSites is each distinct site the meter's walk names in a program under
+// commonJsSites is each distinct site the meter's walk names in a program under
 // testdata/commonjs_reasons, as where and what.
-func commonJSSites(test *testing.T, name string) []string {
+func commonJsSites(test *testing.T, name string) []string {
 	test.Helper()
 	source, readError := os.ReadFile(filepath.Join("testdata/commonjs_reasons", name+".ts"))
 	if readError != nil {

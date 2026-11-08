@@ -77,7 +77,7 @@ func sixUnion(expected []string, shards []sixShard) error {
 	return nil
 }
 
-func sixIDs(prefix string, paths []string) []string {
+func sixIds(prefix string, paths []string) []string {
 	ids := make([]string, len(paths))
 	for index, path := range paths {
 		name := filepath.Base(path)
@@ -129,18 +129,18 @@ func sixRunShards(test *testing.T, h *harness, expected []string, shards []sixSh
 		started = time.Now()
 	}
 	var mutex sync.Mutex
-	var admittedIDs []string
+	var admittedIds []string
 	var completed []sixShard
 	var admitted int
 	var setupBefore time.Duration
 	test.Cleanup(func() {
 		cleanupStarted := time.Now()
-		if sixUnionError := sixUnion(admittedIDs, completed); sixUnionError != nil {
+		if sixUnionError := sixUnion(admittedIds, completed); sixUnionError != nil {
 			test.Errorf("executed shard union: %v", sixUnionError)
 		}
 		test.Logf(
 			"six-executed-union count=%d admitted_shards=%d selector=%d/%d",
-			len(admittedIDs),
+			len(admittedIds),
 			admitted,
 			index,
 			count,
@@ -156,7 +156,7 @@ func sixRunShards(test *testing.T, h *harness, expected []string, shards []sixSh
 		test.Run(unit, func(test *testing.T) {
 			// Only matching Go -run subtests enter here. Validate their executed union,
 			// while the independent complete-plan union above always covers every case.
-			admittedIDs = append(admittedIDs, shard.ids...)
+			admittedIds = append(admittedIds, shard.ids...)
 			admitted++
 			test.Parallel()
 			started := time.Now()
@@ -254,7 +254,7 @@ func (local *harness) sixCompare(name, oracle, binary, configuration, roots stri
 
 func TestSixShardUnionRejectsLossAndDuplication(test *testing.T) {
 	test.Parallel()
-	ids := sixIDs(
+	ids := sixIds(
 		"compiler",
 		[]string{"/checkout/src/compiler/utilities.ts", "/checkout/src/compiler/_namespaces/utilities.ts"},
 	)
@@ -268,13 +268,13 @@ func TestSixShardUnionRejectsLossAndDuplication(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	repositoryIDs := sixIDs(
+	repositoryIds := sixIds(
 		"repository",
 		[]string{filepath.Join(repository, "fixtures/main.ts"), filepath.Join(repository, "stage1/main.ts")},
 	)
 	if sixUnionError := sixUnion(
 		[]string{"repository/fixtures/main.ts", "repository/stage1/main.ts"},
-		[]sixShard{{name: "repository", ids: repositoryIDs}},
+		[]sixShard{{name: "repository", ids: repositoryIds}},
 	); sixUnionError != nil {
 		test.Fatal(sixUnionError)
 	}
@@ -416,7 +416,7 @@ func globalManifestText(harness *harness, path string) string {
 	return string(data)
 }
 
-func sixRuleControlIDs() []string {
+func sixRuleControlIds() []string {
 	return []string{
 		"reporting/no-unsafe-unary-minus",
 		"reporting/related-getter-setter-pairs",
@@ -428,12 +428,12 @@ func sixRuleControlIDs() []string {
 }
 
 // This enumerates the original checks, independently of the shard partitioner.
-func sixUnsplitIDs(generated, global, compiler []string, rounds int, benchmark bool) []string {
-	ids := sixIDs("agreement/generated", generated)
-	ids = append(ids, sixRuleControlIDs()...)
-	ids = append(ids, sixIDs("agreement/nonstrict", generated[:1])...)
-	ids = append(ids, sixIDs("agreement/cross-file", global)...)
-	ids = append(ids, sixIDs("mutant/declaration-source", global)...)
+func sixUnsplitIds(generated, global, compiler []string, rounds int, benchmark bool) []string {
+	ids := sixIds("agreement/generated", generated)
+	ids = append(ids, sixRuleControlIds()...)
+	ids = append(ids, sixIds("agreement/nonstrict", generated[:1])...)
+	ids = append(ids, sixIds("agreement/cross-file", global)...)
+	ids = append(ids, sixIds("mutant/declaration-source", global)...)
 	ids = append(ids, "refusal/unlinked", "control/released-handle", "mutant/retained-handle")
 	for _, name := range []string{
 		"wrong-node",
@@ -450,7 +450,7 @@ func sixUnsplitIDs(generated, global, compiler []string, rounds int, benchmark b
 		"facts-length-bad",
 		"facts-version-bad",
 	} {
-		ids = append(ids, sixIDs("mutant/"+name, generated)...)
+		ids = append(ids, sixIds("mutant/"+name, generated)...)
 	}
 	for _, name := range []string{
 		"assignable",
@@ -468,10 +468,10 @@ func sixUnsplitIDs(generated, global, compiler []string, rounds int, benchmark b
 			ids = append(ids, fmt.Sprintf("cost/%s-%d", name, round))
 		}
 	}
-	ids = append(ids, sixIDs("agreement/compiler", compiler)...)
+	ids = append(ids, sixIds("agreement/compiler", compiler)...)
 	if benchmark {
 		for round := 1; round <= 3; round++ {
-			ids = append(ids, sixIDs(fmt.Sprintf("bench/compiler-%d", round), compiler)...)
+			ids = append(ids, sixIds(fmt.Sprintf("bench/compiler-%d", round), compiler)...)
 		}
 	}
 	return ids

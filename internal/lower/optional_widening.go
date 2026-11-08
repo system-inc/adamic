@@ -195,7 +195,7 @@ func (lowering *lowering) optionalValue(node *ast.Node, target *checker.Type) *o
 // optionalAtSite uses the same relation sites as the other view rules, before lowering.
 // A leading spread is not proof of absence: it copies fields hidden by the source's type too.
 func (lowering *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
-	if lowering.nodeFSFileReadOnlyArgument(node) {
+	if lowering.nodeFileSystemFileReadOnlyArgument(node) {
 		return nil
 	}
 	// Only argument positions of a directly imported node:* call can use the host exemption.

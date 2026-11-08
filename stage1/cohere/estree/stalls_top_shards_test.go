@@ -84,7 +84,7 @@ func TestPortStallControl_000(test *testing.T)  { test.Parallel(); portStallCont
 
 func TestBoundedPortParserUnion(test *testing.T) {
 	test.Parallel()
-	estreeTopUnion(test, "TestBoundedPortParser", testBoundedPortParserShards, boundedPortIDs(boundedPortCases(test)))
+	estreeTopUnion(test, "TestBoundedPortParser", testBoundedPortParserShards, boundedPortIds(boundedPortCases(test)))
 }
 func TestPortStallControlUnion(test *testing.T) {
 	test.Parallel()

@@ -13,11 +13,11 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func workerJSONRefused(key string) bool {
+func workerJsonRefused(key string) bool {
 	return key == "decode/json_decode_coverage_empty.a" || key == "decode/json_decode_empty_object.a"
 }
 
-func workerJSONKeys() []string {
+func workerJsonKeys() []string {
 	keys := []string{"decode/corpus", "encode/corpus", "decode/fast_risks.a"}
 	for _, mode := range []string{"decode", "encode"} {
 		// Reads: internal/oracle/testdata/json_*.a
@@ -27,7 +27,7 @@ func workerJSONKeys() []string {
 		}
 		for _, path := range paths {
 			key := mode + "/" + filepath.Base(path)
-			if !workerJSONRefused(key) {
+			if !workerJsonRefused(key) {
 				keys = append(keys, key)
 			}
 		}
@@ -37,7 +37,7 @@ func workerJSONKeys() []string {
 
 // Only compilation is cached. Each behavior unit reruns Node, native, source
 // oracle and planted runtime mutants with fresh observations.
-func workerJSONProduct(test *testing.T, key string, build bool) string {
+func workerJsonProduct(test *testing.T, key string, build bool) string {
 	test.Helper()
 	mode, name, ok := strings.Cut(key, "/")
 	if !ok {
@@ -114,9 +114,9 @@ func workerJSONProduct(test *testing.T, key string, build bool) string {
 }
 
 func runWorkerJSONProductsShard(test *testing.T, shard int) {
-	for _, key := range workerJSONKeys() {
+	for _, key := range workerJsonKeys() {
 		if familyOwns("TestProduct_WorkerJSON", shard, key) {
-			test.Run(key, func(test *testing.T) { workerJSONProduct(test, key, true) })
+			test.Run(key, func(test *testing.T) { workerJsonProduct(test, key, true) })
 		}
 	}
 }

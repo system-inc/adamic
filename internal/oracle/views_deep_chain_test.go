@@ -52,7 +52,7 @@ func TestViewsDeepChainRecursiveWalkMutant(test *testing.T) {
 	if !strings.Contains(source, "adamic_view_untagged_plain_select(") {
 		test.Fatal("checked-view matcher was not emitted")
 	}
-	if diff := disagreement(want, onWASI(test, source)); diff != "" {
+	if diff := disagreement(want, onWasi(test, source)); diff != "" {
 		test.Fatalf("control: %s", diff)
 	}
 	directory := test.TempDir()

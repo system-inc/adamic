@@ -43,7 +43,7 @@ type numbersUnit struct {
 }
 
 // Case IDs name enumeration positions, not text hashes: identical texts remain separate cases.
-func numbersCaseID(kind string, index int, preference string) string {
+func numbersCaseId(kind string, index int, preference string) string {
 	return fmt.Sprintf("%s-%06d-%s", kind, index, preference)
 }
 
@@ -54,14 +54,14 @@ func numbersUnits(corpus numbersCorpus) []numbersUnit {
 		unit := numbersUnit{name: fmt.Sprintf("batch-%06d-%06d", lo, hi-1), kind: "batch", lo: lo, hi: hi}
 		for index := lo; index < hi; index++ {
 			for _, pref := range []string{"d", "s"} {
-				unit.ids = append(unit.ids, numbersCaseID("batch", index, pref))
+				unit.ids = append(unit.ids, numbersCaseId("batch", index, pref))
 			}
 		}
 		units = append(units, unit)
 	}
 	for index := range corpus.raw {
 		units = append(units, numbersUnit{name: fmt.Sprintf("raw-%06d", index), kind: "raw", lo: index, hi: index + 1,
-			ids: []string{numbersCaseID("raw", index, "d"), numbersCaseID("raw", index, "s")}})
+			ids: []string{numbersCaseId("raw", index, "d"), numbersCaseId("raw", index, "s")}})
 	}
 	for index, mutation := range numbersMutations {
 		units = append(units, numbersUnit{
@@ -94,7 +94,7 @@ func numbersUnionError(corpus numbersCorpus, units []numbersUnit) error {
 	for kind, count := range map[string]int{"batch": len(corpus.texts), "raw": len(corpus.raw)} {
 		for index := 0; index < count; index++ {
 			for _, pref := range []string{"d", "s"} {
-				expected[numbersCaseID(kind, index, pref)] = true
+				expected[numbersCaseId(kind, index, pref)] = true
 			}
 		}
 	}
@@ -112,7 +112,7 @@ func numbersUnionError(corpus numbersCorpus, units []numbersUnit) error {
 			return fmt.Errorf("repeated unit %s", unit.name)
 		}
 		names[unit.name] = true
-		var actualIDs []string
+		var actualIds []string
 		switch unit.kind {
 		case "batch", "raw":
 			limit := len(corpus.texts)
@@ -127,20 +127,20 @@ func numbersUnionError(corpus numbersCorpus, units []numbersUnit) error {
 			}
 			for index := unit.lo; index < unit.hi; index++ {
 				for _, pref := range []string{"d", "s"} {
-					actualIDs = append(actualIDs, numbersCaseID(unit.kind, index, pref))
+					actualIds = append(actualIds, numbersCaseId(unit.kind, index, pref))
 				}
 			}
 		case "mutant":
 			if unit.lo < 0 || unit.lo >= len(numbersMutations) {
 				return fmt.Errorf("invalid mutant in %s", unit.name)
 			}
-			actualIDs = []string{"mutant-" + numbersMutations[unit.lo].name}
+			actualIds = []string{"mutant-" + numbersMutations[unit.lo].name}
 		case "throughput":
-			actualIDs = []string{"throughput-" + unit.side}
+			actualIds = []string{"throughput-" + unit.side}
 		default:
 			return fmt.Errorf("unknown unit kind %q", unit.kind)
 		}
-		if strings.Join(actualIDs, "\n") != strings.Join(unit.ids, "\n") {
+		if strings.Join(actualIds, "\n") != strings.Join(unit.ids, "\n") {
 			return fmt.Errorf("case IDs differ from executable range in %s", unit.name)
 		}
 		for _, id := range unit.ids {
@@ -423,7 +423,7 @@ func checkNumbersOutput(test *testing.T, unit numbersUnit, side string, got, wan
 	}
 }
 
-func TestCSSNumbersUnion(test *testing.T) {
+func TestCssNumbersUnion(test *testing.T) {
 	test.Parallel()
 	corpus := enumerateNumbers(test)
 	units := numbersUnits(corpus)

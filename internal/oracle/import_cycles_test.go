@@ -39,9 +39,9 @@ func TestImportCycleRuntimeCalls(test *testing.T) {
 	// inside the interim policy while exercising actual cross-module function calls.
 	runner := filepath.Join(test.TempDir(), "after.mjs")
 	source := "import { even } from " +
-		quoteJS(path) +
+		quoteJs(path) +
 		";\nimport { odd } from " +
-		quoteJS(filepath.Join(filepath.Dir(path), "odd.a")) +
+		quoteJs(filepath.Join(filepath.Dir(path), "odd.a")) +
 		";\nconsole.log(`${even(8)}`);\nconsole.log(`${odd(9)}`);\n"
 	if writeError := os.WriteFile(runner, []byte(source), 0o644); writeError != nil {
 		test.Fatal(writeError)
@@ -91,7 +91,7 @@ func TestImportCycleRuntimeCalls(test *testing.T) {
 	}
 }
 
-func quoteJS(value string) string {
+func quoteJs(value string) string {
 	// File names here contain no control characters; Go's quoted strings are also JS strings.
 	return "'" + strings.ReplaceAll(strings.ReplaceAll(value, "\\", "\\\\"), "'", "\\'") + "'"
 }

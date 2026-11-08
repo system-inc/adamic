@@ -132,7 +132,7 @@ func TestProduct_JsonFindsClassOrderAnswer(test *testing.T) {
 }
 
 // The answer's key moves with the oracle's bytes and with the case's, and with nothing else it was given.
-func TestJSONClassOrderAnswerKey(test *testing.T) {
+func TestJsonClassOrderAnswerKey(test *testing.T) {
 	test.Parallel()
 	root, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
@@ -304,7 +304,7 @@ func TestPortMatchesGoCohereClassOrder_004(test *testing.T) {
 // inventory.json
 // by TestPortMatchesGoCohereInventory, and each heavy case by its three parts, _000 to _002, which are the whole's
 // sides between them (TestJSONPortPartsAreTheWhole). A planted disagreement in any is caught by exactly one owner.
-func TestJSONDedicatedShardOwnership(test *testing.T) {
+func TestJsonDedicatedShardOwnership(test *testing.T) {
 	test.Parallel()
 	groups := [][]textCase{nil, {{Name: "small.json", Text: "{}"}}}
 	all := []textCase{{Name: "small.json", Text: "{}"}}

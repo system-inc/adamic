@@ -334,8 +334,8 @@ func prepareNumbersAnswerInputs(test *testing.T) {
 			test.Name(),
 		)
 		corpus := enumerateNumbers(test)
-		if units := numbersUnits(corpus); len(units) != testCSSNumbersShards {
-			test.Fatalf("enumerated %d shards, declared %d", len(units), testCSSNumbersShards)
+		if units := numbersUnits(corpus); len(units) != testCssNumbersShards {
+			test.Fatalf("enumerated %d shards, declared %d", len(units), testCssNumbersShards)
 		}
 		oracle := numbersPreparedOracle(test)
 		library := os.Getenv("ADAMIC_CSSNUMBERS_LIBRARY")
@@ -357,7 +357,7 @@ func prepareNumbersAnswerInputs(test *testing.T) {
 // A one-byte edit to one batch's or one raw case's input re-keys the product holding its answer, by name key (what a
 // runner finds it by) and by declared key (what this machine alone builds it by), and so does another oracle, so a
 // changed Go oracle or Prettier library never serves stale answers.
-func TestCSSNumbersAnswerProductsRekey(test *testing.T) {
+func TestCssNumbersAnswerProductsRekey(test *testing.T) {
 	test.Parallel()
 	root, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
@@ -417,7 +417,7 @@ func TestCSSNumbersAnswerProductsRekey(test *testing.T) {
 // An edit to a package the compiler links must move the key of every product the compiler makes (the port's and each
 // mutant's lowering, and every native binary built from one), and an edit to tsc's baselines, which nothing links,
 // must keep it.
-func TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks(test *testing.T) {
+func TestCssNumbersCompilerProductsKeyWhatTheCompilerLinks(test *testing.T) {
 	test.Parallel()
 	main, absolutePathError := filepath.Abs("main.ts")
 	if absolutePathError != nil {
@@ -462,11 +462,11 @@ func TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks(test *testing.T) {
 	}
 }
 
-func TestProduct_CSSNumbersFindsGoOracle(test *testing.T) {
+func TestProduct_CssNumbersFindsGoOracle(test *testing.T) {
 	test.Parallel()
 	numbersPreparedOracle(test)
 }
-func TestProduct_CSSNumbersFindsGoAnswers(test *testing.T) {
+func TestProduct_CssNumbersFindsGoAnswers(test *testing.T) {
 	test.Parallel()
 	corpus := enumerateNumbers(test)
 	oracle := numbersPreparedOracle(test)
@@ -479,7 +479,7 @@ func TestProduct_CSSNumbersFindsGoAnswers(test *testing.T) {
 		numbersOracleIdentity(test, oracle),
 	))
 }
-func TestProduct_CSSNumbersFindsGoBatchAnswers(test *testing.T) {
+func TestProduct_CssNumbersFindsGoBatchAnswers(test *testing.T) {
 	test.Parallel()
 	prepareNumbersAnswerInputs(test)
 	numbersGoBatchAnswersDirectory(
@@ -491,7 +491,7 @@ func TestProduct_CSSNumbersFindsGoBatchAnswers(test *testing.T) {
 }
 
 // Without the external library no unit reads Prettier answers, so there is nothing to build.
-func TestProduct_CSSNumbersPrettierBatchAnswers(test *testing.T) {
+func TestProduct_CssNumbersPrettierBatchAnswers(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_CSSNUMBERS_LIBRARY") == "" {
 		test.Log("external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY")
@@ -505,7 +505,7 @@ func TestProduct_CSSNumbersPrettierBatchAnswers(test *testing.T) {
 		numbersAnswerInputs.corpus,
 	)
 }
-func TestProduct_CSSNumbersFindsGoRawAnswers(test *testing.T) {
+func TestProduct_CssNumbersFindsGoRawAnswers(test *testing.T) {
 	test.Parallel()
 	prepareNumbersAnswerInputs(test)
 	numbersGoRawAnswersDirectory(
@@ -515,39 +515,39 @@ func TestProduct_CSSNumbersFindsGoRawAnswers(test *testing.T) {
 		numbersAnswerInputs.corpus,
 	)
 }
-func TestProduct_CSSNumbersPortLowered(test *testing.T) {
+func TestProduct_CssNumbersPortLowered(test *testing.T) {
 	test.Parallel()
 	numbersPreparedProgram(test, -1)
 }
-func TestProduct_CSSNumbersPortNative(test *testing.T) {
+func TestProduct_CssNumbersPortNative(test *testing.T) {
 	test.Parallel()
 	numbersPreparedNative(test, -1, true)
 }
-func TestProduct_CSSNumbersMutant0Lowered(test *testing.T) {
+func TestProduct_CssNumbersMutant0Lowered(test *testing.T) {
 	test.Parallel()
 	numbersPreparedProgram(test, 0)
 }
-func TestProduct_CSSNumbersMutant0Native(test *testing.T) {
+func TestProduct_CssNumbersMutant0Native(test *testing.T) {
 	test.Parallel()
 	numbersPreparedNative(test, 0, true)
 }
-func TestProduct_CSSNumbersMutant1Lowered(test *testing.T) {
+func TestProduct_CssNumbersMutant1Lowered(test *testing.T) {
 	test.Parallel()
 	numbersPreparedProgram(test, 1)
 }
-func TestProduct_CSSNumbersMutant1Native(test *testing.T) {
+func TestProduct_CssNumbersMutant1Native(test *testing.T) {
 	test.Parallel()
 	numbersPreparedNative(test, 1, true)
 }
-func TestProduct_CSSNumbersMutant2Lowered(test *testing.T) {
+func TestProduct_CssNumbersMutant2Lowered(test *testing.T) {
 	test.Parallel()
 	numbersPreparedProgram(test, 2)
 }
-func TestProduct_CSSNumbersMutant2Native(test *testing.T) {
+func TestProduct_CssNumbersMutant2Native(test *testing.T) {
 	test.Parallel()
 	numbersPreparedNative(test, 2, true)
 }
-func TestProduct_CSSNumbersFastNative(test *testing.T) {
+func TestProduct_CssNumbersFastNative(test *testing.T) {
 	test.Parallel()
 	numbersPreparedNative(test, -1, false)
 }

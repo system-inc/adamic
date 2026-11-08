@@ -9,7 +9,7 @@ import (
 )
 
 // Not parallel: sets the CLI opt-in with test.Setenv and restores it.
-func TestProgramRegionCLIHandsMembershipAndRuntimeOneMode(test *testing.T) {
+func TestProgramRegionCliHandsMembershipAndRuntimeOneMode(test *testing.T) {
 	test.Setenv("ADAMIC_PROGRAM_REGION", "1")
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := `interface Link {next:Link|undefined} const root:Link={next:undefined}; root.next=root; console.log('ok');`

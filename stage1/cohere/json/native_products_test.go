@@ -36,32 +36,32 @@ var formatterMutants = []printerMutation{
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONCachedWidthMutantRelease(test *testing.T) {
+func TestProduct_JsonCachedWidthMutantRelease(test *testing.T) {
 	requireNativePort(test, mutantPortProduct(test, cachedWidthMutant, native.Options{}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONFormatterMutantSanitized_0(test *testing.T) {
+func TestProduct_JsonFormatterMutantSanitized_0(test *testing.T) {
 	requireNativePort(test, mutantPortProduct(test, formatterMutants[0], native.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONFormatterMutantSanitized_1(test *testing.T) {
+func TestProduct_JsonFormatterMutantSanitized_1(test *testing.T) {
 	requireNativePort(test, mutantPortProduct(test, formatterMutants[1], native.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONFormatterMutantSanitized_2(test *testing.T) {
+func TestProduct_JsonFormatterMutantSanitized_2(test *testing.T) {
 	requireNativePort(test, mutantPortProduct(test, formatterMutants[2], native.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONEmptyFallbackGapSanitized(test *testing.T) {
+func TestProduct_JsonEmptyFallbackGapSanitized(test *testing.T) {
 	requireNativePort(test, gapPortProduct(test, "emptyFallback.ts", native.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONMultiplePushGapSanitized(test *testing.T) {
+func TestProduct_JsonMultiplePushGapSanitized(test *testing.T) {
 	requireNativePort(test, gapPortProduct(test, "multiplePush.ts", native.Options{Sanitize: true}))
 }
 
@@ -86,7 +86,7 @@ func mutantPortProduct(test *testing.T, mutation printerMutation, options native
 		if createDirectoryError := os.Mkdir(source, 0755); createDirectoryError != nil {
 			return createDirectoryError
 		}
-		if buildJsonLoweredPortMutationError := buildJSONLoweredPortMutation(
+		if buildJsonLoweredPortMutationError := buildJsonLoweredPortMutation(
 			source,
 			&mutation,
 		); buildJsonLoweredPortMutationError != nil {

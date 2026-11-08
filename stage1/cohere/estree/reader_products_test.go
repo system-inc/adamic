@@ -41,12 +41,12 @@ func TestProduct_RecoveredExpressionMutantPort(test *testing.T) {
 	recoveryBuild(test, recoveredExpressionMutantPath(test), true)
 }
 
-func TestProduct_JSXMutantSource(test *testing.T) { test.Parallel(); jsxMutantPath(test) }
-func TestProduct_JSXMutantPort(test *testing.T) {
+func TestProduct_JsxMutantSource(test *testing.T) { test.Parallel(); jsxMutantPath(test) }
+func TestProduct_JsxMutantPort(test *testing.T) {
 	test.Parallel()
 	miscBuild(test, jsxMutantPath(test))
 }
-func TestProduct_EstreeFindsJSXMutantAnswers(test *testing.T) {
+func TestProduct_EstreeFindsJsxMutantAnswers(test *testing.T) {
 	test.Parallel()
 	miscTextAnswers(test, miscOracle(test), jsxCases(), ".tsx")
 }

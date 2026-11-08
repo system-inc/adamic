@@ -46,8 +46,8 @@ type JSONDecode struct {
 
 func (JSONDecode) Type() Type { return Object }
 
-// JSONLiteralUnits reads the checker's WTF-8 without replacing lone UTF-16 surrogates.
-func JSONLiteralUnits(text string) []uint16 {
+// JsonLiteralUnits reads the checker's WTF-8 without replacing lone UTF-16 surrogates.
+func JsonLiteralUnits(text string) []uint16 {
 	units := []uint16{}
 	for index := 0; index < len(text); {
 		lead := text[index]

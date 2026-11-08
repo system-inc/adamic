@@ -59,12 +59,12 @@ func programMillionMeasurement(test *testing.T, enabled, sanitized bool) {
 	)
 	binary := filepath.Join(programMillionMeasured(test, enabled, sanitized), "million")
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
-	rss := graphRSS.FindSubmatch(result.stdout)
+	rss := graphRss.FindSubmatch(result.stdout)
 	if rss == nil {
 		test.Fatalf("missing peak RSS: %s", result.stdout)
 	}
 	actual := result
-	actual.stdout = graphRSS.ReplaceAll(actual.stdout, nil)
+	actual.stdout = graphRss.ReplaceAll(actual.stdout, nil)
 	actual.stderr = regexp.MustCompile(`(?m)^adamic: (counts|graph region|graph counts):[^\n]*\n`).ReplaceAll(
 		actual.stderr,
 		nil,

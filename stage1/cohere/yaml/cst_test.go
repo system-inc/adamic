@@ -9,26 +9,26 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
-func goCST(test *testing.T, cases string) []byte {
+func goCst(test *testing.T, cases string) []byte {
 	test.Helper()
-	goBinary := goCSTOracle(test)
+	goBinary := goCstOracle(test)
 	return run(test, "", nil, goBinary, cases)
 }
 
-// goCSTOracle is formatter_comparison over testdata/cst_go.go, a product built ahead (#5qykzj5).
-func goCSTOracle(test *testing.T) string { return oracles.ConcreteSyntaxTree(test) }
+// goCstOracle is formatter_comparison over testdata/cst_go.go, a product built ahead (#5qykzj5).
+func goCstOracle(test *testing.T) string { return oracles.ConcreteSyntaxTree(test) }
 
-func TestProduct_YamlFindsCSTGo(test *testing.T) {
+func TestProduct_YamlFindsCstGo(test *testing.T) {
 	test.Parallel()
-	goCSTOracle(test)
+	goCstOracle(test)
 }
 
-func TestCSTMatchesGo(test *testing.T) {
+func TestCstMatchesGo(test *testing.T) {
 	test.Parallel()
-	binary := yamlCSTBuild.binary(test, "cst_main.ts")
-	emitted := yamlCSTBuild.emitted(test, "cst_main.ts")
+	binary := yamlCstBuild.binary(test, "cst_main.ts")
+	emitted := yamlCstBuild.emitted(test, "cst_main.ts")
 	cases, files, count := lexCases(test)
-	expected := goCST(test, cases)
+	expected := goCst(test, cases)
 	root, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
@@ -91,14 +91,14 @@ var cstMutants = yamlMutants{
 	},
 }
 
-func TestProduct_YAMLCSTMutant000(test *testing.T) { test.Parallel(); cstMutants.product(test, 0) }
-func TestProduct_YAMLCSTMutant001(test *testing.T) { test.Parallel(); cstMutants.product(test, 1) }
-func TestProduct_YAMLCSTMutant002(test *testing.T) { test.Parallel(); cstMutants.product(test, 2) }
+func TestProduct_YamlcstMutant000(test *testing.T) { test.Parallel(); cstMutants.product(test, 0) }
+func TestProduct_YamlcstMutant001(test *testing.T) { test.Parallel(); cstMutants.product(test, 1) }
+func TestProduct_YamlcstMutant002(test *testing.T) { test.Parallel(); cstMutants.product(test, 2) }
 
-func TestCSTMutants(test *testing.T) {
+func TestCstMutants(test *testing.T) {
 	test.Parallel()
 	cases, _, _ := lexCases(test)
-	expected := goCST(test, cases)
+	expected := goCst(test, cases)
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)

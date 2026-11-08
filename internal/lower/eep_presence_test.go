@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func checkEEPPresenceRefusal(test *testing.T, name, message string) {
+func checkEepPresenceRefusal(test *testing.T, name, message string) {
 	test.Helper()
 	source, readError := os.ReadFile("testdata/eep_presence/" + name + ".a")
 	if readError != nil {
@@ -22,46 +22,46 @@ func checkEEPPresenceRefusal(test *testing.T, name, message string) {
 	}
 }
 
-func TestEEPPresence0(test *testing.T) {
+func TestEepPresence0(test *testing.T) {
 	test.Parallel()
-	checkEEPPresenceRefusal(test, "eep1m5z", "union or optional tuple length")
+	checkEepPresenceRefusal(test, "eep1m5z", "union or optional tuple length")
 }
 
-func TestEEPPresence1(test *testing.T) {
+func TestEepPresence1(test *testing.T) {
 	test.Parallel()
-	checkEEPPresenceRefusal(test, "eep1m5z-93122fa_t_t5", "union or optional tuple length")
+	checkEepPresenceRefusal(test, "eep1m5z-93122fa_t_t5", "union or optional tuple length")
 }
 
-func TestEEPPresence2(test *testing.T) {
+func TestEepPresence2(test *testing.T) {
 	test.Parallel()
-	checkEEPPresenceRefusal(test, "eep1m5z-93122fa_t_v1", "union or optional tuple length")
+	checkEepPresenceRefusal(test, "eep1m5z-93122fa_t_v1", "union or optional tuple length")
 }
 
-func TestEEPPresence3(test *testing.T) {
+func TestEepPresence3(test *testing.T) {
 	test.Parallel()
-	checkEEPPresenceRefusal(test, "eep1m5z-93122fa_t_v2", "union or optional tuple length")
+	checkEepPresenceRefusal(test, "eep1m5z-93122fa_t_v2", "union or optional tuple length")
 }
 
-func TestEEPPresence4(test *testing.T) {
+func TestEepPresence4(test *testing.T) {
 	test.Parallel()
-	checkEEPPresenceRefusal(test, "eep1m5z-93122fa_t_v5", "union or optional tuple length")
+	checkEepPresenceRefusal(test, "eep1m5z-93122fa_t_v5", "union or optional tuple length")
 }
 
-func TestEEPPresence5(test *testing.T) {
+func TestEepPresence5(test *testing.T) {
 	test.Parallel()
-	checkEEPPresenceRefusal(test, "eep1m5z-classfeat_method_view", "method sharing its name with a getter")
+	checkEepPresenceRefusal(test, "eep1m5z-classfeat_method_view", "method sharing its name with a getter")
 }
 
-func TestEEPPresence6(test *testing.T) {
+func TestEepPresence6(test *testing.T) {
 	test.Parallel()
-	checkEEPPresenceRefusal(
+	checkEepPresenceRefusal(
 		test,
 		"eep1m5z-classfeat_static_virtual",
 		"static field read with an earlier initializer calling this",
 	)
 }
 
-func TestEEPPresenceSupported(test *testing.T) {
+func TestEepPresenceSupported(test *testing.T) {
 	test.Parallel()
 	_, lowerSourceError := lowerSource(
 		test,

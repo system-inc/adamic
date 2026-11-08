@@ -342,8 +342,8 @@ func cssModeUnion(lines []string, plan []cssModeShard, witnesses [][][]int) erro
 	if len(witnesses) != len(printerMutants) {
 		return fmt.Errorf("witnesses for %d printer mutants, want %d", len(witnesses), len(printerMutants))
 	}
-	if len(plan) != testCSSPrinterAgreesWithGoShards {
-		return fmt.Errorf("enumerated %d printer shards, declared %d", len(plan), testCSSPrinterAgreesWithGoShards)
+	if len(plan) != testCssPrinterAgreesWithGoShards {
+		return fmt.Errorf("enumerated %d printer shards, declared %d", len(plan), testCssPrinterAgreesWithGoShards)
 	}
 	var units [][]cssCase
 	for index, unit := range plan[:2*cssPrinterPartitions] {
@@ -419,7 +419,7 @@ func cssPrinterAllWitnesses(test *testing.T) [][][]int {
 	return witnesses
 }
 
-func TestCSSPrinterShardingCatchesDisagreement(test *testing.T) {
+func TestCssPrinterShardingCatchesDisagreement(test *testing.T) {
 	test.Parallel()
 	lines := cssPrinterCorpusLines(test)
 	witnesses := cssPrinterAllWitnesses(test)

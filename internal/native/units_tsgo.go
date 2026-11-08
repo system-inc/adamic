@@ -12,7 +12,7 @@ func BuildSplitTSGo(source, output, archive string, options Options) error {
 	if checkerArchivePathError != nil {
 		return checkerArchivePathError
 	}
-	library, splitTsGoRuntimeError := splitTSGoRuntime(source, options)
+	library, splitTsGoRuntimeError := splitTsGoRuntime(source, options)
 	if splitTsGoRuntimeError != nil {
 		return splitTsGoRuntimeError
 	}
@@ -22,7 +22,7 @@ func BuildSplitTSGo(source, output, archive string, options Options) error {
 // Reuse the existing runtime cache with the checker ABI header in its snapshot, and ADAMIC_TSGO
 // plus the program's features in its flags. The ordinary runtime's empty tsgo.c object cannot
 // satisfy these calls, and a runtime built without the features has other layouts than the units.
-func splitTSGoRuntime(source string, options Options) (string, error) {
+func splitTsGoRuntime(source string, options Options) (string, error) {
 	files, readRuntimeError := readRuntime(runtime, "runtime")
 	if readRuntimeError != nil {
 		return "", readRuntimeError

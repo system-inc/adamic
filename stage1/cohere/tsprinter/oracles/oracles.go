@@ -68,10 +68,10 @@ func inRepositoryCorpus(name string) bool {
 // corpusListName is the product's list of its files, one repository path a line, in the pinned tree's order.
 const corpusListName = "corpus.list"
 
-// buildTSPrinterPinnedCorpus writes each corpus file at the pin under the product, at its repository path, and the list
+// buildTsPrinterPinnedCorpus writes each corpus file at the pin under the product, at its repository path, and the list
 // of them. Every byte comes through buildcache.PinnedFiles as key-time work, so the build's read set holds no file of
 // the working tree.
-func buildTSPrinterPinnedCorpus(inputs buildcache.Inputs, pin string) func(directory string) error {
+func buildTsPrinterPinnedCorpus(inputs buildcache.Inputs, pin string) func(directory string) error {
 	return func(directory string) error {
 		root, absolutePathError := filepath.Abs(Repository)
 		if absolutePathError != nil {
@@ -112,7 +112,7 @@ func PinnedCorpusFiles(test *testing.T) []string {
 		inputs := oracleInputs(TSPrinterPinnedCorpusInputs(RepositoryCorpusCommit))
 		directory, getError := buildcache.Get(
 			inputs,
-			oracleBuild(inputs.Name, buildTSPrinterPinnedCorpus(inputs, RepositoryCorpusCommit)),
+			oracleBuild(inputs.Name, buildTsPrinterPinnedCorpus(inputs, RepositoryCorpusCommit)),
 		)
 		if getError != nil {
 			pinnedCorpus.err = fmt.Errorf("tsprinter pinned corpus: %w", getError)
@@ -640,12 +640,12 @@ func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan
 		Labels: append([]string(nil), plan.Labels...),
 		Shards: append([]CorpusShard(nil), plan.Shards...),
 	}
-	gapIDs := make([]int, len(gaps))
+	gapIds := make([]int, len(gaps))
 	for index, item := range gaps {
-		gapIDs[index] = len(cases) + index
-		whole.Labels = append(whole.Labels, fmt.Sprintf("case-%06d gap %s", gapIDs[index], item.Label))
+		gapIds[index] = len(cases) + index
+		whole.Labels = append(whole.Labels, fmt.Sprintf("case-%06d gap %s", gapIds[index], item.Label))
 	}
-	whole.Shards = append(whole.Shards, CorpusShard{Indices: gapIDs})
+	whole.Shards = append(whole.Shards, CorpusShard{Indices: gapIds})
 	wholeOutputs := append(append([][]byte(nil), outputs...), gapAnswers)
 	if expressionUnionError := ExpressionUnion(
 		whole,
@@ -1396,7 +1396,7 @@ var Mutations = []Mutation{
 
 const MutantsShards = 29
 
-func printerGateTSCCorpus(test *testing.T, family string) {
+func printerGateTscCorpus(test *testing.T, family string) {
 	test.Helper()
 	root, absolutePathError := filepath.Abs(Repository)
 	if absolutePathError != nil {

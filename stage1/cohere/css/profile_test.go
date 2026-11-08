@@ -179,7 +179,7 @@ func TestCSSProfileArtifacts(test *testing.T) {
 }
 
 // Not parallel: askedCases writes the shared ADAMIC_CSS_KEEP and ADAMIC_CSS_KEEP_RAW paths when configured.
-func TestCSSProfileSnapshotsAgree(test *testing.T) {
+func TestCssProfileSnapshotsAgree(test *testing.T) {
 	asked := os.Getenv("ADAMIC_CSS_PROFILE_SNAPSHOTS")
 	if asked == "" {
 		test.Skip("set ADAMIC_CSS_PROFILE_SNAPSHOTS")

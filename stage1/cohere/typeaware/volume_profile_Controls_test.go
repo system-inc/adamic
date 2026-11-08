@@ -216,12 +216,12 @@ func volumeProfileControlsLowered(harness *harness, stage0 string) string {
 		if loadError != nil {
 			return loadError
 		}
-		program.EnableTSGo()
+		program.EnableTsGo()
 		ir, lowerError := lower.Lower(context.Background(), program)
 		if lowerError != nil {
 			return lowerError
 		}
-		source, tsGoCError := native.TSGoC(ir)
+		source, tsGoCError := native.TsGoC(ir)
 		if tsGoCError != nil {
 			return tsGoCError
 		}

@@ -2,11 +2,11 @@ package fresh
 
 import "github.com/system-inc/adamic/internal/ir"
 
-// nodeFSFile evaluates arguments in order. A watcher retains its listener;
+// nodeFileSystemFile evaluates arguments in order. A watcher retains its listener;
 // conservatively let its reachable values escape. Other host calls borrow
 // without retaining or storing references and return independently owned
 // Stats/Date objects or primitive values. Stats.mtime is independently owned too.
-func (analysis *analysis) nodeFSFile(expression ir.NodeFSFile) value {
+func (analysis *analysis) nodeFileSystemFile(expression ir.NodeFSFile) value {
 	for _, argument := range expression.Arguments {
 		held := analysis.value(argument)
 		if expression.Operation == "host_watch_file" {

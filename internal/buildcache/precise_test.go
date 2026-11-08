@@ -2590,7 +2590,7 @@ func TestAMachineFileThroughALinkIsKeyedAsItself(test *testing.T) {
 // box's Windows version, which no key names (#6eexfyv). Only a look at it is keyed, as a system path. Mutant: the
 // library opened keyed as a system file.
 // Not parallel: newRig.
-func TestABuildThatOpensWSLsDriverRefuses(test *testing.T) {
+func TestABuildThatOpensWslsDriverRefuses(test *testing.T) {
 	rig := newRig(test)
 	Product(test, port, building("built"))
 	build := rig.built(test)["port"]
@@ -5006,8 +5006,8 @@ func TestAReaderStillFindsTheUpstreamBuildItRead(test *testing.T) {
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	readProducts.Clear()
 	elsewhere := filepath.Join(test.TempDir(), "cache")
-	if copyFsError := os.CopyFS(elsewhere, os.DirFS(rig.cache)); copyFsError != nil {
-		test.Fatal(copyFsError)
+	if copyFileSystemError := os.CopyFS(elsewhere, os.DirFS(rig.cache)); copyFileSystemError != nil {
+		test.Fatal(copyFileSystemError)
 	}
 	for _, cache := range []string{rig.cache, elsewhere} {
 		found, productForError := productFor(rig.root, cache, reader, 0, nil)

@@ -98,9 +98,9 @@ var unistMutants = yamlMutants{
 	},
 }
 
-func TestProduct_YAMLUnistMutant000(test *testing.T) { test.Parallel(); unistMutants.product(test, 0) }
-func TestProduct_YAMLUnistMutant001(test *testing.T) { test.Parallel(); unistMutants.product(test, 1) }
-func TestProduct_YAMLUnistMutant002(test *testing.T) { test.Parallel(); unistMutants.product(test, 2) }
+func TestProduct_YamlUnistMutant000(test *testing.T) { test.Parallel(); unistMutants.product(test, 0) }
+func TestProduct_YamlUnistMutant001(test *testing.T) { test.Parallel(); unistMutants.product(test, 1) }
+func TestProduct_YamlUnistMutant002(test *testing.T) { test.Parallel(); unistMutants.product(test, 2) }
 
 func TestUnistMutants(test *testing.T) {
 	test.Parallel()

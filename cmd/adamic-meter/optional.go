@@ -39,7 +39,7 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
 		return nil, nil, workingDirectoryError
 	}
 	owned := make(map[string]bool)
-	fs := &optionalFS{FS: osvfs.FS(), source: make(map[string]string)}
+	fs := &optionalFileSystem{FS: osvfs.FS(), source: make(map[string]string)}
 	roots := make([]tspath.RootedFilePath, 0, len(paths))
 	for _, path := range paths {
 		absolute, absolutePathError := filepath.Abs(path)
@@ -99,18 +99,18 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
 	return program, owned, nil
 }
 
-type optionalFS struct {
+type optionalFileSystem struct {
 	vfs.FS
 	source map[string]string
 }
 
-func (fileSystem *optionalFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+func (fileSystem *optionalFileSystem) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if source, ok := fileSystem.source[path.AsString()]; ok {
 		return source, true
 	}
 	return fileSystem.FS.ReadFile(path)
 }
-func (fileSystem *optionalFS) FileExists(path tspath.RootedFilePath) bool {
+func (fileSystem *optionalFileSystem) FileExists(path tspath.RootedFilePath) bool {
 	_, ok := fileSystem.source[path.AsString()]
 	return ok || fileSystem.FS.FileExists(path)
 }

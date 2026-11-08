@@ -78,12 +78,12 @@ func predictions(plan plan, weights map[string]float64) []prediction {
 	}
 	return result
 }
-func digestJSON(value any) string {
+func digestJson(value any) string {
 	b, _ := json.Marshal(value)
 	h := sha256.Sum256(b)
 	return hex.EncodeToString(h[:])
 }
-func planDigest(plan plan) string { plan.Digest = ""; return digestJSON(plan) }
+func planDigest(plan plan) string { plan.Digest = ""; return digestJson(plan) }
 func shortHash(text string) string {
 	h := sha256.Sum256([]byte(text))
 	return hex.EncodeToString(h[:16])
@@ -125,13 +125,13 @@ func digestPath(path string, active map[string]bool) (string, error) {
 		}
 		resolved, resolveSymlinksError := filepath.EvalSymlinks(path)
 		if os.IsNotExist(resolveSymlinksError) {
-			return digestJSON([]string{target, "dangling"}), nil
+			return digestJson([]string{target, "dangling"}), nil
 		}
 		if resolveSymlinksError != nil {
 			return "", resolveSymlinksError
 		}
 		answer, digestPathError := digestPath(resolved, active)
-		return digestJSON([]string{target, answer}), digestPathError
+		return digestJson([]string{target, answer}), digestPathError
 	}
 	if !info.IsDir() {
 		if !info.Mode().IsRegular() {
@@ -142,14 +142,14 @@ func digestPath(path string, active map[string]bool) (string, error) {
 			return "", fileDigestError
 		}
 		stat := info.Sys().(*syscall.Stat_t)
-		return digestJSON([]any{uint32(info.Mode()), stat.Uid, stat.Gid, data}), nil
+		return digestJson([]any{uint32(info.Mode()), stat.Uid, stat.Gid, data}), nil
 	}
 	entries, readDirectoryError := os.ReadDir(path)
 	if readDirectoryError != nil {
 		return "", readDirectoryError
 	}
 	stat := info.Sys().(*syscall.Stat_t)
-	records := []string{digestJSON([]any{uint32(info.Mode()), stat.Uid, stat.Gid})}
+	records := []string{digestJson([]any{uint32(info.Mode()), stat.Uid, stat.Gid})}
 	for _, entry := range entries {
 		key, digestPathError := digestPath(filepath.Join(path, entry.Name()), active)
 		if digestPathError != nil {
@@ -157,7 +157,7 @@ func digestPath(path string, active map[string]bool) (string, error) {
 		}
 		records = append(records, entry.Name(), key)
 	}
-	return digestJSON(records), nil
+	return digestJson(records), nil
 }
 
 // Resume is explicit evidence reuse. Hash private environment values; never print them.
@@ -256,11 +256,11 @@ func stableGoEnvironment(values map[string]string) string {
 		copy["GOGCCFLAGS"],
 		"go-build=/tmp/go-build",
 	)
-	return digestJSON(copy)
+	return digestJson(copy)
 }
 
 func executionKey(env []string, tools, external map[string]string) string {
-	return digestJSON(struct {
+	return digestJson(struct {
 		Env             []string
 		Tools, External map[string]string
 	}{env, tools, external})
@@ -276,7 +276,7 @@ type packageEvidence struct {
 }
 
 func checkpointKey(state resumeState, packagePath string, patterns []string) string {
-	return digestJSON(struct {
+	return digestJson(struct {
 		State    resumeState
 		Package  string
 		Patterns []string
@@ -295,14 +295,14 @@ func appendFile(out io.Writer, path string) error {
 	_, copyError := io.Copy(out, file)
 	return copyError
 }
-func atomicJSON(path string, v any) error {
+func atomicJson(path string, v any) error {
 	f, err := os.CreateTemp(filepath.Dir(path), ".checkpoint-")
 	if err != nil {
 		return err
 	}
 	temporary := f.Name()
 	defer os.Remove(temporary)
-	err = writeJSON(f, v)
+	err = writeJson(f, v)
 	if err == nil {
 		err = f.Sync()
 	}
@@ -401,7 +401,7 @@ func loadPackage(dir, key string, plan plan, index int, packagePath string) (pac
 	} else if statError != nil {
 		return evidence, false, statError
 	}
-	if loadJsonError := loadJSON(path, &evidence); loadJsonError != nil {
+	if loadJsonError := loadJson(path, &evidence); loadJsonError != nil {
 		return evidence, false, loadJsonError
 	}
 	if evidence.Key != key || evidence.Package != packagePath {
@@ -428,7 +428,7 @@ func loadPackage(dir, key string, plan plan, index int, packagePath string) (pac
 // durable evidence. Verify both representations, including their terminal events.
 func validatePackageFiles(dir string, plan plan, summary summary) []string {
 	var state resumeState
-	if loadJsonError := loadJSON(filepath.Join(dir, "run.json"), &state); loadJsonError != nil {
+	if loadJsonError := loadJson(filepath.Join(dir, "run.json"), &state); loadJsonError != nil {
 		return []string{"missing package checkpoint state: " + loadJsonError.Error()}
 	}
 	if state.PlanDigest != plan.Digest || state.Index != summary.Index || state.Context == "" {
@@ -495,7 +495,7 @@ func cleanupPackageScratch(dir, key, root string) error {
 		return statError
 	}
 	var record scratchRecord
-	if loadJsonError := loadJSON(path, &record); loadJsonError != nil {
+	if loadJsonError := loadJson(path, &record); loadJsonError != nil {
 		return loadJsonError
 	}
 	absolute, absolutePathError := filepath.Abs(record.Path)

@@ -279,7 +279,7 @@ func (lowering *lowering) refuseInstantiatedMutation(declaration *ast.Node) erro
 				callee.Name().Text() == "stringify" &&
 				lowering.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON") {
 				for _, argument := range call.Arguments.Nodes {
-					if checkInstantiatedJsonInputError := lowering.checkInstantiatedJSONInput(
+					if checkInstantiatedJsonInputError := lowering.checkInstantiatedJsonInput(
 						argument,
 					); checkInstantiatedJsonInputError != nil {
 						refused = checkInstantiatedJsonInputError
@@ -433,7 +433,7 @@ func (lowering *lowering) inferTypes(
 
 // JSON descriptors must be checked against the actual type arguments too. Without
 // this check a type parameter can hide a container inside the scalar union schema.
-func (lowering *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
+func (lowering *lowering) checkInstantiatedJsonInput(node *ast.Node) error {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindNullKeyword {
 		return nil
@@ -443,7 +443,7 @@ func (lowering *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
 			if element.Kind == ast.KindSpreadElement || element.Kind == ast.KindOmittedExpression {
 				continue
 			}
-			if checkInstantiatedJsonInputError := lowering.checkInstantiatedJSONInput(
+			if checkInstantiatedJsonInputError := lowering.checkInstantiatedJsonInput(
 				element,
 			); checkInstantiatedJsonInputError != nil {
 				return checkInstantiatedJsonInputError
@@ -454,7 +454,7 @@ func (lowering *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, field := range node.AsObjectLiteralExpression().Properties.Nodes {
 			if field.Kind == ast.KindPropertyAssignment {
-				if checkInstantiatedJsonInputError := lowering.checkInstantiatedJSONInput(
+				if checkInstantiatedJsonInputError := lowering.checkInstantiatedJsonInput(
 					field.AsPropertyAssignment().Initializer,
 				); checkInstantiatedJsonInputError != nil {
 					return checkInstantiatedJsonInputError

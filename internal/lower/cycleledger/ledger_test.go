@@ -64,7 +64,7 @@ func TestOriginalCycleLedger(test *testing.T) {
 	}
 	typeChecker, release := program.GetTypeCheckerForFile(context.Background(), source)
 	defer release()
-	modules, cyclic := lower.ESMModuleOrder(typeChecker, source)
+	modules, cyclic := lower.EsmModuleOrder(typeChecker, source)
 	if !cyclic {
 		test.Fatal("original program lost its import cycle")
 	}

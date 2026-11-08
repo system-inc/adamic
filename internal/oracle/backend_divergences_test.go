@@ -19,13 +19,15 @@ const (
 // noJavaScriptPlugins is the message native's computed require throws for a path, in Diagnostics'
 // words (#redxes2).
 func noJavaScriptPlugins(path string) string {
-	return "Cannot load JavaScript module '" + path + "': a native Adamic program can't run JavaScript; run it on Node to load modules at run time"
+	return "Cannot load JavaScript module '" +
+		path +
+		"': a native Adamic program can't run JavaScript; run it on Node to load modules at run time"
 }
 
-// requireInESModule is what Node gives the source of a fixture that calls require: it runs every
+// requireInEsModule is what Node gives the source of a fixture that calls require: it runs every
 // program as an ES module (oracle/node.mjs), where require isn't defined. A catch sees the first
 // line, and Node adds the rest to the message as an uncaught one leaves the module.
-const requireInESModule = "ReferenceError: require is not defined"
+const requireInEsModule = "ReferenceError: require is not defined"
 
 // Only these exact fixtures have ruled differences. Each side remains pinned:
 // membership never excuses an arbitrary exit, diagnostic or output change. A row whose node is set
@@ -41,42 +43,113 @@ var ruledBackendDivergences = []struct {
 	javascript run
 }{
 	{
-		fixture:    "internal/oracle/testdata/d96d304_try_stack.a",
-		ruling:     "@system_adamic, task #z1vjxxd, chain step 24",
-		reason:     "Native stack guards name the exhausted function; JavaScript preserves V8's unnamed overflow diagnostic. Both stops are terminal.",
-		native:     run{stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded in depth\n"), exitCode: 70},
+		fixture: "internal/oracle/testdata/d96d304_try_stack.a",
+		ruling:  "@system_adamic, task #z1vjxxd, chain step 24",
+		reason:  "Native stack guards name the exhausted function; JavaScript preserves V8's unnamed overflow diagnostic. Both stops are terminal.",
+		native: run{
+			stderr:   []byte("adamic: panic: RangeError: Maximum call stack size exceeded in depth\n"),
+			exitCode: 70,
+		},
 		javascript: run{stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70},
 	},
 
 	{fixture: "internal/oracle/testdata/node_inspector_unavailable.a", name: "node-without-inspector",
-		ruling:     "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
-		reason:     "Native and generated JavaScript model Node built --without-inspector; the source is an ES module with no require.",
-		node:       &run{stdout: []byte("ReferenceError\nnone\nrequire is not defined\nReferenceError: require is not defined\nafter\n")},
-		native:     run{stdout: []byte(inspectorUnavailableName + "\n" + inspectorUnavailableCode + "\n" + inspectorUnavailableMessage + "\n" + inspectorUnavailableString + "\nafter\n")},
-		javascript: run{stdout: []byte(inspectorUnavailableName + "\n" + inspectorUnavailableCode + "\n" + inspectorUnavailableMessage + "\n" + inspectorUnavailableString + "\nafter\n")}},
+		ruling: "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
+		reason: "Native and generated JavaScript model Node built --without-inspector; the source is an ES module with no require.",
+		node: &run{stdout: []byte(
+			"ReferenceError\nnone\nrequire is not defined\nReferenceError: require is not defined\nafter\n",
+		)},
+		native: run{stdout: []byte(inspectorUnavailableName +
+			"\n" +
+			inspectorUnavailableCode +
+			"\n" +
+			inspectorUnavailableMessage +
+			"\n" +
+			inspectorUnavailableString +
+			"\nafter\n")},
+		javascript: run{stdout: []byte(inspectorUnavailableName +
+			"\n" +
+			inspectorUnavailableCode +
+			"\n" +
+			inspectorUnavailableMessage +
+			"\n" +
+			inspectorUnavailableString +
+			"\nafter\n")}},
 	{fixture: "internal/oracle/testdata/node_inspector_unavailable_uncaught.a", name: "node-without-inspector",
-		ruling:     "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
-		reason:     "The no-inspector host raises on load; source Node has no CommonJS require in its ES module.",
-		node:       &run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
-		native:     run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + inspectorUnavailableString + "\n"), exitCode: 70},
-		javascript: run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + inspectorUnavailableString + "\n"), exitCode: 70}},
+		ruling: "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
+		reason: "The no-inspector host raises on load; source Node has no CommonJS require in its ES module.",
+		node: &run{
+			stdout: []byte("before\n"),
+			stderr: []byte(
+				"adamic: panic: " + requireInEsModule + " in ES module scope, you can use import instead\n",
+			),
+			exitCode: 70,
+		},
+		native: run{
+			stdout:   []byte("before\n"),
+			stderr:   []byte("adamic: panic: " + inspectorUnavailableString + "\n"),
+			exitCode: 70,
+		},
+		javascript: run{
+			stdout:   []byte("before\n"),
+			stderr:   []byte("adamic: panic: " + inspectorUnavailableString + "\n"),
+			exitCode: 70,
+		}},
 	{
-		fixture:    "internal/oracle/testdata/node_commonjs_require_missing.a",
-		name:       "installed-layout",
-		ruling:     "@system_adamic, task #redxes2, Nov 3",
-		reason:     installedLayoutReason,
-		node:       &run{stdout: []byte("ReferenceError none require is not defined\nReferenceError none require is not defined\nafter\n")},
-		native:     run{stdout: []byte(installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\n" + installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\nafter\n")},
-		javascript: run{stdout: []byte(installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\n" + installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\nafter\n")},
+		fixture: "internal/oracle/testdata/node_commonjs_require_missing.a",
+		name:    "installed-layout",
+		ruling:  "@system_adamic, task #redxes2, Nov 3",
+		reason:  installedLayoutReason,
+		node: &run{stdout: []byte(
+			"ReferenceError none require is not defined\nReferenceError none require is not defined\nafter\n",
+		)},
+		native: run{stdout: []byte(installedLayoutName +
+			" " +
+			installedLayoutCode +
+			" " +
+			installedLayoutMessage +
+			"\n" +
+			installedLayoutName +
+			" " +
+			installedLayoutCode +
+			" " +
+			installedLayoutMessage +
+			"\nafter\n")},
+		javascript: run{stdout: []byte(installedLayoutName +
+			" " +
+			installedLayoutCode +
+			" " +
+			installedLayoutMessage +
+			"\n" +
+			installedLayoutName +
+			" " +
+			installedLayoutCode +
+			" " +
+			installedLayoutMessage +
+			"\nafter\n")},
 	},
 	{
-		fixture:    "internal/oracle/testdata/node_commonjs_require_missing_uncaught.a",
-		name:       "installed-layout",
-		ruling:     "@system_adamic, task #redxes2, Nov 3",
-		reason:     installedLayoutReason,
-		node:       &run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
-		native:     run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + installedLayoutName + ": " + installedLayoutMessage + "\n"), exitCode: 70},
-		javascript: run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + installedLayoutName + ": " + installedLayoutMessage + "\n"), exitCode: 70},
+		fixture: "internal/oracle/testdata/node_commonjs_require_missing_uncaught.a",
+		name:    "installed-layout",
+		ruling:  "@system_adamic, task #redxes2, Nov 3",
+		reason:  installedLayoutReason,
+		node: &run{
+			stdout: []byte("before\n"),
+			stderr: []byte(
+				"adamic: panic: " + requireInEsModule + " in ES module scope, you can use import instead\n",
+			),
+			exitCode: 70,
+		},
+		native: run{
+			stdout:   []byte("before\n"),
+			stderr:   []byte("adamic: panic: " + installedLayoutName + ": " + installedLayoutMessage + "\n"),
+			exitCode: 70,
+		},
+		javascript: run{
+			stdout:   []byte("before\n"),
+			stderr:   []byte("adamic: panic: " + installedLayoutName + ": " + installedLayoutMessage + "\n"),
+			exitCode: 70,
+		},
 	},
 	{
 		fixture:    "internal/oracle/testdata/node_commonjs_require_computed.a",
@@ -88,13 +161,23 @@ var ruledBackendDivergences = []struct {
 		javascript: run{stdout: []byte("Error none " + noJavaScriptPlugins("./plugin-1.js") + "\npaths built: 1\n")},
 	},
 	{
-		fixture:    "internal/oracle/testdata/node_commonjs_require_computed_uncaught.a",
-		name:       "no-javascript-plugins",
-		ruling:     "@system_adamic, task #redxes2, Nov 3",
-		reason:     noJavaScriptPluginsReason,
-		node:       &run{stdout: []byte("before\ncaught: require is not defined\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
-		native:     run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
-		javascript: run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
+		fixture: "internal/oracle/testdata/node_commonjs_require_computed_uncaught.a",
+		name:    "no-javascript-plugins",
+		ruling:  "@system_adamic, task #redxes2, Nov 3",
+		reason:  noJavaScriptPluginsReason,
+		node: &run{
+			stdout: []byte("before\ncaught: require is not defined\n"),
+			stderr: []byte(
+				"adamic: panic: " + requireInEsModule + " in ES module scope, you can use import instead\n",
+			),
+			exitCode: 70,
+		},
+		native: run{stdout: []byte(
+			"before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n",
+		), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
+		javascript: run{stdout: []byte(
+			"before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n",
+		), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
 	},
 }
 

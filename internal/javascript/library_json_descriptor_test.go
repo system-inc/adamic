@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestJSONDescriptorsBuiltOnce(test *testing.T) {
+func TestJsonDescriptorsBuiltOnce(test *testing.T) {
 	test.Parallel()
 	number := ir.JSONDecodeSchema{Nodes: []ir.JSONDecodeNode{{Kind: "number", Of: ir.Number, Expected: "number"}}}
 	text := ir.JSONDecodeSchema{Nodes: []ir.JSONDecodeNode{{Kind: "string", Of: ir.String, Expected: "string"}}}
@@ -45,7 +45,7 @@ func TestJSONDescriptorsBuiltOnce(test *testing.T) {
 // A program that never decodes or encodes JSON carries nothing of it but the two names in the import of
 // adamic: no schema descriptor and no call. Stated as a property rather than a pinned hash of the whole
 // output, so a change to the rest of the emitter never reds it.
-func TestWithoutJSONCarriesOnlyTheImport(test *testing.T) {
+func TestWithoutJsonCarriesOnlyTheImport(test *testing.T) {
 	test.Parallel()
 	program := &ir.Program{Source: "01_hello.ts", Strings: []string{
 		"In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra",

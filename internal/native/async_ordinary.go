@@ -287,8 +287,8 @@ func (nativeEmitter *emitter) suspensionBlocks(
 			}
 			var condition, waiting string
 			var result ir.Expression
-			for _, instructionID := range block.Instructions {
-				instruction := graph.Instructions[instructionID]
+			for _, instructionId := range block.Instructions {
+				instruction := graph.Instructions[instructionId]
 				if source, ok := sourceLines[instruction.At]; ok && source != lastSourceLine {
 					nativeEmitter.statement(source)
 					lastSourceLine = source

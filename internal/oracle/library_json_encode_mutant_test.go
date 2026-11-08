@@ -12,7 +12,7 @@ import (
 
 // Mutate runtime writing, not source values or the Node schema. Each mutant must
 // build with -Werror, exit zero and leak nothing; only the byte oracle may kill it.
-func TestJSONEncodeNativeMutants(test *testing.T) {
+func TestJsonEncodeNativeMutants(test *testing.T) {
 	test.Parallel()
 	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
 	if readError != nil {
@@ -101,12 +101,12 @@ if (!isfinite(value.number)) { ascii(builder,"null");return; }`,
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("caught outside byte oracle: exit %d stderr %s", got.exitCode, got.stderr)
 			}
-			requireJSONMutantCaught(test, onNode(test, path), got)
+			requireJsonMutantCaught(test, onNode(test, path), got)
 			test.Logf("%s: compiled, exit 0, leak-free; caught only by Node stdout", testCase.name)
 		})
 	}
 }
-func TestJSONEncodePlainStringifyMutant(test *testing.T) {
+func TestJsonEncodePlainStringifyMutant(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/json_encode_differences.a"),
@@ -137,7 +137,7 @@ func TestJSONEncodePlainStringifyMutant(test *testing.T) {
 	test.Log("plain JSON.stringify backend: pinned declared-fields assertion failed, exit 70")
 }
 
-func TestJSONEncodeNativeStringMetadata(test *testing.T) {
+func TestJsonEncodeNativeStringMetadata(test *testing.T) {
 	test.Parallel()
 	runtime, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
 	if readError != nil {

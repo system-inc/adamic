@@ -13,7 +13,7 @@ import (
 // Every corpus file in the repository lies under a corpus root, so walking the roots finds exactly the files a walk of
 // the whole repository did, in the same order. This test is that whole-repository walk, kept out of every product's
 // process. A CSS file added outside the roots fails here, naming the root to add.
-func TestCSSCorpusRootsHoldEveryCorpusFile(test *testing.T) {
+func TestCssCorpusRootsHoldEveryCorpusFile(test *testing.T) {
 	test.Parallel()
 	if !slices.IsSorted(oracles.CorpusRoots()) {
 		test.Fatalf(

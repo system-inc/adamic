@@ -110,13 +110,13 @@ func buildsHere(name string) bool {
 	base := strings.TrimSuffix(name, ".go")
 	for _, goos := range []string{"linux", "darwin", "windows", "other"} {
 		if strings.HasSuffix(base, "_"+goos) {
-			return goos == hostOS() || goos == "other" && !slices.Contains([]string{"linux", "darwin"}, hostOS())
+			return goos == hostOs() || goos == "other" && !slices.Contains([]string{"linux", "darwin"}, hostOs())
 		}
 	}
 	return true
 }
 
-func hostOS() string { return runtime.GOOS }
+func hostOs() string { return runtime.GOOS }
 
 // TestTheMakeFilesUseNothingFromTheMachinery is guard 1 of the buildcache split (#a328f0h, Loom's ruling 45922): the
 // files that decide a product's bytes (make_*.go), the only files of this package a product's key reads, use nothing

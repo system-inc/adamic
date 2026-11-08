@@ -9,9 +9,9 @@ import (
 
 // Stock TypeScript declares captures as string even when they did not
 // participate. Correct that type before the checker proves program types.
-type regexpLibraryFS struct{ vfs.FS }
+type regexpLibraryFileSystem struct{ vfs.FS }
 
-func (fileSystem *regexpLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+func (fileSystem *regexpLibraryFileSystem) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	text, ok := fileSystem.FS.ReadFile(path)
 	if strings.HasSuffix(path.AsString(), "/lib.es5.d.ts") ||
 		strings.HasSuffix(path.AsString(), "/lib.es2021.string.d.ts") ||

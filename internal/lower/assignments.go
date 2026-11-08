@@ -366,7 +366,7 @@ func (lowering *lowering) objectDestructuringAssignment(
 		}
 		read.View = sourceExpression(property) + " (field " + field + ")"
 		read.ViewReceiverTypeID = lowering.viewFieldReceiverTypeID(nil, destructured)
-		read.ViewTypeID = lowering.viewTypeID(fieldType)
+		read.ViewTypeID = lowering.viewTypeId(fieldType)
 		read.ViewWhere = lowering.program.Where(property)
 		read.ViewType = lowering.checker.TypeToString(fieldType)
 		read.ViewAllowed = lowering.viewLiterals(fieldType)

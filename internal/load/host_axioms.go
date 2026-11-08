@@ -17,7 +17,7 @@ import (
 // corrects host declarations whose published types promise more than Node does.
 //
 //go:embed host_axioms.json
-var hostAxiomsJSON []byte
+var hostAxiomsJson []byte
 
 type hostAxiom struct {
 	File      string          `json:"file"`
@@ -29,7 +29,7 @@ type hostAxiom struct {
 }
 
 var hostAxioms = sync.OnceValues(func() ([]hostAxiom, error) {
-	return parseHostAxioms(hostAxiomsJSON)
+	return parseHostAxioms(hostAxiomsJson)
 })
 
 func parseHostAxioms(data []byte) ([]hostAxiom, error) {

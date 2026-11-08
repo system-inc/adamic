@@ -383,92 +383,92 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 	return sources, product
 }
 
-func TestProduct_YAMLFormatterMutant000Sources(test *testing.T) {
+func TestProduct_YamlFormatterMutant000Sources(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 0, 0)
 }
 
-func TestProduct_YAMLFormatterMutant000Lowered(test *testing.T) {
+func TestProduct_YamlFormatterMutant000Lowered(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 0, 1)
 }
 
-func TestProduct_YAMLFormatterMutant000Native(test *testing.T) {
+func TestProduct_YamlFormatterMutant000Native(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 0, 2)
 }
 
-func TestProduct_YAMLFormatterMutant001Sources(test *testing.T) {
+func TestProduct_YamlFormatterMutant001Sources(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 1, 0)
 }
 
-func TestProduct_YAMLFormatterMutant001Lowered(test *testing.T) {
+func TestProduct_YamlFormatterMutant001Lowered(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 1, 1)
 }
 
-func TestProduct_YAMLFormatterMutant001Native(test *testing.T) {
+func TestProduct_YamlFormatterMutant001Native(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 1, 2)
 }
 
-func TestProduct_YAMLFormatterMutant002Sources(test *testing.T) {
+func TestProduct_YamlFormatterMutant002Sources(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 2, 0)
 }
 
-func TestProduct_YAMLFormatterMutant002Lowered(test *testing.T) {
+func TestProduct_YamlFormatterMutant002Lowered(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 2, 1)
 }
 
-func TestProduct_YAMLFormatterMutant002Native(test *testing.T) {
+func TestProduct_YamlFormatterMutant002Native(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 2, 2)
 }
 
-func TestProduct_YAMLFormatterMutant003Sources(test *testing.T) {
+func TestProduct_YamlFormatterMutant003Sources(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 3, 0)
 }
 
-func TestProduct_YAMLFormatterMutant003Lowered(test *testing.T) {
+func TestProduct_YamlFormatterMutant003Lowered(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 3, 1)
 }
 
-func TestProduct_YAMLFormatterMutant003Native(test *testing.T) {
+func TestProduct_YamlFormatterMutant003Native(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 3, 2)
 }
 
-func TestProduct_YAMLFormatterMutant004Sources(test *testing.T) {
+func TestProduct_YamlFormatterMutant004Sources(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 4, 0)
 }
 
-func TestProduct_YAMLFormatterMutant004Lowered(test *testing.T) {
+func TestProduct_YamlFormatterMutant004Lowered(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 4, 1)
 }
 
-func TestProduct_YAMLFormatterMutant004Native(test *testing.T) {
+func TestProduct_YamlFormatterMutant004Native(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 4, 2)
 }
 
-func TestProduct_YAMLFormatterMutant005Sources(test *testing.T) {
+func TestProduct_YamlFormatterMutant005Sources(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 5, 0)
 }
 
-func TestProduct_YAMLFormatterMutant005Lowered(test *testing.T) {
+func TestProduct_YamlFormatterMutant005Lowered(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 5, 1)
 }
 
-func TestProduct_YAMLFormatterMutant005Native(test *testing.T) {
+func TestProduct_YamlFormatterMutant005Native(test *testing.T) {
 	test.Parallel()
 	formatterMutantsProduct(test, 5, 2)
 }

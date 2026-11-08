@@ -103,7 +103,7 @@ func run(arguments []string) (code int) {
 		if lowered == nil {
 			return code
 		}
-		if native.UsesTSGo(lowered) {
+		if native.UsesTsGo(lowered) {
 			fmt.Fprintln(os.Stderr, "adamic: tsgo requires a native build with --tsgo <archive>")
 			return 1
 		}
@@ -114,7 +114,7 @@ func run(arguments []string) (code int) {
 		if lowered == nil {
 			return code
 		}
-		if native.UsesTSGo(lowered) {
+		if native.UsesTsGo(lowered) {
 			fmt.Fprintln(os.Stderr, "adamic: tsgo is an external native checker library; JavaScript is not supported")
 			return 1
 		}
@@ -226,7 +226,7 @@ func compileLibrary(path string, tsgo, debug bool) (*ir.Program, int) {
 		return nil, code
 	}
 	if tsgo {
-		program.EnableTSGo()
+		program.EnableTsGo()
 	}
 	options := lower.Options{
 		ProgramRegion:  programRegionRequested(),

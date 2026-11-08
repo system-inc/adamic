@@ -31,7 +31,7 @@ func jsxManifestCases(test *testing.T, cases []string) string {
 	return path
 }
 
-func TestJSXOriginalLibraries(test *testing.T) {
+func TestJsxOriginalLibraries(test *testing.T) {
 	test.Parallel()
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
@@ -98,20 +98,20 @@ func TestJSXOriginalLibraries(test *testing.T) {
 				}
 				test.Log("postprocessed CRLF: library exactly matches Go on LF-normalized input")
 			}
-			if !bytes.Equal(mustJSON(test, want), mustJSON(test, got)) {
+			if !bytes.Equal(mustJson(test, want), mustJson(test, got)) {
 				test.Fatalf(
 					"%s JSX %d differs beyond documented deltas: Go %s; library %s",
 					mode,
 					index,
-					mustJSON(test, want),
-					mustJSON(test, got),
+					mustJson(test, want),
+					mustJson(test, got),
 				)
 			}
 		}
 	}
 }
 
-const testJSXMutantShards = 32
+const testJsxMutantShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX mutant case.
@@ -122,16 +122,16 @@ func jsxMutantPath(test *testing.T) string {
 }
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
-func TestJSXMutant(test *testing.T) {
+func TestJsxMutant(test *testing.T) {
 	finishSetup := miscStart(test)
 	cases := jsxCases()
-	ids := miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", cases)
+	ids := miscIds("stage1/cohere/estree/jsx_test.go:jsx-mutant", cases)
 	oracle := miscOracle(test)
 	path := jsxMutantPath(test)
 	binary, _ := miscBuild(test, path)
 	answers := miscTextAnswers(test, oracle, cases, ".tsx")
 	finishSetup()
-	miscRunShards(test, testJSXMutantShards, ids, func(test *testing.T, index int) {
+	miscRunShards(test, testJsxMutantShards, ids, func(test *testing.T, index int) {
 		list := jsxManifestCases(test, cases[index:index+1])
 		want := answers[index].Data
 		for name, got := range map[string][]byte{
@@ -145,9 +145,9 @@ func TestJSXMutant(test *testing.T) {
 	})
 }
 
-func TestJSXMutantPlantedSurvivor(test *testing.T) {
+func TestJsxMutantPlantedSurvivor(test *testing.T) {
 	test.Parallel()
-	miscPlantedProof(test, testJSXMutantShards, miscIDs(
+	miscPlantedProof(test, testJsxMutantShards, miscIds(
 		"stage1/cohere/estree/jsx_test.go:jsx-mutant",
 		jsxCases(),
 	), func(planted bool) error {

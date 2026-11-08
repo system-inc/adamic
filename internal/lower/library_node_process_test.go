@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestNodeProcessPerformanceAliasABI(test *testing.T) {
+func TestNodeProcessPerformanceAliasAbi(test *testing.T) {
 	test.Parallel()
 	for name, source := range map[string]string{
 		"direct options": "performance.measure('x',{start:0});",

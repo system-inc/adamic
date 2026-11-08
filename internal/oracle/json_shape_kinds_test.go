@@ -85,11 +85,11 @@ func TestJSONDecodeShapeKinds(test *testing.T) {
 	test.Parallel()
 	for _, sanitize := range []bool{false, true} {
 		got := jsonDecodeShapeRun(test, jsonDecodeShapeProbe, sanitize)
-		stderrOK := strings.HasPrefix(string(got.stderr), "adamic: counts:")
+		stderrOk := strings.HasPrefix(string(got.stderr), "adamic: counts:")
 		if sanitize {
-			stderrOK = len(got.stderr) == 0
+			stderrOk = len(got.stderr) == 0
 		}
-		if got.exitCode != 0 || string(got.stdout) != "distinct decoder shapes\n" || !stderrOK {
+		if got.exitCode != 0 || string(got.stdout) != "distinct decoder shapes\n" || !stderrOk {
 			test.Fatalf(
 				"decoder shape control (sanitize=%t): exit %d stdout %s stderr %s",
 				sanitize,
@@ -101,7 +101,7 @@ func TestJSONDecodeShapeKinds(test *testing.T) {
 	}
 }
 
-func TestJSONDecodeShapeInternKindMutant(test *testing.T) {
+func TestJsonDecodeShapeInternKindMutant(test *testing.T) {
 	test.Parallel()
 	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
 	if readError != nil {
@@ -123,7 +123,7 @@ func TestJSONDecodeShapeInternKindMutant(test *testing.T) {
 	}
 }
 
-func TestJSONDecodeShapeKindMutant(test *testing.T) {
+func TestJsonDecodeShapeKindMutant(test *testing.T) {
 	test.Parallel()
 	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
 	if readError != nil {

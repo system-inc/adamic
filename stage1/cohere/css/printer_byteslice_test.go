@@ -9,7 +9,7 @@ import (
 	"unicode/utf16"
 )
 
-func TestCSSPrinterByteSlicesMatchGo(test *testing.T) {
+func TestCssPrinterByteSlicesMatchGo(test *testing.T) {
 	test.Parallel()
 	var want bytes.Buffer
 	encoder := json.NewEncoder(&want)

@@ -51,7 +51,7 @@ func run(arguments []string) (exit int) {
 		"",
 		"write phase durations, cache hits and worker timeline to this JSON file",
 	)
-	asJSON := flags.Bool("json", false, "write the report as JSON on stdout; the table goes to stderr")
+	asJson := flags.Bool("json", false, "write the report as JSON on stdout; the table goes to stderr")
 	classifyOnly := flags.Bool("classify-only", false, "classify every test and do not compile or run")
 	adapt := flags.Bool(
 		"adapt",
@@ -139,9 +139,9 @@ func run(arguments []string) (exit int) {
 		}
 		document.Filters = append(document.Filters, report)
 	}
-	if *asJSON {
+	if *asJson {
 		printTables(os.Stderr, document)
-		if writeJsonError := writeJSON(os.Stdout, document); writeJsonError != nil {
+		if writeJsonError := writeJson(os.Stdout, document); writeJsonError != nil {
 			fmt.Fprintln(os.Stderr, writeJsonError)
 			return 1
 		}

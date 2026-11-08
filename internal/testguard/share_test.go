@@ -9,7 +9,7 @@ import (
 )
 
 // Not parallel: this test changes GOMAXPROCS and -test.parallel for the whole process.
-func TestShareDividesTheUnitsCPUsAmongParallelTests(test *testing.T) {
+func TestShareDividesTheUnitsCpusAmongParallelTests(test *testing.T) {
 	setting := flag.Lookup("test.parallel")
 	previous, previousParallel := runtime.GOMAXPROCS(8), setting.Value.String()
 	defer func() {

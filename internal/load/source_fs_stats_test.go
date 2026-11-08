@@ -12,14 +12,14 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 )
 
-// countingFS is the disk, counting each path FileExists is asked.
-type countingFS struct {
+// countingFileSystem is the disk, counting each path FileExists is asked.
+type countingFileSystem struct {
 	vfs.FS
 	mutex  sync.Mutex
 	counts map[string]int
 }
 
-func (fileSystem *countingFS) FileExists(path tspath.RootedFilePath) bool {
+func (fileSystem *countingFileSystem) FileExists(path tspath.RootedFilePath) bool {
 	fileSystem.mutex.Lock()
 	fileSystem.counts[path.AsString()]++
 	fileSystem.mutex.Unlock()
@@ -40,8 +40,8 @@ func TestALoadStatsAnAdamicFileOnce(test *testing.T) {
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
-	disk := &countingFS{FS: osvfs.FS(), counts: map[string]int{}}
-	fs := &sourceFS{FS: disk}
+	disk := &countingFileSystem{FS: osvfs.FS(), counts: map[string]int{}}
+	fs := &sourceFileSystem{FS: disk}
 	twin := tspath.RootedDirectoryPathFromAbsolute(directory).ResolveFile("shapes.a.ts")
 	for range 1000 {
 		if name := fs.displayName(twin); !strings.HasSuffix(name, "/shapes.a") {

@@ -19,7 +19,7 @@ import (
 // Checked IR is a checkpoint format used by estree and lint. Exercise the whole
 // JSON corpus, including class receivers with no boundary schema. Refusal cases
 // have no checked IR; their existing refusal contracts must still hold.
-func TestJSONCheckedIRGobRoundTrip(test *testing.T) {
+func TestJsonCheckedIrGobRoundTrip(test *testing.T) {
 	test.Parallel()
 	ir.RegisterGob()
 	var paths []string
@@ -46,7 +46,7 @@ func TestJSONCheckedIRGobRoundTrip(test *testing.T) {
 			}
 			program, lowerError := lower.Lower(context.Background(), source)
 			if jsonDecodeEnumerationRefused(filepath.Base(path)) {
-				assertJSONDecodeEnumerationRefusal(test, lowerError)
+				assertJsonDecodeEnumerationRefusal(test, lowerError)
 				return
 			}
 			if strings.Contains(filepath.ToSlash(path), "/json_encode_refused/") {

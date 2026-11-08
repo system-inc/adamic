@@ -155,21 +155,21 @@ func composedMemoryCheck(test *testing.T, index int) {
 	}
 }
 
-func TestProduct_CSSComposedMemoryAddressMutant(test *testing.T) {
+func TestProduct_CssComposedMemoryAddressMutant(test *testing.T) {
 	test.Parallel()
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux sanitizer harness proof")
 	}
 	composedMemoryProduct(test, 0)
 }
-func TestProduct_CSSComposedMemoryUndefinedBehaviorMutant(test *testing.T) {
+func TestProduct_CssComposedMemoryUndefinedBehaviorMutant(test *testing.T) {
 	test.Parallel()
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux sanitizer harness proof")
 	}
 	composedMemoryProduct(test, 1)
 }
-func TestProduct_CSSComposedMemoryLeakMutant(test *testing.T) {
+func TestProduct_CssComposedMemoryLeakMutant(test *testing.T) {
 	test.Parallel()
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux sanitizer harness proof")

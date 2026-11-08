@@ -61,7 +61,7 @@ type manifest struct {
 
 type manifestFile struct {
 	Path   string `json:"path"`
-	SHA256 string `json:"sha256"`
+	Sha256 string `json:"sha256"`
 	Size   int64  `json:"size"`
 	Mode   uint32 `json:"mode"`
 }
@@ -244,9 +244,9 @@ func fetch(key, directory string) error {
 		if file.Path != clean || path.IsAbs(clean) || clean == "." || strings.HasPrefix(clean, "../") || clean == ".." {
 			return poisoned(fmt.Errorf("manifest %s names the path %q", sum, file.Path))
 		}
-		content, blobError := blob(store, file.SHA256)
+		content, blobError := blob(store, file.Sha256)
 		if blobError != nil {
-			return named(blobError, fmt.Sprintf("manifest %s names blob %s for %s", sum, file.SHA256, file.Path))
+			return named(blobError, fmt.Sprintf("manifest %s names blob %s for %s", sum, file.Sha256, file.Path))
 		}
 		if int64(len(content)) != file.Size {
 			return poisoned(fmt.Errorf("%s is %d bytes, its manifest says %d", file.Path, len(content), file.Size))
@@ -310,7 +310,7 @@ func describeProduct(key, name, directory string) (manifest, error) {
 		}
 		product.Files = append(product.Files, manifestFile{
 			Path:   filepath.ToSlash(relative),
-			SHA256: hex.EncodeToString(sum[:]),
+			Sha256: hex.EncodeToString(sum[:]),
 			Size:   int64(len(content)),
 			Mode:   mode,
 		})
@@ -418,15 +418,15 @@ func audit(key, name, fetched string, build func(directory string) error) error 
 	if describeProductError != nil {
 		return describeProductError
 	}
-	wantJSON, _ := json.Marshal(want.Files)
-	gotJSON, _ := json.Marshal(got.Files)
-	if !bytes.Equal(wantJSON, gotJSON) {
+	wantJson, _ := json.Marshal(want.Files)
+	gotJson, _ := json.Marshal(got.Files)
+	if !bytes.Equal(wantJson, gotJson) {
 		return poisoned(fmt.Errorf(
 			"the stored product for %s (%s) differs from a rebuild: stored %s, rebuilt %s (or the build isn't reproducible)",
 			key[:12],
 			name,
-			gotJSON,
-			wantJSON,
+			gotJson,
+			wantJson,
 		))
 	}
 	return nil

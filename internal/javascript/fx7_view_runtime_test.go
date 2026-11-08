@@ -2,7 +2,7 @@ package javascript
 
 import "testing"
 
-func TestFX7ViewCycle(test *testing.T) {
+func TestFx7ViewCycle(test *testing.T) {
 	test.Parallel()
 	source := viewTestRuntime + viewUntaggedPlainRuntime + `
  const adamicFieldReadiness=new WeakMap();
@@ -13,7 +13,7 @@ func TestFX7ViewCycle(test *testing.T) {
 	runViewNode(test, source, "1\n", "", 0)
 }
 
-func TestFX7TupleMarkerRejectsOrdinaryArray(test *testing.T) {
+func TestFx7TupleMarkerRejectsOrdinaryArray(test *testing.T) {
 	test.Parallel()
 	source := viewTestRuntime + fieldReadinessRuntime + viewUntaggedPlainRuntime + `
  const contracts=[{Kind:4,Members:[2]},{Kind:2,FixedTuple:true,Tuple:[3,3],Fields:[{Name:'0',Contract:3},{Name:'1',Contract:3}]},{Kind:1,Of:1}];

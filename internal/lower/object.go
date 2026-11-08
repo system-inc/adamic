@@ -547,7 +547,7 @@ func (lowering *lowering) property(node *ast.Node) (ir.Expression, error) {
 			"a method read only to test for it, where that test doesn't lower through methodPresence",
 		)
 	}
-	if value, found, nodeStdoutIsTtyReadError := lowering.nodeStdoutIsTTYRead(node); found {
+	if value, found, nodeStdoutIsTtyReadError := lowering.nodeStdoutIsTtyRead(node); found {
 		return value, nodeStdoutIsTtyReadError
 	}
 	if value, found, nodeRealpathValueError := lowering.nodeRealpathValue(node); found {
@@ -946,7 +946,7 @@ func (lowering *lowering) property(node *ast.Node) (ir.Expression, error) {
 				lowering.recordGuardedReads,
 				recordGuardedRead{
 					node:           node,
-					receiverTypeID: lowering.viewFieldReceiverTypeID(node, receiver),
+					receiverTypeId: lowering.viewFieldReceiverTypeID(node, receiver),
 					name:           name,
 				},
 			)
@@ -1055,7 +1055,7 @@ func (lowering *lowering) viewedField(node *ast.Node, property ir.Property) ir.P
 			// A field read the checker narrowed, as a predicate narrows its argument (view_widened.go).
 			lowering.narrowedFields = append(lowering.narrowedFields, narrowed)
 		}
-		property.ViewTypeID = lowering.viewTypeID(declared)
+		property.ViewTypeID = lowering.viewTypeId(declared)
 		property.ViewContract = lowering.result.ViewContractTypes[property.ViewTypeID]
 		property.ViewType = lowering.checker.TypeToString(declared)
 		property.ViewAllowed = lowering.viewLiterals(declared)
@@ -1141,8 +1141,8 @@ func (lowering *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, known, reflectGetError := lowering.reflectGet(node); known {
 		return value, true, reflectGetError
 	}
-	if value, known, nodeFsDirectoryCallError := lowering.nodeFSDirectoryCall(node); known {
-		return value, true, nodeFsDirectoryCallError
+	if value, known, nodeFileSystemDirectoryCallError := lowering.nodeFileSystemDirectoryCall(node); known {
+		return value, true, nodeFileSystemDirectoryCallError
 	}
 	if value, known, arrayIsArrayError := lowering.arrayIsArray(node); known {
 		return value, known, arrayIsArrayError
@@ -2248,8 +2248,8 @@ func (lowering *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (lowering *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
-	if value, found, nodeFsFileDateError := lowering.nodeFSFileDate(node); found {
-		return value, nodeFsFileDateError
+	if value, found, nodeFileSystemFileDateError := lowering.nodeFileSystemFileDate(node); found {
+		return value, nodeFileSystemFileDateError
 	}
 	if lowering.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return lowering.regexConstant(node)
@@ -2697,7 +2697,7 @@ func (lowering *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if position, parseError := strconv.Atoi(index.Text()); parseError == nil {
 		elements := lowering.typeArguments(receiver)
 		if position >= 0 && position < len(elements) {
-			property.ViewTypeID = lowering.viewTypeID(elements[position])
+			property.ViewTypeID = lowering.viewTypeId(elements[position])
 			property.ViewContract = lowering.result.ViewContractTypes[property.ViewTypeID]
 			property.ViewReceiverTypeID = lowering.viewFieldReceiverTypeID(node, receiver)
 			property.ViewType = lowering.checker.TypeToString(elements[position])

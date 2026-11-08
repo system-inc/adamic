@@ -79,11 +79,11 @@ func cssOptimizedNative(test *testing.T, index int) string {
 	return cssOptimizedNatives[index]
 }
 
-func TestProduct_CSSPrinterOptimizedNative(test *testing.T) {
+func TestProduct_CssPrinterOptimizedNative(test *testing.T) {
 	test.Parallel()
 	cssOptimizedNative(test, 0)
 }
-func TestProduct_CSSParserOptimizedNative(test *testing.T) {
+func TestProduct_CssParserOptimizedNative(test *testing.T) {
 	test.Parallel()
 	cssOptimizedNative(test, 1)
 }
@@ -107,17 +107,17 @@ func cssPrinterOptimizedMatchesGo(test *testing.T, mode string) {
 }
 
 // Not parallel: askedCases writes the shared ADAMIC_CSS_KEEP and ADAMIC_CSS_KEEP_RAW paths when configured.
-func TestCSSPrinterOptimizedMatchesGo_Default(test *testing.T) {
+func TestCssPrinterOptimizedMatchesGo_Default(test *testing.T) {
 	cssPrinterOptimizedMatchesGo(test, "default")
 }
 
 // Not parallel: askedCases writes the shared ADAMIC_CSS_KEEP and ADAMIC_CSS_KEEP_RAW paths when configured.
-func TestCSSPrinterOptimizedMatchesGo_Narrow(test *testing.T) {
+func TestCssPrinterOptimizedMatchesGo_Narrow(test *testing.T) {
 	cssPrinterOptimizedMatchesGo(test, "narrow")
 }
 
 // Not parallel: askedCases writes the shared ADAMIC_CSS_KEEP and ADAMIC_CSS_KEEP_RAW paths when configured.
-func TestCSSParserOptimizedMatchesNode(test *testing.T) {
+func TestCssParserOptimizedMatchesNode(test *testing.T) {
 	cases, _ := askedCases(test)
 	path, _ := filepath.Abs("compose_main.ts")
 	binary := cssOptimizedNative(test, 1)

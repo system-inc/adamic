@@ -14,7 +14,7 @@ import (
 
 // A structural type can hide fields, even when all of its visible fields are scalar. These
 // programs must be refused until stringify can inspect complete runtime value metadata.
-func TestJSONStringifyRefusals(test *testing.T) {
+func TestJsonStringifyRefusals(test *testing.T) {
 	test.Parallel()
 	cases := []struct{ name, source, reason string }{
 		{"parse", `JSON.parse('{"n":1}');`, "result's type can't be proven from the text"},
@@ -59,7 +59,7 @@ func TestJSONStringifyRefusals(test *testing.T) {
 	}
 }
 
-func TestJSONStringifyResultMayBeUndefined(test *testing.T) {
+func TestJsonStringifyResultMayBeUndefined(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "probe.ts")
 	// Even a serializable argument is not used as a license to lie in the public declaration.
@@ -78,7 +78,7 @@ func TestJSONStringifyResultMayBeUndefined(test *testing.T) {
 
 // This mutant compiles, exits zero, and leaks nothing. Only the independent Node comparison can
 // notice that the descriptor enumerates integer-index keys in the wrong order.
-func TestJSONStringifyOracleCatchesKeyOrder(test *testing.T) {
+func TestJsonStringifyOracleCatchesKeyOrder(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "mutant.ts")
 	source := `console.log(JSON.stringify({ '2': 2, '1': 1, z: 'built'.repeat(2), a: 3 }) ?? 'missing');`

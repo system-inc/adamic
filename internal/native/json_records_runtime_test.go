@@ -101,27 +101,27 @@ func jsonRecordsRuntimeCheck(test *testing.T, mutant string) {
 	}
 }
 
-func TestJSONRecordsRuntimePreparedValues(test *testing.T) {
+func TestJsonRecordsRuntimePreparedValues(test *testing.T) {
 	test.Parallel()
 	jsonRecordsRuntimeCheck(test, "")
 }
 
-func TestJSONRecordsRuntimePrepareMutant(test *testing.T) {
+func TestJsonRecordsRuntimePrepareMutant(test *testing.T) {
 	test.Parallel()
 	jsonRecordsRuntimeCheck(test, "prepare")
 }
 
-func TestJSONRecordsRuntimeOwnershipMutant(test *testing.T) {
+func TestJsonRecordsRuntimeOwnershipMutant(test *testing.T) {
 	test.Parallel()
 	jsonRecordsRuntimeCheck(test, "ownership")
 }
 
-func TestJSONRecordsRuntimeThrowCleanupMutant(test *testing.T) {
+func TestJsonRecordsRuntimeThrowCleanupMutant(test *testing.T) {
 	test.Parallel()
 	jsonRecordsRuntimeCheck(test, "throw")
 }
 
-func TestJSONRecordsRuntimeCycleGuard(test *testing.T) {
+func TestJsonRecordsRuntimeCycleGuard(test *testing.T) {
 	test.Parallel()
 	for _, mutant := range []string{"", "cycle"} {
 		binary := jsonRecordsRuntimeBinary(test, mutant)

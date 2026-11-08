@@ -33,7 +33,7 @@ func regexCompatibleCases(test *testing.T, cases []regexCase) []regexCase {
 		if !seen {
 			var program *regex.Program
 			if regexCase.PatternUnits != nil {
-				program, err = regex.CompileUTF16(regexCase.PatternUnits, flags)
+				program, err = regex.CompileUtf16(regexCase.PatternUnits, flags)
 			} else {
 				program, err = regex.Compile(regexCase.Pattern, flags)
 			}
@@ -160,22 +160,22 @@ func TestRegExpV8NativeShard3(test *testing.T) {
 	runRegExpBytecodeV8NodeUnit(test, 3, false)
 }
 
-func TestRegExpV8WASMShard0(test *testing.T) {
+func TestRegExpV8WasmShard0(test *testing.T) {
 	test.Parallel()
 	runRegExpBytecodeV8NodeUnit(test, 0, true)
 }
 
-func TestRegExpV8WASMShard1(test *testing.T) {
+func TestRegExpV8WasmShard1(test *testing.T) {
 	test.Parallel()
 	runRegExpBytecodeV8NodeUnit(test, 1, true)
 }
 
-func TestRegExpV8WASMShard2(test *testing.T) {
+func TestRegExpV8WasmShard2(test *testing.T) {
 	test.Parallel()
 	runRegExpBytecodeV8NodeUnit(test, 2, true)
 }
 
-func TestRegExpV8WASMShard3(test *testing.T) {
+func TestRegExpV8WasmShard3(test *testing.T) {
 	test.Parallel()
 	runRegExpBytecodeV8NodeUnit(test, 3, true)
 }

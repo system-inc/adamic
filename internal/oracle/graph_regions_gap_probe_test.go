@@ -47,7 +47,7 @@ func withoutGraph(program *ir.Program) *ir.Program {
 	return program
 }
 
-var graphRSS = regexp.MustCompile(`(?m)^graph_peak_rss_kib (\d+)\n`)
+var graphRss = regexp.MustCompile(`(?m)^graph_peak_rss_kib (\d+)\n`)
 var graphRegionLine = regexp.MustCompile(
 	`(?m)^adamic: graph region: live (\d+) bytes (\d+) reachable (\d+) bytes (\d+) unreachable (\d+) bytes (\d+) metadata (\d+)\n`,
 )
@@ -72,7 +72,7 @@ func graphMeasured(test *testing.T, code string) run {
 	result := executeWith(test, []string{"ADAMIC_THREADS=1"}, name, args...)
 	if result.exitCode != 0 ||
 		countsLine.FindSubmatch(result.stderr) == nil ||
-		graphRSS.FindSubmatch(result.stdout) == nil {
+		graphRss.FindSubmatch(result.stdout) == nil {
 		test.Fatalf("measurement failed: %d %s %s", result.exitCode, result.stdout, result.stderr)
 	}
 	return result
@@ -111,7 +111,7 @@ func graphMeasureFixture(test *testing.T, path string, million bool) {
 	}
 	before := graphMeasured(test, baseline)
 	for _, result := range []run{before, after} {
-		output := graphRSS.ReplaceAll(result.stdout, nil)
+		output := graphRss.ReplaceAll(result.stdout, nil)
 		if million {
 			output = regexp.MustCompile(`(?m)^graph_node_bytes \d+\n`).ReplaceAll(output, nil)
 		}
@@ -127,11 +127,11 @@ func graphMeasureFixture(test *testing.T, path string, million bool) {
 		oldCounts[3],
 		oldCounts[4],
 		oldCounts[5],
-		graphRSS.FindSubmatch(before.stdout)[1],
+		graphRss.FindSubmatch(before.stdout)[1],
 		newCounts[3],
 		newCounts[4],
 		newCounts[5],
-		graphRSS.FindSubmatch(after.stdout)[1],
+		graphRss.FindSubmatch(after.stdout)[1],
 		leakcheck.Unbalanced(leakRun(before)),
 	)
 	if million {

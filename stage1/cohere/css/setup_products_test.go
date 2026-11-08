@@ -46,7 +46,7 @@ func cssParserPreparedProgram(test *testing.T, mutation int) cssParserProgram {
 			name = fmt.Sprintf("mutant-%d", mutation)
 			directory = cssParserTopPortDirectory(test, &mutants[mutation])
 		}
-		state.program = buildCSSParserProgram(test, name, directory)
+		state.program = buildCssParserProgram(test, name, directory)
 		state.failed = ""
 	})
 	if state.failed != "" {
@@ -61,12 +61,12 @@ func cssParserPreparedProgram(test *testing.T, mutation int) cssParserProgram {
 
 func cssParserPreparedNative(test *testing.T, mutation int) string {
 	test.Helper()
-	return buildCSSParserBinaries(test, []cssParserProgram{cssParserPreparedProgram(test, mutation)})[0]
+	return buildCssParserBinaries(test, []cssParserProgram{cssParserPreparedProgram(test, mutation)})[0]
 }
 
-// prepareCSSParserCompilerProducts needs no oracle, even on a cold tree. The
+// prepareCssParserCompilerProducts needs no oracle, even on a cold tree. The
 // runtime comparison setup fetches the corpus independently after these products.
-func prepareCSSParserCompilerProducts(test *testing.T) {
+func prepareCssParserCompilerProducts(test *testing.T) {
 	test.Helper()
 	for mutation := -1; mutation < len(mutants); mutation++ {
 		cssParserPreparedNative(test, mutation)
@@ -78,7 +78,7 @@ func prepareCSSParserCompilerProducts(test *testing.T) {
 
 func cssParserPreparedLeaks(test *testing.T) string {
 	test.Helper()
-	return buildCSSParserUnsanitized(test, cssParserPreparedProgram(test, -1))
+	return buildCssParserUnsanitized(test, cssParserPreparedProgram(test, -1))
 }
 
 // Each Go oracle's key moves with the C or C++ compiler go builds it with, and with the C compiler's report, so a
@@ -176,36 +176,36 @@ func TestProduct_CSSParserParserNative(test *testing.T) {
 	test.Parallel()
 	cssParserPreparedNative(test, -1)
 }
-func TestProduct_CSSParserCustomPropertyMutantLowered(test *testing.T) {
+func TestProduct_CssParserCustomPropertyMutantLowered(test *testing.T) {
 	test.Parallel()
 	cssParserPreparedProgram(test, 0)
 }
-func TestProduct_CSSParserCustomPropertyMutantNative(test *testing.T) {
+func TestProduct_CssParserCustomPropertyMutantNative(test *testing.T) {
 	test.Parallel()
 	cssParserPreparedNative(test, 0)
 }
-func TestProduct_CSSParserCommentMutantLowered(test *testing.T) {
+func TestProduct_CssParserCommentMutantLowered(test *testing.T) {
 	test.Parallel()
 	cssParserPreparedProgram(test, 1)
 }
-func TestProduct_CSSParserCommentMutantNative(test *testing.T) {
+func TestProduct_CssParserCommentMutantNative(test *testing.T) {
 	test.Parallel()
 	cssParserPreparedNative(test, 1)
 }
-func TestProduct_CSSParserClosingBraceMutantLowered(test *testing.T) {
+func TestProduct_CssParserClosingBraceMutantLowered(test *testing.T) {
 	test.Parallel()
 	cssParserPreparedProgram(test, 2)
 }
-func TestProduct_CSSParserClosingBraceMutantNative(test *testing.T) {
+func TestProduct_CssParserClosingBraceMutantNative(test *testing.T) {
 	test.Parallel()
 	cssParserPreparedNative(test, 2)
 }
 
-func TestProduct_CSSCompositionLowered(test *testing.T) {
+func TestProduct_CssCompositionLowered(test *testing.T) {
 	test.Parallel()
 	compositionLoweredProduct(test)
 }
-func TestProduct_CSSCompositionNative(test *testing.T) {
+func TestProduct_CssCompositionNative(test *testing.T) {
 	test.Parallel()
 	compositionNativeProduct(test)
 }

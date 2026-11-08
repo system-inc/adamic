@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func (javascriptEmitter *emitter) nodeFSFile(call ir.NodeFSFile) string {
+func (javascriptEmitter *emitter) nodeFileSystemFile(call ir.NodeFSFile) string {
 	args := make([]string, len(call.Arguments))
 	for index, arg := range call.Arguments {
 		args[index] = javascriptEmitter.value(arg)

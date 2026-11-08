@@ -5,9 +5,9 @@ import (
 	"strings"
 )
 
-// nativeFirstASCII computes a necessary first-character condition from bytecode.
+// nativeFirstAscii computes a necessary first-character condition from bytecode.
 // Unknown or nullable paths disable it. Non-ASCII input always uses the VM.
-func (program *Program) nativeFirstASCII() ([2]uint64, bool) {
+func (program *Program) nativeFirstAscii() ([2]uint64, bool) {
 	var visit func(int, map[int]bool) ([2]uint64, bool)
 	visit = func(pc int, path map[int]bool) ([2]uint64, bool) {
 		var bits [2]uint64
@@ -166,7 +166,7 @@ func (program *Program) nativeAnchored() bool {
 
 // ASCII strings admit a separate straight-line runner even when Unicode folding
 // or a wide character class requires the general VM on other strings.
-func (program *Program) nativeStraightLineASCII(name string) string {
+func (program *Program) nativeStraightLineAscii(name string) string {
 	copyProgram := *program
 	copyProgram.code = append([]instruction(nil), program.code...)
 	for pc, instruction := range copyProgram.code {
@@ -193,13 +193,13 @@ func (program *Program) nativeStraightLineASCII(name string) string {
 // Boolean calls need neither capture registers nor instruction accounting in
 // unlimited mode. Emit their entire search, so flags and first sets are compile
 // time constants rather than tests in the shared runtime loop.
-func (program *Program) nativeBooleanASCII(name, first string) string {
-	if program.nativeStraightLineASCII(name) == "" {
-		return program.nativeRepeatedASCII(name)
+func (program *Program) nativeBooleanAscii(name, first string) string {
+	if program.nativeStraightLineAscii(name) == "" {
+		return program.nativeRepeatedAscii(name)
 	}
 	var out strings.Builder
 	minimum, endAnchored := program.nativeBooleanWidth()
-	bits, filter := program.nativeFirstASCII()
+	bits, filter := program.nativeFirstAscii()
 	if filter && first == "NULL" && !endAnchored && !program.nativeAnchored() && !program.flags.Sticky {
 		fmt.Fprintf(
 			&out,
@@ -320,7 +320,7 @@ func (program *Program) nativeBooleanWidth() (int, bool) {
 // An anchored scalar star followed by one scalar needs no choice points for a
 // stateless boolean result. Captures and stateful calls retain the VM, because
 // their preferred end depends on greediness. Saves do not affect existence.
-func (program *Program) nativeRepeatedASCII(name string) string {
+func (program *Program) nativeRepeatedAscii(name string) string {
 	if program.flags.Global || program.flags.Sticky {
 		return ""
 	}

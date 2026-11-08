@@ -145,7 +145,7 @@ func deepMutantsSnapshot(test *testing.T, mutation deepMutantsMutation) (map[str
 	return snapshot, inputs
 }
 
-func deepMutantsIRProduct(test *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
+func deepMutantsIrProduct(test *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
 	test.Helper()
 	snapshot, inputs := deepMutantsSnapshot(test, mutation)
 	// v2: the IR's maps are sorted and its positions placeless, so a v1 program.gob isn't one this reads.
@@ -158,7 +158,7 @@ func deepMutantsIRProduct(test *testing.T, mutation deepMutantsMutation) (string
 
 func deepMutantsLowered(test *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
 	test.Helper()
-	checkpoint, inputs := deepMutantsIRProduct(test, mutation)
+	checkpoint, inputs := deepMutantsIrProduct(test, mutation)
 	inputs.Name = "deep-mutants-emitted-v1"
 	lowered := buildcache.Product(test, inputs, func(dir string) error {
 		program, estreeFamilyReadCheckpointError := estreeFamilyReadCheckpoint(checkpoint)

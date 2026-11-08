@@ -67,7 +67,7 @@ func syntaxMutantProductInputs(test *testing.T, item syntaxMutant) buildcache.In
 	return inputs
 }
 
-func syntaxMutantIRProduct(test *testing.T, item syntaxMutant) string {
+func syntaxMutantIrProduct(test *testing.T, item syntaxMutant) string {
 	test.Helper()
 	inputs := syntaxMutantProductInputs(test, item)
 	// v2: the IR's maps are sorted and its positions placeless, so a v1 program.gob isn't one this reads.
@@ -91,7 +91,7 @@ func syntaxMutantIRProduct(test *testing.T, item syntaxMutant) string {
 }
 func syntaxMutantLoweredProduct(test *testing.T, item syntaxMutant) string {
 	test.Helper()
-	checkpoint := syntaxMutantIRProduct(test, item)
+	checkpoint := syntaxMutantIrProduct(test, item)
 	inputs := syntaxMutantProductInputs(test, item)
 	inputs.Name = "estree-syntax-mutant-emitted-" + item.name
 	return buildcache.Product(test, inputs, func(dir string) error {
@@ -291,8 +291,8 @@ func runSyntaxMutantShard(test *testing.T, shard int) {
 	test.Logf("setup: %.3fs", time.Since(setup).Seconds())
 	started := time.Now()
 	defer func() { test.Logf("shard work: %.3fs", time.Since(started).Seconds()) }()
-	cpu := syntaxMutantCPU()
-	defer func() { test.Logf("CPU: %.3fs", (syntaxMutantCPU() - cpu).Seconds()) }()
+	cpu := syntaxMutantCpu()
+	defer func() { test.Logf("CPU: %.3fs", (syntaxMutantCpu() - cpu).Seconds()) }()
 	item := syntaxMutantEnumeration()[shard]
 	list := manifest(test, prepared.Sources)
 	if shard != 0 && !strings.Contains(string(prepared.Want), `"status":"error"`) {
@@ -433,7 +433,7 @@ func syntaxMutantCanonicalCases(test *testing.T, data []byte, count int) []strin
 	}
 	return cases
 }
-func syntaxMutantCPU() time.Duration {
+func syntaxMutantCpu() time.Duration {
 	var self, children syscall.Rusage
 	if syscall.Getrusage(syscall.RUSAGE_SELF, &self) != nil ||
 		syscall.Getrusage(syscall.RUSAGE_CHILDREN, &children) != nil {

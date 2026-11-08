@@ -9,7 +9,7 @@ import (
 )
 
 // Not parallel: test.Setenv changes the process environment variable WASI_SYSROOT.
-func TestWASIHostTargetRefusals(test *testing.T) {
+func TestWasiHostTargetRefusals(test *testing.T) {
 	// This is a lexer/public-boundary unit: every Build must refuse before clang.
 	// Isolate it from the SDK version probe, tested separately and by the real WASI gate.
 	sdk := test.TempDir()

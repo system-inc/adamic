@@ -50,7 +50,7 @@ func jsonPinnedCorpusInputsAt(pin string) (buildcache.Inputs, error) {
 // A different pin moves both the name key (what a runner finds the corpus by) and the declared key (what this machine
 // alone builds it by), so a corpus at another commit is never served for this one. A one-byte change to a corpus file
 // at the pin is a different commit id, so it is this case too. Keying builds nothing.
-func TestJSONPinnedCorpusRekeysWithThePin(test *testing.T) {
+func TestJsonPinnedCorpusRekeysWithThePin(test *testing.T) {
 	test.Parallel()
 	root, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
@@ -90,9 +90,9 @@ func TestJSONPinnedCorpusRekeysWithThePin(test *testing.T) {
 
 // jsonTrackedSources is the repository's tracked JSON, listed once per process.
 
-// buildJSONPinnedCorpus is the build for the product inputs keys, and PinnedGit checks the pin against those same
+// buildJsonPinnedCorpus is the build for the product inputs keys, and PinnedGit checks the pin against those same
 // Inputs: the build never lists them again, so it never lists the tracked JSON, which reads .git, inside its trace.
-func buildJSONPinnedCorpus(inputs buildcache.Inputs) func(directory string) error {
+func buildJsonPinnedCorpus(inputs buildcache.Inputs) func(directory string) error {
 	return oracles.BuildPinnedCorpus(inputs)
 }
 
@@ -103,7 +103,7 @@ func TestProduct_JSONPinnedCorpus(test *testing.T) {
 	if jsonPinnedCorpusInputsError != nil {
 		test.Fatal(jsonPinnedCorpusInputsError)
 	}
-	buildcache.Product(test, inputs, buildJSONPinnedCorpus(inputs))
+	buildcache.Product(test, inputs, buildJsonPinnedCorpus(inputs))
 }
 
 // Every test in a process reads the product once. Callers get slice copies because hash partitioning sorts its
@@ -205,7 +205,7 @@ func TestPinnedRepositoryCorpusPinMutant(test *testing.T) {
 		test.Fatal(fixtureCasesAtPinError)
 	}
 	fixtureWrite(test, fixture.root, "pin-added.json", "[42]")
-	commitFixtureJSON(test, fixture.root, "pin-added.json")
+	commitFixtureJson(test, fixture.root, "pin-added.json")
 	mutant, gitCorpusError := gitCorpus(fixture.root, "rev-parse", "HEAD")
 	if gitCorpusError != nil {
 		test.Fatal(gitCorpusError)
@@ -236,7 +236,7 @@ func validatePinnedCorpus(test testing.TB, cases []textCase, expected corpusPin)
 	return oracles.ValidatePinnedCorpus(test, oracleCases(cases), expected)
 }
 
-func TestJSONPinnedCorpusRecords(test *testing.T) {
+func TestJsonPinnedCorpusRecords(test *testing.T) {
 	test.Parallel()
 	cases := []textCase{
 		{"a.json", "{}"},
@@ -355,7 +355,7 @@ func TestPinnedRepositoryCorpusBloblessCloneNeverFetches(test *testing.T) {
 	for index := 0; index < 8; index++ {
 		fixtureWrite(test, fixture.root, fmt.Sprintf("batch/%d.json", index), fmt.Sprintf("[%d]", index))
 	}
-	commitFixtureJSON(test, fixture.root, "batch")
+	commitFixtureJson(test, fixture.root, "batch")
 	head, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
 	if err != nil {
 		test.Fatal(err)

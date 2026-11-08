@@ -669,7 +669,7 @@ func processExitArgument(test *testing.T, shard int) {
 				if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 					test.Skip("set ADAMIC_ORACLE_WASI=1")
 				}
-				got = onWASI(test, native.C(program))
+				got = onWasi(test, native.C(program))
 			}
 			if difference := disagreement(truth, got); difference != "" {
 				test.Fatalf("%s: Node %d got %d", difference, truth.exitCode, got.exitCode)
@@ -823,7 +823,7 @@ func processExitAssignmentResult(test *testing.T, shard int) {
 	}
 	nodeProcessRuntimeAgreement(test, program, onNodeWith(test, inputRun{}, path), shard)
 }
-func TestProcessExitNonnumericABI(test *testing.T) {
+func TestProcessExitNonnumericAbi(test *testing.T) {
 	test.Parallel()
 	for _, source := range []string{
 		"process.exit('2');",
@@ -854,15 +854,15 @@ func TestProcessExitOutput_007(test *testing.T) { test.Parallel(); processExitOu
 func TestProcessExitOutput_008(test *testing.T) { test.Parallel(); processExitOutputCase(test, 8) }
 func TestProcessExitOutput_009(test *testing.T) { test.Parallel(); processExitOutputCase(test, 9) }
 
-func TestProcessExitWASIDrain_000(test *testing.T) {
+func TestProcessExitWasiDrain_000(test *testing.T) {
 	test.Parallel()
-	processExitWASIDrain(test, "log", "pipe")
+	processExitWasiDrain(test, "log", "pipe")
 }
-func TestProcessExitWASIDrain_001(test *testing.T) {
+func TestProcessExitWasiDrain_001(test *testing.T) {
 	test.Parallel()
-	processExitWASIDrain(test, "error", "stderr-pipe")
+	processExitWasiDrain(test, "error", "stderr-pipe")
 }
-func processExitWASIDrain(test *testing.T, method, destination string) {
+func processExitWasiDrain(test *testing.T, method, destination string) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}

@@ -41,7 +41,7 @@ type moduleOrdering struct {
 // orderModules computes moduleOrder's answer and makes its side effects; moduleOrder holds it.
 func (lowering *lowering) orderModules(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
 	lowering.moduleOrders++
-	order, cyclic := ESMModuleOrder(lowering.checker, entry)
+	order, cyclic := EsmModuleOrder(lowering.checker, entry)
 	// Dynamic imports are not lowered. Refuse them before imported types can
 	// request source identities during declaration or initializer lowering.
 	for _, module := range order {
@@ -56,9 +56,9 @@ func (lowering *lowering) orderModules(entry *ast.SourceFile) ([]*ast.SourceFile
 	return order, nil
 }
 
-// ESMModuleOrder is shared with the source-ledger audit (cycleledger) so it measures the
+// EsmModuleOrder is shared with the source-ledger audit (cycleledger) so it measures the
 // compiler's actual scheduling proof, rather than replaying observed Node order.
-func ESMModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool) {
+func EsmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool) {
 	order := []*ast.SourceFile{}
 	state := map[*ast.SourceFile]int{} // 1 while its imports are being visited, 2 once placed
 	cyclic := false

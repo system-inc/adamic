@@ -51,7 +51,7 @@ func jsonSanitizedMemory() (*jsonMemoryBudget, error) {
 			)
 			return
 		}
-		jsonMemory = newJSONMemoryBudget(units - jsonMemoryParentWeight)
+		jsonMemory = newJsonMemoryBudget(units - jsonMemoryParentWeight)
 	})
 	return jsonMemory, jsonMemoryError
 }
@@ -72,7 +72,7 @@ type jsonMemoryWaiter struct {
 	admitted chan struct{}
 }
 
-func newJSONMemoryBudget(capacity int) *jsonMemoryBudget {
+func newJsonMemoryBudget(capacity int) *jsonMemoryBudget {
 	return &jsonMemoryBudget{capacity: capacity}
 }
 
@@ -106,9 +106,9 @@ func (budget *jsonMemoryBudget) release(weight int) {
 // A shard waiting for the budget is admitted before any caller that arrives after it, even one that arrives the
 // instant room frees: the broadcast it replaces let that caller in first, and under load the waiter lost every time.
 // Capacity admits as many weights at once as fit.
-func TestJSONMemoryBudgetAdmitsInArrivalOrder(test *testing.T) {
+func TestJsonMemoryBudgetAdmitsInArrivalOrder(test *testing.T) {
 	test.Parallel()
-	budget := newJSONMemoryBudget(jsonMemorySanitizedWeight)
+	budget := newJsonMemoryBudget(jsonMemorySanitizedWeight)
 	budget.acquire(jsonMemorySanitizedWeight)
 	admitted := make(chan string, 2)
 	go func() {
@@ -132,7 +132,7 @@ func TestJSONMemoryBudgetAdmitsInArrivalOrder(test *testing.T) {
 		test.Errorf("admitted %q first, want the caller that was waiting", first)
 	}
 
-	two := newJSONMemoryBudget(2 * jsonMemorySanitizedWeight)
+	two := newJsonMemoryBudget(2 * jsonMemorySanitizedWeight)
 	for range 2 {
 		if wait := two.acquire(jsonMemorySanitizedWeight); wait > time.Second {
 			test.Errorf("capacity for two: an acquire waited %s with room free", wait)

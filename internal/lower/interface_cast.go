@@ -308,12 +308,12 @@ func (lowering *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[
 		contract := lowering.result.ViewContracts[id-1]
 		for _, field := range contract.Fields {
 			fields[field.Name] = true
-			for typeID, contractID := range lowering.result.ViewContractTypes {
-				if contractID == id {
+			for typeId, contractId := range lowering.result.ViewContractTypes {
+				if contractId == id {
 					if lowering.result.CheckedFields == nil {
 						lowering.result.CheckedFields = map[string]bool{}
 					}
-					lowering.result.CheckedFields[ir.CheckedFieldKey(typeID, field.Name)] = true
+					lowering.result.CheckedFields[ir.CheckedFieldKey(typeId, field.Name)] = true
 				}
 			}
 			visit(field.Contract)
@@ -465,7 +465,7 @@ func (lowering *lowering) legacyView(node *ast.Node, value ir.Expression, target
 // uses its instantiated type, or its constraint when the binder remains rigid.
 // Neither operation relates unrelated objects merely because their names match.
 func (lowering *lowering) viewReceiverTypeID(receiver *checker.Type) int {
-	return lowering.viewTypeID(lowering.viewReceiver(receiver))
+	return lowering.viewTypeId(lowering.viewReceiver(receiver))
 }
 
 // viewFieldReceiverTypeID is the one place the id a field read is checked under is
@@ -497,7 +497,7 @@ func (lowering *lowering) viewFieldReceiverTypeID(node *ast.Node, receiver *chec
 // Node wrote (Language's y4, Optimizer's ruling, Nov 2). Only
 // viewFieldReceiverTypeID calls it.
 func (lowering *lowering) viewReadReceiverTypeID(receiver *checker.Type) int {
-	return lowering.viewTypeID(lowering.brandedIntersectionReceiver(lowering.viewReceiver(receiver)))
+	return lowering.viewTypeId(lowering.brandedIntersectionReceiver(lowering.viewReceiver(receiver)))
 }
 
 // viewReceiver is the type a receiver's view is keyed by, before its id.
@@ -511,8 +511,8 @@ func (lowering *lowering) viewReceiver(receiver *checker.Type) *checker.Type {
 	return lowering.checker.GetNonNullableType(receiver)
 }
 
-// viewTypeID is the id a read's view names a type by, kept with its type in viewTypes.
-func (lowering *lowering) viewTypeID(named *checker.Type) int {
+// viewTypeId is the id a read's view names a type by, kept with its type in viewTypes.
+func (lowering *lowering) viewTypeId(named *checker.Type) int {
 	if lowering.viewTypes == nil {
 		lowering.viewTypes = map[int]*checker.Type{}
 	}

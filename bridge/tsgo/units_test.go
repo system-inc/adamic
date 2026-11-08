@@ -195,7 +195,7 @@ func (run *bridgeRun) answers(name, binary string, arguments []string, timing bo
 	}
 	return stdout
 }
-func bridgeABI(run *bridgeRun, _ string, _ int) {
+func bridgeAbi(run *bridgeRun, _ string, _ int) {
 	output := run.mustRun("api", run.command(run.product("api"), run.config(), run.sample(), "check"))
 	run.t.Logf("C ABI: 100 queries, owned outputs, handles and argument checks; %s", output)
 }

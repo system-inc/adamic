@@ -205,7 +205,7 @@ func nodeProcessDirectorySymlinksRuntime(test *testing.T, shard int) {
 		runtime := strings.Replace(string(data), anchor, "char *resolved = strdup(path);", 1)
 		runtime = nodeProcessMutantNames(runtime, "mutant_node_")
 		code := nodeProcessMutantNames(native.C(program), "mutant_node_")
-		bad := onWASI(test, runtime+"\n"+code)
+		bad := onWasi(test, runtime+"\n"+code)
 		if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
 			test.Fatalf("virtual cwd mutant failed outside Node comparison: %+v", bad)
 		}
@@ -238,7 +238,7 @@ func nodeProcessRuntimeAgreement(test *testing.T, program *ir.Program, truth run
 		if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 			test.Skip("set ADAMIC_ORACLE_WASI=1")
 		}
-		if difference := disagreement(truth, onWASI(test, native.C(program))); difference != "" {
+		if difference := disagreement(truth, onWasi(test, native.C(program))); difference != "" {
 			test.Fatal(difference)
 		}
 	default:

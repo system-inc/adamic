@@ -10,7 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func buildWASI(test *testing.T, source, binary string) string {
+func buildWasi(test *testing.T, source, binary string) string {
 	test.Helper()
 	if buildError := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
 		var refused *native.TargetRefused
@@ -74,7 +74,7 @@ func wasiHostRuntimeRefusal(test *testing.T, index int) {
 				source = "#define ADAMIC_NODE_HOST 1\n" + source
 			}
 			binary := filepath.Join(test.TempDir(), "runtime-refusal.wasm")
-			if reason := buildWASI(test, source, binary); reason != "" {
+			if reason := buildWasi(test, source, binary); reason != "" {
 				test.Fatalf(
 					"%s: expected runtime refusal %q, unexpectedly refused at build: %s",
 					probe.suffix,
@@ -106,7 +106,7 @@ func wasiFileAgreesWithNode(test *testing.T, index int) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	for _, fixture := range fsFileFixtures[index : index+1] {
+	for _, fixture := range fileSystemFileFixtures[index : index+1] {
 		test.Run(fixture, func(test *testing.T) {
 			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/node_fs_file_"+fixture+".a"),
@@ -120,11 +120,11 @@ func wasiFileAgreesWithNode(test *testing.T, index int) {
 			}
 			shared := sharedDirectory(test)
 			binary := filepath.Join(shared, "program.wasm")
-			if reason := buildWASI(test, native.C(program), binary); reason != "" {
-				assertWASIRefusal(test, fixture, reason, wasiFileRefusedFixtures)
+			if reason := buildWasi(test, native.C(program), binary); reason != "" {
+				assertWasiRefusal(test, fixture, reason, wasiFileRefusedFixtures)
 				return
 			}
-			nodeRun, wasmRun := fsFilePrepare(test, shared, "node"), fsFilePrepare(test, shared, "wasi")
+			nodeRun, wasmRun := fileSystemFilePrepare(test, shared, "node"), fileSystemFilePrepare(test, shared, "wasi")
 			expected := onNodeWith(test, nodeRun, path)
 			actual := executeInput(
 				test,
@@ -133,7 +133,7 @@ func wasiFileAgreesWithNode(test *testing.T, index int) {
 				"node",
 				append([]string{"--disable-warning=ExperimentalWarning", runner, binary}, wasmRun.arguments...)...,
 			)
-			if assertWASIRefusal(test, fixture, wasiRefusalReason(actual), wasiFileRefusedFixtures) {
+			if assertWasiRefusal(test, fixture, wasiRefusalReason(actual), wasiFileRefusedFixtures) {
 				return
 			}
 			if difference := disagreement(expected, actual); difference != "" {
@@ -149,8 +149,8 @@ func wasiFileAgreesWithNode(test *testing.T, index int) {
 				)
 			}
 			if difference := filesDiffer(
-				fsFileSnapshot(test, nodeRun.arguments[0]),
-				fsFileSnapshot(test, wasmRun.arguments[0]),
+				fileSystemFileSnapshot(test, nodeRun.arguments[0]),
+				fileSystemFileSnapshot(test, wasmRun.arguments[0]),
 			); difference != "" {
 				test.Errorf("filesystem effects: %s", difference)
 			}
@@ -158,93 +158,93 @@ func wasiFileAgreesWithNode(test *testing.T, index int) {
 	}
 }
 
-func TestWASIHostRuntimeRefusal_000(test *testing.T) {
+func TestWasiHostRuntimeRefusal_000(test *testing.T) {
 	test.Parallel()
 	wasiHostRuntimeRefusal(test, 0)
 }
 
-func TestWASIHostRuntimeRefusal_001(test *testing.T) {
+func TestWasiHostRuntimeRefusal_001(test *testing.T) {
 	test.Parallel()
 	wasiHostRuntimeRefusal(test, 1)
 }
 
-func TestWASIHostRuntimeRefusal_002(test *testing.T) {
+func TestWasiHostRuntimeRefusal_002(test *testing.T) {
 	test.Parallel()
 	wasiHostRuntimeRefusal(test, 2)
 }
 
-func TestWASIHostRuntimeRefusal_003(test *testing.T) {
+func TestWasiHostRuntimeRefusal_003(test *testing.T) {
 	test.Parallel()
 	wasiHostRuntimeRefusal(test, 3)
 }
 
-func TestWASIHostRuntimeRefusal_004(test *testing.T) {
+func TestWasiHostRuntimeRefusal_004(test *testing.T) {
 	test.Parallel()
 	wasiHostRuntimeRefusal(test, 4)
 }
 
-func TestWASIHostRuntimeRefusal_005(test *testing.T) {
+func TestWasiHostRuntimeRefusal_005(test *testing.T) {
 	test.Parallel()
 	wasiHostRuntimeRefusal(test, 5)
 }
 
-func TestWASIHostRuntimeRefusal_006(test *testing.T) {
+func TestWasiHostRuntimeRefusal_006(test *testing.T) {
 	test.Parallel()
 	wasiHostRuntimeRefusal(test, 6)
 }
 
-func TestWASIHostRuntimeRefusal_007(test *testing.T) {
+func TestWasiHostRuntimeRefusal_007(test *testing.T) {
 	test.Parallel()
 	wasiHostRuntimeRefusal(test, 7)
 }
 
-func TestWASIFileAgreesWithNode_000(test *testing.T) {
+func TestWasiFileAgreesWithNode_000(test *testing.T) {
 	test.Parallel()
 	wasiFileAgreesWithNode(test, 0)
 }
 
-func TestWASIFileAgreesWithNode_001(test *testing.T) {
+func TestWasiFileAgreesWithNode_001(test *testing.T) {
 	test.Parallel()
 	wasiFileAgreesWithNode(test, 1)
 }
 
-func TestWASIFileAgreesWithNode_002(test *testing.T) {
+func TestWasiFileAgreesWithNode_002(test *testing.T) {
 	test.Parallel()
 	wasiFileAgreesWithNode(test, 2)
 }
 
-func TestWASIFileAgreesWithNode_003(test *testing.T) {
+func TestWasiFileAgreesWithNode_003(test *testing.T) {
 	test.Parallel()
 	wasiFileAgreesWithNode(test, 3)
 }
 
-func TestWASIFileAgreesWithNode_004(test *testing.T) {
+func TestWasiFileAgreesWithNode_004(test *testing.T) {
 	test.Parallel()
 	wasiFileAgreesWithNode(test, 4)
 }
 
-func TestWASIHostShardCoverage(test *testing.T) {
+func TestWasiHostShardCoverage(test *testing.T) {
 	test.Parallel()
-	if len(inputFixtures) != 22 || len(fsFileFixtures) != 7 {
+	if len(inputFixtures) != 22 || len(fileSystemFileFixtures) != 7 {
 		test.Fatalf(
 			"host fixture registry changed: input=%d files=%d; regenerate host shards",
 			len(inputFixtures),
-			len(fsFileFixtures),
+			len(fileSystemFileFixtures),
 		)
 	}
 }
 
-func TestWASIFileAgreesWithNode_005(test *testing.T) {
+func TestWasiFileAgreesWithNode_005(test *testing.T) {
 	test.Parallel()
 	wasiFileAgreesWithNode(test, 5)
 }
 
-func TestWASIFileAgreesWithNode_006(test *testing.T) {
+func TestWasiFileAgreesWithNode_006(test *testing.T) {
 	test.Parallel()
 	wasiFileAgreesWithNode(test, 6)
 }
 
-func TestWASIHostRefusalClassification(test *testing.T) {
+func TestWasiHostRefusalClassification(test *testing.T) {
 	test.Parallel()
 	reasons := []string{
 		"file creation permission bits are not supported",

@@ -29,7 +29,7 @@ type Program struct {
 	captures    int
 	names       map[string][]int
 	repeats     int
-	firstASCII  [2]uint64
+	firstAscii  [2]uint64
 	filterFirst bool
 	prefix      []rune
 	anchored    bool
@@ -82,14 +82,14 @@ func CompileWithProperties(pattern, flags string, properties PropertyProvider) (
 	return compilePattern(tree, properties)
 }
 
-// CompileUTF16 accepts an exact JavaScript pattern string, including surrogates.
-func CompileUTF16(pattern []uint16, flags string) (*Program, error) {
-	return CompileUTF16WithProperties(pattern, flags, UnicodeProperties{})
+// CompileUtf16 accepts an exact JavaScript pattern string, including surrogates.
+func CompileUtf16(pattern []uint16, flags string) (*Program, error) {
+	return CompileUtf16WithProperties(pattern, flags, UnicodeProperties{})
 }
 
-// CompileUTF16WithProperties combines exact pattern strings and the UCD seam.
-func CompileUTF16WithProperties(pattern []uint16, flags string, properties PropertyProvider) (*Program, error) {
-	tree, parsePatternError := parsePattern(patternFromUTF16(pattern), flags, true)
+// CompileUtf16WithProperties combines exact pattern strings and the UCD seam.
+func CompileUtf16WithProperties(pattern []uint16, flags string, properties PropertyProvider) (*Program, error) {
+	tree, parsePatternError := parsePattern(patternFromUtf16(pattern), flags, true)
 	if parsePatternError != nil {
 		return nil, parsePatternError
 	}
@@ -126,7 +126,7 @@ func compilePattern(tree *Pattern, properties PropertyProvider) (*Program, error
 		return nil, disjunctionError
 	}
 	program.code = append(program.code, instruction{op: opAccept})
-	program.firstASCII, program.filterFirst = program.nativeFirstASCII()
+	program.firstAscii, program.filterFirst = program.nativeFirstAscii()
 	program.prefix = program.nativePrefix()
 	program.anchored = program.nativeAnchored()
 	program.regular = program.compileRegular()
@@ -368,7 +368,7 @@ func (exp *RegExp) Exec(input []uint16) (*Match, error) {
 		if !program.anchored && !program.flags.Sticky {
 			for position < len(input) {
 				c := input[position]
-				possible := !program.filterFirst || c >= 128 || program.firstASCII[c/64]&(uint64(1)<<uint(c%64)) != 0
+				possible := !program.filterFirst || c >= 128 || program.firstAscii[c/64]&(uint64(1)<<uint(c%64)) != 0
 				prefix := len(program.prefix) == 0
 				if len(program.prefix) > 0 && position+len(program.prefix) <= len(input) {
 					prefix = true

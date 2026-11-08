@@ -292,8 +292,8 @@ func prepareStringsAnswerInputs(test *testing.T) {
 			test.Name(),
 		)
 		corpus := enumerateStrings(test)
-		if units := stringsUnits(corpus); len(units) != testCSSStringsShards {
-			test.Fatalf("enumerated %d shards, declared %d", len(units), testCSSStringsShards)
+		if units := stringsUnits(corpus); len(units) != testCssStringsShards {
+			test.Fatalf("enumerated %d shards, declared %d", len(units), testCssStringsShards)
 		}
 		oracle := stringsPreparedOracle(test)
 		library := os.Getenv("ADAMIC_CSSSTRINGS_LIBRARY")
@@ -315,7 +315,7 @@ func prepareStringsAnswerInputs(test *testing.T) {
 // A one-byte edit to one batch's or one raw case's input re-keys the product holding its answer, by name key (what a
 // runner finds it by) and by declared key (what this machine alone builds it by), and so does another oracle, so a
 // changed Go oracle or Prettier library never serves stale answers.
-func TestCSSStringsAnswerProductsRekey(test *testing.T) {
+func TestCssStringsAnswerProductsRekey(test *testing.T) {
 	test.Parallel()
 	root, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
@@ -372,11 +372,11 @@ func TestCSSStringsAnswerProductsRekey(test *testing.T) {
 	}
 }
 
-func TestProduct_CSSStringsFindsGoOracle(test *testing.T) {
+func TestProduct_CssStringsFindsGoOracle(test *testing.T) {
 	test.Parallel()
 	stringsPreparedOracle(test)
 }
-func TestProduct_CSSStringsFindsGoAnswers(test *testing.T) {
+func TestProduct_CssStringsFindsGoAnswers(test *testing.T) {
 	test.Parallel()
 	corpus := enumerateStrings(test)
 	oracle := stringsPreparedOracle(test)
@@ -389,7 +389,7 @@ func TestProduct_CSSStringsFindsGoAnswers(test *testing.T) {
 		stringsOracleIdentity(test, oracle),
 	))
 }
-func TestProduct_CSSStringsFindsGoBatchAnswers(test *testing.T) {
+func TestProduct_CssStringsFindsGoBatchAnswers(test *testing.T) {
 	test.Parallel()
 	prepareStringsAnswerInputs(test)
 	stringsGoBatchAnswersDirectory(
@@ -401,7 +401,7 @@ func TestProduct_CSSStringsFindsGoBatchAnswers(test *testing.T) {
 }
 
 // Without the external library no unit reads Prettier answers, so there is nothing to build.
-func TestProduct_CSSStringsPrettierBatchAnswers(test *testing.T) {
+func TestProduct_CssStringsPrettierBatchAnswers(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_CSSSTRINGS_LIBRARY") == "" {
 		test.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
@@ -415,7 +415,7 @@ func TestProduct_CSSStringsPrettierBatchAnswers(test *testing.T) {
 		stringsAnswerInputs.corpus,
 	)
 }
-func TestProduct_CSSStringsFindsGoRawAnswers(test *testing.T) {
+func TestProduct_CssStringsFindsGoRawAnswers(test *testing.T) {
 	test.Parallel()
 	prepareStringsAnswerInputs(test)
 	stringsGoRawAnswersDirectory(
@@ -425,39 +425,39 @@ func TestProduct_CSSStringsFindsGoRawAnswers(test *testing.T) {
 		stringsAnswerInputs.corpus,
 	)
 }
-func TestProduct_CSSStringsPortLowered(test *testing.T) {
+func TestProduct_CssStringsPortLowered(test *testing.T) {
 	test.Parallel()
 	stringsPreparedProgram(test, -1)
 }
-func TestProduct_CSSStringsPortNative(test *testing.T) {
+func TestProduct_CssStringsPortNative(test *testing.T) {
 	test.Parallel()
 	stringsPreparedNative(test, -1, true)
 }
-func TestProduct_CSSStringsMutant0Lowered(test *testing.T) {
+func TestProduct_CssStringsMutant0Lowered(test *testing.T) {
 	test.Parallel()
 	stringsPreparedProgram(test, 0)
 }
-func TestProduct_CSSStringsMutant0Native(test *testing.T) {
+func TestProduct_CssStringsMutant0Native(test *testing.T) {
 	test.Parallel()
 	stringsPreparedNative(test, 0, true)
 }
-func TestProduct_CSSStringsMutant1Lowered(test *testing.T) {
+func TestProduct_CssStringsMutant1Lowered(test *testing.T) {
 	test.Parallel()
 	stringsPreparedProgram(test, 1)
 }
-func TestProduct_CSSStringsMutant1Native(test *testing.T) {
+func TestProduct_CssStringsMutant1Native(test *testing.T) {
 	test.Parallel()
 	stringsPreparedNative(test, 1, true)
 }
-func TestProduct_CSSStringsMutant2Lowered(test *testing.T) {
+func TestProduct_CssStringsMutant2Lowered(test *testing.T) {
 	test.Parallel()
 	stringsPreparedProgram(test, 2)
 }
-func TestProduct_CSSStringsMutant2Native(test *testing.T) {
+func TestProduct_CssStringsMutant2Native(test *testing.T) {
 	test.Parallel()
 	stringsPreparedNative(test, 2, true)
 }
-func TestProduct_CSSStringsFastNative(test *testing.T) {
+func TestProduct_CssStringsFastNative(test *testing.T) {
 	test.Parallel()
 	stringsPreparedNative(test, -1, false)
 }

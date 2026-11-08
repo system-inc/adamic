@@ -174,147 +174,147 @@ func mustRelative(test *testing.T, root, path string) string {
 }
 
 // Each declaration owns exactly one product and uses the leaf's shared recipe.
-func TestProduct_TSPrinterMutantNative_000(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_000(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 0)
 }
 
-func TestProduct_TSPrinterMutantNative_001(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_001(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 1)
 }
 
-func TestProduct_TSPrinterMutantNative_002(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_002(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 2)
 }
 
-func TestProduct_TSPrinterMutantNative_003(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_003(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 3)
 }
 
-func TestProduct_TSPrinterMutantNative_004(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_004(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 4)
 }
 
-func TestProduct_TSPrinterMutantNative_005(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_005(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 5)
 }
 
-func TestProduct_TSPrinterMutantNative_006(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_006(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 6)
 }
 
-func TestProduct_TSPrinterMutantNative_007(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_007(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 7)
 }
 
-func TestProduct_TSPrinterMutantNative_008(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_008(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 8)
 }
 
-func TestProduct_TSPrinterMutantNative_009(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_009(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 9)
 }
 
-func TestProduct_TSPrinterMutantNative_010(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_010(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 10)
 }
 
-func TestProduct_TSPrinterMutantNative_011(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_011(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 11)
 }
 
-func TestProduct_TSPrinterMutantNative_012(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_012(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 12)
 }
 
-func TestProduct_TSPrinterMutantNative_013(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_013(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 13)
 }
 
-func TestProduct_TSPrinterMutantNative_014(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_014(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 14)
 }
 
-func TestProduct_TSPrinterMutantNative_015(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_015(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 15)
 }
 
-func TestProduct_TSPrinterMutantNative_016(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_016(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 16)
 }
 
-func TestProduct_TSPrinterMutantNative_017(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_017(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 17)
 }
 
-func TestProduct_TSPrinterMutantNative_018(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_018(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 18)
 }
 
-func TestProduct_TSPrinterMutantNative_019(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_019(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 19)
 }
 
-func TestProduct_TSPrinterMutantNative_020(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_020(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 20)
 }
 
-func TestProduct_TSPrinterMutantNative_021(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_021(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 21)
 }
 
-func TestProduct_TSPrinterMutantNative_022(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_022(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 22)
 }
 
-func TestProduct_TSPrinterMutantNative_023(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_023(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 23)
 }
 
-func TestProduct_TSPrinterMutantNative_024(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_024(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 24)
 }
 
-func TestProduct_TSPrinterMutantNative_025(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_025(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 25)
 }
 
-func TestProduct_TSPrinterMutantNative_026(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_026(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 26)
 }
 
-func TestProduct_TSPrinterMutantNative_027(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_027(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 27)
 }
 
-func TestProduct_TSPrinterMutantNative_028(test *testing.T) {
+func TestProduct_TsPrinterMutantNative_028(test *testing.T) {
 	test.Parallel()
 	mutantNativeProduct(test, 28)
 }

@@ -867,7 +867,7 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 			test.Fatal(createDirectoryError)
 		}
 	}
-	var wantC, wantJS string
+	var wantC, wantJs string
 	for _, absolute := range entries {
 		for _, cwd := range working {
 			test.Run(filepath.ToSlash(strings.TrimPrefix(absolute, root))+
@@ -889,16 +889,16 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 				if lowerError != nil {
 					test.Fatal(lowerError)
 				}
-				gotC, gotJS := C(lowered), javascript.JavaScript(lowered)
-				if strings.Contains(gotC, root) || strings.Contains(gotJS, root) {
+				gotC, gotJs := C(lowered), javascript.JavaScript(lowered)
+				if strings.Contains(gotC, root) || strings.Contains(gotJs, root) {
 					test.Fatal("emitted code contains checkout or working directory")
 				}
 				if wantC == "" {
-					wantC, wantJS = gotC, gotJS
-				} else if gotC != wantC || gotJS != wantJS {
+					wantC, wantJs = gotC, gotJs
+				} else if gotC != wantC || gotJs != wantJs {
 					test.Fatal("source path or working directory changed C or JS bytes")
 				}
-				test.Logf("%d C bytes and %d JS bytes identical", len(gotC), len(gotJS))
+				test.Logf("%d C bytes and %d JS bytes identical", len(gotC), len(gotJs))
 			})
 		}
 	}

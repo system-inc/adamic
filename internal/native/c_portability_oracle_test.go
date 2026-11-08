@@ -20,7 +20,7 @@ func TestLongUnicodePortabilityClang(test *testing.T) {
 	longUnicodePortability(test, "clang")
 }
 
-func TestLongUnicodePortabilityGCC(test *testing.T) {
+func TestLongUnicodePortabilityGcc(test *testing.T) {
 	test.Parallel()
 	longUnicodePortability(test, "gcc")
 }

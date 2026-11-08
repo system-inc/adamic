@@ -146,7 +146,7 @@ func (property Property) ContainsSequence(text string) bool {
 // different set. A binary property is only the bare name ("White_Space",
 // "space", "WSpace"), never "White_Space=Yes".
 func Lookup(expression string, unicodeSets bool) (Property, bool) {
-	if !expressionOK(expression) {
+	if !expressionOk(expression) {
 		return Property{}, false
 	}
 	if name, value, isPair := splitPair(expression); isPair {
@@ -193,10 +193,10 @@ func codePoint(table map[string]entry, name string) (Property, bool) {
 	return Property{Kind: KindCodePoints, Name: entry.name, Value: entry.value, Set: sets[entry.set]}, true
 }
 
-// expressionOK is the lexical shape of UnicodePropertyValueExpression: letters,
+// expressionOk is the lexical shape of UnicodePropertyValueExpression: letters,
 // digits and underscores, with at most one "=". The grammar admits nothing else,
 // so a space or a hyphen is a different expression and not a property.
-func expressionOK(expression string) bool {
+func expressionOk(expression string) bool {
 	if expression == "" || expression == "=" {
 		return false
 	}

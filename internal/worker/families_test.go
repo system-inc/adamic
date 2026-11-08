@@ -21,11 +21,11 @@ type workerFamily struct {
 }
 
 var workerFamilies = []workerFamily{
-	{"TestWorkerDecodeJSON", "runWorkerDecodeJSONShard", 32, workerJSONDecodeKeys, false},
-	{"TestWorkerEncodeJSON", "runWorkerEncodeJSONShard", 32, workerJSONEncodeKeys, false},
+	{"TestWorkerDecodeJSON", "runWorkerDecodeJSONShard", 32, workerJsonDecodeKeys, false},
+	{"TestWorkerEncodeJSON", "runWorkerEncodeJSONShard", 32, workerJsonEncodeKeys, false},
 	{"TestWorkerdJavaScriptCorpus", "runWorkerdJavaScriptCorpusShard", 8, workerdCorpusKeys, false},
 	{"TestWorkerdWebAssemblyCorpus", "runWorkerdWebAssemblyCorpusShard", 8, workerdCorpusKeys, false},
-	{"TestProduct_WorkerJSON", "runWorkerJSONProductsShard", 32, workerJSONKeys, true},
+	{"TestProduct_WorkerJSON", "runWorkerJSONProductsShard", 32, workerJsonKeys, true},
 	{"TestWorkerMutants", "runWorkerMutantsShard", 8, workerMutantKeys, false},
 	{"TestWasmWorkerMutants", "runWasmWorkerMutantsShard", 16, wasmMutantKeys, false},
 	{"TestWasmWorkers", "runWasmWorkersShard", 5, wasmFixtureKeys, false},

@@ -45,7 +45,7 @@ func cssParserTopPortDirectory(test *testing.T, applied *mutant) string {
 // The comparison leaves prepare their corpus and expected answers at run time.
 func TestThePortParsesAsGoCohereDoes_Setup(test *testing.T) {
 	test.Parallel()
-	prepareCSSParserCompilerProducts(test)
+	prepareCssParserCompilerProducts(test)
 }
 
 func TestThePortParsesAsGoCohereDoes_000(test *testing.T) {

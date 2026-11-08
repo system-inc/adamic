@@ -13,11 +13,11 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-var fsFileFixtures = []string{"close", "write_file", "mkdir", "date", "write_buffer"}
+var fileSystemFileFixtures = []string{"close", "write_file", "mkdir", "date", "write_buffer"}
 
 // Preserve the imported runtime witnesses, but do not compile an unsound Error view.
 // Their exact diagnostics are checked by TestClosureMergeRefusals.
-var fsFileRefusedFixtures = []string{
+var fileSystemFileRefusedFixtures = []string{
 	"read",
 	"open",
 	"write",
@@ -32,7 +32,7 @@ var fsFileRefusedFixtures = []string{
 	"rm",
 }
 
-func fsFilePrepare(test *testing.T, shared, name string) inputRun {
+func fileSystemFilePrepare(test *testing.T, shared, name string) inputRun {
 	test.Helper()
 	root := filepath.Join(shared, name)
 	if createDirectoryError := os.Mkdir(root, 0777); createDirectoryError != nil {
@@ -91,7 +91,7 @@ func fsFilePrepare(test *testing.T, shared, name string) inputRun {
 
 // Like the input oracle's snapshot, also recording symlinks without following
 // them. Every run has its own directory, including the leak-check run.
-func fsFileSnapshot(test *testing.T, root string) map[string]string {
+func fileSystemFileSnapshot(test *testing.T, root string) map[string]string {
 	test.Helper()
 	result := map[string]string{}
 	walkError := filepath.WalkDir(root, func(path string, entry os.DirEntry, pathError error) error {
@@ -134,9 +134,9 @@ func fsFileSnapshot(test *testing.T, root string) map[string]string {
 	return result
 }
 
-func TestNodeFSFileAgreesWithNode(test *testing.T) {
+func TestNodeFileSystemFileAgreesWithNode(test *testing.T) {
 	test.Parallel()
-	for _, fixture := range fsFileFixtures {
+	for _, fixture := range fileSystemFileFixtures {
 		test.Run(fixture, func(test *testing.T) {
 			test.Parallel()
 			path, absolutePathError := filepath.Abs(
@@ -150,14 +150,14 @@ func TestNodeFSFileAgreesWithNode(test *testing.T) {
 				test.Fatal(loweredError)
 			}
 			shared := sharedDirectory(test)
-			truthRun := fsFilePrepare(test, shared, "node")
+			truthRun := fileSystemFilePrepare(test, shared, "node")
 			truth := onNodeWith(test, truthRun, path)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
 				test.Fatalf("source failed on Node: exit %d stderr %s", truth.exitCode, truth.stderr)
 			}
-			backendRun := fsFilePrepare(test, shared, "javascript")
+			backendRun := fileSystemFilePrepare(test, shared, "javascript")
 			backend := inputBackend(test, backendRun, program, shared)
-			nativeRun := fsFilePrepare(test, shared, "native")
+			nativeRun := fileSystemFilePrepare(test, shared, "native")
 			got, binary := inputNatively(test, nativeRun, program, shared)
 			for name, observation := range map[string]run{"native": got, "javascript": backend} {
 				if difference := disagreement(truth, observation); difference != "" {
@@ -174,15 +174,15 @@ func TestNodeFSFileAgreesWithNode(test *testing.T) {
 					)
 				}
 			}
-			wanted := fsFileSnapshot(test, truthRun.arguments[0])
+			wanted := fileSystemFileSnapshot(test, truthRun.arguments[0])
 			for name, how := range map[string]inputRun{"native": nativeRun, "javascript": backendRun} {
-				if difference := filesDiffer(wanted, fsFileSnapshot(test, how.arguments[0])); difference != "" {
+				if difference := filesDiffer(wanted, fileSystemFileSnapshot(test, how.arguments[0])); difference != "" {
 					test.Errorf("%s filesystem: %s", name, difference)
 				}
 			}
 			if leaked := inputLeaks(
 				test,
-				func() inputRun { return fsFilePrepare(test, shared, "leaks") },
+				func() inputRun { return fileSystemFilePrepare(test, shared, "leaks") },
 				program,
 				binary,
 			); leaked != "" {
@@ -195,7 +195,7 @@ func TestNodeFSFileAgreesWithNode(test *testing.T) {
 
 // Each mutant compiles, exits 0, and passes the sanitizer and leak checks. Only
 // the comparison with the source's stdout on Node is allowed to catch it.
-func TestNodeFSFileMutants(test *testing.T) {
+func TestNodeFileSystemFileMutants(test *testing.T) {
 	test.Parallel()
 	cases := []struct{ name, fixture, operation, helper string }{
 		{
@@ -387,7 +387,7 @@ func TestNodeFSFileMutants(test *testing.T) {
 		},
 	}
 	for _, one := range cases {
-		if slices.Contains(fsFileRefusedFixtures, one.fixture) {
+		if slices.Contains(fileSystemFileRefusedFixtures, one.fixture) {
 			continue // The source is refused before runtime mutation is possible.
 		}
 		test.Run(one.name, func(test *testing.T) {
@@ -414,7 +414,7 @@ func TestNodeFSFileMutants(test *testing.T) {
 			if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
 				test.Fatal(buildError)
 			}
-			how := fsFilePrepare(test, shared, "mutant-input")
+			how := fileSystemFilePrepare(test, shared, "mutant-input")
 			got := executeInput(
 				test,
 				how,
@@ -425,7 +425,7 @@ func TestNodeFSFileMutants(test *testing.T) {
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("mutant failed outside Node comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}
-			truth := onNodeWith(test, fsFilePrepare(test, shared, "node"), path)
+			truth := onNodeWith(test, fileSystemFilePrepare(test, shared, "node"), path)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
 				test.Fatalf("Node source failed: %+v", truth)
 			}

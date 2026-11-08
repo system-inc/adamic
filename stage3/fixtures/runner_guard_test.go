@@ -31,27 +31,27 @@ func TestTransformedNodeRunnerGuard(test *testing.T) {
 	const erasable = "stripTypeScriptTypes(source)"
 	const transformed = "stripTypeScriptTypes(source, { mode: 'transform' })"
 	const mapped = "stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url })"
-	const runtimeURL = "new URL('./adamic.mjs', import.meta.url)"
+	const runtimeUrl = "new URL('./adamic.mjs', import.meta.url)"
 	for _, probe := range []struct {
 		name, source string
 		accepted     bool
 	}{
-		{"erasable", erasable + ";" + runtimeURL, true},
-		{"transformed", transformed + ";" + runtimeURL, true},
-		{"transformed with a source map", mapped + ";" + runtimeURL, true},
+		{"erasable", erasable + ";" + runtimeUrl, true},
+		{"transformed", transformed + ";" + runtimeUrl, true},
+		{"transformed with a source map", mapped + ";" + runtimeUrl, true},
 		{
 			"source map without transform mode",
-			"stripTypeScriptTypes(source, { sourceMap: true, sourceUrl: url });" + runtimeURL,
+			"stripTypeScriptTypes(source, { sourceMap: true, sourceUrl: url });" + runtimeUrl,
 			false,
 		},
-		{"mapped and plain transform", mapped + ";" + transformed + ";" + runtimeURL, false},
-		{"missing call", runtimeURL, false},
-		{"unknown call", "stripTypeScriptTypes(source, { mode: 'unknown' });" + runtimeURL, false},
-		{"duplicate erasable", erasable + ";" + erasable + ";" + runtimeURL, false},
-		{"duplicate transformed", transformed + ";" + transformed + ";" + runtimeURL, false},
-		{"mixed calls", erasable + ";" + transformed + ";" + runtimeURL, false},
+		{"mapped and plain transform", mapped + ";" + transformed + ";" + runtimeUrl, false},
+		{"missing call", runtimeUrl, false},
+		{"unknown call", "stripTypeScriptTypes(source, { mode: 'unknown' });" + runtimeUrl, false},
+		{"duplicate erasable", erasable + ";" + erasable + ";" + runtimeUrl, false},
+		{"duplicate transformed", transformed + ";" + transformed + ";" + runtimeUrl, false},
+		{"mixed calls", erasable + ";" + transformed + ";" + runtimeUrl, false},
 		{"missing URL", transformed, false},
-		{"duplicate URL", transformed + ";" + runtimeURL + ";" + runtimeURL, false},
+		{"duplicate URL", transformed + ";" + runtimeUrl + ";" + runtimeUrl, false},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()

@@ -179,7 +179,7 @@ var (
 	yamlFormatBuild     = yamlBuild{"format", []string{"main.ts"}, yamlSanitized}
 	yamlComposeBuild    = yamlBuild{"compose", []string{"compose_main.ts"}, yamlSanitized}
 	yamlUnistBuild      = yamlBuild{"unist", []string{"unist_main.ts"}, yamlSanitized}
-	yamlCSTBuild        = yamlBuild{"cst", []string{"cst_main.ts"}, yamlSanitized}
+	yamlCstBuild        = yamlBuild{"cst", []string{"cst_main.ts"}, yamlSanitized}
 	yamlPropsBuild      = yamlBuild{"props", []string{"props_main.ts"}, yamlSanitized}
 	yamlSchemaBuild     = yamlBuild{"schema", []string{"schema_main.ts"}, yamlSanitized}
 	yamlScalarsBuild    = yamlBuild{"scalars", []string{"scalar_main.ts"}, yamlSanitized}
@@ -206,47 +206,47 @@ var (
 	yamlSharedSliceSanitizedBuild = yamlBuild{"shared-slice", []string{"gaps/sharedSliceAppend.ts"}, yamlSanitized}
 )
 
-func TestProduct_YAMLFormatLowered(test *testing.T)  { test.Parallel(); yamlFormatBuild.lowered(test) }
-func TestProduct_YAMLFormatNative(test *testing.T)   { test.Parallel(); yamlFormatBuild.native(test) }
-func TestProduct_YAMLComposeLowered(test *testing.T) { test.Parallel(); yamlComposeBuild.lowered(test) }
-func TestProduct_YAMLComposeNative(test *testing.T)  { test.Parallel(); yamlComposeBuild.native(test) }
-func TestProduct_YAMLUnistLowered(test *testing.T)   { test.Parallel(); yamlUnistBuild.lowered(test) }
-func TestProduct_YAMLUnistNative(test *testing.T)    { test.Parallel(); yamlUnistBuild.native(test) }
-func TestProduct_YAMLCSTLowered(test *testing.T)     { test.Parallel(); yamlCSTBuild.lowered(test) }
-func TestProduct_YAMLCSTNative(test *testing.T)      { test.Parallel(); yamlCSTBuild.native(test) }
-func TestProduct_YAMLPropsLowered(test *testing.T)   { test.Parallel(); yamlPropsBuild.lowered(test) }
-func TestProduct_YAMLPropsNative(test *testing.T)    { test.Parallel(); yamlPropsBuild.native(test) }
-func TestProduct_YAMLSchemaLowered(test *testing.T)  { test.Parallel(); yamlSchemaBuild.lowered(test) }
-func TestProduct_YAMLSchemaNative(test *testing.T)   { test.Parallel(); yamlSchemaBuild.native(test) }
+func TestProduct_YamlFormatLowered(test *testing.T)  { test.Parallel(); yamlFormatBuild.lowered(test) }
+func TestProduct_YamlFormatNative(test *testing.T)   { test.Parallel(); yamlFormatBuild.native(test) }
+func TestProduct_YamlComposeLowered(test *testing.T) { test.Parallel(); yamlComposeBuild.lowered(test) }
+func TestProduct_YamlComposeNative(test *testing.T)  { test.Parallel(); yamlComposeBuild.native(test) }
+func TestProduct_YamlUnistLowered(test *testing.T)   { test.Parallel(); yamlUnistBuild.lowered(test) }
+func TestProduct_YamlUnistNative(test *testing.T)    { test.Parallel(); yamlUnistBuild.native(test) }
+func TestProduct_YamlcstLowered(test *testing.T)     { test.Parallel(); yamlCstBuild.lowered(test) }
+func TestProduct_YamlcstNative(test *testing.T)      { test.Parallel(); yamlCstBuild.native(test) }
+func TestProduct_YamlPropsLowered(test *testing.T)   { test.Parallel(); yamlPropsBuild.lowered(test) }
+func TestProduct_YamlPropsNative(test *testing.T)    { test.Parallel(); yamlPropsBuild.native(test) }
+func TestProduct_YamlSchemaLowered(test *testing.T)  { test.Parallel(); yamlSchemaBuild.lowered(test) }
+func TestProduct_YamlSchemaNative(test *testing.T)   { test.Parallel(); yamlSchemaBuild.native(test) }
 func TestProduct_YamlScalarsLowered(test *testing.T) { test.Parallel(); yamlScalarsBuild.lowered(test) }
 func TestProduct_YamlScalarsNative(test *testing.T)  { test.Parallel(); yamlScalarsBuild.native(test) }
-func TestProduct_YAMLWidthLowered(test *testing.T)   { test.Parallel(); yamlWidthBuild.lowered(test) }
-func TestProduct_YAMLWidthNative(test *testing.T)    { test.Parallel(); yamlWidthBuild.native(test) }
-func TestProduct_YAMLClosedGapsLowered(test *testing.T) {
+func TestProduct_YamlWidthLowered(test *testing.T)   { test.Parallel(); yamlWidthBuild.lowered(test) }
+func TestProduct_YamlWidthNative(test *testing.T)    { test.Parallel(); yamlWidthBuild.native(test) }
+func TestProduct_YamlClosedGapsLowered(test *testing.T) {
 	test.Parallel()
 	yamlClosedGapsBuild.lowered(test)
 }
-func TestProduct_YAMLClosedGapsNative(test *testing.T) {
+func TestProduct_YamlClosedGapsNative(test *testing.T) {
 	test.Parallel()
 	yamlClosedGapsBuild.native(test)
 }
-func TestProduct_YAMLSpeedProbesLowered(test *testing.T) {
+func TestProduct_YamlSpeedProbesLowered(test *testing.T) {
 	test.Parallel()
 	yamlSpeedProbesBuild.lowered(test)
 }
-func TestProduct_YAMLSpeedProbesNative(test *testing.T) {
+func TestProduct_YamlSpeedProbesNative(test *testing.T) {
 	test.Parallel()
 	yamlSpeedProbesBuild.native(test)
 }
-func TestProduct_YAMLSharedSliceLowered(test *testing.T) {
+func TestProduct_YamlSharedSliceLowered(test *testing.T) {
 	test.Parallel()
 	yamlSharedSliceBuild.lowered(test)
 }
-func TestProduct_YAMLSharedSliceNative(test *testing.T) {
+func TestProduct_YamlSharedSliceNative(test *testing.T) {
 	test.Parallel()
 	yamlSharedSliceBuild.native(test)
 }
-func TestProduct_YAMLSharedSliceSanitized(test *testing.T) {
+func TestProduct_YamlSharedSliceSanitized(test *testing.T) {
 	test.Parallel()
 	yamlSharedSliceSanitizedBuild.native(test)
 }

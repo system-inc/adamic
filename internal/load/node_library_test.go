@@ -106,12 +106,12 @@ func TestNodeLibraryDamagedBundleError(test *testing.T) {
 			Data: []byte(`{"name":"@types/node","version":"25.3.3"}`),
 		}},
 	} {
-		_, nodeTypesIndexFromFsError := nodeTypesIndexFromFS(files)
-		if nodeTypesIndexFromFsError == nil ||
-			!strings.Contains(nodeTypesIndexFromFsError.Error(), "reinstall Adamic") ||
-			strings.Contains(nodeTypesIndexFromFsError.Error(), "stage3/") ||
-			strings.Contains(nodeTypesIndexFromFsError.Error(), "node_types/") {
-			test.Fatalf("want a user-facing bundled declaration error, got %v", nodeTypesIndexFromFsError)
+		_, nodeTypesIndexFromFileSystemError := nodeTypesIndexFromFileSystem(files)
+		if nodeTypesIndexFromFileSystemError == nil ||
+			!strings.Contains(nodeTypesIndexFromFileSystemError.Error(), "reinstall Adamic") ||
+			strings.Contains(nodeTypesIndexFromFileSystemError.Error(), "stage3/") ||
+			strings.Contains(nodeTypesIndexFromFileSystemError.Error(), "node_types/") {
+			test.Fatalf("want a user-facing bundled declaration error, got %v", nodeTypesIndexFromFileSystemError)
 		}
 	}
 }

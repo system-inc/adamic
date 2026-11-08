@@ -79,7 +79,7 @@ func selfCompare(test *testing.T, name string) {
 	counted.stderr = countsLine.ReplaceAll(counted.stderr, nil)
 	compare("counted", counted)
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
-		compare("wasm32-wasi", onWASI(test, native.C(program)))
+		compare("wasm32-wasi", onWasi(test, native.C(program)))
 	}
 }
 

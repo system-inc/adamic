@@ -392,62 +392,62 @@ func TestMarkdownCodeBlockLayoutUnion(test *testing.T) {
 	grainUnion(test, all, 11, "TestMarkdownCodeBlockLayout", "runGrainLayout")
 }
 
-func TestMarkdownHTMLBlockLayout_000(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_000(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 0)
 }
 
-func TestMarkdownHTMLBlockLayout_001(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_001(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 1)
 }
 
-func TestMarkdownHTMLBlockLayout_002(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_002(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 2)
 }
 
-func TestMarkdownHTMLBlockLayout_003(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_003(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 3)
 }
 
-func TestMarkdownHTMLBlockLayout_004(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_004(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 4)
 }
 
-func TestMarkdownHTMLBlockLayout_005(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_005(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 5)
 }
 
-func TestMarkdownHTMLBlockLayout_006(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_006(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 6)
 }
 
-func TestMarkdownHTMLBlockLayout_007(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_007(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 7)
 }
 
-func TestMarkdownHTMLBlockLayout_008(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_008(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 8)
 }
 
-func TestMarkdownHTMLBlockLayout_009(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_009(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 9)
 }
 
-func TestMarkdownHTMLBlockLayout_010(test *testing.T) {
+func TestMarkdownHtmlBlockLayout_010(test *testing.T) {
 	test.Parallel()
 	runGrainLayout(test, "html", 10)
 }
 
-func TestMarkdownHTMLBlockLayoutUnion(test *testing.T) {
+func TestMarkdownHtmlBlockLayoutUnion(test *testing.T) {
 	test.Parallel()
 	all, _ := blockCorpus(test, markdownLayoutProductRoot(test), "whitespace")
 	grainUnion(test, all, 11, "TestMarkdownHTMLBlockLayout", "runGrainLayout")

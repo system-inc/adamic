@@ -68,7 +68,7 @@ func runJSONEncodeShard(test *testing.T, shard int) {
 		})
 	}
 }
-func TestJSONEncodeRefusals(test *testing.T) {
+func TestJsonEncodeRefusals(test *testing.T) {
 	test.Parallel()
 	cases := []struct{ name, source, want string }{
 		{"missing", `encodeJson(1);`, "name the type: encodeJson<YourType>(value)"},
@@ -183,7 +183,7 @@ await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64
 	}
 	return file
 }
-func TestJSONEncodeStringifyWitness(test *testing.T) {
+func TestJsonEncodeStringifyWitness(test *testing.T) {
 	test.Parallel()
 	for _, name := range jsonEncodeFixtures {
 		if name == "json_encode_differences.a" {
@@ -321,7 +321,7 @@ for (const value of [`+key+`]) {
 
 // This is red if encodeJson drops the shared descriptor guard: the accessor is
 // hidden by Data, and native serialization would read a nonexistent data slot.
-func TestJSONEncodeAccessorRefusal(test *testing.T) {
+func TestJsonEncodeAccessorRefusal(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/json_encode_refused/getter.a"),

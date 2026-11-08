@@ -112,7 +112,7 @@ func commandFixture(test *testing.T) (string, string, string, string) {
 	if gitError != nil {
 		test.Fatal(gitError)
 	}
-	manifest := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{
+	manifest := manifest{Sha: sha, Generator: "generator.py", Corpora: []corpus{
 		{Name: "witnesses", Programs: []program{{Path: "corpus/input.a", Blob: blob}}},
 		{Name: "fuzz", Programs: []program{}},
 	}}
@@ -401,7 +401,7 @@ func TestNewlyRefusedIsInformational(test *testing.T) {
 func TestEmptyCorpus(test *testing.T) {
 	test.Parallel()
 	dir, sha, base, head := commandFixture(test)
-	manifest := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{{Name: "fuzz", Programs: []program{}}}}
+	manifest := manifest{Sha: sha, Generator: "generator.py", Corpora: []corpus{{Name: "fuzz", Programs: []program{}}}}
 	data, encodeError := json.Marshal(manifest)
 	if encodeError != nil {
 		test.Fatal(encodeError)
@@ -506,9 +506,9 @@ func TestProduct_AdmissionCompiler(test *testing.T) {
 	_, sha := compilerFixture(test)
 	buildcache.Product(test, compilerInputs(sha), func(product string) error {
 		// Generate the build's inputs inside its trace, rather than reading another test's temporary files.
-		root, builtSHA := compilerFixture(test)
-		if builtSHA != sha {
-			return fmt.Errorf("fixture revision changed: %s != %s", builtSHA, sha)
+		root, builtSha := compilerFixture(test)
+		if builtSha != sha {
+			return fmt.Errorf("fixture revision changed: %s != %s", builtSha, sha)
 		}
 		return buildCompiler(root, test.TempDir(), sha, "compiler", product)
 	})

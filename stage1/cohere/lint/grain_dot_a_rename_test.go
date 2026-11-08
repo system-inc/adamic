@@ -119,8 +119,8 @@ func dotARenameSource(test *testing.T) string {
 func dotARenameRegistered(test *testing.T, source string) string {
 	test.Helper()
 	directory := test.TempDir()
-	if copyFsError := os.CopyFS(directory, os.DirFS(source)); copyFsError != nil {
-		test.Fatal(copyFsError)
+	if copyFileSystemError := os.CopyFS(directory, os.DirFS(source)); copyFileSystemError != nil {
+		test.Fatal(copyFileSystemError)
 	}
 	prepareRegistry(test, directory)
 	return directory

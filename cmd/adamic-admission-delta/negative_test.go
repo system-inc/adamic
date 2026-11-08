@@ -18,7 +18,7 @@ func negativeFixture(test *testing.T) ([]byte, negativeWitness, negativeWitnessL
 		DeclaredType:      "string",
 		RepairFrom:        "undefined!",
 		RepairTo:          `"ready"`,
-		TypeCorrectSHA256: contentHash([]byte(strings.ReplaceAll(string(source), "undefined!", `"ready"`))),
+		TypeCorrectSha256: contentHash([]byte(strings.ReplaceAll(string(source), "undefined!", `"ready"`))),
 		Exit:              70,
 		Stderr:            "adamic: panic: unset\n",
 	}
@@ -104,7 +104,7 @@ func TestNegativeRulingMetadata(test *testing.T) {
 		case "repair":
 			bad.RepairTo = "null!"
 		case "hash":
-			bad.TypeCorrectSHA256 = "bad"
+			bad.TypeCorrectSha256 = "bad"
 		case "header":
 			changed.Comment = ""
 		}
@@ -216,7 +216,7 @@ func TestNegativeValidProgramCannotBeListed(test *testing.T) {
 			test.Fatal("valid source accepted as literal type lie")
 		}
 	}
-	list.Witnesses[witness.TypeCorrectSHA256] = witness
+	list.Witnesses[witness.TypeCorrectSha256] = witness
 	path := filepath.Join(test.TempDir(), "negatives.json")
 	writeNegativeList(test, path, list)
 	if _, readNegativeWitnessesError := readNegativeWitnesses(path); readNegativeWitnessesError == nil {
@@ -296,7 +296,7 @@ func checkedBoundaryFixture(test *testing.T) ([]byte, negativeWitness, negativeW
 		DeclaredType:      "number",
 		RepairFrom:        "{ count: 'abc' }",
 		RepairTo:          "{ count: 5 }",
-		TypeCorrectSHA256: contentHash([]byte(strings.ReplaceAll(string(source), "{ count: 'abc' }", "{ count: 5 }"))),
+		TypeCorrectSha256: contentHash([]byte(strings.ReplaceAll(string(source), "{ count: 'abc' }", "{ count: 5 }"))),
 		Exit:              70,
 		Stderr:            "adamic: panic: field read failed: viewed.count is not a number; expected number, found string\n",
 	}
@@ -361,7 +361,7 @@ func TestNegativeCheckedBoundarySource(test *testing.T) {
 	for name, change := range map[string]func(*negativeWitness){
 		"undeclared":   func(witness *negativeWitness) { witness.Declaration = "corpus/input.a:3" },
 		"two places":   func(witness *negativeWitness) { witness.RepairFrom, witness.RepairTo = "count", "total" },
-		"another hash": func(witness *negativeWitness) { witness.TypeCorrectSHA256 = contentHash(source) },
+		"another hash": func(witness *negativeWitness) { witness.TypeCorrectSha256 = contentHash(source) },
 	} {
 		bad := witness
 		change(&bad)
@@ -400,7 +400,7 @@ func TestNegativeCheckedBoundaryOptionalField(test *testing.T) {
 	} {
 		source := []byte(testCase.declaration + "\nconst raw = { name: 5 };\n")
 		witness := witness
-		witness.TypeCorrectSHA256 = contentHash(
+		witness.TypeCorrectSha256 = contentHash(
 			[]byte(strings.ReplaceAll(string(source), witness.RepairFrom, witness.RepairTo)),
 		)
 		validateWitnessSourceError := validateWitnessSource(source, witness)

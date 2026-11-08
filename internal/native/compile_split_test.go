@@ -428,7 +428,7 @@ func compiledThenLinkedCheckerIsTheOneCall(test *testing.T, index int) {
 		built[which] = splitResult(
 			test,
 			output,
-			buildTSGo(source, output, filepath.Join(directory, "checker.a"), build.options, oneCall),
+			buildTsGo(source, output, filepath.Join(directory, "checker.a"), build.options, oneCall),
 		)
 		os.Remove(output)
 	}

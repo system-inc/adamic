@@ -101,7 +101,7 @@ func (lowering *lowering) nodeHostMember(node *ast.Node) (string, string) {
 	}
 	return "", ""
 }
-func (lowering *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) nodeFileSystemDirectoryCall(node *ast.Node) (ir.Expression, bool, error) {
 	if value, found, nodeRealpathCallError := lowering.nodeRealpathCall(node); found {
 		return value, found, nodeRealpathCallError
 	}
@@ -245,7 +245,7 @@ func (lowering *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bo
 }
 
 // Realpath function values are used by sys.ts's native fallback selection.
-func (lowering *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) nodeFileSystemDirectoryValue(node *ast.Node) (ir.Expression, bool, error) {
 	if value, found, nodeRealpathValueError := lowering.nodeRealpathValue(node); found {
 		return value, found, nodeRealpathValueError
 	}
@@ -286,7 +286,7 @@ func (lowering *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, b
 
 // Refuse broader declared overloads before argument invariance tries to view
 // native internal-slot values (Buffer or URL) as general PathLike objects.
-func (lowering *lowering) nodeFSDirectorySignature(node *ast.Node) error {
+func (lowering *lowering) nodeFileSystemDirectorySignature(node *ast.Node) error {
 	if node.Kind != ast.KindCallExpression {
 		return nil
 	}
@@ -348,7 +348,7 @@ func (lowering *lowering) nodeFSDirectorySignature(node *ast.Node) error {
 // Check possible code targets after callable assignability is complete, including
 // aliases, annotations, and calls from another closure. Never reinterpret its
 // string result as a Buffer or silently drop an options argument.
-func (lowering *lowering) nodeFSDirectoryClosureABI() error {
+func (lowering *lowering) nodeFileSystemDirectoryClosureAbi() error {
 	hosts := map[int]*ast.Node{}
 	for _, record := range lowering.closureRecords {
 		body := lowering.result.Functions[record.function].Body

@@ -174,7 +174,7 @@ func runDebugStrippedIR(test *testing.T, shard int) {
 				test.Fatal("debug metadata changed region eligibility")
 			}
 			stripped := stripSourceLines(reflect.ValueOf(debug)).Interface().(*ir.Program)
-			if !equalSourceIR(reflect.ValueOf(release), reflect.ValueOf(stripped)) {
+			if !equalSourceIr(reflect.ValueOf(release), reflect.ValueOf(stripped)) {
 				a, _ := json.Marshal(release)
 				b, _ := json.Marshal(stripped)
 				for index := 0; index < len(a) && index < len(b); index++ {
@@ -695,7 +695,7 @@ func runDebugReviewOutputAndOwnership(test *testing.T, shard int) {
 }
 
 // DeepEqual considers NaN unequal to itself. IR constants compare by their IEEE bits.
-func equalSourceIR(left, right reflect.Value) bool {
+func equalSourceIr(left, right reflect.Value) bool {
 	if !left.IsValid() || !right.IsValid() {
 		return left.IsValid() == right.IsValid()
 	}
@@ -709,10 +709,10 @@ func equalSourceIR(left, right reflect.Value) bool {
 		if left.IsNil() || right.IsNil() {
 			return left.IsNil() == right.IsNil()
 		}
-		return equalSourceIR(left.Elem(), right.Elem())
+		return equalSourceIr(left.Elem(), right.Elem())
 	case reflect.Struct:
 		for index := 0; index < left.NumField(); index++ {
-			if !equalSourceIR(left.Field(index), right.Field(index)) {
+			if !equalSourceIr(left.Field(index), right.Field(index)) {
 				return false
 			}
 		}
@@ -722,7 +722,7 @@ func equalSourceIR(left, right reflect.Value) bool {
 			return false
 		}
 		for index := 0; index < left.Len(); index++ {
-			if !equalSourceIR(left.Index(index), right.Index(index)) {
+			if !equalSourceIr(left.Index(index), right.Index(index)) {
 				return false
 			}
 		}
@@ -732,7 +732,7 @@ func equalSourceIR(left, right reflect.Value) bool {
 			return false
 		}
 		for _, key := range left.MapKeys() {
-			if !equalSourceIR(left.MapIndex(key), right.MapIndex(key)) {
+			if !equalSourceIr(left.MapIndex(key), right.MapIndex(key)) {
 				return false
 			}
 		}

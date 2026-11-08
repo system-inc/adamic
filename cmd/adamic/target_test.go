@@ -21,7 +21,7 @@ func TestBuildTargetParsing(test *testing.T) {
 }
 
 // Not parallel: this test captures the command's process-wide stderr.
-func TestWASIRejectsTSGoArchive(test *testing.T) {
+func TestWasiRejectsTsGoArchive(test *testing.T) {
 	test.Setenv("WASI_SYSROOT", test.TempDir())
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "diagnostic")
 	if temporaryFileError != nil {

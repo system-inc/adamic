@@ -17,9 +17,9 @@ var embeddedNodeTypes embed.FS
 
 const nodeBundleDirectory = "bundled:///node"
 
-// nodeLibraryFS extends the bundled library view with the pinned Node package.
+// nodeLibraryFileSystem extends the bundled library view with the pinned Node package.
 // Embedded paths take precedence over disk and caller-provided source overlays.
-type nodeLibraryFS struct{ vfs.FS }
+type nodeLibraryFileSystem struct{ vfs.FS }
 
 func nodeBundleName(path string) (string, bool) {
 	if path == nodeBundleDirectory {
@@ -34,7 +34,7 @@ func callerNodeTypes(path string) bool {
 		(strings.HasSuffix(path, "/node_modules/@types/node") || strings.Contains(path, "/node_modules/@types/node/"))
 }
 
-func (fileSystem *nodeLibraryFS) FileExists(path tspath.RootedFilePath) bool {
+func (fileSystem *nodeLibraryFileSystem) FileExists(path tspath.RootedFilePath) bool {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
 		info, statError := fs.Stat(embeddedNodeTypes, name)
 		return statError == nil && !info.IsDir()
@@ -42,7 +42,7 @@ func (fileSystem *nodeLibraryFS) FileExists(path tspath.RootedFilePath) bool {
 	return !callerNodeTypes(path.AsString()) && fileSystem.FS.FileExists(path)
 }
 
-func (fileSystem *nodeLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+func (fileSystem *nodeLibraryFileSystem) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
 		data, readFileError := embeddedNodeTypes.ReadFile(name)
 		if readFileError != nil {
@@ -58,7 +58,7 @@ func (fileSystem *nodeLibraryFS) ReadFile(path tspath.RootedFilePath) (string, b
 	return fileSystem.FS.ReadFile(path)
 }
 
-func (fileSystem *nodeLibraryFS) DirectoryExists(path tspath.RootedDirectoryPath) bool {
+func (fileSystem *nodeLibraryFileSystem) DirectoryExists(path tspath.RootedDirectoryPath) bool {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
 		info, statError := fs.Stat(embeddedNodeTypes, name)
 		return statError == nil && info.IsDir()
@@ -66,7 +66,7 @@ func (fileSystem *nodeLibraryFS) DirectoryExists(path tspath.RootedDirectoryPath
 	return !callerNodeTypes(path.AsString()) && fileSystem.FS.DirectoryExists(path)
 }
 
-func (fileSystem *nodeLibraryFS) GetAccessibleEntries(path tspath.RootedDirectoryPath) vfs.Entries {
+func (fileSystem *nodeLibraryFileSystem) GetAccessibleEntries(path tspath.RootedDirectoryPath) vfs.Entries {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
 		var result vfs.Entries
 		entries, readDirectoryError := embeddedNodeTypes.ReadDir(name)
@@ -98,7 +98,7 @@ func (fileSystem *nodeLibraryFS) GetAccessibleEntries(path tspath.RootedDirector
 	return entries
 }
 
-func (fileSystem *nodeLibraryFS) Stat(path tspath.RootedPath) vfs.FileInfo {
+func (fileSystem *nodeLibraryFileSystem) Stat(path tspath.RootedPath) vfs.FileInfo {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
 		info, _ := fs.Stat(embeddedNodeTypes, name)
 		return info
@@ -109,7 +109,7 @@ func (fileSystem *nodeLibraryFS) Stat(path tspath.RootedPath) vfs.FileInfo {
 	return fileSystem.FS.Stat(path)
 }
 
-func (fileSystem *nodeLibraryFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
+func (fileSystem *nodeLibraryFileSystem) Realpath(path tspath.RootedPath) tspath.RootedPath {
 	if _, bundled := nodeBundleName(path.AsString()); bundled || callerNodeTypes(path.AsString()) {
 		return path
 	}

@@ -52,8 +52,8 @@ func TestGeneratedCrossing(test *testing.T) {
 	}
 	product := crossingProduct(test)
 	directory := test.TempDir()
-	if copyFsError := os.CopyFS(directory, os.DirFS(product)); copyFsError != nil {
-		test.Fatal(copyFsError)
+	if copyFileSystemError := os.CopyFS(directory, os.DirFS(product)); copyFileSystemError != nil {
+		test.Fatal(copyFileSystemError)
 	}
 	run := commandRunner(test, root)
 	write := func(path, text string) {

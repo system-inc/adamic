@@ -472,7 +472,7 @@ func runRegexCasesForTarget(test *testing.T, cases []regexCase, wasmOnly bool) {
 			var program *regex.Program
 			var err error
 			if regexCase.PatternUnits != nil {
-				program, err = regex.CompileUTF16(regexCase.PatternUnits, flags)
+				program, err = regex.CompileUtf16(regexCase.PatternUnits, flags)
 			} else {
 				program, err = regex.Compile(regexCase.Pattern, flags)
 			}

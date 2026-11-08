@@ -18,7 +18,7 @@ import (
 
 const repository = "../../.."
 
-const testCSSNumbersShards = 361
+const testCssNumbersShards = 361
 
 // run is one execution's observable behavior.
 type run struct {
@@ -95,13 +95,13 @@ func enumerateNumbers(test *testing.T) numbersCorpus {
 // Contiguous ranges are fixed by cohere commit 0183ccf8c57a775f874ca73be1adfc06e9ad1562
 // and the generated grammar in enumerateNumbers.
 
-func prepareCSSNumbersSetup(test *testing.T) {
+func prepareCssNumbersSetup(test *testing.T) {
 	test.Helper()
 	numbersTopSetup.once.Do(func() {
 		corpus := enumerateNumbers(test)
 		units := numbersUnits(corpus)
-		if len(units) != testCSSNumbersShards {
-			test.Fatalf("enumerated %d shards, declared %d", len(units), testCSSNumbersShards)
+		if len(units) != testCssNumbersShards {
+			test.Fatalf("enumerated %d shards, declared %d", len(units), testCssNumbersShards)
 		}
 		verifyNumbersUnion(test, corpus, units)
 		dir := numbersTopTempDir(test)
@@ -271,10 +271,10 @@ func prepareCSSNumbersSetup(test *testing.T) {
 	})
 }
 
-func runCSSNumbersShard(test *testing.T, ordinal int) {
+func runCssNumbersShard(test *testing.T, ordinal int) {
 	test.Helper()
 	// Fetch shared products once per process, and this unit's own, before starting this shard's clock.
-	prepareCSSNumbersSetup(test)
+	prepareCssNumbersSetup(test)
 	if numbersTopSetup.run == nil {
 		test.Fatal("shared setup did not complete")
 	}

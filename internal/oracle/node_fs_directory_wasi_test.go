@@ -11,7 +11,7 @@ import (
 )
 
 // Use the same cwd, arguments, credentials, and filesystem inputs as the source.
-func TestNodeFSDirectoryWASIAgreement(test *testing.T) {
+func TestNodeFileSystemDirectoryWasiAgreement(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -85,7 +85,7 @@ func TestNodeFSDirectoryWASIAgreement(test *testing.T) {
 	}
 }
 
-func TestNodeFSDirectoryWASICWDMutant(test *testing.T) {
+func TestNodeFileSystemDirectoryWasicwdMutant(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")

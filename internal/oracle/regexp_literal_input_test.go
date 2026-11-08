@@ -30,7 +30,7 @@ func runRegExpLiteralInputNodeUnit(test *testing.T, target string) {
 	}
 	var got run
 	if target == "wasm32-wasi" {
-		got = onWASI(test, native.C(program))
+		got = onWasi(test, native.C(program))
 	} else {
 		binary := filepath.Join(test.TempDir(), "program")
 		if buildError := native.Build(
@@ -54,7 +54,7 @@ func TestRegExpLiteralInputSanitizeUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpLiteralInputNodeUnit(test, "sanitized")
 }
-func TestRegExpLiteralInputWASMUnit(test *testing.T) {
+func TestRegExpLiteralInputWasmUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpLiteralInputNodeUnit(test, "wasm32-wasi")
 }
@@ -92,7 +92,7 @@ func TestRegExpLiteralInputUnsafeNode(test *testing.T) {
 		test.Fatalf("admitted unsafe literal: %s", difference)
 	}
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
-		if difference := disagreement(want, onWASI(test, native.C(program))); difference != "" {
+		if difference := disagreement(want, onWasi(test, native.C(program))); difference != "" {
 			test.Fatalf("admitted unsafe wasm32 literal: %s", difference)
 		}
 	}

@@ -12,12 +12,12 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func TestJSONReplacerDuplicatesRecordMutant(test *testing.T) {
+func TestJsonReplacerDuplicatesRecordMutant(test *testing.T) {
 	test.Parallel()
 	jsonReplacerDedupMutant(test, "records_json_replacer_duplicates")
 }
 
-func TestJSONReplacerDuplicatesObjectMutant(test *testing.T) {
+func TestJsonReplacerDuplicatesObjectMutant(test *testing.T) {
 	test.Parallel()
 	jsonReplacerDedupMutant(test, "json_replacer_duplicates_object")
 }

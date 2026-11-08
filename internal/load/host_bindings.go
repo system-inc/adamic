@@ -21,7 +21,7 @@ import (
 // a row admits (internal/lower/host_bindings.go).
 //
 //go:embed host_bindings.json
-var hostBindingsJSON []byte
+var hostBindingsJson []byte
 
 // HostBindingAnswer is what one target's host gives a host binding's name.
 type HostBindingAnswer string
@@ -71,7 +71,7 @@ type HostBinding struct {
 	Node        HostBindingNode        `json:"node"`
 	Native      HostBindingColumn      `json:"native"`
 	JavaScript  HostBindingColumn      `json:"javascript"`
-	WASM32      HostBindingColumn      `json:"wasm32"`
+	Wasm32      HostBindingColumn      `json:"wasm32"`
 	Model       HostBindingModel       `json:"model"`
 	// Divergence names a ruled backend divergence (internal/oracle's ruledBackendDivergences) under
 	// which a column may differ from Node; it is empty for every row today.
@@ -90,7 +90,7 @@ func (binding HostBinding) Targets() []HostBindingTarget {
 	return []HostBindingTarget{
 		{"native", binding.Native},
 		{"javascript", binding.JavaScript},
-		{"wasm32", binding.WASM32},
+		{"wasm32", binding.Wasm32},
 	}
 }
 
@@ -108,7 +108,7 @@ var hostBindingTypeOfAnswers = map[string]bool{
 
 // HostBindings is the table, parsed and checked once.
 var HostBindings = sync.OnceValues(func() ([]HostBinding, error) {
-	return parseHostBindings(hostBindingsJSON)
+	return parseHostBindings(hostBindingsJson)
 })
 
 func parseHostBindings(data []byte) ([]HostBinding, error) {

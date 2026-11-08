@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestRunProgramFractionalCPUBudget(test *testing.T) {
+func TestRunProgramFractionalCpuBudget(test *testing.T) {
 	test.Parallel()
 	if runtime.GOOS != "linux" && runtime.GOOS != "darwin" {
 		test.Skip("CPU limits require Linux or macOS")

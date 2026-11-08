@@ -28,7 +28,7 @@ func parseFrontmatter(source string) frontmatter {
 	if end < 0 {
 		return frontmatter{}
 	}
-	parsed := parseYAMLSubset(rest[:end])
+	parsed := parseYamlSubset(rest[:end])
 	parsed.Present = true
 	return parsed
 }
@@ -47,12 +47,12 @@ func bodyAfterFrontmatter(source string) string {
 	return source[:start] + rest[end+len("---*/"):]
 }
 
-// parseYAMLSubset reads the small shape test262 actually writes: scalars, flow lists, block lists,
+// parseYamlSubset reads the small shape test262 actually writes: scalars, flow lists, block lists,
 // and one level of nesting (negative: phase and type). Block scalars (| and >) are skipped. It is
 // not a YAML parser; a construct it doesn't understand is ignored, and the test is then attempted
 // rather than sorted wrong in silence only when the field was one we needed. The corpus tests cover
 // the shapes this tree uses.
-func parseYAMLSubset(yaml string) frontmatter {
+func parseYamlSubset(yaml string) frontmatter {
 	var parsed frontmatter
 	parent := ""
 	parentIndent := -1

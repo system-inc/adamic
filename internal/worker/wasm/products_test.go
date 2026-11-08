@@ -14,7 +14,7 @@ import (
 )
 
 // Select tools before parallel tests; no builds or verdicts live in TestMain.
-func TestMain(suite *testing.M) { testtools.ConfigureWASI(); os.Exit(suite.Run()) }
+func TestMain(suite *testing.M) { testtools.ConfigureWasi(); os.Exit(suite.Run()) }
 
 func wasiClang(test *testing.T) string {
 	test.Helper()
@@ -23,7 +23,7 @@ func wasiClang(test *testing.T) string {
 	); validateOptionsError != nil {
 		test.Fatal(validateOptionsError)
 	}
-	compiler, wasiClangError := native.WASIClang()
+	compiler, wasiClangError := native.WasiClang()
 	if wasiClangError != nil {
 		test.Fatal(wasiClangError)
 	}

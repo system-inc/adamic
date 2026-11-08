@@ -97,7 +97,7 @@ func typeAwareMutant(harness *harness, archive, entry, name, relative, from, to 
 			}
 			entry = harness.write(name+"-driver.ts", driver)
 		}
-		return suiteTSMutant(harness, archive, entry, name, relative, from, to, imports...)
+		return suiteTsMutant(harness, archive, entry, name, relative, from, to, imports...)
 	})
 }
 

@@ -147,8 +147,8 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 }
 `
 
-// behaviorAST is the stub of the ast package Rewrite's output compiles against.
-const behaviorAST = `package ast
+// behaviorAst is the stub of the ast package Rewrite's output compiles against.
+const behaviorAst = `package ast
 const (KindSourceFile=1;KindFunctionDeclaration=2;KindCallExpression=3)
 type Visitor func(*Node) bool
 type Node struct {Kind int;Parent *Node;Children []*Node;Label string;Contract,Syntax,Diagnosed bool}
@@ -256,7 +256,7 @@ func behaviorProbe(test *testing.T) string {
 		for name, text := range map[string]string{
 			"go.mod":           "module probe\n\n" + directives,
 			"refusals.go":      string(output),
-			"ast/ast.go":       behaviorAST,
+			"ast/ast.go":       behaviorAst,
 			"behavior_test.go": behaviorTest,
 		} {
 			path := filepath.Join(module, name)

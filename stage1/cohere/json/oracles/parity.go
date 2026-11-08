@@ -84,7 +84,7 @@ type jsonUpstreamReport struct {
 	blocks map[string]string
 }
 
-func readJSONUpstreamReport(path string) (jsonUpstreamReport, error) {
+func readJsonUpstreamReport(path string) (jsonUpstreamReport, error) {
 	encoded, readError := os.ReadFile(path)
 	if readError != nil {
 		return jsonUpstreamReport{}, readError
@@ -105,7 +105,7 @@ func readJSONUpstreamReport(path string) (jsonUpstreamReport, error) {
 
 // ReadUpstreamReport is shared with the parent json tests.
 func ReadUpstreamReport(path string) (string, map[string]string, error) {
-	report, readJsonUpstreamReportError := readJSONUpstreamReport(path)
+	report, readJsonUpstreamReportError := readJsonUpstreamReport(path)
 	return report.text, report.blocks, readJsonUpstreamReportError
 }
 
@@ -189,7 +189,7 @@ func upstreamAllowed(name string) bool {
 	return strings.HasPrefix(name, "generated/16/")
 }
 
-func buildJSONUpstreamParity(cases []ComparisonCase, oracle, audit, library string) func(string) error {
+func buildJsonUpstreamParity(cases []ComparisonCase, oracle, audit, library string) func(string) error {
 	return func(directory string) error {
 		root, err := filepath.Abs(repository)
 		if err != nil {
@@ -226,7 +226,7 @@ func buildJSONUpstreamParity(cases []ComparisonCase, oracle, audit, library stri
 				pin.PackageLockSHA256,
 			)
 		}
-		known, err := readJSONUpstreamReport("known-upstream-differences.txt")
+		known, err := readJsonUpstreamReport("known-upstream-differences.txt")
 		if err != nil {
 			return err
 		}
@@ -391,7 +391,7 @@ func UpstreamParity(test *testing.T) string {
 		jsonUpstreamParity.directory = oracleProduct(
 			test,
 			inputs,
-			buildJSONUpstreamParity(CorpusCases(test), oracle, audit, library),
+			buildJsonUpstreamParity(CorpusCases(test), oracle, audit, library),
 		)
 	})
 	if jsonUpstreamParity.directory == "" {

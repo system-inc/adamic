@@ -1829,11 +1829,11 @@ func preflightGo(budget *preflightProductBudget, directory string, arguments ...
 	// so exec reads the output to its end and a build slow to close its pipes under load isn't red by chance
 	// (#n3gk22h's shape): go waits for the compilers it starts before it exits, so nothing holds a pipe after it, and
 	// the budget's hard deadline ends the wait if something did.
-	var processID int
-	defer func() { budget.groups.Delete(processID) }()
+	var processId int
+	defer func() { budget.groups.Delete(processId) }()
 	return childguard.CombinedOutput(
 		command,
-		childguard.Options{Unbounded: true, Started: func(pid int) { processID = pid; budget.groups.Store(pid, true) }},
+		childguard.Options{Unbounded: true, Started: func(pid int) { processId = pid; budget.groups.Store(pid, true) }},
 	)
 }
 

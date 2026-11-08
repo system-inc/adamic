@@ -126,7 +126,7 @@ func wasmFiles(
 	if readError != nil {
 		return nil, "", nil, readError
 	}
-	var table native.ABITable
+	var table native.AbiTable
 	if decodeError := json.Unmarshal(
 		abi,
 		&table,

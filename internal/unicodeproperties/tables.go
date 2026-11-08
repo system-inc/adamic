@@ -27126,7 +27126,7 @@ var sequences_Emoji_Keycap_Sequence = []string{
 	"9️⃣",
 }
 
-var sequences_RGI_Emoji_Modifier_Sequence = []string{
+var sequences_Rgi_Emoji_Modifier_Sequence = []string{
 	"☝🏻",
 	"☝🏼",
 	"☝🏽",
@@ -27794,7 +27794,7 @@ var sequences_RGI_Emoji_Modifier_Sequence = []string{
 	"🫸🏿",
 }
 
-var sequences_RGI_Emoji_Flag_Sequence = []string{
+var sequences_Rgi_Emoji_Flag_Sequence = []string{
 	"🇦🇨",
 	"🇦🇩",
 	"🇦🇪",
@@ -28056,13 +28056,13 @@ var sequences_RGI_Emoji_Flag_Sequence = []string{
 	"🇿🇼",
 }
 
-var sequences_RGI_Emoji_Tag_Sequence = []string{
+var sequences_Rgi_Emoji_Tag_Sequence = []string{
 	"🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f",
 	"🏴\U000e0067\U000e0062\U000e0073\U000e0063\U000e0074\U000e007f",
 	"🏴\U000e0067\U000e0062\U000e0077\U000e006c\U000e0073\U000e007f",
 }
 
-var sequences_RGI_Emoji_ZWJ_Sequence = []string{
+var sequences_Rgi_Emoji_Zwj_Sequence = []string{
 	"⛓️\u200d💥",
 	"⛹️\u200d♀️",
 	"⛹️\u200d♂️",
@@ -29679,7 +29679,7 @@ var sequences_RGI_Emoji_ZWJ_Sequence = []string{
 	"🫱🏿\u200d🫲🏾",
 }
 
-var sequences_RGI_Emoji = []string{
+var sequences_Rgi_Emoji = []string{
 	"#️⃣",
 	"*️⃣",
 	"0️⃣",
@@ -33636,11 +33636,14 @@ var sequences_RGI_Emoji = []string{
 }
 
 var stringProperties = map[string]sequences{
-	"Basic_Emoji":                 {name: "Basic_Emoji", sequences: sequences_Basic_Emoji},
-	"Emoji_Keycap_Sequence":       {name: "Emoji_Keycap_Sequence", sequences: sequences_Emoji_Keycap_Sequence},
-	"RGI_Emoji_Modifier_Sequence": {name: "RGI_Emoji_Modifier_Sequence", sequences: sequences_RGI_Emoji_Modifier_Sequence},
-	"RGI_Emoji_Flag_Sequence":     {name: "RGI_Emoji_Flag_Sequence", sequences: sequences_RGI_Emoji_Flag_Sequence},
-	"RGI_Emoji_Tag_Sequence":      {name: "RGI_Emoji_Tag_Sequence", sequences: sequences_RGI_Emoji_Tag_Sequence},
-	"RGI_Emoji_ZWJ_Sequence":      {name: "RGI_Emoji_ZWJ_Sequence", sequences: sequences_RGI_Emoji_ZWJ_Sequence},
-	"RGI_Emoji":                   {name: "RGI_Emoji", sequences: sequences_RGI_Emoji},
+	"Basic_Emoji":           {name: "Basic_Emoji", sequences: sequences_Basic_Emoji},
+	"Emoji_Keycap_Sequence": {name: "Emoji_Keycap_Sequence", sequences: sequences_Emoji_Keycap_Sequence},
+	"RGI_Emoji_Modifier_Sequence": {
+		name:      "RGI_Emoji_Modifier_Sequence",
+		sequences: sequences_Rgi_Emoji_Modifier_Sequence,
+	},
+	"RGI_Emoji_Flag_Sequence": {name: "RGI_Emoji_Flag_Sequence", sequences: sequences_Rgi_Emoji_Flag_Sequence},
+	"RGI_Emoji_Tag_Sequence":  {name: "RGI_Emoji_Tag_Sequence", sequences: sequences_Rgi_Emoji_Tag_Sequence},
+	"RGI_Emoji_ZWJ_Sequence":  {name: "RGI_Emoji_ZWJ_Sequence", sequences: sequences_Rgi_Emoji_Zwj_Sequence},
+	"RGI_Emoji":               {name: "RGI_Emoji", sequences: sequences_Rgi_Emoji},
 }

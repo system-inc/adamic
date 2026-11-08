@@ -66,7 +66,7 @@ func TestArrayUnionRead(test *testing.T) {
 	}
 	backends := map[string]run{"node": node, "native": machine, "javascript": onJavaScriptBackend(test, program)}
 	if os.Getenv("WASI_SYSROOT") != "" {
-		backends["wasi"] = onWASI(test, native.C(program))
+		backends["wasi"] = onWasi(test, native.C(program))
 	} else {
 		test.Log("WASI not run: WASI_SYSROOT is unset")
 	}

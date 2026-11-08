@@ -35,7 +35,7 @@ var tscAgreementFamilyProducts [2]struct {
 // tree carries every declared input and one undeclared file. Mutants: the corpus directory or notyet.json dropped from
 // Files, and an edit there no longer moves the key. The recipe is the list this test reads, and its code is compiled
 // in rather than read as the build runs, so no test or trace holds it: it is a judgment of which code shapes the bytes.
-func TestTSCAgreementKeyIsItsCorpusAndRecipe(test *testing.T) {
+func TestTscAgreementKeyIsItsCorpusAndRecipe(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	write := func(name, content string) {
@@ -321,12 +321,12 @@ func tscAgreementRun(test *testing.T, number int) {
 	}
 }
 
-func TestTSCCorpusAgreement_Union(test *testing.T) {
+func TestTscCorpusAgreement_Union(test *testing.T) {
 	test.Parallel()
 	tscAgreementPlan(test, tscAgreementLoad(test))
 }
 
-func TestTSCCorpusAgreement_PlantedDisagreement(test *testing.T) {
+func TestTscCorpusAgreement_PlantedDisagreement(test *testing.T) {
 	test.Parallel()
 	data := tscAgreementLoad(test)
 	plan, answers := tscAgreementPlan(test, data)

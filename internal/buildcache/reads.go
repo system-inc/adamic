@@ -857,7 +857,7 @@ func gitValue(root, path string, info fs.FileInfo) (string, error) {
 	if readError != nil {
 		return "", readError
 	}
-	return fmt.Sprintf("%t %s", info.Mode()&0o111 != 0, blobID(content, length)), nil
+	return fmt.Sprintf("%t %s", info.Mode()&0o111 != 0, blobId(content, length)), nil
 }
 
 // cleanObject is the index's object for a file whose working copy git found clean, unchanged since: modified, or its
@@ -902,9 +902,9 @@ func cleanObject(root, name string, info fs.FileInfo) (gitObject, int, bool) {
 	return gitObject{}, 40, false
 }
 
-// blobID is git's id of a blob: sha1 (or sha256, for a repository whose ids are 64 long) of "blob <size>\x00" and
+// blobId is git's id of a blob: sha1 (or sha256, for a repository whose ids are 64 long) of "blob <size>\x00" and
 // the content.
-func blobID(content []byte, length int) string {
+func blobId(content []byte, length int) string {
 	header := fmt.Sprintf("blob %d\x00", len(content))
 	if length == 64 {
 		sum := sha256.Sum256(append([]byte(header), content...))

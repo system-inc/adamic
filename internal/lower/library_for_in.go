@@ -23,7 +23,7 @@ func (lowering *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	// Require a plain literal origin, including aliases. This deliberately refuses parameters and
 	// calls until their possible shapes and property presence can be proved.
 	isRecord := lowering.recordElement(proven) != nil
-	_, construction := lowering.constructionJSON(ast.SkipParentheses(statement.Expression))
+	_, construction := lowering.constructionJson(ast.SkipParentheses(statement.Expression))
 	// A readonly view held as the object it views enumerates what Object.keys over it does: the
 	// object's own keys, array indexes first, absent slots and # names left out (adamic_object_keys).
 	// No prototype carries an enumerable name in a closed program, and an array is never held as one.

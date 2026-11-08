@@ -112,7 +112,7 @@ func run(args []string) error {
 		if makePlanError != nil {
 			return makePlanError
 		}
-		return writeJSON(os.Stdout, plan)
+		return writeJson(os.Stdout, plan)
 	case "shard":
 		flags := flag.NewFlagSet("shard", flag.ContinueOnError)
 		count := flags.Int("count", 8, "number of shards")
@@ -157,7 +157,7 @@ func run(args []string) error {
 		for _, result := range results {
 			weights[result.key()] = result.Seconds
 		}
-		return saveJSON(*out, weights)
+		return saveJson(*out, weights)
 	}
 	return fmt.Errorf("unknown command %q", args[0])
 }
@@ -168,21 +168,21 @@ func output(name string, args ...string) (string, error) {
 	}
 	return strings.TrimSpace(string(b)), nil
 }
-func writeJSON(writer io.Writer, v any) error {
+func writeJson(writer io.Writer, v any) error {
 	encoder := json.NewEncoder(writer)
 	encoder.SetIndent("", "  ")
 	return encoder.Encode(v)
 }
-func saveJSON(path string, v any) error {
+func saveJson(path string, v any) error {
 	file, createError := os.Create(path)
 	if createError != nil {
 		return createError
 	}
-	writeJsonError := writeJSON(file, v)
+	writeJsonError := writeJson(file, v)
 	closeError := file.Close()
 	return errors.Join(writeJsonError, closeError)
 }
-func loadJSON(path string, v any) error {
+func loadJson(path string, v any) error {
 	content, readError := os.ReadFile(path)
 	if readError != nil {
 		return readError
@@ -418,7 +418,7 @@ func makePlan(count int) (plan, error) {
 		return plan, sourceIdentityError
 	}
 	var weights map[string]float64
-	if loadJsonError := loadJSON(timingPath, &weights); loadJsonError != nil {
+	if loadJsonError := loadJson(timingPath, &weights); loadJsonError != nil {
 		return plan, loadJsonError
 	}
 	packages, outputError := output("go", "list", "./...")
@@ -723,7 +723,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			return errors.New("output directory already exists; use -resume for identical inputs")
 		}
 		var saved resumeState
-		if loadJsonError := loadJSON(filepath.Join(out, "run.json"), &saved); loadJsonError != nil {
+		if loadJsonError := loadJson(filepath.Join(out, "run.json"), &saved); loadJsonError != nil {
 			return loadJsonError
 		}
 		if saved != state {
@@ -743,7 +743,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if flockError := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX|syscall.LOCK_NB); flockError != nil {
 		return errors.New("another runner owns this output directory")
 	}
-	if atomicJsonError := atomicJSON(filepath.Join(out, "run.json"), state); atomicJsonError != nil {
+	if atomicJsonError := atomicJson(filepath.Join(out, "run.json"), state); atomicJsonError != nil {
 		return atomicJsonError
 	}
 	summary := summary{Version: 1, Plan: plan, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk}
@@ -890,7 +890,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if changeModeError := os.Chmod(temporary, 0755); changeModeError != nil {
 			return changeModeError
 		}
-		if atomicJsonError := atomicJSON(
+		if atomicJsonError := atomicJson(
 			filepath.Join(packageDirectory, "scratch.json"),
 			scratchRecord{Key: key, Path: temporary},
 		); atomicJsonError != nil {
@@ -937,7 +937,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			if fileDigestError != nil {
 				return fileDigestError
 			}
-			if atomicJsonError := atomicJSON(
+			if atomicJsonError := atomicJson(
 				filepath.Join(packageDirectory, "complete.json"),
 				checkpoint,
 			); atomicJsonError != nil {
@@ -976,7 +976,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	summary.DiskAfter = free(root)
 	summary.BuildFlags = buildFlags(plan.Commit, beforeLoad, loadAverage())
 	summary.Pass, summary.Fail, summary.Skip = totals(canonical(summary.Results))
-	if saveJsonError := saveJSON(filepath.Join(out, "summary.json"), summary); saveJsonError != nil {
+	if saveJsonError := saveJson(filepath.Join(out, "summary.json"), summary); saveJsonError != nil {
 		return saveJsonError
 	}
 	cache, createError := os.Create(filepath.Join(out, "gate-cache.log"))
@@ -1128,7 +1128,7 @@ func merge(dirs []string, out string) error {
 	var summaries []summary
 	for _, dir := range dirs {
 		var summary summary
-		if loadJsonError := loadJSON(filepath.Join(dir, "summary.json"), &summary); loadJsonError != nil {
+		if loadJsonError := loadJson(filepath.Join(dir, "summary.json"), &summary); loadJsonError != nil {
 			return loadJsonError
 		}
 		summaries = append(summaries, summary)
@@ -1280,7 +1280,7 @@ func merge(dirs []string, out string) error {
 	if createDirectoryError := os.MkdirAll(out, 0755); createDirectoryError != nil {
 		return createDirectoryError
 	}
-	if saveJsonError := saveJSON(filepath.Join(out, "merged.json"), merged); saveJsonError != nil {
+	if saveJsonError := saveJson(filepath.Join(out, "merged.json"), merged); saveJsonError != nil {
 		return saveJsonError
 	}
 	file, createError := os.Create(filepath.Join(out, "test.jsonl"))
@@ -1354,7 +1354,7 @@ func compare(path, log string) error {
 		path = filepath.Join(path, "merged.json")
 	}
 	var merged merged
-	if loadJsonError := loadJSON(path, &merged); loadJsonError != nil {
+	if loadJsonError := loadJson(path, &merged); loadJsonError != nil {
 		return loadJsonError
 	}
 	whole, _, raw, readLogError := readLog(log)

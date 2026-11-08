@@ -187,7 +187,7 @@ func TestCaptureFactsTest262Node(test *testing.T) {
 // alternative (decimal, hexadecimal, word); the other sites have no captures
 // except diagnostic substitution's required numeric group.
 // Not parallel: reads testdata/capture-tsc.json, which TestCaptureFactsCompilerTable can rewrite.
-func TestCaptureFactsTSCCallbacksNode(test *testing.T) {
+func TestCaptureFactsTscCallbacksNode(test *testing.T) {
 	var cases []captureCase
 	patterns := []struct{ pattern, input, site string }{
 		{`\\.`, `\"\a`, `checker.ts:8943`},

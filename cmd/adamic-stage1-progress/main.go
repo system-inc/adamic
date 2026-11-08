@@ -479,7 +479,7 @@ func main() {
 		false,
 		"inventory origin/main and every unintegrated fetched stage 1/scanner branch",
 	)
-	asJSON := flag.Bool("json", false, "write complete machine-readable reports")
+	asJson := flag.Bool("json", false, "write complete machine-readable reports")
 	flag.Parse()
 	refs := []string{*reference}
 	var integrated []string
@@ -507,7 +507,7 @@ func main() {
 		}
 		reports = append(reports, combined)
 	}
-	if *asJSON {
+	if *asJson {
 		encoder := json.NewEncoder(os.Stdout)
 		encoder.SetIndent("", "  ")
 		if err := encoder.Encode(struct {

@@ -198,7 +198,7 @@ func (lowering *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSche
 		}
 		return literal, schema, nil
 	}
-	if schema, known := lowering.constructionJSON(n); known {
+	if schema, known := lowering.constructionJson(n); known {
 		value, expressionError := lowering.expression(node)
 		return value, schema, expressionError
 	}

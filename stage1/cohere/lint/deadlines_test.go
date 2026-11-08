@@ -49,7 +49,7 @@ func TestCompilerGuardBackend(test *testing.T) {
 	os.Exit(0)
 }
 
-func TestChildCPUHangGuard(test *testing.T) {
+func TestChildCpuHangGuard(test *testing.T) {
 	test.Parallel()
 	loop := filepath.Join(test.TempDir(), "planted-endless-loop.js")
 	if writeError := os.WriteFile(loop, []byte("for (;;) {}"), 0644); writeError != nil {
@@ -79,7 +79,7 @@ func TestChildWallBackstop(test *testing.T) {
 
 // A silent child may wait longer than its entire CPU budget and still finish.
 // The full compiler comparison additionally exercises real shards under burners.
-func TestChildCPUWaitGuard(test *testing.T) {
+func TestChildCpuWaitGuard(test *testing.T) {
 	test.Parallel()
 	command := toolchain.Command(
 		"node",

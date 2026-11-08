@@ -71,15 +71,15 @@ func buildCompiler(root, scratch, sha, name, product string) error {
 	}
 	defer git(root, "worktree", "remove", "--force", tree)
 	// Local worktrees reuse pinned objects without cloning the checker history.
-	cohereSHA, gitError := git(root, "rev-parse", sha+":cohere")
+	cohereSha, gitError := git(root, "rev-parse", sha+":cohere")
 	if gitError == nil {
 		cohereRoot := filepath.Join(root, "cohere")
 		cohereTree := filepath.Join(tree, "cohere")
-		if _, gitError = git(cohereRoot, "worktree", "add", "--detach", cohereTree, cohereSHA); gitError != nil {
+		if _, gitError = git(cohereRoot, "worktree", "add", "--detach", cohereTree, cohereSha); gitError != nil {
 			return gitError
 		}
 		defer git(cohereRoot, "worktree", "remove", "--force", cohereTree)
-		typescriptSHA, gitError := git(cohereTree, "rev-parse", "HEAD:TypeScript")
+		typescriptSha, gitError := git(cohereTree, "rev-parse", "HEAD:TypeScript")
 		if gitError != nil {
 			return gitError
 		}
@@ -91,7 +91,7 @@ func buildCompiler(root, scratch, sha, name, product string) error {
 			"add",
 			"--detach",
 			typescriptTree,
-			typescriptSHA,
+			typescriptSha,
 		); gitError != nil {
 			return gitError
 		}

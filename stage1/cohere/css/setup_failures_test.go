@@ -11,7 +11,7 @@ import (
 // (cssPlantedSetupFailure) runs two tests that share the setup in a fresh process: the first to reach the Once fails
 // with the planted error, and the other must fail naming that test, never with a nameless product lookup ("css
 // sanitized", "no traced build has recorded what it reads") or "composition setup did not complete" (#qbbmqfs).
-func TestCSSSetupFailuresNameTheFirst(test *testing.T) {
+func TestCssSetupFailuresNameTheFirst(test *testing.T) {
 	test.Parallel()
 	binary, executableError := os.Executable()
 	if executableError != nil {

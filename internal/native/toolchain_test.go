@@ -13,7 +13,7 @@ import (
 // Not parallel: it writes executables and runs them, and a parallel sibling that forks between a write and its exec
 // holds the script open for writing, so the exec fails with `ETXTBSY`, which checkWASIClang reads as an empty version
 // (#nf1x9fp, at load 80 on Loom). Serial tests run before the package's parallel ones resume.
-func TestWASIClangIsPinned(test *testing.T) {
+func TestWasiClangIsPinned(test *testing.T) {
 	fake := func(test *testing.T, version string) string {
 		test.Helper()
 		path := filepath.Join(test.TempDir(), "clang")
@@ -26,11 +26,11 @@ func TestWASIClangIsPinned(test *testing.T) {
 		}
 		return path
 	}
-	if checkWasiClangError := checkWASIClang(fake(
+	if checkWasiClangError := checkWasiClang(fake(
 		test,
 		"clang version 20.1.8-wasi-sdk (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
 	)); checkWasiClangError != nil {
-		test.Fatalf("wasi-sdk %s's clang refused: %v", WASISDKVersion, checkWasiClangError)
+		test.Fatalf("wasi-sdk %s's clang refused: %v", WasisdkVersion, checkWasiClangError)
 	}
 	for _, version := range []string{
 		"Ubuntu clang version 18.1.3 (1ubuntu1)",
@@ -38,13 +38,13 @@ func TestWASIClangIsPinned(test *testing.T) {
 		"clang version 20.1.8",
 		"Apple clang version 21.0.0 (clang-2100.3.34.2)",
 	} {
-		checkWasiClangError := checkWASIClang(fake(test, version))
+		checkWasiClangError := checkWasiClang(fake(test, version))
 		if checkWasiClangError == nil {
-			test.Errorf("accepted %q as wasi-sdk %s's clang", version, WASISDKVersion)
+			test.Errorf("accepted %q as wasi-sdk %s's clang", version, WasisdkVersion)
 			continue
 		}
 		if !strings.Contains(checkWasiClangError.Error(), version) ||
-			!strings.Contains(checkWasiClangError.Error(), "wasi-sdk "+WASISDKVersion) {
+			!strings.Contains(checkWasiClangError.Error(), "wasi-sdk "+WasisdkVersion) {
 			test.Errorf("refusal must name the clang found and the pinned release: %v", checkWasiClangError)
 		}
 	}
@@ -57,12 +57,12 @@ func TestWASIClangIsPinned(test *testing.T) {
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
-	if checkWasiClangError := checkWASIClang(
+	if checkWasiClangError := checkWasiClang(
 		broken,
 	); checkWasiClangError == nil || !strings.Contains(checkWasiClangError.Error(), "--version failed: exit status 3") {
 		test.Errorf("a clang that fails to run must be refused with its failure: %v", checkWasiClangError)
 	}
-	if checkWasiClangError := checkWASIClang(
+	if checkWasiClangError := checkWasiClang(
 		filepath.Join(test.TempDir(), "clang"),
 	); checkWasiClangError == nil || !strings.Contains(checkWasiClangError.Error(), "cloud/setup.sh --wasi-sdk") {
 		test.Errorf("a missing clang must say how to install the pinned one: %v", checkWasiClangError)

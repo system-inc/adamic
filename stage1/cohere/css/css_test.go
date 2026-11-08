@@ -196,7 +196,7 @@ func prepareThePortParsesAsGoCohereDoesSetup(test *testing.T) {
 				oracles.ParserShardCount,
 			)
 		}
-		verifyCSSParserUnion(test, corpus.CaseKeys, units, witnesses)
+		verifyCssParserUnion(test, corpus.CaseKeys, units, witnesses)
 		// C emission annotates the IR. Finish both backends sequentially before the
 		// independent native builds and parallel unit readers use immutable products.
 		var programs []cssParserProgram
@@ -244,16 +244,16 @@ func prepareThePortParsesAsGoCohereDoesSetup(test *testing.T) {
 							test.Errorf("%s: %s", side.name, difference)
 						}
 					}
-					checkCSSParserLeaks(test, binaries[0], leakBinary, shardCases)
+					checkCssParserLeaks(test, binaries[0], leakBinary, shardCases)
 					if library == "" {
 						test.Skip("set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory")
 					}
-					postCSS := oracles.CachedPostCSSAnswers(test, script, library, shardCases, libraryIdentity)
+					postCss := oracles.CachedPostCSSAnswers(test, script, library, shardCases, libraryIdentity)
 					slice := make([]string, len(unit.Cases))
 					for i, index := range unit.Cases {
 						slice[i] = corpus.Inputs[index]
 					}
-					checkCSSParserPostCSS(test, unit, slice, want, postCSS)
+					checkCssParserPostCss(test, unit, slice, want, postCss)
 				} else {
 					// Fetch this mutant product once and share the immutable binary
 					// between its two original side checks over exactly its witnesses.
@@ -263,7 +263,7 @@ func prepareThePortParsesAsGoCohereDoesSetup(test *testing.T) {
 						name   string
 						result run
 					}{
-						{"native", cssParserExecute(test, cssParserASAN(false), mutantBinary, shardCases)},
+						{"native", cssParserExecute(test, cssParserAsan(false), mutantBinary, shardCases)},
 						{"Node", cssParserOnNode(test, programs[unit.Mutation+1].main, shardCases)},
 					} {
 						if side.result.exitCode != 0 {
@@ -332,7 +332,7 @@ func runThePortParsesAsGoCohereDoesShard(test *testing.T, ordinal int) {
 	if cssParserTopSetup.run == nil {
 		test.Fatal("shared setup did not complete")
 	}
-	selected := selectedCSSParserShards(test, cssParserTopSetup.units)
+	selected := selectedCssParserShards(test, cssParserTopSetup.units)
 	for _, unit := range selected {
 		if unit.Name == cssParserTopSetup.units[ordinal].Name {
 			cssParserTopSetup.run(test, unit)
@@ -473,7 +473,7 @@ func TestCompositionMatchesGo(test *testing.T) {
 }
 
 // Not parallel: parser throughput runs alone, after agreement has been checked.
-func TestCSSThroughput(test *testing.T) {
+func TestCssThroughput(test *testing.T) {
 	if os.Getenv("ADAMIC_CSS_BENCH") == "" {
 		test.Skip("set ADAMIC_CSS_BENCH=1 for throughput")
 	}

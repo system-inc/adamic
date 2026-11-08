@@ -15,15 +15,15 @@ type ABIField struct {
 	Name string  `json:"name"`
 	Type ABIType `json:"type"`
 }
-type ABIExport struct {
+type AbiExport struct {
 	Name       string     `json:"name"`
 	Parameters []ABIField `json:"parameters"`
 	Returns    ABIType    `json:"returns"`
 	Function   int        `json:"-"`
 }
-type ABITable struct {
+type AbiTable struct {
 	Version int         `json:"version"`
-	Exports []ABIExport `json:"exports"`
+	Exports []AbiExport `json:"exports"`
 }
 
 func (abiType ABIType) representation() ir.Type {
@@ -43,7 +43,7 @@ func (abiType ABIType) representation() ir.Type {
 }
 
 // WASIExports appends typed boundaries to the normal emitter, retaining module globals.
-func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
+func WASIExports(program *ir.Program, exports []AbiExport) (string, error) {
 	for _, export := range exports {
 		if export.Function < 0 || export.Function >= len(program.Functions) {
 			return "", fmt.Errorf("invalid ABI function %s", export.Name)
@@ -350,7 +350,7 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 			export.Returns.Kind == "string" &&
 			len(export.Parameters) == 1 &&
 			export.Parameters[0].Type.Kind == "string" {
-			legacy := emitter.requestABI(export.Function)
+			legacy := emitter.requestAbi(export.Function)
 			start := strings.Index(legacy, "// Borrowed UTF-8 input")
 			end := strings.Index(legacy, "#ifdef ADAMIC_COUNT")
 			wrappers.WriteString(legacy[start:end])

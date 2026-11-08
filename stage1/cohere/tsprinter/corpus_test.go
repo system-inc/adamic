@@ -14,7 +14,7 @@ import (
 
 // A different pin is a different corpus product, by name key and by declared key: a corpus at another commit is never
 // served for this one. Keying builds nothing.
-func TestTSPrinterPinnedCorpusRekeysWithThePin(test *testing.T) {
+func TestTsPrinterPinnedCorpusRekeysWithThePin(test *testing.T) {
 	test.Parallel()
 	root, absolutePathError := filepath.Abs(oracles.Repository)
 	if absolutePathError != nil {

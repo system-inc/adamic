@@ -149,7 +149,7 @@ func jsonEncoderMissingProviders(test *testing.T, backend int) {
 	}
 }
 
-func jsonEncoderGapNUL(test *testing.T, backend int) {
+func jsonEncoderGapNul(test *testing.T, backend int) {
 	// The review runner still marks this witness pending; exercise it directly
 	// against Node on each backend, including its length and escaped-result checks.
 	path, absolutePathError := filepath.Abs(
@@ -191,268 +191,268 @@ func jsonEncoderGapNUL(test *testing.T, backend int) {
 	}
 }
 
-func TestJSONEncoderMainFixture_000(test *testing.T) {
+func TestJsonEncoderMainFixture_000(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 0, 0)
 }
 
-func TestJSONEncoderMainFixture_001(test *testing.T) {
+func TestJsonEncoderMainFixture_001(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 0, 1)
 }
 
-func TestJSONEncoderMainFixture_002(test *testing.T) {
+func TestJsonEncoderMainFixture_002(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 0, 2)
 }
 
-func TestJSONEncoderMainFixture_003(test *testing.T) {
+func TestJsonEncoderMainFixture_003(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 0, 3)
 }
 
-func TestJSONEncoderMainFixture_004(test *testing.T) {
+func TestJsonEncoderMainFixture_004(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 0, 4)
 }
 
-func TestJSONEncoderMainFixture_005(test *testing.T) {
+func TestJsonEncoderMainFixture_005(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 1, 0)
 }
 
-func TestJSONEncoderMainFixture_006(test *testing.T) {
+func TestJsonEncoderMainFixture_006(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 1, 1)
 }
 
-func TestJSONEncoderMainFixture_007(test *testing.T) {
+func TestJsonEncoderMainFixture_007(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 1, 2)
 }
 
-func TestJSONEncoderMainFixture_008(test *testing.T) {
+func TestJsonEncoderMainFixture_008(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 1, 3)
 }
 
-func TestJSONEncoderMainFixture_009(test *testing.T) {
+func TestJsonEncoderMainFixture_009(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 1, 4)
 }
 
-func TestJSONEncoderMainFixture_010(test *testing.T) {
+func TestJsonEncoderMainFixture_010(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 2, 0)
 }
 
-func TestJSONEncoderMainFixture_011(test *testing.T) {
+func TestJsonEncoderMainFixture_011(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 2, 1)
 }
 
-func TestJSONEncoderMainFixture_012(test *testing.T) {
+func TestJsonEncoderMainFixture_012(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 2, 2)
 }
 
-func TestJSONEncoderMainFixture_013(test *testing.T) {
+func TestJsonEncoderMainFixture_013(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 2, 3)
 }
 
-func TestJSONEncoderMainFixture_014(test *testing.T) {
+func TestJsonEncoderMainFixture_014(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 2, 4)
 }
 
-func TestJSONEncoderMainFixture_015(test *testing.T) {
+func TestJsonEncoderMainFixture_015(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 3, 0)
 }
 
-func TestJSONEncoderMainFixture_016(test *testing.T) {
+func TestJsonEncoderMainFixture_016(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 3, 1)
 }
 
-func TestJSONEncoderMainFixture_017(test *testing.T) {
+func TestJsonEncoderMainFixture_017(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 3, 2)
 }
 
-func TestJSONEncoderMainFixture_018(test *testing.T) {
+func TestJsonEncoderMainFixture_018(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 3, 3)
 }
 
-func TestJSONEncoderMainFixture_019(test *testing.T) {
+func TestJsonEncoderMainFixture_019(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 3, 4)
 }
 
-func TestJSONEncoderMainFixture_020(test *testing.T) {
+func TestJsonEncoderMainFixture_020(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 4, 0)
 }
 
-func TestJSONEncoderMainFixture_021(test *testing.T) {
+func TestJsonEncoderMainFixture_021(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 4, 1)
 }
 
-func TestJSONEncoderMainFixture_022(test *testing.T) {
+func TestJsonEncoderMainFixture_022(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 4, 2)
 }
 
-func TestJSONEncoderMainFixture_023(test *testing.T) {
+func TestJsonEncoderMainFixture_023(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 4, 3)
 }
 
-func TestJSONEncoderMainFixture_024(test *testing.T) {
+func TestJsonEncoderMainFixture_024(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 4, 4)
 }
 
-func TestJSONEncoderMainFixture_025(test *testing.T) {
+func TestJsonEncoderMainFixture_025(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 5, 0)
 }
 
-func TestJSONEncoderMainFixture_026(test *testing.T) {
+func TestJsonEncoderMainFixture_026(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 5, 1)
 }
 
-func TestJSONEncoderMainFixture_027(test *testing.T) {
+func TestJsonEncoderMainFixture_027(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 5, 2)
 }
 
-func TestJSONEncoderMainFixture_028(test *testing.T) {
+func TestJsonEncoderMainFixture_028(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 5, 3)
 }
 
-func TestJSONEncoderMainFixture_029(test *testing.T) {
+func TestJsonEncoderMainFixture_029(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 5, 4)
 }
 
-func TestJSONEncoderMainFixture_030(test *testing.T) {
+func TestJsonEncoderMainFixture_030(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 6, 0)
 }
 
-func TestJSONEncoderMainFixture_031(test *testing.T) {
+func TestJsonEncoderMainFixture_031(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 6, 1)
 }
 
-func TestJSONEncoderMainFixture_032(test *testing.T) {
+func TestJsonEncoderMainFixture_032(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 6, 2)
 }
 
-func TestJSONEncoderMainFixture_033(test *testing.T) {
+func TestJsonEncoderMainFixture_033(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 6, 3)
 }
 
-func TestJSONEncoderMainFixture_034(test *testing.T) {
+func TestJsonEncoderMainFixture_034(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 6, 4)
 }
 
-func TestJSONEncoderMainFixture_035(test *testing.T) {
+func TestJsonEncoderMainFixture_035(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 7, 0)
 }
 
-func TestJSONEncoderMainFixture_036(test *testing.T) {
+func TestJsonEncoderMainFixture_036(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 7, 1)
 }
 
-func TestJSONEncoderMainFixture_037(test *testing.T) {
+func TestJsonEncoderMainFixture_037(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 7, 2)
 }
 
-func TestJSONEncoderMainFixture_038(test *testing.T) {
+func TestJsonEncoderMainFixture_038(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 7, 3)
 }
 
-func TestJSONEncoderMainFixture_039(test *testing.T) {
+func TestJsonEncoderMainFixture_039(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 7, 4)
 }
 
-func TestJSONEncoderMainFixture_040(test *testing.T) {
+func TestJsonEncoderMainFixture_040(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 8, 0)
 }
 
-func TestJSONEncoderMainFixture_041(test *testing.T) {
+func TestJsonEncoderMainFixture_041(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 8, 1)
 }
 
-func TestJSONEncoderMainFixture_042(test *testing.T) {
+func TestJsonEncoderMainFixture_042(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 8, 2)
 }
 
-func TestJSONEncoderMainFixture_043(test *testing.T) {
+func TestJsonEncoderMainFixture_043(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 8, 3)
 }
 
-func TestJSONEncoderMainFixture_044(test *testing.T) {
+func TestJsonEncoderMainFixture_044(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 8, 4)
 }
 
-func TestJSONEncoderMainFixture_045(test *testing.T) {
+func TestJsonEncoderMainFixture_045(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 9, 0)
 }
 
-func TestJSONEncoderMainFixture_046(test *testing.T) {
+func TestJsonEncoderMainFixture_046(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 9, 1)
 }
 
-func TestJSONEncoderMainFixture_047(test *testing.T) {
+func TestJsonEncoderMainFixture_047(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 9, 2)
 }
 
-func TestJSONEncoderMainFixture_048(test *testing.T) {
+func TestJsonEncoderMainFixture_048(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 9, 3)
 }
 
-func TestJSONEncoderMainFixture_049(test *testing.T) {
+func TestJsonEncoderMainFixture_049(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMainFixture(test, 9, 4)
 }
 
-func TestJSONEncoderMissingProviders_000(test *testing.T) {
+func TestJsonEncoderMissingProviders_000(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMissingProviders(test, 0)
 }
 
-func TestJSONEncoderMissingProviders_001(test *testing.T) {
+func TestJsonEncoderMissingProviders_001(test *testing.T) {
 	test.Parallel()
 	jsonEncoderMissingProviders(test, 1)
 }
 
-func TestJSONEncoderGapNUL_000(test *testing.T) { test.Parallel(); jsonEncoderGapNUL(test, 0) }
+func TestJsonEncoderGapNul_000(test *testing.T) { test.Parallel(); jsonEncoderGapNul(test, 0) }
 
-func TestJSONEncoderGapNUL_001(test *testing.T) { test.Parallel(); jsonEncoderGapNUL(test, 1) }
+func TestJsonEncoderGapNul_001(test *testing.T) { test.Parallel(); jsonEncoderGapNul(test, 1) }
 
-func TestJSONEncoderGapNUL_002(test *testing.T) { test.Parallel(); jsonEncoderGapNUL(test, 2) }
+func TestJsonEncoderGapNul_002(test *testing.T) { test.Parallel(); jsonEncoderGapNul(test, 2) }

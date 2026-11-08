@@ -170,21 +170,21 @@ func cssPrinterWitnessError(name, mode string, ids []int) error {
 	return nil
 }
 
-func TestProduct_CSSPrinterSemicolonMutantWitnesses(test *testing.T) {
+func TestProduct_CssPrinterSemicolonMutantWitnesses(test *testing.T) {
 	test.Parallel()
 	cssPrinterWitnesses(test, 0)
 }
-func TestProduct_CSSPrinterIndentMutantWitnesses(test *testing.T) {
+func TestProduct_CssPrinterIndentMutantWitnesses(test *testing.T) {
 	test.Parallel()
 	cssPrinterWitnesses(test, 1)
 }
-func TestProduct_CSSPrinterWidthMutantWitnesses(test *testing.T) {
+func TestProduct_CssPrinterWidthMutantWitnesses(test *testing.T) {
 	test.Parallel()
 	cssPrinterWitnesses(test, 2)
 }
 
 // The witnesses' key moves with each input they're derived from: the mutant's port, the corpus and the Go printer.
-func TestCSSPrinterMutantWitnessesRekey(test *testing.T) {
+func TestCssPrinterMutantWitnessesRekey(test *testing.T) {
 	test.Parallel()
 	root, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
@@ -227,7 +227,7 @@ func TestCSSPrinterMutantWitnessesRekey(test *testing.T) {
 // A mutant planted so it differs from Go nowhere turns its shard red. The unmutated printer stands in for it: run
 // through the same derivation over the whole corpus it has no witnesses in either mode, and the shard's check refuses
 // that. The derivation itself still finds a difference planted in one answer.
-func TestCSSPrinterMutantThatDiffersNowhereFails(test *testing.T) {
+func TestCssPrinterMutantThatDiffersNowhereFails(test *testing.T) {
 	test.Parallel()
 	corpus, _ := oracles.CachedParserOutputs(test)
 	witnesses, cssPrinterDeriveWitnessesError := cssPrinterDeriveWitnesses(
@@ -266,7 +266,7 @@ func TestCSSPrinterMutantThatDiffersNowhereFails(test *testing.T) {
 
 // The rule that picks a shard's witnesses: the smallest by bytes, ties by case id, at most cssPrinterWitnessesRun,
 // back in corpus order, and nothing outside the corpus.
-func TestCSSPrinterChosenWitnessesAreTheSmallest(test *testing.T) {
+func TestCssPrinterChosenWitnessesAreTheSmallest(test *testing.T) {
 	test.Parallel()
 	var lines []string
 	var ids []int

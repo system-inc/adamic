@@ -19,7 +19,7 @@ import (
 // every Worker process crosses schemas (and exercises its descriptor cache),
 // while forty disjoint cases cover all 40,000 original indices exactly once.
 // FNV assigns these case names, fixture names and mutant names.
-func workerJSONBehaviorKeys(mode string) []string {
+func workerJsonBehaviorKeys(mode string) []string {
 	// Reads: internal/oracle/testdata/json_*.a
 	paths, globError := filepath.Glob("../oracle/testdata/json_" + mode + "_*.a")
 	if globError != nil {
@@ -35,30 +35,30 @@ func workerJSONBehaviorKeys(mode string) []string {
 	for start := 0; start < 40000; start += 1000 {
 		keys = append(keys, fmt.Sprintf("corpus/%05d", start))
 	}
-	mutants := workerJSONDecodeMutants
+	mutants := workerJsonDecodeMutants
 	if mode == "encode" {
-		mutants = workerJSONEncodeMutants
+		mutants = workerJsonEncodeMutants
 	}
 	for _, mutant := range mutants {
 		keys = append(keys, "mutant/"+mutant.name)
 	}
 	return keys
 }
-func workerJSONDecodeKeys() []string { return workerJSONBehaviorKeys("decode") }
-func workerJSONEncodeKeys() []string { return workerJSONBehaviorKeys("encode") }
+func workerJsonDecodeKeys() []string { return workerJsonBehaviorKeys("decode") }
+func workerJsonEncodeKeys() []string { return workerJsonBehaviorKeys("encode") }
 
-const workerJSONProbeVariable = "ADAMIC_WORKER_JSON_PLANTED_CASE"
+const workerJsonProbeVariable = "ADAMIC_WORKER_JSON_PLANTED_CASE"
 
-func workerJSONProbe(family, key string) bool {
-	return os.Getenv(workerJSONProbeVariable) == family+"="+key
+func workerJsonProbe(family, key string) bool {
+	return os.Getenv(workerJsonProbeVariable) == family+"="+key
 }
-func workerJSONCaseOwns(family string, shard int, key string) bool {
-	probe := os.Getenv(workerJSONProbeVariable)
+func workerJsonCaseOwns(family string, shard int, key string) bool {
+	probe := os.Getenv(workerJsonProbeVariable)
 	return familyOwns(family, shard, key) && (probe == "" || probe == family+"="+key)
 }
-func workerJSONShardHasCases(family string, shard int) bool {
+func workerJsonShardHasCases(family string, shard int) bool {
 	for _, key := range familyNamed(family).keys() {
-		if workerJSONCaseOwns(family, shard, key) {
+		if workerJsonCaseOwns(family, shard, key) {
 			return true
 		}
 	}
@@ -67,7 +67,7 @@ func workerJSONShardHasCases(family string, shard int) bool {
 
 // Corpus products contain deterministic input texts and JSON.stringify witnesses,
 // never native or generated-Worker verdicts. Every behavior case observes those anew.
-func workerJSONCorpusProduct(test *testing.T, mode string, build bool) string {
+func workerJsonCorpusProduct(test *testing.T, mode string, build bool) string {
 	test.Helper()
 	inputs := buildcache.Inputs{Name: "worker JSON corpus " + mode,
 		Files: []string{
@@ -89,16 +89,16 @@ func workerJSONCorpusProduct(test *testing.T, mode string, build bool) string {
 }
 
 // Not parallel: generates the immutable decoder input corpus once.
-func TestProduct_WorkerDecodeJSONCorpus(test *testing.T) {
-	workerJSONCorpusProduct(test, "decode", true)
+func TestProduct_WorkerDecodeJsonCorpus(test *testing.T) {
+	workerJsonCorpusProduct(test, "decode", true)
 }
 
 // Not parallel: generates the immutable encoder input corpus once.
-func TestProduct_WorkerEncodeJSONCorpus(test *testing.T) {
-	workerJSONCorpusProduct(test, "encode", true)
+func TestProduct_WorkerEncodeJsonCorpus(test *testing.T) {
+	workerJsonCorpusProduct(test, "encode", true)
 }
 
-func catchWorkerJSONPlantedCase(test *testing.T, family string) {
+func catchWorkerJsonPlantedCase(test *testing.T, family string) {
 	test.Helper()
 	key := "corpus/00000"
 	executable, executableError := os.Executable()
@@ -113,7 +113,7 @@ func catchWorkerJSONPlantedCase(test *testing.T, family string) {
 		"-test.parallel=4",
 		"-test.timeout=60s",
 	)
-	command.Env = append(os.Environ(), workerJSONProbeVariable+"="+family+"="+key)
+	command.Env = append(os.Environ(), workerJsonProbeVariable+"="+family+"="+key)
 	output, combinedOutputError := command.CombinedOutput()
 	owner := familyCaseName(family, key)
 	failed := regexp.MustCompile(`(?m)^--- FAIL: (`+family+`_[0-9]+) `).FindAllSubmatch(output, -1)
@@ -132,19 +132,19 @@ func catchWorkerJSONPlantedCase(test *testing.T, family string) {
 	}
 	test.Logf("planted wrong case caught by %s/%s", owner, key)
 }
-func TestWorkerDecodeJSONFamiliesCatchAPlantedCase(test *testing.T) {
+func TestWorkerDecodeJsonFamiliesCatchAPlantedCase(test *testing.T) {
 	test.Parallel()
-	catchWorkerJSONPlantedCase(test, "TestWorkerDecodeJSON")
+	catchWorkerJsonPlantedCase(test, "TestWorkerDecodeJSON")
 }
-func TestWorkerEncodeJSONFamiliesCatchAPlantedCase(test *testing.T) {
+func TestWorkerEncodeJsonFamiliesCatchAPlantedCase(test *testing.T) {
 	test.Parallel()
-	catchWorkerJSONPlantedCase(test, "TestWorkerEncodeJSON")
+	catchWorkerJsonPlantedCase(test, "TestWorkerEncodeJSON")
 }
 
-func TestWorkerJSONFamiliesCoverEveryText(test *testing.T) {
+func TestWorkerJsonFamiliesCoverEveryText(test *testing.T) {
 	test.Parallel()
 	for _, mode := range []string{"decode", "encode"} {
-		directory := workerJSONCorpusProduct(test, mode, false)
+		directory := workerJsonCorpusProduct(test, mode, false)
 		read := func(name string) []string {
 			contents, readError := os.ReadFile(filepath.Join(directory, name))
 			if readError != nil {
@@ -170,7 +170,7 @@ func TestWorkerJSONFamiliesCoverEveryText(test *testing.T) {
 			if len(block) != 1000 {
 				test.Fatalf("%s/%d has %d texts", mode, start, len(block))
 			}
-			offsets := workerJSONBlockOffsets(start)
+			offsets := workerJsonBlockOffsets(start)
 			for index, text := range block {
 				originalIndex := offsets[index/250] + index%250
 				if seen[originalIndex] {
@@ -181,7 +181,7 @@ func TestWorkerJSONFamiliesCoverEveryText(test *testing.T) {
 			}
 			counts[familyShard(fmt.Sprintf("corpus/%05d", start), family.shards)] += len(block)
 		}
-		if len(original) != 40000 || !bytes.Equal(mustJSON(test, original), mustJSON(test, combined)) {
+		if len(original) != 40000 || !bytes.Equal(mustJson(test, original), mustJson(test, combined)) {
 			test.Fatal("family blocks omit, repeat or change a corpus text")
 		}
 		test.Logf("%s: texts per shard=%v; total=%d", mode, counts, len(combined))
@@ -189,18 +189,18 @@ func TestWorkerJSONFamiliesCoverEveryText(test *testing.T) {
 }
 
 // Every batch carries all four schemas, including a required-field witness.
-func workerJSONMutantBlocks() []int {
+func workerJsonMutantBlocks() []int {
 	starts := []int{}
 	for start := 0; start < 40000; start += 1000 {
 		starts = append(starts, start)
 	}
 	return starts
 }
-func workerJSONBlockOffsets(start int) []int {
+func workerJsonBlockOffsets(start int) []int {
 	position := start / 4
 	return []int{position, 10000 + position, 20000 + position, 30000 + position}
 }
-func workerJSONOffsetsArgument(offsets []int) string {
+func workerJsonOffsetsArgument(offsets []int) string {
 	values := []string{}
 	for _, offset := range offsets {
 		values = append(values, strconv.Itoa(offset))

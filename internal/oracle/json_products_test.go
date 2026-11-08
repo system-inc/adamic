@@ -17,7 +17,7 @@ import (
 // The existing group-0 runtime products remain the sole builders under the
 // trace. Archive refuses a new feature set from another group until its owner
 // is explicitly added to this product's order dependencies.
-func TestProduct_JSONOracleRuntimes(test *testing.T) {
+func TestProduct_JsonOracleRuntimes(test *testing.T) {
 	test.Parallel()
 	sets := map[string][]string{"": nil}
 	for _, name := range append(slices.Clone(jsonDecodeFixtures), jsonEncodeFixtures...) {

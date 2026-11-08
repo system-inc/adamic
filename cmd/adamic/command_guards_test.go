@@ -120,10 +120,10 @@ func TestRevisionReadsTheStamp(test *testing.T) {
 	}
 }
 
-func TestBuildWASISanitizeTargetBeforeSource(test *testing.T) {
+func TestBuildWasiSanitizeTargetBeforeSource(test *testing.T) {
 	test.Parallel()
 	source := "testdata/build_target.a"
-	assertWASISanitizeRefusal(test, source, []string{
+	assertWasiSanitizeRefusal(test, source, []string{
 		"build",
 		"--target",
 		"wasm32-wasi",
@@ -134,10 +134,10 @@ func TestBuildWASISanitizeTargetBeforeSource(test *testing.T) {
 	})
 }
 
-func TestBuildWASISanitizeTargetAfterSource(test *testing.T) {
+func TestBuildWasiSanitizeTargetAfterSource(test *testing.T) {
 	test.Parallel()
 	source := "testdata/build_target.a"
-	assertWASISanitizeRefusal(test, source, []string{
+	assertWasiSanitizeRefusal(test, source, []string{
 		"build",
 		source,
 		"-o",
@@ -150,10 +150,10 @@ func TestBuildWASISanitizeTargetAfterSource(test *testing.T) {
 
 // --debug is refused on wasm32-wasi rather than ignored: the module would carry no line table. Mutant: drop
 // ValidateOptions' Debug refusal, and the build goes on to WASI_SYSROOT or the SDK.
-func TestBuildWASIDebugTarget(test *testing.T) {
+func TestBuildWasiDebugTarget(test *testing.T) {
 	test.Parallel()
 	source := "testdata/build_target.a"
-	assertWASITargetRefusal(test, source, []string{
+	assertWasiTargetRefusal(test, source, []string{
 		"build",
 		"--target",
 		"wasm32-wasi",
@@ -164,12 +164,12 @@ func TestBuildWASIDebugTarget(test *testing.T) {
 	}, "adamic: native: debug builds are not supported for wasm32-wasi\n")
 }
 
-func assertWASISanitizeRefusal(test *testing.T, source string, arguments []string) {
+func assertWasiSanitizeRefusal(test *testing.T, source string, arguments []string) {
 	test.Helper()
-	assertWASITargetRefusal(test, source, arguments, "adamic: native: sanitizers are not supported for wasm32-wasi\n")
+	assertWasiTargetRefusal(test, source, arguments, "adamic: native: sanitizers are not supported for wasm32-wasi\n")
 }
 
-func assertWASITargetRefusal(test *testing.T, source string, arguments []string, want string) {
+func assertWasiTargetRefusal(test *testing.T, source string, arguments []string, want string) {
 	test.Helper()
 	// A failed load must not stand in for the unsupported-options refusal.
 	if code, _, diagnostic := runGuardCommand(test, []string{"types", source}); code != 0 || diagnostic != "" {

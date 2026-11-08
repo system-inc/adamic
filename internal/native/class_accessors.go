@@ -7,7 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (nativeEmitter *emitter) accessorDeclarations(builder *strings.Builder, classID int, class ir.Class) string {
+func (nativeEmitter *emitter) accessorDeclarations(builder *strings.Builder, classId int, class ir.Class) string {
 	if len(class.Accessors) == 0 {
 		return "NULL"
 	}
@@ -139,7 +139,7 @@ func (nativeEmitter *emitter) accessorDeclarations(builder *strings.Builder, cla
 		}
 		entries = append(entries, fmt.Sprintf("{%s, %s, %s, %d}", cString(accessor.Name), getter, setter, of))
 	}
-	name := nativeEmitter.className(classID) + "_accessors"
+	name := nativeEmitter.className(classId) + "_accessors"
 	fmt.Fprintf(builder, "static const adamic_accessor %s[] = {%s};\n", name, strings.Join(entries, ", "))
 	return name
 }

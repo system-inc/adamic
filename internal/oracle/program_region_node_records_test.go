@@ -12,7 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func programNodeAPI(test *testing.T) string {
+func programNodeApi(test *testing.T) string {
 	test.Helper()
 	return buildcache.Product(test, buildcache.Inputs{
 		Name:      "program-tsc-node-api",
@@ -69,10 +69,10 @@ func programNodeAPI(test *testing.T) string {
 		return nil
 	})
 }
-func TestProduct_ProgramTscNodeAPI(test *testing.T) { test.Parallel(); programNodeAPI(test) }
+func TestProduct_ProgramTscNodeApi(test *testing.T) { test.Parallel(); programNodeApi(test) }
 func TestProgramRegionScalarContainersOnNode(test *testing.T) {
 	test.Parallel()
-	api := filepath.Join(programNodeAPI(test), "lib/typescript.js")
+	api := filepath.Join(programNodeApi(test), "lib/typescript.js")
 	result := execute(test, "node", "testdata/program_region/node_records.cjs", api)
 	if result.exitCode != 0 ||
 		!strings.Contains(string(result.stdout), "K60 ") ||

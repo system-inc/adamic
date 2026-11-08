@@ -272,7 +272,7 @@ func TestParserConstructionRuntimeMutantDeclarationOrder(test *testing.T) {
 	)
 }
 
-func TestParserConstructionRuntimeMutantArrayExtrasInJSON(test *testing.T) {
+func TestParserConstructionRuntimeMutantArrayExtrasInJson(test *testing.T) {
 	test.Parallel()
 	assertParserConstructionRuntimeMutant(
 		test,

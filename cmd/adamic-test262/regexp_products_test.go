@@ -38,7 +38,7 @@ func TestProduct_RegExpRunnerNative(test *testing.T) {
 	test.Parallel()
 	runtimeproducts.Find(test, "sanitized", 0, "internal/oracle TestProduct_NativeRuntimesSanitized0")
 }
-func TestProduct_RegExpRunnerWASI(test *testing.T) {
+func TestProduct_RegExpRunnerWasi(test *testing.T) {
 	test.Parallel()
 	runtimeproducts.Find(test, "wasm", 0, "internal/oracle TestProduct_NativeRuntimesWASI0")
 }

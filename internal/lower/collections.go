@@ -458,7 +458,7 @@ func (lowering *lowering) destructureFrom(
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
 		value.View = sourceExpression(binding) + " (field " + field + ")"
 		value.ViewReceiverTypeID = lowering.viewFieldReceiverTypeID(nil, destructured)
-		value.ViewTypeID = lowering.viewTypeID(fieldType)
+		value.ViewTypeID = lowering.viewTypeId(fieldType)
 		value.ViewWhere = lowering.program.Where(binding)
 		value.ViewType = lowering.checker.TypeToString(fieldType)
 		value.ViewAllowed = lowering.viewLiterals(fieldType)

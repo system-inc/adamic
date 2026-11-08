@@ -37,7 +37,7 @@ func init() {
 // through globalThis, an optional call, a write, the call's result used as a value), and global anywhere
 // but as global.gc's receiver. Each
 // program runs on Node, and its whole first diagnostic is pinned in its .stopped file.
-func TestNodeGlobalsCaptureGCRefusals(test *testing.T) {
+func TestNodeGlobalsCaptureGcRefusals(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/node_globals_capture_gc_refused"
 	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))

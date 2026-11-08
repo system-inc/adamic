@@ -247,7 +247,7 @@ func statementDisagreement(name string, result oracles.Run, want string, labels 
 // answer and takes the same fatal comparison path as the production leaves.
 func TestStatementsShardDisagreement(test *testing.T) {
 	test.Parallel()
-	const count, plantedID = 256, 17
+	const count, plantedId = 256, 17
 	partition, statementPartitionError := oracles.StatementPartition(statementProofKeys(count))
 	if statementPartitionError != nil {
 		test.Fatal(statementPartitionError)
@@ -255,7 +255,7 @@ func TestStatementsShardDisagreement(test *testing.T) {
 	target := -1
 	for number, ids := range partition {
 		for _, id := range ids {
-			if id == plantedID {
+			if id == plantedId {
 				target = number
 			}
 		}
@@ -290,13 +290,13 @@ func TestStatementsShardDisagreement(test *testing.T) {
 			result.Stderr,
 		)
 	}
-	test.Logf("planted case %d caught by exactly %s", plantedID, name)
+	test.Logf("planted case %d caught by exactly %s", plantedId, name)
 	return
 }
 
 func statementRunShardProof(test *testing.T, number int) {
 	test.Helper()
-	const count, plantedID = 256, 17
+	const count, plantedId = 256, 17
 	partition, statementPartitionError := oracles.StatementPartition(statementProofKeys(count))
 	if statementPartitionError != nil {
 		test.Fatal(statementPartitionError)
@@ -311,7 +311,7 @@ func statementRunShardProof(test *testing.T, number int) {
 		fmt.Fprintf(&input, ">const x=%d;\n", id)
 		fmt.Fprintf(&want, "ok\tconst x = %d;\\n\n", id)
 		labels = append(labels, fmt.Sprintf("planted case %d", id))
-		if id == plantedID {
+		if id == plantedId {
 			local = position
 		}
 	}
@@ -343,7 +343,7 @@ func statementRunShardProof(test *testing.T, number int) {
 	}
 }
 
-func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(test *testing.T) {
+func TestStatementsShardUnionRejectsMissingAndRepeatedIds(test *testing.T) {
 	test.Parallel()
 	keys := statementProofKeys(256)
 	shards, statementPartitionError := oracles.StatementPartition(keys)

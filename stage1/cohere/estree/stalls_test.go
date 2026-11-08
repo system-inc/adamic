@@ -24,7 +24,7 @@ func refusedWithin(test *testing.T, argv []string, diagnostic string, budget tim
 		test.Fatal(temporaryFileError)
 	}
 	var stderr bytes.Buffer
-	runWithCpuBudgetError, timedOut, cpu := runWithCPUBudget(test, argv, output, &stderr, budget)
+	runWithCpuBudgetError, timedOut, cpu := runWithCpuBudget(test, argv, output, &stderr, budget)
 	output.Close()
 	info, _ := os.Stat(output.Name())
 	if timedOut || runWithCpuBudgetError == nil || info.Size() != 0 || !strings.Contains(stderr.String(), diagnostic) {
@@ -57,7 +57,7 @@ func boundedPortCases(test *testing.T) []boundedPortCase {
 	return cases
 }
 
-func boundedPortIDs(cases []boundedPortCase) []string {
+func boundedPortIds(cases []boundedPortCase) []string {
 	ids := make([]string, len(cases))
 	for index := range cases {
 		ids[index] = cases[index].id
@@ -71,7 +71,7 @@ func boundedPortIDs(cases []boundedPortCase) []string {
 func boundedPortParserShard(test *testing.T, shard int) {
 	finishSetup := miscStart(test)
 	cases := boundedPortCases(test)
-	ids := boundedPortIDs(cases)
+	ids := boundedPortIds(cases)
 	indexes := estreeScopedIndexes(test, testBoundedPortParserShards, ids, shard)
 	if estreeScopedProof(test, "TestBoundedPortParser", ids, indexes) || len(indexes) == 0 {
 		finishSetup()
@@ -85,9 +85,9 @@ func boundedPortParserShard(test *testing.T, shard int) {
 	oracle := miscOracle(test)
 	audited := estreeBoundedAudits(test)
 	answers := miscAnswers(test, oracle, audited)
-	byID := make(map[string]miscAnswer, len(audited))
+	byId := make(map[string]miscAnswer, len(audited))
 	for index, item := range audited {
-		byID[item.id] = answers[index]
+		byId[item.id] = answers[index]
 	}
 	finishSetup()
 	for _, index := range indexes {
@@ -96,9 +96,9 @@ func boundedPortParserShard(test *testing.T, shard int) {
 		if writeError := os.WriteFile(path, []byte(item.text), 0644); writeError != nil {
 			test.Fatal(writeError)
 		}
-		accepted := item.audit && byID[item.id].Status == "ok"
+		accepted := item.audit && byId[item.id].Status == "ok"
 		if accepted {
-			want := byID[item.id].Data
+			want := byId[item.id].Data
 			for name, got := range map[string][]byte{
 				"Node":    estreeScopedNode(test, main, path),
 				"native":  estreeScopedExecute(test, binary, path),
@@ -138,7 +138,7 @@ func TestBoundedPortParserPlantedDisagreement(test *testing.T) {
 		test,
 		"TestBoundedPortParser",
 		testBoundedPortParserShards,
-		boundedPortIDs(boundedPortCases(test)),
+		boundedPortIds(boundedPortCases(test)),
 	)
 }
 
@@ -181,7 +181,7 @@ func portStallControlShard(test *testing.T, shard int) {
 			if temporaryFileError != nil {
 				test.Fatal(temporaryFileError)
 			}
-			runWithCpuBudgetError, timedOut, cpu := runWithCPUBudget(test, argv, output, output, budget)
+			runWithCpuBudgetError, timedOut, cpu := runWithCpuBudget(test, argv, output, output, budget)
 			output.Close()
 			if portStallControlResultError := portStallControlResult(
 				timedOut,

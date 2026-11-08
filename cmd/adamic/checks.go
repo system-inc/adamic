@@ -17,7 +17,7 @@ func renderWithChecks(backend, path string) int {
 	if program == nil {
 		return code
 	}
-	if native.UsesTSGo(program) {
+	if native.UsesTsGo(program) {
 		if backend == "js" {
 			fmt.Fprintln(os.Stderr, "adamic: tsgo is an external native checker library; JavaScript is not supported")
 		} else {

@@ -22,7 +22,7 @@ func requestSource(test *testing.T, source string) string {
 }
 
 // Not parallel: the command and checker use process-wide diagnostics and environment.
-func TestWASIRequestSelection(test *testing.T) {
+func TestWasiRequestSelection(test *testing.T) {
 	for _, testCase := range []struct {
 		name, source     string
 		handler, refused bool
@@ -105,7 +105,7 @@ func TestWASIRequestSelection(test *testing.T) {
 			if testCase.name == "alias" && name != "serve" {
 				test.Fatalf("alias selected %q, want serve", name)
 			}
-			program, handler, code := compileWASI(path)
+			program, handler, code := compileWasi(path)
 			if testCase.refused {
 				if code != 1 || program != nil {
 					test.Fatalf("accepted invalid handler, code %d", code)
@@ -123,7 +123,7 @@ func TestWASIRequestSelection(test *testing.T) {
 }
 
 // Not parallel: this calls the command in-process, whose checker and diagnostics are shared.
-func TestWASIRequest(test *testing.T) {
+func TestWasiRequest(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -178,7 +178,7 @@ func TestRequestNativeStaysCommand(test *testing.T) {
 }
 
 // Not parallel: uses the command's shared checker and diagnostics.
-func TestWASIRequestModuleSelection(test *testing.T) {
+func TestWasiRequestModuleSelection(test *testing.T) {
 	dir := test.TempDir()
 	dependency := filepath.Join(dir, "dependency.a")
 	if writeError := os.WriteFile(
@@ -202,7 +202,7 @@ func TestWASIRequestModuleSelection(test *testing.T) {
 		if writeError := os.WriteFile(path, []byte(testCase.source), 0644); writeError != nil {
 			test.Fatal(writeError)
 		}
-		program, handler, code := compileWASI(path)
+		program, handler, code := compileWasi(path)
 		if testCase.refused {
 			if code != 1 || program != nil {
 				test.Fatal("accepted ambiguous IR function names")
@@ -214,7 +214,7 @@ func TestWASIRequestModuleSelection(test *testing.T) {
 }
 
 // Not parallel: uses the command's shared checker and diagnostics.
-func TestWASIRequestThrows(test *testing.T) {
+func TestWasiRequestThrows(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}

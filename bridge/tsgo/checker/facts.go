@@ -119,14 +119,14 @@ func (graph *graph) id(subjectType *checker.Type) uint64 {
 	if subjectType == nil {
 		return 0
 	}
-	id := graph.program.typeIDs[subjectType]
+	id := graph.program.typeIds[subjectType]
 	if id == 0 {
-		id = uint64(len(graph.program.typeIDs)) + 1
+		id = uint64(len(graph.program.typeIds)) + 1
 		if id > (1<<53)-1 {
 			panic("type identity space exhausted")
 		}
-		graph.program.typeIDs[subjectType] = id
-		graph.program.typesByID = append(graph.program.typesByID, subjectType)
+		graph.program.typeIds[subjectType] = id
+		graph.program.typesById = append(graph.program.typesById, subjectType)
 	}
 	return id
 }
@@ -227,11 +227,11 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 		id, parseError := strconv.ParseUint(split[1], 10, 64)
 		if parseError != nil ||
 			id == 0 ||
-			id > uint64(len(program.typesByID)) ||
+			id > uint64(len(program.typesById)) ||
 			strconv.FormatUint(id, 10) != split[1] {
 			return "", fmt.Errorf("unknown checker type identity")
 		}
-		subject := program.typesByID[id-1]
+		subject := program.typesById[id-1]
 		if mode == "call-count" {
 			out.number(uint64(len(c.GetSignaturesOfType(subject, checker.SignatureKindCall))))
 		} else if mode == "type-origin" {
@@ -278,11 +278,11 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 			id, parseError := strconv.ParseUint(split[index+1], 10, 64)
 			if parseError != nil ||
 				id == 0 ||
-				id > uint64(len(program.typesByID)) ||
+				id > uint64(len(program.typesById)) ||
 				strconv.FormatUint(id, 10) != split[index+1] {
 				return "", fmt.Errorf("unknown checker type identity")
 			}
-			selected[index] = program.typesByID[id-1]
+			selected[index] = program.typesById[id-1]
 		}
 		out.yes(checker.Checker_isTypeAssignableTo(c, selected[0], selected[1]))
 	case "enum-types":
@@ -318,18 +318,18 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 		id, parseError := strconv.ParseUint(split[1], 10, 64)
 		if parseError != nil ||
 			id == 0 ||
-			id > uint64(len(program.typesByID)) ||
+			id > uint64(len(program.typesById)) ||
 			strconv.FormatUint(id, 10) != split[1] {
 			return "", fmt.Errorf("unknown checker type identity")
 		}
 		if mode == "type-symbol" {
 			name := ""
-			if symbol := program.typesByID[id-1].Symbol(); symbol != nil {
+			if symbol := program.typesById[id-1].Symbol(); symbol != nil {
 				name = symbol.Name
 			}
 			out.text(name)
 		} else {
-			out.text(c.TypeToString(program.typesByID[id-1]))
+			out.text(c.TypeToString(program.typesById[id-1]))
 		}
 	case "declarations":
 		if question != mode {
@@ -394,11 +394,11 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 			id, parseError := strconv.ParseUint(split[1], 10, 64)
 			if parseError != nil ||
 				id == 0 ||
-				id > uint64(len(program.typesByID)) ||
+				id > uint64(len(program.typesById)) ||
 				strconv.FormatUint(id, 10) != split[1] {
 				return "", fmt.Errorf("unknown checker type identity")
 			}
-			subject := program.typesByID[id-1]
+			subject := program.typesById[id-1]
 			if mode == "apparent-shape" {
 				roots = append(roots, graph.add(checker.Checker_getApparentType(c, subject)))
 			} else if mode == "base-shapes" {
@@ -436,11 +436,11 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 			id, parseError := strconv.ParseUint(split[1], 10, 64)
 			if parseError != nil ||
 				id == 0 ||
-				id > uint64(len(program.typesByID)) ||
+				id > uint64(len(program.typesById)) ||
 				strconv.FormatUint(id, 10) != split[1] {
 				return "", fmt.Errorf("unknown checker type identity")
 			}
-			property := checker.Checker_getPropertyOfType(c, program.typesByID[id-1], split[2])
+			property := checker.Checker_getPropertyOfType(c, program.typesById[id-1], split[2])
 			present = property != nil
 			if present {
 				roots = append(roots, graph.add(c.GetTypeOfSymbolAtLocation(property, node)))

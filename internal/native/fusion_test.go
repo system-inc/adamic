@@ -381,9 +381,9 @@ func javaScriptSpace(character rune) bool {
 	return unicode.Is(unicode.Zs, character)
 }
 
-// approximatedIEEE754 says an IEEE 754 sweep question is a function ECMAScript lets an engine
+// approximatedIeee754 says an IEEE 754 sweep question is a function ECMAScript lets an engine
 // approximate: every one the sweep asks, Math's transcendentals and hypot.
-func approximatedIEEE754(question string) bool {
+func approximatedIeee754(question string) bool {
 	operation, _, _ := strings.Cut(question, " ")
 	return slices.Contains(ieee754Unary, operation) || operation == "atan2" || operation == "hypot"
 }

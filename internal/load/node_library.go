@@ -26,10 +26,10 @@ func nodeTypesIndex() (tspath.RootedFilePath, error) {
 	if validateNodeHostAxiomsError := validateNodeHostAxioms(embeddedNodeTypes); validateNodeHostAxiomsError != nil {
 		return "", validateNodeHostAxiomsError
 	}
-	return nodeTypesIndexFromFS(embeddedNodeTypes)
+	return nodeTypesIndexFromFileSystem(embeddedNodeTypes)
 }
 
-func nodeTypesIndexFromFS(files fs.FS) (tspath.RootedFilePath, error) {
+func nodeTypesIndexFromFileSystem(files fs.FS) (tspath.RootedFilePath, error) {
 	data, readFileError := fs.ReadFile(files, "node_types/node_modules/@types/node/package.json")
 	if readFileError != nil {
 		return "", fmt.Errorf("load: this compiler is missing its bundled Node declarations; reinstall Adamic")

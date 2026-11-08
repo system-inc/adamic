@@ -17,7 +17,7 @@ func TestClosureMergeRefusals(test *testing.T) {
 	paths := []string{
 		"stage3/fixtures/nested-functions/refused/01_scanner_frame.a",
 	}
-	for _, name := range fsFileRefusedFixtures {
+	for _, name := range fileSystemFileRefusedFixtures {
 		paths = append(paths, "internal/oracle/testdata/optional_widening_refused/node_fs_file_"+name+".a")
 	}
 	for _, path := range paths {
@@ -29,7 +29,7 @@ func TestClosureMergeRefusals(test *testing.T) {
 			}
 			var truth run
 			if strings.Contains(path, "node_fs_file_") {
-				truth = onNodeWith(test, fsFilePrepare(test, sharedDirectory(test), "refused-node"), absolute)
+				truth = onNodeWith(test, fileSystemFilePrepare(test, sharedDirectory(test), "refused-node"), absolute)
 			} else {
 				truth = onNode(test, absolute)
 			}

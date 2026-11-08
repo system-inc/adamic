@@ -39,7 +39,7 @@ func TestNativeCachesWriteNothingUnderHome(test *testing.T) {
 		); buildError != nil {
 			test.Fatal(buildError)
 		}
-		if _, splitTsGoRuntimeError := splitTSGoRuntime(splitProbe, Options{}); splitTsGoRuntimeError != nil {
+		if _, splitTsGoRuntimeError := splitTsGoRuntime(splitProbe, Options{}); splitTsGoRuntimeError != nil {
 			test.Fatal(splitTsGoRuntimeError)
 		}
 		return

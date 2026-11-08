@@ -573,8 +573,10 @@ func (lowering *lowering) nodeHostDeclaredArgument(node *ast.Node) *checker.Type
 }
 
 func (lowering *lowering) nodeLibraryRefusal(node *ast.Node) error {
-	if nodeFsDirectorySignatureError := lowering.nodeFSDirectorySignature(node); nodeFsDirectorySignatureError != nil {
-		return nodeFsDirectorySignatureError
+	if nodeFileSystemDirectorySignatureError := lowering.nodeFileSystemDirectorySignature(
+		node,
+	); nodeFileSystemDirectorySignatureError != nil {
+		return nodeFileSystemDirectorySignatureError
 	}
 	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) {
 		return nil
@@ -603,7 +605,7 @@ func (lowering *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if nodeProcessSignatureError := lowering.nodeProcessSignature(node); nodeProcessSignatureError != nil {
 		return nodeProcessSignatureError
 	}
-	if found, nodeCommonJsUseRefusalError := lowering.nodeCommonJSUseRefusal(node); found {
+	if found, nodeCommonJsUseRefusalError := lowering.nodeCommonJsUseRefusal(node); found {
 		return nodeCommonJsUseRefusalError
 	}
 	name := lowering.nodeLibraryMember(node)

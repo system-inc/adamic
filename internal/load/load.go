@@ -39,7 +39,7 @@ type Program struct {
 	tsgo bool
 
 	compiler *compiler.Program
-	fs       *sourceFS
+	fs       *sourceFileSystem
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
 	files []*ast.SourceFile
@@ -115,7 +115,7 @@ func load(paths []string, overlay map[string]string, display func(string) string
 	for name, source := range overlay {
 		normalizedOverlay[currentDirectory.ResolveFile(name)] = source
 	}
-	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay, display: display}
+	fs := &sourceFileSystem{FS: osvfs.FS(), overlay: normalizedOverlay, display: display}
 	roots := make([]tspath.RootedFilePath, 0, len(paths)+1)
 	for _, path := range paths {
 		root, rootFileNameError := rootFileName(fs, currentDirectory, path)
@@ -128,7 +128,7 @@ func load(paths []string, overlay map[string]string, display func(string) string
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
+	fileSystem := cachedvfs.From(&regexpLibraryFileSystem{FS: &nodeLibraryFileSystem{FS: bundled.WrapFS(fs)}})
 	configuration := tsoptions.NewParsedCommandLine(
 		compilerOptions(),
 		roots,
@@ -158,7 +158,7 @@ func load(paths []string, overlay map[string]string, display func(string) string
 		fs.nodePreludeText = adaptedPrelude
 		fs.nodeTypes = true
 		roots = append(roots, index)
-		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
+		fileSystem = cachedvfs.From(&regexpLibraryFileSystem{FS: &nodeLibraryFileSystem{FS: bundled.WrapFS(fs)}})
 		options := compilerOptions()
 		options.TypeRoots = []tspath.RootedDirectoryPath{tspath.RootedDirectoryPathFromNormalized(nodeTypesRoot)}
 		configuration = tsoptions.NewParsedCommandLine(
@@ -241,7 +241,7 @@ func IsLibrary(sourceFile *ast.SourceFile) bool {
 
 // rootFileName is the name the checker knows a source file by, refusing anything that isn't Adamic.
 func rootFileName(
-	fs *sourceFS,
+	fs *sourceFileSystem,
 	currentDirectory tspath.RootedDirectoryPath,
 	path string,
 ) (tspath.RootedFilePath, error) {

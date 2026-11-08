@@ -214,7 +214,7 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(test *testing.T) {
 			root,
 			"content",
 			"vendor",
-		), "file false "+blobID([]byte("a file where the commit has a submodule\n"), 40); value != want {
+		), "file false "+blobId([]byte("a file where the commit has a submodule\n"), 40); value != want {
 			test.Fatalf("a file at a gitlink's path values %q, its content %q", value, want)
 		}
 	})
@@ -228,7 +228,7 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(test *testing.T) {
 func TestAnUnpackedSourcesManifestIsReadAsKeying(test *testing.T) {
 	test.Setenv("ADAMIC_BUILD_TRACE", test.TempDir())
 	root := unpacked(test, nil)
-	listing := "100644 blob " + blobID([]byte(declaredTree["flags.txt"]), 40) + "\tflags.txt\x00"
+	listing := "100644 blob " + blobId([]byte(declaredTree["flags.txt"]), 40) + "\tflags.txt\x00"
 	write(test, root, ".tracked/files", listing)
 	var looks, unkeyed []string
 	savedStat, savedOpen := statManifest, openManifest

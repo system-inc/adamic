@@ -90,7 +90,7 @@ func comparePrinterLibraryCases(
 	)
 }
 
-func TestTSCCorpusUpstreamDifferences(test *testing.T) {
+func TestTscCorpusUpstreamDifferences(test *testing.T) {
 	test.Parallel()
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {

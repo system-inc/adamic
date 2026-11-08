@@ -67,7 +67,7 @@ func (program *Program) nativeSparseFirst(name string) (string, string) {
 			return body, name + "_first"
 		}
 	}
-	bits, filter := program.nativeFirstASCII()
+	bits, filter := program.nativeFirstAscii()
 	if !filter || program.nativeAnchored() {
 		return "", "NULL"
 	}

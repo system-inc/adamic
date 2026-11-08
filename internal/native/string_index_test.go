@@ -309,32 +309,32 @@ func TestStringIndexMatchesNodeMixed(test *testing.T) {
 	runStringIndexSweep(test, "mixed")
 }
 
-func TestStringIndexMatchesNodeBMP(test *testing.T) {
+func TestStringIndexMatchesNodeBmp(test *testing.T) {
 	test.Parallel()
 	runStringIndexSweep(test, "BMP")
 }
 
-func TestStringIndexMatchesNodeBMPLowHalvesShifts0To5(test *testing.T) {
+func TestStringIndexMatchesNodeBmpLowHalvesShifts0To5(test *testing.T) {
 	test.Parallel()
 	runStringIndexSweep(test, "BMP low halves shifts 0 to 5")
 }
 
-func TestStringIndexMatchesNodeBMPLowHalvesShifts6To10(test *testing.T) {
+func TestStringIndexMatchesNodeBmpLowHalvesShifts6To10(test *testing.T) {
 	test.Parallel()
 	runStringIndexSweep(test, "BMP low halves shifts 6 to 10")
 }
 
-func TestStringIndexMatchesNodeBMPLowHalvesShifts11To15(test *testing.T) {
+func TestStringIndexMatchesNodeBmpLowHalvesShifts11To15(test *testing.T) {
 	test.Parallel()
 	runStringIndexSweep(test, "BMP low halves shifts 11 to 15")
 }
 
-func TestStringIndexMatchesNodeASCIIShifts0To7(test *testing.T) {
+func TestStringIndexMatchesNodeAsciiShifts0To7(test *testing.T) {
 	test.Parallel()
 	runStringIndexSweep(test, "ASCII shifts 0 to 7")
 }
 
-func TestStringIndexMatchesNodeASCIIShifts8To15(test *testing.T) {
+func TestStringIndexMatchesNodeAsciiShifts8To15(test *testing.T) {
 	test.Parallel()
 	runStringIndexSweep(test, "ASCII shifts 8 to 15")
 }

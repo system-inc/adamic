@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestNodeProcessTTYRefusals(test *testing.T) {
+func TestNodeProcessTtyRefusals(test *testing.T) {
 	test.Parallel()
 	for _, one := range []struct{ expression, reason string }{
 		{

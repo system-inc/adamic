@@ -16,11 +16,11 @@ const (
 	nodeRequireMember  = "node:module.require"
 )
 
-// nodeCommonJSModuleValues is the one reason for __filename and __dirname, so the meter counts them together.
-const nodeCommonJSModuleValues = "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+// nodeCommonJsModuleValues is the one reason for __filename and __dirname, so the meter counts them together.
+const nodeCommonJsModuleValues = "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
 
-// nodeCommonJSLoading is what each named require's reason says after naming it.
-const nodeCommonJSLoading = ": CommonJS loading with no ES-module answer yet"
+// nodeCommonJsLoading is what each named require's reason says after naming it.
+const nodeCommonJsLoading = ": CommonJS loading with no ES-module answer yet"
 
 // nodeSourceMapSupport is the one module a literal require lowers for. tsc 6.0.3 ships no
 // dependencies, so in its installed layout Node answers its require with MODULE_NOT_FOUND, and
@@ -36,15 +36,15 @@ const (
 	nodeJavaScriptModuleClosing = "': a native Adamic program can't run JavaScript; run it on Node to load modules at run time"
 )
 
-// nodeCommonJSUseRefusal names __filename and __dirname, and the requires the meter tracks: of
+// nodeCommonJsUseRefusal names __filename and __dirname, and the requires the meter tracks: of
 // crypto, and of a computed module path called with a spread. It refuses the nodes the generic
 // NotYet would, at the same positions, so a site counts as it did: a call's node and its callee's
 // carry one reason at one place. A require that lowers (nodeCommonJSRequireThrows) is found with no
 // refusal. Any other require gives found false and keeps node:module.require.
-func (lowering *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
+func (lowering *lowering) nodeCommonJsUseRefusal(node *ast.Node) (bool, error) {
 	switch lowering.nodeLibraryMember(node) {
 	case nodeFilenameMember, nodeDirnameMember:
-		return true, lowering.notYet(node, nodeCommonJSModuleValues)
+		return true, lowering.notYet(node, nodeCommonJsModuleValues)
 	case nodeRequireMember:
 	default:
 		return false, nil
@@ -56,14 +56,14 @@ func (lowering *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 	if call == nil || len(call.AsCallExpression().Arguments.Nodes) == 0 {
 		return false, nil
 	}
-	if nodeCommonJSRequireThrows(call) || nodeInspectorRequireThrows(call) {
+	if nodeCommonJsRequireThrows(call) || nodeInspectorRequireThrows(call) {
 		return true, nil
 	}
-	argument := nodeCommonJSRequireArgument(call)
+	argument := nodeCommonJsRequireArgument(call)
 	if argument.Kind != ast.KindStringLiteral && argument.Kind != ast.KindNoSubstitutionTemplateLiteral {
 		return true, lowering.notYet(node, nodeRequireMember+
 			" of a computed module path called with a spread or a second argument"+
-			nodeCommonJSLoading+
+			nodeCommonJsLoading+
 			" (fix: pass the module path as its one argument)")
 	}
 	if argument.Text() == "crypto" {
@@ -71,28 +71,28 @@ func (lowering *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 			`("`+
 			argument.Text()+
 			`")`+
-			nodeCommonJSLoading+
+			nodeCommonJsLoading+
 			" (fix: import it with an import declaration)")
 	}
 	return false, nil
 }
 
-// nodeCommonJSRequireArgument is a require call's first argument as it's judged: past the
+// nodeCommonJsRequireArgument is a require call's first argument as it's judged: past the
 // parentheses, assertions and non-nulls that leave its value as it is, so a literal wrapped in one
 // (`require("source-map-support" as string)`) is the literal it wraps, never a computed path.
-func nodeCommonJSRequireArgument(call *ast.Node) *ast.Node {
+func nodeCommonJsRequireArgument(call *ast.Node) *ast.Node {
 	return ast.SkipOuterExpressions(call.AsCallExpression().Arguments.Nodes[0], ast.OEKAll)
 }
 
-// nodeCommonJSRequireThrows says whether a require call lowers as the throw Adamic ruled for it: a
+// nodeCommonJsRequireThrows says whether a require call lowers as the throw Adamic ruled for it: a
 // literal require of source-map-support, or a require of a path computed as the program runs. Every
 // other literal require stays refused, so this is never a way to load code.
-func nodeCommonJSRequireThrows(call *ast.Node) bool {
+func nodeCommonJsRequireThrows(call *ast.Node) bool {
 	arguments := call.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
 		return false
 	}
-	argument := nodeCommonJSRequireArgument(call)
+	argument := nodeCommonJsRequireArgument(call)
 	switch argument.Kind {
 	case ast.KindSpreadElement:
 		return false
@@ -102,17 +102,17 @@ func nodeCommonJSRequireThrows(call *ast.Node) bool {
 	return true
 }
 
-// nodeCommonJSRequireRoot is the require call a value's evaluation starts with, when it's one that
+// nodeCommonJsRequireRoot is the require call a value's evaluation starts with, when it's one that
 // lowers: node itself, or the receiver its member accesses and calls are made on, through
 // parentheses, assertions and a non-null. The require throws before anything after it in the chain
 // is evaluated, so the whole chain lowers as its throw. Nil for any other node.
-func (lowering *lowering) nodeCommonJSRequireRoot(node *ast.Node) *ast.Node {
+func (lowering *lowering) nodeCommonJsRequireRoot(node *ast.Node) *ast.Node {
 	original := node
 	for {
 		switch node.Kind {
 		case ast.KindCallExpression:
 			if lowering.nodeLibraryMember(node) == nodeRequireMember {
-				if !nodeCommonJSRequireThrows(node) && !(node == original && nodeInspectorRequireThrows(node)) {
+				if !nodeCommonJsRequireThrows(node) && !(node == original && nodeInspectorRequireThrows(node)) {
 					return nil
 				}
 				return node
@@ -125,14 +125,14 @@ func (lowering *lowering) nodeCommonJSRequireRoot(node *ast.Node) *ast.Node {
 	}
 }
 
-// nodeCommonJSRequireValue lowers a value whose evaluation starts with a require that lowers. A
+// nodeCommonJsRequireValue lowers a value whose evaluation starts with a require that lowers. A
 // require of source-map-support is the host's MODULE_NOT_FOUND, with Node's name, code and the
 // first line of its message (host_require_missing). A computed require evaluates its argument, then
 // throws an Error naming the path. Either way the value is never had: as a statement it's
 // undefined, as gc's call is, and anywhere else a placeholder of the value's type that the throw
 // keeps from being read.
-func (lowering *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool, error) {
-	call := lowering.nodeCommonJSRequireRoot(node)
+func (lowering *lowering) nodeCommonJsRequireValue(node *ast.Node) (ir.Expression, bool, error) {
+	call := lowering.nodeCommonJsRequireRoot(node)
 	if call == nil {
 		return nil, false, nil
 	}
@@ -151,7 +151,7 @@ func (lowering *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expressio
 		)
 		return effects, true, nil
 	}
-	if argument := nodeCommonJSRequireArgument(
+	if argument := nodeCommonJsRequireArgument(
 		call,
 	); argument.Kind == ast.KindStringLiteral || argument.Kind == ast.KindNoSubstitutionTemplateLiteral {
 		missing := ir.NodeFSFile{
@@ -171,7 +171,7 @@ func (lowering *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expressio
 	if path.Type() != ir.String {
 		return nil, true, lowering.notYet(argument, nodeRequireMember+
 			" of a computed module path that isn't a string"+
-			nodeCommonJSLoading+
+			nodeCommonJsLoading+
 			" (fix: pass the module path as a string)")
 	}
 	index := len(lowering.result.Functions)
@@ -201,7 +201,7 @@ func nodeInspectorRequireThrows(call *ast.Node) bool {
 	if len(call.AsCallExpression().Arguments.Nodes) != 1 {
 		return false
 	}
-	argument := nodeCommonJSRequireArgument(call)
+	argument := nodeCommonJsRequireArgument(call)
 	if argument.Kind != ast.KindStringLiteral && argument.Kind != ast.KindNoSubstitutionTemplateLiteral {
 		return false
 	}

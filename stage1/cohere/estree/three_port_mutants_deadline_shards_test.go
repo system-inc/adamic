@@ -539,12 +539,12 @@ func TestThreePortMutants_ShardProof(test *testing.T) {
 		test.Fatal(executableError)
 	}
 	for m, mutation := range threePortMutations() {
-		failed, caught, expected, caseID := 0, -1, -1, -1
+		failed, caught, expected, caseId := 0, -1, -1, -1
 		for s, shard := range shards {
 			for _, pair := range shard.cases {
 				if pair.mutant == m && pair.witness {
 					expected = s
-					caseID = pair.index
+					caseId = pair.index
 				}
 			}
 		}
@@ -575,7 +575,7 @@ func TestThreePortMutants_ShardProof(test *testing.T) {
 				caught = s
 				if s != expected || !strings.Contains(
 					string(output),
-					fmt.Sprintf("case %03d: sanitized native mutant survived", caseID),
+					fmt.Sprintf("case %03d: sanitized native mutant survived", caseId),
 				) {
 					test.Fatalf("unexpected failure in %s: %s", name, output)
 				}
@@ -587,7 +587,7 @@ func TestThreePortMutants_ShardProof(test *testing.T) {
 		test.Logf(
 			"planted surviving native %s case %03d caught by TestThreePortMutants_%03d; exactly one shard",
 			mutation.name,
-			caseID,
+			caseId,
 			caught,
 		)
 	}

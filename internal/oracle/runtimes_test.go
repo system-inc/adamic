@@ -66,11 +66,11 @@ func TestProduct_NativeRuntimesWASI0(test *testing.T) {
 	test.Parallel()
 	runtimeproducts.Build(test, "wasm", 0)
 }
-func TestProduct_NativeRuntimesWASI1(test *testing.T) {
+func TestProduct_NativeRuntimesWasi1(test *testing.T) {
 	test.Parallel()
 	runtimeproducts.Build(test, "wasm", 1)
 }
-func TestProduct_NativeRuntimesWASI2(test *testing.T) {
+func TestProduct_NativeRuntimesWasi2(test *testing.T) {
 	test.Parallel()
 	runtimeproducts.Build(test, "wasm", 2)
 }
@@ -78,11 +78,11 @@ func TestProduct_NativeRuntimesWASIRequest0(test *testing.T) {
 	test.Parallel()
 	runtimeproducts.Build(test, "wasm-request", 0)
 }
-func TestProduct_NativeRuntimesWASIRequest1(test *testing.T) {
+func TestProduct_NativeRuntimesWasiRequest1(test *testing.T) {
 	test.Parallel()
 	runtimeproducts.Build(test, "wasm-request", 1)
 }
-func TestProduct_NativeRuntimesWASIRequest2(test *testing.T) {
+func TestProduct_NativeRuntimesWasiRequest2(test *testing.T) {
 	test.Parallel()
 	runtimeproducts.Build(test, "wasm-request", 2)
 }

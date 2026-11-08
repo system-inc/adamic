@@ -46,7 +46,7 @@ func init() {
 }
 
 // Mutants run cleanly under sanitizers and leak checks. Only the source on Node catches them.
-func TestNodeFSDirectoryMutants(test *testing.T) {
+func TestNodeFileSystemDirectoryMutants(test *testing.T) {
 	test.Parallel()
 	cases := []struct{ name, fixture, from, to, helper, function string }{
 		{
@@ -221,7 +221,7 @@ func TestNodeFSDirectoryMutants(test *testing.T) {
 	}
 }
 
-func TestNodeFSDirectoryPermissions(test *testing.T) {
+func TestNodeFileSystemDirectoryPermissions(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_permissions.a"),

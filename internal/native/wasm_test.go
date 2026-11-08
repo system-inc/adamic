@@ -79,7 +79,7 @@ func runWASIUnit(test *testing.T, unit int) {
 		}
 	}
 	// The toolchain is pinned: a clang other than wasi-sdk 27's fails here, by name, rather than skipping.
-	if _, wasiClangError := WASIClang(); wasiClangError != nil {
+	if _, wasiClangError := WasiClang(); wasiClangError != nil {
 		test.Fatal(wasiClangError)
 	}
 	phase := time.Now()
@@ -90,7 +90,7 @@ func runWASIUnit(test *testing.T, unit int) {
 	}
 	flags := wasiFlags(sysroot)
 	probe := filepath.Join(directory, "probe.c")
-	writeWASIFile(test, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
+	writeWasiFile(test, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
 	if output, combinedOutputError := toolchain.Command(
 		wasiCompiler(),
 		append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...,
@@ -123,7 +123,7 @@ func runWASIUnit(test *testing.T, unit int) {
 		defer func() {
 			test.Logf("WASI runtime fetch phase %s %.3fs", variant, time.Since(started).Seconds())
 		}()
-		return strictWASIRuntimeVariant(test, strictWASIRuntime(test), variant)
+		return strictWasiRuntimeVariant(test, strictWasiRuntime(test), variant)
 	}
 	var objects []string
 	directory, objects = runtimeVariant(test, "plain")
@@ -175,7 +175,7 @@ func runWASIUnit(test *testing.T, unit int) {
 		test.Run(fixture, func(test *testing.T) {
 			scratch := test.TempDir()
 			source := filepath.Join(scratch, "main.c")
-			writeWASIFile(test, source, generate(test, fixture))
+			writeWasiFile(test, source, generate(test, fixture))
 			module := filepath.Join(scratch, "main.wasm")
 			link(test, source, module)
 			working := repository
@@ -190,10 +190,10 @@ func runWASIUnit(test *testing.T, unit int) {
 				); createDirectoryError != nil {
 					test.Fatal(createDirectoryError)
 				}
-				writeWASIFile(test, filepath.Join(scratch, "files/input.txt"), "héllo 世界\n")
+				writeWasiFile(test, filepath.Join(scratch, "files/input.txt"), "héllo 世界\n")
 			}
 			started := time.Now()
-			node := observeWASI(
+			node := observeWasi(
 				test,
 				working,
 				"node",
@@ -203,7 +203,7 @@ func runWASIUnit(test *testing.T, unit int) {
 			)
 			test.Logf("WASI source Node phase %.3fs", time.Since(started).Seconds())
 			started = time.Now()
-			wasm := observeWASI(
+			wasm := observeWasi(
 				test,
 				working,
 				"node",
@@ -244,7 +244,7 @@ func runWASIUnit(test *testing.T, unit int) {
 		if len(handler) != 2 {
 			test.Fatal("cannot find the handler in the existing executable C backend")
 		}
-		writeWASIFile(test, filepath.Join(scratch, "program.c"), code)
+		writeWasiFile(test, filepath.Join(scratch, "program.c"), code)
 		module := filepath.Join(scratch, "request.wasm")
 		link(
 			test,
@@ -280,7 +280,7 @@ func runWASIUnit(test *testing.T, unit int) {
 	})
 }
 
-func writeWASIFile(test *testing.T, path, contents string) {
+func writeWasiFile(test *testing.T, path, contents string) {
 	test.Helper()
 	if writeError := os.WriteFile(path, []byte(contents), 0o644); writeError != nil {
 		test.Fatal(writeError)
@@ -304,7 +304,7 @@ type wasiObservation struct {
 	exit           int
 }
 
-func observeWASI(test *testing.T, directory, name string, arguments ...string) wasiObservation {
+func observeWasi(test *testing.T, directory, name string, arguments ...string) wasiObservation {
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -348,26 +348,26 @@ func wasiFlags(sysroot string) []string {
 	}
 }
 
-// strictWASIRuntimeVariants are the strict runtime's two builds: plain, which every fixture's module links, and
+// strictWasiRuntimeVariants are the strict runtime's two builds: plain, which every fixture's module links, and
 // counted (-DADAMIC_COUNT), which only the request benchmark's memory probe links.
-var strictWASIRuntimeVariants = map[string][]string{"plain": nil, "counted": {"-DADAMIC_COUNT"}}
+var strictWasiRuntimeVariants = map[string][]string{"plain": nil, "counted": {"-DADAMIC_COUNT"}}
 
-// strictWASIRuntime is every translation unit of the runtime compiled with wasiFlags, plain and counted, a product
+// strictWasiRuntime is every translation unit of the runtime compiled with wasiFlags, plain and counted, a product
 // built ahead by TestProduct_StrictWASIRuntime: a directory per variant holding the runtime's files beside their
 // objects. Every unit used to compile it into a cache keyed by the test binary's hash, which no product declares, so a
 // runner that reads products never found it.
-func strictWASIRuntime(test *testing.T) string {
+func strictWasiRuntime(test *testing.T) string {
 	test.Helper()
 	sysroot := os.Getenv("WASI_SYSROOT")
 	if sysroot == "" {
 		test.Fatal("WASI_SYSROOT missing")
 	}
 	// The runtime compiles only with wasi-sdk 27's clang, refused by name otherwise, and its version keys the product.
-	if _, wasiClangError := WASIClang(); wasiClangError != nil {
+	if _, wasiClangError := WasiClang(); wasiClangError != nil {
 		test.Fatal(wasiClangError)
 	}
 	flags := wasiFlags(sysroot)
-	variants := slices.Sorted(maps.Keys(strictWASIRuntimeVariants))
+	variants := slices.Sorted(maps.Keys(strictWasiRuntimeVariants))
 	inputs := buildcache.Inputs{
 		Name: "strict-wasi-runtime",
 		Files: []string{
@@ -382,7 +382,7 @@ func strictWASIRuntime(test *testing.T) string {
 	for _, variant := range variants {
 		inputs.Flags = append(
 			inputs.Flags,
-			fmt.Sprintf("variant %s %s", variant, strings.Join(strictWASIRuntimeVariants[variant], " ")),
+			fmt.Sprintf("variant %s %s", variant, strings.Join(strictWasiRuntimeVariants[variant], " ")),
 		)
 	}
 	files, readRuntimeError := readRuntime(runtime, "runtime")
@@ -420,7 +420,7 @@ func strictWASIRuntime(test *testing.T) string {
 			}
 			// Each unit compiles from inside the variant's directory, mapped, so no object names where it was built.
 			compileFlags := append(
-				append(slices.Clone(flags), strictWASIRuntimeVariants[variant]...),
+				append(slices.Clone(flags), strictWasiRuntimeVariants[variant]...),
 				prefixMaps(destination, "/adamic-runtime")...,
 			)
 			if eachInParallelError := eachInParallel(len(sources), func(index int) error {
@@ -441,11 +441,11 @@ func strictWASIRuntime(test *testing.T) string {
 	})
 }
 
-// strictWASIRuntimeVariant is one variant of the strict runtime product: its directory, which holds the headers a
+// strictWasiRuntimeVariant is one variant of the strict runtime product: its directory, which holds the headers a
 // module includes, and its objects in the runtime's order.
-func strictWASIRuntimeVariant(test *testing.T, product, variant string) (string, []string) {
+func strictWasiRuntimeVariant(test *testing.T, product, variant string) (string, []string) {
 	test.Helper()
-	if _, ok := strictWASIRuntimeVariants[variant]; !ok {
+	if _, ok := strictWasiRuntimeVariants[variant]; !ok {
 		test.Fatalf("no strict WASI runtime variant %q", variant)
 	}
 	directory := filepath.Join(product, variant)
@@ -459,9 +459,9 @@ func strictWASIRuntimeVariant(test *testing.T, product, variant string) (string,
 	return directory, objects
 }
 
-// TestProduct_StrictWASIRuntime builds the strict runtime the WASI units link, where they run, so the tree build
+// TestProduct_StrictWasiRuntime builds the strict runtime the WASI units link, where they run, so the tree build
 // builds it ahead.
-func TestProduct_StrictWASIRuntime(test *testing.T) {
+func TestProduct_StrictWasiRuntime(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		test.Skip("set ADAMIC_TEST_WASI=1")
@@ -469,193 +469,193 @@ func TestProduct_StrictWASIRuntime(test *testing.T) {
 	if os.Getenv("WASI_SYSROOT") == "" {
 		test.Skip("WASI toolchain missing: WASI_SYSROOT is not set")
 	}
-	strictWASIRuntime(test)
+	strictWasiRuntime(test)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit00(test *testing.T) {
+func TestWasiUnit00(test *testing.T) {
 	runWASIUnit(test, 0)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit01(test *testing.T) {
+func TestWasiUnit01(test *testing.T) {
 	runWASIUnit(test, 1)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit02(test *testing.T) {
+func TestWasiUnit02(test *testing.T) {
 	runWASIUnit(test, 2)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit03(test *testing.T) {
+func TestWasiUnit03(test *testing.T) {
 	runWASIUnit(test, 3)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit04(test *testing.T) {
+func TestWasiUnit04(test *testing.T) {
 	runWASIUnit(test, 4)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit05(test *testing.T) {
+func TestWasiUnit05(test *testing.T) {
 	runWASIUnit(test, 5)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit06(test *testing.T) {
+func TestWasiUnit06(test *testing.T) {
 	runWASIUnit(test, 6)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit07(test *testing.T) {
+func TestWasiUnit07(test *testing.T) {
 	runWASIUnit(test, 7)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit08(test *testing.T) {
+func TestWasiUnit08(test *testing.T) {
 	runWASIUnit(test, 8)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit09(test *testing.T) {
+func TestWasiUnit09(test *testing.T) {
 	runWASIUnit(test, 9)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit10(test *testing.T) {
+func TestWasiUnit10(test *testing.T) {
 	runWASIUnit(test, 10)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit11(test *testing.T) {
+func TestWasiUnit11(test *testing.T) {
 	runWASIUnit(test, 11)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit12(test *testing.T) {
+func TestWasiUnit12(test *testing.T) {
 	runWASIUnit(test, 12)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit13(test *testing.T) {
+func TestWasiUnit13(test *testing.T) {
 	runWASIUnit(test, 13)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit14(test *testing.T) {
+func TestWasiUnit14(test *testing.T) {
 	runWASIUnit(test, 14)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit15(test *testing.T) {
+func TestWasiUnit15(test *testing.T) {
 	runWASIUnit(test, 15)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit16(test *testing.T) {
+func TestWasiUnit16(test *testing.T) {
 	runWASIUnit(test, 16)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit17(test *testing.T) {
+func TestWasiUnit17(test *testing.T) {
 	runWASIUnit(test, 17)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit18(test *testing.T) {
+func TestWasiUnit18(test *testing.T) {
 	runWASIUnit(test, 18)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit19(test *testing.T) {
+func TestWasiUnit19(test *testing.T) {
 	runWASIUnit(test, 19)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit20(test *testing.T) {
+func TestWasiUnit20(test *testing.T) {
 	runWASIUnit(test, 20)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit21(test *testing.T) {
+func TestWasiUnit21(test *testing.T) {
 	runWASIUnit(test, 21)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit22(test *testing.T) {
+func TestWasiUnit22(test *testing.T) {
 	runWASIUnit(test, 22)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit23(test *testing.T) {
+func TestWasiUnit23(test *testing.T) {
 	runWASIUnit(test, 23)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit24(test *testing.T) {
+func TestWasiUnit24(test *testing.T) {
 	runWASIUnit(test, 24)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit25(test *testing.T) {
+func TestWasiUnit25(test *testing.T) {
 	runWASIUnit(test, 25)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit26(test *testing.T) {
+func TestWasiUnit26(test *testing.T) {
 	runWASIUnit(test, 26)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit27(test *testing.T) {
+func TestWasiUnit27(test *testing.T) {
 	runWASIUnit(test, 27)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit28(test *testing.T) {
+func TestWasiUnit28(test *testing.T) {
 	runWASIUnit(test, 28)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit29(test *testing.T) {
+func TestWasiUnit29(test *testing.T) {
 	runWASIUnit(test, 29)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit30(test *testing.T) {
+func TestWasiUnit30(test *testing.T) {
 	runWASIUnit(test, 30)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit31(test *testing.T) {
+func TestWasiUnit31(test *testing.T) {
 	runWASIUnit(test, 31)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit32(test *testing.T) {
+func TestWasiUnit32(test *testing.T) {
 	runWASIUnit(test, 32)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit33(test *testing.T) {
+func TestWasiUnit33(test *testing.T) {
 	runWASIUnit(test, 33)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit34(test *testing.T) {
+func TestWasiUnit34(test *testing.T) {
 	runWASIUnit(test, 34)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestWASIUnit35(test *testing.T) {
+func TestWasiUnit35(test *testing.T) {
 	runWASIUnit(test, 35)
 }
 
 // Every WASI build in this file runs wasiCompiler: none names "clang", which toolchain resolves to the box's own clang
 // rather than the SDK's beside WASI_SYSROOT, so a build of one and a key of the other could each work and disagree
 // (#jzc9yne). Mutant: one site back to "clang".
-func TestTheWASIBuildsNameNoBareClang(test *testing.T) {
+func TestTheWasiBuildsNameNoBareClang(test *testing.T) {
 	test.Parallel()
 	files := token.NewFileSet()
 	parsed, parseFileError := parser.ParseFile(files, "wasm_test.go", nil, parser.SkipObjectResolution)

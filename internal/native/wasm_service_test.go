@@ -350,12 +350,12 @@ func wasmLeg(test *testing.T, counted string) {
 }
 
 // Not parallel: the service oracle measures request rates, and a neighbor's load would skew them.
-func TestWASIService(test *testing.T) {
+func TestWasiService(test *testing.T) {
 	wasmLeg(test, "0")
 }
 
 // Not parallel: the service oracle measures request rates, and a neighbor's load would skew them.
-func TestWASIServiceCounted(test *testing.T) {
+func TestWasiServiceCounted(test *testing.T) {
 	wasmLeg(test, "1")
 }
 
@@ -452,42 +452,42 @@ func nativePart(test *testing.T, part int) {
 	test.Logf("native sanitized command: responses %d to %d agree with Node", span[0], span[1]-1)
 }
 
-func TestWASIServiceNativeAgrees_0(test *testing.T) {
+func TestWasiServiceNativeAgrees_0(test *testing.T) {
 	test.Parallel()
 	nativePart(test, 0)
 }
 
-func TestWASIServiceNativeAgrees_1(test *testing.T) {
+func TestWasiServiceNativeAgrees_1(test *testing.T) {
 	test.Parallel()
 	nativePart(test, 1)
 }
 
-func TestWASIServiceNativeAgrees_2(test *testing.T) {
+func TestWasiServiceNativeAgrees_2(test *testing.T) {
 	test.Parallel()
 	nativePart(test, 2)
 }
 
-func TestWASIServiceNativeAgrees_3(test *testing.T) {
+func TestWasiServiceNativeAgrees_3(test *testing.T) {
 	test.Parallel()
 	nativePart(test, 3)
 }
 
-func TestWASIServiceNativeAgrees_4(test *testing.T) {
+func TestWasiServiceNativeAgrees_4(test *testing.T) {
 	test.Parallel()
 	nativePart(test, 4)
 }
 
-func TestWASIServiceNativeAgrees_5(test *testing.T) {
+func TestWasiServiceNativeAgrees_5(test *testing.T) {
 	test.Parallel()
 	nativePart(test, 5)
 }
 
-func TestWASIServiceNativeAgrees_6(test *testing.T) {
+func TestWasiServiceNativeAgrees_6(test *testing.T) {
 	test.Parallel()
 	nativePart(test, 6)
 }
 
-func TestWASIServiceNativeAgrees_7(test *testing.T) {
+func TestWasiServiceNativeAgrees_7(test *testing.T) {
 	test.Parallel()
 	nativePart(test, 7)
 }
@@ -535,7 +535,7 @@ func serviceAgreementParts(test *testing.T) []int {
 
 // The tests above are one per part, so a part without its test would go unrun, and a test without its part would fail
 // at its index; and parts with a gap or an overlap must be refused, not passed.
-func TestWASIServicePartsTile(test *testing.T) {
+func TestWasiServicePartsTile(test *testing.T) {
 	test.Parallel()
 	parts := serviceAgreementParts(test)
 	if len(parts) != len(serviceParts) {
@@ -598,24 +598,24 @@ func serviceMutant(test *testing.T, name string) {
 	test.Logf("mutant compiled and was caught by %q\n%s", serviceMutants[index].caught, output)
 }
 
-func TestWASIServiceMutantResponseByte(test *testing.T) {
+func TestWasiServiceMutantResponseByte(test *testing.T) {
 	test.Parallel()
 	serviceMutant(test, "response-byte")
 }
 
-func TestWASIServiceMutantRetainedObject(test *testing.T) {
+func TestWasiServiceMutantRetainedObject(test *testing.T) {
 	test.Parallel()
 	serviceMutant(test, "retained-object")
 }
 
-func TestWASIServiceMutantUnicodeEscape(test *testing.T) {
+func TestWasiServiceMutantUnicodeEscape(test *testing.T) {
 	test.Parallel()
 	serviceMutant(test, "unicode-escape")
 }
 
 // A leg that served fewer requests than the claim must be refused, not passed: the host told to generate a thousand
 // stands in for any split that quietly shrinks the count.
-func TestWASIServiceMutantShrunkCount(test *testing.T) {
+func TestWasiServiceMutantShrunkCount(test *testing.T) {
 	test.Parallel()
 	repository := serviceOptedIn(test)
 	original, readError := os.ReadFile(filepath.Join(repository, serviceHost))
@@ -628,7 +628,7 @@ func TestWASIServiceMutantShrunkCount(test *testing.T) {
 	shrunk := strings.Replace(string(original), "const requestCount = 100000;", "const requestCount = 1000;", 1)
 	directory := test.TempDir()
 	host := filepath.Join(directory, "host-shrunk.mjs")
-	writeWASIFile(test, host, shrunk)
+	writeWasiFile(test, host, shrunk)
 	output, runServiceHostError := runServiceHost(repository, host, "-", directory, "0", "0", [2]int{0, 1000})
 	if runServiceHostError != nil {
 		test.Fatalf("shrunk host: %v\n%s", runServiceHostError, output)
@@ -639,9 +639,9 @@ func TestWASIServiceMutantShrunkCount(test *testing.T) {
 	test.Log("shrunk-count mutant refused by the report check")
 }
 
-// TestProduct_WASIServiceModules builds the service's modules, the mutants' and the regions answer the wasm legs and
+// TestProduct_WasiServiceModules builds the service's modules, the mutants' and the regions answer the wasm legs and
 // the mutants read, where they run, so the tree build builds them ahead.
-func TestProduct_WASIServiceModules(test *testing.T) {
+func TestProduct_WasiServiceModules(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		test.Skip("set ADAMIC_TEST_WASI=1")
@@ -649,9 +649,9 @@ func TestProduct_WASIServiceModules(test *testing.T) {
 	serviceModules(test)
 }
 
-// TestProduct_WASIServiceNative builds the sanitized native command the agreement parts run, where they run, so the
+// TestProduct_WasiServiceNative builds the sanitized native command the agreement parts run, where they run, so the
 // tree build builds it ahead.
-func TestProduct_WASIServiceNative(test *testing.T) {
+func TestProduct_WasiServiceNative(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		test.Skip("set ADAMIC_TEST_WASI=1")

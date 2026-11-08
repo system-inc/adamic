@@ -12,7 +12,7 @@ import (
 )
 
 // Not parallel: checker diagnostics and in-process command state are shared.
-func TestWASIExportSelection(test *testing.T) {
+func TestWasiExportSelection(test *testing.T) {
 	tests := []struct{ source, path string }{
 		{`export function bad(value: readonly boolean[]): void {}`, "bad.value"},
 		{
@@ -47,7 +47,7 @@ func TestWASIExportSelection(test *testing.T) {
 }
 
 // Not parallel: calls the process-wide compiler driver.
-func TestWASIExports(test *testing.T) {
+func TestWasiExports(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}

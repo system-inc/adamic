@@ -108,7 +108,7 @@ func compareExecutionCases(test *testing.T, cases []executionCase, external bool
 		if program == nil {
 			var err error
 			if executionCase.PatternUnits != nil {
-				program, err = CompileUTF16(executionCase.PatternUnits, executionCase.Flags)
+				program, err = CompileUtf16(executionCase.PatternUnits, executionCase.Flags)
 			} else {
 				program, err = Compile(executionCase.Pattern, executionCase.Flags)
 			}
@@ -457,7 +457,7 @@ func TestMatcherPropertyProviderStrings(test *testing.T) {
 	}
 }
 
-func TestMatcherUTF16PatternsNode(test *testing.T) {
+func TestMatcherUtf16PatternsNode(test *testing.T) {
 	test.Parallel()
 	var cases []executionCase
 	for _, flags := range []string{"", "u", "v"} {

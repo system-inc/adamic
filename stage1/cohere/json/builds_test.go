@@ -48,9 +48,9 @@ func jsonLoweredPortInputs() jsonBuildInputs {
 // The immutable lowering product contains the copied TypeScript and both emitted
 // backends. Persisting emitted sources avoids serializing IR interface values;
 // fetching this product will avoid loading, checking, lowering and emission.
-func buildJSONLoweredPort(dir string) error { return buildJSONLoweredPortMutation(dir, nil) }
+func buildJsonLoweredPort(dir string) error { return buildJsonLoweredPortMutation(dir, nil) }
 
-func buildJSONLoweredPortMutation(dir string, mutation *printerMutation) error {
+func buildJsonLoweredPortMutation(dir string, mutation *printerMutation) error {
 	for _, name := range portFiles {
 		contents, readError := os.ReadFile(name)
 		if readError != nil {
@@ -115,10 +115,10 @@ func jsonNativePortInputs(source string, sanitize bool, toolchain []string) json
 
 // Each factory returns the exact func(dir string) error accepted by buildcache.
 // Native.Build retains its existing compiler scratch/runtime action caches.
-func buildJSONReleasePort(source string) func(string) error {
+func buildJsonReleasePort(source string) func(string) error {
 	return func(dir string) error { return native.Build(source, filepath.Join(dir, "port"), native.Options{}) }
 }
-func buildJSONSanitizedPort(source string) func(string) error {
+func buildJsonSanitizedPort(source string) func(string) error {
 	return func(dir string) error {
 		return native.Build(source, filepath.Join(dir, "port"), native.Options{Sanitize: true})
 	}

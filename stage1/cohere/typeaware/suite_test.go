@@ -103,7 +103,7 @@ func suiteSources(test *testing.T, repository string) []string {
 	return keys
 }
 
-func suiteTSMutant(harness *harness, normal, entry, name, relative, from, to string, imports ...string) string {
+func suiteTsMutant(harness *harness, normal, entry, name, relative, from, to string, imports ...string) string {
 	harness.t.Helper()
 	path := filepath.Join(harness.repository, "stage1/cohere/typeaware", relative)
 	text, readError := os.ReadFile(path)
@@ -244,13 +244,13 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	for index, group := range sixRanges(paths, 32) {
 		add(
 			fmt.Sprintf("agreement/generated-%02d", index),
-			sixIDs("agreement/generated", group),
+			sixIds("agreement/generated", group),
 			func(harness *harness) {
 				harness.sixCompare("generated", oracle, binary(harness), configuration, manifest, group)
 			},
 		)
 	}
-	add("controls/reporting", sixRuleControlIDs(), func(harness *harness) {
+	add("controls/reporting", sixRuleControlIds(), func(harness *harness) {
 		test := harness.t
 		for _, name := range []string{
 			"no-unsafe-unary-minus",
@@ -274,7 +274,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		`{"compilerOptions":{"strict":false,"target":"ES2022","module":"NodeNext","lib":["ES2022"]}}`,
 	)
 	one := h.write("one.manifest", paths[0]+"\n")
-	add("agreement/nonstrict", sixIDs("agreement/nonstrict", paths[:1]), func(harness *harness) {
+	add("agreement/nonstrict", sixIds("agreement/nonstrict", paths[:1]), func(harness *harness) {
 		test := harness.t
 		strictTruth := harness.compare("six-nonstrict", oracle, binary(harness), nonstrict, one)
 		if !bytes.Contains(strictTruth.stdout, []byte("\tnoStrictNullCheck\t")) {
@@ -292,7 +292,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	)+"\n"+h.write("global-class.ts", "class Shared {}\n")+"\n")
 	globalPaths := strings.Split(strings.TrimSpace(globalManifestText(h, globalManifest)), "\n")
 	globalTruth := h.must("global-truth", exec.Command(oracle, globalConfiguration, globalManifest))
-	add("agreement/cross-file", sixIDs("agreement/cross-file", globalPaths), func(harness *harness) {
+	add("agreement/cross-file", sixIds("agreement/cross-file", globalPaths), func(harness *harness) {
 		test := harness.t
 		actual := harness.sixCompare(
 			"cross-file",
@@ -307,7 +307,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		}
 	})
 
-	add("mutant/declaration-source", sixIDs("mutant/declaration-source", globalPaths), func(harness *harness) {
+	add("mutant/declaration-source", sixIds("mutant/declaration-source", globalPaths), func(harness *harness) {
 		test := harness.t
 		globalArchive := typeAwareMutantArchive(harness, "declaration-source")
 		globalMutant := typeAwareMutantNative(harness, "declaration-source-suite", entry, globalArchive, false)
@@ -337,12 +337,12 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	})
 
 	for _, name := range []string{"wrong-node", "last-declaration", "nullable-default"} {
-		add("mutant/"+name, sixIDs("mutant/"+name, paths), func(harness *harness) {
+		add("mutant/"+name, sixIds("mutant/"+name, paths), func(harness *harness) {
 			mutant, cases := generated.witnessRun(harness, name)
 			generated.caught(harness, name, mutant, cases)
 		})
 	}
-	add("mutant/union-members", sixIDs("mutant/union-members", paths), func(harness *harness) {
+	add("mutant/union-members", sixIds("mutant/union-members", paths), func(harness *harness) {
 		mutant, cases := generated.witnessRun(harness, "union-members")
 		generated.caught(harness, "union-members", mutant, cases)
 	})
@@ -353,7 +353,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		"assignability-direction",
 		"resolved-signature",
 	} {
-		add("mutant/"+name, sixIDs("mutant/"+name, paths), func(harness *harness) {
+		add("mutant/"+name, sixIds("mutant/"+name, paths), func(harness *harness) {
 			mutant, cases := generated.witnessRun(harness, name)
 			generated.caught(harness, name, mutant, cases)
 		})
@@ -383,7 +383,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	})
 
 	// Explicit C allocation length, not the native path's extra terminator.
-	add("mutant/facts-length-asan", sixIDs("mutant/facts-length-asan", paths), func(harness *harness) {
+	add("mutant/facts-length-asan", sixIds("mutant/facts-length-asan", paths), func(harness *harness) {
 		test := harness.t
 		length, cases := generated.witnessRun(harness, "facts-length-asan")
 		got := harness.run("facts-length-run", exec.Command(length, configuration, cases))
@@ -400,7 +400,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		{"facts-length", "invalid checker facts length"},
 		{"facts-version", "unsupported checker facts schema"},
 	} {
-		add("mutant/"+change.name+"-bad", sixIDs("mutant/"+change.name+"-bad", paths), func(harness *harness) {
+		add("mutant/"+change.name+"-bad", sixIds("mutant/"+change.name+"-bad", paths), func(harness *harness) {
 			test := harness.t
 			malformed, cases := generated.witnessRun(harness, change.name+"-bad")
 			result := harness.run(change.name+"-bad-run", exec.Command(malformed, configuration, cases))
@@ -520,14 +520,14 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		groups = sixCompilerRanges(test, compilerPaths, 8)
 	}
 	for index, group := range groups {
-		add(fmt.Sprintf("agreement/compiler-%02d", index), sixIDs("agreement/compiler", group), func(harness *harness) {
+		add(fmt.Sprintf("agreement/compiler-%02d", index), sixIds("agreement/compiler", group), func(harness *harness) {
 			if len(group) == 0 {
 				harness.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
 			}
 			harness.sixCompare("compiler", oracle, binary(harness), compilerConfiguration, compilerManifest, group)
 		})
 		for round := 1; round <= 3; round++ {
-			ids := sixIDs(fmt.Sprintf("bench/compiler-%d", round), group)
+			ids := sixIds(fmt.Sprintf("bench/compiler-%d", round), group)
 			if rounds != 3 {
 				ids = nil
 			}
@@ -570,7 +570,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		}
 	}
 	// Independent unsplit enumeration: membership is not derived from assignments.
-	expected := sixUnsplitIDs(paths, globalPaths, compilerPaths, rounds, os.Getenv("ADAMIC_TYPEAWARE_BENCH") == "1")
+	expected := sixUnsplitIds(paths, globalPaths, compilerPaths, rounds, os.Getenv("ADAMIC_TYPEAWARE_BENCH") == "1")
 	return newTypeAwarePlan(test, h, expected, shards, testSixRuleAgreementAndMutantsShards)
 }
 

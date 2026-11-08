@@ -245,7 +245,7 @@ func PrinterMutant(test *testing.T, planted []buildcache.Mutation) string {
 		test.Fatal(absolutePathError)
 	}
 	overlayPath := filepath.Join(test.TempDir(), "overlay.json")
-	writeJSON(test, overlayPath, map[string]any{"Replace": map[string]string{
+	writeJson(test, overlayPath, map[string]any{"Replace": map[string]string{
 		filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side,
 	}})
 	return stockOracle(
@@ -258,7 +258,7 @@ func PrinterMutant(test *testing.T, planted []buildcache.Mutation) string {
 	)
 }
 
-func writeJSON(test *testing.T, path string, value any) {
+func writeJson(test *testing.T, path string, value any) {
 	test.Helper()
 	encoded, encodeError := json.Marshal(value)
 	if encodeError != nil {
@@ -282,7 +282,7 @@ func ClassOrderAnswerInputs(oracle []byte, item ComparisonCase) buildcache.Input
 	}
 }
 
-func buildJSONClassOrderAnswer(oracle string, item ComparisonCase) func(string) error {
+func buildJsonClassOrderAnswer(oracle string, item ComparisonCase) func(string) error {
 	return func(directory string) error {
 		input, _ := Protocol([]ComparisonCase{item}, make([]ComparisonAnswer, 1))
 		cases := filepath.Join(directory, "cases.txt")
@@ -330,7 +330,7 @@ func ClassOrderAnswer(test *testing.T) string {
 		directory := oracleProduct(
 			test,
 			ClassOrderAnswerInputs(binary, items[0]),
-			buildJSONClassOrderAnswer(oracle, items[0]),
+			buildJsonClassOrderAnswer(oracle, items[0]),
 		)
 		stored, readError := os.ReadFile(filepath.Join(directory, "answer.txt"))
 		if readError != nil {

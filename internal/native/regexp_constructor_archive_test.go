@@ -193,7 +193,7 @@ func TestRegExpConstructorSourceArchive(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Sanitize: true}, "source")
 }
-func TestRegExpConstructorSourceArchiveWASM(test *testing.T) {
+func TestRegExpConstructorSourceArchiveWasm(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "source")
 }
@@ -201,15 +201,15 @@ func TestRegExpConstructorSyntaxErrorsArchive(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Sanitize: true}, "syntaxErrors")
 }
-func TestRegExpConstructorSyntaxBracketArchiveWASM(test *testing.T) {
+func TestRegExpConstructorSyntaxBracketArchiveWasm(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "syntaxBracket")
 }
-func TestRegExpConstructorSyntaxEscapeArchiveWASM(test *testing.T) {
+func TestRegExpConstructorSyntaxEscapeArchiveWasm(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "syntaxEscape")
 }
-func TestRegExpConstructorSyntaxGroupArchiveWASM(test *testing.T) {
+func TestRegExpConstructorSyntaxGroupArchiveWasm(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "syntaxGroup")
 }
@@ -217,7 +217,7 @@ func TestRegExpConstructorOwnershipArchive(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Sanitize: true}, "ownership")
 }
-func TestRegExpConstructorOwnershipArchiveWASM(test *testing.T) {
+func TestRegExpConstructorOwnershipArchiveWasm(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "ownership")
 }
@@ -225,7 +225,7 @@ func TestRegExpConstructorSplitSourceArchive(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Split: true, Jobs: 2, Sanitize: true}, "splitSource")
 }
-func TestRegExpConstructorSplitSourceArchiveWASM(test *testing.T) {
+func TestRegExpConstructorSplitSourceArchiveWasm(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "splitSource")
 }
@@ -280,7 +280,7 @@ func TestRegExpConstructorUsesOrdinaryRuntime(test *testing.T) {
 	test.Log("construction shares the ordinary runtime")
 }
 
-func TestRegExpConstructorFlagsArchiveWASM(test *testing.T) {
+func TestRegExpConstructorFlagsArchiveWasm(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "flags")
 }
@@ -289,7 +289,7 @@ func TestRegExpCompilerArchiveCache(test *testing.T) {
 	test.Parallel()
 	compilerArchiveCache(test, Options{Sanitize: true})
 }
-func TestRegExpCompilerArchiveCacheWASM(test *testing.T) {
+func TestRegExpCompilerArchiveCacheWasm(test *testing.T) {
 	test.Parallel()
 	compilerArchiveCache(test, Options{Target: "wasm32-wasi"})
 }
@@ -297,7 +297,7 @@ func TestRegExpConstructorFlagErrorsArchive(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Sanitize: true}, "flagErrors")
 }
-func TestRegExpConstructorFlagErrorsArchiveWASM(test *testing.T) {
+func TestRegExpConstructorFlagErrorsArchiveWasm(test *testing.T) {
 	test.Parallel()
 	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "flagErrors")
 }

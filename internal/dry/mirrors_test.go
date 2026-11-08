@@ -20,7 +20,7 @@ import (
 type mirror struct {
 	Path         string `json:"path"`
 	Kind         string `json:"kind"`
-	RuleID       string `json:"rule_id,omitempty"`
+	RuleId       string `json:"rule_id,omitempty"`
 	Counterpart  string `json:"counterpart"`
 	Decision     string `json:"decision"`
 	Reason       string `json:"reason"`
@@ -86,7 +86,7 @@ func goFiles(root string, visit func(string, *ast.File) error) error {
 
 // Registration and definition are joined by package directory and variable name. An id
 // merely mentioned in a cohere test or policy message is not a registered rule.
-func cohereIDs(root string) (map[string]bool, error) {
+func cohereIds(root string) (map[string]bool, error) {
 	data, readError := os.ReadFile(filepath.Join(root, "cohere/internal/lint/configuration/sets/adamic.json"))
 	if readError != nil {
 		return nil, fmt.Errorf("read cohere adamic set (initialize submodules): %w", readError)
@@ -350,9 +350,9 @@ func checkMirrors(root string) ([]string, error) {
 	if sourceHeadersError != nil {
 		return nil, sourceHeadersError
 	}
-	ids, cohereIDsError := cohereIDs(root)
-	if cohereIDsError != nil {
-		return nil, cohereIDsError
+	ids, cohereIdsError := cohereIds(root)
+	if cohereIdsError != nil {
+		return nil, cohereIdsError
 	}
 	data, readError := os.ReadFile(filepath.Join(root, "internal/dry/testdata/cohere-mirrors.json"))
 	if readError != nil {
@@ -368,11 +368,11 @@ func checkMirrors(root string) ([]string, error) {
 	var problems []string
 	seen := map[string]bool{}
 	for index, entry := range entries {
-		key := entry.Path + ":" + entry.Kind + ":" + entry.RuleID
+		key := entry.Path + ":" + entry.Kind + ":" + entry.RuleId
 		if seen[key] {
 			problems = append(
 				problems,
-				fmt.Sprintf("%s: duplicate mirror %s; remove the duplicate entry", entry.Path, entry.RuleID),
+				fmt.Sprintf("%s: duplicate mirror %s; remove the duplicate entry", entry.Path, entry.RuleId),
 			)
 		}
 		seen[key] = true
@@ -388,7 +388,7 @@ func checkMirrors(root string) ([]string, error) {
 			entry.RetiringTask == "" {
 			return nil, fmt.Errorf("%s: mirror needs kind, decision, reason and retiring task", entry.Path)
 		}
-		if entry.Kind == "rule" && !ids[entry.RuleID] {
+		if entry.Kind == "rule" && !ids[entry.RuleId] {
 			return nil, fmt.Errorf("%s: rule mirror needs a registered cohere rule_id", entry.Path)
 		}
 		if !strings.HasPrefix(entry.Counterpart, "cohere/") || strings.Contains(entry.Counterpart, "..") {
@@ -472,12 +472,12 @@ func checkMirrors(root string) ([]string, error) {
 				continue
 			}
 			for _, literal := range literals {
-				if ruleMention(literal, entry.RuleID) || entry.Evidence != "" && literal == entry.Evidence {
+				if ruleMention(literal, entry.RuleId) || entry.Evidence != "" && literal == entry.Evidence {
 					matched[index] = true
 				}
 			}
 			if matched[index] {
-				covered[entry.RuleID] = true
+				covered[entry.RuleId] = true
 			}
 		}
 		coveredLift := false
@@ -521,7 +521,7 @@ func checkMirrors(root string) ([]string, error) {
 				"%s: stale %s mirror %s; remove its cohere-mirrors.json entry because its provenance or diagnostic no longer exists",
 				entry.Path,
 				entry.Kind,
-				entry.RuleID,
+				entry.RuleId,
 			))
 		}
 	}

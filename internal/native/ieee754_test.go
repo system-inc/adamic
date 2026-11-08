@@ -315,7 +315,7 @@ func TestIeee754MatchesNodeBitForBit(test *testing.T) {
 	fusion := readFusion(test, "ieee754")
 	for _, cases := range []map[string]fusionCase{fusion.cases, fusion.derived} {
 		for question := range cases {
-			if !approximatedIEEE754(question) {
+			if !approximatedIeee754(question) {
 				test.Errorf(
 					"the ieee754 fusion list names %q, which isn't a function ECMAScript lets an engine approximate",
 					question,
@@ -330,7 +330,7 @@ func TestIeee754MatchesNodeBitForBit(test *testing.T) {
 		for index, question := range asked {
 			if native[index] == oracle[index] ||
 				bothNaN(native[index], oracle[index]) ||
-				!approximatedIEEE754(question) {
+				!approximatedIeee754(question) {
 				continue
 			}
 			line := question + "\t" + native[index] + "\t" + oracle[index] + "\n"

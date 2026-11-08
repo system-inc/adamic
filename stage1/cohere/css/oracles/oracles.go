@@ -129,7 +129,7 @@ const ChildStallLimit = 4 * time.Minute
 // ParserCorpus holds the live inputs, Go answers, and stable case keys.
 type ParserCorpus struct{ Inputs, Answers, CaseKeys []string }
 
-func readCSSParserCorpus(test *testing.T, path, answers string) ParserCorpus {
+func readCssParserCorpus(test *testing.T, path, answers string) ParserCorpus {
 	test.Helper()
 	data, readError := os.ReadFile(path)
 	if readError != nil {
@@ -577,9 +577,9 @@ func CachedPostCSSAnswers(test *testing.T, script, library, path, identity strin
 	return string(answer)
 }
 
-// cssParserPostCSSAnswersProducts is how many product tests share the agreement units' PostCSS answers, one node run
+// cssParserPostCssAnswersProducts is how many product tests share the agreement units' PostCSS answers, one node run
 // per unit (388 units on Oct 10), so each product test stays well inside a product's 600 s.
-const cssParserPostCSSAnswersProducts = 8
+const cssParserPostCssAnswersProducts = 8
 
 // ParserPostCSSAnswers finds or builds the PostCSS answers that every agreement unit whose ordinal is part modulo
 // cssParserPostCSSAnswersProducts reads, each keyed as that unit asks for it: its own cases, the pinned library
@@ -595,7 +595,7 @@ func ParserPostCSSAnswers(test *testing.T, part int) {
 		test.Fatal(absolutePathError)
 	}
 	identity := ContentIdentity(test, library)
-	prepareCSSParserTopCorpus(test)
+	prepareCssParserTopCorpus(test)
 	corpus := LoadParserCorpus(test)
 	ordinal, built := 0, 0
 	for _, root := range ParserAgreementShards(corpus.CaseKeys) {
@@ -603,7 +603,7 @@ func ParserPostCSSAnswers(test *testing.T, part int) {
 			if unit.Kind != "agreement" {
 				continue
 			}
-			if ordinal%cssParserPostCSSAnswersProducts == part {
+			if ordinal%cssParserPostCssAnswersProducts == part {
 				cases, _ := WriteParserSlice(test, corpus, unit.Cases)
 				CachedPostCSSAnswers(test, script, library, cases, identity)
 				built++
@@ -612,7 +612,7 @@ func ParserPostCSSAnswers(test *testing.T, part int) {
 		}
 	}
 	if built == 0 {
-		test.Fatalf("part %d of %d holds no agreement unit, of %d", part, cssParserPostCSSAnswersProducts, ordinal)
+		test.Fatalf("part %d of %d holds no agreement unit, of %d", part, cssParserPostCssAnswersProducts, ordinal)
 	}
 	test.Logf("PostCSS answers for %d of %d agreement units", built, ordinal)
 }
@@ -728,11 +728,11 @@ var cssParserTopCorpusSetup struct {
 	units  []ParserShard
 }
 
-func prepareCSSParserTopCorpus(test *testing.T) {
+func prepareCssParserTopCorpus(test *testing.T) {
 	test.Helper()
 	cssParserTopCorpusSetup.once.Do(func() {
 		cases, answers := CachedParserOutputs(test)
-		cssParserTopCorpusSetup.corpus = readCSSParserCorpus(test, cases, answers)
+		cssParserTopCorpusSetup.corpus = readCssParserCorpus(test, cases, answers)
 		cssParserTopCorpusSetup.units = ParserAgreementShards(cssParserTopCorpusSetup.corpus.CaseKeys)
 	})
 }
@@ -740,7 +740,7 @@ func prepareCSSParserTopCorpus(test *testing.T) {
 // LoadParserCorpus loads the shared corpus once and checks that setup completed.
 func LoadParserCorpus(test *testing.T) ParserCorpus {
 	test.Helper()
-	prepareCSSParserTopCorpus(test)
+	prepareCssParserTopCorpus(test)
 
 	if len(cssParserTopCorpusSetup.corpus.CaseKeys) == 0 {
 		test.Fatal("shared corpus setup did not complete")

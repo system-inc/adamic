@@ -47,7 +47,7 @@ export function handle(request: HttpRequest): HttpResponse {return {status:200,h
 	}
 }
 
-func TestCheckPureRefusesEnvironmentHostIR(test *testing.T) {
+func TestCheckPureRefusesEnvironmentHostIr(test *testing.T) {
 	test.Parallel()
 	for _, one := range []struct {
 		name  string

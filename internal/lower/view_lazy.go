@@ -170,7 +170,7 @@ func (lowering *lowering) checkLazyViewReads() error {
 			return false
 		}
 		var receiver ir.Expression
-		var typeID, receiverTypeID int
+		var typeId, receiverTypeId int
 		var field, where string
 
 		switch read := node.(type) {
@@ -185,18 +185,18 @@ func (lowering *lowering) checkLazyViewReads() error {
 				refused = callableProducerViewRefusalError
 				return false
 			}
-			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
-			receiverTypeID = read.ViewReceiverTypeID
+			receiver, typeId, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
+			receiverTypeId = read.ViewReceiverTypeID
 
 		default:
 			return true
 		}
-		contract := program.ViewContractTypes[typeID]
+		contract := program.ViewContractTypes[typeId]
 		family := ""
 		if contract != 0 {
 			family = program.ViewContracts[contract-1].Unsupported
 		}
-		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
+		if receiverContract := program.ViewContractTypes[receiverTypeId]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
 		if family == "" {

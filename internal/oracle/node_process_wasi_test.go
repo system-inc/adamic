@@ -10,7 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestNodeProcessWASIAgreement(test *testing.T) {
+func TestNodeProcessWasiAgreement(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -38,7 +38,7 @@ func TestNodeProcessWASIAgreement(test *testing.T) {
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
-			got, reason := observeWASI(test, native.C(program))
+			got, reason := observeWasi(test, native.C(program))
 			// The handle fixtures have their own exact, asserted runtime refusal; it
 			// is not one of wasiRefusalReason's three filesystem refusals.
 			if want := wasiProcessRefusedFixtures[name]; want != "" &&
@@ -48,7 +48,7 @@ func TestNodeProcessWASIAgreement(test *testing.T) {
 				string(got.stderr) == "adamic: panic: wasm32-wasi: "+want+"\n" {
 				reason = want
 			}
-			if assertWASIRefusal(test, name, reason, wasiProcessRefusedFixtures) {
+			if assertWasiRefusal(test, name, reason, wasiProcessRefusedFixtures) {
 				return
 			}
 			truth := onNode(test, path)
@@ -59,7 +59,7 @@ func TestNodeProcessWASIAgreement(test *testing.T) {
 	}
 }
 
-func TestNodeProcessCachedDirectoryWASI(test *testing.T) {
+func TestNodeProcessCachedDirectoryWasi(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -99,7 +99,7 @@ func TestNodeProcessCachedDirectoryWASI(test *testing.T) {
 	}
 }
 
-func TestNodeProcessFreshRemovedCwdWASIRefusal(test *testing.T) {
+func TestNodeProcessFreshRemovedCwdWasiRefusal(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")

@@ -39,7 +39,7 @@ type corpus struct {
 	Programs []program `json:"programs"`
 }
 type manifest struct {
-	SHA       string   `json:"sha"`
+	Sha       string   `json:"sha"`
 	Generator string   `json:"generator"`
 	Corpora   []corpus `json:"corpora"`
 }
@@ -80,7 +80,7 @@ type report struct {
 	Classification        string             `json:"classification"`
 	Diff                  []program          `json:"diff"`
 	DiffCount             int                `json:"diff_count"`
-	DiffTSUnmatched       []string           `json:"diff_ts_unmatched"`
+	DiffTsUnmatched       []string           `json:"diff_ts_unmatched"`
 	CompileTimeoutSeconds float64            `json:"compile_timeout_seconds"`
 	RuntimeTimeoutSeconds float64            `json:"runtime_timeout_seconds"`
 	Base                  string             `json:"base"`
@@ -229,7 +229,7 @@ func run(args []string) error {
 	corpusFilter := flags.String("corpus-filter", "", "comma-separated corpus names; diff is always included")
 	shard := flags.String("shard", "", "partition non-diff inputs as i/N, 1-based")
 	budget := flags.Float64("budget", 0, "runtime budget in seconds; 0 means all, witnesses always run")
-	asJSON := flags.Bool("json", false, "emit JSON to stdout")
+	asJson := flags.Bool("json", false, "emit JSON to stdout")
 	limit := flags.Duration("timeout", 10*time.Second, "per-runtime command timeout")
 	workers := flags.Int("workers", runtime.GOMAXPROCS(0), "parallel classification workers")
 	compileLimit := flags.Duration("compile-timeout", 45*time.Second, "per-program compiler timeout")
@@ -366,8 +366,8 @@ func run(args []string) error {
 		if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
 			return decodeError
 		}
-		if manifest.SHA != result.Head {
-			return fmt.Errorf("manifest sha %s differs from head %s", manifest.SHA, result.Head)
+		if manifest.Sha != result.Head {
+			return fmt.Errorf("manifest sha %s differs from head %s", manifest.Sha, result.Head)
 		}
 		result.ManifestBlob, err = git(root, "hash-object", *manifestPath)
 		if err != nil {
@@ -434,7 +434,7 @@ func run(args []string) error {
 			}
 		}
 	}
-	result.Diff, result.DiffTSUnmatched, err = changedPrograms(root, result.Base, result.Head, listed)
+	result.Diff, result.DiffTsUnmatched, err = changedPrograms(root, result.Base, result.Head, listed)
 	if err != nil {
 		return err
 	}
@@ -679,7 +679,7 @@ func run(args []string) error {
 		result.Verdict, result.Void = "void", true
 	}
 	result.Phases["total"] = time.Since(startedAll).Seconds()
-	if *asJSON {
+	if *asJson {
 		if err = json.NewEncoder(os.Stdout).Encode(result); err != nil {
 			return err
 		}

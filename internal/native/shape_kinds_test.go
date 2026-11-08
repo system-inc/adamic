@@ -126,7 +126,7 @@ func producerSource(test *testing.T, name, path string) string {
 				index = functionIndex
 			}
 		}
-		code, wasiExportsError := WASIExports(program, []ABIExport{
+		code, wasiExportsError := WASIExports(program, []AbiExport{
 			{Name: "echo", Function: index, Parameters: []ABIField{{Name: "value", Type: record}}, Returns: record},
 		})
 		if wasiExportsError != nil {
@@ -398,14 +398,17 @@ func TestShapeKindsRecord(test *testing.T) { test.Parallel(); checkShapeProducer
 
 func TestShapeKindsRegExp(test *testing.T) { test.Parallel(); checkShapeProducer(test, "RegExp") }
 
-func TestShapeKindsTSGo(test *testing.T) { test.Parallel(); checkShapeProducer(test, "TSGo") }
+func TestShapeKindsTsGo(test *testing.T) { test.Parallel(); checkShapeProducer(test, "TSGo") }
 
 func TestShapeKindsNodeProcess(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "NodeProcess")
 }
 
-func TestShapeKindsNodeFS(test *testing.T) { test.Parallel(); checkShapeProducer(test, "NodeFS") }
+func TestShapeKindsNodeFileSystem(test *testing.T) {
+	test.Parallel()
+	checkShapeProducer(test, "NodeFS")
+}
 
 func TestShapeKindsNodeCrypto(test *testing.T) {
 	test.Parallel()
@@ -447,7 +450,7 @@ func TestShapeKindsShapeRegistry(test *testing.T) {
 	checkShapeProducer(test, "ShapeRegistry")
 }
 
-func TestShapeKindsJSON(test *testing.T) { test.Parallel(); checkShapeProducer(test, "JSON") }
+func TestShapeKindsJson(test *testing.T) { test.Parallel(); checkShapeProducer(test, "JSON") }
 
 func TestShapeKindsEmptyWeak(test *testing.T) { test.Parallel(); checkShapeProducer(test, "EmptyWeak") }
 
@@ -594,7 +597,7 @@ func TestShapeKindsConcurrentShapeRegistry(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "ConcurrentShapeRegistry")
 }
-func TestShapeKindsJSONRecordProbe(test *testing.T) {
+func TestShapeKindsJsonRecordProbe(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "JSONRecordProbe")
 }
@@ -606,7 +609,7 @@ func TestShapeKindsTupleViewProbe(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "TupleViewProbe")
 }
-func TestShapeKindsJSONEncoderProbe(test *testing.T) {
+func TestShapeKindsJsonEncoderProbe(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "JSONEncoderProbe")
 }
@@ -614,7 +617,7 @@ func TestShapeKindsAsyncFrameObjects(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "AsyncFrameObjects")
 }
-func TestShapeKindsWASIRecords(test *testing.T) {
+func TestShapeKindsWasiRecords(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "WASIRecords")
 }
@@ -655,12 +658,12 @@ func TestShapeKindsEnvironmentMixed(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "EnvironmentMixed")
 }
-func TestShapeKindsJSONDecoder(test *testing.T) {
+func TestShapeKindsJsonDecoder(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "JSONDecoder")
 }
 
-func TestShapeKindsNodeFSDirectory(test *testing.T) {
+func TestShapeKindsNodeFileSystemDirectory(test *testing.T) {
 	test.Parallel()
 	checkShapeProducer(test, "NodeFSDirectory")
 }

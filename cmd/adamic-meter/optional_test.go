@@ -252,7 +252,7 @@ func TestOptionalAdaptationPreservesLiveMethodPlacement(test *testing.T) {
 	}
 }
 
-func TestOptionalAdaptationUTF16AndAdamicExtension(test *testing.T) {
+func TestOptionalAdaptationUtf16AndAdamicExtension(test *testing.T) {
 	test.Parallel()
 	for _, extension := range []string{".ts", ".a", ".a.ts"} {
 		test.Run(extension, func(test *testing.T) {

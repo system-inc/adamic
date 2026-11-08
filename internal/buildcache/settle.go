@@ -134,7 +134,7 @@ func TreeState() (string, error) {
 					continue
 				}
 				if content, readError := os.ReadFile(filepath.Join(repository, name)); readError == nil {
-					state.WriteString("worktree " + name + " " + blobID(content, 40) + "\n")
+					state.WriteString("worktree " + name + " " + blobId(content, 40) + "\n")
 				} else {
 					state.WriteString("worktree " + name + " unreadable\n")
 				}

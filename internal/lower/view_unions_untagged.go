@@ -281,7 +281,7 @@ func (lowering *lowering) certifyUntaggedCallableProducers() {
 				continue
 			}
 			if lowering.checker.IsTypeAssignableTo(producer.proven, target) &&
-				lowering.untaggedCallableABI(producer.function, *contract) &&
+				lowering.untaggedCallableAbi(producer.function, *contract) &&
 				lowering.uniquelyAssignableCallable(producer.proven, id) {
 				contract.Functions = append(contract.Functions, producer.function)
 			}

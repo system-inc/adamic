@@ -66,7 +66,7 @@ func (lowering *lowering) checkMemberOverrides(
 	classType, base *checker.Type,
 	static bool,
 ) error {
-	checkABI := static ||
+	checkAbi := static ||
 		len(declaration.TypeParameters()) == 0 ||
 		classType != lowering.checker.GetTypeAtLocation(declaration.Name())
 	for _, member := range classMembersWithParameters(declaration) {
@@ -188,7 +188,7 @@ func (lowering *lowering) checkMemberOverrides(
 			}
 			from, okFrom := lowering.representation(previous)
 			to, okTo := lowering.representation(own)
-			if checkABI && (!okFrom || !okTo || from != to) {
+			if checkAbi && (!okFrom || !okTo || from != to) {
 				return lowering.notYet(member, "an inherited field override with a different native representation")
 			}
 		}
@@ -212,7 +212,7 @@ func (lowering *lowering) checkMemberOverrides(
 			override := lowering.checker.GetTypeOfSymbol(next.Parameters()[index])
 			a, knownA := lowering.overrideParameterRepresentation(parameter)
 			b, knownB := lowering.overrideParameterRepresentation(next.Parameters()[index])
-			if checkABI && (!knownA || !knownB || a != b) {
+			if checkAbi && (!knownA || !knownB || a != b) {
 				return lowering.notYet(member, "an override with a different native representation for parameter "+
 					strconv.Quote(next.Parameters()[index].Name)+
 					"; keep the base method's parameter form")
@@ -229,7 +229,7 @@ func (lowering *lowering) checkMemberOverrides(
 		newResult := lowering.checker.GetReturnTypeOfSignature(next)
 		a, knownA := lowering.overrideResultRepresentation(oldResult)
 		b, knownB := lowering.overrideResultRepresentation(newResult)
-		if checkABI && (!knownA || !knownB || a != b) {
+		if checkAbi && (!knownA || !knownB || a != b) {
 			return lowering.notYet(
 				member,
 				"an override with a different native result representation; keep the base method's result form",

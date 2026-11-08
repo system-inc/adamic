@@ -313,8 +313,8 @@ func checkOriginalManifest(test *testing.T, list string, cases []string, postpro
 				ast := left.(map[string]any)["ast"].(map[string]any)
 				statement := ast["body"].([]any)[0].(map[string]any)
 				if source == "x\r\n;" {
-					if !bytes.Equal(mustJSON(test, ast["range"]), []byte("[0,4]")) ||
-						!bytes.Equal(mustJSON(test, statement["range"]), []byte("[0,4]")) {
+					if !bytes.Equal(mustJson(test, ast["range"]), []byte("[0,4]")) ||
+						!bytes.Equal(mustJson(test, statement["range"]), []byte("[0,4]")) {
 						test.Fatal("CRLF gap changed")
 					}
 					ast["range"] = []int{0, 3}
@@ -325,12 +325,12 @@ func checkOriginalManifest(test *testing.T, list string, cases []string, postpro
 					}
 					statement["__contentEnd"] = 1
 				}
-				if !bytes.Equal(mustJSON(test, left), rightBytes) {
+				if !bytes.Equal(mustJson(test, left), rightBytes) {
 					test.Fatalf(
 						"known gap has additional differences: %s case %d: Go after exact known delta %s; library %s",
 						mode,
 						index,
-						mustJSON(test, left),
+						mustJson(test, left),
 						rightBytes,
 					)
 				}
@@ -349,7 +349,7 @@ func checkOriginalManifest(test *testing.T, list string, cases []string, postpro
 	}
 }
 
-func mustJSON(test *testing.T, value any) []byte {
+func mustJson(test *testing.T, value any) []byte {
 	test.Helper()
 	data, encodeError := json.Marshal(value)
 	if encodeError != nil {

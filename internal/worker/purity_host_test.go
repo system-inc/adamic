@@ -83,7 +83,7 @@ func TestWasmPurityRefusesStdoutWrites(test *testing.T) {
 	}
 }
 
-func TestWasmPurityRefusesStdoutTTYReads(test *testing.T) {
+func TestWasmPurityRefusesStdoutTtyReads(test *testing.T) {
 	test.Parallel()
 	builds := 0
 	buildWithError := BuildWith("testdata/wasm/host_stdout_istty.a", filepath.Join(test.TempDir(), "worker"), Options{

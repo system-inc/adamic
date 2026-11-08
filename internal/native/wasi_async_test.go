@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 		test.Fatal(absolutePathError)
 	}
 	runner := filepath.Join(repository, "oracle/wasi.mjs")
-	control := observeWASI(test, repository, "node", "--disable-warning=ExperimentalWarning", runner, module, "hooks")
+	control := observeWasi(test, repository, "node", "--disable-warning=ExperimentalWarning", runner, module, "hooks")
 	counts := regexp.MustCompile(
 		`^adamic: counts: allocations ([0-9]+) frees ([0-9]+) retains [0-9]+ releases [0-9]+ peak [0-9]+ regions 0\n$`,
 	).FindSubmatch(control.stderr)
@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
 	); buildError != nil {
 		test.Fatal(buildError)
 	}
-	leaked := observeWASI(test, repository, "node", "--disable-warning=ExperimentalWarning", runner, mutant, "hooks")
+	leaked := observeWasi(test, repository, "node", "--disable-warning=ExperimentalWarning", runner, mutant, "hooks")
 	leakCounts := regexp.MustCompile(`allocations ([0-9]+) frees ([0-9]+)`).FindSubmatch(leaked.stderr)
 	if leaked.exit != 0 ||
 		string(leaked.stdout) != string(control.stdout) ||
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
 		test.Fatalf("missing release mutant must fail only the leak count: %+v", leaked)
 	}
 	test.Logf("WASI host leak control: %s; missing release mutant: %s", control.stderr, leaked.stderr)
-	refused := observeWASI(test, repository, "node", "--disable-warning=ExperimentalWarning", runner, module)
+	refused := observeWasi(test, repository, "node", "--disable-warning=ExperimentalWarning", runner, module)
 	if refused.exit != 70 ||
 		len(refused.stdout) != 0 ||
 		!strings.Contains(string(refused.stderr), "WASI host promises require wake and wait loop hooks") {

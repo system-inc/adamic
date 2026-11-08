@@ -8,7 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (nativeEmitter *emitter) nodeFSFile(call ir.NodeFSFile) string {
+func (nativeEmitter *emitter) nodeFileSystemFile(call ir.NodeFSFile) string {
 	args := make([]string, len(call.Arguments))
 	for index, argument := range call.Arguments {
 		args[index] = nativeEmitter.value(argument)

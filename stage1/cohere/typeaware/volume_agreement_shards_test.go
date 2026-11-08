@@ -111,7 +111,7 @@ func volumeAgreementOwner(key string) int {
 	sum := sha256.Sum256([]byte(key))
 	return int(sum[0]) % volumeAgreementShards
 }
-func volumeAgreementIDs(shard int) []string {
+func volumeAgreementIds(shard int) []string {
 	var keys []string
 	for _, key := range volumeAgreementKeys() {
 		if volumeAgreementOwner(key) == shard {
@@ -134,7 +134,7 @@ func TestVolumeAgreementAndMutantsUnion(test *testing.T) {
 	seen := map[string]int{}
 	caught := 0
 	for shard := 0; shard < volumeAgreementShards; shard++ {
-		for _, key := range volumeAgreementIDs(shard) {
+		for _, key := range volumeAgreementIds(shard) {
 			seen[key]++
 			if key == "property-shape" &&
 				volumeAgreementSurvived(result{stdout: []byte("planted")}, result{stdout: []byte("planted")}) != nil {
@@ -234,12 +234,12 @@ const program = tsgoProgram(config, rootsManifest.text.split('\n').filter((path)
 		if loadError != nil {
 			return loadError
 		}
-		loaded.EnableTSGo()
+		loaded.EnableTsGo()
 		program, lowerError := lower.Lower(context.Background(), loaded)
 		if lowerError != nil {
 			return lowerError
 		}
-		source, tsGoCError := native.TSGoC(program)
+		source, tsGoCError := native.TsGoC(program)
 		if tsGoCError != nil {
 			return tsGoCError
 		}
@@ -360,7 +360,7 @@ func volumeAgreementManifest(harness *volumeGuardHarness) string {
 	return harness.write("controls.manifest", strings.Join(paths, "\n")+"\n")
 }
 func runVolumeAgreementShard(test *testing.T, shard int) {
-	keys := volumeAgreementIDs(shard)
+	keys := volumeAgreementIds(shard)
 	if len(keys) == 0 {
 		test.Log("own work=0s (empty hash bucket)")
 		return

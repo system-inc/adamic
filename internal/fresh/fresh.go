@@ -1473,7 +1473,7 @@ func (analysis *analysis) value(expression ir.Expression) value {
 	case ir.NodeHostCall:
 		return analysis.call(analysis.operands(expression), expression.Type())
 	case ir.NodeFSFile:
-		return analysis.nodeFSFile(expression)
+		return analysis.nodeFileSystemFile(expression)
 	case ir.FileStatus:
 		analysis.value(expression.Path)
 		return analysis.fresh(anyField, value{})

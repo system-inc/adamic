@@ -12,7 +12,7 @@ import (
 )
 
 // Mutants preserve valid execution and ownership; only Node stdout catches them.
-func TestNodeFSDirectorySymlinkMutants(test *testing.T) {
+func TestNodeFileSystemDirectorySymlinkMutants(test *testing.T) {
 	test.Parallel()
 	cases := []struct{ name, body string }{
 		{
@@ -92,7 +92,7 @@ func TestNodeFSDirectorySymlinkMutants(test *testing.T) {
 				test.Fatal(buildError)
 			}
 			how := prepare("mutant-input")
-			got := executeInput(test, how, nodeFSDirectorySanitizerEnvironment(), binary, how.arguments...)
+			got := executeInput(test, how, nodeFileSystemDirectorySanitizerEnvironment(), binary, how.arguments...)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}

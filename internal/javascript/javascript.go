@@ -1082,7 +1082,7 @@ func (javascriptEmitter *emitter) value(expression ir.Expression) string {
 	case ir.NodeHostCall:
 		return javascriptEmitter.nodeHostCall(expression)
 	case ir.NodeFSFile:
-		return javascriptEmitter.nodeFSFile(expression)
+		return javascriptEmitter.nodeFileSystemFile(expression)
 	case ir.Await:
 		return "(await " + javascriptEmitter.value(expression.Value) + ")"
 	case ir.Yield:

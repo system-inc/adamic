@@ -91,7 +91,7 @@ func cssParserUnionError(keys []string, units []oracles.ParserShard, witnesses [
 	}
 	return nil
 }
-func verifyCSSParserUnion(test *testing.T, keys []string, units []oracles.ParserShard, witnesses [][]int) {
+func verifyCssParserUnion(test *testing.T, keys []string, units []oracles.ParserShard, witnesses [][]int) {
 	test.Helper()
 	if len(units) != oracles.ParserShardCount {
 		test.Fatalf("enumerated %d shards, constant %d", len(units), oracles.ParserShardCount)
@@ -116,7 +116,7 @@ func verifyCSSParserUnion(test *testing.T, keys []string, units []oracles.Parser
 		len(units),
 	)
 }
-func selectCSSParserShards(value string, units []oracles.ParserShard) ([]oracles.ParserShard, error) {
+func selectCssParserShards(value string, units []oracles.ParserShard) ([]oracles.ParserShard, error) {
 	if value == "" {
 		return units, nil
 	}
@@ -137,9 +137,9 @@ func selectCSSParserShards(value string, units []oracles.ParserShard) ([]oracles
 	}
 	return selected, nil
 }
-func selectedCSSParserShards(test *testing.T, units []oracles.ParserShard) []oracles.ParserShard {
+func selectedCssParserShards(test *testing.T, units []oracles.ParserShard) []oracles.ParserShard {
 	test.Helper()
-	selected, selectCssParserShardsError := selectCSSParserShards(os.Getenv("ADAMIC_TEST_SHARD"), units)
+	selected, selectCssParserShardsError := selectCssParserShards(os.Getenv("ADAMIC_TEST_SHARD"), units)
 	if selectCssParserShardsError != nil {
 		test.Fatal(selectCssParserShardsError)
 	}
@@ -154,7 +154,7 @@ func cssParserDifference(unit oracles.ParserShard, got, want string) string {
 	return ""
 }
 
-func checkCSSParserPostCSS(test *testing.T, unit oracles.ParserShard, inputs []string, want, got string) {
+func checkCssParserPostCss(test *testing.T, unit oracles.ParserShard, inputs []string, want, got string) {
 	test.Helper()
 	goLines := strings.Split(strings.TrimSuffix(want, "\n"), "\n")
 	jsLines := strings.Split(strings.TrimSuffix(got, "\n"), "\n")
@@ -189,7 +189,7 @@ func checkCSSParserPostCSS(test *testing.T, unit oracles.ParserShard, inputs []s
 
 type cssParserProgram struct{ name, main, c, javascript string }
 
-func buildCSSParserProgram(test *testing.T, name, directory string) cssParserProgram {
+func buildCssParserProgram(test *testing.T, name, directory string) cssParserProgram {
 	test.Helper()
 	main := filepath.Join(directory, "main.ts")
 	var files []string
@@ -237,7 +237,7 @@ func buildCSSParserProgram(test *testing.T, name, directory string) cssParserPro
 		javascript: filepath.Join(dir, "program.mjs"),
 	}
 }
-func buildCSSParserBinaries(test *testing.T, programs []cssParserProgram) []string {
+func buildCssParserBinaries(test *testing.T, programs []cssParserProgram) []string {
 	test.Helper()
 	options := native.Options{Sanitize: true}
 	var binaries []string
@@ -259,7 +259,7 @@ func buildCSSParserBinaries(test *testing.T, programs []cssParserProgram) []stri
 	return binaries
 }
 
-func buildCSSParserUnsanitized(test *testing.T, program cssParserProgram) string {
+func buildCssParserUnsanitized(test *testing.T, program cssParserProgram) string {
 	test.Helper()
 	options := native.Options{}
 	dir := oracles.ParserProduct(test, oracles.ParserProductInputs{
@@ -276,7 +276,7 @@ func buildCSSParserUnsanitized(test *testing.T, program cssParserProgram) string
 	})
 	return filepath.Join(dir, "parser")
 }
-func cssParserASAN(leaks bool) []string {
+func cssParserAsan(leaks bool) []string {
 	if runtime.GOOS != "linux" {
 		return nil
 	}
@@ -285,7 +285,7 @@ func cssParserASAN(leaks bool) []string {
 	}
 	return []string{"ASAN_OPTIONS=detect_leaks=0"}
 }
-func checkCSSParserLeaks(test *testing.T, sanitized, unsanitized string, args ...string) {
+func checkCssParserLeaks(test *testing.T, sanitized, unsanitized string, args ...string) {
 	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
@@ -310,7 +310,7 @@ func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
 	if len(units) != oracles.ParserShardCount {
 		test.Fatalf("shard count %d", len(units))
 	}
-	verifyCSSParserUnion(test, keys, units, witnesses)
+	verifyCssParserUnion(test, keys, units, witnesses)
 	for mutation, ids := range witnesses {
 		test.Logf(
 			"mutant %s: %d witnesses in shard-%03d",
@@ -408,7 +408,7 @@ func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
 	for _, n := range []int{1, 2, 7, len(units) + 1} {
 		var all []oracles.ParserShard
 		for index := 0; index < n; index++ {
-			selected, selectCssParserShardsError := selectCSSParserShards(fmt.Sprintf("%d/%d", index, n), units)
+			selected, selectCssParserShardsError := selectCssParserShards(fmt.Sprintf("%d/%d", index, n), units)
 			if selectCssParserShardsError != nil {
 				test.Fatal(selectCssParserShardsError)
 			}
@@ -419,12 +419,12 @@ func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
 		}
 	}
 	for _, bad := range []string{"1", "0/0", "-1/2", "2/2", "x/2", "0/1/2"} {
-		if _, selectCssParserShardsError := selectCSSParserShards(bad, units); selectCssParserShardsError == nil {
+		if _, selectCssParserShardsError := selectCssParserShards(bad, units); selectCssParserShardsError == nil {
 			test.Fatalf("accepted %q", bad)
 		}
 	}
 }
-func TestCSSParserPlantedDisagreement(test *testing.T) {
+func TestCssParserPlantedDisagreement(test *testing.T) {
 	test.Parallel()
 	corpus := oracles.LoadParserCorpus(test)
 	units := oracles.ParserAgreementShards(corpus.CaseKeys)

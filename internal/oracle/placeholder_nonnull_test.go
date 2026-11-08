@@ -402,7 +402,7 @@ func assertSlice5Witness(test *testing.T, fixture string) {
 			Declaration  string `json:"declaration"`
 			RepairFrom   string `json:"repair_from"`
 			RepairTo     string `json:"repair_to"`
-			RepairSHA256 string `json:"type_correct_sha256"`
+			RepairSha256 string `json:"type_correct_sha256"`
 			Exit         int    `json:"exit"`
 			Stderr       string `json:"stderr"`
 		} `json:"witnesses"`
@@ -447,8 +447,8 @@ func assertSlice5Witness(test *testing.T, fixture string) {
 	}
 	repaired := strings.ReplaceAll(string(source), entry.RepairFrom, entry.RepairTo)
 	repairHash := fmt.Sprintf("%x", sha256.Sum256([]byte(repaired)))
-	if repairHash != entry.RepairSHA256 {
-		test.Fatalf("repair hash %s, want %s", repairHash, entry.RepairSHA256)
+	if repairHash != entry.RepairSha256 {
+		test.Fatalf("repair hash %s, want %s", repairHash, entry.RepairSha256)
 	}
 	if _, listed := ledger.Witnesses[repairHash]; listed {
 		test.Fatal("type-correct repair is listed as a negative witness")

@@ -20,7 +20,7 @@ func jsonTypes(test testing.TB) string {
 	}
 	return filepath.Join(findWorkerProduct(test, inputs), "json-types")
 }
-func TestProduct_WorkerJSONTypes(test *testing.T) {
+func TestProduct_WorkerJsonTypes(test *testing.T) {
 	test.Parallel()
 	buildcache.GoBuild(test, "json-types", "./oracle/json_types.go", nil)
 }
@@ -38,4 +38,4 @@ func jsonTypesEnvironment(test testing.TB, path string) []string {
 }
 
 // TestMain selects the installed SDK; all build inputs remain TestProduct_ units.
-func TestMain(suite *testing.M) { testtools.ConfigureWASI(); os.Exit(suite.Run()) }
+func TestMain(suite *testing.M) { testtools.ConfigureWasi(); os.Exit(suite.Run()) }

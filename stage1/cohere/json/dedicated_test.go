@@ -294,7 +294,7 @@ func jsonPortPartsUnion(parts map[jsonPortPart][]int) error {
 
 // A split owner checks what one test running the whole checked: the parts are the whole between them, and a side
 // dropped from a part, or run in both, fails here.
-func TestJSONPortPartsAreTheWhole(test *testing.T) {
+func TestJsonPortPartsAreTheWhole(test *testing.T) {
 	test.Parallel()
 	if !slices.Equal(jsonPortPartSides[jsonPortWhole], []int{0, 1, 2, 3, 4}) {
 		test.Fatalf("the whole runs sides %v, want all five", jsonPortPartSides[jsonPortWhole])

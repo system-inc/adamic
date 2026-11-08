@@ -190,14 +190,14 @@ func (builder *ssaBuilder) run() {
 	if !ok {
 		return
 	}
-	builder.states[entry.Id] = newSSAState()
+	builder.states[entry.Id] = newSsaState()
 	for index := range builder.function.Params {
 		builder.defineIn(entry.Id, &builder.function.Params[index])
 	}
 
 	for _, block := range builder.function.Blocks {
 		if _, exists := builder.states[block.Id]; !exists {
-			builder.states[block.Id] = newSSAState()
+			builder.states[block.Id] = newSsaState()
 		}
 		builder.visited[block.Id] = true
 
@@ -251,7 +251,7 @@ func (builder *ssaBuilder) run() {
 	}
 }
 
-func newSSAState() *ssaState {
+func newSsaState() *ssaState {
 	return &ssaState{defs: map[DeclarationId]IdentifierId{}}
 }
 
@@ -330,7 +330,7 @@ func (builder *ssaBuilder) valueAt(place *Place, blockId BlockId) IdentifierId {
 
 	state, ok := builder.states[blockId]
 	if !ok {
-		state = newSSAState()
+		state = newSsaState()
 		builder.states[blockId] = state
 	}
 	if renamed, defined := state.defs[binding]; defined {

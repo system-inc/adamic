@@ -162,7 +162,7 @@ func (normalizer *asyncNormalizer) expression(value ir.Expression, out *[]ir.Sta
 	// A structural method needs a bound receiver and callee snapshot together.
 	// Do not silently turn that operation into a plain property read.
 	var methodOperand bool
-	inspectAsyncIR(reflect.ValueOf(value), func(node any) {
+	inspectAsyncIr(reflect.ValueOf(value), func(node any) {
 		if property, ok := node.(ir.Property); ok && property.Method {
 			methodOperand = true
 		}
@@ -340,7 +340,7 @@ func (normalizer *asyncNormalizer) statements(statements []ir.Statement) ([]ir.S
 					normalizer.program.Locals[local].EnvironmentCell = false
 				}
 			}
-			inspectAsyncIR(reflect.ValueOf([][]ir.Statement{value.Test, value.Body, value.Update}), func(node any) {
+			inspectAsyncIr(reflect.ValueOf([][]ir.Statement{value.Test, value.Body, value.Update}), func(node any) {
 				switch binding := node.(type) {
 				case ir.Declare:
 					mark(binding.Local)
@@ -527,23 +527,23 @@ func (normalizer *asyncNormalizer) statements(statements []ir.Statement) ([]ir.S
 	return out, nil
 }
 
-func inspectAsyncIR(value reflect.Value, visit func(any)) {
+func inspectAsyncIr(value reflect.Value, visit func(any)) {
 	if !value.IsValid() {
 		return
 	}
 	switch value.Kind() {
 	case reflect.Interface, reflect.Pointer:
 		if !value.IsNil() {
-			inspectAsyncIR(value.Elem(), visit)
+			inspectAsyncIr(value.Elem(), visit)
 		}
 	case reflect.Struct:
 		visit(value.Interface())
 		for index := 0; index < value.NumField(); index++ {
-			inspectAsyncIR(value.Field(index), visit)
+			inspectAsyncIr(value.Field(index), visit)
 		}
 	case reflect.Slice, reflect.Array:
 		for index := 0; index < value.Len(); index++ {
-			inspectAsyncIR(value.Index(index), visit)
+			inspectAsyncIr(value.Index(index), visit)
 		}
 	}
 }
@@ -557,7 +557,7 @@ type AsyncError struct {
 func (asyncError *AsyncError) Error() string { return asyncError.What }
 func asyncSourceSite(value any) int {
 	site := 0
-	inspectAsyncIR(reflect.ValueOf(value), func(node any) {
+	inspectAsyncIr(reflect.ValueOf(value), func(node any) {
 		if awaited, ok := node.(ir.Await); ok && site == 0 {
 			site = awaited.Site
 		}

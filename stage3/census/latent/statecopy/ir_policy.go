@@ -11,9 +11,9 @@ import (
 type irCopyPolicy uint8
 
 const (
-	copiedIR irCopyPolicy = iota // Assignment owns all scalar data, including immutable aggregates.
-	deepIR                       // Own mutable descendants; shared identities and empty caches obey irPrivateFields.
-	sharedIR                     // Preserve an audited immutable owning pointer's identity.
+	copiedIr irCopyPolicy = iota // Assignment owns all scalar data, including immutable aggregates.
+	deepIr                       // Own mutable descendants; shared identities and empty caches obey irPrivateFields.
+	sharedIr                     // Preserve an audited immutable owning pointer's identity.
 )
 
 type irFieldPolicy struct {
@@ -60,7 +60,7 @@ func irImmutable(expr ast.Expr, types map[string]ast.Expr, visiting map[string]b
 	return false
 }
 
-func (generator *generator) checkIRFields(positions *token.FileSet, policies map[string]irFieldPolicy) {
+func (generator *generator) checkIrFields(positions *token.FileSet, policies map[string]irFieldPolicy) {
 	for owner, expression := range generator.irTypes {
 		structure, ok := expression.(*ast.StructType)
 		if !ok || !ast.IsExported(owner) {
@@ -95,15 +95,15 @@ func (generator *generator) checkIRFields(positions *token.FileSet, policies map
 				}
 				immutable := irImmutable(field.Type, generator.irTypes, map[string]bool{})
 				switch policy.Copy {
-				case copiedIR:
+				case copiedIr:
 					if !immutable {
 						fail("copied policy would alias mutable state; use a deep copy or audited shared pointer")
 					}
-				case deepIR:
+				case deepIr:
 					if immutable {
 						fail("deep policy names an immutable value; review its copy policy")
 					}
-				case sharedIR:
+				case sharedIr:
 					if printed(field.Type) != "*GeneratedType" ||
 						irPrivateFields["GeneratedType.identity"] != privateShared {
 						fail("shared policy lacks an audited immutable pointer identity")
@@ -132,7 +132,7 @@ func (generator *generator) specFunctionCopy(body *strings.Builder) {
 				continue
 			} // Audited private caches start zero.
 			expression := "value." + id.Name
-			if irSpecFields["Function."+id.Name].Copy == deepIR {
+			if irSpecFields["Function."+id.Name].Copy == deepIr {
 				expression = "latentCopyIR(" + expression + ",seen)"
 			}
 			fmt.Fprintf(body, "result.%s=%s;", id.Name, expression)
@@ -157,7 +157,7 @@ func (generator *generator) specMutableFields(body *strings.Builder) {
 		index := 0
 		for _, field := range generator.irTypes[name].(*ast.StructType).Fields.List {
 			for _, id := range field.Names {
-				if !id.IsExported() || irSpecFields[name+"."+id.Name].Copy == deepIR {
+				if !id.IsExported() || irSpecFields[name+"."+id.Name].Copy == deepIr {
 					fmt.Fprintf(body, "%d,", index)
 				}
 				index++

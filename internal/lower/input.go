@@ -25,8 +25,8 @@ func (lowering *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 	if value, found, nodeHostError := lowering.nodeHost(node); found {
 		return value, true, nodeHostError
 	}
-	if value, found, nodeFsFileError := lowering.nodeFSFile(node); found {
-		return value, true, nodeFsFileError
+	if value, found, nodeFileSystemFileError := lowering.nodeFileSystemFile(node); found {
+		return value, true, nodeFileSystemFileError
 	}
 	if value, found, encodeJsonError := lowering.encodeJson(node); found {
 		return value, true, encodeJsonError

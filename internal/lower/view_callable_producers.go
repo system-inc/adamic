@@ -7,7 +7,7 @@ import (
 
 // Checker assignability does not adapt packed native arguments. Membership
 // certification is sound only if the implementation and view use the same ABI.
-func (lowering *lowering) untaggedCallableABI(index int, contract ir.ViewContract) bool {
+func (lowering *lowering) untaggedCallableAbi(index int, contract ir.ViewContract) bool {
 	function := lowering.result.Functions[index]
 	if !function.Closure ||
 		function.Receiver ||
@@ -130,7 +130,7 @@ func (lowering *lowering) callableProducerViewRefusal(graph *allocationFlowGraph
 								exactMembers[member] = true
 							}
 							compatible = compatible ||
-								lowering.untaggedCallableABI(function, lowering.result.ViewContracts[member-1])
+								lowering.untaggedCallableAbi(function, lowering.result.ViewContracts[member-1])
 						}
 					}
 				}
@@ -157,7 +157,7 @@ func (lowering *lowering) callableProducerViewRefusal(graph *allocationFlowGraph
 						}
 					}
 					for member := range exactMembers {
-						compatible = lowering.untaggedCallableABI(function, lowering.result.ViewContracts[member-1])
+						compatible = lowering.untaggedCallableAbi(function, lowering.result.ViewContracts[member-1])
 					}
 				}
 				if len(assignableMembers) != 0 && !compatible {

@@ -12,7 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func TestDebugIRFlow(test *testing.T) {
+func TestDebugIrFlow(test *testing.T) {
 	test.Parallel()
 	source, readError := os.ReadFile("../oracle/testdata/graph_regions_list.a")
 	if readError != nil {
@@ -35,7 +35,7 @@ func TestDebugIRFlow(test *testing.T) {
 	for index := -1; index < len(program.Functions); index++ {
 		graph := flow.Build(program, index)
 		flow.Construct(graph)
-		if problems := flow.VerifySSA(graph); len(problems) > 0 {
+		if problems := flow.VerifySsa(graph); len(problems) > 0 {
 			test.Fatal(problems)
 		}
 		flow.InferAliasingEffects(graph)

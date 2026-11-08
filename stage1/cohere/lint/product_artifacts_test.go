@@ -50,7 +50,7 @@ func requireLintReferences(test *testing.T, directory string) {
 	requireLintArtifacts(test, directory, names...)
 }
 
-func requireLintJSXBundle(test *testing.T, directory string) {
+func requireLintJsxBundle(test *testing.T, directory string) {
 	test.Helper()
 	requireLintArtifacts(test, directory, "bundle.json")
 	requireLintExecutable(test, filepath.Join(directory, "native"))

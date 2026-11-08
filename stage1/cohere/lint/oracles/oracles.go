@@ -114,7 +114,7 @@ func guardedRun(commandName string, directory string, environment []string, args
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err = testguard.PrepareCPU(command, testguard.Budget); err != nil {
+	if err = testguard.PrepareCpu(command, testguard.Budget); err != nil {
 		return nil, err
 	}
 	err = childguard.Run(

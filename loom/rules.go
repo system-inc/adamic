@@ -14,7 +14,7 @@ import (
 )
 
 //go:embed rules.json
-var rulesJSON []byte
+var rulesJson []byte
 
 // Rules is rules.json: every rule the file sets, each in the shape the queue's POST /rules takes for it.
 type Rules struct {
@@ -115,7 +115,7 @@ type RestackRule struct {
 
 // ReadRules is rules.json as landed with this package.
 func ReadRules() (Rules, error) {
-	return ParseRules(rulesJSON)
+	return ParseRules(rulesJson)
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
@@ -244,7 +244,7 @@ func ParseRules(data []byte) (Rules, error) {
 	}
 	seen := map[string]bool{}
 	for _, change := range rules.First {
-		if !changeIDPattern.MatchString(change) || seen[change] {
+		if !changeIdPattern.MatchString(change) || seen[change] {
 			return Rules{}, fmt.Errorf(
 				"rules.json: first names change ids (chg_ and 26 base32 characters), each once, not %q",
 				change,
@@ -296,8 +296,8 @@ func checkWitness(raw json.RawMessage) error {
 	return nil
 }
 
-// changeIDPattern is a change id as the queue mints it, the lander's own test (Loom's lander/rules.go).
-var changeIDPattern = regexp.MustCompile(`^chg_[0-9a-hjkmnp-tv-z]{26}$`)
+// changeIdPattern is a change id as the queue mints it, the lander's own test (Loom's lander/rules.go).
+var changeIdPattern = regexp.MustCompile(`^chg_[0-9a-hjkmnp-tv-z]{26}$`)
 
 // builderPattern is a box name as a coordinator token's box claim carries it, the Loom Worker's Token.ts BoxPattern and
 // the lander's own (Node on #kqsehcq), so a rules name no token can carry is refused rather than never leased.

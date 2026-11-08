@@ -18,7 +18,7 @@ import (
 
 const repository = "../../.."
 
-const testCSSStringsShards = 291
+const testCssStringsShards = 291
 
 // run is one execution's observable behavior.
 type run struct {
@@ -95,13 +95,13 @@ func enumerateStrings(test *testing.T) stringsCorpus {
 // Contiguous ranges are fixed by cohere commit 0183ccf8c57a775f874ca73be1adfc06e9ad1562
 // and the generated grammar in enumerateStrings.
 
-func prepareCSSStringsSetup(test *testing.T) {
+func prepareCssStringsSetup(test *testing.T) {
 	test.Helper()
 	stringsTopSetup.once.Do(func() {
 		corpus := enumerateStrings(test)
 		units := stringsUnits(corpus)
-		if len(units) != testCSSStringsShards {
-			test.Fatalf("enumerated %d shards, declared %d", len(units), testCSSStringsShards)
+		if len(units) != testCssStringsShards {
+			test.Fatalf("enumerated %d shards, declared %d", len(units), testCssStringsShards)
 		}
 		verifyStringsUnion(test, corpus, units)
 		dir := stringsTopTempDir(test)
@@ -275,10 +275,10 @@ func prepareCSSStringsSetup(test *testing.T) {
 	})
 }
 
-func runCSSStringsShard(test *testing.T, ordinal int) {
+func runCssStringsShard(test *testing.T, ordinal int) {
 	test.Helper()
 	// Fetch shared products once per process before starting this shard's clock.
-	prepareCSSStringsSetup(test)
+	prepareCssStringsSetup(test)
 	if stringsTopSetup.run == nil {
 		test.Fatal("shared setup did not complete")
 	}

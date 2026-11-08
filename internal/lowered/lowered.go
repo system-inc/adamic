@@ -313,7 +313,7 @@ func loaded(directory string, read sources, options Options) (*load.Program, err
 		}
 	}
 	if options.TSGo {
-		program.EnableTSGo()
+		program.EnableTsGo()
 	}
 	return program, nil
 }

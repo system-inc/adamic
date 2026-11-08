@@ -29,7 +29,7 @@ func runWASIAgreesShard(test *testing.T, shard int) {
 			}
 		}
 	}
-	runWASIFixtures(test, familyCases(test, "TestWASIAgreesWithNode", shard, fixturePaths()), mutate)
+	runWasiFixtures(test, familyCases(test, "TestWASIAgreesWithNode", shard, fixturePaths()), mutate)
 }
 
 func wasiFixtureDifference(name string, expected, actual run) error {
@@ -51,7 +51,7 @@ func wasiFixtureDifference(name string, expected, actual run) error {
 
 // Setup belongs inside the selected shard, including the Node helper's native
 // runtime identity. No result-cache bypass or runtime-cache policy changes here.
-func runWASIFixtures(test *testing.T, rows []int, mutate func(string, *ir.Program)) {
+func runWasiFixtures(test *testing.T, rows []int, mutate func(string, *ir.Program)) {
 	test.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
@@ -105,12 +105,12 @@ func runWASIFixtures(test *testing.T, rows []int, mutate func(string, *ir.Progra
 			if mutate != nil {
 				mutate(fixture.path, program)
 			}
-			actual, reason := observeWASI(test, native.C(program))
-			if assertWASIRefusal(test, fixture.path, reason, wasiRefusedFixtures) {
+			actual, reason := observeWasi(test, native.C(program))
+			if assertWasiRefusal(test, fixture.path, reason, wasiRefusedFixtures) {
 				return
 			}
 			if fixture.path == "internal/oracle/testdata/host_stdout/closed.a" {
-				stdoutWASIClosedPipe(test, native.C(program))
+				stdoutWasiClosedPipe(test, native.C(program))
 			}
 			if wasiFixtureDifferenceError := wasiFixtureDifference(
 				test.Name(),
@@ -123,10 +123,10 @@ func runWASIFixtures(test *testing.T, rows []int, mutate func(string, *ir.Progra
 	}
 }
 
-func observeWASI(test *testing.T, source string) (run, string) {
+func observeWasi(test *testing.T, source string) (run, string) {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "program.wasm")
-	if reason := buildWASI(test, source, binary); reason != "" {
+	if reason := buildWasi(test, source, binary); reason != "" {
 		return run{}, reason
 	}
 	actual := execute(
@@ -140,9 +140,9 @@ func observeWASI(test *testing.T, source string) (run, string) {
 }
 
 // Callers without a named refusal must execute; no host regression becomes a skip.
-func onWASI(test *testing.T, source string) run {
+func onWasi(test *testing.T, source string) run {
 	test.Helper()
-	actual, reason := observeWASI(test, source)
+	actual, reason := observeWasi(test, source)
 	if reason != "" {
 		test.Fatalf("unlisted wasm32 refusal: %s", reason)
 	}
@@ -167,23 +167,23 @@ func wasiOracleCatchesMutant(test *testing.T, exit bool) {
 	if exit {
 		if difference := disagreement(
 			expected,
-			onWASI(test, "int main(void) { return 23; }\n"),
+			onWasi(test, "int main(void) { return 23; }\n"),
 		); difference != "exit codes differ" {
 			test.Fatalf("exit mutant: got %q", difference)
 		}
 	} else {
 		program.Strings[0] += "!"
-		if difference := disagreement(expected, onWASI(test, native.C(program))); difference != "stdout differs" {
+		if difference := disagreement(expected, onWasi(test, native.C(program))); difference != "stdout differs" {
 			test.Fatalf("byte mutant: got %q", difference)
 		}
 	}
 }
 
-func TestWASIOracleCatchesMutants_000(test *testing.T) {
+func TestWasiOracleCatchesMutants_000(test *testing.T) {
 	test.Parallel()
 	wasiOracleCatchesMutant(test, false)
 }
-func TestWASIOracleCatchesMutants_001(test *testing.T) {
+func TestWasiOracleCatchesMutants_001(test *testing.T) {
 	test.Parallel()
 	wasiOracleCatchesMutant(test, true)
 }

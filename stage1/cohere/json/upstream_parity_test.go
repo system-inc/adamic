@@ -49,7 +49,7 @@ type jsonUpstreamReport struct {
 	blocks map[string]string
 }
 
-func readJSONUpstreamReport(path string) (jsonUpstreamReport, error) {
+func readJsonUpstreamReport(path string) (jsonUpstreamReport, error) {
 	text, blocks, readUpstreamReportError := oracles.ReadUpstreamReport(path)
 	return jsonUpstreamReport{text, blocks}, readUpstreamReportError
 }
@@ -86,7 +86,7 @@ func TestProduct_JsonFindsUpstreamParityVerdict(test *testing.T) {
 func TestUpstreamRepositoryCorpusParity(test *testing.T) {
 	test.Parallel()
 	directory := jsonUpstreamParityProduct(test)
-	known, readJsonUpstreamReportError := readJSONUpstreamReport("known-upstream-differences.txt")
+	known, readJsonUpstreamReportError := readJsonUpstreamReport("known-upstream-differences.txt")
 	if readJsonUpstreamReportError != nil {
 		test.Fatal(readJsonUpstreamReportError)
 	}
@@ -115,7 +115,7 @@ func TestUpstreamRepositoryCorpusParity(test *testing.T) {
 // corpus.pin, the Prettier pin, the allowed list, the known report and the Prettier driver. A pin is a flag, so it
 // moves the name key (what a runner finds the verdict by) and the declared key (what this machine alone builds it by);
 // a file moves the declared key, and the traced read set the runner's. Keying builds nothing.
-func TestJSONUpstreamParityRekeys(test *testing.T) {
+func TestJsonUpstreamParityRekeys(test *testing.T) {
 	test.Parallel()
 	repositoryRoot, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
@@ -233,9 +233,9 @@ func TestJSONUpstreamParityRekeys(test *testing.T) {
 // The verdict fails on a changed Prettier answer, wherever it lands: on a case that agreed (an unlisted difference),
 // on a known difference (its block changed), or closing one (a known difference gone). The answers are the known
 // report's own, read back, beside two cases on which Go and Prettier agree.
-func TestJSONUpstreamVerdictCatchesChangedAnswers(test *testing.T) {
+func TestJsonUpstreamVerdictCatchesChangedAnswers(test *testing.T) {
 	test.Parallel()
-	known, err := readJSONUpstreamReport("known-upstream-differences.txt")
+	known, err := readJsonUpstreamReport("known-upstream-differences.txt")
 	if err != nil {
 		test.Fatal(err)
 	}

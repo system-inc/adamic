@@ -167,7 +167,7 @@ func processExitSafeIntegerAgreement(test *testing.T, program *ir.Program, truth
 		if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 			test.Skip("set ADAMIC_ORACLE_WASI=1")
 		}
-		check("wasm32", onWASI(test, native.C(program)))
+		check("wasm32", onWasi(test, native.C(program)))
 	default:
 		test.Fatalf("unknown safe-integer shard %d", shard)
 	}

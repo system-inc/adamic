@@ -8,7 +8,7 @@ import (
 
 const fx5NumberLiteral = "const items: (string | number)[] = [1, 2];\nconsole.log(`${typeof items[0]} ${items[0]}`);\n"
 
-func TestFX5NumberLiteralRefused(test *testing.T) {
+func TestFx5NumberLiteralRefused(test *testing.T) {
 	test.Parallel()
 	_, lowerSourceError := lowerSource(test, fx5NumberLiteral)
 	var refusal *Refused
@@ -20,7 +20,7 @@ func TestFX5NumberLiteralRefused(test *testing.T) {
 	}
 }
 
-func TestFX5NumberValueRefused(test *testing.T) {
+func TestFx5NumberValueRefused(test *testing.T) {
 	test.Parallel()
 	_, lowerSourceError := lowerSource(
 		test,
@@ -35,7 +35,7 @@ func TestFX5NumberValueRefused(test *testing.T) {
 	}
 }
 
-func TestFX5MixedLiteralAgrees(test *testing.T) {
+func TestFx5MixedLiteralAgrees(test *testing.T) {
 	test.Parallel()
 	// Only native observes whether union readers match the literal's physical layout.
 	lowersAndAgreesWithNodeNative(test, "FX5MixedLiteral")

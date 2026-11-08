@@ -74,7 +74,7 @@ func (mode jsonSchemaMode) functionName() string {
 }
 
 // Only call-site dispatch inspects the prelude callee; the type walker uses mode.
-func (lowering *lowering) isJSONSchemaCall(node *ast.Node) bool {
+func (lowering *lowering) isJsonSchemaCall(node *ast.Node) bool {
 	return node.Kind == ast.KindCallExpression && (lowering.isPreludeFunction(
 		node.AsCallExpression().Expression,
 		"decodeJson",
@@ -83,7 +83,7 @@ func (lowering *lowering) isJSONSchemaCall(node *ast.Node) bool {
 
 // jsonSchemaCallRefusal refuses a decodeJson or encodeJson call whose type has no schema.
 func (lowering *lowering) jsonSchemaCallRefusal(node *ast.Node) error {
-	if lowering.isJSONSchemaCall(node) {
+	if lowering.isJsonSchemaCall(node) {
 		_, jsonSchemaCallTypeError := lowering.jsonSchemaCallType(node)
 		if jsonSchemaCallTypeError != nil {
 			return jsonSchemaCallTypeError
@@ -201,7 +201,7 @@ func (lowering *lowering) jsonDecodeSchema(
 			switch typed := literal.(type) {
 			case ir.StringConstant:
 				decodeNode.Literal = subjectType.AsLiteralType().Value().(string)
-				decodeNode.LiteralUnits = ir.JSONLiteralUnits(decodeNode.Literal)
+				decodeNode.LiteralUnits = ir.JsonLiteralUnits(decodeNode.Literal)
 			case ir.NumberConstant:
 				decodeNode.Number = typed.Value
 				decodeNode.NumberText = strconv.FormatFloat(typed.Value, 'g', -1, 64)
@@ -275,7 +275,7 @@ func (lowering *lowering) jsonDecodeSchema(
 						}
 						if valid {
 							decodeNode.Discriminant = field.Name
-							decodeNode.DiscriminantUnits = ir.JSONLiteralUnits(field.Name)
+							decodeNode.DiscriminantUnits = ir.JsonLiteralUnits(field.Name)
 							break
 						}
 					}
@@ -349,7 +349,7 @@ func (lowering *lowering) jsonDecodeSchema(
 					}
 					decodeNode.Fields = append(decodeNode.Fields, ir.JSONDecodeField{
 						Name:      field.Name,
-						NameUnits: ir.JSONLiteralUnits(field.Name),
+						NameUnits: ir.JsonLiteralUnits(field.Name),
 						Node:      child,
 						Optional:  optional,
 					})
@@ -408,7 +408,7 @@ func DecodeJsonSources(callerContext context.Context, program *load.Program) (ma
 			if found != nil {
 				return true
 			}
-			if lowering.isJSONSchemaCall(node) {
+			if lowering.isJsonSchemaCall(node) {
 				descriptor, jsonSchemaCallTypeError := lowering.jsonSchemaCallType(node)
 				if jsonSchemaCallTypeError != nil {
 					found = jsonSchemaCallTypeError

@@ -10,12 +10,12 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 )
 
-func TestPrepareCPUWithChildGuard(test *testing.T) {
+func TestPrepareCpuWithChildGuard(test *testing.T) {
 	test.Parallel()
 	command := exec.CommandContext(test.Context(), "/bin/sh", "-c", "ulimit -t")
 	var output bytes.Buffer
 	command.Stdout = &output
-	if prepareCpuError := PrepareCPU(command, 7*time.Second); prepareCpuError != nil {
+	if prepareCpuError := PrepareCpu(command, 7*time.Second); prepareCpuError != nil {
 		test.Fatal(prepareCpuError)
 	}
 	if runError := childguard.Run(

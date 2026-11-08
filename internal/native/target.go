@@ -42,14 +42,14 @@ func ValidateOptions(options Options) error {
 	if info, statError := os.Stat(sysroot); statError != nil || !info.IsDir() {
 		return fmt.Errorf("native: WASI_SYSROOT is not a directory: %s", sysroot)
 	}
-	_, wasiClangError := WASIClang()
+	_, wasiClangError := WasiClang()
 	return wasiClangError
 }
 
-// WASISDKVersion is the one wasi-sdk release every wasm32 build and test uses (bash cloud/setup.sh
+// WasisdkVersion is the one wasi-sdk release every wasm32 build and test uses (bash cloud/setup.sh
 // --wasi-sdk installs it). Another clang can emit different Wasm for the same sha, and then two boxes
 // give two verdicts, so any other clang is refused by name.
-const WASISDKVersion = "27"
+const WasisdkVersion = "27"
 
 // wasiClangVersion is how that release's clang begins its --version output.
 const wasiClangVersion = "clang version 20.1.8-wasi-sdk"
@@ -59,23 +59,23 @@ type wasiClangCheck struct{ err error }
 // Each clang path is checked once per process; the oracle builds hundreds of modules.
 var wasiClangChecks sync.Map
 
-// WASIClang is the pinned wasi-sdk clang beside WASI_SYSROOT, or an error naming what it found instead.
-func WASIClang() (string, error) {
+// WasiClang is the pinned wasi-sdk clang beside WASI_SYSROOT, or an error naming what it found instead.
+func WasiClang() (string, error) {
 	candidate := filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
 	if checked, ok := wasiClangChecks.Load(candidate); ok {
 		return candidate, checked.(wasiClangCheck).err
 	}
-	checkWasiClangError := checkWASIClang(candidate)
+	checkWasiClangError := checkWasiClang(candidate)
 	wasiClangChecks.Store(candidate, wasiClangCheck{checkWasiClangError})
 	return candidate, checkWasiClangError
 }
 
-func checkWASIClang(path string) error {
+func checkWasiClang(path string) error {
 	info, statError := os.Stat(path)
 	if statError != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0111 == 0 {
 		return fmt.Errorf(
 			"native: wasm32-wasi is pinned to wasi-sdk %s, whose clang belongs at %s beside WASI_SYSROOT, and none is there; run bash cloud/setup.sh --wasi-sdk",
-			WASISDKVersion,
+			WasisdkVersion,
 			path,
 		)
 	}
@@ -84,7 +84,7 @@ func checkWASIClang(path string) error {
 	if outputError != nil {
 		return fmt.Errorf(
 			"native: wasm32-wasi is pinned to wasi-sdk %s (%s); %s --version failed: %w",
-			WASISDKVersion,
+			WasisdkVersion,
 			wasiClangVersion,
 			path,
 			outputError,
@@ -94,7 +94,7 @@ func checkWASIClang(path string) error {
 	if !strings.HasPrefix(first, wasiClangVersion) {
 		return fmt.Errorf(
 			"native: wasm32-wasi is pinned to wasi-sdk %s (%s); %s is %q",
-			WASISDKVersion,
+			WasisdkVersion,
 			wasiClangVersion,
 			path,
 			strings.TrimSpace(first),
@@ -122,8 +122,8 @@ func archiverName(compiler string) string {
 	return "ar"
 }
 
-// WASILinkFlags selects commands unless the driver emitted a request handler.
-func WASILinkFlags(options Options) []string {
+// WasiLinkFlags selects commands unless the driver emitted a request handler.
+func WasiLinkFlags(options Options) []string {
 	flags := []string{"-Wl,-z,stack-size=131072", "-Wl,--strip-debug"}
 	if !options.Request {
 		return append(flags, "-mexec-model=command")

@@ -13,20 +13,20 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 )
 
-const testJSXAgreementShards = 32
+const testJsxAgreementShards = 32
 
-func jsxAgreementIDs() []string { return miscIDs("stage1/cohere/estree/jsx_test.go:jsx", jsxCases()) }
+func jsxAgreementIds() []string { return miscIds("stage1/cohere/estree/jsx_test.go:jsx", jsxCases()) }
 
 // The original selector checks the live union; actual case work is in top-level shards.
 func TestJSXAgreement(test *testing.T) {
 	test.Parallel()
-	estreeTopUnion(test, "TestJSXAgreement", testJSXAgreementShards, jsxAgreementIDs())
+	estreeTopUnion(test, "TestJSXAgreement", testJsxAgreementShards, jsxAgreementIds())
 }
 
 func jsxAgreementShard(test *testing.T, shard int) {
 	test.Helper()
-	cases, ids := jsxCases(), jsxAgreementIDs()
-	indexes := estreeScopedIndexes(test, testJSXAgreementShards, ids, shard)
+	cases, ids := jsxCases(), jsxAgreementIds()
+	indexes := estreeScopedIndexes(test, testJsxAgreementShards, ids, shard)
 	if estreeScopedProof(test, "TestJSXAgreement", ids, indexes) || len(indexes) == 0 {
 		return
 	}
@@ -51,49 +51,49 @@ func jsxAgreementShard(test *testing.T, shard int) {
 	}
 }
 
-func TestJSXAgreement_000(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 0) }
-func TestJSXAgreement_001(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 1) }
-func TestJSXAgreement_002(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 2) }
-func TestJSXAgreement_003(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 3) }
-func TestJSXAgreement_004(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 4) }
-func TestJSXAgreement_005(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 5) }
-func TestJSXAgreement_006(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 6) }
-func TestJSXAgreement_007(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 7) }
-func TestJSXAgreement_008(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 8) }
-func TestJSXAgreement_009(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 9) }
-func TestJSXAgreement_010(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 10) }
-func TestJSXAgreement_011(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 11) }
-func TestJSXAgreement_012(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 12) }
-func TestJSXAgreement_013(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 13) }
-func TestJSXAgreement_014(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 14) }
-func TestJSXAgreement_015(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 15) }
-func TestJSXAgreement_016(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 16) }
-func TestJSXAgreement_017(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 17) }
-func TestJSXAgreement_018(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 18) }
-func TestJSXAgreement_019(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 19) }
-func TestJSXAgreement_020(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 20) }
-func TestJSXAgreement_021(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 21) }
-func TestJSXAgreement_022(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 22) }
-func TestJSXAgreement_023(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 23) }
-func TestJSXAgreement_024(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 24) }
-func TestJSXAgreement_025(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 25) }
-func TestJSXAgreement_026(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 26) }
-func TestJSXAgreement_027(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 27) }
-func TestJSXAgreement_028(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 28) }
-func TestJSXAgreement_029(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 29) }
-func TestJSXAgreement_030(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 30) }
-func TestJSXAgreement_031(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 31) }
+func TestJsxAgreement_000(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 0) }
+func TestJsxAgreement_001(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 1) }
+func TestJsxAgreement_002(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 2) }
+func TestJsxAgreement_003(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 3) }
+func TestJsxAgreement_004(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 4) }
+func TestJsxAgreement_005(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 5) }
+func TestJsxAgreement_006(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 6) }
+func TestJsxAgreement_007(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 7) }
+func TestJsxAgreement_008(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 8) }
+func TestJsxAgreement_009(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 9) }
+func TestJsxAgreement_010(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 10) }
+func TestJsxAgreement_011(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 11) }
+func TestJsxAgreement_012(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 12) }
+func TestJsxAgreement_013(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 13) }
+func TestJsxAgreement_014(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 14) }
+func TestJsxAgreement_015(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 15) }
+func TestJsxAgreement_016(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 16) }
+func TestJsxAgreement_017(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 17) }
+func TestJsxAgreement_018(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 18) }
+func TestJsxAgreement_019(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 19) }
+func TestJsxAgreement_020(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 20) }
+func TestJsxAgreement_021(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 21) }
+func TestJsxAgreement_022(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 22) }
+func TestJsxAgreement_023(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 23) }
+func TestJsxAgreement_024(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 24) }
+func TestJsxAgreement_025(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 25) }
+func TestJsxAgreement_026(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 26) }
+func TestJsxAgreement_027(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 27) }
+func TestJsxAgreement_028(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 28) }
+func TestJsxAgreement_029(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 29) }
+func TestJsxAgreement_030(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 30) }
+func TestJsxAgreement_031(test *testing.T) { test.Parallel(); jsxAgreementShard(test, 31) }
 
 // Drive each actual top-level wrapper alone; exactly one owns the planted case.
-func TestJSXAgreementPlantedDisagreement(test *testing.T) {
+func TestJsxAgreementPlantedDisagreement(test *testing.T) {
 	test.Parallel()
-	ids := jsxAgreementIDs()
-	if _, miscPlanError := miscPlan(ids, testJSXAgreementShards); miscPlanError != nil {
+	ids := jsxAgreementIds()
+	if _, miscPlanError := miscPlan(ids, testJsxAgreementShards); miscPlanError != nil {
 		test.Fatal(miscPlanError)
 	}
-	expected := miscShard(ids[len(ids)-1], testJSXAgreementShards)
+	expected := miscShard(ids[len(ids)-1], testJsxAgreementShards)
 	failures := 0
-	for shard := range testJSXAgreementShards {
+	for shard := range testJsxAgreementShards {
 		name := fmt.Sprintf("TestJSXAgreement_%03d", shard)
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 		command := threePortCommand(timeoutContext, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")

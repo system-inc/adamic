@@ -26,7 +26,7 @@ func init() {
 
 // Probe Node's actual validator before checking that unsupported options cannot
 // reach either backend. Every row starts with a real directory and retains it.
-func TestNodeFSRmOptionsValidation(test *testing.T) {
+func TestNodeFileSystemRmOptionsValidation(test *testing.T) {
 	test.Parallel()
 	for _, key := range []string{"recursive", "force", "maxRetries", "retryDelay"} {
 		values := []string{"undefined", "null", "'yes'"}
@@ -98,7 +98,7 @@ func TestNodeFSRmOptionsValidation(test *testing.T) {
 	}
 }
 
-func TestNodeFSRmOptionsUndefinedBinding(test *testing.T) {
+func TestNodeFileSystemRmOptionsUndefinedBinding(test *testing.T) {
 	test.Parallel()
 	for _, key := range []string{"recursive", "force", "maxRetries", "retryDelay"} {
 		test.Run(key, func(test *testing.T) {
@@ -121,7 +121,7 @@ func TestNodeFSRmOptionsUndefinedBinding(test *testing.T) {
 	}
 }
 
-func TestNodeFSRmForceUndefinedReproducer(test *testing.T) {
+func TestNodeFileSystemRmForceUndefinedReproducer(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(repository, "internal/oracle/testdata/fs_rm_refused/oct9_native_p32_fs_rm_force_undefined.a")
 	_, loweredError := lowered(test, path)
@@ -144,7 +144,7 @@ func TestNodeFSRmForceUndefinedReproducer(test *testing.T) {
 	test.Log("recreated oct9 reproducer: Node rejects before removal; lowering refuses before either backend")
 }
 
-func TestNodeFSRmOptionsCounts(test *testing.T) {
+func TestNodeFileSystemRmOptionsCounts(test *testing.T) {
 	test.Parallel()
 	_, measure := counted(test, rmOptionsFixture, false, nil, false, false)
 	row := measure()
@@ -158,7 +158,7 @@ func TestNodeFSRmOptionsCounts(test *testing.T) {
 	}
 }
 
-func TestNodeFSRmOptionsAgreesWithNode(test *testing.T) {
+func TestNodeFileSystemRmOptionsAgreesWithNode(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs(filepath.Join(repository, rmOptionsFixture))
 	if absolutePathError != nil {
@@ -191,8 +191,8 @@ func TestNodeFSRmOptionsAgreesWithNode(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
 		test.Run("wasm32-wasi", func(test *testing.T) {
 			test.Parallel()
-			actual, reason := observeWASI(test, native.C(program))
-			if assertWASIRefusal(test, rmOptionsFixture, reason, wasiRefusedFixtures) {
+			actual, reason := observeWasi(test, native.C(program))
+			if assertWasiRefusal(test, rmOptionsFixture, reason, wasiRefusedFixtures) {
 				return
 			}
 			if difference := disagreement(truth, actual); difference != "" {

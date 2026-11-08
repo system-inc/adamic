@@ -82,11 +82,11 @@ function run():void {
 func TestProgramRegionViewCycleIsNotOwnership(test *testing.T) {
 	test.Parallel()
 	edges := map[string][]string{"a": {"b"}, "b": {"a"}, "string": nil}
-	if got := ProgramRegionSCC(edges, map[string][]string{"a": {"string"}}); len(got) != 0 {
+	if got := ProgramRegionScc(edges, map[string][]string{"a": {"string"}}); len(got) != 0 {
 		test.Fatalf("view-only SCC selected: %v", got)
 	}
 	edges["a"] = append(edges["a"], "a")
-	if got := ProgramRegionSCC(
+	if got := ProgramRegionScc(
 		edges,
 		map[string][]string{"a": {"a", "string"}},
 	); !got["a"] || !got["b"] || got["string"] {

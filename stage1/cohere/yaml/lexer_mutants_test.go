@@ -118,11 +118,11 @@ var lexerMutants = yamlMutants{
 	},
 }
 
-func TestProduct_YAMLLexerMutant000(test *testing.T) { test.Parallel(); lexerMutants.product(test, 0) }
-func TestProduct_YAMLLexerMutant001(test *testing.T) { test.Parallel(); lexerMutants.product(test, 1) }
-func TestProduct_YAMLLexerMutant002(test *testing.T) { test.Parallel(); lexerMutants.product(test, 2) }
-func TestProduct_YAMLLexerMutant003(test *testing.T) { test.Parallel(); lexerMutants.product(test, 3) }
-func TestProduct_YAMLLexerMutant004(test *testing.T) { test.Parallel(); lexerMutants.product(test, 4) }
+func TestProduct_YamlLexerMutant000(test *testing.T) { test.Parallel(); lexerMutants.product(test, 0) }
+func TestProduct_YamlLexerMutant001(test *testing.T) { test.Parallel(); lexerMutants.product(test, 1) }
+func TestProduct_YamlLexerMutant002(test *testing.T) { test.Parallel(); lexerMutants.product(test, 2) }
+func TestProduct_YamlLexerMutant003(test *testing.T) { test.Parallel(); lexerMutants.product(test, 3) }
+func TestProduct_YamlLexerMutant004(test *testing.T) { test.Parallel(); lexerMutants.product(test, 4) }
 
 // lexerMutantsShards is the count of lexerMutants.mutations, each its own top-level test so Loom's planner can cut
 // between mutants, which it can't between subtests.

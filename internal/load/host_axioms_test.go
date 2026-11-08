@@ -14,7 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/compilerinputs"
 )
 
-func TestHostAxiomsCheckerSeesOptionalTTYMembers(test *testing.T) {
+func TestHostAxiomsCheckerSeesOptionalTtyMembers(test *testing.T) {
 	test.Parallel()
 	program, nodeSourceError := nodeSource(test, `import process from 'node:process';
  const outputTTY = process.stdout.isTTY;
@@ -99,7 +99,7 @@ func TestHostAxiomsPreservePublishedPositions(test *testing.T) {
 				test.Fatalf("%s:%d: uncorrected line moved", file, index+1)
 			}
 		}
-		fs := &nodeLibraryFS{}
+		fs := &nodeLibraryFileSystem{}
 		got, ok := fs.ReadFile(tspath.RootedFilePathFromNormalized(nodeTypesDirectory + "/" + file))
 		if !ok || got != served {
 			test.Fatalf("%s: bundled checker sees different text", file)
@@ -158,9 +158,9 @@ func TestHostAxiomsAreBuildCacheInputs(test *testing.T) {
 		}
 		return value
 	}
-	before := key(hostAxiomsJSON)
-	changed := strings.Replace(string(hostAxiomsJSON), "columns?: number;", "columns: number | undefined;", 1)
-	if changed == string(hostAxiomsJSON) || key([]byte(changed)) == before {
+	before := key(hostAxiomsJson)
+	changed := strings.Replace(string(hostAxiomsJson), "columns?: number;", "columns: number | undefined;", 1)
+	if changed == string(hostAxiomsJson) || key([]byte(changed)) == before {
 		test.Fatal("editing a row did not change GoBuild's content key")
 	}
 }
@@ -202,9 +202,9 @@ func TestHostAxiomsAreLoweringProductInputs(test *testing.T) {
 		}
 		return got
 	}
-	before := key(hostAxiomsJSON)
-	changed := strings.Replace(string(hostAxiomsJSON), "columns?: number;", "columns: number | undefined;", 1)
-	if changed == string(hostAxiomsJSON) || key([]byte(changed)) == before {
+	before := key(hostAxiomsJson)
+	changed := strings.Replace(string(hostAxiomsJson), "columns?: number;", "columns: number | undefined;", 1)
+	if changed == string(hostAxiomsJson) || key([]byte(changed)) == before {
 		test.Fatal("editing a host row did not change the lowering product key")
 	}
 }

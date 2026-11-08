@@ -9,7 +9,7 @@ import (
 )
 
 // Inspect both counted-reference ABI cases; the oracle executes the generated programs.
-func TestParallelMapCompilerABI(test *testing.T) {
+func TestParallelMapCompilerAbi(test *testing.T) {
 	test.Parallel()
 	for _, result := range []ir.Type{ir.Number, ir.String} {
 		program := &ir.Program{Source: "parallel.a", Locals: []ir.Local{

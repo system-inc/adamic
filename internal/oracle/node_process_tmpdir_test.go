@@ -55,7 +55,7 @@ func TestNodeProcessTmpdir(test *testing.T) {
 	test.Log("clean tmpdir mutant caught by Node stdout")
 }
 
-func TestNodeProcessOSNamespace(test *testing.T) {
+func TestNodeProcessOsNamespace(test *testing.T) {
 	test.Parallel()
 	path, binary, script := sanitized(test, "internal/oracle/testdata/node_process_os_namespace.a")
 	truth := onNode(test, path)

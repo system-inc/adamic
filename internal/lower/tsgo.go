@@ -24,7 +24,7 @@ func (lowering *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
 	if name == "" {
 		return nil, false, nil
 	}
-	if !lowering.program.TSGoEnabled() {
+	if !lowering.program.TsGoEnabled() {
 		return nil, true, &Refused{
 			Where: lowering.program.Where(node),
 			What:  "an unlinked typescript-go library call",

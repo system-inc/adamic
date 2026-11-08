@@ -65,7 +65,7 @@ func miscPlan(ids []string, count int) ([][]int, error) {
 	return shards, nil
 }
 
-func miscIDs(prefix string, cases []string) []string {
+func miscIds(prefix string, cases []string) []string {
 	ids := make([]string, len(cases))
 	for index, text := range cases {
 		// A generated case keeps its identity even when another is inserted before it.
@@ -210,7 +210,7 @@ func miscBuild(test *testing.T, path string) (string, string) {
 }
 
 // CPU includes this test process and all completed child processes.
-func miscCPU() float64 {
+func miscCpu() float64 {
 	var self, child syscall.Rusage
 	if getrusageError := syscall.Getrusage(syscall.RUSAGE_SELF, &self); getrusageError != nil {
 		panic(getrusageError)
@@ -223,8 +223,8 @@ func miscCPU() float64 {
 }
 
 func miscStart(test *testing.T) func() {
-	start, cpu := time.Now(), miscCPU()
-	test.Cleanup(func() { test.Logf("total CPU: %.6fs", miscCPU()-cpu) })
+	start, cpu := time.Now(), miscCpu()
+	test.Cleanup(func() { test.Logf("total CPU: %.6fs", miscCpu()-cpu) })
 	return func() { test.Logf("setup wall: %.6fs", time.Since(start).Seconds()) }
 }
 
@@ -351,7 +351,7 @@ func TestMiscShardGrowthKeepsAssignments(test *testing.T) {
 		"stage1/cohere/estree/m.input:0:audit",
 		"stage1/cohere/estree/exports_test.go:export:0",
 	}
-	original = append(original, miscIDs(
+	original = append(original, miscIds(
 		"stage1/cohere/estree/exports_test.go:export",
 		[]string{"@d export class C {}", "@d export default class C {}"},
 	)...)
@@ -374,7 +374,7 @@ func TestMiscShardGrowthKeepsAssignments(test *testing.T) {
 		original[1],
 		original[0],
 	}
-	generated := miscIDs(
+	generated := miscIds(
 		"stage1/cohere/estree/exports_test.go:export",
 		[]string{"new case", "@d export default class C {}", "@d export class C {}"},
 	)

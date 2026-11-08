@@ -37,9 +37,9 @@ type response struct {
 }
 
 type record struct {
-	OutputID []byte `json:"output_id"`
+	OutputId []byte `json:"output_id"`
 	Size     int64  `json:"size"`
-	SHA256   string `json:"sha256"`
+	Sha256   string `json:"sha256"`
 }
 
 type cache struct {
@@ -240,23 +240,23 @@ func (cache *cache) get(req request) response {
 			}
 			var record record
 			if json.Unmarshal(rb, &record) != nil ||
-				len(record.OutputID) != sha256.Size ||
+				len(record.OutputId) != sha256.Size ||
 				record.Size < 0 ||
 				record.Size == int64(^uint64(0)>>1) ||
-				!validHash(record.SHA256) ||
-				hex.EncodeToString(record.OutputID) != record.SHA256 {
+				!validHash(record.Sha256) ||
+				hex.EncodeToString(record.OutputId) != record.Sha256 {
 				continue
 			}
 			var body []byte
 			if remote {
 				var poisoned bool
-				body, ok, poisoned = cache.blob(record.SHA256, record.Size)
+				body, ok, poisoned = cache.blob(record.Sha256, record.Size)
 				if poisoned {
 					return out
 				}
 			} else {
-				body, _ = os.ReadFile(cache.blobPath(record.SHA256))
-				if body != nil && !cache.check(body, record.SHA256) {
+				body, _ = os.ReadFile(cache.blobPath(record.Sha256))
+				if body != nil && !cache.check(body, record.Sha256) {
 					return out
 				}
 				ok = body != nil
@@ -265,7 +265,7 @@ func (cache *cache) get(req request) response {
 				continue
 			}
 			if remote {
-				if atomicFileError := atomicFile(cache.blobPath(record.SHA256), body); atomicFileError != nil {
+				if atomicFileError := atomicFile(cache.blobPath(record.Sha256), body); atomicFileError != nil {
 					continue
 				}
 				if atomicFileError := atomicFile(cache.blobPath(hash), rb); atomicFileError == nil {
@@ -274,9 +274,9 @@ func (cache *cache) get(req request) response {
 			}
 			return response{
 				ID:       req.ID,
-				OutputID: record.OutputID,
+				OutputID: record.OutputId,
 				Size:     record.Size,
-				DiskPath: cache.blobPath(record.SHA256),
+				DiskPath: cache.blobPath(record.Sha256),
 			}
 		}
 	}
@@ -317,7 +317,7 @@ func (cache *cache) put(req request, body []byte) response {
 		out.Err = "invalid put IDs or body size"
 		return out
 	}
-	record := record{OutputID: req.OutputID, Size: int64(len(body)), SHA256: hash}
+	record := record{OutputId: req.OutputID, Size: int64(len(body)), Sha256: hash}
 	rb, _ := json.Marshal(record)
 	rh := digest(rb)
 	action := hex.EncodeToString(req.ActionID)

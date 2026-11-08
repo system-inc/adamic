@@ -677,8 +677,8 @@ func (lowering *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) 
 	if value, known, processValueError := lowering.processValue(node); known {
 		return value, processValueError
 	}
-	if value, known, nodeFsDirectoryValueError := lowering.nodeFSDirectoryValue(node); known {
-		return value, nodeFsDirectoryValueError
+	if value, known, nodeFileSystemDirectoryValueError := lowering.nodeFileSystemDirectoryValue(node); known {
+		return value, nodeFileSystemDirectoryValueError
 	}
 	node = ast.SkipParentheses(node)
 	if value, handled, functionObservationError := lowering.functionObservation(node); handled {
@@ -2084,7 +2084,7 @@ func (lowering *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) err
 		node,
 	); !lowering.nodeBufferView(lowering.present(own), lowering.present(slot)) &&
 		!lowering.nodeBufferReadArgument(node) &&
-		!lowering.nodeFSFileBufferArgument(node) {
+		!lowering.nodeFileSystemFileBufferArgument(node) {
 		return lowering.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
 	}
 	// Any other host object may be seen through a type only as far as its registration names
@@ -2102,7 +2102,7 @@ func (lowering *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) err
 		lowering.checker.GetTypeAtLocation(node),
 	); !lowering.typedArraySetArgument(node) &&
 		!lowering.nodeBufferReadArgument(node) &&
-		!lowering.nodeFSFileBufferArgument(node) &&
+		!lowering.nodeFileSystemFileBufferArgument(node) &&
 		!lowering.sameKeeping(own, slot, map[[2]*checker.Type]bool{}) {
 		if lowering.typedArrayKind(lowering.checker.GetNonNullableType(own)) != 0 {
 			return lowering.notYet(

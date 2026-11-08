@@ -10,7 +10,7 @@ import (
 )
 
 // Runtime controls bypass the language's prohibition on owning reference cycles.
-func TestFX7ViewCycleAndStackGuard(test *testing.T) {
+func TestFx7ViewCycleAndStackGuard(test *testing.T) {
 	test.Parallel()
 	source := `
 #include "view_unions_untagged.h"
@@ -99,12 +99,12 @@ int main(int argc, char **argv) {
 }
 
 // A tuple must keep its object kind until all contract matching has finished.
-func TestFX7TupleSelectionBeforeDiagnosticKindRelease(test *testing.T) {
+func TestFx7TupleSelectionBeforeDiagnosticKindRelease(test *testing.T) {
 	test.Parallel()
 	fx7TupleSelectionBeforeDiagnosticKind(test, false)
 }
 
-func TestFX7TupleSelectionBeforeDiagnosticKindSanitized(test *testing.T) {
+func TestFx7TupleSelectionBeforeDiagnosticKindSanitized(test *testing.T) {
 	test.Parallel()
 	fx7TupleSelectionBeforeDiagnosticKind(test, true)
 }

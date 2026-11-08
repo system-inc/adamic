@@ -20,7 +20,7 @@ const (
 //go:embed prelude.d.ts
 var prelude string
 
-// sourceFS is the disk as the checker sees an Adamic program.
+// sourceFileSystem is the disk as the checker sees an Adamic program.
 //
 // TypeScript knows nothing of `.a`, so every X.a is shown to it as X.a.ts. That is the whole trick:
 // the resolver already turns `./geometry` into geometry.ts by trying extensions, and in the same way
@@ -29,7 +29,7 @@ var prelude string
 //
 // A real X.a.ts always wins over the alias, and Load refuses a program where both exist, so no file
 // is ever shadowed silently.
-type sourceFS struct {
+type sourceFileSystem struct {
 	vfs.FS
 	overlay         map[tspath.RootedFilePath]string
 	nodeTypes       bool
@@ -52,7 +52,7 @@ type adamicAnswer struct {
 // Where for every unit and finding, so one internal/lower test binary stat'd one fixture's pair 238,336
 // times (#npd568j). A load's sources don't change while it is read, as cachedvfs already assumes of the
 // same disk, and a new load is a new sourceFS, so a file written between two loads is seen by the second.
-func (fileSystem *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath, bool) {
+func (fileSystem *sourceFileSystem) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath, bool) {
 	if !strings.HasSuffix(path.AsString(), ".a.ts") {
 		return "", false
 	}
@@ -70,7 +70,7 @@ func (fileSystem *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.Roote
 }
 
 // displayName is the name a person wrote, for a file name the checker uses, as display shows it.
-func (fileSystem *sourceFS) displayName(path tspath.RootedFilePath) string {
+func (fileSystem *sourceFileSystem) displayName(path tspath.RootedFilePath) string {
 	name := path.AsString()
 	if adamicPath, isAdamic := fileSystem.adamicFile(path); isAdamic {
 		name = adamicPath.AsString()
@@ -81,7 +81,7 @@ func (fileSystem *sourceFS) displayName(path tspath.RootedFilePath) string {
 	return name
 }
 
-func (fileSystem *sourceFS) FileExists(path tspath.RootedFilePath) bool {
+func (fileSystem *sourceFileSystem) FileExists(path tspath.RootedFilePath) bool {
 	if path == preludePath {
 		return true
 	}
@@ -94,7 +94,7 @@ func (fileSystem *sourceFS) FileExists(path tspath.RootedFilePath) bool {
 	return fileSystem.FS.FileExists(path)
 }
 
-func (fileSystem *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+func (fileSystem *sourceFileSystem) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if path == preludePath {
 		if fileSystem.nodeTypes {
 			return fileSystem.nodePreludeText, true
@@ -113,18 +113,18 @@ func (fileSystem *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) 
 	return fileSystem.FS.ReadFile(path)
 }
 
-func (fileSystem *sourceFS) DirectoryExists(path tspath.RootedDirectoryPath) bool {
+func (fileSystem *sourceFileSystem) DirectoryExists(path tspath.RootedDirectoryPath) bool {
 	return path == preludeDirectory || fileSystem.FS.DirectoryExists(path)
 }
 
-func (fileSystem *sourceFS) Stat(path tspath.RootedPath) vfs.FileInfo {
+func (fileSystem *sourceFileSystem) Stat(path tspath.RootedPath) vfs.FileInfo {
 	if adamicPath, isAdamic := fileSystem.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {
 		return fileSystem.FS.Stat(adamicPath.AsPath())
 	}
 	return fileSystem.FS.Stat(path)
 }
 
-func (fileSystem *sourceFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
+func (fileSystem *sourceFileSystem) Realpath(path tspath.RootedPath) tspath.RootedPath {
 	if path == preludePath {
 		return path
 	}
@@ -137,18 +137,18 @@ func (fileSystem *sourceFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
 // The checker never writes. These refuse rather than pass through, so a write can't land on disk by
 // accident through a file system that exists to read.
 
-func (fileSystem *sourceFS) WriteFile(path tspath.RootedFilePath, data string) error {
+func (fileSystem *sourceFileSystem) WriteFile(path tspath.RootedFilePath, data string) error {
 	return errorReadOnly
 }
 
-func (fileSystem *sourceFS) AppendFile(path tspath.RootedFilePath, data string) error {
+func (fileSystem *sourceFileSystem) AppendFile(path tspath.RootedFilePath, data string) error {
 	return errorReadOnly
 }
 
-func (fileSystem *sourceFS) Remove(path tspath.RootedPath) error {
+func (fileSystem *sourceFileSystem) Remove(path tspath.RootedPath) error {
 	return errorReadOnly
 }
 
-func (fileSystem *sourceFS) Chtimes(path tspath.RootedPath, aTime time.Time, mTime time.Time) error {
+func (fileSystem *sourceFileSystem) Chtimes(path tspath.RootedPath, aTime time.Time, mTime time.Time) error {
 	return errorReadOnly
 }

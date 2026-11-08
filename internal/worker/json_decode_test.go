@@ -16,7 +16,7 @@ import (
 // Only find prepared products here; every owned case makes fresh backend observations.
 func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 	family := "TestWorkerDecodeJSON"
-	if !workerJSONShardHasCases(family, shard) {
+	if !workerJsonShardHasCases(family, shard) {
 		return
 	}
 	for _, tool := range []string{"go", "clang", "node"} {
@@ -71,7 +71,7 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 	}
 	fixtures = append(fixtures, filepath.Join(root, "internal/worker/testdata/json_decode/fast_risks.a"))
 	for _, fixture := range fixtures {
-		if !workerJSONCaseOwns(family, shard, "fixture/"+filepath.Base(fixture)) {
+		if !workerJsonCaseOwns(family, shard, "fixture/"+filepath.Base(fixture)) {
 			continue
 		}
 		test.Run(filepath.Base(fixture), func(test *testing.T) {
@@ -110,10 +110,13 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 				test.Log("Worker and native retain main's empty-object enumeration NotYet")
 				return
 			}
-			product := workerJSONProduct(test, "decode/"+filepath.Base(fixture), false)
+			product := workerJsonProduct(test, "decode/"+filepath.Base(fixture), false)
 			generated = filepath.Join(directory, "generated")
-			if copyFsError := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); copyFsError != nil {
-				test.Fatal(copyFsError)
+			if copyFileSystemError := os.CopyFS(
+				generated,
+				os.DirFS(filepath.Join(product, "worker")),
+			); copyFileSystemError != nil {
+				test.Fatal(copyFileSystemError)
 			}
 			native := filepath.Join(product, "native")
 			expected := run(native)
@@ -150,18 +153,18 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 		})
 	}
 
-	inputs := workerJSONCorpusProduct(test, "decode", false)
-	product := workerJSONProduct(test, "decode/corpus", false)
+	inputs := workerJsonCorpusProduct(test, "decode", false)
+	product := workerJsonProduct(test, "decode/corpus", false)
 	native := filepath.Join(product, "native")
 	for start := 0; start < 40000; start += 1000 {
 		key := fmt.Sprintf("corpus/%05d", start)
-		if !workerJSONCaseOwns(family, shard, key) {
+		if !workerJsonCaseOwns(family, shard, key) {
 			continue
 		}
 		test.Run(key, func(test *testing.T) {
 			corpus := filepath.Join(inputs, fmt.Sprintf("%05d.json", start))
-			offsets := workerJSONBlockOffsets(start)
-			offset := workerJSONOffsetsArgument(offsets)
+			offsets := workerJsonBlockOffsets(start)
+			offset := workerJsonOffsetsArgument(offsets)
 			var expected, oracle []byte
 			for _, original := range offsets {
 				part := filepath.Join(inputs, fmt.Sprintf("part-%05d.json", original))
@@ -180,7 +183,7 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 				test.Fatal("native corpus output differs from Node source")
 			}
 
-			if workerJSONProbe(family, key) {
+			if workerJsonProbe(family, key) {
 				expected = append([]byte("planted wrong case\n"), expected...)
 			}
 			observations := filepath.Join(test.TempDir(), "expected.txt")
@@ -199,14 +202,17 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 	}
 	// Mutants retain all 40,000 potential witnesses and fresh native observations.
 
-	for _, mutant := range workerJSONDecodeMutants {
-		if !workerJSONCaseOwns(family, shard, "mutant/"+mutant.name) {
+	for _, mutant := range workerJsonDecodeMutants {
+		if !workerJsonCaseOwns(family, shard, "mutant/"+mutant.name) {
 			continue
 		}
 		test.Run(mutant.name, func(test *testing.T) {
 			generated := filepath.Join(test.TempDir(), "worker")
-			if copyFsError := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); copyFsError != nil {
-				test.Fatal(copyFsError)
+			if copyFileSystemError := os.CopyFS(
+				generated,
+				os.DirFS(filepath.Join(product, "worker")),
+			); copyFileSystemError != nil {
+				test.Fatal(copyFileSystemError)
 			}
 			runtimePath := filepath.Join(generated, "adamic.mjs")
 			original, readError := os.ReadFile(runtimePath)
@@ -238,11 +244,11 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 			// The old comparison also stopped at its first disagreement. Use
 			// bounded blocks so parsing the outer 40,000-text array is not an
 			// expensive shared prelude. An escaped mutant visits every text.
-			starts := workerJSONMutantBlocks()
+			starts := workerJsonMutantBlocks()
 			for _, start := range starts {
 				corpus := filepath.Join(inputs, fmt.Sprintf("%05d.json", start))
-				offsets := workerJSONBlockOffsets(start)
-				offset := workerJSONOffsetsArgument(offsets)
+				offsets := workerJsonBlockOffsets(start)
+				offset := workerJsonOffsetsArgument(offsets)
 				var expected []byte
 				for _, original := range offsets {
 					part := filepath.Join(inputs, fmt.Sprintf("part-%05d.json", original))
@@ -286,7 +292,7 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 	}
 }
 
-var workerJSONDecodeMutants = []struct{ name, before, after string }{
+var workerJsonDecodeMutants = []struct{ name, before, after string }{
 	{
 		"duplicate-first",
 		"object[key] = value(depth + 1);",

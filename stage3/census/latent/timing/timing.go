@@ -19,7 +19,7 @@ type UnitTimer struct{ encoder *json.Encoder }
 
 func NewUnitTimer(output io.Writer) *UnitTimer { return &UnitTimer{json.NewEncoder(output)} }
 
-func processCPUSeconds() float64 {
+func processCpuSeconds() float64 {
 	var usage syscall.Rusage
 	if getrusageError := syscall.Getrusage(syscall.RUSAGE_SELF, &usage); getrusageError != nil {
 		panic(getrusageError)
@@ -36,9 +36,9 @@ func (timer *UnitTimer) Start(file, where string) func() {
 	if timer == nil {
 		return func() {}
 	}
-	wall, cpu := time.Now(), processCPUSeconds()
+	wall, cpu := time.Now(), processCpuSeconds()
 	return func() {
-		record := UnitTime{file, where, time.Since(wall).Seconds(), processCPUSeconds() - cpu}
+		record := UnitTime{file, where, time.Since(wall).Seconds(), processCpuSeconds() - cpu}
 		if encodeError := timer.encoder.Encode(record); encodeError != nil {
 			panic(encodeError)
 		}

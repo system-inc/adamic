@@ -67,7 +67,7 @@ func TestProduct_MarkdownblocksFindsMarkdownChunksGo(test *testing.T) {
 	oracles.ChunksGoOracle(test)
 }
 
-func TestProduct_MarkdownblocksFindsMarkdownASTGo(test *testing.T) {
+func TestProduct_MarkdownblocksFindsMarkdownAstGo(test *testing.T) {
 	test.Parallel()
 	oracles.ASTGoOracle(test)
 }

@@ -164,7 +164,7 @@ func TestRecordUnionWitnessIsRuled(test *testing.T) {
 			DeclaredType      string `json:"declared_type"`
 			RepairFrom        string `json:"repair_from"`
 			RepairTo          string `json:"repair_to"`
-			TypeCorrectSHA256 string `json:"type_correct_sha256"`
+			TypeCorrectSha256 string `json:"type_correct_sha256"`
 			Exit              int    `json:"exit"`
 			Stderr            string `json:"stderr"`
 		} `json:"witnesses"`
@@ -199,7 +199,7 @@ func TestRecordUnionWitnessIsRuled(test *testing.T) {
 			}
 			repaired := strings.Replace(string(source), witness.RepairFrom, witness.RepairTo, 1)
 			if strings.Count(string(source), witness.RepairFrom) != 1 ||
-				contentHash(repaired) != witness.TypeCorrectSHA256 {
+				contentHash(repaired) != witness.TypeCorrectSha256 {
 				test.Fatal("the listed repair isn't one place, or its hash isn't the listed type-correct hash")
 			}
 			repairedPath := filepath.Join(test.TempDir(), "records_union_"+lying.name+".ts")

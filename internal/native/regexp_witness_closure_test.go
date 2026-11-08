@@ -438,7 +438,7 @@ func regexpWitnessClosureMutant(test *testing.T, name string) {
 	test.Fatalf("no closure mutant evidence for %s", name)
 }
 
-func TestRegExpWitnessClosureDropDTOAMutant(test *testing.T) {
+func TestRegExpWitnessClosureDropDtoaMutant(test *testing.T) {
 	test.Parallel()
 	regexpWitnessClosureMutant(test, "drop-dtoa")
 }

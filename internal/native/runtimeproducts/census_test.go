@@ -1203,7 +1203,7 @@ var jobserverEnvironment = map[string]string{
 // Not parallel: it sets WASI_SYSROOT, which is process-wide.
 func TestTheSysrootReadIsTheSysrootFlag(test *testing.T) {
 	var portable []string
-	for _, installation := range []string{fakeWASISDK(test), fakeWASISDK(test)} {
+	for _, installation := range []string{fakeWasisdk(test), fakeWasisdk(test)} {
 		test.Setenv("WASI_SYSROOT", filepath.Join(installation, "share", "wasi-sysroot"))
 		for _, variant := range Variants {
 			request, runtimeRequestForError := native.RuntimeRequestFor(variant.Options)
@@ -1264,7 +1264,7 @@ func TestTheSysrootReadIsTheSysrootFlag(test *testing.T) {
 // Flags adding -DADAMIC_PROGRAM_REGION when the variable is set; ValidateOptions refusing no variant for it.
 // Not parallel: it sets ADAMIC_PROGRAM_REGION and WASI_SYSROOT, which are process-wide.
 func TestAProgramRegionOnlyRefusesARequest(test *testing.T) {
-	test.Setenv("WASI_SYSROOT", filepath.Join(fakeWASISDK(test), "share", "wasi-sysroot"))
+	test.Setenv("WASI_SYSROOT", filepath.Join(fakeWasisdk(test), "share", "wasi-sysroot"))
 	refused := 0
 	for _, variant := range Variants {
 		test.Setenv("ADAMIC_PROGRAM_REGION", "")
@@ -1319,10 +1319,10 @@ func TestAProgramRegionOnlyRefusesARequest(test *testing.T) {
 	}
 }
 
-// fakeWASISDK is a stand-in wasi-sdk installation for a test that asks native for a wasm request: its sysroot under
+// fakeWasisdk is a stand-in wasi-sdk installation for a test that asks native for a wasm request: its sysroot under
 // share/wasi-sysroot, and bin/clang, which reports the pinned release's version (native's wasiClangVersion) and lists
 // no header for a scan, so a request reads only what the census holds of it, with nothing compiled.
-func fakeWASISDK(test *testing.T) string {
+func fakeWasisdk(test *testing.T) string {
 	test.Helper()
 	installation, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
 	if resolveSymlinksError != nil {
@@ -1487,7 +1487,7 @@ func TestALeanArchiveRefusesWhatItDoesntDeclare(test *testing.T) {
 			"undeclared Command runtime options: ",
 		},
 	} {
-		recorder := &stoppingTB{TB: test}
+		recorder := &stoppingTb{TB: test}
 		func() {
 			defer recorder.recover()
 			directory := ask.archive(recorder, ask.options, ask.features)
@@ -1508,9 +1508,9 @@ func TestALeanArchiveRefusesWhatItDoesntDeclare(test *testing.T) {
 	}
 }
 
-// A stoppingTB is a testing.TB whose Fatal, Fatalf and Skipf record what they're given and stop the caller there, as
+// A stoppingTb is a testing.TB whose Fatal, Fatalf and Skipf record what they're given and stop the caller there, as
 // the testing package's do, so a test can read what a helper of this package failed with.
-type stoppingTB struct {
+type stoppingTb struct {
 	testing.TB
 	failed string
 }
@@ -1518,25 +1518,25 @@ type stoppingTB struct {
 // stopped is what a stoppingTB panics with to stop its caller, which recover takes back.
 type stopped struct{}
 
-func (recorder *stoppingTB) Helper() {}
+func (recorder *stoppingTb) Helper() {}
 
-func (recorder *stoppingTB) Fatal(arguments ...any) {
+func (recorder *stoppingTb) Fatal(arguments ...any) {
 	recorder.failed = fmt.Sprint(arguments...)
 	panic(stopped{})
 }
 
-func (recorder *stoppingTB) Fatalf(format string, arguments ...any) {
+func (recorder *stoppingTb) Fatalf(format string, arguments ...any) {
 	recorder.failed = fmt.Sprintf(format, arguments...)
 	panic(stopped{})
 }
 
-func (recorder *stoppingTB) Skipf(format string, arguments ...any) {
+func (recorder *stoppingTb) Skipf(format string, arguments ...any) {
 	recorder.failed = "skipped: " + fmt.Sprintf(format, arguments...)
 	panic(stopped{})
 }
 
 // recover, deferred, takes back a stoppingTB's stop and lets any other panic go on.
-func (recorder *stoppingTB) recover() {
+func (recorder *stoppingTb) recover() {
 	if recovered := recover(); recovered != nil {
 		if _, ok := recovered.(stopped); !ok {
 			panic(recovered)

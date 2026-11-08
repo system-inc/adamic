@@ -171,7 +171,7 @@ func (local *harness) lowerOverlayToC(entry string, overlay map[string]string, n
 	if loadOverlayError != nil {
 		return "", loadOverlayError
 	}
-	loaded.EnableTSGo()
+	loaded.EnableTsGo()
 	started = time.Now()
 	program, lowerError := lower.Lower(context.Background(), loaded)
 	local.t.Logf("phase lowering %s %.6fs", name, time.Since(started).Seconds())
@@ -179,7 +179,7 @@ func (local *harness) lowerOverlayToC(entry string, overlay map[string]string, n
 		return "", lowerError
 	}
 	started = time.Now()
-	source, tsGoCError := native.TSGoC(program)
+	source, tsGoCError := native.TsGoC(program)
 	local.t.Logf("phase emission %s %.6fs", name, time.Since(started).Seconds())
 	return source, tsGoCError
 }
@@ -600,7 +600,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		rounds = 3
 	}
 	finish := func(compiler []string, benchmark bool) *typeAwarePlan {
-		unsplit := typeAwareUnsplitIDs(generatedPathsForUnion, compiler, rounds, benchmark)
+		unsplit := typeAwareUnsplitIds(generatedPathsForUnion, compiler, rounds, benchmark)
 		if sixUnionError := sixUnion(
 			unsplit,
 			[]sixShard{{name: "original-work", ids: expected}},
@@ -659,8 +659,8 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	truth := h.must("generated-go", exec.Command(oracle, configuration, manifest))
 	generatedPaths := append([]string(nil), paths...)
 	generatedPathsForUnion = generatedPaths
-	expected = append(expected, sixIDs("agreement/generated", generatedPaths)...)
-	add("agreement/generated", sixIDs("agreement/generated", generatedPaths), func(harness *harness) {
+	expected = append(expected, sixIds("agreement/generated", generatedPaths)...)
+	add("agreement/generated", sixIds("agreement/generated", generatedPaths), func(harness *harness) {
 		test := harness.t
 		truth := harness.compare("generated", oracle, binary(harness), configuration, manifest)
 		if sixFindingUnionError := sixFindingUnion(truth.stdout, generatedPaths); sixFindingUnionError != nil {
@@ -711,8 +711,8 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 
 	// Asking the unary expression's type rather than its operand still compiles
 	// and finishes; the independent production-rule findings must disagree.
-	expected = append(expected, sixIDs("mutant/wrong-node", generatedPaths)...)
-	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(harness *harness) {
+	expected = append(expected, sixIds("mutant/wrong-node", generatedPaths)...)
+	add("mutant/wrong-node", sixIds("mutant/wrong-node", generatedPaths), func(harness *harness) {
 		test := harness.t
 		wrong := typeAwareSetup(
 			harness,
@@ -768,8 +768,8 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		{"missing-header", "invalid checker type frame"},
 		{"bad-length", "invalid checker type length or flags"},
 	} {
-		expected = append(expected, sixIDs("mutant/"+change.name, generatedPaths)...)
-		add("mutant/"+change.name, sixIDs("mutant/"+change.name, generatedPaths), func(harness *harness) {
+		expected = append(expected, sixIds("mutant/"+change.name, generatedPaths)...)
+		add("mutant/"+change.name, sixIds("mutant/"+change.name, generatedPaths), func(harness *harness) {
 			test := harness.t
 			malformed := typeAwareMutantNative(
 				harness,
@@ -869,8 +869,8 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	compilerManifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
 	compilerConfiguration := filepath.Join(corpus, "src/compiler/tsconfig.json")
 	test.Logf("compiler corpus: %d files, original compiler tsconfig", len(paths))
-	expected = append(expected, sixIDs("agreement/compiler", paths)...)
-	add("agreement/compiler", sixIDs("agreement/compiler", paths), func(harness *harness) {
+	expected = append(expected, sixIds("agreement/compiler", paths)...)
+	add("agreement/compiler", sixIds("agreement/compiler", paths), func(harness *harness) {
 		if len(paths) == 0 {
 			harness.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
 		}
@@ -890,7 +890,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 					files = paths
 				}
 				name := fmt.Sprintf("bench/%s-%d", corpus.name, round)
-				ids := sixIDs(name, files)
+				ids := sixIds(name, files)
 				if rounds != 3 || len(paths) == 0 {
 					ids = nil
 				}
@@ -954,7 +954,7 @@ func TestPinnedTypeFlags(test *testing.T) {
 	}
 }
 
-func typeAwareUnsplitIDs(generated, compiler []string, rounds int, benchmark bool) []string {
+func typeAwareUnsplitIds(generated, compiler []string, rounds int, benchmark bool) []string {
 	ids := []string{
 		"refusal/unlinked",
 		"refusal/parts-unlinked",
@@ -970,16 +970,16 @@ func typeAwareUnsplitIDs(generated, compiler []string, rounds int, benchmark boo
 		"mutant/missing-header",
 		"mutant/bad-length",
 	} {
-		ids = append(ids, sixIDs(name, generated)...)
+		ids = append(ids, sixIds(name, generated)...)
 	}
 	for round := 1; round <= rounds; round++ {
 		ids = append(ids, fmt.Sprintf("cost/query-%d", round))
 	}
-	ids = append(ids, sixIDs("agreement/compiler", compiler)...)
+	ids = append(ids, sixIds("agreement/compiler", compiler)...)
 	if benchmark {
 		for round := 1; round <= 3; round++ {
-			ids = append(ids, sixIDs(fmt.Sprintf("bench/compiler-%d", round), compiler)...)
-			ids = append(ids, sixIDs(fmt.Sprintf("bench/generated-%d", round), generated)...)
+			ids = append(ids, sixIds(fmt.Sprintf("bench/compiler-%d", round), compiler)...)
+			ids = append(ids, sixIds(fmt.Sprintf("bench/generated-%d", round), generated)...)
 		}
 	}
 	return ids

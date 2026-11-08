@@ -37,10 +37,10 @@ package flow
 
 import "fmt"
 
-// SSAViolation is one broken invariant.
-type SSAViolation struct {
+// SsaViolation is one broken invariant.
+type SsaViolation struct {
 	// Kind is which invariant broke.
-	Kind SSAViolationKind
+	Kind SsaViolationKind
 	// Identifier is the value involved.
 	Identifier IdentifierId
 	// Block is where the violating use or duplicate definition sits.
@@ -49,31 +49,31 @@ type SSAViolation struct {
 	Detail string
 }
 
-func (violation SSAViolation) String() string { return violation.Detail }
+func (violation SsaViolation) String() string { return violation.Detail }
 
-// SSAViolationKind is which of the two invariants a violation breaks.
-type SSAViolationKind uint8
+// SsaViolationKind is which of the two invariants a violation breaks.
+type SsaViolationKind uint8
 
 const (
-	// SSAViolationMultipleDefinitions is a value written more than once.
-	SSAViolationMultipleDefinitions SSAViolationKind = iota
-	// SSAViolationUseNotDominated is a use the definition does not dominate.
-	SSAViolationUseNotDominated
+	// SsaViolationMultipleDefinitions is a value written more than once.
+	SsaViolationMultipleDefinitions SsaViolationKind = iota
+	// SsaViolationUseNotDominated is a use the definition does not dominate.
+	SsaViolationUseNotDominated
 )
 
-// VerifySSA checks that a function is in single static assignment form and returns every violation.
+// VerifySsa checks that a function is in single static assignment form and returns every violation.
 //
 // An empty result means the property holds. It does NOT mean the function was worth checking: a
 // function whose variables are all globals or captured has almost nothing in the graph and
 // passes trivially. `SSAStats` is how a caller tells a real pass from a vacuous one.
 //
 // Nested functions are not descended into; call it per function.
-func VerifySSA(function *Function) []SSAViolation {
+func VerifySsa(function *Function) []SsaViolation {
 	if function == nil || len(function.Blocks) == 0 {
 		return nil
 	}
 
-	var violations []SSAViolation
+	var violations []SsaViolation
 	dominance := computeDominance(function)
 
 	// Where each value is defined. A parameter is defined at the entry block.
@@ -83,8 +83,8 @@ func VerifySSA(function *Function) []SSAViolation {
 
 	recordDefinition := func(id IdentifierId, blockId BlockId, position int) {
 		if previous, exists := definedIn[id]; exists {
-			violations = append(violations, SSAViolation{
-				Kind:       SSAViolationMultipleDefinitions,
+			violations = append(violations, SsaViolation{
+				Kind:       SsaViolationMultipleDefinitions,
 				Identifier: id,
 				Block:      blockId,
 				Detail: fmt.Sprintf("value %s is defined in bb%d and again in bb%d",
@@ -139,8 +139,8 @@ func VerifySSA(function *Function) []SSAViolation {
 		}
 		if definitionBlock == useBlock {
 			if definedAt[id] > usePosition {
-				violations = append(violations, SSAViolation{
-					Kind:       SSAViolationUseNotDominated,
+				violations = append(violations, SsaViolation{
+					Kind:       SsaViolationUseNotDominated,
 					Identifier: id,
 					Block:      useBlock,
 					Detail: fmt.Sprintf("%s in bb%d reads %s before it is defined in the same block",
@@ -150,8 +150,8 @@ func VerifySSA(function *Function) []SSAViolation {
 			return
 		}
 		if !dominance.dominates(definitionBlock, useBlock) {
-			violations = append(violations, SSAViolation{
-				Kind:       SSAViolationUseNotDominated,
+			violations = append(violations, SsaViolation{
+				Kind:       SsaViolationUseNotDominated,
 				Identifier: id,
 				Block:      useBlock,
 				Detail: fmt.Sprintf("%s in bb%d reads %s defined in bb%d, which does not dominate bb%d",
@@ -192,13 +192,13 @@ func VerifySSA(function *Function) []SSAViolation {
 	return violations
 }
 
-// SSAStats counts what a verification actually had to look at.
+// SsaStats counts what a verification actually had to look at.
 //
 // This exists because an empty violation list is exactly what a vacuous check returns. A function
 // with no phis and no renamed values passes `VerifySSA` perfectly while proving nothing, and that
 // is the failure mode this whole package has been bitten by twice. A caller reporting a clean run
 // should report these numbers alongside it.
-type SSAStats struct {
+type SsaStats struct {
 	// Phis is how many merge points were placed.
 	Phis int
 	// NamedValues is how many defined values carry a source name rather than being a temporary.
@@ -208,9 +208,9 @@ type SSAStats struct {
 	Uses int
 }
 
-// CollectSSAStats measures one function.
-func CollectSSAStats(function *Function) SSAStats {
-	var stats SSAStats
+// CollectSsaStats measures one function.
+func CollectSsaStats(function *Function) SsaStats {
+	var stats SsaStats
 	if function == nil {
 		return stats
 	}

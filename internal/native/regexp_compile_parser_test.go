@@ -21,7 +21,7 @@ func TestRegExpRuntimeParserAcceptance(test *testing.T) {
 	test.Parallel()
 	runtimeParserAcceptance(test, false)
 }
-func TestRegExpRuntimeParserWASI(test *testing.T) {
+func TestRegExpRuntimeParserWasi(test *testing.T) {
 	test.Parallel()
 	runtimeParserAcceptance(test, true)
 }

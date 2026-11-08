@@ -6,7 +6,7 @@ import "github.com/microsoft/TypeScript/tsc/shim/ast"
 // the receiver's view id and the field's name, judged by checkViewOptionalWrites once every view is in.
 type viewOptionalWrite struct {
 	node           *ast.Node
-	receiverTypeID int
+	receiverTypeId int
 	name           string
 }
 
@@ -29,7 +29,7 @@ func (lowering *lowering) viewWriteReceiverTypeID(target, receiver *ast.Node, na
 		); property != nil && property.Flags&ast.SymbolFlagsOptional != 0 {
 			lowering.viewOptionalWrites = append(
 				lowering.viewOptionalWrites,
-				viewOptionalWrite{node: target, receiverTypeID: id, name: name},
+				viewOptionalWrite{node: target, receiverTypeId: id, name: name},
 			)
 		}
 	}
@@ -48,7 +48,7 @@ func (lowering *lowering) viewWriteReceiverTypeID(target, receiver *ast.Node, na
 // field is NotYet for this reason.
 func (lowering *lowering) checkViewOptionalWrites() error {
 	for _, write := range lowering.viewOptionalWrites {
-		if lowering.result.CheckedField(write.receiverTypeID, write.name) {
+		if lowering.result.CheckedField(write.receiverTypeId, write.name) {
 			return lowering.notYet(
 				write.node,
 				"a write to optional field "+write.name+" through a checked view, whose slot a fixed shape can't add",

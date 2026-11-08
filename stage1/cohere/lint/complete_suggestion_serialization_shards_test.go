@@ -77,8 +77,8 @@ func completeSuggestionUnion(test *testing.T) {
 	}
 	test.Logf("union: %d checks exactly once; planted disagreement caught by shard %03d", len(seen), caught[0])
 }
-func completeSuggestionEqual(caseID, plantedID int, got, want []byte) bool {
-	return caseID != plantedID || bytes.Equal(got, want)
+func completeSuggestionEqual(caseId, plantedId int, got, want []byte) bool {
+	return caseId != plantedId || bytes.Equal(got, want)
 }
 
 type completeSuggestionProducts struct {

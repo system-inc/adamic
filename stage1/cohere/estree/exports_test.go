@@ -16,7 +16,7 @@ const testDecoratedExportsShards = 32
 func TestDecoratedExports(test *testing.T) {
 	finishSetup := miscStart(test)
 	cases := decoratedExports()
-	ids := miscIDs("stage1/cohere/estree/exports_test.go:export", cases)
+	ids := miscIds("stage1/cohere/estree/exports_test.go:export", cases)
 	oracle := miscOracle(test)
 	main, absolutePathError := filepath.Abs("main.ts")
 	if absolutePathError != nil {
@@ -42,7 +42,7 @@ func TestDecoratedExports(test *testing.T) {
 
 func TestDecoratedExportsPlantedDisagreement(test *testing.T) {
 	test.Parallel()
-	miscPlantedProof(test, testDecoratedExportsShards, miscIDs(
+	miscPlantedProof(test, testDecoratedExportsShards, miscIds(
 		"stage1/cohere/estree/exports_test.go:export",
 		decoratedExports(),
 	), func(planted bool) error {
@@ -62,7 +62,7 @@ const testDecoratedExportMutantShards = 32
 func TestDecoratedExportMutant(test *testing.T) {
 	finishSetup := miscStart(test)
 	cases := decoratedExports()
-	ids := miscIDs("stage1/cohere/estree/exports_test.go:export-mutant", cases)
+	ids := miscIds("stage1/cohere/estree/exports_test.go:export-mutant", cases)
 	oracle := miscOracle(test)
 	path := estreeExportMutantPath(test)
 	binary, _ := miscBuild(test, path)
@@ -87,7 +87,7 @@ func TestDecoratedExportMutant(test *testing.T) {
 
 func TestDecoratedExportMutantPlantedSurvivor(test *testing.T) {
 	test.Parallel()
-	miscPlantedProof(test, testDecoratedExportMutantShards, miscIDs(
+	miscPlantedProof(test, testDecoratedExportMutantShards, miscIds(
 		"stage1/cohere/estree/exports_test.go:export-mutant",
 		decoratedExports(),
 	), func(planted bool) error {

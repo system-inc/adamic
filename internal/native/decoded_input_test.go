@@ -211,11 +211,11 @@ func checkDecodedInput(test *testing.T, data []byte) {
 		len(data),
 	)
 }
-func TestDecodedInputASCII(test *testing.T) {
+func TestDecodedInputAscii(test *testing.T) {
 	test.Parallel()
 	checkDecodedInput(test, []byte(strings.Repeat("const value = 1;\n", 16)))
 }
-func TestDecodedInputMalformedWTF8(test *testing.T) {
+func TestDecodedInputMalformedWtf8(test *testing.T) {
 	test.Parallel()
 	data := []byte("é" + strings.Repeat("const value = 1;\n", 16) + "😀")
 	data = append(data, 0xed, 0xa0, 0x80, 0xc0, 0xaf, 0xf0, 0x9f)

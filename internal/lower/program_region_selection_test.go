@@ -2,7 +2,7 @@ package lower
 
 import "testing"
 
-func TestProgramRegionSCCOwningEdges(test *testing.T) {
+func TestProgramRegionSccOwningEdges(test *testing.T) {
 	test.Parallel()
 	edges := map[string][]string{
 		"left":  {"right"},
@@ -12,7 +12,7 @@ func TestProgramRegionSCCOwningEdges(test *testing.T) {
 		"view2": {"view1"},
 	}
 	owning := map[string][]string{"left": {"right"}, "right": {"leaf"}}
-	selected := ProgramRegionSCC(edges, owning)
+	selected := ProgramRegionScc(edges, owning)
 	if !selected["left"] || !selected["right"] || selected["leaf"] || selected["view1"] || selected["view2"] {
 		test.Fatalf("wrong owning SCC: %v", selected)
 	}

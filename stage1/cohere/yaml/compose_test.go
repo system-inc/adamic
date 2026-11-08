@@ -149,15 +149,15 @@ var composeMutants = yamlMutants{
 	},
 }
 
-func TestProduct_YAMLComposeMutant000(test *testing.T) {
+func TestProduct_YamlComposeMutant000(test *testing.T) {
 	test.Parallel()
 	composeMutants.product(test, 0)
 }
-func TestProduct_YAMLComposeMutant001(test *testing.T) {
+func TestProduct_YamlComposeMutant001(test *testing.T) {
 	test.Parallel()
 	composeMutants.product(test, 1)
 }
-func TestProduct_YAMLComposeMutant002(test *testing.T) {
+func TestProduct_YamlComposeMutant002(test *testing.T) {
 	test.Parallel()
 	composeMutants.product(test, 2)
 }

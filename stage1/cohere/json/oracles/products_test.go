@@ -16,12 +16,12 @@ func TestMain(suite *testing.M) {
 	os.Exit(suite.Run())
 }
 
-// TestProduct_JSONGoOracle is shared with the parent json tests.
-func TestProduct_JSONGoOracle(test *testing.T) { test.Parallel(); FormatterOracle(test) }
+// TestProduct_JsonGoOracle is shared with the parent json tests.
+func TestProduct_JsonGoOracle(test *testing.T) { test.Parallel(); FormatterOracle(test) }
 
-// TestProduct_JSONAuditOracle is shared with the parent json tests. AuditOracle returns the oracle binary's path, as
+// TestProduct_JsonAuditOracle is shared with the parent json tests. AuditOracle returns the oracle binary's path, as
 // buildcache.GoTest does: its product directory holds it.
-func TestProduct_JSONAuditOracle(test *testing.T) {
+func TestProduct_JsonAuditOracle(test *testing.T) {
 	test.Parallel()
 	binary := AuditOracle(test)
 	buildcache.RequireArtifacts(
@@ -31,14 +31,14 @@ func TestProduct_JSONAuditOracle(test *testing.T) {
 	)
 }
 
-// TestProduct_JSONClassOrderAnswer is shared with the parent json tests.
-func TestProduct_JSONClassOrderAnswer(test *testing.T) { test.Parallel(); ClassOrderAnswer(test) }
+// TestProduct_JsonClassOrderAnswer is shared with the parent json tests.
+func TestProduct_JsonClassOrderAnswer(test *testing.T) { test.Parallel(); ClassOrderAnswer(test) }
 
-// TestProduct_JSONUpstreamParityVerdict is shared with the parent json tests.
-func TestProduct_JSONUpstreamParityVerdict(test *testing.T) { test.Parallel(); UpstreamParity(test) }
+// TestProduct_JsonUpstreamParityVerdict is shared with the parent json tests.
+func TestProduct_JsonUpstreamParityVerdict(test *testing.T) { test.Parallel(); UpstreamParity(test) }
 
-// TestProduct_JSONPrinterMutant_0 is shared with the parent json tests.
-func TestProduct_JSONPrinterMutant_0(test *testing.T) {
+// TestProduct_JsonPrinterMutant_0 is shared with the parent json tests.
+func TestProduct_JsonPrinterMutant_0(test *testing.T) {
 	test.Parallel()
 	printerMutation := printerMutations[0]
 	PrinterMutant(
@@ -51,8 +51,8 @@ func TestProduct_JSONPrinterMutant_0(test *testing.T) {
 	)
 }
 
-// TestProduct_JSONPrinterMutant_1 is shared with the parent json tests.
-func TestProduct_JSONPrinterMutant_1(test *testing.T) {
+// TestProduct_JsonPrinterMutant_1 is shared with the parent json tests.
+func TestProduct_JsonPrinterMutant_1(test *testing.T) {
 	test.Parallel()
 	printerMutation := printerMutations[1]
 	PrinterMutant(
@@ -65,8 +65,8 @@ func TestProduct_JSONPrinterMutant_1(test *testing.T) {
 	)
 }
 
-// TestProduct_JSONPrinterMutant_2 is shared with the parent json tests.
-func TestProduct_JSONPrinterMutant_2(test *testing.T) {
+// TestProduct_JsonPrinterMutant_2 is shared with the parent json tests.
+func TestProduct_JsonPrinterMutant_2(test *testing.T) {
 	test.Parallel()
 	printerMutation := printerMutations[2]
 	PrinterMutant(

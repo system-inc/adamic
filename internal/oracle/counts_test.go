@@ -258,7 +258,7 @@ func countedRun(
 				how.arguments = append([]string{writable(test, shared, "counted")}, how.arguments...)
 			}
 			if strings.HasPrefix(path, "internal/oracle/testdata/node_fs_file_") {
-				how = fsFilePrepare(test, shared, "counted")
+				how = fileSystemFilePrepare(test, shared, "counted")
 			}
 			binary := filepath.Join(shared, "program")
 			if buildError := native.Build(source, binary, native.Options{Count: true}); buildError != nil {
@@ -329,7 +329,7 @@ func countCases() []countCase {
 			return counted(test, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
 		}})
 	}
-	for _, fixture := range fsFileFixtures {
+	for _, fixture := range fileSystemFileFixtures {
 		path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
 		cases = append(cases, countCase{
 			path,

@@ -156,4 +156,4 @@ func TestRegExpLintPatternsNode(test *testing.T) {
 }
 
 func TestRegExpSearchNode(test *testing.T) { test.Parallel(); runRegExpSearchNodeUnit(test, false) }
-func TestRegExpSearchWASM(test *testing.T) { test.Parallel(); runRegExpSearchNodeUnit(test, true) }
+func TestRegExpSearchWasm(test *testing.T) { test.Parallel(); runRegExpSearchNodeUnit(test, true) }

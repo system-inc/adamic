@@ -251,7 +251,7 @@ func TestRegExpRuntimePropertyIdentity(test *testing.T) {
 	}
 }
 
-func TestRegExpRuntimePropertiesWASI(test *testing.T) {
+func TestRegExpRuntimePropertiesWasi(test *testing.T) {
 	test.Parallel()
 	// This table unit uses no allocation, libc, atomics or runtime host services.
 	// WASI runs the same entry comparisons with 32-bit pointers. The Linux

@@ -240,37 +240,37 @@ var caseMappingPointRanges = map[string]testUnitRange{
 	"D0000 to 10FFFF": {0xd0000, 0x110000},
 }
 
-func TestCaseMappingMatchesNodePoints0ToFFFF(test *testing.T) {
+func TestCaseMappingMatchesNodePoints0ToFfff(test *testing.T) {
 	test.Parallel()
 	runCaseMappingPoints(test, "0 to FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints10000To1FFFF(test *testing.T) {
+func TestCaseMappingMatchesNodePoints10000To1Ffff(test *testing.T) {
 	test.Parallel()
 	runCaseMappingPoints(test, "10000 to 1FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints20000To2FFFF(test *testing.T) {
+func TestCaseMappingMatchesNodePoints20000To2Ffff(test *testing.T) {
 	test.Parallel()
 	runCaseMappingPoints(test, "20000 to 2FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints30000To5FFFF(test *testing.T) {
+func TestCaseMappingMatchesNodePoints30000To5Ffff(test *testing.T) {
 	test.Parallel()
 	runCaseMappingPoints(test, "30000 to 5FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints60000To8FFFF(test *testing.T) {
+func TestCaseMappingMatchesNodePoints60000To8Ffff(test *testing.T) {
 	test.Parallel()
 	runCaseMappingPoints(test, "60000 to 8FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints90000ToCFFFF(test *testing.T) {
+func TestCaseMappingMatchesNodePoints90000ToCffff(test *testing.T) {
 	test.Parallel()
 	runCaseMappingPoints(test, "90000 to CFFFF")
 }
 
-func TestCaseMappingMatchesNodePointsD0000To10FFFF(test *testing.T) {
+func TestCaseMappingMatchesNodePointsD0000To10Ffff(test *testing.T) {
 	test.Parallel()
 	runCaseMappingPoints(test, "D0000 to 10FFFF")
 }

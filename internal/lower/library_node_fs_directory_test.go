@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestNodeFSDirectorySymlinkSignatures(test *testing.T) {
+func TestNodeFileSystemDirectorySymlinkSignatures(test *testing.T) {
 	test.Parallel()
 	for _, source := range []string{
 		`import {symlinkSync} from 'node:fs'; symlinkSync('target','link');`,
@@ -30,7 +30,7 @@ func TestNodeFSDirectorySymlinkSignatures(test *testing.T) {
 	}
 }
 
-func TestNodeFSDirectoryRealpathClosureBoundaries(test *testing.T) {
+func TestNodeFileSystemDirectoryRealpathClosureBoundaries(test *testing.T) {
 	test.Parallel()
 	for _, source := range []string{
 		`import {realpathSync} from 'node:fs'; const resolve=realpathSync.native; console.log(resolve('.'));`,

@@ -115,32 +115,32 @@ func printerAsGoProducts(test *testing.T) printerProducts {
 	return product
 }
 
-func TestProduct_GraphQLPrinterSource(test *testing.T)  { test.Parallel(); printerAsGoSource(test) }
-func TestProduct_GraphQLPrinterLowered(test *testing.T) { test.Parallel(); printerAsGoLowered(test) }
-func TestProduct_GraphQLPrinterSanitized(test *testing.T) {
+func TestProduct_GraphQlPrinterSource(test *testing.T)  { test.Parallel(); printerAsGoSource(test) }
+func TestProduct_GraphQlPrinterLowered(test *testing.T) { test.Parallel(); printerAsGoLowered(test) }
+func TestProduct_GraphQlPrinterSanitized(test *testing.T) {
 	test.Parallel()
 	printerAsGoNative(test, true)
 }
-func TestProduct_GraphQLPrinterRelease(test *testing.T) {
+func TestProduct_GraphQlPrinterRelease(test *testing.T) {
 	test.Parallel()
 	if runtime.GOOS != "darwin" {
 		test.Skip("Darwin leak check only")
 	}
 	printerAsGoNative(test, false)
 }
-func TestProduct_GraphQLPrinterFindsDefaults(test *testing.T) {
+func TestProduct_GraphQlPrinterFindsDefaults(test *testing.T) {
 	test.Parallel()
 	printerCases(test, "defaults")
 }
-func TestProduct_GraphQLPrinterFindsNarrow(test *testing.T) {
+func TestProduct_GraphQlPrinterFindsNarrow(test *testing.T) {
 	test.Parallel()
 	printerCases(test, "narrow")
 }
-func TestProduct_GraphQLPrinterFindsTight(test *testing.T) {
+func TestProduct_GraphQlPrinterFindsTight(test *testing.T) {
 	test.Parallel()
 	printerCases(test, "tight")
 }
-func TestProduct_GraphQLPrinterFindsTabs(test *testing.T) {
+func TestProduct_GraphQlPrinterFindsTabs(test *testing.T) {
 	test.Parallel()
 	printerCases(test, "tabs")
 }

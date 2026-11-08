@@ -70,7 +70,7 @@ func TestMeasureClangUnits(test *testing.T) {
 			var library string
 			var err error
 			if program == "cohere-typeaware" {
-				library, err = splitTSGoRuntime(source, options)
+				library, err = splitTsGoRuntime(source, options)
 			} else {
 				library, err = RuntimeLibrary("", options)
 			}
@@ -190,7 +190,7 @@ func TestMeasureClangUnits(test *testing.T) {
 		}{{"sanitized", Options{Sanitize: true}}, {"release", Options{}}, {"counted", Options{Count: true}}} {
 			var err error
 			if program == "cohere-typeaware" {
-				_, err = splitTSGoRuntime(source, mode.options)
+				_, err = splitTsGoRuntime(source, mode.options)
 			} else {
 				_, err = RuntimeLibrary("", mode.options)
 			}

@@ -7,7 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func TestNodeFSFileOperationsAreKnown(test *testing.T) {
+func TestNodeFileSystemFileOperationsAreKnown(test *testing.T) {
 	test.Parallel()
 	operations := map[string]ir.Type{
 		"read_sync":           ir.Number,
@@ -59,7 +59,7 @@ func TestNodeFSFileOperationsAreKnown(test *testing.T) {
 	}
 }
 
-func TestNodeFSFileOperandsStillJudgeWrites(test *testing.T) {
+func TestNodeFileSystemFileOperandsStillJudgeWrites(test *testing.T) {
 	test.Parallel()
 	closes := ir.ArrayPush{Array: ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "nodes", Of: ir.Array},
 		Value: ir.Read{Local: 0, Of: ir.Object}, Element: ir.Object, Site: 2}
@@ -80,7 +80,7 @@ func TestNodeFSFileOperandsStillJudgeWrites(test *testing.T) {
 	test.Fatal("fs argument evaluation lost the cycle-closing write")
 }
 
-func TestNodeFSFileDoesNotEscapeBorrowedObjects(test *testing.T) {
+func TestNodeFileSystemFileDoesNotEscapeBorrowedObjects(test *testing.T) {
 	test.Parallel()
 	for _, operation := range []string{"is_file", "date_time", "utimes_dates"} {
 		program := regexTreeProgram(ir.NodeFSFile{
@@ -95,7 +95,7 @@ func TestNodeFSFileDoesNotEscapeBorrowedObjects(test *testing.T) {
 	}
 }
 
-func TestNodeFSFileResultsAreFresh(test *testing.T) {
+func TestNodeFileSystemFileResultsAreFresh(test *testing.T) {
 	test.Parallel()
 	for _, operation := range []string{"stat", "date_new"} {
 		program := &ir.Program{

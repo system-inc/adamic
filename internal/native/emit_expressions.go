@@ -45,7 +45,7 @@ func (nativeEmitter *emitter) evaluate(expression ir.Expression) string {
 	case ir.NodeHostCall:
 		return nativeEmitter.nodeHostCall(expression)
 	case ir.NodeFSFile:
-		return nativeEmitter.nodeFSFile(expression)
+		return nativeEmitter.nodeFileSystemFile(expression)
 	case ir.NodeBufferCall:
 		return nativeEmitter.nodeBufferCall(expression)
 	case ir.PromiseValue:

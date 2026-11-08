@@ -55,7 +55,7 @@ func (lowering *lowering) selectProgramMembership(finder *cycleFinder, modules [
 	program.ProgramTypes = ir.SortedMap[int, bool]{}
 	for node := range selected {
 		if node.proven != nil && !finder.weak(node.proven) && !finder.lowering.isLibraryType(node.proven, "Promise") {
-			program.ProgramTypes[finder.lowering.cycleTypeID(node.proven)] = true
+			program.ProgramTypes[finder.lowering.cycleTypeId(node.proven)] = true
 		}
 		if node.cell != 0 {
 			program.Locals[node.cell-1].ProgramRegion = true

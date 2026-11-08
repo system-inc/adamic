@@ -17,7 +17,7 @@ func TestConstantPortabilityClang(test *testing.T) {
 	constantPortability(test, "clang")
 }
 
-func TestConstantPortabilityGCC(test *testing.T) {
+func TestConstantPortabilityGcc(test *testing.T) {
 	test.Parallel()
 	constantPortability(test, "gcc")
 }

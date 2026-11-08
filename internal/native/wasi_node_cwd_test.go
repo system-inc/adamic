@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-var nodeWASICwdBaseline = []string{
+var nodeWasiCwdBaseline = []string{
 	"args_get",
 	"args_sizes_get",
 	"clock_time_get",
@@ -23,16 +23,16 @@ var nodeWASICwdBaseline = []string{
 	"proc_exit",
 }
 
-func nodeWASICwdEnabled(test *testing.T) {
+func nodeWasiCwdEnabled(test *testing.T) {
 	test.Helper()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" || os.Getenv("WASI_SYSROOT") == "" {
 		test.Skip("set ADAMIC_TEST_WASI=1 and WASI_SYSROOT")
 	}
 }
 
-func nodeWASICwdRuntime(test *testing.T, host bool) {
+func nodeWasiCwdRuntime(test *testing.T, host bool) {
 	test.Helper()
-	nodeWASICwdEnabled(test)
+	nodeWasiCwdEnabled(test)
 	source := ""
 	if host {
 		source = "#define ADAMIC_NODE_HOST 1\n"
@@ -46,18 +46,18 @@ func nodeWASICwdRuntime(test *testing.T, host bool) {
 	}
 }
 
-func TestProduct_NodeWASICwdRuntime_000(test *testing.T) {
+func TestProduct_NodeWasiCwdRuntime_000(test *testing.T) {
 	test.Parallel()
-	nodeWASICwdRuntime(test, false)
+	nodeWasiCwdRuntime(test, false)
 }
-func TestProduct_NodeWASICwdRuntime_001(test *testing.T) {
+func TestProduct_NodeWasiCwdRuntime_001(test *testing.T) {
 	test.Parallel()
-	nodeWASICwdRuntime(test, true)
+	nodeWasiCwdRuntime(test, true)
 }
 
-func nodeWASICwdImports(test *testing.T, variant int) {
+func nodeWasiCwdImports(test *testing.T, variant int) {
 	test.Helper()
-	nodeWASICwdEnabled(test)
+	nodeWasiCwdEnabled(test)
 	source := `#include "adamic.h"
 #include "node_cwd_wasi.h"
 int main(int argc, char **argv) {
@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
 		test.Fatal(buildError)
 	}
 	const inspect = `const fs=require('node:fs');console.log(JSON.stringify(WebAssembly.Module.imports(new WebAssembly.Module(fs.readFileSync(process.argv[1]))).map(i=>i.module==='wasi_snapshot_preview1'?i.name:i.module+'.'+i.name).sort()));`
-	got := observeWASI(test, "", "node", "-e", inspect, module)
+	got := observeWasi(test, "", "node", "-e", inspect, module)
 	if got.exit != 0 || len(got.stderr) != 0 {
 		test.Fatalf("import inspection: %+v", got)
 	}
@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
 	if decodeError := json.Unmarshal(got.stdout, &imports); decodeError != nil {
 		test.Fatal(decodeError)
 	}
-	same := slices.Equal(imports, nodeWASICwdBaseline)
+	same := slices.Equal(imports, nodeWasiCwdBaseline)
 	if variant == 2 {
 		if same {
 			test.Fatal("eager cwd initialization survived the import comparison")
@@ -111,17 +111,17 @@ int main(int argc, char **argv) {
 		}
 		test.Log("eager initializer compiled; Node's module import inspection caught it")
 	} else if !same {
-		test.Fatalf("file-free imports: got %v, want %v", imports, nodeWASICwdBaseline)
+		test.Fatalf("file-free imports: got %v, want %v", imports, nodeWasiCwdBaseline)
 	}
 }
 
-func TestNodeWASICwdFileFreeImports(test *testing.T) { test.Parallel(); nodeWASICwdImports(test, 0) }
-func TestNodeWASICwdLexicalImports(test *testing.T)  { test.Parallel(); nodeWASICwdImports(test, 1) }
-func TestNodeWASICwdStartupMutant(test *testing.T)   { test.Parallel(); nodeWASICwdImports(test, 2) }
+func TestNodeWasiCwdFileFreeImports(test *testing.T) { test.Parallel(); nodeWasiCwdImports(test, 0) }
+func TestNodeWasiCwdLexicalImports(test *testing.T)  { test.Parallel(); nodeWasiCwdImports(test, 1) }
+func TestNodeWasiCwdStartupMutant(test *testing.T)   { test.Parallel(); nodeWasiCwdImports(test, 2) }
 
-func nodeWASICwdAgreement(test *testing.T, variant int) {
+func nodeWasiCwdAgreement(test *testing.T, variant int) {
 	test.Helper()
-	nodeWASICwdEnabled(test)
+	nodeWasiCwdEnabled(test)
 	directory := test.TempDir()
 	first := filepath.Join(directory, "first")
 	moved := filepath.Join(first, "nested")
@@ -138,7 +138,7 @@ func nodeWASICwdAgreement(test *testing.T, variant int) {
 		truthSource += `console.log(fs.readdirSync('.').length);`
 	}
 	truthSource += `console.log(path.resolve('.'));process.chdir(process.argv[1]);console.log(path.resolve('.'));console.log(fs.readdirSync('.').length);`
-	truth := observeWASI(test, first, "node", "-e", truthSource, moved)
+	truth := observeWasi(test, first, "node", "-e", truthSource, moved)
 	if truth.exit != 0 || len(truth.stderr) != 0 {
 		test.Fatalf("Node cwd contract: %+v", truth)
 	}
@@ -233,7 +233,7 @@ int main(int argc, char **argv) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	got := observeWASI(test, first, "node", "--disable-warning=ExperimentalWarning", runner, module)
+	got := observeWasi(test, first, "node", "--disable-warning=ExperimentalWarning", runner, module)
 	if got.exit != 0 || len(got.stderr) != 0 {
 		test.Fatalf("cwd check failed outside Node stdout: %+v", got)
 	}
@@ -247,14 +247,14 @@ int main(int argc, char **argv) {
 	}
 }
 
-func TestNodeWASICwdPathFirst(test *testing.T)      { test.Parallel(); nodeWASICwdAgreement(test, 0) }
-func TestNodeWASICwdDirectoryFirst(test *testing.T) { test.Parallel(); nodeWASICwdAgreement(test, 1) }
-func TestNodeWASICwdSharedOnce(test *testing.T)     { test.Parallel(); nodeWASICwdAgreement(test, 2) }
-func TestNodeWASICwdMissingInitMutant(test *testing.T) {
+func TestNodeWasiCwdPathFirst(test *testing.T)      { test.Parallel(); nodeWasiCwdAgreement(test, 0) }
+func TestNodeWasiCwdDirectoryFirst(test *testing.T) { test.Parallel(); nodeWasiCwdAgreement(test, 1) }
+func TestNodeWasiCwdSharedOnce(test *testing.T)     { test.Parallel(); nodeWasiCwdAgreement(test, 2) }
+func TestNodeWasiCwdMissingInitMutant(test *testing.T) {
 	test.Parallel()
-	nodeWASICwdAgreement(test, 3)
+	nodeWasiCwdAgreement(test, 3)
 }
-func TestNodeWASICwdRepeatedInitMutant(test *testing.T) {
+func TestNodeWasiCwdRepeatedInitMutant(test *testing.T) {
 	test.Parallel()
-	nodeWASICwdAgreement(test, 4)
+	nodeWasiCwdAgreement(test, 4)
 }

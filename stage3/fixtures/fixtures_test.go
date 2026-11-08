@@ -48,7 +48,7 @@ type fixture struct {
 	Configuration *hostconfiguration.Configuration `json:"configuration,omitempty"`
 	File          string                           `json:"file"`
 	Platform      string                           `json:"platform,omitempty"`
-	TSC           []string                         `json:"tsc"`
+	Tsc           []string                         `json:"tsc"`
 	Reason        string                           `json:"reason"`
 	Node          behavior                         `json:"node"`
 	Stage0        stage0                           `json:"stage0"`
@@ -212,11 +212,11 @@ func transformedNodeRunner(test *testing.T, repository string) string {
 			1,
 		)
 	}
-	oracleURL := (&url.URL{Scheme: "file", Path: filepath.ToSlash(path)}).String()
+	oracleUrl := (&url.URL{Scheme: "file", Path: filepath.ToSlash(path)}).String()
 	text = strings.Replace(
 		text,
 		"new URL('./adamic.mjs', import.meta.url)",
-		fmt.Sprintf("new URL('./adamic.mjs', %q)", oracleURL),
+		fmt.Sprintf("new URL('./adamic.mjs', %q)", oracleUrl),
 		1,
 	)
 	transformed := filepath.Join(test.TempDir(), "node-transform.mjs")
@@ -383,7 +383,7 @@ func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...st
 						continue
 					}
 				}
-				if len(entry.TSC) == 0 || entry.Reason == "" {
+				if len(entry.Tsc) == 0 || entry.Reason == "" {
 					test.Fatalf("missing provenance for %s", entry.File)
 				}
 				switch entry.Stage0.Outcome {

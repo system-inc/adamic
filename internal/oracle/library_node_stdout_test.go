@@ -113,7 +113,7 @@ func stdoutClosedPipe(test *testing.T, name string, arguments ...string) {
 }
 
 // Called only by the existing opt-in WASI family, after its setup and gate.
-func stdoutWASIClosedPipe(test *testing.T, source string) {
+func stdoutWasiClosedPipe(test *testing.T, source string) {
 	test.Helper()
 	wasm := filepath.Join(test.TempDir(), "closed.wasm")
 	if buildError := native.Build(source, wasm, native.Options{Target: "wasm32-wasi"}); buildError != nil {

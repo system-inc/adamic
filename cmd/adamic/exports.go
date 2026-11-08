@@ -95,12 +95,12 @@ func crossingType(c *checker.Checker, subjectType *checker.Type, path string, de
 	return result, nil
 }
 
-func exportSignatures(program *load.Program, names []string) ([]native.ABIExport, error) {
+func exportSignatures(program *load.Program, names []string) ([]native.AbiExport, error) {
 	return exportSignaturesWith(program, names, false)
 }
 
 // Workers may select private entry declarations without changing the public build ABI.
-func exportSignaturesWith(program *load.Program, names []string, entryFunctions bool) ([]native.ABIExport, error) {
+func exportSignaturesWith(program *load.Program, names []string, entryFunctions bool) ([]native.AbiExport, error) {
 	entry := program.Files()[0]
 	c, release := program.Checker(context.Background(), entry)
 	defer release()
@@ -108,7 +108,7 @@ func exportSignaturesWith(program *load.Program, names []string, entryFunctions 
 	for _, name := range names {
 		wanted[name] = true
 	}
-	exports := []native.ABIExport{}
+	exports := []native.AbiExport{}
 	module := c.GetSymbolAtLocation(entry.AsNode())
 	if module == nil {
 		if len(names) > 0 {
@@ -151,7 +151,7 @@ func exportSignaturesWith(program *load.Program, names []string, entryFunctions 
 			}
 			continue
 		}
-		export := native.ABIExport{Name: symbol.Name, Parameters: []native.ABIField{}}
+		export := native.AbiExport{Name: symbol.Name, Parameters: []native.ABIField{}}
 		var invalid error
 		if len(declaration.TypeParameters()) > 0 {
 			invalid = fmt.Errorf("%s: generic signatures are outside ABI version 1", symbol.Name)
@@ -202,11 +202,11 @@ func exportSignaturesWith(program *load.Program, names []string, entryFunctions 
 	return exports, nil
 }
 
-func compileExports(path string, names []string) (*ir.Program, []native.ABIExport, int) {
+func compileExports(path string, names []string) (*ir.Program, []native.AbiExport, int) {
 	return compileExportsWith(path, names, false)
 }
 
-func compileExportsWith(path string, names []string, entryFunctions bool) (*ir.Program, []native.ABIExport, int) {
+func compileExportsWith(path string, names []string, entryFunctions bool) (*ir.Program, []native.AbiExport, int) {
 	checked, code := check([]string{path})
 	if checked == nil {
 		return nil, nil, code

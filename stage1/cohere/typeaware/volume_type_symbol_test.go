@@ -139,7 +139,7 @@ func typeSymbolCases() []string {
 	return append(cases, "declare const console: {log():void};\n", "const detached=console.log;\nexport {};\n")
 }
 
-func typeSymbolIDs(shard int) []int {
+func typeSymbolIds(shard int) []int {
 	var ids []int
 	for index := range typeSymbolCases() {
 		if index%testVolumeTypeSymbolShards == shard {
@@ -153,7 +153,7 @@ func TestVolumeTypeSymbolUnion(test *testing.T) {
 	test.Parallel()
 	seen := make(map[int]bool)
 	for shard := 0; shard < testVolumeTypeSymbolShards; shard++ {
-		for _, id := range typeSymbolIDs(shard) {
+		for _, id := range typeSymbolIds(shard) {
 			if seen[id] {
 				test.Fatalf("repeated case %d", id)
 			}
@@ -186,7 +186,7 @@ func TestVolumeTypeSymbolPlantedSurvivor(test *testing.T) {
 	caught := []int{}
 	// Plant identical finding bytes in the assigned shard, using the same validator.
 	for shard := 0; shard < testVolumeTypeSymbolShards; shard++ {
-		if len(typeSymbolIDs(shard)) != 0 &&
+		if len(typeSymbolIds(shard)) != 0 &&
 			typeSymbolSurvived(result{stdout: []byte("findings")}, result{stdout: []byte("findings")}) != nil {
 			caught = append(caught, shard)
 		}
@@ -234,7 +234,7 @@ func typeSymbolFixtures(h *harness) ([]string, string) {
 	}, func(directory string) error {
 		local := &harness{t: h.t, repository: h.repository, directory: directory}
 		var paths []string
-		for _, id := range typeSymbolIDs(0) {
+		for _, id := range typeSymbolIds(0) {
 			name := fmt.Sprintf("control-%03d.ts", id)
 			if id == len(cases)-2 {
 				name = "native-globals.d.ts"

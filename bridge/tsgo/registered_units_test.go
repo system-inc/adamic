@@ -4,7 +4,7 @@ package tsgo_test
 import "testing"
 
 var bridgeCases = []bridgeCase{
-	{"TestBridgeABI", "abi", "", 0, bridgeABI},
+	{"TestBridgeABI", "abi", "", 0, bridgeAbi},
 	{"TestBridgeInputLength", "input-length", "", 0, bridgeInputLength},
 	{"TestBridgeUnlinkedBuild", "unlinked-build", "", 0, bridgeUnlinkedBuild},
 	{"TestBridgeUnlinkedC", "unlinked-c", "", 0, bridgeUnlinkedC},

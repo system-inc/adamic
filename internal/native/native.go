@@ -442,7 +442,7 @@ func linkOne(
 	}
 	arguments = append(arguments, "-lm")
 	if options.Target == "wasm32-wasi" {
-		arguments = append(arguments, WASILinkFlags(options)...)
+		arguments = append(arguments, WasiLinkFlags(options)...)
 	}
 	command := clangIn(directory, compiler, arguments...)
 	var combined []byte

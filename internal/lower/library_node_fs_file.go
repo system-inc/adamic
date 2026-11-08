@@ -8,7 +8,7 @@ import (
 )
 
 // Recognize declarations, including aliased imports, rather than user spellings.
-func (lowering *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) nodeFileSystemFile(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	symbol := lowering.symbol(callee)
@@ -511,7 +511,7 @@ func dateNowCall() ir.Expression {
 	return ir.NodeFSFile{Operation: "time_now", Of: ir.Number}
 }
 
-func (lowering *lowering) nodeFSFileDate(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) nodeFileSystemFileDate(node *ast.Node) (ir.Expression, bool, error) {
 	created := node.AsNewExpression()
 	if !lowering.isLibraryGlobal(created.Expression, "Date") {
 		return nil, false, nil
@@ -535,7 +535,7 @@ func (lowering *lowering) nodeFSFileDate(node *ast.Node) (ir.Expression, bool, e
 
 // These native intrinsics inspect options synchronously and never write or
 // retain them. Borrowing here does not authorize a wider mutable assignment.
-func (lowering *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
+func (lowering *lowering) nodeFileSystemFileReadOnlyArgument(node *ast.Node) bool {
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent

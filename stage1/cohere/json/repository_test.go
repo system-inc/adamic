@@ -18,12 +18,12 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
-type repositoryJSON struct {
+type repositoryJson struct {
 	paths map[string]bool
 	dirty []string
 }
 
-var repositoryJSONPatterns = []string{"*.json", ":(exclude)cohere/**", ":(exclude,glob)**/.git/**"}
+var repositoryJsonPatterns = []string{"*.json", ":(exclude)cohere/**", ":(exclude,glob)**/.git/**"}
 
 func gitCorpus(root string, arguments ...string) ([]byte, error) {
 	return gitCorpusInput(root, nil, arguments...)
@@ -44,11 +44,11 @@ func gitCorpusInput(root string, input []byte, arguments ...string) ([]byte, err
 	return output, nil
 }
 
-func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
+func repositoryJsonAtHead(root string) (repositoryJson, error) {
 	if !tracked.Git(root) {
-		return repositoryJSONInManifest(root)
+		return repositoryJsonInManifest(root)
 	}
-	state := repositoryJSON{paths: map[string]bool{}}
+	state := repositoryJson{paths: map[string]bool{}}
 	top, gitCorpusError := gitCorpus(root, "rev-parse", "--show-toplevel")
 	if gitCorpusError != nil {
 		return state, gitCorpusError
@@ -73,7 +73,7 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
 	}
 	paths, gitCorpusError := gitCorpus(
 		root,
-		append([]string{"ls-files", "--cached", "-z", "--"}, repositoryJSONPatterns...)...,
+		append([]string{"ls-files", "--cached", "-z", "--"}, repositoryJsonPatterns...)...,
 	)
 	if gitCorpusError != nil {
 		return state, gitCorpusError
@@ -91,7 +91,7 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
 		{"diff", "--cached", "--name-only", "-z", "HEAD", "--"},
 		{"diff", "--name-only", "-z", "--"},
 	} {
-		dirty, gitCorpusError := gitCorpus(root, append(arguments, repositoryJSONPatterns...)...)
+		dirty, gitCorpusError := gitCorpus(root, append(arguments, repositoryJsonPatterns...)...)
 		if gitCorpusError != nil {
 			return state, gitCorpusError
 		}
@@ -109,11 +109,11 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
 	return state, nil
 }
 
-// repositoryJSONInManifest is repositoryJSONAtHEAD for a source with no .git, as a Loom runner unpacks it: the tree's
+// repositoryJsonInManifest is repositoryJSONAtHEAD for a source with no .git, as a Loom runner unpacks it: the tree's
 // manifest (internal/tracked) must record root as the tree's own repository, its *.json entries outside cohere/ are
 // the tracked paths, and each one missing or not as recorded is dirty. The manifest is HEAD and index at once.
-func repositoryJSONInManifest(root string) (repositoryJSON, error) {
-	state := repositoryJSON{paths: map[string]bool{}}
+func repositoryJsonInManifest(root string) (repositoryJson, error) {
+	state := repositoryJson{paths: map[string]bool{}}
 	if _, headError := tracked.Head(root); headError != nil {
 		return state, fmt.Errorf("JSON corpus requires usable Git metadata or the tree's manifest: %w", headError)
 	}
@@ -146,14 +146,14 @@ func repositoryJSONInManifest(root string) (repositoryJSON, error) {
 // Tracked repository inputs follow Git HEAD. Only externally provisioned or
 // generated inputs retain identity pins; arbitrary untracked files are refused.
 func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPin, int, error) {
-	state, repositoryJsonAtHeadError := repositoryJSONAtHEAD(root)
+	state, repositoryJsonAtHeadError := repositoryJsonAtHead(root)
 	if repositoryJsonAtHeadError != nil {
 		return corpusPin{}, 0, repositoryJsonAtHeadError
 	}
 	return validateCorpusState(state, cases, expected)
 }
 
-func validateCorpusState(state repositoryJSON, cases []textCase, expected corpusPin) (corpusPin, int, error) {
+func validateCorpusState(state repositoryJson, cases []textCase, expected corpusPin) (corpusPin, int, error) {
 	return oracles.ValidateCorpusState(state.paths, state.dirty, oracleCases(cases), expected)
 }
 
@@ -180,7 +180,7 @@ func fixtureGit(test *testing.T, root string, arguments ...string) {
 	}
 }
 
-func commitFixtureJSON(test *testing.T, root string, paths ...string) {
+func commitFixtureJson(test *testing.T, root string, paths ...string) {
 	test.Helper()
 	fixtureGit(test, root, append([]string{"add", "--"}, paths...)...)
 	fixtureGit(
@@ -204,7 +204,7 @@ func newRepositoryFixture(test *testing.T) repositoryFixture {
 	fixtureGit(test, root, "init", "-q")
 	fixtureWrite(test, root, "tracked.json", "{}")
 	fixtureWrite(test, root, "nested/second.json", "null")
-	commitFixtureJSON(test, root, "tracked.json", "nested/second.json")
+	commitFixtureJson(test, root, "tracked.json", "nested/second.json")
 	for _, item := range []textCase{
 		{"cohere/upstream.json", "[1]"},
 		{"cohere/TypeScript/upstream.json", "[]"},
@@ -387,7 +387,7 @@ func TestRepositoryLandingWithoutPinEdit(test *testing.T) {
 	}
 	// Only this test's private Git history receives the simulated later landing.
 	fixtureWrite(test, fixture.root, "landing-added.json", "{}")
-	commitFixtureJSON(test, fixture.root, "landing-added.json")
+	commitFixtureJson(test, fixture.root, "landing-added.json")
 	actual, count, validateCorpusError := validateCorpus(fixture.root, fixture.cases(test), fixture.pin)
 	if validateCorpusError != nil || count != 3 || actual.SHA256 != fixture.pin.SHA256 {
 		test.Fatalf("landing changed pin or parity: count %d: %v", count, validateCorpusError)

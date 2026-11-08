@@ -124,17 +124,17 @@ func estreeFamilyCopySource(from, to string) error {
 	}
 	return nil
 }
-func TestProduct_DeepMutantsIR0(test *testing.T) {
+func TestProduct_DeepMutantsIr0(test *testing.T) {
 	test.Parallel()
-	deepMutantsIRProduct(test, deepMutantsEnumeration()[0])
+	deepMutantsIrProduct(test, deepMutantsEnumeration()[0])
 }
-func TestProduct_DeepMutantsIR1(test *testing.T) {
+func TestProduct_DeepMutantsIr1(test *testing.T) {
 	test.Parallel()
-	deepMutantsIRProduct(test, deepMutantsEnumeration()[1])
+	deepMutantsIrProduct(test, deepMutantsEnumeration()[1])
 }
-func TestProduct_DeepMutantsIR2(test *testing.T) {
+func TestProduct_DeepMutantsIr2(test *testing.T) {
 	test.Parallel()
-	deepMutantsIRProduct(test, deepMutantsEnumeration()[2])
+	deepMutantsIrProduct(test, deepMutantsEnumeration()[2])
 }
 
 // Hash actual Go dependencies (including embeds and local modules), rather than
@@ -269,17 +269,17 @@ func estreeFamilyDependencyFiles(test *testing.T) []string {
 	return estreeFamilyDependencies.files
 }
 
-func TestProduct_SyntaxMutantIR_000(test *testing.T) {
+func TestProduct_SyntaxMutantIr_000(test *testing.T) {
 	test.Parallel()
-	syntaxMutantIRProduct(test, syntaxMutantEnumeration()[0])
+	syntaxMutantIrProduct(test, syntaxMutantEnumeration()[0])
 }
-func TestProduct_SyntaxMutantIR_001(test *testing.T) {
+func TestProduct_SyntaxMutantIr_001(test *testing.T) {
 	test.Parallel()
-	syntaxMutantIRProduct(test, syntaxMutantEnumeration()[1])
+	syntaxMutantIrProduct(test, syntaxMutantEnumeration()[1])
 }
-func TestProduct_SyntaxMutantIR_002(test *testing.T) {
+func TestProduct_SyntaxMutantIr_002(test *testing.T) {
 	test.Parallel()
-	syntaxMutantIRProduct(test, syntaxMutantEnumeration()[2])
+	syntaxMutantIrProduct(test, syntaxMutantEnumeration()[2])
 }
 
 // estreeModule is the module go list reports a dependency in.

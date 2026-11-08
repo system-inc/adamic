@@ -45,9 +45,9 @@ func init() {
 	}
 }
 
-// PrepareCPU installs Run's re-exec CPU limit without starting the command.
+// PrepareCpu installs Run's re-exec CPU limit without starting the command.
 // Callers using childguard must retain Run's wall ceiling themselves.
-func PrepareCPU(command *exec.Cmd, budget time.Duration) error {
+func PrepareCpu(command *exec.Cmd, budget time.Duration) error {
 	if command.Err != nil {
 		return command.Err
 	}
@@ -71,7 +71,7 @@ func PrepareCPU(command *exec.Cmd, budget time.Duration) error {
 // errors retain their type. Only guard failures are wrapped with a named reason.
 func Run(command *exec.Cmd, budget, ceiling time.Duration) error {
 	label := strings.Join(command.Args, " ")
-	if prepareCpuError := PrepareCPU(command, budget); prepareCpuError != nil {
+	if prepareCpuError := PrepareCpu(command, budget); prepareCpuError != nil {
 		return prepareCpuError
 	}
 	var err error

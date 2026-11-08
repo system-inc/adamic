@@ -131,7 +131,7 @@ func helperMutantProduct(test *testing.T, index int) string {
 	return product.binary
 }
 
-func TestProduct_HelperMutantsJSON(test *testing.T)    { test.Parallel(); helperMutantProduct(test, 0) }
+func TestProduct_HelperMutantsJson(test *testing.T)    { test.Parallel(); helperMutantProduct(test, 0) }
 func TestProduct_HelperMutantsSchema(test *testing.T)  { test.Parallel(); helperMutantProduct(test, 1) }
 func TestProduct_HelperMutantsMessage(test *testing.T) { test.Parallel(); helperMutantProduct(test, 2) }
 func TestProduct_HelperMutantsStrict(test *testing.T)  { test.Parallel(); helperMutantProduct(test, 3) }

@@ -21,7 +21,7 @@ func init() {
 
 // The readSync generic constraint is ArrayBufferView. Its proven Buffer argument
 // is synchronously borrowed as bytes, never exposed as a different object view.
-func (lowering *lowering) nodeFSFileBufferArgument(node *ast.Node) bool {
+func (lowering *lowering) nodeFileSystemFileBufferArgument(node *ast.Node) bool {
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent

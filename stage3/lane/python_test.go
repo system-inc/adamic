@@ -99,9 +99,9 @@ func TestApplyPythonGroupsCoverEveryTestOnce(test *testing.T) {
 			if !ok || name.Name != "runPython" {
 				return true
 			}
-			directory, directoryOK := call.Args[1].(*ast.BasicLit)
-			module, moduleOK := call.Args[2].(*ast.BasicLit)
-			if directoryOK && moduleOK && directory.Value == `"stage3"` && module.Value == `"test_apply"` {
+			directory, directoryOk := call.Args[1].(*ast.BasicLit)
+			module, moduleOk := call.Args[2].(*ast.BasicLit)
+			if directoryOk && moduleOk && directory.Value == `"stage3"` && module.Value == `"test_apply"` {
 				active[function.Name.Name] = true
 			}
 			return true
@@ -278,9 +278,9 @@ func TestLaneGenerateApiPythonGroupsCoverEveryTestOnce(test *testing.T) {
 			if !ok || name.Name != "runPython" {
 				return true
 			}
-			directory, directoryOK := call.Args[1].(*ast.BasicLit)
-			module, moduleOK := call.Args[2].(*ast.BasicLit)
-			if directoryOK && moduleOK && directory.Value == `"stage3/lane"` && module.Value == `"test_generate_api"` {
+			directory, directoryOk := call.Args[1].(*ast.BasicLit)
+			module, moduleOk := call.Args[2].(*ast.BasicLit)
+			if directoryOk && moduleOk && directory.Value == `"stage3/lane"` && module.Value == `"test_generate_api"` {
 				active[function.Name.Name] = true
 			}
 			return true

@@ -98,17 +98,17 @@ type Variant struct {
 	Requires string
 }
 
-// oracleWASI is the setting the wasm variants require, read by a constant name so the census of an archive's path can
+// oracleWasi is the setting the wasm variants require, read by a constant name so the census of an archive's path can
 // hold the read to its reason (TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds).
-const oracleWASI = "ADAMIC_ORACLE_WASI"
+const oracleWasi = "ADAMIC_ORACLE_WASI"
 
 var Variants = []Variant{
 	{"sanitized", native.Options{Sanitize: true}, ""},
 	{"release", native.Options{}, ""},
 	{"shipped", native.Options{Release: true}, ""},
 	{"counted", native.Options{Count: true}, ""},
-	{"wasm", native.Options{Target: "wasm32-wasi"}, oracleWASI},
-	{"wasm-request", native.Options{Target: "wasm32-wasi", Request: true, Count: true}, oracleWASI},
+	{"wasm", native.Options{Target: "wasm32-wasi"}, oracleWasi},
+	{"wasm-request", native.Options{Target: "wasm32-wasi", Request: true, Count: true}, oracleWasi},
 }
 
 // ProgramVariants are the ways internal/oracle's program region tests build a program, each with its own archive
@@ -122,7 +122,7 @@ var ProgramVariants = []Variant{
 	{"program-sanitized", native.Options{ProgramRegion: true, Sanitize: true}, ""},
 	{"program-release", native.Options{ProgramRegion: true}, ""},
 	{"program-counted", native.Options{ProgramRegion: true, Count: true}, ""},
-	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, oracleWASI},
+	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, oracleWasi},
 }
 
 // CommandVariants are the ways cmd/adamic builds a program whose archive no other package builds, each with its own
@@ -386,7 +386,7 @@ func variantNamed(test testing.TB, name string) Variant {
 // oracleWASI, and a variant naming another is skipped until it's read here by name.
 func skipUnlessSet(test testing.TB, variant Variant) {
 	test.Helper()
-	if variant.Requires != "" && (variant.Requires != oracleWASI || os.Getenv(oracleWASI) != "1") {
+	if variant.Requires != "" && (variant.Requires != oracleWasi || os.Getenv(oracleWasi) != "1") {
 		test.Skipf("set %s=1", variant.Requires)
 	}
 }

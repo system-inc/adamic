@@ -402,7 +402,7 @@ func jsonPortAgree(
 		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		writeJSON(test, filepath.Join(directory, "cases.json"), items)
+		writeJson(test, filepath.Join(directory, "cases.json"), items)
 		for side, s := range sides {
 			if !runs[side] {
 				continue
@@ -455,7 +455,7 @@ func jsonPortTopShard(test *testing.T, target int) {
 	}
 	setup := time.Now()
 	oracle := jsonTopOracle(test)
-	loweredDirectory := jsonTopProduct(test, "lowered", jsonLoweredPortInputs(), buildJSONLoweredPort)
+	loweredDirectory := jsonTopProduct(test, "lowered", jsonLoweredPortInputs(), buildJsonLoweredPort)
 	cBytes, readError := os.ReadFile(filepath.Join(loweredDirectory, "main.c"))
 	if readError != nil {
 		test.Fatal(readError)
@@ -465,13 +465,13 @@ func jsonPortTopShard(test *testing.T, target int) {
 		test,
 		"release",
 		jsonNativePortInputs(c, false, jsonTopState.clangTools),
-		buildJSONReleasePort(c),
+		buildJsonReleasePort(c),
 	)
 	sanitizedDirectory := jsonTopProduct(
 		test,
 		"sanitized",
 		jsonNativePortInputs(c, true, jsonTopState.clangTools),
-		buildJSONSanitizedPort(c),
+		buildJsonSanitizedPort(c),
 	)
 	entry, script := filepath.Join(loweredDirectory, "main.ts"), filepath.Join(loweredDirectory, "program.mjs")
 	release, sanitized := filepath.Join(releaseDirectory, "port"), filepath.Join(sanitizedDirectory, "port")
@@ -556,8 +556,8 @@ func jsonPortTopShard(test *testing.T, target int) {
 				test.Fatal(jsonPortAnswersError)
 			}
 			input, _ := protocol(cases, answers)
-			writeJSON(test, filepath.Join(artifacts, "cases.json"), cases)
-			writeJSON(test, filepath.Join(artifacts, "go.json"), answers)
+			writeJson(test, filepath.Join(artifacts, "cases.json"), cases)
+			writeJson(test, filepath.Join(artifacts, "go.json"), answers)
 			for name, value := range map[string]string{"cases.txt": input, "node.txt": joined} {
 				if writeError := os.WriteFile(filepath.Join(artifacts, name), []byte(value), 0644); writeError != nil {
 					test.Fatal(writeError)
@@ -693,7 +693,7 @@ func TestThreePortMutantsAreCaught(test *testing.T) {
 	}
 }
 
-func TestAdditionalJSONBoundaries(test *testing.T) {
+func TestAdditionalJsonBoundaries(test *testing.T) {
 	test.Parallel()
 	texts := []string{
 		"[\n// dangling\n]",
@@ -719,8 +719,8 @@ func TestAdditionalJSONBoundaries(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "cases.txt")
 	if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
 		path = filepath.Join(artifacts, "boundary.txt")
-		writeJSON(test, filepath.Join(artifacts, "boundary.json"), cases)
-		writeJSON(test, filepath.Join(artifacts, "boundary-go.json"), answers)
+		writeJson(test, filepath.Join(artifacts, "boundary.json"), cases)
+		writeJson(test, filepath.Join(artifacts, "boundary-go.json"), answers)
 	}
 	if writeError := os.WriteFile(path, []byte(input), 0644); writeError != nil {
 		test.Fatal(writeError)

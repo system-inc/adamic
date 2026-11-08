@@ -44,7 +44,7 @@ func programParseOracle(test *testing.T, enabled bool) {
 		binary,
 		args...,
 	)
-	actual.stdout = graphRSS.ReplaceAll(actual.stdout, nil)
+	actual.stdout = graphRss.ReplaceAll(actual.stdout, nil)
 	if difference := disagreement(truth, actual); difference != "" {
 		test.Fatalf("sanitized parse: %s", difference)
 	}
@@ -58,7 +58,7 @@ func TestProgramRegionParseOffAgreesWithNode(test *testing.T) {
 	programParseOracle(test, false)
 }
 
-func TestProgramRegionParseWASIImports(test *testing.T) {
+func TestProgramRegionParseWasiImports(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")

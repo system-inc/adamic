@@ -16,8 +16,8 @@ func jsonTypes(test testing.TB) string {
 	return buildcache.GoBuild(test, "json-types", "./oracle/json_types.go", nil)
 }
 
-// TestProduct_JSONTypes builds jsonTypes ahead, so no fixture's run pays for it.
-func TestProduct_JSONTypes(test *testing.T) {
+// TestProduct_JsonTypes builds jsonTypes ahead, so no fixture's run pays for it.
+func TestProduct_JsonTypes(test *testing.T) {
 	test.Parallel()
 	jsonTypes(test)
 }

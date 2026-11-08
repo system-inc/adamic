@@ -139,7 +139,7 @@ func TestLatentStatecopySharesSourceIdentities(test *testing.T) {
 // census refuses once, at its build, instead of panicking in every unit that copies the struct (#fwbnwn3: on
 // Oct 20 Program.methodTables did that to 9,818 of the tsc entry's 10,705 full-mode units). Mutant: the
 // refusal in loadGenerator dropped, so this program generates and the field goes uncopied.
-func TestLatentStatecopyRefusesAnUnnamedPrivateIRField(test *testing.T) {
+func TestLatentStatecopyRefusesAnUnnamedPrivateIrField(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	for name, source := range map[string]string{
@@ -171,7 +171,7 @@ func TestLatentStatecopyRefusesAnUnnamedPrivateIRField(test *testing.T) {
 // irPrivateFields names exactly the unexported fields of exported IR structs on this tree: none missing, which
 // loadGenerator refuses, and none stale, so the table can't keep a policy for a field the IR dropped. Mutant: an
 // entry for a field internal/ir doesn't declare.
-func TestLatentStatecopyNamesEveryPrivateIRField(test *testing.T) {
+func TestLatentStatecopyNamesEveryPrivateIrField(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
 	// Reads: internal/ir/*.go
@@ -181,7 +181,7 @@ func TestLatentStatecopyNamesEveryPrivateIRField(test *testing.T) {
 	}
 	generator := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	declared := map[string]bool{}
-	for _, key := range generator.privateIRFields {
+	for _, key := range generator.privateIrFields {
 		declared[key] = true
 	}
 	for key := range irPrivateFields {
@@ -318,7 +318,7 @@ var latentProbeSourceRootError = func() error {
 	return fmt.Errorf("source importer needs an installed Go source tree on PATH or GOROOT")
 }()
 
-func TestLatentSpeculativePrivateIRFields(test *testing.T) {
+func TestLatentSpeculativePrivateIrFields(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
 	// Reads: internal/ir/*.go
@@ -373,17 +373,17 @@ func TestLatentSpeculativePrivateIRFields(test *testing.T) {
 
 	// Check the static ownership assertion before type checking so the historical
 	// mutant is rejected for sharing private fields, even if its old helpers drift.
-	fullAST, parseFileError := parser.ParseFile(token.NewFileSet(), full, nil, 0)
+	fullAst, parseFileError := parser.ParseFile(token.NewFileSet(), full, nil, 0)
 	if parseFileError != nil {
 		test.Fatal(parseFileError)
 	}
-	generatedAST, parseFileError := parser.ParseFile(token.NewFileSet(), "generated.go", generated, 0)
+	generatedAst, parseFileError := parser.ParseFile(token.NewFileSet(), "generated.go", generated, 0)
 	if parseFileError != nil {
 		test.Fatal(parseFileError)
 	}
 	if latentPrivateCopyProofError := latentPrivateCopyProof(
-		fullAST,
-		generatedAST,
+		fullAst,
+		generatedAst,
 	); latentPrivateCopyProofError != nil {
 		test.Fatal(latentPrivateCopyProofError)
 	}
@@ -405,7 +405,7 @@ func TestLatentSpeculativePrivateIRFields(test *testing.T) {
 	}
 }
 
-func TestLatentSpeculativeRefusesUnnamedExportedIRField(test *testing.T) {
+func TestLatentSpeculativeRefusesUnnamedExportedIrField(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	path := filepath.Join(root, "internal/ir/ir.go")
@@ -450,10 +450,10 @@ func TestLatentSpeculativeBoundaryPolicyRequiredAtBuild(test *testing.T) {
 			test.Fatalf("missing Boundary must fail at generation, naming it: %v", failure)
 		}
 	}()
-	generator.checkIRFields(token.NewFileSet(), policies)
+	generator.checkIrFields(token.NewFileSet(), policies)
 }
 
-func TestLatentSpeculativeEveryIRFieldPolicyIsCurrent(test *testing.T) {
+func TestLatentSpeculativeEveryIrFieldPolicyIsCurrent(test *testing.T) {
 	test.Parallel()
 	root, absolutePathError := filepath.Abs("../../../..")
 	if absolutePathError != nil {
@@ -517,12 +517,12 @@ func latentProbeFunction(file *ast.File, name string) *ast.FuncDecl {
 // This deliberately rejects new write shapes until their ownership is proved.
 func latentPrivateCopyProof(full, generated *ast.File) error {
 	fail := func(reason string) error { return fmt.Errorf("speculative private-field AST proof: %s", reason) }
-	copyIR := latentProbeFunction(full, "latentCopyIR")
-	if copyIR == nil {
+	copyIr := latentProbeFunction(full, "latentCopyIR")
+	if copyIr == nil {
 		return fail("missing IR copier")
 	}
 	var structure, pointer *ast.CaseClause
-	ast.Inspect(copyIR, func(node ast.Node) bool {
+	ast.Inspect(copyIr, func(node ast.Node) bool {
 		clause, ok := node.(*ast.CaseClause)
 		if ok && len(clause.List) == 1 {
 			switch printed(clause.List[0]) {

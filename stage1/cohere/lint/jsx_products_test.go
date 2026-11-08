@@ -3,12 +3,12 @@ package lint
 import "testing"
 
 // The build phase and independently selected shards use these same recipes.
-func TestProduct_LintFindsJSXMembership(test *testing.T) {
+func TestProduct_LintFindsJsxMembership(test *testing.T) {
 	test.Parallel()
 	jsxMembershipOracle(test)
 }
 
-func TestProduct_LintFindsJSXParser(test *testing.T) {
+func TestProduct_LintFindsJsxParser(test *testing.T) {
 	test.Parallel()
 	jsxParserOracle(test)
 }
@@ -25,5 +25,5 @@ func TestProduct_jsx_tree_native(test *testing.T) {
 
 func TestProduct_jsx_tree_setup(test *testing.T) {
 	test.Parallel()
-	requireLintJSXBundle(test, jsxPrepareTrees(test))
+	requireLintJsxBundle(test, jsxPrepareTrees(test))
 }

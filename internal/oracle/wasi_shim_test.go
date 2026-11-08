@@ -34,7 +34,7 @@ var shimFileFixtures = map[string]bool{
 }
 
 // The cwd adapter reads the supplied initial directory even without opening a file.
-func TestWASIShimCwdImports(test *testing.T) {
+func TestWasiShimCwdImports(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -162,8 +162,8 @@ func runWASIShimShard(test *testing.T, shard int) {
 				program.Strings[0] += "!"
 			}
 			binary := filepath.Join(test.TempDir(), "program.wasm")
-			reason := buildWASI(test, native.C(program), binary)
-			if assertWASIRefusal(test, fixture.path, reason, wasiRefusedFixtures) {
+			reason := buildWasi(test, native.C(program), binary)
+			if assertWasiRefusal(test, fixture.path, reason, wasiRefusedFixtures) {
 				refused.Add(1)
 				return
 			}
@@ -255,7 +255,7 @@ func runWASIShimShard(test *testing.T, shard int) {
 
 // Comparing this checked fixture to source instead of the backend is a wrong-witness mutant.
 // Not parallel: sets ADAMIC_GATE_UNCACHED for the whole process with test.Setenv.
-func TestWASIShimCheckedWitnessControl(test *testing.T) {
+func TestWasiShimCheckedWitnessControl(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -302,7 +302,7 @@ func TestWASIShimCheckedWitnessControl(test *testing.T) {
 	test.Log("wrong source witness caught: writes_past_end.a source exits 0, backend and shim exit 70")
 }
 
-func TestWASIShimContractsAndMutants(test *testing.T) {
+func TestWasiShimContractsAndMutants(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -402,7 +402,7 @@ if(check==='iovecs') {
 	}
 }
 
-func TestWASIShimRequest(test *testing.T) {
+func TestWasiShimRequest(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -498,12 +498,12 @@ if(mode==='source') {
 // time yet, so a probe in C holds the shim's clock to node:wasi's: realtime is the host's wall clock,
 // and monotonic only moves forward. A shim whose clock_time_get returns without writing the time is the
 // mutant, and the probe's own output catches it.
-func TestWASIShimClockReadsTheHost(test *testing.T) {
+func TestWasiShimClockReadsTheHost(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	clang, wasiClangError := native.WASIClang()
+	clang, wasiClangError := native.WasiClang()
 	if wasiClangError != nil {
 		test.Fatal(wasiClangError)
 	}

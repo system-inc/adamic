@@ -137,7 +137,7 @@ func cohereAnswers(
 	}
 	scratch := test.TempDir()
 	casesPath := filepath.Join(scratch, "cases.json")
-	writeJSON(test, casesPath, cases)
+	writeJson(test, casesPath, cases)
 	cohere, absolutePathError := filepath.Abs("../../../cohere")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
@@ -185,7 +185,7 @@ func cohereAnswers(
 	return readAnswers(goPath), readAnswers(prettierPath)
 }
 
-func writeJSON(test *testing.T, path string, value any) {
+func writeJson(test *testing.T, path string, value any) {
 	test.Helper()
 	encoded, encodeError := json.Marshal(value)
 	if encodeError != nil {

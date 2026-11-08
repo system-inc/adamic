@@ -225,8 +225,8 @@ func freshGoCache(test *testing.T) func() string {
 	return func() string {
 		test.Helper()
 		directory := filepath.Join(test.TempDir(), "go-build")
-		if copyFsError := os.CopyFS(directory, os.DirFS(freshTemplate.directory)); copyFsError != nil {
-			test.Fatal(copyFsError)
+		if copyFileSystemError := os.CopyFS(directory, os.DirFS(freshTemplate.directory)); copyFileSystemError != nil {
+			test.Fatal(copyFileSystemError)
 		}
 		return directory
 	}

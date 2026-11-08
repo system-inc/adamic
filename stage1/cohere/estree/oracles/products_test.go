@@ -63,7 +63,7 @@ func TestProduct_EstreeExportAnswers(test *testing.T) {
 	textAnswers(test, ParserOracle(test), DecoratedExports(), ".ts")
 }
 
-func TestProduct_JSXMutantAnswers(test *testing.T) {
+func TestProduct_JsxMutantAnswers(test *testing.T) {
 	test.Parallel()
 	textAnswers(test, ParserOracle(test), JSXCases(), ".tsx")
 }

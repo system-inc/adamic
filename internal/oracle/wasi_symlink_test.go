@@ -87,7 +87,7 @@ int main(void) {
 		}
 		return
 	}
-	mutant := onWASI(test, "#define SYMLINK_MUTANT 1\n"+source)
+	mutant := onWasi(test, "#define SYMLINK_MUTANT 1\n"+source)
 	if mutant.exitCode != 0 || len(mutant.stderr) != 0 {
 		test.Fatalf("mutant must compile and execute cleanly: %+v", mutant)
 	}
@@ -97,17 +97,17 @@ int main(void) {
 	test.Logf("removed-adapter mutant caught by Node comparison: stdout %q", mutant.stdout)
 }
 
-func TestWASIEmptySymlinkAgreesWithNode_000(test *testing.T) {
+func TestWasiEmptySymlinkAgreesWithNode_000(test *testing.T) {
 	test.Parallel()
 	wasiEmptySymlinkAgreesWithNode(test, 0)
 }
 
-func TestWASIEmptySymlinkAgreesWithNode_001(test *testing.T) {
+func TestWasiEmptySymlinkAgreesWithNode_001(test *testing.T) {
 	test.Parallel()
 	wasiEmptySymlinkAgreesWithNode(test, 1)
 }
 
-func TestWASIEmptySymlinkAgreesWithNode_002(test *testing.T) {
+func TestWasiEmptySymlinkAgreesWithNode_002(test *testing.T) {
 	test.Parallel()
 	wasiEmptySymlinkAgreesWithNode(test, 2)
 }

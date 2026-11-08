@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 )
 
-// ConfigureWASI runs before testing starts, never in a parallel test. It only
+// ConfigureWasi runs before testing starts, never in a parallel test. It only
 // selects tools, and builds nothing. An explicit sysroot always wins; otherwise
 // use setup.sh's layout under ADAMIC_TOOLS or next to a tools directory on PATH.
 // This also works under env -i, where setup's PATH survives but env.sh does not.
-func ConfigureWASI() {
+func ConfigureWasi() {
 	if os.Getenv("WASI_SYSROOT") != "" {
 		return
 	}

@@ -37,7 +37,7 @@ func runRegExpInputSearchNodeUnit(test *testing.T, target string) {
 	}
 	var got run
 	if target == "wasm32-wasi" {
-		got = onWASI(test, native.C(program))
+		got = onWasi(test, native.C(program))
 	} else {
 		binary := filepath.Join(test.TempDir(), "program")
 		if buildError := native.Build(
@@ -61,7 +61,7 @@ func TestRegExpInputSearchSanitizeUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpInputSearchNodeUnit(test, "sanitized")
 }
-func TestRegExpInputSearchWASMUnit(test *testing.T) {
+func TestRegExpInputSearchWasmUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpInputSearchNodeUnit(test, "wasm32-wasi")
 }

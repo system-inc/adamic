@@ -37,7 +37,7 @@ var wasiProcessRefusedFixtures = map[string]string{
 	"blocking":     "process.stdout._handle requires terminal flag control",
 }
 
-func assertWASIRefusal(test *testing.T, fixture, reason string, refused map[string]string) bool {
+func assertWasiRefusal(test *testing.T, fixture, reason string, refused map[string]string) bool {
 	test.Helper()
 	want, listed := refused[fixture]
 	if reason == "" {

@@ -124,11 +124,11 @@ func TestProduct_CommandRuntimeSanitized(test *testing.T) {
 	test.Parallel()
 	commandRuntimeProduct(test, "sanitized")
 }
-func TestProduct_CommandRuntimeWASI(test *testing.T) {
+func TestProduct_CommandRuntimeWasi(test *testing.T) {
 	test.Parallel()
 	commandRuntimeProduct(test, "wasm")
 }
-func TestProduct_CommandRuntimeWASICounted(test *testing.T) {
+func TestProduct_CommandRuntimeWasiCounted(test *testing.T) {
 	test.Parallel()
 	commandRuntimeProduct(test, "wasm-counted")
 }

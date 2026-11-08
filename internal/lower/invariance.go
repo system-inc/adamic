@@ -492,7 +492,7 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (lowering *lowering) refuseWidening(node *ast.Node) error {
-	if lowering.nodeFSFileReadOnlyArgument(node) || lowering.regexCallbackIntrinsicView(node) {
+	if lowering.nodeFileSystemFileReadOnlyArgument(node) || lowering.regexCallbackIntrinsicView(node) {
 		return nil
 	}
 	var own, contextual *checker.Type
@@ -721,7 +721,7 @@ func (lowering *lowering) castSlotWidened(node *ast.Node) (*checker.Type, *check
 // judgment castSlotWidened makes, for a checked cast, whose relation to its operand stringWideningRefusal
 // leaves to cast.go.
 func (lowering *lowering) castSlotRefusal(node *ast.Node) error {
-	if lowering.nodeFSFileReadOnlyArgument(node) || lowering.regexCallbackIntrinsicView(node) {
+	if lowering.nodeFileSystemFileReadOnlyArgument(node) || lowering.regexCallbackIntrinsicView(node) {
 		return nil
 	}
 	own, contextual, found := lowering.castSlotWidened(node)

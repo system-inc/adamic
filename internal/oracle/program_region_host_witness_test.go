@@ -55,7 +55,7 @@ func TestProgramRegionHost14DefaultAgreesWithNode(test *testing.T) {
 
 const programHost14Path = "stage3/fixtures/host/14_getCurrentDirectory.a"
 
-func programHost14WASM(test *testing.T, counted bool) string {
+func programHost14Wasm(test *testing.T, counted bool) string {
 	test.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -79,12 +79,12 @@ func programHost14WASM(test *testing.T, counted bool) string {
 		}
 		reason = refusal.Error()
 	}
-	if assertWASIRefusal(test, programHost14Path, reason, wasiRefusedFixtures) {
+	if assertWasiRefusal(test, programHost14Path, reason, wasiRefusedFixtures) {
 		return ""
 	}
 	return binary
 }
-func TestProduct_ProgramHost14WASICounted(test *testing.T) {
+func TestProduct_ProgramHost14WasiCounted(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -95,9 +95,9 @@ func TestProduct_ProgramHost14WASICounted(test *testing.T) {
 		[]string{"ADAMIC_NODE_HOST"},
 	)
 }
-func TestProgramRegionHost14DefaultWASIAgreesWithNode(test *testing.T) {
+func TestProgramRegionHost14DefaultWasiAgreesWithNode(test *testing.T) {
 	test.Parallel()
-	binary := programHost14WASM(test, false)
+	binary := programHost14Wasm(test, false)
 	if binary == "" {
 		return
 	}
@@ -121,7 +121,7 @@ func TestProgramRegionHost14DefaultWASIAgreesWithNode(test *testing.T) {
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		filepath.Join(repository, "oracle", "wasi.mjs"),
-		programHost14WASM(test, true),
+		programHost14Wasm(test, true),
 	)
 	if counted.exitCode != expected.exitCode || string(counted.stdout) != string(expected.stdout) {
 		test.Fatalf("counted WASI differs: %+v", counted)
@@ -133,7 +133,7 @@ func TestProgramRegionHost14DefaultWASIAgreesWithNode(test *testing.T) {
 }
 func TestProgramRegionHost14DefaultShimPending(test *testing.T) {
 	test.Parallel()
-	binary := programHost14WASM(test, false)
+	binary := programHost14Wasm(test, false)
 	if binary == "" {
 		return
 	}
@@ -174,7 +174,7 @@ func TestProgramRegionHost14DefaultShimPending(test *testing.T) {
 		"pending shim random_get for mkdtemp and host filesystem access; the file-free shim deliberately supplies neither",
 	)
 }
-func programHost14ProgramWASIPending(test *testing.T) {
+func programHost14ProgramWasiPending(test *testing.T) {
 	test.Helper()
 	validateOptionsError := native.ValidateOptions(native.Options{ProgramRegion: true, Target: "wasm32-wasi"})
 	const reason = "native: Program regions require a one-shot native CLI"
@@ -184,11 +184,11 @@ func programHost14ProgramWASIPending(test *testing.T) {
 	// Program regions are refused off the native CLI, and this proves the refusal holds with its exact reason.
 	test.Log(reason)
 }
-func TestProgramRegionHost14ProgramWASIPending(test *testing.T) {
+func TestProgramRegionHost14ProgramWasiPending(test *testing.T) {
 	test.Parallel()
-	programHost14ProgramWASIPending(test)
+	programHost14ProgramWasiPending(test)
 }
 func TestProgramRegionHost14ProgramShimPending(test *testing.T) {
 	test.Parallel()
-	programHost14ProgramWASIPending(test)
+	programHost14ProgramWasiPending(test)
 }

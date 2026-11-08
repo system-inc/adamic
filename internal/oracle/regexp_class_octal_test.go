@@ -33,7 +33,7 @@ func runRegExpFixtureNodeUnit(test *testing.T, fixture string, target string) {
 	}
 	var got run
 	if target == "wasm32-wasi" {
-		got = onWASI(test, native.C(program))
+		got = onWasi(test, native.C(program))
 	} else {
 		binary := filepath.Join(test.TempDir(), "program")
 		if buildError := native.Build(
@@ -53,7 +53,7 @@ func TestRegExpClassOctalNativeUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpFixtureNodeUnit(test, "regexp_native_class_octal", "native")
 }
-func TestRegExpClassOctalWASMUnit(test *testing.T) {
+func TestRegExpClassOctalWasmUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpFixtureNodeUnit(test, "regexp_native_class_octal", "wasm32-wasi")
 }
@@ -61,7 +61,7 @@ func TestRegExpFoldingNativeUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpFixtureNodeUnit(test, "regexp_v8_folding", "native")
 }
-func TestRegExpFoldingWASMUnit(test *testing.T) {
+func TestRegExpFoldingWasmUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpFixtureNodeUnit(test, "regexp_v8_folding", "wasm32-wasi")
 }
@@ -69,7 +69,7 @@ func TestRegExpSurrogatesReleaseUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpFixtureNodeUnit(test, "regexp_v8_surrogates", "native")
 }
-func TestRegExpSurrogatesWASMUnit(test *testing.T) {
+func TestRegExpSurrogatesWasmUnit(test *testing.T) {
 	test.Parallel()
 	runRegExpFixtureNodeUnit(test, "regexp_v8_surrogates", "wasm32-wasi")
 }

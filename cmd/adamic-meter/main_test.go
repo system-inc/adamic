@@ -65,7 +65,7 @@ func countKind(report *report, kind string) int {
 	return count
 }
 
-func TestJSONIsMachineReadable(test *testing.T) {
+func TestJsonisMachineReadable(test *testing.T) {
 	test.Parallel()
 	var stdout, stderr bytes.Buffer
 	if code := run([]string{"--json", "testdata/corpus"}, &stdout, &stderr); code != 0 {

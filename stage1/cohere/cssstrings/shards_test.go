@@ -43,7 +43,7 @@ type stringsUnit struct {
 }
 
 // Case IDs name enumeration positions, not text hashes: identical texts remain separate cases.
-func stringsCaseID(kind string, index int, preference string) string {
+func stringsCaseId(kind string, index int, preference string) string {
 	return fmt.Sprintf("%s-%06d-%s", kind, index, preference)
 }
 
@@ -54,14 +54,14 @@ func stringsUnits(corpus stringsCorpus) []stringsUnit {
 		unit := stringsUnit{name: fmt.Sprintf("batch-%06d-%06d", lo, hi-1), kind: "batch", lo: lo, hi: hi}
 		for index := lo; index < hi; index++ {
 			for _, pref := range []string{"d", "s"} {
-				unit.ids = append(unit.ids, stringsCaseID("batch", index, pref))
+				unit.ids = append(unit.ids, stringsCaseId("batch", index, pref))
 			}
 		}
 		units = append(units, unit)
 	}
 	for index := range corpus.raw {
 		units = append(units, stringsUnit{name: fmt.Sprintf("raw-%06d", index), kind: "raw", lo: index, hi: index + 1,
-			ids: []string{stringsCaseID("raw", index, "d"), stringsCaseID("raw", index, "s")}})
+			ids: []string{stringsCaseId("raw", index, "d"), stringsCaseId("raw", index, "s")}})
 	}
 	for index, mutation := range stringsMutations {
 		units = append(units, stringsUnit{
@@ -94,7 +94,7 @@ func stringsUnionError(corpus stringsCorpus, units []stringsUnit) error {
 	for kind, count := range map[string]int{"batch": len(corpus.texts), "raw": len(corpus.raw)} {
 		for index := 0; index < count; index++ {
 			for _, pref := range []string{"d", "s"} {
-				expected[stringsCaseID(kind, index, pref)] = true
+				expected[stringsCaseId(kind, index, pref)] = true
 			}
 		}
 	}
@@ -112,7 +112,7 @@ func stringsUnionError(corpus stringsCorpus, units []stringsUnit) error {
 			return fmt.Errorf("repeated unit %s", unit.name)
 		}
 		names[unit.name] = true
-		var actualIDs []string
+		var actualIds []string
 		switch unit.kind {
 		case "batch", "raw":
 			limit := len(corpus.texts)
@@ -127,20 +127,20 @@ func stringsUnionError(corpus stringsCorpus, units []stringsUnit) error {
 			}
 			for index := unit.lo; index < unit.hi; index++ {
 				for _, pref := range []string{"d", "s"} {
-					actualIDs = append(actualIDs, stringsCaseID(unit.kind, index, pref))
+					actualIds = append(actualIds, stringsCaseId(unit.kind, index, pref))
 				}
 			}
 		case "mutant":
 			if unit.lo < 0 || unit.lo >= len(stringsMutations) {
 				return fmt.Errorf("invalid mutant in %s", unit.name)
 			}
-			actualIDs = []string{"mutant-" + stringsMutations[unit.lo].name}
+			actualIds = []string{"mutant-" + stringsMutations[unit.lo].name}
 		case "throughput":
-			actualIDs = []string{"throughput-" + unit.side}
+			actualIds = []string{"throughput-" + unit.side}
 		default:
 			return fmt.Errorf("unknown unit kind %q", unit.kind)
 		}
-		if strings.Join(actualIDs, "\n") != strings.Join(unit.ids, "\n") {
+		if strings.Join(actualIds, "\n") != strings.Join(unit.ids, "\n") {
 			return fmt.Errorf("case IDs differ from executable range in %s", unit.name)
 		}
 		for _, id := range unit.ids {
@@ -314,7 +314,7 @@ func buildStringsNative(test *testing.T, name string, program stringsProgram, sa
 
 // An edit to a package the compiler links must move every lowered and native product's key, and an edit to tsc's
 // baselines, which nothing links, must keep it.
-func TestCSSStringsCompilerProductsKeyWhatTheCompilerLinks(test *testing.T) {
+func TestCssStringsCompilerProductsKeyWhatTheCompilerLinks(test *testing.T) {
 	test.Parallel()
 	main, absolutePathError := filepath.Abs("main.ts")
 	if absolutePathError != nil {
@@ -449,7 +449,7 @@ func checkStringsOutput(test *testing.T, unit stringsUnit, side string, got, wan
 	}
 }
 
-func TestCSSStringsUnion(test *testing.T) {
+func TestCssStringsUnion(test *testing.T) {
 	test.Parallel()
 	corpus := enumerateStrings(test)
 	units := stringsUnits(corpus)

@@ -303,7 +303,7 @@ func TestMethodPresenceRestsOnTheseStops(test *testing.T) {
 // (Math.sumPrecise, Uint8Array.fromBase64). So a member each later level first declares must stay
 // unknown to the checker, and one es2024 declares must be known, or the rows prove nothing. Mutant
 // (testdata/method_presence/mutants.md in internal/oracle): load.go's Lib made lib.es2026.d.ts.
-func TestMethodPresenceLibraryStopsAtES2024(test *testing.T) {
+func TestMethodPresenceLibraryStopsAtEs2024(test *testing.T) {
 	test.Parallel()
 	if _, loadError := load.Load([]string{
 		writeAgreementSource(test, "main.a", "console.log(String(Map.groupBy([1, 2], (value) => value % 2).size));\n"),

@@ -65,7 +65,7 @@ func main() {
 	}
 	arguments = append(arguments, "-lm")
 	if options.Target != "" {
-		arguments = append(arguments, native.WASILinkFlags(options)...)
+		arguments = append(arguments, native.WasiLinkFlags(options)...)
 	}
 	command := exec.Command(compiler, arguments...)
 	output, combinedOutputError := command.CombinedOutput()

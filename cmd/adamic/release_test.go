@@ -8,17 +8,17 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestBuildSelectsShippedReleaseLTO(test *testing.T) {
+func TestBuildSelectsShippedReleaseLto(test *testing.T) {
 	test.Parallel()
 	auditReleaseBuild(test, "shipped", nil, true)
 }
 
-func TestBuildCountedExcludesReleaseLTO(test *testing.T) {
+func TestBuildCountedExcludesReleaseLto(test *testing.T) {
 	test.Parallel()
 	auditReleaseBuild(test, "counted", []string{"--count"}, false)
 }
 
-func TestBuildSanitizedExcludesReleaseLTO(test *testing.T) {
+func TestBuildSanitizedExcludesReleaseLto(test *testing.T) {
 	test.Parallel()
 	auditReleaseBuild(test, "sanitized", []string{"--sanitize"}, false)
 }

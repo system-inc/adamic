@@ -9,7 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func TestIRTypeTags(test *testing.T) {
+func TestIrTypeTags(test *testing.T) {
 	test.Parallel()
 	contents, readFileError := runtime.ReadFile("runtime/adamic.h")
 	if readFileError != nil {

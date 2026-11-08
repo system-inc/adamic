@@ -13,7 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func UsesTSGo(program *ir.Program) bool {
+func UsesTsGo(program *ir.Program) bool {
 	for _, function := range program.Functions {
 		if _, found := spec.Name(function.Name); found {
 			return true
@@ -22,12 +22,12 @@ func UsesTSGo(program *ir.Program) bool {
 	return false
 }
 
-// TSGoC replaces only the compiler-generated library bodies. Kept here so
+// TsGoC replaces only the compiler-generated library bodies. Kept here so
 // this unit does not edit the shared emitter. Signatures, calls, snapshots and
 // cleanup remain the ordinary emitter's output. The library contracts borrow
 // inputs, mutate no Adamic value and return fresh values, as the IR bodies say.
 // A changed emitter layout is an error, never a guessed replacement.
-func TSGoC(program *ir.Program) (string, error) {
+func TsGoC(program *ir.Program) (string, error) {
 	source := C(program)
 	emitter := &emitter{program: program, regions: planRegions(program)}
 	for index, function := range program.Functions {
@@ -84,13 +84,13 @@ func TSGoC(program *ir.Program) (string, error) {
 // The public ABI header is embedded beside the archive's source, never copied
 // from cgo's generated implementation header.
 func BuildTSGo(source, output, archive string, options Options) error {
-	return buildTSGo(source, output, archive, options, false)
+	return buildTsGo(source, output, archive, options, false)
 }
 
-// buildTSGo compiles main.c to main.o and then links it, as linkOne does. oneCall has a build off macOS compile and
+// buildTsGo compiles main.c to main.o and then links it, as linkOne does. oneCall has a build off macOS compile and
 // link it in one clang call instead, as it did before the split (#2r9xhqs), only so
 // TestACompiledThenLinkedCheckerIsTheOneCallChecker can hold the split's binary to the one call's bytes.
-func buildTSGo(source, output, archive string, options Options, oneCall bool) error {
+func buildTsGo(source, output, archive string, options Options, oneCall bool) error {
 	archive, checkerArchivePathError := checkerArchivePath(archive)
 	if checkerArchivePathError != nil {
 		return checkerArchivePathError
@@ -204,5 +204,5 @@ func tsgoRuntimeLibrary(source string, options Options) (string, error) {
 	if validateOptionsError := ValidateOptions(options); validateOptionsError != nil {
 		return "", validateOptionsError
 	}
-	return splitTSGoRuntime(source, options)
+	return splitTsGoRuntime(source, options)
 }

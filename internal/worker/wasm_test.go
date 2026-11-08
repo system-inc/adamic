@@ -42,13 +42,13 @@ func wasmOracle(test *testing.T, directory, entry string) string {
 		filepath.Join(oracle, "worker.mjs"),
 		strings.Replace(string(bridge), `"./handler.mjs"`, `"`+filepath.ToSlash(entry)+`"`, 1),
 	)
-	write(test, filepath.Join(oracle, "adamic.mjs"), "export * from "+string(mustJSON(test, runtime))+";\n")
+	write(test, filepath.Join(oracle, "adamic.mjs"), "export * from "+string(mustJson(test, runtime))+";\n")
 	// The exact same bridge drives source, with no Wasm module or crossing.
 	write(test, filepath.Join(oracle, "wasm-state.mjs"), "export async function initializeCrossing() {}\n")
 	return filepath.Join(oracle, "worker.mjs")
 }
 
-func mustJSON(test *testing.T, value any) []byte {
+func mustJson(test *testing.T, value any) []byte {
 	test.Helper()
 	encoded, encodeError := json.Marshal(value)
 	if encodeError != nil {

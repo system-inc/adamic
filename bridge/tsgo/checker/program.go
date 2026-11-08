@@ -25,8 +25,8 @@ import (
 // The external checker runs Go's runtime and collector; Adamic values never enter it.
 type Program struct {
 	Compiler    *compiler.Program
-	typeIDs     map[*checker.Type]uint64
-	typesByID   []*checker.Type
+	typeIds     map[*checker.Type]uint64
+	typesById   []*checker.Type
 	exactRanges map[*ast.SourceFile]map[nodeRange][]*ast.Node
 }
 type Result struct {
@@ -123,7 +123,7 @@ func Open(configurationPath string, files []string) (*Program, error) {
 		)
 		release()
 	}
-	return &Program{Compiler: program, typeIDs: make(map[*checker.Type]uint64)}, nil
+	return &Program{Compiler: program, typeIds: make(map[*checker.Type]uint64)}, nil
 }
 
 func diagnosticText(diagnostics []*ast.Diagnostic) string {

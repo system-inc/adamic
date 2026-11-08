@@ -38,7 +38,7 @@ func TestExecuteCPUHelper(test *testing.T) {
 	os.Exit(0)
 }
 
-func TestExecuteCPULimit(test *testing.T) {
+func TestExecuteCpuLimit(test *testing.T) {
 	test.Parallel()
 	executable, executableError := os.Executable()
 	if executableError != nil {
@@ -204,7 +204,7 @@ exit "$2"`
 	}
 }
 
-func TestExecutePreservesPWD(test *testing.T) {
+func TestExecutePreservesPwd(test *testing.T) {
 	test.Parallel()
 	// The CPU-limit shell can repair a wrong PWD to the physical directory.
 	// A symlink distinguishes that repair from preserving the caller's spelling.

@@ -14,7 +14,7 @@ import (
 // The checker-archive build includes tsgo_runtime.h, and with it adamic.h, before main.c's own
 // #defines, so the features it turns on have to arrive as flags. Without them the
 // closure-convention method tables meet adamic.h's older entry type and clang refuses the C.
-func TestTSGoBuildSeesTheProgramsFeatures(test *testing.T) {
+func TestTsGoBuildSeesTheProgramsFeatures(test *testing.T) {
 	test.Parallel()
 	loaded, loadError := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_extended.a")})
 	if loadError != nil {

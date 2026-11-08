@@ -19,7 +19,7 @@ import (
 // is a keyed product built ahead by a TestProduct_ of its own, so none of them compiles C (#tze35sy, Loom's build law):
 // four clang builds were made inside the tests.
 
-func TestProduct_TSPrinterGapsSanitized(test *testing.T) {
+func TestProduct_TsPrinterGapsSanitized(test *testing.T) {
 	test.Parallel()
 	for _, source := range []sanitizedSource{
 		prefixUpdateValueSource,
@@ -30,7 +30,7 @@ func TestProduct_TSPrinterGapsSanitized(test *testing.T) {
 	}
 }
 
-func TestProduct_TSPrinterNumberConstructorSanitized(test *testing.T) {
+func TestProduct_TsPrinterNumberConstructorSanitized(test *testing.T) {
 	test.Parallel()
 	requirePort(test, sourceSanitized(test, numberConstructorSource))
 }

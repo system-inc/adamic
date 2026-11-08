@@ -12,9 +12,9 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// compileWASI uses the entry module's handleRequest export, as in the runtime's source witness.
+// compileWasi uses the entry module's handleRequest export, as in the runtime's source witness.
 // Private or dependency-only names are not handlers. An export alias selects its resolved function declaration.
-func compileWASI(path string) (*ir.Program, int, int) {
+func compileWasi(path string) (*ir.Program, int, int) {
 	program, code := check([]string{path})
 	if program == nil {
 		return nil, -1, code

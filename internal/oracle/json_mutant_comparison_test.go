@@ -28,14 +28,14 @@ func jsonMutantComparisonFailure(truth, got run) string {
 	return fmt.Sprintf("Node side differed: %s (%s)", diff, failure)
 }
 
-func requireJSONMutantCaught(test *testing.T, truth, got run) {
+func requireJsonMutantCaught(test *testing.T, truth, got run) {
 	test.Helper()
 	if failure := jsonMutantComparisonFailure(truth, got); failure != "" {
 		test.Fatal(failure)
 	}
 }
 
-func TestJSONMutantComparisonDiagnostics(test *testing.T) {
+func TestJsonMutantComparisonDiagnostics(test *testing.T) {
 	test.Parallel()
 	printed := run{stdout: []byte("mutated\n")}
 	cases := []struct {

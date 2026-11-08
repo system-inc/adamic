@@ -9,7 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestWASILegacyFileCwdNodeMutant(test *testing.T) {
+func TestWasiLegacyFileCwdNodeMutant(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")

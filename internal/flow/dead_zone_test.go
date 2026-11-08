@@ -61,7 +61,7 @@ func TestDeadZoneStoreThrowsAfterItsValue(test *testing.T) {
 	if !endsInThrow(graph, store) {
 		test.Fatal("a store in the dead zone has no throw edge after it")
 	}
-	if violations := VerifySSA(graph); len(violations) > 0 {
+	if violations := VerifySsa(graph); len(violations) > 0 {
 		test.Fatalf("SSA: %v", violations)
 	}
 	if hoisted, store := build(true); endsInThrow(hoisted, store) {

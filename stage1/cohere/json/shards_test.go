@@ -119,7 +119,7 @@ func jsonPortSelection(value string) (int, int, error) {
 	return 0, 0, fmt.Errorf("ADAMIC_TEST_SHARD=%q: expected zero-based i/n with 0 <= i < n", value)
 }
 
-func TestJSONPortShardUnion(test *testing.T) {
+func TestJsonPortShardUnion(test *testing.T) {
 	test.Parallel()
 	cases := make([]textCase, 39)
 	for index := range cases {
@@ -170,7 +170,7 @@ func TestJSONPortShardUnion(test *testing.T) {
 	}
 }
 
-func TestJSONPortShardDisagreement(test *testing.T) {
+func TestJsonPortShardDisagreement(test *testing.T) {
 	test.Parallel()
 	cases := make([]textCase, 33)
 	answers := make([]answer, 33)
@@ -221,7 +221,7 @@ func jsonPortAnswers(protocol string, count int) ([]answer, error) {
 	return oracles.ParseAnswers(protocol, count)
 }
 
-func TestJSONHashShardsStayStable(test *testing.T) {
+func TestJsonHashShardsStayStable(test *testing.T) {
 	test.Parallel()
 	const count = 2048
 	original := []textCase{

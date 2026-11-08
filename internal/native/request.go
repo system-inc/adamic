@@ -25,7 +25,7 @@ func WASI(program *ir.Program, handler int) (string, error) {
 	return cProgram(program, handler, mainLines), nil
 }
 
-func (nativeEmitter *emitter) requestABI(handler int) string {
+func (nativeEmitter *emitter) requestAbi(handler int) string {
 	if handler == len(nativeEmitter.program.Functions) {
 		return `
 __attribute__((constructor)) static void adamic_module_start(void) {

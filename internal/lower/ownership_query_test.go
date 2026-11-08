@@ -121,7 +121,7 @@ func BenchmarkOwnershipQueryLowering(benchmark *testing.B) {
 				if loadError != nil {
 					benchmark.Fatal(loadError)
 				}
-				checked.EnableTSGo()
+				checked.EnableTsGo()
 				benchmark.StartTimer()
 				program, lowerWithOptionsError := LowerWithOptions(
 					context.Background(),

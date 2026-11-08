@@ -119,7 +119,7 @@ func lowered(test *testing.T, path string) *ir.Program {
 // Build's walk (no read went missing).
 func checkSingleAssignmentProgram(test *testing.T, path string) {
 	test.Helper()
-	var totals SSAStats
+	var totals SsaStats
 	var functions int
 	program := lowered(test, path)
 	for function := -1; function < len(program.Functions); function++ {
@@ -132,11 +132,11 @@ func checkSingleAssignmentProgram(test *testing.T, path string) {
 		reaching := reachingDefinitions(Build(program, function))
 		graph := Build(program, function)
 		Construct(graph)
-		for _, violation := range VerifySSA(graph) {
+		for _, violation := range VerifySsa(graph) {
 			test.Errorf("%s: %s", where, violation)
 		}
 		checkReaching(test, where, graph, reaching)
-		stats := CollectSSAStats(graph)
+		stats := CollectSsaStats(graph)
 		totals.Phis += stats.Phis
 		totals.NamedValues += stats.NamedValues
 		totals.Uses += stats.Uses

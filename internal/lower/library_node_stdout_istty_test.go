@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestNodeStdoutIsTTYReadsAreAdmitted(test *testing.T) {
+func TestNodeStdoutIsTtyReadsAreAdmitted(test *testing.T) {
 	test.Parallel()
 	for _, ext := range []string{"a", "ts"} {
 		source, readError := os.ReadFile(filepath.Join("testdata/stdout", "isTTY."+ext))
@@ -29,7 +29,7 @@ func TestNodeStdoutIsTTYReadsAreAdmitted(test *testing.T) {
 	}
 }
 
-func TestNodeStdoutIsTTYRefusesOtherStreams(test *testing.T) {
+func TestNodeStdoutIsTtyRefusesOtherStreams(test *testing.T) {
 	test.Parallel()
 	for _, stream := range []string{"stderr", "stdin"} {
 		for _, ext := range []string{".a", ".ts"} {
@@ -45,7 +45,7 @@ func TestNodeStdoutIsTTYRefusesOtherStreams(test *testing.T) {
 	}
 }
 
-func TestNodeStdoutIsTTYRefusesOpaqueUses(test *testing.T) {
+func TestNodeStdoutIsTtyRefusesOpaqueUses(test *testing.T) {
 	test.Parallel()
 	for _, source := range []string{
 		`const value = process.stdout['isTTY'];`,
@@ -64,7 +64,7 @@ func TestNodeStdoutIsTTYRefusesOpaqueUses(test *testing.T) {
 	}
 }
 
-func TestNodeStdoutIsTTYRefusesMutation(test *testing.T) {
+func TestNodeStdoutIsTtyRefusesMutation(test *testing.T) {
 	test.Parallel()
 	for _, one := range []struct{ source, reason string }{
 		{`process.stdout.isTTY = true;`, "written (fix: read process.stdout.isTTY; terminal status is read-only)"},

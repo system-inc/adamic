@@ -56,7 +56,7 @@ func (lowering *lowering) processValue(node *ast.Node) (ir.Expression, bool, err
 	if value, known, nodeStdoutWriteError := lowering.nodeStdoutWrite(node); known {
 		return value, known, nodeStdoutWriteError
 	}
-	if value, known, nodeStdoutIsTtyReadError := lowering.nodeStdoutIsTTYRead(node); known {
+	if value, known, nodeStdoutIsTtyReadError := lowering.nodeStdoutIsTtyRead(node); known {
 		return value, known, nodeStdoutIsTtyReadError
 	}
 	if value, known, nodePlatformReadError := lowering.nodePlatformRead(node); known {

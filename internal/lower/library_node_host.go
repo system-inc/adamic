@@ -515,7 +515,7 @@ func (lowering *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, 
 }
 
 // Only stdout's library member is bound. Streams remain opaque values.
-func (lowering *lowering) nodeStdoutIsTTYMember(node *ast.Node) bool {
+func (lowering *lowering) nodeStdoutIsTtyMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	return node.Kind == ast.KindPropertyAccessExpression &&
 		lowering.nodeLibraryMember(node) == "node:tty.WriteStream.isTTY" &&
@@ -529,11 +529,11 @@ func (lowering *lowering) nodeStdoutColumnsMember(node *ast.Node) bool {
 		lowering.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
 }
 
-func (lowering *lowering) nodeStdoutTTYMember(node *ast.Node) bool {
-	return lowering.nodeStdoutIsTTYMember(node) || lowering.nodeStdoutColumnsMember(node)
+func (lowering *lowering) nodeStdoutTtyMember(node *ast.Node) bool {
+	return lowering.nodeStdoutIsTtyMember(node) || lowering.nodeStdoutColumnsMember(node)
 }
 
-func (lowering *lowering) nodeStdoutIsTTYRefusal(node *ast.Node) error {
+func (lowering *lowering) nodeStdoutIsTtyRefusal(node *ast.Node) error {
 	member := "isTTY"
 	if lowering.nodeStdoutColumnsMember(node) {
 		member = "columns"
@@ -564,11 +564,11 @@ func (lowering *lowering) nodeStdoutIsTTYRefusal(node *ast.Node) error {
 	return nil
 }
 
-func (lowering *lowering) nodeStdoutIsTTYRead(node *ast.Node) (ir.Expression, bool, error) {
-	if !lowering.nodeStdoutTTYMember(node) {
+func (lowering *lowering) nodeStdoutIsTtyRead(node *ast.Node) (ir.Expression, bool, error) {
+	if !lowering.nodeStdoutTtyMember(node) {
 		return nil, false, nil
 	}
-	if nodeStdoutIsTtyRefusalError := lowering.nodeStdoutIsTTYRefusal(node); nodeStdoutIsTtyRefusalError != nil {
+	if nodeStdoutIsTtyRefusalError := lowering.nodeStdoutIsTtyRefusal(node); nodeStdoutIsTtyRefusalError != nil {
 		return nil, true, nodeStdoutIsTtyRefusalError
 	}
 	if lowering.nodeStdoutColumnsMember(node) {
@@ -585,8 +585,8 @@ func (lowering *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 	}
 	if node.Kind == ast.KindDeleteExpression {
 		target := ast.SkipParentheses(node.AsDeleteExpression().Expression)
-		if lowering.nodeStdoutTTYMember(target) {
-			return true, lowering.nodeStdoutIsTTYRefusal(target)
+		if lowering.nodeStdoutTtyMember(target) {
+			return true, lowering.nodeStdoutIsTtyRefusal(target)
 		}
 	}
 
@@ -599,15 +599,15 @@ func (lowering *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 		receiver = receiver.Parent
 	}
 	if receiver.Parent != nil &&
-		lowering.nodeStdoutTTYMember(receiver.Parent) &&
+		lowering.nodeStdoutTtyMember(receiver.Parent) &&
 		ast.SkipParentheses(receiver.Parent.AsPropertyAccessExpression().Expression) == access {
-		return true, lowering.nodeStdoutIsTTYRefusal(receiver.Parent)
+		return true, lowering.nodeStdoutIsTtyRefusal(receiver.Parent)
 	}
 	name := lowering.nodeLibraryMember(access)
 	switch name {
 	case "node:tty.WriteStream.isTTY", "node:tty.ReadStream.isTTY":
-		if lowering.nodeStdoutIsTTYMember(access) {
-			return true, lowering.nodeStdoutIsTTYRefusal(access)
+		if lowering.nodeStdoutIsTtyMember(access) {
+			return true, lowering.nodeStdoutIsTtyRefusal(access)
 		}
 		receiver := "node:tty stream"
 		if access.Kind == ast.KindPropertyAccessExpression {
@@ -616,7 +616,7 @@ func (lowering *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 		return true, lowering.notYet(access, receiver+".isTTY is not bound (fix: read process.stdout.isTTY)")
 	case "node:tty.WriteStream.columns":
 		if lowering.nodeStdoutColumnsMember(access) {
-			return true, lowering.nodeStdoutIsTTYRefusal(access)
+			return true, lowering.nodeStdoutIsTtyRefusal(access)
 		}
 		return true, lowering.notYet(
 			access,
@@ -633,8 +633,8 @@ func (lowering *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 			outer = outer.Parent
 		}
-		if outer.Parent != nil && lowering.nodeStdoutTTYMember(outer.Parent) {
-			return true, lowering.nodeStdoutIsTTYRefusal(outer.Parent)
+		if outer.Parent != nil && lowering.nodeStdoutTtyMember(outer.Parent) {
+			return true, lowering.nodeStdoutIsTtyRefusal(outer.Parent)
 		}
 		if outer.Parent == nil || !lowering.nodeStdoutWriteMember(outer.Parent) {
 			return true, lowering.notYet(access, "node:process.Process.stdout used as a value")

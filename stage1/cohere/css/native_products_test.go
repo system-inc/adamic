@@ -22,7 +22,7 @@ import (
 // law): seven clang builds, four closed gaps, the raw and composed range guards and the byte slices, were made inside
 // the tests.
 
-func TestProduct_CSSGapsSanitized(test *testing.T) {
+func TestProduct_CssGapsSanitized(test *testing.T) {
 	test.Parallel()
 	for _, path := range []string{
 		"gaps/1_regex_and_value_tree.ts",
@@ -34,14 +34,14 @@ func TestProduct_CSSGapsSanitized(test *testing.T) {
 	}
 }
 
-func TestProduct_CSSRangeGuardsSanitized(test *testing.T) {
+func TestProduct_CssRangeGuardsSanitized(test *testing.T) {
 	test.Parallel()
 	for _, path := range []string{"testdata/range_guard.ts", "testdata/composition_range_guard.ts"} {
 		requirePort(test, programSanitized(test, path))
 	}
 }
 
-func TestProduct_CSSByteSlicesSanitized(test *testing.T) {
+func TestProduct_CssByteSlicesSanitized(test *testing.T) {
 	test.Parallel()
 	requirePort(test, programSanitized(test, "testdata/byte_slices.ts"))
 }

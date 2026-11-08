@@ -151,11 +151,11 @@ func (lowering *lowering) findCycles(modules []*ast.SourceFile) error {
 		return lowering.checkLazyViewReads()
 	}
 	lowering.resolveCountTypes(modules)
-	if nodeProcessStorageAbiError := lowering.nodeProcessStorageABI(modules); nodeProcessStorageAbiError != nil {
+	if nodeProcessStorageAbiError := lowering.nodeProcessStorageAbi(modules); nodeProcessStorageAbiError != nil {
 		return nodeProcessStorageAbiError
 	}
-	if nodeFsDirectoryClosureAbiError := lowering.nodeFSDirectoryClosureABI(); nodeFsDirectoryClosureAbiError != nil {
-		return nodeFsDirectoryClosureAbiError
+	if nodeFileSystemDirectoryClosureAbiError := lowering.nodeFileSystemDirectoryClosureAbi(); nodeFileSystemDirectoryClosureAbiError != nil {
+		return nodeFileSystemDirectoryClosureAbiError
 	}
 	return lowering.checkLazyViewReads()
 }

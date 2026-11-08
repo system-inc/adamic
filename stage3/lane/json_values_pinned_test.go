@@ -12,7 +12,7 @@ import (
 
 // A public-any exemption remains justified only while its pinned API sample still reads the unchecked value.
 // This test runs git to read the pinned object, never Go or a compiler. Entries may be removed, never added here.
-func TestJSONValues52PinnedAnySampleReadsRemain(test *testing.T) {
+func TestJsonValues52PinnedAnySampleReadsRemain(test *testing.T) {
 	test.Parallel()
 	root := repositoryRoot(test)
 	data, readError := os.ReadFile(filepath.Join(root, "stage3/adapt/52-json-values/public-any-pinned.json"))
@@ -73,7 +73,7 @@ func jsonValues52SampleContainsOwnPin(sample, function, read string) bool {
 	return strings.Contains(sample, "ts."+function+"(") && strings.Contains(sample, read)
 }
 
-func TestJSONValues52ExemptionsRequireTheirOwnCall(test *testing.T) {
+func TestJsonValues52ExemptionsRequireTheirOwnCall(test *testing.T) {
 	test.Parallel()
 	const read = `config.config["compilerOptions"]`
 	const sample = `const config = ts.parseConfigFileTextToJson("config.json", text); config.config["compilerOptions"];`

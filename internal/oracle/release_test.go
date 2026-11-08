@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func TestReleaseFMAAgreesWithNode(test *testing.T) {
+func TestReleaseFmaAgreesWithNode(test *testing.T) {
 	test.Parallel()
 	releaseAgrees(test, "internal/oracle/testdata/release_fma.a", false)
 }

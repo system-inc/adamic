@@ -845,7 +845,7 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	finder.lowering.result.GraphTypes = map[int]bool{}
 	for node := range graph {
 		if node.proven != nil && !finder.weak(node.proven) {
-			finder.lowering.result.GraphTypes[finder.lowering.cycleTypeID(node.proven)] = true
+			finder.lowering.result.GraphTypes[finder.lowering.cycleTypeId(node.proven)] = true
 		}
 		if node.cell != 0 {
 			finder.lowering.result.Locals[node.cell-1].GraphCell = true
@@ -1479,7 +1479,7 @@ func (finder *scanCycleFinder) programRegionSelectionMode(indexed bool) map[cycl
 		edges[node] = links
 		queue = append(queue, links...)
 	}
-	selected := ProgramRegionSCC(edges, owning)
+	selected := ProgramRegionScc(edges, owning)
 	// Compiler's container rule is applied after SCC selection, to concrete
 	// allocation-site types after monomorphization. Views cannot admit a container
 	// whose elements/keys/values are outside the selected component.
@@ -1692,7 +1692,7 @@ func (lowering *lowering) scanSelectProgramMembership(
 	program.ProgramTypes = ir.SortedMap[int, bool]{}
 	for node := range selected {
 		if node.proven != nil && !finder.weak(node.proven) && !finder.lowering.isLibraryType(node.proven, "Promise") {
-			program.ProgramTypes[finder.lowering.cycleTypeID(node.proven)] = true
+			program.ProgramTypes[finder.lowering.cycleTypeId(node.proven)] = true
 		}
 		if node.cell != 0 {
 			program.Locals[node.cell-1].ProgramRegion = true

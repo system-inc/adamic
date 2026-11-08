@@ -56,7 +56,7 @@ func TestProduct_FormatfilesNativeJavaScriptLowercase(test *testing.T) {
 	requireFormatfilesBinary(test, formatfilesPreparedMutant(test, 3).binary)
 }
 
-func TestProduct_FormatfilesNativeUTF16Sort(test *testing.T) {
+func TestProduct_FormatfilesNativeUtf16Sort(test *testing.T) {
 	test.Parallel()
 	requireFormatfilesBinary(test, formatfilesPreparedMutant(test, 4).binary)
 }
@@ -66,7 +66,7 @@ func TestProduct_FormatfilesNativeLinkLoop(test *testing.T) {
 	requireFormatfilesBinary(test, formatfilesPreparedMutant(test, 5).binary)
 }
 
-func TestProduct_FormatfilesNativeQuoteDEL(test *testing.T) {
+func TestProduct_FormatfilesNativeQuoteDel(test *testing.T) {
 	test.Parallel()
 	requireFormatfilesBinary(test, formatfilesPreparedMutant(test, 6).binary)
 }

@@ -134,8 +134,8 @@ func TestParallelCachedMatchesSerial(test *testing.T) {
 	}
 	assertFreshCacheProfile(test, engine.profile)
 	document := reportDocument{Filters: []filterReport{serial}}
-	var serialJSON, serialTable bytes.Buffer
-	if writeJsonError := writeJSON(&serialJSON, document); writeJsonError != nil {
+	var serialJson, serialTable bytes.Buffer
+	if writeJsonError := writeJson(&serialJson, document); writeJsonError != nil {
 		test.Fatal(writeJsonError)
 	}
 	printTables(&serialTable, document)
@@ -164,14 +164,14 @@ func TestParallelCachedMatchesSerial(test *testing.T) {
 			}
 		}
 		document.Filters = []filterReport{parallel}
-		if writeJsonError := writeJSON(&encoded, document); writeJsonError != nil {
+		if writeJsonError := writeJson(&encoded, document); writeJsonError != nil {
 			test.Fatal(writeJsonError)
 		}
 		printTables(&table, document)
-		if !bytes.Equal(serialJSON.Bytes(), encoded.Bytes()) ||
+		if !bytes.Equal(serialJson.Bytes(), encoded.Bytes()) ||
 			!bytes.Equal(serialTable.Bytes(), table.Bytes()) ||
 			!bytes.Equal(serialLog.Bytes(), log.Bytes()) {
-			test.Fatalf("round %d differs:\nserial=%s\nparallel=%s", round, serialJSON.Bytes(), encoded.Bytes())
+			test.Fatalf("round %d differs:\nserial=%s\nparallel=%s", round, serialJson.Bytes(), encoded.Bytes())
 		}
 	}
 	// The limit selects the same attempted files before workers are scheduled.

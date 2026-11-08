@@ -5,16 +5,16 @@ import "strconv"
 // CheckedFieldKey is where CheckedFields records a checked view member: under its static receiver's checker type, so an
 // unrelated receiver with the same member name is not checked. Gob-encoded programs and the products that hash them
 // keep this spelling.
-func CheckedFieldKey(receiverTypeID int, name string) string {
-	return strconv.Itoa(receiverTypeID) + ":" + name
+func CheckedFieldKey(receiverTypeId int, name string) string {
+	return strconv.Itoa(receiverTypeId) + ":" + name
 }
 
 // CheckedField says whether a read or write of name through a receiver of type receiverTypeID is checked: a view member
 // under its receiver's key, or a record's or merged class's field under its bare name, through any receiver lowering
 // hasn't proven plain (PlainReceivers). An unproven receiver stays checked.
-func (program *Program) CheckedField(receiverTypeID int, name string) bool {
-	return program.CheckedFields[CheckedFieldKey(receiverTypeID, name)] ||
-		program.CheckedFields[name] && !program.PlainReceivers[receiverTypeID]
+func (program *Program) CheckedField(receiverTypeId int, name string) bool {
+	return program.CheckedFields[CheckedFieldKey(receiverTypeId, name)] ||
+		program.CheckedFields[name] && !program.PlainReceivers[receiverTypeId]
 }
 
 // CheckedRead is CheckedField for a field read, which can prove its receiver plain by its value as well

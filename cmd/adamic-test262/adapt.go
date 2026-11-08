@@ -407,10 +407,10 @@ func sameType(left *jtype, right *jtype) bool {
 	}
 }
 
-// strictEqualOK reports whether == and === agree on every value of these two types.
+// strictEqualOk reports whether == and === agree on every value of these two types.
 // The same primitive does not coerce. Two objects compare by reference either way.
 // null compared with undefined does coerce, and that pair is not the same kind, so it stays.
-func strictEqualOK(left *jtype, right *jtype) bool {
+func strictEqualOk(left *jtype, right *jtype) bool {
 	if left == nil || right == nil || left.kind != right.kind {
 		return false
 	}
@@ -1930,7 +1930,7 @@ func (parser *parser) receiverElem(call callNote) *jtype {
 
 func (parser *parser) rewriteEquals() {
 	for _, cmp := range parser.cmps {
-		if !strictEqualOK(parser.eval(cmp.left), parser.eval(cmp.right)) {
+		if !strictEqualOk(parser.eval(cmp.left), parser.eval(cmp.right)) {
 			continue
 		}
 		text := "==="

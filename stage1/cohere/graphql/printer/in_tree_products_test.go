@@ -57,19 +57,19 @@ func printerCopyProducts(test *testing.T) printerProducts {
 // No TestProduct_ built the in-tree printer or the whitespace gap's copy, so Workshop's combined proof (Oct 10) found
 // the lowered and sanitized printers missing on the reading checkout. These build exactly what preparePrinterProducts
 // reads for each.
-func TestProduct_GraphQLPrinterInTreeLowered(test *testing.T) {
+func TestProduct_GraphQlPrinterInTreeLowered(test *testing.T) {
 	test.Parallel()
 	printerLoweredProduct(test, printerInTreeSource(test))
 }
 
-func TestProduct_GraphQLPrinterInTreeNative(test *testing.T) {
+func TestProduct_GraphQlPrinterInTreeNative(test *testing.T) {
 	test.Parallel()
 	printerInTreeProducts(test)
 }
 
 // The whitespace gap units lower an unmutated copy of the port (printerDirectory with no change) rather than the
 // package's own main.ts; this builds what they read, keyed as they key it.
-func TestProduct_GraphQLPrinterCopyNative(test *testing.T) {
+func TestProduct_GraphQlPrinterCopyNative(test *testing.T) {
 	test.Parallel()
 	printerCopyProducts(test)
 }

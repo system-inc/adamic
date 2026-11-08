@@ -73,7 +73,7 @@ func TestAFileInASubmoduleIsValuedByTheSubmodulesOwnListing(test *testing.T) {
 		if gitValueError != nil {
 			test.Fatal(gitValueError)
 		}
-		if want := "false " + blobID([]byte(content), 40); got != want {
+		if want := "false " + blobId([]byte(content), 40); got != want {
 			test.Fatalf("inner.c holding %q valued %q, want %q", content, got, want)
 		}
 		return got

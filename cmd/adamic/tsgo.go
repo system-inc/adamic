@@ -121,13 +121,13 @@ func buildWithNativeExports(
 	var program *ir.Program
 	var code int
 	handler := -1
-	var exports []native.ABIExport
+	var exports []native.AbiExport
 	if options.Target == "wasm32-wasi" {
 		program, exports, code = compileExportsWith(path, names, entryFunctions)
 		if program != nil && len(exports) == 0 && !reactor {
 			// An export alias is outside the per-function crossing set (docs/wasm-abi.md), but an
 			// aliased handleRequest still selects the request ABI, as it did before those exports.
-			program, handler, code = compileWASI(path)
+			program, handler, code = compileWasi(path)
 		}
 		reactor = reactor || len(exports) > 0
 		options.Request = reactor || handler >= 0
@@ -141,12 +141,12 @@ func buildWithNativeExports(
 		explainPredicateChecks(os.Stderr, program)
 	}
 	var err error
-	if native.UsesTSGo(program) {
+	if native.UsesTsGo(program) {
 		if archive == "" {
 			fmt.Fprintln(os.Stderr, "adamic: tsgo requires a linked checker archive; build with --tsgo <archive>")
 			return 1
 		}
-		source, renderError := native.TSGoC(program)
+		source, renderError := native.TsGoC(program)
 		if renderError != nil {
 			err = renderError
 		} else {
@@ -172,7 +172,7 @@ func buildWithNativeExports(
 		return 1
 	}
 	if abiPath != "" {
-		bytes, err := json.MarshalIndent(native.ABITable{Version: 1, Exports: exports}, "", "  ")
+		bytes, err := json.MarshalIndent(native.AbiTable{Version: 1, Exports: exports}, "", "  ")
 		if err == nil {
 			err = os.WriteFile(abiPath, append(bytes, '\n'), 0644)
 		}

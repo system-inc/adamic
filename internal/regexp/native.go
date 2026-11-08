@@ -161,7 +161,7 @@ func (program *Program) NativeDeclarations(name string) (string, error) {
 				name,
 			)
 		}
-		bits, filter := program.nativeFirstASCII()
+		bits, filter := program.nativeFirstAscii()
 		prefix := program.nativePrefix()
 		prefixName := "NULL"
 		if len(prefix) > 0 {
@@ -178,7 +178,7 @@ func (program *Program) NativeDeclarations(name string) (string, error) {
 			out.WriteString(body)
 			fast = name + "_fast"
 		}
-		if body := program.nativeStraightLineASCII(name); body != "" {
+		if body := program.nativeStraightLineAscii(name); body != "" {
 			out.WriteString(body)
 			ascii = name + "_ascii"
 		}
@@ -195,7 +195,7 @@ func (program *Program) NativeDeclarations(name string) (string, error) {
 		firstBody, firstName := program.nativeSparseFirst(name)
 		out.WriteString(firstBody)
 		testName := "NULL"
-		if body := program.nativeBooleanASCII(name, firstName); body != "" {
+		if body := program.nativeBooleanAscii(name, firstName); body != "" {
 			out.WriteString(body)
 			testName = name + "_test"
 		}

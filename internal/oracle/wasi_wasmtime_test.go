@@ -229,13 +229,13 @@ func runWasmtimeAgreesShard(test *testing.T, shard int) {
 			}
 			binary := filepath.Join(test.TempDir(), "program.wasm")
 			// The wasm32 refusals TestWASIAgreesWithNode holds by name (wasiRefusedFixtures), at build or at run.
-			reason := buildWASI(test, native.C(program), binary)
+			reason := buildWasi(test, native.C(program), binary)
 			var actual run
 			if reason == "" {
 				actual = onWasmtime(test, inputRun{}, binary)
 				reason = wasiRefusalReason(actual)
 			}
-			if assertWASIRefusal(test, fixture.path, reason, wasiRefusedFixtures) {
+			if assertWasiRefusal(test, fixture.path, reason, wasiRefusedFixtures) {
 				boundary = true
 				return
 			}
@@ -299,7 +299,7 @@ func runWasmtimeInputShard(test *testing.T, shard int) {
 					test.Log("PASS", fixture.path)
 				}
 			}()
-			limited, wasRefused = runWASIInputFixture(
+			limited, wasRefused = runWasiInputFixture(
 				test,
 				fixture.path,
 				fixture.arguments,
@@ -387,7 +387,7 @@ func TestWasmtimeCheckedWitness(test *testing.T) {
 
 // The named exceptions still compare all three fields. Each independent mutant
 // must fail that exact comparison; changed host behavior cannot become a pass.
-func TestWASINamedBehaviorCatchesMutants(test *testing.T) {
+func TestWasiNamedBehaviorCatchesMutants(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{
 		"write_stdout_order.a",

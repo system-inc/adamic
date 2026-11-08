@@ -22,7 +22,7 @@ type negativeWitness struct {
 	DeclaredType      string `json:"declared_type"`
 	RepairFrom        string `json:"repair_from"`
 	RepairTo          string `json:"repair_to"`
-	TypeCorrectSHA256 string `json:"type_correct_sha256"`
+	TypeCorrectSha256 string `json:"type_correct_sha256"`
 	Exit              int    `json:"exit"`
 	Stderr            string `json:"stderr"`
 }
@@ -61,12 +61,12 @@ func readNegativeWitnesses(path string) (negativeWitnessList, error) {
 	}
 	for hash, witness := range list.Witnesses {
 		if !validContentHash(hash) ||
-			!validContentHash(witness.TypeCorrectSHA256) ||
-			witness.TypeCorrectSHA256 == hash {
+			!validContentHash(witness.TypeCorrectSha256) ||
+			witness.TypeCorrectSha256 == hash {
 			return list, fmt.Errorf("invalid negative or type-correct content hash %q", hash)
 		}
-		if _, listed := list.Witnesses[witness.TypeCorrectSHA256]; listed {
-			return list, fmt.Errorf("type-correct program cannot be listed: %s", witness.TypeCorrectSHA256)
+		if _, listed := list.Witnesses[witness.TypeCorrectSha256]; listed {
+			return list, fmt.Errorf("type-correct program cannot be listed: %s", witness.TypeCorrectSha256)
 		}
 		if !strings.HasPrefix(witness.RulingTask, "#") ||
 			len(witness.RulingTask) < 2 ||
@@ -200,7 +200,7 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 		return fmt.Errorf("declared number does not contain its ruled literal callback type lie")
 	}
 	repaired := repairedSource(source, witness)
-	if bytes.Equal(source, repaired) || contentHash(repaired) != witness.TypeCorrectSHA256 {
+	if bytes.Equal(source, repaired) || contentHash(repaired) != witness.TypeCorrectSha256 {
 		return fmt.Errorf("type-correct repair hash differs")
 	}
 	return nil
@@ -226,7 +226,7 @@ func negativeRelated(path string, source []byte, list negativeWitnessList) bool 
 	hash := contentHash(source)
 	for ruledHash, witness := range list.Witnesses {
 		at := strings.LastIndex(witness.Declaration, ":")
-		if hash == ruledHash || hash == witness.TypeCorrectSHA256 || (at > 0 && path == witness.Declaration[:at]) {
+		if hash == ruledHash || hash == witness.TypeCorrectSha256 || (at > 0 && path == witness.Declaration[:at]) {
 			return true
 		}
 	}

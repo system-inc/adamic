@@ -13,19 +13,19 @@ func TestMain(suite *testing.M) {
 	os.Exit(suite.Run())
 }
 func TestProduct_CSSStringsGoOracle(test *testing.T) { test.Parallel(); Printer(test) }
-func TestProduct_CSSStringsGoAnswers(test *testing.T) {
+func TestProduct_CssStringsGoAnswers(test *testing.T) {
 	test.Parallel()
 	corpus := Enumerate(test)
 	p := Printer(test)
 	FullAnswers(test, p, nil, Input(corpus.Texts), Identity(test, p))
 }
-func TestProduct_CSSStringsGoBatchAnswers(test *testing.T) {
+func TestProduct_CssStringsGoBatchAnswers(test *testing.T) {
 	test.Parallel()
 	corpus := Enumerate(test)
 	p := Printer(test)
 	BatchAnswers(test, p, Identity(test, p), BatchCases(corpus))
 }
-func TestProduct_CSSStringsGoRawAnswers(test *testing.T) {
+func TestProduct_CssStringsGoRawAnswers(test *testing.T) {
 	test.Parallel()
 	corpus := Enumerate(test)
 	p := Printer(test)

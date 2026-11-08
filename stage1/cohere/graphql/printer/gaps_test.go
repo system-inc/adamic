@@ -39,7 +39,7 @@ const printerWhitespaceWitnessShards = 5
 
 // A real process emits one planted acceptance where the oracle requires refusal;
 // only the owning whitespace shard may report the disagreement.
-func whitespaceCaseID(index int) string {
+func whitespaceCaseId(index int) string {
 	return fmt.Sprintf("stage1/cohere/graphql/printer/whitespace-witness/case-%06d", index)
 }
 
@@ -64,9 +64,9 @@ func TestPrinterWhitespacePlantedDisagreement(test *testing.T) {
 	test.Parallel()
 	var whole []printerCase
 	for index := range 5 {
-		whole = append(whole, printerCase{id: whitespaceCaseID(index), want: "error\trefused"})
+		whole = append(whole, printerCase{id: whitespaceCaseId(index), want: "error\trefused"})
 	}
-	planted := whitespaceCaseID(3)
+	planted := whitespaceCaseId(3)
 	caught := 0
 	for number, shard := range whitespaceShards(whole) {
 		var answer strings.Builder
@@ -96,8 +96,8 @@ func TestPrinterWhitespacePlantedDisagreement(test *testing.T) {
 
 func TestPrinterWhitespaceShardGrowth(test *testing.T) {
 	test.Parallel()
-	original := []printerCase{{id: whitespaceCaseID(0)}, {id: whitespaceCaseID(1)}}
-	grown := append(append([]printerCase(nil), original...), printerCase{id: whitespaceCaseID(2)})
+	original := []printerCase{{id: whitespaceCaseId(0)}, {id: whitespaceCaseId(1)}}
+	grown := append(append([]printerCase(nil), original...), printerCase{id: whitespaceCaseId(2)})
 	before, after := whitespaceShards(original), whitespaceShards(grown)
 	if len(before) != printerWhitespaceWitnessShards || len(after) != len(before) {
 		test.Fatal("growth changed shard count")

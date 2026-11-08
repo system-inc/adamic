@@ -75,7 +75,7 @@ func freshC(test *testing.T, entry string, options Options) string {
 		test.Fatal(loadError)
 	}
 	if options.TSGo {
-		program.EnableTSGo()
+		program.EnableTsGo()
 	}
 	lowering, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), program, options.Lower)
 	if lowerWithOptionsError != nil {
@@ -311,7 +311,7 @@ func replaced(test *testing.T, first string, read sources, builds *atomic.Int32,
 // it: one of its strings changed, the same length. Mutant: the sum check dropped.
 //
 // Not parallel: privateCache sets the build cache's variables for the process.
-func TestATornStoredIRIsAMissAndRebuilt(test *testing.T) {
+func TestATornStoredIrisAMissAndRebuilt(test *testing.T) {
 	privateCache(test)
 	read := sourcesOf(test, fromHere(tornProgram))
 	var builds atomic.Int32
@@ -336,7 +336,7 @@ func TestATornStoredIRIsAMissAndRebuilt(test *testing.T) {
 // A stored IR gob can't decode is a miss and rebuilt, its sum right for the bytes it holds.
 //
 // Not parallel: privateCache sets the build cache's variables for the process.
-func TestAnUndecodableStoredIRIsAMissAndRebuilt(test *testing.T) {
+func TestAnUndecodableStoredIrisAMissAndRebuilt(test *testing.T) {
 	privateCache(test)
 	read := sourcesOf(test, fromHere(tornProgram))
 	var builds atomic.Int32

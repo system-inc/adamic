@@ -936,7 +936,7 @@ func (lowering *lowering) walkProgramModules(visit func(*ast.Node)) {
 	}
 	seen := map[*ast.SourceFile]bool{}
 	for _, root := range lowering.program.Files() {
-		order, _ := ESMModuleOrder(lowering.checker, root)
+		order, _ := EsmModuleOrder(lowering.checker, root)
 		for _, module := range order {
 			if !seen[module] {
 				seen[module] = true

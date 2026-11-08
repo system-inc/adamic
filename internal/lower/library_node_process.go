@@ -273,7 +273,7 @@ func (lowering *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool,
 	if value, known, nodeGlobalsValueError := lowering.nodeGlobalsValue(node); known {
 		return value, known, nodeGlobalsValueError
 	}
-	if value, known, nodeCommonJsRequireValueError := lowering.nodeCommonJSRequireValue(node); known {
+	if value, known, nodeCommonJsRequireValueError := lowering.nodeCommonJsRequireValue(node); known {
 		return value, known, nodeCommonJsRequireValueError
 	}
 	if node.Kind == ast.KindPrefixUnaryExpression {
@@ -489,7 +489,7 @@ func (lowering *lowering) nodeProcessEnvironmentDelete(node *ast.Node) bool {
 // These static host receivers have no evaluation effects; arbitrary typed objects
 // still use the compiler's receiver evaluation and runtime method lookup.
 func (lowering *lowering) nodeProcessMethodPresence(node *ast.Node) (ir.Expression, bool) {
-	if lowering.nodeFSRealpathPresence(node) {
+	if lowering.nodeFileSystemRealpathPresence(node) {
 		return ir.BooleanConstant{Value: true}, true
 	}
 	path := lowering.processPath(node)
@@ -554,7 +554,7 @@ func (lowering *lowering) nodeProcessHostBinding(node *ast.Node) bool {
 
 // sys.ts reads the native variant from its static fs module. Never erase an
 // arbitrary receiver expression merely because it has realpathSync's type.
-func (lowering *lowering) nodeFSRealpathPresence(node *ast.Node) bool {
+func (lowering *lowering) nodeFileSystemRealpathPresence(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindPropertyAccessExpression || node.Name().Text() != "native" {
 		return false
@@ -646,7 +646,7 @@ func (lowering *lowering) nodeProcessSignature(node *ast.Node) error {
 // Structural interfaces can hide the overloaded declaration. Once a program
 // holds performance, unresolved calls and writes to its slot names must retain
 // the runtime's string/number ABI; otherwise refuse before C emission.
-func (lowering *lowering) nodeProcessStorageABI(modules []*ast.SourceFile) error {
+func (lowering *lowering) nodeProcessStorageAbi(modules []*ast.SourceFile) error {
 	host := false
 	var failure string
 	check := func(statements []ir.Statement) {

@@ -127,7 +127,7 @@ func gccInvariantProduct(test *testing.T, kind string) string {
 		return nil
 	})
 }
-func checkGCCInvariant(test *testing.T, kind string, mutant bool) {
+func checkGccInvariant(test *testing.T, kind string, mutant bool) {
 	test.Helper()
 	variant := "control"
 	if mutant {
@@ -159,30 +159,30 @@ func checkGCCInvariant(test *testing.T, kind string, mutant bool) {
 	}
 	test.Logf("%s %s: exit %d stdout %q", kind, variant, result.exit, result.stdout)
 }
-func TestProduct_GCCInvariantDTOA(test *testing.T) {
+func TestProduct_GccInvariantDtoa(test *testing.T) {
 	test.Parallel()
 	gccInvariantProduct(test, "DTOA")
 }
-func TestProduct_GCCInvariantReduction(test *testing.T) {
+func TestProduct_GccInvariantReduction(test *testing.T) {
 	test.Parallel()
 	gccInvariantProduct(test, "Reduction")
 }
-func TestProduct_GCCInvariantMap(test *testing.T) { test.Parallel(); gccInvariantProduct(test, "Map") }
-func TestGCCInvariantDTOA(test *testing.T)        { test.Parallel(); checkGCCInvariant(test, "DTOA", false) }
-func TestGCCInvariantReduction(test *testing.T) {
+func TestProduct_GccInvariantMap(test *testing.T) { test.Parallel(); gccInvariantProduct(test, "Map") }
+func TestGccInvariantDtoa(test *testing.T)        { test.Parallel(); checkGccInvariant(test, "DTOA", false) }
+func TestGccInvariantReduction(test *testing.T) {
 	test.Parallel()
-	checkGCCInvariant(test, "Reduction", false)
+	checkGccInvariant(test, "Reduction", false)
 }
-func TestGCCInvariantMap(test *testing.T) { test.Parallel(); checkGCCInvariant(test, "Map", false) }
-func TestGCCInvariantDTOAMutant(test *testing.T) {
+func TestGccInvariantMap(test *testing.T) { test.Parallel(); checkGccInvariant(test, "Map", false) }
+func TestGccInvariantDtoaMutant(test *testing.T) {
 	test.Parallel()
-	checkGCCInvariant(test, "DTOA", true)
+	checkGccInvariant(test, "DTOA", true)
 }
-func TestGCCInvariantReductionMutant(test *testing.T) {
+func TestGccInvariantReductionMutant(test *testing.T) {
 	test.Parallel()
-	checkGCCInvariant(test, "Reduction", true)
+	checkGccInvariant(test, "Reduction", true)
 }
-func TestGCCInvariantMapMutant(test *testing.T) {
+func TestGccInvariantMapMutant(test *testing.T) {
 	test.Parallel()
-	checkGCCInvariant(test, "Map", true)
+	checkGccInvariant(test, "Map", true)
 }

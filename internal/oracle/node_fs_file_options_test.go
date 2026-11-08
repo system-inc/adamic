@@ -13,10 +13,10 @@ import (
 )
 
 func init() {
-	fsFileFixtures = append(fsFileFixtures, "write_positions")
+	fileSystemFileFixtures = append(fileSystemFileFixtures, "write_positions")
 }
 
-func TestNodeFSWritePositionsWASI(test *testing.T) {
+func TestNodeFileSystemWritePositionsWasi(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -32,13 +32,13 @@ func TestNodeFSWritePositionsWASI(test *testing.T) {
 		test.Fatal(loweredError)
 	}
 	shared := sharedDirectory(test)
-	truthRun := fsFilePrepare(test, shared, "node")
+	truthRun := fileSystemFilePrepare(test, shared, "node")
 	truth := onNodeWith(test, truthRun, path)
 	binary := filepath.Join(shared, "program.wasm")
 	if buildError := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	how := fsFilePrepare(test, shared, "wasi")
+	how := fileSystemFilePrepare(test, shared, "wasi")
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
@@ -57,8 +57,8 @@ func TestNodeFSWritePositionsWASI(test *testing.T) {
 		test.Fatalf("%s: Node %q, WASI %q, stderr %q", difference, truth.stdout, got.stdout, got.stderr)
 	}
 	if difference := filesDiffer(
-		fsFileSnapshot(test, truthRun.arguments[0]),
-		fsFileSnapshot(test, how.arguments[0]),
+		fileSystemFileSnapshot(test, truthRun.arguments[0]),
+		fileSystemFileSnapshot(test, how.arguments[0]),
 	); difference != "" {
 		test.Fatal(difference)
 	}
@@ -66,7 +66,7 @@ func TestNodeFSWritePositionsWASI(test *testing.T) {
 
 // Both mutations remain well-typed, finish normally, and pass sanitizer and
 // leak checks. Only the source's output on Node detects their wrong semantics.
-func TestNodeFSConsumedOptionsMutants(test *testing.T) {
+func TestNodeFileSystemConsumedOptionsMutants(test *testing.T) {
 	test.Parallel()
 	for _, probe := range []struct {
 		name, path, operation, helper string
@@ -122,7 +122,7 @@ func TestNodeFSConsumedOptionsMutants(test *testing.T) {
 					test.Fatal(difference)
 				}
 				if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
-					if difference := disagreement(truth, onWASI(test, code)); difference != "" {
+					if difference := disagreement(truth, onWasi(test, code)); difference != "" {
 						test.Fatal(difference)
 					}
 				}
@@ -140,9 +140,9 @@ func TestNodeFSConsumedOptionsMutants(test *testing.T) {
 			environment := []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}
 			var got, truth run
 			if probe.input {
-				how := fsFilePrepare(test, shared, "mutant-input")
+				how := fileSystemFilePrepare(test, shared, "mutant-input")
 				got = executeInput(test, how, environment, binary, how.arguments...)
-				truth = onNodeWith(test, fsFilePrepare(test, shared, "node"), path)
+				truth = onNodeWith(test, fileSystemFilePrepare(test, shared, "node"), path)
 			} else {
 				got = executeWith(test, environment, binary)
 				truth = onNode(test, path)
@@ -162,7 +162,7 @@ func TestNodeFSConsumedOptionsMutants(test *testing.T) {
 	}
 }
 
-func TestNodeFSRmUndefinedNodeMutant(test *testing.T) {
+func TestNodeFileSystemRmUndefinedNodeMutant(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"recursive", "force", "maxRetries", "retryDelay"} {
 		test.Run(name, func(test *testing.T) {

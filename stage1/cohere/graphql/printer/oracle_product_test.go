@@ -6,4 +6,4 @@ import (
 )
 
 func printerOracle(test *testing.T) string                    { return oracles.Printer(test) }
-func TestProduct_GraphQLPrinterFindsGoOracle(test *testing.T) { test.Parallel(); printerOracle(test) }
+func TestProduct_GraphQlPrinterFindsGoOracle(test *testing.T) { test.Parallel(); printerOracle(test) }

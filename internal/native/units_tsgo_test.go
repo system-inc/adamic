@@ -26,21 +26,21 @@ func tsgoArchive(test *testing.T) string {
 	return buildcache.GoBuild(test, "tsgo.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"})
 }
 
-// TestProduct_TSGoArchive builds the checker archive the split units link, so the tree build builds it ahead.
-func TestProduct_TSGoArchive(test *testing.T) {
+// TestProduct_TsGoArchive builds the checker archive the split units link, so the tree build builds it ahead.
+func TestProduct_TsGoArchive(test *testing.T) {
 	test.Parallel()
 	tsgoArchive(test)
 }
 
-// splitTSGoOptions are the options both the whole baseline and every split build are built with.
-var splitTSGoOptions = Options{Sanitize: true, Jobs: 5}
+// splitTsGoOptions are the options both the whole baseline and every split build are built with.
+var splitTsGoOptions = Options{Sanitize: true, Jobs: 5}
 
-// splitTSGoSource is the C both units build: typeaware's main.ts loaded, lowered and emitted with TSGoC, a product
+// splitTsGoSource is the C both units build: typeaware's main.ts loaded, lowered and emitted with TSGoC, a product
 // built ahead by TestProduct_SplitTSGoSource. Every unit used to load and lower it again, a few seconds each. Built
 // in process, so its declared inputs are every file go compiles into the packages that make it (load, lowering and
 // emission), the program's own sources with everything they import (typeaware's unary_minus.ts reaches lint's
 // finding.ts and its suggestions.a) and this recipe; under the tree builder's trace its key is what it read.
-func splitTSGoSource(test *testing.T) string {
+func splitTsGoSource(test *testing.T) string {
 	test.Helper()
 	compiler, goInputsError := buildcache.GoInputs(
 		"main.c",
@@ -65,12 +65,12 @@ func splitTSGoSource(test *testing.T) string {
 		if loadError != nil {
 			return loadError
 		}
-		program.EnableTSGo()
+		program.EnableTsGo()
 		lowered, lowerError := lower.Lower(context.Background(), program)
 		if lowerError != nil {
 			return lowerError
 		}
-		source, tsGoCError := TSGoC(lowered)
+		source, tsGoCError := TsGoC(lowered)
 		if tsGoCError != nil {
 			return tsGoCError
 		}
@@ -83,16 +83,16 @@ func splitTSGoSource(test *testing.T) string {
 	return string(source)
 }
 
-// splitTSGoBaseline is the whole sanitized checker both units compare their split builds with, BuildTSGo of the
+// splitTsGoBaseline is the whole sanitized checker both units compare their split builds with, BuildTSGo of the
 // source product against the archive product, a product built ahead by TestProduct_SplitTSGoBaseline. Both inputs
 // are products, so they key it by their bytes: the same bytes wherever they were fetched.
-func splitTSGoBaseline(test *testing.T, source, archive string) string {
+func splitTsGoBaseline(test *testing.T, source, archive string) string {
 	test.Helper()
 	archiveBytes, readError := os.ReadFile(archive)
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	optionBytes, encodeError := json.Marshal(splitTSGoOptions)
+	optionBytes, encodeError := json.Marshal(splitTsGoOptions)
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
@@ -110,37 +110,37 @@ func splitTSGoBaseline(test *testing.T, source, archive string) string {
 		if !strings.HasPrefix(test.Name(), "TestProduct_") {
 			return fmt.Errorf("split-tsgo-baseline must be built ahead by TestProduct_SplitTSGoBaseline")
 		}
-		return BuildTSGo(source, filepath.Join(directory, "whole"), archive, splitTSGoOptions)
+		return BuildTSGo(source, filepath.Join(directory, "whole"), archive, splitTsGoOptions)
 	})
 	return filepath.Join(directory, "whole")
 }
 
-// TestProduct_SplitTSGoSource builds the C the split units build, so the tree build builds it ahead.
-func TestProduct_SplitTSGoSource(test *testing.T) {
+// TestProduct_SplitTsGoSource builds the C the split units build, so the tree build builds it ahead.
+func TestProduct_SplitTsGoSource(test *testing.T) {
 	test.Parallel()
-	splitTSGoSource(test)
+	splitTsGoSource(test)
 }
 
 // TestProduct_SplitTSGoBaseline builds the whole checker the split units compare with, so the tree build builds it
 // ahead.
 func TestProduct_SplitTSGoBaseline(test *testing.T) {
 	test.Parallel()
-	splitTSGoBaseline(test, splitTSGoSource(test), tsgoArchive(test))
+	splitTsGoBaseline(test, splitTsGoSource(test), tsgoArchive(test))
 }
 
-// splitTSGoSplit is the split sanitized checker built from the source product against the archive product with the
+// splitTsGoSplit is the split sanitized checker built from the source product against the archive product with the
 // units cache bypassed, a product built ahead by TestProduct_SplitTSGoSplit. Its compile is the whole of the agreement
 // test's cost: 23 units and about 17 s of clang quiet, 24 s at twice the box's load, one 1 MB unit the long pole
 // (#dgcy49s). Bypassed, its build reads no units cache, so nothing outside its inputs reaches it; a build mixing hits
 // and misses is TestSplitMixesHitsAndMisses's. Keyed as the baseline is, by its inputs' bytes.
-func splitTSGoSplit(test *testing.T, source, archive string) string {
+func splitTsGoSplit(test *testing.T, source, archive string) string {
 	test.Helper()
 	test.Setenv("ADAMIC_GATE_UNCACHED", "1")
 	archiveBytes, readError := os.ReadFile(archive)
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	optionBytes, encodeError := json.Marshal(splitTSGoOptions)
+	optionBytes, encodeError := json.Marshal(splitTsGoOptions)
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
@@ -155,16 +155,16 @@ func splitTSGoSplit(test *testing.T, source, archive string) string {
 		},
 		Toolchain: []string{buildcache.Tool("clang", "--version")},
 	}, func(directory string) error {
-		return BuildSplitTSGo(source, filepath.Join(directory, "split"), archive, splitTSGoOptions)
+		return BuildSplitTSGo(source, filepath.Join(directory, "split"), archive, splitTsGoOptions)
 	})
 	return filepath.Join(directory, "split")
 }
 
-// TestProduct_SplitTSGoSplit builds the split checker the agreement test runs, so the tree build builds it ahead.
+// TestProduct_SplitTsGoSplit builds the split checker the agreement test runs, so the tree build builds it ahead.
 // Not parallel: splitTSGoSplit sets ADAMIC_GATE_UNCACHED for the process.
-func TestProduct_SplitTSGoSplit(test *testing.T) {
+func TestProduct_SplitTsGoSplit(test *testing.T) {
 	archive := tsgoArchive(test)
-	splitTSGoSplit(test, splitTSGoSource(test), archive)
+	splitTsGoSplit(test, splitTsGoSource(test), archive)
 }
 
 // The split checker, built ahead, prints what the whole one prints. Each was compiled by a product test, so this test
@@ -172,12 +172,12 @@ func TestProduct_SplitTSGoSplit(test *testing.T) {
 // on a box with an empty units cache was the bypass's compile plus writes, about 27 s at twice the box's load and 60.73
 // s at load 82, which reddened a change that touched nothing here (#dgcy49s). Not parallel: splitTSGoSplit sets
 // ADAMIC_GATE_UNCACHED for the process.
-func TestSplitTSGoAgrees(test *testing.T) {
+func TestSplitTsGoAgrees(test *testing.T) {
 	phase := time.Now()
 	archive := tsgoArchive(test)
-	source := splitTSGoSource(test)
-	whole := splitTSGoBaseline(test, source, archive)
-	split := splitTSGoSplit(test, source, archive)
+	source := splitTsGoSource(test)
+	whole := splitTsGoBaseline(test, source, archive)
+	split := splitTsGoSplit(test, source, archive)
 	test.Logf("product fetch phase %.3fs", time.Since(phase).Seconds())
 	directory := test.TempDir()
 	input := filepath.Join(directory, "sample.a")

@@ -177,7 +177,7 @@ func TestRegExpRuntimeCompilerMatchesNodeCached(test *testing.T) {
 	test.Parallel()
 	runtimeCompilerMatching(test, false)
 }
-func TestRegExpRuntimeCompilerMatchesNodeWASMCached(test *testing.T) {
+func TestRegExpRuntimeCompilerMatchesNodeWasmCached(test *testing.T) {
 	test.Parallel()
 	runtimeCompilerMatching(test, true)
 }

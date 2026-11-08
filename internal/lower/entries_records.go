@@ -295,7 +295,7 @@ func init() {
 // are implied by (c) and have no witness of their own; they are kept so a new entrance fails closed.
 type recordGuardedRead struct {
 	node           *ast.Node
-	receiverTypeID int
+	receiverTypeId int
 	name           string
 }
 
@@ -453,7 +453,7 @@ func (lowering *lowering) mergedClassInstanceTypes() []*checker.Type {
 // a fixed type the checker can't otherwise see.
 func (lowering *lowering) checkRecordGuardedReads() error {
 	for _, read := range lowering.recordGuardedReads {
-		if lowering.result.CheckedField(read.receiverTypeID, read.name) {
+		if lowering.result.CheckedField(read.receiverTypeId, read.name) {
 			return lowering.notYet(read.node, "a union or optional field read in a program with record storage")
 		}
 	}

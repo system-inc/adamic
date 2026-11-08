@@ -119,11 +119,11 @@ func programParseMeasurement(test *testing.T, sample int) {
 		result := execute(test, name, append(argv, args...)...)
 		seconds := time.Since(started).Seconds()
 		match := countsLine.FindSubmatch(result.stderr)
-		rss := graphRSS.FindSubmatch(result.stdout)
+		rss := graphRss.FindSubmatch(result.stdout)
 		if result.exitCode != 0 || match == nil || rss == nil {
 			test.Fatalf("parse measurement: %d %s %s", result.exitCode, result.stdout, result.stderr)
 		}
-		if string(graphRSS.ReplaceAll(result.stdout, nil)) != string(truth.stdout) {
+		if string(graphRss.ReplaceAll(result.stdout, nil)) != string(truth.stdout) {
 			test.Fatalf("parse disagrees: %s", result.stdout)
 		}
 		if report := leakcheck.Unbalanced(leakRun(result)); report != "" {

@@ -12,7 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func TestCompilerCacheIncludesSHA(test *testing.T) {
+func TestCompilerCacheIncludesSha(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	a, keyError := buildcache.Key(root, compilerInputs("base-sha"))

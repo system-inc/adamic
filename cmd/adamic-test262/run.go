@@ -728,7 +728,7 @@ func test262Commit(test262 string) string {
 	return strings.TrimSpace(string(output))
 }
 
-func writeJSON(writer io.Writer, document reportDocument) error {
+func writeJson(writer io.Writer, document reportDocument) error {
 	encoded, encodeError := json.MarshalIndent(document, "", "  ")
 	if encodeError != nil {
 		return encodeError

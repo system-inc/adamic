@@ -26,7 +26,7 @@ const cssPrinterPartitions = 64
 // crashing, which says something about the mutant, never about the printer: on Oct 12 those runs took 1,780 of the
 // family's 2,928 active seconds (#testaudit). 128 unmutated shards, both modes by sixty-four partitions, then one
 // witness shard per mutant and mode.
-const testCSSPrinterAgreesWithGoShards = 2*cssPrinterPartitions + 2*3
+const testCssPrinterAgreesWithGoShards = 2*cssPrinterPartitions + 2*3
 
 var cssPrinterCorpusOnce sync.Once
 var cssPrinterCorpus []string
@@ -50,7 +50,7 @@ func cssPrinterCorpusLines(test *testing.T) []string {
 // The printer reads the parser's corpus product only because a live enumeration through the printer's own Go
 // oracle gives the same bytes. Mutant, run by hand with ADAMIC_CSS_FIXTURES set (without it there's no fixture root to
 // drop): drop the fixture root from the live enumeration; the corpora then differ.
-func TestCSSPrinterCorpusIsTheParserCorpus(test *testing.T) {
+func TestCssPrinterCorpusIsTheParserCorpus(test *testing.T) {
 	test.Parallel()
 	live, readError := os.ReadFile(cssPrinterCases(test, oracles.ComparisonOracle(test, false)))
 	if readError != nil {
@@ -108,7 +108,7 @@ func cssPrinterSanitizedVerdict(result run, expected string) error {
 // The one sanitized run still names each failure. A printer whose releases are dropped (the composed memory leak
 // mutant) reads as a leak, a changed answer as an output that isn't Go's, and LeakSanitizer unable to run as a red;
 // the unmutated printer passes.
-func TestCSSPrinterSanitizedRunNamesEachFailure(test *testing.T) {
+func TestCssPrinterSanitizedRunNamesEachFailure(test *testing.T) {
 	test.Parallel()
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux runs leak detection inside the sanitized run")
@@ -182,7 +182,7 @@ func TestCSSPrinterSanitizedRunNamesEachFailure(test *testing.T) {
 	}
 }
 
-func runCSSPrinterShard(test *testing.T, shard int) {
+func runCssPrinterShard(test *testing.T, shard int) {
 	test.Helper()
 	setup := time.Now()
 	lines := cssPrinterCorpusLines(test)
@@ -311,7 +311,7 @@ func runCSSPrinterShard(test *testing.T, shard int) {
 	}
 }
 
-func TestCSSPrinterAgreesWithGoUnion(test *testing.T) {
+func TestCssPrinterAgreesWithGoUnion(test *testing.T) {
 	test.Parallel()
 	lines := cssPrinterCorpusLines(test)
 	witnesses := cssPrinterAllWitnesses(test)
@@ -338,137 +338,137 @@ func TestCSSPrinterAgreesWithGoUnion(test *testing.T) {
 	)
 }
 
-func TestCSSPrinterAgreesWithGo_000(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 0) }
-func TestCSSPrinterAgreesWithGo_001(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 1) }
-func TestCSSPrinterAgreesWithGo_002(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 2) }
-func TestCSSPrinterAgreesWithGo_003(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 3) }
-func TestCSSPrinterAgreesWithGo_004(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 4) }
-func TestCSSPrinterAgreesWithGo_005(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 5) }
-func TestCSSPrinterAgreesWithGo_006(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 6) }
-func TestCSSPrinterAgreesWithGo_007(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 7) }
-func TestCSSPrinterAgreesWithGo_008(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 8) }
-func TestCSSPrinterAgreesWithGo_009(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 9) }
-func TestCSSPrinterAgreesWithGo_010(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 10) }
-func TestCSSPrinterAgreesWithGo_011(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 11) }
-func TestCSSPrinterAgreesWithGo_012(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 12) }
-func TestCSSPrinterAgreesWithGo_013(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 13) }
-func TestCSSPrinterAgreesWithGo_014(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 14) }
-func TestCSSPrinterAgreesWithGo_015(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 15) }
-func TestCSSPrinterAgreesWithGo_016(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 16) }
-func TestCSSPrinterAgreesWithGo_017(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 17) }
-func TestCSSPrinterAgreesWithGo_018(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 18) }
-func TestCSSPrinterAgreesWithGo_019(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 19) }
-func TestCSSPrinterAgreesWithGo_020(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 20) }
-func TestCSSPrinterAgreesWithGo_021(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 21) }
-func TestCSSPrinterAgreesWithGo_022(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 22) }
-func TestCSSPrinterAgreesWithGo_023(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 23) }
-func TestCSSPrinterAgreesWithGo_024(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 24) }
-func TestCSSPrinterAgreesWithGo_025(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 25) }
-func TestCSSPrinterAgreesWithGo_026(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 26) }
-func TestCSSPrinterAgreesWithGo_027(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 27) }
-func TestCSSPrinterAgreesWithGo_028(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 28) }
-func TestCSSPrinterAgreesWithGo_029(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 29) }
-func TestCSSPrinterAgreesWithGo_030(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 30) }
-func TestCSSPrinterAgreesWithGo_031(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 31) }
-func TestCSSPrinterAgreesWithGo_032(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 32) }
-func TestCSSPrinterAgreesWithGo_033(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 33) }
-func TestCSSPrinterAgreesWithGo_034(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 34) }
-func TestCSSPrinterAgreesWithGo_035(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 35) }
-func TestCSSPrinterAgreesWithGo_036(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 36) }
-func TestCSSPrinterAgreesWithGo_037(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 37) }
-func TestCSSPrinterAgreesWithGo_038(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 38) }
-func TestCSSPrinterAgreesWithGo_039(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 39) }
-func TestCSSPrinterAgreesWithGo_040(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 40) }
-func TestCSSPrinterAgreesWithGo_041(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 41) }
-func TestCSSPrinterAgreesWithGo_042(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 42) }
-func TestCSSPrinterAgreesWithGo_043(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 43) }
-func TestCSSPrinterAgreesWithGo_044(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 44) }
-func TestCSSPrinterAgreesWithGo_045(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 45) }
-func TestCSSPrinterAgreesWithGo_046(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 46) }
-func TestCSSPrinterAgreesWithGo_047(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 47) }
-func TestCSSPrinterAgreesWithGo_048(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 48) }
-func TestCSSPrinterAgreesWithGo_049(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 49) }
-func TestCSSPrinterAgreesWithGo_050(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 50) }
-func TestCSSPrinterAgreesWithGo_051(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 51) }
-func TestCSSPrinterAgreesWithGo_052(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 52) }
-func TestCSSPrinterAgreesWithGo_053(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 53) }
-func TestCSSPrinterAgreesWithGo_054(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 54) }
-func TestCSSPrinterAgreesWithGo_055(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 55) }
-func TestCSSPrinterAgreesWithGo_056(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 56) }
-func TestCSSPrinterAgreesWithGo_057(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 57) }
-func TestCSSPrinterAgreesWithGo_058(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 58) }
-func TestCSSPrinterAgreesWithGo_059(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 59) }
-func TestCSSPrinterAgreesWithGo_060(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 60) }
-func TestCSSPrinterAgreesWithGo_061(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 61) }
-func TestCSSPrinterAgreesWithGo_062(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 62) }
-func TestCSSPrinterAgreesWithGo_063(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 63) }
-func TestCSSPrinterAgreesWithGo_064(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 64) }
-func TestCSSPrinterAgreesWithGo_065(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 65) }
-func TestCSSPrinterAgreesWithGo_066(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 66) }
-func TestCSSPrinterAgreesWithGo_067(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 67) }
-func TestCSSPrinterAgreesWithGo_068(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 68) }
-func TestCSSPrinterAgreesWithGo_069(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 69) }
-func TestCSSPrinterAgreesWithGo_070(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 70) }
-func TestCSSPrinterAgreesWithGo_071(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 71) }
-func TestCSSPrinterAgreesWithGo_072(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 72) }
-func TestCSSPrinterAgreesWithGo_073(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 73) }
-func TestCSSPrinterAgreesWithGo_074(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 74) }
-func TestCSSPrinterAgreesWithGo_075(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 75) }
-func TestCSSPrinterAgreesWithGo_076(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 76) }
-func TestCSSPrinterAgreesWithGo_077(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 77) }
-func TestCSSPrinterAgreesWithGo_078(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 78) }
-func TestCSSPrinterAgreesWithGo_079(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 79) }
-func TestCSSPrinterAgreesWithGo_080(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 80) }
-func TestCSSPrinterAgreesWithGo_081(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 81) }
-func TestCSSPrinterAgreesWithGo_082(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 82) }
-func TestCSSPrinterAgreesWithGo_083(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 83) }
-func TestCSSPrinterAgreesWithGo_084(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 84) }
-func TestCSSPrinterAgreesWithGo_085(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 85) }
-func TestCSSPrinterAgreesWithGo_086(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 86) }
-func TestCSSPrinterAgreesWithGo_087(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 87) }
-func TestCSSPrinterAgreesWithGo_088(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 88) }
-func TestCSSPrinterAgreesWithGo_089(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 89) }
-func TestCSSPrinterAgreesWithGo_090(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 90) }
-func TestCSSPrinterAgreesWithGo_091(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 91) }
-func TestCSSPrinterAgreesWithGo_092(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 92) }
-func TestCSSPrinterAgreesWithGo_093(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 93) }
-func TestCSSPrinterAgreesWithGo_094(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 94) }
-func TestCSSPrinterAgreesWithGo_095(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 95) }
-func TestCSSPrinterAgreesWithGo_096(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 96) }
-func TestCSSPrinterAgreesWithGo_097(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 97) }
-func TestCSSPrinterAgreesWithGo_098(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 98) }
-func TestCSSPrinterAgreesWithGo_099(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 99) }
-func TestCSSPrinterAgreesWithGo_100(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 100) }
-func TestCSSPrinterAgreesWithGo_101(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 101) }
-func TestCSSPrinterAgreesWithGo_102(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 102) }
-func TestCSSPrinterAgreesWithGo_103(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 103) }
-func TestCSSPrinterAgreesWithGo_104(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 104) }
-func TestCSSPrinterAgreesWithGo_105(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 105) }
-func TestCSSPrinterAgreesWithGo_106(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 106) }
-func TestCSSPrinterAgreesWithGo_107(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 107) }
-func TestCSSPrinterAgreesWithGo_108(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 108) }
-func TestCSSPrinterAgreesWithGo_109(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 109) }
-func TestCSSPrinterAgreesWithGo_110(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 110) }
-func TestCSSPrinterAgreesWithGo_111(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 111) }
-func TestCSSPrinterAgreesWithGo_112(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 112) }
-func TestCSSPrinterAgreesWithGo_113(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 113) }
-func TestCSSPrinterAgreesWithGo_114(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 114) }
-func TestCSSPrinterAgreesWithGo_115(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 115) }
-func TestCSSPrinterAgreesWithGo_116(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 116) }
-func TestCSSPrinterAgreesWithGo_117(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 117) }
-func TestCSSPrinterAgreesWithGo_118(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 118) }
-func TestCSSPrinterAgreesWithGo_119(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 119) }
-func TestCSSPrinterAgreesWithGo_120(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 120) }
-func TestCSSPrinterAgreesWithGo_121(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 121) }
-func TestCSSPrinterAgreesWithGo_122(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 122) }
-func TestCSSPrinterAgreesWithGo_123(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 123) }
-func TestCSSPrinterAgreesWithGo_124(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 124) }
-func TestCSSPrinterAgreesWithGo_125(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 125) }
-func TestCSSPrinterAgreesWithGo_126(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 126) }
-func TestCSSPrinterAgreesWithGo_127(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 127) }
-func TestCSSPrinterAgreesWithGo_128(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 128) }
-func TestCSSPrinterAgreesWithGo_129(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 129) }
-func TestCSSPrinterAgreesWithGo_130(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 130) }
-func TestCSSPrinterAgreesWithGo_131(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 131) }
-func TestCSSPrinterAgreesWithGo_132(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 132) }
-func TestCSSPrinterAgreesWithGo_133(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 133) }
+func TestCssPrinterAgreesWithGo_000(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 0) }
+func TestCssPrinterAgreesWithGo_001(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 1) }
+func TestCssPrinterAgreesWithGo_002(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 2) }
+func TestCssPrinterAgreesWithGo_003(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 3) }
+func TestCssPrinterAgreesWithGo_004(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 4) }
+func TestCssPrinterAgreesWithGo_005(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 5) }
+func TestCssPrinterAgreesWithGo_006(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 6) }
+func TestCssPrinterAgreesWithGo_007(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 7) }
+func TestCssPrinterAgreesWithGo_008(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 8) }
+func TestCssPrinterAgreesWithGo_009(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 9) }
+func TestCssPrinterAgreesWithGo_010(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 10) }
+func TestCssPrinterAgreesWithGo_011(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 11) }
+func TestCssPrinterAgreesWithGo_012(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 12) }
+func TestCssPrinterAgreesWithGo_013(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 13) }
+func TestCssPrinterAgreesWithGo_014(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 14) }
+func TestCssPrinterAgreesWithGo_015(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 15) }
+func TestCssPrinterAgreesWithGo_016(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 16) }
+func TestCssPrinterAgreesWithGo_017(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 17) }
+func TestCssPrinterAgreesWithGo_018(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 18) }
+func TestCssPrinterAgreesWithGo_019(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 19) }
+func TestCssPrinterAgreesWithGo_020(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 20) }
+func TestCssPrinterAgreesWithGo_021(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 21) }
+func TestCssPrinterAgreesWithGo_022(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 22) }
+func TestCssPrinterAgreesWithGo_023(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 23) }
+func TestCssPrinterAgreesWithGo_024(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 24) }
+func TestCssPrinterAgreesWithGo_025(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 25) }
+func TestCssPrinterAgreesWithGo_026(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 26) }
+func TestCssPrinterAgreesWithGo_027(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 27) }
+func TestCssPrinterAgreesWithGo_028(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 28) }
+func TestCssPrinterAgreesWithGo_029(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 29) }
+func TestCssPrinterAgreesWithGo_030(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 30) }
+func TestCssPrinterAgreesWithGo_031(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 31) }
+func TestCssPrinterAgreesWithGo_032(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 32) }
+func TestCssPrinterAgreesWithGo_033(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 33) }
+func TestCssPrinterAgreesWithGo_034(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 34) }
+func TestCssPrinterAgreesWithGo_035(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 35) }
+func TestCssPrinterAgreesWithGo_036(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 36) }
+func TestCssPrinterAgreesWithGo_037(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 37) }
+func TestCssPrinterAgreesWithGo_038(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 38) }
+func TestCssPrinterAgreesWithGo_039(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 39) }
+func TestCssPrinterAgreesWithGo_040(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 40) }
+func TestCssPrinterAgreesWithGo_041(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 41) }
+func TestCssPrinterAgreesWithGo_042(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 42) }
+func TestCssPrinterAgreesWithGo_043(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 43) }
+func TestCssPrinterAgreesWithGo_044(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 44) }
+func TestCssPrinterAgreesWithGo_045(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 45) }
+func TestCssPrinterAgreesWithGo_046(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 46) }
+func TestCssPrinterAgreesWithGo_047(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 47) }
+func TestCssPrinterAgreesWithGo_048(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 48) }
+func TestCssPrinterAgreesWithGo_049(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 49) }
+func TestCssPrinterAgreesWithGo_050(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 50) }
+func TestCssPrinterAgreesWithGo_051(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 51) }
+func TestCssPrinterAgreesWithGo_052(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 52) }
+func TestCssPrinterAgreesWithGo_053(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 53) }
+func TestCssPrinterAgreesWithGo_054(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 54) }
+func TestCssPrinterAgreesWithGo_055(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 55) }
+func TestCssPrinterAgreesWithGo_056(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 56) }
+func TestCssPrinterAgreesWithGo_057(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 57) }
+func TestCssPrinterAgreesWithGo_058(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 58) }
+func TestCssPrinterAgreesWithGo_059(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 59) }
+func TestCssPrinterAgreesWithGo_060(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 60) }
+func TestCssPrinterAgreesWithGo_061(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 61) }
+func TestCssPrinterAgreesWithGo_062(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 62) }
+func TestCssPrinterAgreesWithGo_063(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 63) }
+func TestCssPrinterAgreesWithGo_064(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 64) }
+func TestCssPrinterAgreesWithGo_065(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 65) }
+func TestCssPrinterAgreesWithGo_066(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 66) }
+func TestCssPrinterAgreesWithGo_067(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 67) }
+func TestCssPrinterAgreesWithGo_068(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 68) }
+func TestCssPrinterAgreesWithGo_069(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 69) }
+func TestCssPrinterAgreesWithGo_070(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 70) }
+func TestCssPrinterAgreesWithGo_071(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 71) }
+func TestCssPrinterAgreesWithGo_072(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 72) }
+func TestCssPrinterAgreesWithGo_073(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 73) }
+func TestCssPrinterAgreesWithGo_074(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 74) }
+func TestCssPrinterAgreesWithGo_075(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 75) }
+func TestCssPrinterAgreesWithGo_076(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 76) }
+func TestCssPrinterAgreesWithGo_077(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 77) }
+func TestCssPrinterAgreesWithGo_078(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 78) }
+func TestCssPrinterAgreesWithGo_079(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 79) }
+func TestCssPrinterAgreesWithGo_080(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 80) }
+func TestCssPrinterAgreesWithGo_081(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 81) }
+func TestCssPrinterAgreesWithGo_082(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 82) }
+func TestCssPrinterAgreesWithGo_083(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 83) }
+func TestCssPrinterAgreesWithGo_084(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 84) }
+func TestCssPrinterAgreesWithGo_085(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 85) }
+func TestCssPrinterAgreesWithGo_086(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 86) }
+func TestCssPrinterAgreesWithGo_087(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 87) }
+func TestCssPrinterAgreesWithGo_088(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 88) }
+func TestCssPrinterAgreesWithGo_089(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 89) }
+func TestCssPrinterAgreesWithGo_090(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 90) }
+func TestCssPrinterAgreesWithGo_091(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 91) }
+func TestCssPrinterAgreesWithGo_092(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 92) }
+func TestCssPrinterAgreesWithGo_093(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 93) }
+func TestCssPrinterAgreesWithGo_094(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 94) }
+func TestCssPrinterAgreesWithGo_095(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 95) }
+func TestCssPrinterAgreesWithGo_096(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 96) }
+func TestCssPrinterAgreesWithGo_097(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 97) }
+func TestCssPrinterAgreesWithGo_098(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 98) }
+func TestCssPrinterAgreesWithGo_099(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 99) }
+func TestCssPrinterAgreesWithGo_100(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 100) }
+func TestCssPrinterAgreesWithGo_101(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 101) }
+func TestCssPrinterAgreesWithGo_102(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 102) }
+func TestCssPrinterAgreesWithGo_103(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 103) }
+func TestCssPrinterAgreesWithGo_104(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 104) }
+func TestCssPrinterAgreesWithGo_105(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 105) }
+func TestCssPrinterAgreesWithGo_106(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 106) }
+func TestCssPrinterAgreesWithGo_107(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 107) }
+func TestCssPrinterAgreesWithGo_108(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 108) }
+func TestCssPrinterAgreesWithGo_109(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 109) }
+func TestCssPrinterAgreesWithGo_110(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 110) }
+func TestCssPrinterAgreesWithGo_111(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 111) }
+func TestCssPrinterAgreesWithGo_112(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 112) }
+func TestCssPrinterAgreesWithGo_113(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 113) }
+func TestCssPrinterAgreesWithGo_114(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 114) }
+func TestCssPrinterAgreesWithGo_115(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 115) }
+func TestCssPrinterAgreesWithGo_116(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 116) }
+func TestCssPrinterAgreesWithGo_117(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 117) }
+func TestCssPrinterAgreesWithGo_118(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 118) }
+func TestCssPrinterAgreesWithGo_119(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 119) }
+func TestCssPrinterAgreesWithGo_120(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 120) }
+func TestCssPrinterAgreesWithGo_121(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 121) }
+func TestCssPrinterAgreesWithGo_122(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 122) }
+func TestCssPrinterAgreesWithGo_123(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 123) }
+func TestCssPrinterAgreesWithGo_124(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 124) }
+func TestCssPrinterAgreesWithGo_125(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 125) }
+func TestCssPrinterAgreesWithGo_126(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 126) }
+func TestCssPrinterAgreesWithGo_127(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 127) }
+func TestCssPrinterAgreesWithGo_128(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 128) }
+func TestCssPrinterAgreesWithGo_129(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 129) }
+func TestCssPrinterAgreesWithGo_130(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 130) }
+func TestCssPrinterAgreesWithGo_131(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 131) }
+func TestCssPrinterAgreesWithGo_132(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 132) }
+func TestCssPrinterAgreesWithGo_133(test *testing.T) { test.Parallel(); runCssPrinterShard(test, 133) }

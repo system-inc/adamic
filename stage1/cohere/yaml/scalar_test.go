@@ -139,15 +139,15 @@ var scalarMutants = yamlMutants{family: "scalar", entry: "scalar_main.ts", files
 	},
 }}
 
-func TestProduct_YAMLScalarMutant000(test *testing.T) {
+func TestProduct_YamlScalarMutant000(test *testing.T) {
 	test.Parallel()
 	scalarMutants.product(test, 0)
 }
-func TestProduct_YAMLScalarMutant001(test *testing.T) {
+func TestProduct_YamlScalarMutant001(test *testing.T) {
 	test.Parallel()
 	scalarMutants.product(test, 1)
 }
-func TestProduct_YAMLScalarMutant002(test *testing.T) {
+func TestProduct_YamlScalarMutant002(test *testing.T) {
 	test.Parallel()
 	scalarMutants.product(test, 2)
 }

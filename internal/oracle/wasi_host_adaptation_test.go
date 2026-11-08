@@ -123,7 +123,7 @@ int main(void) {
 	test.Logf("adapter %d mutant compiled and ran cleanly; only Node stdout caught it", index)
 }
 
-func TestWASIHostBuildBoundaryNodeMutant(test *testing.T) {
+func TestWasiHostBuildBoundaryNodeMutant(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -156,34 +156,34 @@ func TestWASIHostBuildBoundaryNodeMutant(test *testing.T) {
 	}
 	code = "#include \"adamic.h\"\nstatic double fake_pid(void) {return 0;}\n" +
 		strings.Replace(code, "adamic_node_pid()", "fake_pid()", 1)
-	bad := onWASI(test, code)
+	bad := onWasi(test, code)
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
 		test.Fatalf("fake capability must fail only Node comparison: %+v", bad)
 	}
 	test.Log("fake WASI process id compiled and ran cleanly; only Node stdout caught it")
 }
 
-func TestWASIHostFileAdapter_000(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 0, true) }
+func TestWasiHostFileAdapter_000(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 0, true) }
 
 func TestNativeHostFileAdapter_000(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 0, false) }
 
-func TestWASIHostFileAdapter_001(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 1, true) }
+func TestWasiHostFileAdapter_001(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 1, true) }
 
 func TestNativeHostFileAdapter_001(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 1, false) }
 
-func TestWASIHostFileAdapter_002(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 2, true) }
+func TestWasiHostFileAdapter_002(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 2, true) }
 
 func TestNativeHostFileAdapter_002(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 2, false) }
 
-func TestWASIHostFileAdapter_003(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 3, true) }
+func TestWasiHostFileAdapter_003(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 3, true) }
 
 func TestNativeHostFileAdapter_003(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 3, false) }
 
-func TestWASIHostFileAdapter_004(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 4, true) }
+func TestWasiHostFileAdapter_004(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 4, true) }
 
 func TestNativeHostFileAdapter_004(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 4, false) }
 
-func TestWASIHostTimestampPrecisionNodeMutant(test *testing.T) {
+func TestWasiHostTimestampPrecisionNodeMutant(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -240,7 +240,7 @@ int main(void) {
 	implementation = implementation[:start] + implementation[end:]
 	symbols := regexp.MustCompile(`\badamic_fs_file_[A-Za-z_]+`)
 	implementation = symbols.ReplaceAllString(implementation, "mutant_$0")
-	bad := onWASI(test, implementation+"\n"+symbols.ReplaceAllString(source, "mutant_$0"))
+	bad := onWasi(test, implementation+"\n"+symbols.ReplaceAllString(source, "mutant_$0"))
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
 		test.Fatalf("silent precision loss must fail only Node comparison: %+v", bad)
 	}

@@ -87,39 +87,39 @@ func TestPrinterMutantUnion(test *testing.T) { test.Parallel(); printerMutantUni
 
 // The mutants read the defaults corpus every other test reads (printerCases), which TestProduct_GraphQLPrinterDefaults
 // declares, from the one Go oracle (printerOracle).
-func TestProduct_GraphQLMutantSource000(test *testing.T) {
+func TestProduct_GraphQlMutantSource000(test *testing.T) {
 	test.Parallel()
 	printerMutantSource(test, 0)
 }
-func TestProduct_GraphQLMutantSource001(test *testing.T) {
+func TestProduct_GraphQlMutantSource001(test *testing.T) {
 	test.Parallel()
 	printerMutantSource(test, 1)
 }
-func TestProduct_GraphQLMutantSource002(test *testing.T) {
+func TestProduct_GraphQlMutantSource002(test *testing.T) {
 	test.Parallel()
 	printerMutantSource(test, 2)
 }
-func TestProduct_GraphQLMutantLowered000(test *testing.T) {
+func TestProduct_GraphQlMutantLowered000(test *testing.T) {
 	test.Parallel()
 	printerMutantLowered(test, 0)
 }
-func TestProduct_GraphQLMutantLowered001(test *testing.T) {
+func TestProduct_GraphQlMutantLowered001(test *testing.T) {
 	test.Parallel()
 	printerMutantLowered(test, 1)
 }
-func TestProduct_GraphQLMutantLowered002(test *testing.T) {
+func TestProduct_GraphQlMutantLowered002(test *testing.T) {
 	test.Parallel()
 	printerMutantLowered(test, 2)
 }
-func TestProduct_GraphQLMutantSanitized000(test *testing.T) {
+func TestProduct_GraphQlMutantSanitized000(test *testing.T) {
 	test.Parallel()
 	printerMutantSanitized(test, 0)
 }
-func TestProduct_GraphQLMutantSanitized001(test *testing.T) {
+func TestProduct_GraphQlMutantSanitized001(test *testing.T) {
 	test.Parallel()
 	printerMutantSanitized(test, 1)
 }
-func TestProduct_GraphQLMutantSanitized002(test *testing.T) {
+func TestProduct_GraphQlMutantSanitized002(test *testing.T) {
 	test.Parallel()
 	printerMutantSanitized(test, 2)
 }

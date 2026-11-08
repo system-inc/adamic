@@ -49,7 +49,7 @@ func guardValueFacts(test *testing.T, program *Program, file, question string) [
 	return decodedFields(test, wire)
 }
 
-func TestGuardSymbolOriginFFFF(test *testing.T) {
+func TestGuardSymbolOriginFfff(test *testing.T) {
 	test.Parallel()
 	program, file := guardProgram(test, "witness\uffff.a", guardValueSource)
 	got := guardValueFacts(test, program, file, "symbol-origin")

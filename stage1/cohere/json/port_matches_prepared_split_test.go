@@ -130,7 +130,7 @@ func portMatchesJsonLoweredPortInputs() portMatchesJsonBuildInputs {
 // The immutable lowering product contains the copied TypeScript and both emitted
 // backends. Persisting emitted sources avoids serializing IR interface values;
 // fetching this product will avoid loading, checking, lowering and emission.
-func portMatchesBuildJSONLoweredPort(dir string) error {
+func portMatchesBuildJsonLoweredPort(dir string) error {
 	for _, name := range portFiles {
 		contents, readError := os.ReadFile(name)
 		if readError != nil {
@@ -189,10 +189,10 @@ func portMatchesJsonNativePortInputs(source string, sanitize bool, toolchain []s
 
 // Each factory returns the exact func(dir string) error accepted by buildcache.
 // Native.Build retains its existing compiler scratch/runtime action caches.
-func portMatchesBuildJSONReleasePort(source string) func(string) error {
+func portMatchesBuildJsonReleasePort(source string) func(string) error {
 	return func(dir string) error { return native.Build(source, filepath.Join(dir, "port"), native.Options{}) }
 }
-func portMatchesBuildJSONSanitizedPort(source string) func(string) error {
+func portMatchesBuildJsonSanitizedPort(source string) func(string) error {
 	return func(dir string) error {
 		return native.Build(source, filepath.Join(dir, "port"), native.Options{Sanitize: true})
 	}
@@ -219,7 +219,7 @@ func portMatchesProduct(test *testing.T, name string) string {
 		case "oracle":
 			product.dir = oracles.FormatterOracle(test)
 		case "lowered":
-			product.dir = buildcache.Product(test, portMatchesJsonLoweredPortInputs(), portMatchesBuildJSONLoweredPort)
+			product.dir = buildcache.Product(test, portMatchesJsonLoweredPortInputs(), portMatchesBuildJsonLoweredPort)
 		case "release", "sanitized":
 			lowered := portMatchesProduct(test, "lowered")
 			source, readError := os.ReadFile(filepath.Join(lowered, "main.c"))
@@ -230,9 +230,9 @@ func portMatchesProduct(test *testing.T, name string) string {
 			if portMatchesJsonClangToolchainError != nil {
 				test.Fatal(portMatchesJsonClangToolchainError)
 			}
-			build := portMatchesBuildJSONReleasePort(string(source))
+			build := portMatchesBuildJsonReleasePort(string(source))
 			if name == "sanitized" {
-				build = portMatchesBuildJSONSanitizedPort(string(source))
+				build = portMatchesBuildJsonSanitizedPort(string(source))
 			}
 			product.dir = buildcache.Product(
 				test,
@@ -253,15 +253,15 @@ func TestProduct_JsonFindsGoOracle(test *testing.T) {
 	test.Parallel()
 	portMatchesProduct(test, "oracle")
 }
-func TestProduct_JSONLoweredPort(test *testing.T) {
+func TestProduct_JsonLoweredPort(test *testing.T) {
 	test.Parallel()
 	portMatchesProduct(test, "lowered")
 }
-func TestProduct_JSONNativeRelease(test *testing.T) {
+func TestProduct_JsonNativeRelease(test *testing.T) {
 	test.Parallel()
 	portMatchesProduct(test, "release")
 }
-func TestProduct_JSONNativeSanitized(test *testing.T) {
+func TestProduct_JsonNativeSanitized(test *testing.T) {
 	test.Parallel()
 	portMatchesProduct(test, "sanitized")
 }

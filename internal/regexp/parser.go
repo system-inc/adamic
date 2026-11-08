@@ -53,11 +53,11 @@ func parsePattern(pattern, flags string, nativeBounds bool) (*Pattern, error) {
 	return &Pattern{Flags: f, Body: body}, nil
 }
 
-// ParseUTF16 preserves JavaScript pattern strings, including lone surrogates.
-func ParseUTF16(pattern []uint16, flags string) (*Pattern, error) {
-	return Parse(patternFromUTF16(pattern), flags)
+// ParseUtf16 preserves JavaScript pattern strings, including lone surrogates.
+func ParseUtf16(pattern []uint16, flags string) (*Pattern, error) {
+	return Parse(patternFromUtf16(pattern), flags)
 }
-func patternFromUTF16(pattern []uint16) string {
+func patternFromUtf16(pattern []uint16) string {
 	var encoded []byte
 	for index := 0; index < len(pattern); index++ {
 		character := rune(pattern[index])

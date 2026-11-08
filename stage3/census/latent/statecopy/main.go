@@ -21,18 +21,18 @@ type generator struct {
 	sortedMap *ast.TypeSpec
 	positions *token.FileSet
 	// The unexported fields of exported IR structs, as Type.field, each one named in irPrivateFields.
-	privateIRFields []string
+	privateIrFields []string
 }
 
 // How both latent copies treat each unexported field of an exported IR struct. latentCopyIR copies an IR
 // value by reflection, which can't write an unexported field, so every such field is named here with what the
 // copy does instead, and loadGenerator refuses one that isn't (#fwbnwn3: methodTables arrived Oct 20 and every
 // full-mode unit that copied a Program panicked on it until this table existed).
-type privateIRField int
+type privateIrField int
 
 const (
 	// privateNil: a cache a census never fills; the copy accepts it only nil, and refuses a populated one.
-	privateNil privateIRField = iota
+	privateNil privateIrField = iota
 	// privateEmpty: a cache the IR rebuilds from exported fields when it's nil; the copy starts it empty.
 	privateEmpty
 	// privateShared: an identity compared by pointer; the copy shares the owning pointer, whose value nothing
@@ -40,7 +40,7 @@ const (
 	privateShared
 )
 
-var irPrivateFields = map[string]privateIRField{
+var irPrivateFields = map[string]privateIrField{
 	"Program.argumentFacts":       privateNil,    // Backend-only derivation; a census must not populate it.
 	"Program.methodTables":        privateEmpty,  // Rebuilt from the copied method declarations.
 	"BoundaryStringTable.indexes": privateEmpty,  // Rebuilt from copied Values.
@@ -220,14 +220,14 @@ func loadGenerator(repository, lowerInput string) generator {
 									key,
 								))
 							}
-							generator.privateIRFields = append(generator.privateIRFields, key)
+							generator.privateIrFields = append(generator.privateIrFields, key)
 						}
 					}
 				}
 			}
 		}
 	}
-	generator.checkIRFields(irPositions, irSpecFields)
+	generator.checkIrFields(irPositions, irSpecFields)
 	paths, globError := filepath.Glob(filepath.Join(repository, "internal/lower/*.go"))
 	if globError != nil {
 		panic(globError)

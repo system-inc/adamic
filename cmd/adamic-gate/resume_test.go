@@ -102,7 +102,7 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 		}
 		evidence.LogDigest, _ = fileDigest(path)
 		evidence.StderrDigest, _ = fileDigest(stderr)
-		if atomicJsonError := atomicJSON(filepath.Join(dir, "complete.json"), evidence); atomicJsonError != nil {
+		if atomicJsonError := atomicJson(filepath.Join(dir, "complete.json"), evidence); atomicJsonError != nil {
 			test.Fatal(atomicJsonError)
 		}
 	}
@@ -217,7 +217,7 @@ func TestResumeCleanupPreservesForeignPaths(test *testing.T) {
 	os.Mkdir(checkpoint, 0700)
 	foreign := filepath.Join(root, "foreign")
 	os.Mkdir(foreign, 0700)
-	if atomicJsonError := atomicJSON(
+	if atomicJsonError := atomicJson(
 		filepath.Join(checkpoint, "scratch.json"),
 		scratchRecord{Key: "key", Path: foreign},
 	); atomicJsonError != nil {
@@ -233,7 +233,7 @@ func TestResumeCleanupPreservesForeignPaths(test *testing.T) {
 	if temporaryDirectoryError != nil {
 		test.Fatal(temporaryDirectoryError)
 	}
-	atomicJSON(filepath.Join(checkpoint, "scratch.json"), scratchRecord{Key: "key", Path: owned})
+	atomicJson(filepath.Join(checkpoint, "scratch.json"), scratchRecord{Key: "key", Path: owned})
 	if cleanupPackageScratchError := cleanupPackageScratch(checkpoint, "key", root); cleanupPackageScratchError != nil {
 		test.Fatal(cleanupPackageScratchError)
 	}

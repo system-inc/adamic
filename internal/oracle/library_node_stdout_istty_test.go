@@ -16,7 +16,7 @@ import (
 
 // Regular destinations always run. Only the terminal overlay requires a host
 // with script(1) and /dev/ptmx; setup.sh does not promise either to Loom runners.
-func stdoutIsTTYAgreement(test *testing.T, transport string) {
+func stdoutIsTtyAgreement(test *testing.T, transport string) {
 	test.Helper()
 	path, binary, js := sanitized(test, "internal/oracle/testdata/host_stdout/istty.a")
 	loader, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -61,7 +61,7 @@ func stdoutIsTTYAgreement(test *testing.T, transport string) {
 	)
 	var truth run
 	for index, variant := range variants {
-		got := stdoutIsTTYRun(test, transport, variant.name, variant.args...)
+		got := stdoutIsTtyRun(test, transport, variant.name, variant.args...)
 		if index == 0 {
 			truth = got
 			expected := "undefined false true\n"
@@ -78,7 +78,7 @@ func stdoutIsTTYAgreement(test *testing.T, transport string) {
 	}
 }
 
-func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run {
+func stdoutIsTtyRun(test *testing.T, transport, name string, args ...string) run {
 	test.Helper()
 	if transport == "pty" {
 		quote := func(text string) string { return "'" + strings.ReplaceAll(text, "'", "'\"'\"'") + "'" }
@@ -145,26 +145,26 @@ func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run
 	return run{stdout: out.Bytes(), stderr: errout.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
-func TestStdoutIsTTYMatchesNodeOnPipe(test *testing.T) {
+func TestStdoutIsTtyMatchesNodeOnPipe(test *testing.T) {
 	test.Parallel()
-	stdoutTTYColumns(test, "pipe")
+	stdoutTtyColumns(test, "pipe")
 }
-func TestStdoutIsTTYMatchesNodeOnFile(test *testing.T) {
+func TestStdoutIsTtyMatchesNodeOnFile(test *testing.T) {
 	test.Parallel()
-	stdoutTTYColumns(test, "file")
+	stdoutTtyColumns(test, "file")
 }
-func TestStdoutIsTTYMatchesNodeOnNull(test *testing.T) {
+func TestStdoutIsTtyMatchesNodeOnNull(test *testing.T) {
 	test.Parallel()
-	stdoutTTYColumns(test, "null")
+	stdoutTtyColumns(test, "null")
 }
-func TestStdoutIsTTYMatchesNodeOnPty(test *testing.T) {
+func TestStdoutIsTtyMatchesNodeOnPty(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_STDOUT_PTY") != "1" {
 		test.Skip(
 			"set ADAMIC_ORACLE_STDOUT_PTY=1 to run the stdout isTTY pty oracle (Platforms runs this lane by hand)",
 		)
 	}
-	stdoutIsTTYAgreement(test, "pty")
+	stdoutIsTtyAgreement(test, "pty")
 	stdoutColumnsAgreement(test, "pty")
 	stdoutColumnsLifecycle(test)
 }

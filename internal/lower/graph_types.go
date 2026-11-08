@@ -10,17 +10,17 @@ import (
 // graphAllocation preserves both the allocation's concrete type and its contextual
 // view. Ownership is selected only after the whole program's cycle proof runs.
 func (lowering *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expression {
-	ids := []int{lowering.cycleTypeID(lowering.concrete(lowering.checker.GetTypeAtLocation(node)))}
+	ids := []int{lowering.cycleTypeId(lowering.concrete(lowering.checker.GetTypeAtLocation(node)))}
 	// Fresh literal identities may change across checker queries. The variable's
 	// widened allocation view is stable and is the type the cycle finder visits.
 	if node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Name() != nil {
 		ids = append(
 			ids,
-			lowering.cycleTypeID(lowering.concrete(lowering.checker.GetTypeAtLocation(node.Parent.Name()))),
+			lowering.cycleTypeId(lowering.concrete(lowering.checker.GetTypeAtLocation(node.Parent.Name()))),
 		)
 	}
 	if contextual := lowering.slotType(node); contextual != nil {
-		ids = append(ids, lowering.cycleTypeID(lowering.concrete(contextual)))
+		ids = append(ids, lowering.cycleTypeId(lowering.concrete(contextual)))
 	}
 	switch value := value.(type) {
 	case ir.ObjectLiteral:
@@ -299,7 +299,7 @@ func (finder *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	finder.lowering.result.GraphTypes = map[int]bool{}
 	for node := range graph {
 		if node.proven != nil && !finder.weak(node.proven) {
-			finder.lowering.result.GraphTypes[finder.lowering.cycleTypeID(node.proven)] = true
+			finder.lowering.result.GraphTypes[finder.lowering.cycleTypeId(node.proven)] = true
 		}
 		if node.cell != 0 {
 			finder.lowering.result.Locals[node.cell-1].GraphCell = true
@@ -523,9 +523,9 @@ func (finder *cycleFinder) graphAdoptionBoundary() error {
 	return nil
 }
 
-// cycleTypeID keeps the checker's allocation identity unchanged. The optional
+// cycleTypeId keeps the checker's allocation identity unchanged. The optional
 // capture lets differential tests resolve even transient allocation types.
-func (lowering *lowering) cycleTypeID(proven *checker.Type) int {
+func (lowering *lowering) cycleTypeId(proven *checker.Type) int {
 	id := int(proven.Id())
 	if lowering.cycleTypes != nil {
 		lowering.cycleTypes[id] = proven

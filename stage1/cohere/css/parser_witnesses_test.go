@@ -153,21 +153,21 @@ func cssParserWitnessError(name string, ids []int) error {
 	return nil
 }
 
-func TestProduct_CSSParserCustomPropertyMutantWitnesses(test *testing.T) {
+func TestProduct_CssParserCustomPropertyMutantWitnesses(test *testing.T) {
 	test.Parallel()
 	cssParserWitnesses(test, 0)
 }
-func TestProduct_CSSParserCommentMutantWitnesses(test *testing.T) {
+func TestProduct_CssParserCommentMutantWitnesses(test *testing.T) {
 	test.Parallel()
 	cssParserWitnesses(test, 1)
 }
-func TestProduct_CSSParserClosingBraceMutantWitnesses(test *testing.T) {
+func TestProduct_CssParserClosingBraceMutantWitnesses(test *testing.T) {
 	test.Parallel()
 	cssParserWitnesses(test, 2)
 }
 
 // The witnesses' key moves with each input they're derived from: the mutant's port, the corpus and Go's answers.
-func TestCSSParserMutantWitnessesRekey(test *testing.T) {
+func TestCssParserMutantWitnessesRekey(test *testing.T) {
 	test.Parallel()
 	root, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
@@ -210,7 +210,7 @@ func TestCSSParserMutantWitnessesRekey(test *testing.T) {
 // A mutant planted so it differs from Go nowhere turns the test red. The unmutated parser stands in for it: run
 // through the same derivation over the whole corpus it has no witnesses, and the union refuses a plan built on that.
 // The derivation still finds a difference planted in one answer.
-func TestCSSParserMutantThatDiffersNowhereFails(test *testing.T) {
+func TestCssParserMutantThatDiffersNowhereFails(test *testing.T) {
 	test.Parallel()
 	ids, cssParserDeriveWitnessesError := cssParserDeriveWitnesses(test, cssParserPreparedProgram(test, -1).main)
 	if cssParserDeriveWitnessesError != nil {

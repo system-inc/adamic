@@ -85,11 +85,11 @@ func jsonEncoderRecordView(test *testing.T, wasm bool) {
 	}
 }
 
-func TestJSONEncoderRecordView_000(test *testing.T) {
+func TestJsonEncoderRecordView_000(test *testing.T) {
 	test.Parallel()
 	jsonEncoderRecordView(test, false)
 }
-func TestJSONEncoderRecordView_001(test *testing.T) {
+func TestJsonEncoderRecordView_001(test *testing.T) {
 	test.Parallel()
 	jsonEncoderRecordView(test, true)
 }

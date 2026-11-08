@@ -51,11 +51,11 @@ func TestRegExpRegularEngineNode(test *testing.T) {
 	test.Parallel()
 	runRegExpRegularEngineNodeUnit(test, false, -1)
 }
-func TestRegExpRegularEngineWASMCache(test *testing.T) {
+func TestRegExpRegularEngineWasmCache(test *testing.T) {
 	test.Parallel()
 	runRegExpRegularEngineNodeUnit(test, true, 0)
 }
-func TestRegExpRegularEngineWASMSemantics(test *testing.T) {
+func TestRegExpRegularEngineWasmSemantics(test *testing.T) {
 	test.Parallel()
 	runRegExpRegularEngineNodeUnit(test, true, 1)
 }

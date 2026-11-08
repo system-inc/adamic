@@ -29,12 +29,12 @@ func TestTSGoRequiresLink(test *testing.T) {
 	if _, lowerError := lower.Lower(context.Background(), loaded); lowerError == nil {
 		test.Fatal("lowering accepted an unlinked checker call")
 	}
-	loaded.EnableTSGo()
+	loaded.EnableTsGo()
 	lowered, lowerError := lower.Lower(context.Background(), loaded)
 	if lowerError != nil {
 		test.Fatal(lowerError)
 	}
-	if !native.UsesTSGo(lowered) {
+	if !native.UsesTsGo(lowered) {
 		test.Fatal("opted-in bridge calls lost")
 	}
 }

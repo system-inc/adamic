@@ -44,10 +44,10 @@ func buildEngineFixture(test *testing.T, path, directory string) (string, string
 		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(directory, "program.wasm")
-	return binary, buildWASI(test, native.C(program), binary)
+	return binary, buildWasi(test, native.C(program), binary)
 }
 
-func runWASIInputFixture(
+func runWasiInputFixture(
 	test *testing.T,
 	fixture string,
 	arguments []string,
@@ -62,7 +62,7 @@ func runWASIInputFixture(
 	shared := sharedDirectory(test)
 	binary, reason := buildEngineFixture(test, path, shared)
 	if reason != "" {
-		assertWASIRefusal(test, fixture, reason, wasiInputRefusedFixtures)
+		assertWasiRefusal(test, fixture, reason, wasiInputRefusedFixtures)
 		return false, true
 	}
 	how := inputRun{directory: filepath.Dir(path), arguments: append([]string{}, arguments...)}
@@ -93,7 +93,7 @@ func runWASIInputFixture(
 		expected, limited = engine.limits(test, fixture, expected)
 	}
 	actual := engine.run(test, how, binary)
-	if assertWASIRefusal(test, fixture, wasiRefusalReason(actual), wasiInputRefusedFixtures) {
+	if assertWasiRefusal(test, fixture, wasiRefusalReason(actual), wasiInputRefusedFixtures) {
 		return false, true
 	}
 	if writes {
@@ -188,7 +188,7 @@ func runWASIInputShard(test *testing.T, shard int) {
 					test.Log("PASS", fixture.path)
 				}
 			}()
-			limited, wasRefused = runWASIInputFixture(
+			limited, wasRefused = runWasiInputFixture(
 				test,
 				fixture.path,
 				fixture.arguments,
@@ -201,7 +201,7 @@ func runWASIInputShard(test *testing.T, shard int) {
 	}
 }
 
-func TestWASIInputRunnerCatchesMutants(test *testing.T) {
+func TestWasiInputRunnerCatchesMutants(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -252,7 +252,7 @@ func TestWASIInputRunnerCatchesMutants(test *testing.T) {
 	test.Log("V8 input runner caught independently compiled stdout, stderr and exit mutants")
 }
 
-func TestWASIWalkBehaviorCatchesMutants(test *testing.T) {
+func TestWasiWalkBehaviorCatchesMutants(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")

@@ -295,55 +295,55 @@ func TestHostStatus_023(test *testing.T) { test.Parallel(); hostStatus(test, 23,
 
 func TestHostStatus_024(test *testing.T) { test.Parallel(); hostStatus(test, 24, false) }
 
-func TestHostStatusWASI_000(test *testing.T) { test.Parallel(); hostStatus(test, 0, true) }
+func TestHostStatusWasi_000(test *testing.T) { test.Parallel(); hostStatus(test, 0, true) }
 
-func TestHostStatusWASI_001(test *testing.T) { test.Parallel(); hostStatus(test, 1, true) }
+func TestHostStatusWasi_001(test *testing.T) { test.Parallel(); hostStatus(test, 1, true) }
 
-func TestHostStatusWASI_002(test *testing.T) { test.Parallel(); hostStatus(test, 2, true) }
+func TestHostStatusWasi_002(test *testing.T) { test.Parallel(); hostStatus(test, 2, true) }
 
-func TestHostStatusWASI_003(test *testing.T) { test.Parallel(); hostStatus(test, 3, true) }
+func TestHostStatusWasi_003(test *testing.T) { test.Parallel(); hostStatus(test, 3, true) }
 
-func TestHostStatusWASI_004(test *testing.T) { test.Parallel(); hostStatus(test, 4, true) }
+func TestHostStatusWasi_004(test *testing.T) { test.Parallel(); hostStatus(test, 4, true) }
 
-func TestHostStatusWASI_005(test *testing.T) { test.Parallel(); hostStatus(test, 5, true) }
+func TestHostStatusWasi_005(test *testing.T) { test.Parallel(); hostStatus(test, 5, true) }
 
-func TestHostStatusWASI_006(test *testing.T) { test.Parallel(); hostStatus(test, 6, true) }
+func TestHostStatusWasi_006(test *testing.T) { test.Parallel(); hostStatus(test, 6, true) }
 
-func TestHostStatusWASI_007(test *testing.T) { test.Parallel(); hostStatus(test, 7, true) }
+func TestHostStatusWasi_007(test *testing.T) { test.Parallel(); hostStatus(test, 7, true) }
 
-func TestHostStatusWASI_008(test *testing.T) { test.Parallel(); hostStatus(test, 8, true) }
+func TestHostStatusWasi_008(test *testing.T) { test.Parallel(); hostStatus(test, 8, true) }
 
-func TestHostStatusWASI_009(test *testing.T) { test.Parallel(); hostStatus(test, 9, true) }
+func TestHostStatusWasi_009(test *testing.T) { test.Parallel(); hostStatus(test, 9, true) }
 
-func TestHostStatusWASI_010(test *testing.T) { test.Parallel(); hostStatus(test, 10, true) }
+func TestHostStatusWasi_010(test *testing.T) { test.Parallel(); hostStatus(test, 10, true) }
 
-func TestHostStatusWASI_011(test *testing.T) { test.Parallel(); hostStatus(test, 11, true) }
+func TestHostStatusWasi_011(test *testing.T) { test.Parallel(); hostStatus(test, 11, true) }
 
-func TestHostStatusWASI_012(test *testing.T) { test.Parallel(); hostStatus(test, 12, true) }
+func TestHostStatusWasi_012(test *testing.T) { test.Parallel(); hostStatus(test, 12, true) }
 
-func TestHostStatusWASI_013(test *testing.T) { test.Parallel(); hostStatus(test, 13, true) }
+func TestHostStatusWasi_013(test *testing.T) { test.Parallel(); hostStatus(test, 13, true) }
 
-func TestHostStatusWASI_014(test *testing.T) { test.Parallel(); hostStatus(test, 14, true) }
+func TestHostStatusWasi_014(test *testing.T) { test.Parallel(); hostStatus(test, 14, true) }
 
-func TestHostStatusWASI_015(test *testing.T) { test.Parallel(); hostStatus(test, 15, true) }
+func TestHostStatusWasi_015(test *testing.T) { test.Parallel(); hostStatus(test, 15, true) }
 
-func TestHostStatusWASI_016(test *testing.T) { test.Parallel(); hostStatus(test, 16, true) }
+func TestHostStatusWasi_016(test *testing.T) { test.Parallel(); hostStatus(test, 16, true) }
 
-func TestHostStatusWASI_017(test *testing.T) { test.Parallel(); hostStatus(test, 17, true) }
+func TestHostStatusWasi_017(test *testing.T) { test.Parallel(); hostStatus(test, 17, true) }
 
-func TestHostStatusWASI_018(test *testing.T) { test.Parallel(); hostStatus(test, 18, true) }
+func TestHostStatusWasi_018(test *testing.T) { test.Parallel(); hostStatus(test, 18, true) }
 
-func TestHostStatusWASI_019(test *testing.T) { test.Parallel(); hostStatus(test, 19, true) }
+func TestHostStatusWasi_019(test *testing.T) { test.Parallel(); hostStatus(test, 19, true) }
 
-func TestHostStatusWASI_020(test *testing.T) { test.Parallel(); hostStatus(test, 20, true) }
+func TestHostStatusWasi_020(test *testing.T) { test.Parallel(); hostStatus(test, 20, true) }
 
-func TestHostStatusWASI_021(test *testing.T) { test.Parallel(); hostStatus(test, 21, true) }
+func TestHostStatusWasi_021(test *testing.T) { test.Parallel(); hostStatus(test, 21, true) }
 
-func TestHostStatusWASI_022(test *testing.T) { test.Parallel(); hostStatus(test, 22, true) }
+func TestHostStatusWasi_022(test *testing.T) { test.Parallel(); hostStatus(test, 22, true) }
 
-func TestHostStatusWASI_023(test *testing.T) { test.Parallel(); hostStatus(test, 23, true) }
+func TestHostStatusWasi_023(test *testing.T) { test.Parallel(); hostStatus(test, 23, true) }
 
-func TestHostStatusWASI_024(test *testing.T) { test.Parallel(); hostStatus(test, 24, true) }
+func TestHostStatusWasi_024(test *testing.T) { test.Parallel(); hostStatus(test, 24, true) }
 
 // Both the source oracle and generated JavaScript use the row's named Node build.
 func hostNodeWith(test *testing.T, how inputRun, binary, path string) run {

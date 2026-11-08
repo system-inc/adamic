@@ -11,7 +11,7 @@ import (
 )
 
 // Not parallel: calls the command's shared checker and diagnostics.
-func TestWASIReleaseSections(test *testing.T) {
+func TestWasiReleaseSections(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}

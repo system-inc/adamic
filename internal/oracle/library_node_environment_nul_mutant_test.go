@@ -12,7 +12,7 @@ import (
 
 // Change the runtime's lookup itself. A rejected NUL name incorrectly misses
 // the explicitly present A; both literal and runtime-built names must catch it.
-func TestProcessEnvironmentNULRejectMutantIsCaught(test *testing.T) {
+func TestProcessEnvironmentNulRejectMutantIsCaught(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs("testdata/process_env/nul.a")
 	if absolutePathError != nil {

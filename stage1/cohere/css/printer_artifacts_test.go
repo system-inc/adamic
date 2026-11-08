@@ -9,31 +9,31 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func TestProduct_CSSPrinterSanitizedAndLowered(test *testing.T) {
+func TestProduct_CssPrinterSanitizedAndLowered(test *testing.T) {
 	test.Parallel()
-	requireCSSPrinter(test, cssPrinterProduct(test, -1))
+	requireCssPrinter(test, cssPrinterProduct(test, -1))
 }
-func TestProduct_CSSPrinterSemicolonMutant(test *testing.T) {
+func TestProduct_CssPrinterSemicolonMutant(test *testing.T) {
 	test.Parallel()
-	requireCSSPrinter(test, cssPrinterProduct(test, 0))
+	requireCssPrinter(test, cssPrinterProduct(test, 0))
 }
-func TestProduct_CSSPrinterIndentMutant(test *testing.T) {
+func TestProduct_CssPrinterIndentMutant(test *testing.T) {
 	test.Parallel()
-	requireCSSPrinter(test, cssPrinterProduct(test, 1))
+	requireCssPrinter(test, cssPrinterProduct(test, 1))
 }
-func TestProduct_CSSPrinterWidthMutant(test *testing.T) {
+func TestProduct_CssPrinterWidthMutant(test *testing.T) {
 	test.Parallel()
-	requireCSSPrinter(test, cssPrinterProduct(test, 2))
+	requireCssPrinter(test, cssPrinterProduct(test, 2))
 }
-func TestProduct_CSSPrinterDarwinLeaks(test *testing.T) {
+func TestProduct_CssPrinterDarwinLeaks(test *testing.T) {
 	test.Parallel()
 	if runtime.GOOS != "darwin" {
 		test.Skip("macOS leaks requires an unsanitized executable")
 	}
-	requireCSSPrinter(test, cssPrinterProduct(test, 3))
+	requireCssPrinter(test, cssPrinterProduct(test, 3))
 }
 
-func requireCSSPrinter(test *testing.T, product cssExecutable) {
+func requireCssPrinter(test *testing.T, product cssExecutable) {
 	test.Helper()
 	manifest := filepath.Join(test.TempDir(), "empty-manifest")
 	if writeError := os.WriteFile(manifest, nil, 0600); writeError != nil {

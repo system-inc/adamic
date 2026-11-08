@@ -18,7 +18,7 @@ func TestRegExpRuntimeBytecodeIdentity(test *testing.T) {
 	test.Parallel()
 	runtimeBytecodeIdentity(test, false, "")
 }
-func TestRegExpRuntimeBytecodeWASI(test *testing.T) {
+func TestRegExpRuntimeBytecodeWasi(test *testing.T) {
 	test.Parallel()
 	runtimeBytecodeIdentity(test, true, "")
 }
@@ -344,7 +344,7 @@ func TestRegExpRuntimeV8Refusals(test *testing.T) {
 	test.Parallel()
 	runtimeBytecodeIdentity(test, false, "v8")
 }
-func TestRegExpRuntimeV8WASI(test *testing.T) {
+func TestRegExpRuntimeV8Wasi(test *testing.T) {
 	test.Parallel()
 	runtimeBytecodeIdentity(test, true, "v8")
 }

@@ -14,7 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestOptionalPositionCountsUTF16Surrogates(test *testing.T) {
+func TestOptionalPositionCountsUtf16Surrogates(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	const source = "const glyph='😀'; const items: string[]=[]; const item:string=items[0];"
@@ -74,7 +74,7 @@ func TestOptionalResolverPreservesUncheckedIndexDiagnostic(test *testing.T) {
 	}
 }
 
-func TestReturnAdaptationRewritesTS7030AndPreservesBehavior(test *testing.T) {
+func TestReturnAdaptationRewritesTs7030AndPreservesBehavior(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	const source = "function f(flag: boolean, undefined: number): number | undefined { if (flag) return 1; }"

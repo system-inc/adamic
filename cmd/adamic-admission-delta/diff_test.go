@@ -99,8 +99,8 @@ func TestDiffCoverage(test *testing.T) {
 		test.Fatalf("stderr does not count the changed programs: %s", observation.Stderr)
 	}
 	// An ad hoc --corpus run has no manifest to list a .ts, so the changed one is reported, never run.
-	if !reflect.DeepEqual(report.DiffTSUnmatched, []string{"outside/ignored.ts"}) {
-		test.Fatalf("diff_ts_unmatched %q, want outside/ignored.ts", report.DiffTSUnmatched)
+	if !reflect.DeepEqual(report.DiffTsUnmatched, []string{"outside/ignored.ts"}) {
+		test.Fatalf("diff_ts_unmatched %q, want outside/ignored.ts", report.DiffTsUnmatched)
 	}
 	var raw map[string]json.RawMessage
 	if decodeError := json.Unmarshal([]byte(observation.Stdout), &raw); decodeError != nil {
@@ -128,7 +128,7 @@ func TestDiffSamplingIsMandatory(test *testing.T) {
 // A changed .ts is in the diff exactly when the manifest lists it: a head that adds only a .ts program the manifest
 // holds runs it, and a head that adds only a .ts module no corpus lists reports it as unmatched. Mutant:
 // changedPrograms takes .a only again (the program is missing from the diff, and from diff_ts_unmatched).
-func TestDiffCoverageTakesListedTSPrograms(test *testing.T) {
+func TestDiffCoverageTakesListedTsPrograms(test *testing.T) {
 	test.Parallel()
 	dir, base, compiler, _ := commandFixture(test)
 	for _, step := range []struct{ path, text string }{
@@ -160,7 +160,7 @@ func TestDiffCoverageTakesListedTSPrograms(test *testing.T) {
 		test.Fatal(gitError)
 	}
 	data, encodeError := json.Marshal(manifest{
-		SHA:     head,
+		Sha:     head,
 		Corpora: []corpus{{Name: "fixtures", Programs: []program{{Path: "programs/added.ts", Blob: blob}}}},
 	})
 	if encodeError != nil {
@@ -194,11 +194,11 @@ func TestDiffCoverageTakesListedTSPrograms(test *testing.T) {
 		diff = append(diff, program.Path)
 	}
 	if !reflect.DeepEqual(diff, []string{"programs/added.ts"}) ||
-		!reflect.DeepEqual(report.DiffTSUnmatched, []string{"library/module.ts"}) {
+		!reflect.DeepEqual(report.DiffTsUnmatched, []string{"library/module.ts"}) {
 		test.Fatalf(
 			"diff %q and diff_ts_unmatched %q, want the listed program in the diff and only the module unmatched: %s",
 			diff,
-			report.DiffTSUnmatched,
+			report.DiffTsUnmatched,
 			observation.Stderr,
 		)
 	}

@@ -547,7 +547,7 @@ func TestAbandonedPutResyncs(test *testing.T) {
 	}
 }
 
-func TestAbandonedPutAtEOF(test *testing.T) {
+func TestAbandonedPutAtEof(test *testing.T) {
 	test.Parallel()
 	for _, tail := range []string{"", "\"QUJD", "\"QUJD\n"} {
 		test.Run(fmt.Sprintf("%q", tail), func(test *testing.T) {

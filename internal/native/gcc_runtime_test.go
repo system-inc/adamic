@@ -121,7 +121,7 @@ func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 	})
 }
 
-func checkGCCRuntimeUnit(test *testing.T, name string) {
+func checkGccRuntimeUnit(test *testing.T, name string) {
 	test.Helper()
 	directory := gccRuntimeUnit(test, name)
 	diagnostics, readError := os.ReadFile(filepath.Join(directory, "diagnostics"))
@@ -132,7 +132,7 @@ func checkGCCRuntimeUnit(test *testing.T, name string) {
 		test.Logf("GCC advisory warnings for %s:\n%s", name, diagnostics)
 	}
 }
-func TestGCCRuntimeInventory(test *testing.T) {
+func TestGccRuntimeInventory(test *testing.T) {
 	test.Parallel()
 	files, readRuntimeError := readRuntime(runtime, "runtime")
 	if readRuntimeError != nil {
@@ -166,7 +166,7 @@ func gccMutantDiagnostic(mutant string) string {
 	}
 	panic(mutant)
 }
-func checkGCCDiagnosticMutant(test *testing.T, name, mutant string) {
+func checkGccDiagnosticMutant(test *testing.T, name, mutant string) {
 	test.Helper()
 	data, readError := os.ReadFile(filepath.Join(gccRuntimeProduct(test, name, mutant), "diagnostics"))
 	if readError != nil {
@@ -177,37 +177,37 @@ func checkGCCDiagnosticMutant(test *testing.T, name, mutant string) {
 	}
 	test.Logf("%s rejected: %s", mutant, gccMutantDiagnostic(mutant))
 }
-func TestProduct_GCCDiagnosticDTOAMutant(test *testing.T) {
+func TestProduct_GccDiagnosticDtoaMutant(test *testing.T) {
 	test.Parallel()
 	gccRuntimeProduct(test, "dtoa.c", "DTOA")
 }
-func TestProduct_GCCDiagnosticReductionMutant(test *testing.T) {
+func TestProduct_GccDiagnosticReductionMutant(test *testing.T) {
 	test.Parallel()
 	gccRuntimeProduct(test, "ieee754.c", "Reduction")
 }
-func TestProduct_GCCDiagnosticMapMutant(test *testing.T) {
+func TestProduct_GccDiagnosticMapMutant(test *testing.T) {
 	test.Parallel()
 	gccRuntimeProduct(test, "map.c", "Map")
 }
-func TestProduct_GCCDiagnosticRecursionMutant(test *testing.T) {
+func TestProduct_GccDiagnosticRecursionMutant(test *testing.T) {
 	test.Parallel()
 	gccRuntimeProduct(test, "ieee754.c", "recursion")
 }
-func TestGCCDiagnosticDTOAMutant(test *testing.T) {
+func TestGccDiagnosticDtoaMutant(test *testing.T) {
 	test.Parallel()
-	checkGCCDiagnosticMutant(test, "dtoa.c", "DTOA")
+	checkGccDiagnosticMutant(test, "dtoa.c", "DTOA")
 }
-func TestGCCDiagnosticReductionMutant(test *testing.T) {
+func TestGccDiagnosticReductionMutant(test *testing.T) {
 	test.Parallel()
-	checkGCCDiagnosticMutant(test, "ieee754.c", "Reduction")
+	checkGccDiagnosticMutant(test, "ieee754.c", "Reduction")
 }
-func TestGCCDiagnosticMapMutant(test *testing.T) {
+func TestGccDiagnosticMapMutant(test *testing.T) {
 	test.Parallel()
-	checkGCCDiagnosticMutant(test, "map.c", "Map")
+	checkGccDiagnosticMutant(test, "map.c", "Map")
 }
-func TestGCCDiagnosticRecursionMutant(test *testing.T) {
+func TestGccDiagnosticRecursionMutant(test *testing.T) {
 	test.Parallel()
-	checkGCCDiagnosticMutant(test, "ieee754.c", "recursion")
+	checkGccDiagnosticMutant(test, "ieee754.c", "recursion")
 }
 
 // Match the existing portability tests' executable lookup and version query,

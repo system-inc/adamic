@@ -61,7 +61,7 @@ func compileInProcess(path string) (result execution) {
 	if lowerError != nil {
 		return execution{Exit: 1, Stderr: "adamic: " + lowerError.Error() + "\n"}
 	}
-	if native.UsesTSGo(lowered) {
+	if native.UsesTsGo(lowered) {
 		return execution{Exit: 1, Stderr: "adamic: tsgo requires a native build with --tsgo <archive>\n"}
 	}
 	code := native.C(lowered)

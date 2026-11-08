@@ -49,7 +49,7 @@ func main() { os.Exit(run(os.Args[1:], os.Stdout, os.Stderr)) }
 func run(arguments []string, stdout, stderr io.Writer) int {
 	flags := flag.NewFlagSet("adamic-meter", flag.ContinueOnError)
 	flags.SetOutput(stderr)
-	asJSON := flags.Bool("json", false, "write JSON")
+	asJson := flags.Bool("json", false, "write JSON")
 	adapt := flags.Bool("adapt", false, "apply semantics-preserving rewrites in memory")
 	if parseError := flags.Parse(arguments); parseError != nil {
 		return 2
@@ -63,7 +63,7 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 		fmt.Fprintf(stderr, "adamic-meter: %v\n", measureError)
 		return 1
 	}
-	if *asJSON {
+	if *asJson {
 		encoder := json.NewEncoder(stdout)
 		encoder.SetIndent("", "  ")
 		if encodeError := encoder.Encode(report); encodeError != nil {

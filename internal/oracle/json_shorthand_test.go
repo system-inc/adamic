@@ -14,7 +14,7 @@ func init() {
 	}{"internal/oracle/testdata/json_shorthand.a", true, false})
 }
 
-func TestJSONStringifyShorthand(test *testing.T) {
+func TestJsonStringifyShorthand(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs("testdata/json_shorthand.a")
 	if absolutePathError != nil {
@@ -40,7 +40,7 @@ func TestJSONStringifyShorthand(test *testing.T) {
 	}
 }
 
-func TestJSONStringifyShorthandWrongBindingMutant(test *testing.T) {
+func TestJsonStringifyShorthandWrongBindingMutant(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs("testdata/json_shorthand.a")
 	if absolutePathError != nil {

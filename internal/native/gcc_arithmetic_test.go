@@ -77,7 +77,7 @@ func gccArithmeticProduct(test *testing.T) string {
 		return nil
 	})
 }
-func checkGCCArithmetic(test *testing.T, mutant bool) {
+func checkGccArithmetic(test *testing.T, mutant bool) {
 	test.Helper()
 	variant := "control"
 	if mutant {
@@ -99,9 +99,9 @@ func checkGCCArithmetic(test *testing.T, mutant bool) {
 		strings.TrimSpace(string(got.stdout)),
 	)
 }
-func TestProduct_GCCArithmetic(test *testing.T) { test.Parallel(); gccArithmeticProduct(test) }
-func TestGCCArithmeticUnfused(test *testing.T)  { test.Parallel(); checkGCCArithmetic(test, false) }
-func TestGCCArithmeticContractionMutant(test *testing.T) {
+func TestProduct_GccArithmetic(test *testing.T) { test.Parallel(); gccArithmeticProduct(test) }
+func TestGccArithmeticUnfused(test *testing.T)  { test.Parallel(); checkGccArithmetic(test, false) }
+func TestGccArithmeticContractionMutant(test *testing.T) {
 	test.Parallel()
-	checkGCCArithmetic(test, true)
+	checkGccArithmetic(test, true)
 }

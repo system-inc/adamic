@@ -67,7 +67,7 @@ func TestDeadlineChild(test *testing.T) {
 	}
 }
 
-func runWithCPUBudget(
+func runWithCpuBudget(
 	test *testing.T,
 	argv []string,
 	stdout, stderr io.Writer,
@@ -164,7 +164,7 @@ func estreeRefusalBudget(test *testing.T, argv []string) time.Duration {
 			return
 		}
 		var stdout, stderr bytes.Buffer
-		runWithCpuBudgetError, exceeded, cpu := runWithCPUBudget(
+		runWithCpuBudgetError, exceeded, cpu := runWithCpuBudget(
 			test,
 			append(append([]string(nil), program...), input),
 			&stdout,

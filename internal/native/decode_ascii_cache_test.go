@@ -14,11 +14,11 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// decodeASCIICorpus is Node's decoder corpus cut into the units' prefix ranges, one file per range, a product built
+// decodeAsciiCorpus is Node's decoder corpus cut into the units' prefix ranges, one file per range, a product built
 // ahead by TestProduct_DecodeASCIICorpus. Node writes all 92014 prefixes in about 20 s, which every unit used to wait
 // on in a cache of its own, under the home directory when ADAMIC_BUILD_CACHE_DIR was unset, the first unit paying
 // for it.
-func decodeASCIICorpus(test *testing.T) string {
+func decodeAsciiCorpus(test *testing.T) string {
 	test.Helper()
 	repository, absolutePathError := filepath.Abs("../..")
 	if absolutePathError != nil {
@@ -75,11 +75,11 @@ func decodeASCIICorpus(test *testing.T) string {
 	})
 }
 
-// decodeASCIIDecoder is the decoder probe for target, native under ASan and UBSan or wasi: the runtime's C with
+// decodeAsciiDecoder is the decoder probe for target, native under ASan and UBSan or wasi: the runtime's C with
 // probe.c and baseline.c, a product built ahead by TestProduct_DecodeASCIINative and TestProduct_DecodeASCIIWASI. Every
 // unit of a target runs its own range of the corpus through the same binary, which each used to wait on in the same
 // cache as the corpus.
-func decodeASCIIDecoder(test *testing.T, target string) string {
+func decodeAsciiDecoder(test *testing.T, target string) string {
 	test.Helper()
 	repository, absolutePathError := filepath.Abs("../..")
 	if absolutePathError != nil {
@@ -216,26 +216,26 @@ func decodeASCIIDecoder(test *testing.T, target string) string {
 	return filepath.Join(directory, "decode-"+target)
 }
 
-// TestProduct_DecodeASCIICorpus builds the corpus every decode unit runs its range of, so the tree build builds it
+// TestProduct_DecodeAsciiCorpus builds the corpus every decode unit runs its range of, so the tree build builds it
 // ahead.
-func TestProduct_DecodeASCIICorpus(test *testing.T) {
+func TestProduct_DecodeAsciiCorpus(test *testing.T) {
 	test.Parallel()
-	decodeASCIICorpus(test)
+	decodeAsciiCorpus(test)
 }
 
-// TestProduct_DecodeASCIINative builds the sanitized native decoder the native units run, so the tree build builds it
+// TestProduct_DecodeAsciiNative builds the sanitized native decoder the native units run, so the tree build builds it
 // ahead.
-func TestProduct_DecodeASCIINative(test *testing.T) {
+func TestProduct_DecodeAsciiNative(test *testing.T) {
 	test.Parallel()
-	decodeASCIIDecoder(test, "native")
+	decodeAsciiDecoder(test, "native")
 }
 
-// TestProduct_DecodeASCIIWASI builds the WASI decoder the WASI units run, where they run, so the tree build builds it
+// TestProduct_DecodeAsciiwasi builds the WASI decoder the WASI units run, where they run, so the tree build builds it
 // ahead.
-func TestProduct_DecodeASCIIWASI(test *testing.T) {
+func TestProduct_DecodeAsciiwasi(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		test.Skip("set ADAMIC_TEST_WASI=1")
 	}
-	decodeASCIIDecoder(test, "wasi")
+	decodeAsciiDecoder(test, "wasi")
 }

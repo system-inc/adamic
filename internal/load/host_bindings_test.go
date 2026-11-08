@@ -88,7 +88,7 @@ func hostBindingCells(row HostBinding) []string {
 			row.Declaration.Type,
 		),
 		fmt.Sprintf("%s, %s module, `%s`", row.Node.Version, row.Node.Module, row.Node.TypeOf),
-		column(row.Native), column(row.JavaScript), column(row.WASM32),
+		column(row.Native), column(row.JavaScript), column(row.Wasm32),
 		model, divergence, row.Ruling,
 	}
 }

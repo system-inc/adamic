@@ -548,7 +548,7 @@ func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...
 // product (buildcache.GoTest) built ahead, and the directory go test would run it in.
 func cohereSideOracle(test testing.TB) (string, string) { return oracles.Parser(test) }
 
-func TestProduct_GraphQLFindsGoOracle(test *testing.T) {
+func TestProduct_GraphQlFindsGoOracle(test *testing.T) {
 	test.Parallel()
 	cohereSideOracle(test)
 }

@@ -60,7 +60,7 @@ func (store *fakeStore) put(test *testing.T, key string, files map[string]string
 	for name, content := range files {
 		product.Files = append(
 			product.Files,
-			manifestFile{Path: name, SHA256: store.blob([]byte(content)), Size: int64(len(content)), Mode: 0o644},
+			manifestFile{Path: name, Sha256: store.blob([]byte(content)), Size: int64(len(content)), Mode: 0o644},
 		)
 	}
 	store.ref(test, key, product)
@@ -143,7 +143,7 @@ func TestAStoredProductThatDoesntCheckIsPoisoning(test *testing.T) {
 		"a blob that isn't its hash": func(test *testing.T, store *fakeStore, key string) {
 			product := store.put(test, key, map[string]string{"bin/checker": "the checker"})
 			// The same length, so only the blob's hash can tell.
-			store.objects["/blobs/"+product.Files[0].SHA256] = []byte("the checkeR")
+			store.objects["/blobs/"+product.Files[0].Sha256] = []byte("the checkeR")
 		},
 		"a manifest for another key": func(test *testing.T, store *fakeStore, key string) {
 			product := store.put(test, key, map[string]string{"bin/checker": "the checker"})
@@ -198,7 +198,7 @@ func TestAnUnstoredOrUnreachableProductIsBuiltHere(test *testing.T) {
 				// The ref and manifest read, then a blob's read fails: the store's trouble, not poisoning.
 				store, _ = shared(test)
 				product := store.put(test, recorded(test), map[string]string{"product": "stored"})
-				store.broken = "/blobs/" + product.Files[0].SHA256
+				store.broken = "/blobs/" + product.Files[0].Sha256
 			} else {
 				cached(test)
 				test.Setenv("ADAMIC_BUILD_STORE", address)

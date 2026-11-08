@@ -17,7 +17,7 @@ func censusExports(test testing.TB) string {
 	return buildcache.GoExports(test, "./stage1/cohere/tsprinter/oracles")
 }
 
-func TestProduct_TSPrinterOraclesCensusExports(test *testing.T) {
+func TestProduct_TsPrinterOraclesCensusExports(test *testing.T) {
 	test.Parallel()
 	censusExports(test)
 }

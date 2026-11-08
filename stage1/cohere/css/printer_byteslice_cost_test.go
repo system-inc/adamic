@@ -97,12 +97,12 @@ func cssPrinterCounted(test *testing.T, index int) string {
 	return cssPrinterCountedNatives[index]
 }
 
-func TestProduct_CSSPrinterCounted(test *testing.T) {
+func TestProduct_CssPrinterCounted(test *testing.T) {
 	test.Parallel()
 	cssPrinterCounted(test, 0)
 }
 
-func TestProduct_CSSPrinterPrefixCostMutant(test *testing.T) {
+func TestProduct_CssPrinterPrefixCostMutant(test *testing.T) {
 	test.Parallel()
 	cssPrinterCounted(test, 1)
 }
@@ -233,7 +233,7 @@ func cssPrinterPreflightCost(test *testing.T, binary, oracle string) error {
 
 // Ordinary top-level tests are enumerated by adamic-gate's go test -list census;
 // no opt-in environment or optional fixture root is required for this guard.
-func TestCSSPrinterPreflightCost(test *testing.T) {
+func TestCssPrinterPreflightCost(test *testing.T) {
 	test.Parallel()
 	oracle := oracles.ComparisonOracle(test, true)
 	if cssPrinterPreflightCostError := cssPrinterPreflightCost(
@@ -245,7 +245,7 @@ func TestCSSPrinterPreflightCost(test *testing.T) {
 	}
 }
 
-func TestCSSPrinterPreflightCostMutant(test *testing.T) {
+func TestCssPrinterPreflightCostMutant(test *testing.T) {
 	test.Parallel()
 	oracle := oracles.ComparisonOracle(test, true)
 	cssPrinterPreflightCostError := cssPrinterPreflightCost(test, cssPrinterCounted(test, 1), oracle)

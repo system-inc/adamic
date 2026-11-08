@@ -148,7 +148,7 @@ func hostBindingStop(row load.HostBinding) string {
 		}
 		return "the host binding " + row.Name + ", pending " + said + ","
 	}
-	if row.Native.Answer != row.JavaScript.Answer || row.Native.Answer != row.WASM32.Answer {
+	if row.Native.Answer != row.JavaScript.Answer || row.Native.Answer != row.Wasm32.Answer {
 		return "the host binding " +
 			row.Name +
 			", whose targets answer differently (native " +
@@ -156,7 +156,7 @@ func hostBindingStop(row load.HostBinding) string {
 			", javascript " +
 			string(row.JavaScript.Answer) +
 			", wasm32 " +
-			string(row.WASM32.Answer) +
+			string(row.Wasm32.Answer) +
 			") where one IR feeds every target, until an IR presence node is ruled,"
 	}
 	if row.Native.Answer == load.HostBindingProvided {

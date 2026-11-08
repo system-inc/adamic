@@ -9,7 +9,7 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 )
 
-func TestTSPrinterCachedMetadataRelocation(test *testing.T) {
+func TestTsPrinterCachedMetadataRelocation(test *testing.T) {
 	test.Parallel()
 	first, second, product, copy := test.TempDir(), test.TempDir(), test.TempDir(), test.TempDir()
 	original := oracles.PrinterCase{

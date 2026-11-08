@@ -29,8 +29,8 @@ type recoverySetup struct {
 
 func beginRecoverySetup(test *testing.T) *recoverySetup {
 	setup := &recoverySetup{start: time.Now()}
-	cpu := recoveryCPU(test)
-	test.Cleanup(func() { test.Logf("TEST totalCPU=%.6fs", (recoveryCPU(test) - cpu).Seconds()) })
+	cpu := recoveryCpu(test)
+	test.Cleanup(func() { test.Logf("TEST totalCPU=%.6fs", (recoveryCpu(test) - cpu).Seconds()) })
 	return setup
 }
 func (setup *recoverySetup) report(test *testing.T) {
@@ -228,7 +228,7 @@ func recoveryCount(got []byte, needle string, want int) string {
 }
 
 type recoveryProof struct {
-	IDs            []string
+	Ids            []string `json:"IDs"`
 	Count, Planted int
 	Mode           string
 }
@@ -251,7 +251,7 @@ func proveRecoveryVerdict(test *testing.T, cases []recoveryCase, count int, mode
 	}
 	configuration := recoveryProof{Count: count, Planted: planted, Mode: mode}
 	for _, recoveryCase := range cases {
-		configuration.IDs = append(configuration.IDs, recoveryCase.id)
+		configuration.Ids = append(configuration.Ids, recoveryCase.id)
 	}
 	data, encodeError := json.Marshal(configuration)
 	if encodeError != nil {
@@ -289,7 +289,7 @@ func TestRecoveryShardProofChild(test *testing.T) {
 		test.Fatal(decodeError)
 	}
 	var cases []recoveryCase
-	for _, id := range configuration.IDs {
+	for _, id := range configuration.Ids {
 		cases = append(cases, recoveryCase{id: id})
 	}
 	shards := partitionRecovery(test, cases, configuration.Count)
@@ -334,7 +334,7 @@ func TestRecoveryShardProofChild(test *testing.T) {
 	})
 }
 
-func recoveryCPU(test *testing.T) time.Duration {
+func recoveryCpu(test *testing.T) time.Duration {
 	test.Helper()
 	var self, children syscall.Rusage
 	if getrusageError := syscall.Getrusage(syscall.RUSAGE_SELF, &self); getrusageError != nil {

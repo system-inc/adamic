@@ -13,7 +13,7 @@ import (
 )
 
 // Not parallel: builds several reactors and runs the lifetime and independent mutant probes.
-func workersWASMProduct(test *testing.T) string {
+func workersWasmProduct(test *testing.T) string {
 	test.Helper()
 	return buildcache.Product(test, integrationInputs(test, "workersWASMProduct"), func(directory string) error {
 		root, absolutePathError := filepath.Abs("../../..")
@@ -108,18 +108,18 @@ func workersWASMProduct(test *testing.T) string {
 }
 
 // Not parallel: prepares shared WASI module inputs before the harnesses.
-func TestProduct_WorkersWASMInputs(test *testing.T) { workersWASMProduct(test) }
+func TestProduct_WorkersWasmInputs(test *testing.T) { workersWasmProduct(test) }
 
-func TestWorkersWASM(test *testing.T) {
+func TestWorkersWasm(test *testing.T) {
 	test.Parallel()
 	root, absolutePathError := filepath.Abs("../../..")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	product := workersWASMProduct(test)
+	product := workersWasmProduct(test)
 	directory := test.TempDir()
-	if copyFsError := os.CopyFS(directory, os.DirFS(product)); copyFsError != nil {
-		test.Fatal(copyFsError)
+	if copyFileSystemError := os.CopyFS(directory, os.DirFS(product)); copyFileSystemError != nil {
+		test.Fatal(copyFileSystemError)
 	}
 	run := commandRunner(test, root)
 	write := func(path, text string) {

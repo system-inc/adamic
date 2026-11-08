@@ -8,7 +8,7 @@ import (
 )
 
 // Not parallel: test.Setenv changes the process environment variable WASI_SYSROOT.
-func TestWASITargetFlags(test *testing.T) {
+func TestWasiTargetFlags(test *testing.T) {
 	test.Setenv("WASI_SYSROOT", test.TempDir())
 	flags := strings.Join(Flags(Options{Target: "wasm32-wasi"}), " ")
 	for _, flag := range []string{
@@ -29,7 +29,7 @@ func TestWASITargetFlags(test *testing.T) {
 }
 
 // Not parallel: test.Setenv changes the process environment variable WASI_SYSROOT.
-func TestWASIRefusesUnsupportedOptions(test *testing.T) {
+func TestWasiRefusesUnsupportedOptions(test *testing.T) {
 	test.Setenv("WASI_SYSROOT", test.TempDir())
 	// Each refusal by its own words: past them a WASI build fails anyway on the empty sysroot's missing SDK clang, so
 	// an error alone can't tell a dropped refusal from a kept one.

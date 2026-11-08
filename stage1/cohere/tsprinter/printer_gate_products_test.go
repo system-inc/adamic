@@ -111,27 +111,27 @@ func printerGateFamilyProducts(test *testing.T, family string) tsPrinterProducts
 	}
 }
 
-func TestProduct_TSPrinterExpressionsLowered(test *testing.T) {
+func TestProduct_TsPrinterExpressionsLowered(test *testing.T) {
 	test.Parallel()
 	printerGateLowered(test, "expressions")
 }
-func TestProduct_TSPrinterExpressionsSanitized(test *testing.T) {
+func TestProduct_TsPrinterExpressionsSanitized(test *testing.T) {
 	test.Parallel()
 	printerGateNative(test, "expressions", true)
 }
-func TestProduct_TSPrinterExpressionsRelease(test *testing.T) {
+func TestProduct_TsPrinterExpressionsRelease(test *testing.T) {
 	test.Parallel()
 	printerGateNative(test, "expressions", false)
 }
-func TestProduct_TSPrinterStatementsLowered(test *testing.T) {
+func TestProduct_TsPrinterStatementsLowered(test *testing.T) {
 	test.Parallel()
 	printerGateLowered(test, "statements")
 }
-func TestProduct_TSPrinterStatementsSanitized(test *testing.T) {
+func TestProduct_TsPrinterStatementsSanitized(test *testing.T) {
 	test.Parallel()
 	printerGateNative(test, "statements", true)
 }
-func TestProduct_TSPrinterStatementsRelease(test *testing.T) {
+func TestProduct_TsPrinterStatementsRelease(test *testing.T) {
 	test.Parallel()
 	printerGateNative(test, "statements", false)
 }
@@ -139,15 +139,15 @@ func TestProduct_TSPrinterStatementsRelease(test *testing.T) {
 // The document port's lowered program and natives are products, as expressions' and statements' are: building the
 // sanitized native inside TestDocumentsAgainstGoAndPrettier was 5.8 of its 10.6 s alone on one core, and most of its
 // 65.5 s at load 37 on Cloud, which reddened a lint-only change by the time budget (#g7a9yd3).
-func TestProduct_TSPrinterDocumentsLowered(test *testing.T) {
+func TestProduct_TsPrinterDocumentsLowered(test *testing.T) {
 	test.Parallel()
 	printerGateLowered(test, "documents")
 }
-func TestProduct_TSPrinterDocumentsSanitized(test *testing.T) {
+func TestProduct_TsPrinterDocumentsSanitized(test *testing.T) {
 	test.Parallel()
 	printerGateNative(test, "documents", true)
 }
-func TestProduct_TSPrinterDocumentsRelease(test *testing.T) {
+func TestProduct_TsPrinterDocumentsRelease(test *testing.T) {
 	test.Parallel()
 	printerGateNative(test, "documents", false)
 }

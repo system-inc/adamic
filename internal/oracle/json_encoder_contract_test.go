@@ -55,7 +55,7 @@ func jsonEncoderContract(test *testing.T, backend int) {
 	if backend == 1 {
 		if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
 			test.Run("wasi", func(test *testing.T) {
-				if difference := disagreement(want, onWASI(test, code)); difference != "" {
+				if difference := disagreement(want, onWasi(test, code)); difference != "" {
 					test.Fatal(difference)
 				}
 			})
@@ -139,16 +139,16 @@ func jsonEncoderContract(test *testing.T, backend int) {
 	}
 }
 
-func TestJSONEncoderContract_000(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 0) }
+func TestJsonEncoderContract_000(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 0) }
 
-func TestJSONEncoderContract_001(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 1) }
+func TestJsonEncoderContract_001(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 1) }
 
-func TestJSONEncoderContract_002(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 2) }
+func TestJsonEncoderContract_002(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 2) }
 
-func TestJSONEncoderContract_003(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 3) }
+func TestJsonEncoderContract_003(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 3) }
 
-func TestJSONEncoderContract_004(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 4) }
+func TestJsonEncoderContract_004(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 4) }
 
-func TestJSONEncoderContract_005(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 5) }
+func TestJsonEncoderContract_005(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 5) }
 
-func TestJSONEncoderContract_006(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 6) }
+func TestJsonEncoderContract_006(test *testing.T) { test.Parallel(); jsonEncoderContract(test, 6) }

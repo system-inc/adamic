@@ -79,11 +79,11 @@ func programHostMeasurement(test *testing.T, sample int) {
 		result := execute(test, name, args...)
 		seconds := time.Since(started).Seconds()
 		match := countsLine.FindSubmatch(result.stderr)
-		rss := graphRSS.FindSubmatch(result.stdout)
+		rss := graphRss.FindSubmatch(result.stdout)
 		if result.exitCode != truth.exitCode ||
 			match == nil ||
 			rss == nil ||
-			string(graphRSS.ReplaceAll(result.stdout, nil)) != string(truth.stdout) {
+			string(graphRss.ReplaceAll(result.stdout, nil)) != string(truth.stdout) {
 			test.Fatalf("host measurement disagrees with Node: %d %s %s", result.exitCode, result.stdout, result.stderr)
 		}
 		if report := leakcheck.Unbalanced(leakRun(result)); report != "" {

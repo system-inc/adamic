@@ -151,19 +151,19 @@ var schemaMutants = yamlMutants{
 	},
 }
 
-func TestProduct_YAMLSchemaMutant000(test *testing.T) {
+func TestProduct_YamlSchemaMutant000(test *testing.T) {
 	test.Parallel()
 	schemaMutants.product(test, 0)
 }
-func TestProduct_YAMLSchemaMutant001(test *testing.T) {
+func TestProduct_YamlSchemaMutant001(test *testing.T) {
 	test.Parallel()
 	schemaMutants.product(test, 1)
 }
-func TestProduct_YAMLSchemaMutant002(test *testing.T) {
+func TestProduct_YamlSchemaMutant002(test *testing.T) {
 	test.Parallel()
 	schemaMutants.product(test, 2)
 }
-func TestProduct_YAMLSchemaMutant003(test *testing.T) {
+func TestProduct_YamlSchemaMutant003(test *testing.T) {
 	test.Parallel()
 	schemaMutants.product(test, 3)
 }

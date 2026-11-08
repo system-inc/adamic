@@ -228,13 +228,13 @@ func QueryOwnership(snapshot OwnershipSnapshot, owner string) OwnershipAnswer {
 			unknown("unresolved frontier reachable from " + root.Name)
 		}
 		key := stateKey{root.Object, false}
-		strong, strongOK := paths[key]
+		strong, strongOk := paths[key]
 		weakKey := stateKey{root.Object, true}
-		weak, weakOK := paths[weakKey]
-		if !strongOK && !weakOK {
+		weak, weakOk := paths[weakKey]
+		if !strongOk && !weakOk {
 			continue
 		}
-		if weakOK && (!strongOK || weak.distance < strong.distance) {
+		if weakOk && (!strongOk || weak.distance < strong.distance) {
 			key = weakKey
 		}
 		observedWeak := root.Weak || key.weak

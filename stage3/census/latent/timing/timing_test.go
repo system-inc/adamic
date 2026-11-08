@@ -24,14 +24,14 @@ func TestLatentUnitTimerWritesSeparateSequentialRecords(test *testing.T) {
 		if decodeError := decoder.Decode(&record); decodeError != nil {
 			test.Fatal(decodeError)
 		}
-		wall, wallOK := record["wall_seconds"].(float64)
-		cpu, cpuOK := record["cpu_seconds"].(float64)
+		wall, wallOk := record["wall_seconds"].(float64)
+		cpu, cpuOk := record["cpu_seconds"].(float64)
 		where := []string{"first.ts:1:1", "second.ts:2:1"}[index]
 		if len(record) != 4 ||
 			record["file"] != name ||
 			record["where"] != where ||
-			!wallOK ||
-			!cpuOK ||
+			!wallOk ||
+			!cpuOk ||
 			wall <= 0 ||
 			cpu < 0 {
 			test.Fatalf("invalid unit time: %+v", record)

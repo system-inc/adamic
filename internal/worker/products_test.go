@@ -169,8 +169,8 @@ func workerWasmProduct(test *testing.T, key string, mutant *workerMutation, buil
 		// Reuse the ordinary Worker, then replace just the module with the counted
 		// build. Do not compile the same ordinary module again in the memory unit.
 		ordinary := workerWasmProduct(test, "transform", mutant, false)
-		if copyFsError := os.CopyFS(output, os.DirFS(ordinary)); copyFsError != nil {
-			return copyFsError
+		if copyFileSystemError := os.CopyFS(output, os.DirFS(ordinary)); copyFileSystemError != nil {
+			return copyFileSystemError
 		}
 		return run(
 			"build",

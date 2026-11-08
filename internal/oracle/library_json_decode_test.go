@@ -38,7 +38,7 @@ var jsonDecodeFixtures = []string{
 func jsonDecodeEnumerationRefused(name string) bool {
 	return name == "json_decode_empty_object.a" || name == "json_decode_coverage_empty.a"
 }
-func assertJSONDecodeEnumerationRefusal(test *testing.T, sourceError error) {
+func assertJsonDecodeEnumerationRefusal(test *testing.T, sourceError error) {
 	test.Helper()
 	var gap *lower.NotYet
 	if !errors.As(sourceError, &gap) || !strings.Contains(gap.What, "Object.keys on a non-object") {
@@ -67,7 +67,7 @@ func runJSONDecodeShard(test *testing.T, shard int) {
 			}
 			program, loweredError := lowered(test, path)
 			if jsonDecodeEnumerationRefused(name) {
-				assertJSONDecodeEnumerationRefusal(test, loweredError)
+				assertJsonDecodeEnumerationRefusal(test, loweredError)
 				return
 			}
 			if loweredError != nil {
@@ -96,7 +96,7 @@ func runJSONDecodeShard(test *testing.T, shard int) {
 		})
 	}
 }
-func TestJSONDecodeRefusals(test *testing.T) {
+func TestJsonDecodeRefusals(test *testing.T) {
 	test.Parallel()
 	cases := []struct{ name, source, want string }{
 		{"missing", "decodeJson('1');", "name the type: decodeJson<YourType>(text)"},

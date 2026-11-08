@@ -10,7 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestNodeFSDirectoryUnionMutant(test *testing.T) {
+func TestNodeFileSystemDirectoryUnionMutant(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"),
@@ -42,7 +42,7 @@ static bool mutant_static_dirent_is(const adamic_object *value, const char *meth
 	}
 	how := inputRun{directory: filepath.Dir(path)}
 	truth := onNodeWith(test, how, path)
-	actual := executeInput(test, how, nodeFSDirectorySanitizerEnvironment(), binary)
+	actual := executeInput(test, how, nodeFileSystemDirectorySanitizerEnvironment(), binary)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || actual.exitCode != 0 || len(actual.stderr) != 0 {
 		test.Fatalf("mutant must finish cleanly, Node=%+v mutant=%+v", truth, actual)
 	}
@@ -53,7 +53,7 @@ static bool mutant_static_dirent_is(const adamic_object *value, const char *meth
 }
 
 // Real special files exercise true results for the shared predicates too.
-func TestNodeFSDirectoryUnionSpecialKinds(test *testing.T) {
+func TestNodeFileSystemDirectoryUnionSpecialKinds(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"),

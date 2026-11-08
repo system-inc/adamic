@@ -270,7 +270,7 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 	}
 	bodies.WriteString("\treturn adamic_host_exit_status();\n}\n")
 	if handler >= 0 {
-		bodies.WriteString(emitter.requestABI(handler))
+		bodies.WriteString(emitter.requestAbi(handler))
 	}
 
 	for index := range program.Functions {

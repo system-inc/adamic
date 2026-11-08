@@ -185,7 +185,7 @@ func runJSONDecodeValidationMutantsShard(test *testing.T, shard int) {
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("caught outside Node comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}
-			requireJSONMutantCaught(test, onNode(test, path), got)
+			requireJsonMutantCaught(test, onNode(test, path), got)
 			test.Logf("%s: caught only by Node stdout comparison", validationCase.name)
 		})
 	}
@@ -195,7 +195,7 @@ func inlineDecodeMutant(runtime, code string) string {
 	code = strings.ReplaceAll(code, "adamic_json_decode(", "json_mutant_decode(")
 	return runtime + "\n" + code
 }
-func TestJSONDecodeParserMutants(test *testing.T) {
+func TestJsonDecodeParserMutants(test *testing.T) {
 	test.Parallel()
 	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
 	if readError != nil {
@@ -243,12 +243,12 @@ func TestJSONDecodeParserMutants(test *testing.T) {
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("caught outside comparison: %d %s", got.exitCode, got.stderr)
 			}
-			requireJSONMutantCaught(test, onNode(test, path), got)
+			requireJsonMutantCaught(test, onNode(test, path), got)
 			test.Logf("%s: caught only by Node stdout comparison", testCase.name)
 		})
 	}
 }
-func TestJSONDecodeErrorLeakMutant(test *testing.T) {
+func TestJsonDecodeErrorLeakMutant(test *testing.T) {
 	test.Parallel()
 	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
 	if readError != nil {
@@ -284,7 +284,7 @@ func TestJSONDecodeErrorLeakMutant(test *testing.T) {
 	test.Log("half-array error cleanup: caught only by the leak check")
 }
 
-func TestJSONDecodeFieldPresenceMutants(test *testing.T) {
+func TestJsonDecodeFieldPresenceMutants(test *testing.T) {
 	test.Parallel()
 	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
 	if readError != nil {
@@ -358,7 +358,7 @@ func TestJSONDecodeFieldPresenceMutants(test *testing.T) {
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("caught outside comparison: %d %s", got.exitCode, got.stderr)
 			}
-			requireJSONMutantCaught(test, onNode(test, path), got)
+			requireJsonMutantCaught(test, onNode(test, path), got)
 			test.Logf("%s: caught only by Node stdout comparison", testCase.name)
 		})
 	}
@@ -366,7 +366,7 @@ func TestJSONDecodeFieldPresenceMutants(test *testing.T) {
 
 // Restore the old omission in the emitted descriptor, leaving valid JavaScript and the source
 // oracle untouched. Each empty-shape fixture must catch its validator's TypeError at runtime.
-func TestJSONDecodeEmptyFieldsMutant(test *testing.T) {
+func TestJsonDecodeEmptyFieldsMutant(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"json_decode_empty_tuple.a", "json_decode_empty_object.a"} {
 		test.Run(name, func(test *testing.T) {
@@ -376,7 +376,7 @@ func TestJSONDecodeEmptyFieldsMutant(test *testing.T) {
 			}
 			if jsonDecodeEnumerationRefused(name) {
 				_, loweredError := lowered(test, path)
-				assertJSONDecodeEnumerationRefusal(test, loweredError)
+				assertJsonDecodeEnumerationRefusal(test, loweredError)
 				// Retain the empty-object descriptor witness without Object.keys, which main refuses.
 				path = filepath.Join(test.TempDir(), "empty-object.a")
 				source := "import { decodeJson } from 'adamic'; console.log(decodeJson<{}>('{}').kind);"

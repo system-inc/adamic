@@ -12,7 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func TestJSONDecodeReferenceMatchesIR(test *testing.T) {
+func TestJsonDecodeReferenceMatchesIr(test *testing.T) {
 	test.Parallel()
 	decoder, readError := os.ReadFile("runtime/json_decode.c")
 	if readError != nil {

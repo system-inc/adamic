@@ -136,7 +136,7 @@ func (lowering *lowering) constructionIndexWrite(target, valueNode *ast.Node) ([
 
 // A const initialized by one factory return has a closed physical layout. This
 // proves JSON's descriptor, not the values of reserved or unset fields.
-func (lowering *lowering) constructionJSON(node *ast.Node) (*ir.JSONSchema, bool) {
+func (lowering *lowering) constructionJson(node *ast.Node) (*ir.JSONSchema, bool) {
 	if !ast.IsIdentifier(node) {
 		return nil, false
 	}

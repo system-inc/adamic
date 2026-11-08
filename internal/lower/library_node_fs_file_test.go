@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestNodeFSFileOptionsBorrow(test *testing.T) {
+func TestNodeFileSystemFileOptionsBorrow(test *testing.T) {
 	test.Parallel()
 	for _, source := range []string{
 		`import {statSync as status} from 'node:fs'; const options={throwIfNoEntry:false}; const result=status('missing',options); console.log(result===undefined?'absent':'present');`,
@@ -18,11 +18,11 @@ func TestNodeFSFileOptionsBorrow(test *testing.T) {
 		if strings.Contains(source, "before remove") {
 			exit = 70
 		}
-		lowersAndAgreesWithNodeExit(test, fsAgreementSource(test, source), exit)
+		lowersAndAgreesWithNodeExit(test, fileSystemAgreementSource(test, source), exit)
 	}
 }
 
-func TestNodeFSFileDoesNotAuthorizeMutableWidening(test *testing.T) {
+func TestNodeFileSystemFileDoesNotAuthorizeMutableWidening(test *testing.T) {
 	test.Parallel()
 	_, lowerSourceError := lowerSource(
 		test,
@@ -33,7 +33,7 @@ func TestNodeFSFileDoesNotAuthorizeMutableWidening(test *testing.T) {
 	}
 }
 
-func TestNodeFSFileRefusesOptionEffects(test *testing.T) {
+func TestNodeFileSystemFileRefusesOptionEffects(test *testing.T) {
 	test.Parallel()
 	_, lowerSourceError := lowerSource(
 		test,
@@ -44,7 +44,7 @@ func TestNodeFSFileRefusesOptionEffects(test *testing.T) {
 	}
 }
 
-func TestNodeFSFileRefusesVoidValues(test *testing.T) {
+func TestNodeFileSystemFileRefusesVoidValues(test *testing.T) {
 	test.Parallel()
 	_, lowerSourceError := lowerSource(
 		test,
@@ -56,7 +56,7 @@ func TestNodeFSFileRefusesVoidValues(test *testing.T) {
 	}
 }
 
-func TestNodeFSFileRefusesPinnedUnsupportedOverloads(test *testing.T) {
+func TestNodeFileSystemFileRefusesPinnedUnsupportedOverloads(test *testing.T) {
 	test.Parallel()
 	for _, one := range []struct{ source, member string }{
 		{`import {readFileSync} from 'node:fs'; readFileSync('x','latin1');`, "readFileSync"},
@@ -76,15 +76,18 @@ func TestNodeFSFileRefusesPinnedUnsupportedOverloads(test *testing.T) {
 	}
 }
 
-func TestNodeFSFileNamespaceImport(test *testing.T) {
+func TestNodeFileSystemFileNamespaceImport(test *testing.T) {
 	test.Parallel()
 	lowersAndAgreesWithNode(
 		test,
-		fsAgreementSource(test, `import * as fs from 'node:fs'; console.log(fs.existsSync('x')?'present':'absent');`),
+		fileSystemAgreementSource(
+			test,
+			`import * as fs from 'node:fs'; console.log(fs.existsSync('x')?'present':'absent');`,
+		),
 	)
 }
 
-func TestNodeFSFileQualifiedErrorType(test *testing.T) {
+func TestNodeFileSystemFileQualifiedErrorType(test *testing.T) {
 	test.Parallel()
 	_, lowerSourceError := lowerSource(
 		test,
@@ -97,7 +100,7 @@ func TestNodeFSFileQualifiedErrorType(test *testing.T) {
 	}
 }
 
-func TestNodeFSFileKeepsDetachedMethodRefusal(test *testing.T) {
+func TestNodeFileSystemFileKeepsDetachedMethodRefusal(test *testing.T) {
 	test.Parallel()
 	_, lowerSourceError := lowerSource(
 		test,
@@ -109,26 +112,26 @@ func TestNodeFSFileKeepsDetachedMethodRefusal(test *testing.T) {
 	}
 }
 
-func TestNodeFSFileBufferBorrow(test *testing.T) {
+func TestNodeFileSystemFileBufferBorrow(test *testing.T) {
 	test.Parallel()
-	lowersAndAgreesWithNode(test, fsAgreementSource(
+	lowersAndAgreesWithNode(test, fileSystemAgreementSource(
 		test,
 		`import {openSync,closeSync,readSync,readFileSync,writeFileSync,unlinkSync} from 'node:fs'; import {Buffer} from 'node:buffer'; const bytes=Buffer.from('b'); writeFileSync('x',Buffer.from('a')); const fd=openSync('x','r'); const count=readSync(fd,bytes,0,1,null); console.log(count.toString()); closeSync(fd); console.log(bytes.toString()); writeFileSync('x',bytes); console.log(readFileSync('x','utf8')); unlinkSync('x');`,
 	))
 }
 
-func TestNodeFSFileScratchOptionsBorrow(test *testing.T) {
+func TestNodeFileSystemFileScratchOptionsBorrow(test *testing.T) {
 	test.Parallel()
 	for _, source := range []string{
 		`import {rmSync,existsSync} from 'node:fs'; const options={recursive:true,force:true}; rmSync('missing',options); console.log(existsSync('missing')?'present':'absent');`,
 		`import {mkdtempSync,existsSync,rmSync} from 'node:fs'; const directory=mkdtempSync('prefix',{encoding:'utf8'}); console.log(existsSync(directory)?'created':'missing'); rmSync(directory,{recursive:true});`,
 	} {
 		source = strings.ReplaceAll(source, "'prefix'", strconv.Quote(filepath.Join(test.TempDir(), "prefix")))
-		lowersAndAgreesWithNode(test, fsAgreementSource(test, source))
+		lowersAndAgreesWithNode(test, fileSystemAgreementSource(test, source))
 	}
 }
 
-func TestNodeFSFileScratchOverloadsAreNamed(test *testing.T) {
+func TestNodeFileSystemFileScratchOverloadsAreNamed(test *testing.T) {
 	test.Parallel()
 	for _, one := range []struct{ source, member string }{
 		{`import {mkdtempSync} from 'node:fs'; mkdtempSync('prefix','buffer');`, "mkdtempSync"},

@@ -46,7 +46,7 @@ func TestNodePathBasenameMutants(test *testing.T) {
 			if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
 				test.Fatal(buildError)
 			}
-			got := executeInput(test, how, nodeFSDirectorySanitizerEnvironment(), binary)
+			got := executeInput(test, how, nodeFileSystemDirectorySanitizerEnvironment(), binary)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}

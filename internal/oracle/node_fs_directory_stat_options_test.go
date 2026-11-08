@@ -13,7 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestNodeFSDirectoryStatConstOptionsMutant(test *testing.T) {
+func TestNodeFileSystemDirectoryStatConstOptionsMutant(test *testing.T) {
 	test.Parallel()
 	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_stat_options.a"),
@@ -42,7 +42,7 @@ func TestNodeFSDirectoryStatConstOptionsMutant(test *testing.T) {
 	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	got := executeInput(test, how, nodeFSDirectorySanitizerEnvironment(), binary)
+	got := executeInput(test, how, nodeFileSystemDirectorySanitizerEnvironment(), binary)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
 		test.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
 	}
@@ -52,7 +52,7 @@ func TestNodeFSDirectoryStatConstOptionsMutant(test *testing.T) {
 	test.Log("false option forced true; caught only by Node stdout; sanitizers and leaks clean")
 }
 
-func nodeFSDirectorySanitizerEnvironment() []string {
+func nodeFileSystemDirectorySanitizerEnvironment() []string {
 	environment := []string{"UBSAN_OPTIONS=halt_on_error=1"}
 	if runtime.GOOS == "linux" {
 		environment = append(environment, "ASAN_OPTIONS=detect_leaks=1")
@@ -62,7 +62,7 @@ func nodeFSDirectorySanitizerEnvironment() []string {
 
 // Dropping an encoding argument reproduces the old string-only closure bug.
 // Latin1 and UTF8 remain valid strings, so only Node's bytes catch the mutant.
-func TestNodeFSRealpathClosureOptionsMutant(test *testing.T) {
+func TestNodeFileSystemRealpathClosureOptionsMutant(test *testing.T) {
 	test.Parallel()
 	input, absolutePathError := filepath.Abs("testdata/node_fs_directory_inputs/é.txt")
 	if absolutePathError != nil {
@@ -98,7 +98,7 @@ func TestNodeFSRealpathClosureOptionsMutant(test *testing.T) {
 	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	got := executeWith(test, nodeFSDirectorySanitizerEnvironment(), binary)
+	got := executeWith(test, nodeFileSystemDirectorySanitizerEnvironment(), binary)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || got.exitCode != 0 || len(got.stderr) != 0 {
 		test.Fatalf("mutant failed outside Node comparison: Node %+v mutant %+v", truth, got)
 	}

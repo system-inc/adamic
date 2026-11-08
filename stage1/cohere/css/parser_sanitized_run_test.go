@@ -17,7 +17,7 @@ import (
 // so it checks the output, ASan/UBSan and LeakSanitizer, where a second run checked leaks before (#testaudit).
 func cssParserSanitizedAgreement(test *testing.T, binary, cases string) run {
 	test.Helper()
-	return cssParserExecute(test, cssParserASAN(true), binary, cases)
+	return cssParserExecute(test, cssParserAsan(true), binary, cases)
 }
 
 // cssParserReleaseMutant is the unmutated parser's emitted C with every release dropped, built sanitized, as a
@@ -45,7 +45,7 @@ func cssParserReleaseMutant(test *testing.T) string {
 	return filepath.Join(dir, "parser")
 }
 
-func TestProduct_CSSParserReleaseMutant(test *testing.T) {
+func TestProduct_CssParserReleaseMutant(test *testing.T) {
 	test.Parallel()
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux runs leak detection inside the sanitized run")
@@ -56,7 +56,7 @@ func TestProduct_CSSParserReleaseMutant(test *testing.T) {
 // The merged run still fails on what the removed leak run caught. A parser that drops its releases prints the parser's
 // answers and passes ASan/UBSan with leak detection off, so only leak detection catches it, and the agreement's one
 // sanitized run fails it as a leak with the output still right. The unmutated parser passes the same run.
-func TestCSSParserSanitizedRunCatchesALeak(test *testing.T) {
+func TestCssParserSanitizedRunCatchesALeak(test *testing.T) {
 	test.Parallel()
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux runs leak detection inside the sanitized run")
@@ -75,7 +75,7 @@ func TestCSSParserSanitizedRunCatchesALeak(test *testing.T) {
 	}
 	answers("the unmutated parser", unmutated)
 	mutant := cssParserReleaseMutant(test)
-	unchecked := cssParserExecute(test, cssParserASAN(false), mutant, cases)
+	unchecked := cssParserExecute(test, cssParserAsan(false), mutant, cases)
 	if unchecked.exitCode != 0 || len(unchecked.stderr) != 0 {
 		test.Fatalf(
 			"with leak detection off the release mutant should pass: exit %d, %s",

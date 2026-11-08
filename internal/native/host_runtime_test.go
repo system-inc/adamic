@@ -392,7 +392,7 @@ func TestHostRuntimeMutantEnvironment(test *testing.T) {
 	runHostRuntimeMutant(test, 11)
 }
 
-func TestHostRuntimeMutantEOL(test *testing.T) {
+func TestHostRuntimeMutantEol(test *testing.T) {
 	test.Parallel()
 	runHostRuntimeMutant(test, 12)
 }

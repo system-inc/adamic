@@ -14,7 +14,7 @@ func jsonTypes(test testing.TB) string {
 	test.Helper()
 	return buildcache.GoBuild(test, "json-types", "./oracle/json_types.go", nil)
 }
-func TestProduct_JSONTypes(test *testing.T) { test.Parallel(); jsonTypes(test) }
+func TestProduct_JsonTypes(test *testing.T) { test.Parallel(); jsonTypes(test) }
 
 func jsonTypesEnvironment(test testing.TB, path string) []string {
 	test.Helper()

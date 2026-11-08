@@ -5,7 +5,7 @@ import (
 	"slices"
 )
 
-func ProgramRegionSCC[T comparable](edges, owning map[T][]T) map[T]bool {
+func ProgramRegionScc[T comparable](edges, owning map[T][]T) map[T]bool {
 	index, low := map[T]int{}, map[T]int{}
 	active := map[T]bool{}
 	stack := []T{}
@@ -139,7 +139,7 @@ func (finder *cycleFinder) programRegionSelectionMode(indexed bool) map[cycleNod
 		edges[node] = links
 		queue = append(queue, links...)
 	}
-	selected := ProgramRegionSCC(edges, owning)
+	selected := ProgramRegionScc(edges, owning)
 	// Compiler's container rule is applied after SCC selection, to concrete
 	// allocation-site types after monomorphization. Views cannot admit a container
 	// whose elements/keys/values are outside the selected component.

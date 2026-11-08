@@ -284,10 +284,10 @@ func buffers(pass *analysis.Pass, value types.TypeAndValue) bool {
 	if value.Type == nil || value.IsNil() {
 		return false
 	}
-	return !isOSFile(value.Type)
+	return !isOsFile(value.Type)
 }
 
-func isOSFile(resolvedType types.Type) bool {
+func isOsFile(resolvedType types.Type) bool {
 	pointer, ok := types.Unalias(resolvedType).(*types.Pointer)
 	if !ok {
 		return false

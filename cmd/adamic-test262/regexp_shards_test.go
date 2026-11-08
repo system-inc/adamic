@@ -60,7 +60,7 @@ func TestRegExpRunnerConstructorLegacy(test *testing.T) {
 	regExpRunnerShard(test, "testdata/regexp-constructor-errors", "legacy", outcomeRefused)
 }
 
-func regExpRunnerWASIShard(test *testing.T, name string) {
+func regExpRunnerWasiShard(test *testing.T, name string) {
 	test.Helper()
 	engine := regExpCompilerEngine(test, "testdata/regexp")
 	one := regExpFixture(test, engine.test262, name)
@@ -71,18 +71,18 @@ func regExpRunnerWASIShard(test *testing.T, name string) {
 	); writeError != nil {
 		test.Fatal(writeError)
 	}
-	regExpWASIAgrees(test, engine, one)
+	regExpWasiAgrees(test, engine, one)
 }
-func TestRegExpRunnerMetadataWASI(test *testing.T) {
+func TestRegExpRunnerMetadataWasi(test *testing.T) {
 	test.Parallel()
-	regExpRunnerWASIShard(test, "metadata")
+	regExpRunnerWasiShard(test, "metadata")
 }
-func TestRegExpRunnerUtilitiesWASI(test *testing.T) {
+func TestRegExpRunnerUtilitiesWasi(test *testing.T) {
 	test.Parallel()
-	regExpRunnerWASIShard(test, "utilities")
+	regExpRunnerWasiShard(test, "utilities")
 }
 
-func regExpWASIAgrees(test testing.TB, engine *engine, one classified) {
+func regExpWasiAgrees(test testing.TB, engine *engine, one classified) {
 	test.Helper()
 	options := native.Options{Target: "wasm32-wasi"}
 	directory, request := regExpRunnerRuntime(test, options)
@@ -101,7 +101,7 @@ func regExpWASIAgrees(test testing.TB, engine *engine, one classified) {
 	binary := filepath.Join(engine.work, "program.wasm")
 	args := append(native.Flags(options), "-I", directory, cPath, "-o", binary)
 	args = append(args, native.RuntimeLinkFlags(filepath.Join(directory, "runtime.a"))...)
-	args = append(args, native.WASILinkFlags(options)...)
+	args = append(args, native.WasiLinkFlags(options)...)
 	args = append(args, "-Wl,--export=__stack_low", "-lm")
 	linked := runCommand(20*time.Second, nil, request.Compiler, args...)
 	if linked.Exit != 0 {

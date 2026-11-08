@@ -11,182 +11,182 @@ import (
 	"time"
 )
 
-func TestSignalTERMDefaultSource(test *testing.T) {
+func TestSignalTermDefaultSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGTERM, false, "Source")
 }
 
-func TestSignalTERMDefaultNative(test *testing.T) {
+func TestSignalTermDefaultNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGTERM, false, "Native")
 }
 
-func TestSignalTERMDefaultBackend(test *testing.T) {
+func TestSignalTermDefaultBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGTERM, false, "Backend")
 }
 
-func TestSignalTERMInheritedSource(test *testing.T) {
+func TestSignalTermInheritedSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGTERM, true, "Source")
 }
 
-func TestSignalTERMInheritedNative(test *testing.T) {
+func TestSignalTermInheritedNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGTERM, true, "Native")
 }
 
-func TestSignalTERMInheritedBackend(test *testing.T) {
+func TestSignalTermInheritedBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGTERM, true, "Backend")
 }
 
-func TestSignalINTDefaultSource(test *testing.T) {
+func TestSignalIntDefaultSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGINT, false, "Source")
 }
 
-func TestSignalINTDefaultNative(test *testing.T) {
+func TestSignalIntDefaultNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGINT, false, "Native")
 }
 
-func TestSignalINTDefaultBackend(test *testing.T) {
+func TestSignalIntDefaultBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGINT, false, "Backend")
 }
 
-func TestSignalINTInheritedSource(test *testing.T) {
+func TestSignalIntInheritedSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGINT, true, "Source")
 }
 
-func TestSignalINTInheritedNative(test *testing.T) {
+func TestSignalIntInheritedNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGINT, true, "Native")
 }
 
-func TestSignalINTInheritedBackend(test *testing.T) {
+func TestSignalIntInheritedBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGINT, true, "Backend")
 }
 
-func TestSignalHUPDefaultSource(test *testing.T) {
+func TestSignalHupDefaultSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGHUP, false, "Source")
 }
 
-func TestSignalHUPDefaultNative(test *testing.T) {
+func TestSignalHupDefaultNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGHUP, false, "Native")
 }
 
-func TestSignalHUPDefaultBackend(test *testing.T) {
+func TestSignalHupDefaultBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGHUP, false, "Backend")
 }
 
-func TestSignalHUPInheritedSource(test *testing.T) {
+func TestSignalHupInheritedSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGHUP, true, "Source")
 }
 
-func TestSignalHUPInheritedNative(test *testing.T) {
+func TestSignalHupInheritedNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGHUP, true, "Native")
 }
 
-func TestSignalHUPInheritedBackend(test *testing.T) {
+func TestSignalHupInheritedBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGHUP, true, "Backend")
 }
 
-func TestSignalQUITDefaultSource(test *testing.T) {
+func TestSignalQuitDefaultSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGQUIT, false, "Source")
 }
 
-func TestSignalQUITDefaultNative(test *testing.T) {
+func TestSignalQuitDefaultNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGQUIT, false, "Native")
 }
 
-func TestSignalQUITDefaultBackend(test *testing.T) {
+func TestSignalQuitDefaultBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGQUIT, false, "Backend")
 }
 
-func TestSignalQUITInheritedSource(test *testing.T) {
+func TestSignalQuitInheritedSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGQUIT, true, "Source")
 }
 
-func TestSignalQUITInheritedNative(test *testing.T) {
+func TestSignalQuitInheritedNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGQUIT, true, "Native")
 }
 
-func TestSignalQUITInheritedBackend(test *testing.T) {
+func TestSignalQuitInheritedBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGQUIT, true, "Backend")
 }
 
-func TestSignalUSR2DefaultSource(test *testing.T) {
+func TestSignalUsr2DefaultSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGUSR2, false, "Source")
 }
 
-func TestSignalUSR2DefaultNative(test *testing.T) {
+func TestSignalUsr2DefaultNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGUSR2, false, "Native")
 }
 
-func TestSignalUSR2DefaultBackend(test *testing.T) {
+func TestSignalUsr2DefaultBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGUSR2, false, "Backend")
 }
 
-func TestSignalUSR2InheritedSource(test *testing.T) {
+func TestSignalUsr2InheritedSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGUSR2, true, "Source")
 }
 
-func TestSignalUSR2InheritedNative(test *testing.T) {
+func TestSignalUsr2InheritedNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGUSR2, true, "Native")
 }
 
-func TestSignalUSR2InheritedBackend(test *testing.T) {
+func TestSignalUsr2InheritedBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGUSR2, true, "Backend")
 }
 
-func TestSignalALRMDefaultSource(test *testing.T) {
+func TestSignalAlrmDefaultSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGALRM, false, "Source")
 }
 
-func TestSignalALRMDefaultNative(test *testing.T) {
+func TestSignalAlrmDefaultNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGALRM, false, "Native")
 }
 
-func TestSignalALRMDefaultBackend(test *testing.T) {
+func TestSignalAlrmDefaultBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGALRM, false, "Backend")
 }
 
-func TestSignalALRMInheritedSource(test *testing.T) {
+func TestSignalAlrmInheritedSource(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGALRM, true, "Source")
 }
 
-func TestSignalALRMInheritedNative(test *testing.T) {
+func TestSignalAlrmInheritedNative(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGALRM, true, "Native")
 }
 
-func TestSignalALRMInheritedBackend(test *testing.T) {
+func TestSignalAlrmInheritedBackend(test *testing.T) {
 	test.Parallel()
 	signalLeg(test, syscall.SIGALRM, true, "Backend")
 }

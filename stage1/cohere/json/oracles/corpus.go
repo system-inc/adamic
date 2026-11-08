@@ -428,7 +428,7 @@ func RepositoryCorpusIdentityError(pin string, cases []ComparisonCase, count int
 // ValidatePinnedCorpus is shared with the parent json tests.
 func ValidatePinnedCorpus(test testing.TB, cases []ComparisonCase, expected CorpusPin) (CorpusPin, int, error) {
 	tracked, _ := PinnedCorpusProduct(test)
-	state := repositoryJSON{paths: map[string]bool{}}
+	state := repositoryJson{paths: map[string]bool{}}
 	for _, item := range tracked {
 		state.paths[item.Name] = true
 	}
@@ -451,7 +451,7 @@ const RepositoryCorpusCommit = "2b4dbde172c1c2f23c065ecae8b906f8fcb72a20"
 
 const ProvisionedCorpusPrefix = "stage3/api/node_modules/"
 
-type repositoryJSON struct {
+type repositoryJson struct {
 	paths map[string]bool
 	dirty []string
 }
@@ -463,7 +463,7 @@ func ValidateCorpusState(
 	cases []ComparisonCase,
 	expected CorpusPin,
 ) (CorpusPin, int, error) {
-	state := repositoryJSON{paths: paths, dirty: dirty}
+	state := repositoryJson{paths: paths, dirty: dirty}
 	if len(state.dirty) > 0 {
 		return CorpusPin{}, 0, fmt.Errorf("repository dirty JSON: %s", strings.Join(state.dirty, ", "))
 	}

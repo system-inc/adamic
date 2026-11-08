@@ -17,9 +17,9 @@ import (
 // Parallel execution reserves memory: all parsed ASTs, full six-pass results and sanitizer clones share a large working
 // set.
 // Not parallel: ADAMIC_MARKDOWNAST_KEEP export directory and shared markdownMemory budget; existing helper controls parallel execution.
-func TestMarkdownASTPreprocessing(test *testing.T) {
+func TestMarkdownAstPreprocessing(test *testing.T) {
 	parallelMarkdownMemory(test, 3)
-	fixture := markdownASTPrepare(test)
+	fixture := markdownAstPrepare(test)
 	inputs, files, goBinary, nativeCases, fork, want := fixture.inputs, fixture.files, fixture.goBinary, fixture.nativeCases, fixture.fork, fixture.want
 	if keep := os.Getenv("ADAMIC_MARKDOWNAST_KEEP"); keep != "" {
 		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
@@ -171,9 +171,9 @@ func TestMarkdownASTPreprocessing(test *testing.T) {
 // contexts, every timed run still checked against Go's bytes, so neither test carries both the comparisons and the
 // timings.
 // Not parallel: parallelMarkdownMemory runs it in parallel under the shared markdownMemory budget, except while a KEEP export is requested; existing helper controls parallel execution.
-func TestMarkdownASTPreprocessingThroughput(test *testing.T) {
+func TestMarkdownAstPreprocessingThroughput(test *testing.T) {
 	parallelMarkdownMemory(test, 3)
-	fixture := markdownASTPrepare(test)
+	fixture := markdownAstPrepare(test)
 	inputs, goBinary, nativeCases, fork, want := fixture.inputs, fixture.goBinary, fixture.nativeCases, fixture.fork, fixture.want
 	fast := pilotNativeProductFromLowered(test, "ast", pilotLoweredProduct(test, "ast"), false)
 	for _, side := range []struct {
@@ -198,24 +198,24 @@ func TestMarkdownASTPreprocessingThroughput(test *testing.T) {
 	}
 }
 
-// markdownASTInput is one AST preprocessing context as the Go driver and the probes read it.
-type markdownASTInput struct {
+// markdownAstInput is one AST preprocessing context as the Go driver and the probes read it.
+type markdownAstInput struct {
 	Name, Text string
 	Mode       string
 	TabWidth   int
 }
 
-// markdownASTFixture is what both AST preprocessing tests start from: the contexts, Go's projected bytes for them,
+// markdownAstFixture is what both AST preprocessing tests start from: the contexts, Go's projected bytes for them,
 // the AST transport Go wrote for the other sides, and the pinned fork.
-type markdownASTFixture struct {
-	inputs                      []markdownASTInput
+type markdownAstFixture struct {
+	inputs                      []markdownAstInput
 	files                       int
 	batch                       []byte
 	goBinary, nativeCases, fork string
 	want                        run
 }
 
-func markdownASTPrepare(test *testing.T) markdownASTFixture {
+func markdownAstPrepare(test *testing.T) markdownAstFixture {
 	test.Helper()
 	root, absolutePathError := filepath.Abs(repository)
 	if absolutePathError != nil {
@@ -228,9 +228,9 @@ func markdownASTPrepare(test *testing.T) markdownASTFixture {
 		test.Log(selection.Log(test.Name()))
 	}
 	corpus, files = selectedMarkdownInputs(corpus, files, selection)
-	inputs := []markdownASTInput{}
+	inputs := []markdownAstInput{}
 	for _, item := range corpus {
-		inputs = append(inputs, markdownASTInput{Name: item.Name, Text: item.Text, TabWidth: 4})
+		inputs = append(inputs, markdownAstInput{Name: item.Name, Text: item.Text, TabWidth: 4})
 	}
 	for _, text := range []string{
 		"[[a\n[[wiki]]",
@@ -268,13 +268,13 @@ func markdownASTPrepare(test *testing.T) markdownASTFixture {
 		for _, tab := range []int{1, 2, 3, 4, 8} {
 			inputs = append(
 				inputs,
-				markdownASTInput{Name: fmt.Sprintf("generated/AST/%d/%s", tab, text), Text: text, TabWidth: tab},
+				markdownAstInput{Name: fmt.Sprintf("generated/AST/%d/%s", tab, text), Text: text, TabWidth: tab},
 			)
 		}
 	}
 	inputs = append(
 		inputs,
-		markdownASTInput{Name: "synthetic/adjacent_text", Text: "a b", Mode: "adjacent_text", TabWidth: 4},
+		markdownAstInput{Name: "synthetic/adjacent_text", Text: "a b", Mode: "adjacent_text", TabWidth: 4},
 	)
 	dir := test.TempDir()
 	var batch bytes.Buffer
@@ -304,7 +304,7 @@ func markdownASTPrepare(test *testing.T) markdownASTFixture {
 		test.Fatal(readError)
 	}
 	equal(test, "pinned bundle", installed, pinned)
-	return markdownASTFixture{
+	return markdownAstFixture{
 		inputs:      inputs,
 		files:       files,
 		batch:       batch.Bytes(),
@@ -319,17 +319,17 @@ func markdownASTPrepare(test *testing.T) markdownASTFixture {
 // (#5qykzj5).
 func astGoOracle(test *testing.T) string { test.Helper(); return oracles.ASTGoOracle(test) }
 
-func TestProduct_MarkdownASTLowered(test *testing.T) {
+func TestProduct_MarkdownAstLowered(test *testing.T) {
 	test.Parallel()
 	pilotLoweredProduct(test, "ast")
 }
 
-func TestProduct_MarkdownASTNativeSanitized(test *testing.T) {
+func TestProduct_MarkdownAstNativeSanitized(test *testing.T) {
 	test.Parallel()
 	pilotNativeProduct(test, "ast", true)
 }
 
-func TestProduct_MarkdownASTNativeRelease(test *testing.T) {
+func TestProduct_MarkdownAstNativeRelease(test *testing.T) {
 	test.Parallel()
 	pilotNativeProduct(test, "ast", false)
 }

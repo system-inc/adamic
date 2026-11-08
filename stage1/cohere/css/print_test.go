@@ -138,9 +138,9 @@ func comparePrinterLibrary(test *testing.T, cases, expected, library, mode, vari
 			continue
 		}
 		var goText, jsText string
-		goOK := json.Unmarshal([]byte(goAnswer), &goText) == nil
-		jsOK := json.Unmarshal([]byte(jsAnswer), &jsText) == nil
-		if goOK && jsOK && goText == jsText {
+		goOk := json.Unmarshal([]byte(goAnswer), &goText) == nil
+		jsOk := json.Unmarshal([]byte(jsAnswer), &jsText) == nil
+		if goOk && jsOk && goText == jsText {
 			agrees++
 			continue
 		}

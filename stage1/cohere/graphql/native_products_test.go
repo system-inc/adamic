@@ -20,7 +20,7 @@ import (
 // product built ahead by a TestProduct_ of its own, so neither test compiles C (#tze35sy, Loom's build law): eighteen
 // clang builds, the closed gap, the port and its sixteen mutants, were made inside the tests.
 
-func TestProduct_GraphQLGapsSanitized(test *testing.T) {
+func TestProduct_GraphQlGapsSanitized(test *testing.T) {
 	test.Parallel()
 	for _, gap := range gaps {
 		if gap.notYet == "" && gap.badC == "" {
@@ -29,12 +29,12 @@ func TestProduct_GraphQLGapsSanitized(test *testing.T) {
 	}
 }
 
-func TestProduct_GraphQLPortSanitized(test *testing.T) {
+func TestProduct_GraphQlPortSanitized(test *testing.T) {
 	test.Parallel()
 	requirePort(test, portSanitized(test, nil))
 }
 
-func TestProduct_GraphQLPortMutantsSanitized(test *testing.T) {
+func TestProduct_GraphQlPortMutantsSanitized(test *testing.T) {
 	test.Parallel()
 	for _, applied := range mutants {
 		requirePort(test, portSanitized(test, &applied))

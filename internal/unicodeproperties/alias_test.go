@@ -244,14 +244,14 @@ func TestScriptAliasSet(test *testing.T) {
 		"Adlm",
 	} {
 		script, ok := Lookup("sc="+required, false)
-		extensions, extOK := Lookup("scx="+required, false)
-		if !ok || !extOK || script.Value == "" || script.Set == extensions.Set {
+		extensions, extOk := Lookup("scx="+required, false)
+		if !ok || !extOk || script.Value == "" || script.Set == extensions.Set {
 			test.Errorf(
 				"script %s: sc %v scx %v same set %v",
 				required,
 				ok,
-				extOK,
-				ok && extOK && script.Set == extensions.Set,
+				extOk,
+				ok && extOk && script.Set == extensions.Set,
 			)
 		}
 		if _, ok := Lookup("Script="+required, false); !ok {

@@ -114,9 +114,9 @@ var propsMutants = yamlMutants{family: "props", entry: "props_main.ts", files: [
 	{"tab indentation accepted", "tab = index;", "tab = -1;"},
 }}
 
-func TestProduct_YAMLPropsMutant000(test *testing.T) { test.Parallel(); propsMutants.product(test, 0) }
-func TestProduct_YAMLPropsMutant001(test *testing.T) { test.Parallel(); propsMutants.product(test, 1) }
-func TestProduct_YAMLPropsMutant002(test *testing.T) { test.Parallel(); propsMutants.product(test, 2) }
+func TestProduct_YamlPropsMutant000(test *testing.T) { test.Parallel(); propsMutants.product(test, 0) }
+func TestProduct_YamlPropsMutant001(test *testing.T) { test.Parallel(); propsMutants.product(test, 1) }
+func TestProduct_YamlPropsMutant002(test *testing.T) { test.Parallel(); propsMutants.product(test, 2) }
 
 func TestPropsMutants(test *testing.T) {
 	test.Parallel()

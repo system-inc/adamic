@@ -15,12 +15,12 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func TestTSGoCacheRelease(test *testing.T) { test.Parallel(); tsgoCacheWitness(test, Options{}) }
-func TestTSGoCacheShippedRelease(test *testing.T) {
+func TestTsGoCacheRelease(test *testing.T) { test.Parallel(); tsgoCacheWitness(test, Options{}) }
+func TestTsGoCacheShippedRelease(test *testing.T) {
 	test.Parallel()
 	tsgoCacheWitness(test, Options{Release: true})
 }
-func TestTSGoCacheSanitized(test *testing.T) {
+func TestTsGoCacheSanitized(test *testing.T) {
 	test.Parallel()
 	tsgoCacheWitness(test, Options{Sanitize: true})
 }

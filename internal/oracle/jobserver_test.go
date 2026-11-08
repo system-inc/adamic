@@ -104,7 +104,7 @@ func jobserverRun(test *testing.T, clang string, tokens int) (report, commands s
 	}
 	fifo := ""
 	if tokens > 0 {
-		fifo = tokenFIFO(test, tokens)
+		fifo = tokenFifo(test, tokens)
 	}
 	out, cache, log := test.TempDir(), test.TempDir(), filepath.Join(test.TempDir(), "clang")
 	// The log's directory is written into the wrapper, since clang runs under toolchain.Env, which passes no variable
@@ -210,9 +210,9 @@ func TestTheJobserverNeverReachesTheEmittedCOrClangChild(test *testing.T) {
 	}
 }
 
-// tokenFIFO makes a jobserver FIFO holding count tokens, held open for the test so its tokens stay, and returns its
+// tokenFifo makes a jobserver FIFO holding count tokens, held open for the test so its tokens stay, and returns its
 // path.
-func tokenFIFO(test *testing.T, count int) string {
+func tokenFifo(test *testing.T, count int) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "jobserver")
 	if mkfifoError := syscall.Mkfifo(path, 0o600); mkfifoError != nil {

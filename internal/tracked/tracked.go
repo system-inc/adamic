@@ -684,7 +684,7 @@ func readRecord(directory string) (string, string, *manifest, error) {
 		)
 	}
 	found := &manifest{directory: directory, head: strings.TrimSpace(string(head))}
-	if !objectID(found.head) {
+	if !objectId(found.head) {
 		return "", "", nil, fmt.Errorf(
 			"%s: the manifest's commit %q isn't an object id",
 			filepath.Join(record, headFile),
@@ -719,7 +719,7 @@ func parseTree(source string, listing []byte) ([]Entry, error) {
 			name == "" ||
 			len(fields) != 3 ||
 			!knownMode(fields[0]) ||
-			!objectID(fields[2]) ||
+			!objectId(fields[2]) ||
 			(fields[1] == "commit") != (fields[0] == "160000") ||
 			(fields[1] != "blob" && fields[1] != "commit") {
 			return nil, fmt.Errorf("%s: %q isn't a git ls-tree -r entry", source, line)
@@ -735,7 +735,7 @@ func parseStage(source string, listing []byte) ([]Entry, error) {
 	for _, line := range names(listing) {
 		header, name, ok := strings.Cut(line, "\t")
 		fields := strings.Fields(header)
-		if !ok || name == "" || len(fields) != 3 || !knownMode(fields[0]) || !objectID(fields[1]) {
+		if !ok || name == "" || len(fields) != 3 || !knownMode(fields[0]) || !objectId(fields[1]) {
 			return nil, fmt.Errorf("%s: %q isn't a git ls-files --stage entry", source, line)
 		}
 		entries = append(entries, Entry{Mode: fields[0], Object: fields[1], Path: name})
@@ -747,7 +747,7 @@ func knownMode(mode string) bool {
 	return mode == "100644" || mode == "100755" || mode == "120000" || mode == "160000"
 }
 
-func objectID(text string) bool {
+func objectId(text string) bool {
 	return (len(text) == 40 || len(text) == 64) && strings.Trim(text, "0123456789abcdef") == ""
 }
 
@@ -797,7 +797,7 @@ func bound(record string, found *manifest, commit []byte) error {
 	}
 	line, _, _ := bytes.Cut(commit, []byte("\n"))
 	named, ok := strings.CutPrefix(string(line), "tree ")
-	if !ok || !objectID(named) {
+	if !ok || !objectId(named) {
 		return fmt.Errorf("%s: the commit object names no tree: %q", filepath.Join(record, commitFile), line)
 	}
 	rebuilt, treeObjectError := treeObject(found.entries, len(found.head))

@@ -19,9 +19,9 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func stdoutTTYColumns(test *testing.T, transport string) {
+func stdoutTtyColumns(test *testing.T, transport string) {
 	test.Helper()
-	stdoutIsTTYAgreement(test, transport)
+	stdoutIsTtyAgreement(test, transport)
 	stdoutColumnsAgreement(test, transport)
 }
 
@@ -40,7 +40,7 @@ func stdoutColumnsAgreement(test *testing.T, transport string) {
 	}
 	var truth run
 	for index, variant := range variants {
-		got := stdoutIsTTYRun(test, transport, variant[0], variant[1:]...)
+		got := stdoutIsTtyRun(test, transport, variant[0], variant[1:]...)
 		if index == 0 {
 			truth = got
 			if got.exitCode != 0 {
@@ -328,7 +328,7 @@ func columnsLifecycleRun(test *testing.T, products, node, fixture, mutant string
 	return result
 }
 
-func TestStdoutColumnsRefusesWASI(test *testing.T) {
+func TestStdoutColumnsRefusesWasi(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(repository, "internal/oracle/testdata/stdout_columns/columns.a")
 	program, loweredError := lowered(test, path)
@@ -346,7 +346,7 @@ func TestStdoutColumnsRefusesWASI(test *testing.T) {
 		refused.Reason != "wasi preview1 reports no terminal size" {
 		test.Fatalf("want typed, named WASI refusal, got %v", buildError)
 	}
-	if reason := buildWASI(
+	if reason := buildWasi(
 		test,
 		native.C(program),
 		filepath.Join(test.TempDir(), "oracle-columns.wasm"),
