@@ -1,0 +1,59 @@
+// Scratch overlay only. Ordinary Load/Lower and output remain guarded.
+package lower
+import (
+ "encoding/json"
+ "os"
+ "sort"
+ "github.com/system-inc/adamic/internal/ir"
+)
+type boundarySite struct {
+ Kind string `json:"kind"`
+ Where string `json:"where"`
+ PositionSource string `json:"position_source"`
+ Detail string `json:"detail,omitempty"`
+}
+func (l *lowering) boundaryObserve(unit,file string,start int,full bool,crashed ...bool) {
+ path:=os.Getenv("BOUNDARY_STREAM"); if path=="" { return }
+ panicStop:=len(crashed)>0 && crashed[0]
+ stopped:=len(latentFindings)>start || panicStop
+ status:="lowered"
+ if stopped { status="stopped" }
+ sites:=[]boundarySite{}
+ // These IR expressions have no source-position member on bcbe5d12. Neither
+ // CheckedFields keys nor ViewOrigins entries retain an AST source location.
+ // Do not substitute graphViewSite/graphDynamicSite: those are last-seen sites.
+ add:=func(kind,detail string){sites=append(sites,boundarySite{kind,unit,"unit fallback: IR node or metadata entry has no source position",detail})}
+ // First-error failures discard the unit's body. Full mode retains successful
+ // statements after the stock rollback of each failing statement.
+ if (!stopped || full) && !panicStop {
+  for range l.result.ViewOrigins { add("views","ViewOrigins") }
+  keys:=[]string{};for key:=range l.result.CheckedFields {keys=append(keys,key)};sort.Strings(keys)
+  for _,key:=range keys { add("views","CheckedFields:"+key) }
+  inspect:=func(node any)bool{
+   switch v:=node.(type){
+   case ir.ObjectLiteral:if v.Record {add("record_literals","")}
+   case ir.DynamicProperty:add("dynamic_reads","DynamicProperty")
+   case ir.DynamicKeyedProperty:add("dynamic_reads","DynamicKeyedProperty")
+   case ir.ObjectCall:if v.Checked {add("checked_object_calls",v.Method)}
+   };return true
+  }
+  walk(l.result.Main,inspect)
+  for _,function:=range l.result.Functions {walk(function.Body,inspect)}
+ }
+ out,err:=os.OpenFile(path,os.O_CREATE|os.O_WRONLY|os.O_APPEND,0600);if err!=nil{panic(err)}
+ record:=map[string]any{"unit":unit,"file":file,"status":status,"full_mode":full,"graph_types_nonempty":len(l.result.GraphTypes)!=0,"graph_types_count":len(l.result.GraphTypes),"sites":sites,"findings_added":len(latentFindings)-start,"recovered_findings":latentFindings[start:]}
+ err=json.NewEncoder(out).Encode(record);closeErr:=out.Close();if err!=nil{panic(err)};if closeErr!=nil{panic(closeErr)}
+}
+// Deterministic meter check without loader/checker state.
+func BoundaryCensusSelftest() {
+ l:=&lowering{result:&ir.Program{ViewOrigins:[]ir.Expression{ir.ObjectLiteral{}},CheckedFields:ir.SortedMap[string,bool]{"field":true},GraphTypes:ir.SortedMap[int,bool]{7:true},Main:[]ir.Statement{ir.Evaluate{Value:ir.ObjectLiteral{Record:true}}},Functions:[]ir.Function{{Body:[]ir.Statement{ir.Evaluate{Value:ir.DynamicProperty{}},ir.Evaluate{Value:ir.DynamicKeyedProperty{}},ir.Evaluate{Value:ir.ObjectCall{Checked:true,Method:"keys"}}}}}}}
+ latentFindings=nil
+ l.boundaryObserve("selftest.ts:1:1","selftest.ts",0,false)
+ latentFindings=append(latentFindings,LatentFinding{Kind:"NotYet"})
+ l.boundaryObserve("selftest.ts:2:1","selftest.ts",0,false)
+}
+
+var recordRecoveryUnits map[string]bool
+func recordRecoverySelected(where string) bool {
+ if recordRecoveryUnits==nil { data,err:=os.ReadFile(os.Getenv("RECORD_RECOVERY_UNITS"));if err!=nil{panic(err)};if err=json.Unmarshal(data,&recordRecoveryUnits);err!=nil{panic(err)} };return recordRecoveryUnits[where]
+}

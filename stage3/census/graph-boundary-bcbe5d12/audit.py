@@ -57,3 +57,7 @@ assert all(name.startswith(scope) for name in changed),changed
 for p in here.rglob('*'):assert '__pycache__' not in p.parts
 result=dict(raw_recount_passed=True,source_hashes_passed=True,scope_passed=True,counts_by_scope={k:dict(v) for k,v in by_scope.items()},units=len(units))
 (here/'validation.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
+
+if (here/'record-findings.json').exists():
+ import sys
+ subprocess.run([sys.executable,str(here/'audit-record-findings.py')],check=True)

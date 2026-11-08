@@ -1,0 +1,37 @@
+{
+  "why_rerun": "904 selected stopped-unit boundary rows have no phase=lowering finding payload because their source file records were not flushed before prior bounded passes stopped. No available stream payload was rerun.",
+  "original_binary_sha256": "e2082b9959c77e255f826dd7176861530962cc1a98f6d8f2e98dddcb9988595d",
+  "recovery_binary_sha256": "a671c0d60f6f2293379e19701ca21966b3f08bae753971b00d7f05bc8aa70bab",
+  "overlay_base": "/workspace/scratch/jawqwv7/overlay/overlay.json",
+  "overlay": "/workspace/scratch/jawqwv7/record-recovery-overlay/overlay.json",
+  "only_changes": [
+    "Filter candidate units by the exact missing unit where set before lowering; file setup and registration remain unchanged.",
+    "Include latentFindings[start:] in the boundary observer row before file-level buffering can lose it."
+  ],
+  "changed_go_evidence": {
+    "record-recovery-latent_units.go.txt": "2af2536c291c5d89c53185a472954d99ff3282e00e37c17ae75132ddaa02b825",
+    "record-recovery-latent_hook.go.txt": "e6df3e64edfb2c71c93f553984752974ef8217869ac627e1681827d19619903e",
+    "record-recovery-graph_boundary_census.go.txt": "64c5afddf78515f3dfef498be2853996930dfe5cfd170d94793222befd63f86d"
+  },
+  "unit_boundary_validation": [
+    "status",
+    "full_mode",
+    "graph_types_count",
+    "graph_types_nonempty",
+    "sites",
+    "findings_added"
+  ],
+  "child_limit_seconds": 1490,
+  "memory_soft_limit": "4GiB",
+  "ordinary_load_lower_guards": "unchanged; LATENT_ASSERT_NO_OUTPUT=1",
+  "startup_note": "An initial runner invocation preceded binary build completion and raised FileNotFoundError before any measurement child started. The completed build exited 0 and the runner was then started normally.",
+  "first_error_file_filter": {
+    "why": "original first-error loop does not honor LATENT_ONLY_FILE; stop unproductive unrelated-file scanning and select only checker.ts before the same setup and lowering",
+    "binary_sha256": "080a0ac961698b6ed7330deec6bbd15103e2c17ad61cc3daba659e156ec587e2",
+    "overlay": "/workspace/scratch/jawqwv7/record-recovery-file-filter-overlay.json",
+    "source_evidence": "record-recovery-latent_hook-file-filter.go.txt",
+    "source_sha256": "d40e8b54f811a99813a064186c5f3b10e19bf10032b540300a7b35de2bafbf93",
+    "retry_job": "record-recovery-08",
+    "retry_payloads": 4
+  }
+}
