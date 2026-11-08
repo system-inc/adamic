@@ -1,0 +1,13 @@
+        return array.slice(index);
+    }
+}
+declare const process: { nextTick?: unknown; browser?: unknown; } | undefined; declare const require: unknown;
+/** @internal */
+export function isNodeLikeSystem(): boolean {
+    // This is defined here rather than in sys.ts to prevent a cycle from its
+    // use in performanceCore.ts.
+    return typeof process !== "undefined"
+        && !!process.nextTick
+        && !process.browser
+        && typeof require !== "undefined";
+}

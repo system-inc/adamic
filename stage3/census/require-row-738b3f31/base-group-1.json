@@ -1,0 +1,181 @@
+[
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 14.475335667
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 14.42632843
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 14.375186296
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/binder.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 14.721855193
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/builder.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 15.416635065
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 13.562098357
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 13.462621851
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 15.021702287
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 13.318639772
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 13.341211511000001
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/require-row-adapted/src/compiler/debug.ts:525:37",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 15.618402131
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.051191704
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 3.621715771
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 3.542759328
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 15.219426984
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 13.331316282
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 13.900606151
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 12.994244726
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 18.403824911
+  },
+  {
+    "roots": [
+      "/workspace/require-row-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/require-row-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 13.405597173
+  }
+]
