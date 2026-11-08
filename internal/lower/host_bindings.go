@@ -103,7 +103,7 @@ func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
 		if row == nil {
 			return false, nil
 		}
-		if reason := hostBindingStop(*row); stop == nil && reason != "" {
+		if reason := l.hostBindingStopIn(*row); stop == nil && reason != "" {
 			stop = l.notYet(declaration, reason)
 		}
 	}
@@ -147,6 +147,19 @@ func hostBindingStop(row load.HostBinding) string {
 	return ""
 }
 
+// hostBindingStopIn is why a row doesn't lower in this lowering's build, or "" when it does. A row's Node
+// answer is measured in ES module mode, as the oracle runs every program, so it says nothing of a build
+// that declares one CommonJS bundle (ModuleFormatCommonJSBundle), where Node answers otherwise: typeof
+// require is "function" there, and folding core.ts's require Absent would make isNodeLikeSystem silently
+// false. Such a build stops at every row measured only in ES module mode, at its declaration and at every
+// use, until that format's answer is measured into the row (#redxes2; WebAssembly's must on #00qn5az).
+func (l *lowering) hostBindingStopIn(row load.HostBinding) string {
+	if l.moduleFormat == ModuleFormatCommonJSBundle && row.Node.Module == "ES" {
+		return "the host binding " + row.Name + " in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),"
+	}
+	return hostBindingStop(row)
+}
+
 // possessive is an owner's name with its possessive ending: Runtime's, Platforms'.
 func possessive(owner string) string {
 	if strings.HasSuffix(owner, "s") {
@@ -188,9 +201,9 @@ func (l *lowering) hostBindingOf(node *ast.Node) (*load.HostBinding, *ast.Symbol
 	return row, symbol
 }
 
-// hostBindingAbsent reports whether a row lowers as Absent on every target.
-func hostBindingAbsent(row load.HostBinding) bool {
-	return hostBindingStop(row) == "" && row.Native.Answer == load.HostBindingAbsent
+// hostBindingAbsent reports whether a row lowers as Absent on every target in this lowering's build.
+func (l *lowering) hostBindingAbsent(row load.HostBinding) bool {
+	return l.hostBindingStopIn(row) == "" && row.Native.Answer == load.HostBindingAbsent
 }
 
 // hostBindingGuard is the symbol of the Absent host binding a condition's typeof test proves missing:
@@ -219,7 +232,7 @@ func (l *lowering) hostBindingGuard(condition *ast.Node) *ast.Symbol {
 		return nil
 	}
 	row, symbol := l.hostBindingOf(test.AsTypeOfExpression().Expression)
-	if row == nil || !hostBindingAbsent(*row) {
+	if row == nil || !l.hostBindingAbsent(*row) {
 		return nil
 	}
 	return symbol
@@ -265,7 +278,7 @@ func (l *lowering) hostBindingRefusal(node *ast.Node) error {
 	if ast.IsAssignmentTarget(node) {
 		return &Refused{Where: l.program.Where(node), What: "a write to the host binding " + row.Name, Fix: hostBindingWriteFix}
 	}
-	if stop := hostBindingStop(*row); stop != "" {
+	if stop := l.hostBindingStopIn(*row); stop != "" {
 		return l.notYet(node, stop)
 	}
 	operand := node
@@ -357,7 +370,7 @@ func (l *lowering) hostBindingTypeOf(node *ast.Node) (ir.Expression, bool, error
 	if row == nil {
 		return nil, false, nil
 	}
-	if stop := hostBindingStop(*row); stop != "" {
+	if stop := l.hostBindingStopIn(*row); stop != "" {
 		return nil, true, l.notYet(node, stop)
 	}
 	return ir.StringConstant{Index: l.constant("undefined")}, true, nil
