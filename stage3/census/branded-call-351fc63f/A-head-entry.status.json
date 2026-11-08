@@ -1,0 +1,21 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_FULL",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "-u",
+    "LATENT_ONLY_FILE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/tmp/branded-report/stage3/census/branded-call-351fc63f/A-head-entry-units.jsonl",
+    "/tmp/branded-head-census",
+    "/tmp/branded-A/src/tsc/tsc.ts",
+    "/tmp/branded-report/stage3/census/branded-call-351fc63f/A-head-entry.jsonl"
+  ],
+  "cwd": "/tmp/branded-report",
+  "binary_sha256": null,
+  "exit": 0,
+  "wall_seconds": 2850.755,
+  "stopped": null
+}

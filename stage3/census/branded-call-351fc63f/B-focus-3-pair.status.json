@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "/tmp/branded-report/stage3/census/pair/pair.py",
+    "/tmp/branded-report/stage3/census/branded-call-351fc63f/B-parent-focus-3.jsonl",
+    "/tmp/branded-report/stage3/census/branded-call-351fc63f/B-head-focus-3.jsonl",
+    "/tmp/branded-B",
+    "--typescript",
+    "/tmp/branded-report/stage3/api/node_modules/typescript",
+    "--json",
+    "/tmp/branded-report/stage3/census/branded-call-351fc63f/B-focus-3-pair.json",
+    "--report",
+    "/tmp/branded-report/stage3/census/branded-call-351fc63f/B-focus-3-pair.md"
+  ],
+  "cwd": "/tmp/branded-report",
+  "binary_sha256": null,
+  "exit": 0,
+  "wall_seconds": 2.004,
+  "stopped": null
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/tmp/branded-head-overlay",
+    "/tmp/branded-head-entry"
+  ],
+  "cwd": "/tmp/branded-head",
+  "exit": 0,
+  "wall_seconds": 4.683,
+  "stopped": null
+}

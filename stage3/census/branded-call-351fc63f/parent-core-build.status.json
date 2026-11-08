@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/tmp/branded-parent-overlay/overlay.json",
+    "-o",
+    "/tmp/branded-parent-core",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/tmp/branded-report",
+  "exit": 0,
+  "wall_seconds": 58.19,
+  "stopped": null
+}

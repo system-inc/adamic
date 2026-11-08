@@ -1,0 +1,232 @@
+{
+  "A": {
+    "entry": {
+      "raw_findings": {
+        "lowered": 1,
+        "moved": 0,
+        "new_findings": 0,
+        "new_sites": 0,
+        "unit_first_stop_delta": 1,
+        "regressions": 0,
+        "totals": {
+          "before": {
+            "Refused": 4550,
+            "NotYet": 554
+          },
+          "after": {
+            "Refused": 4550,
+            "NotYet": 553
+          }
+        }
+      },
+      "distinct_reads": {
+        "lowered": 1,
+        "moved": 0,
+        "new_findings": 0,
+        "new_sites": 0,
+        "unit_first_stop_delta": 1,
+        "regressions": 0,
+        "totals": {
+          "before": {
+            "Refused": 4355,
+            "NotYet": 547
+          },
+          "after": {
+            "Refused": 4355,
+            "NotYet": 546
+          }
+        }
+      },
+      "units": [
+        {
+          "identity": [
+            "src/compiler/factory/utilities.ts",
+            "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+            23202
+          ],
+          "unit": {
+            "body_end": 23374,
+            "body_start": 23279,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "getJSDocTypeAssertionType",
+            "status": "attempted",
+            "where": "/tmp/branded-A/src/compiler/factory/utilities.ts:624:1"
+          },
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a checked predicate target TypeNode that narrows undefined, which isn't its supertype",
+            "root_kind": "",
+            "text": "/tmp/branded-A/src/compiler/factory/utilities.ts:626:5: stage 0 can't lower a checked predicate target TypeNode that narrows undefined, which isn't its supertype yet",
+            "unit": "/tmp/branded-A/src/compiler/factory/utilities.ts:624:1",
+            "where": "/tmp/branded-A/src/compiler/factory/utilities.ts:626:5"
+          },
+          "head": null
+        }
+      ]
+    },
+    "core": {
+      "raw_findings": {
+        "lowered": 0,
+        "moved": 0,
+        "new_findings": 0,
+        "new_sites": 0,
+        "unit_first_stop_delta": 0,
+        "regressions": 0,
+        "totals": {
+          "before": {
+            "Refused": 3,
+            "NotYet": 13,
+            "Boundary": 10
+          },
+          "after": {
+            "Refused": 3,
+            "NotYet": 13,
+            "Boundary": 10
+          }
+        }
+      },
+      "distinct_reads": {
+        "lowered": 0,
+        "moved": 0,
+        "new_findings": 0,
+        "new_sites": 0,
+        "unit_first_stop_delta": 0,
+        "regressions": 0,
+        "totals": {
+          "before": {
+            "Refused": 3,
+            "NotYet": 13,
+            "Boundary": 10
+          },
+          "after": {
+            "Refused": 3,
+            "NotYet": 13,
+            "Boundary": 10
+          }
+        }
+      },
+      "units": []
+    }
+  },
+  "B": {
+    "entry": {
+      "raw_findings": {
+        "lowered": 8,
+        "moved": 0,
+        "new_findings": 0,
+        "new_sites": 0,
+        "unit_first_stop_delta": 1,
+        "regressions": 0,
+        "totals": {
+          "before": {
+            "Refused": 4549,
+            "NotYet": 555
+          },
+          "after": {
+            "Refused": 4542,
+            "NotYet": 554
+          }
+        }
+      },
+      "distinct_reads": {
+        "lowered": 8,
+        "moved": 0,
+        "new_findings": 0,
+        "new_sites": 0,
+        "unit_first_stop_delta": 1,
+        "regressions": 0,
+        "totals": {
+          "before": {
+            "Refused": 4354,
+            "NotYet": 548
+          },
+          "after": {
+            "Refused": 4347,
+            "NotYet": 547
+          }
+        }
+      },
+      "units": [
+        {
+          "identity": [
+            "src/compiler/factory/utilities.ts",
+            "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+            23202
+          ],
+          "unit": {
+            "body_end": 23374,
+            "body_start": 23279,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "getJSDocTypeAssertionType",
+            "status": "attempted",
+            "where": "/tmp/branded-B/src/compiler/factory/utilities.ts:624:1"
+          },
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a checked predicate target TypeNode that narrows undefined, which isn't its supertype",
+            "root_kind": "",
+            "text": "/tmp/branded-B/src/compiler/factory/utilities.ts:626:5: stage 0 can't lower a checked predicate target TypeNode that narrows undefined, which isn't its supertype yet",
+            "unit": "/tmp/branded-B/src/compiler/factory/utilities.ts:624:1",
+            "where": "/tmp/branded-B/src/compiler/factory/utilities.ts:626:5"
+          },
+          "head": null
+        }
+      ]
+    },
+    "core": {
+      "raw_findings": {
+        "lowered": 0,
+        "moved": 0,
+        "new_findings": 0,
+        "new_sites": 0,
+        "unit_first_stop_delta": 0,
+        "regressions": 0,
+        "totals": {
+          "before": {
+            "Refused": 3,
+            "NotYet": 13,
+            "Boundary": 10
+          },
+          "after": {
+            "Refused": 3,
+            "NotYet": 13,
+            "Boundary": 10
+          }
+        }
+      },
+      "distinct_reads": {
+        "lowered": 0,
+        "moved": 0,
+        "new_findings": 0,
+        "new_sites": 0,
+        "unit_first_stop_delta": 0,
+        "regressions": 0,
+        "totals": {
+          "before": {
+            "Refused": 3,
+            "NotYet": 13,
+            "Boundary": 10
+          },
+          "after": {
+            "Refused": 3,
+            "NotYet": 13,
+            "Boundary": 10
+          }
+        }
+      },
+      "units": []
+    }
+  }
+}
