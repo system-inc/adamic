@@ -1,0 +1,16 @@
+// stdout's handle held in another object's field, its setBlocking read off the field and called
+// detached: Node's throws TypeError: Illegal invocation, and so does both backends' (#0bxc4jh).
+import 'node:process';
+const holder: { handle: { setBlocking?: (value: boolean) => void } | undefined } = { handle: (process.stdout as any)._handle as { setBlocking?: (value: boolean) => void } | undefined };
+if (holder.handle === undefined) {
+	console.log('no handle');
+} else {
+	const set = holder.handle.setBlocking;
+	try {
+		if (set) set(true);
+		console.log('blocked');
+	} catch (error) {
+		console.log(`${error instanceof TypeError}`);
+		if (error instanceof Error) console.log(error.message);
+	}
+}
