@@ -98,6 +98,16 @@ def site_lines(summary):
 def lowering_summary(records, expected, measurement):
     if not records or records[0].get('measurement') != measurement or records[0].get('status') != 'measurement':
         raise ValueError('invalid latent measurement header')
+    reports = [i for i, row in enumerate(records) if row.get('status') == 'relation_report']
+    trailer = None
+    if reports:
+        if reports != [len(records) - 1]:
+            raise ValueError('relation_report must occur exactly once, at the end')
+        trailer = records[-1]
+        relation = trailer.get('relation_overflow', {})
+        if trailer.get('measurement') != measurement or any(not isinstance(relation.get(key), str) for key in ('after_load', 'end')):
+            raise ValueError('invalid latent relation report')
+        records = records[:-1]
     seen = set()
     sites = set()
     events = 0
@@ -106,13 +116,14 @@ def lowering_summary(records, expected, measurement):
         if name not in expected or name in seen or record.get('measurement') != measurement:
             raise ValueError('invalid or duplicate latent census file')
         seen.add(name)
+    for record in [*records[1:], *([trailer] if trailer else [])]:
         for finding in record.get('findings') or []:
             if finding.get('measurement') != measurement or finding['kind'] not in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic', 'Boundary'):
                 raise ValueError('invalid latent finding')
             sites.add(tuple(finding[key] for key in ('kind', 'where', 'reason', 'text')))
             events += 1
     if seen != expected:
-        raise ValueError('latent census coverage incomplete')
+        raise ValueError('latent census coverage incomplete' + ('' if trailer else '; relation report missing: run did not complete; end answer unavailable'))
     counts = Counter(site[0] for site in sites)
     reasons = Counter((site[0], site[2]) for site in sites if site[0] in ('NotYet', 'Refused'))
     ranked = sorted(reasons, key=lambda key: (-reasons[key], key))
@@ -126,6 +137,8 @@ def lowering_summary(records, expected, measurement):
     reason_rows = sorted(groups.values(), key=lambda row: (-row['count'], row['reason']))
     return {
         'measurement': measurement,
+        'relation_report_complete': trailer is not None,
+        'relation_overflow': trailer['relation_overflow'] if trailer else None,
         'checker_rejected': records[0]['checker_rejected'],
         'count_definition': 'unique (kind, where, reason, text) sites across all attempts',
         'totals': {kind: counts[kind] for kind in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic')},
@@ -188,11 +201,15 @@ def entry_summary(tree, run):
     return result
 
 
+def relation_lines(summary):
+    return [] if summary['relation_report_complete'] else ['Relation report missing: run did not complete; end answer unavailable.']
+
+
 def entry_table(label, entry):
     summary = entry['lowering_census']
     if summary is None:
         return ['', f'tsc entry lowering, {label}: blocked by checker diagnostics.']
-    lines = ['', f"tsc entry lowering, {label}: {summary['measurement']}.",
+    lines = ['', f"tsc entry lowering, {label}: {summary['measurement']}.", *relation_lines(summary),
              f"Resolved source files: {summary['source_files']}; "
              f"NotYet: {summary['totals']['NotYet']}; Refused: {summary['totals']['Refused']}.",
              f"Errors: {summary['totals']['error']}; panics: {summary['totals']['panic']}; "
@@ -210,7 +227,7 @@ def entry_table(label, entry):
 
 def latent_table(label, summary):
     totals = summary['totals']
-    lines = ['', f'Latent lowering, {label}: {MEASUREMENT}.',
+    lines = ['', f'Latent lowering, {label}: {MEASUREMENT}.', *relation_lines(summary),
              f"NotYet: {totals['NotYet']}; Refused: {totals['Refused']}.",
              f"Recovery boundaries: {summary['boundaries']}; named nested checker exclusions: {len(summary['excluded_nested_functions'])}.",
              f"Errors: {totals['error']}; panics: {totals['panic']}.", *site_lines(summary), '',
@@ -295,9 +312,10 @@ def root_order_checks(tree, run, records):
         # A source-file list is not an ES-module evaluation order. Use the allowed
         # fallback explicitly: source path, numeric line/column, then stream order.
         findings = [finding for record in latent[1:] for finding in record.get('findings') or []
-                    if stop_file(finding['where']) in program]
-        findings.sort(key=lambda finding: (site_where(stop_file(finding['where'])),
-                                          *map(int, finding['where'].rsplit(':', 2)[1:])))
+                    if record.get('status') == 'relation_report' or stop_file(finding['where']) in program]
+        findings.sort(key=lambda finding: ('', 0, 0) if finding['where'] == 'program' else
+                      (site_where(stop_file(finding['where'])),
+                       *map(int, finding['where'].rsplit(':', 2)[1:])))
         first = findings[0] if findings else None
         checks.append({'root': site_where(root), 'where': site_where(row['where']),
                        'reason': row['reason'], 'node': probe,
@@ -305,7 +323,8 @@ def root_order_checks(tree, run, records):
                        'entry_unattempted_sources': sorted(site_where(name) for name in program - attempted),
                        'entry_next_stop': None if first is None else {
                            'kind': first['kind'], 'where': site_where(first['where']),
-                           'reason': first['reason'], 'source': 'entry census', 'order': 'source order'}})
+                           'reason': first['reason'], 'source': 'entry census',
+                           'order': 'program relation report' if first['where'] == 'program' else 'source order'}})
     return checks
 
 

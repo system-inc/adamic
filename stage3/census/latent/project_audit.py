@@ -1,4 +1,6 @@
 """Bounded entry-project audit used by audit_deferred.py --project."""
+
+from stream_records import census_records
 from collections import Counter
 import json
 import os
@@ -39,6 +41,7 @@ def run_project(binary, output, project, baseline, seconds):
                     partial_line = True
                     break
                 raise
+        rows = census_records(rows)
         files = rows[1:]
         units = [unit for row in files for unit in row['units']]
         counts = unit_counts(units)

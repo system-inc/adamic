@@ -1,0 +1,13 @@
+..F.
+======================================================================
+FAIL: test_relation_trailer_findings_count_as_notyet_sites (report_test.RelationTrailerReportTests.test_relation_trailer_findings_count_as_notyet_sites)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/8dbaea5/final-mutants/drop-trailer-findings/report_test.py", line 660, in test_relation_trailer_findings_count_as_notyet_sites
+    self.assertEqual(summary['totals']['NotYet'], 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.059s
+
+FAILED (failures=1)

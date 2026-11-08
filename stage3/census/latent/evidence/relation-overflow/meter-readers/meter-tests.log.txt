@@ -1,0 +1,51 @@
+=== RUN   TestReportPython
+=== PAUSE TestReportPython
+=== RUN   TestEntryPython
+=== PAUSE TestEntryPython
+=== RUN   TestCompilerPython
+=== PAUSE TestCompilerPython
+=== RUN   TestGeneratorPython
+=== PAUSE TestGeneratorPython
+=== RUN   TestNodeReadinessPython
+=== PAUSE TestNodeReadinessPython
+=== CONT  TestReportPython
+=== CONT  TestGeneratorPython
+=== CONT  TestNodeReadinessPython
+=== CONT  TestCompilerPython
+=== CONT  TestEntryPython
+    meter_test.go:21: entry_test: s..........ss
+        ----------------------------------------------------------------------
+        Ran 13 tests in 0.034s
+        
+        OK (skipped=3)
+--- PASS: TestEntryPython (1.19s)
+=== NAME  TestReportPython
+    meter_test.go:17: report_test: ss.........................................
+        ----------------------------------------------------------------------
+        Ran 43 tests in 0.503s
+        
+        OK (skipped=2)
+--- PASS: TestReportPython (1.34s)
+=== NAME  TestGeneratorPython
+    meter_test.go:29: generator_test: .
+        ----------------------------------------------------------------------
+        Ran 1 test in 8.502s
+        
+        OK
+--- PASS: TestGeneratorPython (9.13s)
+=== NAME  TestNodeReadinessPython
+    meter_test.go:33: node_readiness_test: ....
+        ----------------------------------------------------------------------
+        Ran 4 tests in 13.200s
+        
+        OK
+--- PASS: TestNodeReadinessPython (14.12s)
+=== NAME  TestCompilerPython
+    meter_test.go:25: compiler_test: .........
+        ----------------------------------------------------------------------
+        Ran 9 tests in 36.528s
+        
+        OK
+--- PASS: TestCompilerPython (37.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/meter	37.423s

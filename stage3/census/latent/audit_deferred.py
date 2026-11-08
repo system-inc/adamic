@@ -1,4 +1,6 @@
 """Real call witnesses, coverage gaps, unit counts and independent byte-mask mutants."""
+
+from stream_records import census_records
 import copy
 import importlib.util
 import json
@@ -65,7 +67,7 @@ for mode in ('legacy', 'full', 'speculative'):
     env = dict(os.environ, LATENT_ASSERT_NO_OUTPUT='1', LATENT_FULL='0' if mode=='legacy' else '1', LATENT_SPECULATIVE='1' if mode=='speculative' else '0')
     with (output/(mode+'.log')).open('w') as log:
         subprocess.run([str(binary), str(source), str(destination)], env=env, stdout=log, stderr=subprocess.STDOUT, timeout=45, check=True)
-    rows = hidden.read_rows(destination)
+    rows = census_records(hidden.read_rows(destination))
     units = [u for row in rows[1:] for u in row['units']]
     named = {u['name']: u for u in units if u['kind']=='KindFunctionDeclaration'}
     for name in ('unused', 'called', 'diagnosed', 'outer'):

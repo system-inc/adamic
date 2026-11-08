@@ -1,0 +1,74 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/importclean",
+    "exit": 0,
+    "wall_seconds": 8.853,
+    "log": "/tmp/latent-package-tests/latent_importclean.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/overlaytext",
+    "exit": 0,
+    "wall_seconds": 2.772,
+    "log": "/tmp/latent-package-tests/latent_overlaytext.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "exit": 0,
+    "wall_seconds": 5.655,
+    "log": "/tmp/latent-package-tests/latent_refusalrewrite.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "exit": 0,
+    "wall_seconds": 0.443,
+    "log": "/tmp/latent-package-tests/latent_refusalrewrite_cmd.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/replay",
+    "exit": 0,
+    "wall_seconds": 0.766,
+    "log": "/tmp/latent-package-tests/latent_replay.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/replay/worker",
+    "exit": 0,
+    "wall_seconds": 0.22,
+    "log": "/tmp/latent-package-tests/latent_replay_worker.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+    "exit": 0,
+    "wall_seconds": 19.725,
+    "log": "/tmp/latent-package-tests/latent_statecopy.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+    "exit": 0,
+    "wall_seconds": 10.01,
+    "log": "/tmp/latent-package-tests/latent_statementrewrite.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/timing",
+    "exit": 0,
+    "wall_seconds": 0.831,
+    "log": "/tmp/latent-package-tests/latent_timing.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "exit": 0,
+    "wall_seconds": 0.254,
+    "log": "/tmp/latent-package-tests/latent_tool.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/predicates/tools/tool",
+    "exit": 0,
+    "wall_seconds": 0.273,
+    "log": "/tmp/latent-package-tests/predicates_tools_tool.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/tool",
+    "exit": 0,
+    "wall_seconds": 1.912,
+    "log": "/tmp/latent-package-tests/tool.log"
+  }
+]
