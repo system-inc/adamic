@@ -243,14 +243,18 @@ func (l *lowering) nodeHeldHostObject(proven *checker.Type, depth int) *checker.
 		return nil
 	}
 	proven = l.checker.GetNonNullableType(proven)
-	if _, host := l.nodeHostObject(proven); host {
-		return proven
-	}
+	// A generic's slot is judged by its constraint before nodeHostObject is asked: a type parameter
+	// declared in a Node file carries a Node library name (setTimeout's TArgs is node:timers.TArgs),
+	// so nodeHostObject would call the parameter itself a host object, where it holds only what its
+	// constraint can.
 	if proven.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 {
 		if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != nil && constraint != proven {
 			return l.nodeHeldHostObject(constraint, depth+1)
 		}
 		return nil
+	}
+	if _, host := l.nodeHostObject(proven); host {
+		return proven
 	}
 	members := []*checker.Type{}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
