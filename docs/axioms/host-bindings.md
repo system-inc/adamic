@@ -27,9 +27,9 @@ Every column is held to Node's real `typeof` by internal/oracle/host_bindings_te
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | onProfilerEvent | performance.ts, `declare let onProfilerEvent: ((eventName: string) => void) \| undefined` | v24.21.0, ES module, `undefined` | Absent | Absent | Absent | none | none | @system_adamic on #00qn5az, Nov 6 2026 00:27Z: Absent on every target, Node's own answer under the oracle's module mode |
 | process | core.ts, `declare const process: { nextTick?: unknown; browser?: unknown; } \| undefined` | v24.21.0, ES module, `object` | Pending (Runtime) | Provided | Pending (Runtime and Platforms) | `node:process` | none | @system_adamic on #00qn5az, Nov 6 2026 00:05Z: Provided through Node's process model, the native and wasm32 columns pending Runtime's and Platforms' clearance of process.browser |
-| performance | performanceCore.ts, `declare const performance: Performance \| undefined` | v24.21.0, ES module, `object` | Pending (Runtime) | Provided | Pending (Runtime and Platforms) | #3sh9398, not built | none | @system_adamic on #00qn5az, Nov 6 2026 00:05Z: Provided on Node, not yet until #3sh9398's host model exists |
+| performance | performanceCore.ts, `declare const performance: Performance \| undefined` | v24.21.0, ES module, `object` | Provided | Provided | Provided | `node:perf_hooks` | none | @system_adamic_runtime on #m36zjrk, Nov 8 2026: native and wasm32 cleared, Provided through node:perf_hooks' performance, the same object on Node (globalThis.performance === perf_hooks.performance); wasm32 proven by WebAssembly on #m36zjrk |
 
-Only onProfilerEvent lowers today. process waits on Runtime and Platforms to clear `process.browser`, which Node answers undefined, before its reads route through the Node process lowering (internal/lower/library_node_process.go). performance waits on those columns and on #3sh9398's host model.
+onProfilerEvent and performance lower today. process waits on Runtime and Platforms to clear `process.browser`, which Node answers undefined, before its reads route through the Node process lowering (internal/lower/library_node_process.go). performance reads route through node:perf_hooks' performance, the same object Node supplies globally.
 
 ## Changing a row
 
