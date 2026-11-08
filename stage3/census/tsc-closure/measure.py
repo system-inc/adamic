@@ -14,7 +14,7 @@ def coverage(rows):
  if set(rows[0]['root_files'])!={str(root/f) for f in expected}:raise ValueError('root manifest mismatch')
 def census(path):
  rows=hidden.read_rows(path);coverage(rows)
- keys={(f['kind'],f['where'],f['reason'],f['text']) for r in rows[1:] for f in r['findings'] if f['kind']!='Boundary'}
+ keys={(f['kind'],f['where'],f['reason'],f['text']) for r in rows for f in r.get('findings', []) if f['kind']!='Boundary'}
  @functools.lru_cache(None)
  def location(site):
   path=Path(site[1].rsplit(':',2)[0]);return path.relative_to(root).as_posix() if path.is_relative_to(root) else None

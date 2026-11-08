@@ -1,0 +1,26 @@
+{
+  "task": "8dbaea5",
+  "base": "6f68dd0fc5ee78c0b1230482d2c2089f02b1856b",
+  "starting_branch": "795656f9a1424b46bd3ab445cbcef00a9f12f19c",
+  "setup_exit": 0,
+  "npm_exit": 0,
+  "meter_go_wrappers_exit": 0,
+  "meter_real_python_suites_exit": 0,
+  "whole_census_suite_exit": 0,
+  "latent_overlay_suite_exit": 0,
+  "entry_build_exit": 0,
+  "latent_build_exit": 0,
+  "census_build_exit": 0,
+  "basic_audit_exit": 0,
+  "reader_checks_exit": 0,
+  "mutant_assertions_exit": 0,
+  "mutants": {
+    "trailer-as-file": 1,
+    "drop-trailer-findings": 1
+  },
+  "initial_entry_audit_misinvocation": {
+    "wrapper_exit": 1,
+    "child_exit": 2,
+    "reason": "directory-only audit mistakenly invoked with entry-file binary; corrected latent audit exits 0"
+  }
+}
