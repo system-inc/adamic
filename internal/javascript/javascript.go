@@ -312,6 +312,10 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		const callee = "const adamicCallee = (object, name) => { "
 		code = strings.Replace(code, callee, callee+"if (object === performance) return { code: (closure, values) => object[name](...values) }; ", 1)
 	}
+	if emitter.stdoutHandleUsed {
+		const callee = "const adamicCallee = (object, name) => { "
+		code = strings.Replace(code, callee, callee+stdoutHandleCallee, 1)
+	}
 	if emitter.processExitUsed {
 		code = "import { processExit as adamicProcessExit, processExiting as adamicProcessExiting } from " + runtimeImport + ";\n" + code
 	} else if strings.Contains(code, "adamicProcessExiting()") {
@@ -381,6 +385,7 @@ func classCountRuntime(runtime string, counted bool) string {
 type emitter struct {
 	processExitUsed     bool
 	hostCalleeUsed      bool
+	stdoutHandleUsed    bool
 	program             *ir.Program
 	options             Options
 	function            *ir.Function
@@ -898,6 +903,9 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 	case ir.ProcessCall:
 		if expression.Operation == "performance" {
 			e.hostCalleeUsed = true
+		}
+		if expression.Operation == "handle" {
+			e.stdoutHandleUsed = true
 		}
 		if value, known := e.nodeProcessCall(expression); known {
 			return value

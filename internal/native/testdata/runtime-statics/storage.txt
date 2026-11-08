@@ -456,7 +456,6 @@
 `node_process.c:mark_type:1`
 `node_process.c:marks:1`
 `node_process.c:measure_type:1`
-`node_process.c:method:1`
 `node_process.c:name_error:1`
 `node_process.c:performance_clear_marks_closure:1`
 `node_process.c:performance_clear_measures_closure:1`
@@ -466,6 +465,9 @@
 `node_process.c:performance_object:1`
 `node_process.c:platform:1`
 `node_process.c:platform:2`
+# The handle's setBlocking as a value, whose code throws Illegal invocation (#0bxc4jh): a static
+# closure with a zero count, as the handle is, written by nothing and read by address alone.
+`node_process.c:set_blocking_closure:1`
 # Error.stackTraceLimit's stored count, read and written only through relaxed atomics.
 `node_process.c:stack_trace_limit:1`
 `runtime-file:node_process.c`
