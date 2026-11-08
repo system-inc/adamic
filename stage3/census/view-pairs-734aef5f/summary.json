@@ -44,13 +44,13 @@
     "stopped": 3509
   },
   "stock_skips_without_boundary": {
-    "deferred_generic_instantiation": 720
+    "deferred_generic_instantiation": 724
   },
-  "deferred_units_in_emitted_inventory": 720,
+  "deferred_units_in_emitted_inventory": 724,
   "resolved_files": 81,
-  "full_files_attempted": 41,
-  "full_files_complete_traversal": 40,
-  "stock_inventory_units": 7127,
+  "full_files_attempted": 42,
+  "full_files_complete_traversal": 41,
+  "stock_inventory_units": 7208,
   "probe_incomplete_units": 0,
   "orphan_pair_lines": 0,
   "probe_errors": [],
@@ -58,7 +58,7 @@
   "deduplicated_pair_visits": 239945,
   "over_depth_pair_visits": 21343,
   "nil_reference_definition": "Known lower.representation(fieldType) with ir.Type.IsReference(); includes strings and Weak. Object-reference companion excludes ir.String and ir.Weak. Fields come from cycleFinder.fields, excluding prototype methods, accessors and static prototype.",
-  "first_error_selected_stopped_units": 115,
+  "first_error_selected_stopped_units": 101,
   "cycle_finder_ran": false,
   "graph_types_nonempty_units": 0
 }
