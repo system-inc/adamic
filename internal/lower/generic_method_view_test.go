@@ -57,6 +57,9 @@ console.log(h.handle(new Cat()));
 		{"a host method a view makes generic", `const p: { chdir<T>(directory: string | number): void } = process;
 p.chdir(5);
 `},
+		{"a host method a view makes generic, exit", `const p: { exit<T>(code?: number | string | null | boolean): void } = process;
+p.exit(true);
+`},
 		{"one class's generic method under two type arguments", `class Box<E> { put<T>(x: E): string { return "kept"; } }
 const dogs: Box<Dog> = new Box<Dog>();
 const animals: Box<Animal> = dogs;
