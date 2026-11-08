@@ -1,0 +1,4 @@
+import 'node:process';
+const handle = (process.stdout as any)._handle as { setBlocking?: (value: boolean) => void; };
+if (handle && handle.setBlocking) { const set = handle.setBlocking; set(true); }
+console.log('set blocking');
