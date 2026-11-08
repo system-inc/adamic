@@ -10,28 +10,28 @@ Box: `755daee0c6ba`; cgroup CPU quota `400000 100000`; memory limit `17179869184
 
 | Kind | Observations | Distinct reported locations |
 | --- | ---: | ---: |
-| views | 34896 | 358 |
+| views | 34902 | 360 |
 | record_literals | 0 | 0 |
 | dynamic_reads | 28 | 21 |
 | checked_object_calls | 0 | 0 |
 
-Views combine 1194 ViewOrigins entries and 33702 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
+Views combine 1196 ViewOrigins entries and 33706 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
 
-The 79 compiler-file subtotal is `{'views': 34896, 'record_literals': 0, 'dynamic_reads': 28, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
+The 79 compiler-file subtotal is `{'views': 34902, 'record_literals': 0, 'dynamic_reads': 28, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
 
-Long pole by observed count: **views, 34896**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
+Long pole by observed count: **views, 34902**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
 
 ## Coverage and interpretation
 
-Coverage continuation: 11/51 previously unstarted files now have a single-file full-mode attempt; 40 remain. executeCommandLine.ts is also retried because the earlier emitter piece ended before reaching it. Every continuation child is capped at 1490 seconds, leaving shutdown time below 25 minutes. A nonzero or timed-out single-file attempt is recorded and the runner moves on. 0 continuation files exited nonzero so far.
+Coverage continuation: 12/51 previously unstarted files now have a single-file full-mode attempt; 39 remain. executeCommandLine.ts is also retried because the earlier emitter piece ended before reaching it. Every continuation child is capped at 1490 seconds, leaving shutdown time below 25 minutes. A nonzero or timed-out single-file attempt is recorded and the runner moves on. 0 continuation files exited nonzero so far.
 
 Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 seconds; full-01: child exit -15, configured elapsed bound, 1791.304 seconds; full-07: child exit -15, configured elapsed bound, 571.096 seconds. Interrupted active units are excluded from completed observation counts.
 
 Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
 
-Observed 6589 unit results: {'lowered': 4142, 'stopped': 2447}. First-error pass observed 3447 results; full pieces observed 5976. The summed table uses one result per unit, preferring full mode over first-error mode and later full observations over earlier ones. Earlier completed unit results remain when a later attempt does not reach that unit. Repeated sites in different units are repeated observations, not independent source sites.
+Observed 6666 unit results: {'lowered': 4177, 'stopped': 2489}. First-error pass observed 3447 results; full pieces observed 6113. The summed table uses one result per unit, preferring full mode over first-error mode and later full observations over earlier ones. Earlier completed unit results remain when a later attempt does not reach that unit. Repeated sites in different units are repeated observations, not independent source sites.
 
-Stock unit inventory has 4714 units in 33 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 602}`. Missing stock file records after an interrupted pass are not evidence of zero units.
+Stock unit inventory has 4854 units in 34 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 605}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
 In first-error mode a unit with a lowering finding contributes zero sites: its body is discarded. In full mode the stock hook rolls failed statements back and continues. A `stopped` full-mode observation can therefore contain retained successful statements; its failed statements contribute no sites. Panicked unit results contribute zero sites. `lowered` means no new lowering finding in that unit, not whole-program acceptance. File-level refusal-scan findings do not suppress independent-unit examination.
 
@@ -86,7 +86,7 @@ Attribution is to the unit's file, not an independent root. Complete traversal m
 | semver.ts | 0 | 0 | 0 | 0 | 29 | complete traversal | no, not computed |
 | sourcemap.ts | 0 | 0 | 0 | 0 | 58 | complete traversal | no, not computed |
 | symbolWalker.ts | 0 | 0 | 0 | 0 | 14 | complete traversal | no, not computed |
-| sys.ts | 0 | 0 | 0 | 0 | 60 | not yet attempted | no, not computed |
+| sys.ts | 6 | 0 | 0 | 0 | 137 | complete traversal | no, not computed |
 | tracing.ts | 0 | 0 | 0 | 0 | 10 | not yet attempted | no, not computed |
 | transformer.ts | 0 | 0 | 0 | 0 | 0 | not yet attempted | no, not computed |
 | transformers/classFields.ts | 192 | 0 | 0 | 0 | 23 | not yet attempted | no, not computed |
@@ -540,7 +540,15 @@ export function createNodeConverters(factory: NodeFactory): NodeConverters {
 | full-20-010-snapshot-final | 0 | 2.004 | completed |
 | full-20-010-snapshot | 0 | 2.003 | completed |
 | full-20-010 | 0 | 70.571 | completed |
+| full-20-011-add | 0 | 1.006 | completed |
+| full-20-011-audit | 0 | 3.004 | completed |
+| full-20-011-commit | 0 | 1.001 | completed |
+| full-20-011-push | 0 | 2.001 | completed |
+| full-20-011-report | 0 | 2.005 | completed |
+| full-20-011-snapshot-final | 0 | 1.003 | completed |
+| full-20-011-snapshot | 0 | 2.006 | completed |
 | full-20-011 | 0 | 54.11 | completed |
+| full-20-012 | 0 | 117.241 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
 | interim-audit | 0 | 3.002 | completed |
