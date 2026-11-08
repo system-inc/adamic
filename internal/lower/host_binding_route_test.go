@@ -4,17 +4,14 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"slices"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/load"
 )
 
 // A Provided host binding routes its reads through its model path (host_bindings.go, #yewmv46). No
-// row of today's table routes, so these pins lower against the performance row as its owners'
-// clearance will make it: Provided on every target, through node:perf_hooks.
+// performance's real row is Provided on every target, through node:perf_hooks.
 //
 // Mutants, each one line, and the pin that goes red:
 //   - (m1) library_node.go, nodeHostObject's arm for a Provided row's declared type:
@@ -33,24 +30,6 @@ import (
 //   - (m3) host_bindings.go, hostBindingModelRefusal's member assignability:
 //     `if !l.checker.IsTypeAssignableTo(held, declared) {` becomes `if false {`. Pin b goes red: its
 //     stop moves to the whole-type check's words, which name no member.
-
-// routedPerformanceRows is today's table with performance's row Provided on every target, its model
-// node:perf_hooks.
-func routedPerformanceRows() ([]load.HostBinding, error) {
-	rows, err := load.HostBindings()
-	if err != nil {
-		return nil, err
-	}
-	routed := slices.Clone(rows)
-	for index := range routed {
-		if routed[index].Name == "performance" {
-			routed[index].Native = load.HostBindingColumn{Answer: load.HostBindingProvided}
-			routed[index].WASM32 = load.HostBindingColumn{Answer: load.HostBindingProvided}
-			routed[index].Model = load.HostBindingModel{Path: "node:perf_hooks"}
-		}
-	}
-	return routed, nil
-}
 
 // routedPerformanceCore is a performanceCore.ts declaring performance on line 1, its row's declaration
 // exactly, then an interface Performance holding members, then body.
@@ -102,18 +81,8 @@ func routedPerformanceMain(name, call string) string {
 	return "import 'node:perf_hooks';\nimport { " + name + " } from './performanceCore.ts';\n" + call + "\n"
 }
 
-// These run one after another, never t.Parallel(): each swaps the package's hostBindingRows for the
-// routed table and restores it with defer. A parallel test, or subtest, would read the swapped table
-// from another test's lowering, or run after the restore. Go runs every top-level parallel test only
-// once the sequential ones are done, so the parallel host binding tests never see the swap.
+// These pins exercise the real performance row and its declaration and later-view checks.
 func TestHostBindingProvidedRoutesThroughItsModel(t *testing.T) {
-	rows, err := routedPerformanceRows()
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer func(table func() ([]load.HostBinding, error)) { hostBindingRows = table }(hostBindingRows)
-	hostBindingRows = func() ([]load.HostBinding, error) { return rows, nil }
-
 	// (a) performanceCore.ts's own declarations, as adapted, lower, and its now() is the host's:
 	// performance.now() is the model's now, the call Node's own global's lowers to.
 	t.Run("performanceCore.ts's shape", func(t *testing.T) {
