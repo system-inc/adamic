@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "source": "ArrayLiteralExpression | CallExpression | NewExpression",
+    "target": "ArrayLiteralExpression",
+    "path": [],
+    "count": 1,
+    "files": [
+      "/workspace/view-pairs-adapted/src/compiler/checker.ts"
+    ],
+    "units": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "unit": "/workspace/view-pairs-adapted/src/compiler/checker.ts:28352:5",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "source": "SyntaxKind",
+    "target": "SyntaxKind.ArrayLiteralExpression | SyntaxKind.CallExpression | SyntaxKind.NewExpression",
+    "path": [
+      "parent",
+      "kind"
+    ],
+    "count": 1,
+    "files": [
+      "/workspace/view-pairs-adapted/src/compiler/checker.ts"
+    ],
+    "units": [
+      {
+        "file": "/workspace/view-pairs-adapted/src/compiler/checker.ts",
+        "unit": "/workspace/view-pairs-adapted/src/compiler/checker.ts:28364:5",
+        "count": 1
+      }
+    ]
+  }
+]

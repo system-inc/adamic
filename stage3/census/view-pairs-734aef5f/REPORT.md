@@ -14,18 +14,18 @@ Annotations add full nested paths, nil-source target types and reference fields,
 
 ## Counts
 
-**Unrelated object pair observations: 0; distinct textual (source, target, nested path) pairs: 0. Nil-source views with a known runtime reference field: 0.** The object-capable reference companion is 0. Nil-source views with no proven reference field but unknown fields or missing target: 0.
+**Unrelated object pair observations: 2; distinct textual (source, target, nested path) pairs: 2. Nil-source views with a known runtime reference field: 0.** The object-capable reference companion is 0. Nil-source views with no proven reference field but unknown fields or missing target: 0.
 
-Selected-unit pair observations: **22772**. Raw lines across all passes, including superseded first-error and retry observations: **22772**. Selected units held 812 viewSources entries; pointer deduplication suppressed 127469 repeat visits and the depth bound suppressed 10593 visits.
+Selected-unit pair observations: **31794**. Raw lines across all passes, including superseded first-error and retry observations: **31794**. Selected units held 1282 viewSources entries; pointer deduplication suppressed 178863 repeat visits and the depth bound suppressed 15449 visits.
 
 | Split | Selected unit observations | All raw lines |
 | --- | ---: | ---: |
-| object_related_top | 684 | 684 |
-| object_related_nested | 19791 | 19791 |
-| object_unrelated_top | 0 | 0 |
-| object_unrelated_nested | 0 | 0 |
+| object_related_top | 946 | 946 |
+| object_related_nested | 27705 | 27705 |
+| object_unrelated_top | 1 | 1 |
+| object_unrelated_nested | 1 | 1 |
 | scalar_top | 3 | 3 |
-| scalar_nested | 2294 | 2294 |
+| scalar_nested | 3138 | 3138 |
 | nil_source | 0 | 0 |
 | nil_target_only | 0 | 0 |
 
@@ -35,7 +35,7 @@ Reference field means a cycleFinder.fields field whose lowering representation i
 
 ## Coverage
 
-Observed **4062 unit results**: `{'lowered': 3007, 'stopped': 1055}`. Deferred standalone units in emitted inventories: **28**. Unobserved stock units by status: `{'deferred_generic_instantiation': 28}`. Full-mode files attempted: **8/81**; emitted complete full-mode file inventories: 8. Stock inventory has 719 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
+Observed **5380 unit results**: `{'lowered': 3618, 'stopped': 1762}`. Deferred standalone units in emitted inventories: **28**. Unobserved stock units by status: `{'deferred_generic_instantiation': 28}`. Full-mode files attempted: **9/81**; emitted complete full-mode file inventories: 8. Stock inventory has 719 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
 
 One result per (unit file, unit position) is selected: full mode supersedes first-error mode, and later full pieces supersede earlier ones. Repeated dependency pairs in different units remain repeated observations. TypeToString text can be truncated or reused for distinct checker identities; the distinct-pair list groups displayed source/target strings plus the full first-encountered nested path, not globally shared checker identities.
 
@@ -49,7 +49,8 @@ All counts and owner positions are also in [unrelated-object-pairs.json](unrelat
 
 | Source type | Target type | Nested path | Count | Files and units |
 | --- | --- | --- | ---: | --- |
-| none observed | | | 0 | |
+| ArrayLiteralExpression \| CallExpression \| NewExpression | ArrayLiteralExpression | (top level) | 1 | checker.ts:28352:5 x1 |
+| SyntaxKind | SyntaxKind.ArrayLiteralExpression \| SyntaxKind.CallExpression \| SyntaxKind.NewExpression | parent.kind | 1 | checker.ts:28364:5 x1 |
 
 ## Every nil-source view with a runtime reference field
 
@@ -71,7 +72,7 @@ Each observation is retained, including repeats in one unit, in [nil-source-refe
 | builderPublic.ts | 10 | 6 | 0 | complete traversal |
 | builderState.ts | 21 | 12 | 0 | complete traversal |
 | builderStatePublic.ts | 3 | 0 | 0 | complete traversal |
-| checker.ts | 42 | 9 | 210 | not yet attempted |
+| checker.ts | 653 | 716 | 9232 | bounded/nonzero exit |
 | commandLineParser.ts | 97 | 62 | 0 | not yet attempted |
 | core.ts | 54 | 3 | 0 | not yet attempted |
 | corePublic.ts | 9 | 0 | 0 | not yet attempted |
@@ -160,6 +161,7 @@ Each child is capped at 1490 seconds with five seconds for forced cleanup, below
 | full-005 | 0 | 47.044 | completed |
 | full-006 | 0 | 77.234 | completed |
 | full-007 | 0 | 84.082 | completed |
+| full-008 | -15 | 1490.747 | configured elapsed bound |
 
 ## Evidence and replay
 
