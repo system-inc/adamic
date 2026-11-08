@@ -1,7 +1,6 @@
 package native_test
 
 import (
-	"bytes"
 	"context"
 	"os"
 	"os/exec"
@@ -10,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -227,15 +227,13 @@ func restPackCounts(t *testing.T, source string, withoutPlan bool) (int64, int64
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	if err := command.Run(); err != nil {
-		t.Fatalf("counted run: %v\n%s", err, stderr.String())
+	_, stderr, err := childguard.Capture(ctx, exec.CommandContext(ctx, binary))
+	if err != nil {
+		t.Fatalf("counted run: %v\n%s", err, stderr)
 	}
-	match := leakcheck.CountsLine.FindSubmatch(stderr.Bytes())
+	match := leakcheck.CountsLine.FindSubmatch(stderr)
 	if match == nil {
-		t.Fatalf("no counts line:\n%s", stderr.String())
+		t.Fatalf("no counts line:\n%s", stderr)
 	}
 	counts := [3]int64{}
 	for index, group := range []int{1, 2, 6} {
