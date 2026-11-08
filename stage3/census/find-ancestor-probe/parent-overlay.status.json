@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/probe-parent",
+    "/workspace/scratch/probe-parent-overlay"
+  ],
+  "cwd": "/workspace/scratch/probe-parent",
+  "exit": 0,
+  "wall_seconds": 3.005538183999988,
+  "stopped": null
+}

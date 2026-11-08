@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/probe-head",
+    "/workspace/scratch/probe-head-overlay"
+  ],
+  "cwd": "/workspace/scratch/probe-head",
+  "exit": 0,
+  "wall_seconds": 1.001277961000028,
+  "stopped": null
+}
