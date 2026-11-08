@@ -79,11 +79,11 @@ entry diagnostics and their exact match against the brief's committed meter
 run. [proofs/census.json](proofs/census.json) checks complete diagnostic set
 differences, including all 13 exact locations and no added diagnostic:
 
-| Tree | Whole program | checker.ts own file | Head A |
-| --- | ---: | ---: | ---: |
-| Before | 144 | 30 | 13 |
-| After | 131 | 17 | 0 |
-| One-read mutant | 132 | 18 | 1 |
+| Tree            | Whole program | checker.ts own file | Head A |
+| --------------- | ------------: | ------------------: | -----: |
+| Before          |           144 |                  30 |     13 |
+| After           |           131 |                  17 |      0 |
+| One-read mutant |           132 |                  18 |      1 |
 
 The isolated mutant undoes only the first `parameter!.dotDotDotToken` read,
 restoring TS18048 at checker.ts:52426:13. The independent verifier exits 1:
@@ -104,10 +104,10 @@ records their catchers. No mutant enters the oracle tree.
 [proofs/source.json](proofs/source.json) records one changed source file out of
 711 and exact stock checker JavaScript equality:
 
-| Comments | Bytes | SHA-256, before and after |
-| --- | ---: | --- |
+| Comments |     Bytes | SHA-256, before and after                                          |
+| -------- | --------: | ------------------------------------------------------------------ |
 | Retained | 2,892,419 | `786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e` |
-| Removed | 2,354,716 | `3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac` |
+| Removed  | 2,354,716 | `3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac` |
 
 There is no JavaScript diff and no JavaScript-changing head requiring Node
 before/after behavioral witnesses. Public source declarations are unchanged;
@@ -181,12 +181,12 @@ runners, no filter, eight upstream workers, `--light=false`, and lint disabled.
 Its raw status is **fail**, exit 1, solely for the existing public API
 acknowledgement failure. This is not a claim of zero upstream failing tests.
 
-| Phase | Exit | Wall seconds |
-| --- | ---: | ---: |
-| Install | 0 | 2.553 |
-| Build | 0 | 2.187 |
-| Tests | 1 | 356.202 |
-| Complete oracle | 1 | 361.032 |
+| Phase           | Exit | Wall seconds |
+| --------------- | ---: | -----------: |
+| Install         |    0 |        2.553 |
+| Build           |    0 |        2.187 |
+| Tests           |    1 |      356.202 |
+| Complete oracle |    1 |      361.032 |
 
 Counts: **106,366 passing, 1 failing, 0 pending**. The only failure is exactly
 `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change`.
@@ -215,7 +215,6 @@ counts, exits and byte comparisons. Compressed phase logs and the complete
 baseline diff are beside them. No lane acceptance predicate is run or changed;
 Loom's Correctness wave supplies that proof.
 
-
 ## Owner-pin repair on main 80c2d3282
 
 The follow-up branch `typescript/axolotl-checker-a-pin` starts at main
@@ -243,7 +242,6 @@ New proof artifacts and reproducible proof tooling are on the separate branch
 added here. Existing proof artifacts above remain historical records of 95a.
 No Loom submission is made. This repair changes adapter acceptance scope, not
 the thirteen source edits or emitted compiler JavaScript.
-
 
 The repair's full apply passes in **213 seconds** on the pinned main tip.
 Restoring only the owner's before text in that completed tree, while retaining
