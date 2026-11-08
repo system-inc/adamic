@@ -331,18 +331,22 @@ answer of every query separately from deterministic census output. The two
 Unit rows use the unit's exact location. Compare checker.ts rows with
 `LATENT_TIMES` unit timings to measure per-unit scanning overhead.
 
-The overlay includes two in-process Go tests. Run them after generating the
+The overlay includes in-process Go tests. Run them after generating the
 scratch overlay:
 
 ```sh
-go test -count=1 -overlay=/tmp/latent-overlay/overlay.json ./internal/lower -run '^TestLatentCensusOverflow'
+go test -count=1 -overlay=/tmp/latent-overlay/overlay.json ./stage3/census/latent/tool -run '^TestLatentCensus(Overflow|EntryReach)'
 ```
 
 `TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt` plants the same
 failed/overflowed assignable-relation cache mark as production's
 `TestAnOverflowedRelationMakesLoweringNotYet`, without a TS2859 diagnostic. It
 checks program and unit findings and their serialized fields.
-`TestLatentCensusOverflowAttributionKeepsEarlierUnitsClean` checks the first
-exposing unit and conservative endpoint-only attribution. Neither test starts a
-compiler subprocess. `TestLatentRelationOverflowHooksAndProductionWording`
+The test never starts a compiler subprocess. `TestLatentRelationOverflowHooksAndProductionWording`
 guards the driver hooks and production wording on main's own source.
+
+Passing a file directly selects its resolved non-library source reach, with the
+entry first so module identities remain routes from that entry. This permits a
+first-error census of the adapted `src/tsc/tsc.ts` even when its checker rejects
+the program. Directory invocation retains its explicitly enumerated roots.
+`TestLatentCensusEntryReachKeepsRootBeforeDependencies` checks this ordering.

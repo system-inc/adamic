@@ -39,6 +39,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	info, err := os.Stat(os.Args[1])
+	if err != nil { panic(err) }
+	if !info.IsDir() { program.LatentCensusEntryReach() }
 	if os.Getenv("LATENT_ASSERT_NO_OUTPUT") != "" {
 		output, failure := lower.Lower(context.Background(), program)
 		if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {

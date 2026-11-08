@@ -1,10 +1,11 @@
-package lower
+package main
 
 import (
 	"bytes"
 	"context"
 	"encoding/json"
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -26,9 +27,9 @@ func TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	run := func() (LatentRelationReport, []LatentFile) {
-		records := []LatentFile{}
-		report := Latent(ctx, program, func(record LatentFile) { records = append(records, record) })
+	run := func() (lower.LatentRelationReport, []lower.LatentFile) {
+		records := []lower.LatentFile{}
+		report := lower.Latent(ctx, program, func(record lower.LatentFile) { records = append(records, record) })
 		return report, records
 	}
 	control, records := run()
@@ -104,35 +105,26 @@ func TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt(t *testing.T) {
 	t.Logf("planted mark census JSONL:\n%s", output.String())
 }
 
-func TestLatentCensusOverflowAttributionKeepsEarlierUnitsClean(t *testing.T) {
+func TestLatentCensusEntryReachKeepsRootBeforeDependencies(t *testing.T) {
 	t.Parallel()
-	clean, overflow := "", "planted overflow"
-	records := []LatentFile{{Units: []LatentUnit{
-		{Where: "earlier", RelationOverflow: &clean},
-		{Where: "exposing", RelationOverflow: &overflow},
-		{Where: "later", RelationOverflow: &overflow},
-		{Where: "deferred", Status: "deferred_generic_instantiation"},
-	}}}
-	report := LatentRelationReport{End: overflow}
-	report.finish(records)
-	if report.FirstAffectedUnit != "exposing" || len(report.Findings) != 1 || len(records[0].Findings) != 0 {
-		t.Fatalf("per-unit attribution lost: %+v %+v", report, records)
-	}
-	// No post-unit check saw a final out-of-unit query. The record must explicitly
-	// mark all attempts, retaining the exact NotYet reason, and say it is broad.
-	for index := range records[0].Units {
-		if records[0].Units[index].RelationOverflow != nil {
-			records[0].Units[index].RelationOverflow = &clean
+	dir := t.TempDir()
+	entry := filepath.Join(dir, "main.a")
+	dependency := filepath.Join(dir, "dependency.a")
+	for path, source := range map[string]string{
+		entry:      "import {value} from './dependency.a';\nconsole.log(String(value));\n",
+		dependency: "export const value: number = 7;\n",
+	} {
+		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+			t.Fatal(err)
 		}
 	}
-	report = LatentRelationReport{End: overflow}
-	report.finish(records)
-	if report.FirstAffectedUnit != "" || !strings.Contains(report.Attribution, "every attempted unit conservatively marked") || len(records[0].Findings) != 3 {
-		t.Fatalf("endpoint-only overflow silently narrowed: %+v %+v", report, records)
+	program, err := load.LatentLoad([]string{entry})
+	if err != nil {
+		t.Fatal(err)
 	}
-	for _, finding := range records[0].Findings {
-		if finding.Phase != "relation_overflow_conservative_all_units" || finding.Kind != "NotYet" {
-			t.Fatalf("unlabelled broad attribution: %+v", finding)
-		}
+	program.LatentCensusEntryReach()
+	files := program.Files()
+	if len(files) != 2 || program.FileName(files[0]) != entry || program.FileName(files[1]) != dependency {
+		t.Fatalf("entry-root reach changed: %v", files)
 	}
 }
