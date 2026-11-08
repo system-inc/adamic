@@ -10,28 +10,28 @@ Box: `755daee0c6ba`; cgroup CPU quota `400000 100000`; memory limit `17179869184
 
 | Kind | Observations | Distinct reported locations |
 | --- | ---: | ---: |
-| views | 29166 | 314 |
+| views | 34896 | 358 |
 | record_literals | 0 | 0 |
-| dynamic_reads | 27 | 20 |
+| dynamic_reads | 28 | 21 |
 | checked_object_calls | 0 | 0 |
 
-Views combine 1055 ViewOrigins entries and 28111 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
+Views combine 1194 ViewOrigins entries and 33702 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
 
-The 79 compiler-file subtotal is `{'views': 29166, 'record_literals': 0, 'dynamic_reads': 27, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
+The 79 compiler-file subtotal is `{'views': 34896, 'record_literals': 0, 'dynamic_reads': 28, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
 
-Long pole by observed count: **views, 29166**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
+Long pole by observed count: **views, 34896**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
 
 ## Coverage and interpretation
 
-Coverage continuation: 7/51 previously unstarted files now have a single-file full-mode attempt; 44 remain. executeCommandLine.ts is also retried because the earlier emitter piece ended before reaching it. Every continuation child is capped at 1490 seconds, leaving shutdown time below 25 minutes. A nonzero or timed-out single-file attempt is recorded and the runner moves on. 0 continuation files exited nonzero so far.
+Coverage continuation: 8/51 previously unstarted files now have a single-file full-mode attempt; 43 remain. executeCommandLine.ts is also retried because the earlier emitter piece ended before reaching it. Every continuation child is capped at 1490 seconds, leaving shutdown time below 25 minutes. A nonzero or timed-out single-file attempt is recorded and the runner moves on. 0 continuation files exited nonzero so far.
 
 Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 seconds; full-01: child exit -15, configured elapsed bound, 1791.304 seconds; full-07: child exit -15, configured elapsed bound, 571.096 seconds. Interrupted active units are excluded from completed observation counts.
 
 Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
 
-Observed 6516 unit results: {'lowered': 4106, 'stopped': 2410}. First-error pass observed 3447 results; full pieces observed 5008. The summed table uses one result per unit, preferring full mode over first-error mode and later full observations over earlier ones. Earlier completed unit results remain when a later attempt does not reach that unit. Repeated sites in different units are repeated observations, not independent source sites.
+Observed 6549 unit results: {'lowered': 4121, 'stopped': 2428}. First-error pass observed 3447 results; full pieces observed 5875. The summed table uses one result per unit, preferring full mode over first-error mode and later full observations over earlier ones. Earlier completed unit results remain when a later attempt does not reach that unit. Repeated sites in different units are repeated observations, not independent source sites.
 
-Stock unit inventory has 3679 units in 29 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 535}`. Missing stock file records after an interrupted pass are not evidence of zero units.
+Stock unit inventory has 4612 units in 30 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{'deferred_generic_instantiation': 601}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
 In first-error mode a unit with a lowering finding contributes zero sites: its body is discarded. In full mode the stock hook rolls failed statements back and continues. A `stopped` full-mode observation can therefore contain retained successful statements; its failed statements contribute no sites. Panicked unit results contribute zero sites. `lowered` means no new lowering finding in that unit, not whole-program acceptance. File-level refusal-scan findings do not suppress independent-unit examination.
 
@@ -120,7 +120,7 @@ Attribution is to the unit's file, not an independent root. Complete traversal m
 | tsc/_namespaces/ts.ts | 0 | 0 | 0 | 0 | 1 | complete traversal | no, not computed |
 | tsc/tsc.ts | 0 | 0 | 0 | 0 | 6 | complete traversal | no, not computed |
 | types.ts | 0 | 0 | 0 | 0 | 875 | complete traversal | no, not computed |
-| utilities.ts | 4668 | 0 | 7 | 0 | 834 | not yet attempted | no, not computed |
+| utilities.ts | 10398 | 0 | 8 | 0 | 867 | complete traversal | no, not computed |
 | utilitiesPublic.ts | 2528 | 0 | 0 | 0 | 243 | complete traversal | no, not computed |
 | visitorPublic.ts | 0 | 0 | 0 | 0 | 28 | complete traversal | no, not computed |
 | watch.ts | 0 | 0 | 0 | 0 | 36 | complete traversal | no, not computed |
@@ -140,7 +140,7 @@ Examples, when available, use unit fallback positions and adapted unit source te
 | Unit file | Count |
 | --- | ---: |
 | checker.ts | 10465 |
-| utilities.ts | 4668 |
+| utilities.ts | 10398 |
 | program.ts | 4452 |
 | emitter.ts | 3433 |
 | utilitiesPublic.ts | 2528 |
@@ -173,6 +173,13 @@ Examples, when available, use unit fallback positions and adapted unit source te
         result: Symbol,
 ```
 
+`utilities.ts:1097:1` (unit fallback):
+```ts
+export function isGrammarError(parent: Node, child: Node | NodeArray<Node>): boolean {
+    if (isTypeParameterDeclaration(parent)) return child === parent.expression;
+    if (isClassStaticBlockDeclaration(parent)) return child === parent.modifiers;
+```
+
 `utilities.ts:1143:1` (unit fallback):
 ```ts
 function isAnyPrologueDirective(node: Node) {
@@ -185,13 +192,6 @@ function isAnyPrologueDirective(node: Node) {
 export function isExportNamespaceAsDefaultDeclaration(node: Node): boolean {
     return !!(isExportDeclaration(node) && node.exportClause && isNamespaceExport(node.exportClause) && moduleExportNameIsDefault(node.exportClause.name));
 }
-```
-
-`utilities.ts:2037:1` (unit fallback):
-```ts
-function canUseOriginalText(node: LiteralLikeNode, flags: GetLiteralTextFlags): boolean {
-    if (nodeIsSynthesized(node) || !node.parent || (flags & GetLiteralTextFlags.TerminateUnterminatedLiterals && node.isUnterminated)) {
-        return false;
 ```
 
 `program.ts:937:1` (unit fallback):
@@ -508,7 +508,15 @@ export function createNodeConverters(factory: NodeFactory): NodeConverters {
 | full-20-006-snapshot-final | 0 | 1.004 | completed |
 | full-20-006-snapshot | 0 | 1.002 | completed |
 | full-20-006 | 0 | 71.166 | completed |
+| full-20-007-add | 0 | 1.005 | completed |
+| full-20-007-audit | 0 | 2.029 | completed |
+| full-20-007-commit | 0 | 1.005 | completed |
+| full-20-007-push | 0 | 3.009 | completed |
+| full-20-007-report | 0 | 1.002 | completed |
+| full-20-007-snapshot-final | 0 | 1.002 | completed |
+| full-20-007-snapshot | 0 | 1.002 | completed |
 | full-20-007 | 0 | 86.22 | completed |
+| full-20-008 | 0 | 524.788 | completed |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
 | interim-audit | 0 | 3.002 | completed |
