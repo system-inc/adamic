@@ -49,6 +49,11 @@ type widening struct {
 	// which stage 0 doesn't relate yet (widenedProperties).
 	genericMethod string
 
+	// unfixedGeneric is a generic function, of type source, seen as target, which fixes none of the
+	// source's type parameters that its instantiation needs, so one falls back to a constraint holding
+	// any (rule G, widened).
+	unfixedGeneric bool
+
 	// declaredKey names a declared property an index signature reaches in .a (records_declared_keys.go):
 	// the target's index signature can write target under it where source is declared, or, when
 	// dictionary is set, the source's index signature holds source where the target reads it as target.
@@ -162,8 +167,23 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 			}
 			return l.widened(source, target, visited)
 		}
-		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && len(toSignatures[0].TypeParameters()) == 0 {
-			fromSignatures = []*checker.Signature{instantiateSignatureInContextOf(l.checker, fromSignatures[0], toSignatures[0], nil, nil)}
+		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && !slices.Equal(fromSignatures[0].TypeParameters(), toSignatures[0].TypeParameters()) {
+			// A generic function seen as another signature is related as tsc relates it (relater.go,
+			// compareSignaturesRelated): the target's own type parameters held opaque (its canonical
+			// signature), and the source instantiated in that context by the checker's inference, so
+			// @types/node's setTimeout<TArgs> seen as a slot's <A>(callback: (...args: NoInfer<A>) => void,
+			// ms, ...args: A) is judged with TArgs as A (rule G, #7fd51gk). The walk below is unchanged.
+			// A type parameter the target doesn't fix falls back to its constraint, and one holding any
+			// would hand the walk an any it accepts anything into, so that instantiation stops instead.
+			target := toSignatures[0]
+			if len(target.TypeParameters()) > 0 {
+				target = checker.Checker_getCanonicalSignature(l.checker, target)
+			}
+			instantiated := instantiateSignatureInContextOf(l.checker, fromSignatures[0], target, nil, nil)
+			if l.signatureAny(instantiated, target) != nil && l.signatureAny(fromSignatures[0], target) == nil {
+				return &widening{source: from, target: to, unfixedGeneric: true}
+			}
+			fromSignatures, toSignatures = []*checker.Signature{instantiated}, []*checker.Signature{target}
 		}
 		if found := l.widenedParameters(fromSignatures[0], toSignatures[0], visited); found != nil {
 			return found
@@ -233,8 +253,9 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 				// A generic method, on either side, has no one type to compare until its type parameters
 				// are related, and tsc relates a method's parameters both ways: a handle<T>(x: Dog) seen as
 				// handle<T>(x: Animal) is handed a Cat (#q6gs98r). Only a method type identical to the
-				// view's, under the checker's identity relation, is the same method; any other view of a
-				// generic method stops here, unjudged, rather than passing. A host's own generic method,
+				// view's, under the checker's identity relation, is the same method. Any other view of a
+				// generic method is related by rule G when each side is one signature, and an overload set
+				// stops unjudged rather than passing (#7fd51gk). A host's own generic method,
 				// declared only in TypeScript's library or Node's (hostDeclaredSymbol), keeps the path it had
 				// before this stop: FSWatcher's on, seen as sys.ts's FsWatchWorkerWatcher's, is judged by its
 				// run-time event check and its any overload's relation, and Performance's members by
@@ -243,7 +264,16 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 				if source == target || checker.Checker_isTypeIdenticalTo(l.checker, source, target) || l.hostDeclaredSymbol(inside) && l.generic(source) {
 					continue
 				}
-				return &widening{source: source, target: target, genericMethod: viewed.Name}
+				if len(l.checker.GetSignaturesOfType(source, checker.SignatureKindCall)) != 1 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 1 {
+					// An overload set has no one signature to relate, so it stays unjudged and stops.
+					return &widening{source: source, target: target, genericMethod: viewed.Name}
+				}
+				// One signature on each side is related as a function value is (widened's rule G), so the
+				// parameters a view narrows are refused there, with the method's own types.
+				if found := l.widened(source, target, visited); found != nil {
+					return found
+				}
+				continue
 			}
 			if found := l.widened(source, target, visited); found != nil {
 				return found
@@ -286,6 +316,22 @@ func (l *lowering) hostDeclaredSymbol(symbol *ast.Symbol) bool {
 		}
 	}
 	return true
+}
+
+// signatureAny is the first position where a member typed any in from meets one in to that isn't any or
+// unknown, through the return (covariantly) and every parameter a caller of to passes (contravariantly),
+// as anyRelatedSignatures walks them, or nil.
+func (l *lowering) signatureAny(from, to *checker.Signature) *anyRelation {
+	seen := map[[2]*checker.Type]bool{}
+	if found := l.anyContained(l.checker.GetReturnTypeOfSignature(from), l.checker.GetReturnTypeOfSignature(to), 0, seen); found != nil {
+		return found
+	}
+	for position := range anyRelatedPositions(from, to) {
+		if found := l.anyContained(l.checker.GetTypeAtPosition(to, position), l.checker.GetTypeAtPosition(from, position), 0, seen); found != nil {
+			return found
+		}
+	}
+	return nil
 }
 
 // generic reports whether a function type has a type parameter of its own.
@@ -1067,6 +1113,9 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 	}
 	if found.genericMethod != "" {
 		return l.notYet(node, "a generic method "+found.genericMethod+" of type "+l.checker.TypeToString(found.source)+" seen as "+l.checker.TypeToString(found.target))
+	}
+	if found.unfixedGeneric {
+		return l.notYet(node, "a generic function of type "+l.checker.TypeToString(found.source)+" seen as "+l.checker.TypeToString(found.target)+", which doesn't fix every type parameter it's instantiated with, so one falls back to a constraint holding any")
 	}
 	if found.enum {
 		if enumObjectSymbol(found.target) != nil {
