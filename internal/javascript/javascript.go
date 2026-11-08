@@ -97,6 +97,14 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => fn(object, ...values) }; };\n")
 	}
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
+	// object.name?.(...) through an interface: what adamicCallee finds, read once and before the
+	// arguments, called; undefined, with the arguments not evaluated, where it finds undefined.
+	optionalMethodCall := "const adamicOptionalMethodCall = (object, name, values) => { const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn == null) return undefined; return own ? adamicCall(fn, fn.receiver ? [object, ...values()] : values()) : "
+	if counted {
+		builder.WriteString(optionalMethodCall + "adamicDirect(fn, [object, ...values()]); };\n")
+	} else {
+		builder.WriteString(optionalMethodCall + "fn(object, ...values()); };\n")
+	}
 	builder.WriteString("const adamicParallelMap = (items, work) => items.map((item, index) => adamicCall(work, [item, index]));\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
@@ -1438,6 +1446,16 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
 		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
+			if expression.Optional {
+				if property.Optional || property.View != "" {
+					// Lowering tests an optional call's receiver in a conditional of its own, and stops
+					// one through a checked view (unemittableCheckedViewRead).
+					panic("compiler bug: an optional call through an optional receiver or a checked view")
+				}
+				// object.name?.(...): undefined, with the arguments not evaluated, where the object has
+				// no function value or method by that name, or its field holds undefined.
+				return "adamicOptionalMethodCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.callValues(expression.Arguments, expression.Spread) + "])"
+			}
 			if property.View != "" {
 				property.Method = false
 				callee, checked := readUnionViewAt(e, property, "receiver")
@@ -1452,6 +1470,10 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 			}
 			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.callValues(expression.Arguments, expression.Spread) + "])"
+		}
+		if expression.Optional {
+			// Lowering makes an optional call only through an interface (ir.CallClosure's Optional).
+			panic("compiler bug: an optional call through a function value")
 		}
 		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 	case ir.ArrayMap:

@@ -305,6 +305,16 @@ func unemittableCheckedViewRead(program *ir.Program) error {
 		if refused != nil {
 			return false
 		}
+		if call, isCall := node.(ir.CallClosure); isCall && call.Optional {
+			// object.name?.(...) whose method a checked view reads: the view's real object may hold
+			// anything in that slot, a value that isn't a function among them (check 49), and its read
+			// has no contract for a callable that may be missing (readUnionViewAt's).
+			if read, isProperty := call.Closure.(ir.Property); isProperty && read.View != "" && viewReadOf(program, read) == viewReadChecks {
+				refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " + read.Name + " of callable type " + read.ViewType}
+				return false
+			}
+			return true
+		}
 		read, isProperty := node.(ir.Property)
 		if !isProperty || read.View == "" || read.Method || viewReadOf(program, read) != viewReadChecks {
 			return true
