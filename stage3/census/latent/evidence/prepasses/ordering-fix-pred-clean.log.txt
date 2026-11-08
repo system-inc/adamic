@@ -1,0 +1,7 @@
+panic: overlay.go:469:128: missing ',' before newline in argument list (and 10 more errors)
+
+goroutine 1 [running]:
+main.main()
+	github.com/system-inc/adamic/stage3/census/latent/importclean/main.go:53 +0xd4
+exit status 2
+child_exit=1

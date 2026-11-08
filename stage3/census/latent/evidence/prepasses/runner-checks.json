@@ -1,0 +1,15 @@
+{
+  "nonzero": {
+    "wrapper_exit": 7,
+    "child_status": 7
+  },
+  "signal": {
+    "wrapper_exit": 143,
+    "child_status": -15
+  },
+  "memory": {
+    "wrapper_exit": 143,
+    "child_status": -15,
+    "reason": "combined VmRSS exceeded 1 KiB"
+  }
+}

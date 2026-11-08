@@ -85,7 +85,7 @@ refusal_output.write_text(refusal_source)
 replace[str(repository / 'internal/lower/refusals.go')] = str(refusal_output)
 # Keep all checker diagnostics and populated roots, but expose them only to measurement.
 loader = (repository / 'internal/load/load.go').read_text()
-loader = loader.replace('type Program struct {', 'type Program struct {\n latentSites []*ast.Diagnostic\n latentDiagnostics []string')
+loader = loader.replace('type Program struct {', 'type Program struct {\n latentRoots []*ast.SourceFile\n latentSites []*ast.Diagnostic\n latentDiagnostics []string')
 needle = 'return nil, &CheckError{Diagnostics: diagnostics}'
 assert loader.count(needle) == 1
 loader = loader.replace(needle, 'loaded.latentDiagnostics = diagnostics')
@@ -93,6 +93,7 @@ loader = loader.replace('formatted := make([]string, 0, len(all))', 'p.latentSit
 # Rename the permissive API; ordinary Load and LoadOverlay cannot expose rejected programs.
 loader = loader.replace('func Load(paths []string)', 'func LatentLoad(paths []string)')
 loader = loader.replace('func LoadOverlay(paths []string, overlay map[string]string)', 'func latentLoadOverlay(paths []string, overlay map[string]string)')
+loader = loader.replace('\treturn loaded, nil', '\tloaded.latentRoots = append([]*ast.SourceFile{}, loaded.files...)\n\treturn loaded, nil')
 loader += '\nfunc Load(paths []string) (*Program, error) { return nil, fmt.Errorf("latent census: measurement loader only; no output path") }\nfunc LoadOverlay(paths []string, overlay map[string]string) (*Program, error) { return Load(paths) }\n'
 overlay('internal/load/load.go', loader)
 overlay('internal/load/latent_hook.go', (territory / 'load.go.txt').read_text())

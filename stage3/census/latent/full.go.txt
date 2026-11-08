@@ -48,6 +48,7 @@ func (l *lowering) latentUseProgramFacts(facts **latentProgramFacts) {
 	}
 	local := **facts
 	local.entriesRecords = maps.Clone(local.entriesRecords)
+ local.omittedOptionals = maps.Clone(local.omittedOptionals)
 	l.latentApplyProgramFacts(local)
 	l.latentProgramRecordsPending = true
 }
