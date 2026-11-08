@@ -1,0 +1,1 @@
+class Animal { name = "a"; } class Cat extends Animal {} interface Handler { handle<T>(x: Animal): string; } class StringHandler { handle<T extends string>(x: Animal): string { return x.name; } } const h: Handler = new StringHandler(); console.log(h.handle(new Cat()));

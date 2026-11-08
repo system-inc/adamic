@@ -1,0 +1,62 @@
+ evidence/00-fetch.exit                    |   1 +
+ evidence/00-fetch.log                     |   2 +
+ evidence/01-git-help.exit                 |   1 +
+ evidence/01-git-help.log                  |   2 +
+ evidence/02-toolchain.exit                |   1 +
+ evidence/02-toolchain.log                 |   6 +
+ evidence/03-checkout.exit                 |   1 +
+ evidence/03-checkout.log                  |   1 +
+ evidence/04-provenance.exit               |   1 +
+ evidence/04-provenance.log                |  35 ++++
+ evidence/05-submodules.exit               |   1 +
+ evidence/05-submodules.log                |  10 +
+ evidence/10-gofmt.exit                    |   1 +
+ evidence/10-gofmt.log                     |   0
+ evidence/11-vet.exit                      |   1 +
+ evidence/11-vet.log                       |   1 +
+ evidence/12-vet-retry.exit                |   1 +
+ evidence/12-vet-retry.log                 |   0
+ evidence/20-focused.exit                  |   1 +
+ evidence/20-focused.log                   | 227 +++++++++++++++++++++
+ evidence/21-node-handler.exit             |   1 +
+ evidence/21-node-handler.log              |   1 +
+ evidence/22-fetch-update.exit             |   1 +
+ evidence/22-fetch-update.log              |   2 +
+ evidence/23-advance.exit                  |   1 +
+ evidence/23-advance.log                   |   4 +
+ evidence/24-focused-d643b424.exit         |   1 +
+ evidence/24-focused-d643b424.log          | 252 +++++++++++++++++++++++
+ evidence/30-mutant-a.patch                |  13 ++
+ evidence/31-mutant-a.exit                 |   1 +
+ evidence/31-mutant-a.log                  |  31 +++
+ evidence/40-mutant-b.patch                |  13 ++
+ evidence/41-mutant-b.exit                 |   1 +
+ evidence/41-mutant-b.log                  |   8 +
+ evidence/42-restoration.exit              |   1 +
+ evidence/42-restoration.log               |   0
+ evidence/43-report.exit                   |   1 +
+ evidence/50-typescript-clone.exit         |   1 +
+ evidence/50-typescript-clone.log          |   1 +
+ evidence/51-typescript-checkout.exit      |   1 +
+ evidence/51-typescript-checkout.log       |  18 ++
+ evidence/52-whole-provenance.exit         |   1 +
+ evidence/52-whole-provenance.log          |   4 +
+ evidence/53-whole-lower.exit              |   1 +
+ evidence/53-whole-lower.log               |  23 +++
+ evidence/54-readme-update.exit            |   1 +
+ evidence/60-source-restoration.exit       |   1 +
+ evidence/60-source-restoration.log        |   0
+ evidence/61-precommit-status.exit         |   1 +
+ evidence/61-precommit-status.log          |   3 +
+ evidence/62-remote-evidence-before.exit   |   1 +
+ evidence/62-remote-evidence-before.log    |   0
+ evidence/63-final-report.exit             |   1 +
+ evidence/64-final-source-restoration.exit |   1 +
+ evidence/64-final-source-restoration.log  |   0
+ evidence/65-stage.log                     |   0
+ evidence/README-write.exit                |   1 +
+ evidence/README.md                        |  32 +++
+ evidence/handler.ts                       |   1 +
+ evidence/step-5.md                        |  35 ++++
+ evidence/steps-1-4.md                     | 321 ++++++++++++++++++++++++++++++
+ 61 files changed, 1075 insertions(+)

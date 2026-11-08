@@ -1,0 +1,8 @@
+=== RUN   TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== PAUSE TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== CONT  TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+    rule_g_test.go:90: got /tmp/adamic-gate/TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet3007918554/001/main.ts:5:27: stage 0 can't lower a generic function value without a concrete contextual signature yet, want the unfixed type parameter named as NotYet
+--- FAIL: TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.131s
+FAIL

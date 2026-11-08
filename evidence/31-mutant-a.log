@@ -1,0 +1,31 @@
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== RUN   TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers
+=== PAUSE TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== CONT  TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== RUN   TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== PAUSE TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a
+=== RUN   TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts
+=== PAUSE TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== CONT  TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a
+=== CONT  TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts
+=== NAME  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+    rule_g_test.go:22: Load: /tmp/adamic-gate/TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot.a1995793088/001/main.a:4:26: error TS18004: No value exists in scope for the shorthand property 'setTimeout'. Either declare one or provide an initializer.
+=== NAME  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+    rule_g_test.go:22: Load: /tmp/adamic-gate/TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot.ts2590798619/001/main.ts:4:26: error TS18004: No value exists in scope for the shorthand property 'setTimeout'. Either declare one or provide an initializer.
+--- FAIL: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot (0.00s)
+    --- FAIL: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a (0.13s)
+    --- FAIL: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts (0.14s)
+--- PASS: TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers (0.00s)
+    --- PASS: TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts (0.12s)
+    --- PASS: TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.175s
+FAIL

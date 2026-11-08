@@ -1,0 +1,13 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index ec8c73589..338db2757 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -167,7 +167,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
+ 			}
+ 			return l.widened(source, target, visited)
+ 		}
+-		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && !slices.Equal(fromSignatures[0].TypeParameters(), toSignatures[0].TypeParameters()) {
++		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && len(toSignatures[0].TypeParameters()) == 0 {
+ 			// A generic function seen as another signature is related as tsc relates it (relater.go,
+ 			// compareSignaturesRelated): the target's own type parameters held opaque (its canonical
+ 			// signature), and the source instantiated in that context by the checker's inference, so

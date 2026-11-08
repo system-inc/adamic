@@ -1,0 +1,32 @@
+# Rule G compiler proof
+
+Requested compiler head initially dda69fa165e2562031833030564bada78ae62b39, parent e3aa0bb7642163ebd004a71ba40a4657d27eab71. Updated by user to d643b42469bd229d461ca025652bf0dc360ee675 for steps 2–5; this adds only a test to rule_g_test.go.
+
+Scope: steps 1–5. User cancelled admission delta (step 6) and census (7a/7b); those run on a house box. No claim is made for those gates here.
+
+Every proof command has an output `.log` and matching numeric `.exit`. Mutant patches are retained; compiler and test source are restored after measurements. Logs 20 and 12 are at the original head; log 24 and the mutant/full-suite logs use d643b424. Log 24 temporarily adds `t.Logf("provider stops at: %v", err)` to the timer test, then restores it exactly.
+
+Toolchain is loaded with `source /workspace/adamic-tools/env.sh`. The configured TMPDIR initially did not exist: first vet attempt (11) exited 1; directory created and vet retried (12). See 02-toolchain.log for versions.
+
+Commands:
+
+- 05: `git submodule update --init --recursive --depth 1`
+- 10: `gofmt -l internal/lower/`
+- 12: `go vet ./internal/lower/`
+- 20, 24: `go test -count=1 -run 'TestASetTimeout|TestAGenericMethod|TestAGenericFunction|TestAHostMethod|TestNodeWatch' -v ./internal/lower/`
+- 21: `node evidence/handler.ts`
+- 31: mutant A, `go test -count=1 -run 'TestASetTimeout|TestAGenericMethodWithANarrowerConstraint' -v ./internal/lower/`
+- 41: mutant B, `go test -count=1 -run 'TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet' -v ./internal/lower/`
+- 42: `git diff --exit-code d643b42469bd229d461ca025652bf0dc360ee675 -- internal/lower/`
+
+- 53: `ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source go test -count=1 -timeout 40m -skip '^TestProduct_' ./internal/lower/`
+
+The upstream source is checked out at 050880ce59e30b356b686bd3144efe24f875ebc8 (see logs 50–52). No admission delta or standalone census was run.
+
+See [steps-1-4.md](steps-1-4.md) for the focused results, verbatim failure output, and why neither mutant establishes sensitivity.
+
+## Final result
+
+Proof failed. The focused suite and full lower suite both fail in three tests (four failing extension subtests). Neither mutant introduces a new failure; mutant A leaves the narrower-constraint-unused test green. The new narrower-constraint-read test and timer test terminate inside the loader helper, before their stop logging can execute. See [step-5.md](step-5.md) for every full-suite failure verbatim.
+
+Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made or retained. Steps 6–7 were skipped at the user's direction.

@@ -1,0 +1,35 @@
+dda69fa165e2562031833030564bada78ae62b39
+e3aa0bb7642163ebd004a71ba40a4657d27eab71
+commit dda69fa165e2562031833030564bada78ae62b39
+Author:     kirkouimet <kirk@kirkouimet.com>
+AuthorDate: Sun Nov 8 12:09:46 2026 -0700
+Commit:     kirkouimet <kirk@kirkouimet.com>
+CommitDate: Sun Nov 8 12:09:46 2026 -0700
+
+    lower: rule G, a generic function seen as a generic slot is related as tsc relates it, the slot's type parameters held opaque and the source instantiated in their context; an instantiation holding any where the slot doesn't stops (#7fd51gk)
+    
+    widened's signature branch instantiated a generic source only for a target
+    with no type parameters, so a generic provider against a generic slot was
+    related raw: @types/node's setTimeout<TArgs> seen as sys.ts's
+    <A>(callback: (...args: NoInfer<A>) => void, ms, ...args: A) compared TArgs
+    with A and refused both ways at sys.ts 1501 and 1599. Now any single generic
+    source signature whose type parameters aren't the target's is instantiated in
+    the context of the target's canonical signature (relater.go's own steps), and
+    the walk below is unchanged.
+    
+    Condition 3: a source type parameter the target doesn't fix falls back to its
+    constraint; one holding any would let the walk accept anything, so when the
+    instantiation puts any where the target has a type and the raw source didn't
+    (signatureAny), it's NotYet. This also guards the older generic-to-plain branch.
+    
+    widenedProperties' generic-method stop (#q6gs98r) now relates one signature on
+    each side through widened, so g1, g4 to g7 and the Box row are refused at the
+    narrowed parameter, and an overload set (o2) still stops unjudged.
+    
+    Pins: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot,
+    TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers (i2),
+    TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet (L2), and the
+    generic-method rows' new texts.
+    
+    Co-Authored-By: Ahra <ahra@ahra.ai>
+?? evidence/
