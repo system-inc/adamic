@@ -1,0 +1,23 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_FULL=1",
+    "LATENT_ONLY_FILE=/workspace/scratch/sygfnmc-adapted/src/compiler/core.ts",
+    "LATENT_TIMES=/workspace/adamic/stage3/census/latent/evidence/prepasses/core-full-head-times.jsonl",
+    "LATENT_PREPASS_TIMES=/workspace/adamic/stage3/census/latent/evidence/prepasses/core-full-head-prepasses.tsv",
+    "/tmp/sygfnmc-head",
+    "/workspace/scratch/sygfnmc-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/core-full-head.jsonl"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 30.03376308299994,
+  "peak_rss_kib": 919832,
+  "user_seconds": 31.954146,
+  "system_seconds": 4.185886,
+  "peak_observed_combined_rss_kib": 5367728,
+  "rss_ceiling_kib": 14680064
+}

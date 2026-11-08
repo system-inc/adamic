@@ -1,0 +1,37 @@
+FFFF
+======================================================================
+FAIL: test_order_error_is_a_lowering_finding_for_every_eligible_unit (__main__.ModuleOrderOutput.test_order_error_is_a_lowering_finding_for_every_eligible_unit) (mode='first-error')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 55, in test_order_error_is_a_lowering_finding_for_every_eligible_unit
+    self.assertTrue(errors,(mode,unit,row['findings']))
+AssertionError: [] is not true : ('first-error', {'measurement': 'measured on a checker-rejected program', 'where': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/a-clean.ts:1:1', 'kind': 'KindVariableStatement', 'instantiated': False, 'status': 'attempted', 'checker_diagnostics': []}, [])
+
+======================================================================
+FAIL: test_order_error_is_a_lowering_finding_for_every_eligible_unit (__main__.ModuleOrderOutput.test_order_error_is_a_lowering_finding_for_every_eligible_unit) (mode='full')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 55, in test_order_error_is_a_lowering_finding_for_every_eligible_unit
+    self.assertTrue(errors,(mode,unit,row['findings']))
+AssertionError: [] is not true : ('full', {'measurement': 'measured on a checker-rejected program', 'where': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/a-clean.ts:1:1', 'kind': 'KindVariableStatement', 'instantiated': False, 'status': 'attempted', 'checker_diagnostics': [], 'top': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/a-clean.ts:1:1'}, [])
+
+======================================================================
+FAIL: test_order_error_is_a_lowering_finding_for_every_eligible_unit (__main__.ModuleOrderOutput.test_order_error_is_a_lowering_finding_for_every_eligible_unit) (mode='speculative')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 55, in test_order_error_is_a_lowering_finding_for_every_eligible_unit
+    self.assertTrue(errors,(mode,unit,row['findings']))
+AssertionError: [] is not true : ('speculative', {'measurement': 'measured on a checker-rejected program', 'where': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/a-clean.ts:1:1', 'kind': 'KindVariableStatement', 'instantiated': False, 'status': 'speculative', 'checker_diagnostics': []}, [{'site_where': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/b-dynamic.ts:1:14', 'site_kind': 'KindIdentifier', 'site_start': 12, 'site_end': 20, 'root_kind': 'local panic: lower: source module has no import-declaration route: /tmp/adamic-gate/latent-order-error-lns5p0kw/source/b-dynamic.ts', 'depth': 0, 'boundary_where': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/b-dynamic.ts:1:14', 'measurement': 'measured on a checker-rejected program', 'unit': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/a-clean.ts:3:1', 'phase': 'refusal_scan', 'kind': 'error', 'where': '', 'reason': 'local panic: lower: source module has no import-declaration route: /tmp/adamic-gate/latent-order-error-lns5p0kw/source/b-dynamic.ts', 'text': 'local panic: lower: source module has no import-declaration route: /tmp/adamic-gate/latent-order-error-lns5p0kw/source/b-dynamic.ts', 'start': 12, 'end': 20}, {'site_where': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/c-leaf.ts:1:14', 'site_kind': 'KindIdentifier', 'site_start': 12, 'site_end': 17, 'root_kind': 'local panic: lower: source module has no import-declaration route: /tmp/adamic-gate/latent-order-error-lns5p0kw/source/c-leaf.ts', 'depth': 0, 'boundary_where': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/c-leaf.ts:1:14', 'measurement': 'measured on a checker-rejected program', 'unit': '/tmp/adamic-gate/latent-order-error-lns5p0kw/source/a-clean.ts:3:1', 'phase': 'refusal_scan', 'kind': 'error', 'where': '', 'reason': 'local panic: lower: source module has no import-declaration route: /tmp/adamic-gate/latent-order-error-lns5p0kw/source/c-leaf.ts', 'text': 'local panic: lower: source module has no import-declaration route: /tmp/adamic-gate/latent-order-error-lns5p0kw/source/c-leaf.ts', 'start': 12, 'end': 17}])
+
+======================================================================
+FAIL: test_order_error_is_emitted_for_file_with_only_deferred_units (__main__.ModuleOrderOutput.test_order_error_is_emitted_for_file_with_only_deferred_units)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 67, in test_order_error_is_emitted_for_file_with_only_deferred_units
+    self.assertTrue(any(f['phase']=='registration' and f['reason']=='a dynamic import()' for f in row['findings']),row)
+AssertionError: False is not true : {'measurement': 'measured on a checker-rejected program', 'file': '/tmp/adamic-gate/latent-order-error-_d4mwfg9/source/a-deferred.ts', 'declarations': [{'measurement': 'measured on a checker-rejected program', 'where': '/tmp/adamic-gate/latent-order-error-_d4mwfg9/source/a-deferred.ts:1:1', 'name': ' identity', 'kind': 'KindFunctionDeclaration', 'start': 0, 'end': 58}, {'measurement': 'measured on a checker-rejected program', 'where': '/tmp/adamic-gate/latent-order-error-_d4mwfg9/source/a-deferred.ts:1:29', 'name': 'value', 'kind': 'KindParameter', 'start': 28, 'end': 36}], 'units': [{'measurement': 'measured on a checker-rejected program', 'where': '/tmp/adamic-gate/latent-order-error-_d4mwfg9/source/a-deferred.ts:1:1', 'kind': 'KindFunctionDeclaration', 'body_start': 40, 'body_end': 58, 'instantiated': False, 'status': 'deferred_generic_instantiation', 'checker_diagnostics': [], 'name': 'identity', 'top': '/tmp/adamic-gate/latent-order-error-_d4mwfg9/source/a-deferred.ts:1:1'}], 'findings': []}
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.415s
+
+FAILED (failures=4)
