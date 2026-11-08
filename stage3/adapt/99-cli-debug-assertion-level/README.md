@@ -21,13 +21,13 @@ Input: microsoft/TypeScript v6.0.3, commit
 Line numbers are the adapted tree's before this adaptation, from the
 adapter's evidence. They are never used as edit addresses.
 
-| Row | Site | Edit |
-| --- | --- | --- |
-| import | debug.ts:16 and 71, the `./_namespaces/ts.js` named import | `getOwnKeys,` and `noop,` removed |
-| cache | debug.ts:155, `const assertionCache` | removed, with the blank line above it |
-| set | debug.ts:161, setAssertionLevel | the body becomes `currentAssertionLevel = level;` |
-| doc | debug.ts:181, shouldAssertFunction's JSDoc | reworded: it no longer caches or replaces anything |
-| should | debug.ts:187, shouldAssertFunction | the body becomes `return shouldAssert(level);` |
+| Row    | Site                                                       | Edit                                               |
+| ------ | ---------------------------------------------------------- | -------------------------------------------------- |
+| import | debug.ts:16 and 71, the `./_namespaces/ts.js` named import | `getOwnKeys,` and `noop,` removed                  |
+| cache  | debug.ts:155, `const assertionCache`                       | removed, with the blank line above it              |
+| set    | debug.ts:161, setAssertionLevel                            | the body becomes `currentAssertionLevel = level;`  |
+| doc    | debug.ts:181, shouldAssertFunction's JSDoc                 | reworded: it no longer caches or replaces anything |
+| should | debug.ts:187, shouldAssertFunction                         | the body becomes `return shouldAssert(level);`     |
 
 The cache declaration is upstream's with adaptation 30's `| undefined` on the
 entry type. 76 turned AssertionKeys into its six literal names. This
@@ -144,13 +144,13 @@ and exact message), and whether the namespace member is still the assertion.
 Each of the six assertion functions runs five rows. 30 of 30 are as ruled on
 Node 24.14.1, and the six assertions give the same answer (assertNode shown):
 
-| Row | Before | After |
-| --- | --- | --- |
-| None (`NODE_ENV` unset), failing | returns; Debug.assertNode is now noop | returns; Debug.assertNode is unchanged |
-| Normal (`NODE_ENV=development`), passing | returns | returns |
-| Normal, failing | `Debug Failure. False expression: Unexpected node.` with the verbose line | the same message |
-| None, one failing call, then `setAssertionLevel(Normal)`, failing | `TypeError: Debug.assertNode is not a function`; the member is the object `{ level, assertion }` | the same Debug Failure as at Normal |
-| the same, passing | the same TypeError | returns |
+| Row                                                               | Before                                                                                           | After                                  |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------- |
+| None (`NODE_ENV` unset), failing                                  | returns; Debug.assertNode is now noop                                                            | returns; Debug.assertNode is unchanged |
+| Normal (`NODE_ENV=development`), passing                          | returns                                                                                          | returns                                |
+| Normal, failing                                                   | `Debug Failure. False expression: Unexpected node.` with the verbose line                        | the same message                       |
+| None, one failing call, then `setAssertionLevel(Normal)`, failing | `TypeError: Debug.assertNode is not a function`; the member is the object `{ level, assertion }` | the same Debug Failure as at Normal    |
+| the same, passing                                                 | the same TypeError                                                                               | returns                                |
 
 The verbose line for assertNode reads
 `Verbose Debug Information: Node Identifier did not pass test 'isStringLiteral'.`
@@ -171,16 +171,16 @@ because every file in this directory feeds apply's input key.
 
 Refused, writing nothing (debug.ts's hash checked after each run):
 
-| Tree | Adapter |
-| --- | --- |
-| setAssertionLevel adapted, the rest upstream | `half-adapted debug.ts: setAssertionLevel adapted, shouldAssertFunction original, doc comment original, assertionCache original, imports original` |
-| adapted, the `noop` import kept | `half-adapted import: getOwnKeys adapted, noop original` |
-| adapted, both imports kept | `half-adapted debug.ts: ... imports original` |
-| adapted, upstream's JSDoc kept | `half-adapted debug.ts: ... doc comment original ...` |
-| upstream with line 170 fixed to `cachedFunc.assertion` | `uninventoried setAssertionLevel body: ...` |
-| upstream with a seventh shouldAssertFunction call, in Debug.type | `type: the assertion key is not its own name` |
-| upstream with `noop` read in getFunctionName | `noop is read outside the replaced bodies, at line 369` |
-| upstream with `getOwnKeys` read in formatEnum | `getOwnKeys is read outside the replaced bodies, at line 391` |
+| Tree                                                             | Adapter                                                                                                                                            |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| setAssertionLevel adapted, the rest upstream                     | `half-adapted debug.ts: setAssertionLevel adapted, shouldAssertFunction original, doc comment original, assertionCache original, imports original` |
+| adapted, the `noop` import kept                                  | `half-adapted import: getOwnKeys adapted, noop original`                                                                                           |
+| adapted, both imports kept                                       | `half-adapted debug.ts: ... imports original`                                                                                                      |
+| adapted, upstream's JSDoc kept                                   | `half-adapted debug.ts: ... doc comment original ...`                                                                                              |
+| upstream with line 170 fixed to `cachedFunc.assertion`           | `uninventoried setAssertionLevel body: ...`                                                                                                        |
+| upstream with a seventh shouldAssertFunction call, in Debug.type | `type: the assertion key is not its own name`                                                                                                      |
+| upstream with `noop` read in getFunctionName                     | `noop is read outside the replaced bodies, at line 369`                                                                                            |
+| upstream with `getOwnKeys` read in formatEnum                    | `getOwnKeys is read outside the replaced bodies, at line 391`                                                                                      |
 
 ## Measured
 
