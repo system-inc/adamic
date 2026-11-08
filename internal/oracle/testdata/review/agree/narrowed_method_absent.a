@@ -1,0 +1,19 @@
+// A narrowed call through an optional field, box.run(), after a call put undefined back in it. Since
+// #0bxc4jh the narrowed call keeps its object, as an unnarrowed one does, and its check is still the
+// narrowing's own: the same words and exit as when it called the field's value with no object.
+interface Box {
+	run?: (() => void) | undefined;
+}
+function hello(): void {
+	console.log('hello');
+}
+const box: Box = { run: hello };
+function clear(): void {
+	box.run = undefined;
+}
+if (box.run) {
+	box.run();
+	clear();
+	box.run();
+}
+console.log('after');

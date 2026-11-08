@@ -293,7 +293,9 @@ func (graph *allocationFlowGraph) viewedFrom(origins []ir.Expression, throughSpr
 // fixed tuples and certified callables, or in place as one of the representations the runtime
 // checks a slot against. A read that is neither, such as an interface with a length held as a
 // union because a string, an array and an object all satisfy it, has no emission, so it stops at
-// the read. A method read is the call's to emit, through the adapter.
+// the read. A method read is the call's to emit, through the adapter, but for an optional field's:
+// one is called only where a narrowing's Defined holds it (ir.MethodCallee), and the adapter reads
+// a callable optional field no more for a call than for a value, so it stops here as the value's does.
 //
 // An optional field the shape lacks reads undefined, so it goes through the adapter, and only when
 // its declared union holds undefined. A read through ?. reads undefined from an absent receiver
@@ -306,7 +308,7 @@ func unemittableCheckedViewRead(program *ir.Program) error {
 			return false
 		}
 		read, isProperty := node.(ir.Property)
-		if !isProperty || read.View == "" || read.Method || viewReadOf(program, read) != viewReadChecks {
+		if !isProperty || read.View == "" || read.Method && !read.Absent || viewReadOf(program, read) != viewReadChecks {
 			return true
 		}
 		contract := emittedViewContract(program, read)
