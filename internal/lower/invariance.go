@@ -1144,14 +1144,29 @@ func (l *lowering) isExpression(node *ast.Node) bool {
 // hasTypeAncestor catches literals inside types that IsPartOfTypeNode does not classify, such as
 // the string in X["literal"]. Those name types, not runtime reads. A statement or declaration ends
 // the search so a value in its initializer or body is judged in its own context.
+// IsTypeNodeKind's extra AnyKeyword, UnknownKeyword, NumberKeyword, BigIntKeyword, ObjectKeyword,
+// BooleanKeyword, StringKeyword, SymbolKeyword, VoidKeyword, UndefinedKeyword, NeverKeyword and
+// IntrinsicKeyword hold no expressions; neither do JSDocAllType, JSDocNullableType,
+// JSDocNonNullableType, JSDocOptionalType or JSDocVariadicType. In its TypePredicate..ImportType
+// range, TypePredicate, TypeReference, FunctionType, ConstructorType, TypeQuery, TypeLiteral,
+// ArrayType, TupleType, OptionalType, RestType, UnionType, IntersectionType, ConditionalType,
+// InferType, ParenthesizedType, ThisType, TypeOperator, IndexedAccessType, MappedType, LiteralType,
+// NamedTupleMember, TemplateLiteralType, TemplateLiteralTypeSpan and ImportType are erased,
+// including TypeQuery's names and LiteralType's literal expressions. ExpressionWithTypeArguments
+// alone can wrap an evaluated expression: a class heritage's base. Its type arguments still erase.
 func hasTypeAncestor(node *ast.Node) bool {
+	child := node
 	for parent := node.Parent; parent != nil; parent = parent.Parent {
+		if parent.Kind == ast.KindExpressionWithTypeArguments && parent.Expression() == child {
+			return false
+		}
 		if ast.IsTypeNode(parent) {
 			return true
 		}
 		if ast.IsStatement(parent) || ast.IsDeclaration(parent) {
 			return false
 		}
+		child = parent
 	}
 	return false
 }
