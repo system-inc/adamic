@@ -13,9 +13,9 @@ rows are retained in the raw streams and excluded from the 79-root denominator.
 
 Exactly 73 baseline roots first stop at core.ts:381:26. All 73 move past it:
 
-| Roots | Kind | New first stop | Reason |
-| ---: | --- | --- | --- |
-| 73 | Refused | src/compiler/core.ts:409:37 | a value of type U[] \| undefined seen as {}[] \| undefined, which can write {} where U is read |
+| Roots | Kind    | New first stop              | Reason                                                                                         |
+| ----: | ------- | --------------------------- | ---------------------------------------------------------------------------------------------- |
+|    73 | Refused | src/compiler/core.ts:409:37 | a value of type U[] \| undefined seen as {}[] \| undefined, which can write {} where U is read |
 
 These are first lowering stops after clean checking, not native compilation
 successes. census-results.json records every root, including the other six.
