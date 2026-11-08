@@ -42,3 +42,7 @@ Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made
 ## L2 proof at e5531c8
 
 [Baseline, mutant B, and stock tsc 6.0.3](e5531c8/results.md): baseline passes; condition-3 mutant newly fails with `got <nil>, want the unfixed type parameter named as NotYet`; stock tsc accepts under default and strict settings. Exact source restoration verified.
+
+## L3 comparison
+
+[Two-compiler native sanitizer and JavaScript probe](l3/results.md): e3aa0bb and e5531c8 both refuse the exact .ts and .a source with TS2532 before lowering. Source Node throws TypeError. No native or emitted JS programs could be run; no sanitizer report.
