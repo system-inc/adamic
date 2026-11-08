@@ -1,0 +1,21 @@
+{
+  "status": {
+    "command": [
+      "/workspace/scratch/c3b22184/entry-census",
+      "/workspace/c3b22184-adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/c3b22184/artifacts/tsc/latent.jsonl"
+    ],
+    "exit_code": -15,
+    "stopping_reason": "configured elapsed-time bound",
+    "seconds": 1801.0077677959998,
+    "process_group_cleaned": true
+  },
+  "last_completed_timing": {
+    "file": "/workspace/c3b22184-adapted/src/compiler/factory/nodeConverters.ts",
+    "where": "/workspace/c3b22184-adapted/src/compiler/factory/nodeConverters.ts:183:1",
+    "wall_seconds": 0.419387857,
+    "cpu_seconds": 0.41671999999971376
+  },
+  "active_unit": "not recorded; the last completed unit is not the interrupted unit",
+  "raw_records": 1
+}

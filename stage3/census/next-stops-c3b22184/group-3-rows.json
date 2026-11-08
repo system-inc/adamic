@@ -1,0 +1,56 @@
+[
+  {
+    "roots": [
+      "/workspace/c3b22184-adapted/src/compiler/symbolWalker.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/c3b22184-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 22.634189327
+  },
+  {
+    "roots": [
+      "/workspace/c3b22184-adapted/src/compiler/sys.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/c3b22184-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 18.532977559
+  },
+  {
+    "roots": [
+      "/workspace/c3b22184-adapted/src/compiler/tracing.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/c3b22184-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 20.093109655
+  },
+  {
+    "roots": [
+      "/workspace/c3b22184-adapted/src/compiler/transformer.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/c3b22184-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 20.818440325
+  },
+  {
+    "roots": [
+      "/workspace/c3b22184-adapted/src/compiler/transformers/classFields.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/c3b22184-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 20.568224293
+  },
+  {
+    "roots": [
+      "/workspace/c3b22184-adapted/src/compiler/transformers/classThis.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/c3b22184-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 20.149583134
+  }
+]

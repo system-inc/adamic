@@ -3,3 +3,5 @@
 Adamic, #baobab. Report only, measurement in progress.
 
 Compiler/apply: c3b22184745d809cb281a37ef1989c895596223f. TypeScript 6.0.3 source pin: 050880ce59e30b356b686bd3144efe24f875ebc8.
+
+Entry probe stopped: configured elapsed-time bound; child exit -15. The ordinary root census continues.
