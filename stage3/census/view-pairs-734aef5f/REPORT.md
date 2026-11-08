@@ -16,16 +16,16 @@ Scalar enum/boolean unions are classified as scalar fields using the adapted sou
 
 **Unrelated object pair observations: 1; distinct textual (source, target, nested path) pairs: 1. Nil-source views with a known runtime reference field: 0.** The object-capable reference companion is 0. Nil-source views with no proven reference field but unknown fields or missing target: 0.
 
-Selected-unit pair observations: **37414**. Raw lines across all passes, including superseded first-error and retry observations: **50362**. Selected units held 2013 viewSources entries; pointer deduplication suppressed 210912 repeat visits and the depth bound suppressed 18164 visits.
+Selected-unit pair observations: **37432**. Raw lines across all passes, including superseded first-error and retry observations: **50380**. Selected units held 2016 viewSources entries; pointer deduplication suppressed 210912 repeat visits and the depth bound suppressed 18164 visits.
 
 | Split | Selected unit observations | All raw lines |
 | --- | ---: | ---: |
-| object_related_top | 1321 | 1615 |
-| object_related_nested | 23183 | 31374 |
+| object_related_top | 1324 | 1618 |
+| object_related_nested | 23189 | 31380 |
 | object_unrelated_top | 1 | 1 |
 | object_unrelated_nested | 0 | 0 |
 | scalar_top | 3 | 3 |
-| scalar_nested | 12906 | 17369 |
+| scalar_nested | 12915 | 17378 |
 | nil_source | 0 | 0 |
 | nil_target_only | 0 | 0 |
 
@@ -35,7 +35,7 @@ Reference field means a cycleFinder.fields field whose lowering representation i
 
 ## Coverage
 
-Observed **7241 unit results**: `{'lowered': 4377, 'stopped': 2864}`. Deferred standalone units in emitted inventories: **251**. Unobserved stock units by status: `{'deferred_generic_instantiation': 251}`. Full-mode files attempted: **19/81**; emitted complete full-mode file inventories: 18. Stock inventory has 4842 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
+Observed **7261 unit results**: `{'lowered': 4385, 'stopped': 2876}`. Deferred standalone units in emitted inventories: **290**. Unobserved stock units by status: `{'deferred_generic_instantiation': 290}`. Full-mode files attempted: **20/81**; emitted complete full-mode file inventories: 19. Stock inventory has 5049 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
 
 One result per (unit file, unit position) is selected: full mode supersedes first-error mode, and later full pieces supersede earlier ones. Repeated dependency pairs in different units remain repeated observations. TypeToString text can be truncated or reused for distinct checker identities; the distinct-pair list groups displayed source/target strings plus the full first-encountered nested path, not globally shared checker identities.
 
@@ -91,7 +91,7 @@ Each observation is retained, including repeats in one unit, in [nil-source-refe
 | factory/utilities.ts | 61 | 39 | 1428 | not yet attempted |
 | factory/utilitiesPublic.ts | 3 | 0 | 0 | not yet attempted |
 | hostErrors.ts | 0 | 3 | 0 | not yet attempted |
-| moduleNameResolver.ts | 97 | 51 | 0 | not yet attempted |
+| moduleNameResolver.ts | 105 | 63 | 18 | complete traversal |
 | moduleSpecifiers.ts | 25 | 23 | 7 | not yet attempted |
 | parser.ts | 224 | 321 | 3281 | complete traversal |
 | path.ts | 63 | 14 | 0 | not yet attempted |
@@ -171,6 +171,7 @@ Each child is capped at 1490 seconds with five seconds for forced cleanup, below
 | full-016 | 0 | 276.508 | completed |
 | full-017 | 0 | 251.477 | completed |
 | full-018 | 0 | 145.189 | completed |
+| full-019 | 0 | 184.259 | completed |
 
 ## Evidence and replay
 
