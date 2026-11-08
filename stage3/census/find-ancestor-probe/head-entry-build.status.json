@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/probe-head-entry/overlay.json",
+    "-o",
+    "/workspace/scratch/probe-head-entry-bin",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/scratch/probe-head",
+  "exit": 0,
+  "wall_seconds": 15.010243801000001,
+  "stopped": null
+}

@@ -1,0 +1,15 @@
+{
+  "pid": 11149,
+  "command": [
+    "/workspace/scratch/probe-parent-entry-bin",
+    "/workspace/scratch/fa-adapted/src/tsc/tsc.ts",
+    "/workspace/scratch/probe-report/stage3/census/find-ancestor-probe/parent-entry-run.jsonl"
+  ],
+  "flags": {
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMEMLIMIT": "5GiB",
+    "GOGC": "70",
+    "ADAMIC_PROBE_BINDINGS": "1",
+    "LATENT_TIMES": "/workspace/scratch/probe-report/stage3/census/find-ancestor-probe/parent-entry-run-units.jsonl"
+  }
+}
