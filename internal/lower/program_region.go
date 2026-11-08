@@ -137,7 +137,10 @@ func (l *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.Source
 		}
 	}
 	if len(plan.types) != 0 && plan.refusal == nil {
-		plan.refusal = f.graphAdoptionBoundary()
+		plan.refusal = f.viewPairGuard()
+		if plan.refusal == nil {
+			plan.refusal = f.graphAdoptionBoundary()
+		}
 	}
 
 	for i, x := range program.Locals {
