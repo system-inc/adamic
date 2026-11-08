@@ -1,0 +1,4 @@
+import 'node:process';
+const optional = process?.execArgv;
+const plain = process.execArgv;
+console.log(String(optional === plain));
