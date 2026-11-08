@@ -17,10 +17,10 @@ adaptation makes the binding a qualified namespace import, whose one remaining
 use is its `createHash` member:
 
 ```ts
-import * as _fs from "node:fs";
-import * as _path from "node:path";
-import * as _os from "node:os";
-import * as _crypto from "node:crypto";
+import * as _fs from 'node:fs';
+import * as _path from 'node:path';
+import * as _os from 'node:os';
+import * as _crypto from 'node:crypto';
 ```
 
 Only the last import is added. The comment about reduced Node installations,
@@ -153,11 +153,11 @@ The official apply exits 0 on both separate pristine trees. Its generated
 reports are retained in proofs/; main's committed `stage3/patch-set.md` and all
 lane plan files are untouched. No table was hand-merged.
 
-| Tree or row | Files | Added | Removed |
-| --- | ---: | ---: | ---: |
-| Main control total | 95 | 6024 | 5731 |
-| 99-wasm-crypto-import row | 1 | 4 | 11 |
-| With adaptation total | 95 | 6028 | 5742 |
+| Tree or row               | Files | Added | Removed |
+| ------------------------- | ----: | ----: | ------: |
+| Main control total        |    95 |  6024 |    5731 |
+| 99-wasm-crypto-import row |     1 |     4 |      11 |
+| With adaptation total     |    95 |  6028 |    5742 |
 
 Both upstream `npm run build` commands exit 0: control
 26.039 seconds, after 24.015 seconds.
@@ -175,10 +175,10 @@ Before each suite, clean file-cache pages of finished task artifacts are release
 without changing their bytes. Every cgroup memory-event counter must remain
 unchanged, and the run stops below 3 GiB free disk. No guard is weakened.
 
-| Oracle | Passing | Sanctioned API failure | Pending | Wall seconds |
-| --- | ---: | ---: | ---: | ---: |
-| Current main control | 106366 | 1 | 0 | 345.003 |
-| With 99-wasm-crypto-import | 106366 | 1 | 0 | 347.139 |
+| Oracle                     | Passing | Sanctioned API failure | Pending | Wall seconds |
+| -------------------------- | ------: | ---------------------: | ------: | -----------: |
+| Current main control       |  106366 |                      1 |       0 |      345.003 |
+| With 99-wasm-crypto-import |  106366 |                      1 |       0 |      347.139 |
 
 The actual unmodified `stage3/lane/check.py` CLI prints this for each:
 
