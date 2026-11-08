@@ -482,7 +482,7 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func (l *lowering) enumRefusal(node *ast.Node) error {
-	if l.isExpression(node) {
+	if l.isExpression(node) && !hasTypeAncestor(node) {
 		if symbol := l.flagValueSymbol(node); symbol != nil {
 			declared := l.checker.GetTypeOfSymbol(symbol)
 			observed := l.checker.GetTypeAtLocation(node)

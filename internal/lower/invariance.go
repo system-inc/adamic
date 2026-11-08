@@ -1141,6 +1141,21 @@ func (l *lowering) isExpression(node *ast.Node) bool {
 	return ast.IsExpression(node) && !ast.IsPartOfTypeNode(node)
 }
 
+// hasTypeAncestor catches literals inside types that IsPartOfTypeNode does not classify, such as
+// the string in X["literal"]. Those name types, not runtime reads. A statement or declaration ends
+// the search so a value in its initializer or body is judged in its own context.
+func hasTypeAncestor(node *ast.Node) bool {
+	for parent := node.Parent; parent != nil; parent = parent.Parent {
+		if ast.IsTypeNode(parent) {
+			return true
+		}
+		if ast.IsStatement(parent) || ast.IsDeclaration(parent) {
+			return false
+		}
+	}
+	return false
+}
+
 // impliedTarget is the type tsc gave what a value with no type written for it goes into, or nil: a
 // conditional's (or ??'s, ||'s, &&'s) own type for its branches, an array literal's element type for
 // its elements, and a function's inferred result for what it returns.
