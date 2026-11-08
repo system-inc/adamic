@@ -31,12 +31,23 @@ var libraryStoredMembers = map[string]map[string]bool{
 
 // libraryUnstoredMember names the library interface when member is a lib-declared member the runtime
 // shape lacks: one a library interface in libraryStoredMembers declares, whose runtime shape holds no
-// slot for it. Read through that interface's own type, such a member is the inherited library member
-// refusal's (a lib declaration is never an own field); read through any other view, nothing else stops
-// it. It's "" for any other member.
+// slot for it, or a method any library interface declares, which lives on the prototype and never in a
+// runtime shape (#sn788gx's census: a Date seen as { readonly getTime?: () => number } read getTime
+// absent natively where Node read it present, and one called through { getTime(): number } stopped at
+// run time as a compiler bug). Read through that interface's own type, such a member is the inherited
+// library member refusal's (a lib declaration is never an own field); read through any other view,
+// nothing else stops it. It's "" for any other member.
 func libraryUnstoredMember(member *ast.Symbol) string {
+	owner, _ := libraryUnstoredMemberOf(member)
+	return owner
+}
+
+// libraryUnstoredMemberOf is libraryUnstoredMember, and says whether the member is unstored because it's
+// a method (which only a view the program declares reads as an own field: the library's own types, such
+// as String.prototype.replace's searchValue or a Set's ReadonlySetLike, are lowering's library dispatch).
+func libraryUnstoredMemberOf(member *ast.Symbol) (string, bool) {
 	if member == nil {
-		return ""
+		return "", false
 	}
 	for _, declaration := range member.Declarations {
 		owner := declaration.Parent
@@ -44,10 +55,25 @@ func libraryUnstoredMember(member *ast.Symbol) string {
 			continue
 		}
 		if stored, known := libraryStoredMembers[owner.Name().Text()]; known && !stored[member.Name] {
-			return owner.Name().Text()
+			return owner.Name().Text(), false
+		}
+		if declaration.Kind == ast.KindMethodSignature {
+			return owner.Name().Text(), true
 		}
 	}
-	return ""
+	return "", false
+}
+
+// programDeclared reports whether a view's member is declared by the program: some declaration of it sits
+// outside TypeScript's library and Node's.
+func programDeclared(member *ast.Symbol) bool {
+	for _, declaration := range member.Declarations {
+		file := ast.GetSourceFileOfNode(declaration)
+		if !load.IsLibrary(file) && !load.IsNodeLibrary(file) {
+			return true
+		}
+	}
+	return false
 }
 
 func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool) *optionalWidening {
@@ -138,7 +164,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		// A view the program declares, naming a member the source has only as a lib-declared member the
 		// runtime shape lacks, would read it absent natively. A view that names it as the same library
 		// member is read through that member, which the inherited library member refusal stops.
-		if owner := libraryUnstoredMember(declared); owner != "" && libraryUnstoredMember(property) == "" {
+		if owner, method := libraryUnstoredMemberOf(declared); owner != "" && libraryUnstoredMember(property) == "" && (!method || programDeclared(property)) {
 			return &optionalWidening{property: property.Name, source: source, target: target, unstored: owner}
 		}
 		if found := l.optionalWidened(l.checker.GetTypeOfSymbol(declared), l.checker.GetTypeOfSymbol(property), nil, visited); found != nil {
