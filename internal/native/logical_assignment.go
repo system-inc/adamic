@@ -105,17 +105,22 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 		slot := e.temporary()
 		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, receiver, key, e.cache())
 		if storage.IsReference() {
+			// As writeProperty stores one: in a graph program the new value is held and the old dropped
+			// through the graph, since the old may be a member edge with no count of its own to release
+			// (#89tq0ef). The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, retained(value))
-			e.line("adamic_release(%s);", old)
+			e.line("%s->reference = %s;", slot, e.heldReferenceIn(receiver, value))
+			e.dropIn(receiver, old)
 		} else {
 			e.line("%s->%s = %s;", slot, member(storage), slotted(storage, value))
 		}
 	case ir.SetIndex:
 		stored := value
 		if storage.IsReference() {
-			stored = retained(stored)
+			// As the plain element store does: held through the graph in a graph program, where
+			// adamic_array_set drops the old element through the graph too (#89tq0ef).
+			stored = e.heldReferenceIn(receiver, stored)
 		}
 		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", receiver, index, member(storage), slotted(storage, stored))
 	}
