@@ -1,0 +1,88 @@
+[
+  {
+    "label": "A-finish-shim",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/finish-shim.mjs",
+      "/workspace/scratch/sys-timer-slot/A"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/A",
+    "exit": 0,
+    "seconds": 0.42122817039489746
+  },
+  {
+    "label": "A-bundle-declarations",
+    "args": [
+      "node",
+      "scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "./built/local/typescript/typescript.d.ts",
+      "--output",
+      "./built/local/typescript.d.ts"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/A",
+    "exit": 0,
+    "seconds": 7.374431371688843
+  },
+  {
+    "label": "B-finish-shim",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/finish-shim.mjs",
+      "/workspace/scratch/sys-timer-slot/B"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/B",
+    "exit": 0,
+    "seconds": 0.27245140075683594
+  },
+  {
+    "label": "B-bundle-declarations",
+    "args": [
+      "node",
+      "scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "./built/local/typescript/typescript.d.ts",
+      "--output",
+      "./built/local/typescript.d.ts"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/B",
+    "exit": 0,
+    "seconds": 9.927136659622192
+  },
+  {
+    "label": "main-public-timer-api",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/artifact-api.cjs",
+      "/workspace/scratch/sys-timer-slot/main",
+      "/workspace/scratch/sys-timer-slot/main-public-timers.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.505868911743164
+  },
+  {
+    "label": "A-public-timer-api",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/artifact-api.cjs",
+      "/workspace/scratch/sys-timer-slot/A",
+      "/workspace/scratch/sys-timer-slot/A-public-timers.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.877148151397705
+  },
+  {
+    "label": "B-public-timer-api",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/artifact-api.cjs",
+      "/workspace/scratch/sys-timer-slot/B",
+      "/workspace/scratch/sys-timer-slot/B-public-timers.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.2786035537719727
+  }
+]

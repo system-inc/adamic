@@ -1,0 +1,606 @@
+{
+  "task": "7fd51gk",
+  "rulingTime": "Nov 8 03:55Z",
+  "base": "66e4051f19854166c95df6be99a4ae0e2eeaadd8",
+  "historyRestoredFrom": "949b9c3c4c883d964bba19ee9fbdae9fd1909288",
+  "measurementOnly": true,
+  "addedDiagnostics": {
+    "adamic": [
+      {
+        "code": 2322,
+        "category": "Error",
+        "message": "Type '(timeout: string | number | Timeout | undefined) => void' is not assignable to type '(timeoutId: unknown) => void'.\n  Types of parameters 'timeout' and 'timeoutId' are incompatible.\n    Type 'unknown' is not assignable to type 'string | number | Timeout | undefined'.",
+        "file": "src/compiler/sys.ts",
+        "line": 1500,
+        "column": 13
+      },
+      {
+        "code": 2322,
+        "category": "Error",
+        "message": "Type '(timeout: string | number | Timeout | undefined) => void' is not assignable to type '(timeoutId: unknown) => void'.\n  Types of parameters 'timeout' and 'timeoutId' are incompatible.\n    Type 'unknown' is not assignable to type 'string | number | Timeout | undefined'.",
+        "file": "src/compiler/sys.ts",
+        "line": 1598,
+        "column": 13
+      }
+    ],
+    "upstream": [
+      {
+        "code": 2322,
+        "category": "Error",
+        "message": "Type '(timeout: string | number | Timeout | undefined) => void' is not assignable to type '(timeoutId: unknown) => void'.\n  Types of parameters 'timeout' and 'timeoutId' are incompatible.\n    Type 'unknown' is not assignable to type 'string | number | Timeout | undefined'.",
+        "file": "src/compiler/sys.ts",
+        "line": 1500,
+        "column": 13
+      },
+      {
+        "code": 2322,
+        "category": "Error",
+        "message": "Type '(timeout: string | number | Timeout | undefined) => void' is not assignable to type '(timeoutId: unknown) => void'.\n  Types of parameters 'timeout' and 'timeoutId' are incompatible.\n    Type 'unknown' is not assignable to type 'string | number | Timeout | undefined'.",
+        "file": "src/compiler/sys.ts",
+        "line": 1598,
+        "column": 13
+      }
+    ]
+  },
+  "stockVersion": "6.0.3",
+  "stockAdamicRoots": 79,
+  "solutionExit": 2,
+  "census": {
+    "head2Walls": 123,
+    "DWalls": 101,
+    "kept": 101,
+    "gone": 22,
+    "new": 0,
+    "providerFindingsAbsentBecauseBodyCheckerSplit": true,
+    "providerUnit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/sys-timer-property/D/src/compiler/sys.ts:1473:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 64991,
+      "body_end": 85322,
+      "instantiated": false,
+      "status": "split_checker_body",
+      "checker_diagnostics": [
+        "/workspace/scratch/sys-timer-property/D/src/compiler/sys.ts:1500:13: error TS2322: Type '(timeout: string | number | Timeout | undefined) => void' is not assignable to type '(timeoutId: unknown) => void'.\n  Types of parameters 'timeout' and 'timeoutId' are incompatible.\n    Type 'unknown' is not assignable to type 'string | number | Timeout | undefined'.",
+        "/workspace/scratch/sys-timer-property/D/src/compiler/sys.ts:1598:13: error TS2322: Type '(timeout: string | number | Timeout | undefined) => void' is not assignable to type '(timeoutId: unknown) => void'.\n  Types of parameters 'timeout' and 'timeoutId' are incompatible.\n    Type 'unknown' is not assignable to type 'string | number | Timeout | undefined'."
+      ],
+      "name": "getNodeSystem",
+      "parent": "/workspace/scratch/sys-timer-property/D/src/compiler/sys.ts:1467:1",
+      "top": "/workspace/scratch/sys-timer-property/D/src/compiler/sys.ts:1467:1"
+    }
+  },
+  "javascript": [
+    {
+      "file": "typescript.js",
+      "head2Sha256": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "DSha256": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "bytes": 9157055,
+      "byteIdentical": true
+    },
+    {
+      "file": "watchGuard.js",
+      "head2Sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "DSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "bytes": 2314,
+      "byteIdentical": true
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "head2Sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "DSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "bytes": 10364,
+      "byteIdentical": true
+    },
+    {
+      "file": "_tsc.js",
+      "head2Sha256": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "DSha256": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "bytes": 6249277,
+      "byteIdentical": true
+    },
+    {
+      "file": "typingsInstaller.js",
+      "head2Sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "DSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "bytes": 280,
+      "byteIdentical": true
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "head2Sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "DSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "bytes": 1013,
+      "byteIdentical": true
+    },
+    {
+      "file": "_tsserver.js",
+      "head2Sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "DSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "bytes": 27889,
+      "byteIdentical": true
+    },
+    {
+      "file": "tsc.js",
+      "head2Sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "DSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "bytes": 267,
+      "byteIdentical": true
+    },
+    {
+      "file": "tsserver.js",
+      "head2Sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "DSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "bytes": 272,
+      "byteIdentical": true
+    }
+  ],
+  "declarationSpans": {
+    "H": {
+      "typescript": "6.0.3",
+      "rows": [
+        {
+          "file": "built/local/typescript.d.ts",
+          "members": [
+            {
+              "name": "setTimeout",
+              "kind": "MethodSignature",
+              "line": 8545,
+              "column": 9,
+              "endLine": 8545,
+              "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+            },
+            {
+              "name": "clearTimeout",
+              "kind": "MethodSignature",
+              "line": 8546,
+              "column": 9,
+              "endLine": 8546,
+              "text": "clearTimeout?(timeoutId: unknown): void;"
+            }
+          ]
+        },
+        {
+          "file": "built/local/typescript.internal.d.ts",
+          "members": [
+            {
+              "name": "setTimeout",
+              "kind": "MethodSignature",
+              "line": 16663,
+              "column": 9,
+              "endLine": 16663,
+              "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+            },
+            {
+              "name": "clearTimeout",
+              "kind": "MethodSignature",
+              "line": 16664,
+              "column": 9,
+              "endLine": 16664,
+              "text": "clearTimeout?(timeoutId: unknown): void;"
+            }
+          ]
+        },
+        {
+          "file": "tests/baselines/local/api/typescript.d.ts",
+          "members": [
+            {
+              "name": "setTimeout",
+              "kind": "MethodSignature",
+              "line": 8545,
+              "column": 9,
+              "endLine": 8545,
+              "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+            },
+            {
+              "name": "clearTimeout",
+              "kind": "MethodSignature",
+              "line": 8546,
+              "column": 9,
+              "endLine": 8546,
+              "text": "clearTimeout?(timeoutId: unknown): void;"
+            }
+          ]
+        },
+        {
+          "file": "tests/baselines/reference/api/typescript.d.ts",
+          "members": [
+            {
+              "name": "setTimeout",
+              "kind": "MethodSignature",
+              "line": 8491,
+              "column": 9,
+              "endLine": 8491,
+              "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+            },
+            {
+              "name": "clearTimeout",
+              "kind": "MethodSignature",
+              "line": 8492,
+              "column": 9,
+              "endLine": 8492,
+              "text": "clearTimeout?(timeoutId: any): void;"
+            }
+          ]
+        }
+      ]
+    },
+    "D": {
+      "typescript": "6.0.3",
+      "rows": [
+        {
+          "file": "built/local/typescript.d.ts",
+          "members": [
+            {
+              "name": "setTimeout",
+              "kind": "PropertySignature",
+              "line": 8545,
+              "column": 9,
+              "endLine": 8545,
+              "text": "setTimeout?: <A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown;"
+            },
+            {
+              "name": "clearTimeout",
+              "kind": "PropertySignature",
+              "line": 8546,
+              "column": 9,
+              "endLine": 8546,
+              "text": "clearTimeout?: (timeoutId: unknown) => void;"
+            }
+          ]
+        },
+        {
+          "file": "built/local/typescript.internal.d.ts",
+          "members": [
+            {
+              "name": "setTimeout",
+              "kind": "PropertySignature",
+              "line": 16663,
+              "column": 9,
+              "endLine": 16663,
+              "text": "setTimeout?: <A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown;"
+            },
+            {
+              "name": "clearTimeout",
+              "kind": "PropertySignature",
+              "line": 16664,
+              "column": 9,
+              "endLine": 16664,
+              "text": "clearTimeout?: (timeoutId: unknown) => void;"
+            }
+          ]
+        },
+        {
+          "file": "tests/baselines/local/api/typescript.d.ts",
+          "members": [
+            {
+              "name": "setTimeout",
+              "kind": "PropertySignature",
+              "line": 8545,
+              "column": 9,
+              "endLine": 8545,
+              "text": "setTimeout?: <A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown;"
+            },
+            {
+              "name": "clearTimeout",
+              "kind": "PropertySignature",
+              "line": 8546,
+              "column": 9,
+              "endLine": 8546,
+              "text": "clearTimeout?: (timeoutId: unknown) => void;"
+            }
+          ]
+        },
+        {
+          "file": "tests/baselines/reference/api/typescript.d.ts",
+          "members": [
+            {
+              "name": "setTimeout",
+              "kind": "MethodSignature",
+              "line": 8491,
+              "column": 9,
+              "endLine": 8491,
+              "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+            },
+            {
+              "name": "clearTimeout",
+              "kind": "MethodSignature",
+              "line": 8492,
+              "column": 9,
+              "endLine": 8492,
+              "text": "clearTimeout?(timeoutId: any): void;"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "commands": {
+    "D-stock-status.json": {
+      "name": "D-stock",
+      "command": [
+        "node",
+        "--max-old-space-size=8192",
+        "/workspace/scratch/sys-timer-property/check.cjs",
+        "/workspace/scratch/sys-timer-property/D",
+        "/workspace/adamic",
+        "/workspace/scratch/sys-timer-property/D-stock.json"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 69.22544452099828,
+      "stoppingReason": null
+    },
+    "D-git-pin-status.json": {
+      "name": "D-git-pin",
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/sys-timer-property/D",
+        "update-ref",
+        "HEAD",
+        "050880ce59e30b356b686bd3144efe24f875ebc8"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.5012418709993653,
+      "stoppingReason": null
+    },
+    "head2-owner-replay-status.json": {
+      "name": "head2-owner-replay",
+      "command": [
+        "node",
+        "stage3/adapt/99-correctness-core-sys-timer-slot/adapt.cjs",
+        "/workspace/scratch/sys-timer-stack/head2"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 1.5047668510014773,
+      "stoppingReason": null
+    },
+    "head-status.json": {
+      "name": "head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.5015935929986881,
+      "stoppingReason": null
+    },
+    "H-stock-status.json": {
+      "name": "H-stock",
+      "command": [
+        "node",
+        "--max-old-space-size=8192",
+        "/workspace/scratch/sys-timer-property/check.cjs",
+        "/workspace/scratch/sys-timer-property/H",
+        "/workspace/adamic",
+        "/workspace/scratch/sys-timer-property/H-stock.json"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 72.23595346799993,
+      "stoppingReason": null
+    },
+    "H-spans-status.json": {
+      "name": "H-spans",
+      "command": [
+        "node",
+        "/workspace/scratch/sys-timer-property/spans.cjs",
+        "/workspace/scratch/sys-timer-property/H"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 2.0044043400012015,
+      "stoppingReason": null
+    },
+    "D-bundle-declarations-status.json": {
+      "name": "D-bundle-declarations",
+      "command": [
+        "node",
+        "scripts/dtsBundler.mjs",
+        "--entrypoint",
+        "./built/local/typescript/typescript.d.ts",
+        "--output",
+        "./built/local/typescript.d.ts"
+      ],
+      "cwd": "/workspace/scratch/sys-timer-property/D",
+      "exit": 0,
+      "seconds": 4.008700726000825,
+      "stoppingReason": null
+    },
+    "H-build-compiler-status.json": {
+      "name": "H-build-compiler",
+      "command": [
+        "npm",
+        "run",
+        "build:compiler",
+        "--",
+        "--lkg"
+      ],
+      "cwd": "/workspace/scratch/sys-timer-property/H",
+      "exit": 0,
+      "seconds": 12.55782233699938,
+      "stoppingReason": null
+    },
+    "D-git-init-status.json": {
+      "name": "D-git-init",
+      "command": [
+        "git",
+        "init",
+        "-q",
+        "/workspace/scratch/sys-timer-property/D"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.5012647479998122,
+      "stoppingReason": null
+    },
+    "D-finish-shim-status.json": {
+      "name": "D-finish-shim",
+      "command": [
+        "node",
+        "/workspace/scratch/sys-timer-property/finish-shim.mjs",
+        "/workspace/scratch/sys-timer-property/D"
+      ],
+      "cwd": "/workspace/scratch/sys-timer-property/D",
+      "exit": 0,
+      "seconds": 0.5012680500003626,
+      "stoppingReason": null
+    },
+    "H-bundle-declarations-status.json": {
+      "name": "H-bundle-declarations",
+      "command": [
+        "node",
+        "scripts/dtsBundler.mjs",
+        "--entrypoint",
+        "./built/local/typescript/typescript.d.ts",
+        "--output",
+        "./built/local/typescript.d.ts"
+      ],
+      "cwd": "/workspace/scratch/sys-timer-property/H",
+      "exit": 0,
+      "seconds": 4.010390608000307,
+      "stoppingReason": null
+    },
+    "H-latent-status.json": {
+      "name": "H-latent",
+      "command": [
+        "/workspace/scratch/sys-timer-stack/bin/census",
+        "/workspace/scratch/sys-timer-property/H/src/compiler",
+        "/workspace/scratch/sys-timer-property/H-latent.jsonl"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 95.89814731500155,
+      "stoppingReason": null
+    },
+    "H-git-pin-status.json": {
+      "name": "H-git-pin",
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/sys-timer-property/H",
+        "update-ref",
+        "HEAD",
+        "050880ce59e30b356b686bd3144efe24f875ebc8"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.5015070230001584,
+      "stoppingReason": null
+    },
+    "H-api-baseline-status.json": {
+      "name": "H-api-baseline",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/oracle/run-tasks.cjs",
+        "/workspace/scratch/sys-timer-property/H",
+        "/workspace/scratch/sys-timer-property/api-tasks.json",
+        "/workspace/scratch/sys-timer-property/H-api-worker",
+        "1"
+      ],
+      "cwd": "/workspace/scratch/sys-timer-property/H",
+      "exit": 1,
+      "seconds": 3.005820518999826,
+      "stoppingReason": null
+    },
+    "branch-status.json": {
+      "name": "branch",
+      "command": [
+        "git",
+        "switch",
+        "-c",
+        "typescript/sys-timer-slot-property"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.5015321829996537,
+      "stoppingReason": null
+    },
+    "D-spans-status.json": {
+      "name": "D-spans",
+      "command": [
+        "node",
+        "/workspace/scratch/sys-timer-property/spans.cjs",
+        "/workspace/scratch/sys-timer-property/D"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 1.505148578002263,
+      "stoppingReason": null
+    },
+    "D-latent-status.json": {
+      "name": "D-latent",
+      "command": [
+        "/workspace/scratch/sys-timer-stack/bin/census",
+        "/workspace/scratch/sys-timer-property/D/src/compiler",
+        "/workspace/scratch/sys-timer-property/D-latent.jsonl"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 76.72436416799974,
+      "stoppingReason": null
+    },
+    "D-api-baseline-status.json": {
+      "name": "D-api-baseline",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/oracle/run-tasks.cjs",
+        "/workspace/scratch/sys-timer-property/D",
+        "/workspace/scratch/sys-timer-property/api-tasks.json",
+        "/workspace/scratch/sys-timer-property/D-api-worker",
+        "1"
+      ],
+      "cwd": "/workspace/scratch/sys-timer-property/D",
+      "exit": 1,
+      "seconds": 3.0062096390029183,
+      "stoppingReason": null
+    },
+    "restore-history-status.json": {
+      "name": "restore-history",
+      "command": [
+        "git",
+        "restore",
+        "--source=949b9c3c4c883d964bba19ee9fbdae9fd1909288",
+        "--staged",
+        "--worktree",
+        "--",
+        "stage3/census/sys-timer-slot"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.5013674690017069,
+      "stoppingReason": null
+    },
+    "D-build-compiler-status.json": {
+      "name": "D-build-compiler",
+      "command": [
+        "npm",
+        "run",
+        "build:compiler",
+        "--",
+        "--lkg"
+      ],
+      "cwd": "/workspace/scratch/sys-timer-property/D",
+      "exit": 1,
+      "seconds": 27.648871892000898,
+      "stoppingReason": null
+    },
+    "H-git-init-status.json": {
+      "name": "H-git-init",
+      "command": [
+        "git",
+        "init",
+        "-q",
+        "/workspace/scratch/sys-timer-property/H"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.5015604920008627,
+      "stoppingReason": null
+    }
+  }
+}

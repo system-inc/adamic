@@ -1,0 +1,29 @@
+[
+  {
+    "label": "overlay",
+    "args": [
+      "python3",
+      "stage3/census/latent/make_overlay.py",
+      "/workspace/adamic",
+      "/workspace/scratch/sys-timer-slot/overlay"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 7.069123983383179
+  },
+  {
+    "label": "latent-build",
+    "args": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/sys-timer-slot/overlay/overlay.json",
+      "-o",
+      "/workspace/scratch/sys-timer-slot/census",
+      "./stage3/census/latent/tool"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 598.2130181789398
+  }
+]

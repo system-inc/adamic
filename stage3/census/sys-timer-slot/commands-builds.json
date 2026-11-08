@@ -1,0 +1,80 @@
+[
+  {
+    "label": "main-build-compiler",
+    "args": [
+      "npm",
+      "run",
+      "build:compiler",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/main",
+    "exit": 0,
+    "seconds": 69.21735262870789
+  },
+  {
+    "label": "main-build-tests",
+    "args": [
+      "npm",
+      "run",
+      "build:tests",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/main",
+    "exit": 0,
+    "seconds": 20.09418225288391
+  },
+  {
+    "label": "A-build-compiler",
+    "args": [
+      "npm",
+      "run",
+      "build:compiler",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/A",
+    "exit": 1,
+    "seconds": 67.05005097389221
+  },
+  {
+    "label": "A-build-tests",
+    "args": [
+      "npm",
+      "run",
+      "build:tests",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/A",
+    "exit": 1,
+    "seconds": 27.03646969795227
+  },
+  {
+    "label": "B-build-compiler",
+    "args": [
+      "npm",
+      "run",
+      "build:compiler",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/B",
+    "exit": 1,
+    "seconds": 43.3549120426178
+  },
+  {
+    "label": "B-build-tests",
+    "args": [
+      "npm",
+      "run",
+      "build:tests",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/B",
+    "exit": 1,
+    "seconds": 31.125869750976562
+  }
+]

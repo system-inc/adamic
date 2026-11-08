@@ -1,0 +1,30 @@
+[
+  {
+    "label": "C-a-stock",
+    "args": [
+      "node",
+      "--max-old-space-size=8192",
+      "/workspace/adamic/stage3/census/sys-timer-slot/C-check.cjs",
+      "/workspace/scratch/sys-timer-slot/C-a",
+      "/workspace/adamic",
+      "/workspace/scratch/sys-timer-slot/C-a-stock.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 70.94389605522156
+  },
+  {
+    "label": "C-b-stock",
+    "args": [
+      "node",
+      "--max-old-space-size=8192",
+      "/workspace/adamic/stage3/census/sys-timer-slot/C-check.cjs",
+      "/workspace/scratch/sys-timer-slot/C-b",
+      "/workspace/adamic",
+      "/workspace/scratch/sys-timer-slot/C-b-stock.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 100.33565068244934
+  }
+]

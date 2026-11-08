@@ -1,0 +1,180 @@
+{
+  "H": {
+    "typescript": "6.0.3",
+    "rows": [
+      {
+        "file": "built/local/typescript.d.ts",
+        "members": [
+          {
+            "name": "setTimeout",
+            "kind": "MethodSignature",
+            "line": 8545,
+            "column": 9,
+            "endLine": 8545,
+            "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+          },
+          {
+            "name": "clearTimeout",
+            "kind": "MethodSignature",
+            "line": 8546,
+            "column": 9,
+            "endLine": 8546,
+            "text": "clearTimeout?(timeoutId: unknown): void;"
+          }
+        ]
+      },
+      {
+        "file": "built/local/typescript.internal.d.ts",
+        "members": [
+          {
+            "name": "setTimeout",
+            "kind": "MethodSignature",
+            "line": 16663,
+            "column": 9,
+            "endLine": 16663,
+            "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+          },
+          {
+            "name": "clearTimeout",
+            "kind": "MethodSignature",
+            "line": 16664,
+            "column": 9,
+            "endLine": 16664,
+            "text": "clearTimeout?(timeoutId: unknown): void;"
+          }
+        ]
+      },
+      {
+        "file": "tests/baselines/local/api/typescript.d.ts",
+        "members": [
+          {
+            "name": "setTimeout",
+            "kind": "MethodSignature",
+            "line": 8545,
+            "column": 9,
+            "endLine": 8545,
+            "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+          },
+          {
+            "name": "clearTimeout",
+            "kind": "MethodSignature",
+            "line": 8546,
+            "column": 9,
+            "endLine": 8546,
+            "text": "clearTimeout?(timeoutId: unknown): void;"
+          }
+        ]
+      },
+      {
+        "file": "tests/baselines/reference/api/typescript.d.ts",
+        "members": [
+          {
+            "name": "setTimeout",
+            "kind": "MethodSignature",
+            "line": 8491,
+            "column": 9,
+            "endLine": 8491,
+            "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+          },
+          {
+            "name": "clearTimeout",
+            "kind": "MethodSignature",
+            "line": 8492,
+            "column": 9,
+            "endLine": 8492,
+            "text": "clearTimeout?(timeoutId: any): void;"
+          }
+        ]
+      }
+    ]
+  },
+  "D": {
+    "typescript": "6.0.3",
+    "rows": [
+      {
+        "file": "built/local/typescript.d.ts",
+        "members": [
+          {
+            "name": "setTimeout",
+            "kind": "PropertySignature",
+            "line": 8545,
+            "column": 9,
+            "endLine": 8545,
+            "text": "setTimeout?: <A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown;"
+          },
+          {
+            "name": "clearTimeout",
+            "kind": "PropertySignature",
+            "line": 8546,
+            "column": 9,
+            "endLine": 8546,
+            "text": "clearTimeout?: (timeoutId: unknown) => void;"
+          }
+        ]
+      },
+      {
+        "file": "built/local/typescript.internal.d.ts",
+        "members": [
+          {
+            "name": "setTimeout",
+            "kind": "PropertySignature",
+            "line": 16663,
+            "column": 9,
+            "endLine": 16663,
+            "text": "setTimeout?: <A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown;"
+          },
+          {
+            "name": "clearTimeout",
+            "kind": "PropertySignature",
+            "line": 16664,
+            "column": 9,
+            "endLine": 16664,
+            "text": "clearTimeout?: (timeoutId: unknown) => void;"
+          }
+        ]
+      },
+      {
+        "file": "tests/baselines/local/api/typescript.d.ts",
+        "members": [
+          {
+            "name": "setTimeout",
+            "kind": "PropertySignature",
+            "line": 8545,
+            "column": 9,
+            "endLine": 8545,
+            "text": "setTimeout?: <A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown;"
+          },
+          {
+            "name": "clearTimeout",
+            "kind": "PropertySignature",
+            "line": 8546,
+            "column": 9,
+            "endLine": 8546,
+            "text": "clearTimeout?: (timeoutId: unknown) => void;"
+          }
+        ]
+      },
+      {
+        "file": "tests/baselines/reference/api/typescript.d.ts",
+        "members": [
+          {
+            "name": "setTimeout",
+            "kind": "MethodSignature",
+            "line": 8491,
+            "column": 9,
+            "endLine": 8491,
+            "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+          },
+          {
+            "name": "clearTimeout",
+            "kind": "MethodSignature",
+            "line": 8492,
+            "column": 9,
+            "endLine": 8492,
+            "text": "clearTimeout?(timeoutId: any): void;"
+          }
+        ]
+      }
+    ]
+  }
+}

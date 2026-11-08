@@ -1,0 +1,138 @@
+{
+  "builds": {
+    "H": {
+      "typedCompilerBuildExit": 0,
+      "normalBuildMissingBeforeShim": [],
+      "apiWorker": {
+        "seconds": 2.775751187,
+        "counts": {
+          "passing": 30,
+          "failing": 1,
+          "pending": 0
+        },
+        "completed": 11,
+        "requested": 11,
+        "exit": 0,
+        "signal": null,
+        "failed": true
+      }
+    },
+    "D": {
+      "typedCompilerBuildExit": 1,
+      "normalBuildMissingBeforeShim": [
+        "tsserverlibrary.js"
+      ],
+      "apiWorker": {
+        "seconds": 2.614952788,
+        "counts": {
+          "passing": 30,
+          "failing": 1,
+          "pending": 0
+        },
+        "completed": 11,
+        "requested": 11,
+        "exit": 0,
+        "signal": null,
+        "failed": true
+      }
+    }
+  },
+  "javascript": [
+    {
+      "file": "typescript.js",
+      "head2Sha256": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "DSha256": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "bytes": 9157055,
+      "byteIdentical": true
+    },
+    {
+      "file": "watchGuard.js",
+      "head2Sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "DSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "bytes": 2314,
+      "byteIdentical": true
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "head2Sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "DSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "bytes": 10364,
+      "byteIdentical": true
+    },
+    {
+      "file": "_tsc.js",
+      "head2Sha256": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "DSha256": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "bytes": 6249277,
+      "byteIdentical": true
+    },
+    {
+      "file": "typingsInstaller.js",
+      "head2Sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "DSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "bytes": 280,
+      "byteIdentical": true
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "head2Sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "DSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "bytes": 1013,
+      "byteIdentical": true
+    },
+    {
+      "file": "_tsserver.js",
+      "head2Sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "DSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "bytes": 27889,
+      "byteIdentical": true
+    },
+    {
+      "file": "tsc.js",
+      "head2Sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "DSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "bytes": 267,
+      "byteIdentical": true
+    },
+    {
+      "file": "tsserver.js",
+      "head2Sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "DSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "bytes": 272,
+      "byteIdentical": true
+    }
+  ],
+  "javascriptCount": 9,
+  "allNineByteIdentical": true,
+  "declarations": [
+    {
+      "file": "built/local/typescript.d.ts",
+      "diffFile": "built-local-typescript.d.ts.diff.txt",
+      "changed": true,
+      "beforeSha256": "ed36f8be8cfe65cf385331d21ff406f5ad8deb86749872d55d012cf3d7843eb9",
+      "afterSha256": "acecde84050ed615d034b86a9da0f0fc9f7caedb64e3c4d3568d2b3b631033ab"
+    },
+    {
+      "file": "built/local/typescript.internal.d.ts",
+      "diffFile": "built-local-typescript.internal.d.ts.diff.txt",
+      "changed": true,
+      "beforeSha256": "0bc7521bcad5e0d691b8d306e4c96501f5511e896f40184df33b8f4426e94350",
+      "afterSha256": "47d6b4029196be14a0bbcaa7ce63d263dcc1b274d1c03b421f7f54a46e538037"
+    },
+    {
+      "file": "tests/baselines/local/api/typescript.d.ts",
+      "diffFile": "tests-baselines-local-api-typescript.d.ts.diff.txt",
+      "changed": true,
+      "beforeSha256": "ed36f8be8cfe65cf385331d21ff406f5ad8deb86749872d55d012cf3d7843eb9",
+      "afterSha256": "acecde84050ed615d034b86a9da0f0fc9f7caedb64e3c4d3568d2b3b631033ab"
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "diffFile": "tests-baselines-reference-api-typescript.d.ts.diff.txt",
+      "changed": false,
+      "beforeSha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf",
+      "afterSha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf"
+    }
+  ],
+  "fixedHarnessFrom": "accepted Head 2 built/local/run.js; not a D typecheck substitute"
+}

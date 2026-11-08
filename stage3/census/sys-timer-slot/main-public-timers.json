@@ -1,0 +1,168 @@
+{
+  "typescript": "6.0.3",
+  "timers": [
+    {
+      "file": "built/local/typescript.d.ts",
+      "line": 2715,
+      "start": 119143,
+      "end": 119223,
+      "name": "setTimeout",
+      "owner": "ServerHost",
+      "text": "setTimeout(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "anyTokens": 3
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "line": 2716,
+      "start": 119236,
+      "end": 119271,
+      "name": "clearTimeout",
+      "owner": "ServerHost",
+      "text": "clearTimeout(timeoutId: any): void;",
+      "anyTokens": 1
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "line": 2717,
+      "start": 119284,
+      "end": 119354,
+      "name": "setImmediate",
+      "owner": "ServerHost",
+      "text": "setImmediate(callback: (...args: any[]) => void, ...args: any[]): any;",
+      "anyTokens": 3
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "line": 2718,
+      "start": 119367,
+      "end": 119404,
+      "name": "clearImmediate",
+      "owner": "ServerHost",
+      "text": "clearImmediate(timeoutId: any): void;",
+      "anyTokens": 1
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "line": 8545,
+      "start": 423650,
+      "end": 423731,
+      "name": "setTimeout",
+      "owner": "System",
+      "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "anyTokens": 3
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "line": 8546,
+      "start": 423740,
+      "end": 423776,
+      "name": "clearTimeout",
+      "owner": "System",
+      "text": "clearTimeout?(timeoutId: any): void;",
+      "anyTokens": 1
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "line": 9872,
+      "start": 511050,
+      "end": 511131,
+      "name": "setTimeout",
+      "owner": "WatchHost",
+      "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "anyTokens": 3
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "line": 9874,
+      "start": 511219,
+      "end": 511255,
+      "name": "clearTimeout",
+      "owner": "WatchHost",
+      "text": "clearTimeout?(timeoutId: any): void;",
+      "anyTokens": 1
+    }
+  ],
+  "referenceTimers": [
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "line": 2718,
+      "start": 119197,
+      "end": 119277,
+      "name": "setTimeout",
+      "owner": "ServerHost",
+      "text": "setTimeout(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "anyTokens": 3
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "line": 2719,
+      "start": 119290,
+      "end": 119325,
+      "name": "clearTimeout",
+      "owner": "ServerHost",
+      "text": "clearTimeout(timeoutId: any): void;",
+      "anyTokens": 1
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "line": 2720,
+      "start": 119338,
+      "end": 119408,
+      "name": "setImmediate",
+      "owner": "ServerHost",
+      "text": "setImmediate(callback: (...args: any[]) => void, ...args: any[]): any;",
+      "anyTokens": 3
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "line": 2721,
+      "start": 119421,
+      "end": 119458,
+      "name": "clearImmediate",
+      "owner": "ServerHost",
+      "text": "clearImmediate(timeoutId: any): void;",
+      "anyTokens": 1
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "line": 8491,
+      "start": 419878,
+      "end": 419959,
+      "name": "setTimeout",
+      "owner": "System",
+      "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "anyTokens": 3
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "line": 8492,
+      "start": 419968,
+      "end": 420004,
+      "name": "clearTimeout",
+      "owner": "System",
+      "text": "clearTimeout?(timeoutId: any): void;",
+      "anyTokens": 1
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "line": 9814,
+      "start": 506882,
+      "end": 506963,
+      "name": "setTimeout",
+      "owner": "WatchHost",
+      "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "anyTokens": 3
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "line": 9816,
+      "start": 507051,
+      "end": 507087,
+      "name": "clearTimeout",
+      "owner": "WatchHost",
+      "text": "clearTimeout?(timeoutId: any): void;",
+      "anyTokens": 1
+    }
+  ],
+  "anyTokens": 16
+}

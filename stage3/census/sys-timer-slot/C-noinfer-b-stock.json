@@ -1,0 +1,89 @@
+{
+  "version": "6.0.3",
+  "adamicRoots": 79,
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": [],
+    "typeRoots": [
+      "/workspace/adamic/internal/load/node_types/node_modules/@types"
+    ]
+  },
+  "adamic": [],
+  "solution": [],
+  "solutionExit": 0,
+  "headProbes": [
+    {
+      "line": 1499,
+      "mainLine": 1501,
+      "name": "setTimeout",
+      "sourceType": "typeof setTimeout",
+      "targetType": "<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown",
+      "fits": true,
+      "sourceSignatures": [
+        {
+          "signature": "<TArgs extends any[]>(callback: (...args: TArgs) => void, delay?: number, ...args: [void] extends TArgs ? Partial<TArgs> : TArgs): NodeJS.Timeout",
+          "file": "/workspace/adamic/internal/load/node_types/node_modules/@types/node/web-globals/timers.d.ts",
+          "line": 27
+        }
+      ]
+    },
+    {
+      "line": 1500,
+      "mainLine": 1502,
+      "name": "clearTimeout",
+      "sourceType": "(timeout: NodeJS.Timeout | string | number | undefined) => void",
+      "targetType": "(timeoutId: unknown) => void",
+      "fits": true,
+      "sourceSignatures": [
+        {
+          "signature": "(timeout: NodeJS.Timeout | string | number | undefined): void",
+          "file": "/workspace/adamic/internal/load/node_types/node_modules/@types/node/web-globals/timers.d.ts",
+          "line": 41
+        }
+      ]
+    },
+    {
+      "line": 1597,
+      "mainLine": 1599,
+      "name": "setTimeout",
+      "sourceType": "typeof setTimeout",
+      "targetType": "<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown",
+      "fits": true,
+      "sourceSignatures": [
+        {
+          "signature": "<TArgs extends any[]>(callback: (...args: TArgs) => void, delay?: number, ...args: [void] extends TArgs ? Partial<TArgs> : TArgs): NodeJS.Timeout",
+          "file": "/workspace/adamic/internal/load/node_types/node_modules/@types/node/web-globals/timers.d.ts",
+          "line": 27
+        }
+      ]
+    },
+    {
+      "line": 1598,
+      "mainLine": 1600,
+      "name": "clearTimeout",
+      "sourceType": "(timeout: NodeJS.Timeout | string | number | undefined) => void",
+      "targetType": "(timeoutId: unknown) => void",
+      "fits": true,
+      "sourceSignatures": [
+        {
+          "signature": "(timeout: NodeJS.Timeout | string | number | undefined): void",
+          "file": "/workspace/adamic/internal/load/node_types/node_modules/@types/node/web-globals/timers.d.ts",
+          "line": 41
+        }
+      ]
+    }
+  ]
+}

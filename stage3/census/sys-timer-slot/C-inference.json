@@ -1,0 +1,184 @@
+{
+  "typescript": "6.0.3",
+  "attempts": [
+    {
+      "spelling": "prefix",
+      "rest": "...args: [...A, ...unknown[]]",
+      "ambient": true,
+      "source": "export {};\ndeclare function setTimeout(handler: () => void, timeout: number): NodeJS.Timeout;\ndeclare function clearTimeout(handle: NodeJS.Timeout | undefined): void;\ninterface Slot {setTimeout?<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]): unknown;clearTimeout?(id:unknown):void;}\ndeclare const slot: Slot;\ndeclare const queue: {pollScheduled: unknown};\nslot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue);\nslot.setTimeout!(()=>{},250,'pollQueue');\nslot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches');\nconst provider: Slot = {setTimeout,clearTimeout};\n",
+      "calls": [
+        {
+          "line": 7,
+          "text": "slot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue)",
+          "signature": "(callback: (_label: string, q: { pollScheduled: unknown; }) => void, ms: number, _label: string, q: { pollScheduled: unknown; }, ...args: unknown[]): unknown"
+        },
+        {
+          "line": 8,
+          "text": "slot.setTimeout!(()=>{},250,'pollQueue')",
+          "signature": "(callback: () => void, ms: number, ...args: unknown[]): unknown"
+        },
+        {
+          "line": 9,
+          "text": "slot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches')",
+          "signature": "(callback: () => void, ms: number, ...args: unknown[]): unknown"
+        }
+      ],
+      "diagnostics": [
+        {
+          "file": "/workspace/scratch/sys-timer-slot/main/C-inference.ts",
+          "line": 10,
+          "code": 2322,
+          "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...A, ...unknown[]]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more."
+        }
+      ]
+    },
+    {
+      "spelling": "prefix",
+      "rest": "...args: [...A, ...unknown[]]",
+      "ambient": false,
+      "source": "export {};\n\ninterface Slot {setTimeout?<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]): unknown;clearTimeout?(id:unknown):void;}\ndeclare const slot: Slot;\ndeclare const queue: {pollScheduled: unknown};\nslot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue);\nslot.setTimeout!(()=>{},250,'pollQueue');\nslot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches');\nconst provider: Slot = {setTimeout,clearTimeout};\n",
+      "calls": [
+        {
+          "line": 6,
+          "text": "slot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue)",
+          "signature": "(callback: (_label: string, q: { pollScheduled: unknown; }) => void, ms: number, _label: string, q: { pollScheduled: unknown; }, ...args: unknown[]): unknown"
+        },
+        {
+          "line": 7,
+          "text": "slot.setTimeout!(()=>{},250,'pollQueue')",
+          "signature": "(callback: () => void, ms: number, ...args: unknown[]): unknown"
+        },
+        {
+          "line": 8,
+          "text": "slot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches')",
+          "signature": "(callback: () => void, ms: number, ...args: unknown[]): unknown"
+        }
+      ],
+      "diagnostics": [
+        {
+          "file": "/workspace/scratch/sys-timer-slot/main/C-inference.ts",
+          "line": 9,
+          "code": 2322,
+          "message": "Type 'typeof setTimeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.\n  Types of parameters 'args' and 'args' are incompatible.\n    Type '[...A, ...unknown[]]' is not assignable to type 'MakeVoidParameterOptional<A>'."
+        }
+      ]
+    },
+    {
+      "spelling": "union",
+      "rest": "...args: A | [...A, ...unknown[]]",
+      "ambient": true,
+      "source": "export {};\ndeclare function setTimeout(handler: () => void, timeout: number): NodeJS.Timeout;\ndeclare function clearTimeout(handle: NodeJS.Timeout | undefined): void;\ninterface Slot {setTimeout?<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A | [...A, ...unknown[]]): unknown;clearTimeout?(id:unknown):void;}\ndeclare const slot: Slot;\ndeclare const queue: {pollScheduled: unknown};\nslot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue);\nslot.setTimeout!(()=>{},250,'pollQueue');\nslot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches');\nconst provider: Slot = {setTimeout,clearTimeout};\n",
+      "calls": [
+        {
+          "line": 7,
+          "text": "slot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue)",
+          "signature": "(callback: (args_0: string, args_1: { pollScheduled: unknown; }) => void, ms: number, ...args: [string, { pollScheduled: unknown; }] | [string, { pollScheduled: unknown; }, ...unknown[]]): unknown"
+        },
+        {
+          "line": 8,
+          "text": "slot.setTimeout!(()=>{},250,'pollQueue')",
+          "signature": "(callback: () => void, ms: number, ...args: unknown[] | []): unknown"
+        },
+        {
+          "line": 9,
+          "text": "slot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches')",
+          "signature": "(callback: () => void, ms: number, ...args: unknown[] | []): unknown"
+        }
+      ],
+      "diagnostics": [
+        {
+          "file": "/workspace/scratch/sys-timer-slot/main/C-inference.ts",
+          "line": 10,
+          "code": 2322,
+          "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A | [...A, ...unknown[]]) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A] | [ms: number, ...A, ...unknown[]]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n        Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n          Target allows only 1 element(s) but source may have more."
+        }
+      ]
+    },
+    {
+      "spelling": "union",
+      "rest": "...args: A | [...A, ...unknown[]]",
+      "ambient": false,
+      "source": "export {};\n\ninterface Slot {setTimeout?<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A | [...A, ...unknown[]]): unknown;clearTimeout?(id:unknown):void;}\ndeclare const slot: Slot;\ndeclare const queue: {pollScheduled: unknown};\nslot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue);\nslot.setTimeout!(()=>{},250,'pollQueue');\nslot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches');\nconst provider: Slot = {setTimeout,clearTimeout};\n",
+      "calls": [
+        {
+          "line": 6,
+          "text": "slot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue)",
+          "signature": "(callback: (args_0: string, args_1: { pollScheduled: unknown; }) => void, ms: number, ...args: [string, { pollScheduled: unknown; }] | [string, { pollScheduled: unknown; }, ...unknown[]]): unknown"
+        },
+        {
+          "line": 7,
+          "text": "slot.setTimeout!(()=>{},250,'pollQueue')",
+          "signature": "(callback: () => void, ms: number, ...args: unknown[] | []): unknown"
+        },
+        {
+          "line": 8,
+          "text": "slot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches')",
+          "signature": "(callback: () => void, ms: number, ...args: unknown[] | []): unknown"
+        }
+      ],
+      "diagnostics": [
+        {
+          "file": "/workspace/scratch/sys-timer-slot/main/C-inference.ts",
+          "line": 9,
+          "code": 2322,
+          "message": "Type 'typeof setTimeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A | [...A, ...unknown[]]) => unknown'.\n  Types of parameters 'args' and 'args' are incompatible.\n    Type 'A | [...A, ...unknown[]]' is not assignable to type 'MakeVoidParameterOptional<A>'.\n      Type '[...A, ...unknown[]]' is not assignable to type 'MakeVoidParameterOptional<A>'."
+        }
+      ]
+    },
+    {
+      "spelling": "fullTupleNoInfer",
+      "rest": "...args: A",
+      "ambient": true,
+      "source": "export {};\ndeclare function setTimeout(handler: () => void, timeout: number): NodeJS.Timeout;\ndeclare function clearTimeout(handle: NodeJS.Timeout | undefined): void;\ninterface Slot {setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;clearTimeout?(id:unknown):void;}\ndeclare const slot: Slot;\ndeclare const queue: {pollScheduled: unknown};\nslot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue);\nslot.setTimeout!(()=>{},250,'pollQueue');\nslot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches');\nconst provider: Slot = {setTimeout,clearTimeout};\n",
+      "calls": [
+        {
+          "line": 7,
+          "text": "slot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue)",
+          "signature": "(callback: (...args: NoInfer<[string, { pollScheduled: unknown; }]>) => void, ms: number, args_0: string, args_1: { pollScheduled: unknown; }): unknown"
+        },
+        {
+          "line": 8,
+          "text": "slot.setTimeout!(()=>{},250,'pollQueue')",
+          "signature": "(callback: (...args: NoInfer<[string]>) => void, ms: number, args_0: string): unknown"
+        },
+        {
+          "line": 9,
+          "text": "slot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches')",
+          "signature": "(callback: (...args: NoInfer<[string]>) => void, ms: number, args_0: string): unknown"
+        }
+      ],
+      "diagnostics": [
+        {
+          "file": "/workspace/scratch/sys-timer-slot/main/C-inference.ts",
+          "line": 10,
+          "code": 2322,
+          "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more."
+        }
+      ]
+    },
+    {
+      "spelling": "fullTupleNoInfer",
+      "rest": "...args: A",
+      "ambient": false,
+      "source": "export {};\n\ninterface Slot {setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;clearTimeout?(id:unknown):void;}\ndeclare const slot: Slot;\ndeclare const queue: {pollScheduled: unknown};\nslot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue);\nslot.setTimeout!(()=>{},250,'pollQueue');\nslot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches');\nconst provider: Slot = {setTimeout,clearTimeout};\n",
+      "calls": [
+        {
+          "line": 6,
+          "text": "slot.setTimeout!((_label:string, q:typeof queue)=>{},250,'label',queue)",
+          "signature": "(callback: (...args: NoInfer<[string, { pollScheduled: unknown; }]>) => void, ms: number, args_0: string, args_1: { pollScheduled: unknown; }): unknown"
+        },
+        {
+          "line": 7,
+          "text": "slot.setTimeout!(()=>{},250,'pollQueue')",
+          "signature": "(callback: (...args: NoInfer<[string]>) => void, ms: number, args_0: string): unknown"
+        },
+        {
+          "line": 8,
+          "text": "slot.setTimeout!(()=>{},1000,'timerToUpdateChildWatches')",
+          "signature": "(callback: (...args: NoInfer<[string]>) => void, ms: number, args_0: string): unknown"
+        }
+      ],
+      "diagnostics": []
+    }
+  ]
+}

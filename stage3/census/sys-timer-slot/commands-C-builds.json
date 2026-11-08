@@ -1,0 +1,104 @@
+[
+  {
+    "label": "C-a-build-compiler",
+    "args": [
+      "npm",
+      "run",
+      "build:compiler",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-a",
+    "exit": 1,
+    "seconds": 42.51065754890442
+  },
+  {
+    "label": "C-a-build-tests",
+    "args": [
+      "npm",
+      "run",
+      "build:tests",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-a",
+    "exit": 1,
+    "seconds": 20.819742441177368
+  },
+  {
+    "label": "C-a-finish-shim",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/finish-shim.mjs",
+      "/workspace/scratch/sys-timer-slot/C-a"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-a",
+    "exit": 0,
+    "seconds": 0.2690448760986328
+  },
+  {
+    "label": "C-a-bundle-declarations",
+    "args": [
+      "node",
+      "scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "./built/local/typescript/typescript.d.ts",
+      "--output",
+      "./built/local/typescript.d.ts"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-a",
+    "exit": 0,
+    "seconds": 6.154085397720337
+  },
+  {
+    "label": "C-b-build-compiler",
+    "args": [
+      "npm",
+      "run",
+      "build:compiler",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-b",
+    "exit": 1,
+    "seconds": 46.96996521949768
+  },
+  {
+    "label": "C-b-build-tests",
+    "args": [
+      "npm",
+      "run",
+      "build:tests",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-b",
+    "exit": 1,
+    "seconds": 26.175583124160767
+  },
+  {
+    "label": "C-b-finish-shim",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/finish-shim.mjs",
+      "/workspace/scratch/sys-timer-slot/C-b"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-b",
+    "exit": 0,
+    "seconds": 0.22039222717285156
+  },
+  {
+    "label": "C-b-bundle-declarations",
+    "args": [
+      "node",
+      "scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "./built/local/typescript/typescript.d.ts",
+      "--output",
+      "./built/local/typescript.d.ts"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-b",
+    "exit": 0,
+    "seconds": 4.775149345397949
+  }
+]

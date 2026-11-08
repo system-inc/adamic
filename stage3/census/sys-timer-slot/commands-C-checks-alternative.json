@@ -1,0 +1,30 @@
+[
+  {
+    "label": "C-noinfer-a-stock",
+    "args": [
+      "node",
+      "--max-old-space-size=8192",
+      "/workspace/adamic/stage3/census/sys-timer-slot/C-check.cjs",
+      "/workspace/scratch/sys-timer-slot/C-noinfer-a",
+      "/workspace/adamic",
+      "/workspace/scratch/sys-timer-slot/C-noinfer-a-stock.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 75.6504282951355
+  },
+  {
+    "label": "C-noinfer-b-stock",
+    "args": [
+      "node",
+      "--max-old-space-size=8192",
+      "/workspace/adamic/stage3/census/sys-timer-slot/C-check.cjs",
+      "/workspace/scratch/sys-timer-slot/C-noinfer-b",
+      "/workspace/adamic",
+      "/workspace/scratch/sys-timer-slot/C-noinfer-b-stock.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 72.86865782737732
+  }
+]

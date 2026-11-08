@@ -1,0 +1,61 @@
+{
+  "version": "6.0.3",
+  "adamicRoots": 79,
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": [],
+    "typeRoots": [
+      "/workspace/adamic/internal/load/node_types/node_modules/@types"
+    ]
+  },
+  "adamic": [
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type 'unknown' is not assignable to type 'boolean'.",
+      "file": "src/compiler/sys.ts",
+      "line": 384,
+      "column": 9
+    },
+    {
+      "code": 2345,
+      "category": "Error",
+      "message": "Argument of type '(_timeoutType: string, queue: PollingIntervalQueue) => void' is not assignable to parameter of type '(...args: unknown[]) => void'.\n  Types of parameters '_timeoutType' and 'args' are incompatible.\n    Type 'unknown' is not assignable to type 'string'.",
+      "file": "src/compiler/sys.ts",
+      "line": 384,
+      "column": 79
+    }
+  ],
+  "solution": [
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type 'unknown' is not assignable to type 'boolean'.",
+      "file": "src/compiler/sys.ts",
+      "line": 384,
+      "column": 9
+    },
+    {
+      "code": 2345,
+      "category": "Error",
+      "message": "Argument of type '(_timeoutType: string, queue: PollingIntervalQueue) => void' is not assignable to parameter of type '(...args: unknown[]) => void'.\n  Types of parameters '_timeoutType' and 'args' are incompatible.\n    Type 'unknown' is not assignable to type 'string'.",
+      "file": "src/compiler/sys.ts",
+      "line": 384,
+      "column": 79
+    }
+  ],
+  "solutionExit": 2
+}

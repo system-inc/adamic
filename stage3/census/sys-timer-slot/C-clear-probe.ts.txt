@@ -1,0 +1,6 @@
+import { clearTimeout } from "node:timers";
+interface CancellationSlot {
+    clearTimeout?(handle: unknown): void;
+}
+const host: CancellationSlot = { clearTimeout };
+export { host };

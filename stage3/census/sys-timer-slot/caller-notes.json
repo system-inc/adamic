@@ -1,0 +1,14 @@
+{
+  "src/compiler/sys.ts:384": "Stored in PollingIntervalQueue.pollScheduled: boolean (declaration line 258). Two truthiness reads and two writes of false. No handle member read. unknown cannot be assigned to the current boolean annotation.",
+  "src/compiler/sys.ts:497": "Stored in local pollScheduled: any (line 470); tested for truthiness and reset to undefined. No cancellation or member read.",
+  "src/compiler/sys.ts:777": "Stored in timerToUpdateChildWatches: any (line 624); truthiness/negation, clearTimeout, reset to undefined, and string interpolation in sysLog at line 813. No handle member read.",
+  "src/compiler/watchPublic.ts:867": "Stored in timerToInvalidateFailedLookupResolutions: any (line 443); truthiness, cancellation through WatchHost, reset to undefined.",
+  "src/compiler/watchPublic.ts:889": "Stored in timerToUpdateProgram: any (line 442); truthiness, cancellation through WatchHost, reset to undefined.",
+  "src/compiler/tsbuildPublic.ts:2067": "Stored in SolutionBuilderState.timerToBuildInvalidatedProject: unknown (line 424); truthiness, clearTimeout, reset to undefined, matching TIMER-SLOT.md.",
+  "src/server/utilities.ts:30": "Stored as a value in ThrottledOperations.pendingTimeouts: Map<string, any> (line 12). Retrieved as any, tested for truthiness, passed to clearTimeout, and removed from the map. No handle member read.",
+  "src/server/utilities.ts:63": "Stored in GcTimer.timerId: any (line 53); compared with undefined using !== at line 60 and reset to undefined at line 67. No handle member read.",
+  "src/server/session.ts:406": "Passed to setTimerHandle(timerHandle: any) at line 450, then stored in this.timerHandle: any (line 370). Compared with undefined, canceled, reset, and converted to a boolean by !!. No handle member read.",
+  "src/server/typingInstallerAdapter.ts:242": "Return value discarded.",
+  "src/testRunner/parallel/host.ts:326": "Stored in worker.timer: any, canceled with the global clearTimeout. This is a global timer call, outside System's slot.",
+  "src/testRunner/unittests/sys/symlinkWatching.ts:20": "Return value discarded. op has type () => void; no extra arguments."
+}
