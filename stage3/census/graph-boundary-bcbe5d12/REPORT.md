@@ -10,20 +10,24 @@ Box: `755daee0c6ba`; cgroup CPU quota `400000 100000`; memory limit `17179869184
 
 | Kind | Observations | Distinct reported locations |
 | --- | ---: | ---: |
-| views | 8220 | 106 |
+| views | 18685 | 243 |
 | record_literals | 0 | 0 |
 | dynamic_reads | 12 | 6 |
 | checked_object_calls | 0 | 0 |
 
-Views combine 245 ViewOrigins entries and 7975 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
+Views combine 604 ViewOrigins entries and 18081 CheckedFields keys, as requested; these are metadata observations, not that many distinct adapter expressions.
 
-The 79 compiler-file subtotal is `{'views': 8220, 'record_literals': 0, 'dynamic_reads': 12, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
+The 79 compiler-file subtotal is `{'views': 18685, 'record_literals': 0, 'dynamic_reads': 12, 'checked_object_calls': 0}`. The two entry-file subtotal is `{'views': 0, 'record_literals': 0, 'dynamic_reads': 0, 'checked_object_calls': 0}`. Both cover lowered unit results only.
 
-Long pole by observed count: **views, 8220**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
+Long pole by observed count: **views, 18685**. Coverage caveat: lowered IR only; failed statements, checker-skipped bodies, deferred generics and uncompleted units are absent. Inference: this ranking may differ after those gaps lower.
 
 ## Coverage and interpretation
 
-Observed 3447 unit results: {'lowered': 2673, 'stopped': 774}. First-error pass observed 3447 results; full pieces observed 3. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
+Bounded-pass stops: first: child exit -15, configured elapsed bound, 1790.787 seconds; full-01: child exit -15, configured elapsed bound, 1791.304 seconds. Interrupted active units are excluded from completed observation counts.
+
+Entry checker diagnostics: 0. The latent observations still do not establish whole-program lowering or native behavior.
+
+Observed 4798 unit results: {'lowered': 3293, 'stopped': 1505}. First-error pass observed 3447 results; full pieces observed 1394. The summed table uses one result per unit, preferring full mode over first-error mode. Repeated sites in different units are repeated observations, not independent source sites.
 
 Stock unit inventory has 3 units in 1 emitted files out of 81 resolved files. Units without an observer result, by stock status: `{}`. Missing stock file records after an interrupted pass are not evidence of zero units.
 
@@ -47,7 +51,7 @@ Attribution is to the unit's file, not an independent root. A zero with zero obs
 | builderPublic.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
 | builderState.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
 | builderStatePublic.ts | 0 | 0 | 0 | 0 | 0 | no, not computed |
-| checker.ts | 0 | 0 | 0 | 0 | 51 | no, not computed |
+| checker.ts | 10465 | 0 | 0 | 0 | 1402 | no, not computed |
 | commandLineParser.ts | 0 | 0 | 0 | 0 | 159 | no, not computed |
 | core.ts | 0 | 0 | 4 | 0 | 57 | no, not computed |
 | corePublic.ts | 0 | 0 | 0 | 0 | 9 | no, not computed |
@@ -133,6 +137,7 @@ Examples below are unit fallback positions and adapted unit source text, not exa
 
 | Unit file | Count |
 | --- | ---: |
+| checker.ts | 10465 |
 | utilities.ts | 4668 |
 | utilitiesPublic.ts | 2158 |
 | factory/utilities.ts | 637 |
@@ -141,6 +146,27 @@ Examples below are unit fallback positions and adapted unit source text, not exa
 | transformers/classFields.ts | 192 |
 
 Examples below are unit fallback positions and adapted unit source text, not exact expression locations.
+
+`checker.ts:2437:5` (unit fallback):
+```ts
+    function getJsxNamespace(location: Node | undefined): __String {
+        if (location) {
+            const file = getSourceFileOfNode(location);
+```
+
+`checker.ts:3112:9` (unit fallback):
+```ts
+        function isUsedInFunctionOrInstancePropertyWorker(usage: Node, declaration: Node): boolean {
+            return !!findAncestor(usage, current => {
+                if (current === declContainer) {
+```
+
+`checker.ts:3299:5` (unit fallback):
+```ts
+    function onSuccessfullyResolvedSymbol(
+        errorLocation: Node | undefined,
+        result: Symbol,
+```
 
 `utilities.ts:1143:1` (unit fallback):
 ```ts
@@ -270,6 +296,8 @@ function isStaticPropertyDeclaration(node: Node): node is PropertyDeclaration {
 | entry-build-fixed | 0 | 33.1 | completed |
 | entry-build | 1 | 10.017 | nonzero exit; cause not inferred |
 | entry-fixture | 0 | 1.007 | completed |
+| export-audit | 0 | 2.003 | completed |
+| export-report | 0 | 1.003 | completed |
 | first-add | 0 | 1.008 | completed |
 | first-commit | 0 | 1.007 | completed |
 | first-push | 0 | 3.006 | completed |
@@ -277,9 +305,18 @@ function isStaticPropertyDeclaration(node: Node): node is PropertyDeclaration {
 | first-snapshot-final | 0 | 1.004 | completed |
 | first-snapshot | 0 | 1.005 | completed |
 | first | -15 | 1790.787 | configured elapsed bound |
+| full-00-add | 0 | 1.003 | completed |
+| full-00-commit | 0 | 1.002 | completed |
+| full-00-push | 0 | 3.006 | completed |
+| full-00-report | 0 | 1.002 | completed |
+| full-00-snapshot-final | 0 | 1.001 | completed |
+| full-00-snapshot | 0 | 1.001 | completed |
 | full-00 | 0 | 24.088 | completed |
+| full-01 | -15 | 1791.304 | configured elapsed bound |
 | instrument-entry-fixed | 0 | 1.001 | completed |
 | instrument-entry | 0 | 1.002 | completed |
+| interim-audit | 0 | 3.002 | completed |
+| interim-report | 0 | 1.002 | completed |
 | npm-ci | 0 | not timed | completed |
 | overlay-entry-fixed | 0 | 2.011 | completed |
 | overlay-entry | 0 | 3.006 | completed |
@@ -295,7 +332,7 @@ Read `graph_types.go:460` and its callers at `graph_types.go:355` and `program_r
 
 The entry resolves 81 implementation files: the 79 compiler files from the independent-root report plus `src/tsc/tsc.ts` and `src/tsc/_namespaces/ts.ts`. The sums cover this resolved entry program. `instrument.py` uses the meter entry overlay to keep the entry first and expand Files to its implementation dependencies. It removes only the meter driver's full-mode-only checker-rejection gate so the requested first-error latent pass can retain diagnostics and proceed. `instrument.py` extends the existing guarded latent overlay in scratch only. It retains successful top-level statement returns in the measurement result's Main, which the stock hook discards. Ordinary Load and Lower remain disabled and every real pass asserts those guards. `overlay/` contains all generated Go inputs as `.go.txt`; no production lower source is changed. The deterministic self-test exercises Main, a function body, both dynamic reads, both view sources, GraphTypes presence, and failed-unit exclusion.
 
-An initial entry build omitted the observer mapping and failed; the corrected build and entry fixture passed before the real census. Both attempts are retained. Raw boundary streams, original latent streams, timing streams, logs and each child's own exit status are compressed separately beside this report in `raw/`. `source-manifest.json`, `provenance.json` and `SHA256SUMS` retain source and binary identities. Piece selections and measurement environment variables are retained in raw JSON. Full pieces use Go's `GOMEMLIMIT=10GiB` soft memory limit and a 60-minute aggregate budget; each child has at most 1790 seconds. Each process group is killed and reaped by the supervisor on completion or stopping.
+An initial entry build omitted the observer mapping and failed; the corrected build and entry fixture passed before the real census. Both attempts are retained. The flattened selected-site stream is [`sites.jsonl.gz`](sites.jsonl.gz), beside this report; each line includes kind, reported position, unit, owner file, GraphTypes flag and original stream. It is derived without changing the preserved raw pass streams. Raw boundary streams, original latent streams, timing streams, logs and each child's own exit status are compressed separately beside this report in `raw/`. `source-manifest.json`, `provenance.json` and `SHA256SUMS` retain source and binary identities. Piece selections and measurement environment variables are retained in raw JSON. Full pieces use Go's `GOMEMLIMIT=10GiB` soft memory limit and a 60-minute aggregate budget; each child has at most 1790 seconds. Each process group is killed and reaped by the supervisor on completion or stopping.
 
 ```sh
 source /workspace/adamic-tools/env.sh
