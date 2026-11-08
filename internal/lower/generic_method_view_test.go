@@ -13,7 +13,8 @@ class Cat extends Animal { }
 `
 
 // A generic method seen through a view whose method isn't its own type stops, unjudged, on either side
-// and through an interface (#q6gs98r, Language's probes g1, g4, g5, g6 and g7 on #7fd51gk). tsc relates a
+// and through an interface (#q6gs98r, Language's probes g1, g4, g5, g6 and g7 on #7fd51gk, and o2, an
+// overloaded view, from her attack on #q6gs98r). tsc relates a
 // method's parameters both ways, so each of these is accepted there and hands a Dog method a Cat.
 func TestAGenericMethodSeenThroughAnotherViewIsNotYet(t *testing.T) {
 	t.Parallel()
@@ -43,6 +44,14 @@ interface DogHandler { handle<T>(x: Dog): string; }
 class Real { handle<T>(x: Dog): string { return x.bark(); } }
 const d: DogHandler = new Real();
 const h: Handler = d;
+console.log(h.handle(new Cat()));
+`},
+		{"o2, an overloaded generic view", `class DogHandler { handle<T>(x: Dog): string { return x.bark(); } }
+interface Handler {
+	handle<T>(x: Animal): string;
+	handle<T>(x: Animal, y: number): string;
+}
+const h: Handler = new DogHandler();
 console.log(h.handle(new Cat()));
 `},
 		{"one class's generic method under two type arguments", `class Box<E> { put<T>(x: E): string { return "kept"; } }
