@@ -202,7 +202,7 @@ func TestHostBindingUnmatchedDeclarationIsRefused(t *testing.T) {
 }
 
 // process and performance are Provided on Node, but their native column waits on Runtime's clearance,
-// their wasm32 column on Runtime's and Platforms', and performance's reads on #3sh9398's host model, so
+// their wasm32 column on Runtime's and Platforms', and performance's reads on #m36zjrk's host model, so
 // each stops as not yet at its declaration, naming what it waits on, never Node's answer printed where a
 // host has nothing.
 func TestHostBindingPendingRowsAreNotYet(t *testing.T) {
@@ -211,7 +211,7 @@ func TestHostBindingPendingRowsAreNotYet(t *testing.T) {
 		{"process", "core.ts", "declare const process: { nextTick?: unknown; browser?: unknown; } | undefined;\nexport function isNodeLikeSystem(): boolean {\n\treturn typeof process !== \"undefined\" && !!process.nextTick && !process.browser;\n}\n",
 			"core.ts:1:15: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"},
 		{"performance", "performanceCore.ts", "interface Performance {\n\tnow(): number;\n}\ndeclare const performance: Performance | undefined;\nexport function now(): number {\n\treturn typeof performance === \"object\" ? performance.now() : 0;\n}\n",
-			"performanceCore.ts:4:15: stage 0 can't lower the host binding performance, pending Runtime's clearance of its native column, Runtime and Platforms' clearance of its wasm32 column and #3sh9398's host model, yet"},
+			"performanceCore.ts:4:15: stage 0 can't lower the host binding performance, pending Runtime's clearance of its native column, Runtime and Platforms' clearance of its wasm32 column and #m36zjrk's host model, yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
