@@ -16,26 +16,26 @@ Scalar enum/boolean unions are classified as scalar fields using the adapted sou
 
 **Unrelated object pair observations: 1; distinct textual (source, target, nested path) pairs: 1. Nil-source views with a known runtime reference field: 0.** The object-capable reference companion is 0. Nil-source views with no proven reference field but unknown fields or missing target: 0.
 
-Selected-unit pair observations: **41182**. Raw lines across all passes, including superseded first-error and retry observations: **59705**. Selected units held 2367 viewSources entries; pointer deduplication suppressed 231463 repeat visits and the depth bound suppressed 20554 visits.
+Selected-unit pair observations: **40970**. Raw lines across all passes, including superseded first-error and retry observations: **60921**. Selected units held 2367 viewSources entries; pointer deduplication suppressed 230247 repeat visits and the depth bound suppressed 20627 visits.
 
 | Split | Selected unit observations | All raw lines |
 | --- | ---: | ---: |
-| object_related_top | 1560 | 1995 |
-| object_related_nested | 25363 | 37076 |
+| object_related_top | 1557 | 2024 |
+| object_related_nested | 25232 | 37847 |
 | object_unrelated_top | 1 | 1 |
 | object_unrelated_nested | 0 | 0 |
 | scalar_top | 0 | 3 |
-| scalar_nested | 14258 | 20630 |
+| scalar_nested | 14180 | 21046 |
 | nil_source | 0 | 0 |
 | nil_target_only | 0 | 0 |
 
-Intersection targets are a subset of the object counts, not an added bucket: 31, split as `{'object_related_top': 0, 'object_related_nested': 31, 'object_unrelated_top': 0, 'object_unrelated_nested': 0, 'scalar_top': 0, 'scalar_nested': 0, 'nil_source': 0, 'nil_target_only': 0}`. Scalar/non-object rows include source-proven primitive, enum and scalar-union fields that the probe's broad union flag test admits; scalar-types.json preserves that source-based classification. Intersection targets retain object status even when scalar-like; top-level non-object rows are shown separately from nested scalar fields.
+Intersection targets are a subset of the object counts, not an added bucket: 29, split as `{'object_related_top': 0, 'object_related_nested': 29, 'object_unrelated_top': 0, 'object_unrelated_nested': 0, 'scalar_top': 0, 'scalar_nested': 0, 'nil_source': 0, 'nil_target_only': 0}`. Scalar/non-object rows include source-proven primitive, enum and scalar-union fields that the probe's broad union flag test admits; scalar-types.json preserves that source-based classification. Intersection targets retain object status even when scalar-like; top-level non-object rows are shown separately from nested scalar fields.
 
 Reference field means a cycleFinder.fields field whose lowering representation is known and ir.Type.IsReference() is true. This runtime definition includes strings and Weak. The companion object-capable count excludes strings and Weak. Unknown representations remain explicitly unknown, not silently declared scalar. The nil-source count is a count of views; unlike non-nil pairs, the original probe does not deduplicate nil sources.
 
 ## Coverage
 
-Observed **7965 unit results**: `{'lowered': 4639, 'stopped': 3326}`. Deferred standalone units in emitted inventories: **616**. Unobserved stock units by status: `{'deferred_generic_instantiation': 616}`. Full-mode files attempted: **32/81**; emitted complete full-mode file inventories: 31. Stock inventory has 6491 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
+Observed **7966 unit results**: `{'lowered': 4640, 'stopped': 3326}`. Deferred standalone units in emitted inventories: **633**. Unobserved stock units by status: `{'deferred_generic_instantiation': 633}`. Full-mode files attempted: **33/81**; emitted complete full-mode file inventories: 32. Stock inventory has 6609 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
 
 One result per (unit file, unit position) is selected: full mode supersedes first-error mode, and later full pieces supersede earlier ones. Repeated dependency pairs in different units remain repeated observations. TypeToString text can be truncated or reused for distinct checker identities; the distinct-pair list groups displayed source/target strings plus the full first-encountered nested path, not globally shared checker identities.
 
@@ -88,7 +88,7 @@ Each observation is retained, including repeats in one unit, in [nil-source-refe
 | factory/nodeFactory.ts | 81 | 421 | 1243 | complete traversal |
 | factory/nodeTests.ts | 228 | 0 | 0 | not yet attempted |
 | factory/parenthesizerRules.ts | 1 | 2 | 76 | not yet attempted |
-| factory/utilities.ts | 61 | 39 | 1428 | not yet attempted |
+| factory/utilities.ts | 62 | 39 | 1216 | complete traversal |
 | factory/utilitiesPublic.ts | 3 | 0 | 0 | not yet attempted |
 | hostErrors.ts | 0 | 3 | 0 | not yet attempted |
 | moduleNameResolver.ts | 105 | 63 | 18 | complete traversal |
@@ -184,6 +184,7 @@ Each child is capped at 1490 seconds with five seconds for forced cleanup, below
 | full-029 | 0 | 38.053 | completed |
 | full-030 | 0 | 164.779 | completed |
 | full-031 | 0 | 68.111 | completed |
+| full-032 | 0 | 97.285 | completed |
 
 ## Evidence and replay
 
