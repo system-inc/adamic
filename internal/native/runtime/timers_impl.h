@@ -69,7 +69,7 @@ adamic_timer_handle adamic_timer_start(const adamic_timer_provider *provider,
     /* Node makes such a delay 1 ms with a warning on stderr; a run-time NotYet (Adamic's ruling on
      * #995spev), said in the JavaScript backend's words too. */
     if (!isfinite(delay_ms) || delay_ms < 0 || delay_ms > INT32_MAX) {
-        static const char message[] = "a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet";
+        static const char message[] = "a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing";
         adamic_panic(message, sizeof message - 1);
     }
     unsigned delay = delay_ms < 1 ? 1 : (unsigned)delay_ms;
@@ -155,7 +155,7 @@ double adamic_node_clear_timeout(const adamic_heap *value) {
     const adamic_object *object = (const adamic_object *)value;
     if (object->shape != &timeout_shape) {
         if (timer_foreign_handle(object)) {
-            static const char message[] = "clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet";
+            static const char message[] = "clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined";
             adamic_panic(message, sizeof message - 1);
         }
         return 0;

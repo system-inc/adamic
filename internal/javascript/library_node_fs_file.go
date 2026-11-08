@@ -121,12 +121,12 @@ const adamicWatchFileListener = callback => {
 // by the prototype a probe timer has, but holds a truthy own _onTimeout stops before Node would
 // unenroll it.
 const nodeTimersRuntime = `const adamicSetTimeout = (callback, delay, values) => {
- if (!(delay >= 0 && delay <= 2147483647)) panic("a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet");
+ if (!(delay >= 0 && delay <= 2147483647)) panic("a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing");
  return globalThis.setTimeout((...handed) => { adamicCall(callback, handed); }, delay, ...values);
 };
 const adamicTimeoutPrototype = (() => { const probe = globalThis.setTimeout(() => {}, 1); globalThis.clearTimeout(probe); return Object.getPrototypeOf(probe); })();
 const adamicClearTimeout = (value) => {
- if (typeof value === 'object' && value !== null && Object.getPrototypeOf(value) !== adamicTimeoutPrototype && Object.hasOwn(value, '_onTimeout') && value._onTimeout) panic("clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet");
+ if (typeof value === 'object' && value !== null && Object.getPrototypeOf(value) !== adamicTimeoutPrototype && Object.hasOwn(value, '_onTimeout') && value._onTimeout) panic("clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined");
  globalThis.clearTimeout(value);
 };
 `
