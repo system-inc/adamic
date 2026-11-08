@@ -1789,7 +1789,7 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
 func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
-	arguments := l.typeArguments(l.checker.GetTypeAtLocation(node))
+	arguments := l.typeArguments(l.intrinsicReceiverType(node))
 	if len(arguments) != 2 {
 		return 0, 0, l.notYet(node, "a Map whose key and value types aren't known")
 	}

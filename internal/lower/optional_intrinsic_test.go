@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"fmt"
+	"os"
 	"testing"
 )
 
@@ -43,5 +44,37 @@ func TestOptionalIntrinsicBooleanPlainToStringLowers(t *testing.T) {
 	t.Parallel()
 	if _, err := lowerSourceAs(t, "function text(value: boolean): string { return value.toString(); }\nconsole.log(text(true));", ".ts"); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestOptionalIntrinsicArgumentsAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"delete", "foreach", "effects", "result"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			source, err := os.ReadFile("../oracle/testdata/library_optional_receiver_" + name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			lowersAndAgreesWithNode(t, string(source))
+		})
+	}
+}
+
+func TestOptionalIntrinsicArgumentBoundariesRefuse(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"property", "optional_property", "call", "spread", "function"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			source, err := os.ReadFile("../oracle/testdata/optional_receiver_refused/" + name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowerSource(t, string(source))
+			var refused *NotYet
+			if !errors.As(err, &refused) || (refused.What != "a call through ?. (an optional call)" && refused.What != "an optional chain longer than one step") {
+				t.Fatalf("want optional call/chain refusal, got %v", err)
+			}
+		})
 	}
 }

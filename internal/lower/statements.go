@@ -179,13 +179,11 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if err := l.genericFunctionIdentityCall(expression); err != nil {
 			return nil, err
 		}
-		if l.nodeFSEntryMethod(expression) {
-			if value, handled, err := l.optionalIntrinsic(expression); handled {
-				if err != nil {
-					return nil, err
-				}
-				return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		if value, handled, err := l.optionalIntrinsic(expression); handled {
+			if err != nil {
+				return nil, err
 			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
 		}
 		if err := l.optionalCall(expression); err != nil {
 			return nil, err
