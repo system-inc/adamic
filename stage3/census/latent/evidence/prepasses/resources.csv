@@ -1,0 +1,8 @@
+run,child_exit,wall_seconds,user_seconds,system_seconds,peak_rss_kib,peak_observed_combined_rss_kib,resource_source
+apply,0,844.3020684559999,713.014926,135.505922,2039816,,child getrusage
+cost-checker,0,7.007712728000115,5.86826,2.021601,457528,,child getrusage
+cost-entry,0,6.005472920000102,6.210075,0.7652439999999999,467188,,child getrusage
+first-error-base,0,2365.8,2761.44,55.77,8169948,,process lifetime CPU ticks and sampled lifetime VmHWM; final sampling interval may miss a peak
+first-error-head,0,2455.073792147,2848.082742,68.570143,8049096,9445896,child getrusage
+core-full-base,0,32.08166303999997,34.976056,4.2555119999999995,901236,5090940,child getrusage
+core-full-head,0,30.03376308299994,31.954146,4.185886,919832,5367728,child getrusage

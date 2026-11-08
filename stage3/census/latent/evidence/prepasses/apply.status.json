@@ -1,0 +1,14 @@
+{
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "--build-product",
+    "/workspace/scratch/sygfnmc-adapted"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 844.3020684559999,
+  "peak_rss_kib": 2039816,
+  "user_seconds": 713.014926,
+  "system_seconds": 135.505922
+}

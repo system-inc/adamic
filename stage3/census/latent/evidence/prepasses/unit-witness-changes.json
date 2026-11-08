@@ -1,0 +1,38 @@
+[
+  {
+    "where": "/workspace/scratch/sygfnmc-adapted/src/compiler/core.ts:1028:1",
+    "name": "appendIfUnique",
+    "before": true,
+    "after": false
+  },
+  {
+    "where": "/workspace/scratch/sygfnmc-adapted/src/compiler/moduleNameResolver.ts:300:1",
+    "name": "initializeResolutionField",
+    "before": true,
+    "after": false
+  },
+  {
+    "where": "/workspace/scratch/sygfnmc-adapted/src/compiler/moduleNameResolver.ts:304:1",
+    "name": "updateResolutionField",
+    "before": true,
+    "after": false
+  },
+  {
+    "where": "/workspace/scratch/sygfnmc-adapted/src/compiler/moduleNameResolver.ts:311:1",
+    "name": "initializeResolutionFieldForReadonlyCache",
+    "before": true,
+    "after": false
+  },
+  {
+    "where": "/workspace/scratch/sygfnmc-adapted/src/compiler/watch.ts:563:1",
+    "name": "emitFilesAndReportErrors",
+    "before": true,
+    "after": false
+  },
+  {
+    "where": "/workspace/scratch/sygfnmc-adapted/src/compiler/watch.ts:633:1",
+    "name": "emitFilesAndReportErrorsAndGetExitStatus",
+    "before": true,
+    "after": false
+  }
+]

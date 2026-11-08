@@ -195,6 +195,7 @@ func TestLatentStatecopyNamesEveryPrivateIRField(t *testing.T) {
 // from the generator's table. Unrelated lowering fields are intentionally ignored.
 func carryFactGuardGaps(root, lowerInput string) []string {
 	audited := map[string]string{
+		"omittedOptionals":           "map[*ast.Symbol]bool",
 		"entriesRecords":             "map[*ast.Node]bool",
 		"entriesProgramRecords":      "bool",
 		"entriesProgramRecordsKnown": "bool",
@@ -228,7 +229,7 @@ func carryFactGuardGaps(root, lowerInput string) []string {
 	}
 	generated := string(generate(root, lowerInput))
 	for name, ty := range audited {
-		if ty == "map[*ast.Node]bool" && !strings.Contains(generated, "result."+name+" = func(value map[*ast.Node]bool)") {
+		if strings.HasPrefix(ty, "map[") && !strings.Contains(generated, "result."+name+" = func(value "+ty+")") {
 			gaps = append(gaps, "carried lowering."+name+" lost its owned snapshot map copy")
 		}
 		for _, assignment := range []string{name + ": value." + name, "value." + name + " = facts." + name} {
@@ -242,6 +243,9 @@ func carryFactGuardGaps(root, lowerInput string) []string {
 	helper, err := os.ReadFile(filepath.Join(root, "stage3/census/latent/full.go.txt"))
 	if err != nil || !strings.Contains(string(helper), "local.entriesRecords = maps.Clone(local.entriesRecords)") {
 		gaps = append(gaps, "carried lowering.entriesRecords lost its owned installation map copy")
+	}
+	if err != nil || !strings.Contains(string(helper), "local.omittedOptionals = maps.Clone(local.omittedOptionals)") {
+		gaps = append(gaps, "carried lowering.omittedOptionals lost its owned installation map copy")
 	}
 	return gaps
 }

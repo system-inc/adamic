@@ -1,0 +1,16 @@
+{
+  "command": [
+    "env",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_PREPASS_TIMES=/workspace/adamic/stage3/census/latent/evidence/prepasses/cost-entry.tsv",
+    "/tmp/sygfnmc-cost",
+    "/workspace/scratch/sygfnmc-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/cost-entry-header.jsonl"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 6.005472920000102,
+  "peak_rss_kib": 467188,
+  "user_seconds": 6.210075,
+  "system_seconds": 0.7652439999999999
+}

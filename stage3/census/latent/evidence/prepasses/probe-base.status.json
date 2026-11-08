@@ -1,0 +1,15 @@
+{
+  "command": [
+    "env",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "/tmp/sygfnmc-base",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/probe.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/probe-base.jsonl"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 1.0093481559999873,
+  "peak_rss_kib": 31340,
+  "user_seconds": 0.12415999999999999,
+  "system_seconds": 0.082922
+}

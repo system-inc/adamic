@@ -372,3 +372,29 @@ that end-only detection marks all attempts and explains the unknown onset.
 The bounded tsc entry run reached its 30-minute limit before the end query.
 Its after-load answer was `""`; the run-end answer is unavailable and the
 whole-run overflow result remains unknown. See the [run evidence](evidence/relation-overflow/report.md).
+
+## Production prepasses
+
+The census templates track production's pre-refusal passes in order. The in-process
+AST guard follows Lower's local delegates and rejects missing
+or reordered calls. Its adjacent exemption table explains why independent units do
+not run the enum-validation and module-readiness preflights as unit first stops,
+and why the element collector retains the conservative nil-key mode.
+The two mutant test files prove omission and newly added production passes fail.
+
+Fact collectors use the production ESM module order from the original input roots,
+which the loader retains when an entry's observation ledger expands. Directory
+measurements use the deduplicated union of those root orders. Omitted optional
+facts join the registered program-facts capture; installations and snapshots own
+separate maps. `LATENT_PREPASS_TIMES` optionally writes pass, attempting unit and
+elapsed nanoseconds as tab-separated rows, outside the findings stream.
+
+[Prepass evidence](evidence/prepasses/report.md) records scope, exemptions, costs,
+paired observations and validation status.
+
+Module-list preparation returns production ordering errors instead of using a
+partial list. First-error units record and stop; full and speculative modes retain
+file preparation failures and unit boundaries. `module_order_audit.py BINARY`
+exercises a real production dynamic-import refusal on a tiny fixture, including
+a selected file containing only generic deferrals. It uses an already built guarded
+overlay and never builds one in a gate test.
