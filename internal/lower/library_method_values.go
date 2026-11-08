@@ -73,6 +73,11 @@ func (l *lowering) libraryMethodReadAllowed(node *ast.Node) bool {
 	if l.libraryFunctionValueRead(node) {
 		return true
 	}
+	// A collator's compare read into a slot of exactly its type, its collator's own bound closure
+	// (library_intl.go).
+	if l.intlCollatorCompareRead(node) {
+		return true
+	}
 	if _, known := l.libraryMethod(node, map[*ast.Symbol]bool{}); !known {
 		return false
 	}
@@ -109,6 +114,9 @@ func (l *lowering) libraryMapArgument(node *ast.Node) bool {
 
 func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, error) {
 	if value, handled, err := l.libraryFunctionValueOf(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.intlCollatorCompareValue(node); handled {
 		return value, true, err
 	}
 	_, known := l.libraryMethod(node, map[*ast.Symbol]bool{})

@@ -15,7 +15,12 @@
 // collation is #s82g5nx.
 
 #include "adamic.h"
+#include <string.h>
 
+// collator_compare_slot is #compare's place in collator_shape, the one place new writes it and the
+// value read reads it, so the two can't drift; adamic_object_callee's arm reads slot 0 by the same
+// rule (object.c), and collator_names[collator_compare_slot] is checked to be "#compare" where it's read.
+enum { collator_compare_slot = 0 };
 static const char *const collator_names[] = {"#compare", "#locale"};
 static const bool collator_references[] = {true, true};
 static const adamic_field_kind collator_kinds[] = {adamic_field_reference, adamic_field_reference};
@@ -43,7 +48,16 @@ adamic_object *adamic_intl_collator_new(const adamic_string *locale) {
 	compare->cells[0] = adamic_cell_new((adamic_value){.reference = NULL}, true);
 	adamic_object *collator = adamic_object_new(&collator_shape);
 	adamic_intl_collator_shape_publish(&collator_shape);
-	collator->slots[0].reference = compare;
+	collator->slots[collator_compare_slot].reference = compare;
 	collator->slots[1].reference = NULL;
 	return collator;
+}
+
+// adamic_intl_collator_compare is a collator's compare read as a value, not called (#9tw2b9z): its
+// #compare closure, retained for the caller, the collator borrowed. Lowering admits the read only off
+// the new expression itself, so the collator is one adamic_intl_collator_new just made, and anything
+// else reaching here is a compiler bug, stopped by name rather than retaining another shape's slot.
+adamic_closure *adamic_intl_collator_compare(const adamic_object *collator) {
+	if (collator == NULL || collator->shape != &collator_shape || strcmp(collator_names[collator_compare_slot], "#compare") != 0) { adamic_invariant("compare read off something other than a new collator"); }
+	return adamic_retain(collator->slots[collator_compare_slot].reference);
 }
