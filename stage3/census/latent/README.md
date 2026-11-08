@@ -311,3 +311,47 @@ process each side. It also records a failed single-file composition check: defer
 generic `instantiated` metadata is census-wide, so utilities-only and multi-file
 records differ even on unchanged main. Do not treat separate-process file records
 as interchangeable with multi-file records without accounting for that witness scope.
+
+## Checker relation overflow
+
+The program record includes `relation_overflow.after_load` and
+`relation_overflow.end`, including explicit empty strings. By default only these
+two queries run. An overflow present after load marks every attempted unit. An
+overflow first observed at the end conservatively marks every attempted unit
+with phase `relation_overflow_conservative_all_units`; `attribution` explains
+that the first affected unit is unknown. Both use Lower's exact NotYet words.
+Skipped and deferred units are never treated as independent lowering attempts.
+
+Per-unit probing proved costly on checker.ts: 51 calls took 32.599 seconds,
+averaging 639.192 ms, versus 10.570 seconds of unit lowering. Across the stopped
+cost experiment, queries consumed 972.056 seconds. This is why endpoint checks
+are the default. `LATENT_RELATION_PER_UNIT=1` enables explicit measurement after
+each attempted unit; only then do units include their `relation_overflow` answer.
+
+`LATENT_RELATION_TIMES=/path/to/relation-times.jsonl` records query wall cost and
+answer separately from deterministic census output. The two `where: "program"`
+rows are the load and end observations, in that order. Opt-in unit rows use the
+unit's exact location. `LATENT_TIMES` records lowering costs separately.
+
+The overlay includes in-process Go tests. Run them after generating the
+scratch overlay:
+
+```sh
+go test -count=1 -overlay=/tmp/latent-overlay/overlay.json ./stage3/census/latent/tool -run '^TestLatentCensus(Overflow|EntryReach)'
+```
+
+`TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt` plants the same
+failed/overflowed assignable-relation cache mark as production's
+`TestAnOverflowedRelationMakesLoweringNotYet`, without a TS2859 diagnostic. It
+checks program and unit findings and their serialized fields.
+The test never starts a compiler subprocess. `TestLatentRelationOverflowHooksAndProductionWording`
+guards the driver hooks and production wording on main's own source.
+
+Passing a file directly selects its resolved non-library source reach, with the
+entry first so module identities remain routes from that entry. This permits a
+first-error census of the adapted `src/tsc/tsc.ts` even when its checker rejects
+the program. Directory invocation retains its explicitly enumerated roots.
+`TestLatentCensusEntryReachKeepsRootBeforeDependencies` checks this ordering.
+
+`TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset` verifies
+that end-only detection marks all attempts and explains the unknown onset.

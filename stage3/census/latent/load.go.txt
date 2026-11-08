@@ -95,3 +95,16 @@ func (p *Program) LatentReplayEntryReach() {
 		}
 	}
 }
+
+// A direct entry-file census uses the resolved reach, with the entry first:
+// lowering's module identities are import routes from Files()[0]. This is the
+// meter entry overlay's ordering, available to the primary census driver too.
+func (p *Program) LatentCensusEntryReach() {
+ entry := p.files[0]
+ p.files = []*ast.SourceFile{entry}
+ for _, source := range p.compiler.GetSourceFiles() {
+  if source != entry && !source.IsDeclarationFile && !IsLibrary(source) {
+   p.files = append(p.files, source)
+  }
+ }
+}
