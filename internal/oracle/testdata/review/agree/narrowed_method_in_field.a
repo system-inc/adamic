@@ -3,7 +3,7 @@
 // this is the counter where Node prints 7, and an arrow in the field is called as it was.
 interface Counter {
 	x: number;
-	add?: (n: number) => number;
+	add?: (amount: number) => number;
 }
 function show(counter: Counter): void {
 	if ('add' in counter) {
@@ -12,10 +12,10 @@ function show(counter: Counter): void {
 }
 show({
 	x: 3,
-	add(n: number): number {
-		return this.x + n;
+	add(amount: number): number {
+		return this.x + amount;
 	},
 });
-show({ x: 5, add: (n: number): number => n * 2 });
+show({ x: 5, add: (amount: number): number => amount * 2 });
 show({ x: 6 });
 console.log('done');

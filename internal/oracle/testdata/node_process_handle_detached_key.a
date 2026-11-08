@@ -1,0 +1,17 @@
+// stdout's handle's setBlocking read by a computed key and called detached: Node's throws TypeError:
+// Illegal invocation, and so does both backends' (#0bxc4jh).
+import 'node:process';
+const handle = (process.stdout as any)._handle as { setBlocking?: (value: boolean) => void } | undefined;
+const key = 'setBlocking';
+if (handle === undefined) {
+	console.log('no handle');
+} else {
+	const set = handle[key];
+	try {
+		if (set) set(true);
+		console.log('blocked');
+	} catch (error) {
+		console.log(`${error instanceof TypeError}`);
+		if (error instanceof Error) console.log(error.message);
+	}
+}
