@@ -1,0 +1,29 @@
+{
+  "runner_pid": 20564,
+  "state": "launched; child exit is pending in the resource runner status file",
+  "arguments": [
+    "--peer-pid",
+    "19423",
+    "--rss-ceiling-kib",
+    "14680064",
+    "--watch",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-head-times.jsonl",
+    "--watch",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-head-prepasses.tsv",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-head",
+    "--",
+    "env",
+    "-u",
+    "LATENT_FULL",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "-u",
+    "LATENT_ONLY_FILE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-head-times.jsonl",
+    "LATENT_PREPASS_TIMES=/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-head-prepasses.tsv",
+    "/tmp/sygfnmc-head",
+    "/workspace/scratch/sygfnmc-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-head.jsonl"
+  ]
+}
