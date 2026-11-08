@@ -102,6 +102,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		}
 	}
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
+	defer finder.logViewPairs()
 	for _, module := range modules {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
