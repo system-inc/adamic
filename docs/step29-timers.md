@@ -35,9 +35,12 @@ surface. “Checked cancellation” does not introduce an exception Node never
 throws. Handle identities are never reused; callers never dereference them.
 
 Node normalizes 0 and 0.5 to 1 ms, and truncates positive fractional durations.
-Negative, NaN and overflowing durations also become 1 but emit Node-specific
-warnings. This primitive accepts finite [0, INT32_MAX] durations and names the
-warning-requiring cases NotYet. Coercion from other source types is library's
+Negative, NaN and overflowing durations also become 1, with Node's warning on
+stderr: this primitive queues Node's exact lines with its own process id (NaN
+and negative once a process, overflow every time, the hint after the first) and
+writes them where Node's ticks run, after a timer's callback and after each drain
+of the promise jobs (#zhgmbwz). The oracle makes only that process id a token
+(`timeoutWarningLine`). Coercion from other source types is library's
 responsibility; an omitted duration must become 1 ms in the binding. Invalid
 callback types likewise need the binding's checked signature or Node error
 path. None is implemented as an unchecked C conversion.

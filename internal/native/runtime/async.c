@@ -187,6 +187,9 @@ static void drain_jobs(void) {
         reaction->frame->resume(reaction->frame, reaction->promise->value, reaction->promise->rejected);
         adamic_release(reaction);
     }
+    /* Node's ticks after the microtasks: a warning a job's setTimeout gave, or main's, which the
+     * oracle's ES module runner writes only once main's jobs are done (timers_impl.h). */
+    timer_warnings_flush();
 }
 void adamic_async_run(void) {
     /* A resolved await is a microtask, not a host turn. Run queued jobs before
