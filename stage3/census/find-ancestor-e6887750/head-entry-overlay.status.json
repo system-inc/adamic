@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/tmp/fa-head-overlay",
+    "/tmp/fa-head-entry"
+  ],
+  "cwd": "/tmp/fa-head",
+  "exit": 0,
+  "wall_seconds": 1.013,
+  "stopped": null
+}

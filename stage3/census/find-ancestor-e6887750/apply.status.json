@@ -1,0 +1,11 @@
+{
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "/tmp/fa-adapted"
+  ],
+  "cwd": "/tmp/fa-report",
+  "exit": 0,
+  "wall_seconds": 744.825,
+  "stopped": null
+}

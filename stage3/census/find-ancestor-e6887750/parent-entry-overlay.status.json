@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/tmp/fa-parent-overlay",
+    "/tmp/fa-parent-entry"
+  ],
+  "cwd": "/tmp/fa-report",
+  "exit": 0,
+  "wall_seconds": 1.002,
+  "stopped": null
+}
