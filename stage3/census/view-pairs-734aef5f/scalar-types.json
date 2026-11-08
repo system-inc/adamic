@@ -3698,6 +3698,10 @@
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
     },
+    "SyntaxKind.Identifier | SyntaxKind.ObjectBindingPattern | SyntaxKind.ArrayBindingPattern": {
+      "scalar": true,
+      "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
+    },
     "SyntaxKind.Identifier | SyntaxKind.ObjectBindingPattern | SyntaxKind.ArrayBindingPattern | SyntaxKind.ArrayLiteralExpression | SyntaxKind.ObjectLiteralExpression | SyntaxKind.PropertyAccessExpression | SyntaxKind.ElementAccessExpression | SyntaxKind.OmittedExpression": {
       "scalar": true,
       "basis": "Primitive/literal/property-key type, source enum, or union/alias made entirely from such scalar types."
