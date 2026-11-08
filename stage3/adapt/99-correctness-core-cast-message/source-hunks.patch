@@ -1,0 +1,11 @@
+--- before/src/compiler/core.ts
++++ after/src/compiler/core.ts
+@@ -1786,7 +1786,7 @@
+ export function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut {
+     if (value !== undefined && test(value)) return value;
+ 
+-    return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test '${Debug.getFunctionName(test)}'.`);
++    return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test.`);
+ }
+ 
+ /**

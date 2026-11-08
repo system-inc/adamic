@@ -1,0 +1,18 @@
+{
+  "side": "baseline",
+  "apply": {
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/core-finish/baseline"
+    ],
+    "cwd": "/workspace/scratch/core-cast/base",
+    "exit": 0,
+    "seconds": 542.290870887,
+    "stopReason": null,
+    "childrenPeakRssKiB": 2468236
+  },
+  "sourceFiles": 746,
+  "sourceManifestSha256": "35ce93bd447f46feb674419aab177cd5be3e6650bd171f378dfa019e13cb8dd0",
+  "status": "Apply complete, subsequent proof pending"
+}

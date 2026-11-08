@@ -1,0 +1,9 @@
+'use strict';
+const fs=require('fs'),assert=require('assert/strict');const s='/workspace/scratch/core-finish',before=require(s+'/baseline/built/local/typescript.js'),after=require(s+'/head1/built/local/typescript.js'),rows=[];
+for(const [kind,make] of [['undefined',()=>undefined],['null',()=>null],['number',()=>42],['string',()=> 'text'],['object',()=>({})],['custom stringification',()=>({toString(){return 'value kept';}})]]){
+ const value=make();function call(product,root){let predicateCalls=0;function reject(){predicateCalls++;return false;}let error;try{product.cast(value,reject);}catch(e){error=e;}assert(error instanceof Error);return {error,predicateCalls,throwPoint:error.stack.split('\n')[1].replace(root,'<product>')};}
+ const a=call(before,s+'/baseline'),b=call(after,s+'/head1');assert.equal(a.error.constructor,b.error.constructor);assert.equal(a.predicateCalls,b.predicateCalls);assert.equal(a.predicateCalls,value===undefined?0:1);assert.equal(a.error.message.replace(" 'reject'",''),b.error.message);assert.equal(a.throwPoint,b.throwPoint);rows.push({kind,before:a.error.message,after:b.error.message,errorClass:b.error.constructor.name,predicateCalls:b.predicateCalls,throwPoint:b.throwPoint});
+}
+for(const value of [null,42,'text',{}]){assert.equal(before.cast(value,()=>true),value);assert.equal(after.cast(value,()=>true),value);}
+const sentinel=new TypeError('predicate sentinel');for(const product of [before,after])assert.throws(()=>product.cast({},()=>{throw sentinel;}),e=>e===sentinel);
+fs.writeFileSync(s+'/raw/normal-cast-witness.json',JSON.stringify({passed:true,actualCompletedNormalBuilds:true,failureCases:rows,passingIdentityCases:4,predicateExceptionIdentityPreserved:true},null,2)+'\n');console.log('normal builds preserve Error, condition calls, value text and exact throw point; passing identity and predicate exception unchanged');
