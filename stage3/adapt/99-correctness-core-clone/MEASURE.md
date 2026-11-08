@@ -12,10 +12,10 @@ identity, baseline and API guards. The merged identity multiset and raw baseline
 diff are identical to the whole control: 106,366 passing, one sanctioned API
 failure, zero skipped. Preparation/build calls and Node witnesses are excluded.
 
-| Function | Calls | Completed | Counterexamples |
-| --- | ---: | ---: | ---: |
-| groupBy | 1,604 | 1,604 | 0 |
-| clone | 8,603,902 | 8,603,902 | 0 |
+| Function |     Calls | Completed | Counterexamples |
+| -------- | --------: | --------: | --------------: |
+| groupBy  |     1,604 |     1,604 |               0 |
+| clone    | 8,603,902 | 8,603,902 |               0 |
 
 The compiler callback isSyntheticMetadataDecorator accounts for 1,424
 groupBy calls. Selector-name and caller-frame counts, result-key combinations,
