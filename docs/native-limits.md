@@ -6,7 +6,8 @@ lists each, what Adamic does there, and which check holds that answer. The rule 
 [wasm-limits.md](wasm-limits.md) keeps: Adamic does the same thing another way that a ruling names and a
 test pins on every side, or stops loudly. It never does something different quietly.
 
-Each difference here is a row of `ruledBackendDivergences` (`internal/oracle/backend_divergences_test.go`).
+Each difference here is a row of `internal/oracle/testdata/backend_divergences.json`, which the oracle's
+`ruledBackendDivergences` and the admission delta both read. Only Adamic adds a row.
 A row pins Node's outcome, native's and the JavaScript backend's, each byte for byte, so membership never
 excuses a change on any side. wasm32 is a native build and is held to the row's native outcome.
 
