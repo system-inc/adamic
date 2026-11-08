@@ -1,6 +1,10 @@
 import json,hashlib,tarfile,subprocess,os
 from pathlib import Path
 from runner import out,raw,repo,run
+for side in ['base','head']:
+ for kind in ['census','latent']:
+  label=side+('-binary.sha256' if kind=='census' else '-latent-binary.sha256')
+  assert hashlib.sha256((raw/(side+'-'+kind)).read_bytes()).hexdigest()==(out/label).read_text().strip()
 # Completed census invocations must be reaped and their original process groups absent.
 tree=Path('/workspace/require-row-adapted')
 manifest={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}

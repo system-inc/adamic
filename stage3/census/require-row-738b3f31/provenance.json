@@ -5,5 +5,15 @@
   "box": "6f9f78360b0e",
   "cpu_quota": "400000 100000\n",
   "meminfo": "MemTotal:       18440100 kB\nMemFree:        10594540 kB\nMemAvailable:   17220696 kB\nBuffers:          103112 kB\nCached:          5919936 kB\nSwapCached:            0 kB\nActive:          2845584 kB\nInactive:        3189344 kB\nActive(anon):       8224 kB\nInactive(anon):    45388 kB\nActive(file):    2837360 kB\nInactive(file):  3143956 kB\nUnevictable:       29944 kB\nMlocked:               0 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nDirty:            124892 kB\nWriteback:             0 kB\nAnonPages:         42100 kB\nMapped:            76928 kB\nShmem:             11572 kB\nKReclaimable:     996852 kB\nSlab:            1115652 kB\nSReclaimable:     996852 kB\nSUnreclaim:       118800 kB\nKernelStack:        2256 kB\nPageTables:         2040 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     9220048 kB\nCommitted_AS:     335756 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:        4572 kB\nVmallocChunk:          0 kB\nPercpu:             1296 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:    116736 kB\nFilePmdMapped:         0 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       83968 kB\nDirectMap2M:     8404992 kB\nDirectMap1G:    42991616 kB\n",
-  "tree": "/workspace/require-row-adapted"
+  "tree": "/workspace/require-row-adapted",
+  "visible_cpus": 5,
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cgroup_memory_max": "17179869184",
+  "head_parent": "71b126b06aa5840838330965f77b089fbffee3e4"
 }
