@@ -132,7 +132,7 @@ func (l *lowering) predicateOverloadReturn(implementation, statement *ast.Node, 
 	if expression == nil {
 		return false
 	}
-	if l.predicateOverloadUndefinedServes(expression, promised) || l.censusRelated(l.checker.GetTypeAtLocation(expression), promised) {
+	if l.censusRelated(l.checker.GetTypeAtLocation(expression), promised) {
 		return true
 	}
 	returned := ast.SkipParentheses(expression)
