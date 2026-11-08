@@ -1,9 +1,11 @@
 """Independently verify the checker work queue, source coverage and guarded lowering ledger."""
+
+from stream_records import census_records
 from unit_status import body_eligible, audit_deferred
 import collections, copy, gzip, hashlib, json, pathlib, re, sys
 ROOT=pathlib.Path(__file__).resolve().parent;adapted=pathlib.Path(sys.argv[1]).resolve()
 report=json.loads((ROOT/'REPORT.json').read_text())
-with gzip.open(ROOT/'data/meter3/meter-3.jsonl.gz','rt') as f:raw=[json.loads(l) for l in f]
+with gzip.open(ROOT/'data/meter3/meter-3.jsonl.gz','rt') as f:raw=census_records([json.loads(l) for l in f])
 LABEL='measured on a checker-rejected program'
 expected=[]
 for site in raw[0]['diagnostic_sites']:

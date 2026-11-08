@@ -314,9 +314,12 @@ as interchangeable with multi-file records without accounting for that witness s
 
 ## Checker relation overflow
 
-The program record includes `relation_overflow.after_load` and
-`relation_overflow.end`, including explicit empty strings. By default only these
-two queries run. An overflow present after load marks every attempted unit. An
+The original program header is written and synced before lowering, so a cutoff
+retains checker diagnostics. A final record with `status: "relation_report"`
+contains `relation_overflow.after_load`, `relation_overflow.end` and the program
+findings. Empty strings are explicit answers. The trailing record exists only
+after the run completes; its absence means the end answer is unavailable.
+By default only these two queries run. An overflow present after load marks every attempted unit. An
 overflow first observed at the end conservatively marks every attempted unit
 with phase `relation_overflow_conservative_all_units`; `attribution` explains
 that the first affected unit is unknown. Both use Lower's exact NotYet words.
@@ -337,7 +340,7 @@ The overlay includes in-process Go tests. Run them after generating the
 scratch overlay:
 
 ```sh
-go test -count=1 -overlay=/tmp/latent-overlay/overlay.json ./stage3/census/latent/tool -run '^TestLatentCensus(Overflow|EntryReach)'
+go test -count=1 -overlay=/tmp/latent-overlay/overlay.json ./stage3/census/latent/tool -run '^TestLatent(Census|Stream)'
 ```
 
 `TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt` plants the same
@@ -347,11 +350,21 @@ checks program and unit findings and their serialized fields.
 The test never starts a compiler subprocess. `TestLatentRelationOverflowHooksAndProductionWording`
 guards the driver hooks and production wording on main's own source.
 
-Passing a file directly selects its resolved non-library source reach, with the
-entry first so module identities remain routes from that entry. This permits a
-first-error census of the adapted `src/tsc/tsc.ts` even when its checker rejects
-the program. Directory invocation retains its explicitly enumerated roots.
-`TestLatentCensusEntryReachKeepsRootBeforeDependencies` checks this ordering.
+Deferred follow-up: resolved-reach census for a direct file argument. Today a
+file argument checks its imports but catalogues only the named root. The removed
+`LatentCensusEntryReach` expansion would also catalogue the resolved source
+reach, entry-first to preserve module identity routes. That coverage change is
+independent of overflow detection: the checker retains relations for imported
+files even when only the root is lowered. A separate change should measure
+before-and-after file/unit counts with adapted core.ts as the argument and
+compare the resulting census, with its own entry-order regression test. This
+change preserves the existing file-argument scope.
+
+The stream tests cover both a cutoff retaining only its synced header and a
+successful header/file/relation-trailer sequence. Legacy readers use
+`stream_records.census_records` to separate the trailing program report from
+file records; it merges observed relation metadata into a copied header only
+when the complete trailer exists.
 
 `TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset` verifies
 that end-only detection marks all attempts and explains the unknown onset.

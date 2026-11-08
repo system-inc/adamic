@@ -89,45 +89,18 @@ func TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt(t *testing.T) {
 		if attempted != 2 || report.FirstAffectedUnit == "" {
 			t.Fatalf("attempted=%d, report=%+v", attempted, report)
 		}
-		// Serialize the same program header and file rows as the measurement driver.
+		// Use the driver's real header/file/trailer writer.
 		var output bytes.Buffer
-		encoder := json.NewEncoder(&output)
-		if err := encoder.Encode(map[string]any{"relation_overflow": report, "findings": report.Findings}); err != nil {
-			t.Fatal(err)
-		}
-		for _, record := range records {
-			if err := encoder.Encode(record); err != nil {
-				t.Fatal(err)
+		writeLatentStream(json.NewEncoder(&output), map[string]any{"status": "measurement"}, func() error { return nil }, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
+			for _, record := range records {
+				emit(record)
 			}
-		}
+			return report
+		})
 		if strings.Count(output.String(), `"kind":"NotYet"`) < 3 {
 			t.Fatalf("overflow findings lost from output: %s", output.String())
 		}
 		t.Logf("per_unit=%v planted mark census JSONL:\n%s", perUnit, output.String())
-	}
-}
-
-func TestLatentCensusEntryReachKeepsRootBeforeDependencies(t *testing.T) {
-	t.Parallel()
-	dir := t.TempDir()
-	entry := filepath.Join(dir, "main.a")
-	dependency := filepath.Join(dir, "dependency.a")
-	for path, source := range map[string]string{
-		entry:      "import {value} from './dependency.a';\nconsole.log(String(value));\n",
-		dependency: "export const value: number = 7;\n",
-	} {
-		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-			t.Fatal(err)
-		}
-	}
-	program, err := load.LatentLoad([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	program.LatentCensusEntryReach()
-	files := program.Files()
-	if len(files) != 2 || program.FileName(files[0]) != entry || program.FileName(files[1]) != dependency {
-		t.Fatalf("entry-root reach changed: %v", files)
 	}
 }
 
@@ -148,5 +121,61 @@ func TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset(t *testing
 		if finding.Phase != "relation_overflow_conservative_all_units" || finding.Kind != "NotYet" || !strings.Contains(finding.Reason, "gave up on as too complex") {
 			t.Fatalf("bad conservative finding: %+v", finding)
 		}
+	}
+}
+
+func TestLatentStreamCutoffRetainsHeaderWithoutEndAnswer(t *testing.T) {
+	t.Parallel()
+	var output bytes.Buffer
+	flushed := false
+	func() {
+		defer func() {
+			if recover() != "cutoff" {
+				t.Fatal("cutoff was not propagated")
+			}
+		}()
+		writeLatentStream(json.NewEncoder(&output), map[string]any{"status": "measurement", "diagnostics": []string{"retained diagnostic"}}, func() error { flushed = true; return nil }, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
+			if !flushed || !strings.Contains(output.String(), "retained diagnostic") {
+				t.Fatal("header was not flushed before lowering")
+			}
+			panic("cutoff")
+		})
+	}()
+	var header map[string]any
+	if err := json.Unmarshal(bytes.TrimSpace(output.Bytes()), &header); err != nil {
+		t.Fatal(err)
+	}
+	if header["status"] != "measurement" || header["relation_overflow"] != nil || strings.Contains(output.String(), `"end"`) {
+		t.Fatalf("cutoff forged a relation answer: %s", output.String())
+	}
+}
+
+func TestLatentStreamCompletesWithRelationTrailerAfterFiles(t *testing.T) {
+	t.Parallel()
+	var output bytes.Buffer
+	syncs := 0
+	writeLatentStream(json.NewEncoder(&output), map[string]any{"status": "measurement"}, func() error { syncs++; return nil }, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
+		if syncs != 1 {
+			t.Fatal("run started before header sync")
+		}
+		emit(lower.LatentFile{File: "only.a", Units: []lower.LatentUnit{}, Findings: []lower.LatentFinding{}})
+		return lower.LatentRelationReport{AfterLoad: "", End: "", Findings: []lower.LatentFinding{}}
+	})
+	lines := bytes.Split(bytes.TrimSpace(output.Bytes()), []byte{'\n'})
+	if len(lines) != 3 || syncs != 3 {
+		t.Fatalf("wrong stream shape: syncs=%d %s", syncs, output.String())
+	}
+	rows := make([]map[string]any, len(lines))
+	for i, line := range lines {
+		if err := json.Unmarshal(line, &rows[i]); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if rows[0]["status"] != "measurement" || rows[0]["relation_overflow"] != nil || rows[1]["file"] != "only.a" || rows[2]["status"] != "relation_report" {
+		t.Fatalf("header/file/trailer order lost: %s", output.String())
+	}
+	relation := rows[2]["relation_overflow"].(map[string]any)
+	if relation["after_load"] != "" || relation["end"] != "" {
+		t.Fatalf("empty observations lost: %+v", relation)
 	}
 }

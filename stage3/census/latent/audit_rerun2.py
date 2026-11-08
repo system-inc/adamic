@@ -1,4 +1,6 @@
 """Independently recount checker ratios, variance owners and deltas; kill artifact mutants."""
+
+from stream_records import census_records
 from unit_status import attempted, body_eligible, audit_deferred
 import collections, copy, functools, gzip, hashlib, json, pathlib, re, sys
 ROOT=pathlib.Path(__file__).resolve().parent;adapted=pathlib.Path(sys.argv[1]).resolve()
@@ -6,8 +8,8 @@ stock=json.loads(pathlib.Path(sys.argv[2]).read_text());report=json.loads((ROOT/
 LABEL='measured on a checker-rejected program';KINDS=['NotYet','Refused','SkippedDependency','error','panic']
 raw={}
 for run in report['runs']:
- with gzip.open(ROOT/'data/rerun2'/(run['name']+'.jsonl.gz'),'rt') as f:raw[run['name']]=[json.loads(l) for l in f]
-with gzip.open(ROOT/'data/cumulative.jsonl.gz','rt') as f:raw['cumulative']=[json.loads(l) for l in f]
+ with gzip.open(ROOT/'data/rerun2'/(run['name']+'.jsonl.gz'),'rt') as f:raw[run['name']]=census_records([json.loads(l) for l in f])
+with gzip.open(ROOT/'data/cumulative.jsonl.gz','rt') as f:raw['cumulative']=census_records([json.loads(l) for l in f])
 
 def keys(rows):return {(f['kind'],f['where'],f['reason'],f['text']) for r in rows[1:] for f in r['findings']}
 def kind_counts(s):

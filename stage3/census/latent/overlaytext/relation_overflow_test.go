@@ -29,7 +29,7 @@ func TestLatentRelationOverflowHooksAndProductionWording(t *testing.T) {
 		"../lower.go.txt":             {"relations := latentRelationReport(ctx, program)", "relations.End = latentReadRelationOverflow(ctx, program)", "relations.Complete(records)", "latentCheckUnitRelation(program, checker, &unit)"},
 		"../units.go.txt":             {"latentCheckUnitRelation(program, checker, &unit)"},
 		"../speculative.go.txt":       {"latentCheckUnitRelation(program, checker, &unit)"},
-		"../main.go.txt":              {`"relation_overflow": relations`, `"findings": relations.Findings`, "program.LatentCensusEntryReach()"},
+		"../main.go.txt":              {`"relation_overflow": relations`, `"findings": relations.Findings`, "writeRecord(header)", `"status": "relation_report"`},
 		"../make_overlay.py":          {"'internal/lower/latent_relation_overflow.go'", "'stage3/census/latent/tool/relation_overflow_test.go'"},
 	} {
 		source, err := os.ReadFile(file)
