@@ -2,14 +2,20 @@ package oracle
 
 import (
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
 // timerSourceFixtures are setTimeout and clearTimeout called from source (#995spev), held to Node by
 // the ordinary families: native under the sanitizers and the leak check, the JavaScript backend,
-// release, gob and counted. Each schedules a timer, so wasm32-wasi refuses it at setTimeout.
-var timerSourceFixtures = []string{"forwarded", "fewer_parameters", "clear_then_set", "order", "callback_throw", "clear_kinds"}
+// release, gob and counted. Each schedules a timer, so wasm32-wasi refuses it at setTimeout. The
+// delay_ programs give delays Node warns for and makes 1 ms (#zhgmbwz): one of each kind, two of each
+// (NaN and a negative warn once a process, an overflow every time), every kind with the hint line
+// once, the warning's place from main, a timer's callback and a promise job, and delays inside the
+// range that don't warn. Their warning lines differ only in the process id, which disagreement's
+// timeoutWarningLine rule alone makes a token.
+var timerSourceFixtures = []string{"forwarded", "fewer_parameters", "clear_then_set", "order", "callback_throw", "clear_kinds",
+	"delay_nan", "delay_negative", "delay_overflow", "delay_nan_twice", "delay_negative_twice", "delay_overflow_twice", "delay_kinds",
+	"delay_order_main", "delay_order_callback", "delay_order_job", "delay_computed"}
 
 func init() {
 	for _, name := range timerSourceFixtures {
@@ -79,42 +85,61 @@ func TestClearTimeoutHeldAsUnionCancels(t *testing.T) {
 	timerSourceRun(t, timerSourcePath(t, "clear_held.a"), "cleared\nkept fired\n", run{stdout: []byte("cleared\nkept fired\n")})
 }
 
-// timerDelayStop is the run-time NotYet a delay Node warns for and makes 1 ms stops in (Adamic's
-// ruling on #995spev): timers_impl.h's words, and the JavaScript backend's adamicSetTimeout's.
-const timerDelayStop = "a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing"
-
-// A delay Node warns for, NaN, negative or past 2^31 - 1, becomes 1 ms on Node with a warning on
-// stderr that carries Node's process id, which no backend can print byte for byte. Each delay_ program
-// stops alike natively, released and on the JavaScript backend after what Node printed before the
-// timer, while Node runs on: the warning, then the callback, as at 1 ms. delay_computed.a, a delay
-// computed inside the range, runs as Node's does. Mutant: timers_impl.h's check made Node's clamp,
-// so delay_nan.a runs on natively at 1 ms with no warning.
-func TestTimerDelayNeedingWarningsStops(t *testing.T) {
+// delay_kinds.a on Node prints what the rule was written from, Node v24's words: each warning's line,
+// the duration line after each, and the hint line after the first alone, its pid made a token on both
+// sides. Native and the JavaScript backend are held to Node by the families.
+func TestTimerDelayWarningsInNodesWords(t *testing.T) {
 	t.Parallel()
-	for name, warning := range map[string]string{"delay_nan.a": "TimeoutNaNWarning", "delay_negative.a": "TimeoutNegativeWarning", "delay_overflow.a": "TimeoutOverflowWarning"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path := timerSourcePath(t, name)
-			truth := onNode(t, path)
-			if truth.exitCode != 0 || string(truth.stdout) != "before\nscheduled\nfired\n" || !strings.Contains(string(truth.stderr), warning+": ") || !strings.Contains(string(truth.stderr), "Timeout duration was set to 1.") {
-				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
-			}
-			program, err := lowered(t, path)
-			if err != nil {
-				t.Fatalf("the program must lower: %v", err)
-			}
-			want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + timerDelayStop + "\n"), exitCode: 70}
-			native, _ := natively(t, program)
-			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
-					t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, difference, got.exitCode, got.stdout, got.stderr)
-				}
-			}
-		})
+	const duration = "Timeout duration was set to 1.\n"
+	want := run{
+		stdout: []byte("scheduled\ninfinity fired\nnan fired\nnegative fired\njust past fired\n"),
+		stderr: []byte("(node:1) TimeoutOverflowWarning: Infinity does not fit into a 32-bit signed integer.\n" + duration +
+			"(Use `node --trace-warnings ...` to show where the warning was created)\n" +
+			"(node:1) TimeoutNaNWarning: NaN is not a number.\n" + duration +
+			"(node:1) TimeoutNegativeWarning: -1.5 is a negative number.\n" + duration +
+			"(node:1) TimeoutOverflowWarning: 2147483647.5 does not fit into a 32-bit signed integer.\n" + duration),
 	}
-	t.Run("delay_computed.a", func(t *testing.T) {
-		t.Parallel()
-		node := "scheduled\nhalf\none and a half\nthree\n"
-		timerSourceRun(t, timerSourcePath(t, "delay_computed.a"), node, run{stdout: []byte(node)})
-	})
+	if truth := onNode(t, timerSourcePath(t, "delay_kinds.a")); disagreement(want, truth) != "" {
+		t.Fatalf("source Node: %s: exit %d, stdout %q, stderr %q", disagreement(want, truth), truth.exitCode, truth.stdout, truth.stderr)
+	}
+}
+
+// The timeout warning rule lets two runs differ in the process id of one of Node's three warning
+// lines and in nothing else (Adamic's ruling on #995spev, under Language's condition). Mutant: the
+// rule as a general "(node:<digits>) ...Warning" pattern, so a misspelled warning word and another
+// warning agree across two process ids.
+func TestTimeoutWarningPidAloneIsNormalized(t *testing.T) {
+	t.Parallel()
+	const tail = "\nTimeout duration was set to 1.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+	for _, line := range []string{
+		"TimeoutNaNWarning: NaN is not a number.",
+		"TimeoutNegativeWarning: -2 is a negative number.",
+		"TimeoutNegativeWarning: -1.5 is a negative number.",
+		"TimeoutNegativeWarning: -1e-7 is a negative number.",
+		"TimeoutNegativeWarning: -Infinity is a negative number.",
+		"TimeoutOverflowWarning: 2147483648 does not fit into a 32-bit signed integer.",
+		"TimeoutOverflowWarning: 2147483647.5 does not fit into a 32-bit signed integer.",
+		"TimeoutOverflowWarning: 1e+300 does not fit into a 32-bit signed integer.",
+		"TimeoutOverflowWarning: Infinity does not fit into a 32-bit signed integer.",
+	} {
+		node, native := run{stderr: []byte("before\n(node:48213) " + line + tail)}, run{stderr: []byte("before\n(node:7) " + line + tail)}
+		if difference := disagreement(node, native); difference != "" {
+			t.Errorf("%q under two process ids: %s", line, difference)
+		}
+	}
+	for name, pair := range map[string][2]string{
+		"a misspelled warning word":        {"(node:1) TimeoutNegaitveWarning: -2 is a negative number.\n", "(node:2) TimeoutNegaitveWarning: -2 is a negative number.\n"},
+		"another warning":                  {"(node:1) DeprecationWarning: Buffer() is deprecated.\n", "(node:2) DeprecationWarning: Buffer() is deprecated.\n"},
+		"another number":                   {"(node:1) TimeoutNegativeWarning: -2 is a negative number.\n", "(node:1) TimeoutNegativeWarning: -1.5 is a negative number.\n"},
+		"a negative warning's positive":    {"(node:1) TimeoutNegativeWarning: 2 is a negative number.\n", "(node:2) TimeoutNegativeWarning: 2 is a negative number.\n"},
+		"a number that isn't JavaScript's": {"(node:1) TimeoutOverflowWarning: 1E300 does not fit into a 32-bit signed integer.\n", "(node:2) TimeoutOverflowWarning: 1E300 does not fit into a 32-bit signed integer.\n"},
+		"words after the line":             {"(node:1) TimeoutNaNWarning: NaN is not a number. twice\n", "(node:2) TimeoutNaNWarning: NaN is not a number. twice\n"},
+		"words before the line":            {"say (node:1) TimeoutNaNWarning: NaN is not a number.\n", "say (node:2) TimeoutNaNWarning: NaN is not a number.\n"},
+		"the duration line dropped":        {"(node:1) TimeoutNaNWarning: NaN is not a number.\nTimeout duration was set to 1.\n", "(node:2) TimeoutNaNWarning: NaN is not a number.\n"},
+		"the hint line dropped":            {"(node:1) TimeoutNaNWarning: NaN is not a number.\n" + tail[1:], "(node:2) TimeoutNaNWarning: NaN is not a number.\nTimeout duration was set to 1.\n"},
+	} {
+		if difference := disagreement(run{stderr: []byte(pair[0])}, run{stderr: []byte(pair[1])}); difference != "stderr differs" {
+			t.Errorf("%s: got %q, want \"stderr differs\"", name, difference)
+		}
+	}
 }

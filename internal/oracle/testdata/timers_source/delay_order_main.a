@@ -1,0 +1,16 @@
+// A warning main's setTimeout gives prints as Node's does through the oracle's module runner: after
+// main's synchronous code and after every promise job, here job's line and main's last.
+import 'node:timers';
+
+async function job(): Promise<void> {
+    await Promise.resolve();
+    console.error('job stderr');
+}
+
+console.log('main stdout before');
+console.error('main stderr before');
+setTimeout(() => { console.log('fired'); }, Number('not a number'));
+console.error('main stderr after');
+await job();
+console.error('main stderr last');
+console.log('main stdout after');

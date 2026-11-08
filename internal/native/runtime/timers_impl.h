@@ -1,5 +1,6 @@
 /* Private to async.c: registrations and deadlines never cross threads. */
 #include "timers.h"
+#include "node_process.h"
 #include <limits.h>
 #include <math.h>
 #include <time.h>
@@ -54,6 +55,57 @@ static void timer_drop(timer_entry *entry) {
     free(entry->references);
     free(entry);
 }
+/* Node's Timeout warns on stderr for a delay that's NaN, negative or past 2^31 - 1 ms, in Node's
+ * words with this process's id (Adamic's ruling on #995spev, Nov 7, lifted by #zhgmbwz): NaN and a
+ * negative delay once a process, an overflowing one every time, the first warning of any kind followed
+ * by Node's hint line. process.emitWarning writes on a nextTick, so the text waits here until
+ * timer_warnings_flush, called where Node's ticks would run: after a timer's callback, and after each
+ * drain of the promise jobs (async.c). Loop-thread only, as the registrations are. */
+static char *timer_warnings;
+static size_t timer_warnings_length, timer_warnings_capacity;
+static bool timer_nan_warned, timer_negative_warned, timer_hint_written;
+static void timer_warnings_append(const char *text, size_t length) {
+    if (length > SIZE_MAX - timer_warnings_length) abort();
+    if (timer_warnings_length + length > timer_warnings_capacity) {
+        size_t capacity = timer_warnings_capacity == 0 ? 256 : timer_warnings_capacity;
+        while (capacity < timer_warnings_length + length) {
+            if (capacity > SIZE_MAX / 2) abort();
+            capacity *= 2;
+        }
+        char *grown = realloc(timer_warnings, capacity);
+        if (grown == NULL) abort();
+        timer_warnings = grown;
+        timer_warnings_capacity = capacity;
+    }
+    memcpy(timer_warnings + timer_warnings_length, text, length);
+    timer_warnings_length += length;
+}
+/* Node's process name in the hint is basename(process.argv0), which the oracle runs as node. */
+static void timer_warn(const char *name, double delay_ms, const char *reason) {
+    static const char duration[] = "\nTimeout duration was set to 1.\n";
+    static const char hint[] = "(Use `node --trace-warnings ...` to show where the warning was created)\n";
+    char number[ADAMIC_NUMBER_FORMAT_MAX];
+    timer_warnings_append("(node:", 6);
+    timer_warnings_append(number, adamic_number_format(adamic_node_pid(), number));
+    timer_warnings_append(") ", 2);
+    timer_warnings_append(name, strlen(name));
+    timer_warnings_append(": ", 2);
+    timer_warnings_append(number, adamic_number_format(delay_ms, number));
+    timer_warnings_append(reason, strlen(reason));
+    timer_warnings_append(duration, sizeof duration - 1);
+    if (!timer_hint_written) {
+        timer_hint_written = true;
+        timer_warnings_append(hint, sizeof hint - 1);
+    }
+}
+/* Writes what timer_warn queued through the output lock, after stdout's buffered text and in
+ * stderr's order, as Node's tick would. */
+static void timer_warnings_flush(void) {
+    if (timer_warnings_length == 0) return;
+    adamic_string text = ADAMIC_STRING_BYTES(timer_warnings, timer_warnings_length);
+    (void)adamic_write_raw(adamic_stderr, &text);
+    timer_warnings_length = 0;
+}
 adamic_timer_handle adamic_timer_start(const adamic_timer_provider *provider,
     adamic_closure *callback, adamic_timer_invoke invoke, double delay_ms,
     bool repeat, size_t argc, const adamic_value *arguments, const bool *references) {
@@ -66,13 +118,20 @@ adamic_timer_handle adamic_timer_start(const adamic_timer_provider *provider,
         static const char message[] = "NotYet: timers with custom host loop hooks";
         adamic_panic(message, sizeof message - 1);
     }
-    /* Node makes such a delay 1 ms with a warning on stderr; a run-time NotYet (Adamic's ruling on
-     * #995spev), said in the JavaScript backend's words too. */
-    if (!isfinite(delay_ms) || delay_ms < 0 || delay_ms > INT32_MAX) {
-        static const char message[] = "a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing";
-        adamic_panic(message, sizeof message - 1);
+    /* Node's Timeout constructor's branch, its order of tests and its 1 ms. */
+    if (!(delay_ms >= 1 && delay_ms <= INT32_MAX)) {
+        if (delay_ms > INT32_MAX) {
+            timer_warn("TimeoutOverflowWarning", delay_ms, " does not fit into a 32-bit signed integer.");
+        } else if (delay_ms < 0 && !timer_negative_warned) {
+            timer_negative_warned = true;
+            timer_warn("TimeoutNegativeWarning", delay_ms, " is a negative number.");
+        } else if (isnan(delay_ms) && !timer_nan_warned) {
+            timer_nan_warned = true;
+            timer_warn("TimeoutNaNWarning", delay_ms, " is not a number.");
+        }
+        delay_ms = 1;
     }
-    unsigned delay = delay_ms < 1 ? 1 : (unsigned)delay_ms;
+    unsigned delay = (unsigned)delay_ms;
     double deadline = timer_now() + delay;
     timer_entry *entry = calloc(1, sizeof *entry);
     if (entry == NULL) abort();
@@ -198,6 +257,9 @@ static bool timer_dispatch(void) {
     chosen->firing = false;
     if (!chosen->active) timer_drop(chosen);
     if (adamic_thrown != NULL) adamic_uncaught();
+    /* Node runs a callback's ticks before its promise jobs, so a warning its setTimeout gave is
+     * written here, ahead of the drain that follows. */
+    timer_warnings_flush();
     return true;
 }
 static void timer_shutdown(void) {
@@ -206,4 +268,7 @@ static void timer_shutdown(void) {
         timer_unlink(entry);
         timer_drop(entry);
     }
+    free(timer_warnings);
+    timer_warnings = NULL;
+    timer_warnings_length = timer_warnings_capacity = 0;
 }

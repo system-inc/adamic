@@ -1,0 +1,13 @@
+// A warning a timer's callback gives prints after that callback's own lines and before the next
+// callback's, as Node's does, and the timer it set runs at 1 ms, after both.
+import 'node:timers';
+
+const unit = 'abc'.length;
+setTimeout(() => {
+    console.log('first stdout');
+    console.error('first stderr before');
+    setTimeout(() => { console.error('inner fired'); }, -unit);
+    console.error('first stderr after');
+}, unit);
+setTimeout(() => { console.error('second stderr'); }, unit);
+console.log('scheduled');

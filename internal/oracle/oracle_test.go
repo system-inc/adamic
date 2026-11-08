@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"syscall"
 	"testing"
@@ -746,6 +747,27 @@ func leakRun(result run) leakcheck.Run {
 	return leakcheck.Run{Stdout: result.stdout, Stderr: result.stderr, ExitCode: result.exitCode}
 }
 
+// timeoutWarningLine is one of the three first lines Node's Timeout writes for a delay it makes 1 ms,
+// whole: NaN, a negative number or one past 2^31 - 1, the number as JavaScript's String writes it.
+// Each process prints its own id there, Node's and native's (timers_impl.h) and the sanitized and
+// release builds' alike, so that id is the one thing two runs can't agree on. Only its digits are
+// made a token, and only in a line that is exactly one of the three: the rest of the line, and the
+// "Timeout duration was set to 1." and hint lines after it, are compared byte for byte. A general
+// "(node:<digits>) ...Warning" pattern would let any warning through, a misspelled one among them.
+// Adamic's ruling on #995spev (Nov 7, option (b)), under Language's condition that nothing but the
+// pid token is normalized (#zhgmbwz).
+var timeoutWarningLine = regexp.MustCompile(`(?m)^(\(node:)[0-9]+(\) (?:TimeoutNaNWarning: NaN is not a number|TimeoutNegativeWarning: -` + javaScriptNumber + ` is a negative number|TimeoutOverflowWarning: ` + javaScriptNumber + ` does not fit into a 32-bit signed integer)\.)$`)
+
+// javaScriptNumber is a positive number as JavaScript's String writes it: Infinity, digits with an
+// optional fraction, and an optional exponent with its sign (1e+300, 1.5e-7).
+const javaScriptNumber = `(?:Infinity|[0-9]+(?:\.[0-9]+)?(?:e[+-][0-9]+)?)`
+
+// stderrCompared is stderr as disagreement compares it: each timeout warning line's process id made
+// one token.
+func stderrCompared(stderr []byte) []byte {
+	return timeoutWarningLine.ReplaceAll(stderr, []byte("${1}pid${2}"))
+}
+
 // disagreement says how two runs differ, or "" when they don't.
 func disagreement(oracle run, native run) string {
 	switch {
@@ -753,7 +775,7 @@ func disagreement(oracle run, native run) string {
 		return "exit codes differ"
 	case !bytes.Equal(oracle.stdout, native.stdout):
 		return "stdout differs"
-	case !bytes.Equal(oracle.stderr, native.stderr):
+	case !bytes.Equal(stderrCompared(oracle.stderr), stderrCompared(native.stderr)):
 		return "stderr differs"
 	}
 	return ""

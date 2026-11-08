@@ -1,8 +1,10 @@
-// setTimeout with delays computed at run time inside Node's range runs as Node's does: a delay
-// under 1 ms is 1 ms, so the three fire in the order they were set.
+// setTimeout with delays computed at run time inside Node's range runs as Node's does, with no
+// warning: 0, -0 and a delay under 1 ms are 1 ms, so the five fire in the order they were set.
 import 'node:timers';
 
 const unit = 'abc'.length;
+setTimeout(() => { console.log('zero'); }, unit - 3);
+setTimeout(() => { console.log('negative zero'); }, -(unit - 3));
 setTimeout(() => { console.log('half'); }, unit / 6);
 setTimeout(() => { console.log('one and a half'); }, unit / 2);
 setTimeout(() => { console.log('three'); }, unit);

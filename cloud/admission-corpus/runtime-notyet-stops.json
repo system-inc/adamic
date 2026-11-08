@@ -252,24 +252,6 @@
       "ruling_task": "#995spev",
       "lifting_task": "#6a8w6bn",
       "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined\n"
-    },
-    "812efc3e590757cce43cf25afdea90b98c9881d20e2037e5b813371a70273bb5": {
-      "path": "internal/oracle/testdata/timers_source/delay_nan.a",
-      "ruling_task": "#995spev",
-      "lifting_task": "#zhgmbwz",
-      "stderr": "adamic: panic: a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing\n"
-    },
-    "ee662df976371220e6d6abbc8868f0da5b63de8d315e6332ddc6fef80ed3108b": {
-      "path": "internal/oracle/testdata/timers_source/delay_negative.a",
-      "ruling_task": "#995spev",
-      "lifting_task": "#zhgmbwz",
-      "stderr": "adamic: panic: a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing\n"
-    },
-    "455c2d87e78f740608d351a766fb874ffb52548d206a4a451a23773509ba917f": {
-      "path": "internal/oracle/testdata/timers_source/delay_overflow.a",
-      "ruling_task": "#995spev",
-      "lifting_task": "#zhgmbwz",
-      "stderr": "adamic: panic: a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet; pass a delay from 0 to 2147483647, or write d >= 0 && d <= 2147483647 ? d : 1 to keep Node's timing\n"
     }
   }
 }

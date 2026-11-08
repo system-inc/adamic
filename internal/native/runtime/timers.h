@@ -16,8 +16,9 @@ typedef void (*adamic_timer_invoke)(adamic_closure *, size_t, const adamic_value
 /* Return the process's native CLI provider; it owns no caller reference. */
 const adamic_timer_provider *adamic_timers_provider(void);
 /* Register a timeout/interval, copying arguments and retaining each reference
- * and the callback. delay_ms is finite and in [0, INT32_MAX]; fractions truncate,
- * zero becomes 1 ms. repeat selects interval. Library checks the signature and
+ * and the callback. Fractions of delay_ms truncate, and one outside [1, INT32_MAX]
+ * becomes 1 ms, NaN, negative or past INT32_MAX with Node's warning, written at the
+ * loop's next tick. repeat selects interval. Library checks the signature and
  * supplies its invocation thunk. All operations require the loop thread. */
 adamic_timer_handle adamic_timer_start(const adamic_timer_provider *provider,
     adamic_closure *callback, adamic_timer_invoke invoke, double delay_ms,

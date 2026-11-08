@@ -1,0 +1,7 @@
+// Node warns for a NaN delay once a process: the second NaN runs at 1 ms with no warning of its own.
+import 'node:timers';
+
+const missing = Number('not a number');
+setTimeout(() => { console.log('first fired'); }, missing);
+setTimeout(() => { console.log('second fired'); }, missing + 1);
+console.log('scheduled');

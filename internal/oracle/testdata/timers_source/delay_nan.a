@@ -1,5 +1,5 @@
-// setTimeout with NaN, which Node makes 1 ms with a warning on stderr, stops on both backends after
-// what Node printed so far, a run-time NotYet (Adamic's ruling on #995spev), and Node runs on.
+// setTimeout with NaN runs at 1 ms, as Node's does, after Node's warning on stderr: its line with the
+// process id, the duration line and, the first warning in the process, the hint line (#zhgmbwz).
 import 'node:timers';
 
 console.log('before');
