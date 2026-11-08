@@ -104,17 +104,16 @@ console.log(h.handle(new Dog()));
 
 // A host method that isn't generic, seen through a view that makes it so, isn't the host's own generic
 // method, so it stops as a program's does rather than taking the host exemption (Runtime's must on #q6gs98r):
-// without the view's <T>, the wider parameter is refused at widenedParameters.
+// without the view's <T>, the wider parameter is refused at widenedParameters. process itself can't be
+// held in a view (a namespace object used as a value stops first), so the pin holds an FSWatcher.
 func TestAHostMethodAViewMakesGenericIsNotYet(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, source string }{
-		{"chdir", `import process from 'node:process';
-const p: { chdir<T>(directory: string | number): void } = process;
-p.chdir(5);
-`},
-		{"exit", `import process from 'node:process';
-const p: { exit<T>(code?: number | string | null | boolean): void } = process;
-p.exit(true);
+		{"setMaxListeners", `import * as fs from 'node:fs';
+const watcher = fs.watch('.');
+const view: { setMaxListeners<T>(n: number | string): unknown } = watcher;
+view.setMaxListeners("x");
+watcher.close();
 `},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
