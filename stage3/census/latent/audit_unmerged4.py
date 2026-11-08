@@ -1,11 +1,13 @@
 """Independently recount unique lowering sites and top-ten rankings for untouched tips."""
+
+from stream_records import census_records
 from unit_status import body_eligible, audit_deferred
 import collections, copy, gzip, hashlib, json, pathlib, subprocess
 ROOT=pathlib.Path(__file__).resolve().parent;report=json.loads((ROOT/'REPORT.json').read_text());DATA=ROOT/'data/unmerged4'
 LABEL='measured on a checker-rejected program';KINDS=['NotYet','Refused','SkippedDependency','error','panic']
 raw={}
 for r in report['runs']:
- with gzip.open(DATA/(r['name']+'.jsonl.gz'),'rt') as f:raw[r['name']]=[json.loads(l) for l in f]
+ with gzip.open(DATA/(r['name']+'.jsonl.gz'),'rt') as f:raw[r['name']]=census_records([json.loads(l) for l in f])
 
 def check(value):
  assert value['measurement']==LABEL,'label'

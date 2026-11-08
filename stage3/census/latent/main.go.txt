@@ -53,17 +53,30 @@ func main() {
 	if diagnostics == nil {
 		diagnostics = []string{}
 	}
-	if err := encoder.Encode(map[string]any{"measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}); err != nil {
-		panic(err)
-	}
-	lower.Latent(context.Background(), program, func(record lower.LatentFile) {
+	header := map[string]any{"measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}
+	writeLatentStream(encoder, header, output.Sync, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
+		return lower.Latent(context.Background(), program, func(record lower.LatentFile) {
+			emit(record)
+			fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings), lower.LatentMeasurementLabel)
+		})
+	})
+
+}
+
+// Flush the header before any lowering. A cutoff cannot manufacture an end
+// answer: the relation trailer is written only after the run returns normally.
+func writeLatentStream(encoder *json.Encoder, header map[string]any, flush func() error, run func(func(lower.LatentFile)) lower.LatentRelationReport) {
+	writeRecord := func(record any) {
 		if err := encoder.Encode(record); err != nil {
 			panic(err)
 		}
-		if err := output.Sync(); err != nil { panic(err) }
-		fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings), lower.LatentMeasurementLabel)
-	})
-
+		if err := flush(); err != nil {
+			panic(err)
+		}
+	}
+	writeRecord(header)
+	relations := run(func(record lower.LatentFile) { writeRecord(record) })
+	writeRecord(map[string]any{"measurement": lower.LatentMeasurementLabel, "status": "relation_report", "relation_overflow": relations, "findings": relations.Findings})
 }
 
 func censusMode() string {
