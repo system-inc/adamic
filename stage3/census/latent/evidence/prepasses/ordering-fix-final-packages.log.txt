@@ -1,0 +1,257 @@
+=== RUN   TestLatentPrepassesAddedProductionMutantSygfnmc
+=== PAUSE TestLatentPrepassesAddedProductionMutantSygfnmc
+=== RUN   TestLatentPrepassesOmissionMutantSygfnmc
+=== PAUSE TestLatentPrepassesOmissionMutantSygfnmc
+=== RUN   TestLatentCensusPrepassesTrackProductionSygfnmc
+=== PAUSE TestLatentCensusPrepassesTrackProductionSygfnmc
+=== CONT  TestLatentPrepassesAddedProductionMutantSygfnmc
+=== CONT  TestLatentCensusPrepassesTrackProductionSygfnmc
+=== CONT  TestLatentPrepassesOmissionMutantSygfnmc
+=== NAME  TestLatentPrepassesAddedProductionMutantSygfnmc
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/predicates/tools/lower.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/latent/lower.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/latent/speculative.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/latent/units.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+--- PASS: TestLatentPrepassesAddedProductionMutantSygfnmc (0.01s)
+--- PASS: TestLatentCensusPrepassesTrackProductionSygfnmc (0.02s)
+=== NAME  TestLatentPrepassesOmissionMutantSygfnmc
+    prepasses_omission_mutant_test.go:20: guard red as required: stage3/census/latent/lower.go.txt: production prepass noteOmittedOptionals missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames])
+--- PASS: TestLatentPrepassesOmissionMutantSygfnmc (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent	0.030s
+=== RUN   TestImportCleanDropsOnlyTheImportsARewriteLeftUnused
+=== PAUSE TestImportCleanDropsOnlyTheImportsARewriteLeftUnused
+=== RUN   TestImportCleanKeepsMainLowerImports
+=== PAUSE TestImportCleanKeepsMainLowerImports
+=== CONT  TestImportCleanDropsOnlyTheImportsARewriteLeftUnused
+=== CONT  TestImportCleanKeepsMainLowerImports
+--- PASS: TestImportCleanDropsOnlyTheImportsARewriteLeftUnused (0.00s)
+--- PASS: TestImportCleanKeepsMainLowerImports (1.69s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/importclean	1.696s
+=== RUN   TestMakeOverlayTextEditsHoldOnMainLower
+=== PAUSE TestMakeOverlayTextEditsHoldOnMainLower
+=== RUN   TestMakeOverlayTextEditsNameAReshape
+=== PAUSE TestMakeOverlayTextEditsNameAReshape
+=== RUN   TestLatentCarryFactsReplayBodiesMatchMain
+=== PAUSE TestLatentCarryFactsReplayBodiesMatchMain
+=== CONT  TestMakeOverlayTextEditsHoldOnMainLower
+=== CONT  TestLatentCarryFactsReplayBodiesMatchMain
+=== CONT  TestMakeOverlayTextEditsNameAReshape
+--- PASS: TestMakeOverlayTextEditsHoldOnMainLower (0.00s)
+--- PASS: TestMakeOverlayTextEditsNameAReshape (0.00s)
+--- PASS: TestLatentCarryFactsReplayBodiesMatchMain (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/overlaytext	0.013s
+=== RUN   TestFullOwnerGuardRequiresFunctionDeclaration
+=== PAUSE TestFullOwnerGuardRequiresFunctionDeclaration
+=== RUN   TestRewriteAcceptsTwoOuterRefusalReturns
+=== PAUSE TestRewriteAcceptsTwoOuterRefusalReturns
+=== RUN   TestCompiler41231d51Shape
+=== PAUSE TestCompiler41231d51Shape
+=== RUN   TestMissingFunctionMutantFailsLoudly
+=== PAUSE TestMissingFunctionMutantFailsLoudly
+=== RUN   TestChangedVisitorMutantFailsLoudly
+=== PAUSE TestChangedVisitorMutantFailsLoudly
+=== RUN   TestVisitorsCollectContinueAndSkipDiagnosedBodies
+=== PAUSE TestVisitorsCollectContinueAndSkipDiagnosedBodies
+=== RUN   TestProduct_RefusalRewriteBehaviorProbe
+=== PAUSE TestProduct_RefusalRewriteBehaviorProbe
+=== RUN   TestModulePreflightShapes
+=== PAUSE TestModulePreflightShapes
+=== RUN   TestUnsupportedPreflightReturns
+=== PAUSE TestUnsupportedPreflightReturns
+=== RUN   TestCompilerSlice3Shape
+=== PAUSE TestCompilerSlice3Shape
+=== RUN   TestRefusalRewriteReadsMainRefusals
+=== PAUSE TestRefusalRewriteReadsMainRefusals
+=== CONT  TestFullOwnerGuardRequiresFunctionDeclaration
+=== CONT  TestProduct_RefusalRewriteBehaviorProbe
+=== CONT  TestCompilerSlice3Shape
+=== CONT  TestMissingFunctionMutantFailsLoudly
+=== CONT  TestCompiler41231d51Shape
+--- PASS: TestMissingFunctionMutantFailsLoudly (0.00s)
+=== CONT  TestVisitorsCollectContinueAndSkipDiagnosedBodies
+--- PASS: TestFullOwnerGuardRequiresFunctionDeclaration (0.01s)
+=== CONT  TestRewriteAcceptsTwoOuterRefusalReturns
+--- PASS: TestRewriteAcceptsTwoOuterRefusalReturns (0.00s)
+=== CONT  TestRefusalRewriteReadsMainRefusals
+--- PASS: TestCompiler41231d51Shape (0.03s)
+=== CONT  TestChangedVisitorMutantFailsLoudly
+--- PASS: TestRefusalRewriteReadsMainRefusals (0.03s)
+=== CONT  TestModulePreflightShapes
+--- PASS: TestChangedVisitorMutantFailsLoudly (0.02s)
+=== CONT  TestUnsupportedPreflightReturns
+--- PASS: TestUnsupportedPreflightReturns (0.01s)
+--- PASS: TestModulePreflightShapes (0.03s)
+--- PASS: TestCompilerSlice3Shape (0.07s)
+=== NAME  TestProduct_RefusalRewriteBehaviorProbe
+    rewrite_test.go:264: build refusalrewrite_behavior_probe ca3d2983be92 hit 0.41
+--- PASS: TestProduct_RefusalRewriteBehaviorProbe (0.44s)
+=== NAME  TestVisitorsCollectContinueAndSkipDiagnosedBodies
+    rewrite_test.go:92: build refusalrewrite_behavior_probe ca3d2983be92 hit 0.42
+--- PASS: TestVisitorsCollectContinueAndSkipDiagnosedBodies (0.46s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/refusalrewrite	0.487s
+?   	github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd	[no test files]
+?   	github.com/system-inc/adamic/stage3/census/latent/replay	[no test files]
+?   	github.com/system-inc/adamic/stage3/census/latent/replay/worker	[no test files]
+=== RUN   TestLatentStatecopySortedMapProgramMembership
+=== PAUSE TestLatentStatecopySortedMapProgramMembership
+=== RUN   TestLatentStatecopyCoversEveryLoweringStateField
+=== PAUSE TestLatentStatecopyCoversEveryLoweringStateField
+=== RUN   TestLatentStatecopySharesSourceIdentities
+=== PAUSE TestLatentStatecopySharesSourceIdentities
+=== RUN   TestLatentStatecopyRefusesAnUnnamedPrivateIRField
+=== PAUSE TestLatentStatecopyRefusesAnUnnamedPrivateIRField
+=== RUN   TestLatentStatecopyNamesEveryPrivateIRField
+=== PAUSE TestLatentStatecopyNamesEveryPrivateIRField
+=== RUN   TestLatentCarryFactsAuditedFields
+=== PAUSE TestLatentCarryFactsAuditedFields
+=== RUN   TestLatentCarryFactsIgnoresUncarriedFields
+=== PAUSE TestLatentCarryFactsIgnoresUncarriedFields
+=== RUN   TestLatentSpeculativePrivateIRFields
+=== PAUSE TestLatentSpeculativePrivateIRFields
+=== RUN   TestLatentSpeculativeRefusesUnnamedExportedIRField
+=== PAUSE TestLatentSpeculativeRefusesUnnamedExportedIRField
+=== RUN   TestLatentSpeculativeBoundaryPolicyRequiredAtBuild
+=== PAUSE TestLatentSpeculativeBoundaryPolicyRequiredAtBuild
+=== RUN   TestLatentSpeculativeEveryIRFieldPolicyIsCurrent
+=== PAUSE TestLatentSpeculativeEveryIRFieldPolicyIsCurrent
+=== RUN   TestLatentStatecopyFixedArrayByValue
+=== PAUSE TestLatentStatecopyFixedArrayByValue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy
+=== PAUSE TestLatentStatecopyRefusesFixedArrayNeedingCopy
+=== RUN   TestUnknownMutableContainerFailsLoudly
+=== PAUSE TestUnknownMutableContainerFailsLoudly
+=== RUN   TestUnknownForeignPointerFailsLoudly
+=== PAUSE TestUnknownForeignPointerFailsLoudly
+=== RUN   TestProduct_Statecopy
+=== PAUSE TestProduct_Statecopy
+=== RUN   TestPublishedCopyModeIsPrivate
+    publication_unix_test.go:37: build go_build_./stage3/census/latent/statecopy_statecopy 5bd48e3ef105 hit 1.23
+--- PASS: TestPublishedCopyModeIsPrivate (1.61s)
+=== CONT  TestLatentStatecopySortedMapProgramMembership
+=== CONT  TestLatentSpeculativeRefusesUnnamedExportedIRField
+=== CONT  TestLatentStatecopyRefusesFixedArrayNeedingCopy
+=== CONT  TestUnknownMutableContainerFailsLoudly
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/entryfalse
+=== CONT  TestUnknownForeignPointerFailsLoudly
+--- PASS: TestLatentSpeculativeRefusesUnnamedExportedIRField (0.00s)
+=== CONT  TestLatentSpeculativeEveryIRFieldPolicyIsCurrent
+--- PASS: TestLatentStatecopySortedMapProgramMembership (0.00s)
+=== CONT  TestLatentStatecopyFixedArrayByValue
+--- PASS: TestLatentStatecopyFixedArrayByValue (0.00s)
+=== CONT  TestProduct_Statecopy
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/entrytrue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]intfalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]inttrue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]intfalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]inttrue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuefalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuetrue
+--- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/entryfalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/entrytrue (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]intfalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]inttrue (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]intfalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]inttrue (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuefalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuetrue (0.00s)
+=== CONT  TestLatentStatecopyNamesEveryPrivateIRField
+=== NAME  TestUnknownMutableContainerFailsLoudly
+    main_test.go:28: build go_build_./stage3/census/latent/statecopy_statecopy 5bd48e3ef105 hit 0.00
+=== NAME  TestProduct_Statecopy
+    main_test.go:81: build go_build_./stage3/census/latent/statecopy_statecopy 5bd48e3ef105 hit 0.01
+--- PASS: TestProduct_Statecopy (0.01s)
+=== CONT  TestLatentSpeculativePrivateIRFields
+=== NAME  TestUnknownForeignPointerFailsLoudly
+    main_test.go:59: build go_build_./stage3/census/latent/statecopy_statecopy 5bd48e3ef105 hit 0.01
+--- PASS: TestUnknownMutableContainerFailsLoudly (0.03s)
+=== CONT  TestLatentSpeculativeBoundaryPolicyRequiredAtBuild
+--- PASS: TestUnknownForeignPointerFailsLoudly (0.05s)
+=== CONT  TestLatentCarryFactsIgnoresUncarriedFields
+--- PASS: TestLatentSpeculativeBoundaryPolicyRequiredAtBuild (0.56s)
+=== CONT  TestLatentCarryFactsAuditedFields
+--- PASS: TestLatentCarryFactsIgnoresUncarriedFields (0.92s)
+=== CONT  TestLatentStatecopySharesSourceIdentities
+--- PASS: TestLatentSpeculativeEveryIRFieldPolicyIsCurrent (1.08s)
+=== CONT  TestLatentStatecopyRefusesAnUnnamedPrivateIRField
+--- PASS: TestLatentStatecopyRefusesAnUnnamedPrivateIRField (0.00s)
+=== CONT  TestLatentStatecopyCoversEveryLoweringStateField
+--- PASS: TestLatentStatecopyNamesEveryPrivateIRField (1.12s)
+--- PASS: TestLatentCarryFactsAuditedFields (0.64s)
+--- PASS: TestLatentStatecopySharesSourceIdentities (0.26s)
+--- PASS: TestLatentStatecopyCoversEveryLoweringStateField (0.20s)
+--- PASS: TestLatentSpeculativePrivateIRFields (1.63s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/statecopy	3.287s
+=== RUN   TestMissingStatementFailsWithMethodName
+=== PAUSE TestMissingStatementFailsWithMethodName
+=== RUN   TestStatementRewriteAcceptsNamedAndUnnamedResults
+=== PAUSE TestStatementRewriteAcceptsNamedAndUnnamedResults
+=== RUN   TestStatementRewriteRefusesOtherSignatures
+=== PAUSE TestStatementRewriteRefusesOtherSignatures
+=== RUN   TestStatementRewriteReadsMainStatements
+=== PAUSE TestStatementRewriteReadsMainStatements
+=== RUN   TestProduct_Statementrewrite
+=== PAUSE TestProduct_Statementrewrite
+=== CONT  TestMissingStatementFailsWithMethodName
+=== CONT  TestStatementRewriteReadsMainStatements
+=== CONT  TestStatementRewriteRefusesOtherSignatures
+=== RUN   TestStatementRewriteRefusesOtherSignatures/one_result
+=== PAUSE TestStatementRewriteRefusesOtherSignatures/one_result
+=== RUN   TestStatementRewriteRefusesOtherSignatures/another_type
+=== PAUSE TestStatementRewriteRefusesOtherSignatures/another_type
+=== RUN   TestStatementRewriteRefusesOtherSignatures/two_parameters
+=== PAUSE TestStatementRewriteRefusesOtherSignatures/two_parameters
+=== RUN   TestStatementRewriteRefusesOtherSignatures/another_parameter
+=== PAUSE TestStatementRewriteRefusesOtherSignatures/another_parameter
+=== CONT  TestStatementRewriteRefusesOtherSignatures/one_result
+=== CONT  TestStatementRewriteRefusesOtherSignatures/another_parameter
+=== CONT  TestStatementRewriteRefusesOtherSignatures/two_parameters
+=== NAME  TestStatementRewriteRefusesOtherSignatures/one_result
+    main_test.go:102: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 7b44433209b3 hit 1.77
+=== CONT  TestStatementRewriteAcceptsNamedAndUnnamedResults
+=== RUN   TestStatementRewriteAcceptsNamedAndUnnamedResults/unnamed
+=== PAUSE TestStatementRewriteAcceptsNamedAndUnnamedResults/unnamed
+=== RUN   TestStatementRewriteAcceptsNamedAndUnnamedResults/named
+=== PAUSE TestStatementRewriteAcceptsNamedAndUnnamedResults/named
+=== CONT  TestProduct_Statementrewrite
+    main_test.go:136: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 7b44433209b3 hit 0.00
+--- PASS: TestProduct_Statementrewrite (0.00s)
+=== CONT  TestStatementRewriteRefusesOtherSignatures/another_type
+    main_test.go:102: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 7b44433209b3 hit 0.00
+=== CONT  TestStatementRewriteAcceptsNamedAndUnnamedResults/unnamed
+    main_test.go:77: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 7b44433209b3 hit 0.00
+=== NAME  TestMissingStatementFailsWithMethodName
+    main_test.go:25: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 7b44433209b3 hit 1.83
+=== CONT  TestStatementRewriteAcceptsNamedAndUnnamedResults/named
+    main_test.go:77: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 7b44433209b3 hit 0.00
+--- PASS: TestStatementRewriteAcceptsNamedAndUnnamedResults (0.00s)
+    --- PASS: TestStatementRewriteAcceptsNamedAndUnnamedResults/unnamed (0.01s)
+    --- PASS: TestStatementRewriteAcceptsNamedAndUnnamedResults/named (0.01s)
+--- PASS: TestMissingStatementFailsWithMethodName (2.17s)
+=== NAME  TestStatementRewriteRefusesOtherSignatures/two_parameters
+    main_test.go:102: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 7b44433209b3 hit 1.95
+=== NAME  TestStatementRewriteReadsMainStatements
+    main_test.go:122: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 7b44433209b3 hit 1.98
+--- PASS: TestStatementRewriteReadsMainStatements (2.31s)
+=== NAME  TestStatementRewriteRefusesOtherSignatures/another_parameter
+    main_test.go:102: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 7b44433209b3 hit 2.03
+--- PASS: TestStatementRewriteRefusesOtherSignatures (0.00s)
+    --- PASS: TestStatementRewriteRefusesOtherSignatures/one_result (2.11s)
+    --- PASS: TestStatementRewriteRefusesOtherSignatures/another_type (0.03s)
+    --- PASS: TestStatementRewriteRefusesOtherSignatures/two_parameters (2.27s)
+    --- PASS: TestStatementRewriteRefusesOtherSignatures/another_parameter (2.35s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/statementrewrite	2.377s
+=== RUN   TestLatentUnitTimerWritesSeparateSequentialRecords
+=== PAUSE TestLatentUnitTimerWritesSeparateSequentialRecords
+=== CONT  TestLatentUnitTimerWritesSeparateSequentialRecords
+--- PASS: TestLatentUnitTimerWritesSeparateSequentialRecords (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/timing	0.005s
+?   	github.com/system-inc/adamic/stage3/census/latent/tool	[no test files]
+?   	github.com/system-inc/adamic/stage3/census/predicates/tools/tool	[no test files]

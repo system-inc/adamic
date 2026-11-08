@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-count=1",
+    "-v",
+    "./stage3/census/latent/...",
+    "./stage3/census/predicates/..."
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 6.011780082000314,
+  "peak_rss_kib": 203004,
+  "user_seconds": 10.633310999999999,
+  "system_seconds": 6.355469,
+  "peak_observed_combined_rss_kib": 0,
+  "rss_ceiling_kib": null
+}

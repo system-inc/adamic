@@ -1,0 +1,11 @@
+{
+  "source": "Original invocation, retained from the command executed before reconnect",
+  "command": [
+    "env",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-base-times.jsonl",
+    "/tmp/sygfnmc-base",
+    "/workspace/scratch/sygfnmc-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/prepasses/first-error-base.jsonl"
+  ]
+}

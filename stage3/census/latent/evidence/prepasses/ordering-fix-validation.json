@@ -1,0 +1,26 @@
+{
+  "recut_base": "fd8b74b9bd4fa5d8012dfcc0c0252c3f1964cd4d",
+  "measured_base": "0816e18511b5e1ef4383543ee81c526fc36acfaf",
+  "census_rerun": false,
+  "ordering_sources_unchanged": {
+    "internal/lower/modules.go": true,
+    "internal/lower/refusals.go": true
+  },
+  "whole_latent_statecopy_and_predicates_packages_exit": 0,
+  "overlay_build_exit": 0,
+  "real_error_audit_exit": 0,
+  "old_binary_negative_control_exit": 1,
+  "predicates_family_audit_exit": 0,
+  "predicates_seam_audit_exit": 0,
+  "historical_predicates_error_audit_exit": 0,
+  "binary_sha256": {
+    "sygfnmc-2-census": "dc095152e8c9e6f6fc97d14e5c360bb0f855f74bdfc557a9cf8ce3f5c0ff55ee",
+    "sygfnmc-2-pred": "4c9da558cc9ebd339dd8fcb61ffcc361b5a17accdadbbca9ad244754648b68a5"
+  },
+  "final_packages_exit": 0,
+  "final_overlay_build_exit": 0,
+  "final_order_audit_exit": 0,
+  "successful_path_audit_exit": 0,
+  "non_test_reference_check_exit": 0,
+  "final_binary_sha256": "dc095152e8c9e6f6fc97d14e5c360bb0f855f74bdfc557a9cf8ce3f5c0ff55ee"
+}

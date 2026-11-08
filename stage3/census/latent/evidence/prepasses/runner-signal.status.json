@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-c",
+    "import time; time.sleep(10)"
+  ],
+  "child_exit": -15,
+  "stopped": "runner received signal 15",
+  "wall_seconds": 1.0044755870003428,
+  "peak_rss_kib": 9984,
+  "user_seconds": 0.0,
+  "system_seconds": 0.022109999999999998
+}
