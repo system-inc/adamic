@@ -4,26 +4,26 @@ All required checks pass for the single kept site, H10 / CW157. The other 25 req
 
 The final compiler base is main `ab8a85bebf2a14a06fa8c3c4ca8cc93201a2309f`. Work started on `529b6fdb427a7fa7ccd9bdf58d4347e72e49f16c`; main advanced with three Lower commits. The branch was fast-forwarded, both proof binaries were rebuilt, and all six census measurements plus the individual checker trials were rerun. No stage3, setup, source pin or Go workspace input changed between those main commits. `compiler-provenance.json` records the exact commits and binary, adapter and pin hashes.
 
-| Check | Result |
-| --- | --- |
-| Requested timeout-wrapped setup with GOPROXY=https://proxy.golang.org\|direct | Exit 0; 1142.992 seconds |
-| Full stage3/apply.sh --build-product | Exit 0; real sorted adaptation sequence and complete before/after refs |
-| 99n patch table | One file, one line added, one line removed |
-| Ordinary keyed replay to a new tree | Exit 0; all 81,504 non-Git payload entries byte-identical |
-| Direct adapter replay on full output | Zero files, edits and writes; bytes and mtime preserved |
-| Owner contract | Foreign edit accepted; changed-before, partial-signature and changed-after owners refused before any write |
-| Adamic types | Zero diagnostics before and after, all 79 roots; actual shipped full-apply output also exits 0 |
-| Stock TypeScript 6.0.3 | Zero diagnostics for baseline, H10, and every independently tested proposal |
-| Normal TypeScript local builds | Both exit 0 |
-| All 9 emitted JavaScript files | Byte-identical |
-| Both public declarations | typescript.d.ts and tsserverlibrary.d.ts byte-identical |
-| Entire debug.ts transpile | Byte-identical with comments kept and removed |
-| Source and syntax comparison | Only debug.ts changes among 746 sources; 47 casts on each side, zero explicit any types on each side |
-| Selected-file census | 105 debug.ts units measured against the complete 79-root program, full mode, no-output assertions |
-| Real census pair against main coordinates | One removed finding/read; zero new findings, sites, first-stop changes, regressions or panics |
-| generate_shards.py --check | Exit 0 on the final directory |
-| Stage3 lane Go fixtures | Exit 0; 181.605 seconds with GOMAXPROCS=1 and -parallel=1 |
-| Real adaptation sort | 99n after 99j and before 99-wasm on main; fixture with 99m puts 99n immediately after 99m |
+| Check                                                                         | Result                                                                                                     |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Requested timeout-wrapped setup with GOPROXY=https://proxy.golang.org\|direct | Exit 0; 1142.992 seconds                                                                                   |
+| Full stage3/apply.sh --build-product                                          | Exit 0; real sorted adaptation sequence and complete before/after refs                                     |
+| 99n patch table                                                               | One file, one line added, one line removed                                                                 |
+| Ordinary keyed replay to a new tree                                           | Exit 0; all 81,504 non-Git payload entries byte-identical                                                  |
+| Direct adapter replay on full output                                          | Zero files, edits and writes; bytes and mtime preserved                                                    |
+| Owner contract                                                                | Foreign edit accepted; changed-before, partial-signature and changed-after owners refused before any write |
+| Adamic types                                                                  | Zero diagnostics before and after, all 79 roots; actual shipped full-apply output also exits 0             |
+| Stock TypeScript 6.0.3                                                        | Zero diagnostics for baseline, H10, and every independently tested proposal                                |
+| Normal TypeScript local builds                                                | Both exit 0                                                                                                |
+| All 9 emitted JavaScript files                                                | Byte-identical                                                                                             |
+| Both public declarations                                                      | typescript.d.ts and tsserverlibrary.d.ts byte-identical                                                    |
+| Entire debug.ts transpile                                                     | Byte-identical with comments kept and removed                                                              |
+| Source and syntax comparison                                                  | Only debug.ts changes among 746 sources; 47 casts on each side, zero explicit any types on each side       |
+| Selected-file census                                                          | 105 debug.ts units measured against the complete 79-root program, full mode, no-output assertions          |
+| Real census pair against main coordinates                                     | One removed finding/read; zero new findings, sites, first-stop changes, regressions or panics              |
+| generate_shards.py --check                                                    | Exit 0 on the final directory                                                                              |
+| Stage3 lane Go fixtures                                                       | Exit 0; 181.605 seconds with GOMAXPROCS=1 and -parallel=1                                                  |
+| Real adaptation sort                                                          | 99n after 99j and before 99-wasm on main; fixture with 99m puts 99n immediately after 99m                  |
 
 The public declarations are 593,502 and 866 bytes. Their SHA-256 values, all nine JavaScript hashes, both debug.ts transpile hashes, source counts and syntax counts are in `comparison.json`. `full-source-comparison.json` links the real full-apply output to that measured H10 source. No public API sanction is added. A runtime oracle was unnecessary because every emitted JavaScript byte is unchanged.
 

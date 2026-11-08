@@ -5,21 +5,21 @@ H10 / CW157 is kept. The other 25 sites are dropped with independent checker and
 The only shipped source edit is:
 
 ```ts
-function hasNode(f: Readonly<FlowNode>): f is Readonly<Extract<FlowNode, { node?: Node; }>> {
+function hasNode(f: Readonly<FlowNode>): f is Readonly<Extract<FlowNode, { node?: Node }>> {
     return !!(f.flags & hasNodeFlags);
 }
 ```
 
 It reads flags and its caller only reads node. The original CW157 writable union view is gone, with zero new findings anywhere in debug.ts. hasNode has no recorded lowering stop. renderFlowNode retains the existing checked-predicate depth bound for FlowSwitchClause at debug.ts:937:9.
 
-| Hand | Sites | Decision | Evidence |
-| --- | --- | --- | --- |
-| H06 | CW093, CW095, CW096, CW097 | Dropped | New weak/strong retention NotYet in assertNotNode |
-| H07 | CW102 through CW136, even IDs | Dropped | Required enum-record NotYet transition absent; two new cache-storage scan findings |
-| H08 | CW155 | Dropped | The assumed literal declaration is absent; introducing one changes JavaScript |
-| H09 | CW156 | Dropped | New Array-as-value lowering and string initializer scan finding |
-| H10 | CW157 | Kept | One finding removed; zero new findings or regressions |
-| H11 | CW158 | Dropped | New Array-as-value lowering in renderGraph and inherited fill storage |
+| Hand | Sites                         | Decision | Evidence                                                                           |
+| ---- | ----------------------------- | -------- | ---------------------------------------------------------------------------------- |
+| H06  | CW093, CW095, CW096, CW097    | Dropped  | New weak/strong retention NotYet in assertNotNode                                  |
+| H07  | CW102 through CW136, even IDs | Dropped  | Required enum-record NotYet transition absent; two new cache-storage scan findings |
+| H08  | CW155                         | Dropped  | The assumed literal declaration is absent; introducing one changes JavaScript      |
+| H09  | CW156                         | Dropped  | New Array-as-value lowering and string initializer scan finding                    |
+| H10  | CW157                         | Kept     | One finding removed; zero new findings or regressions                              |
+| H11  | CW158                         | Dropped  | New Array-as-value lowering in renderGraph and inherited fill storage              |
 
 Every individual ID and reason is in [sites.json](sites.json). H07's exact counts, the raw census, the real pair result, and all 105 declaration next stops are in [CENSUS.md](CENSUS.md). Passing proof details are in [PROOF.md](PROOF.md).
 
