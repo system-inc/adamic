@@ -114,6 +114,7 @@ func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile
 
 func latentFullSelected(ctx context.Context, program *load.Program, emit func(LatentFile), selection *latentReplaySelection) {
 	var facts *latentProgramFacts
+ var modules []*ast.SourceFile
 
 	for _, file := range program.Files() {
 		if !latentFileSelected(program.FileName(file)) {
@@ -141,8 +142,11 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 		}
 		// Registration is prepared once per file, then deep-copied per attempted unit.
 		base := fresh()
-		base.noteInheritance(program.Files())
-		base.noteAccessorNames(program.Files())
+		if modules == nil { modules = base.latentPrepassModules() }
+		func() { defer latentPrepassTimer("collectViewedElements")(); base.collectViewedElements(modules) }()
+		func() { defer latentPrepassTimer("noteInheritance")(); base.noteInheritance(modules) }()
+		func() { defer latentPrepassTimer("noteAccessorNames")(); base.noteAccessorNames(modules) }()
+		if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); base.noteOmittedOptionals(modules) }() }
 		base.latentRegister(program.Files())
 		base.latentRegisterNested(program.Files())
 		base.latentUseProgramFacts(&facts)

@@ -311,3 +311,21 @@ process each side. It also records a failed single-file composition check: defer
 generic `instantiated` metadata is census-wide, so utilities-only and multi-file
 records differ even on unchanged main. Do not treat separate-process file records
 as interchangeable with multi-file records without accounting for that witness scope.
+
+## Production prepasses
+
+The census templates track production's pre-refusal passes in order. The in-process
+AST guard follows Lower's local delegates and rejects missing
+or reordered calls. Its adjacent exemption table explains why independent units do
+not run the enum-validation and module-readiness preflights as unit first stops.
+The two mutant test files prove omission and newly added production passes fail.
+
+Fact collectors use the production ESM module order from the original input roots,
+which the loader retains when an entry's observation ledger expands. Directory
+measurements use the deduplicated union of those root orders. Omitted optional
+facts join the registered program-facts capture; installations and snapshots own
+separate maps. `LATENT_PREPASS_TIMES` optionally writes pass, attempting unit and
+elapsed nanoseconds as tab-separated rows, outside the findings stream.
+
+[Prepass evidence](evidence/prepasses/report.md) records scope, exemptions, costs,
+paired observations and validation status.
