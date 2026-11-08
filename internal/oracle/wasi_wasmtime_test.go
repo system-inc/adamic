@@ -126,6 +126,12 @@ func runWasmtimeAgreesShard(t *testing.T, shard int) {
 	// Cleanups run after the parallel subtests, so the counts are the shard's whole.
 	t.Cleanup(func() {
 		t.Logf("wasmtime shard=%d fixtures=%d pass=%d limitations=%d refused=%d fail=%d skip=%d", shard, passed.Load()+failed.Load()+skipped.Load()+limitations.Load()+refused.Load(), passed.Load(), limitations.Load(), refused.Load(), failed.Load(), skipped.Load())
+		// Every fixture here passes, is a pinned host limitation, a named refusal or a failure; a skip would leave a
+		// fixture unaccounted for under a passing parent. Mutant: the not-lowering branch back to t.Skip, and every
+		// shard holding a fixture registered not to lower goes red here.
+		if skipped.Load() > 0 {
+			t.Errorf("%d fixtures skipped: a fixture is a pass, a host limitation, a refusal or a failure, never a skip", skipped.Load())
+		}
 	})
 	for _, index := range rows {
 		fixture := fixtures[index]
@@ -167,12 +173,18 @@ func runWasmtimeAgreesShard(t *testing.T, shard int) {
 				boundary = true
 				return
 			}
+			// A fixture registered not to lower is a refusal, counted as one, never a skip: its NotYet is held here as
+			// TestNativeAgreesWithNode and TestWASIAgreesWithNode hold it, and the refusal's own words are its
+			// registering test's to pin, where that test pins them. A skip would only hide it from the skip census
+			// (#p3rd3vn).
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {
 					t.Fatalf("want NotYet, got %v", err)
 				}
-				t.Skip("fixture does not lower")
+				t.Logf("refused fixture, registered not to lower and held to its NotYet as the native oracle holds it: %v", notYet)
+				boundary = true
+				return
 			}
 			if err != nil {
 				t.Fatal(err)
