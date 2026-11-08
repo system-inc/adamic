@@ -21,11 +21,11 @@ Input: microsoft/TypeScript v6.0.3, commit
 
 Line numbers come from the meter. They are never used as edit addresses.
 
-| Row | Site | Edit |
-| --- | --- | --- |
-| 1 | program.ts:406:25, createGetSourceFile, TS18046 | `onError(e.message)` becomes `onError(String(propertyOf(e, "message")))` |
-| 2 | program.ts:441:25, createWriteFileMeasuringIO, TS18046 | the same |
-| import | after program.ts:326's ts.performance.js import | `import { propertyOf } from "./hostErrors.js";` |
+| Row    | Site                                                   | Edit                                                                     |
+| ------ | ------------------------------------------------------ | ------------------------------------------------------------------------ |
+| 1      | program.ts:406:25, createGetSourceFile, TS18046        | `onError(e.message)` becomes `onError(String(propertyOf(e, "message")))` |
+| 2      | program.ts:441:25, createWriteFileMeasuringIO, TS18046 | the same                                                                 |
+| import | after program.ts:326's ts.performance.js import        | `import { propertyOf } from "./hostErrors.js";`                          |
 
 The import goes where 47 put its own in tracing.ts, directly after the
 ts.performance.js import. program.ts is CRLF, and so is the inserted line.
@@ -128,15 +128,15 @@ its top frame points at.
 Every row must match its ruled before and after. 14 of 14 do on Node 24.14.1,
 and both sites give the same answer:
 
-| Thrown | onError before | onError after | Consumer before | Consumer after |
-| --- | --- | --- | --- | --- |
-| null | TypeError `Cannot read properties of null (reading 'message')` | the same TypeError | not reached | not reached |
-| undefined | TypeError `Cannot read properties of undefined (reading 'message')` | the same TypeError | not reached | not reached |
-| the string "disk failed" | undefined | "undefined" | `Debug Failure.` | `Cannot read file 'a.ts': undefined.` |
-| the number 5 | undefined | "undefined" | `Debug Failure.` | the same text |
-| an Error "disk failed" | "disk failed" | "disk failed" | `Cannot read file 'a.ts': disk failed.` | the same |
-| `{ message: 42 }` | the number 42 | the string "42" | `Cannot read file 'a.ts': 42.` | the same |
-| `{}` | undefined | "undefined" | `Debug Failure.` | `Cannot read file 'a.ts': undefined.` |
+| Thrown                   | onError before                                                      | onError after      | Consumer before                         | Consumer after                        |
+| ------------------------ | ------------------------------------------------------------------- | ------------------ | --------------------------------------- | ------------------------------------- |
+| null                     | TypeError `Cannot read properties of null (reading 'message')`      | the same TypeError | not reached                             | not reached                           |
+| undefined                | TypeError `Cannot read properties of undefined (reading 'message')` | the same TypeError | not reached                             | not reached                           |
+| the string "disk failed" | undefined                                                           | "undefined"        | `Debug Failure.`                        | `Cannot read file 'a.ts': undefined.` |
+| the number 5             | undefined                                                           | "undefined"        | `Debug Failure.`                        | the same text                         |
+| an Error "disk failed"   | "disk failed"                                                       | "disk failed"      | `Cannot read file 'a.ts': disk failed.` | the same                              |
+| `{ message: 42 }`        | the number 42                                                       | the string "42"    | `Cannot read file 'a.ts': 42.`          | the same                              |
+| `{}`                     | undefined                                                           | "undefined"        | `Debug Failure.`                        | `Cannot read file 'a.ts': undefined.` |
 
 The consumer column shows getSourceFile's text. writeFile's reads
 `Could not write file 'a.js': ...` in the same rows.
@@ -161,14 +161,14 @@ TypeError, while the mutant hands onError "undefined" and returns normally.
 
 Refused, writing nothing (program.ts's hash checked after each run):
 
-| Tree | Adapter |
-| --- | --- |
+| Tree                                               | Adapter                                                                                                     |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | one site converted, the other left, import present | `half-adapted program.ts: createGetSourceFile adapted, createWriteFileMeasuringIO original, import adapted` |
-| both sites converted, the import dropped | `half-adapted program.ts: ... import original` |
-| `String(` dropped, the reads bare propertyOf calls | `uninventoried onError argument: propertyOf(e, "message")` |
-| the withdrawn `as string` | `uninventoried onError argument, the withdrawn cast: propertyOf(e, "message") as string` |
-| a local `const String` in program.ts | `program.ts declares its own String` |
-| no 94 | `hostErrors.ts lacks 94's propertyOf: adaptation 94 must run first` |
+| both sites converted, the import dropped           | `half-adapted program.ts: ... import original`                                                              |
+| `String(` dropped, the reads bare propertyOf calls | `uninventoried onError argument: propertyOf(e, "message")`                                                  |
+| the withdrawn `as string`                          | `uninventoried onError argument, the withdrawn cast: propertyOf(e, "message") as string`                    |
+| a local `const String` in program.ts               | `program.ts declares its own String`                                                                        |
+| no 94                                              | `hostErrors.ts lacks 94's propertyOf: adaptation 94 must run first`                                         |
 
 The strict check (Measured, below) run on two of those trees:
 
@@ -186,10 +186,10 @@ once the inserted import line is subtracted.
 
 `adamic types` on Golem, each tree built by apply.sh from its branch (main 4d63c0a6 with 94, then with 94 and 97e):
 
-| Tree | Whole program | program.ts own-file | patch-set.md row |
-| --- | ---: | ---: | --- |
-| 94 | 144 | 11 | `94-axolotl-property-read \| 1 \| 8 \| 0` |
-| 94 and 97e | 142 | 9 | `97-cli-axolotl-e \| 1 \| 3 \| 2` |
+| Tree       | Whole program | program.ts own-file | patch-set.md row                          |
+| ---------- | ------------: | ------------------: | ----------------------------------------- |
+| 94         |           144 |                  11 | `94-axolotl-property-read \| 1 \| 8 \| 0` |
+| 94 and 97e |           142 |                   9 | `97-cli-axolotl-e \| 1 \| 3 \| 2`         |
 
 The two removed are exactly program.ts 406:25 and 441:25. Every other diagnostic in every other file is
 identical, and program.ts's other nine are the same rows one line lower for the import.
