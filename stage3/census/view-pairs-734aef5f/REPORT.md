@@ -35,7 +35,7 @@ Reference field means a cycleFinder.fields field whose lowering representation i
 
 ## Coverage
 
-Observed **8644 unit results**: `{'lowered': 4992, 'stopped': 3652}`. Deferred standalone units in emitted inventories: **774**. Unobserved stock units by status: `{'deferred_generic_instantiation': 774}`. Full-mode files attempted: **58/81**; emitted complete full-mode file inventories: 57. Stock inventory has 7948 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
+Observed **8644 unit results**: `{'lowered': 4992, 'stopped': 3652}`. Deferred standalone units in emitted inventories: **797**. Unobserved stock units by status: `{'deferred_generic_instantiation': 797}`. Full-mode files attempted: **59/81**; emitted complete full-mode file inventories: 58. Stock inventory has 7989 units. Probe-incomplete selected units: 0; pair lines without a completed probe unit row: 0.
 
 One result per (unit file, unit position) is selected: full mode supersedes first-error mode, and later full pieces supersede earlier ones. Repeated dependency pairs in different units remain repeated observations. TypeToString text can be truncated or reused for distinct checker identities; the distinct-pair list groups displayed source/target strings plus the full first-encountered nested path, not globally shared checker identities.
 
@@ -82,7 +82,7 @@ Each observation is retained, including repeats in one unit, in [nil-source-refe
 | expressionToTypeNode.ts | 20 | 41 | 891 | complete traversal |
 | factory/baseNodeFactory.ts | 2 | 1 | 0 | not yet attempted |
 | factory/emitHelpers.ts | 70 | 13 | 0 | complete traversal |
-| factory/emitNode.ts | 15 | 3 | 0 | not yet attempted |
+| factory/emitNode.ts | 15 | 3 | 0 | complete traversal |
 | factory/nodeChildren.ts | 1 | 5 | 77 | not yet attempted |
 | factory/nodeConverters.ts | 2 | 1 | 0 | not yet attempted |
 | factory/nodeFactory.ts | 81 | 421 | 1243 | complete traversal |
@@ -210,6 +210,7 @@ Each child is capped at 1490 seconds with five seconds for forced cleanup, below
 | full-055 | 0 | 75.193 | completed |
 | full-056 | 0 | 49.134 | completed |
 | full-057 | 0 | 30.094 | completed |
+| full-059 | 0 | 30.034 | completed |
 
 ## Evidence and replay
 
