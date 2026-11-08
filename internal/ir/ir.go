@@ -87,6 +87,10 @@ type Program struct {
 	// Packed calls reserve fixed words and separate rest tails, never a count word.
 	FixedArgumentSlots int
 	RestArgumentSlots  SortedMap[RestArguments, int]
+	// RestGraphTypes is each rest layout's pack identities, read as an array literal's GraphTypes.
+	// The caller packs the tail outside lowering, so a pack whose array is on a cycle is made in
+	// the graph region by these, or it holds the region from outside and both leak (#2zhhwaz).
+	RestGraphTypes SortedMap[RestArguments, []int]
 
 	// Main is what the program does, in order.
 	Main []Statement
