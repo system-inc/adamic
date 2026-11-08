@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/tmp/lmv-parent-entry/overlay.json",
+    "-o",
+    "/tmp/lmv-parent-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/tmp/lmv-report",
+  "exit": 0,
+  "wall_seconds": 39.057,
+  "stopped": null
+}

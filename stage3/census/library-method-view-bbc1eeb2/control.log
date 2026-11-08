@@ -1,0 +1,64 @@
+checkpoint apply child_exit=0 d437c874bffc8f213cfe8b8cc167f2b9147e330c
+launch parent
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+entry runs active; parent_exit=None head_exit=not started
+launch head
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+entry runs active; parent_exit=None head_exit=None
+parent-run child_exit=0 wall_seconds=2571.931
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+entry runs active; parent_exit=0 head_exit=None
+head-run child_exit=0 wall_seconds=2527.855
+parent files=81 checker_diagnostics=0
+head files=81 checker_diagnostics=0
+pair child_exit=0 wall_seconds=13.035
+pair complete

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "npm",
+    "ci",
+    "--prefix",
+    "stage3/api"
+  ],
+  "cwd": "/tmp/lmv-report",
+  "exit": 0,
+  "wall_seconds": 2.003,
+  "stopped": null
+}

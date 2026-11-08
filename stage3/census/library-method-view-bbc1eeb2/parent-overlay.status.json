@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/tmp/lmv-report",
+    "/tmp/lmv-parent-overlay"
+  ],
+  "cwd": "/tmp/lmv-report",
+  "exit": 0,
+  "wall_seconds": 3.002,
+  "stopped": null
+}

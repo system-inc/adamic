@@ -1,0 +1,107 @@
+[
+  {
+    "logical": "/tmp/lmv-head/internal/load/latent_hook.go",
+    "evidence": "overlays/head/00-entry_load_hook.go.txt",
+    "sha256": "a21f0d172cce99b74fc6ca8d80159a18d3a2775dbb6f5468041523a9cea0e681"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/load/load.go",
+    "evidence": "overlays/head/01-internal_load_load.go.txt",
+    "sha256": "09ed256da9beedc908843e89d042e8a501521fc5d9c25a6ebfa4e57261a47b25"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/entries_records.go",
+    "evidence": "overlays/head/02-internal_lower_entries_records.go.txt",
+    "sha256": "3581183be01d9e0332c4f206dbee2427073f952e37f43046591fd601efa0bd8d"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/expression.go",
+    "evidence": "overlays/head/03-internal_lower_expression.go.txt",
+    "sha256": "a0d25d09c6313cb07e8c67825f131b1fee95687861d3ae14cae9cfae4124f9a5"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/functions.go",
+    "evidence": "overlays/head/04-internal_lower_functions.go.txt",
+    "sha256": "e27727da4f2788a7a7bd6efbcfdd427062c4c81d079adad1d43623ffaec4a1ed"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/generic.go",
+    "evidence": "overlays/head/05-internal_lower_generic.go.txt",
+    "sha256": "f2f5ec636a22acbe0b3e63f689e9b035bd0b1437ba4e48a0c67e8babf1c77810"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/latent_full.go",
+    "evidence": "overlays/head/06-internal_lower_latent_full.go.txt",
+    "sha256": "2b884f363369ae05730700b87dddf7ad2a640256e1470fdb3078388ea8cc9c44"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/latent_hook.go",
+    "evidence": "overlays/head/07-internal_lower_latent_hook.go.txt",
+    "sha256": "7e369629bdb13889bbb6edcedd44a40c7e5745ead5ccdc0599da79226c68a6d2"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/latent_piece.go",
+    "evidence": "overlays/head/08-internal_lower_latent_piece.go.txt",
+    "sha256": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/latent_progress.go",
+    "evidence": "overlays/head/09-internal_lower_latent_progress.go.txt",
+    "sha256": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/latent_replay.go",
+    "evidence": "overlays/head/10-internal_lower_latent_replay.go.txt",
+    "sha256": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/latent_speculative.go",
+    "evidence": "overlays/head/11-internal_lower_latent_speculative.go.txt",
+    "sha256": "83bae8ce71ff7ea39a9b4659f01c99bb6154ee8d2392746f23c60487f384af38"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/latent_state.go",
+    "evidence": "overlays/head/12-internal_lower_latent_state.go.txt",
+    "sha256": "cf917f6f05359a80358e7ff554bef32daa79cdbbb9c0d3ae8b6f6c0a4257c367"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/latent_timing.go",
+    "evidence": "overlays/head/13-internal_lower_latent_timing.go.txt",
+    "sha256": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/latent_units.go",
+    "evidence": "overlays/head/14-internal_lower_latent_units.go.txt",
+    "sha256": "30b40535af8b16dfb934337677fd00769387e8aee1d6b780d7af4bcf7093c9f9"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/locals.go",
+    "evidence": "overlays/head/15-internal_lower_locals.go.txt",
+    "sha256": "9f7eaef46469ee896c75bdccdd70269f4bbe302f0a4d1a475f4b27be8278a4b6"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/lower.go",
+    "evidence": "overlays/head/16-internal_lower_lower.go.txt",
+    "sha256": "58fe4a1bae3e063d98888198e3b1fa31ae3397a5506da9673141a8b42df5452f"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/refusals.go",
+    "evidence": "overlays/head/17-internal_lower_refusals.go.txt",
+    "sha256": "e9d960970c2b4cd172ea3c90299f5cf169617f5353052b8f1e050e4397d14d7b"
+  },
+  {
+    "logical": "/tmp/lmv-head/internal/lower/statements.go",
+    "evidence": "overlays/head/18-internal_lower_statements.go.txt",
+    "sha256": "1ddb0fec6c7ff00220a85795f99b95e9e80650fafdfc05e5c9ead8ef70dc3138"
+  },
+  {
+    "logical": "/tmp/lmv-head/stage3/census/latent/replay/worker/main.go",
+    "evidence": "overlays/head/19-stage3_census_latent_replay_worker_main.go.txt",
+    "sha256": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34"
+  },
+  {
+    "logical": "/tmp/lmv-head/stage3/census/latent/tool/main.go",
+    "evidence": "overlays/head/20-entry_main.go.txt",
+    "sha256": "f7d18ccb2e9be563e72abc566af03d15a3984850c9bd394978b39f12302a15c1"
+  }
+]
