@@ -396,7 +396,14 @@ func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
 
 // checkDefined emits the failed read as a catchable TypeError, or an invariant panic.
 func (e *emitter) checkDefined(value string, message string) {
-	e.line("if (%s == NULL) {", value)
+	e.checkDefinedWhen(value+" == NULL", message)
+}
+
+// checkDefinedWhen is checkDefined where absent, a C condition, says the value isn't there: a narrowed
+// method callee is missing when the object's lookup found neither a field's value nor a method
+// (callThrough).
+func (e *emitter) checkDefinedWhen(absent string, message string) {
+	e.line("if (%s) {", absent)
 	if (ir.Defined{Message: message}).Throws() {
 		e.line("\tstatic adamic_string error_message = ADAMIC_STRING(%s);", cString(strings.TrimPrefix(message, "TypeError: ")))
 		e.line("\tstatic adamic_string error_name = ADAMIC_STRING(\"TypeError\");")
