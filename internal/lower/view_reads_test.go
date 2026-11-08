@@ -98,6 +98,7 @@ var viewNoField = []viewReadExample{
 	{ir.HasOwn{}, "tests for an own field without reading its value"},
 	{ir.HasProperty{}, "tests for a field without reading its value"},
 	{ir.InstanceOf{}, "tests a class chain"},
+	{ir.IntlCollatorCompareValue{}, "the compare closure of the collator made right there, which no view checks"},
 	{ir.IntlCollatorNew{}, "a new collator from its locale, a string, which no view checks"},
 	{ir.IterableOf{}, "a generator where an Iterable<T> slot holds it, whose steps hand over what its body yields; it holds no field a view checks"},
 	{ir.IsCollectionIterator{}, "tests whether a view's object is a collection's iterator"},
