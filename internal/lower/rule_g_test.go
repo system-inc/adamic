@@ -53,16 +53,17 @@ console.log(h.handle(new Cat()));
 }
 
 // A type parameter the slot doesn't fix falls back to its constraint, and one holding any would let the
-// walk accept anything (rule G's condition 3): the slot's NoInfer leaves T no candidate, so T is any[], and
-// the provider would hand the slot's callback whatever its caller passed. A generic function value stops
+// walk accept anything (rule G's condition 3): the provider's own NoInfer leaves T no candidate (a slot's
+// NoInfer doesn't, since inference reads the slot's types as sources), so T is any[], and the provider
+// would hand the slot's callback whatever its caller passed. A generic function value stops
 // earlier, at its own NotYet, so the pin is a class's method.
 func TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet(t *testing.T) {
 	t.Parallel()
 	source := `interface Slot {
-	run<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ...args: A): void;
+	run<A extends unknown[]>(callback: (...args: A) => void, ...args: A): void;
 }
 class Provider {
-	run<T extends any[]>(callback: (...args: T) => void, ...rest: unknown[]): void {}
+	run<T extends any[]>(callback: (...args: NoInfer<T>) => void, ...rest: unknown[]): void {}
 }
 const slot: Slot = new Provider();
 console.log("made");
