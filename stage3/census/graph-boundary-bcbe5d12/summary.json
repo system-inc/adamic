@@ -32,24 +32,24 @@
     "dynamic_reads": 24,
     "checked_object_calls": 0
   },
-  "observed_unit_results": 7325,
+  "observed_unit_results": 7403,
   "observed_statuses": {
-    "lowered": 4388,
+    "lowered": 4466,
     "stopped": 2937
   },
   "unobserved_stock_statuses": {
     "deferred_generic_instantiation": 645
   },
   "first_error_observed": 3447,
-  "full_observed": 6859,
-  "files_in_stock_stream": 52,
+  "full_observed": 6937,
+  "files_in_stock_stream": 53,
   "files_in_table": 81,
-  "files_observed": 72,
+  "files_observed": 73,
   "graph_types_nonempty_units": 0,
   "followup": {
     "requested_files": 51,
-    "requested_attempted": 30,
-    "requested_remaining": 21,
+    "requested_attempted": 31,
+    "requested_remaining": 20,
     "additional_executeCommandLine_attempted": true,
     "bounded_nonzero_files": []
   }
