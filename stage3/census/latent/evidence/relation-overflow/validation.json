@@ -10,22 +10,23 @@
   "full_audit_exit": 1,
   "baseline_full_audit_exit": 1,
   "removed_call_mutant_exit": 1,
-  "binary_sha256": "11318e4f32ad1a378727f1448c326f67b9e794dca9fa4e40b6b3a2dd25c7a108",
+  "binary_sha256": "34b0a70233e6b56819197db997b55227b107fbce5a779e62cc03fede200a0aaa",
   "apply_exit": 0,
   "whole_census_pattern_exit": 0,
   "pre_run_source_parent_checkpoint": "e57046e693cd992623db06d8fcdeb82eab830bd4",
   "tested_sources_sha256": {
     "stage3/census/latent/full.go.txt": "f5943d073c13ed002634a95b77c1e9d0f51426849218fc18df378c2d95f6d36e",
     "stage3/census/latent/load.go.txt": "a40f69a83128f3ebfd6c80b35c21b14729d28c680ab81d17a6f4414bc90030ac",
-    "stage3/census/latent/lower.go.txt": "f605ce88c70d6f1de262ffe1db0f6afb63efa22ad86994193aee3c16206503f9",
+    "stage3/census/latent/lower.go.txt": "5f7ee3cc14cc0f50481053935cf60581b36fe7ac7352ea7527c8083e23e9fe87",
     "stage3/census/latent/main.go.txt": "286eebd4a62d2a1e1c5e7df7215c4b54abe91419a5154a13372acfb035dbcf91",
     "stage3/census/latent/piece.go.txt": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee",
     "stage3/census/latent/progress.go.txt": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3",
-    "stage3/census/latent/relation_overflow.go.txt": "1c75dd6f6a7a580e3311bfb3becb3ae48a6b9d1afb212c70f22b27d055302a43",
-    "stage3/census/latent/relation_overflow_test.go.txt": "60c2df8aa4a815790fe417683e3a9480a638bba85e2404fab4e227613ab6b738",
+    "stage3/census/latent/relation_overflow.go.txt": "9897c23b3b4a5b79d8696b685b03192d74d95df4ccd911a6aea2cb9ac88ce1cc",
+    "stage3/census/latent/relation_overflow_test.go.txt": "1fdbcb7e4a6c329aadf75aaf69eda792c20c9568cf730b2c5fed412f54c3bdb7",
     "stage3/census/latent/replay.go.txt": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a",
     "stage3/census/latent/scalar_copy_test.go.txt": "cb954586052e4cd1942386f0b52d0600841e0a27a09e392065377383170e4f96",
     "stage3/census/latent/speculative.go.txt": "65291a3617c02660bde8189ecc95f7adcae196770cb1f2dfe945a3cd6aaed8cc",
     "stage3/census/latent/units.go.txt": "aa44680899f7dee16ca793764e2f28ea132f042aa2767becc2d6c78337322463"
-  }
+  },
+  "relation_policy": "endpoints by default; explicit LATENT_RELATION_PER_UNIT=1 measurement option"
 }

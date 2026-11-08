@@ -10,9 +10,11 @@ import (
 	"time"
 )
 
-// Empty strings are explicit answers, not omitted observations. Attempted units
-// carry their own post-unit answer; skipped and deferred units carry no answer.
+// Per-unit probing is opt-in after its cost measurement on checker.ts.
+var latentRelationPerUnit bool
+
 type LatentRelationReport struct {
+	PerUnit           bool            `json:"per_unit"`
 	AfterLoad         string          `json:"after_load"`
 	End               string          `json:"end"`
 	FirstAffectedUnit string          `json:"first_affected_unit,omitempty"`
@@ -58,10 +60,17 @@ func latentOverflowFinding(where, phase, answer string) LatentFinding {
 }
 
 func latentRelationReport(ctx context.Context, program *load.Program) LatentRelationReport {
-	return LatentRelationReport{AfterLoad: latentReadRelationOverflow(ctx, program), Attribution: "per attempted unit, checked after lowering; includes the unit that first exposes overflow", Findings: []LatentFinding{}}
+	report := LatentRelationReport{PerUnit: latentRelationPerUnit, AfterLoad: latentReadRelationOverflow(ctx, program), Attribution: "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown", Findings: []LatentFinding{}}
+	if report.PerUnit {
+		report.Attribution = "per attempted unit, checked after lowering; includes the unit that first exposes overflow"
+	}
+	return report
 }
 
 func latentCheckUnitRelation(program *load.Program, typeChecker *checker.Checker, unit *LatentUnit) {
+	if !latentRelationPerUnit {
+		return
+	}
 	answer := latentReadCheckedRelation(program, typeChecker, unit.Where)
 	unit.RelationOverflow = &answer
 	if answer != "" {
@@ -71,7 +80,8 @@ func latentCheckUnitRelation(program *load.Program, typeChecker *checker.Checker
 	}
 }
 
-func (report *LatentRelationReport) finish(records []LatentFile) {
+// Complete attributes endpoint observations to the buffered census records.
+func (report *LatentRelationReport) Complete(records []LatentFile) {
 	answer := report.AfterLoad
 	if answer == "" {
 		answer = report.End
@@ -99,8 +109,25 @@ func (report *LatentRelationReport) finish(records []LatentFile) {
 		phase = "relation_overflow_conservative_all_units"
 		for index := range records {
 			for _, unit := range records[index].Units {
-				if unit.RelationOverflow != nil {
+				if unit.Status == "attempted" || unit.Status == "panic" || unit.Status == "speculative" {
 					records[index].Findings = append(records[index].Findings, latentOverflowFinding(unit.Where, phase, answer))
+				}
+			}
+		}
+	}
+	if report.AfterLoad != "" && !report.PerUnit {
+		report.Attribution = "overflow present after load; every attempted unit was lowered under an overflowed checker"
+		for index := range records {
+			for _, unit := range records[index].Units {
+				if unit.Status == "attempted" || unit.Status == "panic" || unit.Status == "speculative" {
+					if report.FirstAffectedUnit == "" {
+						report.FirstAffectedUnit = unit.Where
+					}
+					finding := latentOverflowFinding(unit.Where, "relation_overflow", answer)
+					if records[index].Piece != nil {
+						finding.PieceAtom = "prepass"
+					}
+					records[index].Findings = append(records[index].Findings, finding)
 				}
 			}
 		}

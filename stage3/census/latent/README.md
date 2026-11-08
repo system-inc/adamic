@@ -315,21 +315,23 @@ as interchangeable with multi-file records without accounting for that witness s
 ## Checker relation overflow
 
 The program record includes `relation_overflow.after_load` and
-`relation_overflow.end`, including explicit empty strings. Every attempted unit
-has a `relation_overflow` string queried after lowering, including after a
-recovered panic. Skipped and deferred units omit it. A nonempty answer becomes a
-`NotYet` finding on the program and each affected attempted unit, using the exact
-production Lower wording. The first affected unit includes the attempt that
-exposed overflow. If only the final check sees overflow from an out-of-unit
-query, all attempts receive a finding with phase
-`relation_overflow_conservative_all_units`, and the program's `attribution`
-explains that the first affected unit is unknown.
+`relation_overflow.end`, including explicit empty strings. By default only these
+two queries run. An overflow present after load marks every attempted unit. An
+overflow first observed at the end conservatively marks every attempted unit
+with phase `relation_overflow_conservative_all_units`; `attribution` explains
+that the first affected unit is unknown. Both use Lower's exact NotYet words.
+Skipped and deferred units are never treated as independent lowering attempts.
 
-`LATENT_RELATION_TIMES=/path/to/relation-times.jsonl` records the wall cost and
-answer of every query separately from deterministic census output. The two
-`where: "program"` rows are the load and end observations, in that order.
-Unit rows use the unit's exact location. Compare checker.ts rows with
-`LATENT_TIMES` unit timings to measure per-unit scanning overhead.
+Per-unit probing proved costly on checker.ts: 51 calls took 32.599 seconds,
+averaging 639.192 ms, versus 10.570 seconds of unit lowering. Across the stopped
+cost experiment, queries consumed 972.056 seconds. This is why endpoint checks
+are the default. `LATENT_RELATION_PER_UNIT=1` enables explicit measurement after
+each attempted unit; only then do units include their `relation_overflow` answer.
+
+`LATENT_RELATION_TIMES=/path/to/relation-times.jsonl` records query wall cost and
+answer separately from deterministic census output. The two `where: "program"`
+rows are the load and end observations, in that order. Opt-in unit rows use the
+unit's exact location. `LATENT_TIMES` records lowering costs separately.
 
 The overlay includes in-process Go tests. Run them after generating the
 scratch overlay:
@@ -350,3 +352,6 @@ entry first so module identities remain routes from that entry. This permits a
 first-error census of the adapted `src/tsc/tsc.ts` even when its checker rejects
 the program. Directory invocation retains its explicitly enumerated roots.
 `TestLatentCensusEntryReachKeepsRootBeforeDependencies` checks this ordering.
+
+`TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset` verifies
+that end-only detection marks all attempts and explains the unknown onset.

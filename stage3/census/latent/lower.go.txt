@@ -219,6 +219,14 @@ var latentConcreteCallDepth int
 var latentUnitTimer *UnitTimer
 
 func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) LatentRelationReport {
+    return LatentWithRelationChecks(ctx, program, os.Getenv("LATENT_RELATION_PER_UNIT") == "1", emit)
+}
+
+// Explicit measurement mode keeps tests parallel without process-wide environment changes.
+func LatentWithRelationChecks(ctx context.Context, program *load.Program, perUnit bool, emit func(LatentFile)) LatentRelationReport {
+    outerRelationPerUnit := latentRelationPerUnit
+    latentRelationPerUnit = perUnit
+    defer func() { latentRelationPerUnit = outerRelationPerUnit }()
     relations := latentRelationReport(ctx, program)
     latentUnitTimer = nil
     if path := os.Getenv("LATENT_TIMES"); path != "" {
@@ -232,7 +240,7 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) L
     records := []LatentFile{}
     latentRun(ctx, program, func(record LatentFile) { records = append(records, record) })
     relations.End = latentReadRelationOverflow(ctx, program)
-    relations.finish(records)
+    relations.Complete(records)
     for _, record := range records {
         for index := range record.Units {
             unit := &record.Units[index]

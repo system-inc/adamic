@@ -25,8 +25,8 @@ func TestLatentRelationOverflowHooksAndProductionWording(t *testing.T) {
 		t.Fatal("census does not use production overflow NotYet wording")
 	}
 	for file, needles := range map[string][]string{
-		"../relation_overflow.go.txt": {"program.RelationOverflow(typeChecker)", `latentOverflowFinding(unit.Where, "relation_overflow", answer)`, "report.Findings = append"},
-		"../lower.go.txt":             {"relations := latentRelationReport(ctx, program)", "relations.End = latentReadRelationOverflow(ctx, program)", "relations.finish(records)", "latentCheckUnitRelation(program, checker, &unit)"},
+		"../relation_overflow.go.txt": {"program.RelationOverflow(typeChecker)", "finding.PieceAtom = latentPieceOrigin", "report.Findings = append"},
+		"../lower.go.txt":             {"relations := latentRelationReport(ctx, program)", "relations.End = latentReadRelationOverflow(ctx, program)", "relations.Complete(records)", "latentCheckUnitRelation(program, checker, &unit)"},
 		"../units.go.txt":             {"latentCheckUnitRelation(program, checker, &unit)"},
 		"../speculative.go.txt":       {"latentCheckUnitRelation(program, checker, &unit)"},
 		"../main.go.txt":              {`"relation_overflow": relations`, `"findings": relations.Findings`, "program.LatentCensusEntryReach()"},
