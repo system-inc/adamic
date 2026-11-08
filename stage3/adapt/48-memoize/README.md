@@ -21,7 +21,6 @@ returns `42 42 1`, and the one-byte output and changed-source mutants are
 caught. The full tsc oracle and lane are not rerun in this acceptance follow-up;
 A changes no JavaScript and the prior gate evidence is retained.
 
-
 ## Updated p2 compiler repeat
 
 Merged origin/area/stage3 at b2c4549f into this branch, without rebasing:
@@ -76,7 +75,6 @@ output mutant; it does not repeat the full upstream oracle, lane, caller
 check or host extraction. Their older results below retain their original
 revision scope. All new evidence is in `evidence/p2-repeat/`. The rest of this
 README is the historical report on 03ccf222.
-
 
 Neither requested candidate qualifies on the requested base,
 `origin/area/stage3` at `03ccf222dfeedef4bfe5cc3e219e4586d14a5c13`.
