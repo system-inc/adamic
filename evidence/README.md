@@ -50,3 +50,7 @@ Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made
 ## L4 comparison
 
 [Two-compiler native sanitizer and JS probe, source Node and stock tsc](l4/results.md): base refuses generic-method view; head refuses an unfixed type parameter falling back to a constraint holding any. Stock tsc 6.0.3 accepts; source Node throws TypeError. No emitted program or sanitizer report.
+
+## L5 comparison
+
+[Generic function property form, two compilers, stock tsc and Node](l5/results.md): both revisions refuse every native/JS .ts/.a compile with adamic/no-void-read. Stock tsc 6.0.3 accepts; source Node throws TypeError. Full refusals, outputs and exit codes retained.
