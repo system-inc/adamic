@@ -65,6 +65,11 @@ func TestLibraryMethodViewIsNotYet(t *testing.T) {
 			})
 		}
 	}
+	// A RegExp's test is served through a program view (libraryServedMethods), measured by the review
+	// lane's two agreeing fixtures, so both forms lower and agree with Node here too. Mutant: the served
+	// table emptied, and these stop at "a view naming test".
+	lowersAndAgreesWithNodeAs(t, "interface Tester { test(text: string): boolean; }\nfunction run(tester: Tester): boolean { return tester.test('xa'); }\nconsole.log(`${run(/a/)}`);\n", ".a")
+	lowersAndAgreesWithNodeAs(t, "interface Maybe { test?: (text: string) => boolean; }\nfunction describe(value: Maybe): string { return value.test === undefined ? 'no test' : 'has test'; }\nconsole.log(describe(/a/));\nconsole.log(describe({}));\n", ".a")
 	// A view naming only the Date's value and no method lowers: a Date seen as itself.
 	lowersAndAgreesWithNodeAs(t, "const made = new Date(0);\nconst same: Date = made;\nconsole.log(`${same.getTime()}`);\n", ".a")
 }
