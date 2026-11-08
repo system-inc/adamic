@@ -120,13 +120,13 @@ Measured results:
   the source afterward.
 - Independent adapted-tree copies use the upstream lockfile's npm install
   and TypeScript's own LKG tsc: `node lib/tsc.js -b src/compiler
-  --emitDeclarationOnly false --pretty false`. Both builds exit 0. The
+--emitDeclarationOnly false --pretty false`. Both builds exit 0. The
   emitted built/local/compiler/program.js is byte-identical, **240875 bytes**,
   SHA-256 `84416ea952adee2078357a097bddcdfd5ec553b9a526d7000574b3044f957fa3`.
   The original checker trees never receive those build dependencies.
 - `python3 -B stage3/lane/generate_shards.py --check` passes.
 - With ADAMIC_TYPESCRIPT_SOURCE set to the pinned upstream, `GOMAXPROCS=1
-  go test -count=1 -skip 'TestShard_|TestProduct_' ./stage3/lane/` passes.
+go test -count=1 -skip 'TestShard_|TestProduct_' ./stage3/lane/` passes.
   The worker has a four-core quota. Initial default-concurrency attempts
   exposed missing input configuration and then the existing 55-second Python
   group timeouts under load. The passing run changes concurrency only, with
