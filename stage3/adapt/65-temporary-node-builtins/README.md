@@ -14,7 +14,6 @@ emitted JavaScript (with and without comments) before writing any file.
 The prior process-only evidence below is historical, not validation of this
 replacement. New whole-tree apply, oracle and lane results are recorded separately.
 
-
 ## Validated on current main
 
 Against main efe9f404, normal apply succeeds and measures 2 files, 7 lines
