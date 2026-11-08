@@ -20,7 +20,7 @@ import (
 // name, so a local that shadows the declared name is judged as the local.
 //
 // One IR feeds every target, so a row lowers only when its three columns are equal and none is pending
-// its owner's clearance; any other row is not yet, named (hostBindingStop), at its declaration and at
+// its owner's clearance; any other row is not yet, named (hostBindingStopIn), at its declaration and at
 // every use. Of the rows today onProfilerEvent and require lower, each Absent on every target.
 //
 // Absent: typeof answers the constant "undefined", which every backend compares as it compares any
@@ -120,8 +120,11 @@ func (l *lowering) hostBindingDeclared(statement *ast.Node) bool {
 	return matched && err == nil
 }
 
-// hostBindingStop is why a row doesn't lower, said as what stage 0 can't lower yet, or "" when it does.
-func hostBindingStop(row load.HostBinding) string {
+// hostBindingRowStop is why a row doesn't lower in a build of the row's own measured module mode, said
+// as what stage 0 can't lower yet, or "" when it does. Only hostBindingStopIn calls it: every judgment of
+// a row goes through the build's module format first, so no caller can reach this ES-only answer by
+// accident (Compiler's read of #00qn5az's require head).
+func hostBindingRowStop(row load.HostBinding) string {
 	var waits []string
 	for _, target := range row.Targets() {
 		if target.Column.Answer == load.HostBindingPending {
@@ -157,7 +160,7 @@ func (l *lowering) hostBindingStopIn(row load.HostBinding) string {
 	if l.moduleFormat == ModuleFormatCommonJSBundle && row.Node.Module == "ES" {
 		return "the host binding " + row.Name + " in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),"
 	}
-	return hostBindingStop(row)
+	return hostBindingRowStop(row)
 }
 
 // possessive is an owner's name with its possessive ending: Runtime's, Platforms'.
