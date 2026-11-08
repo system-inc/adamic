@@ -371,6 +371,7 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 	if l.isSet(sourceNode) || l.isLibraryType(proven, "MapIterator", "SetIterator") {
 		sourceType = l.typeArguments(proven)[0]
 	}
+	l.unplannedAllocation(node, sourceType, "Map.groupBy")
 	grouped := l.typeArguments(l.checker.GetTypeAtLocation(node))
 	if len(grouped) != 2 {
 		return nil, true, l.notYet(node, "Map.groupBy without known grouped elements")
