@@ -1,0 +1,77 @@
+2594029da13920577f63b2a4798325d7d76d8f4f
+ 06af2e399c6c1fb93fd570b774027942747400b4 cohere (06af2e39)
+ d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)
+package lower
+
+import (
+	"strings"
+	"testing"
+)
+
+// Rule G (#7fd51gk): a generic function seen as a generic slot is related as tsc relates it, the slot's
+// type parameters held opaque and the source instantiated in their context. @types/node's own setTimeout,
+// seen through sys.ts's timer slot, is TArgs instantiated as A, so its callback relates to the slot's.
+func TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot(t *testing.T) {
+	t.Parallel()
+	source := `import { setTimeout } from 'node:timers';
+interface Timers {
+	setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;
+}
+const timers: Timers = { setTimeout };
+console.log(timers.setTimeout === undefined ? "none" : "some");
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, source, extension)
+			if err == nil {
+				return
+			}
+			for _, refusal := range []string{"seen as one taking", "falls back to a constraint holding any", "a generic method setTimeout"} {
+				if strings.Contains(err.Error(), refusal) {
+					t.Fatalf("the provider's relation to the slot stopped: %v", err)
+				}
+			}
+		})
+	}
+}
+
+// A generic method whose constraint differs from the view's but whose parameters are the view's is the
+// same method once related (Language's i2 on #q6gs98r), so it lowers.
+func TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers(t *testing.T) {
+	t.Parallel()
+	source := genericMethodAnimals + `interface Handler { handle<T>(x: Animal): string; }
+class StringHandler { handle<T extends string>(x: Animal): string { return x.name; } }
+const h: Handler = new StringHandler();
+console.log(h.handle(new Cat()));
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			if _, err := lowerSourceAs(t, source, extension); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
+// A type parameter the slot doesn't fix falls back to its constraint, and one holding any would let the
+// walk accept anything (rule G's condition 3): the slot's NoInfer leaves T no candidate, so T is any[], and
+// the provider would hand the slot's callback whatever its caller passed. A generic function value stops
+// earlier, at its own NotYet, so the pin is a class's method.
+func TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet(t *testing.T) {
+	t.Parallel()
+	source := `interface Slot {
+	run<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ...args: A): void;
+}
+class Provider {
+	run<T extends any[]>(callback: (...args: T) => void, ...rest: unknown[]): void {}
+}
+const slot: Slot = new Provider();
+console.log("made");
+`
+	_, err := lowerSourceAs(t, source, ".ts")
+	if err == nil || !strings.Contains(err.Error(), "falls back to a constraint holding any") {
+		t.Fatalf("got %v, want the unfixed type parameter named as NotYet", err)
+	}
+}

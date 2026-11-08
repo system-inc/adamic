@@ -30,3 +30,7 @@ See [steps-1-4.md](steps-1-4.md) for the focused results, verbatim failure outpu
 Proof failed. The focused suite and full lower suite both fail in three tests (four failing extension subtests). Neither mutant introduces a new failure; mutant A leaves the narrower-constraint-unused test green. The new narrower-constraint-read test and timer test terminate inside the loader helper, before their stop logging can execute. See [step-5.md](step-5.md) for every full-suite failure verbatim.
 
 Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made or retained. Steps 6–7 were skipped at the user's direction.
+
+## Follow-up at 2594029
+
+[Latest steps 2–4 rerun](2594029/results.md): the corrected timer pin passes and newly fails under mutant A; L2 still fails with `got <nil>` at baseline and under mutant B. See that report for full diagnostics and exact timer stops. No step 5 rerun was requested.

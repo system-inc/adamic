@@ -1,0 +1,12 @@
+diff --git a/internal/lower/rule_g_test.go b/internal/lower/rule_g_test.go
+index 15ceee115..5f6658b4a 100644
+--- a/internal/lower/rule_g_test.go
++++ b/internal/lower/rule_g_test.go
+@@ -21,6 +21,7 @@ console.log(timers.setTimeout === undefined ? "none" : "some");
+ 		t.Run(extension, func(t *testing.T) {
+ 			t.Parallel()
+ 			_, err := lowerSourceAs(t, source, extension)
++			t.Logf("stops at: %v", err)
+ 			if err == nil {
+ 				return
+ 			}

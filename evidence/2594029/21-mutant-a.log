@@ -1,0 +1,31 @@
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== RUN   TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers
+=== PAUSE TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== CONT  TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== RUN   TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a
+=== PAUSE TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== RUN   TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts
+=== PAUSE TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts
+=== CONT  TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a
+=== CONT  TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts
+--- PASS: TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers (0.00s)
+    --- PASS: TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a (0.14s)
+    --- PASS: TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts (0.14s)
+=== NAME  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+    rule_g_test.go:29: the provider's relation to the slot stopped: /tmp/adamic-gate/TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot.ts930501549/001/main.ts:5:26: Adamic 0.1 refuses a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)
+=== NAME  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+    rule_g_test.go:29: the provider's relation to the slot stopped: /tmp/adamic-gate/TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot.a2984888062/001/main.a:5:26: Adamic 0.1 refuses a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)
+--- FAIL: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot (0.00s)
+    --- FAIL: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts (0.62s)
+    --- FAIL: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a (0.63s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.673s
+FAIL
