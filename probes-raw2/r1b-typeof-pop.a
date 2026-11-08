@@ -1,0 +1,8 @@
+// r1b: typeof of a pop from a graph member array whose element type holds null and undefined.
+interface Node { name: string; next: (Node | null | undefined)[] }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [] };
+a.next.push(b);
+b.next.push(a); // a cycle: a and b share a graph region
+console.log(typeof a.next.pop());
+console.log(a.name + ' ' + b.name + ' ' + a.next.length + ' ' + b.next.length);
