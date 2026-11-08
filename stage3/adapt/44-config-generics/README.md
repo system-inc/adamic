@@ -17,20 +17,20 @@ adapted span, supports CRLF and LF, parses before writing, checks exact erased
 JavaScript, and is idempotent. `predicate.json` protects the entire existing
 predicate, including its shallow array acceptance.
 
-| Site | Contract |
-|---|---|
-| S04 parseJsonConfigFileContentWorker | Carry the raw root `TRaw` to parseConfig. |
-| parseConfig | Carry `TRaw` to the raw-config owner; do not claim validation. |
+| Site                                   | Contract                                                                                                       |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| S04 parseJsonConfigFileContentWorker   | Carry the raw root `TRaw` to parseConfig.                                                                      |
+| parseConfig                            | Carry `TRaw` to the raw-config owner; do not claim validation.                                                 |
 | S07 convertCompileOnSaveOptionFromJson | Carry the raw property's `T` through `{ compileOnSave?: T }`; retain diagnostic conversion and boolean result. |
-| S10 compiler-options worker | Accept caller `TRaw`; produce existing CompilerOptions defaults and normalized fields. |
-| S11 type-acquisition worker | Accept caller `TRaw`; produce existing TypeAcquisition defaults and fields. |
-| S12 watch-options worker | Accept caller `TRaw`; retain optional WatchOptions result. |
-| S13 converter overload | Raw `TRaw`, undefined defaults, optional WatchOptions result. |
-| S14 converter overload | Raw `TRaw`, normalized default family union, including actual falsy-input undefined return. |
-| S15 converter implementation | Enumerate raw `TRaw` and pass each indexed value into generic value conversion. |
-| convertJsonOption | Internal export accepts `TRaw`; existing predicate, validation, normalization and output contract remain. |
-| convertJsonOptionOfListType | Carry the actual `TValues extends readonly unknown[]`, including unions of array types. |
-| list-element caller | Explicit `map<TValues[number], CompilerOptionsValue>` passes the exact element union to recursive conversion. |
+| S10 compiler-options worker            | Accept caller `TRaw`; produce existing CompilerOptions defaults and normalized fields.                         |
+| S11 type-acquisition worker            | Accept caller `TRaw`; produce existing TypeAcquisition defaults and fields.                                    |
+| S12 watch-options worker               | Accept caller `TRaw`; retain optional WatchOptions result.                                                     |
+| S13 converter overload                 | Raw `TRaw`, undefined defaults, optional WatchOptions result.                                                  |
+| S14 converter overload                 | Raw `TRaw`, normalized default family union, including actual falsy-input undefined return.                    |
+| S15 converter implementation           | Enumerate raw `TRaw` and pass each indexed value into generic value conversion.                                |
+| convertJsonOption                      | Internal export accepts `TRaw`; existing predicate, validation, normalization and output contract remain.      |
+| convertJsonOptionOfListType            | Carry the actual `TValues extends readonly unknown[]`, including unions of array types.                        |
+| list-element caller                    | Explicit `map<TValues[number], CompilerOptionsValue>` passes the exact element union to recursive conversion.  |
 
 No cast, runtime statement, public declaration or public alias is added.
 The stock checker found that an element generic alone fails on the actual
