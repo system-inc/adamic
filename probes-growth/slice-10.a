@@ -1,0 +1,12 @@
+// Growth probe: a long-lived cyclic graph, and 10 iterations each copying its array with slice(),
+// reading the copy and dropping it. Compare the counted build's peak at 10 and at 1000.
+interface Node { name: string; next: Node[] }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b);
+let total = 0;
+for (let i = 0; i < 10; i++) {
+	const copy = a.next.slice();
+	total += copy.length;
+}
+console.log(`${a.name} ${total}`);

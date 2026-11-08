@@ -1,0 +1,9 @@
+// Control: the same loop over an array that isn't part of any cycle.
+interface Leaf { name: string }
+const leaves: Leaf[] = [{ name: 'x' + '' }, { name: 'y' + '' }];
+let total = 0;
+for (let i = 0; i < 10; i++) {
+	const copy = leaves.slice();
+	total += copy.length;
+}
+console.log(`${leaves.length} ${total}`);
