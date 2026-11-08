@@ -3,7 +3,7 @@
 // receiver, so this was the first argument where Node prints 7.
 interface Counter {
 	x: number;
-	add?(n: number): number;
+	add?(amount: number): number;
 }
 function show(counter: Counter): void {
 	if ('add' in counter) {
@@ -12,8 +12,8 @@ function show(counter: Counter): void {
 }
 show({
 	x: 3,
-	add(n: number): number {
-		return this.x + n;
+	add(amount: number): number {
+		return this.x + amount;
 	},
 });
 show({ x: 5 });
