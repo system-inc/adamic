@@ -71,13 +71,13 @@ the other `99-cli-` directories.
 Line numbers are the adapted tree's before this adaptation, from the
 adapter's evidence. They are never used as edit addresses.
 
-| Row | Site | Edit |
-| --- | --- | --- |
-| import | performanceCore.ts:2 | `import * as perfHooks from "node:perf_hooks";` added after the `./_namespaces/ts.js` import |
-| binding | performanceCore.ts:35, in tryGetPerformance's try block | `const { performance } = require("perf_hooks") as { performance?: Performance \| undefined };` becomes `const { performance } = perfHooks;` |
-| declare | performanceCore.ts:104, the last statement | `declare const require: (specifier: "perf_hooks") => any;` removed, with the LF lines 65 appended, so the file ends as upstream's does |
-| return type | performanceCore.ts:30, tryGetPerformance's header | `function tryGetPerformance() {` becomes `function tryGetPerformance(): { shouldWriteNativeEvents: boolean; performance: Performance; } \| undefined {` |
-| readonly | performanceCore.ts:16, in PerformanceTime | `timeOrigin: number;` becomes `readonly timeOrigin: number;` |
+| Row         | Site                                                    | Edit                                                                                                                                                    |
+| ----------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| import      | performanceCore.ts:2                                    | `import * as perfHooks from "node:perf_hooks";` added after the `./_namespaces/ts.js` import                                                            |
+| binding     | performanceCore.ts:35, in tryGetPerformance's try block | `const { performance } = require("perf_hooks") as { performance?: Performance \| undefined };` becomes `const { performance } = perfHooks;`             |
+| declare     | performanceCore.ts:104, the last statement              | `declare const require: (specifier: "perf_hooks") => any;` removed, with the LF lines 65 appended, so the file ends as upstream's does                  |
+| return type | performanceCore.ts:30, tryGetPerformance's header       | `function tryGetPerformance() {` becomes `function tryGetPerformance(): { shouldWriteNativeEvents: boolean; performance: Performance; } \| undefined {` |
+| readonly    | performanceCore.ts:16, in PerformanceTime               | `timeOrigin: number;` becomes `readonly timeOrigin: number;`                                                                                            |
 
 The binding keeps upstream's destructuring. That is how
 internal/oracle/testdata/node_process_performance_core.a shapes it
@@ -125,11 +125,11 @@ performanceCore.ts alone, and selecting the census's file prefix through it
 performance.ts, the one other file that reads its types), give the same
 performanceCore.ts record, and no finding elsewhere lands in it.
 
-| Tree | Stops in performanceCore.ts |
-| --- | --- |
+| Tree                         | Stops in performanceCore.ts                                                                                                                                                                                                         |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | main, before this adaptation | 28:1 an ambient value declaration; 35:37 a cast the runtime can't check (scan and lowering); 72:62 NotYet, a presence test of a method whose presence the receiver's construction doesn't prove; 104:1 an ambient value declaration |
-| the import alone (e1e31c24) | 29:1; 53:16, 74:33 and 84:29 as above |
-| this adaptation | 29:1 an ambient value declaration (`declare const performance`); 73:62 the same presence-test NotYet |
+| the import alone (e1e31c24)  | 29:1; 53:16, 74:33 and 84:29 as above                                                                                                                                                                                               |
+| this adaptation              | 29:1 an ambient value declaration (`declare const performance`); 73:62 the same presence-test NotYet                                                                                                                                |
 
 The import moves every later line down by one, so 29:1 and 73:62 are main's
 28:1 and 72:62. Nothing is new.
@@ -229,18 +229,18 @@ tree neither.
 Four rows are ruled, and four of four hold on Node 24.21.0, with each row the
 same on both sides:
 
-| Row | Before and after |
-| --- | --- |
+| Row                        | Before and after                                                                                                    |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | performanceCore, ES module | the browser global: shouldWriteNativeEvents true, the perf_hooks performance object, timestamp finite and monotonic |
-| performanceCore, CommonJS | the perf_hooks path: shouldWriteNativeEvents false, the same object |
-| src/compiler, ES module | loads; isNodeLikeSystem false; `sys` undefined; shouldWriteNativeEvents true |
-| node:perf_hooks, ES module | loads; its performance is `globalThis.performance`; no inspector module added |
+| performanceCore, CommonJS  | the perf_hooks path: shouldWriteNativeEvents false, the same object                                                 |
+| src/compiler, ES module    | loads; isNodeLikeSystem false; `sys` undefined; shouldWriteNativeEvents true                                        |
+| node:perf_hooks, ES module | loads; its performance is `globalThis.performance`; no inspector module added                                       |
 
 Two rows are recorded, not ruled:
 
-| Row | Before | After |
-| --- | --- | --- |
-| node:perf_hooks, node-without-inspector | skipped: `ADAMIC_HOST_NODE_WITHOUT_INSPECTOR` unset | the same |
+| Row                                                  | Before                                                               | After                                                               |
+| ---------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| node:perf_hooks, node-without-inspector              | skipped: `ADAMIC_HOST_NODE_WITHOUT_INSPECTOR` unset                  | the same                                                            |
 | performanceCore, ES module, without the require test | the browser global: the require throws inside the try and is ignored | the perf_hooks path: shouldWriteNativeEvents false, the same object |
 
 The last row extracts isNodeLikeSystem with its `typeof require` test removed
@@ -258,23 +258,23 @@ feeds apply's input key.
 
 Refused, writing nothing (the file's hash checked after each run):
 
-| performanceCore.ts | Adapter |
-| --- | --- |
-| the import added, the rest original | `half-adapted performanceCore.ts: import adapted, binding original, require declaration original, return type original, timeOrigin original` |
-| the binding adapted, the rest original | `half-adapted performanceCore.ts: import original, binding adapted, require declaration original, return type original, timeOrigin original` |
-| adapted, 65's declaration kept | `half-adapted performanceCore.ts: import adapted, binding adapted, require declaration original, return type adapted, timeOrigin adapted` |
-| upstream's cast, as before 65 | `uninventoried perf_hooks binding: ...` |
-| original, with `require` read in another function | `performanceCore.ts names require outside the reviewed sites` |
-| original, with `const perfHooks = 0;` | `performanceCore.ts names perfHooks outside the reviewed sites` |
-| adapted, the binding moved out of its try block | `the perf_hooks binding left its try block` |
-| adapted, the import a named import | `unreviewed perf_hooks import` |
-| the import, binding and declaration adapted, as e1e31c24 wrote it | `half-adapted performanceCore.ts: import adapted, binding adapted, require declaration adapted, return type original, timeOrigin original` |
-| adapted, timeOrigin writable (the return type alone) | `half-adapted performanceCore.ts: import adapted, binding adapted, require declaration adapted, return type adapted, timeOrigin original` |
-| adapted, without the return type (readonly alone) | `half-adapted performanceCore.ts: import adapted, binding adapted, require declaration adapted, return type original, timeOrigin adapted` |
-| original, with the return type | `half-adapted performanceCore.ts: import original, binding original, require declaration original, return type adapted, timeOrigin original` |
-| original, with readonly timeOrigin | `half-adapted performanceCore.ts: import original, binding original, require declaration original, return type original, timeOrigin adapted` |
-| adapted, the return type's performance a PerformanceTime | `uninventoried tryGetPerformance header: ...` |
-| adapted, `timeOrigin: number;` added to Performance | `performanceCore.ts names timeOrigin outside the reviewed sites` |
+| performanceCore.ts                                                | Adapter                                                                                                                                      |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| the import added, the rest original                               | `half-adapted performanceCore.ts: import adapted, binding original, require declaration original, return type original, timeOrigin original` |
+| the binding adapted, the rest original                            | `half-adapted performanceCore.ts: import original, binding adapted, require declaration original, return type original, timeOrigin original` |
+| adapted, 65's declaration kept                                    | `half-adapted performanceCore.ts: import adapted, binding adapted, require declaration original, return type adapted, timeOrigin adapted`    |
+| upstream's cast, as before 65                                     | `uninventoried perf_hooks binding: ...`                                                                                                      |
+| original, with `require` read in another function                 | `performanceCore.ts names require outside the reviewed sites`                                                                                |
+| original, with `const perfHooks = 0;`                             | `performanceCore.ts names perfHooks outside the reviewed sites`                                                                              |
+| adapted, the binding moved out of its try block                   | `the perf_hooks binding left its try block`                                                                                                  |
+| adapted, the import a named import                                | `unreviewed perf_hooks import`                                                                                                               |
+| the import, binding and declaration adapted, as e1e31c24 wrote it | `half-adapted performanceCore.ts: import adapted, binding adapted, require declaration adapted, return type original, timeOrigin original`   |
+| adapted, timeOrigin writable (the return type alone)              | `half-adapted performanceCore.ts: import adapted, binding adapted, require declaration adapted, return type adapted, timeOrigin original`    |
+| adapted, without the return type (readonly alone)                 | `half-adapted performanceCore.ts: import adapted, binding adapted, require declaration adapted, return type original, timeOrigin adapted`    |
+| original, with the return type                                    | `half-adapted performanceCore.ts: import original, binding original, require declaration original, return type adapted, timeOrigin original` |
+| original, with readonly timeOrigin                                | `half-adapted performanceCore.ts: import original, binding original, require declaration original, return type original, timeOrigin adapted` |
+| adapted, the return type's performance a PerformanceTime          | `uninventoried tryGetPerformance header: ...`                                                                                                |
+| adapted, `timeOrigin: number;` added to Performance               | `performanceCore.ts names timeOrigin outside the reviewed sites`                                                                             |
 
 ## Measured
 
