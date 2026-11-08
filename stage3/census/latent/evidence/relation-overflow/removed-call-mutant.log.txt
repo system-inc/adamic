@@ -1,0 +1,8 @@
+=== RUN   TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt
+=== PAUSE TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt
+=== CONT  TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt
+    relation_overflow_test.go:62: planted mark disappeared: {AfterLoad: End: FirstAffectedUnit: Attribution:per attempted unit, checked after lowering; includes the unit that first exposes overflow Findings:[]}
+--- FAIL: TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/tool	0.121s
+FAIL

@@ -65,7 +65,9 @@ func latentCheckUnitRelation(program *load.Program, typeChecker *checker.Checker
 	answer := latentReadCheckedRelation(program, typeChecker, unit.Where)
 	unit.RelationOverflow = &answer
 	if answer != "" {
-		latentFindings = append(latentFindings, latentOverflowFinding(unit.Where, "relation_overflow", answer))
+		finding := latentOverflowFinding(unit.Where, "relation_overflow", answer)
+		finding.PieceAtom = latentPieceOrigin
+		latentFindings = append(latentFindings, finding)
 	}
 }
 
