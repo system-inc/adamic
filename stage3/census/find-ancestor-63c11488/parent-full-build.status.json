@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/fa-parent-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/fa-parent-full",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/scratch/fa-parent",
+  "exit": 0,
+  "wall_seconds": 484.461,
+  "stopped": null
+}
