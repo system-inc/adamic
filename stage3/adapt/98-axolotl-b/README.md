@@ -29,7 +29,7 @@ between, so it did not need extending.
 
 - `node.declarations[0]` in visitVariableDeclarationList (2803:38),
   U-endpoint. The guard is `node.transformFlags &
-  TransformFlags.ContainsBindingPattern`. createVariableDeclarationList adds no
+TransformFlags.ContainsBindingPattern`. createVariableDeclarationList adds no
   such flag of its own; the list's flags are its declarations NodeArray's
   aggregate, which is None for an empty array. Only the binding pattern
   factories set the flag, and it reaches the list through a declaration, so the
@@ -91,10 +91,10 @@ Own-file diagnostics, counted the way the daily meter counts: the census tool
 stage3/meter/report.py's `report()` over its JSONL, attributing each diagnostic
 to its primary location and deduplicating repeated observations.
 
-| File | Before | After |
-| --- | ---: | ---: |
-| transformers/es2015.ts | 5 | 0 |
-| Own file, all of src/compiler | 58/79 | 59/79 |
+| File                          | Before | After |
+| ----------------------------- | -----: | ----: |
+| transformers/es2015.ts        |      5 |     0 |
+| Own file, all of src/compiler |  58/79 | 59/79 |
 
 The before tree is main's apply (the Nov 1 meter's 5 and its 58/79,
 reproduced). Its five findings are TS2532 at 2803:38, 3046:64, 4691:34 and
