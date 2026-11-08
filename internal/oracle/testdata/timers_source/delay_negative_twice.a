@@ -1,0 +1,8 @@
+// Node warns for a negative delay once a process: the warning names the first, -2, and the second,
+// -1.5, runs at 1 ms with no warning of its own.
+import 'node:timers';
+
+const unit = 'ab'.length;
+setTimeout(() => { console.log('first fired'); }, -unit);
+setTimeout(() => { console.log('second fired'); }, -unit * 0.75);
+console.log('scheduled');

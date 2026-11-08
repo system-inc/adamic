@@ -450,6 +450,15 @@
 `runtime-file:timers_impl.h`
 `timers_impl.h:timers:1`
 `timers_impl.h:timer_next_identity:1`
+# Node's delay warnings (#zhgmbwz): the queued text and its length and capacity, written by setTimeout
+# and flushed by the loop thread alone, freed at teardown; the once flags and the hint flag are
+# process-wide, as Node's are, set only on the loop thread. No value graph.
+`timers_impl.h:timer_warnings:1`
+`timers_impl.h:timer_warnings_length:1`
+`timers_impl.h:timer_warnings_capacity:1`
+`timers_impl.h:timer_nan_warned:1`
+`timers_impl.h:timer_negative_warned:1`
+`timers_impl.h:timer_hint_written:1`
 
 # Native readiness sources borrow their descriptor and data, owning neither. The
 # loop thread alone registers, polls, dispatches and closes them; identities never reuse.

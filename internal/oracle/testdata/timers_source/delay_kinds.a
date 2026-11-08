@@ -1,0 +1,11 @@
+// One warning of each kind and a second overflow, each run at 1 ms in the order set: the hint line
+// follows only the first warning in the process, whatever its kind, and each number is written as
+// JavaScript writes it (Infinity, -1.5, 2147483647.5).
+import 'node:timers';
+
+const unit = 'ab'.length;
+setTimeout(() => { console.log('infinity fired'); }, unit / 0);
+setTimeout(() => { console.log('nan fired'); }, Number('not a number'));
+setTimeout(() => { console.log('negative fired'); }, -unit * 0.75);
+setTimeout(() => { console.log('just past fired'); }, 2147483647 + unit / 4);
+console.log('scheduled');
