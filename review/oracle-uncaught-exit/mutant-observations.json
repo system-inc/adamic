@@ -1,0 +1,228 @@
+{
+  "base": "93fa14ff0f189f13be19aec4f82974d4f663e4e8",
+  "performance_head": "801bc791336eb5f13fcb2b0dfac9ed66aae0c35a",
+  "node": "v24.19.0",
+  "observations": [
+    {
+      "fixture": "two_timers",
+      "mode": "fixed",
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Error: uncaught exit\n"
+    },
+    {
+      "fixture": "two_timers",
+      "mode": "plain",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "file:///workspace/adamic/internal/oracle/testdata/uncaught_exit/two_timers.mjs:1\nsetTimeout(() => { throw new Error('uncaught exit'); }, 0);\n                   ^\n\nError: uncaught exit\n    at Timeout._onTimeout (file:///workspace/adamic/internal/oracle/testdata/uncaught_exit/two_timers.mjs:1:26)\n    at listOnTimeout (node:internal/timers:635:17)\n    at process.processTimers (node:internal/timers:571:7)\n\nNode.js v24.19.0\n"
+    },
+    {
+      "fixture": "top_level",
+      "mode": "fixed",
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Error: uncaught exit\n"
+    },
+    {
+      "fixture": "top_level",
+      "mode": "plain",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "file:///workspace/adamic/internal/oracle/testdata/uncaught_exit/top_level.mjs:2\nthrow new Error('uncaught exit');\n      ^\n\nError: uncaught exit\n    at file:///workspace/adamic/internal/oracle/testdata/uncaught_exit/top_level.mjs:2:7\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.19.0\n"
+    },
+    {
+      "fixture": "promise_job",
+      "mode": "fixed",
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Error: uncaught exit\n"
+    },
+    {
+      "fixture": "promise_job",
+      "mode": "plain",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "file:///workspace/adamic/internal/oracle/testdata/uncaught_exit/promise_job.mjs:2\nPromise.resolve().then(() => { throw new Error('uncaught exit'); });\n                                     ^\n\nError: uncaught exit\n    at file:///workspace/adamic/internal/oracle/testdata/uncaught_exit/promise_job.mjs:2:38\n\nNode.js v24.19.0\n"
+    }
+  ],
+  "timers": [
+    {
+      "fixture": "801bc791:timers_source/forwarded.a",
+      "exit": 0,
+      "stdout": "pollPollingIntervalQueue scheduled true\npollLowPollingIntervalQueue scheduled true\npollLowPollingIntervalQueue c.ts false\npollPollingIntervalQueue a.ts,b.ts false\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "801bc791:timers_source/fewer_parameters.a",
+      "exit": 0,
+      "stdout": "scheduled yes\npollQueue first.ts,second.ts\nhanded one no count no flag\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "801bc791:timers_source/clear_then_set.a",
+      "exit": 0,
+      "stdout": "cleared before b.ts\ncleared before c.ts\nscheduled held\nupdated a.ts,b.ts,c.ts\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "801bc791:timers_source/order.a",
+      "exit": 0,
+      "stdout": "synchronous\nawaited reaction\nzero first\nzero second\none\nfive\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "801bc791:timers_source/callback_throw.a",
+      "exit": 70,
+      "stdout": "scheduled\nbefore the throw\n",
+      "stderr": "adamic: panic: Error: timer callback failed\n"
+    },
+    {
+      "fixture": "801bc791:timers_source/clear_kinds.a",
+      "exit": 0,
+      "stdout": "live held\ncleared twice\nfired\ncleared after it fired\nlive fired\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a throw",
+      "exit": 70,
+      "stdout": "prefix\n",
+      "stderr": "adamic: panic: Error: timer callback failed\n"
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a order",
+      "exit": 0,
+      "stdout": "prefix\njob\nfirst\nfirst-job\nsecond\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a interval",
+      "exit": 0,
+      "stdout": "prefix\n12345 1 67890 7\n12345 2 67890 7\n12345 3 67890 7\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a cancel",
+      "exit": 0,
+      "stdout": "prefix\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a cancel-self",
+      "exit": 0,
+      "stdout": "prefix\ntick\nafter 12345 67890\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a foreign",
+      "exit": 0,
+      "stdout": "prefix\nfire 12345\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a unref",
+      "exit": 0,
+      "stdout": "prefix\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a unref-live",
+      "exit": 0,
+      "stdout": "prefix\nearly\nlate\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a deadlines",
+      "exit": 0,
+      "stdout": "prefix\nearly\nlate\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a graph",
+      "exit": 0,
+      "stdout": "prefix\n12345 1 67890 7\n12345 2 67890 7\n12345 3 67890 7\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a arity",
+      "exit": 0,
+      "stdout": "prefix\n12345 42 0 0\n12345 7 0 0\n12345 7 2 17\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a host",
+      "exit": 0,
+      "stdout": "prefix\nfire 12345\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/timers/oracle.a turn-phase",
+      "exit": 0,
+      "stdout": "prefix\ninterval\nhost\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/async_host/oracle.a early",
+      "exit": 0,
+      "stdout": "prefix\nfulfilled\nfulfilled\nearly clean\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/async_host/oracle.a late",
+      "exit": 0,
+      "stdout": "prefix\nfulfilled\nfulfilled\nlate clean\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/async_host/oracle.a reject",
+      "exit": 0,
+      "stdout": "prefix\nrejected\nrejected\nreject clean\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/watchfile/oracle.a throw",
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Error: watch listener failed\n"
+    },
+    {
+      "fixture": "internal/native/testdata/watchfile/oracle.a interval",
+      "exit": 0,
+      "stdout": "interval true\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "internal/native/testdata/watchfile/oracle.a listeners",
+      "exit": 0,
+      "stdout": "first\nsecond\njob\n",
+      "stderr": ""
+    }
+  ],
+  "mutant": {
+    "exit": 70,
+    "stdout": "pending timer\n",
+    "stderr": "adamic: panic: Error: uncaught exit\n"
+  },
+  "before": [
+    {
+      "fixture": "two_timers",
+      "exit": 70,
+      "stdout": "pending timer\n",
+      "stderr": "adamic: panic: Error: uncaught exit\n"
+    },
+    {
+      "fixture": "top_level",
+      "exit": 70,
+      "stdout": "pending timer\n",
+      "stderr": "adamic: panic: Error: uncaught exit\n"
+    },
+    {
+      "fixture": "promise_job",
+      "exit": 70,
+      "stdout": "pending timer\n",
+      "stderr": "adamic: panic: Error: uncaught exit\n"
+    }
+  ],
+  "promise_monitor": "monitor: Error: uncaught exit unhandledRejection\nadamic: panic: Error: uncaught exit\n",
+  "commit_parent": "ce883cb24bc849579918fb39a3cbef8439f23246"
+}

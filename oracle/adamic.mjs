@@ -46,7 +46,7 @@ process.on('uncaughtException', (error) => {
 		if (name) message += ` in ${name.replace(/^function_\d+_/, '')}`;
 	}
 	process.stderr.write(`adamic: panic: ${message}\n`);
-	process.exitCode = 70;
+	process.exit(70);
 });
 
 for (const stream of [process.stdout, process.stderr]) {

@@ -1,0 +1,597 @@
+{
+  "status": "Broad validation stopped at user request; targeted checks follow the push.",
+  "completed_invocations": [
+    {
+      "package": "cmd/adamic",
+      "phase": "products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/products-0-cmd_adamic.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_CommandRuntimeDebug)$",
+        "./cmd/adamic"
+      ]
+    },
+    {
+      "package": "internal/oracle",
+      "phase": "products-0",
+      "exit": 1,
+      "log": "/tmp/oracle-uncaught-evidence/products-0-internal_oracle.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_AdamicMapOrderMutant|TestProduct_AllocatorFreshHandoverCompiler|TestProduct_AllocatorSlabSizes|TestProduct_AsyncCountCaptured|TestProduct_AsyncCountExpressionWrite|TestProduct_AsyncCountParameter|TestProduct_AsyncCountPayload|TestProduct_AsyncCountReassigned|TestProduct_AsyncCountRootError|TestProduct_AsyncCountStable|TestProduct_AsyncCountThrown|TestProduct_AsyncOriginalCoverageDiscard|TestProduct_AsyncOriginalCoverageParameters|TestProduct_AsyncOriginalCoverageRejectEager|TestProduct_AsyncOriginalCoverageRejectEmpty|TestProduct_AsyncOriginalCoverageRejectNested|TestProduct_AsyncOriginalCoverageTypeof|TestProduct_AsyncOriginalCoverageUnions|TestProduct_AsyncOriginalCoverageValues|TestProduct_AsyncOriginalNested|TestProduct_AsyncOriginalPlain|TestProduct_AsyncOriginalThree|TestProduct_AsyncOriginalThrow|TestProduct_AsyncOriginalTypeof|TestProduct_FSWatchMutantBasename|TestProduct_FSWatchMutantCloseDoneAtOnce|TestProduct_FSWatchMutantCloseKeepsSource|TestProduct_FSWatchMutantDrainOncePerRead|TestProduct_FSWatchMutantPendingWaitBlocks|TestProduct_FSWatchMutantSwapped|TestProduct_FSWatchMutantUnwatchFileDoneAtOnce|TestProduct_FSWatchMutantViewNameCheck|TestProduct_JSONTypes|TestProduct_MovesSource|TestProduct_NativeRuntimesCounted0|TestProduct_NativeRuntimesCounted1|TestProduct_NativeRuntimesCounted2|TestProduct_NativeRuntimesRelease0|TestProduct_NativeRuntimesRelease1|TestProduct_NativeRuntimesRelease2|TestProduct_NativeRuntimesSanitized0|TestProduct_NativeRuntimesSanitized1|TestProduct_NativeRuntimesSanitized2|TestProduct_NativeRuntimesShipped0|TestProduct_NativeRuntimesShipped1|TestProduct_NativeRuntimesShipped2|TestProduct_NativeRuntimesWASI0|TestProduct_NativeRuntimesWASI1|TestProduct_NativeRuntimesWASI2|TestProduct_NativeRuntimesWASIRequest0|TestProduct_NativeRuntimesWASIRequest1|TestProduct_NativeRuntimesWASIRequest2|TestProduct_OracleCompilingFixtures|TestProduct_OwnershipQueryASan|TestProduct_OwnershipQueryTSan|TestProduct_ParallelTSanRuntime0|TestProduct_ParallelTSanRuntime1|TestProduct_ParallelTSanRuntime2|TestProduct_ProgramHost14WASICounted|TestProduct_ProgramParseLowerOff|TestProduct_ProgramParseLowerOn|TestProduct_ProgramRuntimesCounted0|TestProduct_ProgramRuntimesCounted1|TestProduct_ProgramRuntimesCounted2|TestProduct_ProgramRuntimesRelease0|TestProduct_ProgramRuntimesRelease1|TestProduct_ProgramRuntimesRelease2|TestProduct_ProgramRuntimesSanitized0|TestProduct_ProgramRuntimesSanitized1|TestProduct_ProgramRuntimesSanitized2|TestProduct_ProgramTscNodeAPI|TestProduct_ProgramTscSource|TestProduct_WatchFileMutantInitialMissing|TestProduct_WatchFileMutantListenerIdentity|TestProduct_WatchFileMutantSizeOnly|TestProduct_WatchFileMutantThrowingListener|TestProduct_WatchFileMutantUnref)$",
+        "./internal/oracle"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/products-0-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WorkerDecodeJSONCorpus|TestProduct_WorkerEncodeJSONCorpus|TestProduct_WorkerJSONTypes)$",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/native",
+      "phase": "products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/products-0-internal_native.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_AsyncCountProtocol|TestProduct_CaseMappingProbe|TestProduct_DebugReviewDebug_000|TestProduct_DebugReviewDebug_001|TestProduct_DebugReviewDebug_002|TestProduct_DebugReviewDebug_003|TestProduct_DebugReviewDebug_004|TestProduct_DebugReviewDebug_005|TestProduct_DebugReviewDebug_006|TestProduct_DebugReviewDebug_007|TestProduct_DebugReviewDebug_008|TestProduct_DebugReviewDebug_009|TestProduct_DebugReviewDebug_010|TestProduct_DebugReviewDebug_011|TestProduct_DebugReviewDebug_012|TestProduct_DebugReviewDebug_013|TestProduct_DebugReviewDebug_014|TestProduct_DebugReviewDebug_015|TestProduct_DebugReviewDebug_016|TestProduct_DebugReviewDebug_017|TestProduct_DebugReviewDebug_018|TestProduct_DebugReviewDebug_019|TestProduct_DebugReviewDebug_020|TestProduct_DebugReviewDebug_021|TestProduct_DebugReviewDebug_022|TestProduct_DebugReviewDebug_023|TestProduct_DebugReviewRelease_000|TestProduct_DebugReviewRelease_001|TestProduct_DebugReviewRelease_002|TestProduct_DebugReviewRelease_003|TestProduct_DebugReviewRelease_004|TestProduct_DebugReviewRelease_005|TestProduct_DebugReviewRelease_006|TestProduct_DebugReviewRelease_007|TestProduct_DebugReviewRelease_008|TestProduct_DebugReviewRelease_009|TestProduct_DebugReviewRelease_010|TestProduct_DebugReviewRelease_011|TestProduct_DebugReviewRelease_012|TestProduct_DebugReviewRelease_013|TestProduct_DebugReviewRelease_014|TestProduct_DebugReviewRelease_015|TestProduct_DebugReviewRelease_016|TestProduct_DebugReviewRelease_017|TestProduct_DebugReviewRelease_018|TestProduct_DebugReviewRelease_019|TestProduct_DebugReviewRelease_020|TestProduct_DebugReviewRelease_021|TestProduct_DebugReviewRelease_022|TestProduct_DebugReviewRelease_023|TestProduct_DebugReviewSanitized_000|TestProduct_DebugReviewSanitized_001|TestProduct_DebugReviewSanitized_002|TestProduct_DebugReviewSanitized_003|TestProduct_DebugReviewSanitized_004|TestProduct_DebugReviewSanitized_005|TestProduct_DebugReviewSanitized_006|TestProduct_DebugReviewSanitized_007|TestProduct_DebugReviewSanitized_008|TestProduct_DebugReviewSanitized_009|TestProduct_DebugReviewSanitized_010|TestProduct_DebugReviewSanitized_011|TestProduct_DebugReviewSanitized_012|TestProduct_DebugReviewSanitized_013|TestProduct_DebugReviewSanitized_014|TestProduct_DebugReviewSanitized_015|TestProduct_DebugReviewSanitized_016|TestProduct_DebugReviewSanitized_017|TestProduct_DebugReviewSanitized_018|TestProduct_DebugReviewSanitized_019|TestProduct_DebugReviewSanitized_020|TestProduct_DebugReviewSanitized_021|TestProduct_DebugReviewSanitized_022|TestProduct_DebugReviewSanitized_023|TestProduct_DebugRuntimeDebug|TestProduct_DebugRuntimeDebugSanitized|TestProduct_DebugRuntimeRelease|TestProduct_DebugRuntimeSanitized|TestProduct_DecodeASCIICorpus|TestProduct_DecodeASCIINative|TestProduct_DecodeASCIIWASI|TestProduct_DecodedInputBackends|TestProduct_DecodedInputReads|TestProduct_FSWatchHarnessMutantErrorKeepsSource|TestProduct_FSWatchHarnessRelease|TestProduct_FSWatchHarnessSanitized|TestProduct_FSWatchSharedHarness|TestProduct_FSWatchSharedMutantIdentity|TestProduct_FSWatchSharedMutantInstances|TestProduct_FSWatchSharedMutantRefness|TestProduct_FSWatchSharedMutantRemove|TestProduct_GCCArithmetic|TestProduct_GCCDiagnosticDTOAMutant|TestProduct_GCCDiagnosticMapMutant|TestProduct_GCCDiagnosticRecursionMutant|TestProduct_GCCDiagnosticReductionMutant|TestProduct_GCCInvariantDTOA|TestProduct_GCCInvariantMap|TestProduct_GCCInvariantReduction|TestProduct_GCCRuntimeAdamic|TestProduct_GCCRuntimeArray|TestProduct_GCCRuntimeArrayFrom|TestProduct_GCCRuntimeAsync|TestProduct_GCCRuntimeBitwise|TestProduct_GCCRuntimeCase|TestProduct_GCCRuntimeCensusSmall|TestProduct_GCCRuntimeClassFeatures|TestProduct_GCCRuntimeClassInheritance|TestProduct_GCCRuntimeClassStatic|TestProduct_GCCRuntimeClosure|TestProduct_GCCRuntimeConstruction|TestProduct_GCCRuntimeCount|TestProduct_GCCRuntimeDirectory|TestProduct_GCCRuntimeDtoa|TestProduct_GCCRuntimeExceptions|TestProduct_GCCRuntimeFromCodes|TestProduct_GCCRuntimeGenerator|TestProduct_GCCRuntimeGraphRegions|TestProduct_GCCRuntimeHeap|TestProduct_GCCRuntimeHostRuntime|TestProduct_GCCRuntimeHypot|TestProduct_GCCRuntimeIeee754|TestProduct_GCCRuntimeInput|TestProduct_GCCRuntimeJsonDecode|TestProduct_GCCRuntimeJsonEncode|TestProduct_GCCRuntimeJsonStringify|TestProduct_GCCRuntimeLibraryArray|TestProduct_GCCRuntimeLibraryLanguage|TestProduct_GCCRuntimeLibraryMathNumber|TestProduct_GCCRuntimeLibraryObject|TestProduct_GCCRuntimeMap|TestProduct_GCCRuntimeMapSet|TestProduct_GCCRuntimeMath|TestProduct_GCCRuntimeMaybe|TestProduct_GCCRuntimeNodeBuffer|TestProduct_GCCRuntimeNodeCrypto|TestProduct_GCCRuntimeNodeCwdWasi|TestProduct_GCCRuntimeNodeFSDirectory|TestProduct_GCCRuntimeNodeFsFile|TestProduct_GCCRuntimeNodeHost|TestProduct_GCCRuntimeNodePath|TestProduct_GCCRuntimeNodeProcess|TestProduct_GCCRuntimeNormalize|TestProduct_GCCRuntimeNumber|TestProduct_GCCRuntimeObject|TestProduct_GCCRuntimeParallel|TestProduct_GCCRuntimeParse|TestProduct_GCCRuntimeProcess|TestProduct_GCCRuntimeProgramRegion|TestProduct_GCCRuntimeRadix|TestProduct_GCCRuntimeRecord|TestProduct_GCCRuntimeRegexp|TestProduct_GCCRuntimeRegexpCompileBytecode|TestProduct_GCCRuntimeRegexpCompileOwnership|TestProduct_GCCRuntimeRegexpCompileParser|TestProduct_GCCRuntimeRegexpCompileProperties|TestProduct_GCCRuntimeRegexpCompileRuntime|TestProduct_GCCRuntimeRegexpCompileSets|TestProduct_GCCRuntimeRegexpCompileV8|TestProduct_GCCRuntimeRegexpRegular|TestProduct_GCCRuntimeRegexpReplace|TestProduct_GCCRuntimeRegion|TestProduct_GCCRuntimeSet|TestProduct_GCCRuntimeShare|TestProduct_GCCRuntimeSlabQuarantine|TestProduct_GCCRuntimeSort|TestProduct_GCCRuntimeSortUndefined|TestProduct_GCCRuntimeSpread|TestProduct_GCCRuntimeStack|TestProduct_GCCRuntimeString|TestProduct_GCCRuntimeStringAppend|TestProduct_GCCRuntimeStringFrom|TestProduct_GCCRuntimeStringIndex|TestProduct_GCCRuntimeStringShare|TestProduct_GCCRuntimeTsgo|TestProduct_GCCRuntimeTypedArray|TestProduct_GCCRuntimeTypedArraySort|TestProduct_GCCRuntimeUnion|TestProduct_GCCRuntimeUtf8|TestProduct_GCCRuntimeViewUnionsMixed|TestProduct_GCCRuntimeViewUnionsUntagged|TestProduct_GCCRuntimeWeak|TestProduct_HostProviderExitStateMutant|TestProduct_JSONTypes|TestProduct_NodeWASICwdRuntime_000|TestProduct_NodeWASICwdRuntime_001|TestProduct_NormalizationProbe|TestProduct_PrimitiveMutants|TestProduct_ProgramRegionCoreASan|TestProduct_ProgramRegionCoreASanSlabs|TestProduct_ProgramRegionCoreCounted|TestProduct_RecordMutants|TestProduct_RegExpBytecodeNativePart0|TestProduct_RegExpBytecodeNativePart1|TestProduct_RemoteScanRelease|TestProduct_RemoteScanSanitized|TestProduct_RetainReleaseASan|TestProduct_RetainReleaseTSan|TestProduct_RuntimeUnfusedCounted|TestProduct_RuntimeUnfusedRelease|TestProduct_RuntimeUnfusedSanitized|TestProduct_ShapeKindProducers|TestProduct_SourceMutantCheckpoint|TestProduct_SourceMutantCloseDoneAtOnce|TestProduct_SourceMutantLiveness|TestProduct_SourceMutantPendingUntilQuiet|TestProduct_SourceMutantPendingWaitTimeout|TestProduct_SourceMutantPredicate|TestProduct_SourceMutantReadinessLive|TestProduct_SourceMutantRefPendsClose|TestProduct_SourceMutantRefStaleAdmitted|TestProduct_SourcesCounted|TestProduct_SourcesRelease|TestProduct_SourcesSanitized|TestProduct_SplitTSGoBaseline|TestProduct_SplitTSGoSource|TestProduct_SplitTSGoSplit|TestProduct_StableIdentityAsyncMethods|TestProduct_StableIdentityEntriesRecordAlias|TestProduct_StrictWASIRuntime|TestProduct_TSGoArchive|TestProduct_TimerMutantCallbackUncaught|TestProduct_TimerMutantCancelFreesCallback|TestProduct_TimerMutantCancelLeaksCounted|TestProduct_TimerMutantCancelLeaksRegistration|TestProduct_TimerMutantCustomHooks|TestProduct_TimerMutantForeignCancellation|TestProduct_TimerMutantPromiseCheckpoint|TestProduct_TimerMutantReleasedBeforeLastFire|TestProduct_TimerMutantTurnPhase|TestProduct_TimerMutantUnrefIgnored|TestProduct_TimersCounted|TestProduct_TimersRelease|TestProduct_TimersSanitized|TestProduct_WASICompiler|TestProduct_WatchFileBatchCheckpointMutant|TestProduct_WatchFileCustomHooks|TestProduct_WatchFileCustomHooksMutant|TestProduct_WatchFileProviderSanitized|TestProduct_WatchFileSharedIntervalMutant)$",
+        "./internal/native"
+      ]
+    },
+    {
+      "package": "cmd/adamic",
+      "phase": "main-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-0-cmd_adamic.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_CommandRuntimeDebug)$",
+        "./cmd/adamic"
+      ]
+    },
+    {
+      "package": "internal/oracle",
+      "phase": "main-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-0-internal_oracle.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_NativeRuntimesSanitized0|TestProduct_NativeRuntimesSanitized1|TestProduct_NativeRuntimesSanitized2)$",
+        "./internal/oracle"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "main-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-0-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WorkerDecodeJSONCorpus|TestProduct_WorkerEncodeJSONCorpus|TestProduct_WorkerJSONTypes)$",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/native",
+      "phase": "main-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-0-internal_native.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_AsyncCountProtocol|TestProduct_CaseMappingProbe|TestProduct_DebugReviewDebug_000|TestProduct_DebugReviewDebug_001|TestProduct_DebugReviewDebug_002|TestProduct_DebugReviewDebug_003|TestProduct_DebugReviewDebug_004|TestProduct_DebugReviewDebug_005|TestProduct_DebugReviewDebug_006|TestProduct_DebugReviewDebug_007|TestProduct_DebugReviewDebug_008|TestProduct_DebugReviewDebug_009|TestProduct_DebugReviewDebug_010|TestProduct_DebugReviewDebug_011|TestProduct_DebugReviewDebug_012|TestProduct_DebugReviewDebug_013|TestProduct_DebugReviewDebug_014|TestProduct_DebugReviewDebug_015|TestProduct_DebugReviewDebug_016|TestProduct_DebugReviewDebug_017|TestProduct_DebugReviewDebug_018|TestProduct_DebugReviewDebug_019|TestProduct_DebugReviewDebug_020|TestProduct_DebugReviewDebug_021|TestProduct_DebugReviewDebug_022|TestProduct_DebugReviewDebug_023|TestProduct_DebugReviewRelease_000|TestProduct_DebugReviewRelease_001|TestProduct_DebugReviewRelease_002|TestProduct_DebugReviewRelease_003|TestProduct_DebugReviewRelease_004|TestProduct_DebugReviewRelease_005|TestProduct_DebugReviewRelease_006|TestProduct_DebugReviewRelease_007|TestProduct_DebugReviewRelease_008|TestProduct_DebugReviewRelease_009|TestProduct_DebugReviewRelease_010|TestProduct_DebugReviewRelease_011|TestProduct_DebugReviewRelease_012|TestProduct_DebugReviewRelease_013|TestProduct_DebugReviewRelease_014|TestProduct_DebugReviewRelease_015|TestProduct_DebugReviewRelease_016|TestProduct_DebugReviewRelease_017|TestProduct_DebugReviewRelease_018|TestProduct_DebugReviewRelease_019|TestProduct_DebugReviewRelease_020|TestProduct_DebugReviewRelease_021|TestProduct_DebugReviewRelease_022|TestProduct_DebugReviewRelease_023|TestProduct_DebugReviewSanitized_000|TestProduct_DebugReviewSanitized_001|TestProduct_DebugReviewSanitized_002|TestProduct_DebugReviewSanitized_003|TestProduct_DebugReviewSanitized_004|TestProduct_DebugReviewSanitized_005|TestProduct_DebugReviewSanitized_006|TestProduct_DebugReviewSanitized_007|TestProduct_DebugReviewSanitized_008|TestProduct_DebugReviewSanitized_009|TestProduct_DebugReviewSanitized_010|TestProduct_DebugReviewSanitized_011|TestProduct_DebugReviewSanitized_012|TestProduct_DebugReviewSanitized_013|TestProduct_DebugReviewSanitized_014|TestProduct_DebugReviewSanitized_015|TestProduct_DebugReviewSanitized_016|TestProduct_DebugReviewSanitized_017|TestProduct_DebugReviewSanitized_018|TestProduct_DebugReviewSanitized_019|TestProduct_DebugReviewSanitized_020|TestProduct_DebugReviewSanitized_021|TestProduct_DebugReviewSanitized_022|TestProduct_DebugReviewSanitized_023|TestProduct_DebugRuntimeDebug|TestProduct_DebugRuntimeDebugSanitized|TestProduct_DebugRuntimeRelease|TestProduct_DebugRuntimeSanitized|TestProduct_DecodeASCIICorpus|TestProduct_DecodeASCIINative|TestProduct_DecodeASCIIWASI|TestProduct_DecodedInputBackends|TestProduct_DecodedInputReads|TestProduct_FSWatchHarnessMutantErrorKeepsSource|TestProduct_FSWatchHarnessRelease|TestProduct_FSWatchHarnessSanitized|TestProduct_FSWatchSharedHarness|TestProduct_FSWatchSharedMutantIdentity|TestProduct_FSWatchSharedMutantInstances|TestProduct_FSWatchSharedMutantRefness|TestProduct_FSWatchSharedMutantRemove|TestProduct_GCCArithmetic|TestProduct_GCCDiagnosticDTOAMutant|TestProduct_GCCDiagnosticMapMutant|TestProduct_GCCDiagnosticRecursionMutant|TestProduct_GCCDiagnosticReductionMutant|TestProduct_GCCInvariantDTOA|TestProduct_GCCInvariantMap|TestProduct_GCCInvariantReduction|TestProduct_GCCRuntimeAdamic|TestProduct_GCCRuntimeArray|TestProduct_GCCRuntimeArrayFrom|TestProduct_GCCRuntimeAsync|TestProduct_GCCRuntimeBitwise|TestProduct_GCCRuntimeCase|TestProduct_GCCRuntimeCensusSmall|TestProduct_GCCRuntimeClassFeatures|TestProduct_GCCRuntimeClassInheritance|TestProduct_GCCRuntimeClassStatic|TestProduct_GCCRuntimeClosure|TestProduct_GCCRuntimeConstruction|TestProduct_GCCRuntimeCount|TestProduct_GCCRuntimeDirectory|TestProduct_GCCRuntimeDtoa|TestProduct_GCCRuntimeExceptions|TestProduct_GCCRuntimeFromCodes|TestProduct_GCCRuntimeGenerator|TestProduct_GCCRuntimeGraphRegions|TestProduct_GCCRuntimeHeap|TestProduct_GCCRuntimeHostRuntime|TestProduct_GCCRuntimeHypot|TestProduct_GCCRuntimeIeee754|TestProduct_GCCRuntimeInput|TestProduct_GCCRuntimeJsonDecode|TestProduct_GCCRuntimeJsonEncode|TestProduct_GCCRuntimeJsonStringify|TestProduct_GCCRuntimeLibraryArray|TestProduct_GCCRuntimeLibraryLanguage|TestProduct_GCCRuntimeLibraryMathNumber|TestProduct_GCCRuntimeLibraryObject|TestProduct_GCCRuntimeMap|TestProduct_GCCRuntimeMapSet|TestProduct_GCCRuntimeMath|TestProduct_GCCRuntimeMaybe|TestProduct_GCCRuntimeNodeBuffer|TestProduct_GCCRuntimeNodeCrypto|TestProduct_GCCRuntimeNodeCwdWasi|TestProduct_GCCRuntimeNodeFSDirectory|TestProduct_GCCRuntimeNodeFsFile|TestProduct_GCCRuntimeNodeHost|TestProduct_GCCRuntimeNodePath|TestProduct_GCCRuntimeNodeProcess|TestProduct_GCCRuntimeNormalize|TestProduct_GCCRuntimeNumber|TestProduct_GCCRuntimeObject|TestProduct_GCCRuntimeParallel|TestProduct_GCCRuntimeParse|TestProduct_GCCRuntimeProcess|TestProduct_GCCRuntimeProgramRegion|TestProduct_GCCRuntimeRadix|TestProduct_GCCRuntimeRecord|TestProduct_GCCRuntimeRegexp|TestProduct_GCCRuntimeRegexpCompileBytecode|TestProduct_GCCRuntimeRegexpCompileOwnership|TestProduct_GCCRuntimeRegexpCompileParser|TestProduct_GCCRuntimeRegexpCompileProperties|TestProduct_GCCRuntimeRegexpCompileRuntime|TestProduct_GCCRuntimeRegexpCompileSets|TestProduct_GCCRuntimeRegexpCompileV8|TestProduct_GCCRuntimeRegexpRegular|TestProduct_GCCRuntimeRegexpReplace|TestProduct_GCCRuntimeRegion|TestProduct_GCCRuntimeSet|TestProduct_GCCRuntimeShare|TestProduct_GCCRuntimeSlabQuarantine|TestProduct_GCCRuntimeSort|TestProduct_GCCRuntimeSortUndefined|TestProduct_GCCRuntimeSpread|TestProduct_GCCRuntimeStack|TestProduct_GCCRuntimeString|TestProduct_GCCRuntimeStringAppend|TestProduct_GCCRuntimeStringFrom|TestProduct_GCCRuntimeStringIndex|TestProduct_GCCRuntimeStringShare|TestProduct_GCCRuntimeTsgo|TestProduct_GCCRuntimeTypedArray|TestProduct_GCCRuntimeTypedArraySort|TestProduct_GCCRuntimeUnion|TestProduct_GCCRuntimeUtf8|TestProduct_GCCRuntimeViewUnionsMixed|TestProduct_GCCRuntimeViewUnionsUntagged|TestProduct_GCCRuntimeWeak|TestProduct_HostProviderExitStateMutant|TestProduct_JSONTypes|TestProduct_NodeWASICwdRuntime_000|TestProduct_NodeWASICwdRuntime_001|TestProduct_NormalizationProbe|TestProduct_PrimitiveMutants|TestProduct_ProgramRegionCoreASan|TestProduct_ProgramRegionCoreASanSlabs|TestProduct_ProgramRegionCoreCounted|TestProduct_RecordMutants|TestProduct_RegExpBytecodeNativePart0|TestProduct_RegExpBytecodeNativePart1|TestProduct_RemoteScanRelease|TestProduct_RemoteScanSanitized|TestProduct_RetainReleaseASan|TestProduct_RetainReleaseTSan|TestProduct_RuntimeUnfusedCounted|TestProduct_RuntimeUnfusedRelease|TestProduct_RuntimeUnfusedSanitized|TestProduct_ShapeKindProducers|TestProduct_SourceMutantCheckpoint|TestProduct_SourceMutantCloseDoneAtOnce|TestProduct_SourceMutantLiveness|TestProduct_SourceMutantPendingUntilQuiet|TestProduct_SourceMutantPendingWaitTimeout|TestProduct_SourceMutantPredicate|TestProduct_SourceMutantReadinessLive|TestProduct_SourceMutantRefPendsClose|TestProduct_SourceMutantRefStaleAdmitted|TestProduct_SourcesCounted|TestProduct_SourcesRelease|TestProduct_SourcesSanitized|TestProduct_SplitTSGoBaseline|TestProduct_SplitTSGoSource|TestProduct_SplitTSGoSplit|TestProduct_StableIdentityAsyncMethods|TestProduct_StableIdentityEntriesRecordAlias|TestProduct_StrictWASIRuntime|TestProduct_TSGoArchive|TestProduct_TimerMutantCallbackUncaught|TestProduct_TimerMutantCancelFreesCallback|TestProduct_TimerMutantCancelLeaksCounted|TestProduct_TimerMutantCancelLeaksRegistration|TestProduct_TimerMutantCustomHooks|TestProduct_TimerMutantForeignCancellation|TestProduct_TimerMutantPromiseCheckpoint|TestProduct_TimerMutantReleasedBeforeLastFire|TestProduct_TimerMutantTurnPhase|TestProduct_TimerMutantUnrefIgnored|TestProduct_TimersCounted|TestProduct_TimersRelease|TestProduct_TimersSanitized|TestProduct_WASICompiler|TestProduct_WatchFileBatchCheckpointMutant|TestProduct_WatchFileCustomHooks|TestProduct_WatchFileCustomHooksMutant|TestProduct_WatchFileProviderSanitized|TestProduct_WatchFileSharedIntervalMutant)$",
+        "./internal/native"
+      ]
+    },
+    {
+      "package": "stage1/cohere/lint/oracles",
+      "phase": "main-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-0-stage1_cohere_lint_oracles.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_CompleteSuggestionGoOracle|TestProduct_LintGoOracle|TestProduct_RulesAgreeCapture|TestProduct_SuggestionAlongsideGoOracle|TestProduct_jsx_membership|TestProduct_jsx_parser)$",
+        "./stage1/cohere/lint/oracles"
+      ]
+    },
+    {
+      "package": "stage3/fixtures",
+      "phase": "main-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-0-stage3_fixtures.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_FixtureOracleHook)$",
+        "./stage3/fixtures"
+      ]
+    },
+    {
+      "package": "stage1/cohere/lint",
+      "phase": "main-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-0-stage1_cohere_lint.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_ClosedComparatorGapLastIndexPosition|TestProduct_ClosedComparatorGapNumericOr|TestProduct_ClosedComparatorGapOptionalIndex|TestProduct_CompilerAgreementCheckerHeapWitness|TestProduct_CompilerAgreementCombinedOutputMutant|TestProduct_CompilerAgreementLowered|TestProduct_CompilerAgreementReleaseNative|TestProduct_CompilerAgreementSanitizedNative|TestProduct_CompleteSuggestionLowered|TestProduct_CompleteSuggestionMutantLowered|TestProduct_CompleteSuggestionNative|TestProduct_DecodedOptionsLowered|TestProduct_DecodedOptionsMutantLowered|TestProduct_DecorationOptionMutantJavaScript|TestProduct_DotARenameOriginalLowered|TestProduct_DotARenameOriginalNative|TestProduct_DotARenameRenamedLowered|TestProduct_DotARenameRenamedNative|TestProduct_DotARenameSource|TestProduct_EmittedMismatchLowered|TestProduct_EmittedMismatchNative|TestProduct_FactoryHooksLowered|TestProduct_FactoryHooksMutantLowered|TestProduct_FactoryHooksNative|TestProduct_JsxTextnodesMutantLowered|TestProduct_JsxTextnodesMutantNative|TestProduct_LintMutant_adamic_no_type_predicate|TestProduct_LintMutant_base_boundary_no_global_container|TestProduct_LintMutant_base_consistency_no_console|TestProduct_LintMutant_base_consistency_no_hand_built_declared_error|TestProduct_LintMutant_base_consistency_require_pagination_argument_name|TestProduct_LintMutant_default_param_last|TestProduct_LintMutant_eqeqeq|TestProduct_LintMutant_max_classes_per_file|TestProduct_LintMutant_max_depth|TestProduct_LintMutant_max_nested_callbacks|TestProduct_LintMutant_nexus_consistency_no_abbreviated_identifier|TestProduct_LintMutant_nexus_consistency_no_ambiguous_identifier|TestProduct_LintMutant_nexus_consistency_no_enum|TestProduct_LintMutant_nexus_consistency_no_for_in|TestProduct_LintMutant_nexus_consistency_no_long_line_comment|TestProduct_LintMutant_nexus_consistency_no_multiline_arrow_function|TestProduct_LintMutant_nexus_consistency_no_shouting|TestProduct_LintMutant_nexus_consistency_no_single_line_jsdoc|TestProduct_LintMutant_nexus_consistency_no_stuttering_name|TestProduct_LintMutant_nexus_consistency_require_type_suffix|TestProduct_LintMutant_no_await_in_loop|TestProduct_LintMutant_no_bitwise|TestProduct_LintMutant_no_caller|TestProduct_LintMutant_no_cond_assign|TestProduct_LintMutant_no_continue|TestProduct_LintMutant_no_debugger|TestProduct_LintMutant_no_div_regex|TestProduct_LintMutant_no_duplicate_case|TestProduct_LintMutant_no_empty|TestProduct_LintMutant_no_empty_character_class|TestProduct_LintMutant_no_empty_pattern|TestProduct_LintMutant_no_empty_static_block|TestProduct_LintMutant_no_ex_assign|TestProduct_LintMutant_no_extra_bind|TestProduct_LintMutant_no_iterator|TestProduct_LintMutant_no_labels|TestProduct_LintMutant_no_multi_assign|TestProduct_LintMutant_no_negated_condition|TestProduct_LintMutant_no_new|TestProduct_LintMutant_no_octal_escape|TestProduct_LintMutant_no_plusplus|TestProduct_LintMutant_no_proto|TestProduct_LintMutant_no_return_assign|TestProduct_LintMutant_no_script_url|TestProduct_LintMutant_no_self_compare|TestProduct_LintMutant_no_sequences|TestProduct_LintMutant_no_sparse_arrays|TestProduct_LintMutant_no_template_curly_in_string|TestProduct_LintMutant_no_underscore_dangle|TestProduct_LintMutant_no_unexpected_multiline|TestProduct_LintMutant_no_unneeded_ternary|TestProduct_LintMutant_no_unsafe_finally|TestProduct_LintMutant_no_unsafe_negation|TestProduct_LintMutant_no_unsafe_optional_chaining|TestProduct_LintMutant_no_unused_labels|TestProduct_LintMutant_no_unused_private_class_members|TestProduct_LintMutant_no_useless_catch|TestProduct_LintMutant_no_useless_concat|TestProduct_LintMutant_no_useless_constructor|TestProduct_LintMutant_no_useless_rename|TestProduct_LintMutant_no_var|TestProduct_LintMutant_no_warning_comments|TestProduct_LintMutant_no_with|TestProduct_LintMutant_prefer_destructuring|TestProduct_LintMutant_prefer_template|TestProduct_LintMutant_react_forward_ref_uses_ref|TestProduct_LintMutant_react_jsx_no_comment_textnodes|TestProduct_LintMutant_react_no_find_dom_node|TestProduct_LintMutant_react_no_is_mounted|TestProduct_LintMutant_react_no_redundant_should_component_update|TestProduct_LintMutant_require_yield|TestProduct_LintMutant_typescript_adjacent_overload_signatures|TestProduct_LintMutant_typescript_init_declarations|TestProduct_LintMutant_typescript_method_signature_style|TestProduct_LintMutant_typescript_no_this_alias|TestProduct_LintMutant_typescript_no_wrapper_object_types|TestProduct_LintMutant_typescript_prefer_literal_enum_member|TestProduct_LintMutant_unicode_bom|TestProduct_LintMutant_vars_on_top|TestProduct_LintOwnedWitnessesLowered|TestProduct_LintOwnedWitnessesSanitized|TestProduct_ProfileCompilationC|TestProduct_ProfileCompilationCounted|TestProduct_ProfileCompilationJavaScript|TestProduct_ProfileCompilationLowered|TestProduct_ProfileCompilationProfiled|TestProduct_ProfileCompilationScanner|TestProduct_RulesAgreeLowered|TestProduct_RulesAgreeNative|TestProduct_ShardsAgreeLowered|TestProduct_ShardsAgreeNative|TestProduct_WitnessScriptKindLowered|TestProduct_WitnessScriptKindNative|TestProduct_jsx_tree_lowered|TestProduct_jsx_tree_native)$",
+        "./stage1/cohere/lint"
+      ]
+    },
+    {
+      "package": "internal/fuzz",
+      "phase": "main-final-products-1",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-1-internal_fuzz.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_Adamic)$",
+        "./internal/fuzz"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "main-final-products-1",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-1-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WorkerCompiler)$",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/native",
+      "phase": "main-final-products-1",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-1-internal_native.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_DebugCommandDriver|TestProduct_DebugLineTable|TestProduct_DebugRuntimeSharing|TestProduct_RegExpWitnessClosureInventory|TestProduct_WASIServiceModules|TestProduct_WASIServiceNative)$",
+        "./internal/native"
+      ]
+    },
+    {
+      "package": "stage1/cohere/lint/oracles",
+      "phase": "main-final-products-1",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-1-stage1_cohere_lint_oracles.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_ProfileCompilationOracleOutputs|TestProduct_YepestaSetup)$",
+        "./stage1/cohere/lint/oracles"
+      ]
+    },
+    {
+      "package": "stage1/cohere/lint",
+      "phase": "main-final-products-1",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-1-stage1_cohere_lint.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_DecodedOptionsNative|TestProduct_LintFindsCompleteSuggestionGoOracle|TestProduct_LintFindsGoOracle|TestProduct_LintFindsJSXMembership|TestProduct_LintFindsJSXParser|TestProduct_LintFindsRulesAgreeCapture|TestProduct_LintFindsShardsAgreeCapture|TestProduct_LintFindsSuggestionAlongsideGoOracle|TestProduct_LintMutantNativeCanary|TestProduct_ShardsAgreePrepared|TestProduct_ShardsAgreeReferences|TestProduct_SuggestionAlongsideLowered|TestProduct_SuggestionAlongsideNative|TestProduct_jsx_tree_setup)$",
+        "./stage1/cohere/lint"
+      ]
+    },
+    {
+      "package": "stage3/fixtures",
+      "phase": "main-final-products-1",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-1-stage3_fixtures.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_FixtureRuntimesSanitized0|TestProduct_FixtureRuntimesSanitized1|TestProduct_FixtureRuntimesSanitized2)$",
+        "./stage3/fixtures"
+      ]
+    },
+    {
+      "package": "stage1/cohere/lint",
+      "phase": "main-final-products-2",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-2-stage1_cohere_lint.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_LintFindsProfileOracleOutputs|TestProduct_LintFindsYepestaSetup)$",
+        "./stage1/cohere/lint"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "main-final-products-2",
+      "exit": 1,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-2-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WorkerChecks|TestProduct_WorkerComputeCorpus|TestProduct_WorkerComputeSieveMutant|TestProduct_WorkerJSON_000|TestProduct_WorkerJSON_001|TestProduct_WorkerJSON_002|TestProduct_WorkerJSON_003|TestProduct_WorkerJSON_004|TestProduct_WorkerJSON_005|TestProduct_WorkerJSON_006|TestProduct_WorkerJSON_007|TestProduct_WorkerJSON_008|TestProduct_WorkerJSON_009|TestProduct_WorkerJSON_010|TestProduct_WorkerJSON_011|TestProduct_WorkerJSON_012|TestProduct_WorkerJSON_013|TestProduct_WorkerJSON_014|TestProduct_WorkerJSON_015|TestProduct_WorkerJSON_016|TestProduct_WorkerJSON_017|TestProduct_WorkerJSON_018|TestProduct_WorkerJSON_019|TestProduct_WorkerJSON_020|TestProduct_WorkerJSON_021|TestProduct_WorkerJSON_022|TestProduct_WorkerJSON_023|TestProduct_WorkerJSON_024|TestProduct_WorkerJSON_025|TestProduct_WorkerJSON_026|TestProduct_WorkerJSON_027|TestProduct_WorkerJSON_028|TestProduct_WorkerJSON_029|TestProduct_WorkerJSON_030|TestProduct_WorkerJSON_031|TestProduct_WorkerWasmTransform|TestProduct_WorkerdJavaScript|TestProduct_WorkerdWebAssembly)$",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "main-final-products-3",
+      "exit": 1,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-products-3-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WorkerMutants_000|TestProduct_WorkerMutants_001|TestProduct_WorkerMutants_002|TestProduct_WorkerMutants_003|TestProduct_WorkerMutants_004|TestProduct_WorkerMutants_005|TestProduct_WorkerMutants_006|TestProduct_WorkerMutants_007|TestProduct_WorkerMutants_008|TestProduct_WorkerMutants_009|TestProduct_WorkerMutants_010|TestProduct_WorkerMutants_011|TestProduct_WorkerMutants_012|TestProduct_WorkerMutants_013|TestProduct_WorkerMutants_014|TestProduct_WorkerMutants_015|TestProduct_WorkerMutants_016|TestProduct_WorkerMutants_017|TestProduct_WorkerMutants_018|TestProduct_WorkerMutants_019|TestProduct_WorkerMutants_020|TestProduct_WorkerMutants_021|TestProduct_WorkerMutants_022|TestProduct_WorkerMutants_023|TestProduct_WorkerWasmMutants_000|TestProduct_WorkerWasmMutants_001|TestProduct_WorkerWasmMutants_002|TestProduct_WorkerWasmMutants_003|TestProduct_WorkerWasmMutants_004|TestProduct_WorkerWasmMutants_005|TestProduct_WorkerWasmMutants_006|TestProduct_WorkerWasmMutants_007|TestProduct_WorkerWasmMutants_008|TestProduct_WorkerWasm_000|TestProduct_WorkerWasm_001|TestProduct_WorkerWasm_002|TestProduct_WorkerWasm_003|TestProduct_WorkerWasm_004|TestProduct_WorkerWasm_005|TestProduct_WorkerWasm_006|TestProduct_WorkerWasm_007)$",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/adamiclint/repowalk",
+      "phase": "main-final-whole",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-whole-internal_adamiclint_repowalk.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-skip",
+        "^TestProduct_",
+        "./internal/adamiclint/repowalk"
+      ]
+    },
+    {
+      "package": "bench",
+      "phase": "main-final-whole",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-whole-bench.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-skip",
+        "^TestProduct_",
+        "./bench"
+      ]
+    },
+    {
+      "package": "internal/fuzz",
+      "phase": "main-final-whole",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-whole-internal_fuzz.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-skip",
+        "^TestProduct_",
+        "./internal/fuzz"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "main-final-whole",
+      "exit": 1,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-whole-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-skip",
+        "^TestProduct_",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/native",
+      "phase": "main-final-whole",
+      "exit": 1,
+      "log": "/tmp/oracle-uncaught-evidence/main-final-whole-internal_native.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-skip",
+        "^TestProduct_",
+        "./internal/native"
+      ]
+    },
+    {
+      "package": "internal/native",
+      "phase": "oracle-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/oracle-final-products-0-internal_native.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WASICompiler)$",
+        "./internal/native"
+      ]
+    },
+    {
+      "package": "internal/oracle",
+      "phase": "oracle-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/oracle-final-products-0-internal_oracle.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_AdamicMapOrderMutant|TestProduct_AllocatorFreshHandoverCompiler|TestProduct_AllocatorSlabSizes|TestProduct_AsyncCountCaptured|TestProduct_AsyncCountExpressionWrite|TestProduct_AsyncCountParameter|TestProduct_AsyncCountPayload|TestProduct_AsyncCountReassigned|TestProduct_AsyncCountRootError|TestProduct_AsyncCountStable|TestProduct_AsyncCountThrown|TestProduct_AsyncOriginalCoverageDiscard|TestProduct_AsyncOriginalCoverageParameters|TestProduct_AsyncOriginalCoverageRejectEager|TestProduct_AsyncOriginalCoverageRejectEmpty|TestProduct_AsyncOriginalCoverageRejectNested|TestProduct_AsyncOriginalCoverageTypeof|TestProduct_AsyncOriginalCoverageUnions|TestProduct_AsyncOriginalCoverageValues|TestProduct_AsyncOriginalNested|TestProduct_AsyncOriginalPlain|TestProduct_AsyncOriginalThree|TestProduct_AsyncOriginalThrow|TestProduct_AsyncOriginalTypeof|TestProduct_FSWatchMutantBasename|TestProduct_FSWatchMutantCloseDoneAtOnce|TestProduct_FSWatchMutantCloseKeepsSource|TestProduct_FSWatchMutantDrainOncePerRead|TestProduct_FSWatchMutantPendingWaitBlocks|TestProduct_FSWatchMutantSwapped|TestProduct_FSWatchMutantUnwatchFileDoneAtOnce|TestProduct_FSWatchMutantViewNameCheck|TestProduct_JSONTypes|TestProduct_MovesSource|TestProduct_NativeRuntimesCounted0|TestProduct_NativeRuntimesCounted1|TestProduct_NativeRuntimesCounted2|TestProduct_NativeRuntimesRelease0|TestProduct_NativeRuntimesRelease1|TestProduct_NativeRuntimesRelease2|TestProduct_NativeRuntimesSanitized0|TestProduct_NativeRuntimesSanitized1|TestProduct_NativeRuntimesSanitized2|TestProduct_NativeRuntimesShipped0|TestProduct_NativeRuntimesShipped1|TestProduct_NativeRuntimesShipped2|TestProduct_NativeRuntimesWASI0|TestProduct_NativeRuntimesWASI1|TestProduct_NativeRuntimesWASI2|TestProduct_NativeRuntimesWASIRequest0|TestProduct_NativeRuntimesWASIRequest1|TestProduct_NativeRuntimesWASIRequest2|TestProduct_OracleCompilingFixtures|TestProduct_OwnershipQueryASan|TestProduct_OwnershipQueryTSan|TestProduct_ParallelTSanRuntime0|TestProduct_ParallelTSanRuntime1|TestProduct_ParallelTSanRuntime2|TestProduct_ProgramHost14WASICounted|TestProduct_ProgramParseLowerOff|TestProduct_ProgramParseLowerOn|TestProduct_ProgramRuntimesCounted0|TestProduct_ProgramRuntimesCounted1|TestProduct_ProgramRuntimesCounted2|TestProduct_ProgramRuntimesRelease0|TestProduct_ProgramRuntimesRelease1|TestProduct_ProgramRuntimesRelease2|TestProduct_ProgramRuntimesSanitized0|TestProduct_ProgramRuntimesSanitized1|TestProduct_ProgramRuntimesSanitized2|TestProduct_ProgramTscNodeAPI|TestProduct_ProgramTscSource|TestProduct_WatchFileMutantInitialMissing|TestProduct_WatchFileMutantListenerIdentity|TestProduct_WatchFileMutantSizeOnly|TestProduct_WatchFileMutantThrowingListener|TestProduct_WatchFileMutantUnref)$",
+        "./internal/oracle"
+      ]
+    },
+    {
+      "package": "internal/oracle",
+      "phase": "oracle-final-products-1",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/oracle-final-products-1-internal_oracle.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_Adamic|TestProduct_FSWatchClosePending|TestProduct_FSWatchCloseTwice|TestProduct_FSWatchCreate|TestProduct_FSWatchMissing|TestProduct_FSWatchMkdir|TestProduct_FSWatchOnReturns|TestProduct_FSWatchRecursive|TestProduct_FSWatchSelfClose|TestProduct_FSWatchSelfDelete|TestProduct_FSWatchTscShape|TestProduct_FSWatchTwoEvents|TestProduct_FSWatchUnlink|TestProduct_FSWatchUnref|TestProduct_FSWatchUnwatchFilePending|TestProduct_FSWatchViewAfterClose|TestProduct_FSWatchViewOtherEvent|TestProduct_FSWatchWrite|TestProduct_JSONOracleRuntimes|TestProduct_MovesCounted_Control|TestProduct_MovesCounted_SharingMutant|TestProduct_MovesDeterminism|TestProduct_MovesNative_asan|TestProduct_MovesNative_asan_slabs|TestProduct_MovesNative_malloc|TestProduct_MovesNative_release|TestProduct_MovesNative_tsan|TestProduct_ProgramHostOff|TestProduct_ProgramHostOn|TestProduct_ProgramMillionMeasuredOff|TestProduct_ProgramMillionMeasuredOn|TestProduct_ProgramMillionMeasuredSanitizedOff|TestProduct_ProgramMillionMeasuredSanitizedOn|TestProduct_ProgramParseOff|TestProduct_ProgramParseOn|TestProduct_ProgramParseSanitizedOff|TestProduct_ProgramParseSanitizedOn|TestProduct_RecordUnionSlots|TestProduct_StdoutColumnsProbes|TestProduct_WatchFileAppearance|TestProduct_WatchFileCancelAll|TestProduct_WatchFileCancelOne|TestProduct_WatchFileDuplicateListener|TestProduct_WatchFileInitialMissing|TestProduct_WatchFileListenerBatch|TestProduct_WatchFileSameSizeMtime|TestProduct_WatchFileThrowingListener|TestProduct_WatchFileTscCloseShape|TestProduct_WatchFileUnref)$",
+        "./internal/oracle"
+      ]
+    },
+    {
+      "package": "internal/oracle",
+      "phase": "oracle-final-products-2",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/oracle-final-products-2-internal_oracle.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_CountMeasurements00|TestProduct_CountMeasurements01|TestProduct_CountMeasurements02|TestProduct_CountMeasurements03|TestProduct_CountMeasurements04|TestProduct_CountMeasurements05|TestProduct_CountMeasurements06|TestProduct_CountMeasurements07|TestProduct_CountMeasurements08|TestProduct_CountMeasurements09|TestProduct_CountMeasurements10|TestProduct_CountMeasurements11|TestProduct_CountMeasurements12|TestProduct_CountMeasurements13|TestProduct_CountMeasurements14|TestProduct_CountMeasurements15)$",
+        "./internal/oracle"
+      ]
+    },
+    {
+      "package": "internal/oracle",
+      "phase": "oracle-final-whole",
+      "exit": 1,
+      "log": "/tmp/oracle-uncaught-evidence/oracle-final-whole-internal_oracle.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-skip",
+        "^TestProduct_",
+        "./internal/oracle"
+      ]
+    },
+    {
+      "package": "internal/native",
+      "phase": "worker-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/worker-final-products-0-internal_native.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WASICompiler)$",
+        "./internal/native"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "worker-final-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/worker-final-products-0-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WorkerDecodeJSONCorpus|TestProduct_WorkerEncodeJSONCorpus|TestProduct_WorkerJSONTypes)$",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "worker-final-products-1",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/worker-final-products-1-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WorkerCompiler)$",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "worker-final-products-2",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/worker-final-products-2-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WorkerChecks|TestProduct_WorkerComputeCorpus|TestProduct_WorkerComputeSieveMutant|TestProduct_WorkerJSON_000|TestProduct_WorkerJSON_001|TestProduct_WorkerJSON_002|TestProduct_WorkerJSON_003|TestProduct_WorkerJSON_004|TestProduct_WorkerJSON_005|TestProduct_WorkerJSON_006|TestProduct_WorkerJSON_007|TestProduct_WorkerJSON_008|TestProduct_WorkerJSON_009|TestProduct_WorkerJSON_010|TestProduct_WorkerJSON_011|TestProduct_WorkerJSON_012|TestProduct_WorkerJSON_013|TestProduct_WorkerJSON_014|TestProduct_WorkerJSON_015|TestProduct_WorkerJSON_016|TestProduct_WorkerJSON_017|TestProduct_WorkerJSON_018|TestProduct_WorkerJSON_019|TestProduct_WorkerJSON_020|TestProduct_WorkerJSON_021|TestProduct_WorkerJSON_022|TestProduct_WorkerJSON_023|TestProduct_WorkerJSON_024|TestProduct_WorkerJSON_025|TestProduct_WorkerJSON_026|TestProduct_WorkerJSON_027|TestProduct_WorkerJSON_028|TestProduct_WorkerJSON_029|TestProduct_WorkerJSON_030|TestProduct_WorkerJSON_031|TestProduct_WorkerWasmTransform|TestProduct_WorkerdJavaScript|TestProduct_WorkerdWebAssembly)$",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "worker-final-products-3",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/worker-final-products-3-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_WorkerMutants_000|TestProduct_WorkerMutants_001|TestProduct_WorkerMutants_002|TestProduct_WorkerMutants_003|TestProduct_WorkerMutants_004|TestProduct_WorkerMutants_005|TestProduct_WorkerMutants_006|TestProduct_WorkerMutants_007|TestProduct_WorkerMutants_008|TestProduct_WorkerMutants_009|TestProduct_WorkerMutants_010|TestProduct_WorkerMutants_011|TestProduct_WorkerMutants_012|TestProduct_WorkerMutants_013|TestProduct_WorkerMutants_014|TestProduct_WorkerMutants_015|TestProduct_WorkerMutants_016|TestProduct_WorkerMutants_017|TestProduct_WorkerMutants_018|TestProduct_WorkerMutants_019|TestProduct_WorkerMutants_020|TestProduct_WorkerMutants_021|TestProduct_WorkerMutants_022|TestProduct_WorkerMutants_023|TestProduct_WorkerWasmMutants_000|TestProduct_WorkerWasmMutants_001|TestProduct_WorkerWasmMutants_002|TestProduct_WorkerWasmMutants_003|TestProduct_WorkerWasmMutants_004|TestProduct_WorkerWasmMutants_005|TestProduct_WorkerWasmMutants_006|TestProduct_WorkerWasmMutants_007|TestProduct_WorkerWasmMutants_008|TestProduct_WorkerWasm_000|TestProduct_WorkerWasm_001|TestProduct_WorkerWasm_002|TestProduct_WorkerWasm_003|TestProduct_WorkerWasm_004|TestProduct_WorkerWasm_005|TestProduct_WorkerWasm_006|TestProduct_WorkerWasm_007)$",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "internal/worker",
+      "phase": "worker-final-whole",
+      "exit": 1,
+      "log": "/tmp/oracle-uncaught-evidence/worker-final-whole-internal_worker.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-skip",
+        "^TestProduct_",
+        "./internal/worker"
+      ]
+    },
+    {
+      "package": "stage1/cohere/css/oracles",
+      "phase": "extra-products-0",
+      "exit": 0,
+      "log": "/tmp/oracle-uncaught-evidence/extra-products-0-stage1_cohere_css_oracles.log",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "30m",
+        "-run",
+        "^(TestProduct_CSSCompositionCorpusOracle|TestProduct_CSSCompositionGoOracle|TestProduct_CSSParserCorpus|TestProduct_CSSParserGoOracle|TestProduct_CSSParserPostCSSAnswers_0|TestProduct_CSSParserPostCSSAnswers_1|TestProduct_CSSParserPostCSSAnswers_2|TestProduct_CSSParserPostCSSAnswers_3|TestProduct_CSSParserPostCSSAnswers_4|TestProduct_CSSParserPostCSSAnswers_5|TestProduct_CSSParserPostCSSAnswers_6|TestProduct_CSSParserPostCSSAnswers_7|TestProduct_CSSPrinterOracle|TestProduct_CSSPrinterParserOracle)$",
+        "./stage1/cohere/css/oracles"
+      ]
+    }
+  ]
+}
