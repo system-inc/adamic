@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"os"
 	"slices"
 	_ "unsafe"
 
@@ -59,6 +61,24 @@ func init() {
 
 // constraintRelation judges one binding, as constraintRelationRefusal says.
 func (l *lowering) constraintRelation(binding typeArgumentBinding) error {
+	if os.Getenv("ADAMIC_PROBE_BINDINGS") != "" && binding.site != nil && binding.site.Kind == ast.KindCallExpression {
+		resolved := "nil"
+		if signature := l.checker.GetResolvedSignature(binding.site); signature != nil {
+			resolved = "("
+			for index, parameter := range signature.Parameters() {
+				if index > 0 {
+					resolved += ", "
+				}
+				resolved += l.checker.TypeToString(l.checker.GetTypeOfSymbol(parameter))
+			}
+			resolved += ") => " + l.checker.TypeToString(l.checker.GetReturnTypeOfSignature(signature))
+		}
+		argument := "nil"
+		if binding.argument != nil {
+			argument = l.checker.TypeToString(binding.argument)
+		}
+		fmt.Fprintf(os.Stderr, "probe-binding\t%s\t%s\tresolved=%s\targument=%s\tconstraint=%s\n", l.program.Where(binding.site), l.checker.TypeToString(binding.parameter), resolved, argument, l.checker.TypeToString(binding.constraint))
+	}
 	if l.libraryTypeParameter(binding.parameter) {
 		return nil
 	}
