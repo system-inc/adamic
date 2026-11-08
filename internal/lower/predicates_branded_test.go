@@ -770,7 +770,7 @@ const element = orPredicate2(isIdentifier, isTypeElement);
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 const s: PropertySignature = { kind: 171, pos: 4, name: "n", typeText: "t", _declarationBrand: undefined, _typeElementBrand: undefined };
 const z: Node = { kind: 5, pos: 6 };
-for (const n of [i, s, z]) { console.log(named(n) ? "named " + String(n.pos) : "no", element(n) ? "element" : "other"); }
+for (const n of [i, s, z]) { console.log((named(n) ? "named " + String(n.pos) : "no") + " " + (element(n) ? "element" : "other")); }
 `, ".ts")
 	for _, probe := range []struct{ name, source, want string }{
 		{"second instance", pick + `const element = pick(i, isTypeElementLie);
