@@ -9,10 +9,10 @@ exited 0 before these measurements or any 99y source edit.
 It also compares type object identity with combine's type parameter, rather
 than assuming every displayed T is the same type parameter.
 
-| Baseline call | Narrowed array | Narrowed value | Resolved append signature | Type argument |
-| --- | --- | --- | --- | --- |
-| core.ts:966 append(xs, ys) | xs: T[] | ys: T | (to: T[], value: T or undefined): T[] | combine's own T |
-| core.ts:967 append(ys, xs) | ys: T[] | xs: T | (to: T[], value: T or undefined): T[] | combine's own T |
+| Baseline call              | Narrowed array | Narrowed value | Resolved append signature             | Type argument   |
+| -------------------------- | -------------- | -------------- | ------------------------------------- | --------------- |
+| core.ts:966 append(xs, ys) | xs: T[]        | ys: T          | (to: T[], value: T or undefined): T[] | combine's own T |
+| core.ts:967 append(ys, xs) | ys: T[]        | xs: T          | (to: T[], value: T or undefined): T[] | combine's own T |
 
 Before either isArray test the tested argument is T or T[]. Inside the
 concatenate arm both xs and ys are T[]. In each append arm the array is T[]
