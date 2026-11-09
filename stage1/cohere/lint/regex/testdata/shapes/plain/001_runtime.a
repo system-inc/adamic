@@ -1,4 +1,4 @@
-// base/consistency_require_pagination_argument_name.go:30; `Pagination$`
+// base/consistency_require_pagination_argument_name.go:33; `Pagination$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();

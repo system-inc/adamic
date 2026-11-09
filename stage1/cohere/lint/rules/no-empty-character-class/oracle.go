@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoEmptyCharacterClass() rule.Rule { return rules.NoEmptyCharacterClass }
+func oracleNoEmptyCharacterClass(options any) rule.Bound {
+	return bindOracle(rules.NoEmptyCharacterClass, options)
+}
 
 // The upstream rule has no options type and never reads options. Decode supplied
 // JSON instead of silently dropping it; retain a non-nil value for the guard.

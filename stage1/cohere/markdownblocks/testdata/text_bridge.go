@@ -15,7 +15,7 @@ func AdamicTextFixture(text string) string {
 		return 0
 	}
 	for _, node := range splitText(text, nil) {
-		fields = append(fields, fmt.Sprintf("%s\t%s\t%d,%d,%d\t%s", node.NodeType, node.Kind, flag(node.IsCJ), flag(node.HasLeadingPunctuation), flag(node.HasTrailingPunctuation), escape.Replace(node.Value)))
+		fields = append(fields, fmt.Sprintf("%s\t%s\t%d,%d,%d\t%s", node.NodeType, node.Kind, flag(node.IsCj), flag(node.HasLeadingPunctuation), flag(node.HasTrailingPunctuation), escape.Replace(node.Value)))
 	}
 	return escape.Replace(strings.Join(fields, "\n"))
 }

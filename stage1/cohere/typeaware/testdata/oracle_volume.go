@@ -124,10 +124,10 @@ func main() {
 		}
 		typeChecker, release := program.GetTypeCheckerForFile(context.Background(), file)
 		var collected []rule.Diagnostic
-		subjects := []rule.Rule{rules.NoConfusingVoidExpression,
-			rules.ConsistentReturn, rules.UnboundMethod, rules.NoUnsafeAssignment, rules.NoShadow, rules.PreferNullishCoalescing, rules.NoUnsafeEnumComparison, rules.SwitchExhaustivenessCheck, rules.NoUnsafeTypeAssertion, rules.NoUnsafeMemberAccess, rules.NoUnsafeUnaryMinus, rules.RelatedGetterSetterPairs, rules.NoUnsafeDeclarationMerging, rules.NoUnsafeArgument, rules.RestrictPlusOperands, rules.NoUnnecessaryBooleanLiteralCompare}
+		subjects := []rule.Bound{unconfigured(rules.NoConfusingVoidExpression),
+			unconfigured(rules.ConsistentReturn), unconfigured(rules.UnboundMethod), unconfigured(rules.NoUnsafeAssignment), unconfigured(rules.NoShadow), unconfigured(rules.PreferNullishCoalescing), unconfigured(rules.NoUnsafeEnumComparison), unconfigured(rules.SwitchExhaustivenessCheck), unconfigured(rules.NoUnsafeTypeAssertion), unconfigured(rules.NoUnsafeMemberAccess), unconfigured(rules.NoUnsafeUnaryMinus), unconfigured(rules.RelatedGetterSetterPairs), unconfigured(rules.NoUnsafeDeclarationMerging), unconfigured(rules.NoUnsafeArgument), unconfigured(rules.RestrictPlusOperands), unconfigured(rules.NoUnnecessaryBooleanLiteralCompare)}
 		if selected != nil {
-			var kept []rule.Rule
+			var kept []rule.Bound
 			for _, subject := range subjects {
 				if slices.Contains(selected, subject.Name) {
 					kept = append(kept, subject)
@@ -141,7 +141,7 @@ func main() {
 		callbacks := map[ast.Kind][]func(*ast.Node){}
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {
-			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, nil)
+			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject.Traits), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }})
 			for kind, callback := range listeners {
 				callbacks[kind] = append(callbacks[kind], callback)
 			}
@@ -182,4 +182,8 @@ func diagnostic(d rule.Diagnostic) string {
 		}
 	}
 	return line
+}
+
+func unconfigured[Options any](subject rule.Rule[Options]) rule.Bound {
+	return rule.Bind(subject, rule.Given[Options]{})
 }

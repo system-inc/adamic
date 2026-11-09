@@ -9,7 +9,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoScriptUrl() rule.Rule { return rules.NoScriptUrl }
+func oracleNoScriptUrl(options any) rule.Bound { return bindOracle(rules.NoScriptUrl, options) }
 
 // NoScriptUrl has no upstream option fields. Decode the complete JSON value anyway:
 // supplied options must reach the unchanged upstream rule, not a nil adapter.

@@ -50,25 +50,25 @@ func dump(node *estree.Node, depth int) {
 		case *estree.Node:
 			fmt.Fprintln(output, "node")
 			dump(v, depth+1)
-		case []*estree.Node:
+		case estree.Nodes:
 			fmt.Fprintf(output, "list %d\n", len(v))
 			for _, child := range v {
 				dump(child, depth+1)
 			}
-		case string:
-			fmt.Fprintf(output, "string %s\n", written(v))
-		case bool:
-			fmt.Fprintf(output, "bool %d\n", bit(v))
-		case float64:
-			text := strconv.FormatFloat(v, 'f', -1, 64)
-			if v != 0 && (math.Abs(v) < 1e-6 || math.Abs(v) >= 1e21) {
-				text = strconv.FormatFloat(v, 'e', -1, 64)
+		case estree.String:
+			fmt.Fprintf(output, "string %s\n", written(string(v)))
+		case estree.Boolean:
+			fmt.Fprintf(output, "bool %d\n", bit(bool(v)))
+		case estree.Number:
+			text := strconv.FormatFloat(float64(v), 'f', -1, 64)
+			if v != 0 && (math.Abs(float64(v)) < 1e-6 || math.Abs(float64(v)) >= 1e21) {
+				text = strconv.FormatFloat(float64(v), 'e', -1, 64)
 				text = strings.ReplaceAll(strings.ReplaceAll(text, "e-0", "e-"), "e+0", "e+")
 			}
-			if math.IsNaN(v) {
+			if math.IsNaN(float64(v)) {
 				text = "NaN"
 			}
-			if math.IsInf(v, 1) {
+			if math.IsInf(float64(v), 1) {
 				text = "Infinity"
 			}
 			fmt.Fprintf(output, "number %s\n", text)

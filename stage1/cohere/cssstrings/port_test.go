@@ -18,7 +18,7 @@ import (
 
 const repository = "../../.."
 
-const testCSSStringsShards = 291
+const testCSSStringsShards = 292
 
 // run is one execution's observable behavior.
 type run struct {
@@ -87,7 +87,7 @@ func enumerateStrings(t *testing.T) stringsCorpus {
 // TestCSSStrings_NNN are top-level parallel units. ADAMIC_TEST_SHARD=i/n
 // selects stable ordinals modulo n locally; unset runs every unit. The gate uses
 // -run '^TestCSSStrings_NNN$'. Every original side and sanitizer/leak check stays.
-// Contiguous ranges are fixed by cohere commit 0183ccf8c57a775f874ca73be1adfc06e9ad1562
+// Contiguous ranges are fixed by the pinned cohere commit (corpusfiles.CohereCommit)
 // and the generated grammar in enumerateStrings.
 
 func prepareCSSStringsSetup(t *testing.T) {

@@ -46,11 +46,11 @@ func AdamicLeaf(mode byte, text string) string {
 		}
 	case 'h', 'i':
 		node.NodeType = "image"
-		node.Alt, node.Title, node.URL = &text, &text, text
+		node.Alt, node.Title, node.Url = &text, &text, text
 	case 'o':
 		node.NodeType = "image"
 		fallback := "fallback"
-		node.Alt, node.OriginalAltText, node.URL = &fallback, &text, text
+		node.Alt, node.OriginalAltText, node.Url = &fallback, &text, text
 	case 'j', 'l', 'q':
 		node.NodeType = "imageReference"
 		node.Alt, node.Label = &text, &text
@@ -67,10 +67,12 @@ func AdamicLeaf(mode byte, text string) string {
 	default:
 		panic("unknown leaf mode")
 	}
-	path := printing.NewAstPath(root)
+	path := printing.NewAstPath(root, (*settings)(nil))
 	options := &options{Settings: &settings{proseWrap: prose, singleQuote: mode == 'i'}}
-	document := printing.Call(path, func(path *astPath) doc.Doc {
-		return printMdast(path, options, func(any, any) doc.Doc { panic("leaf must not print children") }, nil)
-	}, "children", parentIndex, "children", index)
+	document := printing.CallElement(path, func(path *astPath) doc.Doc {
+		return printing.CallElement(path, func(path *astPath) doc.Doc {
+			return printMdast(path, options, func(string, *printing.NoArguments) doc.Doc { panic("leaf must not print children") }, nil)
+		}, index, "children")
+	}, parentIndex, "children")
 	return doc.Print(document, doc.Options{PrintWidth: 80, TabWidth: 2})
 }

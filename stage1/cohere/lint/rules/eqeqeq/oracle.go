@@ -9,7 +9,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleEqeqeq() rule.Rule { return rules.Eqeqeq }
+func oracleEqeqeq(options any) rule.Bound { return bindOracle(rules.Eqeqeq, options) }
 func oracleEqeqeqOptions(fields []string) any {
 	if len(fields) > 5 && fields[5] != "" && fields[5] != "null" {
 		options := rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}

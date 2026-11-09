@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oraclePreferTemplate() rule.Rule                 { return rules.PreferTemplate }
+func oraclePreferTemplate(options any) rule.Bound     { return bindOracle(rules.PreferTemplate, options) }
 func oraclePreferTemplateOptions(fields []string) any { return nil }

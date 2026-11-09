@@ -271,11 +271,11 @@ func TestAdamicPortCases(t *testing.T) {
 		index := Build(source)
 		comments := scanComments(source)
 		for _, comment := range comments {
-			scopeWord, honored := directives.Recognize(source[comment.pos:comment.end])
+			scopeWord, honored := directives.Recognize(source[comment.position:comment.end])
 			if !honored {
 				scopeWord = "-"
 			}
-			fmt.Fprintf(&answers, "comment %d %d %s\n", toUnits(comment.pos), toUnits(comment.end), scopeWord)
+			fmt.Fprintf(&answers, "comment %d %d %s\n", toUnits(comment.position), toUnits(comment.end), scopeWord)
 		}
 		for position, directive := range index.Directives() {
 			rules := make([]string, len(directive.Rules))
@@ -284,11 +284,11 @@ func TestAdamicPortCases(t *testing.T) {
 			}
 			fmt.Fprintf(&answers, "directive %d %s rules=%s reason=%s line=%d start=%d end=%d pos=%d end=%d\n", position, directive.Kind,
 				strings.Join(rules, ","), adamicQuote(directive.Reason), directive.Line, directive.StartLine, directive.EndLine,
-				toUnits(directive.Pos), toUnits(directive.End))
+				toUnits(directive.Position), toUnits(directive.End))
 		}
 		rules := slices.Clone(adamicRules)
 		for _, reference := range index.RuleReferences() {
-			fmt.Fprintf(&answers, "reference %s %d %d\n", adamicQuote(reference.Name), toUnits(reference.Pos), toUnits(reference.End))
+			fmt.Fprintf(&answers, "reference %s %d %d\n", adamicQuote(reference.Name), toUnits(reference.Position), toUnits(reference.End))
 			if !slices.Contains(rules, reference.Name) && len(rules) < len(adamicRules)+3 && !strings.ContainsAny(reference.Name, "\t\n\r\\") {
 				rules = append(rules, reference.Name)
 			}
@@ -303,7 +303,7 @@ func TestAdamicPortCases(t *testing.T) {
 			}
 		}
 		for _, comment := range comments {
-			offsets = append(offsets, comment.pos, comment.end)
+			offsets = append(offsets, comment.position, comment.end)
 		}
 		offsets = append(offsets, len(source), len(source)+3)
 		for _, offset := range offsets {

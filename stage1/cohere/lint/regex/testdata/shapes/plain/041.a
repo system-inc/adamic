@@ -1,12 +1,14 @@
-// nexus/shouting.go:186; `^\s*(\$|ahra\s|git\s|pnpm\s|npm\s|sqlite3\s|curl\s|s\s+c\b)`
+// tailwind/collapse/utility_nodes.go:143; `\s+`
 import { observe } from '../observe.a';
-const pattern = "^[ \\t\\n\\f\\r]*(\\$|ahra[ \\t\\n\\f\\r]|git[ \\t\\n\\f\\r]|pnpm[ \\t\\n\\f\\r]|npm[ \\t\\n\\f\\r]|sqlite3[ \\t\\n\\f\\r]|curl[ \\t\\n\\f\\r]|s[ \\t\\n\\f\\r]+c\\b)";
+const pattern = "[ \\t\\n\\f\\r]+";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "$", 4);
-observe(regex, "x$", 5);
-observe(regex, "$\n", 6);
+observe(regex, "\t", 4);
+observe(regex, "x\t", 5);
+observe(regex, "\t\n", 6);
+observe(regex, "foo\r", 7);
+observe(regex, "a\nb", 8);

@@ -11,7 +11,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/system-inc/cohere/internal/format/estree"
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 )
 
 func statementSyntax(node *ast.Node) bool {
@@ -123,7 +123,7 @@ func TestAdamicStatementCorpus(t *testing.T) {
 	for _, source := range []string{"function named();", "function named(x);", "function named(...items);", "function named(x=1);", "{function named();}", "yield\nvalue;", "yield\n0;", "yield 0;", "{}[0];", "p?x:y;", "{p?x:y;}"} {
 		add("tsc-corpus-boundary", source)
 	}
-	options := formatoptions.Default()
+	options := format_options.Default()
 	options.PrintWidth = 80
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	var input, answers strings.Builder
@@ -157,7 +157,7 @@ func TestAdamicStatementUpstreamDifferences(t *testing.T) {
 	if err = json.Unmarshal(data, &records); err != nil {
 		t.Fatal(err)
 	}
-	options := formatoptions.Default()
+	options := format_options.Default()
 	options.PrintWidth = 80
 	for _, record := range records {
 		got, err := Format("difference.ts", record.Source+";", options, nil)

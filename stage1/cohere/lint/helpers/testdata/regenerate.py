@@ -8,6 +8,14 @@ with tempfile.TemporaryDirectory(prefix='adamic-helper-metadata-') as directory:
  virtual=cohere/'adamic_helper_oracle.go'
  descriptors=cohere/'adamic_helper_descriptors.go'
  overlay={'Replace':{str(virtual):str(here/'oracle.go'),str(descriptors):str(here/'descriptors.go'),str(cohere/'policy/adamic_helpers.go'):str(here/'catalog.go')}}
+ register=cohere/'internal/lint/rule/register.go'
+ anchor='func Register(registrations ...Registrant) {'
+ source=register.read_text()
+ assert source.count(anchor)==1
+ captured=here/'register_capture.go'
+ assert captured.read_text()==source.replace(anchor,anchor+'\n\tAdamicRegistrations = append(AdamicRegistrations, registrations...)',1), 'registration capture overlay differs from pinned register.go'
+ overlay['Replace'][str(register)]=str(captured)
+ overlay['Replace'][str(cohere/'internal/lint/rule/adamic_bridge.go')]=str(here/'rule_bridge.go')
  path=directory/'overlay.json';path.write_text(json.dumps(overlay))
  with (directory/'build.log').open('wb') as log:
   subprocess.run(['go','build','-overlay='+str(path),'-o',str(directory/'oracle'),str(virtual),str(descriptors)],cwd=cohere,stdout=log,stderr=subprocess.STDOUT,check=True)

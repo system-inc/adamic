@@ -8,10 +8,10 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoDebugger() rule.Rule {
-	subject := rules.NoDebugger
+func oracleNoDebugger(options any) rule.Bound {
+	subject := bindOracle(rules.NoDebugger, options)
 	run := subject.Run
-	subject.Run = func(ctx rule.Context, options any) rule.Listeners {
+	subject.Run = func(ctx rule.Context) rule.Listeners {
 		report := ctx.Report
 		ctx.Report = func(d rule.Diagnostic) {
 			start := d.Range.Pos()
@@ -28,7 +28,7 @@ func oracleNoDebugger() rule.Rule {
 			}
 			report(d)
 		}
-		return run(ctx, options)
+		return run(ctx)
 	}
 	return subject
 }

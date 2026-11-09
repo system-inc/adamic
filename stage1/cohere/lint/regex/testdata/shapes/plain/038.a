@@ -1,12 +1,12 @@
-// nexus/shouting.go:183; `^[ \t]*\*(?: |\t|$)`
+// tailwind/collapse/signature_compile.go:74; `--alpha\(|--spacing\(|--theme\(|theme\(`
 import { observe } from '../observe.a';
-const pattern = "^[ \\t]*\\*(?: |\\t|(?![\\s\\S]))";
+const pattern = "--alpha\\(|--spacing\\(|--theme\\(|theme\\(";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "*\t", 4);
-observe(regex, "x*\t", 5);
-observe(regex, "*\t\n", 6);
+observe(regex, "--alpha(", 4);
+observe(regex, "x--alpha(", 5);
+observe(regex, "--alpha(\n", 6);
