@@ -1,0 +1,2 @@
+stage3/census/record-handle-fixtures/receivers/03-watch--path--assign-field.ts(18,7): error TS2322: Type 'Holding & { k: Receiver; }' is not assignable to type 'Receiver'.
+  Type 'MapLike<WatchDirectoryFlags> & { k: Receiver; }' provides no match for the signature '(path: string): string'.

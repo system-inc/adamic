@@ -1,0 +1,2 @@
+stage3/census/record-handle-fixtures/receivers/06-string-arrays--construct--assign-field.ts(14,7): error TS2322: Type 'Holding & { k: Receiver; }' is not assignable to type 'Receiver'.
+  Type 'Holding & { k: Receiver; }' provides no match for the signature 'new (kind: number, pos: number, end: number): object'.

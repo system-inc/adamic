@@ -1,0 +1,2 @@
+stage3/census/record-handle-fixtures/receivers/10-symbol--optional--array.ts(132,29): error TS2322: Type 'Holding' is not assignable to type 'Receiver'.
+  Type 'MapLike<Symbol>' provides no match for the signature '(): string | undefined'.

@@ -1,0 +1,2 @@
+stage3/census/record-handle-fixtures/receivers/10-symbol--construct--direct.ts(132,7): error TS2322: Type 'Holding' is not assignable to type 'Receiver'.
+  Type 'MapLike<Symbol>' provides no match for the signature 'new (kind: number, pos: number, end: number): object'.

@@ -1,0 +1,31 @@
+01-options-value--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+01-options-value--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+01-options-value--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+02-options--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+02-options--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+02-options--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+03-watch--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+03-watch--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+03-watch--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+04-group-by--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+04-group-by--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+04-group-by--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+05-extend--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+05-extend--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+05-extend--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+06-string-arrays--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+06-string-arrays--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+06-string-arrays--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+07-position--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+07-position--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+07-position--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+08-string--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+08-string--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+08-string--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+09-type--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+09-type--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+09-type--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+10-symbol--construct--assign-function.ts: new (kind: number, pos: number, end: number) => object; intersection=false; calls=0; constructs=1
+10-symbol--optional--assign-function.ts: () => string | undefined; intersection=false; calls=1; constructs=0
+10-symbol--path--assign-function.ts: (path: string) => string; intersection=false; calls=1; constructs=0
+Verified all 30 Object.assign function-source receivers have plain function types at invocation.

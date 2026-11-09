@@ -1,0 +1,2 @@
+stage3/census/record-handle-fixtures/receivers/08-string--path--via-object.ts(13,7): error TS2322: Type 'object' is not assignable to type 'Receiver'.
+  Type '{}' provides no match for the signature '(path: string): string'.

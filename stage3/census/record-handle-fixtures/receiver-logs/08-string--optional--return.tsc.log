@@ -1,0 +1,2 @@
+stage3/census/record-handle-fixtures/receivers/08-string--optional--return.ts(12,32): error TS2322: Type 'Holding' is not assignable to type 'Receiver'.
+  Type 'Holding' provides no match for the signature '(): string | undefined'.

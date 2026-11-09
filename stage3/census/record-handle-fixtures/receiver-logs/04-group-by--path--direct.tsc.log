@@ -1,0 +1,2 @@
+stage3/census/record-handle-fixtures/receivers/04-group-by--path--direct.ts(13,7): error TS2322: Type 'Holding<T>' is not assignable to type 'Receiver'.
+  Type 'Holding<T>' provides no match for the signature '(path: string): string'.
