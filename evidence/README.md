@@ -58,3 +58,7 @@ Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made
 ## C1/C2 table casts
 
 [Generic and non-generic table-to-record probes](c1-c2/results.md): both pinned compilers refuse both .ts/.a probes in native and JS compilation because fixed objects and records have different storage. Source Node throws node.bark TypeError for both; no sanitizer run or report.
+
+## Canary build-only check
+
+[22b8a0b and ad1ddfe census build checks](canary-build-check/results.md): fetch, vet, latent overlay generation/normalization/gofmt/build, and entry overlay generation/normalization/gofmt/build all exit 0 at both pins. No compile errors, tests or census runs.

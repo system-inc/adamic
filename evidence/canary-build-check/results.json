@@ -1,0 +1,147 @@
+{
+  "01-go-version": {
+    "exit": 0,
+    "stdout": "go version go1.27.1 linux/amd64\n",
+    "stderr": ""
+  },
+  "22b8a0b-checkout": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Warning: you are leaving 3 commits behind, not connected to\nany of your branches:\n\n  e5531c8c7 lower: condition 3's pin is the generic-to-plain branch, since tsc refuses the unfixed any[] against a generic slot itself (#7fd51gk)\n  ec5e9b2bf lower: condition 3's pin puts NoInfer on the provider's side, where it leaves T unfixed (#7fd51gk)\n  2594029da lower: rule G's pins reach the relation: setTimeout imported from node:timers, L2 as a class method, and i2's lying twin dropped since tsc itself refuses it (#7fd51gk)\n\nIf you want to keep them by creating a new branch, this may be a good time\nto do so with:\n\n git branch <new-branch-name> e5531c8c7\n\nHEAD is now at 22b8a0b9a wip: the canary counts and names every panic the census's registration swallows, and prints each checker's push/pop stacks and overflowed relation pairs when they change (Lower's two additions and Compiler's overflow mark on #448a51k), never for landing\n"
+  },
+  "22b8a0b-revision": {
+    "exit": 0,
+    "stdout": "22b8a0b9aa55c785165d8ea75556d853cacd8602\n",
+    "stderr": ""
+  },
+  "22b8a0b-submodules": {
+    "exit": 0,
+    "stdout": " 06af2e399c6c1fb93fd570b774027942747400b4 cohere (06af2e39)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)\n",
+    "stderr": ""
+  },
+  "22b8a0b-clean": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "22b8a0b-vet": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "22b8a0b-overlay": {
+    "exit": 0,
+    "stdout": "/tmp/ov-22b8a0b/overlay.json\n",
+    "stderr": "go: downloading golang.org/x/tools v0.50.0\n"
+  },
+  "22b8a0b-rename": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "22b8a0b-gofmt": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "22b8a0b-latent-build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "22b8a0b-entry-overlay": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "22b8a0b-entry-rename": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "22b8a0b-entry-gofmt": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "22b8a0b-entry-build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ad1ddfe-checkout": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Warning: you are leaving 6 commits behind, not connected to\nany of your branches:\n\n  22b8a0b9a wip: the canary counts and names every panic the census's registration swallows, and prints each checker's push/pop stacks and overflowed relation pairs when they change (Lower's two additions and Compiler's overflow mark on #448a51k), never for landing\n  153dddf57 wip: cast_proof's probe imports, never for landing\n  5c1f4aa75 wip: the probe's imports on this base, never for landing\n  e654a11e0 wip: a census canary (ADAMIC_PROBE_CANARY) reads the checker's own answer at named argument sites after every scan and unit and prints when it changes, and the widened probe's argument line adds the located type, its flags and given's own assignability, on Lower's probe-widened-head, for #448a51k, never for landing\n ... and 2 more.\n\nIf you want to keep them by creating a new branch, this may be a good time\nto do so with:\n\n git branch <new-branch-name> 22b8a0b9a\n\nHEAD is now at ad1ddfe12 wip: the canary counts and names every panic the census's registration swallows, and prints each checker's push/pop stacks and overflowed relation pairs when they change (Lower's two additions and Compiler's overflow mark on #448a51k), never for landing\n"
+  },
+  "ad1ddfe-revision": {
+    "exit": 0,
+    "stdout": "ad1ddfe1295cbdea512db15108358c75e522426a\n",
+    "stderr": ""
+  },
+  "ad1ddfe-submodules": {
+    "exit": 0,
+    "stdout": " 06af2e399c6c1fb93fd570b774027942747400b4 cohere (06af2e39)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)\n",
+    "stderr": ""
+  },
+  "ad1ddfe-clean": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ad1ddfe-vet": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ad1ddfe-overlay": {
+    "exit": 0,
+    "stdout": "/tmp/ov-ad1ddfe/overlay.json\n",
+    "stderr": ""
+  },
+  "ad1ddfe-rename": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ad1ddfe-gofmt": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ad1ddfe-latent-build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ad1ddfe-entry-overlay": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ad1ddfe-entry-rename": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ad1ddfe-entry-gofmt": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ad1ddfe-entry-build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "99-restore": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Warning: you are leaving 6 commits behind, not connected to\nany of your branches:\n\n  ad1ddfe12 wip: the canary counts and names every panic the census's registration swallows, and prints each checker's push/pop stacks and overflowed relation pairs when they change (Lower's two additions and Compiler's overflow mark on #448a51k), never for landing\n  22812c873 wip: cast_proof's probe imports, never for landing\n  8856dc6f1 wip: the probe's imports on this base, never for landing\n  4bc277e3c wip: a census canary (ADAMIC_PROBE_CANARY) reads the checker's own answer at named argument sites after every scan and unit and prints when it changes, and the widened probe's argument line adds the located type, its flags and given's own assignability, on Lower's probe-widened-head, for #448a51k, never for landing\n ... and 2 more.\n\nIf you want to keep them by creating a new branch, this may be a good time\nto do so with:\n\n git branch <new-branch-name> ad1ddfe12\n\nHEAD is now at e5531c8c7 lower: condition 3's pin is the generic-to-plain branch, since tsc refuses the unfixed any[] against a generic slot itself (#7fd51gk)\n"
+  },
+  "99-clean": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

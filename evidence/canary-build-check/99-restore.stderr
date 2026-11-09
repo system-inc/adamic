@@ -1,0 +1,15 @@
+Warning: you are leaving 6 commits behind, not connected to
+any of your branches:
+
+  ad1ddfe12 wip: the canary counts and names every panic the census's registration swallows, and prints each checker's push/pop stacks and overflowed relation pairs when they change (Lower's two additions and Compiler's overflow mark on #448a51k), never for landing
+  22812c873 wip: cast_proof's probe imports, never for landing
+  8856dc6f1 wip: the probe's imports on this base, never for landing
+  4bc277e3c wip: a census canary (ADAMIC_PROBE_CANARY) reads the checker's own answer at named argument sites after every scan and unit and prints when it changes, and the widened probe's argument line adds the located type, its flags and given's own assignability, on Lower's probe-widened-head, for #448a51k, never for landing
+ ... and 2 more.
+
+If you want to keep them by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> ad1ddfe12
+
+HEAD is now at e5531c8c7 lower: condition 3's pin is the generic-to-plain branch, since tsc refuses the unfixed any[] against a generic slot itself (#7fd51gk)
