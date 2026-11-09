@@ -434,6 +434,13 @@ func TestNegativeCheckedBoundaryExactStop(t *testing.T) {
 // isn't name's, as stage 1 refuses in .a the tagless cast a .ts witness makes.
 func checkedBoundaryCommand(t *testing.T, repairAgrees bool, name string) (observation, report) {
 	t.Helper()
+	return checkedBoundaryCommandWith(t, repairAgrees, name, "")
+}
+
+// checkedBoundaryCommandWith is checkedBoundaryCommand whose compiler, building a program without 'abc' (the repair),
+// first runs repairBuild, and whose command takes extra arguments.
+func checkedBoundaryCommandWith(t *testing.T, repairAgrees bool, name, repairBuild string, extra ...string) (observation, report) {
+	t.Helper()
 	dir, _, base, head := commandFixture(t)
 	source, witness, list := checkedBoundaryFixture(t)
 	witness.Declaration = "corpus/" + name + ":1"
@@ -442,7 +449,7 @@ func checkedBoundaryCommand(t *testing.T, repairAgrees bool, name string) (obser
 	if !repairAgrees {
 		stops = "true"
 	}
-	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nesac\ncase \"$2\" in\n*"+filepath.Ext(name)+") ;;\n*) echo \"adamic: $2: Adamic 0.1 refuses a downcast\" >&2; exit 1;;\nesac\ncase \"$1\" in\njs) if "+stops+"; then echo '// STOP'; else echo '// GO'; fi;;\nbuild) if "+stops+"; then printf '#!/bin/sh\\necho 42\\necho \"adamic: panic: field read failed: viewed.count is not a number; expected number, found string\" >&2\\nexit 70\\n' > \"$4.tmp\"; else printf '#!/bin/sh\\necho 42\\n' > \"$4.tmp\"; fi && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
+	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nesac\ncase \"$2\" in\n*"+filepath.Ext(name)+") ;;\n*) echo \"adamic: $2: Adamic 0.1 refuses a downcast\" >&2; exit 1;;\nesac\ncase \"$1\" in\njs) if "+stops+"; then echo '// STOP'; else echo '// GO'; fi;;\nbuild) if ! grep -q \"'abc'\" \"$2\"; then "+repairBuild+" :; fi; if "+stops+"; then printf '#!/bin/sh\\necho 42\\necho \"adamic: panic: field read failed: viewed.count is not a number; expected number, found string\" >&2\\nexit 70\\n' > \"$4.tmp\"; else printf '#!/bin/sh\\necho 42\\n' > \"$4.tmp\"; fi && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
 	for path, data := range map[string]string{
 		"corpus/" + name:  string(source),
 		"oracle/node.mjs": "import {readFileSync} from 'node:fs';const s=readFileSync(process.argv[2],'utf8');console.log('42');if(s.includes('STOP')){console.error('adamic: panic: field read failed: viewed.count is not a number; expected number, found string');process.exit(70);}\n",
@@ -467,7 +474,7 @@ func checkedBoundaryCommand(t *testing.T, repairAgrees bool, name string) (obser
 	if err != nil {
 		t.Fatal(err)
 	}
-	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--corpus", "corpus", "--json")
+	o := invokeCommand(t, dir, append([]string{"--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--corpus", "corpus", "--json"}, extra...)...)
 	var r report
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
 		t.Fatal(err, o.Stderr, o.Stdout)
