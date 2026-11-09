@@ -32,14 +32,14 @@ const optionalHostCallNotYet = "a call through ?. to a Node host method whose lo
 // optionalHostCall judges object?.method(...) on a method lib doesn't declare, which optionalCall
 // otherwise admits: NotYet when any declaration of the method, or of a root of it (each member's own,
 // for a property of a union such as Stats | Dirent), is in a Node library file and that member's
-// lowering isn't named in optionalHostCallGuarded. It fails closed: a root with no declaration, or a
-// declaration with no file, can't be told from a Node host method's, so the call stops too.
+// lowering isn't named in optionalHostCallGuarded. A root with no declaration, such as a property a
+// mapped type with no modifiers property makes (Record<'m', F>'s m), is skipped: a Node member always
+// has a declaration, and a mapped type over a Node type reaches it through syntheticOrigin, which
+// GetRootSymbols follows. A declaration with no file can't be told from a Node host method's, so the
+// call stops.
 func (l *lowering) optionalHostCall(call *ast.Node, method *ast.Symbol) error {
 	unguarded := []string{}
 	for _, root := range append([]*ast.Symbol{method}, l.checker.GetRootSymbols(method)...) {
-		if len(root.Declarations) == 0 {
-			return l.notYet(call, optionalHostCallNotYet+" (a member whose declaration can't be read; #3625x53)")
-		}
 		for _, declaration := range root.Declarations {
 			source := ast.GetSourceFileOfNode(declaration)
 			if source == nil {
