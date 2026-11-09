@@ -18,14 +18,19 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 		return nil, false, nil
 	}
 	callee := ast.SkipParentheses(call.Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || !l.libraryMember(callee) {
+	if callee.Kind != ast.KindPropertyAccessExpression || (!l.libraryMember(callee) && !l.nodeFSEntryMethod(callee)) {
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()
 	if access.QuestionDotToken == nil {
 		return nil, false, nil
 	}
-	value, known, err := l.builtin(node)
+	value, known, err := func() (ir.Expression, bool, error) {
+		previous := l.optionalReceiverCall
+		l.optionalReceiverCall = node
+		defer func() { l.optionalReceiverCall = previous }()
+		return l.builtin(node)
+	}()
 	if !known || err != nil {
 		return nil, known, err
 	}
@@ -106,7 +111,7 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	}
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_intrinsic_receiver", Type: receiver.Type(), Function: function, ExpressionAssigned: true})
 	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: receiver}}, Result: ir.Conditional{
-		Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: read}},
+		Condition: ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}}},
 		WhenTrue:  fit(lowered, of), WhenNot: fit(ir.Undefined{}, of), Of: of,
 	}}, true, nil
 }
