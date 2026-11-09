@@ -10,6 +10,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
+	"sort"
+	"strings"
 )
 
 // A checker-diagnosed dependency is a measurement boundary, not a compiler blocker.
@@ -279,6 +281,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 			}()
 			latentRecord(fresh().latentRefuse(file))
 		}()
+		latentCanary(program, checker, "scan "+program.Where(file.AsNode()))
 		for _, node := range file.Statements.Nodes {
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
 			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "attempted", CheckerDiagnostics: []string{}}
@@ -341,6 +344,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 				latentRecord(l.unlowerable)
 			}()
 			record.Units = append(record.Units, unit)
+			latentCanary(program, checker, "unit "+unit.Where)
 		}
 		release()
 		seen := map[LatentFinding]bool{}
@@ -352,5 +356,76 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 			}
 		}
 		emit(record)
+	}
+}
+
+// latentCanary is #448a51k's canary, never for landing. ADAMIC_PROBE_CANARY is a comma list of site suffixes
+// (file:line:col, as program.Where prints them). After each file's scan and each unit it reads, at every site,
+// the checker's own answer the binding gate reads (the type at the node, its contextual type, and whether one
+// is assignable to the other) and prints a probe-canary line whenever that answer changes, naming the scan or
+// unit it changed after and the checker that answered. The reads are checker calls too, so a run with the
+// canary is compared with one without before its lines are trusted.
+var latentCanaryNodes map[string]*ast.Node
+var latentCanaryLast map[string]string
+
+func latentCanary(program *load.Program, c *checker.Checker, after string) {
+	sites := os.Getenv("ADAMIC_PROBE_CANARY")
+	if sites == "" {
+		return
+	}
+	if latentCanaryNodes == nil {
+		latentCanaryNodes = map[string]*ast.Node{}
+		latentCanaryLast = map[string]string{}
+		wanted := []string{}
+		for _, site := range strings.Split(sites, ",") {
+			if site != "" {
+				wanted = append(wanted, site)
+			}
+		}
+		for _, file := range program.Files() {
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				where := program.Where(node)
+				for _, site := range wanted {
+					// The deepest node at a site wins, so an argument's own identifier is read, not an expression
+					// that starts at the same token.
+					if strings.HasSuffix(where, site) {
+						latentCanaryNodes[site] = node
+					}
+				}
+				return node.ForEachChild(visit)
+			}
+			file.AsNode().ForEachChild(visit)
+		}
+		for _, site := range wanted {
+			if latentCanaryNodes[site] == nil {
+				fmt.Fprintf(os.Stderr, "probe-canary\t%s\tnot found\n", site)
+			}
+		}
+	}
+	names := make([]string, 0, len(latentCanaryNodes))
+	for site := range latentCanaryNodes {
+		names = append(names, site)
+	}
+	sort.Strings(names)
+	for _, site := range names {
+		node := latentCanaryNodes[site]
+		located := c.GetTypeAtLocation(node)
+		contextual := c.GetContextualType(node, checker.ContextFlagsNone)
+		text := func(t *checker.Type) string {
+			if t == nil {
+				return "nil"
+			}
+			return fmt.Sprintf("#%d %s", t.Id(), c.TypeToString(t))
+		}
+		assignable := "none"
+		if located != nil && contextual != nil {
+			assignable = fmt.Sprint(c.IsTypeAssignableTo(located, contextual))
+		}
+		reading := fmt.Sprintf("kind=%s\tlocated=%s\tcontextual=%s\tassignable=%s", node.Kind.String(), text(located), text(contextual), assignable)
+		if latentCanaryLast[site] != reading {
+			fmt.Fprintf(os.Stderr, "probe-canary\t%s\tafter=%s\tchecker=%p\t%s\n", site, after, c, reading)
+			latentCanaryLast[site] = reading
+		}
 	}
 }
