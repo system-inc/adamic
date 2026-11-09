@@ -1,0 +1,1 @@
+internal/oracle/testdata/records_source_handles/spread_copy.ts:8:7: stage 0 can't lower a { [key: string]: string; a: string; } seen as {} (fixed objects and records have different storage; copy explicitly) yet

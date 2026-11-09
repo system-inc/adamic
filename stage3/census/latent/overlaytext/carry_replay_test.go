@@ -17,11 +17,14 @@ import (
 // The carry skips these bodies and replays their first-ask module-read effects.
 // Fingerprint normalized AST bodies: parse without comments and format with an
 // empty FileSet, so comments and source positions are not part of the contract.
+// entriesRecordLiteralWalk moved with #ny0c3gb (a const literal under satisfies is eligible): no carried
+// answer moved in tsc (two eligible literals, both still no), taken by Correctness on that reading; the
+// whole-program uncarried, carried and mutant comparison is owed on #3cvj5sk.
 var carryReplayBodies = map[string]string{
 	"entriesProgramHasRecords":  "d08d63eabd0fb9f08c9750de9bce09b724ecbaf5ec5c3b52dfdd19117100157a",
 	"entriesProgramRecordsWalk": "852371609dd722f09b94d30b04116ede41a67f0ab6d89f9390c69fa236f85fa9",
 	"entriesRecordLiteral":      "f15d4f56c50e7b98d231f5ee967b76caee5bc9c66d50bd7e7143aa7d328ada98",
-	"entriesRecordLiteralWalk":  "ee77f34596203a624dbeded6e2576020d94eb6c0208b3df2a879508d350ab68a",
+	"entriesRecordLiteralWalk":  "06ec77fe884d39399a712f143b37922d7c67eb7ec18ac46bbf1b3c715c6aa478",
 }
 
 func carryReplayBodyGaps(source []byte) []string {
