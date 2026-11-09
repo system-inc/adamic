@@ -52,14 +52,14 @@ func TestLatentWrittenAnyDeferredCensusStopsZb0q0zd(t *testing.T) {
 		}
 		stopped := false
 		for _, finding := range record.Findings {
-			if !ordinary && finding.Phase != "deferred" {
+			if !ordinary && finding.Phase != "deferred" && finding.Phase != "deferred_scan" {
 				t.Fatalf("fixture has another stop: %+v", finding)
 			}
-			if finding.Phase == "deferred" {
+			if finding.Phase == "deferred" || finding.Phase == "deferred_scan" {
 				if ordinary {
 					t.Fatalf("deferred displaced an ordinary refusal: %+v", finding)
 				}
-				if finding.Unit == unit.Where {
+				if finding.Phase == "deferred" && finding.Unit == unit.Where {
 					if finding.Kind != "NotYet" || finding.Reason != "a member typed any ([]) related to string at the assertion site" {
 						t.Fatalf("wrong deferred stop: %+v", finding)
 					}

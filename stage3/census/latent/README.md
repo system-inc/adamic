@@ -413,7 +413,9 @@ Independent census units probe the production `refuseNode` walk on disposable
 state before body lowering. An ordinary refusal anywhere in that unit suppresses
 its deferred result; otherwise it records the deferred NotYet and stops the unit.
 The continuing module scan reports its deferred fallback only when it collected
-no ordinary finding. Deferred findings retain their unit or module owner, and
+no ordinary finding, in phase `deferred_scan`. This separate scan phase prevents
+a module at line 1 from impersonating its first unit at the same location.
+Deferred findings retain their unit or module owner, and
 pairing treats them as unit first stops. No lowering state field is added.
 
 The real written-any regression runs in process with the census overlay:

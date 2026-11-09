@@ -33,6 +33,11 @@ class PairTests(unittest.TestCase):
             self.assertEqual(changes[0]['head']['phase'], 'deferred')
             self.assertEqual(result[view]['regressions'][0]['type'], 'previously_finding_free_unit')
 
+    def test_module_deferred_scan_does_not_impersonate_first_unit_zb0q0zd(self):
+        unit = dict(where='input.ts:1:1', kind='KindVariableStatement', status='attempted')
+        result = self.synthetic('const value = 1;', [], [(1, 'written-any relation', 'deferred_scan')], [unit])
+        self.assertEqual(result['raw_findings']['unit_first_stop_delta'], [])
+
     def test_qeanycw_distinct_reads_cleared_with_no_new(self):
         d = self.witnesses['qeanycw']['distinct_reads']
         self.assertEqual(len(d['new_sites']), 0)

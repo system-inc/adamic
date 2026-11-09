@@ -332,7 +332,7 @@ func (l *lowering) latentScan(file *ast.SourceFile) {
 		return
 	}
 	owner, phase := latentFindingOwner, latentFindingPhase
-	latentFindingOwner, latentFindingPhase = l.program.Where(file.AsNode()), "deferred"
+	latentFindingOwner, latentFindingPhase = l.program.Where(file.AsNode()), "deferred_scan"
 	latentRecord(latent.DeferredStop(err, l.refusal.deferred))
 	latentFindingOwner, latentFindingPhase = owner, phase
 }

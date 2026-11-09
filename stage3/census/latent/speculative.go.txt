@@ -439,6 +439,10 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 				finding.Depth = 0
 			}
 			key := latentSpecFindingKey(finding)
+			// Deferred scan and unit events may name the same site but carry different stops.
+			if finding.Phase == "deferred" || finding.Phase == "deferred_scan" {
+				key += "\x00" + finding.Phase + "\x00" + finding.Unit
+			}
 			if !seen[key] {
 				seen[key] = true
 				record.Findings = append(record.Findings, finding)

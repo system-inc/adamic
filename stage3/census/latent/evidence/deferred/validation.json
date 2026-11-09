@@ -12,7 +12,7 @@
   },
   "pair": {
     "exit": 0,
-    "tests": 16
+    "tests": 17
   },
   "overlay_build": 0,
   "real_census_pin": 0,
@@ -23,5 +23,16 @@
     "expected": 1,
     "fixture_findings": []
   },
-  "note": "Two superseded cold build jobs were terminated with child exit 143. A pin invocation before overlay generation finished and a directory audit invoked with the entry binary each returned 1; corrected invocations are retained separately."
+  "note": "Two superseded cold build jobs were terminated with child exit 143. A pin invocation before overlay generation finished and a directory audit invoked with the entry binary each returned 1; corrected invocations are retained separately. The module/unit location collision exposed speculative deduplication merging the two phases; the final complete-mode logs pass after preserving both phase and owner.",
+  "module_order_audit": 0,
+  "final_modes": {
+    "first-error": 0,
+    "full": 0,
+    "speculative": 0
+  },
+  "final_mutant": {
+    "exit": 1,
+    "expected": 1,
+    "fixture_findings": []
+  }
 }
