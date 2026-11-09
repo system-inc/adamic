@@ -37,6 +37,10 @@ func TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt(t *testing.T) {
 		if control.AfterLoad != "" || control.End != "" || len(control.Findings) != 0 {
 			t.Fatalf("clean control: %+v", control)
 		}
+		// The meter's relation budget reads these counts (#ferqs8v): none before the mark is planted.
+		if control.CacheSizes["flaggedPairs"] != 0 || control.CacheSizes["ts2859"] != 0 || control.CacheSizes["assignable"] < 0 {
+			t.Fatalf("clean control's relation counts: %v", control.CacheSizes)
+		}
 		for _, record := range records {
 			for _, unit := range record.Units {
 				if unit.Status == "attempted" && perUnit && (unit.RelationOverflow == nil || *unit.RelationOverflow != "") {
@@ -61,6 +65,10 @@ func TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt(t *testing.T) {
 		report, records := run()
 		if !strings.Contains(report.AfterLoad, "marked as overflowed") || report.End == "" || len(report.Findings) != 1 {
 			t.Fatalf("planted mark disappeared: %+v", report)
+		}
+		// The one planted pair is the one flagged pair; its diagnostic was dropped, so no TS2859 is held.
+		if report.CacheSizes["flaggedPairs"] != 1 || report.CacheSizes["ts2859"] != 0 {
+			t.Fatalf("planted mark's relation counts: %v", report.CacheSizes)
 		}
 		attempted := 0
 		for _, record := range records {
