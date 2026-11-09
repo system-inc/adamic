@@ -268,7 +268,7 @@ func (l *lowering) hostOrigin(node *ast.Node, path []string, visited map[*ast.No
 	visited[node] = true
 	switch node.Kind {
 	case ast.KindIdentifier:
-		if row, _ := l.hostBindingOf(node); row != nil && hostBindingRouted(*row) {
+		if row, _ := l.hostBindingOf(node); row != nil && l.hostBindingRouted(*row) {
 			// The walk never follows a host object's own properties.
 			if model := l.hostBindingModel(*row); len(path) == 0 {
 				if _, host := l.nodeHostObject(model); host {
