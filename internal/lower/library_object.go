@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
@@ -219,6 +220,11 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: argument, source: lowered, copied: l.concrete(source)})
 				call.Arguments = append(call.Arguments, lowered)
 			}
+			// Object.assign returns its target, so its result is admitted only as the target's own type: tsc's T & U
+			// must claim nothing the target doesn't already hold (Adamic's ruling on #ny0c3gb, #k8aak04).
+			if !l.checker.IsTypeAssignableTo(target, l.checker.GetTypeAtLocation(node)) {
+				return refused("Object.assign returns its target, and tsc's result type claims more than the target's own type holds")
+			}
 			call.Returns = ir.Object
 		}
 	default:
@@ -320,4 +326,70 @@ func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
 		}
 	}
 	return ir.Object, true
+}
+
+// objectAssignCallableSourceRefusal refuses an Object.assign whose source is callable or constructable
+// (Adamic's ruling on #ny0c3gb, #k8aak04, from rulings.md:86 and :293). lib types the result T & U, a claim the
+// call never proves when U carries a call or construct signature: Object.assign copies own properties, never
+// callability, so a record typed as a function would be called where Node throws TypeError. It runs in the
+// refusal walk, ahead of every lowering, so it never rests on an intersection value staying not yet. The call is
+// matched by the lib declaration it resolves to, never by its spelling, so an alias, Object["assign"] and
+// globalThis.Object.assign are judged with Object.assign.
+func (l *lowering) objectAssignCallableSourceRefusal(node *ast.Node) error {
+	if node.Kind != ast.KindCallExpression || !l.objectAssignCall(node) {
+		return nil
+	}
+	for index, argument := range node.Arguments() {
+		if index == 0 {
+			continue
+		}
+		source := argument
+		sources := []*checker.Type{l.checker.GetTypeAtLocation(argument)}
+		if argument.Kind == ast.KindSpreadElement {
+			source = argument.AsSpreadElement().Expression
+			sources = l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(source))
+		}
+		for _, proven := range sources {
+			if l.callableOrConstructable(proven, map[*checker.Type]bool{}) {
+				return &Refused{Where: l.program.Where(argument), What: "Object.assign with the callable source " + l.checker.TypeToString(proven), Fix: "Object.assign copies own properties, never callability, so its result is no function though tsc types it as one; keep the function as its own value"}
+			}
+		}
+	}
+	return nil
+}
+
+// objectAssignCall reports whether a call resolves to lib's ObjectConstructor.assign.
+func (l *lowering) objectAssignCall(call *ast.Node) bool {
+	signature := l.checker.GetResolvedSignature(call)
+	if signature == nil || signature.Declaration() == nil {
+		return false
+	}
+	declaration := signature.Declaration()
+	if declaration.Kind != ast.KindMethodSignature || declaration.Name() == nil || declaration.Name().Text() != "assign" || !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		return false
+	}
+	owner := declaration.Parent
+	return owner != nil && owner.Kind == ast.KindInterfaceDeclaration && owner.Name().Text() == "ObjectConstructor"
+}
+
+// callableOrConstructable reports whether any part of a type has a call or construct signature, or is lib's
+// Function: a union is callable when any member is, since the source may be that member.
+func (l *lowering) callableOrConstructable(proven *checker.Type, seen map[*checker.Type]bool) bool {
+	if proven == nil || seen[proven] {
+		return false
+	}
+	seen[proven] = true
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, part := range proven.Types() {
+			if l.callableOrConstructable(part, seen) {
+				return true
+			}
+		}
+		return false
+	}
+	return l.isLibraryType(proven, "Function", "CallableFunction", "NewableFunction") || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
+}
+
+func init() {
+	refusalRules.register(160, "objectAssignCallableSourceRefusal", (*lowering).objectAssignCallableSourceRefusal)
 }
