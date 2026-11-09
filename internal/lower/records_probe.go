@@ -53,7 +53,8 @@ func (l *lowering) recordProbeLists() *recordProbeLists {
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindObjectLiteralExpression && l.entriesRecordLiteral(node) {
 			own := l.checker.GetTypeAtLocation(node)
-			if own.Flags()&checker.TypeFlagsObject != 0 && own.ObjectFlags()&checker.ObjectFlagsFreshLiteral != 0 {
+			freshOwn := own.Flags()&checker.TypeFlagsObject != 0 && own.ObjectFlags()&checker.ObjectFlagsFreshLiteral != 0
+			if freshOwn {
 				fresh++
 				if len(l.checker.GetPropertiesOfType(own)) == 0 && len(l.checker.GetIndexInfosOfType(own)) == 0 {
 					freshEmpty++
@@ -69,6 +70,17 @@ func (l *lowering) recordProbeLists() *recordProbeLists {
 			}
 			if parent != nil && parent.Kind == ast.KindVariableDeclaration {
 				ride = append(ride, l.checker.GetTypeAtLocation(parent.Name()))
+			}
+			if freshOwn {
+				names := []string{}
+				for _, companion := range ride {
+					names = append(names, l.checker.TypeToString(companion))
+				}
+				parentKind := "none"
+				if node.Parent != nil {
+					parentKind = node.Parent.Kind.String()
+				}
+				fmt.Fprintf(os.Stderr, "probe-records-literal\t%s\town=%s\tparent=%s\tcompanions=%q\n", l.program.Where(node), l.checker.TypeToString(own), parentKind, names)
 			}
 			state.widened = append(state.widened, widen(own))
 			for _, t := range ride {
