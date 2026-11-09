@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 // Every host-binding row's columns are held to Node's real typeof, whether or not the row lowers today
@@ -102,7 +103,7 @@ func TestHostBindingsAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/host_bindings"
 	programs := 0
-	for _, name := range []string{"if", "and", "conditional", "shadow", "performance_provided"} {
+	for _, name := range []string{"if", "and", "conditional", "shadow", "performance_provided", "process_provided"} {
 		programs++
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -143,5 +144,26 @@ func TestHostBindingGlobalObjectRoadIsNotYet(t *testing.T) {
 	var notYet *lower.NotYet
 	if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), "main.ts:6:13: stage 0 can't lower the global object as a value (only a property read's or member call's receiver is admitted) yet") {
 		t.Errorf("got %v, want the global object as a value to stop at main.ts:6:13", err)
+	}
+}
+
+// generatorAgrees holds native, sanitized and JavaScript; this pin executes the same process row
+// fixture as a WASI command, with no permitted refusal (#zqz01vh, Adamic and Lower, Nov 8 2026).
+func TestHostBindingProcessWASIAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/host_bindings/process_provided/main.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth, got := onNode(t, path), onWASI(t, native.C(program))
+	if difference := disagreement(truth, got); difference != "" {
+		t.Fatalf("%s: Node %+v WASI %+v", difference, truth, got)
 	}
 }
