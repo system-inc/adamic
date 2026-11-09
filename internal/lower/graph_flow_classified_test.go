@@ -110,7 +110,7 @@ func TestGraphFlowSteps(t *testing.T) {
 		{"a read demands its local", read, graphFlowStep{sources: graphFlowSources{locals: []int{3}}}},
 		{"a call demands its target's result", ir.Call{Function: 2, Returns: ir.Object}, graphFlowStep{sources: graphFlowSources{results: []int{2}}}},
 		{"a direct closure call demands its target's result", ir.CallClosure{Direct: 3, Returns: ir.Object}, graphFlowStep{sources: graphFlowSources{results: []int{2}}}},
-		{"an opaque closure call is the leak-only frontier", ir.CallClosure{Closure: read, Returns: ir.Object}, graphFlowStep{}},
+		{"an opaque closure call's result is planned at its targets' Returns", ir.CallClosure{Closure: read, Returns: ir.Object}, graphFlowStep{}},
 		{"a bound method demands its factory's result", ir.BoundMethod{Factory: 5}, graphFlowStep{sources: graphFlowSources{results: []int{5}}}},
 		{"a generator's step demands its yields", ir.GeneratorNext{Function: 6, Of: ir.Object}, graphFlowStep{sources: graphFlowSources{yields: []int{6}}}},
 		{"a field read is planned where it was stored", ir.Property{Object: value, Name: "next", Of: ir.Object}, graphFlowStep{}},

@@ -1,0 +1,10 @@
+// f3, the pin: a copy passed as an argument to a parameter's function value, which stores it, demanded at the call since its targets are Unknown (#41vb71c).
+interface Node { name: string; next: Node[]; kids: Node[][] }
+const a: Node = { name: 'a' + '', next: [], kids: [] };
+const b: Node = { name: 'b' + '', next: [a], kids: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const byName = (x: Node, y: Node): number => (x.name < y.name ? -1 : 1);
+function each(g: (x: Node[]) => void): void { g(a.next.toSorted(byName)); }
+each((x: Node[]): void => { a.kids.push(x); });
+const k = a.kids[0];
+console.log(`${a.kids.length} ${k === undefined ? -1 : k.length}`);
