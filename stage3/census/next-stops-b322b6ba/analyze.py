@@ -16,7 +16,7 @@ for (where,kind,reason),roots in sorted(groups.items(),key=lambda x:(-len(x[1]),
  prior=[baseline[r] for r in roots]
  unchanged=sum(p==(where,kind,reason) for p in prior)
  known=(where,kind,reason) in baseline.values()
- result.append(dict(where=where,kind=kind,reason=reason,roots=roots,count=len(roots),unchanged=unchanged,moved=len(roots)-unchanged,comparison='unchanged' if unchanged==len(roots) else 'moved' if known else 'new'))
+ result.append(dict(where=where,kind=kind,reason=reason,roots=roots,count=len(roots),unchanged=unchanged,moved=(len(roots)-unchanged if known else 0),new=(0 if known else len(roots)),comparison='unchanged' if unchanged==len(roots) else 'moved' if known else 'new'))
 (out/'grouped-first-stops.json').write_text(json.dumps(result,indent=2)+'\n')
 comparisons=[]
 for r in rows:

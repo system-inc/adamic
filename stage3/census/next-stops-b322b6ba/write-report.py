@@ -5,6 +5,7 @@ out=Path(__file__).resolve().parent
 read=lambda n:json.loads((out/n).read_text())
 p=read('provenance.json');groups=read('grouped-first-stops.json');art=read('root-order.json');totals=read('latent-totals.json');entry=totals['guarded_entry'];ordinary=totals['ordinary_counted_observations']
 checks={r['root']:r for r in art['checks']};excerpts=read('source-excerpts.json');comparison=read('comparison.json')
+tally=collections.Counter(r['classification'] for r in comparison)
 accepted=[root for g in groups if g['kind']=='accepted' for root in g['roots']]
 q=lambda s:'`'+str(s)+'`'
 lines=['# Next stops on main b322b6ba','','Measured for #baobab and #b5w3ycg. Report only.','',f'Compiler and apply SHA: {q(p["sha"])}. TypeScript 6.0.3 source pin: {q(p["typescript_pin"])}.','',f'Box: {q(p["box"])}; {p["cpus"]} visible CPUs; CPU quota {q(p["cpu_max"])}; {p["meminfo"]}. Started {p["date"]}.','','## Grouped first stops','','Locations and root names are relative to `src/compiler/`. Sorted largest first. Only the first of each root\'s two observations counts. All duplicate observations agree in every non-timing field.','','| Roots | Location | Kind | Exact reason | Compared with c3b7baf0 | Root names |','| ---: | --- | --- | --- | --- | --- |']
@@ -16,7 +17,7 @@ lines+=['','## Roots lowering whole','',f'{len(accepted)}/79 in the ordinary ind
 for g in groups:
  c=collections.Counter(r['classification'] for r in comparison if r['root'] in g['roots'])
  lines.append(f'| {q(g["where"])} {g["kind"]} | {g["count"]} | {c["unchanged"]} | {c["moved"]} | {c["new"]} |')
-lines+=['','Each root, with its before and after tuple retained in `comparison.json`:','','| Root | Classification | Before location / kind | After location / kind |','| --- | --- | --- | --- |']
+lines+=['',f'Across 79 roots: {tally["unchanged"]} unchanged, {tally["moved"]} moved to an existing tuple, {tally["new"]} at a new tuple.','','Each root, with its before and after tuple retained in `comparison.json`:','','| Root | Classification | Before location / kind | After location / kind |','| --- | --- | --- | --- |']
 for r in comparison:lines.append(f'| {q(r["root"])} | {r["classification"]} | {q(r["before"][0])} {r["before"][1]} | {q(r["after"][0])} {r["after"][1]} |')
 lines+=['','## Stop source and lowering emitters','']
 emitters={'an ambient value declaration':'`internal/lower/ambient.go:79` assigns the exact reason in `ambientRefusal`; line 91 emits the `Refused` result.','a cast the runtime can\'t check':'`internal/lower/cast_proof.go:195`, `castRefusal`.','reading an enum before its runtime initialization; move the call after the enum declaration':'`internal/lower/namespaces.go:267` and `:318`, `namespaceInitialization`.','a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration':'`internal/lower/namespaces.go:269` and `:321`, `namespaceInitialization`.'}
