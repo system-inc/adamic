@@ -1,8 +1,10 @@
 package lower
 
 import (
+	"fmt"
 	"reflect"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -70,7 +72,9 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 // is a may-flow proof, not an execution or a choice of one conditional branch.
 // Negative IDs name allocation sites in this IR, independently of fresh checker
 // identities. They select the existing allocation emission without runtime work.
-func (f *cycleFinder) graphFlows() {
+// follow classifies every IR expression by graphFlowRules (graph_flow_classes.go), and a graph
+// value through one the plan doesn't follow is NotYet at the site that demanded it, never a leak.
+func (f *cycleFinder) graphFlows() error {
 	program := f.l.result
 	next := 0
 	program.Main = graphAllocationSites(reflect.ValueOf(program.Main), &next).Interface().([]ir.Statement)
@@ -95,8 +99,9 @@ func (f *cycleFinder) graphFlows() {
 		}
 		return false
 	}
-	// Positive nodes are locals followed by function results.
+	// Positive nodes are locals, then function results, then generator functions' yields.
 	resultNode := func(function int) int { return len(program.Locals) + function + 1 }
+	yieldNode := func(function int) int { return len(program.Locals) + len(program.Functions) + function + 1 }
 	sources := map[int][]ir.Expression{}
 	wanted := map[int]bool{}
 	queue := []int{}
@@ -118,7 +123,14 @@ func (f *cycleFinder) graphFlows() {
 			}
 		}
 	}
-	pending := []ir.Expression{}
+	// A graphDemand is what asked for a graph value: a positive node, or a write site's slot. A stop
+	// is reported where it is.
+	type graphDemand struct{ node, site int }
+	type graphPending struct {
+		expression ir.Expression
+		at         graphDemand
+	}
+	pending := []graphPending{}
 	// Site retains the checker view of the actual slot being written.
 	slot := func(site int, name string, argument int) bool {
 		if site <= 0 || site > len(f.l.writeSites) {
@@ -154,20 +166,20 @@ func (f *cycleFinder) graphFlows() {
 			returns[closure.function] = f.l.checker.GetReturnTypeOfSignature(signatures[0])
 		}
 	}
-	var members func(ir.Expression, *checker.Type)
-	members = func(expression ir.Expression, proven *checker.Type) {
+	var members func(ir.Expression, *checker.Type, graphDemand)
+	members = func(expression ir.Expression, proven *checker.Type, at graphDemand) {
 		if expression == nil || proven == nil || f.weak(proven) {
 			return
 		}
 		if graphType(proven) {
-			pending = append(pending, expression)
+			pending = append(pending, graphPending{expression, at})
 		}
 		switch value := expression.(type) {
 		case ir.ObjectLiteral:
 			for _, field := range f.fields(proven) {
 				for _, initializer := range value.Fields {
 					if f.l.cycleFieldMatches(proven, field.Name, initializer.Name) {
-						members(initializer.Value, f.l.checker.GetTypeOfSymbol(field))
+						members(initializer.Value, f.l.checker.GetTypeOfSymbol(field), at)
 					}
 				}
 			}
@@ -175,27 +187,34 @@ func (f *cycleFinder) graphFlows() {
 			arguments := f.graphArguments(proven)
 			if len(arguments) > 0 {
 				for _, element := range value.Elements {
-					members(element, arguments[0])
+					members(element, arguments[0], at)
 				}
 			}
 		case ir.Conditional:
-			members(value.WhenTrue, proven)
-			members(value.WhenNot, proven)
+			members(value.WhenTrue, proven, at)
+			members(value.WhenNot, proven, at)
 		}
 	}
 	collect := func(body []ir.Statement, function int) {
 		walk(body, func(node any) bool {
 			switch value := node.(type) {
 			case ir.Declare:
-				members(value.Value, f.l.localTypes[value.Local])
+				members(value.Value, f.l.localTypes[value.Local], graphDemand{node: value.Local + 1})
 				sources[value.Local+1] = append(sources[value.Local+1], value.Value)
 			case ir.Assign:
-				members(value.Value, f.l.localTypes[value.Local])
+				members(value.Value, f.l.localTypes[value.Local], graphDemand{node: value.Local + 1})
 				sources[value.Local+1] = append(sources[value.Local+1], value.Value)
 			case ir.Return:
-				members(value.Value, returns[function])
+				at := graphDemand{}
 				if function >= 0 {
-					sources[resultNode(function)] = append(sources[resultNode(function)], value.Value)
+					at.node = resultNode(function)
+					sources[at.node] = append(sources[at.node], value.Value)
+				}
+				members(value.Value, returns[function], at)
+			case ir.Yield:
+				// A generator's step is the value its body yields (GeneratorNext's rule).
+				if function >= 0 {
+					sources[yieldNode(function)] = append(sources[yieldNode(function)], value.Value)
 				}
 			case ir.Call:
 				for _, target := range program.CallTargets(value) {
@@ -223,26 +242,26 @@ func (f *cycleFinder) graphFlows() {
 				}
 			case ir.SetProperty:
 				if slot(value.Site, value.Name, 0) {
-					pending = append(pending, value.Value)
+					pending = append(pending, graphPending{value.Value, graphDemand{site: value.Site}})
 				}
 			case ir.SetIndex:
 				if slot(value.Site, "", 0) {
-					pending = append(pending, value.Value)
+					pending = append(pending, graphPending{value.Value, graphDemand{site: value.Site}})
 				}
 			case ir.ArrayPush:
 				if slot(value.Site, "", 0) {
-					pending = append(pending, value.Value)
+					pending = append(pending, graphPending{value.Value, graphDemand{site: value.Site}})
 				}
 			case ir.MapSet:
 				if slot(value.Site, "", 0) {
-					pending = append(pending, value.Key)
+					pending = append(pending, graphPending{value.Key, graphDemand{site: value.Site}})
 				}
 				if slot(value.Site, "", 1) {
-					pending = append(pending, value.Value)
+					pending = append(pending, graphPending{value.Value, graphDemand{site: value.Site}})
 				}
 			case ir.SetAdd:
 				if slot(value.Site, "", 0) {
-					pending = append(pending, value.Value)
+					pending = append(pending, graphPending{value.Value, graphDemand{site: value.Site}})
 				}
 			}
 			return true
@@ -252,53 +271,68 @@ func (f *cycleFinder) graphFlows() {
 	for i, function := range program.Functions {
 		collect(function.Body, i)
 	}
-	var follow func(ir.Expression)
-	follow = func(expression ir.Expression) {
+	// where is a demand's place in the source: the write, the local's declaration, or the function's.
+	where := func(at graphDemand) string {
+		if at.site > 0 {
+			return f.l.writeSiteWhere(at.site)
+		}
+		var node *ast.Node
+		switch locals, functions := len(program.Locals), len(program.Functions); {
+		case at.node > 0 && at.node <= locals:
+			node = f.l.localNodes[at.node-1]
+		case at.node > locals && at.node <= locals+functions:
+			node = f.l.functionNodes[at.node-locals-1]
+		case at.node > locals+functions && at.node <= locals+2*functions:
+			node = f.l.functionNodes[at.node-locals-functions-1]
+		}
+		if node == nil {
+			return program.Source
+		}
+		return f.l.program.Where(node)
+	}
+	// The stop reported is the least by place and words, so it doesn't hang on map order.
+	var stopped *NotYet
+	var follow func(ir.Expression, graphDemand)
+	follow = func(expression ir.Expression, at graphDemand) {
 		if expression == nil {
 			return
 		}
-		value := reflect.ValueOf(expression)
-		if field := value.FieldByName("GraphTypes"); field.IsValid() {
-			ids := field.Interface().([]int)
-			program.GraphTypes[ids[len(ids)-1]] = true
+		step := graphFlowStepOf(expression, program)
+		if step.stop {
+			failure := &NotYet{Where: where(at), What: fmt.Sprintf("a graph value through %T the plan doesn't follow", expression)}
+			if stopped == nil || failure.Where < stopped.Where || failure.Where == stopped.Where && failure.What < stopped.What {
+				stopped = failure
+			}
 			return
 		}
-		switch value := expression.(type) {
-		case ir.Read:
-			demand(value.Local + 1)
-		case ir.Call:
-			for _, target := range program.CallTargets(value) {
-				demand(resultNode(target))
-			}
-		case ir.CallClosure:
-			targets := program.ClosureTargets(value)
-			if targets.Unknown {
-				return
-			}
-			for _, target := range targets.Functions {
-				demand(resultNode(target))
-			}
-		case ir.Conditional:
-			follow(value.WhenTrue)
-			follow(value.WhenNot)
-		case ir.Box:
-			follow(value.Value)
-		case ir.Narrow:
-			follow(value.Value)
-		case ir.Unwrap:
-			follow(value.Value)
-		case ir.CheckedCast:
-			follow(value.Value)
+		if step.planned {
+			program.GraphTypes[step.site] = true
+		}
+		for _, operand := range step.sources.operands {
+			follow(operand, at)
+		}
+		for _, local := range step.sources.locals {
+			demand(local + 1)
+		}
+		for _, function := range step.sources.results {
+			demand(resultNode(function))
+		}
+		for _, function := range step.sources.yields {
+			demand(yieldNode(function))
 		}
 	}
-	for _, expression := range pending {
-		follow(expression)
+	for _, each := range pending {
+		follow(each.expression, each.at)
 	}
 	for len(queue) > 0 {
 		node := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
 		for _, expression := range sources[node] {
-			follow(expression)
+			follow(expression, graphDemand{node: node})
 		}
 	}
+	if stopped != nil {
+		return stopped
+	}
+	return nil
 }

@@ -11,6 +11,9 @@ type RecordCall struct {
 	Element   Type
 	Returns   Type
 	Site      int
+	// GraphTypes plans the new array "values" and "entries" make, as an ArraySlice's plans its own:
+	// graphFlows marks its site where a graph value is demanded through it (lower/graph_flow.go).
+	GraphTypes []int
 	// OwnOnly changes prototype handling, never the value provenance or ownership.
 	OwnOnly bool
 }

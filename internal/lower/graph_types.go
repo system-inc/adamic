@@ -352,11 +352,16 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			f.l.result.Classes[instance.class-1].Graph = true
 		}
 	}
-	f.graphFlows()
+	// The view pair guard and the boundary's refusal come before a plan's stop, so a program either
+	// refuses reads the stop it always has.
+	flows := f.graphFlows()
 	if err := f.viewPairGuard(); err != nil {
 		return err
 	}
-	return f.graphAdoptionBoundary()
+	if err := f.graphAdoptionBoundary(); err != nil {
+		return err
+	}
+	return flows
 }
 
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
