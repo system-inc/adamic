@@ -1,12 +1,13 @@
-// nexus/shouting.go:184; `^@example\b`
+// tailwind/collapse/utility_nodes.go:134; `\\\*`
 import { observe } from '../observe.a';
-const pattern = "^@example\\b";
+const pattern = "\\\\\\*";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "@example", 4);
-observe(regex, "x@example", 5);
-observe(regex, "@example\n", 6);
+observe(regex, "\\*", 4);
+observe(regex, "x\\*", 5);
+observe(regex, "\\*\n", 6);
+observe(regex, "/*${token.value.slice(2).replace(/(\\*\\/|\\/\\*)/g, '*/", 7);

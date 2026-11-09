@@ -8,5 +8,7 @@ import (
 	base "github.com/system-inc/cohere/internal/lint/rules/base"
 )
 
-func oracleConsistencyNoConsole() rule.Rule                 { return base.ConsistencyNoConsole }
+func oracleConsistencyNoConsole(options any) rule.Bound {
+	return bindOracle(base.ConsistencyNoConsole, options)
+}
 func oracleConsistencyNoConsoleOptions(fields []string) any { return nil }

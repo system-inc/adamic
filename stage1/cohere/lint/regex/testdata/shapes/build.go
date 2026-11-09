@@ -86,20 +86,15 @@ func translated(p string) (string, string) {
 }
 func dynamic(id string) (string, string) {
 	switch id {
-	case "core/require_description.go:236":
+	case "core/require_description.go:241":
 		return `^(custom)(?:[\t\n\x0B\f\r \x{00A0}\x{1680}\x{2000}-\x{200A}\x{2028}\x{2029}\x{202F}\x{205F}\x{3000}\x{FEFF}]|$)`, "additionalDirectives=[custom]"
-	case "nexus/abbreviation_vocabulary.go:162":
-		return "^cfg[A-Z]", "abbreviation=cfg"
-	case "nexus/abbreviation_vocabulary.go:176":
-		return "(^|[^a-zA-Z])Cfg($|[A-Z0-9])", "word=Cfg"
-	case "nexus/abbreviation_vocabulary.go:177":
-		return "[a-z0-9]Cfg($|[A-Z0-9])", "word=Cfg"
-	case "nexus/abbreviation_vocabulary.go:178":
-		return "Cfg($|[A-Z0-9])", "word=Cfg"
-	case "nexus/consistency_no_return_void.go:116":
+	case "nexus/consistency_no_return_void.go:124":
 		return `^return\s+void\s+value\s*;$`, "operandText=value"
-	case "react/no_unstable_nested_components.go:893":
+	case "react/no_unstable_nested_components.go:396":
 		return "^render.*$", "propNamePattern=render*"
+	case "tailwind/collapse/canonicalizer_arbitrary.go:652":
+		// The upstream calc fixtures use var(--foo); cssVariableName admits this name literally.
+		return `var\(--foo[,)]`, "variable=--foo"
 	}
 	panic(id)
 }

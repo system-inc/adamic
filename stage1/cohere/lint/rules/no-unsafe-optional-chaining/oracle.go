@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUnsafeOptionalChaining() rule.Rule { return rules.NoUnsafeOptionalChaining }
+func oracleNoUnsafeOptionalChaining(options any) rule.Bound {
+	return bindOracle(rules.NoUnsafeOptionalChaining, options)
+}
 func oracleNoUnsafeOptionalChainingOptions(fields []string) any {
 	var options rules.NoUnsafeOptionalChainingOptions
 	if len(fields) > 5 && fields[5] != "" {

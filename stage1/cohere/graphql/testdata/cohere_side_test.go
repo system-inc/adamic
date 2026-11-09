@@ -674,7 +674,7 @@ func adamicUTF16Offsets(text string) []int {
 
 // adamicOutline writes a tree as parser_test.go's outline does, with UTF-16 offsets and strings in the
 // output form.
-func adamicOutline(builder *strings.Builder, value any, offsets []int) {
+func adamicOutline(builder *strings.Builder, value estree.Value, offsets []int) {
 	switch typed := value.(type) {
 	case nil:
 		builder.WriteString("undefined")
@@ -691,7 +691,7 @@ func adamicOutline(builder *strings.Builder, value any, offsets []int) {
 			}
 			builder.WriteString("}")
 		}
-	case []*estree.Node:
+	case estree.Nodes:
 		builder.WriteString("(")
 		for index, child := range typed {
 			if index > 0 {
@@ -700,10 +700,10 @@ func adamicOutline(builder *strings.Builder, value any, offsets []int) {
 			adamicOutline(builder, child, offsets)
 		}
 		builder.WriteString(")")
-	case string:
-		builder.WriteString(`"` + adamicWritten(typed) + `"`)
-	case bool:
-		builder.WriteString(strconv.FormatBool(typed))
+	case estree.String:
+		builder.WriteString(`"` + adamicWritten(string(typed)) + `"`)
+	case estree.Boolean:
+		builder.WriteString(strconv.FormatBool(bool(typed)))
 	default:
 		panic(fmt.Sprintf("an unexpected %T in a tree", typed))
 	}

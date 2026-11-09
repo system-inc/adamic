@@ -3,7 +3,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 	"github.com/system-inc/cohere/internal/format/native"
 	"os"
 	"strings"
@@ -23,7 +23,7 @@ func main() {
 		}
 		parts := strings.SplitN(line, "\t", 2)
 		text := unescape.Replace(parts[1])
-		formatted, err := (native.Formatter{Options: formatoptions.PrettierDefaults()}).Format("input.yaml", text)
+		formatted, err := (native.Formatter{Options: format_options.PrettierDefaults()}).Format("input.yaml", text)
 		if err != nil {
 			fmt.Fprintf(&out, "error\t%s\n", escape.Replace(err.Error()))
 		} else {

@@ -8,5 +8,7 @@ import (
 	nexus "github.com/system-inc/cohere/internal/lint/rules/nexus"
 )
 
-func oracleConsistencyRequireTypeSuffix() rule.Rule                 { return nexus.ConsistencyRequireTypeSuffix }
+func oracleConsistencyRequireTypeSuffix(options any) rule.Bound {
+	return bindOracle(nexus.ConsistencyRequireTypeSuffix, options)
+}
 func oracleConsistencyRequireTypeSuffixOptions(fields []string) any { return nil }

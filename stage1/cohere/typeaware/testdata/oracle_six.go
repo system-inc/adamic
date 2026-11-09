@@ -127,11 +127,11 @@ func main() {
 		}
 		typeChecker, release := program.GetTypeCheckerForFile(context.Background(), file)
 		var collected []rule.Diagnostic
-		subjects := []rule.Rule{rules.NoUnsafeUnaryMinus, rules.RelatedGetterSetterPairs, rules.NoUnsafeDeclarationMerging, rules.NoUnsafeArgument, rules.RestrictPlusOperands, rules.NoUnnecessaryBooleanLiteralCompare}
+		subjects := []rule.Bound{unconfigured(rules.NoUnsafeUnaryMinus), unconfigured(rules.RelatedGetterSetterPairs), unconfigured(rules.NoUnsafeDeclarationMerging), unconfigured(rules.NoUnsafeArgument), unconfigured(rules.RestrictPlusOperands), unconfigured(rules.NoUnnecessaryBooleanLiteralCompare)}
 		callbacks := map[ast.Kind][]func(*ast.Node){}
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {
-			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, nil)
+			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject.Traits), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }})
 			for kind, callback := range listeners {
 				callbacks[kind] = append(callbacks[kind], callback)
 			}
@@ -169,4 +169,8 @@ func diagnostic(d rule.Diagnostic) string {
 		line += fmt.Sprintf("\t%d\t%d\t%s", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
 	}
 	return line
+}
+
+func unconfigured[Options any](subject rule.Rule[Options]) rule.Bound {
+	return rule.Bind(subject, rule.Given[Options]{})
 }

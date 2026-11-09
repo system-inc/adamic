@@ -9,7 +9,9 @@ import (
 	"strings"
 )
 
-func oracleMaxNestedCallbacks() rule.Rule { return rules.MaxNestedCallbacks }
+func oracleMaxNestedCallbacks(options any) rule.Bound {
+	return bindOracle(rules.MaxNestedCallbacks, options)
+}
 
 func oracleMaxNestedCallbacksOptions(fields []string) any {
 	if len(fields) < 6 || fields[5] == "" || fields[5] == "null" {

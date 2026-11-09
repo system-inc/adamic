@@ -1,5 +1,5 @@
 // This file is not built here. formatfiles_test.go lays it into cohere's own package,
-// cohere/internal/format/formatfiles, with `go test -overlay`, so that it can build trees with cohere's
+// cohere/internal/format/format_files, with `go test -overlay`, so that it can build trees with cohere's
 // own test helpers (writeTree and settingsTree, from enumerate_test.go) and walk them with cohere's
 // Enumerate, without a byte of the submodule changing.
 //
@@ -10,7 +10,7 @@
 // carry. Then generated trees, from a seeded generator whose names and contents start at every edge of
 // every class the walk decides on.
 
-package formatfiles
+package format_files
 
 import (
 	"encoding/json"
@@ -27,7 +27,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 )
 
 // adamicRequest is what formatfiles_test.go asks.
@@ -233,7 +233,7 @@ func adamicGenerated(t *testing.T, random *rand.Rand, root string) []string {
 		}
 		for range random.Intn(5) {
 			name := pick(adamicFileNames)
-			// What formatoptions.Resolve reads at the root is left out: the port is given its answer.
+			// What format_options.Resolve reads at the root is left out: the port is given its answer.
 			if directory == "" && name == "package.json" {
 				continue
 			}
@@ -341,9 +341,9 @@ func TestAdamicPortCases(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		resolution, err := formatoptions.Resolve(root)
+		resolution, err := format_options.Resolve(root)
 		if err != nil {
-			t.Fatalf("%s: formatoptions.Resolve, whose answer the port is given, refuses the tree: %v", tree.name, err)
+			t.Fatalf("%s: format_options.Resolve, whose answer the port is given, refuses the tree: %v", tree.name, err)
 		}
 		if len(resolution.IgnorePatterns) > 0 {
 			t.Fatalf("%s: its settings name ignorePatterns, which the port doesn't carry", tree.name)

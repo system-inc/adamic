@@ -8,8 +8,8 @@ import (
 	"github.com/system-inc/cohere/internal/lint/rules/nexus"
 )
 
-func oracleConsistencyNoAbbreviatedIdentifier() rule.Rule {
-	return nexus.ConsistencyNoAbbreviatedIdentifier
+func oracleConsistencyNoAbbreviatedIdentifier(options any) rule.Bound {
+	return bindOracle(nexus.ConsistencyNoAbbreviatedIdentifier, options)
 }
 func oracleConsistencyNoAbbreviatedIdentifierOptions(fields []string) any {
 	var options nexus.ConsistencyNoAbbreviatedIdentifierOptions

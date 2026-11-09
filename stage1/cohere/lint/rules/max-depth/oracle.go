@@ -8,7 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleMaxDepth() rule.Rule { return rules.MaxDepth }
+func oracleMaxDepth(options any) rule.Bound { return bindOracle(rules.MaxDepth, options) }
 
 func oracleMaxDepthOptions(fields []string) any {
 	settings := rules.DefaultMaxDepthSettings()

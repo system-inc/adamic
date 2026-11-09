@@ -12,6 +12,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/cohere/internal/format/css/postcss"
+	"github.com/system-inc/cohere/internal/json_value"
 )
 
 // Not parallel: writes the fixed output paths supplied by the environment request.
@@ -65,7 +66,7 @@ func TestAdamicCompositionCases(t *testing.T) {
 				answer = err.Error()
 			}
 		} else {
-			answer = dumpGlueValue(root, func(index int) any { return index })
+			answer = dumpGlueValue(root, func(index int) json_value.Value { return json_value.Number(strconv.Itoa(index)) })
 			parsed++
 		}
 		encoder := json.NewEncoder(&answers)

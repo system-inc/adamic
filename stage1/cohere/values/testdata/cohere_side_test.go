@@ -145,8 +145,8 @@ func TestAdamicPortCases(t *testing.T) {
 			fmt.Fprintf(&answers, "case %d %s\n", index, mode)
 			tree, err := Parse(text, Options{Loose: loose})
 			if err != nil {
-				var thrown *Error
-				if !asError(err, &thrown) {
+				thrown, isError := asError(err)
+				if !isError {
 					// A panic that isn't one of upstream's throws: a fault in the Go, which the port
 					// can't print, so it shows as a difference.
 					fmt.Fprintf(&answers, "fault %v\n", err)
@@ -172,15 +172,15 @@ func adamicRender(node *estree.Node, depth int, toUTF16 func(int) int, builder *
 	builder.WriteString(strings.Repeat("  ", depth))
 	builder.WriteString(node.Type())
 	keys := slices.Sorted(slices.Values(node.Keys()))
-	children, isContainer := node.Get("nodes").([]*estree.Node)
+	children, isContainer := node.Get("nodes").(estree.Nodes)
 	for _, key := range keys {
 		if key == "nodes" {
 			continue
 		}
 		value := node.Get(key)
 		if key == "sourceIndex" {
-			if index, isInt := value.(int); isInt {
-				value = toUTF16(index)
+			if index, isInt := value.(estree.Integer); isInt {
+				value = estree.Integer(toUTF16(int(index)))
 			}
 		}
 		fmt.Fprintf(builder, " %s=%s", key, adamicValue(value))
@@ -195,22 +195,22 @@ func adamicRender(node *estree.Node, depth int, toUTF16 func(int) int, builder *
 }
 
 // adamicValue is a field's value as main.ts writes it.
-func adamicValue(value any) string {
+func adamicValue(value estree.Value) string {
 	switch typed := value.(type) {
 	case nil:
 		return "<undefined>"
-	case string:
-		return adamicQuote(typed)
-	case bool:
-		return strconv.FormatBool(typed)
-	case int:
-		return strconv.Itoa(typed)
-	case float64:
-		if math.IsNaN(typed) {
+	case estree.String:
+		return adamicQuote(string(typed))
+	case estree.Boolean:
+		return strconv.FormatBool(bool(typed))
+	case estree.Integer:
+		return strconv.Itoa(int(typed))
+	case estree.Number:
+		if math.IsNaN(float64(typed)) {
 			return "NaN"
 		}
-		return strconv.FormatFloat(typed, 'f', -1, 64)
-	case map[string]any:
+		return strconv.FormatFloat(float64(typed), 'f', -1, 64)
+	case estree.Record:
 		keys := slices.Sorted(func(yield func(string) bool) {
 			for key := range typed {
 				if !yield(key) {

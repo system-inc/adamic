@@ -60,7 +60,7 @@ func outline(out io.Writer, token *cst.Token) {
 		list(out, token.End)
 	}
 	fmt.Fprint(out, "|")
-	list(out, token.Props)
+	list(out, token.Properties)
 	fmt.Fprint(out, "|[")
 	for _, item := range token.Items {
 		list(out, item.Start)

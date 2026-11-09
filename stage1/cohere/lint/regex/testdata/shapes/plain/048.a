@@ -1,0 +1,12 @@
+// tailwind/no_deprecated_classes.go:69; `^rounded$`
+import { observe } from '../observe.a';
+const pattern = "^rounded(?![\\s\\S])";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "rounded", 4);
+observe(regex, "xrounded", 5);
+observe(regex, "rounded\n", 6);
