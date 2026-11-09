@@ -38,6 +38,22 @@ class PairTests(unittest.TestCase):
         result = self.synthetic('const value = 1;', [], [(1, 'written-any relation', 'deferred_scan')], [unit])
         self.assertEqual(result['raw_findings']['unit_first_stop_delta'], [])
 
+    def test_program_relation_report_is_preserved_without_a_source_location_zb0q0zd(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'input.ts').write_text('const value = 1;')
+            unit = dict(where='input.ts:1:1', kind='KindVariableStatement', status='attempted')
+            finding = dict(kind='NotYet', where='program', unit='program',
+                           phase='relation_overflow_conservative_all_units',
+                           reason='checker relation overflow', text='program overflow')
+            base = [HEADER, dict(file='input.ts', units=[unit], findings=[])]
+            head = base + [dict(status='relation_report', findings=[finding])]
+            result = pair.compare(base, head, root, TS)
+            for view in ('raw_findings', 'distinct_reads'):
+                self.assertEqual(result[view]['unit_first_stop_delta'], [])
+                self.assertEqual(result[view]['new_findings'][0]['identity'], ('<program>', '', 0))
+                self.assertEqual(result[view]['new_findings'][0]['finding'], finding)
+
     def test_qeanycw_distinct_reads_cleared_with_no_new(self):
         d = self.witnesses['qeanycw']['distinct_reads']
         self.assertEqual(len(d['new_sites']), 0)

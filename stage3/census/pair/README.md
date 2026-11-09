@@ -30,3 +30,5 @@ and 65 after, with 181 lowered, 5 moved, 1 new finding at an existing site,
 0 new sites and 0 regressions. Raw counts, reason counts, unit first stops and
 panics are also unchanged. These are fixture results, not a remeasurement of
 the complete historical streams.
+
+Program-level relation reports use the `<program>` identity instead of a fabricated source location. They remain in raw and distinct findings but do not impersonate unit first stops. Unit first-stop comparisons cover lowering and deferred phases; conservative relation-overflow attribution remains explicit in the complete streams.

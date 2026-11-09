@@ -10,10 +10,24 @@
     "base": "6c9fa7e72466a26d95a761e6a63cb993355e10d29f59edcd1e1a514bb02d38ec",
     "head": "f8055eefd93d40dac370d323f3e2c141526d3cbb3bf86253e4f733534aaef0ce"
   },
-  "code_checkpoint": "0a706a790b86f08a9571c8d40d0b7bd3e0b1aa33",
+  "code_checkpoint": "d5e3d405cc6f69ff83fb908afeb9ad048fd63316",
   "source_file_count": 711,
   "apply_exit": 0,
   "memory_limit_bytes": "17179869184",
   "cpu_max": "400000 100000",
-  "go_memory_limit": "5GiB"
+  "go_memory_limit": "5GiB",
+  "paired_measurement": "incomplete; no overstatement count claimed",
+  "streams": {
+    "base.jsonl": {
+      "sha256_uncompressed": "5b4fa75622db021232e7760355bf83a330d34d9a86880b6b2101f9a607870d9a",
+      "bytes_uncompressed": 21235242
+    },
+    "base-times.jsonl": {
+      "sha256_uncompressed": "65931af64168f92cebc5d47f05add418d3c2b55039a7c838d36bf50286bd6503",
+      "bytes_uncompressed": 868001
+    }
+  },
+  "baseline_exit": 0,
+  "baseline_attempted_units": 4059,
+  "final_head_exit": -15
 }

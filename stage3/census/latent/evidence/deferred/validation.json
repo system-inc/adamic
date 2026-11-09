@@ -12,7 +12,7 @@
   },
   "pair": {
     "exit": 0,
-    "tests": 17
+    "tests": 18
   },
   "overlay_build": 0,
   "real_census_pin": 0,
@@ -55,5 +55,19 @@
     "mutant_expected": 1,
     "mutant_owner": "callWrittenAny",
     "mutant_findings": []
+  },
+  "generic_predicate_seam": 0,
+  "generic_module_order_audit": 0,
+  "baseline_census_exit": 0,
+  "final_head_census": "incomplete, deliberately terminated with SIGTERM",
+  "paired_count": null,
+  "own_live_processes_at_stop": [],
+  "final_destination_pushed": false,
+  "source_hashes_unchanged_after_baseline": true,
+  "reference_guard": {
+    "base": "018b7c21",
+    "exit": 0,
+    "inherited_main_relative_violations": 7,
+    "production_files_edited_to_fix_inherited_violations": false
   }
 }

@@ -37,7 +37,7 @@ def identities(streams, tree, typescript):
             for item in (row.get('findings') or []) + (row.get('units') or []):
                 for field in ('where', 'unit'):
                     where = item.get(field)
-                    if not where or where in seen:
+                    if not where or where == 'program' or where in seen:
                         continue
                     seen.add(where)
                     file, line, column = where.rsplit(':', 2)
@@ -57,6 +57,8 @@ def compare(base, head, tree, typescript, normalize=True):
         raise ValueError('measurement headers differ')
 
     def site(where, distinct):
+        if where == 'program':
+            return ('<program>', '', 0)
         i = ids[where]
         return (i['file'], i['sha256'], i['read_offset' if distinct and normalize else 'byte_offset'])
 
