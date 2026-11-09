@@ -7,6 +7,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // The proof contains checker types only, so refusals precede representation lowering of unknown
@@ -47,6 +48,16 @@ func (l *lowering) castAssignable(source, target *checker.Type) bool {
 func (l *lowering) castAssignableAt(operand *ast.Node, source, target *checker.Type) bool {
 	if !l.classAssignable(source, target) || !l.enumAssignable(source, target) {
 		return false
+	}
+	if operand != nil && probeWidenedAt(l.program.Where(operand)) {
+		before := load.RelationOverflowMarked(l.checker)
+		found := l.freshOrWidened(operand, source, target)
+		after := load.RelationOverflowMarked(l.checker)
+		desc := "nil"
+		if found != nil {
+			desc = probeTypeText(l.checker, found.source) + " -> " + probeTypeText(l.checker, found.target)
+		}
+		fmt.Fprintf(os.Stderr, "probe-widened\tcast\t%s\tsource=%s\ttarget=%s\twidening=%s\toverflowBefore=%t\toverflowAfter=%t\n", l.program.Where(operand), probeTypeText(l.checker, source), probeTypeText(l.checker, target), desc, before, after)
 	}
 	if operand != nil {
 		if l.freshOrWidened(operand, source, target) != nil {
