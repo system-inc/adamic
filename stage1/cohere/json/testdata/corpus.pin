@@ -1,14 +1,14 @@
 {
-  "count": 1113,
-  "sha256": "ec5e0f63770de1ffa8bc8eb534ec270a8bbe964a2059ff789ab4f4e26cb0537b",
+  "count": 1278,
+  "sha256": "887ad33ca8f8774cd41489fd4c8529dbe4482314588e68057dd2662becb2384f",
   "groups": {
     "TypeScript": {
       "count": 203,
       "sha256": "46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b"
     },
     "cohere": {
-      "count": 858,
-      "sha256": "34c398ee1ce83e8c789e28189aa334c5da0a6edf9c5d973a1837e572eca17241"
+      "count": 1023,
+      "sha256": "0c004d2fc1e119138dc5f68a2800603db39948fe0dfdee7c089d19c5b29b3a7b"
     },
     "generated": {
       "count": 34,
@@ -21,20 +21,24 @@
   },
   "cases": [
     {
+      "path": "cohere/CohereSettings.json",
+      "sha256": "18e879b73199e4b4f255c7c201d2d21abe7ab1e53156119fd06c87fe23372f7d"
+    },
+    {
       "path": "cohere/TypeScript-shim/checker/extra-shim.json",
-      "sha256": "0ba2d2c46db29b988267b112d1dd52724f8c69dcff2be9925071b46a23d0a701"
+      "sha256": "3a361ed527245c0543e9e135c6f30e935c77e71e3669238b6ffb48428cdef013"
     },
     {
       "path": "cohere/TypeScript-shim/compiler/extra-shim.json",
-      "sha256": "b9ceb4f5e07bd29b696bcf5116752cfb146bb5da2da98991d6534d3a8c15edb4"
+      "sha256": "efc48a108aafd7dfbd77e1c0a555b51c9ff5d38850b225d4c7dd0932e4c1189a"
     },
     {
       "path": "cohere/TypeScript-shim/tsoptions/extra-shim.json",
-      "sha256": "28c0612033aec3a8f1f6c84d74b000aaf8d29407f06318c2e862c1b9566fceb0"
+      "sha256": "24597f888612671397027b4fb16651dec3e441abf5270a4e2dbd5adfe555cb8f"
     },
     {
       "path": "cohere/TypeScript-shim/vfs/extra-shim.json",
-      "sha256": "902a20030dcb6e95ee91dc05d3c1c553e806afd814bcef4545af06f91b9df861"
+      "sha256": "3b7cb127d17ce5ec4f345017259c476d7dc307c0ae6612f9792c6146b0ffe898"
     },
     {
       "path": "cohere/TypeScript/.devcontainer/devcontainer.json",
@@ -850,123 +854,531 @@
     },
     {
       "path": "cohere/bench/results/2026-10-05-cf47c419a242-mac16-5.json",
-      "sha256": "3d68b2c47583f545b12fab7f111911d29705a524ddc17ba65cec622aff6fefdd"
+      "sha256": "0112878602c6928342b3b713e7753e81b376105c11983ed5e6e705e5a57616d4"
+    },
+    {
+      "path": "cohere/conformance/text_rules/families.json",
+      "sha256": "a11c95c51b7692232f22268832604f6dbb032dcbe0fe19946693110fa916b0e4"
+    },
+    {
+      "path": "cohere/conformance/text_rules/ledger.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/abbreviated-identifier/ab00/case.json",
+      "sha256": "4f0f4c52ea6665234a1418f716b744fbbb47270007599a76d3a01240782c303a"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/abbreviated-identifier/ab01/case.json",
+      "sha256": "20a6c8068716d26699ac9fbe2be2e67d88663fa7a49c180aae0262aefb171fc9"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/abbreviated-identifier/ab03/case.json",
+      "sha256": "4d7a5ba49574776180f312355792774e4e0d3b98a062ffc799ee61261d094189"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/abbreviated-identifier/ab04/case.json",
+      "sha256": "7eeac4b318bb4dbdbe643231ca3fb366cd766a7679fd5682d83eeb965977bc29"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/ambiguous-identifier/am00/case.json",
+      "sha256": "03fde6e153e9ddbb5b279f26c5843379ed6acabfbeb3c71d09f5b2857a380c67"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/ambiguous-identifier/am01/case.json",
+      "sha256": "6dfd1cd4f0b59debd721362be783c682d199b2b6f6f888a221be83bfefcddde1"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/ambiguous-identifier/am02/case.json",
+      "sha256": "a8a66f68b124cf7791f40175d6ebf0e22bea82f7ca15dabbecadef2371901d96"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/ambiguous-identifier/am03/case.json",
+      "sha256": "82d5f57563b43090a25b523858bee9885be0ba619cbe260e3b974d826df9657d"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/ambiguous-identifier/am04/case.json",
+      "sha256": "780a830655221b30b78328dfdebc57719c1ad5abf06c1f0a20d6646ba7d698d5"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/ambiguous-identifier/am05/case.json",
+      "sha256": "2c5f2db5ea10938906382d4974ecf3d4c606a125fb9ec854e3ae328d148b8608"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/ambiguous-identifier/am06/case.json",
+      "sha256": "e13114744195a97c4ccbba251a6936edd3fa0981a2c88f0759b4c659339007b4"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/ambiguous-identifier/am07/case.json",
+      "sha256": "33155d664d52cdf2480597236970539573583a7de2e7b5974f0b624d5f62819f"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us01/case.json",
+      "sha256": "8c07b35f58de7bca5e39837e9e9ea3ae6acc6d2bf88182016903cbec63ff5d29"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us02/case.json",
+      "sha256": "4d394abc329c20f5bfb49e760408493a1b05ae3d6632f9ce4b6a40a83fe5f333"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us03/case.json",
+      "sha256": "4a2899934f625aeb9aeb223e7bef363bee2cecf0679f568ad8e657c746446b88"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us05/case.json",
+      "sha256": "0d1a53c388567b43c952db963b5f7dffc940d8abef4b51e6aaf406f944164ae6"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us06/case.json",
+      "sha256": "12723a278981a21e984015045b54d38f51418c37ec19f7f05a7d84ee7aa2efb7"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us07/case.json",
+      "sha256": "a2cfca9ec122517d94fa055152c1826d37908553e19886587665a8474b9b312e"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us08/case.json",
+      "sha256": "d0c2251c12ae2cae5c880637987f2b3a9e51b7b10f30bae32f393ff921ba59f8"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us09/case.json",
+      "sha256": "605df5bdb2c6dcead72ab048d9f4f8bfd7ca894130fe07c77e2cee472c52fab7"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us10/case.json",
+      "sha256": "7a6cfa3cde38251f34ae0271e54710501bf0c6a9f6d70da47008f7dc0b50944f"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us11/case.json",
+      "sha256": "040404a5b87090f73779f50c177e2b7e1e12aaa1fa483db2de64618317fd144b"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us12/case.json",
+      "sha256": "2e1a0d65a56bb6e7ff7590e2de3987bbe53332059000d529bddccc94073a7a2f"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/casing/us13/case.json",
+      "sha256": "292822da0f7e6054ee31a5acda1ac3fa198a7afdfd634234662fa72da574f512"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/console/co00/case.json",
+      "sha256": "d3f7a9cd1713412124a94e8c89a4edd62411fa6cb8900572cc20e0ca58a16648"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/console/co05/case.json",
+      "sha256": "c459c4a669478144b81fd9ff2523a2d8c94158f9e690a7e29b1042e00d775721"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/console/co05b/case.json",
+      "sha256": "f5b2d16a016ccc2bea6aa8ee2dd8cf96bc93284f428fd333143476158d8da87a"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/labels/lb00/case.json",
+      "sha256": "eb977df803122044ae8d54115102af0688cd0efc60df1c1869a874a40697e301"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/labels/lb01/case.json",
+      "sha256": "e6566af3055a1e5c6adffd1359fd028895896143663137c1927eb8f6fd2e7637"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/long-file/lf01/case.json",
+      "sha256": "e7b32112c71b3e27667629c65ab0405c330fff8d6c0ca66e0d33349477c6a318"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/long-file/lf02/case.json",
+      "sha256": "b5e8664fe04fcc6156fec08ec1060e249ba79046891375ec129d2db67e52cc59"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/long-file/lf03/case.json",
+      "sha256": "c2aae146efee4252c0298e4b7ce284eb460ad3ff054a4407fa198f4aac4c1091"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/long-file/lf04/case.json",
+      "sha256": "d381e90813787ce1f3ed99429634ca7b615bcad5d19ba8419c95cfeeacdbd588"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/long-file/lf05/case.json",
+      "sha256": "32cd714d05a421779fbcd92b07e812edf7a831468177ba0820cca2ed2dada099"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/long-file/lf06/case.json",
+      "sha256": "f9085183a81e4ffb853ba883f1d1e1066e652c899b46807862cc962f2d4fe100"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw00/case.json",
+      "sha256": "8018752f45b5d7682f5bc76b21f764cf33130f4de292841dca42207358995026"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw01/case.json",
+      "sha256": "e9701121ae046d87ff3fc1be0cc74bacc85f32049b35552acd8be0b694dbee83"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw02/case.json",
+      "sha256": "a24b53d30b68fb6c4a970e3fdb593540b4c6211b6fc32065372c50854f708eab"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw03/case.json",
+      "sha256": "c622760c3a26b3ee882e1363f1604a927da79b938350114132ee945ae9366944"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw04/case.json",
+      "sha256": "774207f52698cff3d2bb8ce9367af0b509bed32a7ecf5f049be0cc1de34bee98"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw05/case.json",
+      "sha256": "7a4fe2f85c2f7b284bb6e7716777893bd4ca962ff679f24f7cb9a925e5d02603"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw06/case.json",
+      "sha256": "5f6b38e9e6ba69363e7c6e3efab148c9d12e4d0ce962342d194a936335d4213c"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw07/case.json",
+      "sha256": "049a8c5786d21205bea1fd6344c08b4907b7fafc80465f2187f164bd33e07026"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw08/case.json",
+      "sha256": "7c0f4f28f1996f4868bad7be8ff7252bf0cb2db2e3527a23af844331beab6012"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw09/case.json",
+      "sha256": "fa927d3c21967d51146bcab343cd005842b28c5088fbaa2955fd7394801681a4"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw10/case.json",
+      "sha256": "9d51a0ee55d5899e65e37175e2399a1660eccb3c382cffea64baa63ec2a0615f"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw11/case.json",
+      "sha256": "71e94908eccf249c435ea1e1940f0e2a7aed770a9b0b05575e02dcf9a1893e74"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw12/case.json",
+      "sha256": "9422cf3170ada8fea72a1c2db7bb66fa0beb3c9da6d3a2b577fcd948f24807f3"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw13/case.json",
+      "sha256": "f512a9d86ab271f0cce02058702b58a3455933d9b6d2ca50c9bc3842cccbff33"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw14/case.json",
+      "sha256": "765bdd80b6121b33eb2d3f21ac869bb59fe753e57344180c762c6c7b06d59c40"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw15/case.json",
+      "sha256": "0cee62bda7e648d182c19e921b0a29173cc8f4839c4af9a299bdb5be5f3a2d43"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw16/case.json",
+      "sha256": "368f675fcd6fac3ae7ec95ab5b63d04b79d8ed33db3cfe9e9e385abd44099ab6"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw17/case.json",
+      "sha256": "adce284ad38fa56d34b4093d86920f3e54c9ab6f48ca0c83c48af5f39aa517d9"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw18/case.json",
+      "sha256": "33bc87da2e7234a29beeeb815f7133266c67a4bc3388fffe0a121b1863c4e3d5"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw19/case.json",
+      "sha256": "2effee22fc5900847ac1e43e45c61118264ec4af9a46010339c9a81074f833bd"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/separated-folder-words/fw20/case.json",
+      "sha256": "874f130b83d13cbd93ae41d7f32ed609fab9399f7d93767ddc56cd07ee03eafb"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh01/case.json",
+      "sha256": "fd031852c8866b560541433c821b028c21c4c6ebbe22cb5cc9787658e484bdd2"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh02/case.json",
+      "sha256": "3791b59543da2fb3ba9042f38ca00e9671983071243790fff43d1bd4e46a6773"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh03/case.json",
+      "sha256": "cf86b0be07f89df954bd35a0ac6a2a5cdf3c325ed3e87721dfa41b00b6412f7c"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh04/case.json",
+      "sha256": "6a81efe0299e796f58d670e28d6d571f4c85268643db93b7d76e3367949ba70f"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh05/case.json",
+      "sha256": "485fa5137d2ab64c902cb214443f504410a7592c7f4f742696197fbdedfa960f"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh07/case.json",
+      "sha256": "112a67c23eb001a12289c44bc55ef412de95d087d4607fa8e42a15d816dbe8cc"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh08/case.json",
+      "sha256": "613a343d608d025de02b5a4af3075c5698171283d7e62bec74186176235e269c"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh10/case.json",
+      "sha256": "690e35a8534e5fa7c5e5acf478d742cc1a586672467a3c39ab2d985bb8f20b60"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh11/case.json",
+      "sha256": "5d26a92f4dd1fa460bd19a5e4f18d40d43638829df450b73da12e454b8bd8414"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh12/case.json",
+      "sha256": "dd9a568af3aa091b32cc65a8f1268216742436eddd46db1dc7cc2d7bd49d3153"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh14/case.json",
+      "sha256": "fa529d779e3ae7815cb40cc3095bff01593440eb72489781e10d269e48b67b4b"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh15/case.json",
+      "sha256": "d1c01f6a31102355d9e74d9bdaadaa45e67b33bfa1873252d9e9512bb63d7be5"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh16/case.json",
+      "sha256": "e5f35342762999ff7190011cef0d323522554b25e03f0a8ed0ebdfeedbf503f3"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh17/case.json",
+      "sha256": "6ee72bccb7de2d6a774ac2288571dffd411dd49c8b1004318c6b27c83e75136a"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh18/case.json",
+      "sha256": "444825967ae467e9e67975d63bbd51a2a0d5c78687b5401b4246b288c7f3a6b7"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh19/case.json",
+      "sha256": "84bd483607e621bb170a0728351fe621b3b3c6b2bfb3ea66b321cabbaef4dc20"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh20/case.json",
+      "sha256": "ce474290c3b60922722a99911e4e278aca07b44173ed12ba3e521a3151725d5c"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh21/case.json",
+      "sha256": "f2cfcb4e11a0d9cd2bb01e74625df8fa90d8fab6e65928bed2f86c9d3f2a3f49"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh22/case.json",
+      "sha256": "4fb2f22788a48977a74e29f683eb61764add19228315d2cd24e4032e32f9e866"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh23/case.json",
+      "sha256": "dbdd0fc55ed3fa402bd123db5d264f23eba10206dffb501ee43f840fdf3eecfa"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh24/case.json",
+      "sha256": "160295ce38182c82088b7cdf04c951fa4133d3a3f31b7c9764f51a1a642ba7a1"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh25/case.json",
+      "sha256": "54883fe20fa593e209c14905b96fb8fdd096b0c702cb26e690e7a4170db1e2e1"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/shouting/sh26/case.json",
+      "sha256": "214f71fcbac55e5ddfea76e10b486ddce56c01b39d284b56c01024d1495c391d"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/utils-folder/uf01/case.json",
+      "sha256": "4c7cec12487bc520c3b56d80a59f51bc94eb19a222f172d831100cd70cba9602"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/utils-folder/uf01b/case.json",
+      "sha256": "44ffffabbac0a3392aba9a6f39dfeada955ff38b49a80159a4edd654a6227cbd"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/utils-folder/uf02/case.json",
+      "sha256": "80f540645805865990ad2f55e37e0c7b8280b5f6984ee0001abb2050ef59cdbf"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/utils-folder/uf03/case.json",
+      "sha256": "21621a7e1f8d3958d09f7c9af5517ff45c4acb19a18cdf3abcbd8d39f9cae028"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/utils-folder/uf04/case.json",
+      "sha256": "af6b9cb1b711e23417dd911cf8f5a08b943c001009be725b434617afdcfeaefa"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/utils-folder/uf05/case.json",
+      "sha256": "a9a2d79d271c2f3a9432f770d273ee418f0128a94d538400b7528a6792f67504"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/utils-folder/uf06/case.json",
+      "sha256": "995f1fd0b466b1cc1eecc914ec9f17fcaccb418770712e8c7dd01befc1ea9c6b"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/utils-folder/uf07/case.json",
+      "sha256": "4cae38561afb26c9a736284e3bb7fc31b4500d98e8ec4b637c259f1c6bbc7b18"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc01/case.json",
+      "sha256": "b5c1bc3ea32410bf53af611f6d765d2a939f30a845b29377d350d2600c2cf6ae"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc02/case.json",
+      "sha256": "bb74bd391e1023551332bab46c82569c5ade7df2c2da0cfb2789b29167d15aae"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc03/case.json",
+      "sha256": "ccf1b1aad4668ef19d9f91d89c0f50898fffdd4af3792ad725089bd690aa21f2"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc04/case.json",
+      "sha256": "252b918ab4a10ad3b564f6735b321af5b272bf76d0e8f508d258b31b451b4be0"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc05/case.json",
+      "sha256": "8ce001a44f2f6cb8c3fcc2c22b4864c0dc8a2bae884ec05ec508c20cf69e1db3"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc06/case.json",
+      "sha256": "402c4093ae23efb14c9062d02ee250bf586327feef94aced746ab9e031f5de38"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc07/case.json",
+      "sha256": "6554bc366be096b934138485cdafcbbcce8be0cbe80f343a0932844d5b719d91"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc08/case.json",
+      "sha256": "a359de94551600da6432c7e7d48b147dcc142bc0275d146e4c461d32e80703d0"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc09/case.json",
+      "sha256": "430bc3642c252c72128680a946d2f32c93efb55c3266794be633fa234f6021b6"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc10/case.json",
+      "sha256": "ddea6f6bf3b54bed7731c0b731e5408bd9f22249e3e4b0370b313416cb48c68c"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc11/case.json",
+      "sha256": "f1feadf350f9b8530b555bc7203b147a4ed26a2d2e9615b8f2ceae29d3aa0dd7"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc12/case.json",
+      "sha256": "0c3d67286846cce0b7547c548b737fb40cbd249926db5cdff7c3cd37ea19c533"
+    },
+    {
+      "path": "cohere/conformance/text_rules/testdata/warning-comments/wc13/case.json",
+      "sha256": "18de2c4d64b9e0ce4355004634805e7dd828380f180a6aa8aee6d7c055027817"
     },
     {
       "path": "cohere/docs/data/CohereSettings.schema.json",
-      "sha256": "b95ed8d10c2c52bfb1112573a37c3740fc204702cdd52e11b1067ca534cd755a"
+      "sha256": "ef85faf945d97f3d7c8c4c71da652852427f551c2e530017fb0e015c1a108352"
     },
     {
       "path": "cohere/docs/data/NexusCohereSettings.schema.json",
-      "sha256": "bd33c4f23667df5785749c8e0a45d0f280bf3cc46ad74c397845d04225659d80"
+      "sha256": "264168f7db215db985d1eea533fed4ab08c5c583ba582f13b786509022c49d15"
     },
     {
       "path": "cohere/docs/data/benchmarks.json",
-      "sha256": "c9dfdd7ef9870b6ee7a681eb4360ee8069598553be554f961292884f109aeb4b"
+      "sha256": "03e63c33a193432001471207f0b3b83f8e4f3b5b1093ffae2e663b1b5069093a"
     },
     {
       "path": "cohere/docs/data/changelog.json",
-      "sha256": "a7748a8a35bc21c28323a8552d525666e616267c34caa4cab07d28d281c96935"
+      "sha256": "db3f1b84202ac8f6de2ad65cec9042b3c3fe66f85cfdea3d6c02ab40ab2cd49e"
     },
     {
       "path": "cohere/docs/data/cli.json",
-      "sha256": "5317ce63118b5b5bbf7dc818fd3d40c1d58659eff651a9d45140d76da3b7394a"
+      "sha256": "1acbd8c9d2f5ca3a8d795696490565dc74b650a8bc37a10eaac3964ed6c9b8fc"
     },
     {
       "path": "cohere/docs/data/examples/@eslint-community/eslint-comments/require-description.json",
-      "sha256": "c1fbacc96ac9bec28bfa5848ce638e872eb2793061dd9a8c3012f4411c801607"
+      "sha256": "3980a26a8e6239f29d7fe1ba05f86e3b717a624a145fc78c02794328bc847c31"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/google-font-display.json",
-      "sha256": "09a69fcf2818fb44d3f973ba185185aa905fd1fe76e2f63e8d55ca0f159d1134"
+      "sha256": "2b2a259e4819fdf75ad5629e756974f91b1e9a1463379d65479333c3eb3ebf38"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/google-font-preconnect.json",
-      "sha256": "b31e216d7ff1046ee3d40352d6b81b8b4404977cb90c633b52ab01d9c507427b"
+      "sha256": "70794bf5c8f4d484c6280d680d411a7598be522bdd8ac2f451b058f1547ecbd0"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/inline-script-id.json",
-      "sha256": "6a1e7eafa4787b34a2be5ee27975fbb90ebe3403a97dfd65b89fcfed6fc5e37b"
+      "sha256": "89ad2cc0e3e8d5abfa56bdfd740164132dc1ff932bb8f777a0e7fe0f72cb9659"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/next-script-for-ga.json",
-      "sha256": "3a6942bd0884a1ef9efeb16154fc02fb27f0684e42b4a09d53de96d73dc0cc67"
+      "sha256": "87eb3b7e46ac5b413c28ae1d767a9da85f489fe2cb225eab8d11ed16aa73970c"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-assign-module-variable.json",
-      "sha256": "0abe131e402bda8dbc13ce0907a5aef78582e754c8d3a57ad41b7536c47d2dc7"
+      "sha256": "75a325c037a8157aab4956ab2649a2c1923ae3725fca0bb9fababef528e95c46"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-async-client-component.json",
-      "sha256": "3a8f7a29c8664b4709fd32a9cb22743a054bf53d20a687e9942bcd48bf64be4f"
+      "sha256": "bbf9053d6d253c04eefe485e91d37e0fbade27b1e71afcf6493ab3b58db7f8a7"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-before-interactive-script-outside-document.json",
-      "sha256": "9c1fcc8449d5fd2404e46412787b618091b66e0a7c8004cddabc0992a491c0e2"
+      "sha256": "53df2905e5c30f8cce97665f611bab30369fa13c2eb15c3fa5b889e9cdb5e028"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-css-tags.json",
-      "sha256": "f1e1a19786c37580688c606149cd333f6316fa0ed85d23e8699b65c5f62e66c4"
+      "sha256": "15f4fa6cea3b58d68bb3470000bf50615f26175737e21edbed58a8838efe0e6e"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-document-import-in-page.json",
-      "sha256": "40baeaf722563fb6d9737785280d7af1f21f50ab10d116d55405647ecfbe6d91"
+      "sha256": "58bf678235eedce6b767548f9110cf0440db623fbf2b3547391bb12c4ccad728"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-duplicate-head.json",
-      "sha256": "191472734d4e66fdb9b584010c0c0788871311b74dd0b79430bbc39bc1d5e671"
+      "sha256": "f379aa91136188d1e4df11fa873829c76489d53e2fc0d19b19c1144283cee105"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-head-element.json",
-      "sha256": "3f4cca6247617a9d83e94c836217967f90dabdd71c0314aaeeb749c7c5a8a1f9"
+      "sha256": "c958c03e0afdde714743222ef25f76c2097f7c19c43c4df67cf4074bc3712417"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-head-import-in-document.json",
-      "sha256": "72618b09ed84c9ce4976b04e0aa0998635e5196e91876fcd61a21836648ab66d"
+      "sha256": "eafa85a7ebcf7c5f7db45f6621d8fc7dbacefdef851123699090f6b5608a68f4"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-html-link-for-pages.json",
-      "sha256": "37b64a2c0d385dfcfa080100f62347e52499984ae3ca634a5131ae11b3a38c16"
+      "sha256": "b86839472a71ae127b7bf928f96a698a463894b2ae329fb4eb5247428ad67097"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-img-element.json",
-      "sha256": "3824f2d87ec79df9863551a16e8abef9fc5c4eea77412a0ee19c26cf15cfc9ae"
+      "sha256": "c3a3e33b09b1ac2e11e0dc58cb230d8fc293020cba2c894d3a5943647c013575"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-location-assign-relative-destination.json",
-      "sha256": "8d2c5691562a15f985f398346c589b976434c609f8f776a3a46bbf5a068a6535"
+      "sha256": "95dea5cdbb229319ac9c58bd6a9315804a610d03ec258c178a20fbb4b85ac411"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-page-custom-font.json",
-      "sha256": "7a0c341dba771b010997a56badc16110e10ea4f9fbdbb973f16459b784475517"
+      "sha256": "c89dbfecb09f329b1a0f0d7b5065e7146e9021952845571efdda2f5d3d334eda"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-script-component-in-head.json",
-      "sha256": "61ad89fa970d5480f8cf8e921f9760e89895f7b2e7acbae33f1b8377a6d3f8d7"
+      "sha256": "4bf75d3becea80dd99b0637481b1c34c5f87ecba499d3a3f70ae38d809684015"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-styled-jsx-in-document.json",
-      "sha256": "ab35f27e6a4a31cd8e2fc2a5d40900dedbcfeb7e89b32ec76e7bbaf4723f443c"
+      "sha256": "ca885ef79b50dca3a259ca4502812c349e7ad2220b2ef83d90f242607e312180"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-sync-scripts.json",
-      "sha256": "73f8348f20aeefc2b0d49c7b7b2d2c6d0bc4bef0c5208d5c993f7d8b41b40185"
+      "sha256": "d08b2f20ca7c7278cd1612436d6169616d362ad4304cc85b8f08b3746f101db9"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-title-in-document-head.json",
-      "sha256": "27bc75c8a478581980739a76ba7560cfd21c9777790a68273f361c3ef0522bbf"
+      "sha256": "3ad6aa29328890c2f9aa046401468ef5b2c6100569a88bf008404af97379835c"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-typos.json",
-      "sha256": "3dc1d0466a6987ad080e7fbb36ad35087bef183dc74474b3b9f8ed1d3d82271e"
+      "sha256": "dcfd6ab9c87ac8e544549d21fa89d1f5412af47ded0ce423d68dddb6e4367952"
     },
     {
       "path": "cohere/docs/data/examples/@next/next/no-unwanted-polyfillio.json",
-      "sha256": "7260c67eb2428ecc935fba2a138f3d7b18807a1c4cf7e68680416c52b5b51886"
+      "sha256": "ddcec73c903b1fc8e23ad10792d8ed16338826ff96fd6a931860f45a00f8a014"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/adjacent-overload-signatures.json",
-      "sha256": "f9f1870f7715189162d6bb76fed6631c337d9a02b1b26084404d39d8c5364293"
+      "sha256": "062f9fef3bcd19051ac933b9a7256c7b16fe8a8ec6ce9f3f05314229b8ac4e6c"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/array-type.json",
@@ -974,7 +1386,7 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/await-thenable.json",
-      "sha256": "041df8ce960d6cc9493071560e04819965f6751b1849dbd4ae276e9f6b41d4a8"
+      "sha256": "dc40942ed662f2002f8a0dba1f5b1ff8884cb5fb4c31f57c82dd7a78dc86dc34"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/ban-ts-comment.json",
@@ -982,23 +1394,23 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/ban-tslint-comment.json",
-      "sha256": "4f89210e0a875549b212950cf9eeae9a0314a62855b3f83e76a6aaddc1cfb24b"
+      "sha256": "d3a37ed84808aef570038d9ad82a574c7a32fb8944107c66f89afd2ec75643f8"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/class-literal-property-style.json",
-      "sha256": "72067bf0945650ee217f05fdf68d3e5cf8455230bf67d9d770547791326e4033"
+      "sha256": "f80ed8daea859f7b50ecccebf3afa94ddce88318b46772d8761bc1741abf06a3"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/consistent-generic-constructors.json",
-      "sha256": "fbf9189f592b0db246a2a3c6ebfe2390cc9366f9e49cd1a24eb733bd51e560f6"
+      "sha256": "f16e8492bf19dcb12b96126f4c7a7a8d0d97df32cce3c8d128eae06a243de5b6"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/consistent-indexed-object-style.json",
-      "sha256": "53c70111dbe88c05b52ceae8bcba5eceafeb64728a710841c6bb4e32093554b1"
+      "sha256": "17017054e98d4f89e57cacc468112b7910b9b5e61dfaa7b6b9324fbe6905db30"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/consistent-return.json",
-      "sha256": "d3c19a387022251ab4ab3418e38e666d9dc9de3b0bd54bc311c8b0d321fe8d8d"
+      "sha256": "00ee16eb40e85029de59b63cabf52d983cd41e3e252bee9927596e7c3b3186bf"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/consistent-type-assertions.json",
@@ -1006,47 +1418,47 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/consistent-type-definitions.json",
-      "sha256": "62ef9f8271818b34de17ad53d79a100c149ef8945ec0d398298db82289c5c1f7"
+      "sha256": "5ab4ac77746c2ed42747201e221dd560847e173500c3456ea9bcb668416147bd"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/consistent-type-exports.json",
-      "sha256": "fab091c5207f24ace24ef8ccac194caeedd7ee0d2c394be5984c9c880dd5df4b"
+      "sha256": "24dc25d9e667681c6e55bed2022bd226fb34223edfe1db830cdd20e36b67ab78"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/consistent-type-imports.json",
-      "sha256": "469faa2c33bac7232aaaabdcfbf3306b3482f74df1a344adc0d1ca1894c38e3f"
+      "sha256": "07e91f178d9b81aa02a3c14a8bc218bf8376c303e5a18f38261a6597995bd1b9"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/default-param-last.json",
-      "sha256": "205415e7cc182b975faf0cf8f32568c8b5d0b5164d9f9b7286640da652ebca05"
+      "sha256": "b095299bcf837d3f344cebcfa2899956896be1b464c8a58d9e120c94bed4b3f5"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/dot-notation.json",
-      "sha256": "782125152b1acb189266940ba0e6a4d9bc5377d2a3ec718d2cfa3d55b165f432"
+      "sha256": "ac9285421ac936c7f396b939f5d0f9682dc128b0c89455778e317b3777c5236f"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/init-declarations.json",
-      "sha256": "197bc4c0c18746a547eaa2d1a49bc3fcc7b9200ca6f06313fdb60f8f2d034670"
+      "sha256": "e1c828f0a50508d2df2142470be635b98dad1a1aa27568e494a7843b0852dba7"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/method-signature-style.json",
-      "sha256": "26628a4e0c6a4109ecd195a59c6e269a6573de6ce494827d979d3357430ec05f"
+      "sha256": "151ebaceefe2573896d67b0d808053a4432457241fa3ecae06d6999f26bb7dec"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-array-constructor.json",
-      "sha256": "3e951a447eb85f21642d0f73b211a56716d3df566f012e2fdfbc664862b23f18"
+      "sha256": "60270ff477c10ea744c2712b718adac9ada64cbfbe33ce931bd963bb8da969d2"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-array-delete.json",
-      "sha256": "ef51bf3117281b0f743f539e966df49c859894c3e68773a0337260f3b25348ca"
+      "sha256": "838aaab7f19d7f700743cb2db89729b22a5c6284733a3e5d07c64e132503fc3b"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-base-to-string.json",
-      "sha256": "14cd4f67c37514dbd4467edc46afd6320f2ee307e680ae05370d706fa7daa34e"
+      "sha256": "183f6db3d005a7e913eeb83efc5a0132824b32906056aff9e660cb1e19a715b0"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-confusing-non-null-assertion.json",
-      "sha256": "7e39f3b05c06619ffffb81c5ab8ae6e64498840a2cdd7176af1c831de5db8db9"
+      "sha256": "5a1c476d44737d290614226edb47b0749115dc32abbb14f163c3b9b098d59760"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-confusing-void-expression.json",
@@ -1054,39 +1466,39 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-deprecated.json",
-      "sha256": "27b79cec9351916bc3d9feef350033805ab781ba8b386b7052e94b56b39a124d"
+      "sha256": "a2774de5d37039820f45c79a2dac54ac091d26f70ad2ec269fe468364e3418b3"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-dupe-class-members.json",
-      "sha256": "b93bd35aa6d600b6a5b23271875a561b18f48a772616f31d4d591134976fcc0f"
+      "sha256": "698cbbf341fe1c6c5dff6f92103f8f83a291d06700d55a1a8478aefeb21932c8"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-duplicate-enum-values.json",
-      "sha256": "364bf8154371006279cd5ce0f8b9a2dbce242d77c6f37e322d67c71bef1b68a8"
+      "sha256": "e2f6c96a13a02292476bca7760a543619e59cede99728ce38aaee64e7e480c96"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-duplicate-type-constituents.json",
-      "sha256": "b61863f5b9e8442b017230112f340a43b5e9a9b227ab5cc7f12de0875f8381e3"
+      "sha256": "b558fcc6d325d2776089be909200d442f5533f26b0c20943262405f5fac77265"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-dynamic-delete.json",
-      "sha256": "efd9e55744aabf017a491dec7c58a38c5b26166e949c014f36bc33d2708c79d3"
+      "sha256": "4cd459def28f7f0e038b72272ffff3132a72f6cbfb525f75d9d29537f9afb9a3"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-empty-object-type.json",
-      "sha256": "fe2d5f3e5f24e9106847180b65a843b9867f0d4e75f6b29c149f08dbfaf28787"
+      "sha256": "ffe84c52ee44b0c089e4971f182e0237cc045e6242a298836c06e7a90e8ba6e2"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-explicit-any.json",
-      "sha256": "38615a9f1b9715d26597839f95a6f03fd1ec45e386708b5033008c9c2a285cca"
+      "sha256": "3a2246d70262c1e17760ff83391d78132cae9f20936f71e591756dfebd77e508"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-extra-non-null-assertion.json",
-      "sha256": "962eb5d09fe920bd4859fb3038136d73b3d50fe0a978e7d99bb2c55a77b6faa2"
+      "sha256": "f0c2d97ee78491298f25a945e9ed332b4e9f0aacada0f7bf401d068ebaefc090"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-extraneous-class.json",
-      "sha256": "1bfd693bc9e3af934d8bb55d66aa5fbf7493b550397a8c669fd3b49d0a4abf98"
+      "sha256": "8d40758442b37e076a6ed97d74785aca73c59909247acf480667bf4089cf2e04"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-floating-promises.json",
@@ -1094,31 +1506,31 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-for-in-array.json",
-      "sha256": "5a74e19aaf6521f381dff19c413c1cf821d667527cfe4dc058974eb16114e06e"
+      "sha256": "2a719761785c091e34fe9da59877a2a7ff4406ecc0671de00d0594e7bbb09da2"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-implied-eval.json",
-      "sha256": "f6a3419168c44ba58b4f4392972296b47a602f7ca3ef7099cf438c67edd8f635"
+      "sha256": "91851265e09f8b7100d45efb121f3afac6d3a130a9d6eb01799722e3d94a9d76"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-import-type-side-effects.json",
-      "sha256": "aec4117a38c256c68230704a8c6045dc9ccd6e1696c88e86231a3f8d710e99ca"
+      "sha256": "2c8b9d446a72e10f41f2b9f537baa64635409805d3b818b990a22c16fb85ecb2"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-inferrable-types.json",
-      "sha256": "3765139bc77b9fc5cff8b1956bade9f7e02ac2770db148f01e264d23a7d363ce"
+      "sha256": "f4beb86c81d12f1c0fadb4b7965cb541a5a4fae47599d779604af34495a5883f"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-invalid-this.json",
-      "sha256": "b0a7f7d746372f589fe39fea75d727dd22369fa3819bdb770e90d7be08ec9e57"
+      "sha256": "606bfbe9c2d41a0ec71f598c510090b51bfbfca7920f2a7a10998f356bfebb5f"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-meaningless-void-operator.json",
-      "sha256": "d966a8665fcb026c25080368dee16e48356686ca19897479d3ad3f9df3889705"
+      "sha256": "91d9255666b792f3a9dedc107ddc06548782aaf5e48f4fd31a1c307fdb2b6afd"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-misused-new.json",
-      "sha256": "97560092a167b6379cf0a874f76b34ae0add8b41cf4492ae1e42e882f45822c8"
+      "sha256": "386acac53a134cd5b81e87f9244561d6ca9c315ca75c586c73b85860cb843996"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-misused-promises.json",
@@ -1130,43 +1542,43 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-mixed-enums.json",
-      "sha256": "3f04f29663059b559ec2c3eec6caad848090369ac62f503c176a1259de0eb528"
+      "sha256": "294f9cb60ec6daa5833111f0c781302bea871214e6011ef09678f35170abe03d"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-non-null-asserted-nullish-coalescing.json",
-      "sha256": "cde89b18c2a64822f573af82cb4e9953e845c553877287933f55289e49cd9404"
+      "sha256": "84c16012bc22943408ab64070bcb9398fb35b031f320ab665e9ea5e3932fdfe0"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-non-null-asserted-optional-chain.json",
-      "sha256": "142f041e0650923c6eefb237f2cde279f545bfc7a63ac8d8f04a13ff69f282d7"
+      "sha256": "ceb3f0c17c98c4ad7300abb6b4caa59859e0141e0082f39a1b581f3b4f2403e8"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-non-null-assertion.json",
-      "sha256": "6d8f31dd5218d2a38775ea3ffb63d1d5b036889487ba1c3562bc813cb91ffeb8"
+      "sha256": "0e4c415c8f044a7d24983f6dc8911b55a079946dd94248bc9d5f3cdcbcbdc192"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-redeclare.json",
-      "sha256": "b4ecd3ba4f315d418f9e479f2283e95f0d401cf8b240ba489ad7b2e77d11ca13"
+      "sha256": "1522a476bd7d8ae71c27a88a438be453c786a3bd9ca42b1f70f67fd556d4ffe3"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-redundant-type-constituents.json",
-      "sha256": "1109bc06c6962ebbd0ef1eb23884d458b2a686e6365bcfbd384a4ca69c43f4b2"
+      "sha256": "a72bc1fb0af70847cd8ae5119efaf450b371fb0ca51050cba1f1d7c4cd1301ba"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-require-imports.json",
-      "sha256": "817e1345de23db7e6483728fe92844bc4496ba9e71aa858d3cacbd074c7bf0fd"
+      "sha256": "01c7490275af569b79f95ce09c2cf081e2381509147769af7398e65f13b39b27"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-restricted-types.json",
-      "sha256": "4115a5eb0c9d432043ee2ab1f9f58aa587cce99170c43b8e1cef1e6af7cab140"
+      "sha256": "0968bae30de020190cf67776b83d5ece3f0309d1bd9059713ebd2e23fb9ef707"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-shadow.json",
-      "sha256": "f46a045d8adfa21a3ee188f7767fee252041e006171b839c93ca06ea2af1b91a"
+      "sha256": "791ec7f88a4af0688716c6e103eac4624a148566f61851d127e00434099c81ea"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-this-alias.json",
-      "sha256": "32e57814b39b2b6f8cd37b7db1528a633a33785e1600b80246bd267fc8f2f179"
+      "sha256": "9c3d82e36afd2622adbb9edf662ce243022d5dc8977ce88489e331c746ce6add"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unnecessary-boolean-literal-compare.json",
@@ -1174,27 +1586,27 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unnecessary-parameter-property-assignment.json",
-      "sha256": "0059c399e61663dd94ca16d75c0090645650fd5a4c9e1ed32ab4754bacd01f35"
+      "sha256": "c05130fa5cfe2ca28762b8bd09c1183f2324127a4899184b51eb1ab9f7c40f02"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unnecessary-qualifier.json",
-      "sha256": "df226e759d150b42998387a67b381d7fd7b088e85ec520d5b23a2a2844a9c2cd"
+      "sha256": "b3f969c5268ee743507f1194aedaa570846f4be0963cd51695451fa31525a574"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unnecessary-template-expression.json",
-      "sha256": "b7732bbae478878a8930f4b69d8a5264ccfa5d7e2f57d7d3528632f1bfcda7b5"
+      "sha256": "25acb781323ad1b81dbce3aa428b7f6ced5bd2d980d34af5c731855a280ab916"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unnecessary-type-constraint.json",
-      "sha256": "1a20cec3addb7058c993323acb4528b48d31687411f9af81ec8408c3a350ab1d"
+      "sha256": "0d212473c859eca8b73ecd4999f30e15b4474b4265c561e293ccf118e83749d7"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unnecessary-type-parameters.json",
-      "sha256": "cbaa0e3cc771118f67e7d4bcf63f238ebe9f29584c5ef97acc71f70b7a15af92"
+      "sha256": "5a6e927d33457b19d938d5ffb566ec564abe9182d08af7c24e66a09980227e08"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-argument.json",
-      "sha256": "2e8229aa9923e147c23a0dbd240d4060dbb4a5bf6dcdb6eb3d194ba5094bffb5"
+      "sha256": "722aa1984c8ec7f9c22d28ccefd952a4da18896d5c4f223a6390b21f3244101d"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-assignment.json",
@@ -1202,19 +1614,19 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-call.json",
-      "sha256": "7dc07fe1a24f317dc2b3832f3ad948e1ee074384451b07d1a6fef90edd1148fb"
+      "sha256": "c54ffac7d06ad150d46d59b38a5748e13504c02b9d7b5791fc5cbd24942de72f"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-declaration-merging.json",
-      "sha256": "d968628404939b8e50875038d9d386c9a4dadda8f6db6c01121bf3c378aa51e6"
+      "sha256": "519ffcde5861de879a02391e9f3ca9a9cad091cf45dbc2eaac4f3d715a370bb3"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-enum-comparison.json",
-      "sha256": "5cf1d84669bc3397d6db73d4fe55518c40e8aea3f750278d6ce8cd1608f9508d"
+      "sha256": "18abc187a2b18dcc5c2adb0871ef3f6c56616b5beb84e8341398b1a50c1b7c89"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-function-type.json",
-      "sha256": "4a4410ed01d9525a880541f4531ecf947f0e1e9ca95e607bca86a003948cc25e"
+      "sha256": "60e81733313fa4a2a8d8f1000cb0e988e975abd95155b389218a4aacf8ab24a5"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-member-access.json",
@@ -1222,7 +1634,7 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-return.json",
-      "sha256": "e6b84f9eeb27cc915670d99980116dd1ba9d6feb6bf2622f578cd4aaae245169"
+      "sha256": "5440bb4a3bd29eb0026b732b6e6cc8758b0c2dd7c2ac5ea7943d8de0f42894df"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-type-assertion.json",
@@ -1230,127 +1642,127 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unsafe-unary-minus.json",
-      "sha256": "26535ec11a4a9c3bb2a6c8d5c1d5cd2553a9eb7d66d72d74823cb77b46f55e73"
+      "sha256": "1235432946a765848ce98bbfaabcdf05cb03a571dc49e1cc44ee663c2a1a5d41"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unused-expressions.json",
-      "sha256": "34c0d92e81d717f29370bffd850af7a897c14ce03777009f1bd7ea066d9f8ad9"
+      "sha256": "9c97dc26d0f1596550b1fb11817b8a1d276f682b5bd5d074024ab5658f0bdf4d"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unused-private-class-members.json",
-      "sha256": "b266c76e6d044f8f07644a7718c39a62b37daab35726be75be7d47205f3c1fad"
+      "sha256": "b6c5edf1307233adf5061ead903a2eda9b190a43d31cdd60bbc769ea07dfd6db"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-unused-vars.json",
-      "sha256": "fa686afaea085712bd809ff2a7fb15263e3318e03bae701b7bc448b802b38002"
+      "sha256": "9704cd2cc86c4b0e101bc5c2ba16f0d5c5d3d89163c3e57d628f094289755be2"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-useless-default-assignment.json",
-      "sha256": "be4e504169049183e601885a10f2c9a1abc90a720cf9f08d4465cf5dffd52867"
+      "sha256": "e61f36c207183e328e0a30728ba238dde1d24626c50b9ffc515ad34d276f7d6d"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-useless-empty-export.json",
-      "sha256": "16f00c4231203e4b7c9871b3a87c091d49b17994c7c5db4e7f93e7b0c88111f6"
+      "sha256": "c212bbfca72d1ac7d387b87211971d1d55e093ffd1c9f79e5711f67e447a9f09"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/no-wrapper-object-types.json",
-      "sha256": "fbda23fc349cfdc52af59d72735a76519f81dbca947f3fd82ae9c29debfb55f9"
+      "sha256": "130f65bff474f2a91c7be0ae0ba16585b4681d7788db04907d46171bf4eab6ae"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/non-nullable-type-assertion-style.json",
-      "sha256": "d35977e9e31a717ffbf9df6e8a25e888692f6b24ffc37ec697d71e9bfe3bdd60"
+      "sha256": "0632e34e87d091b7cd0c7d1962d00676c9fa3306e423d5271b22efcc84e4ab13"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/only-throw-error.json",
-      "sha256": "7911984cc1916950812fb7ac58aff269149f7152aab02dc0c40e4e9c063d13f2"
+      "sha256": "6ada2da7275b3e4602222985705fd0a1df03827578c3d29588f72271240f5d24"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-as-const.json",
-      "sha256": "de7697aaf6c582b8010b4b58c05cb419ffa9f412ba4054814fb8a4b30a3e2d75"
+      "sha256": "c6d65d2356d8643e92444871226ecf7b791839d06c988e1c1dd08bbb0901a189"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-enum-initializers.json",
-      "sha256": "85a6daece74f4f74817b5c4ee1f0d120911af409e55c9d7fef3420ecd9d4486c"
+      "sha256": "57226e568421a9a2b0034d6d2a4f2d7230382b53deee1d3f485d9445b210c6cb"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-find.json",
-      "sha256": "fd542ece08809a455d11785d1d298647b8ababe96e2492b9d45fa5e0b9d06119"
+      "sha256": "a0ded4cc0f4847ee56f874a24c950fa237464d3813271ee4a3211e8b66087fe9"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-for-of.json",
-      "sha256": "585c5516929df895a31e3418a7652356932f3b6295a43b712ce39c928e8e8e7d"
+      "sha256": "87266106aad754a6d66cbcbc76636d74694c00431022280b0a3ff1b71845d782"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-function-type.json",
-      "sha256": "69fcf99cf554383aedbac097d8f2b8b4c79abced01b18b3e3cd688ffb2b4ab4a"
+      "sha256": "4de5391d4d9731291c099921b02c73055962003ff600fd273b5ffbe9db1bccde"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-includes.json",
-      "sha256": "005f2e56183aa50459a6839c00d178b01ab5810f1abfd1c6b7d2dedc09c1d26f"
+      "sha256": "f83ebecc86d61bfa24ef8cd23f233cb6de72a8d9e4b936a5d1bc9e5f4e1ad772"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-literal-enum-member.json",
-      "sha256": "1a0fefa7ffc51b9f0f4ea4f571abfd34c76409de9a7b51634d04b4df33c63b7a"
+      "sha256": "19c3ed21ee2ce9e209926cfd5cf7f2605f5ca1acde129fa3287a4a53b228c380"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-namespace-keyword.json",
-      "sha256": "6e970fa537d1ce2951e0d3feb66314c07858de915f2f16360b82b4b8496fbbb5"
+      "sha256": "eb5604b0a98579c909de2f9fedcd74e6932614fa7ee983641ac99116f9a8a307"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-nullish-coalescing.json",
-      "sha256": "2b0b2d1defd9fd7bc89a255a6fd0d06999ef134faa9542320daca062269bef5f"
+      "sha256": "bedd040e0f98675c7c9bdb1c30e4dc6219b407beaa355bdb8f5c0ac92403e5b5"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-promise-reject-errors.json",
-      "sha256": "24cd5c01be250b7c8a38b5570b8976cd38bcf64fcafbea5a322885616a20525a"
+      "sha256": "902efe0bbb878492424d6eb838bfb8336b61e0fd503e3ad8c7e22b062d6c7812"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-reduce-type-parameter.json",
-      "sha256": "102f51e5f7fb0c64e19e9db680d523e3375162dd1de04da43fb6d4df4e6aca69"
+      "sha256": "a61a9ec9289aba226aa80291968e5f5a3f3a256166d849cb2bdc5dba0d6f22b4"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-regexp-exec.json",
-      "sha256": "fd539251c07d49a307addbd112646e0abbfe58e70d7e830457c2d3da811b40a1"
+      "sha256": "216c63412e5e61489a40cfe979035aa9fee76d9ce9054dcad61a1fb9019afbd7"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/prefer-return-this-type.json",
-      "sha256": "cac232d43d9b177c300eafe53aaceaaf213bbfae0c29db48aaf25a0e00a945e0"
+      "sha256": "e875a162a0736a74f76d1665167c34269aac020a6acdf9e943fc93e91cedc46b"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/related-getter-setter-pairs.json",
-      "sha256": "0eb4d8ca500891b2223824972c906ee35e4bd7d1ce1cde21868d4c39fee8df4a"
+      "sha256": "e4d690cdd35058c341da5a107467a101787890ac4a1dd4cc211ff9221f910585"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/require-array-sort-compare.json",
-      "sha256": "3c984f5d37c232a145c055f3dac09d81a9c5480857b0aa5a8c3720daaab7dfd0"
+      "sha256": "41d669c2b5d18f5fc3a6f9e6446df5ab3cc575f90d5d6b3f0d8405f6e54936de"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/restrict-plus-operands.json",
-      "sha256": "4534714c1246c489b78aff774a8257296818d88a0782132d0269b63bfae54ea7"
+      "sha256": "e52697f21642ca7c4ae1b38730ef0863e02121c33c3ccc13e945fc6acfe192e5"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/restrict-template-expressions.json",
-      "sha256": "570c037ad14f96649445f547b675cc1efee903034dc5d52779959edb82e6592b"
+      "sha256": "4b45a999b3e157b64ab09cbba3535e6f8838f5c5e565e5fd073fa691b15a6146"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/return-await.json",
-      "sha256": "0811ee12dc7271c81d84299940376bfd7d2140dd70dc74a03dee556492531fc9"
+      "sha256": "04b6779ae3f37995b31a9a1a1c4078313271ed6214c29d8ba41c3a44e5032ec9"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/strict-void-return.json",
-      "sha256": "aee40b5ba3356a95d7cce639fffd2878ec62871a207bbd377ebf77e62ebf725b"
+      "sha256": "c087864c88bce18ad9c7feeae9a895a8b7532375eca89f55b5051430fce5fb7d"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/switch-exhaustiveness-check.json",
-      "sha256": "384ea63cd0493f654131fafcb86c6a764da567c82eb13051a27ab6e7415923bd"
+      "sha256": "8cc4a868016587792a5f8381c293ee68c64c7548efc6247ffdc683e3156ef900"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/triple-slash-reference.json",
-      "sha256": "8b4f46f096d6dfdaf3782b79f369332598e1711d0e50136d03e941234fca2da0"
+      "sha256": "fa6a2526e2f5961bdbf510f5afa6d975fba8c28eb434166b149ea7a7bb787057"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/unbound-method.json",
-      "sha256": "34584b60529c606b66d9a63b934f25581adb264f6eccce7c72e8e2a15c4e9488"
+      "sha256": "f9562392992d26818892395588faf6e6fd3fba4264fbcafa18ee1090dcb237e5"
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/unified-signatures.json",
@@ -1358,7 +1770,7 @@
     },
     {
       "path": "cohere/docs/data/examples/@typescript-eslint/use-unknown-in-catch-callback-variable.json",
-      "sha256": "615c76de35e7772cb2e416a2ec6743620368300b0097fc095aada4d6a12785ce"
+      "sha256": "e86381ec9bbfc57487728edf33d1a5e7715922d956e30cabfb62b88b3783c6ac"
     },
     {
       "path": "cohere/docs/data/examples/accessor-pairs.json",
@@ -1366,39 +1778,55 @@
     },
     {
       "path": "cohere/docs/data/examples/adamic/invariant-mutable.json",
-      "sha256": "144de0cb29041b0fbfab11f94c2fda9bdad393dcf0d6c6c2562dfdee222b01ba"
+      "sha256": "d945cd551323ebbad137892ab7f4aeaf8e37a8bafb036936f6f60f71b144a07e"
+    },
+    {
+      "path": "cohere/docs/data/examples/adamic/no-ambient-declarations.json",
+      "sha256": "0b2294d83bc92f023a7812c7ae36ccc790c37c581f2a7f6b23156c361949b49e"
+    },
+    {
+      "path": "cohere/docs/data/examples/adamic/no-cross-enum-narrowing.json",
+      "sha256": "2ba2f7bb128a3bd601e38ce517a33662bf36b8f82391de9e7abd15c36346805f"
     },
     {
       "path": "cohere/docs/data/examples/adamic/no-definite-assignment.json",
-      "sha256": "d63f7121f8e17355b4b7d1a3aaa46b3a575b394bb27f9906683826d02c4cb900"
+      "sha256": "288f57c7043531b96e634b1fddb2a0e874dc43ac51c974e2d17d4a6d3528ef9b"
     },
     {
       "path": "cohere/docs/data/examples/adamic/no-indexed-access-write.json",
-      "sha256": "34e380b7d5dc8f18765b2636c7553122161c1ab1f84389bc780290fb6001ce21"
+      "sha256": "f6b265885aacb535f87843563ace92fa7d439e07062ad4e60341679613bd1c8d"
     },
     {
       "path": "cohere/docs/data/examples/adamic/no-optional-widening.json",
-      "sha256": "60ceac4f9d3d2b762b846988ac8b51c19021e15242f357e30d7b332e0a0ac6ef"
+      "sha256": "40abffdb267a6be2747ac52bfc16e0f427a91ced1d5492a65bd6899338551ede"
     },
     {
       "path": "cohere/docs/data/examples/adamic/no-type-predicate.json",
-      "sha256": "1abf9e54c844b2f2ac0fd23c5faca1fbf1eb0b48fd20ce562d7f6b6563558b9e"
+      "sha256": "e080baf5afe06e0d1668bfd43ba2a873362eae27deec1764fa68585634ba5094"
     },
     {
       "path": "cohere/docs/data/examples/adamic/no-unchecked-cast.json",
-      "sha256": "455f34776b16c276a80eae0a1278f910cbde4b561d83016bf9e9f3ec834ed44a"
+      "sha256": "c614cc52600edb138a960a4eb644dbddc1c6e3c1fdce672fabc7678034098251"
+    },
+    {
+      "path": "cohere/docs/data/examples/adamic/no-void-widening.json",
+      "sha256": "32e46d79a1c4ab7f5788826010d322b2638cf0911b9694d12fdc4434b54dbcc6"
     },
     {
       "path": "cohere/docs/data/examples/adamic/nominal-class.json",
-      "sha256": "3465f7a1d7a705756f8c922e7e23d319c611f752d23a488912234c75695e53f8"
+      "sha256": "169e115b24479deb18aee7587ed9ec82d2dc17083d8094480b2b853f2c523394"
     },
     {
       "path": "cohere/docs/data/examples/adamic/single-spread.json",
-      "sha256": "fab4d915348cfbf61e7e448df32ac26f1f243f8e857c69769e7a6a99763e4650"
+      "sha256": "aad6097b5a15dc7176317c163b1a8f1d2a1cb054a82ef929493f991be483e406"
+    },
+    {
+      "path": "cohere/docs/data/examples/adamic/union-write.json",
+      "sha256": "90b2657092d0f1f22130bbe72e2cfd6621d1c55e601eca283f855ec8e8c2e85e"
     },
     {
       "path": "cohere/docs/data/examples/array-callback-return.json",
-      "sha256": "a54d555ec3485074e154639e028b3cd77f7b4325eef3219d1975e19cd377364f"
+      "sha256": "6cdad3a947865eb42eac5540814229154ddfd7ed0adf8491d8154d270b493f27"
     },
     {
       "path": "cohere/docs/data/examples/arrow-body-style.json",
@@ -1406,23 +1834,23 @@
     },
     {
       "path": "cohere/docs/data/examples/base/boundary-no-global-container.json",
-      "sha256": "abe18cd39dffdb776b8f626cbc66a227a5a828d640a4bddf67116684947ee662"
+      "sha256": "f29ceb143e7cf85f740e0fe42a7582b3262ed9b4ca8d148dab8aac36258b9cdf"
     },
     {
       "path": "cohere/docs/data/examples/base/consistency-no-bare-throw.json",
-      "sha256": "31bdaf1cf85e77073b3a1ff6179e5ab9b94a799aeba1d9c6e580b927ee311426"
+      "sha256": "f38518319277de3f873aa427b673de9367b59d338ff3101976d0c12136b3b7c1"
     },
     {
       "path": "cohere/docs/data/examples/base/consistency-no-console.json",
-      "sha256": "331fdbb3fbab311e53a1caa3fb6d61b2ef0053ea79b5ca1f5ae598fd7d64b610"
+      "sha256": "b0ab10633fa8dd3400bed3163d38e45c73fefd561120da4ad3ffee79a08866f0"
     },
     {
       "path": "cohere/docs/data/examples/base/consistency-no-hand-built-declared-error.json",
-      "sha256": "efd56f16c8a013853e30992b4090a1d67998f4cd0b331b8242edd232b6402390"
+      "sha256": "26d0468215b850295ccfe97ac76db0986e91120ff210407546c0f5bfbc8fcc13"
     },
     {
       "path": "cohere/docs/data/examples/base/consistency-require-pagination-argument-name.json",
-      "sha256": "0d559d7941a42a28f2691e48bc00f77ea02d148e2cdd6017162e6e703a362e1e"
+      "sha256": "a5e19f4e6a94fbfde3f256be0ac0cdd7fdd81e57a2ca53c65295b30a24e64ede"
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-graphql-nullable-parity.json",
@@ -1430,295 +1858,311 @@
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-matching-inject-type.json",
-      "sha256": "9dc0e3f91f517a0e5623471b11c2f65c918bbd17c997bc4262c551b98e7d7988"
+      "sha256": "77856d670d3d272046bfb650af78bd5b4616e7933a1b9d3528dfb73f301ca336"
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-matching-operation-context.json",
-      "sha256": "00770afcd702bd29fd993ae0f3abdccb40a5851c55c100a6f417bc7adfd7eca9"
+      "sha256": "b9784fcce62f11695c8f1fbe12185975daf05f16a34f5f2cab69bf30803bbea6"
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-matching-provider-return.json",
-      "sha256": "4713baac301c75c06a11f61284ead9a71a557917e8a985343bc6c79e0ff3e29a"
+      "sha256": "568d2be9ae5201d533bbd638f28c74dba61672a76f7fd4fd29886ca8983f8758"
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-optional-relation.json",
-      "sha256": "658ca387a5f3303818bcf83e74c1e8097ff5eb9984d511b2b765e5be7e6d9079"
+      "sha256": "3cbf39709e8a1145ecf740128f377ab5479baf4b2a60609832a777065d2f9c74"
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-orm-column-declare.json",
-      "sha256": "11abb1e18bd438ca063ddcd523a58a8d7f40a43c865c67050915c8091c371c5d"
+      "sha256": "05fc09aae162add27ffcc658e7d0ebff205c5df7bb012e819d81c73b555f46b7"
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-orm-column-nullable-parity.json",
-      "sha256": "bb89880eab29d1ae903ffe84a65fcb7ad20f7a042f656041bc6b800d4d21819f"
+      "sha256": "5ecb99cb99a1269ab7521b2228948e11b6ab2106fbeebbc427f5dd0cd6f3f0a5"
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-serializable-nullable-parity.json",
-      "sha256": "a1c55d64b815622d9d579cd6a9cf834cbc2e0751a5509241a8fc24cf0f5b7d6f"
+      "sha256": "3755b6cdb8b5d203458547df8058c5c96ff33c33d0e58c3de5afface3df69d2b"
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-verify-array-parity.json",
-      "sha256": "4b6acefc4f3db4f15165888015734609615b97df70093583be9903eae235b38c"
+      "sha256": "23ca3b672006645bb2f6e7ab58f8e121d7c69c7f2caf687bebe32b85293a6b32"
     },
     {
       "path": "cohere/docs/data/examples/base/correctness-require-verify-optional-parity.json",
-      "sha256": "f450b76bbdaf0627cb2a95f2e5e6ccaf382d4462003d67751cf5abe36e6ee9bd"
+      "sha256": "6f25d280f4ec327ffe1603f70b118523e51cebfb1f28c765ed47f22dcc5a8182"
     },
     {
       "path": "cohere/docs/data/examples/base/security-require-context-access.json",
-      "sha256": "48b73e7019958a727e0921d00f4ea78740fdf86e972050fc719d7210500776de"
+      "sha256": "16b40ce1b3312086703e3fc9c418481611064f8eb3219fb8ba2ed3a7734e1612"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/enforce-canonical-classes.json",
-      "sha256": "c33c5220323f3db24c287538a45ad153a0d093272b1322fe86babe1445e42bfb"
+      "sha256": "a4a184c75a4f00e2a7ea252798b43327286e687cd033b0087abf37bdff35c7c1"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/enforce-consistent-class-order.json",
-      "sha256": "519fd307ff843b68a056e624fcdbc0e4042bd7c5fe371561ffb45d9ba72e82f4"
+      "sha256": "3c110d82ffe2fd4058cfcdf6b2bec57cd400bf96a0726795ec55f9fbb86531ae"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/enforce-consistent-important-position.json",
-      "sha256": "3634168d6a2939a9a64bb81db265964b05ca449bb1de653cb6cf5cb0a0040e03"
+      "sha256": "33df747ac948118ac2b57688940665e8e0426c36a342aadabbf169a20f1c3d04"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/enforce-consistent-variable-syntax.json",
-      "sha256": "2fcc88456d3a9a1873302e87489c3022359eda9291c7492bf6ae37fa50901bbf"
+      "sha256": "cf4afda19a6074de4797f90366910154794ca6969b61854d013efea3e30458bf"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/enforce-consistent-variant-order.json",
-      "sha256": "d2d372fd23fae28fb59cccfeb1791236b50fd3b319cac1c86250459fd4750a10"
+      "sha256": "f6409919f1600b2e9f56bfdd4c9ef8f5a7469fc1ea5e04f2f7e9ff7f52982184"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/enforce-shorthand-classes.json",
-      "sha256": "af9e4d0d47ae2cae921951ecfd82f897ce81d90e373f0585be27f7f0d878fa6c"
+      "sha256": "6ce6df1c34d1aa08c4bf3cffc7f2ded242734f51db123fba4fae2cf954fbfbf5"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/no-concatenated-classes.json",
-      "sha256": "bdaf66f549cd42be2baa377cae9a6a9b79233ac3ff2ed034a1ea4aa048ab9def"
+      "sha256": "58cc29f81c3d3cbde8117e7007884de5f5c3dc173651ea8a5c56cd48f697ff03"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/no-conflicting-classes.json",
-      "sha256": "97cde58b9cf1c78c266384dc1b14a09d63b74a7e2e58865bcd69dc76a245c16f"
+      "sha256": "2af0d1b45cbadb7c0996e90ca2b5df3348021e93589dee2934ecc6868d80d2d9"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/no-deprecated-classes.json",
-      "sha256": "7cf79ef5462c41430edf1acc9da15dadc4e4e46a972785b1f0267eadf762db91"
+      "sha256": "568c5c4445acafd33c05a206e346f681105d924aa911b1d5334bc1cac01901ce"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/no-duplicate-classes.json",
-      "sha256": "3bc61fd4512b0a9bbac38c47f07bf97421f45f7bf7431c26b5f5517837908d1b"
+      "sha256": "fada0a32ce5d6791780ff42965d65dc853cbdfdc964af37fa83a43093bd9ebb9"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/no-unknown-classes.json",
-      "sha256": "5e1c20b36fca36c00313e9eaa6d5b3c0d23142b3495e3715a8e3d814359a1307"
+      "sha256": "7206452ede0638f0503829bac5747caeab3ac8eddff271819a5dfe62f112aa3f"
     },
     {
       "path": "cohere/docs/data/examples/better-tailwindcss/no-unnecessary-whitespace.json",
-      "sha256": "805b16952ccf92e3ba9358c0366258fca64fbbcfbd9fb1a8a93777312f929882"
+      "sha256": "0835e3c01b1c18e026666dff4eb00a653ca2686eae166a8e9a71f067ec6f28fe"
     },
     {
       "path": "cohere/docs/data/examples/block-scoped-var.json",
-      "sha256": "c671c47dfad33338589bbed916a9da04089679b6aa8a7a75cedcabc117ba29a8"
+      "sha256": "87bdd1aa82c574eac092dc477d24a1c347e79f59f9b56d30912bdab5c4ca488b"
     },
     {
       "path": "cohere/docs/data/examples/boundaries/dependencies.json",
-      "sha256": "4ae4e79666fd20108b67f138b8bf43a190136559d157001a15d2a42d956b6aeb"
+      "sha256": "537774cb3adbd582a855329dc46a5d309d70f408cea3bc3f71114a0e009bf043"
     },
     {
       "path": "cohere/docs/data/examples/class-methods-use-this.json",
-      "sha256": "edad961170687ff07b60a6389d96169b66810dad28a859eaef28b7e67e20aea2"
+      "sha256": "8412ba32a4ecc5ce24f43fa98c4c558cbc809bf0b0ef8c923f9775de46b8995b"
     },
     {
       "path": "cohere/docs/data/examples/complexity.json",
-      "sha256": "40fff9de73777b9d8a19d89364a3a4025b19d67f720fb2128e320f307ef15549"
+      "sha256": "dddc7757dc6d7fc1f20553aa5315005d198dfc5a64ea816abe08acfc2e2eb00c"
     },
     {
       "path": "cohere/docs/data/examples/consistent-return.json",
-      "sha256": "93e1920396c40f09231184baa06aabd07f6318b53c29af54af27c5ef72b2afc1"
+      "sha256": "008c7f6654eaf625d4efe84fb3bf2fbfa8010acb41890d774cffee275477aeaf"
     },
     {
       "path": "cohere/docs/data/examples/consistent-this.json",
-      "sha256": "b6b2d84912a0c3ecfe554413ba1b7e711254889cb1d9dc452412920993d9b52f"
+      "sha256": "66192715943827ca15aef9270f607b2cfedaae82ea4f97bbbe2b457887cfb0b2"
     },
     {
       "path": "cohere/docs/data/examples/constructor-super.json",
-      "sha256": "02ce711b208c70d1f586dc4911b9273ac71048fcf0c56171769f4fc5ac8fa923"
+      "sha256": "a4735725791e60eba13aff530c3a5d9e0cd00e2e0a64299f3a53776a32d69d28"
     },
     {
       "path": "cohere/docs/data/examples/default-case-last.json",
-      "sha256": "5651570981d54d22c557e486b2bbef5ca2bc807a54cc30cdbae3d9b48adbae7f"
+      "sha256": "d615db033ff5b0927f48a14cc36db3f4513ae17e813e6a1739b152a124cc890c"
     },
     {
       "path": "cohere/docs/data/examples/default-case.json",
-      "sha256": "1cba311807bd6c4e0199a59884595d1ae1831b423893df3eccfa62544f12f5f0"
+      "sha256": "ae19d023383cb4c18f0c230139edf8385edd61fd9c4b12e77e7825a186d7e3ee"
     },
     {
       "path": "cohere/docs/data/examples/default-param-last.json",
-      "sha256": "0776efb7339b2ef629669f101bd457749a7d966ff2486233183e666e66ff3b47"
+      "sha256": "4d5f43afee87a068619f2082ed5746d9c7f0dd6d7c6a2d094e561e7830bf12ac"
     },
     {
       "path": "cohere/docs/data/examples/dot-notation.json",
-      "sha256": "fd3d30ef378fb2fe9f04e4e3ae615261ffb94d1293c0f8a17e237106c3c3b4bf"
+      "sha256": "23689aeaaa3c53382200f8fac03501b7f81c75e9c0fe9d833c2f96755a14ebca"
     },
     {
       "path": "cohere/docs/data/examples/eqeqeq.json",
-      "sha256": "82b42a83406d0aa266ef04caaafe2cd3db21bb7d2ea6e47218a87153176f031b"
+      "sha256": "bf3625864c793d56ba3a7b2835d66015a9c1d017e2cc2ee23130c558eee0503c"
     },
     {
       "path": "cohere/docs/data/examples/for-direction.json",
-      "sha256": "e5d7363e9d59aa24fa3418656db07dd6f3e7e3b1eff93b006fbd5be9e0edf567"
+      "sha256": "bae930a7fa29ece086fa26d5ed377b4f1d7206cc050ed43047ac7f9165a87431"
     },
     {
       "path": "cohere/docs/data/examples/func-name-matching.json",
-      "sha256": "0e8636530a32c7bdb5fb85eee293ecb749f84aaf4b8049938fd5cd02e988a977"
+      "sha256": "130065290534aea3d281ec5ad269f4bec4aa35001084849e693f33193baec38d"
     },
     {
       "path": "cohere/docs/data/examples/getter-return.json",
-      "sha256": "a9a0f53cb9de00a372d233a91e48fddfb7561116b8ab0829d458acfcb0c9c05c"
+      "sha256": "bd7a3397bb7310bd2afc1ee3734189df2aa5c52ca43e4978e0cb78a11507cba3"
     },
     {
       "path": "cohere/docs/data/examples/grouped-accessor-pairs.json",
-      "sha256": "bb8c168b830ab84671b76c560162ef57b22e23759587e7c195052d0fe9fe2d1f"
+      "sha256": "ab7148ee8a522e5ece0ab5d1da83d981091e712866b4421f7f4f69986b6d952d"
     },
     {
       "path": "cohere/docs/data/examples/guard-for-in.json",
-      "sha256": "f8bfe573a80dadf1e5a06e22fbf26cd62411480e75614ed85e4ee6f85683b860"
+      "sha256": "b3354d8f6d5c03d7ab903b3adff82fc1b27644059ec63fc31abf8ed9800abc34"
     },
     {
       "path": "cohere/docs/data/examples/id-denylist.json",
-      "sha256": "f3797be848df34a915e2516d1bcd9b58a332e494f26cc13b6b46f3875e65d294"
+      "sha256": "58cd40d3ae5920f912cf5cf3e21fd1d1c72eb92fda8790a86001552afd410bf3"
     },
     {
       "path": "cohere/docs/data/examples/id-length.json",
-      "sha256": "83979762adf3d851c03f477f17aa87adb1267fc7469716be3be86582d880206c"
+      "sha256": "47b128dd88cb6f48de05d30b765b4f54293a02f507788d363c2e5bca55142c2f"
     },
     {
       "path": "cohere/docs/data/examples/id-match.json",
-      "sha256": "ee981b23573705db9882b5655e865249f45766d50ffc842f2f039005ee1c3308"
+      "sha256": "6c05c18c416556cf4388d89aff92e893e39c9592291f873e4d90fab133653271"
     },
     {
       "path": "cohere/docs/data/examples/logical-assignment-operators.json",
-      "sha256": "e4e8495fc8f2187a1c19b0ba46540ca22edb60f42b31e9412749e308a7294cd7"
+      "sha256": "ede4e583c7bd332356fccfca7c8bee58744e8dadb1864fe3727bdabb91c0c31d"
     },
     {
       "path": "cohere/docs/data/examples/max-classes-per-file.json",
-      "sha256": "ec40f4bc835fde15698aeee48ed67ee31cfbd453df9149c46c0c6d0cca264a15"
+      "sha256": "a84ecb763dfacd2b6ea18d2c39a3a18e1fea494e5788f5069cd0a0b3930c0dc4"
     },
     {
       "path": "cohere/docs/data/examples/max-depth.json",
-      "sha256": "2164b0aedf98d4bb448924f4ea5376dc1ace3856042bd75f34ca46828fb47f40"
+      "sha256": "63bb015faf4980de850892754ffbdcc7e546fe336d71dd78d83d99bbff03e41b"
     },
     {
       "path": "cohere/docs/data/examples/max-lines.json",
-      "sha256": "bb0f45879e8679a1172c3fa1ed360750db28ea58a6a74c692b22407f8c80cf35"
+      "sha256": "06e05cce3c62d38c6866fabb2fddc7db5ea27a0456442a61c1eb8564078cabae"
     },
     {
       "path": "cohere/docs/data/examples/max-nested-callbacks.json",
-      "sha256": "9eb59b4599c377aa8b14aa110fe564841945ba1e9841f48275dcf1859ca006ed"
+      "sha256": "40dbdbeedf79ae4fa70a3d23edfb4ebe5c199453a2548fd81f5ce2d8ff2fef6b"
     },
     {
       "path": "cohere/docs/data/examples/nexus/boundary-no-internal-import.json",
-      "sha256": "3c240702bdc1ec50e5712562f2c56ed818eeda586ec8ef7dc6438d751c7ff2ab"
+      "sha256": "7cb03bc71e191acd99442f9b605f45cd5ccb6c371320d35742c36f89ce087080"
     },
     {
       "path": "cohere/docs/data/examples/nexus/boundary-no-nexus-outside-import.json",
-      "sha256": "6edb4668c0eab6e3ecb3cdfdcf1ea16d17413ebb2cf5c47241f53e4cda908571"
+      "sha256": "4ebc29890fb05f896b8dc2753d589f26bc786c67f4d6ba511ecab49ce1b43dd5"
     },
     {
       "path": "cohere/docs/data/examples/nexus/boundary-no-project-import.json",
-      "sha256": "e244bd721e9d51cafc8dcfcb90fc3479f4497e53b679ca304388cac037493814"
+      "sha256": "e2c4c5aea9d8df54999038651a3445412a20456227722a8b11478f2abb4545f8"
     },
     {
       "path": "cohere/docs/data/examples/nexus/concurrency-no-check-then-write.json",
-      "sha256": "3367ce3a419c087bb039662dce42829f56d4352e65af95381c663a143174041a"
+      "sha256": "9fd3c826e31ca83efc5ca4b2d7aacaf455fae184f2e94fb10d9403811a529edb"
     },
     {
       "path": "cohere/docs/data/examples/nexus/concurrency-no-lost-update.json",
-      "sha256": "2eed438350d6875fed6d20cb8b7ec2390a930204d969b98c2710dcf152992c39"
+      "sha256": "a0535f893e672a3669951db03c357d7a6dd9ee915cc9fb99523d8dc64c88b1ad"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-abbreviated-identifier.json",
-      "sha256": "a9916fd470783af57cad9602cc517971b2aa5b943800a7baf717a8b466c7b446"
+      "sha256": "f54f1356f07d8bdec76e057591c5a8c7dff3caebc6ff1be94667665ea984772f"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-ambiguous-identifier.json",
-      "sha256": "5d2ba86c16358955e68dba2a237e8077cebb19775ff11d8108fd23556279166b"
+      "sha256": "0ce3804fecd2fe42d5314ee9cff11bbac5ff78677b00ae902cb356a01b38c883"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-boolean-outcome.json",
-      "sha256": "a963fca34889e60c726c890b8455524289f1374336543c4e4951f762a882439c"
+      "sha256": "124d80bad1241c1c80e7d190064c1940e6a5beb863302e2a69a5f0062aa323b2"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-enum.json",
-      "sha256": "d167e7c8ce70099cb493957e1f99280faa52a299f05f10231825a5b4a36fe78e"
+      "sha256": "7e4f0bd96e87ffc99057ba3b8202f6aa23adeeacc64ea430e3c286fb0f8ea9da"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-for-in.json",
-      "sha256": "448f69d2cd7bff987b244f34b9bef7cb09dbcc51e12afd2ce86c1000e0365364"
+      "sha256": "db5b8d0c62a4a8217b60674e1e84564fcd16e99782a1f69e7b5d318407a47359"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-hand-rolled-delay.json",
-      "sha256": "32ccffbecdc897ac2ebcbebe6379a2c4bf7598dbfcd84c267d15e8022c85d856"
+      "sha256": "01a32681a0ff4be410b34ed6cc131279c5864fb459638542a14b7589cb28cc91"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-iso-string-date-cut.json",
-      "sha256": "39578c71d4024b169202d7831aa89dafb7dcaddc6141519e3fc7a018503dce9a"
+      "sha256": "9a1689b85231239b0b1e780a9a1eb0dd1fc5c5abcf0f9794d325f891451d2c0c"
+    },
+    {
+      "path": "cohere/docs/data/examples/nexus/consistency-no-label.json",
+      "sha256": "0d1faa35bfe834a997f7d27d97121ede69c3a8e63ff5808352cc0c6b71dadeef"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-long-line-comment.json",
-      "sha256": "b2d3408cf5fe2e634392fdd58d28d76a6dcbfcbbc1732a0b1c2bb81c6f89d4eb"
+      "sha256": "383853915a48f9db151b13060faca1cd2e5aa71cb8c1483cd392ab558238f236"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-multiline-arrow-function.json",
-      "sha256": "eeed936218b65fcb74312af9b6f1e14c3c2132acc16f47e22deabfc7fb7d2885"
+      "sha256": "d5f671bc5e3a42395ab1b671fbf545a0dcdcc67d44eabbdc33d083284fcd1c44"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-property-alias.json",
-      "sha256": "97dfcc605c3ab5e3e7511b6f4b12e843a1fb5141e33f18b06d13704eed6a7e31"
+      "sha256": "746e4714d871c2dd13599f90ea80123bb86ae2203231e96bbab24049b711b568"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-return-void.json",
-      "sha256": "663f6936e5ac6f0506b99675da236061f667fd52c2e251719ee3ad84b9a01899"
+      "sha256": "9916d21e4b7daa4dc77fae5c798e8777d9e3896be131b29f825e54d1ea41e1e8"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-screaming-snake-case.json",
-      "sha256": "45d7b7dee7439718912fdc0bc9ab62adbe6b34f8284d49a09936cf23679ca7c1"
+      "sha256": "f3853313ab79e142f7505b3471764eb66db5dcbf8fbc82f26074d61b4294560b"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-shouting.json",
-      "sha256": "5470c883ed9b0af5f0d52051a1888bc2a9b6952dd6658c119ee2947ebaf297df"
+      "sha256": "de10f06418bcf84684bab38a562416b5a7f09e823a326e391b58f56a03a9563b"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-single-line-jsdoc.json",
-      "sha256": "88b9cf842374a0d2c647fb358b3e2c3991c57fbf3c079efc1d24b0602469fccd"
+      "sha256": "4fda1e320cfb5f89fc1f1dc364a74e577ed909fb7c17803e1137ccc8546b1efa"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-stuttering-name.json",
-      "sha256": "e00f37edee176278190950eb509e0e04f96a172873a66106fe9c9010c5df6d82"
+      "sha256": "1189efb552da8aa1497cff5eb8bdb5c886226ca9c73580f8d84e4a03592c43a5"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-no-utils-folder.json",
-      "sha256": "07c715a410d742036779b66a74a161584cc392b0a8bb8ec059026920e1168b24"
+      "sha256": "b7b0e44e1a74860849ec331e792bd3a7ff98fff4db20a144983a443ac98434af"
+    },
+    {
+      "path": "cohere/docs/data/examples/nexus/consistency-no-warning-comment.json",
+      "sha256": "54f92f6648f379ec8350a5ed5f4a21e74f4ff9354d3817f3bd8609fa7d1490d3"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-require-constant-casing.json",
-      "sha256": "2b3ceded253cece95c51b827ab74fe40f1f66a0e94d441ccc561b8fb8bf6f4f0"
+      "sha256": "40e72efec4997ec9d8b2a656c9de16498ffb4612b84eef3fd652c1dee8269a34"
+    },
+    {
+      "path": "cohere/docs/data/examples/nexus/consistency-require-identifier-casing.json",
+      "sha256": "da620e50665255dd5e765506151313c2350310d93a8d9f412d77d4640a391c7f"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-require-matching-return-type.json",
-      "sha256": "be703e444fa53c61723227d22d0f76439f69e2c5813bd8d6e95eb1bd33621777"
+      "sha256": "4cf4973e55086b0ad5a83a09c2a4cfb877f2f50caad4e03f662e7804fdb1b1a2"
+    },
+    {
+      "path": "cohere/docs/data/examples/nexus/consistency-require-separated-folder-words.json",
+      "sha256": "e6f7207ac58ff8f71c173d19f6e9bfce5a5611845a4ab1c0851fe6502244f2c4"
     },
     {
       "path": "cohere/docs/data/examples/nexus/consistency-require-type-suffix.json",
-      "sha256": "a9812b2362e0c683e4750d2e230e4f479798b3a1b4ace7d400c38839fc76dd95"
+      "sha256": "06e344fd744a2ca5a36fcb310716b0ed4af1d88b2a04c17ee00fe5a65a688835"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-callback-in-parse-try.json",
-      "sha256": "a31fb9619bd1705006676adb11da52796c934b5cf703231e0151d2c1b832b7e5"
+      "sha256": "290b54f3b1e3dd63b5a65ae941eb5676cc69bbc9ba973e6456777616fd04eb73"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-caller-data-mutation.json",
-      "sha256": "df4268d3d0f57643263bfae541a460380594b124b356d961173a6d2ccfd59a78"
+      "sha256": "68eef8ee15c65a1d0549c195126ffa713bb1d497972f5a650fadc22e3e747dfe"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-collection-misuse.json",
@@ -1726,71 +2170,71 @@
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-discarded-outcome.json",
-      "sha256": "2530e84055a92bdee43c9363a48b080727c057668fcc021bd29ff085670fcd44"
+      "sha256": "1de781f985479b5277b355f3100f38320ce481f5115303ba884b0c4aedc38937"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-discarded-pure-result.json",
-      "sha256": "7c789a12d0d66b28bd0d7ce296a2268bb1548644c8a818507a864ae681caf5d2"
+      "sha256": "919ccfb9e4d3daaeab7a3c2e44c6607706ca58937d68bbdaefb053b322f7a70e"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-global-listener-target-assertion.json",
-      "sha256": "88f7d2971e96a124c4b04589362d135aab4e37ef020439dbd068f803fbc49e94"
+      "sha256": "2a57812270fbd1c2b20f8a32b88efe5c88cc44c0c5dae03e85d23080593b7dd5"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-identical-branches.json",
-      "sha256": "f0bc7733685541316f3f3c6c5eccaa4a318de4f19ce472f585ecf8dbf8643dbc"
+      "sha256": "80fb24fa2136b939dfbc183e8390876e44c35add2af8a86d06774b5498c7b49a"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-implicit-return.json",
-      "sha256": "3aaafc2050453afe6b00b6c44a0b576816501c66e0bbc71bd29e3d1e6a417cca"
+      "sha256": "d8bf1baf82774c35de368c65b66109c43eedf17a3cd80781099c85de23a4be32"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-import-cycle-load-time-read.json",
-      "sha256": "2160b24b1e8e01279bea655db11cd36b068dc60e105d970aa5df918b84dbf0ac"
+      "sha256": "cd6dd0fc816ca93813b03df37c266817d467aa4d9b955d7eaaabb9501f6f69d4"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-leaked-number-render.json",
-      "sha256": "bafee76aba403a5a4b4eb5eef4a15232e4b4db6a9ecdd6ef28d52274d8546ced"
+      "sha256": "afe00dcc39ffb92691a143873e5f9f25a24f8f89551f50355c99b766445580a2"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-load-time-import-meta-path.json",
-      "sha256": "1cb76ebdd1cd678b1731ab56d9bb122d3dd906467cc2541fab86beb1fefe024f"
+      "sha256": "777dba0f6223ae8a2162338aadc53f1ea486833f1a776d8bac3830d10080ba04"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-mock-on-module-namespace.json",
-      "sha256": "bfb8450d055859e5b0b8378c7474ddb62e1319635af9942b9be385d00715e180"
+      "sha256": "2c34923573078a021b58549691f70f45678692578ed205768dd9aea80abd3b3d"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-nullish-stripping-assertion.json",
-      "sha256": "eeb9650867804991074ba90a0f9c88f3b0846ae7a2064529514a79096c649973"
+      "sha256": "ceb7b73fd6b15364cc42fc84152ef74c036354bf52a2d44dab140dda316c75dd"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-process-exit-after-output.json",
-      "sha256": "878b67a31c34e56bf056ccf0e10f8130e094eefb589ac230aaf84c1cd8da099d"
+      "sha256": "98bde62e80239d598963428099d21b5d438a20b2a70a73bbdd87d851c53607a8"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-test-on-global-regex.json",
-      "sha256": "5e81947aa7939203751b0fef804281eaad9565cb35ed7fc5bfb52371bf668b1c"
+      "sha256": "25d6aca60c9e1e6d12f0d28609752ce62d853c68744b2080d008d356f41cbd1c"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-uncleared-race-timeout.json",
-      "sha256": "eb442ca70fa4c55b9f6ad8e836d23be01feef30fdc105cec3888b191b5b998ea"
+      "sha256": "e8f0c41af123d088f3c3f93aa14e40f161e04cbf01333930835b9e73e3afaa4a"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-no-write-only-collection.json",
-      "sha256": "3390246646e6980d88d1782b16435cb1c99134ef237a496b3683077d4bb32b83"
+      "sha256": "1c5d431dca95e29fd9dd33bac043f101ed59f57eba3dce39077ac390452a873f"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-require-blocking-standard-streams.json",
-      "sha256": "82c4cbf59c2fbeb2e9f063b2b30034fb82b0d0c2de4ad9953119afd8e357b286"
+      "sha256": "d69ed436ae8f5011b085359a04649ac18213f0b43c84519e25052baae0747ee8"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-require-child-process-error-listener.json",
-      "sha256": "8e2c6a4f6432566759543107228fdeddbcb9688ed6a20a264f32db258b319952"
+      "sha256": "be759a7ad99fa651793d05b752c5d75cf48022edeaa1ef7ba161a3e00f97ba52"
     },
     {
       "path": "cohere/docs/data/examples/nexus/correctness-require-response-status-check.json",
-      "sha256": "16c156b11034a260181dd05214f6091850fccfb809d273016346e3bca9f10338"
+      "sha256": "df18d01d322921b6ada1b9defd07dd58a936c32547f8ef34e34bb58d7df8a6f8"
     },
     {
       "path": "cohere/docs/data/examples/nexus/import-no-forbidden-source.json",
@@ -1798,67 +2242,67 @@
     },
     {
       "path": "cohere/docs/data/examples/nexus/import-require-module-alias.json",
-      "sha256": "8cff4f6ddf2d29da6759f0a0b3cc6387595c80377219b08e77fad211abce466f"
+      "sha256": "11dcc07de09c88998f7113a8fedf75a8213a2ea64b93d1f65927383f5a756be8"
     },
     {
       "path": "cohere/docs/data/examples/nexus/import-require-node-namespace.json",
-      "sha256": "f8d12afa89b6b5a2a020d6007bc83d3144c1ad6bd730f73fbd39c41faa3c2015"
+      "sha256": "7dc855c91970956c6dbfdb0e0d50e3a5b9b3d7968a1451af5d1f37852f74f6ca"
     },
     {
       "path": "cohere/docs/data/examples/nexus/import-require-path-alias.json",
-      "sha256": "66d6c22ad1f869d3ec87db899f29f24e40228a6edd8a12e9eeb0d2103678d3dd"
+      "sha256": "f9f3643c74e7e187d5eec8e2119791a51471a894a935d0895f973870c7adc3ca"
     },
     {
       "path": "cohere/docs/data/examples/nexus/performance-no-independent-await-in-loop.json",
-      "sha256": "8d42e6e584e5de7892d298a8d3dadc4eab75837575f864f370d8b426af2d94eb"
+      "sha256": "af57156ba28c4506e51a60014cf1ecebe468107cf8cdddf79b66e43050562f29"
     },
     {
       "path": "cohere/docs/data/examples/nexus/security-no-interpolated-shell-command.json",
-      "sha256": "2508147a8a18f4cc245295460aa1f5e75f3c1fb22af3d298850407e1c372e6e6"
+      "sha256": "e8061708a63d677d282a399d12119e279c24b004a9fdcc885cd1f7106b77fdf3"
     },
     {
       "path": "cohere/docs/data/examples/nexus/security-no-interpolated-sql-string.json",
-      "sha256": "933b0f2089247a26e5d0e9e9b55d5a0bbd97e42d42e43f4289f334cc6089e68c"
+      "sha256": "54b76a4514e81af6798323155649a736faa92b07a26fe692124a692e3a564be1"
     },
     {
       "path": "cohere/docs/data/examples/no-alert.json",
-      "sha256": "d950a23087c482a098d374d6bfd5b30001040c1def1ed8209bf3cebb97d61394"
+      "sha256": "5e744848c33f100970fc14a9acf1dc4a2fbf1d984cd03600fd47acc5a7d4e24f"
     },
     {
       "path": "cohere/docs/data/examples/no-async-promise-executor.json",
-      "sha256": "020f815755538a016ada7f7fed36e8e67031d6b541ab798f7ea90bf43886ebf4"
+      "sha256": "6e745b7960bc6af0e6e0576779d7a1e4fb762733e9980005cfcc52605237c706"
     },
     {
       "path": "cohere/docs/data/examples/no-await-in-loop.json",
-      "sha256": "4e8df236c11d28bdb37f78d8deac3bcb3e6dabb26a69d1d45c606c8fd1de881e"
+      "sha256": "43d81bd36d5c1890495174b02488fdc680d32a0d1e5a85f6310743ef001c547a"
     },
     {
       "path": "cohere/docs/data/examples/no-bitwise.json",
-      "sha256": "6d36b7bf7f870c973188cbcf74350532121eb83d700c559ef15ef73d981fb2b8"
+      "sha256": "315309e4ba1a89e99243f47af64585554980396c5d5416ca4c933c6cc4e670bf"
     },
     {
       "path": "cohere/docs/data/examples/no-caller.json",
-      "sha256": "da76c9b06e861f9071000cd382d85c47735cdde6c6f72e3b1906a34e68afc235"
+      "sha256": "b02a070ab45090da21e200b5924d97374f37f2f257dce9917fe6e30c07fd73c9"
     },
     {
       "path": "cohere/docs/data/examples/no-case-declarations.json",
-      "sha256": "75a79127965311d7e6a8789ec865cf9d7abb4e433513395ae5907a0cbcfe7f67"
+      "sha256": "737dcce3b341b94aec33fed947aaba726c6b054a9679eadb634c333cdf19300a"
     },
     {
       "path": "cohere/docs/data/examples/no-class-assign.json",
-      "sha256": "4ce2d1159c75e985f8893f0b842bbd80a5edd81cea75f5a5a790f12d9fe1fcb9"
+      "sha256": "1adf228bbd3d8bdaa6f9d34ed17b8ed7bae06741180d5140b550a231f10f5a84"
     },
     {
       "path": "cohere/docs/data/examples/no-compare-neg-zero.json",
-      "sha256": "c525d91c7b1257279cea5b84b359c6f45384189dd2950337c5bf1257d28a9d5a"
+      "sha256": "6be9a1b5294aec2f70b5aac718d5adae07564c8d961ee5be517771b599afd24e"
     },
     {
       "path": "cohere/docs/data/examples/no-cond-assign.json",
-      "sha256": "1224842b91ab312e07d8914063d034b52f8515f5ae526598b884d374197c3b61"
+      "sha256": "9152e8af59d5d810116e3230c35b7fd21ed2db21261ef0c14b7926b2fd7b22c7"
     },
     {
       "path": "cohere/docs/data/examples/no-const-assign.json",
-      "sha256": "eba5badb353a9dad6a983cd98844b658272ae270f14c0259bb5df0272b9944d8"
+      "sha256": "a441c23155bc739468377c07f46261ae002915062ed48256dd0b50c563053e3b"
     },
     {
       "path": "cohere/docs/data/examples/no-constant-binary-expression.json",
@@ -1866,171 +2310,171 @@
     },
     {
       "path": "cohere/docs/data/examples/no-constant-condition.json",
-      "sha256": "bfe0d92ea0e43b8e2eca23be901cfeb3ba479dbb97b78753df3f18620ff0dea4"
+      "sha256": "2236a8a0d9f254bc986720c09f1168235541c68f3ac85c6c3116de1797941c95"
     },
     {
       "path": "cohere/docs/data/examples/no-constructor-return.json",
-      "sha256": "6e5f090d87d6917b1bf50f7f602a48e2593d8a484ec7d57c466b6ed524de5861"
+      "sha256": "657368b2c6523bdfc7c1c34b57ad8e528c6d8e96bea9abdd0db4aa479c385068"
     },
     {
       "path": "cohere/docs/data/examples/no-continue.json",
-      "sha256": "b7828d8e159213626c70532ad8c70797f01238c8fd25c53846b439db34a31e5d"
+      "sha256": "19136dfedf736c372d469c0b491508774961660794dd9906b95579ae8a6d1f7c"
     },
     {
       "path": "cohere/docs/data/examples/no-control-regex.json",
-      "sha256": "6994a2862fde83de2528bd2d19b1fad8b419c04b09b0aabeee882e83e5b9c09a"
+      "sha256": "3c051cfc584c9f739103c5b30f28ea4767c3a194e5b363cd56856f35dec2108a"
     },
     {
       "path": "cohere/docs/data/examples/no-debugger.json",
-      "sha256": "579fa04527066ac2853ecfd08d503771051ec24fb1f59e25847f945cb4c78e87"
+      "sha256": "53c94df99da41d8816459fe3a79036f649fad906d3efa08905f0d16e37fa3d06"
     },
     {
       "path": "cohere/docs/data/examples/no-delete-var.json",
-      "sha256": "159252ed48dc95ac3e6473fd60d4558130948407091b6e5f9ea6ee2337fa45e3"
+      "sha256": "ad921e83e37cb95f693d4495d8336cd90c88dcec72c7edc5842f194b1569472e"
     },
     {
       "path": "cohere/docs/data/examples/no-div-regex.json",
-      "sha256": "3f637aeec5856a04df7002566529ec929750b59e6ee6f5b8646b8188fa323835"
+      "sha256": "a5bce730d4f7b67dcd4c9262635a7d8166fa97799be6957654b06cc8622092ac"
     },
     {
       "path": "cohere/docs/data/examples/no-dupe-class-members.json",
-      "sha256": "29372417577c7a2b0e962292b5b3141e14a25f35a2a0635268f9a9fda06d182a"
+      "sha256": "3c49ae0a32ea8913046becbcfa7d8e7ebec1dde5f0c72273124288e592cb6ed3"
     },
     {
       "path": "cohere/docs/data/examples/no-dupe-else-if.json",
-      "sha256": "9698f532e5131caed5e485a89aea57c56afd679f2ffbfb8ac8171abd2a13805a"
+      "sha256": "345d83f990d63ce06dbf10729e422cf220d7c170a72e9ff3cac15c1db0e8d0b9"
     },
     {
       "path": "cohere/docs/data/examples/no-duplicate-case.json",
-      "sha256": "f33330ffc3372d4e15b08d90023a75c077293816ae423fd457cf0ec4f3937098"
+      "sha256": "ddcd332da96d1444ffca3ff9ef9fbee2da38c7d1fa4ea8a0a0e10e377c9cacfe"
     },
     {
       "path": "cohere/docs/data/examples/no-else-return.json",
-      "sha256": "9c2c08f245a245b26b0d4bd79e201b7b86d55526061d2a33504b44000d5dca41"
+      "sha256": "b90d2c759ae6745ffdc8d7073bf4e7b0a00482166b4f66775323a789a01492ac"
     },
     {
       "path": "cohere/docs/data/examples/no-empty-character-class.json",
-      "sha256": "f854d7c0cc5292ba2260d9c95878a564d87f5d1f7be54a647f938bcd2b9a7061"
+      "sha256": "89239c2e3ca98315968173e12c0cf9ed790d001df231e8826d503280a2a3bd9d"
     },
     {
       "path": "cohere/docs/data/examples/no-empty-function.json",
-      "sha256": "996e7bafe74c8f29dd1da91ca879756f86dca182cdd629336ad444de3314b462"
+      "sha256": "615ba8b9b47d42bf6fcb990c9b5633ba43a229c458a94c918bc1dba0d72a0f2c"
     },
     {
       "path": "cohere/docs/data/examples/no-empty-pattern.json",
-      "sha256": "4f1b9c767e75174481da56159a2897c4848f429be1067fd1e712bd845c4ccf71"
+      "sha256": "562765106d852242cb7ee5a5a6dbf3128749753dbf002177b2b7aeda168d6a23"
     },
     {
       "path": "cohere/docs/data/examples/no-empty-static-block.json",
-      "sha256": "33cbb320a29c68c25586ee5aa9c423f0eba4b6b0f71896722bcb35eca467f836"
+      "sha256": "7b9b0b5ba1ab87140c4cd75e311486c1d54f2fc33e8295584c0da2887f936759"
     },
     {
       "path": "cohere/docs/data/examples/no-empty.json",
-      "sha256": "ba02088bbefa9c0fd83ec32659ae5c5dbb1f8db9c57c0e5955b4cd90b5306d51"
+      "sha256": "4786cc6ce61fdaf5ea80e9bf09844d982ee81f159c5e2d39654fa0760d589ce9"
     },
     {
       "path": "cohere/docs/data/examples/no-eq-null.json",
-      "sha256": "83b1459beb6a0c3c17c2315863dcfb9ebe5b09538f7a0a85f78133e4b6f3a598"
+      "sha256": "46aaf8eec175f2dfb2655220035e7d1a83e994be29a9c3638d67b80b83b6e0ea"
     },
     {
       "path": "cohere/docs/data/examples/no-eval.json",
-      "sha256": "aa5fdaa1dfe5df6cfa186931773715b096db0201faa8cd6e6d9a674fa0b2f50b"
+      "sha256": "c05d11e70243e2f2e5e4d79b80cd1416c47a2154a984abf300de1a13ca30a20e"
     },
     {
       "path": "cohere/docs/data/examples/no-ex-assign.json",
-      "sha256": "7b1d3672576b5b1b2a69b8cdbbbe2845c1156feb1ebbd8fceba2fcbf97fb92ea"
+      "sha256": "55befb3da403a25786543f0a315dfd3d23ad6c8d53f19e24b922584a5184447e"
     },
     {
       "path": "cohere/docs/data/examples/no-extend-native.json",
-      "sha256": "f37404ee8264d31b7eb4264c3521ab345e1a6b40c9dd67986671729c7cd790e2"
+      "sha256": "60c8794fc905606ca7f112cdb23d5849a7ef875bf45d394c946b02f5d972dfdf"
     },
     {
       "path": "cohere/docs/data/examples/no-extra-bind.json",
-      "sha256": "3bac5865efaeb226c16a0eb39052c9ba7674671381f535b5d883cb359e12925a"
+      "sha256": "a23b94516b6758d26ebdc3efd8c89ae0b2abb8b24f3023de60763003d91b6159"
     },
     {
       "path": "cohere/docs/data/examples/no-extra-boolean-cast.json",
-      "sha256": "90f275fe435e3ba21f3caa07b1337138510a886366263b98a99f5e35df78ca88"
+      "sha256": "7eb0f93ed15fba2ce15ce9a06ac33e819a3996a19e91ec29257fe0c8351cf648"
     },
     {
       "path": "cohere/docs/data/examples/no-extra-label.json",
-      "sha256": "1d0c0139d3885c96f641a77452993e581c4da3a652738283a74a804a364e4536"
+      "sha256": "3d873ed3bcd4c0734085f8374ef69a5919b95f3f52f1a50f69e680ef98b46904"
     },
     {
       "path": "cohere/docs/data/examples/no-fallthrough.json",
-      "sha256": "6318460aa2c863f5a24c2cb53efecf6606c65ece34fc7928f7ae937855f6c222"
+      "sha256": "c7c10448426aa918d44aeef6612df84519ffb894c710e114210bcffdb7bbb7a1"
     },
     {
       "path": "cohere/docs/data/examples/no-func-assign.json",
-      "sha256": "7f30dfcc740deca99deeffeaa74ddee7d0ef197487e61a14f28016e4fbbc7e2d"
+      "sha256": "75d3ae9ea7a7a5f821611b859d53898bb4988da0dd587bd89541d6b423b49708"
     },
     {
       "path": "cohere/docs/data/examples/no-global-assign.json",
-      "sha256": "446e2afddb659217ac30330403b4a01b2c45b73b6523befc35b2b509ecb0ec4c"
+      "sha256": "634ab90e0ca9613863bebf2ffc0847241b245f5872f8f84f87bb6b4c3a83f7b3"
     },
     {
       "path": "cohere/docs/data/examples/no-implicit-coercion.json",
-      "sha256": "593c01144beab28b9bceb81e5cdd4c6a7611fd56bc70b19d84f5ea30407afddd"
+      "sha256": "cd57131644ca05b0cddfa5577d737c961b449ae26c3d481611efd5db4b80f075"
     },
     {
       "path": "cohere/docs/data/examples/no-implicit-globals.json",
-      "sha256": "e13116db1633e40b189c23a7343357590e25ebe401da2fad76d9a720879eccaf"
+      "sha256": "4219b669cecda80faed8ee3bfbd1fa3d88d8f0d84da79b51f4c46e4f3e6f4986"
     },
     {
       "path": "cohere/docs/data/examples/no-implied-eval.json",
-      "sha256": "a0cd8b5c33b18e2cdbc17ac90fa21cd632234b15f502b9051973a13f5d36f485"
+      "sha256": "af5c0d09c4790a4534e489131ca7b0633dfc003364746244e69968dd44e5ce7b"
     },
     {
       "path": "cohere/docs/data/examples/no-import-assign.json",
-      "sha256": "1d40b9dd9c88b0eb50840dd8ee67ed7c46d829727ae37780165610414a8a8d63"
+      "sha256": "50f9f73bb71ed691c78988d871e3b57a7d02e68ebe5c88eef604db4414036b5d"
     },
     {
       "path": "cohere/docs/data/examples/no-inline-comments.json",
-      "sha256": "d4bf0552b39bf0d8b76e3f664553fe86920a94cb35177ca4f56cfdb069752d13"
+      "sha256": "4d607af1a77ad10c962820cb718c9495d9979ef17315cdea0d9f12ec3cafbda1"
     },
     {
       "path": "cohere/docs/data/examples/no-inner-declarations.json",
-      "sha256": "2a23fd963e0be6ae094e81abd5ffdee07d50f283a57fcbbb0119ee050b308f52"
+      "sha256": "1d973a440ba364eaf6d933c8242cc8c916546185e6514b0e2fef64ae09de27c1"
     },
     {
       "path": "cohere/docs/data/examples/no-invalid-regexp.json",
-      "sha256": "406ff5e28c3944c010648f1767b71685a567484711354df16b5465979c756b3f"
+      "sha256": "97b7eb9774dec869e150ef0d47ccb4b39cef84394f961fd6feec81b55e6fae6e"
     },
     {
       "path": "cohere/docs/data/examples/no-invalid-this.json",
-      "sha256": "37fe3e08693a7c03d46319780d9f1b026f8f129079468745d1e501aadf800e6f"
+      "sha256": "3e57435da4f84f0725aafbcce00c56f957b50f35c6bfe46e7d21b45e27c5ceac"
     },
     {
       "path": "cohere/docs/data/examples/no-irregular-whitespace.json",
-      "sha256": "f7be0a1a38387087b4976e64c9d961473c544211f01e2da2bb8c0c8b79d1a39d"
+      "sha256": "e81dcbd21f1e580d0bfdc6b2fc450e28b43c21e8f86bb7274c837529199ac0b7"
     },
     {
       "path": "cohere/docs/data/examples/no-iterator.json",
-      "sha256": "3373be9a2fc73f3d3fcfb09e00beab61618b2dce667e56e8da87e0dad734dc90"
+      "sha256": "25a33631fbc13ff31ec03327628858b64457ee067e0b11f2974ddca84551b5b9"
     },
     {
       "path": "cohere/docs/data/examples/no-label-var.json",
-      "sha256": "fa44bf54d47ab188877dd40ff39a47faa198482bd4c79eacc13359b25b274f34"
+      "sha256": "a5a4b108eb755f8ce75a87ab1e2934129d6fc88956ddb6cd84193501648527d0"
     },
     {
       "path": "cohere/docs/data/examples/no-labels.json",
-      "sha256": "4220917605e4c6ebb30d2899360d690126a2858e551c143442b3da62602ad835"
+      "sha256": "f628407f207f4d2cab54831192e3396aad9e412fbb3756926a97332a348b3886"
     },
     {
       "path": "cohere/docs/data/examples/no-lone-blocks.json",
-      "sha256": "4095f9657f224f524fa5311adba1352449e46b3ad696f551b28e238de2a78a33"
+      "sha256": "a280fdffc4e656bef4bc2d5bb7b45a9918f8a00ed2f1d6e6499f314e64fa7ec2"
     },
     {
       "path": "cohere/docs/data/examples/no-lonely-if.json",
-      "sha256": "818b4956cfced0578ed7950f65b2dd2e51f265cfac47e1a4c54d1897affb2006"
+      "sha256": "291ecd9150ea271b0785d635383501921a28f51af36b9b4c04c02334b83bfdb6"
     },
     {
       "path": "cohere/docs/data/examples/no-loop-func.json",
-      "sha256": "12c031922c5c64684b0bd560f2e93d9c55f77bc7b94bbfce7001e6d4a6e590fc"
+      "sha256": "50ae588a4c3e310d75c5f1a934c22628127b6794cfa4829ce3084c2fc167ae92"
     },
     {
       "path": "cohere/docs/data/examples/no-loss-of-precision.json",
-      "sha256": "baad7716de73f30f04c209afbdaf2676e1f60dda6ef7502493a47ca29840605c"
+      "sha256": "9873f660de0f27c51d7ba2cb719a410fc9d5149851ce01c0618c2061868f4959"
     },
     {
       "path": "cohere/docs/data/examples/no-misleading-character-class.json",
@@ -2038,83 +2482,83 @@
     },
     {
       "path": "cohere/docs/data/examples/no-multi-assign.json",
-      "sha256": "9bcc005a61e045bd8aebbb376751af29e232dfc25e3117d4055e067cbad54f5c"
+      "sha256": "5bca3382ad7fc6d39685a495989cc4ca1a501db75486e4f5c68a1d65d58fa68a"
     },
     {
       "path": "cohere/docs/data/examples/no-multi-str.json",
-      "sha256": "ae607e51c667a1b87842fc6056e31bb42eaeedec71f354b7410a47dfde21c408"
+      "sha256": "2df8e29f3cb963200c9880aa8a8bcc4e6e037264b5d9695181b1947f2bee8367"
     },
     {
       "path": "cohere/docs/data/examples/no-negated-condition.json",
-      "sha256": "5ed0b2d78bb4e244a916dab8df3cbaedc3e15bbaefb6d05ed119dfaf54a3f64b"
+      "sha256": "be50271a033b1d4694fb106aa2b7d10b55513926bf51d82bc5e555f42cc24605"
     },
     {
       "path": "cohere/docs/data/examples/no-new-func.json",
-      "sha256": "e513511fc27e8a460e08ed82049354852306840f1419324ddee288cf8be0a306"
+      "sha256": "f862962284a1e7c8327af83d315337fd296dc9253fa35e95595b44fb988ef918"
     },
     {
       "path": "cohere/docs/data/examples/no-new-native-nonconstructor.json",
-      "sha256": "6b152814fe1cfcf7f23942b2434be7df38173ed10e4304e8484ce790419dc2c1"
+      "sha256": "44a508af0c4b4170358dec170b1294dddf73ec15ead3638e9641288ba4fb1e82"
     },
     {
       "path": "cohere/docs/data/examples/no-new-wrappers.json",
-      "sha256": "189f9b400a8df81c5b1985648a7a38cf987557d0fa4d3b2c431d6056e7aa26fa"
+      "sha256": "cdccf22333b080d5a372522cf0c86350f29182bb1f2dda642c2578aed0a7f209"
     },
     {
       "path": "cohere/docs/data/examples/no-new.json",
-      "sha256": "55ccaa5471b60544445d34795920f79dc4ae0c71cb79466a28bf047eae4d461a"
+      "sha256": "bf2aa9730b973529b1763d828d8300cfdd07455fb6ed220b8d812b2182f0682b"
     },
     {
       "path": "cohere/docs/data/examples/no-nonoctal-decimal-escape.json",
-      "sha256": "d9e03bd7ae8bb232a26e696eab537cf5dfa68b3f11519b4d89e06e7778916b9c"
+      "sha256": "9fbe3676fe25b456e68cdb1d62665f46bcc5b6f39c5272fb48de1df04ad99d94"
     },
     {
       "path": "cohere/docs/data/examples/no-obj-calls.json",
-      "sha256": "968d2059f3b59c2dfd62f96f64a0e39665d804ac49f5e3fafd535a25ed6256fa"
+      "sha256": "d1c3319aa4cfb4aca84bcf7396c2ebf9c4e34aef27c3658be8985d5be425f9f4"
     },
     {
       "path": "cohere/docs/data/examples/no-object-constructor.json",
-      "sha256": "c1b0497b7e40abf53b1c2df7881232be04c671a0be4b0cf871859355c907755b"
+      "sha256": "01fd29056e9d344912395b8bb57e94b3519938dba19727800f339dc8378fd821"
     },
     {
       "path": "cohere/docs/data/examples/no-octal-escape.json",
-      "sha256": "8354cd74e0f7c3a1a4c559ec2ce9bc7fa976b34cfe09256ebb5386c785a9ed1b"
+      "sha256": "9168e5493ffe17df85cb8fb7773354e926f418599f8d88408c4ae817103ed797"
     },
     {
       "path": "cohere/docs/data/examples/no-octal.json",
-      "sha256": "ffb23d9c4614e6e767226713238b85ed3a4ec2d0feea3664c0353227b606692b"
+      "sha256": "7a74591902b4ca0035b9a64563faca7f0eaf146a825daf0045d6b21129cd9d04"
     },
     {
       "path": "cohere/docs/data/examples/no-param-reassign.json",
-      "sha256": "addcd43612f6fb66fe1694634e514b7ecf1e7ad99eea485fbd84357ef0c25da7"
+      "sha256": "5af55b01184c2cac896bed3438c3cfec8ac983e4349e7baa82d0a114e67523ca"
     },
     {
       "path": "cohere/docs/data/examples/no-plusplus.json",
-      "sha256": "768b8a979d48f5ba18e4f71a20a269efb32b5693db61a1c99bac5fe4f67b9d7b"
+      "sha256": "4041e9e706a9d1bc16febe2365afcf43d5ae8f13b34d9eb68e861b4c4e4b0333"
     },
     {
       "path": "cohere/docs/data/examples/no-promise-executor-return.json",
-      "sha256": "8ec52d5ccbb470175050ee0794a9bedec9b2ec858f70ec95d4396234ca2549db"
+      "sha256": "a5ef7b12a34d39d31cb7a51f9479e0d0dfd47588b11c539f9fce65c615a0d0c5"
     },
     {
       "path": "cohere/docs/data/examples/no-proto.json",
-      "sha256": "ea1ac248c37092a28741851f63af60d239ce782450f151525d1a86238cf04e3f"
+      "sha256": "91fdeca40a5028726781e498161d7a30d2a92ca0837d865f2d5fee3a8cb7c30d"
     },
     {
       "path": "cohere/docs/data/examples/no-prototype-builtins.json",
-      "sha256": "8a8854e7de9f84158caab5841241aaeab5e5b5ac5dde79d2b21c344ec12e335d"
+      "sha256": "4f0f483f527793ac99d032511832fe776b81b0f3a6caba16cd996338c73b079d"
     },
     {
       "path": "cohere/docs/data/examples/no-regex-spaces.json",
-      "sha256": "e1a60f7262ec53e81725c2756ff394fde5e79e77499383effaeebd9e4f827b82"
+      "sha256": "3e2174a29f5bb78c7262c925f83290d7a2a44a457e71afde8f6d082e9b665014"
     },
     {
       "path": "cohere/docs/data/examples/no-restricted-exports.json",
-      "sha256": "84608c626b7f92eed36f1e6ab3cd6a1a70ad28a0b9cac24d74fb30766ad0c260"
+      "sha256": "0a8d6c83531e6fe6d879e66562395419fc9bdfbbdec08907ee9f2e8694c17e20"
     },
     {
       "path": "cohere/docs/data/examples/no-restricted-globals.json",
-      "sha256": "e0f2758965b629074cfff16e005a0a126ffd03e64be54fbb4d5f134f50bbe30d"
+      "sha256": "bc77e6b2d41a59527339bf567b40bd5fb9bb459c189148494c4c3c288fe0aa42"
     },
     {
       "path": "cohere/docs/data/examples/no-restricted-imports.json",
@@ -2122,155 +2566,155 @@
     },
     {
       "path": "cohere/docs/data/examples/no-restricted-properties.json",
-      "sha256": "510feb60069c0854b7b5c67019b25b00713948ef3caa7db1df946074ca3707f0"
+      "sha256": "c3384dcc154e18cfd04f1e4fe2a9bac4bef76a9177cef5877e09149d5490189a"
     },
     {
       "path": "cohere/docs/data/examples/no-return-assign.json",
-      "sha256": "898eb5320b7b1161b45f1a93929df187b919d6af40681d2d90e774625141adc2"
+      "sha256": "4bc765350a01c1fa2affef87f06fb21556dfec7483a9e0fb7ec6094feb8de91e"
     },
     {
       "path": "cohere/docs/data/examples/no-script-url.json",
-      "sha256": "1a2177d0a0cee33b594a3322015e557b3c32163fbd9e3cc66f73bc67de51cfc7"
+      "sha256": "f1a61936da99b4309d2754822154dcb8a8f547985f03f6f2c151acd0ff03cca0"
     },
     {
       "path": "cohere/docs/data/examples/no-self-assign.json",
-      "sha256": "84d889ff71b021056c556b0906a56a6296559a9e385912757efbeb72167361a4"
+      "sha256": "893453ca085e796f090a8dcd05ebf629b067d8d104b80799195578d83c57f8d0"
     },
     {
       "path": "cohere/docs/data/examples/no-self-compare.json",
-      "sha256": "70abd1b2648f62804bd6e838554245386161349976d080a4e38a72bd16981da1"
+      "sha256": "d92861e097d91c905d508f4ffe8bd90146d11aa64f0d6a6b30ae8d41c7600240"
     },
     {
       "path": "cohere/docs/data/examples/no-sequences.json",
-      "sha256": "f50e72f572b3b5c3bc5c9150599171e2c714b40f240ce763852ada2f1464cddb"
+      "sha256": "0e249a46469c396cf00fe744cae602a4b7fdf39b77707a7805bf770a59e858c0"
     },
     {
       "path": "cohere/docs/data/examples/no-setter-return.json",
-      "sha256": "db0932c8d56f0f371c79006fd7a7ba00c9cec93232fa616e38e3656897cc9e71"
+      "sha256": "dfdc7b9efefa91231d21dea857bcdcb05defe0215ba244c6f4e1b4213ba581c5"
     },
     {
       "path": "cohere/docs/data/examples/no-shadow-restricted-names.json",
-      "sha256": "c2296000352f54cc274911c06d3d50fd6609131c49db5e0df6a00d3614860569"
+      "sha256": "f1daed4a9319d9ecdae442ab717e9a82bec35be3d3bdf5027ffb1f25d183b1ea"
     },
     {
       "path": "cohere/docs/data/examples/no-sparse-arrays.json",
-      "sha256": "1a29d22b57359acdb8c39271ea4ec552bb76dfbfad1630286f74eafdb694e9d3"
+      "sha256": "3e2578b0880696b14ecfa4ef6125e687f2263f4492037cc47e5d7dc636d290a2"
     },
     {
       "path": "cohere/docs/data/examples/no-template-curly-in-string.json",
-      "sha256": "23c36a9e100c89336d46ba3ce649b55dd22a1d3b53ce362367eac2ae1c88be9e"
+      "sha256": "830dfef743dc1ba47bd97bad914de56e69d9bc338256150b2317099e5a137fcf"
     },
     {
       "path": "cohere/docs/data/examples/no-this-before-super.json",
-      "sha256": "a957a8b15f27b599eab4b59b53f6068b35b4a1051700a056e26541f97c37d370"
+      "sha256": "54d8c1c187e2a13b7e0c5e88cefe0fc5a03a7b3c9dfe623c930705903c4765dc"
     },
     {
       "path": "cohere/docs/data/examples/no-throw-literal.json",
-      "sha256": "0ee9ca648e4f0191b4b9d0a01a8b9e3a26d886e559f3b6c1542a1a194de75777"
+      "sha256": "c6dad09d7871c23e5e23f53ac413c32bf599253d1dd2a6baae6bd75aa71df2eb"
     },
     {
       "path": "cohere/docs/data/examples/no-unassigned-vars.json",
-      "sha256": "650798ad8dd3eecb05345bf33874406d582240162f4b2ddf20e70e6d2c36f3cf"
+      "sha256": "0ea503f55e851ae36007b5e85f36df213f666f6ea253a0dd1906439b1ae237e6"
     },
     {
       "path": "cohere/docs/data/examples/no-undef-init.json",
-      "sha256": "0ef390e599f20b4b55ae81e0d92cb34532736124feec0291618a78cf14a0ce5d"
+      "sha256": "b7c0b05936795d43a023af0dedcef125a857bf07c7e01de74212dbfd23d6b770"
     },
     {
       "path": "cohere/docs/data/examples/no-underscore-dangle.json",
-      "sha256": "66e6aecdf474be35af68c0d60d3271862429cb555a4a3448275a70952220382f"
+      "sha256": "90bf58e3ca5accf427ccde38f3f8b484eff52a361b5986a8c70613a8d4a9ffe0"
     },
     {
       "path": "cohere/docs/data/examples/no-unexpected-multiline.json",
-      "sha256": "ce9c5f3079e0a593137589840d8fc7973390a891700c8e87cf0e714d613d9dd7"
+      "sha256": "818b7a6f3cf150989570887b63ba28e41996a7a5a13eee652e97f9bb3cd85198"
     },
     {
       "path": "cohere/docs/data/examples/no-unmodified-loop-condition.json",
-      "sha256": "24f5b97ed3588524caab63623647048a4e747fbdea6fe0a960acb5698e9f5dd9"
+      "sha256": "f159f5907c0846244bf441153df64d82783048f8d1e78ef98da3d93dd413d185"
     },
     {
       "path": "cohere/docs/data/examples/no-unneeded-ternary.json",
-      "sha256": "b66f802547f5c0255c6acac0b1cf86f6574f95a2c2633174957d829c33beef3c"
+      "sha256": "eb36b0f8cc59495a0ffaf64a9af96a798f96de7993da2e460d85c33c1ef5a21e"
     },
     {
       "path": "cohere/docs/data/examples/no-unreachable-loop.json",
-      "sha256": "6ca24824666063eb6681a201ad3476b6ab25e452890c3f7239a92621ce225cf1"
+      "sha256": "e4610850c6c3dffcac5fdf002a130b286aa98ba312740425329aa00dfb388274"
     },
     {
       "path": "cohere/docs/data/examples/no-unsafe-finally.json",
-      "sha256": "ae7a6989271007c535917da62bcc25102327c9f6f13a5e53e5cd1388950590c2"
+      "sha256": "8e27d2e728b8228e4a981bdbd5ec5bee4798df86fffeff0c0d850561b0705199"
     },
     {
       "path": "cohere/docs/data/examples/no-unsafe-negation.json",
-      "sha256": "2a15beb642dc31fa95254889ce76da70d40411c49872ddb36abff9dc3908dbf4"
+      "sha256": "777aa1830fec6f64d9fcc34f0e3bb8e25d6d41a97997ae8a0ed20eabee5d0a8b"
     },
     {
       "path": "cohere/docs/data/examples/no-unsafe-optional-chaining.json",
-      "sha256": "c2f74986604c9bc705886e1c9b6574581d3f49eca1fedbe5bab452f5e8347eca"
+      "sha256": "7777da03b70942c45369add8bfc9dd31aca8ffafa0c4beb14c6666aa56715277"
     },
     {
       "path": "cohere/docs/data/examples/no-unused-labels.json",
-      "sha256": "bca92f967a3ebcd0b27232dc9c287a4970c8bc6a0fc1f99c53e9eea80cbd5959"
+      "sha256": "44172e1407c066646a8e0ded3b1838e746a223e641f01606716977db1abd5018"
     },
     {
       "path": "cohere/docs/data/examples/no-unused-private-class-members.json",
-      "sha256": "9b86132512d939c9e0ed9f8d0eedadf7e3bab74a3f383f938ac07d2a041d1f4c"
+      "sha256": "359a00671f8c9bd1465f595a9031d16adad7abfce5896bd648200e2a35307663"
     },
     {
       "path": "cohere/docs/data/examples/no-use-before-define.json",
-      "sha256": "2fbca48c688d167639ee4f0c24d46178108ea47382f7001b4a80d80b44ffdede"
+      "sha256": "1bd2366f830b902bd7f6528806b2b5ac805a358a533183d213aaac3b7f9a2729"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-assignment.json",
-      "sha256": "3dc153d01afcb6b3972c6d1d1fe66c3062ad52dc740cfe6eca1f5066a39714c6"
+      "sha256": "f19dc966bcf72a67d8853a547b5f9f4f01f5d895e87c400858fde8e8764eb402"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-backreference.json",
-      "sha256": "a57d808a07ab32b2a941ffb772fdf60b4596c9118de254107e8010ff1618cf97"
+      "sha256": "e967215857c256586365d6cefacfa958d29dc17992af51e77c49d81fb99ccfff"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-call.json",
-      "sha256": "5b9aac624426677f8d2458f34395ab75b6173563b7858f78ff92759b56fab9c5"
+      "sha256": "72b835794f60e1989c7a5c333ebd084da3cc1fb625ad86dcb7678fbb1fb9664f"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-catch.json",
-      "sha256": "56c41997184d0c3ce19aa6aaeb80db69ca5ed02f03362a8ac90bee293e622e77"
+      "sha256": "1a8e6eaa5d875af124d28dee46271fd1c0fdde52f82bf0e2e0ded0780ad9b0a0"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-computed-key.json",
-      "sha256": "53665a7351cd182960b76d5f940ea09f6ff55fe72cac9f9f3d7ec6e6cd41bcdc"
+      "sha256": "cd0014446f44aef29fb15b007be0dd7d09c5281a387a653e13e0e9c22ef7381f"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-concat.json",
-      "sha256": "41731c29cf2581b0e1eeacfc044a67e640b41a16047e0c9124f50d293132924a"
+      "sha256": "f14048d7a8b02f4322c4de237e75afb724dd763d8309573351eb2c9ff994c232"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-constructor.json",
-      "sha256": "f8f2a8fee4f77f423ce9c56274258a6acaca03a2b73295862ef1c51a3ad0578a"
+      "sha256": "13289edb66144c7a2dbe19245e7df3a46c575567e959b8d8b6c6154f27f6e163"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-escape.json",
-      "sha256": "79f4c343b9c48ace548a7a650811786a459e47021527ec83f39d97191945f16d"
+      "sha256": "b95218474bd6a5a799515015a7d36a3b92a8c3fbcebb90c244269f2a3f818d66"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-rename.json",
-      "sha256": "eb07231851c4272d76d24570566b050734c20efcf31c50ffc5a04803590457ac"
+      "sha256": "413c1750c4ce3c0e0aa68abd3b8a54a4ebf5d797e31e3c178026c674869bfa52"
     },
     {
       "path": "cohere/docs/data/examples/no-useless-return.json",
-      "sha256": "fc9a69bccdfaca4d35a2ac2e8f339511ce89ae8b103d498bd4fe0836f5970781"
+      "sha256": "1047dcd8ede92ca58cb2b133d4f22629f57863f9c5bbcbc6a55c9e73dd74f853"
     },
     {
       "path": "cohere/docs/data/examples/no-var.json",
-      "sha256": "645743a68490102756067285f5ac67d7b67ac16323ef91f35f691e03b9cff1f5"
+      "sha256": "1ad614cf34e0c95acd2af05994e63edbc22a8807caeeb1c8eab61006dce82b1c"
     },
     {
       "path": "cohere/docs/data/examples/no-warning-comments.json",
-      "sha256": "69e6c4675a61363c746ee2d663c49823e59833f50d43da76bb70ca273128bd77"
+      "sha256": "e0fd2526295f5fcec7e9280316982959c6a7f11a1a75ef8e84cbb85caeb13f6c"
     },
     {
       "path": "cohere/docs/data/examples/no-with.json",
-      "sha256": "39154aa50a6e03c8a78a08e07cd65289692fb67c2ef176271b9cfe13311f468c"
+      "sha256": "44fda00c9064cc480cca6af3c920c1cb6d246a74dc25575c6b9ab3d38c3b6bb0"
     },
     {
       "path": "cohere/docs/data/examples/object-shorthand.json",
@@ -2282,55 +2726,55 @@
     },
     {
       "path": "cohere/docs/data/examples/operator-assignment.json",
-      "sha256": "a2a6556283459014fe96fba675e245384799183d71cb1e52114d288e14ca1890"
+      "sha256": "89990ad74c5dc120637e2aa3d05baec05d0f990ae5f975c23f975c91b615ce03"
     },
     {
       "path": "cohere/docs/data/examples/prefer-arrow-callback.json",
-      "sha256": "2a88b8a8750e2dfc4fdfd6a565268ab0e1b33d648322c22f66da4cf57ff5bb9b"
+      "sha256": "187ae489adcf0cb8ac7273d15a5e4d10529d6b7a64efe5b96184ffc1cb37bd1d"
     },
     {
       "path": "cohere/docs/data/examples/prefer-const.json",
-      "sha256": "7da093d3e42205639a7a69e8d9fd69e678a33699307ae74492a798191ba15c07"
+      "sha256": "7f32171836ecdef4fc035c13f41c66185ec9f1f1a6a8e86b1569417b803e050d"
     },
     {
       "path": "cohere/docs/data/examples/prefer-destructuring.json",
-      "sha256": "1deb9b740497096c8af6ee5c07dbd968ae5129f8edb8800be42cc36a5c580d12"
+      "sha256": "c4decdf8b82f6190871e3751f2caad830067170124e732664a1edc12610470f2"
     },
     {
       "path": "cohere/docs/data/examples/prefer-exponentiation-operator.json",
-      "sha256": "a1837363408e9da38a692fe19dbb26803a68fd83fba16e7bc5b5dddbf77f4b58"
+      "sha256": "f095c03b5ec4dcc3b343f6603fb7c66c2ca8dd7ce39b0b66a9f64476ae2cc559"
     },
     {
       "path": "cohere/docs/data/examples/prefer-numeric-literals.json",
-      "sha256": "ba4039c08f5f43dd8be2f3386fc0141b4257a3afa5be008a40b1bb647e3e6718"
+      "sha256": "69ec7d479d69dd46d11639c591a9273b98d81586f77e649dd42cd6b929d8cfd8"
     },
     {
       "path": "cohere/docs/data/examples/prefer-object-has-own.json",
-      "sha256": "18f22ca43ddc7023f0d808d90d920671780a21f98ea59f006f0e45335cb907b5"
+      "sha256": "df5a35fcc25edfa76cf9d75dac433abec369479c39a698855aa7919b5fbf685e"
     },
     {
       "path": "cohere/docs/data/examples/prefer-object-spread.json",
-      "sha256": "816cfa59401d45d1970ab12b64f52d7a7697ae6af7b7257c8f2ee07b3037bc43"
+      "sha256": "ddcd625d93027a7e592560fd74eef7819b2f4b2c7dbb3834e956f8404b222c9d"
     },
     {
       "path": "cohere/docs/data/examples/prefer-promise-reject-errors.json",
-      "sha256": "2e1461384a41cc1738bb47d41cd5be3daf884bfac2188a79317a4677c982ef1a"
+      "sha256": "23b75dd147b7df2bb942268b1621e64fe912847c1f249e897d647d3f6c99107d"
     },
     {
       "path": "cohere/docs/data/examples/prefer-regex-literals.json",
-      "sha256": "09f3f102d6a68394bc2179e495b497d97118e8df350ad64bd0a7caf264093fed"
+      "sha256": "41eff8b86377ca15e7d3140727a97b4c81ecaf87e0e3b3f921f3d5a1eda685ab"
     },
     {
       "path": "cohere/docs/data/examples/prefer-rest-params.json",
-      "sha256": "a67e69993bee04ceb3a7e2c57d723d55dedc7fe3b3cfc6c26201a81f6d17c15f"
+      "sha256": "ece8c619332bbebd5700d1eb76b2352f938b4d3d6631073cd108c1d186eeffd0"
     },
     {
       "path": "cohere/docs/data/examples/prefer-spread.json",
-      "sha256": "02e8a74c2790862da197e8f1df5e893d89b4e893705b68deaf4c0cbe0ba9f102"
+      "sha256": "f96b42b7366d0c56eeace4b802c02f10ae50e85392f7fea2c7f4f050bb1f660c"
     },
     {
       "path": "cohere/docs/data/examples/prefer-template.json",
-      "sha256": "3fc1dc3717bc7ddf85cf5ead219e32b86176a928f13198bd58f43e60caf79dc6"
+      "sha256": "e07c7e19a0c1d30d0adb0438b19e8d385b08aef32a5f7034d8d1aaac260d1697"
     },
     {
       "path": "cohere/docs/data/examples/preserve-caught-error.json",
@@ -2338,15 +2782,15 @@
     },
     {
       "path": "cohere/docs/data/examples/radix.json",
-      "sha256": "b161c0a7509d9e2142e05817f4d77b968f79680bed5432342e415ec17abd1f29"
+      "sha256": "bd7e7c8e1c4cfbeba42ad70745d232f30ac57f5ee11c925d2ce44521ec7b0432"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/config.json",
-      "sha256": "967468f6bda8eddb6f5a349566e20ac2cf23bd95e9577ece2e24d33a6ce42b66"
+      "sha256": "6756476d6fab9b8c08e567942843d18fb57d5554ad676ffa2bfe310a87222d49"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/error-boundaries.json",
-      "sha256": "44dd61afc612ebbe1c3f85fa175545825cccafb7815413c41d6e0ffc60622beb"
+      "sha256": "f201d9ca201ba51eca64d67b7baf150eb20bd763b6e28c93508ac646ff50d12c"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/exhaustive-deps.json",
@@ -2354,11 +2798,11 @@
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/gating.json",
-      "sha256": "88e1def0db0e3787d67b8552888e7795204b35fc7b04a1e1b2630393b742f978"
+      "sha256": "35c6ee9489a264f76ed1ccbe93a51f3531264958f7375621edf48f0dc3a0028b"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/globals.json",
-      "sha256": "4139076ddf117b2c1542d1179ba06c5bf590d4eca637af9f99e589ea08890a3f"
+      "sha256": "3eac4bf8276b16ecb1d7679eba9c386d9f1040d16b966a4ac885c90b47d10068"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/immutability.json",
@@ -2366,23 +2810,23 @@
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/incompatible-library.json",
-      "sha256": "f2e2484d41fd3f6299db0162b7c2268e133ec845d091c0ae62dd3ce0d6ce3507"
+      "sha256": "e1f06b79651eeef9f6847e686fea72e0567044aa07f712e2904f267ca9b2634c"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/no-deriving-state-in-effects.json",
-      "sha256": "d586be248c4bd61882c506d748d4dea10a57b06a99298faf6ba437938179ffd4"
+      "sha256": "46db7e04a11cdf7deed8b04ea4dc0b4460ae155db9f0e1ca4e1f786b0897ef1a"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/preserve-manual-memoization.json",
-      "sha256": "90749d59f0567c2bc195716e81b44f32d31f992c3635228d78e2cc97394c18c0"
+      "sha256": "457873921e9b42d8ae4915da502bce6ecdbc14da0ad79df1a716af493920a924"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/purity.json",
-      "sha256": "65b06c9f8ffeb3881ed39dae880e824a8eebb72f67119d32dad30ae2154bea01"
+      "sha256": "b34e8a8a702e812b8f1ff98a655d61a49beecbd6857aa208df6c382c9f665aba"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/refs.json",
-      "sha256": "5b9b9185d50e0db58f8f968f500bd4072549571187dc6a62bcd7ebb9ecd3788d"
+      "sha256": "fd2b85fa339cc06702eebee075f877d69e4075fb5017619327da97521eb2c621"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/rules-of-hooks.json",
@@ -2390,19 +2834,19 @@
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/set-state-in-effect.json",
-      "sha256": "38c08fdf7c39e44bdc487bba4448152f4f124af2c48625e73f1ff2446f5d68ca"
+      "sha256": "34b9167a5f454530eb7e2381ba1541e69ad015b6c8d5e91767bc1320b065ab42"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/set-state-in-render.json",
-      "sha256": "c13fe93591d48f4d48e08d0bff66e141e15ab17fb99b3d1c485bf04c34c4c1a8"
+      "sha256": "f9eb3573d223a63b20fc18ade4158887875810b52417d1c18e3d601bc7df8897"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/static-components.json",
-      "sha256": "ac6a4ee0cde389b54f67211265b571f0f457b12773ca10c780cf1497815d3459"
+      "sha256": "ec6a905e8e6dc904f3ac45392183046b1e2c8214c2480b58faeb257f8586a63f"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/unsupported-syntax.json",
-      "sha256": "7f199bfdc958ec802321f85cbe8db488a7644e748bd23ac1b5554a8a5e5a9bf3"
+      "sha256": "c7fd37979b5966fd3334f43734ca7b631c55e711a523f8dfbafa6e68b22f96e7"
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/use-memo.json",
@@ -2410,59 +2854,59 @@
     },
     {
       "path": "cohere/docs/data/examples/react-hooks/void-use-memo.json",
-      "sha256": "b212fb50c1e03b5bf02327ba21e32bcbccbfcecbdd645d33086fc4e4c61a7a7d"
+      "sha256": "c9088186fc67aa0ce0cf8774a6fe2769499bf1c551435243de9991d075a715e0"
     },
     {
       "path": "cohere/docs/data/examples/react/boolean-prop-naming.json",
-      "sha256": "4f989da45288b23e2e2d64a24318aff8d02d4e97608457f2e205d683e6f77156"
+      "sha256": "960bb0c68601f575b557a973c678f98bf6ebb58d1b0116a637dcdf6790791e24"
     },
     {
       "path": "cohere/docs/data/examples/react/button-has-type.json",
-      "sha256": "b1a147d92aa0cffd2606bb04ee25d66690a7e7321e5e913aed81a7561b281290"
+      "sha256": "6776d88688830fe2d0133b60001d061fab259537c7879862592b27a9f87e1ee4"
     },
     {
       "path": "cohere/docs/data/examples/react/checked-requires-onchange-or-readonly.json",
-      "sha256": "04c8f6e34e82982ed7615e6ae9bb2309a91d518f8852630ede741f39cf510aab"
+      "sha256": "59cf595f94265268e35ccbd9c7e0d007de338c10c989f0f3965b9e652b456364"
     },
     {
       "path": "cohere/docs/data/examples/react/default-props-match-prop-types.json",
-      "sha256": "ab9f236b530e998d18df95382289c66fc67f4940caba0d51210350b0ff89d08b"
+      "sha256": "643de34f35a8194d9d3fa4d50d7fb999d176bbf9a6aac0e38ff119837bfc89fa"
     },
     {
       "path": "cohere/docs/data/examples/react/display-name.json",
-      "sha256": "ca04552453f38718ed3c440dc2fa27a641f54c5e638c69613d3c70870c719a3c"
+      "sha256": "9a478126300d5af6d2c6c7f1403701d1539cc0e15def085095cc0760575344d1"
     },
     {
       "path": "cohere/docs/data/examples/react/forbid-dom-props.json",
-      "sha256": "0a8aa664a10471aab7470e42f39ecfed88a7d6e6544c1837db62b9a8f47e52a0"
+      "sha256": "c65ad4c3a458489101c7b46cfee182dc6218170be5c3b3626ef891a22e925587"
     },
     {
       "path": "cohere/docs/data/examples/react/forbid-elements.json",
-      "sha256": "b6db73423b48afecb5fd016780cf833575b732acf0a023d7b0df52f107e09ff3"
+      "sha256": "88fdb9a7a59a7a0d2eee98e9ded757f9eca532047d4ce6e52022ddacd9a96f2e"
     },
     {
       "path": "cohere/docs/data/examples/react/forbid-foreign-prop-types.json",
-      "sha256": "00e3d0e8fa57f1d0d83b1642d14b0af0b973a9cdfbf74560176b8ec271a6219d"
+      "sha256": "c49148e03ae127d89f6a9d938ccbca56e555c205b29c5600fb177f7ee62a2202"
     },
     {
       "path": "cohere/docs/data/examples/react/forbid-prop-types.json",
-      "sha256": "95587ca19ce844bcc8183a95e08804a91544341debfd80b26639738ccd6796b6"
+      "sha256": "5932df15cd14fe0c0636649a901ffa1d1976774545cfc7376b1cad14eb547a0b"
     },
     {
       "path": "cohere/docs/data/examples/react/forward-ref-uses-ref.json",
-      "sha256": "c9b45d69f52332d69433b1a9181c8a73c9c0aa91acfe792dd539f41a1b46c86d"
+      "sha256": "03476ba467793f6442f77f619ec69d8abdccb23d7f84671b686e85ae66254754"
     },
     {
       "path": "cohere/docs/data/examples/react/iframe-missing-sandbox.json",
-      "sha256": "8a9b901298447423c881df515b0d4d7659c8ba902f65158ff5d0547ba4968f54"
+      "sha256": "448d43c754e5fea0921e4abc51f73008d9308ad259939d4ce4de4100b52a47f4"
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-curly-brace-presence.json",
-      "sha256": "d1151e90e729da62e95af74aee236d23e5fe219d9da42394b77b323918d3ae57"
+      "sha256": "992a47de405189698284e3a479dbf10f43fd67e5c8c862c22a9a508a006964a4"
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-fragments.json",
-      "sha256": "cc294b0b4fcb1d1cb036f41e1ffe5753c870b86f68c44e44d73d4842b44528ec"
+      "sha256": "052d2976b5dfc8fde9f71a447fcadaf2315b4d97dbf8b78eb06cd51de9c29046"
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-key.json",
@@ -2470,7 +2914,7 @@
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-no-comment-textnodes.json",
-      "sha256": "9cffa15dc03cb1c7957c6430706a0dfad49333c34a52f62e447a95ea696a48d5"
+      "sha256": "a109319dc4ec5432f4dd0d00f27cbed2ab0b8ecff0953ae0b654f9b9753046f9"
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-no-constructed-context-values.json",
@@ -2478,75 +2922,75 @@
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-no-duplicate-props.json",
-      "sha256": "f5c68f4c7dbfe0cb2e00f65df6ecc73c9e328037519e0269a519ff8f776fc620"
+      "sha256": "bb440a14e774f94e7b2072b9e5a0e78a2b62869a46006f933f4a1a133e3a1714"
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-no-script-url.json",
-      "sha256": "25ce1ed46b0829f0b1ae032867af1f9fae4f8f6ccaf61d43353b9bf17bacf931"
+      "sha256": "1782bc5ca99d3c0d60ae03fcc982bc954dd8965545d0a7bccca5d32283407b3c"
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-no-target-blank.json",
-      "sha256": "5e287711a5c8bd1202b1e9cfb53a1ac0924ebf5484f8deee741af22a5abc9815"
+      "sha256": "6fb278292b14d8b476820cece3145ec8f2194557b5aecb619446de1cf842073d"
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-no-undef.json",
-      "sha256": "4deafe32f528df00d78c7c9595afce7e8428fa58d27e6693c51694616929945a"
+      "sha256": "3ace68efb3f9abc9efbf5edc450b801f8ad657a0afd21309d027cc2f7ca81167"
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-no-useless-fragment.json",
-      "sha256": "6180bfc6ef6205f7e0d58c12eb60959d0669233da679cf3931539d62a259fe81"
+      "sha256": "c2c554826a999124990c73c23918a01db7cfbd155be3d24a98e7626d63d158d2"
     },
     {
       "path": "cohere/docs/data/examples/react/jsx-props-no-spread-multi.json",
-      "sha256": "ad99a675ca678c1e957e496bba0e4f6c48e5741cfe6ab9ce380c0d466da88263"
+      "sha256": "4b13ac4cce02c7f5f90016f76b46aaadb9c33c6beac16c994434d061f76f750b"
     },
     {
       "path": "cohere/docs/data/examples/react/no-access-state-in-setstate.json",
-      "sha256": "413202a05d67d9d08d0dd894a25eaca3b66e58aa589718dbc15b9aa19683f716"
+      "sha256": "e64b4514a2c3ac60565f6d3696cd18d1006b7493d7e53f1d4a31c1b97dd3016e"
     },
     {
       "path": "cohere/docs/data/examples/react/no-adjacent-inline-elements.json",
-      "sha256": "79d9e19f1de110f586be497a50fa9c203a7e5dd71eda771c97a91202f35f6148"
+      "sha256": "2f96b7ac4e236e354e468f3a34fd45c42c23e4ee8599316bae3947e667f3e720"
     },
     {
       "path": "cohere/docs/data/examples/react/no-array-index-key.json",
-      "sha256": "07c4292a1057cc9be51b9800f0b6ca8d7a1b8d5f61b26481070c12d36933eb40"
+      "sha256": "7522b2879e0dc6581adedce55d462960a8e70d006de516e43d9866fb46b5d1d4"
     },
     {
       "path": "cohere/docs/data/examples/react/no-arrow-function-lifecycle.json",
-      "sha256": "512c8daebf8b685159d495db3079d6cd0c325302253d14cc5b6d2f401917e6f7"
+      "sha256": "abff4eda5c5554f97fe32bb399bb7d7fa100284911b62a1569c642863541d68c"
     },
     {
       "path": "cohere/docs/data/examples/react/no-children-prop.json",
-      "sha256": "828557817e004a21d07af2aa32af8665dcecdb265c486ab3f36d33240615ad14"
+      "sha256": "f68f42b1b63052c5a2086787dac3202f9bf3b20c0f52f6ae495e2ea0a1a93288"
     },
     {
       "path": "cohere/docs/data/examples/react/no-danger-with-children.json",
-      "sha256": "1c0974d7d61fe1f69b8fa9055dd9aa69f1e07403013b4836c5710d161fd0df2f"
+      "sha256": "6eb73c2f9ba9092d1edc2dd22b791495dc9e009f32b2b1e69e95f6037c2f8dcb"
     },
     {
       "path": "cohere/docs/data/examples/react/no-danger.json",
-      "sha256": "a63647230734c0a6ae921252f7c7ae584c8f28a4d831f95a4f25ab2cdc5194d4"
+      "sha256": "f92eb07c9847586eff1b3e501d9042c2c006286d0c417f33eb75f6861085ce11"
     },
     {
       "path": "cohere/docs/data/examples/react/no-deprecated.json",
-      "sha256": "b9cc845b7b87b4a44f1b62fc21c3cf194d15937abe0e4544ac6f4a0a15196708"
+      "sha256": "42dd7256a628f00738af0ed31e08db0804c574ab07a13341b222c1d4257844b3"
     },
     {
       "path": "cohere/docs/data/examples/react/no-did-mount-set-state.json",
-      "sha256": "8f7635ff33169c25680ce53a44d3ce25ca26c8af624501cbed0b6a7fe7e51659"
+      "sha256": "558aa5c6adc59c3b117d52442823aa06b53ab66f3166dda7db11a852c609d99c"
     },
     {
       "path": "cohere/docs/data/examples/react/no-did-update-set-state.json",
-      "sha256": "96a6c3b13d3af0d68c9bdabf770c070cda7a31a452e01ecc945189d86ea8675d"
+      "sha256": "2fe64f285c26969a8fa16f97bb0a76e5b29b73a40eb49ff4edb243e8530a6d30"
     },
     {
       "path": "cohere/docs/data/examples/react/no-direct-mutation-state.json",
-      "sha256": "215bd2164bd594affa6643f00cce6041277afb0268c7899041c33d537e62fc08"
+      "sha256": "a2ed9442c46bcebe14d1025881a536d637406deff666140930945cc664e475ca"
     },
     {
       "path": "cohere/docs/data/examples/react/no-find-dom-node.json",
-      "sha256": "c71eb3e7eb40024500f73163fe1c83962b43ee1236543a7779d1f2dba92316d4"
+      "sha256": "942bc891945fe9d023659b94901e03c36f3a2b081615920fb77fba0c9a8085b6"
     },
     {
       "path": "cohere/docs/data/examples/react/no-invalid-html-attribute.json",
@@ -2554,39 +2998,39 @@
     },
     {
       "path": "cohere/docs/data/examples/react/no-is-mounted.json",
-      "sha256": "b70271e9dad8e577aba2fc39436614bcbda48a1b0548fb387ae3c7289f932984"
+      "sha256": "81cffba3fca6ee696618e00419dc9752b1b455d7d2f8ecbf0a0802e06f2f098f"
     },
     {
       "path": "cohere/docs/data/examples/react/no-multi-comp.json",
-      "sha256": "28fb5cf6d87b239aa00ad0e0fb2b3ae2bab004e75de6bf43c2bc4b780b458477"
+      "sha256": "231db9b4e6463763cc83e3d7b6507a7f64bfff649d018021d3edc41d08f72dc6"
     },
     {
       "path": "cohere/docs/data/examples/react/no-namespace.json",
-      "sha256": "2d996f7127bbb6bd47c3c8cc5007ccd7a04e50101126c8fc8a03f65837ac2f96"
+      "sha256": "2bf1b8a80f9596b473b558cf88336428242bc91eddf0daf58c2d3e61acd3e53a"
     },
     {
       "path": "cohere/docs/data/examples/react/no-object-type-as-default-prop.json",
-      "sha256": "86e7ffdb49d25a1df861a16813f597e8817f8dd12611db1eb6a8259bedaf8ec7"
+      "sha256": "c7080d045790876c716410e19d0381e3c7b14ea560d4bc113035df47ec3c21ae"
     },
     {
       "path": "cohere/docs/data/examples/react/no-redundant-should-component-update.json",
-      "sha256": "8d3b5b0e7a9e3a66e9ef9c73afe9e078acf1357991b553e6dd4660cc992dab73"
+      "sha256": "008c86686ad83b9b483ac1784d71fa5d78d7d3ae26cc06aa1208f668177d2dd4"
     },
     {
       "path": "cohere/docs/data/examples/react/no-render-return-value.json",
-      "sha256": "41dc85db69b1b18a762134eb4703d3ee01fa528e57aaa21e181b2d1c205a853c"
+      "sha256": "668a491bc4881725019f3adfd7b0936f5fbdca12acd3bd6652dc08aeda6d6a83"
     },
     {
       "path": "cohere/docs/data/examples/react/no-set-state.json",
-      "sha256": "f1e0f6e65de7d8154791b4597a221e6fa5c877e7313c9115b5d1707b91515e0e"
+      "sha256": "86c7c85399c99695020ec0576a34d3c73947a17c44e33338c1f5458df9b3d41d"
     },
     {
       "path": "cohere/docs/data/examples/react/no-string-refs.json",
-      "sha256": "8bd496878e271059a23a47b780e72f040d0b687b981ed923281a9bed592a8ace"
+      "sha256": "581fc1558400570fd49fdc1245606a710f7b8515e23a1be5e635e2cb9ce322ed"
     },
     {
       "path": "cohere/docs/data/examples/react/no-this-in-sfc.json",
-      "sha256": "623afa7909f9b998ce0c9c162d8ea51eda5af3317191efd6c7f4d558e3a44e29"
+      "sha256": "466dfc29766b88f25a93dea27dae3628b3cdd37eae12a1ad6a23ebba443e4ee4"
     },
     {
       "path": "cohere/docs/data/examples/react/no-typos.json",
@@ -2594,91 +3038,91 @@
     },
     {
       "path": "cohere/docs/data/examples/react/no-unescaped-entities.json",
-      "sha256": "6dee5dbf4d37e9394b8498cdc34ebf83dcb1fe43c41c2e826c0520a51d7b6030"
+      "sha256": "fa94cea6df7d2881a19a3869c5ad15cb6ed6ce9f0d0a35683656cb653637c28d"
     },
     {
       "path": "cohere/docs/data/examples/react/no-unknown-property.json",
-      "sha256": "b039f244a824bc96b3ec88045120e9c1f0e659ad3ee89f9bd363eeceb3ec57fe"
+      "sha256": "10baf6a7a1c7e75c8a292bef67c96af614b8aeb06d31525583d0c2b6dec87097"
     },
     {
       "path": "cohere/docs/data/examples/react/no-unsafe.json",
-      "sha256": "4558835a77114d1ffbfcf75fc56d37afba38adb4e8d4c18bac4ab42272c5120f"
+      "sha256": "2a3fb355ba17200c0b8ec95b1cd0e96528c46ff72d5a9588788f96094d956e00"
     },
     {
       "path": "cohere/docs/data/examples/react/no-unstable-nested-components.json",
-      "sha256": "1439f409ef150bfc293ed3acb43fa7f479a13f3a5b1aa060847bcd26a49fe7f6"
+      "sha256": "feb5a822ccf7e2deca46a072108be751c78a8c28f9f46d0357137a2070ff9b58"
     },
     {
       "path": "cohere/docs/data/examples/react/no-unused-class-component-methods.json",
-      "sha256": "18b32e0b16b4224ca902200d3375b31e1a9650bf5b7b7d2fc56569da3029fa45"
+      "sha256": "5a3d738adfd004ed9169342110e390aebf358f78d9407cd760cfce3d3e4d3bfc"
     },
     {
       "path": "cohere/docs/data/examples/react/no-unused-state.json",
-      "sha256": "865ebb9dbcfc46c2ca31c478ff61ecf0bfeb48cc90122a90b276d5ce1a981071"
+      "sha256": "279948587275b68c89d53f9ad0c4f1709e0fc68c792de0082b4a844b488bbbec"
     },
     {
       "path": "cohere/docs/data/examples/react/no-will-update-set-state.json",
-      "sha256": "2a0fc49a68e3a4a54a89db878f6a8dde62db452bd0c74e3fc21d3252f3ca38d3"
+      "sha256": "faa58bc1aae9b044cba30fa092171b37b1dc7a3b010d7e4d1bf188d136802c2b"
     },
     {
       "path": "cohere/docs/data/examples/react/prefer-es6-class.json",
-      "sha256": "961aecc3dca45eef97061db16351d945c930b2b026f6c37ce88977fedc833ec4"
+      "sha256": "afe1459e1053041bc02d094339295cd0f11fdbf7bf7060d88f8047201ceeb3e1"
     },
     {
       "path": "cohere/docs/data/examples/react/prefer-stateless-function.json",
-      "sha256": "133c8ba2b4d3efff31ed94f47b85a910e13bf1de77a507ac38465d7210fe1d34"
+      "sha256": "690d297c0591407295e875bf6bb9d18b1f2b12a36087c3ebaebddd7b6105077c"
     },
     {
       "path": "cohere/docs/data/examples/react/require-optimization.json",
-      "sha256": "4b9d3a7fb81fa63b9d44e5b5849e6261dda62f1495b6fe112b9a2bc13730c65e"
+      "sha256": "dc07459da426ec18308fe7245445d10318200251f5d9d9aed0ab0de90d9f5de2"
     },
     {
       "path": "cohere/docs/data/examples/react/require-render-return.json",
-      "sha256": "cf5cd77c0092b8dd186d58510a40436c8809abb64f23a516f40a158bedcd8bc9"
+      "sha256": "fa366e4c72b8e57fe16c92c31b3880cfbfd9f326304ac98e1290700051c11c8e"
     },
     {
       "path": "cohere/docs/data/examples/react/self-closing-comp.json",
-      "sha256": "63f680242d97dea5ec2bddbd3d2d0ed2282de357176eacf47e199fa770e7c39a"
+      "sha256": "f56bacce89ec4f93fed28883911564240df31cc06cde6b0da8e15662fd68aef9"
     },
     {
       "path": "cohere/docs/data/examples/react/sort-comp.json",
-      "sha256": "5a84d57b8370ef8de06dfc285ccff3d00609dd024891414f81fede628905c2e7"
+      "sha256": "495cdd799f7f343fb0c3885f6625a0799cebfd2ec2a397c5802ef16e43ac3e88"
     },
     {
       "path": "cohere/docs/data/examples/react/sort-default-props.json",
-      "sha256": "fa06b01bd5d2f066fefaea56432602a804bdb4be028018f707c68c7513be0eed"
+      "sha256": "9d34d5289e5ea443f1eae1bb3cc019b24e7491e7c659e9aaf6418aa14cacf70e"
     },
     {
       "path": "cohere/docs/data/examples/react/state-in-constructor.json",
-      "sha256": "995a90d2c932f8efc89fc25ed016a13fd4f608d458c5dca6f7ebc071541f87fc"
+      "sha256": "a98670fe19588416fd0b6243a68436ac6d24779fc0aa5a040e24e7a1411771e0"
     },
     {
       "path": "cohere/docs/data/examples/react/static-property-placement.json",
-      "sha256": "4de356aafeca74627a5ffd2d5876a7a1134189a08b05bd2a859d848ebfbe5a2d"
+      "sha256": "65fc8589cc415b5eef834d756637f5b2187d67d9d3b5cefab99b068d72ab9281"
     },
     {
       "path": "cohere/docs/data/examples/react/style-prop-object.json",
-      "sha256": "7d984229eb5d0a4a1a9bbcb366fb89872c4bde411e6852449dbc5443f1793c03"
+      "sha256": "c4d05286b8fa4a5b46251e3ce262fcb6012928d8c1b93bbfbfd22dfc0a15607e"
     },
     {
       "path": "cohere/docs/data/examples/react/void-dom-elements-no-children.json",
-      "sha256": "875283a9c0ab42861bd1b71d441a6bddf9c1e4575fee604fe254ec71b8223c60"
+      "sha256": "ddf25f70b46af6c3c30669ecc0a87173bc0ab3cf97a6fd0b41bfd3f4dc39943d"
     },
     {
       "path": "cohere/docs/data/examples/require-atomic-updates.json",
-      "sha256": "3099df4d92a98cfdefaf3784fa0f1fe56774d2407fdadfa1b5e7d8d4d5eaa9fa"
+      "sha256": "e3af91210eb1d274fcf14504584ae0957165acdec0663ed9ac0330fed5f5b406"
     },
     {
       "path": "cohere/docs/data/examples/require-await.json",
-      "sha256": "87896b5ea265e863183c230d546cfb008eb07be5685ef4a44ab23f460693cada"
+      "sha256": "99090227acb9bd4605817b0e83cfe4157bb4ad390ca5fc488256f29127e4d629"
     },
     {
       "path": "cohere/docs/data/examples/require-yield.json",
-      "sha256": "83d67f2412e38f0f5a602a28bce9cebf1d1593aab2933dfb8f4fd1465ec2820d"
+      "sha256": "2450fecadb33110966abd15d72c2d39263c62abec5052c7aa7ddb41d85f418f8"
     },
     {
       "path": "cohere/docs/data/examples/sort-vars.json",
-      "sha256": "1a8ce69648121cbfdeac28582a7ddc461398dae3900d884c4d0052843a886977"
+      "sha256": "39aa53306b3ef1c63ae3f406564090d59991166e533fd96beb50bae3f9ef1af1"
     },
     {
       "path": "cohere/docs/data/examples/strict.json",
@@ -2686,15 +3130,15 @@
     },
     {
       "path": "cohere/docs/data/examples/structure/boundary-no-project-theme-value.json",
-      "sha256": "34da0ceb3cd846416700843d074a8e1b903bceb5137cccbce6aa38817a196631"
+      "sha256": "fb73253d35514bb1543e1a6bc394d22c7e900953fb356d21e7a487c541c2983f"
     },
     {
       "path": "cohere/docs/data/examples/structure/consistency-require-matching-file-name.json",
-      "sha256": "093070adab683d6e3136ae6fd776ad2fc2d3751dfe4130c3c890ef1decb6eac8"
+      "sha256": "8e29b7f955bbd1d8d8b29a3bb8c1ac8ad92b2f37d570a0da4e8ace06b5a1083b"
     },
     {
       "path": "cohere/docs/data/examples/structure/consistency-require-organized-imports.json",
-      "sha256": "8f7cebb407707fd9e451ad0993a16415f16c8266053f11be1e4a3ccf0a980f92"
+      "sha256": "85e2518c136f7877ff953393031d66a9f9d7bfe2c6ff8a0e56d36ec889723a48"
     },
     {
       "path": "cohere/docs/data/examples/structure/import-require-react-namespace.json",
@@ -2702,15 +3146,15 @@
     },
     {
       "path": "cohere/docs/data/examples/structure/network-no-direct-fetch.json",
-      "sha256": "5bbbaa3b508428ac13ad7796a8e3a9c6f29ccf3aaf8d16613837f379fe72a17b"
+      "sha256": "c1511d98eb0314aab61eb1264a3bf4247cfd50162b3388aab387720875bab247"
     },
     {
       "path": "cohere/docs/data/examples/structure/network-no-forbidden-import.json",
-      "sha256": "6458568d2adc3dbe66d6fc04efe523f0a81cdccac0b9d90f00332ec5c0fa71e8"
+      "sha256": "8bc661ab5917bcaf68cc32de4ee63232b84b57d50a3165b2ae65f5847807cb1f"
     },
     {
       "path": "cohere/docs/data/examples/structure/network-no-invalidate-cache-in-on-success.json",
-      "sha256": "4164793adb3227f29adee07e692e2ce515cef17859585dbac1aa7178bc4bed3f"
+      "sha256": "6c62b89058ffc265926e4afaeb18c05bb64885068342308bd6841f43ff571b6f"
     },
     {
       "path": "cohere/docs/data/examples/structure/network-no-invalidate-cache-literal-key.json",
@@ -2718,7 +3162,7 @@
     },
     {
       "path": "cohere/docs/data/examples/structure/network-no-string-literal-query.json",
-      "sha256": "9e7b435050c288f01827666432d8fb837d5e519b62d18988e4ecaa068af54654"
+      "sha256": "e68566a7d33086312097efda45c5530b65b1fdf10fc59ec716687b9b397023df"
     },
     {
       "path": "cohere/docs/data/examples/structure/network-require-hook-options-parameter.json",
@@ -2726,31 +3170,31 @@
     },
     {
       "path": "cohere/docs/data/examples/structure/network-require-hook-request-suffix.json",
-      "sha256": "fb7b19985b3bf9f121074b688556f7e60dd686c0b0ef5c36f5ea4dc0e9301912"
+      "sha256": "971ef3114cd84f140bb9b7b48d8987e0dcc52d0a185daba83a25d8a9da937652"
     },
     {
       "path": "cohere/docs/data/examples/structure/network-require-hook-variables-type.json",
-      "sha256": "ca446792a8f75a91cfcb3b20af29bd0bb41357c0bcb4426ac473b0d2ef643c64"
+      "sha256": "cd096a360cb72e8f5123c0c9f41f4341eeae765f9cf8d3dddd08c0706a238dc7"
     },
     {
       "path": "cohere/docs/data/examples/structure/next-no-near-miss-route-export.json",
-      "sha256": "4402ef1f90fb9416a23b10fef0fdae255765c8cc6f6f3de6ba3f7c8abf4a41fa"
+      "sha256": "f3d943d4a997420d9ad53717a74fd57cfa7c9e74e3e18a1a228b61f563e776c0"
     },
     {
       "path": "cohere/docs/data/examples/structure/next-no-page-state.json",
-      "sha256": "342a4412568674deb047435bc0df52d8a8eb277d5ebad9267c7a2dc0b7c7036e"
+      "sha256": "cfde7a913b35342d84dc3fc002436d9b8e3b97da5593f8bc5d823f9b102d65f0"
     },
     {
       "path": "cohere/docs/data/examples/structure/next-require-api-parameter-name.json",
-      "sha256": "b5ff983d654e611676ec3efd1710e6e4f24c941864677d916c0044d2953bac4f"
+      "sha256": "671d8ffa1a0f15ad7b541f667acc2010b808d80466e6c7b006d80ad2125e2dc7"
     },
     {
       "path": "cohere/docs/data/examples/structure/next-require-page-default-export.json",
-      "sha256": "6ff526d494bc6ba2788997f3ae4464a1a51603d22b93b65cc5aa1d1718c068ff"
+      "sha256": "f0936ada42be4f0cbdd2b255a26bfffae8cdba22cd4bcd562f9e9dfcb9c7b43b"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-component-no-const-assignment.json",
-      "sha256": "941a35ed4a77d0ced217b350e884daf5cad7364999650ca97b4d29775e489072"
+      "sha256": "4a219dfbb016a091fa370410cbaaebd1d19d2a29ec9f6fe87262c02f11b2e6e5"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-component-no-destructuring.json",
@@ -2758,27 +3202,27 @@
     },
     {
       "path": "cohere/docs/data/examples/structure/react-component-no-display-name.json",
-      "sha256": "73a8313deda7de75301c9d64da46acad7b49e9f754cb9da5bf2f7ce42ee1a778"
+      "sha256": "9bd5b77c7e7e5b572f2195a3a416aeca566e9fb02d25b283163c04a864b24b08"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-component-no-forward-ref.json",
-      "sha256": "f313e74a7c004839087ad4b1c2fc064627c50a5a85e84c1c39b7b343ad63564b"
+      "sha256": "a4aea41c5fa4fe2d16b4d4997bcd0145d42e742e971b967855a58b3d3093308e"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-component-no-separate-named-export.json",
-      "sha256": "565c70dd52e764abd2ec3b699d682a8460f83aacdf1ca356bb2d992baaab6127"
+      "sha256": "fec77c9550cfc08d2fe39ce9933afc2ecdfe481ed858c989242d2317dd291cf4"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-component-require-named-export.json",
-      "sha256": "8d190014045c419c008f60a37f1af7dc32972f8addd7aeb3e749f5b83c05fc67"
+      "sha256": "f79484f1c377b8bdfdfd8bd448c005ff479f58da3534feffe680283fe53bef21"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-component-require-properties-parameter.json",
-      "sha256": "74cc499e32b4fdb08f4b605a9c77840b2fe8d47f575157cd987c1d2745522052"
+      "sha256": "e96bec534fca2cc87d18af808bbd287dede0160c636a6de58d0cef0567a4051c"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-component-require-properties-type-suffix.json",
-      "sha256": "30fec51bcb2f4cc6ab8b9781542dfc753e38dffffda7e9370c481cf951e49aeb"
+      "sha256": "f70e03d61560ee0e3409ed0d23af48f8e4a40ee5e12bd816529ed9dd946749d6"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-element-no-anchor.json",
@@ -2786,111 +3230,127 @@
     },
     {
       "path": "cohere/docs/data/examples/structure/react-element-no-horizontal-rule.json",
-      "sha256": "3838e4555c6166a8ac6b8baec133c2390c29671658a050712b963a5368f1655a"
+      "sha256": "f7d20d1d788046e62d9387b9108ab530e00dd503fa8ed6b8545480cd75eba687"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-hook-no-any-type.json",
-      "sha256": "129089e8f9c0cea458ed75be32aa795d416b883a64e801026e9ed4357ca731fe"
+      "sha256": "87b717f5d219ffb0cd4e5871ef209105737ddd12833f86bffb5ccd7b0ddc6d92"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-hook-no-destructuring.json",
-      "sha256": "62e13a10a51f1782252236804bd80660816105eeac9d768663abca7899bc7046"
+      "sha256": "3cc69664e50a8fee7b278ecc89dad0833cb9ee162792f5150fc191af62b29ac4"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-hook-no-properties-in-dependencies.json",
-      "sha256": "37460d37133d7bb5cef18a2375737c3973ee11873c9d98962a76dc42c43b9105"
+      "sha256": "6006265d5fe7a59168c19bdf71d42701cc3a83658b7f3e5eb4721d4492fa7d1e"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-hook-require-effect-comment.json",
-      "sha256": "c68a7fab4aa9072df6514b54d64e2f8d4ab752d5436e690541b265da9d66c6c0"
+      "sha256": "3ca2ff31f0cb54f7bfeaef066afdc6de07a302361b5378c6ffd0958b2db791c1"
     },
     {
       "path": "cohere/docs/data/examples/structure/react-hook-require-result-naming.json",
-      "sha256": "9b50e267560788b368fc5f7b75dd957d0fe7309695d01bd51a944d2b7d34922a"
+      "sha256": "b2ac581b52e6b4c3cf977268f0b2ad0edf50c8181d01d93dfdb764e746a332b9"
     },
     {
       "path": "cohere/docs/data/examples/structure/storage-no-direct-local-storage.json",
-      "sha256": "0d764e3909be16acc8ac0eb9c760c3edd35f7735e4858382a7c80244d7a20d95"
+      "sha256": "a1f3f1e80d8f7ffca4c8a80df7eb0c54b714f57530f24fabb71612a370e84d7a"
     },
     {
       "path": "cohere/docs/data/examples/structure/tailwind-no-physical-direction.json",
-      "sha256": "cf6c66f3cc6d5b639573c6c8173f89db5ab322b38bff40f7747bebdee3fdcac1"
+      "sha256": "077ab66409bb95d59a484887dc16d80f69e4148e4218fe30105f1bd99e835cdd"
     },
     {
       "path": "cohere/docs/data/examples/symbol-description.json",
-      "sha256": "f2dad3e20a9dc3e30531d790f8b96bb4497540ba0bfb9f32ff3727819f878d92"
+      "sha256": "022c922ec559193e9d4342514bddc4d0b70651c86ec257fc5a1be44a7b9fd4e0"
     },
     {
       "path": "cohere/docs/data/examples/unicode-bom.json",
-      "sha256": "19bb76d84794e5982fbec0ba2644a87d947705ef7ac529664f8d2a07f55a694a"
+      "sha256": "5d230eb85e8492476be63cd1c70e16fddf8689bba690f6e4f31371b1a0c04383"
     },
     {
       "path": "cohere/docs/data/examples/use-isnan.json",
-      "sha256": "e8edebc8dcdf564b7fefb0d07e80da292e8bfb3a93f6c1ce70ed8861abb68a77"
+      "sha256": "e52b8d206508d558fe5de66b3a76b648935e109e744b30e9cdaaebd0f46d3674"
     },
     {
       "path": "cohere/docs/data/examples/valid-typeof.json",
-      "sha256": "e9a007362b163da933a1bca8f965c0c7cd4e76ce0ae0e37db81166d51e71e510"
+      "sha256": "91d15c8977981678b1587615c086d87017c6a40b1af2f08b67ee900abdd49405"
     },
     {
       "path": "cohere/docs/data/examples/vars-on-top.json",
-      "sha256": "3a2864aefe2cf01765dc4dbdffb596cf30ab22a9a2d3d5a2e20ca20156cb9707"
+      "sha256": "ed26fa53ad4595c62c9a9d753bab8ce1900afd1d80469b429cc22c90f6f93c28"
     },
     {
       "path": "cohere/docs/data/examples/yoda.json",
-      "sha256": "e70d8a9cf09862315dcadeb95463727a6e5f486a3431ff98911915b6bbe9dd66"
+      "sha256": "2e7fd36a202a2a0a6e0611801849d39ad151c560c7ac9d09440ff517be90e0cf"
     },
     {
       "path": "cohere/docs/data/rules.json",
-      "sha256": "9b2918446d11151c8b7c6758e49b52b6cbb7caa3cbcfb7a194e29a4c0feaed57"
+      "sha256": "fe2e9b7b0136e83c5286c363397ebdc672c3e9403953efa99691a2a55653cb08"
     },
     {
       "path": "cohere/docs/data/sets.json",
-      "sha256": "50a9345635eb5e2d2c337d9f4ecf13e364ac5958cc1848280899f6832289628a"
+      "sha256": "caf0842b3cfa0aa4562ef1363b6a6c5b5ea28a538ca608092b45184c64ab2fc8"
     },
     {
       "path": "cohere/docs/task-evidence/xzpba0r/adamic-after-summary.json",
-      "sha256": "42ac6c1e2417bc16c8df88cdb9ad4c31f8594bf4ed0f8ac99ed5f0fe9357bb93"
+      "sha256": "f450378f3b75c00737df4c1e4e40eae69c578422f89c8b41c7febb5ab89bdcd5"
     },
     {
       "path": "cohere/docs/task-evidence/xzpba0r/adamic-before-summary.json",
-      "sha256": "2b17ec33f1634a1af06e8f45b553e3203ff62aa472a88e43aa2b870a61da9c1c"
+      "sha256": "ae3f530ec9c687c9dc9486e684691fb67477d3d87b223dbad488547e2e6a7c47"
     },
     {
       "path": "cohere/docs/task-evidence/xzpba0r/adamic-edges-summary.json",
-      "sha256": "81d0ff9e15a35e63d229a5cee902523ca2accdb1f2b4b83737bcc2ca0210dba4"
+      "sha256": "6304ecb14d06dcd5f03a9a381a62dfb4b7cf2231fe21abf5ff755f41cca2adfe"
     },
     {
       "path": "cohere/editors/vscode/package.json",
-      "sha256": "7f7ccb199030d48d27a6284ce30448b46d0862d207d25f11703b117e4d4b31dc"
+      "sha256": "e19d3264c05fa17b785432545f7124abb7db27761f5b2aba2ad1c0a430c9917e"
     },
     {
       "path": "cohere/editors/vscode/test-vscode/host/package.json",
       "sha256": "a2372f96bde2c635f549e30a30433e98c86fb5e022c52db6dfbb09c6e1eb0fd3"
     },
     {
+      "path": "cohere/internal/go_engine/testdata/configured/CohereSettings.json",
+      "sha256": "3f06c2ace0fb2921bcbf63b5a1af39487e394032bc0ab287da168d41a8452582"
+    },
+    {
+      "path": "cohere/internal/go_engine/testdata/generated-rules-withheld/CohereSettings.json",
+      "sha256": "ec87014c5c7d76170581661d90b9de5c9d1b91d629f4c7116c1e9cb804e09dde"
+    },
+    {
+      "path": "cohere/internal/go_engine/testdata/option-unknown/CohereSettings.json",
+      "sha256": "36d5bafe90121e0aa39963c15d7d472bb8805a0a03ecf65d2e79cde0e122fede"
+    },
+    {
+      "path": "cohere/internal/go_engine/testdata/options/CohereSettings.json",
+      "sha256": "ab492673eb7f6451885634f23992a4e7cd7850220683b8a8e9a121704cd65111"
+    },
+    {
       "path": "cohere/internal/lint/configuration/sets/adamic.json",
-      "sha256": "1c26f9e20e7f07a3ddea3b6fedefa87dc1d62a57aea468fe8bd6fb1cf9828a4f"
+      "sha256": "f5e365e90bfa69749f37a0f29130a6cf68d45ce586c2797b9a7954bc72f9a402"
     },
     {
       "path": "cohere/internal/lint/configuration/sets/next.json",
-      "sha256": "98c24c96538f8edefb84273e79fe5f29091ed1420475138b2a23df41d8ddcc55"
+      "sha256": "3eb5af7280fe53c1ddd36fe6b4800c3c0864211ea18ae17546c5ad97f17054c0"
     },
     {
       "path": "cohere/internal/lint/configuration/sets/react.json",
-      "sha256": "be76f4c45b30e6bb610c9f1c6d3384dd0c556602eeb2cdefdfac015c8d0f81f6"
+      "sha256": "f60185a334c73931b36643e534449dc70564d399a94143a5aa6aecd04ad6f833"
     },
     {
       "path": "cohere/internal/lint/configuration/sets/style.json",
-      "sha256": "81f0e4491f0d41a2e817c12571748d34e0a85925b14d4f7239273ac7fa1da295"
+      "sha256": "4b77fd1b485bb12133be3422afebd5956818f90954db1a4ab7df3bebd5d6b457"
     },
     {
       "path": "cohere/internal/lint/configuration/sets/system-inc/base.json",
-      "sha256": "b137aa00e50db1f33fc325d6c0e6ac4fa561b2fe1be3d91787976a79b544baf5"
+      "sha256": "fcf419b7b397a11f89307f68bf8068244d6b4480d0955f60a6dc6bd9bfe0d853"
     },
     {
       "path": "cohere/internal/lint/configuration/sets/system-inc/structure.json",
-      "sha256": "0abffd4ae879c0463ca3f1d1df17ce2e1b43b777c97cdc87881bd2703e350925"
+      "sha256": "cdd4dba1ade71b4c2a053ad0b693873c9d2959c272ce1dc29e5c6b1e0416a8c3"
     },
     {
       "path": "cohere/internal/lint/configuration/sets/tailwind.json",
@@ -2898,14 +3358,14 @@
     },
     {
       "path": "cohere/internal/lint/configuration/sets/typescript.json",
-      "sha256": "0fb0d30511f4be101ca613b349485bee63ceed033320b1e9d7783ab63572d651"
+      "sha256": "d14a52fd2da918f30b4eb43a92c6b20ad864942bb67d1664cc128abb51c36cc7"
     },
     {
-      "path": "cohere/internal/lint/optionschema/schemas.json",
-      "sha256": "476af4c7e6bea12f59eb80d47a7c4a478544ab6f8cc4e626e3d11395c2bd2fe0"
+      "path": "cohere/internal/lint/option_schema/schemas.json",
+      "sha256": "5b3d1afaab0c9503ad5e0bf5c5bf9bdb1beb9510f015656e7b495f0eb4402713"
     },
     {
-      "path": "cohere/internal/lint/optionschema/testdata/samples.json",
+      "path": "cohere/internal/lint/option_schema/testdata/samples.json",
       "sha256": "499d1c2a168871487ec11693b3c965ed87ad3ad5c6eaa072be8532107f0e1048"
     },
     {
@@ -3589,12 +4049,32 @@
       "sha256": "c4f2ed1c029403533c33b07560eed381c4178cc5531e68178e75778278617c23"
     },
     {
+      "path": "cohere/internal/lint/rules/adamic/testdata/ambient/reference-types/node_modules/@types/phantom/package.json",
+      "sha256": "48a5b8d5597b31b67a0c285f382fc56c4b02c6103d9685938313a591f924aca7"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/ast_fixtures.json",
       "sha256": "743147e3c3564f86936f5c7247e888e0b282cbed7f1852655c348f2c74afe7f1"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/candidate_fixtures.json",
       "sha256": "aea2f8ba6bde298a39644543f774d56d25810585af1e52ce6651408b89584304"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/canonical_singles.json",
+      "sha256": "ca5799c5e434165386d3fede025b42c1b2f92ec53f7660da9bf785373bd12618"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/canonical_singles_public.json",
+      "sha256": "3495f04cb5d93a95d7132ee6d8bed371499409acf929310c179435ba12043f97"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/canonical_unported.json",
+      "sha256": "ce2408794b87dc4636b425928878640ddbdb2cb89d845e8ab395bac6e0ba18c4"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/canonical_unported_public.json",
+      "sha256": "b6ad4873db11efcba124cc3241c0204343c4b9b0cd771f6aeb08446c75b3345b"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/classorder_fixtures.json",
@@ -3733,12 +4213,16 @@
       "sha256": "b901445c31593f249b6ca97c8c314f591148a588ae74c9c7a0001db8ad8a09b3"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/tools/generate_canonical_singles/cases.json",
+      "sha256": "9166561a4bf914de3eb72382a4adda2d52b11a3204e23a973563e51897966fe6"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/tools/generate_class_order/systems.json",
       "sha256": "bef7f7fd100f9a7f5b49ca37c20d3095430a9b2b23148e6e7e0d241b369922c1"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/tools/generate_data_type/corpus.json",
-      "sha256": "dbe1f01f727d10ce27ffe00719715ae70c00c9a8c65881ad5c06278f413dc56d"
+      "sha256": "2041754e2453a3bfa9da112916ddd7213f6e8b0ba514a55aa75b133d892c8d36"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/tools/generate_theme/stylesheets.json",
@@ -3746,7 +4230,7 @@
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/tools/generate_value_parser/corpus.json",
-      "sha256": "76ed968324c1cfc9d12f444d245e2c0c6852c34f94f74dc2d77698a128677337"
+      "sha256": "d35eba6cda0b066a94b845fc6c1aed7313e2bbbbbf7b6169e2aeeb5ebb6d1125"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/tools/generate_variant/corpus.json",
@@ -3765,7 +4249,7 @@
       "sha256": "6ca1316fa7515f20d4872f89e466ceb681df44ddebbdc456651549eac16f6ba9"
     },
     {
-      "path": "cohere/internal/unused_exports/testdata/deadref/tsconfig.json",
+      "path": "cohere/internal/unused_exports/testdata/dead_reference/tsconfig.json",
       "sha256": "6ca1316fa7515f20d4872f89e466ceb681df44ddebbdc456651549eac16f6ba9"
     },
     {
@@ -3774,495 +4258,671 @@
     },
     {
       "path": "cohere/policy/Abbreviations.json",
-      "sha256": "b8b43ae4616565ad6822e0b46d67827a51347418c70e4df655d6dcd9153a9bb7"
+      "sha256": "e9f3057106f3e132a44a97f8e0ba1441ab246713b261eb3d09d7240aeecf4146"
+    },
+    {
+      "path": "cohere/policy/Brands.json",
+      "sha256": "04ac2bbd7d7196a7c1b9495330127a82fa0ebda43be4b6a0a555243c366f90d8"
+    },
+    {
+      "path": "cohere/policy/ErrorOpeningWords.json",
+      "sha256": "88316455a6b13769b9377aac79e4664e41c326be34df787110ff337c2bca2fd9"
     },
     {
       "path": "cohere/policy/RuleNaming.json",
-      "sha256": "3191cae4a063647b99e5a9babaa04746e28546f015a146790f228b6410176c29"
+      "sha256": "f4b1cdbeea55091672d7c46f6f40a5237df61450285f518cbfd9a7abf4cc51f9"
+    },
+    {
+      "path": "cohere/policy/Shouting.json",
+      "sha256": "bdd400adedf2446a3c14e617d24df65eb7341053d20cc03769e5a6de4c2f42ec"
     },
     {
       "path": "cohere/policy/messages/boundary-no-global-container.json",
-      "sha256": "2f182b633353da7e3483d1ce1b686a28013d9d6428d13a195be40206ef3692ec"
+      "sha256": "e380aaa7f8c10edc7c433c619ad00d807e65e8f9bd1a0b21b739036b527e2131"
     },
     {
       "path": "cohere/policy/messages/boundary-no-internal-import.json",
-      "sha256": "001d1f0c892fa24e04ed052c440cafa822e6a4e11372b69eea81db293e047a92"
+      "sha256": "d234202badae2822b392210cdaf9413d1e8a55a4826537ce9c19383ea2fe9c6e"
     },
     {
       "path": "cohere/policy/messages/boundary-no-nexus-outside-import.json",
-      "sha256": "113d91c9c5765c07464e540a787646c6be72ecbe6bdf666c23e87d94424268ab"
+      "sha256": "14402716022a60d89762fbfb37060d8f5e9f8e5df731209fe25117d269eba110"
     },
     {
       "path": "cohere/policy/messages/boundary-no-project-import.json",
-      "sha256": "e43611ca76d7487886eb9b2354aaf8d361a77ec530526e07a45ccf93175326ca"
+      "sha256": "550a7bfbac2841e63a93fff0cab2a8a657f79f58225507972de0bfc2a797c65d"
     },
     {
       "path": "cohere/policy/messages/boundary-no-project-theme-value.json",
-      "sha256": "2111bf475e9084737eba4758840a846f68b69d3a67f50ccd8efc5703b9ae3a1a"
+      "sha256": "fb88a1978915b51ab804cd7494f6718d91faf5bb0d2f3f5212b80692b82820ec"
+    },
+    {
+      "path": "cohere/policy/messages/concurrency-no-buffered-wait-delay.json",
+      "sha256": "3af2ea6dd6c44bc215589de29274304503933d009bde81b39fa17378fd319ea8"
     },
     {
       "path": "cohere/policy/messages/concurrency-no-check-then-write.json",
-      "sha256": "a7b9caa7fd24967c09551fbea3dee74adebb4457c9309a43f993b38bf3ef193d"
+      "sha256": "42325f8dbfd93955ef06e34eec0cf15709c919a17cc4e671ab54a359a0c5df50"
+    },
+    {
+      "path": "cohere/policy/messages/concurrency-no-kill-by-name.json",
+      "sha256": "598293a45322c3d09cd914957cbcb5f0c04107049c6d30ad8dc5b10bb229c33a"
     },
     {
       "path": "cohere/policy/messages/concurrency-no-lost-update.json",
-      "sha256": "af5c55d0367f53a7b33ddbf8c43e77a6e06072261405fb6ba3aa96e217be1b6c"
+      "sha256": "c20d48a275de9e3fe9a81708053fe51bfb86214ec56c2a25f7dddd8adc4783d4"
     },
     {
       "path": "cohere/policy/messages/concurrency-require-escape-hatch-reason.json",
-      "sha256": "cb5c46d8690d1d038102693dff441882cfc6616695c92f4947027ab0e3c196d3"
+      "sha256": "a3a680d530aab1d01587a1c34a681b6e7ae840a94f9a5ec093e1ccdc5cd746fb"
     },
     {
       "path": "cohere/policy/messages/consistency-no-abbreviated-identifier.json",
-      "sha256": "a64ba8ae85a98ea3de02fa958b400f9d5f3622265a6dce562aa5dc9a75a64c1e"
+      "sha256": "41d77fa0222145568eb73d6e5fa2ff76551a457ecbbe22639eeb39aa9c7426dc"
     },
     {
       "path": "cohere/policy/messages/consistency-no-ambiguous-identifier.json",
-      "sha256": "696c47a3c5e3ea60e38db92bf653e044a85f8592a98b6437fa02be06f147e91a"
+      "sha256": "1ba3a1eab2f7775610d4d288b27e71c9e49893f6575f5e8391a48f1a735ca6f5"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-any.json",
+      "sha256": "17c9278b8961785cbe8c3696d786a75175bcd46b2aa9b6d1c281463d6da8360b"
     },
     {
       "path": "cohere/policy/messages/consistency-no-bare-throw.json",
-      "sha256": "6ef8801e56fb4e61ace56a89fc0fb28e475471b682e958eb93b2c7ac205725db"
+      "sha256": "7ef39557cc413f4cfcfd54b7df3299222285ef13ecca166d5e599f050230a394"
     },
     {
       "path": "cohere/policy/messages/consistency-no-boolean-outcome.json",
-      "sha256": "d090609197085585909ae4df7fdd7ac9d9f33346c2d296c693946b608107997d"
+      "sha256": "158d1ca84f5cf4e7bde02781b3232c87bba4fb669f9ee13624f58128ba0681db"
     },
     {
       "path": "cohere/policy/messages/consistency-no-console.json",
-      "sha256": "720280ab44a29a22746d0146c19b32f00c9ca616aaae038efed66c43479c3b43"
+      "sha256": "b518b6432a585160dfad966ef7b7692ed1a9e5ad710c29a7d920341cbae84bcf"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-dash-punctuation.json",
+      "sha256": "f756441e4fea149dc7bc0711b562ba7a0735ece1df290cdb1899ed7b3a35f7a2"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-else-return.json",
+      "sha256": "800413656e608450db01e6e04642308d1d6276a3a31b5bb64bcea52f304e231e"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-empty-function.json",
+      "sha256": "34e7e70e7b801d66ed75d00043719b5d616340521f0fc4205c89af00864aa1c7"
     },
     {
       "path": "cohere/policy/messages/consistency-no-enum.json",
-      "sha256": "37a80a714acbc5b7e0a3bd2f03b22131f26ddf425201af16743289e5816838d4"
+      "sha256": "70218bd6f2ba7b02154fd99caf1e3dcfb29ea8ce5178755993e1dcfca5010fa1"
     },
     {
       "path": "cohere/policy/messages/consistency-no-for-in.json",
-      "sha256": "a51dec1e342a4cc6b588ddab40ec5e7bbc32809ab9d268d4718e8bd45b7bd8cf"
+      "sha256": "c311eeff86e4089cf60666ce08812c29d4431575ada63a6ddf473bb47ed99407"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-grouped-var.json",
+      "sha256": "c5e2e21d46e98b8e97139fc3c3d32f159a449515da62d14fef953e7ec83fc720"
     },
     {
       "path": "cohere/policy/messages/consistency-no-hand-built-declared-error.json",
-      "sha256": "72340cabcb362b80b83da20fe73910f4add1a6bbb8d9769d9edab635d6aa04ec"
+      "sha256": "e4dc5ad89c83ca0bea833aea9e05d33ff900ff735c3b447bc5d8fc546fa6eeac"
     },
     {
       "path": "cohere/policy/messages/consistency-no-hand-rolled-delay.json",
-      "sha256": "dd526bbc39780571ce24eb6c01c60f3cd5a041ec1bb800a8b115fcf4a0eee5fa"
+      "sha256": "8b7fd01e5b5e94078572f1ebfee50293824f373ec983eeb6054291abd8d7eecb"
     },
     {
       "path": "cohere/policy/messages/consistency-no-iso-string-date-cut.json",
-      "sha256": "b50981aba340d8188e5ef849007911613588da8079748847889b1ec5dfb57e24"
+      "sha256": "3568f45e983b16795fd93af04f7dd9ed936b9580480b2a584e4a6b1395b4269b"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-label.json",
+      "sha256": "0ccff3df9e584cadd26ddeae139fc44e0dcc12b435ef18597373ca2b13ec5cd9"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-lone-block.json",
+      "sha256": "1d89a5f14148d451919ac306fd865a6901d191916fc16e0e8de2c4249cfc50f5"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-lonely-if.json",
+      "sha256": "86b3cd2ed399423ace0f41528dcd2f7bbaff7d4715818203781e6eecab9219e6"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-long-file.json",
+      "sha256": "d8647e2a0cf728630c2354ee7c4fe705abb6d81910c61beba3d34c793fad212b"
     },
     {
       "path": "cohere/policy/messages/consistency-no-long-line-comment.json",
-      "sha256": "310741566f39f0d1dcd9c441a7d1b85eecc660511e218a429bf3cbd81aeb2347"
+      "sha256": "c87dc2c5dd7a06e769a1bc5a55a293589443e9b3e1ac2741ec4fe1ff1bed70a8"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-long-line.json",
+      "sha256": "b2c378b5fae314f1d6ad16cb9969597c6dc0cb8f46da22529afedf31f6d6f635"
     },
     {
       "path": "cohere/policy/messages/consistency-no-multiline-arrow-function.json",
-      "sha256": "856da5310121283c9c16df398b5c0870be7fc203995a8e722fab6d0c7efd4ea3"
+      "sha256": "8953d16e6e688a392dc82e2accd57e0dc53173ac3a87c6fc28a0d67518013825"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-parameter-reassignment.json",
+      "sha256": "b56deea5e0362592d6f3a8c9800b00cf1c24468e12d801b6d907694d054910ad"
     },
     {
       "path": "cohere/policy/messages/consistency-no-property-alias.json",
-      "sha256": "6b893c8dfb4e0b89122375127c8295ef7f98d249099bb67205b36c1a515ac783"
+      "sha256": "4391732c6a62f6e6968b94862685eb54d93351bdea247d384ce10f3a1a40bbca"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-redundant-import-alias.json",
+      "sha256": "53b04658fe5af7577e4c4381b0b3d1ff7e2b5f9444e803b89775ee1c3b2b1d7e"
     },
     {
       "path": "cohere/policy/messages/consistency-no-return-void.json",
-      "sha256": "32ba026e27ec7e62fae3297fc70b7ada3459386fe58bc19e05c8e50a59b5e1a5"
+      "sha256": "32de7e2e87647c16cbdfad511b2aac0ccd24cfcfa0d95af27a9bf00b5cecce06"
     },
     {
       "path": "cohere/policy/messages/consistency-no-screaming-snake-case.json",
-      "sha256": "d94589e9e50b89be239410c55c4205f58bf52f2453714a646174ed7e5b9c7814"
+      "sha256": "ea6784f039b6dab3f32513cb05ec6d02f497dabe8482b0ea2a134c327f1f5c40"
     },
     {
       "path": "cohere/policy/messages/consistency-no-shouting.json",
-      "sha256": "74c41ffdebbc3efd37ba38bf0654b24f0c12e71ead3b227dfe4e2b2594dcbaac"
+      "sha256": "42e3f00dec254ee4f2f00e5542c508efd4a1787dd86b233f6e75bafa5e2ae6f6"
     },
     {
       "path": "cohere/policy/messages/consistency-no-single-line-jsdoc.json",
-      "sha256": "422b025ea2b3e86af15e7d4ed17f210bb3fa8d6b46aa181b4842d4fae04227cb"
+      "sha256": "79e1eddc626c57e8e39dc75dbfc70634b5cb67e84612721ba8df62e36033a531"
     },
     {
       "path": "cohere/policy/messages/consistency-no-stuttering-name.json",
-      "sha256": "7a758a57a4ad05e4daf1ae7284399d0b6902003d5a723a94b3d438d4d9328b28"
+      "sha256": "bbd5d48a97f12409112e3b3615091979b6bbb051a148d37ce5c6ac42d72e1094"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-undefined-initializer.json",
+      "sha256": "ee91807afc47791de7bf0ad4bb868dd8b3e356fb748e8a49cf80abbfddec7884"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-uppercase-initialism.json",
+      "sha256": "4347eba9dc219082b485e5c694777cd9eb8d4a143d84cba8390b1f4f70e3cc4b"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-use-before-define.json",
+      "sha256": "d69198a99932bde0e133101ae33c593bd6460d4dcc3a97fdb1dbe0328729214a"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-useless-concatenation.json",
+      "sha256": "209dad7ba66fa6eda3694f81293c6e877e94d349ce3762ddc47fb3295d4801c7"
     },
     {
       "path": "cohere/policy/messages/consistency-no-utils-folder.json",
-      "sha256": "e000fe18ca16b32343abf59786a9ad0247fc53ede994c715b881f05330ce0c1f"
+      "sha256": "d081c5b10c04944ab61987d143f8810f5379dae9751d59082189c5f0b165cc98"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-no-warning-comment.json",
+      "sha256": "21b958f354416fc54926e0616771bb2b89e8096c80dc96732e641a71337b27e9"
     },
     {
       "path": "cohere/policy/messages/consistency-require-constant-casing.json",
-      "sha256": "c4e74b03d1220eb6d314c3165bdf8fba125729c2e59a078b04ab9a0c11048a2a"
+      "sha256": "c806771c29c46133d9ade6c1bfdf0f701442485ccda29a192d931e858aabe3e7"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-require-default-last.json",
+      "sha256": "c630f30a6527cb79f8c6144456c80358c576d5743f76476af8b8963cdd3a5be4"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-require-error-clause.json",
+      "sha256": "77ab10a5d23ba6072f258155dec4c063b0538adbeaaa8ea46cae5913515edb8e"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-require-identifier-casing.json",
+      "sha256": "104e35cf74e78c2bdf367a22bd715fea4b6ae15b417efbce7fc6cb91185b864b"
     },
     {
       "path": "cohere/policy/messages/consistency-require-matching-file-name.json",
-      "sha256": "568b16ba98e2fd0853eae9fe9b89aff3babc5ae65e6c708fe4e8b41958559975"
+      "sha256": "fc08248b1715470ace5af05a30be5f76fe0b87d9724c102334cc9a86ac25f578"
     },
     {
       "path": "cohere/policy/messages/consistency-require-matching-return-type.json",
-      "sha256": "14bf1bb3d3d141aa53ac098e54a85ed4367fc4eeed016ffb638e10b9883f943a"
+      "sha256": "d751298bbc1117a5fc24b8bffd2d8f99f9dd7e6b252f5e76ce174e1c2db8b7c4"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-require-octal-prefix.json",
+      "sha256": "ca2e464b58a6bf0ee933f6a09611b590ee2c08e15f3a2b7fd59b7f98114c60df"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-require-one-type-per-file.json",
+      "sha256": "7e4811097381327eccc4a8d0c516106e437426ca4259864525636e7bfe8b398e"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-require-operator-assignment.json",
+      "sha256": "1df53449f62f6fce6ba025dc47cb7f1cb1718442df691153c923a4e538b301e9"
     },
     {
       "path": "cohere/policy/messages/consistency-require-organized-imports.json",
-      "sha256": "d6b3d6dff42fe0c5d0e84e69a76b309c75b9bb3e5a8f1c19f9f3997b80a14e71"
+      "sha256": "5e39d8d71849fb694cb567a5bb2c24741672fa343d9d8567dd6c6ee5a86b23ce"
     },
     {
       "path": "cohere/policy/messages/consistency-require-pagination-argument-name.json",
-      "sha256": "9b7a4333f661c02f322195e4f96fdeb7cc32f2effb7514cde853321792b2dc1f"
+      "sha256": "d467f8ef3be0d58880ab6310f7dfc329f46f8ed38e39c3efd80f72755969b0a2"
+    },
+    {
+      "path": "cohere/policy/messages/consistency-require-separated-folder-words.json",
+      "sha256": "b196e936c0b5fd0a82d8d89f9f228c12af4b83710602732bc0925978a2058cf6"
     },
     {
       "path": "cohere/policy/messages/consistency-require-type-suffix.json",
-      "sha256": "0b2cc13dcf1db3c4b7807e6fae615e1ddaef4cd4057a12f4d9bd215dbb6e5722"
+      "sha256": "f8b1b3f80c174776da9148ac2f7281e34c8706df39146a5aa70d53d29e54ea14"
     },
     {
       "path": "cohere/policy/messages/correctness-no-callback-in-parse-try.json",
-      "sha256": "a4c781e5028b2363a9820f2384b076a4e01e7198b14bf1118c5fb2b97e95d0fe"
+      "sha256": "9f75a4173eb62cb28c199cceb271e44aa4e5c169cd1bb0d36a4bb78ee8cc0ef5"
     },
     {
       "path": "cohere/policy/messages/correctness-no-caller-data-mutation.json",
-      "sha256": "db36dbc05007d2ce0b553c2ad4dd5852bd919c80bc137e82bd816b6029b5a346"
+      "sha256": "514cbc4aa06aad521293ab6330706f48770401b4e8293c2d7551fa66b9933516"
     },
     {
       "path": "cohere/policy/messages/correctness-no-collection-misuse.json",
-      "sha256": "2051bf268b5ff8ffde1726972dd6df72de4221bee4d040256fe5843099cdc611"
+      "sha256": "b42e1afbb229fb6b96041a1c180065148390de2d636cfe98bbf2e124fa049d6f"
     },
     {
       "path": "cohere/policy/messages/correctness-no-default-for-owned-enum.json",
-      "sha256": "d74185452795891a2b15b4cc4bcd910695519ac8a85d6849768bcdf74455f1d8"
+      "sha256": "d1d45bf59d4c2e0fb5d6b7030f4c90df7c013d8c2f93b51f61640268939a5439"
     },
     {
       "path": "cohere/policy/messages/correctness-no-discarded-outcome.json",
-      "sha256": "85eafd4c43b0b58ec38e01764c01781ca3bc3d3353bcdc1e1fa1e77495ecb0a1"
+      "sha256": "379ec23bae0bfc3cb296277cb9c389affc08284297411e3d9e201590824eade0"
     },
     {
       "path": "cohere/policy/messages/correctness-no-discarded-pure-result.json",
-      "sha256": "e292b965b8c6a55d30257e34ef1c6dd37f1b697fd4b79cbbae2431c0b552f62a"
+      "sha256": "69be235336b5bacd6bb2c8336d240917d7991e62274af7d07097018b8b70287c"
     },
     {
       "path": "cohere/policy/messages/correctness-no-discarded-try-optional.json",
-      "sha256": "ab2c2fbc1eae6ecbb559afc202324c8a5d3ae0e62b456249a19858d242fba1ea"
+      "sha256": "e2b0c9b7afc2acc854bc73826d842e57ff785ec8f9897f21571a3dd4103592ad"
     },
     {
       "path": "cohere/policy/messages/correctness-no-global-listener-target-assertion.json",
-      "sha256": "17ea4f8520ca65e2c96782010092c0b5bdaf6dfb56ee6235b905007757414380"
+      "sha256": "9dc8437fbf4b0d700f4e1e6ec5bbe3367e4415381c1c51a6f2955fb135b1f023"
     },
     {
       "path": "cohere/policy/messages/correctness-no-identical-branches.json",
-      "sha256": "a8bc07635b9800a452cd85e19b330d25f0d80f2550132ed9e025d5ff37ca3a32"
+      "sha256": "a62d8fd31f5f6fe633ddc4f6ffb4344e69c898db55dbda307d0a7d1ccfd9675b"
     },
     {
       "path": "cohere/policy/messages/correctness-no-implicit-return.json",
-      "sha256": "2f3daef1a5e44b6c22fb6da3ad170ef82ee2da7b4babbf0a99535f1b06c4067a"
+      "sha256": "3bc1f3209780c0481dafe1ecf80436611479b505cfe5d52b659077fa464599bb"
     },
     {
       "path": "cohere/policy/messages/correctness-no-import-cycle-load-time-read.json",
-      "sha256": "6ee97fb0f03360de3c231830c50439c7bead2097501542b488abd0b1ba38897e"
+      "sha256": "b158e8aaf94fcbd7706cf7d07b254e18db16f0a1177129be598785f5fcbed99c"
     },
     {
       "path": "cohere/policy/messages/correctness-no-leaked-number-render.json",
-      "sha256": "f68e6c31c0e50a0390d4c49997db8f9bb83603ca4bacaf96dfb8bb502e223d22"
+      "sha256": "676d959660bcf3503e90be95be2b2cb99e94e687ffc8787acb5a5df3b9e765c0"
     },
     {
       "path": "cohere/policy/messages/correctness-no-load-time-import-meta-path.json",
-      "sha256": "f185fce161793d1a17ec2d987646e0741d14e68d9e9070f196fd8ee206ea2e5e"
+      "sha256": "77fc2a4c463dd6feff8fa62bd2d32e89bb766bf2038c24773444fb059436e9b6"
     },
     {
       "path": "cohere/policy/messages/correctness-no-mock-on-module-namespace.json",
-      "sha256": "460d41ebbbec8df7f228f05e6d85e4d2e2b92edc7d277bbeea7247f2b5726ea5"
+      "sha256": "f5e9143b4dc2b7506dbdfcf86d5dd25be20921d8c0d83cd04375eda03b671dca"
     },
     {
       "path": "cohere/policy/messages/correctness-no-nullish-stripping-assertion.json",
-      "sha256": "0f0cee4746f5efa2c6bdf2656126c7d5710f1e85814f97e61a365eeedd1671d2"
+      "sha256": "cc7c946a801ee4b3a4dec8a1544061bd1eec347e90d37726e0eabf3a5ddb50ec"
     },
     {
       "path": "cohere/policy/messages/correctness-no-process-exit-after-output.json",
-      "sha256": "76e07e98296135da012ee880784d59b2036b44fe6ef38aa6b867a10976014b54"
+      "sha256": "de5d5494a541ad737f848bf947ee1e1853f7ecc7cdd72bf04a1fb916d9a59dd1"
     },
     {
       "path": "cohere/policy/messages/correctness-no-test-on-global-regex.json",
-      "sha256": "a50c788b2d66e4979ac75f2a934f1853ac8050ee2b79f699a4c8a9034ea1f42c"
+      "sha256": "326ce731a46bd36a1c1750b11967cf30b4dbaad9846214cd7951255351bf3e20"
     },
     {
       "path": "cohere/policy/messages/correctness-no-uncleared-race-timeout.json",
-      "sha256": "33c9caa54b212a3ef4dd9300b94017f20438c6676497a9f1760ec50b87ca12fd"
+      "sha256": "94d639799a2dc2deb72b0f854837d8b0c59d0cf713ae8edd8bf655f257005934"
     },
     {
       "path": "cohere/policy/messages/correctness-no-write-only-collection.json",
-      "sha256": "529413c401f10dac20e4d60244c8a152f55ddc12eb223f7556b46935e060b581"
+      "sha256": "daeee796d7777f45539820fb93abb731e28e2dcd7f3e373032b1849611016b0c"
     },
     {
       "path": "cohere/policy/messages/correctness-require-blocking-standard-streams.json",
-      "sha256": "2bdedb726a3a6b95b5552b6b123bc6ae117c51d256475a3d09988ab4ecfdf68e"
+      "sha256": "71be0c896328a392ad1235f3455b3ec7450b2640d111fc3418d1cd2294715439"
+    },
+    {
+      "path": "cohere/policy/messages/correctness-require-checked-assertion.json",
+      "sha256": "5cc4b2eed68d9346bd455ec1630d701873228e636ffb5657ff38e1a14eba0349"
     },
     {
       "path": "cohere/policy/messages/correctness-require-child-process-error-listener.json",
-      "sha256": "06a07840345805fb27a4fc7e01b127a2ff7cecb5d6bcfe336afedbbc6e8154fd"
+      "sha256": "0ddde77da99fcc42d3ccd3d49bd053a08d7c32f8014e02d42afa7c597090bdc7"
+    },
+    {
+      "path": "cohere/policy/messages/correctness-require-declared-walk.json",
+      "sha256": "26aeb5f478548ab6e5061440e339282e0b61c4b281870866ebac6022882e4913"
     },
     {
       "path": "cohere/policy/messages/correctness-require-graphql-nullable-parity.json",
-      "sha256": "880568a1cd21771d93e4beae2742e8b72ef54834d9357bb33a225f133cfe9860"
+      "sha256": "d3794e6138f5dd17e54b2888d02cabba16f58ca543d39d7538f3bf9cb7f8e302"
+    },
+    {
+      "path": "cohere/policy/messages/correctness-require-handled-error.json",
+      "sha256": "b4e3c7e8f67e89b817a04cba131a9cf5b2e1183e89c4236577865bc7ecf7633b"
+    },
+    {
+      "path": "cohere/policy/messages/correctness-require-invariant-reason.json",
+      "sha256": "789c2a53e43600d6e3563562da1116143b2cf99e3ef53af862f031d06bda93c4"
     },
     {
       "path": "cohere/policy/messages/correctness-require-matching-inject-type.json",
-      "sha256": "d5f393d81f3250222a9c49b2880dfba676201d80296794cf681bd9f31c3ecd0b"
+      "sha256": "98f1dca6d506656adfa05a42b59c4b1373615e5c77bd1b2bd6c29a72f820a13e"
     },
     {
       "path": "cohere/policy/messages/correctness-require-matching-operation-context.json",
-      "sha256": "f682b97dff39c88a10393665d0068d774a446afef62283ccb1cf7119fbf5eeaa"
+      "sha256": "80b441f64293962b0566c9d77997d3716a046a080e4688bb5f5533c854af1510"
     },
     {
       "path": "cohere/policy/messages/correctness-require-matching-provider-return.json",
-      "sha256": "37995603ed8416091011b118da07cc98253764794a17963755fac76c7db35dbb"
+      "sha256": "7ad3e9faf2405d3a7f75990db42e6c14a2049bf0e0881edc7d7ce9d4701ab445"
     },
     {
       "path": "cohere/policy/messages/correctness-require-optional-relation.json",
-      "sha256": "907cde508f9e5e45c0300c62cad7718c4e8c3b97e9411a12860bb9d7d13608aa"
+      "sha256": "cc0a8fe5855449ecbc26017b845592e994f5b87b2aee72ec99ff7dbff308a633"
     },
     {
       "path": "cohere/policy/messages/correctness-require-orm-column-declare.json",
-      "sha256": "332e84fbf9c4eec3274edd7b7a64032d8de53debdf6519c2eeb0fad328f03a18"
+      "sha256": "d845206dfd95d5a862637a7f7cfbb7a210956ce1e08082ed61de3e5837fab156"
     },
     {
       "path": "cohere/policy/messages/correctness-require-orm-column-nullable-parity.json",
-      "sha256": "f799762eb629499dd525ebe42bddb5867fa465c42ea46305a38a52844a17d607"
+      "sha256": "f0725bf2fcf681358595815ea994795aa5e7ff618a146c9e5d51076135e342e4"
     },
     {
       "path": "cohere/policy/messages/correctness-require-response-status-check.json",
-      "sha256": "48c9882d72d3533cc051d246e7fc22d0e89bf94a958b8775b83a34e30d71589b"
+      "sha256": "31a919c9f8526945a76d0459bdb47738542a21dd50fac22bca62bfd95bdc7cf6"
     },
     {
       "path": "cohere/policy/messages/correctness-require-serializable-nullable-parity.json",
-      "sha256": "3591f8b5e9fc11339e64f53425f620e177ce7a4a47a3632f3c8b507b7b0b1f80"
+      "sha256": "28e05fe072e759c874da6e330d1ad22ce6d0dfe1607a1e603b07fc21840920d5"
     },
     {
       "path": "cohere/policy/messages/correctness-require-verify-array-parity.json",
-      "sha256": "007bcfb62a895bf1ce0c02bfa8ed0cb595751bd5b721f1505c9a5ea5b429a6f6"
+      "sha256": "cd0c1aa380f6d1c9f6fb09656b9d5f8833fd1c69694e27dba8e1761c5d0cadb2"
     },
     {
       "path": "cohere/policy/messages/correctness-require-verify-optional-parity.json",
-      "sha256": "1d40335a9dc0760c40d864aa640a507dbf5b2034f15dc76e1c419f822d48b3ce"
+      "sha256": "9754dd354430bdde724cbf9007b7b36653a8f7f43bb8c79cbb666bb3e3267143"
+    },
+    {
+      "path": "cohere/policy/messages/correctness-require-wrapped-error.json",
+      "sha256": "37b5f8c6814727a932d90d7624e8d12cdbcc78d6803c15ce00a3a9865a216d86"
     },
     {
       "path": "cohere/policy/messages/import-no-forbidden-source.json",
-      "sha256": "8fcfab039747149e4929d3c676f3c2a10213e4451c84ad80b47a2e9a5f27daf8"
+      "sha256": "6786167853c387f8839ad2c7720029eea5c73839abdc7fb0358185b60166d818"
     },
     {
       "path": "cohere/policy/messages/import-require-module-alias.json",
-      "sha256": "3384d0cbe0e89d398c0ccb610038e58283a12f3d4fc43292709e65fff161d324"
+      "sha256": "1697fba1fd9789379512460ca1e71480c934b6ce71b96fb4052eb5f1d0c5453c"
     },
     {
       "path": "cohere/policy/messages/import-require-node-namespace.json",
-      "sha256": "b98a8f2ed0d7b02851beeed149d53851d93b390237e8414c0d101acaebc0e273"
+      "sha256": "98c97fcfb8d4dcd339386b5bb9bba0f8c76ef7e599ec658a4cc243685be8d307"
     },
     {
       "path": "cohere/policy/messages/import-require-path-alias.json",
-      "sha256": "b8bc371c2e89d0dd143e2516be210519952e0b99f44b3722c3f029ae88da61da"
+      "sha256": "fad591c68b9424d757819bf6880f95754ad1a6a53a52696765e58af512578d55"
     },
     {
       "path": "cohere/policy/messages/import-require-react-namespace.json",
-      "sha256": "31c00dfd9ef87819e20d9aa83c4fb6f8bbfec6c6d1a006d93f6204c19e30eb30"
+      "sha256": "0554c5012ef568a53bf019134cd81a3c6a8b91f9f9bf360976558044c244e7da"
     },
     {
       "path": "cohere/policy/messages/invariant-mutable.json",
-      "sha256": "98c1b4f3cfe60c10852d8dad02063db075552b4a73ed2e02e38d8daa8f0ba091"
+      "sha256": "13941c8f963b0f2c45dee9cb1352f186b17d182531b5e3b02de31e4603cfc257"
     },
     {
       "path": "cohere/policy/messages/localization-no-untranslated-value.json",
-      "sha256": "c6ffd8fdc72d16df84f14bc5120ed57411a4e54b3b6f979d14cd1944ba232d8c"
+      "sha256": "67855b980aabb1061810bf18f2d7b5549c03f0ef82a9659aab44dfa28491b348"
     },
     {
       "path": "cohere/policy/messages/network-no-direct-fetch.json",
-      "sha256": "84d4b3c85d2735f49a69226181db531f2593545aef7ced1727f9f93035eb2574"
+      "sha256": "2d552896300718591442d538655bde08d0d83d8dd25b7e44fe7fb4f5103c543c"
     },
     {
       "path": "cohere/policy/messages/network-no-forbidden-import.json",
-      "sha256": "e515adfbf04c40a9dd2b79d585b7cf64cd080394bf80e25b04f4529a982e60f2"
+      "sha256": "ce9008cf7b1ce70734db19b1e951d632a14bdcda8ceaf37a32c4ed0eb2b2e4a2"
     },
     {
       "path": "cohere/policy/messages/network-no-invalidate-cache-in-on-success.json",
-      "sha256": "5a2f4457ded6940b87b56f79bb2847548ced8e621e9089e42fccce656424511b"
+      "sha256": "11b35e9efdc3dc2f8c5143a2ff8925e06782cfe4cc1685cd3d9294d3a5b2d2fa"
     },
     {
       "path": "cohere/policy/messages/network-no-invalidate-cache-literal-key.json",
-      "sha256": "2df2746fa52d4f2f796263d893673dbe0013ba87930f6cc95873beae81f9d69c"
+      "sha256": "06b23afef834dc475726c0ddf29e16d158adb610d637436d8b133388f527c31e"
     },
     {
       "path": "cohere/policy/messages/network-no-string-literal-query.json",
-      "sha256": "826b49e47ef2c6384823347a58bbdf233cf84c34b81b2a879d94597fcdb4d705"
+      "sha256": "5809c8f35d1a6c1dcfbfff7590d11bead5d828ed55462d748982a170041be169"
     },
     {
       "path": "cohere/policy/messages/network-require-hook-options-parameter.json",
-      "sha256": "06f1da0a8c8d260d31a59c3f3d65deaa5ae9f23cd3d9a6c45f81ef5ce93a5d93"
+      "sha256": "3bb7ad864e1dc6567c75ce38b4c006176f9c523a93c745ecc43b159fd762dfb2"
     },
     {
       "path": "cohere/policy/messages/network-require-hook-request-suffix.json",
-      "sha256": "0fb2e42f3c35c35d4f36f3c7e59ef3a92b3946acfce726ce6ccfdf8f3ee5ce00"
+      "sha256": "b0dc4f282d463e4b1796e977fb2cb5b3970fcfb57f21730a1f58e2217f174b83"
     },
     {
       "path": "cohere/policy/messages/network-require-hook-variables-type.json",
-      "sha256": "187188a812b449e5eef7deb3f6f360bc89acfdf9346d9d2783e2c92a8a12ef9d"
+      "sha256": "5a3763b9d265c055b33fc5ebee47e35a5b73a307ec7c370249a5dd1caed58f53"
     },
     {
       "path": "cohere/policy/messages/next-no-near-miss-route-export.json",
-      "sha256": "1f80962f43f9601b849d98ff7c5f871f054febf9935c99c2b094242b2e464132"
+      "sha256": "eb56b5e2b1a04591021590b51f2f401e12c347d7bc8e7ffc22253001ffe27f0f"
     },
     {
       "path": "cohere/policy/messages/next-no-page-state.json",
-      "sha256": "1279f901cb10208be0ceb464922b4a4075c4e257cb8281722349632bdf71e19b"
+      "sha256": "64b1cecc72724d3f69b7eb6099e41319515e63cfcc65e47aa5abc2d5619e375c"
     },
     {
       "path": "cohere/policy/messages/next-require-api-parameter-name.json",
-      "sha256": "a35b30b14551c8c3fba72d8d2ab2b60570063093b4c39a4b80acd91b20285538"
+      "sha256": "ad229c45bac381fad46b850487d1a5ca165181378ec3769628a175a007fe8e71"
     },
     {
       "path": "cohere/policy/messages/next-require-page-default-export.json",
-      "sha256": "23dd053ee9c1c51ec6fdfdf5e2ee874ef5d698fc53454dbb1d49a635f2662a38"
+      "sha256": "0ef93581ef2d0564312d0dbf0a7cd3aa66175a99566251ab1d168a233ac6b1b9"
+    },
+    {
+      "path": "cohere/policy/messages/no-ambient-declarations.json",
+      "sha256": "419b00711628e132f30801639d33163520f2747549a4a178792bba1737597f1a"
+    },
+    {
+      "path": "cohere/policy/messages/no-cross-enum-narrowing.json",
+      "sha256": "9e100ecf4faaec1d688ae1ae66eab933670721092b2a40b9376686884d271324"
     },
     {
       "path": "cohere/policy/messages/no-definite-assignment.json",
-      "sha256": "f44926f2e0bb33ebbc2809a609d3e95b31c6cebb39d2c3090207d666371d24f6"
+      "sha256": "e7143d4fea16357e3584b5d0c8f8a1ed29e9452450cd4e82cbba22a6946a6521"
     },
     {
       "path": "cohere/policy/messages/no-indexed-access-write.json",
-      "sha256": "0166d3d6955980c3d2fb847fdffb50b4840e69d7204fbc1702e613a17b6b501a"
+      "sha256": "ee4d01d99374055334211b52603c71c04fb1ca031820676dd0030992a719885b"
     },
     {
       "path": "cohere/policy/messages/no-non-null-assertion.json",
-      "sha256": "88ae6ea4a92de32184ac144d74de8e62175e27c4a8bf85e7edb2ebb5919e87a4"
+      "sha256": "e70436161389b8506e09d61d04b0a702d2d3d7f7af8ce167290d4df3eb985dd0"
     },
     {
       "path": "cohere/policy/messages/no-optional-widening.json",
-      "sha256": "ad74ff95306b338810b3b26cf70a9fe3d6ca62c3b0d5592fb70be5941432dd8e"
+      "sha256": "8cbd4acbc1349dc80dc546c052608fa59824282d5d4c944b98824e2fb807f74f"
     },
     {
       "path": "cohere/policy/messages/no-type-predicate.json",
-      "sha256": "4fca1468676fc09f2968ab333bb2b68f3a3eddc7ffdf13aacbe2df918c482be4"
+      "sha256": "a6e0f6f57ee009e66bce5d6d4b30ca5bb18cc859291a6ff23386fe3782298b35"
     },
     {
       "path": "cohere/policy/messages/no-unchecked-cast.json",
-      "sha256": "6aec0263d22401e3540e4edc81513eaa4883489505eadde6ce59dbcdc519d346"
+      "sha256": "88ee3bbfec8e32208edc0be8587d509007e46042331fed01a1e51857b3e54c29"
+    },
+    {
+      "path": "cohere/policy/messages/no-void-widening.json",
+      "sha256": "738c87d0e4dd228b3bd1c0ea04bc003de113eecbdff4094f60ba53a17285624c"
     },
     {
       "path": "cohere/policy/messages/nominal-class.json",
-      "sha256": "3045366ef0ea71d768b64467ad67a8aba9caa071fd6c39996bcd367f00753fbd"
+      "sha256": "af1c9bcf3b6e75121a57ba90666a7c38859150f60fb7b75304bafbfca01c9eb5"
     },
     {
       "path": "cohere/policy/messages/performance-no-independent-await-in-loop.json",
-      "sha256": "e6938dddbc624eb629164d4b312785f4fe7d4df824fce05bb3cac1eae6ce32bd"
+      "sha256": "901f11b7ea7a53f9ef7933cc1530dc65237590e4aaa3ba47079a63db61d21147"
     },
     {
       "path": "cohere/policy/messages/react-component-no-const-assignment.json",
-      "sha256": "02d194b19b5ccda9ebf2375c73c9cabf54d65b76e3546d06ea285b7233c56a45"
+      "sha256": "442bb8d9c34f643076b8fd3f63be9c28c28f9ff8ad520b59b266c18100debf1b"
     },
     {
       "path": "cohere/policy/messages/react-component-no-destructuring.json",
-      "sha256": "9a7b060237d1eb77ce87b30ff45c907af4c2726737998e3d4011b4223b923828"
+      "sha256": "1336e20b72c8dcb9b3e3028a79232d7314bf03935ce228c968ca5630252a18be"
     },
     {
       "path": "cohere/policy/messages/react-component-no-display-name.json",
-      "sha256": "a4b439b7f4bc3c743e99267fd96c8425b64b5e71004761ea6228d5b840539ab6"
+      "sha256": "a3facb19c53ebeafe1ff9bd0b35150a5eccf4cb2ca40d34686e2e1111fe94c33"
     },
     {
       "path": "cohere/policy/messages/react-component-no-forward-ref.json",
-      "sha256": "17e818112aa20ca5e54ec292a934041a35c73a39fd7176b4c5468edbbeca504a"
+      "sha256": "6e00470e861522be68af8a6ca8d7acc4a1f55dacc391f9cad510482318ad2320"
     },
     {
       "path": "cohere/policy/messages/react-component-no-separate-named-export.json",
-      "sha256": "d240ba8812ed9d63a6d2984856fdd1c5ea0ea76d23b5abcc86606109f43d855c"
+      "sha256": "27f8c0a805ba920cdd16c360245a0bfd4e771a92003e0abd0b6217b73fc398c8"
     },
     {
       "path": "cohere/policy/messages/react-component-require-named-export.json",
-      "sha256": "64802450b1c166f060a31ef7fa39e8c46fb13ee47224c99b0d19445598f04bb5"
+      "sha256": "db66bf4e9f35e88b8cea6bc21ca17f1833dedd06e3577e46341c3e936de597a5"
     },
     {
       "path": "cohere/policy/messages/react-component-require-properties-parameter.json",
-      "sha256": "11a2c6a6b2630e102145fbb39909903cb55286a11dd3c6bf4584bb565f6dfe0d"
+      "sha256": "b34aea54ab1a7507b4265b9eeec10228308069cb8ad4f09c37d54d8af7563b93"
     },
     {
       "path": "cohere/policy/messages/react-component-require-properties-type-suffix.json",
-      "sha256": "1bb1744c8c762b4fd051f8f8610a1ac17cd0487a9902ce9b0a76e0bb2724375b"
+      "sha256": "52ad3f4401b7d7e2ec8b8b332e43c77c8fde3fe40dc37133bcc753b7a4b7beaa"
     },
     {
       "path": "cohere/policy/messages/react-element-no-anchor.json",
-      "sha256": "8d3c3cac7878aa82e67e254d5f6c3bbdb426aaa0646871c26cb57f5fe6ed741d"
+      "sha256": "89ba97f34be444c976164fdcf1aee5f795ae179a82bd8bda0f18e5f19f7a52fa"
     },
     {
       "path": "cohere/policy/messages/react-element-no-horizontal-rule.json",
-      "sha256": "ee5846e49520946b325c1a551ac612187a9d9ae2c6d14aadec4662422556f5ca"
+      "sha256": "fe80498a6514bcb0e71657458b60b4d749310cff1f7f82391ee5eba406504c26"
     },
     {
       "path": "cohere/policy/messages/react-hook-no-any-type.json",
-      "sha256": "6eec22e35a337e1bf8579f7148216b357f9445125dce28562a18e15010b201d4"
+      "sha256": "40ef2863e95ccebc587013e795b6de197351ed207600ef62d5c5155aeb3a44ad"
     },
     {
       "path": "cohere/policy/messages/react-hook-no-destructuring.json",
-      "sha256": "d4e1a84fd537094e32b058eb1e0b948ef2199a02e9106543b8fad2569c55c7b6"
+      "sha256": "4031999174d7e76bc545ece860c61026188cc4c532ca3d7628318030615fb811"
     },
     {
       "path": "cohere/policy/messages/react-hook-no-properties-in-dependencies.json",
-      "sha256": "93642fdda34bcc64d2c03dfceeb2f1ba475c9a4a2bad2b2d9c030507ba605cf0"
+      "sha256": "33cba5e7ada72038cf933afff5392793b100938f7d18673dbdf175f5a8073abc"
     },
     {
       "path": "cohere/policy/messages/react-hook-require-effect-comment.json",
-      "sha256": "acc929d1f4c37fd36f590d2f3106d8bc5079f17f72e9e34997d5d0c19830650b"
+      "sha256": "31966d5560123948d8d340c9a050c6ea52ffdeaacda36d522446b73fab89fe3a"
     },
     {
       "path": "cohere/policy/messages/react-hook-require-result-naming.json",
-      "sha256": "356a260adae774b5a8f8de32a00a827e67199ce7f36c343c87805817f05e23ec"
+      "sha256": "ffd9d4c9dfb223d8000b7de1fbcb8bdbf664213ce3587377db90f05f3ef554d3"
     },
     {
       "path": "cohere/policy/messages/security-no-interpolated-shell-command.json",
-      "sha256": "4f8921b63260f09ce6da1bfa96457b49312c793c7cbe4bf87225265832cbd917"
+      "sha256": "028222b9943a210917071bed54672e9e8dccf4fb2d07240aca4677e3589c827f"
     },
     {
       "path": "cohere/policy/messages/security-no-interpolated-sql-string.json",
-      "sha256": "c0669ebdbdb7d1b006ef9a72ef1bacd57925402178a563016bd417f4b19cae0b"
+      "sha256": "4311a3527d49b9e64ac1aafd987bbfc7045b854189df60898e539d7e4ba7d6df"
     },
     {
       "path": "cohere/policy/messages/security-require-context-access.json",
-      "sha256": "6b28b90954480070b016e4995c0e531e0ce809c8bd64cdff04e2550eda186e5e"
+      "sha256": "392e4dec835420080436339d5e6132d31e7eee6dabd1cc5eac4ff672770a1823"
     },
     {
       "path": "cohere/policy/messages/single-spread.json",
-      "sha256": "cb39a294448decba2c938bc353c8c446a60bfa6601f98e3836f03b8ebd81cc83"
+      "sha256": "f008ac3e62feb1b3123db83da131f8fd82296b2bb7c3796c11f85a32805445ac"
     },
     {
       "path": "cohere/policy/messages/storage-no-direct-local-storage.json",
-      "sha256": "e27d4966c4591b2086af610ac774a17e1b286dd024717e79af502a6c08f5ca08"
+      "sha256": "f8ca3cf75457cbd7c0c1365ad54e039edc3df2914514406ba803727fe6db4399"
     },
     {
       "path": "cohere/policy/messages/tailwind-no-physical-direction.json",
-      "sha256": "ea03dd030ae8c3a2a254176dc5e70ea894811cbd2ad418729c636a91fd6a1f36"
+      "sha256": "fbe9a3ba4bb69b83bc0017652e2ffb5ad0c778029925611a03d867287f3168db"
+    },
+    {
+      "path": "cohere/policy/messages/testing-no-machine-path.json",
+      "sha256": "4ea41bec9a20ba510f7e376340ae824ac447c74ea576539c576d94088437ae0b"
+    },
+    {
+      "path": "cohere/policy/messages/testing-no-timing-assertion.json",
+      "sha256": "4ef9aa1f1dbb5092038138cdcbe343976d45d3857b35c39a9a984f3a211c0d34"
+    },
+    {
+      "path": "cohere/policy/messages/testing-no-uncached-run.json",
+      "sha256": "d7efde97cf7e4fd86fbb3184522676139922daa5ce9e964d9a62a6455c876733"
+    },
+    {
+      "path": "cohere/policy/messages/testing-require-failure-path.json",
+      "sha256": "12584d688b6442cdad9d9ab1ab63319e8ff20830cb74c50407762df1fc63503f"
+    },
+    {
+      "path": "cohere/policy/messages/testing-require-parallel.json",
+      "sha256": "5b8fa5cb83e7d2d57379282aae3072fa19e0e30821e4ab54abf9ef1dcba594a2"
     },
     {
       "path": "cohere/policy/messages/toolchain-require-strict-memory-safety.json",
-      "sha256": "8842cfe260b9021df98291657e28735f7bf1ecb7df2da9afb811adb95c1611d5"
+      "sha256": "9106573c067252c31690a300f6f4b41b5c0f98af1636a299f476f4037df758b6"
     },
     {
       "path": "cohere/policy/messages/toolchain-require-swift-6-language-mode.json",
-      "sha256": "b47ae213fe7be6d5fcebefdc95e6559fc23ecadd2e61521572949d5628f28027"
+      "sha256": "b063af7a2a48f9c28a35534c708e421bc4af483e381d43f90c092cd3d972698e"
     },
     {
       "path": "cohere/policy/messages/toolchain-require-upcoming-features.json",
-      "sha256": "adb51bad9889107bd65e0c4e1a715cf6fbfcfe36e2945f684ed9e3a26e238f58"
+      "sha256": "6ff43745f89dd2a3615c14554c6c6b809be9cfa7d26a087c5d518c1cb1898993"
+    },
+    {
+      "path": "cohere/policy/messages/union-write.json",
+      "sha256": "d8c8661adbcbe90ec1697ed1af41edbae937c0c1fb3c642044eb44d39ba53e1c"
     },
     {
       "path": "cohere/schema/CohereOutput.schema.json",
-      "sha256": "90bec6016af9166eeca516039a827582534316885f0306b7a2fc796ec3395a78"
+      "sha256": "6ef0cc7ad225483c89e7ed33163ab6fa40ee5a1de7d3323228804bd29663c1cf"
     },
     {
       "path": "cohere/schema/CohereSettings.schema.json",
-      "sha256": "b95ed8d10c2c52bfb1112573a37c3740fc204702cdd52e11b1067ca534cd755a"
+      "sha256": "ef85faf945d97f3d7c8c4c71da652852427f551c2e530017fb0e015c1a108352"
     },
     {
       "path": "cohere/schema/NexusCohereSettings.schema.json",
-      "sha256": "bd33c4f23667df5785749c8e0a45d0f280bf3cc46ad74c397845d04225659d80"
+      "sha256": "264168f7db215db985d1eea533fed4ab08c5c583ba582f13b786509022c49d15"
     },
     {
       "path": "cohere/swift/HouseRuleVerdicts.json",
-      "sha256": "29f9ed6a8b648dcf62fc79a2bd5e8e2713f2aace32190591305301a047fa41b3"
+      "sha256": "e0a7907fb9ec476eca7ec3734f52e5f0956589ee21c2e44c56a203bf26c9a6f5"
     },
     {
       "path": "cohere/swift/Rules.json",
-      "sha256": "bb977ea09d43b8da36e95ac949b69612e8ca102745d26b579b53081109943587"
+      "sha256": "a56acc6836949489d28c34ce12e1e5644db0436f18e7ea07b2b8118abbb0b350"
+    },
+    {
+      "path": "cohere/tools/go_codemods/command/word_names/testdata/Abbreviations.json",
+      "sha256": "0f32733345842bcd3302d4c7b8c6bd3c87912960876a745d90e1693f891af1cf"
     },
     {
       "path": "generated/0/package.json",
