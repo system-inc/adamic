@@ -31,6 +31,10 @@ import (
 //   - adamic_graph_merge unites only its two endpoints (no between): "third", "diamond" and "taken"
 //     keep a cycle of counted edges, which the counted build's acyclic check reports.
 //   - between stops at the first region it finds that reaches the target: "diamond" leaves x2 out.
+//   - between skips no search on a region with no edge in: "search cost" counts N squared for the
+//     unrelated stores at N = 1000.
+//   - between reads the holder member instead of its region (passing it as a target with no
+//     region): "member" leaks a graph.
 const graphRegionOfOneHarness = `#define ADAMIC_CANONICAL_CLOSURES 1
 #include "adamic.h"
 #include "graph_regions.h"
@@ -202,6 +206,31 @@ int main(int count, char **arguments) {
   }
   printf("searched %zu\n", adamic_counted.graph_searched - before);
   adamic_release(chain);
+ } else if (strcmp(mode, "member") == 0) {
+  // Language's pin: the copy's edge runs to b, the store is into a. a has no counted edge in of its
+  // own, but its region does, through b, so the store must merge.
+  adamic_array *held = copy(b, NULL);
+  link(a, 1, held);
+  adamic_release(held);
+  label(a);
+ } else if (strcmp(mode, "open") == 0) {
+  // The open bound: a chain of N regions over c's graph, stored into a, whose region has an edge in
+  // (from w) that the chain doesn't reach. The search visits what the chain reaches and merges none
+  // of it. #fhcjc66's topological order is what bounds this per store.
+  adamic_object *c = node(&name_c);
+  adamic_array *w = copy(a, NULL);
+  adamic_array *chain = copy(c, NULL);
+  adamic_release(c);
+  for (long i = 0; i < loops; i++) {
+   adamic_array *next = holder(chain, NULL);
+   adamic_release(chain);
+   chain = next;
+  }
+  size_t before = adamic_counted.graph_searched;
+  link(a, 1, chain);
+  printf("searched %zu\n", adamic_counted.graph_searched - before);
+  adamic_release(chain);
+  adamic_release(w);
  } else {
   return 3;
  }
@@ -238,7 +267,7 @@ func TestGraphRegionOfOne(t *testing.T) {
 		}
 		return leakcheck.Run{Stdout: []byte(stdout.String()), Stderr: []byte(stderr.String()), ExitCode: exit}
 	}
-	for _, mode := range []string{"dropped", "stored", "closed", "escape", "overwrite", "teardown", "sorted", "third", "diamond", "taken", "chain", "unrelated"} {
+	for _, mode := range []string{"dropped", "stored", "closed", "escape", "overwrite", "teardown", "sorted", "third", "diamond", "taken", "chain", "unrelated", "member", "open"} {
 		t.Run(mode, func(t *testing.T) {
 			t.Parallel()
 			for _, binary := range []string{sanitized, counted} {
@@ -252,20 +281,40 @@ func TestGraphRegionOfOne(t *testing.T) {
 			}
 		})
 	}
-	// The search's cost, written down for Adamic's no-pause line (#5nrs3q2): the regions visited by
-	// one store that closes a chain of N, and by N stores of that chain into fresh nodes. Logged, with
-	// the chain's merge checked by the counted build above; a bound is ruled on these numbers.
+	// The search's cost, as numbers (#5nrs3q2, Adamic's ruling): regions visited in the counted build.
+	// A chain of N regions closed by one store visits at most N + 2, each merged once. The chain stored into N
+	// fresh nodes visits none, since nothing points into a fresh node's region; without the incoming
+	// check it was N squared (1,002,000 at N = 1000), which is the mutant. The open bound, a store into
+	// a region with edges in that the value doesn't reach, visits what the value reaches, N + 1, and is
+	// recorded here so it can't grow unseen; #fhcjc66 bounds it per store.
 	t.Run("search cost", func(t *testing.T) {
 		t.Parallel()
 		searched := regexp.MustCompile(`searched (\d+)`)
-		for _, mode := range []string{"chain", "unrelated"} {
-			for _, loops := range []string{"10", "1000"} {
-				result := run(counted, mode, loops)
-				match := searched.FindSubmatch(result.Stdout)
-				if result.ExitCode != 0 || match == nil {
-					t.Fatalf("%s %s: exit %d\n%s%s", mode, loops, result.ExitCode, result.Stdout, result.Stderr)
-				}
-				t.Logf("%s, N = %s: %s regions searched", mode, loops, match[1])
+		visits := func(mode string, loops int) int {
+			result := run(counted, mode, strconv.Itoa(loops))
+			match := searched.FindSubmatch(result.Stdout)
+			if result.ExitCode != 0 || match == nil {
+				t.Fatalf("%s %d: exit %d\n%s%s", mode, loops, result.ExitCode, result.Stdout, result.Stderr)
+			}
+			value, err := strconv.Atoi(string(match[1]))
+			if err != nil {
+				t.Fatal(err)
+			}
+			return value
+		}
+		for _, loops := range []int{10, 1000} {
+			if got := visits("chain", loops); got > loops+2 {
+				t.Errorf("chain of %d: %d regions searched, want at most %d", loops, got, loops+2)
+			} else {
+				t.Logf("chain of %d closed by one store: %d regions searched", loops, got)
+			}
+			if got := visits("unrelated", loops); got != 0 {
+				t.Errorf("chain of %d stored into %d fresh nodes: %d regions searched, want 0", loops, loops, got)
+			}
+			if got := visits("open", loops); got > loops+2 {
+				t.Errorf("open bound, chain of %d: %d regions searched, want at most %d", loops, got, loops+2)
+			} else {
+				t.Logf("open bound, chain of %d: %d regions searched", loops, got)
 			}
 		}
 	})
@@ -339,18 +388,21 @@ func TestGraphRegionProgramEdge(t *testing.T) {
 	for _, mode := range []string{"cycle", "late"} {
 		command := exec.Command(binary, mode)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
-		output, err := command.CombinedOutput()
+		var stdout, stderr strings.Builder
+		command.Stdout, command.Stderr = &stdout, &stderr
+		err := command.Run()
 		switch mode {
 		case "cycle":
 			if err != nil {
-				t.Fatalf("cycle: %v\n%s", err, output)
+				t.Fatalf("cycle: %v\n%s%s", err, stdout.String(), stderr.String())
 			}
-			if report := leakcheck.Unbalanced(leakcheck.Run{Stderr: output}); report != "" {
-				t.Fatalf("cycle: %s\n%s", report, output)
+			// The counts line is stderr's last; stdout is read apart from it.
+			if report := leakcheck.Unbalanced(leakcheck.Run{Stdout: []byte(stdout.String()), Stderr: []byte(stderr.String())}); report != "" {
+				t.Fatalf("cycle: %s\n%s", report, stderr.String())
 			}
 		case "late":
-			if err == nil || !strings.Contains(string(output), "heap-use-after-free") {
-				t.Fatalf("a copy released after the Program region's end isn't reported: %v\n%s", err, output)
+			if err == nil || !strings.Contains(stderr.String(), "heap-use-after-free") {
+				t.Fatalf("a copy released after the Program region's end isn't reported: %v\n%s", err, stderr.String())
 			}
 		}
 	}

@@ -33,6 +33,11 @@ typedef struct graph_region {
 	adamic_heap **boundary;
 	size_t boundary_count;
 	size_t boundary_capacity;
+	// incoming is how many counted edges run into this region's members from other regions. A store
+	// can close a cycle only into a region something points at, so a merge skips its search when the
+	// holder's region has none (between). It's the region's, never a member's: a member with no edge
+	// of its own can share a region with one that has.
+	size_t incoming;
 #ifdef ADAMIC_COUNT
 	// counted_out is how many counted edges run from this region's members to other regions, kept
 	// by every path that makes or ends one, and checked against the members at every merge and free.
@@ -265,7 +270,10 @@ static void search_back(adamic_heap *heap, graph_region *root) {
 	}
 }
 static void between(graph_region *from, graph_region *target_root, adamic_heap *target_lone) {
-	if (from == NULL) { return; }
+	// Nothing points into a member with no region, nor into a region with no counted edge in, so no
+	// path can reach it. The open bound: a target with edges in that from doesn't reach still costs a
+	// search of everything from reaches (the "open" witness); #fhcjc66's topological order bounds it.
+	if (from == NULL || target_root == NULL || target_root->incoming == 0) { return; }
 	search_target_root = target_root;
 	search_target_lone = target_lone;
 	search_count = 0;
@@ -303,7 +311,10 @@ static void uncount(adamic_heap *heap, graph_region *root) {
 	if ((root != NULL && root->merging) || (root == NULL && (heap == merging_one || heap == merging_two))) {
 		if (heap->references == 0 || (root != NULL && root->references == 0)) { FAIL("compiler bug: graph released without ownership"); }
 		heap->references--;
-		if (root != NULL) { root->references--; }
+		if (root != NULL) {
+			root->references--;
+			root->incoming--;
+		}
 #ifdef ADAMIC_COUNT
 		edge_from->counted_out--;
 #endif
@@ -358,6 +369,7 @@ static graph_region *unite(graph_region *a, adamic_heap *one, graph_region *b, a
 		if (SIZE_MAX - a->references < b->references || SIZE_MAX - a->size < b->size) { FAIL("graph region count overflow"); }
 		a->references += b->references;
 		a->size += b->size;
+		a->incoming += b->incoming;
 		adamic_graph_header_of(a->tail)->next = b->head;
 		a->tail = b->tail;
 		a->record_tail->next_record = b;
@@ -473,6 +485,7 @@ void adamic_graph_drop(void *holder, void *value) {
 #ifdef ADAMIC_COUNT
 		region->counted_out--;
 #endif
+		region_of(to)->incoming--;
 	}
 	adamic_release(value);
 }
@@ -541,6 +554,10 @@ static void count_owned(void *value) {
 	if (heap == NULL || heap == joining) { return; }
 	graph_region *root = region_of(heap);
 	if (root != NULL && root->shared) { FAIL("merging shared graph regions is not yet supported"); }
+	// A counted edge's target always has a region, so a member with none has no edge in.
+	if (root == NULL) { root = new_region(heap); }
+	if (root->incoming == SIZE_MAX) { FAIL("graph region count overflow"); }
+	root->incoming++;
 	joined++;
 }
 
@@ -578,6 +595,7 @@ void *adamic_graph_escape(void *holder, void *value) {
 #ifdef ADAMIC_COUNT
 	region->counted_out--;
 #endif
+	region_of(to)->incoming--;
 	return value;
 }
 
@@ -679,6 +697,7 @@ static void release_outside(void *value) {
 		// region holds none.
 		if (freeing_root == NULL) { FAIL("compiler bug: graph edge crosses regions"); }
 		freeing_crossing++;
+		region_of(heap)->incoming--;
 	}
 	outside_release(value);
 }
