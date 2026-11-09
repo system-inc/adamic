@@ -14,6 +14,11 @@ from node_readiness import run_roots
 MEASUREMENT = 'measured on a checker-rejected program'
 ENTRY_MEASUREMENT = 'measured on a checker-clean entry-root program'
 REJECTED_ENTRY_MEASUREMENT = 'measured on a checker-rejected entry-root program'
+# The tsc entry pass's ceiling on the checker's assignable cache: 3.3 times the 299,624 pairs measured at Lower's
+# record-sources head on Nov 9 (#ny0c3gb), and well under the checker's 16M cap. A relation call's step budget is
+# (16M - size) / 8, so a cache that grows toward the cap starves every later relation until they overflow.
+ASSIGNABLE_THRESHOLD = 1_000_000
+RELATION_CACHES = ('subtype', 'strictSubtype', 'assignable', 'comparable', 'identity', 'enum')
 
 
 def reason_owner(reason, owners):
@@ -201,6 +206,40 @@ def entry_summary(tree, run):
     return result
 
 
+def relation_budget(entry):
+    """The tsc entry pass's relation caches against the budget. Only a complete, readable report under it is ok."""
+    summary = entry['lowering_census']
+    verdict = {'status': 'unknown', 'assignable': None, 'threshold': ASSIGNABLE_THRESHOLD, 'overflow_marked': False}
+    if summary is None:
+        return dict(verdict, why='entry lowering blocked by checker diagnostics, so no relation report')
+    if not summary['relation_report_complete']:
+        return dict(verdict, why='relation report missing: run limited or did not complete')
+    relation = summary['relation_overflow']
+    sizes = relation.get('cache_sizes')
+    verdict['overflow_marked'] = relation['end'] != ''
+    red = ['the checker holds an overflowed relation at the end: ' + relation['end']] if verdict['overflow_marked'] else []
+    if isinstance(sizes, dict) and sizes:
+        # A cache the driver couldn't read is -1; one missing or malformed reads the same, which fails closed.
+        unread = [name for name in RELATION_CACHES if type(sizes.get(name)) is not int or sizes[name] < 0]
+        if unread:
+            red.append('unreadable relation caches: ' + ', '.join(unread))
+        if 'assignable' not in unread:
+            verdict['assignable'] = sizes['assignable']
+            if sizes['assignable'] > ASSIGNABLE_THRESHOLD:
+                red.append(f"assignable cache {sizes['assignable']:,} pairs, past {ASSIGNABLE_THRESHOLD:,}")
+    if red:
+        return dict(verdict, status='red', why='; '.join(red))
+    if not isinstance(sizes, dict) or not sizes:
+        return dict(verdict, why='relation report has no cache sizes')
+    return dict(verdict, status='ok', why=f"assignable cache {sizes['assignable']:,} pairs, within {ASSIGNABLE_THRESHOLD:,}")
+
+
+def relation_budget_line(entry):
+    verdict = relation_budget(entry)
+    assignable = 'unread' if verdict['assignable'] is None else f"{verdict['assignable']:,}"
+    return f"Relation budget: {verdict['status']}; assignable {assignable} of {verdict['threshold']:,} pairs; {verdict['why']}.".replace('\n', ' ')
+
+
 def relation_lines(summary):
     return [] if summary['relation_report_complete'] else ['Relation report missing: run did not complete; end answer unavailable.']
 
@@ -208,8 +247,8 @@ def relation_lines(summary):
 def entry_table(label, entry):
     summary = entry['lowering_census']
     if summary is None:
-        return ['', f'tsc entry lowering, {label}: blocked by checker diagnostics.']
-    lines = ['', f"tsc entry lowering, {label}: {summary['measurement']}.", *relation_lines(summary),
+        return ['', relation_budget_line(entry), f'tsc entry lowering, {label}: blocked by checker diagnostics.']
+    lines = ['', relation_budget_line(entry), f"tsc entry lowering, {label}: {summary['measurement']}.", *relation_lines(summary),
              f"Resolved source files: {summary['source_files']}; "
              f"NotYet: {summary['totals']['NotYet']}; Refused: {summary['totals']['Refused']}.",
              f"Errors: {summary['totals']['error']}; panics: {summary['totals']['panic']}; "
@@ -536,7 +575,9 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit, comm
     unowned, unowned_lines = unowned_table(trees)
     box_path = run / 'box.json'
     box = json.loads(box_path.read_text()) if box_path.exists() else None
-    result = dict(trees['area'], trees=trees, unowned_reasons=unowned, compiler_mode=mode, box=box)
+    # Main is the measured tree; twice-daily.sh's exit reads this verdict once the record is whole.
+    result = dict(trees['area'], trees=trees, unowned_reasons=unowned, compiler_mode=mode, box=box,
+                  relation_budget=relation_budget(trees['main']['tsc_entry']))
     (run / 'report.json').write_text(json.dumps(result, indent=2) + '\n')
     lines = []
     for key, title in [('checker_whole_program', 'Whole program'), ('checker_own_file', 'Own file')]:
