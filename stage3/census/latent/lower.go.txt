@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
+	"reflect"
 	"sort"
 	"strings"
 )
@@ -167,7 +168,7 @@ func (l *lowering) latentRegister(files []*ast.SourceFile) {
 			if node.Name() != nil {
 				l.classes[l.symbol(node.Name())] = node
 				func() {
-					defer func() { _ = recover() }()
+					defer latentSwallow(l, node)
 					if l.needsStatics(node) {
 						if l.staticGlobals == nil {
 							l.staticGlobals = map[*ast.Symbol]int{}
@@ -194,7 +195,7 @@ func (l *lowering) latentRegister(files []*ast.SourceFile) {
 					if ast.IsIdentifier(name) {
 						// Registration errors are contextual, not a finding in every unrelated unit.
 						func() {
-							defer func() { _ = recover() }()
+							defer latentSwallow(l, name)
 							if local, err := l.declareLocal(name); err == nil {
 								l.result.Locals[local].Global = true
 							}
@@ -403,6 +404,7 @@ func latentCanary(program *load.Program, c *checker.Checker, after string) {
 			}
 		}
 	}
+	latentCanaryState(c, after)
 	names := make([]string, 0, len(latentCanaryNodes))
 	for site := range latentCanaryNodes {
 		names = append(names, site)
@@ -427,5 +429,87 @@ func latentCanary(program *load.Program, c *checker.Checker, after string) {
 			fmt.Fprintf(os.Stderr, "probe-canary\t%s\tafter=%s\tchecker=%p\t%s\n", site, after, c, reading)
 			latentCanaryLast[site] = reading
 		}
+	}
+}
+
+// latentSwallow is the census's silent registration recovery, kept as it was (nothing recorded, the unit
+// goes on), with #448a51k's canary told: it counts every swallowed panic, and with ADAMIC_PROBE_CANARY set
+// prints each distinct one once, with the unit it happened in and the checker it happened on, which the
+// census keeps using afterwards. Never for landing.
+var latentSwallowCount int
+var latentSwallowSeen map[string]bool
+
+func latentSwallow(l *lowering, node *ast.Node) {
+	failure := recover()
+	if failure == nil {
+		return
+	}
+	latentSwallowCount++
+	if os.Getenv("ADAMIC_PROBE_CANARY") == "" {
+		return
+	}
+	key := l.program.Where(node) + "\t" + fmt.Sprint(failure)
+	if latentSwallowSeen == nil {
+		latentSwallowSeen = map[string]bool{}
+	}
+	if !latentSwallowSeen[key] {
+		latentSwallowSeen[key] = true
+		fmt.Fprintf(os.Stderr, "probe-swallowed\t%s\tunit=%s\tchecker=%p\tcount=%d\t%v\n", l.program.Where(node), latentFindingOwner, l.checker, latentSwallowCount, failure)
+	}
+}
+
+// latentCanaryState prints a checker's push/pop stacks and its relation caches' overflow marks whenever they
+// change for that checker (Lower's two additions on #448a51k). Between units every stack should be empty;
+// a non-zero one is state a recovered panic left behind. Fields are read by name, as load's
+// RelationOverflowMarked reads them, and a field that isn't there prints as missing.
+var latentCanaryStates map[*checker.Checker]string
+
+func latentCanaryState(c *checker.Checker, after string) {
+	value := reflect.ValueOf(c).Elem()
+	field := func(name string) string {
+		f := value.FieldByName(name)
+		if !f.IsValid() {
+			return name + "=missing"
+		}
+		switch f.Kind() {
+		case reflect.Slice, reflect.Map:
+			return fmt.Sprintf("%s=%d", name, f.Len())
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			return fmt.Sprintf("%s=%d", name, f.Int())
+		case reflect.Bool:
+			return fmt.Sprintf("%s=%t", name, f.Bool())
+		case reflect.Pointer:
+			return fmt.Sprintf("%s=%t", name, !f.IsNil())
+		}
+		return name + "=unreadable"
+	}
+	parts := []string{}
+	for _, name := range []string{"typeResolutions", "resolutionStart", "varianceStack", "callResolutionStack", "flowLoopStack", "sharedFlows", "antecedentTypes", "contextualInfos", "inferenceContextInfos", "awaitedTypeStack", "reverseMappedSourceStack", "flowAnalysisDisabled", "currentNode"} {
+		parts = append(parts, field(name))
+	}
+	overflowed := 0
+	for _, name := range []string{"subtypeRelation", "strictSubtypeRelation", "assignableRelation", "comparableRelation", "identityRelation"} {
+		relation := value.FieldByName(name)
+		if !relation.IsValid() || relation.Kind() != reflect.Pointer || relation.IsNil() {
+			continue
+		}
+		results := relation.Elem().FieldByName("results")
+		if !results.IsValid() || results.Kind() != reflect.Map {
+			continue
+		}
+		for iterator := results.MapRange(); iterator.Next(); {
+			if iterator.Value().Uint()&(1<<5) != 0 {
+				overflowed++
+			}
+		}
+	}
+	parts = append(parts, fmt.Sprintf("overflowedPairs=%d", overflowed))
+	state := strings.Join(parts, "\t")
+	if latentCanaryStates == nil {
+		latentCanaryStates = map[*checker.Checker]string{}
+	}
+	if latentCanaryStates[c] != state {
+		fmt.Fprintf(os.Stderr, "probe-state\tafter=%s\tchecker=%p\tswallowed=%d\t%s\n", after, c, latentSwallowCount, state)
+		latentCanaryStates[c] = state
 	}
 }

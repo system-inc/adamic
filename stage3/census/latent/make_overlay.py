@@ -144,7 +144,7 @@ if (repository / 'internal/lower/enums.go').exists():
     hook = hook.replace('// LATENT_ENUM_REGISTRATION', """case ast.KindEnumDeclaration:
         if """ + built + """ {
             func() {
-                defer func() { _ = recover() }()
+                defer latentSwallow(l, node)
                 if local, err := l.enumLocal(node); err == nil { l.result.Locals[local].Global = true }
             }()
         }""")
