@@ -348,6 +348,10 @@ func (l *lowering) objectAssignCallableSourceRefusal(node *ast.Node) error {
 		if argument.Kind == ast.KindSpreadElement {
 			source = argument.AsSpreadElement().Expression
 			sources = l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(source))
+			// A spread whose element types can't be read could hold a function: it fails closed.
+			if len(sources) == 0 {
+				return &Refused{Where: l.program.Where(argument), What: "Object.assign with a spread source whose element types aren't known", Fix: "Object.assign copies own properties, never callability; pass each source as its own argument"}
+			}
 		}
 		for _, proven := range sources {
 			if l.callableOrConstructable(proven, map[*checker.Type]bool{}) {
@@ -374,12 +378,19 @@ func (l *lowering) objectAssignCall(call *ast.Node) bool {
 }
 
 // callableOrConstructable reports whether any part of a type has a call or construct signature, or is lib's
-// Function: a union is callable when any member is, since the source may be that member.
+// Function: a union is callable when any member is, since the source may be that member, and a type
+// parameter or another instantiable type is judged by its base constraint, whose union a type parameter's
+// own signatures would read only in common (Compiler's read of #k8aak04).
 func (l *lowering) callableOrConstructable(proven *checker.Type, seen map[*checker.Type]bool) bool {
 	if proven == nil || seen[proven] {
 		return false
 	}
 	seen[proven] = true
+	if proven.Flags()&checker.TypeFlagsInstantiable != 0 {
+		if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != nil && constraint != proven && l.callableOrConstructable(constraint, seen) {
+			return true
+		}
+	}
 	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, part := range proven.Types() {
 			if l.callableOrConstructable(part, seen) {
