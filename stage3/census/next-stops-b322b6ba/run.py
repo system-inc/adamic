@@ -31,7 +31,7 @@ def checkpoint(label):
     run('checkpoint-add-'+label,['git','add','--',str(out)])
     treeid=subprocess.check_output(['git','write-tree'],cwd=repo,text=True).strip()
     state=out/'checkpoint-state.json'
-    parent=json.loads(state.read_text())['commit'] if state.exists() else subprocess.check_output(['git','rev-parse','origin/main'],cwd=repo,text=True).strip()
+    parent=json.loads(state.read_text())['commit'] if state.exists() else subprocess.check_output(['git','rev-parse','b322b6ba2f'],cwd=repo,text=True).strip()
     commit=subprocess.check_output(['git','commit-tree',treeid,'-p',parent,'-m','Next stops checkpoint: '+label],cwd=repo,text=True).strip()
     run('checkpoint-push-'+label,['git','push','origin',commit+':refs/heads/typescript/next-stops-b322b6ba-checkpoint'])
     state.write_text(json.dumps(dict(commit=commit,label=label),indent=2)+'\n')

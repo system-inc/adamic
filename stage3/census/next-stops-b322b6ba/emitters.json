@@ -1,7 +1,0 @@
-{
-  "core.ts:2599:80": "New group. `internal/lower/ambient.go:79` selects `an ambient value declaration`; `internal/lower/ambient.go:91` emits the Refused value. The stop is the `declare const require: unknown;` statement after the now-lowered process declaration.",
-  "debug.ts:525:37": "`internal/lower/cast_proof.go:195`, `castRefusal`, constructs the Refused value.",
-  "commandLineParser.ts:293:35": "`internal/lower/namespaces.go:267` and `:318`, `namespaceInitialization`, emit the enum-readiness NotYet reason.",
-  "diagnosticInformationMap.generated.ts:13:45": "`internal/lower/namespaces.go:267` and `:318`, `namespaceInitialization`, emit the enum-readiness NotYet reason.",
-  "semver.ts:71:9": "`internal/lower/namespaces.go:269` and `:321`, `namespaceInitialization`, emit the namespace-readiness NotYet reason."
-}
