@@ -28,6 +28,10 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// node that takes it, before a rule that meets the call, the class or the member first would
 		// call it something else.
 		"150 intlCollatorRefusal",
+		// objectAssignCallableSourceRefusal judges an Object.assign call by its sources' types at the call, before
+		// knownLoweringGap or functionCallRefusal meet the call and before lowering reaches the intersection value
+		// its result would be (#k8aak04).
+		"160 objectAssignCallableSourceRefusal",
 		"200 knownLoweringGap",
 		"300 functionCallRefusal",
 		"400 phantomRefusal",
