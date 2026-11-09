@@ -134,3 +134,12 @@ with (run / 'README.md').open('a') as output:
     output.write(f'\nElapsed: {seconds // 60}m {seconds % 60}s.\n')
 PYTHON
 cat "$run/report.md"
+# The day's record is whole; only its exit carries the tsc entry pass's relation budget (#ny0c3gb). It exits 3,
+# its own code, so cloud/meter-daily/run.sh can tell a day over budget from a run that broke.
+python3 - "$run/report.json" <<'PYTHON'
+import json, sys
+budget = json.load(open(sys.argv[1])).get('relation_budget') or {'status': 'missing', 'why': 'no verdict in report.json'}
+if budget['status'] != 'ok':
+    print(f"relation budget {budget['status']}: assignable {budget.get('assignable')} of {budget.get('threshold')} pairs; {budget['why']}", file=sys.stderr)
+    sys.exit(3)
+PYTHON

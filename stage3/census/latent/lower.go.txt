@@ -240,6 +240,7 @@ func LatentWithRelationChecks(ctx context.Context, program *load.Program, perUni
     records := []LatentFile{}
     latentRun(ctx, program, func(record LatentFile) { records = append(records, record) })
     relations.End = latentReadRelationOverflow(ctx, program)
+    relations.CacheSizes = latentRelationCacheSizes(ctx, program)
     relations.Complete(records)
     for _, record := range records {
         for index := range record.Units {

@@ -7,6 +7,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
+	"reflect"
 	"time"
 )
 
@@ -14,12 +15,53 @@ import (
 var latentRelationPerUnit bool
 
 type LatentRelationReport struct {
-	PerUnit           bool            `json:"per_unit"`
-	AfterLoad         string          `json:"after_load"`
-	End               string          `json:"end"`
-	FirstAffectedUnit string          `json:"first_affected_unit,omitempty"`
-	Attribution       string          `json:"attribution"`
-	Findings          []LatentFinding `json:"-"`
+	PerUnit           bool             `json:"per_unit"`
+	AfterLoad         string           `json:"after_load"`
+	End               string           `json:"end"`
+	FirstAffectedUnit string           `json:"first_affected_unit,omitempty"`
+	Attribution       string           `json:"attribution"`
+	CacheSizes        map[string]int64 `json:"cache_sizes,omitempty"`
+	Findings          []LatentFinding  `json:"-"`
+}
+
+// latentRelationCaches name the checker's relation caches by field, in load.RelationOverflowMarked's order.
+var latentRelationCaches = []struct{ field, name string }{
+	{"subtypeRelation", "subtype"}, {"strictSubtypeRelation", "strictSubtype"}, {"assignableRelation", "assignable"},
+	{"comparableRelation", "comparable"}, {"identityRelation", "identity"},
+}
+
+// latentRelationCacheSizes is how many pairs each relation cache holds at the end of the run, the daily meter's
+// relation budget (#ny0c3gb). The caches are unexported, so they're read by name as load.RelationOverflowMarked
+// reads their marks, and only read. A cache that isn't where it's expected is -1, which the meter reads as over
+// budget, so it fails closed.
+func latentRelationCacheSizes(ctx context.Context, program *load.Program) map[string]int64 {
+	files := program.Files()
+	if len(files) == 0 {
+		return nil // No checker to read: the report has no sizes, which the meter reads as unknown.
+	}
+	typeChecker, release := program.Checker(ctx, files[0])
+	defer release()
+	sizes := map[string]int64{}
+	value := reflect.ValueOf(typeChecker).Elem()
+	size := func(results reflect.Value) int64 {
+		if !results.IsValid() || results.Kind() != reflect.Map {
+			return -1
+		}
+		return int64(results.Len())
+	}
+	for _, cache := range latentRelationCaches {
+		relation := value.FieldByName(cache.field)
+		switch {
+		case !relation.IsValid() || relation.Kind() != reflect.Pointer:
+			sizes[cache.name] = -1
+		case relation.IsNil():
+			sizes[cache.name] = 0 // A relation the checker never made holds no pairs.
+		default:
+			sizes[cache.name] = size(relation.Elem().FieldByName("results"))
+		}
+	}
+	sizes["enum"] = size(value.FieldByName("enumRelation"))
+	return sizes
 }
 
 func latentReadCheckedRelation(program *load.Program, typeChecker *checker.Checker, where string) string {
