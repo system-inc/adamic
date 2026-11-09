@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/adamic",
+    "/workspace/scratch/next-stops-overlay"
+  ],
+  "exit_code": 0,
+  "seconds": 11.31098173600003,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

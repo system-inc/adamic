@@ -1,0 +1,76 @@
+internal/lower/ambient.go:63: 	if node.Kind == ast.KindModuleDeclaration {
+internal/lower/ambient.go:64: 		switch {
+internal/lower/ambient.go:65: 		case ast.IsGlobalScopeAugmentation(node):
+internal/lower/ambient.go:66: 			what = "a global augmentation"
+internal/lower/ambient.go:67: 		case !ast.IsIdentifier(node.Name()):
+internal/lower/ambient.go:68: 			what = "a module augmentation or ambient external module"
+internal/lower/ambient.go:69: 		case ambientDeclaration(node) && ambientNamespaceValues(node):
+internal/lower/ambient.go:70: 			what = "an ambient namespace or module holding values"
+internal/lower/ambient.go:71: 		}
+internal/lower/ambient.go:72: 	} else if ambientDeclaration(node) {
+internal/lower/ambient.go:73: 		switch node.Kind {
+internal/lower/ambient.go:74: 		case ast.KindVariableStatement:
+internal/lower/ambient.go:75: 			// A .ts file's declaration a host-binding row names lowers by its row (host_bindings.go).
+internal/lower/ambient.go:76: 			if matched, err := l.hostBindingStatement(node); matched {
+internal/lower/ambient.go:77: 				return err
+internal/lower/ambient.go:78: 			}
+internal/lower/ambient.go:79: 			what = "an ambient value declaration"
+internal/lower/ambient.go:80: 		case ast.KindFunctionDeclaration:
+internal/lower/ambient.go:81: 			what = "an ambient function declaration"
+internal/lower/ambient.go:82: 		case ast.KindClassDeclaration:
+internal/lower/ambient.go:83: 			what = "an ambient class declaration"
+internal/lower/ambient.go:84: 		case ast.KindEnumDeclaration:
+internal/lower/ambient.go:85: 			what = "an ambient enum declaration"
+internal/lower/ambient.go:86: 		}
+internal/lower/ambient.go:87: 	}
+internal/lower/ambient.go:88: 	if what == "" {
+internal/lower/ambient.go:89: 		return nil
+internal/lower/ambient.go:90: 	}
+internal/lower/ambient.go:91: 	return &Refused{Where: l.program.Where(node), What: what, Fix: "define the values in a module and import them; use Adamic-generated platform bindings for host values"}
+internal/lower/ambient.go:92: }
+internal/lower/ambient.go:93: 
+internal/lower/ambient.go:94: func init() { refusalRules.register(2200, "ambientRefusal", (*lowering).ambientRefusal) }
+internal/lower/cast_proof.go:190: 	}
+internal/lower/cast_proof.go:191: 	operand, from := l.mintOperand(as)
+internal/lower/cast_proof.go:192: 	if mint := l.brandMintOf(operand, from, target); mint != nil {
+internal/lower/cast_proof.go:193: 		return castProof{brandMint: mint}, l.brandMintRefusal(node, target, mint)
+internal/lower/cast_proof.go:194: 	}
+internal/lower/cast_proof.go:195: 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
+internal/lower/cast_proof.go:196: 	inner := ast.SkipParentheses(as.Expression)
+internal/lower/cast_proof.go:197: 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
+internal/lower/cast_proof.go:198: 		if l.overloadDefaultPair(node) {
+internal/lower/cast_proof.go:199: 			return castProof{overloadDefault: true}, nil
+internal/lower/cast_proof.go:200: 		}
+internal/lower/namespaces.go:258: // Follow statically known callees before executing a module statement. An unresolved
+internal/lower/namespaces.go:259: // edge keeps namespace reads checked at runtime; it is never proof of no effects.
+internal/lower/namespaces.go:260: func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+internal/lower/namespaces.go:261: 	initialized := map[*ast.Node]bool{}
+internal/lower/namespaces.go:262: 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+internal/lower/namespaces.go:263: 	checkCall := func(target *ast.Node) error {
+internal/lower/namespaces.go:264: 		for declaration, read := range graph.reach(target) {
+internal/lower/namespaces.go:265: 			if !initialized[declaration] {
+internal/lower/namespaces.go:266: 				if declaration.Kind == ast.KindEnumDeclaration {
+internal/lower/namespaces.go:267: 					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
+internal/lower/namespaces.go:268: 				}
+internal/lower/namespaces.go:269: 				return l.notYet(read, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+internal/lower/namespaces.go:270: 			}
+internal/lower/namespaces.go:271: 		}
+internal/lower/namespaces.go:272: 		return nil
+internal/lower/namespaces.go:273: 	}
+internal/lower/namespaces.go:308: 			}
+internal/lower/namespaces.go:309: 			initialized[node] = true
+internal/lower/namespaces.go:310: 			return nil
+internal/lower/namespaces.go:311: 		}
+internal/lower/namespaces.go:312: 		// The enum object exists while its own member assignments execute.
+internal/lower/namespaces.go:313: 		if node.Kind == ast.KindEnumDeclaration {
+internal/lower/namespaces.go:314: 			initialized[node] = true
+internal/lower/namespaces.go:315: 		}
+internal/lower/namespaces.go:316: 		if l.namespaceValueNode(node) {
+internal/lower/namespaces.go:317: 			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
+internal/lower/namespaces.go:318: 				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
+internal/lower/namespaces.go:319: 			}
+internal/lower/namespaces.go:320: 			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] {
+internal/lower/namespaces.go:321: 				return l.notYet(node, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+internal/lower/namespaces.go:322: 			}
+internal/lower/namespaces.go:323: 		}
+internal/lower/namespaces.go:324: 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {

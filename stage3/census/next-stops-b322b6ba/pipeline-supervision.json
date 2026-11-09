@@ -1,0 +1,8 @@
+{
+  "wrapper_pid": 7432,
+  "command": "python3 stage3/census/next-stops-b322b6ba/run.py pipeline python3 stage3/census/next-stops-b322b6ba/pipeline.py ",
+  "action": "Paused outer elapsed-bound wrapper only; pipeline and sequential per-root children continue in their original foreground session. Resume wrapper after pipeline exits to collect its own child exit code. Each root retains its original bound.",
+  "date": "2026-11-09T19:14:14.673891+00:00",
+  "resumed_utc": "2026-11-09T20:09:16.480470+00:00",
+  "pipeline_child_state_at_resume": "zombie after exit 0; all 79 roots and group checkpoints complete"
+}
