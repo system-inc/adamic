@@ -137,3 +137,55 @@ Exit 1. Failing assertion excerpt:
 ```text
         host_binding_process_test.go:161: want stop containing "which reaches node:process.Process.release", got <nil>
 ```
+
+### (f) Fit the absent read to its representation
+
+The read now uses `of, known := l.representation(l.checker.GetTypeAtLocation(node))`,
+a member-named NotYet when unknown, then `fit(ir.Undefined{Of: ir.Object}, of)`.
+This uses the canonical absent `ir.MaybeOf` for a maybe-scalar and fit's own reference/union arms.
+No backend or runtime C change is needed.
+
+The typed fixtures use isolated lower-test subprocesses with synthetic host rows; the real table's
+exact declaration-text rule is unchanged. Boolean and string reads into typed constants agree
+with Node natively, sanitized and on JavaScript (and WASI). Their assignment consumers already
+fit the value, so they are agreement pins only: they do not kill (f). An initial mutant that left
+`of` unused was invalid Go and is not counted as a kill.
+
+Mutant (f) replaces only the fitted return with the original Object result, discarding `of` so
+the mutant remains valid Go:
+
+```go
+_ = of // mutant: ignore the consumer representation
+return ir.Undefined{Of: ir.Object}, true, nil
+```
+
+The number fixture reads `process.browser` directly in `?? 0`, without an intervening assignment
+that could fit the absent read. Node prints `0`; the fixed head agrees on native, sanitized,
+JavaScript and WASI.
+
+```sh
+ADAMIC_GATE_UNCACHED=1 timeout 900 go test ./internal/oracle -count=1 -run '^TestHostBindingsAgreeWithNode$/^process_browser_number$'
+```
+
+Exit 1. Native C generation fails before emission (not an unused-variable Go build failure):
+
+```text
+--- FAIL: TestHostBindingsAgreeWithNode (16.42s)
+    --- FAIL: TestHostBindingsAgreeWithNode/process_browser_number (16.42s)
+panic: native: no conversion from 4 to 1 [recovered, repanicked]
+```
+
+The bare Object value reaches native's union conversion instead of a correctly held absent
+maybe-number. The mutant was restored byte for byte after this run.
+
+### Second-head remeasurement
+
+All six mutants were applied alone and restored byte for byte on the second head, Nov 8, 2026,
+with the same Node, Go, TypeScript source and uncached setting above. Every named command exited 1;
+the runner exited 0 only after verifying all six red results and restorations. (a), (b), (c) and
+(e) use exactly the edits and commands above. (d) now changes
+`return fit(ir.Undefined{Of: ir.Object}, of), true, nil` to
+`return fit(ir.BooleanConstant{Value: true}, of), true, nil`;
+its same process_provided oracle command still reports the same native, sanitized and JavaScript
+stdout disagreement. (f) uses the direct numeric command above. The whole lower package and
+HostBinding oracle suites with and without WASI run on the restored tree.
