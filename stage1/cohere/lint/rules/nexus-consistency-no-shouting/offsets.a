@@ -1,0 +1,20 @@
+import { utf8Length } from 'adamic';
+
+// Go's strings and the masks use byte offsets. The port's source ranges use UTF-16.
+// Translate at the boundary, leaving byte-counted blanks intact for later masks.
+export function sourceOffset(text: string, byteOffset: number): number {
+    let bytes = 0;
+    let position = 0;
+    for(const character of text) {
+        if(bytes >= byteOffset) {
+            break;
+        }
+        bytes += utf8Length(character);
+        position += character.length;
+    }
+    return position;
+}
+
+export function byteSlice(text: string, start: number, end: number): string {
+    return text.slice(sourceOffset(text, start), sourceOffset(text, end));
+}
