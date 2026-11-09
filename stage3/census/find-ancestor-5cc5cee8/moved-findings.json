@@ -1,0 +1,1413 @@
+[
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3872,
+    "row": "compiler/transformers/es2015.ts:488:1 | refusal_scan | Refused | compiler/transformers/es2015.ts:512:13 | a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2015.ts:512:13: Adamic 0.1 refuses a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2015.ts:488:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2015.ts:512:13"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3859,
+    "row": "compiler/transformers/es2016.ts:21:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2016.ts:21:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3839,
+    "row": "compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1264:49 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1264:49: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1264:49"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3839,
+    "row": "compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1273:45 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1273:45: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1273:45"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3839,
+    "row": "compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1307:41 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1307:41: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1307:41"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3839,
+    "row": "compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1325:41 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1325:41: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1325:41"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3839,
+    "row": "compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:218:13 | a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:218:13: Adamic 0.1 refuses a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:218:13"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3841,
+    "row": "compiler/transformers/es2019.ts:17:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2019.ts:17:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3843,
+    "row": "compiler/transformers/es2020.ts:42:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2020.ts:42:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3845,
+    "row": "compiler/transformers/es2021.ts:25:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2021.ts:25:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3829,
+    "row": "compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:753:41 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:753:41: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:753:41"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3829,
+    "row": "compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:914:50 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:914:50: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:914:50"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3829,
+    "row": "compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:924:46 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:924:46: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:924:46"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3820,
+    "row": "compiler/transformers/legacyDecorators.ts:88:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/legacyDecorators.ts:88:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:587:119"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3895,
+    "row": "compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:266:13 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/esnextAnd2015.ts:266:13: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/esnextAnd2015.ts:266:13"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3895,
+    "row": "compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:297:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/esnextAnd2015.ts:297:17: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/esnextAnd2015.ts:297:17"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1485:21 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1485:21: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1485:21"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1505:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1505:17: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1505:17"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1560:21 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1560:21: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1560:21"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1577:21 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1577:21: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1577:21"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1604:21 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1604:21: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1604:21"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1753:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1753:17: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1753:17"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1772:33 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1772:33: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1772:33"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1788:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1788:17: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1788:17"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1805:33 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1805:33: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1805:33"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1886:37 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1886:37: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1886:37"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1894:37 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1894:37: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1894:37"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1898:33 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1898:33: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:1898:33"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3890,
+    "row": "compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:2138:29 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:2138:29: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:174:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/module.ts:2138:29"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3893,
+    "row": "compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:1189:29 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:1189:29: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:137:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:1189:29"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3893,
+    "row": "compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:802:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:802:17: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:137:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:802:17"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3893,
+    "row": "compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:816:40 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:816:40: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:137:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:816:40"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3893,
+    "row": "compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:837:13 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:837:13: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:137:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:837:13"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3893,
+    "row": "compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:894:33 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:894:33: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:137:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:894:33"
+    }
+  },
+  {
+    "side": "base",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3893,
+    "row": "compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:909:37 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:909:37: Adamic 0.1 refuses a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:137:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/module/system.ts:909:37"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 2583,
+    "row": "compiler/utilities.ts:12088:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:12088:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 1783,
+    "row": "compiler/utilities.ts:1291:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:1291:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 1900,
+    "row": "compiler/utilities.ts:3125:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:3125:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 1901,
+    "row": "compiler/utilities.ts:3130:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:3130:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 1902,
+    "row": "compiler/utilities.ts:3135:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:3135:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 1904,
+    "row": "compiler/utilities.ts:3150:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:3150:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 2040,
+    "row": "compiler/utilities.ts:4823:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:4823:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 1607,
+    "row": "compiler/utilitiesPublic.ts:1566:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 1516,
+    "row": "compiler/utilitiesPublic.ts:787:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:787:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "base",
+    "category": "head",
+    "unit_ordinal": 1517,
+    "row": "compiler/utilitiesPublic.ts:788:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked); make the implementation result covariant with every overload result",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:788:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:786:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3859,
+    "row": "compiler/transformers/es2016.ts:21:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2016.ts:21:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3831,
+    "row": "compiler/transformers/es2017.ts:104:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:104:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:104:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:104:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:104:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3835,
+    "row": "compiler/transformers/es2017.ts:1059:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:1059:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:1059:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:1059:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:1059:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3832,
+    "row": "compiler/transformers/es2017.ts:106:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:106:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:106:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:106:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:106:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3833,
+    "row": "compiler/transformers/es2017.ts:112:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:112:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:112:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:112:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:112:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3834,
+    "row": "compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:163:26 | a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:163:26: Adamic 0.1 refuses a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:119:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:163:26"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3834,
+    "row": "compiler/transformers/es2017.ts:119:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:119:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:119:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:119:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:119:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3830,
+    "row": "compiler/transformers/es2017.ts:1:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:1:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:1:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2017.ts:1:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3837,
+    "row": "compiler/transformers/es2018.ts:115:1 | relation_overflow | NotYet | compiler/transformers/es2018.ts:115:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:115:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:115:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:115:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3838,
+    "row": "compiler/transformers/es2018.ts:122:1 | relation_overflow | NotYet | compiler/transformers/es2018.ts:122:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:122:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:122:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:122:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3839,
+    "row": "compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:168:26 | a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:168:26: Adamic 0.1 refuses a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:168:26"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3839,
+    "row": "compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:499:40 | a function taking Node seen as one taking NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a function taking Node seen as one taking NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:499:40: Adamic 0.1 refuses a function taking Node seen as one taking NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration> (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:499:40"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3839,
+    "row": "compiler/transformers/es2018.ts:154:1 | relation_overflow | NotYet | compiler/transformers/es2018.ts:154:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:154:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3836,
+    "row": "compiler/transformers/es2018.ts:1:1 | relation_overflow | NotYet | compiler/transformers/es2018.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2018.ts:1:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3841,
+    "row": "compiler/transformers/es2019.ts:17:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2019.ts:17:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3841,
+    "row": "compiler/transformers/es2019.ts:17:1 | relation_overflow | NotYet | compiler/transformers/es2019.ts:17:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2019.ts:17:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2019.ts:17:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2019.ts:17:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3840,
+    "row": "compiler/transformers/es2019.ts:1:1 | relation_overflow | NotYet | compiler/transformers/es2019.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2019.ts:1:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2019.ts:1:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2019.ts:1:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3843,
+    "row": "compiler/transformers/es2020.ts:42:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2020.ts:42:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3845,
+    "row": "compiler/transformers/es2021.ts:25:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2021.ts:25:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3821,
+    "row": "compiler/transformers/esDecorators.ts:1:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:1:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:1:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:1:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3822,
+    "row": "compiler/transformers/esDecorators.ts:227:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:227:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:227:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:227:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:227:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3823,
+    "row": "compiler/transformers/esDecorators.ts:234:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:234:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:234:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:234:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:234:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3824,
+    "row": "compiler/transformers/esDecorators.ts:262:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:262:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:262:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:262:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:262:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3825,
+    "row": "compiler/transformers/esDecorators.ts:269:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:269:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:269:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:269:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:269:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3826,
+    "row": "compiler/transformers/esDecorators.ts:276:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:276:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:276:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:276:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:276:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3827,
+    "row": "compiler/transformers/esDecorators.ts:281:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:281:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:281:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:281:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:281:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3828,
+    "row": "compiler/transformers/esDecorators.ts:288:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:288:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:288:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:288:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:288:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3829,
+    "row": "compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1931:42 | a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:1931:42: Adamic 0.1 refuses a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike> (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:1931:42"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3829,
+    "row": "compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1954:32 | a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:1954:32: Adamic 0.1 refuses a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral> (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:1954:32"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3829,
+    "row": "compiler/transformers/esDecorators.ts:295:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:295:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:295:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/esDecorators.ts:295:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3819,
+    "row": "compiler/transformers/legacyDecorators.ts:1:1 | relation_overflow | NotYet | compiler/transformers/legacyDecorators.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/legacyDecorators.ts:1:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/legacyDecorators.ts:1:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/legacyDecorators.ts:1:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3820,
+    "row": "compiler/transformers/legacyDecorators.ts:88:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/legacyDecorators.ts:88:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/visitorPublic.ts:585:48"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3820,
+    "row": "compiler/transformers/legacyDecorators.ts:88:1 | relation_overflow | NotYet | compiler/transformers/legacyDecorators.ts:88:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/legacyDecorators.ts:88:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/legacyDecorators.ts:88:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/legacyDecorators.ts:88:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "relation-limit noise",
+    "unit_ordinal": 3818,
+    "row": "compiler/transformers/typeSerializer.ts:132:1 | relation_overflow | NotYet | compiler/transformers/typeSerializer.ts:132:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "relation_overflow",
+      "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/transformers/typeSerializer.ts:132:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/typeSerializer.ts:132:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/transformers/typeSerializer.ts:132:1"
+    }
+  },
+  {
+    "side": "head",
+    "category": "head",
+    "unit_ordinal": 1900,
+    "row": "compiler/utilities.ts:3125:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:3125:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/binder.ts:1034:17"
+    }
+  },
+  {
+    "side": "head",
+    "category": "head",
+    "unit_ordinal": 1901,
+    "row": "compiler/utilities.ts:3130:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:3130:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/binder.ts:1034:17"
+    }
+  },
+  {
+    "side": "head",
+    "category": "head",
+    "unit_ordinal": 1904,
+    "row": "compiler/utilities.ts:3150:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilities.ts:3150:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/binder.ts:1034:17"
+    }
+  },
+  {
+    "side": "head",
+    "category": "head",
+    "unit_ordinal": 1607,
+    "row": "compiler/utilitiesPublic.ts:1566:1 | lowering | NotYet | compiler/utilitiesPublic.ts:1562:1 | checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+    "finding": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }",
+      "root_kind": "",
+      "text": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:1562:1: stage 0 can't lower checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } yet",
+      "unit": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:1566:1",
+      "where": "/workspace/scratch/bar-adapted/src/compiler/utilitiesPublic.ts:1562:1"
+    }
+  }
+]

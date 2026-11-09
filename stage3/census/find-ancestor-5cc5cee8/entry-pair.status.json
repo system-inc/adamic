@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "/workspace/adamic/stage3/census/pair/pair.py",
+    "/workspace/adamic/stage3/census/find-ancestor-5cc5cee8/base-pair-input.jsonl.gz",
+    "/workspace/adamic/stage3/census/find-ancestor-5cc5cee8/head-pair-input.jsonl.gz",
+    "/workspace/scratch/bar-adapted",
+    "--typescript",
+    "/workspace/adamic/stage3/api/node_modules/typescript",
+    "--json",
+    "/workspace/adamic/stage3/census/find-ancestor-5cc5cee8/entry-paired.json",
+    "--report",
+    "/workspace/adamic/stage3/census/find-ancestor-5cc5cee8/entry-paired.md"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "wall_seconds": 18.043,
+  "stopped": null
+}

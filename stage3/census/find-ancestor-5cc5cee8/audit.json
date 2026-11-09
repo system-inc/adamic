@@ -1,0 +1,23 @@
+{
+  "streams": {
+    "base": {
+      "stream_uncompressed_sha256": "13d117f618e1b4a3f4cdf52fb25f53e088f523a53aa78dd0dee2d30b7d098852",
+      "monotone_overflow": true,
+      "projection_exact": true,
+      "list_exact": true,
+      "probe_rows": 4059
+    },
+    "head": {
+      "stream_uncompressed_sha256": "f4dbc4031dd68610cacc89b1c20a0e76d469a6616f780d92714f5f4114a7094a",
+      "monotone_overflow": true,
+      "projection_exact": true,
+      "list_exact": true,
+      "probe_rows": 4059
+    }
+  },
+  "run_end_findings_identical": true,
+  "checkpoint_scope_verified": true,
+  "working_tree_scope_verified": true,
+  "all_child_statuses_zero": true,
+  "process_cleanup_verified": true
+}

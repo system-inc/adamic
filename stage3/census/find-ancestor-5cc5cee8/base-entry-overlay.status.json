@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/workspace/scratch/bar-base-overlay",
+    "/workspace/scratch/bar-base-entry"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "wall_seconds": 1.008,
+  "stopped": null
+}

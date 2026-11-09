@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/workspace/scratch/bar-head-overlay",
+    "/workspace/scratch/bar-head-entry"
+  ],
+  "cwd": "/workspace/scratch/bar-head",
+  "exit": 0,
+  "wall_seconds": 1.137,
+  "stopped": null
+}

@@ -1,0 +1,305 @@
+--- base
++++ head
+@@ -4550,7 +4550,6 @@
+ compiler/transformers/es2015.ts:488:1 | refusal_scan | Refused | compiler/transformers/es2015.ts:4981:37 | a value of type Identifier seen as TextRange, whose readonly field pos becomes writable: a readonly field may 
+ compiler/transformers/es2015.ts:488:1 | refusal_scan | Refused | compiler/transformers/es2015.ts:5022:20 | a value of type CapturedThis seen as PrimaryExpression, whose readonly field emitNode becomes writable: a read
+ compiler/transformers/es2015.ts:488:1 | refusal_scan | Refused | compiler/transformers/es2015.ts:502:26 | a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void
+-compiler/transformers/es2015.ts:488:1 | refusal_scan | Refused | compiler/transformers/es2015.ts:512:13 | a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read
+ compiler/transformers/es2015.ts:488:1 | refusal_scan | Refused | compiler/transformers/es2015.ts:676:54 | a cast the runtime can't check
+ compiler/transformers/es2015.ts:488:1 | refusal_scan | Refused | compiler/transformers/es2015.ts:683:48 | a cast the runtime can't check
+ compiler/transformers/es2015.ts:488:1 | refusal_scan | Refused | compiler/transformers/es2015.ts:765:49 | a cast the runtime can't check
+@@ -4561,7 +4560,7 @@
+ compiler/transformers/es2015.ts:488:1 | refusal_scan | Refused | compiler/transformers/es2015.ts:976:22 | a value of type VariableStatement seen as TextRange, whose readonly field pos becomes writable: a readonly fie
+ compiler/transformers/es2015.ts:488:1 | relation_overflow | NotYet | compiler/transformers/es2015.ts:488:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/es2016.ts:1:1 | relation_overflow | NotYet | compiler/transformers/es2016.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+-compiler/transformers/es2016.ts:21:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor
++compiler/transformers/es2016.ts:21:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+ compiler/transformers/es2016.ts:21:1 | refusal_scan | Refused | compiler/transformers/es2016.ts:108:13 | a value of type AssignmentExpression<EqualsToken> seen as TextRange, whose readonly field pos becomes writable
+ compiler/transformers/es2016.ts:21:1 | refusal_scan | Refused | compiler/transformers/es2016.ts:110:30 | a value of type CallExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field 
+ compiler/transformers/es2016.ts:21:1 | refusal_scan | Refused | compiler/transformers/es2016.ts:120:29 | a value of type CallExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field 
+@@ -4573,13 +4572,18 @@
+ compiler/transformers/es2016.ts:21:1 | refusal_scan | Refused | compiler/transformers/es2016.ts:89:34 | a value of type AssignmentExpression<EqualsToken> seen as TextRange, whose readonly field pos becomes writable
+ compiler/transformers/es2016.ts:21:1 | refusal_scan | Refused | compiler/transformers/es2016.ts:95:17 | a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a reado
+ compiler/transformers/es2016.ts:21:1 | relation_overflow | NotYet | compiler/transformers/es2016.ts:21:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/es2017.ts:104:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:104:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/es2017.ts:1059:1 | lowering | NotYet | compiler/transformers/es2017.ts:1106:25 | a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and 
++compiler/transformers/es2017.ts:1059:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:1059:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/es2017.ts:106:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:106:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/es2017.ts:112:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:112:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/es2017.ts:119:1 | lowering | Refused | compiler/transformers/es2017.ts:736:5 | overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | NotYet | compiler/binder.ts:1109:17 | writing a checked object field without its source-slot type certificate
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | NotYet | compiler/factory/emitHelpers.ts:424:37 | writing a checked object field without its source-slot type certificate
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:1030:17 | a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a reado
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:1043:17 | a value of type CallExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field 
++compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:163:26 | a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:355:66 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:355:71 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:356:48 | an object refinement using an open numeric enum as a literal tag
+@@ -4601,6 +4605,10 @@
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:876:57 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:879:91 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:980:17 | a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a reado
++compiler/transformers/es2017.ts:119:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:119:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/es2017.ts:1:1 | relation_overflow | NotYet | compiler/transformers/es2017.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/es2018.ts:115:1 | relation_overflow | NotYet | compiler/transformers/es2018.ts:115:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/es2018.ts:122:1 | relation_overflow | NotYet | compiler/transformers/es2018.ts:122:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/es2018.ts:154:1 | lowering | Refused | compiler/transformers/es2018.ts:1220:5 | overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | NotYet | compiler/binder.ts:1109:17 | writing a checked object field without its source-slot type certificate
+@@ -4610,18 +4618,14 @@
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1182:21 | an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Identifier
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1228:52 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1237:60 | a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly 
+-compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1264:49 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+-compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1273:45 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1288:34 | a value of type Identifier seen as TextRange, whose readonly field pos becomes writable: a readonly field may 
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1295:34 | a value of type AssignmentExpression<EqualsToken> seen as TextRange, whose readonly field pos becomes writable
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1299:34 | a value of type Block seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold 
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1305:34 | a value of type IfStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may
+-compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1307:41 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+-compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1325:41 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1414:17 | a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a reado
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1464:17 | a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a reado
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:1477:17 | a value of type CallExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field 
+-compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:218:13 | a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read
++compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:168:26 | a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:399:21 | a value of type YieldExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:415:25 | a value of type YieldExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:422:41 | a value of type Expression seen as TextRange, whose readonly field pos becomes writable: a readonly field may 
+@@ -4629,6 +4633,7 @@
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:441:21 | a value of type YieldExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:477:93 | a method read as a value (liftToBlock would lose its object, and this with it)
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:496:21 | a value of type ObjectLiteralElementLike[] | undefined seen as {}[] | undefined, which can write {} where Obje
++compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:499:40 | a function taking Node seen as one taking NonNullable<MethodDeclaration | ShorthandPropertyAssignment | Access
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:578:71 | a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly 
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:639:48 | a value of type NodeArray<Expression> seen as TextRange, whose readonly field pos becomes writable: a readonly
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:733:81 | an object refinement using an open numeric enum as a literal tag
+@@ -4655,10 +4660,14 @@
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:852:17 | a value of type ForStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field ma
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:855:29 | a value of type VariableDeclarationList seen as TextRange, whose readonly field pos becomes writable: a readon
+ compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:857:46 | a value of type VariableDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly f
+-compiler/transformers/es2019.ts:17:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor
++compiler/transformers/es2018.ts:154:1 | relation_overflow | NotYet | compiler/transformers/es2018.ts:154:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/es2018.ts:1:1 | relation_overflow | NotYet | compiler/transformers/es2018.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/es2019.ts:17:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+ compiler/transformers/es2019.ts:17:1 | refusal_scan | NotYet | compiler/binder.ts:2258:13 | writing a checked object field without its source-slot type certificate
++compiler/transformers/es2019.ts:17:1 | relation_overflow | NotYet | compiler/transformers/es2019.ts:17:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/es2019.ts:1:1 | relation_overflow | NotYet | compiler/transformers/es2019.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/es2020.ts:1:1 | relation_overflow | NotYet | compiler/transformers/es2020.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+-compiler/transformers/es2020.ts:42:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor
++compiler/transformers/es2020.ts:42:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+ compiler/transformers/es2020.ts:42:1 | refusal_scan | NotYet | compiler/binder.ts:1109:17 | writing a checked object field without its source-slot type certificate
+ compiler/transformers/es2020.ts:42:1 | refusal_scan | Refused | compiler/transformers/es2020.ts:145:37 | a value of type CallExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field 
+ compiler/transformers/es2020.ts:42:1 | refusal_scan | Refused | compiler/transformers/es2020.ts:158:74 | a cast the runtime can't check
+@@ -4667,8 +4676,16 @@
+ compiler/transformers/es2020.ts:42:1 | refusal_scan | Refused | compiler/transformers/es2020.ts:251:13 | a value of type ConditionalExpression seen as TextRange, whose readonly field pos becomes writable: a readonly
+ compiler/transformers/es2020.ts:42:1 | relation_overflow | NotYet | compiler/transformers/es2020.ts:42:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/es2021.ts:1:1 | relation_overflow | NotYet | compiler/transformers/es2021.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+-compiler/transformers/es2021.ts:25:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor
++compiler/transformers/es2021.ts:25:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+ compiler/transformers/es2021.ts:25:1 | relation_overflow | NotYet | compiler/transformers/es2021.ts:25:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/esDecorators.ts:1:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/esDecorators.ts:227:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:227:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/esDecorators.ts:234:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:234:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/esDecorators.ts:262:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:262:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/esDecorators.ts:269:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:269:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/esDecorators.ts:276:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:276:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/esDecorators.ts:281:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:281:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/esDecorators.ts:288:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:288:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/esDecorators.ts:295:1 | lowering | NotYet | compiler/transformers/esDecorators.ts:670:14 | a function returning ImmediatelyInvokedArrowFunction
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | NotYet | compiler/binder.ts:1109:17 | writing a checked object field without its source-slot type certificate
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | NotYet | compiler/binder.ts:2258:13 | writing a checked object field without its source-slot type certificate
+@@ -4722,6 +4739,7 @@
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1929:64 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1930:72 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1931:36 | an object refinement using an open numeric enum as a literal tag
++compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1931:42 | a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIde
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1935:35 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1935:69 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1936:72 | an object refinement using an open numeric enum as a literal tag
+@@ -4729,6 +4747,7 @@
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1941:64 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1944:65 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1946:57 | an object refinement using an open numeric enum as a literal tag
++compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1954:32 | a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiter
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1974:20 | optional property id in BigIntLiteral absent from structural source never, which can hide fields
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1996:20 | optional property id in ArrayBindingPattern absent from structural source never, which can hide fields
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:2020:20 | optional property id in ArrayBindingPattern absent from structural source never, which can hide fields
+@@ -4762,15 +4781,13 @@
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:619:56 | a value of type Identifier | TextRange seen as SourceMapRange | undefined, whose readonly field pos becomes wr
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:619:56 | a value of type Identifier | undefined seen as Identifier | TextRange, whose readonly field pos becomes writab
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:716:32 | an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ExpressionWithTypeArguments
+-compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:753:41 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:786:49 | a value of type Statement[] seen as {}[], which can write {} where Statement is read
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:893:52 | optional property source in SourceMapRange absent from structural source TextRange, which can hide fields
+-compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:914:50 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:923:62 | a value of type Identifier | TextRange seen as SourceMapRange | undefined, whose readonly field pos becomes wr
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:923:62 | a value of type Identifier | undefined seen as Identifier | TextRange, whose readonly field pos becomes writab
+-compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:924:46 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:960:35 | an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ClassStaticBlockDeclaration
+ compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:987:36 | a value of type NodeArray<ClassElement> seen as TextRange, whose readonly field pos becomes writable: a readon
++compiler/transformers/esDecorators.ts:295:1 | relation_overflow | NotYet | compiler/transformers/esDecorators.ts:295:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/esnext.ts:1:1 | relation_overflow | NotYet | compiler/transformers/esnext.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/esnext.ts:64:1 | relation_overflow | NotYet | compiler/transformers/esnext.ts:64:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/esnext.ts:71:1 | lowering | Refused | compiler/visitorPublic.ts:123:5 | overload 1 of visitNode parameter node cannot be served by implementation parameter node
+@@ -4932,7 +4949,8 @@
+ compiler/transformers/jsx.ts:92:1 | refusal_scan | Refused | compiler/transformers/jsx.ts:485:76 | a function taking Node seen as one taking NonNullable<MethodDeclaration | PropertyAssignment | ShorthandProper
+ compiler/transformers/jsx.ts:92:1 | refusal_scan | Refused | compiler/transformers/jsx.ts:534:33 | a value of type StringLiteral seen as TextRange, whose readonly field pos becomes writable: a readonly field m
+ compiler/transformers/jsx.ts:92:1 | relation_overflow | NotYet | compiler/transformers/jsx.ts:92:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+-compiler/transformers/legacyDecorators.ts:88:1 | lowering | Refused | compiler/visitorPublic.ts:587:119 | overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor
++compiler/transformers/legacyDecorators.ts:1:1 | relation_overflow | NotYet | compiler/transformers/legacyDecorators.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
++compiler/transformers/legacyDecorators.ts:88:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+ compiler/transformers/legacyDecorators.ts:88:1 | refusal_scan | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/transformers/legacyDecorators.ts:88:1 | refusal_scan | NotYet | compiler/binder.ts:2258:13 | writing a checked object field without its source-slot type certificate
+ compiler/transformers/legacyDecorators.ts:88:1 | refusal_scan | Refused | compiler/transformers/legacyDecorators.ts:189:17 | a value of type NodeArray<ClassElement> seen as TextRange, whose readonly field pos becomes writable: a readon
+@@ -4951,6 +4969,7 @@
+ compiler/transformers/legacyDecorators.ts:88:1 | refusal_scan | Refused | compiler/transformers/legacyDecorators.ts:726:30 | a value of type Expression seen as TextRange, whose readonly field pos becomes writable: a readonly field may 
+ compiler/transformers/legacyDecorators.ts:88:1 | refusal_scan | Refused | compiler/transformers/legacyDecorators.ts:836:50 | a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a re
+ compiler/transformers/legacyDecorators.ts:88:1 | refusal_scan | Refused | compiler/transformers/legacyDecorators.ts:837:48 | a value of type Identifier seen as TextRange, whose readonly field pos becomes writable: a readonly field may 
++compiler/transformers/legacyDecorators.ts:88:1 | relation_overflow | NotYet | compiler/transformers/legacyDecorators.ts:88:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/module/esnextAnd2015.ts:1:1 | relation_overflow | NotYet | compiler/transformers/module/esnextAnd2015.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | lowering | Refused | compiler/utilities.ts:12183:22 | a cast the runtime can't check
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | NotYet | compiler/binder.ts:1109:17 | writing a checked object field without its source-slot type certificate
+@@ -4958,11 +4977,9 @@
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:111:34 | a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly 
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:119:30 | a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly 
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:135:30 | a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly 
+-compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:266:13 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:269:21 | a value of type VariableStatement seen as TextRange, whose readonly field pos becomes writable: a readonly fie
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:277:55 | optional property id in ExternalModuleReference absent from structural source never, which can hide fields
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:289:73 | optional property id in ExternalModuleReference absent from structural source never, which can hide fields
+-compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:297:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:424:43 | an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Identifier
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | refusal_scan | Refused | compiler/transformers/module/esnextAnd2015.ts:78:26 | a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void
+ compiler/transformers/module/esnextAnd2015.ts:67:1 | relation_overflow | NotYet | compiler/transformers/module/esnextAnd2015.ts:67:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+@@ -4990,41 +5007,28 @@
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1254:61 | a value of type Expression | GeneratedIdentifier seen as Expression | undefined, whose readonly field emitNode
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1439:38 | a cast the runtime can't check
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1443:53 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1485:21 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1488:29 | a value of type VariableStatement seen as TextRange, whose readonly field pos becomes writable: a readonly fie
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1505:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1512:37 | a value of type VariableDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly f
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1560:21 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1563:29 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1566:55 | optional property id in ExternalModuleReference absent from structural source never, which can hide fields
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1577:21 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1580:29 | a value of type VariableStatement seen as TextRange, whose readonly field pos becomes writable: a readonly fie
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1588:63 | optional property id in ExternalModuleReference absent from structural source never, which can hide fields
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1604:21 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1607:29 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1618:73 | optional property id in ExternalModuleReference absent from structural source never, which can hide fields
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1643:29 | a value of type VariableStatement seen as TextRange, whose readonly field pos becomes writable: a readonly fie
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1672:29 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1696:25 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1721:21 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1753:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1756:25 | a value of type FunctionDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly f
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1772:33 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1788:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1791:25 | a value of type ClassDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly fiel
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1805:33 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1860:33 | a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a reado
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1876:46 | a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1880:46 | a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1880:88 | a cast the runtime can't check
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1886:37 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1890:64 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1894:37 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1898:33 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1929:33 | a function taking Node seen as one taking NonNullable<InitializedVariableDeclaration> (tsc relates a method's 
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:1940:21 | a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a reado
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:208:26 | a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void
+-compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:2138:29 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:2169:40 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:2187:27 | a value of type CallExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field 
+ compiler/transformers/module/module.ts:174:1 | refusal_scan | Refused | compiler/transformers/module/module.ts:2314:37 | a value of type PropertyAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly fi
+@@ -5078,7 +5082,6 @@
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | NotYet | compiler/factory/nodeFactory.ts:6111:21 | writing a checked object field without its source-slot type certificate
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:1000:77 | a value of type AssignmentExpression<EqualsToken> seen as TextRange, whose readonly field pos becomes writable
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:1001:48 | a value of type AssignmentExpression<EqualsToken> seen as TextRange, whose readonly field pos becomes writable
+-compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:1189:29 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:1219:129 | a value of type Expression seen as TextRange, whose readonly field pos becomes writable: a readonly field may 
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:1303:41 | a function taking ForInitializer seen as one taking NonNullable<ForInitializer | undefined> (tsc relates a met
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:1362:51 | an object refinement using an open numeric enum as a literal tag
+@@ -5115,14 +5118,9 @@
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:239:21 | a value of type NodeArray<ExpressionStatement> seen as TextRange, whose readonly field pos becomes writable: a
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:775:73 | optional property id in ExternalModuleReference absent from structural source never, which can hide fields
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:776:80 | optional property id in ExternalModuleReference absent from structural source never, which can hide fields
+-compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:802:17 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+-compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:816:40 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+-compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:837:13 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:839:17 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:843:29 | a value of type ClassExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field
+-compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:894:33 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:901:42 | a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read
+-compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:909:37 | a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read
+ compiler/transformers/module/system.ts:137:1 | refusal_scan | Refused | compiler/transformers/module/system.ts:909:62 | a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly f
+ compiler/transformers/module/system.ts:137:1 | relation_overflow | NotYet | compiler/transformers/module/system.ts:137:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/module/system.ts:1:1 | relation_overflow | NotYet | compiler/transformers/module/system.ts:1:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+@@ -5260,6 +5258,7 @@
+ compiler/transformers/typeSerializer.ts:132:1 | refusal_scan | Refused | compiler/transformers/typeSerializer.ts:378:66 | a cast the runtime can't check
+ compiler/transformers/typeSerializer.ts:132:1 | refusal_scan | Refused | compiler/transformers/typeSerializer.ts:398:48 | an object refinement using an open numeric enum as a literal tag
+ compiler/transformers/typeSerializer.ts:132:1 | refusal_scan | Refused | compiler/transformers/typeSerializer.ts:600:53 | a value of type Identifier seen as TextRange, whose readonly field pos becomes writable: a readonly field may 
++compiler/transformers/typeSerializer.ts:132:1 | relation_overflow | NotYet | compiler/transformers/typeSerializer.ts:132:1 | a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive com
+ compiler/transformers/utilities.ts:107:1 | lowering | Refused | compiler/utilitiesPublic.ts:774:16 | an unproven relation from Node | undefined to T | undefined: the source is not assignable to the target
+ compiler/transformers/utilities.ts:124:1 | lowering | NotYet | compiler/transformers/utilities.ts:126:25 | a Map or Set interface implemented by a value that isn't a Map or Set
+ compiler/transformers/utilities.ts:153:1 | lowering | NotYet | compiler/transformers/utilities.ts:161:25 | a Map or Set interface implemented by a value that isn't a Map or Set
+@@ -5544,7 +5543,6 @@
+ compiler/utilities.ts:12031:1 | refusal_scan | Refused | compiler/utilities.ts:12051:71 | an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Unknown | SyntaxKind.EndOfFileT
+ compiler/utilities.ts:12057:1 | refusal_scan | NotYet | compiler/factory/nodeFactory.ts:6111:21 | writing a checked object field without its source-slot type certificate
+ compiler/utilities.ts:12065:1 | refusal_scan | Refused | compiler/utilities.ts:12082:70 | an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Unknown | SyntaxKind.EndOfFileT
+-compiler/utilities.ts:12088:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
+ compiler/utilities.ts:1210:1 | lowering | Refused | compiler/core.ts:1334:1 | overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]
+ compiler/utilities.ts:1210:1 | refusal_scan | Refused | compiler/utilities.ts:1213:46 | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, wh
+ compiler/utilities.ts:12165:1 | lowering | NotYet | compiler/utilities.ts:12168:8 | spreading an array of other elements
+@@ -5573,7 +5571,6 @@
+ compiler/utilities.ts:12436:1 | lowering | NotYet | compiler/binder.ts:1109:17 | writing a checked object field without its source-slot type certificate
+ compiler/utilities.ts:12448:1 | refusal_scan | NotYet | compiler/utilities.ts:8553:49 | a member typed any (getTokenConstructor()) related to new <TKind extends SyntaxKind>(kind: TKind, pos: number,
+ compiler/utilities.ts:1277:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+-compiler/utilities.ts:1291:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
+ compiler/utilities.ts:1385:1 | lowering | Refused | compiler/utilities.ts:1386:13 | Object enumeration with getter or accessor descriptors
+ compiler/utilities.ts:1385:1 | refusal_scan | Refused | compiler/utilities.ts:1386:5 | a value of type Map<string, Map<string, string[]> | Map<string, never[]> | Map<string, string[] | never[]>> se
+ compiler/utilities.ts:1385:1 | refusal_scan | Refused | compiler/utilities.ts:1416:19 | a value of type Map<string, never[]> seen as Map<string, string[]> | Map<string, never[]> | Map<string, string
+@@ -5666,11 +5663,10 @@
+ compiler/utilities.ts:3053:1 | refusal_scan | NotYet | compiler/factory/nodeFactory.ts:6111:21 | writing a checked object field without its source-slot type certificate
+ compiler/utilities.ts:3066:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/utilities.ts:3112:1 | lowering | NotYet | compiler/utilities.ts:3094:20 | a Map or Set interface implemented by a value that isn't a Map or Set
+-compiler/utilities.ts:3125:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
+-compiler/utilities.ts:3130:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
+-compiler/utilities.ts:3135:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
++compiler/utilities.ts:3125:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
++compiler/utilities.ts:3130:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/utilities.ts:3140:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+-compiler/utilities.ts:3150:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
++compiler/utilities.ts:3150:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/utilities.ts:3180:1 | lowering | Refused | compiler/utilities.ts:3180:1 | overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | 
+ compiler/utilities.ts:3182:1 | lowering | Refused | compiler/utilities.ts:3180:1 | overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | 
+ compiler/utilities.ts:3184:1 | lowering | Refused | compiler/utilities.ts:3180:1 | overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | 
+@@ -5820,7 +5816,6 @@
+ compiler/utilities.ts:4783:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/utilities.ts:4793:1 | lowering | NotYet | compiler/utilities.ts:4794:11 | a value of type HasJSDoc | undefined
+ compiler/utilities.ts:4810:1 | lowering | NotYet | compiler/utilities.ts:4810:17 | a function returning HasJSDoc | undefined
+-compiler/utilities.ts:4823:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
+ compiler/utilities.ts:4828:1 | lowering | NotYet | compiler/utilities.ts:4828:43 | a value of type TypeParameterDeclaration & { parent: JSDocTemplateTag; }
+ compiler/utilities.ts:4828:1 | refusal_scan | Refused | compiler/utilities.ts:4830:32 | a cast the runtime can't check
+ compiler/utilities.ts:4835:1 | lowering | Refused | compiler/utilities.ts:4836:15 | a cast the runtime can't check
+@@ -6101,7 +6096,7 @@
+ compiler/utilitiesPublic.ts:1536:1 | refusal_scan | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/utilitiesPublic.ts:1550:1 | refusal_scan | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/utilitiesPublic.ts:1562:1 | lowering | NotYet | compiler/utilitiesPublic.ts:1536:1 | checked predicate overload target ImportClause & { readonly isTypeOnly: true; readonly name: Identifier; }
+-compiler/utilitiesPublic.ts:1566:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
++compiler/utilitiesPublic.ts:1566:1 | lowering | NotYet | compiler/utilitiesPublic.ts:1562:1 | checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: E
+ compiler/utilitiesPublic.ts:1574:1 | lowering | NotYet | compiler/binder.ts:1109:17 | writing a checked object field without its source-slot type certificate
+ compiler/utilitiesPublic.ts:1574:1 | refusal_scan | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+ compiler/utilitiesPublic.ts:1581:1 | lowering | NotYet | compiler/binder.ts:1109:17 | writing a checked object field without its source-slot type certificate
+@@ -6160,8 +6155,6 @@
+ compiler/utilitiesPublic.ts:762:1 | lowering | NotYet | compiler/utilitiesPublic.ts:766:17 | a function returning T | undefined
+ compiler/utilitiesPublic.ts:764:1 | lowering | NotYet | compiler/utilitiesPublic.ts:766:17 | a function returning T | undefined
+ compiler/utilitiesPublic.ts:766:1 | refusal_scan | Refused | compiler/utilitiesPublic.ts:774:16 | a cast the runtime can't check
+-compiler/utilitiesPublic.ts:787:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
+-compiler/utilitiesPublic.ts:788:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (re
+ compiler/utilitiesPublic.ts:817:1 | lowering | Refused | compiler/utilitiesPublic.ts:826:1 | overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined
+ compiler/utilitiesPublic.ts:827:1 | lowering | Refused | compiler/utilitiesPublic.ts:826:1 | overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined
+ compiler/utilitiesPublic.ts:882:1 | lowering | NotYet | compiler/utilitiesPublic.ts:888:9 | a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype

@@ -1,0 +1,88 @@
+{
+  "base": {
+    "onset_ordinal": 3842,
+    "onset_attempted_ordinal": 3444,
+    "onset_unit": "compiler/transformers/es2020.ts:1:1",
+    "onset_name": null,
+    "catalogued_units": 4563,
+    "probed_units": 4059,
+    "files": 81,
+    "diagnostics": [],
+    "relation_report": {
+      "after_load": "",
+      "attribution": "per attempted unit, checked after lowering; includes the unit that first exposes overflow",
+      "end": "error TS2859: Excessive complexity comparing types '\" \"' and '{}'.",
+      "first_affected_unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/es2020.ts:1:1",
+      "per_unit": true
+    }
+  },
+  "head": {
+    "onset_ordinal": 3818,
+    "onset_attempted_ordinal": 3420,
+    "onset_unit": "compiler/transformers/typeSerializer.ts:132:1",
+    "onset_name": "createRuntimeTypeSerializer",
+    "catalogued_units": 4563,
+    "probed_units": 4059,
+    "files": 81,
+    "diagnostics": [],
+    "relation_report": {
+      "after_load": "",
+      "attribution": "per attempted unit, checked after lowering; includes the unit that first exposes overflow",
+      "end": "error TS2859: Excessive complexity comparing types '\" \"' and '{}'.",
+      "first_affected_unit": "/workspace/scratch/bar-adapted/src/compiler/transformers/typeSerializer.ts:132:1",
+      "per_unit": true
+    }
+  },
+  "same_header": true,
+  "scan_moved_counts": {
+    "head": {
+      "base": 0,
+      "head": 0
+    },
+    "relation-limit noise": {
+      "base": 30,
+      "head": 5
+    },
+    "relation-limit finding itself": {
+      "base": 0,
+      "head": 0
+    }
+  },
+  "moved_counts": {
+    "head": {
+      "base": 10,
+      "head": 4
+    },
+    "relation-limit noise": {
+      "base": 35,
+      "head": 34
+    },
+    "relation-limit finding itself": {
+      "base": 0,
+      "head": 0
+    }
+  },
+  "finding_list_rows": {
+    "base": 6444,
+    "head": 6437
+  },
+  "exact_finding_rows": {
+    "base": 6444,
+    "head": 6437
+  }
+}
+base | 2583 | compiler/utilities.ts:12088:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+base | 1783 | compiler/utilities.ts:1291:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+base | 1900 | compiler/utilities.ts:3125:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+base | 1901 | compiler/utilities.ts:3130:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+base | 1902 | compiler/utilities.ts:3135:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+base | 1904 | compiler/utilities.ts:3150:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+base | 2040 | compiler/utilities.ts:4823:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+base | 1607 | compiler/utilitiesPublic.ts:1566:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+base | 1516 | compiler/utilitiesPublic.ts:787:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+base | 1517 | compiler/utilitiesPublic.ts:788:1 | lowering | Refused | compiler/utilitiesPublic.ts:786:1 | overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at compiler/utilitiesPublic.ts:795:13 isn't the value its predicate checked)
+head | 1900 | compiler/utilities.ts:3125:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+head | 1901 | compiler/utilities.ts:3130:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+head | 1904 | compiler/utilities.ts:3150:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+head | 1607 | compiler/utilitiesPublic.ts:1566:1 | lowering | NotYet | compiler/utilitiesPublic.ts:1562:1 | checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }
+
