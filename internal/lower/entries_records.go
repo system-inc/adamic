@@ -321,7 +321,8 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 // parameter, a property, an element, an argument or a return. These hold nothing: `satisfies T`, whose operand
 // stays the type it had (rulings.md:14), `as const`, which keeps the literal's own type, a variable with no
 // annotation, which takes the literal's own type, and a slot that's a type parameter or otherwise instantiable,
-// such as a generic's parameter before inference, since `f<T>(x: T)` holds `{}` as the T inferred for it. Any
+// or has such a member (instantiableMember), such as a generic's parameter before inference, since
+// `f<T>(x: T)` holds `{}` as the T inferred for it. Any
 // other place is one this can't name, and holds nothing either, so the literal's own widened type stands.
 func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 	var handles []*checker.Type
@@ -353,11 +354,29 @@ func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 	}
 	kept := handles[:0]
 	for _, handle := range handles {
-		if handle != nil && handle.Flags()&checker.TypeFlagsInstantiable == 0 {
+		if handle != nil && !instantiableMember(handle) {
 			kept = append(kept, handle)
 		}
 	}
 	return kept
+}
+
+// instantiableMember says whether t is instantiable, a type parameter among them, or a union or intersection
+// with such a member anywhere (`T | undefined`), which entriesRecordHandles holds no handle. A generic type that
+// isn't one, such as MapLike<T> inside a generic body, is kept as a handle for now, pending the differential on
+// #ny0c3gb.
+func instantiableMember(t *checker.Type) bool {
+	if t.Flags()&checker.TypeFlagsInstantiable != 0 {
+		return true
+	}
+	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range t.Types() {
+			if instantiableMember(member) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // recordMayReach says whether a record could be the receiver of a field read whose receiver has
