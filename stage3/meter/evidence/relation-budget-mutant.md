@@ -35,3 +35,11 @@ m4, Failed is submittable: FAIL test_exactly_the_three_are_submitted (outcome='F
 m5, BudgetUnknown isn't submittable: FAIL test_exactly_the_three_are_submitted (outcome='BudgetUnknown')
 run.sh and submit.sh themselves are checked by bash -n only; their first proof is the box's next run after
 /srv/adamic-meter is reinstalled with outcome.py beside them.
+
+# Re-cut onto main ffffe17f with the flagged-pair and TS2859 counts (#ferqs8v), Codex at 486400a2
+Meter: Ran 64 tests, OK (skipped=2). Latent and entry overlays build; the four overlaid census tests and overlaytext pass;
+./cloud/ whole ok. A two-line program's cache_sizes:
+{"assignable":230,"comparable":0,"enum":0,"flaggedPairs":0,"identity":0,"strictSubtype":4,"subtype":0,"ts2859":0}
+Mutant, the flagged-pair count never counts (relation_overflow.go.txt, the mark test made `if false`): red at
+relation_overflow_test.go:71: planted mark's relation counts: map[... flaggedPairs:0 ...], in
+TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt.
