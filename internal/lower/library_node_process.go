@@ -227,6 +227,11 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		}
 	}
 
+	if node.Kind == ast.KindPropertyAccessExpression && l.processPath(node) == "process.browser" && hostBindingAbsentMembers["node:process.process"]["browser"] {
+		// processPath admits only static host receivers here; a receiver with effects stays stopped.
+		// No process object slot is read, on any target (#zqz01vh, Adamic and Lower, Nov 8 2026).
+		return ir.Undefined{Of: ir.Object}, true, nil
+	}
 	if node.Kind == ast.KindTypeOfExpression {
 		operand := node.AsTypeOfExpression().Expression
 		if l.nodeProcessHostBinding(operand) {
