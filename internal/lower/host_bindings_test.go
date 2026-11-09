@@ -226,7 +226,7 @@ func TestHostBindingRequireIsAbsent(t *testing.T) {
 
 // A row's Node answer is measured in ES module mode, so a build that declares one CommonJS bundle, where
 // Node answers typeof require "function", stops at core.ts's require rather than folding it Absent, at
-// its declaration, and so does an Absent row of any name (WebAssembly's must on #00qn5az, #redxes2). The
+// its declaration, and so does a row of any name, Absent or routed (WebAssembly's must on #00qn5az, #redxes2). The
 // same program lowers in the default ES build. Mutant (l), internal/oracle/testdata/host_bindings/
 // mutants.md: hostBindingStopIn's format test dropped, and the bundle build lowers require as Absent.
 func TestHostBindingRowsStopInACommonJSBundle(t *testing.T) {
@@ -236,6 +236,11 @@ func TestHostBindingRowsStopInACommonJSBundle(t *testing.T) {
 			"core.ts:1:15: stage 0 can't lower the host binding require in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2), yet"},
 		{"performance.ts's onProfilerEvent", "performance.ts", profilerDeclaration + "export function run(name: string): void {\n\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n}\n",
 			"performance.ts:1:13: stage 0 can't lower the host binding onProfilerEvent in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2), yet"},
+		// A routed row too: process is Provided and routes its reads through node:process in the ES build, and a
+		// bundle build stops at its declaration before any read is routed (Compiler's read of #00qn5az's seam with
+		// #yewmv46).
+		{"core.ts's process, a routed row", "core.ts", "declare const process: { nextTick?: unknown; browser?: unknown; } | undefined;\nconsole.log(typeof process);\n",
+			"core.ts:1:15: stage 0 can't lower the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2), yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

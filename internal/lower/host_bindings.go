@@ -138,9 +138,11 @@ func hostBindingRoute(row load.HostBinding) string {
 	return ""
 }
 
-// hostBindingRouted reports whether a row lowers as Provided, its reads routed (hostBindingRoute).
-func hostBindingRouted(row load.HostBinding) bool {
-	return hostBindingStop(row) == "" && row.Native.Answer == load.HostBindingProvided
+// hostBindingRouted reports whether a row lowers as Provided in this lowering's build, its reads routed
+// (hostBindingRoute). It judges the row through hostBindingStopIn, so a build declared one CommonJS bundle
+// never routes a row measured in ES module mode (#00qn5az).
+func (l *lowering) hostBindingRouted(row load.HostBinding) bool {
+	return l.hostBindingStopIn(row) == "" && row.Native.Answer == load.HostBindingProvided
 }
 
 // hostBindingModel is the type of a Provided row's model export: the value named as the row in the
@@ -291,7 +293,7 @@ func (l *lowering) hostBindingViews() map[*ast.Symbol]*checker.Type {
 			}
 			for _, declaration := range statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
 				row := l.hostBindingRow(declaration)
-				if row == nil || !hostBindingRouted(*row) {
+				if row == nil || !l.hostBindingRouted(*row) {
 					continue
 				}
 				model := l.hostBindingModel(*row)
