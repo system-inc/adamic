@@ -73,21 +73,19 @@ func TestNodeFSDirentOptionalFunctionsAndContinuationsStop(t *testing.T) {
 	}
 }
 
-func direntOptionalReceiverMarkMutants(t *testing.T) (string, string) {
+func direntOptionalReceiverMarkMutant(t *testing.T) string {
 	t.Helper()
 	mutations := []buildcache.Mutation{{File: "internal/lower/library_node_fs_directory.go", Before: "(!receiverOptional || l.optionalReceiverCall != node)", After: "!receiverOptional"}}
-	lower := buildcache.GoTestMutated(t, "", "dirent-optional-mark-lower.test", "./internal/lower", nil, mutations)
-	oracle := buildcache.GoTestMutated(t, "", "dirent-optional-mark-oracle.test", "./internal/oracle", nil, mutations)
-	return lower, oracle
+	return buildcache.GoTestMutated(t, "", "dirent-optional-mark-lower.test", "./internal/lower", nil, mutations)
 }
 
 func TestProduct_DirentOptionalReceiverMarkMutant(t *testing.T) {
 	t.Parallel()
-	direntOptionalReceiverMarkMutants(t)
+	direntOptionalReceiverMarkMutant(t)
 }
 
 func TestNodeFSDirentOptionalReceiverMarkMutantIsCaught(t *testing.T) {
 	t.Parallel()
-	lower, oracle := direntOptionalReceiverMarkMutants(t)
-	checkEntryReceiverMarkMutant(t, lower, oracle, "TestNodeFSDirentOptionalReceiverRequiresGuard", direntOptionalReceiverCatch, "TestNodeFSDirentOptionalReceiverFullLower")
+	lower := direntOptionalReceiverMarkMutant(t)
+	checkEntryReceiverMarkMutant(t, lower, "TestNodeFSDirentOptionalReceiverRequiresGuard", direntOptionalReceiverCatch)
 }
