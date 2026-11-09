@@ -77,8 +77,9 @@ func TestObjectAssignClassCopiesStayRefused(t *testing.T) {
 }
 
 // The call is judged by the lib declaration it resolves to and the source's type, never by its spelling: an
-// alias, an element access, a spread, a union holding a function, lib's Function and a class's constructor all
-// stop at the rule. A source that isn't callable is left to the lowering's own rules.
+// alias, an element access, a spread, a union holding a function, lib's Function, a class's constructor and a
+// type parameter whose constraint is callable, alone or in a union, all stop at the rule. A source that isn't
+// callable is left to the lowering's own rules.
 func TestObjectAssignCallableSourceRoads(t *testing.T) {
 	t.Parallel()
 	const prelude = "type Receiver = (path: string) => string;\nconst h: { value: number } = { value: 1 };\nconst fn: Receiver = path => path;\n"
@@ -90,6 +91,8 @@ func TestObjectAssignCallableSourceRoads(t *testing.T) {
 		{"lib's Function", "const any: Function = fn;\nconst r = Object.assign(h, any);\n"},
 		{"a class's constructor", "class Dog { name = 'rex'; }\nconst r = Object.assign(h, Dog);\n"},
 		{"globalThis.Object", "const r = globalThis.Object.assign(h, fn);\n"},
+		{"a type parameter constrained to a function", "function copy<F extends () => void>(target: { value: number }, f: F): void {\n\tObject.assign(target, f);\n}\ncopy(h, (): void => {});\n"},
+		{"a type parameter constrained to a union holding a function", "function copy<F extends Receiver | { value: number }>(target: { value: number }, f: F): void {\n\tObject.assign(target, f);\n}\ncopy(h, fn);\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -100,6 +103,15 @@ func TestObjectAssignCallableSourceRoads(t *testing.T) {
 			}
 		})
 	}
+	t.Run("a spread whose element types aren't known", func(t *testing.T) {
+		t.Parallel()
+		// A class extending Array<Receiver> holds functions, and its own type has no type arguments to read.
+		_, err := lowerModules(t, map[string]string{"main.ts": prelude + "class Receivers extends Array<Receiver> {}\nconst many = new Receivers();\nconst r = Object.assign(h, ...many);\n"})
+		var refused *Refused
+		if !errors.As(err, &refused) || !strings.Contains(err.Error(), "Adamic 0.1 refuses Object.assign with a spread source whose element types aren't known") {
+			t.Errorf("got %v, want the unread spread's refusal", err)
+		}
+	})
 	t.Run("a plain source", func(t *testing.T) {
 		t.Parallel()
 		if _, err := lowerModules(t, map[string]string{"main.ts": "const h = { value: 1 };\nconst r = Object.assign(h, { value: 2 });\nconsole.log(String(r.value));\n"}); err != nil {
