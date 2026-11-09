@@ -274,6 +274,15 @@ type recordGuardedRead struct {
 // (Adamic's ruling on #ny0c3gb, with rulings.md:66, :68 and :89). A stored literal is seen only through the places
 // that hold it (entriesRecordHandles), and where none holds it as anything more specific than itself, it's held
 // as its own regular widened type, so a literal whose holding place goes unnamed fails closed.
+//
+// The list holds only each literal's own holding places, never the later hops a value takes (a parameter and a
+// return, an assignment, a binding element, a spread copy). Two guards stand for those hops. First, the empty
+// object type is every record's implicit source (recordEmptyObject): any value can be seen as `{}` and then as
+// whatever `{}` is assignable to, so typesMayReach answers "may reach" for such a receiver whatever hop the `{}`
+// sits at (Language's t1 on #ny0c3gb: Held to `{}` to an all-optional Read, each hop legal, Held to Read not).
+// Second, every hop that could widen a record's view is judged at its own relation site: a structural source
+// seen as a type with an optional field it doesn't declare is refused (adamic/no-optional-widening,
+// rulings.md:71), and a read of that field through such a view is checked (rulings.md:72).
 func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	if l.entriesRecordTypesKnown {
 		return l.entriesRecordTypes
@@ -357,6 +366,33 @@ func (l *lowering) recordMayReach(receiver *checker.Type) bool {
 	return l.typesMayReach(receiver, l.entriesRecordStorageTypes(), true, 0)
 }
 
+// recordEmptyObject is the type `{}`, every record's implicit source (entriesRecordStorageTypes), one per
+// lowering. The checker exports no empty object type, so it's the `{}` in the library's
+// `type NonNullable<T> = T & {}`, which the checker types as its one empty type literal, the type a program
+// that writes `{}` sees. Nil when the library declares no such `{}`, and typesMayReach then fails closed.
+func (l *lowering) recordEmptyObject() *checker.Type {
+	if l.emptyObjectKnown {
+		return l.emptyObject
+	}
+	l.emptyObjectKnown = true
+	symbol := l.checker.GetGlobalSymbol("NonNullable", ast.SymbolFlagsTypeAlias, nil)
+	if symbol == nil {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind != ast.KindTypeAliasDeclaration || declaration.Type() == nil || declaration.Type().Kind != ast.KindIntersectionType {
+			continue
+		}
+		for _, member := range declaration.Type().AsIntersectionTypeNode().Types.Nodes {
+			if member.Kind == ast.KindTypeLiteral && len(member.AsTypeLiteralNode().Members.Nodes) == 0 {
+				l.emptyObject = l.checker.GetTypeFromTypeNode(member)
+				return l.emptyObject
+			}
+		}
+	}
+	return nil
+}
+
 // typesMayReach says whether a value made as one of sources could be the receiver of a field read
 // whose receiver has this type, records saying the sources are records' (an enumeration's own storage
 // type is one too). Unknown fails closed, as recordMayReach says.
@@ -390,6 +426,13 @@ func (l *lowering) typesMayReach(receiver *checker.Type, sources []*checker.Type
 	}
 	if records && l.enumerationRecordStorageType(receiver) {
 		return true
+	}
+	// A record can be seen as `{}` and then as any type `{}` is assignable to, whatever its handles say
+	// (entriesRecordStorageTypes' first guard), so that's asked once of each object or intersection member.
+	if records && receiver.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0 {
+		if empty := l.recordEmptyObject(); empty == nil || l.checker.IsTypeAssignableTo(empty, receiver) {
+			return true
+		}
 	}
 	// Both ways: a record seen as a wider type, and a record narrowed to a narrower one (a predicate,
 	// a discriminant), arrive alike.

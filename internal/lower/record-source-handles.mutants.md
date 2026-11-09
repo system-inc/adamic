@@ -1,11 +1,15 @@
-# Record source handles: its mutant (#ny0c3gb)
+# Record source handles: its mutants (#ny0c3gb)
 
 entriesRecordStorageTypes relates a record literal as the types of the places that hold it (entriesRecordHandles),
-and `satisfies T` is not one: the binding holds the operand's own type (rulings.md:14), so
-`const table = {} satisfies Record<string, number>` is held as `{}`. One edit, run on a house box, then put back, with
-`go test ./internal/oracle -run '^TestRecordSourceHandles$' -count=1 -v`.
+and typesMayReach asks, for records, whether `{}` is assignable to the receiver (recordEmptyObject), since any record
+can be seen as `{}` and then as whatever `{}` is assignable to. Each mutant is one edit, run on a house box, then put
+back, with `go test ./internal/oracle -run '^TestRecordSourceHandles$' -count=1 -v`.
 
-The mutant counts `satisfies T`'s type as a holding place. In entries_records.go, entriesRecordHandles, the old text
+## (a) `satisfies T` counted as a holding place
+
+`satisfies T` holds nothing: the binding holds the operand's own type (rulings.md:14), so
+`const table = {} satisfies Record<string, number>` is held as `{}`. In entries_records.go, entriesRecordHandles, the
+old text
 
 ```go
 		if held.Kind == ast.KindAsExpression && !ast.IsConstTypeReference(held.AsAsExpression().Type) {
@@ -26,5 +30,34 @@ becomes
 
 Red: TestRecordSourceHandles/satisfies. The record is held as Record<string, number> alone, which Options (a required
 label) relates to in neither direction, so Options's read loses its weak_field_read and the fixture lowers one helper,
-not two. The other three subtests stay green: bare and generic hold no satisfies, and handle.ts already holds its record
-as Record<string, number>.
+not two. Every other subtest stays as it was: no other fixture holds a record under `satisfies`.
+
+## (b) The `{}` question dropped
+
+In entries_records.go, typesMayReach, the old text
+
+```go
+	if records && receiver.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0 {
+		if empty := l.recordEmptyObject(); empty == nil || l.checker.IsTypeAssignableTo(empty, receiver) {
+			return true
+		}
+	}
+```
+
+becomes
+
+```go
+	if false && records && receiver.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0 {
+		if empty := l.recordEmptyObject(); empty == nil || l.checker.IsTypeAssignableTo(empty, receiver) {
+			return true
+		}
+	}
+```
+
+Red: TestRecordSourceHandles/empty_source, whose record is held as Held, which relates to Read in neither direction, so
+Read's read loses its weak_field_read (0 helpers, want 1). And TestRecordSourceHandles/t2_parameter_return, if it
+lowers as its .stop reads: Read's read is plain, so native stops at the record's fixed read with the runtime's own
+words and the JavaScript backend prints text, where the pin wants the weak read's stop. t1_empty and the other roads
+stop at the hiding rule before lowering finishes (rulings.md:71), the second guard, and stay as they were. bare,
+satisfies and generic stay green, since their Options declares a required label `{}` lacks, and so does handle.ts,
+whose Hints its Record<string, number> handle already reaches.
