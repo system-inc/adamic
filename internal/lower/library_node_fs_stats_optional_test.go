@@ -80,16 +80,21 @@ func TestProduct_StatsOptionalReceiverMarkMutant(t *testing.T) {
 func TestNodeFSStatsOptionalReceiverMarkMutantIsCaught(t *testing.T) {
 	t.Parallel()
 	lower, oracle := statsOptionalReceiverMarkMutants(t)
+	checkEntryReceiverMarkMutant(t, lower, oracle, "TestNodeFSStatsOptionalReceiverRequiresGuard", statsOptionalReceiverCatch, "TestNodeFSStatsOptionalReceiverFullLower")
+}
+
+func checkEntryReceiverMarkMutant(t *testing.T, lower, oracle, direct, catch, full string) {
+	t.Helper()
 	ctx, cancel := context.WithTimeout(t.Context(), 5*time.Minute)
 	defer cancel()
-	stdout, stderr, err := childguard.Capture(ctx, exec.CommandContext(ctx, lower, "-test.run", "^TestNodeFSStatsOptionalReceiverRequiresGuard$", "-test.count=1", "-test.v"))
+	stdout, stderr, err := childguard.Capture(ctx, exec.CommandContext(ctx, lower, "-test.run", "^"+direct+"$", "-test.count=1", "-test.v"))
 	var exited *exec.ExitError
-	if !errors.As(err, &exited) || exited.ExitCode() != 1 || !strings.Contains(string(stdout), statsOptionalReceiverCatch) {
+	if !errors.As(err, &exited) || exited.ExitCode() != 1 || !strings.Contains(string(stdout), catch) {
 		t.Fatalf("mark mutant must fail direct guard test: err=%v stdout=%s stderr=%s", err, stdout, stderr)
 	}
 	t.Logf("mark mutant caught: %s", stdout)
 	controls := []struct{ binary, selection, pass string }{
-		{lower, "^TestNodeFSStatsOptionalReceiverFullLower$", "--- PASS: TestNodeFSStatsOptionalReceiverFullLower"},
+		{lower, "^" + full + "$", "--- PASS: " + full},
 		{oracle, "^TestInputAgreesWithNode$/internal/oracle/testdata/node_fs_stats_optional_call.a$", "--- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_stats_optional_call.a"},
 	}
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
