@@ -171,7 +171,9 @@ func TestBackendDivergenceCommandRefusals(t *testing.T) {
 }
 
 // A row rules Node's side only when its node is set, and every run is held whole: a row with no Node outcome, or a
-// Node run that errs, is never a ruled divergence.
+// Node run that errs, is never a ruled divergence. Nor is a row declaring a format, even run exactly as it says, since
+// its runs are a bundled image's in the installed layout. Mutant: acceptsRuledBackendDivergence without its format
+// test accepts every CommonJSBundle row.
 func TestBackendDivergenceExactRun(t *testing.T) {
 	t.Parallel()
 	var list ruledBackendDivergenceList
@@ -195,6 +197,21 @@ func TestBackendDivergenceExactRun(t *testing.T) {
 		if acceptsRuledBackendDivergence(row.Fixture, list, observation{}, backend, backend) {
 			t.Errorf("%s: a row that rules no Node outcome accepted", row.Fixture)
 		}
+	}
+	bundled := 0
+	for _, row := range list.Divergences {
+		if row.Format == "" || row.Node == nil {
+			continue
+		}
+		bundled++
+		node := observation{Exit: row.Node.ExitCode, Stdout: row.Node.Stdout, Stderr: row.Node.Stderr}
+		backend := observation{Exit: row.Native.ExitCode, Stdout: row.Native.Stdout, Stderr: row.Native.Stderr}
+		if acceptsRuledBackendDivergence(row.Fixture, list, node, backend, backend) {
+			t.Errorf("%s: a row declaring format %s accepted", row.Fixture, row.Format)
+		}
+	}
+	if bundled == 0 {
+		t.Error("no landed row declares a format, so nothing here tests one")
 	}
 }
 
