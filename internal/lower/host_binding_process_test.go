@@ -71,6 +71,8 @@ func TestHostBindingProcessBrowserRoadsStop(t *testing.T) {
 		"process['browser'] = 1;",
 		"delete process.browser;",
 		"console.log('browser' in process);",
+		"const k = 'browser'; console.log(k in process);",
+		"const k = 'browser'; console.log(process[k]);",
 		"console.log(process['browser']);",
 		"console.log(Reflect.get(process, 'browser'));",
 		"const p: { browser?: unknown } = process; console.log(p.browser);",
@@ -94,8 +96,44 @@ func TestHostBindingProcessBrowserRoadsStop(t *testing.T) {
 			if !strings.Contains(what, "browser") {
 				t.Fatalf("want a stop naming browser, got %v", err)
 			}
+			if strings.HasPrefix(body, "const k") && what != "a run-time key on process, which could name process.browser" {
+				t.Fatalf("want the run-time key diagnostic, got %v", err)
+			}
 			if strings.HasPrefix(body, "const p:") && !strings.Contains(what, "a member no host registration names") {
 				t.Fatalf("want the unregistered browser view stop, got %v", err)
+			}
+			t.Log(err)
+		})
+	}
+	// Language's roads use the same program's core row and read it after the attempted write.
+	for _, probe := range []struct{ name, body, prefix, module string }{
+		{"q1 globalThis assign", "Object.assign(globalThis.process, { browser: true });", "", ""},
+		{"q2 globalThis defineProperty", "Object.defineProperty(globalThis.process, 'browser', { value: true });", "", ""},
+		{"q3 globalThis Reflect.set", "Reflect.set(globalThis.process, 'browser', true);", "", ""},
+		{"q1 bracket assign", "Object.assign(globalThis['process'], { browser: true });", "", ""},
+		{"q2 bracket defineProperty", "Object.defineProperty(globalThis['process'], 'browser', { value: true });", "", ""},
+		{"q3 bracket Reflect.set", "Reflect.set(globalThis['process'], 'browser', true);", "", ""},
+		{"q4 imported alias", "Object.assign(nodeProcess, { browser: true });", "import nodeProcess from 'node:process';\n", ""},
+		{"q6 another module's global", "mutate();", "import { mutate } from './mutator.ts';\n", "export function mutate(): void { Object.assign(process, { browser: true }); }\n"},
+		{"q7 cast receiver", "(process as { browser?: unknown }).browser = true;", "", ""},
+		{"q8 destructuring assignment", "({ browser: process.browser } = { browser: true });", "", ""},
+		{"q9 for-of target", "for (process.browser of [true]) {}", "", ""},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			modules := processModules(probe.body + "\nconsole.log(String(process.browser));")
+			modules["core.ts"] = probe.prefix + modules["core.ts"]
+			if probe.module != "" {
+				modules["mutator.ts"] = probe.module
+			}
+			_, err := lowerModules(t, modules)
+			var notYet *NotYet
+			var refused *Refused
+			if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+				t.Fatalf("mutation road did not stop; compare its run with Node before changing lowering: %v", err)
+			}
+			if (strings.HasPrefix(probe.name, "q1 ") || strings.HasPrefix(probe.name, "q2 ") || strings.HasPrefix(probe.name, "q3 ")) && (notYet == nil || notYet.What != "process.browser outside a plain property read") {
+				t.Fatalf("want rule 70's browser stop, got %v", err)
 			}
 			t.Log(err)
 		})
