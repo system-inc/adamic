@@ -22,8 +22,8 @@ import (
 const repositoryCorpusCommit = oracles.RepositoryCorpusCommit
 
 // SHA256 of sorted name<TAB>SHA256(bytes)<LF>, including upstream inputs and
-// generated controls: 3,919 cases at cohere 0183ccf8, where 7945d102 had 3,900.
-const repositoryCorpusIdentity = "0ebc69862856a18e2af48e2a27ebfba868f642da3b4e48c218b99bd0a09236bf"
+// generated controls: 4,084 cases at cohere 5360753e, where 06af2e39 had 3,919.
+const repositoryCorpusIdentity = "66cb1846add346a00d20248856ae86bad5e63137673184e2e682765471b0c8a4"
 
 // The corpus files corpus.pin names under stage3/api/node_modules: npm ci --prefix stage3/api installs them from
 // stage3/api's lockfile, so no archive of tracked files carries them.
@@ -142,10 +142,10 @@ func repositoryCorpusIdentityError(pin string, cases []textCase, count int, iden
 func TestPinnedRepositoryCorpusIdentity(t *testing.T) {
 	t.Parallel()
 	cases := corpusCases(t)
-	if err := repositoryCorpusIdentityError(repositoryCorpusCommit, cases, 3919, repositoryCorpusIdentity); err != nil {
+	if err := repositoryCorpusIdentityError(repositoryCorpusCommit, cases, 4084, repositoryCorpusIdentity); err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("3919 cases; name/byte identity SHA256 %s", pinForCases(cases).SHA256)
+	t.Logf("4084 cases; name/byte identity SHA256 %s", pinForCases(cases).SHA256)
 }
 
 // fixtureCasesAtPin is repositoryCasesAtPin on a fixture repository, under a key that names the fixture's pin, as the
