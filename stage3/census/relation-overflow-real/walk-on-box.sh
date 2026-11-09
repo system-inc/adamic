@@ -192,6 +192,162 @@ func (c *Checker) boxWalkBegin(source,target *Type,relation *Relation) bool {
     return true
 }
 GO
+cat > "$work/box_attribution.go" <<'GO'
+package checker
+
+import (
+    "runtime"
+    "slices"
+    "sort"
+    "strings"
+)
+
+type boxRelationKey struct { function,caller,relation string; lower bool }
+type boxRelationTotal struct { calls uint64; growth int64 }
+type boxStackMemo struct { pcs []uintptr; function,caller string; lower bool }
+type boxAttributionState struct {
+    depth int
+    baseline,last,gaps int64
+    rows map[boxRelationKey]*boxRelationTotal
+    pcs []uintptr
+    memo map[uint64][]boxStackMemo
+}
+type boxRelationToken struct { entered,outer bool; before int64; row *boxRelationTotal }
+type BoxRelationRow struct {
+    Key string `json:"key"`
+    Function string `json:"function"`
+    Caller string `json:"caller"`
+    Relation string `json:"relation"`
+    Calls uint64 `json:"calls"`
+    Growth int64 `json:"growth"`
+}
+type BoxRelationAttribution struct {
+    Baseline int64 `json:"assignable_before"`
+    Current int64 `json:"assignable_after"`
+    Change int64 `json:"cache_change"`
+    SumKeyGrowth int64 `json:"sum_key_growth"`
+    NoLowerGrowth int64 `json:"hooked_without_lower_frame_growth"`
+    UnhookedGrowth int64 `json:"unhooked_growth"`
+    Remainder int64 `json:"unattributed_remainder"`
+    UnattributedFraction float64 `json:"unattributed_fraction"`
+    UnattributedLarge bool `json:"unattributed_large"`
+    Assessment string `json:"unattributed_assessment"`
+    AccountingOK bool `json:"accounting_ok"`
+    OuterCalls uint64 `json:"outer_calls"`
+    Rows []BoxRelationRow `json:"rows"`
+    NoLowerRows []BoxRelationRow `json:"hooked_without_lower_frame"`
+}
+func (c *Checker) BoxAttributionStart() {
+    size:=int64(c.assignableRelation.size())
+    c.boxAttribution=&boxAttributionState{baseline:size,last:size,rows:map[boxRelationKey]*boxRelationTotal{},pcs:make([]uintptr,64),memo:map[uint64][]boxStackMemo{}}
+}
+// Resolve inline frames correctly, memoizing exact PC sequences, not just a hash.
+func (a *boxAttributionState) frameKey(relation string) boxRelationKey {
+    for {
+        n:=runtime.Callers(2,a.pcs)
+        pcs:=a.pcs[:n]
+        hash:=uint64(14695981039346656037)
+        for _,pc:=range pcs {hash^=uint64(pc);hash*=1099511628211}
+        for _,saved:=range a.memo[hash] {
+            if slices.Equal(saved.pcs,pcs) {return boxRelationKey{saved.function,saved.caller,relation,saved.lower}}
+        }
+        function,caller:="",""
+        frames:=runtime.CallersFrames(pcs)
+        for {
+            frame,more:=frames.Next()
+            if function!="" {caller=frame.Function;break}
+            if strings.HasPrefix(frame.Function,"github.com/system-inc/adamic/internal/lower.") {function=frame.Function}
+            if !more {break}
+        }
+        if (function=="" || caller=="") && n==len(a.pcs) && len(a.pcs)<4096 {
+            a.pcs=make([]uintptr,len(a.pcs)*2);continue
+        }
+        found:=function!="" && caller!=""
+        if !found {function="<no complete internal/lower frame pair>";caller=""}
+        a.memo[hash]=append(a.memo[hash],boxStackMemo{append([]uintptr(nil),pcs...),function,caller,found})
+        return boxRelationKey{function,caller,relation,found}
+    }
+}
+func (c *Checker) boxRelationEnter(relation *Relation) boxRelationToken {
+    a:=c.boxAttribution
+    if a==nil {return boxRelationToken{}}
+    a.depth++
+    token:=boxRelationToken{entered:true,outer:a.depth==1}
+    if !token.outer {return token}
+    token.before=int64(c.assignableRelation.size())
+    // Independently measure cache changes between observed calls, including deletions.
+    a.gaps+=token.before-a.last
+    key:=a.frameKey(c.boxWalkCache(relation))
+    row:=a.rows[key]
+    if row==nil {row=&boxRelationTotal{};a.rows[key]=row}
+    row.calls++
+    token.row=row
+    return token
+}
+func (c *Checker) boxRelationExit(token boxRelationToken) {
+    if !token.entered {return}
+    a:=c.boxAttribution
+    if token.outer {
+        if a.depth!=1 {panic("relation attribution depth mismatch")}
+        after:=int64(c.assignableRelation.size())
+        token.row.growth+=after-token.before
+        a.last=after
+    }
+    a.depth--
+    if a.depth<0 {panic("negative relation attribution depth")}
+}
+func boxAttributionFinish(s *BoxRelationAttribution) {
+    s.Change=s.Current-s.Baseline
+    s.SumKeyGrowth=0;s.NoLowerGrowth=0;s.OuterCalls=0
+    for _,row:=range s.Rows {s.SumKeyGrowth+=row.Growth;s.OuterCalls+=row.Calls}
+    for _,row:=range s.NoLowerRows {s.NoLowerGrowth+=row.Growth;s.OuterCalls+=row.Calls}
+    s.Remainder=s.NoLowerGrowth+s.UnhookedGrowth
+    s.AccountingOK=s.Change==s.SumKeyGrowth+s.Remainder
+    denominator:=s.Change;if denominator<0 {denominator=-denominator};if denominator<1 {denominator=1}
+    magnitude:=s.Remainder;if magnitude<0 {magnitude=-magnitude}
+    s.UnattributedFraction=float64(magnitude)/float64(denominator)
+    s.UnattributedLarge=magnitude>0 && s.UnattributedFraction>=0.01
+    s.Assessment="none"
+    if magnitude>0 {s.Assessment="small: less than 1% of absolute net cache change"}
+    if s.UnattributedLarge {s.Assessment="large: at least 1% of absolute net cache change (denominator at least 1)"}
+    order:=func(rows []BoxRelationRow) {sort.Slice(rows,func(i,j int)bool {
+        if rows[i].Growth!=rows[j].Growth {return rows[i].Growth>rows[j].Growth}
+        if rows[i].Key!=rows[j].Key {return rows[i].Key<rows[j].Key}
+        return rows[i].Relation<rows[j].Relation
+    })}
+    order(s.Rows);order(s.NoLowerRows)
+}
+func (c *Checker) BoxAttributionSnapshot() BoxRelationAttribution {
+    a:=c.boxAttribution
+    if a==nil || a.depth!=0 {panic("attribution snapshot requires an idle, enabled checker")}
+    s:=BoxRelationAttribution{Baseline:a.baseline,Current:int64(c.assignableRelation.size()),Rows:[]BoxRelationRow{},NoLowerRows:[]BoxRelationRow{}}
+    s.UnhookedGrowth=a.gaps+(s.Current-a.last)
+    for key,total:=range a.rows {
+        row:=BoxRelationRow{key.function+" <- "+key.caller,key.function,key.caller,key.relation,total.calls,total.growth}
+        if key.lower {s.Rows=append(s.Rows,row)} else {s.NoLowerRows=append(s.NoLowerRows,row)}
+    }
+    boxAttributionFinish(&s)
+    return s
+}
+func (c *Checker) BoxAttributionDelta(before,after BoxRelationAttribution) BoxRelationAttribution {
+    subtract:=func(left,right []BoxRelationRow) []BoxRelationRow {
+        old:=map[boxRelationKey]BoxRelationRow{}
+        for _,row:=range left {old[boxRelationKey{function:row.Function,caller:row.Caller,relation:row.Relation}]=row}
+        result:=[]BoxRelationRow{}
+        for _,row:=range right {
+            previous:=old[boxRelationKey{function:row.Function,caller:row.Caller,relation:row.Relation}]
+            row.Calls-=previous.Calls;row.Growth-=previous.Growth
+            if row.Calls!=0 || row.Growth!=0 {result=append(result,row)}
+        }
+        return result
+    }
+    s:=BoxRelationAttribution{Baseline:before.Current,Current:after.Current,
+        UnhookedGrowth:after.UnhookedGrowth-before.UnhookedGrowth,
+        Rows:subtract(before.Rows,after.Rows),NoLowerRows:subtract(before.NoLowerRows,after.NoLowerRows)}
+    boxAttributionFinish(&s)
+    return s
+}
+GO
 cat > "$work/box_load.go" <<'GO'
 package load
 
@@ -243,6 +399,7 @@ import (
     "encoding/json"
     "fmt"
     "os"
+    "path/filepath"
     "strconv"
     "sync"
     "sync/atomic"
@@ -294,6 +451,8 @@ func main() {
     if len(program.LatentDiagnostics())!=0 {panic(fmt.Sprintf("entry checker rejected: %v",program.LatentDiagnostics()))}
     entry:=program.Files()[0]
     c,release:=program.Checker(context.Background(),entry);release()
+    // The shim's unsafe mirrors must still read the original Checker field offsets.
+    if checker.Checker_numberType(c)!=c.GetNumberType() || checker.Checker_stringType(c)!=c.GetStringType() || checker.Checker_booleanType(c)!=c.GetBooleanType() || checker.Checker_undefinedType(c)!=c.GetUndefinedType() {panic("instrumentation changed shim Checker field offsets")}
     program.LatentEntryReach()
     if program.Files()[0]!=entry {panic("canonical entry order lost")}
     total:=0
@@ -302,13 +461,47 @@ func main() {
         if other!=c {panic("walk uses more than one checker")};release()
         total+=len(file.Statements.Nodes)
     }
+    // Attribution begins after checking. Reporting and snapshots ask no relations.
+    c.BoxAttributionStart()
+    at1500:=c.BoxAttributionSnapshot()
+    window:=at1500
+    have1500,haveWindow:=false,false
+    attribution:=func(reason string) {
+        snapshot:=c.BoxAttributionSnapshot()
+        n:=done.Load()
+        if n==1500 && !have1500 {at1500=snapshot;have1500=true}
+        if n==2000 && have1500 && !haveWindow {window=c.BoxAttributionDelta(at1500,snapshot);haveWindow=true}
+        table:=filepath.Join(filepath.Dir(os.Args[3]),fmt.Sprintf("relation-attribution-%06d-%s.json",n,reason))
+        report:=map[string]any{"units_done":n,"reason":reason,"growth_metric":"net assignableRelation entries; nested checks charged to the outermost relation", "cumulative":snapshot,
+            "window_1500_2000":map[string]any{"available":haveWindow}}
+        if haveWindow {report["window_1500_2000"]=map[string]any{"available":true,"from_units":1500,"to_units":2000,"data":window}}
+        data,err:=json.MarshalIndent(report,"","  ");if err!=nil {panic(err)}
+        if err=os.WriteFile(table,append(data,'\n'),0644);err!=nil {panic(err)}
+        top:=snapshot.Rows;if len(top)>20 {top=top[:20]}
+        row:=map[string]any{"event":"relation_attribution","reason":reason,"top20":top,"table_path":table,
+            "assignable_before":snapshot.Baseline,"assignable_after":snapshot.Current,"cache_change":snapshot.Change,
+            "sum_key_growth":snapshot.SumKeyGrowth,"hooked_without_lower_frame_growth":snapshot.NoLowerGrowth,
+            "unhooked_growth":snapshot.UnhookedGrowth,"unattributed_remainder":snapshot.Remainder,
+            "unattributed_large":snapshot.UnattributedLarge,"unattributed_assessment":snapshot.Assessment,"accounting_ok":snapshot.AccountingOK,
+            "outer_calls":snapshot.OuterCalls,"window_1500_2000":map[string]any{"available":haveWindow}}
+        if haveWindow {
+            topWindow:=window.Rows;if len(topWindow)>20 {topWindow=topWindow[:20]}
+            row["window_1500_2000"]=map[string]any{"available":true,"from_units":1500,"to_units":2000,"top20":topWindow,
+                "cache_change":window.Change,"sum_key_growth":window.SumKeyGrowth,"unhooked_growth":window.UnhookedGrowth,
+                "hooked_without_lower_frame_growth":window.NoLowerGrowth,"unattributed_remainder":window.Remainder,
+                "unattributed_large":window.UnattributedLarge,"unattributed_assessment":window.Assessment,"accounting_ok":window.AccountingOK}
+        }
+        say(row)
+        if !snapshot.AccountingOK || (haveWindow && !window.AccountingOK) {panic("relation attribution conservation failed")}
+    }
     counts:=func(reason string) {
         row:=program.BoxWalkCounts(c);row["event"]="counts";row["reason"]=reason
         row["units_total"]=total;row["limit"]=limit
         if reason=="end" {row["completed"]=int(done.Load())==total;row["limited"]=limit>0 && done.Load()>=limit && int(done.Load())<total}
         say(row)
+        attribution(reason)
     }
-    say(map[string]any{"event":"start","entry":os.Args[1],"files":len(program.Files()),"units_total":total,"limit":limit,"heartbeat_seconds":60,"checkpoint_every":500})
+    say(map[string]any{"event":"start","entry":os.Args[1],"files":len(program.Files()),"units_total":total,"limit":limit,"heartbeat_seconds":60,"checkpoint_every":500,"shim_offsets_checked":true})
     counts("checked")
     lower.BoxWalkEnter=func(node *ast.Node,phase string) {
         label:=program.Where(node)+" ["+node.Kind.String()+"]"
@@ -342,7 +535,15 @@ def once(text,old,new):
     return text.replace(old,new,1)
 checker='cohere/TypeScript/tsc/internal/checker/'
 text=read(checker+'checker.go')
-text=once(text,'type Checker struct {','type Checker struct {\n boxWalkFirst bool\n boxWalkFlag func(string,*Type,*Type,string,string,string)\n boxWalkSite func(*ast.Node)')
+# The shim has fixed-offset extra_Checker readers. Append, never prepend fields.
+start=text.index('type Checker struct {')
+end=text.index('\n}',start)
+text=text[:end]+'''
+ boxWalkFirst bool
+ boxWalkFlag func(string,*Type,*Type,string,string,string)
+ boxWalkSite func(*ast.Node)
+ boxAttribution *boxAttributionState
+'''+text[end:]
 put(checker+'checker.go',text)
 text=read(checker+'relater.go')
 text=once(text,'\tr := c.getRelater()\n\tr.relation = relation', '''\tif c.boxWalkSite!=nil {node:=errorNode;if node==nil {node=c.currentNode};if node!=nil {c.boxWalkSite(node)}}
@@ -355,7 +556,16 @@ text=once(text,old,'''boxWalkSourceText:=c.TypeToString(source)
  boxWalkTargetText:=c.TypeToString(target)
  if boxWalkFirst {c.boxWalkFlag("first_flag",source,target,c.boxWalkCache(relation),boxWalkSourceText,boxWalkTargetText)}
  c.reportDiagnostic(NewDiagnosticForNode(errorNode, diagnostics.Excessive_complexity_comparing_types_0_and_1, boxWalkSourceText, boxWalkTargetText), diagnosticOutput)''')
+# These cover the public IsTypeAssignableTo method, shim linkname identical/
+# strict-subtype methods, ordinary subtype/comparable paths, direct diagnostic
+# comparisons, and elaboration. All actual Relaters are entered through Ex.
+for name in ['isTypeRelatedTo','checkTypeRelatedTo','checkTypeRelatedToEx','checkTypeRelatedToAndOptionallyElaborate']:
+    pattern=r'(func \(c \*Checker\) '+name+r'\([\s\S]*?\) bool \{)'
+    text,n=re.subn(pattern,lambda match:match[1]+'\n boxRelationToken := c.boxRelationEnter(relation)\n defer c.boxRelationExit(boxRelationToken)',text)
+    assert n==1,('relation entry',name,n)
+assert text.count('r := c.getRelater()')==1
 put(checker+'relater.go',text)
+put(checker+'box_attribution.go',(work/'box_attribution.go').read_text())
 put(checker+'box_walk.go',(work/'box_checker.go').read_text())
 text=read('internal/load/load.go')
 needle='loaded := &Program{compiler: program, fs: fs}'
