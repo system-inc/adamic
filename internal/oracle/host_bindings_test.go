@@ -103,10 +103,14 @@ func TestHostBindingsAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/host_bindings"
 	programs := 0
-	for _, name := range []string{"if", "and", "conditional", "shadow", "performance_provided", "process_provided"} {
+	for _, name := range []string{"if", "and", "conditional", "shadow", "performance_provided", "process_provided", "process_browser_boolean", "process_browser_string", "process_browser_number"} {
 		programs++
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
+			if strings.HasPrefix(name, "process_browser_") {
+				hostBindingTypedProcessAgrees(t, strings.TrimPrefix(name, "process_browser_"))
+				return
+			}
 			generatorAgrees(t, directory+"/"+name+"/main.ts")
 		})
 	}
