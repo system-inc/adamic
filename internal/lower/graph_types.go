@@ -119,6 +119,11 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 					Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
 				}
 			}
+			// A cell that can hold a record seeds a cycle through a record no graph region holds: stopped,
+			// conservatively, as a record written into any graph slot is (noteRecordSlot).
+			if f.holdsRecord(proven) && f.recordStop == nil {
+				f.recordStop = f.l.notYet(f.l.localNodes[local], "a record held by '"+declared.Name+"', a variable a function value captures on a cycle, in a graph program: a record can't join a graph region")
+			}
 			seeds[cycleNode{cell: local + 1}] = true
 		}
 	}
@@ -185,7 +190,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	active := map[cycleNode]bool{}
 	stack := []cycleNode{}
 	graph := map[cycleNode]bool{}
-	var throughPromise, throughRecord []cycleNode
+	var throughPromise []cycleNode
 	var visit func(cycleNode)
 	visit = func(node cycleNode) {
 		next++
@@ -223,9 +228,6 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 				if each.proven != nil && f.l.isLibraryType(each.proven, "Promise") && throughPromise == nil {
 					throughPromise = component
 				}
-				if each.proven != nil && f.l.recordElement(each.proven) != nil && throughRecord == nil {
-					throughRecord = []cycleNode{each}
-				}
 			}
 		}
 	}
@@ -253,19 +255,6 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			What:  "a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region",
 			Fix:   "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)",
 		}
-	}
-	// A record is never a graph member either: a literal makes it as ir.RecordLiteral, which nothing
-	// adopts, and graphAdoptionBoundary sees only the older ObjectLiteral.Record. The refusal at :87
-	// catches a cycle closed by a write into a record, but a record built whole and stored into a graph
-	// field closes one with no such write: a.r = { k: a.next.slice() } freed 5 of 20 by the counted build
-	// (#a9e21hc). So a record on a cycle stops here, until #1vb0x5s gives records their region. A record
-	// outside every selected component (a record of graph values nothing in the graph holds) lowers.
-	if throughRecord != nil {
-		where := f.where[throughRecord[0].proven]
-		if where == nil {
-			where = modules[0].AsNode()
-		}
-		return f.l.notYet(where, "a record whose values can reach back to what holds it, in a graph program: a record can't join a graph region yet")
 	}
 	// An otherwise acyclic cache of graph elements belongs inside their graph too.
 	for changed := true; changed; {
@@ -368,7 +357,12 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		}
 	}
 	f.graphFlows()
-	return f.graphAdoptionBoundary()
+	// The boundary's refusals come first, so the older record form, ObjectLiteral{Record}, keeps its own
+	// words; then a record written into a graph slot on a cycle (#a9e21hc).
+	if err := f.graphAdoptionBoundary(); err != nil {
+		return err
+	}
+	return f.recordStop
 }
 
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
