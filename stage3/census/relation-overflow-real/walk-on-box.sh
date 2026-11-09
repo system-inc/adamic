@@ -200,6 +200,7 @@ package checker
 import (
     "fmt"
     "runtime"
+    "github.com/microsoft/TypeScript/tsc/internal/ast"
     "slices"
     "sort"
     "strings"
@@ -221,7 +222,14 @@ type boxAttributionState struct {
     texts map[*Type]string
     storage map[*Type]bool
     storageObservations uint64
+    origins map[*Type]map[boxSourceOrigin]bool
+    storageHistogram bool
+    emit func(map[string]any)
+    where func(*ast.Node)string
+    marked func()bool
+    observerDepth int
 }
+type boxSourceOrigin struct { kind string; node *ast.Node }
 type boxPairContext struct { receiver,source *Type; direction string }
 type boxPairKey struct { key boxRelationKey; receiver,source *Type; direction string }
 type BoxPairRow struct {
@@ -276,7 +284,7 @@ type BoxRelationAttribution struct {
 }
 func (c *Checker) BoxAttributionStart() {
     size:=int64(c.assignableRelation.size())
-    c.boxAttribution=&boxAttributionState{baseline:size,last:size,rows:map[boxRelationKey]*boxRelationTotal{},pcs:make([]uintptr,64),memo:map[uint64][]boxStackMemo{},pairs:map[boxPairKey]*BoxPairRow{},texts:map[*Type]string{},storage:map[*Type]bool{}}
+    c.boxAttribution=&boxAttributionState{baseline:size,last:size,rows:map[boxRelationKey]*boxRelationTotal{},pcs:make([]uintptr,64),memo:map[uint64][]boxStackMemo{},pairs:map[boxPairKey]*BoxPairRow{},texts:map[*Type]string{},storage:map[*Type]bool{},origins:map[*Type]map[boxSourceOrigin]bool{}}
 }
 // Resolve inline frames correctly, memoizing exact PC sequences, not just a hash.
 func (a *boxAttributionState) frameKey(relation string) boxRelationKey {
@@ -427,6 +435,7 @@ func (c *Checker) BoxAttributionDelta(before,after BoxRelationAttribution) BoxRe
 func (c *Checker) boxText(t *Type) string {
     a:=c.boxAttribution
     if text,ok:=a.texts[t];ok {return text}
+    if a.observerDepth>0 {text:=c.TypeToString(t);a.texts[t]=text;return text}
     before:=int64(c.assignableRelation.size())
     if a.depth==0 {a.gaps+=before-a.last}
     a.depth++
@@ -453,6 +462,10 @@ func (c *Checker) BoxRecordStorage(types []*Type) {
     a:=c.boxAttribution;if a==nil {return}
     a.storageObservations++
     for _,t:=range types {if t!=nil {a.storage[t]=true}}
+    if !a.storageHistogram && a.emit!=nil && len(types)>0 {
+        a.storageHistogram=true
+        c.boxObserve(func(){c.boxStorageHistogram(types)})
+    }
 }
 func (c *Checker) BoxStorageSnapshot() BoxStorageReport {
     a:=c.boxAttribution
@@ -464,6 +477,213 @@ func (c *Checker) BoxStorageSnapshot() BoxStorageReport {
     for _,t:=range types {report.Largest=append(report.Largest,BoxStorageRow{t.Id(),c.boxText(t),members(t)})}
     return report
 }
+func (c *Checker) BoxStorageObserve(emit func(map[string]any),where func(*ast.Node)string,marked func()bool) {
+    a:=c.boxAttribution;a.emit=emit;a.where=where;a.marked=marked
+}
+func (c *Checker) BoxRecordSource(t *Type,node *ast.Node,kind string) *Type {
+    a:=c.boxAttribution
+    if a!=nil && t!=nil {
+        origins:=a.origins[t];if origins==nil {origins=map[boxSourceOrigin]bool{};a.origins[t]=origins}
+        origins[boxSourceOrigin{kind,node}]=true
+    }
+    return t
+}
+// Separate observation from rule growth, including structural resolution and
+// diagnostic comparisons. Nested observer text formatting is charged just once.
+func (c *Checker) boxObserve(fn func()) {
+    a:=c.boxAttribution
+    before:=int64(c.assignableRelation.size())
+    idle:=a.depth==0;if idle {a.gaps+=before-a.last}
+    a.depth++;a.observerDepth++
+    defer func(){
+        a.depth--;a.observerDepth--
+        delta:=int64(c.assignableRelation.size())-before
+        a.gaps+=delta;a.observerGrowth+=delta
+        if idle {a.last=int64(c.assignableRelation.size())}
+    }()
+    fn()
+}
+func (c *Checker) boxOrigins(t *Type) []map[string]any {
+    a:=c.boxAttribution;result:=[]map[string]any{}
+    for origin:=range a.origins[t] {result=append(result,map[string]any{"origin":origin.kind,"node":a.where(origin.node)})}
+    sort.Slice(result,func(i,j int)bool {x,y:=fmt.Sprint(result[i]["origin"],result[i]["node"]),fmt.Sprint(result[j]["origin"],result[j]["node"]);return x<y})
+    return result
+}
+func boxObjectFlagNames(t *Type) []string {
+    names:=[]string{}
+    add:=func(mask ObjectFlags,name string){if t.ObjectFlags()&mask!=0 {names=append(names,name)}}
+    // Single bits only; aliases reuse bits across object/union/intersection kinds.
+    add(ObjectFlagsClass,"Class")
+    add(ObjectFlagsInterface,"Interface")
+    add(ObjectFlagsReference,"Reference")
+    add(ObjectFlagsTuple,"Tuple")
+    add(ObjectFlagsAnonymous,"Anonymous")
+    add(ObjectFlagsMapped,"Mapped")
+    add(ObjectFlagsInstantiated,"Instantiated")
+    add(ObjectFlagsObjectLiteral,"ObjectLiteral")
+    add(ObjectFlagsEvolvingArray,"EvolvingArray")
+    add(ObjectFlagsObjectLiteralPatternWithComputedProperties,"ObjectLiteralPatternWithComputedProperties")
+    add(ObjectFlagsReverseMapped,"ReverseMapped")
+    add(ObjectFlagsJsxAttributes,"JsxAttributes")
+    add(ObjectFlagsJSLiteral,"JSLiteral")
+    add(ObjectFlagsFreshLiteral,"FreshLiteral")
+    add(ObjectFlagsArrayLiteral,"ArrayLiteral")
+    add(ObjectFlagsPrimitiveUnion,"PrimitiveUnion")
+    add(ObjectFlagsContainsWideningType,"ContainsWideningType")
+    add(ObjectFlagsContainsObjectOrArrayLiteral,"ContainsObjectOrArrayLiteral")
+    add(ObjectFlagsNonInferrableType,"NonInferrableType")
+    add(ObjectFlagsCouldContainTypeVariablesComputed,"CouldContainTypeVariablesComputed")
+    add(ObjectFlagsCouldContainTypeVariables,"CouldContainTypeVariables")
+    add(ObjectFlagsMembersResolved,"MembersResolved")
+    if t.Flags()&TypeFlagsObject!=0 {add(ObjectFlagsContainsSpread,"ContainsSpread")}
+    if t.Flags()&TypeFlagsObject!=0 {add(ObjectFlagsObjectRestType,"ObjectRestType")}
+    if t.Flags()&TypeFlagsObject!=0 {add(ObjectFlagsInstantiationExpressionType,"InstantiationExpressionType")}
+    if t.Flags()&TypeFlagsObject!=0 {add(ObjectFlagsSingleSignatureType,"SingleSignatureType")}
+    if t.Flags()&TypeFlagsObject!=0 {add(ObjectFlagsIsClassInstanceClone,"IsClassInstanceClone")}
+    if t.Flags()&TypeFlagsObject!=0 {add(ObjectFlagsIdenticalBaseTypeCalculated,"IdenticalBaseTypeCalculated")}
+    if t.Flags()&TypeFlagsObject!=0 {add(ObjectFlagsIdenticalBaseTypeExists,"IdenticalBaseTypeExists")}
+    if t.Flags()&TypeFlagsObject!=0 {add(ObjectFlagsFromTypeNode,"FromTypeNode")}
+    if t.Flags()&(TypeFlagsUnionOrIntersection|TypeFlagsSubstitution)!=0 {add(ObjectFlagsIsGenericTypeComputed,"IsGenericTypeComputed")}
+    if t.Flags()&(TypeFlagsUnionOrIntersection|TypeFlagsSubstitution)!=0 {add(ObjectFlagsIsGenericObjectType,"IsGenericObjectType")}
+    if t.Flags()&(TypeFlagsUnionOrIntersection|TypeFlagsSubstitution)!=0 {add(ObjectFlagsIsGenericIndexType,"IsGenericIndexType")}
+    if t.Flags()&TypeFlagsUnion!=0 {add(ObjectFlagsContainsIntersections,"ContainsIntersections")}
+    if t.Flags()&TypeFlagsUnion!=0 {add(ObjectFlagsIsUnknownLikeUnionComputed,"IsUnknownLikeUnionComputed")}
+    if t.Flags()&TypeFlagsUnion!=0 {add(ObjectFlagsIsUnknownLikeUnion,"IsUnknownLikeUnion")}
+    if t.Flags()&TypeFlagsUnion!=0 {add(ObjectFlagsIsUniformEnumComputed,"IsUniformEnumComputed")}
+    if t.Flags()&TypeFlagsUnion!=0 {add(ObjectFlagsIsUniformEnum,"IsUniformEnum")}
+    if t.Flags()&TypeFlagsIntersection!=0 {add(ObjectFlagsIsNeverIntersectionComputed,"IsNeverIntersectionComputed")}
+    if t.Flags()&TypeFlagsIntersection!=0 {add(ObjectFlagsIsNeverIntersection,"IsNeverIntersection")}
+    if t.Flags()&TypeFlagsIntersection!=0 {add(ObjectFlagsIsConstrainedTypeVariable,"IsConstrainedTypeVariable")}
+    if len(names)==0 {names=append(names,"None")};return names
+}
+func (c *Checker) boxSourceInfo(t *Type,full bool) map[string]any {
+    props:=c.GetPropertiesOfType(t);indices:=c.GetIndexInfosOfType(t)
+    flags,objects:=t.Flags(),t.ObjectFlags()
+    regular:=c.getRegularTypeOfObjectLiteral(t)
+    row:=map[string]any{"type_id":t.Id(),"type":c.boxText(t),"origins":c.boxOrigins(t),
+        "TypeFlags":FormatTypeFlags(flags),"TypeFlags_bits":uint32(flags),
+        "ObjectFlags":boxObjectFlagNames(t),"ObjectFlags_bits":uint32(objects),
+        "property_count":len(props),"index_info_count":len(indices),
+        "truly_empty":flags&TypeFlagsObject!=0 && len(props)==0 && len(indices)==0,
+        "fresh_literal":objects&ObjectFlagsFreshLiteral!=0 && objects&ObjectFlagsObjectLiteral!=0,
+        "regular_type_id":regular.Id(),"evolving":objects&ObjectFlagsEvolvingArray!=0,
+        "instantiated":objects&ObjectFlagsInstantiated!=0,
+        "call_signature_count":len(c.getSignaturesOfType(t,SignatureKindCall)),
+        "construct_signature_count":len(c.getSignaturesOfType(t,SignatureKindConstruct))}
+    if full {
+        properties:=[]map[string]any{}
+        for _,p:=range props {
+            pt:=c.getTypeOfSymbol(p)
+            properties=append(properties,map[string]any{"name":ast.SymbolName(p),"declared_type":c.TypeToStringEx(pt,nil,TypeFormatFlagsNoTruncation,nil),"type_id":pt.Id()})
+        }
+        sort.Slice(properties,func(i,j int)bool{return properties[i]["name"].(string)<properties[j]["name"].(string)})
+        infos:=[]map[string]any{}
+        for _,info:=range indices {infos=append(infos,map[string]any{
+            "key_type":c.TypeToStringEx(info.KeyType(),nil,TypeFormatFlagsNoTruncation,nil),
+            "value_type":c.TypeToStringEx(info.ValueType(),nil,TypeFormatFlagsNoTruncation,nil),"readonly":info.IsReadonly()})}
+        row["properties"]=properties;row["index_infos"]=infos
+    }
+    return row
+}
+func (c *Checker) boxStorageHistogram(types []*Type) {
+    a:=c.boxAttribution
+    unique:=map[*Type]bool{};for _,t:=range types {if t!=nil {unique[t]=true}}
+    ordered:=make([]*Type,0,len(unique));for t:=range unique {ordered=append(ordered,t)}
+    sort.Slice(ordered,func(i,j int)bool{return ordered[i].Id()<ordered[j].Id()})
+    groups:=map[string][]map[string]any{};empty,fresh:=0,0
+    samples:=[]map[string]any{}
+    for _,t:=range ordered {
+        row:=c.boxSourceInfo(t,false);text:=row["type"].(string)
+        groups[text]=append(groups[text],row)
+        if row["truly_empty"].(bool) {empty++};if row["fresh_literal"].(bool) {fresh++}
+        if text=="{}" && len(samples)<10 {samples=append(samples,c.boxSourceInfo(t,true))}
+    }
+    histogram:=[]map[string]any{}
+    for text,sources:=range groups {
+        // Each source carries its flags/counts/origins: equal printed text need
+        // not mean equal checker structure or flags. Never merge those facts.
+        histogram=append(histogram,map[string]any{"type":text,"distinct_type_ids":len(sources),"sources":sources})
+    }
+    sort.Slice(histogram,func(i,j int)bool {
+        x,y:=histogram[i]["distinct_type_ids"].(int),histogram[j]["distinct_type_ids"].(int)
+        if x!=y {return x>y};return histogram[i]["type"].(string)<histogram[j]["type"].(string)
+    })
+    a.emit(map[string]any{"event":"record_storage_histogram","collection":"first materialized storage list",
+        "distinct_sources":len(unique),"groups":histogram,"truly_empty_count":empty,"fresh_literal_count":fresh,
+        "empty_definition":"Object type with zero properties and zero index infos; signature counts also reported",
+        "source_origin_labels":[]string{"literal_own_type","contextual_type","variable_declared_type"},"brace_samples":samples})
+}
+func boxDiagnosticMessages(d *ast.Diagnostic) []map[string]any {
+    rows:=[]map[string]any{{"code":d.Code(),"message":d.String()}}
+    for _,next:=range d.MessageChain() {rows=append(rows,boxDiagnosticMessages(next)...)}
+    return rows
+}
+func (c *Checker) boxProbe(source,target *Type,node *ast.Node,measure,diagnose bool) map[string]any {
+    before:=c.assignableRelation.size()
+    markedBefore:=false;if measure {markedBefore=c.boxAttribution.marked()}
+    answer:=c.IsTypeAssignableTo(source,target)
+    after:=c.assignableRelation.size()
+    row:=map[string]any{"assignable":answer,"source_id":source.Id(),"target_id":target.Id()}
+    if measure {row["assignable_before"]=before;row["assignable_after"]=after;row["RelationOverflowMarked_before"]=markedBefore;row["RelationOverflowMarked"]=c.boxAttribution.marked()}
+    if !diagnose {row["diagnostics_deferred"]=true;return row}
+    messages:=[]map[string]any{}
+    if !answer {
+        var diagnostics []*ast.Diagnostic
+        c.checkTypeRelatedToEx(source,target,c.assignableRelation,node,nil,&diagnostics)
+        for _,d:=range diagnostics {messages=append(messages,boxDiagnosticMessages(d)...)}
+    }
+    row["failure_diagnostics"]=messages
+    if answer {row["failure_reason"]="none: assignable"} else if len(messages)==0 {row["failure_reason"]="checker returned false without a property/index diagnostic"} else {row["failure_reason"]="see checker diagnostic chain for the failing property/index or non-structural cause"}
+    return row
+}
+func (c *Checker) BoxStorageProbes() {
+    a:=c.boxAttribution;if a==nil || a.emit==nil {return}
+    // Rank receiver members by growth against brace-printed sources. If a short
+    // smoke has none yet, explicitly label a fallback to the top receivers.
+    growth:=map[*Type]int64{};bracePairs:=false
+    for key,row:=range a.pairs {if row.Source=="{}" {growth[key.receiver]+=row.Growth;bracePairs=true}}
+    if !bracePairs {for key,row:=range a.pairs {growth[key.receiver]+=row.Growth}}
+    receivers:=make([]*Type,0,len(growth));for t:=range growth {receivers=append(receivers,t)}
+    sort.Slice(receivers,func(i,j int)bool {if growth[receivers[i]]!=growth[receivers[j]] {return growth[receivers[i]]>growth[receivers[j]]};return receivers[i].Id()<receivers[j].Id()})
+    if len(receivers)>2 {receivers=receivers[:2]}
+    if len(receivers)==0 {a.emit(map[string]any{"event":"record_storage_probe","available":false,"reason":"no growing typesMayReach receiver yet"});return}
+    selected:=map[*Type]int64{}
+    for key,row:=range a.pairs {if key.receiver==receivers[0] && row.Source=="{}" {selected[key.source]+=row.Growth}}
+    candidates:=make([]*Type,0,len(selected));for t:=range selected {candidates=append(candidates,t)}
+    sort.Slice(candidates,func(i,j int)bool {if selected[candidates[i]]!=selected[candidates[j]] {return selected[candidates[i]]>selected[candidates[j]]};return candidates[i].Id()<candidates[j].Id()})
+    // Text only for known storage sources; the histogram already formatted the
+    // first list, later lists may introduce new literal types with new IDs.
+    c.boxObserve(func(){
+        fallback:=[]*Type{}
+        for t:=range a.storage {if _,ok:=selected[t];!ok && c.boxText(t)=="{}" {fallback=append(fallback,t)}}
+        sort.Slice(fallback,func(i,j int)bool{return fallback[i].Id()<fallback[j].Id()})
+        candidates=append(candidates,fallback...);if len(candidates)>10 {candidates=candidates[:10]}
+        // Measure the public calls first, before any explanatory diagnostic
+        // comparisons can warm them. These are explicit end-of-walk replays.
+        measured:=[]map[string]any{}
+        if len(candidates)>0 {
+            source:=candidates[0];var node *ast.Node;for origin:=range a.origins[source] {node=origin.node;break}
+            for _,receiver:=range receivers {measured=append(measured,map[string]any{"receiver_id":receiver.Id(),"receiver":c.boxText(receiver),"source_id":source.Id(),
+                "source_to_receiver":c.boxProbe(source,receiver,node,true,false),"receiver_to_source":c.boxProbe(receiver,source,node,true,false)})}
+        }
+        samples:=[]map[string]any{}
+        for _,source:=range candidates {
+            info:=c.boxSourceInfo(source,true);var node *ast.Node
+            for origin:=range a.origins[source] {node=origin.node;break}
+            info["growth_against_receiver"]=selected[source]
+            info["source_to_receiver"]=c.boxProbe(source,receivers[0],node,false,true)
+            info["receiver_to_source"]=c.boxProbe(receivers[0],source,node,false,true)
+            samples=append(samples,info)
+        }
+        a.emit(map[string]any{"event":"record_storage_probe","available":len(samples)>0,"growing_brace_pairs_observed":bracePairs,
+            "receiver_id":receivers[0].Id(),"receiver":c.boxText(receivers[0]),"receiver_growth":growth[receivers[0]],
+            "samples":samples,"two_top_receivers_one_source":measured,"observer_queries":true,
+            "probe_timing":"end-of-walk replays before explanatory diagnostic comparisons",
+            "requested_receivers":2,"receivers_available":len(growth),"receivers_emitted":len(receivers),
+            "samples_requested":10,"samples_emitted":len(samples)})
+    })
+}
+
 GO
 cat > "$work/box_load.go" <<'GO'
 package load
@@ -581,12 +801,17 @@ func main() {
     }
     // Attribution begins after checking. Snapshots ask no relations; storage text
     // formatting is measured separately in observer_type_text_growth.
-    if !plain {c.BoxAttributionStart()}
+    if !plain {
+        c.BoxAttributionStart()
+        c.BoxStorageObserve(say,program.Where,func()bool{return load.RelationOverflowMarked(c)})
+    }
     at1500:=c.BoxAttributionSnapshot()
     window:=at1500
     have1500,haveWindow:=false,false
     attribution:=func(reason string) {
         if plain {return}
+        // Probes are explicitly observer work and are reconciled separately.
+        if reason=="end" {c.BoxStorageProbes()}
         storage:=c.BoxStorageSnapshot()
         snapshot:=c.BoxAttributionSnapshot()
         n:=done.Load()
@@ -597,15 +822,23 @@ func main() {
             "window_1500_2000":map[string]any{"available":haveWindow}}
         if haveWindow {report["window_1500_2000"]=map[string]any{"available":true,"from_units":1500,"to_units":2000,"data":window}}
         data,err:=json.MarshalIndent(report,"","  ");if err!=nil {panic(err)}
-        // Publish complete files, then stream the full table so a yielded box's
-        // retained stdout includes every key and the window, not only a path.
+        // Publish the full artifact. The bounded JSONL tables below preserve
+        // the top 200 pairs per scope when a proof worktree disappears.
         file,err:=os.CreateTemp(filepath.Dir(table),".attribution-*");if err!=nil {panic(err)}
         if _,err=file.Write(append(data,'\n'));err!=nil {panic(err)}
         if err=file.Sync();err!=nil {panic(err)}
         if err=file.Close();err!=nil {panic(err)}
         if err=os.Rename(file.Name(),table);err!=nil {panic(err)}
-        report["event"]="relation_attribution_table";report["table_path"]=table
-        say(report)
+        // The artifact retains all pairs. Stream bounded JSONL tables, since
+        // proof worktrees disappear. Every row is a full typesMayReach pair.
+        streamTable:=func(scope string,fromWindow bool) {
+            pairs:=snapshot.Pairs;if fromWindow {pairs=window.Pairs}
+            total:=len(pairs);if len(pairs)>200 {pairs=pairs[:200]}
+            say(map[string]any{"event":"typesMayReach_pair_table","reason":reason,"scope":scope,"pairs_total":total,"pairs_emitted":len(pairs),"limit":200,"table_path":table})
+            for i,pair:=range pairs {say(map[string]any{"event":"typesMayReach_pair","reason":reason,"scope":scope,"rank":i+1,"pair":pair})}
+        }
+        streamTable("cumulative",false)
+        if haveWindow {streamTable("window_1500_2000",true)}
         top:=snapshot.Rows;if len(top)>20 {top=top[:20]}
         row:=map[string]any{"event":"relation_attribution","reason":reason,"top20":top,"table_path":table,
             "assignable_before":snapshot.Baseline,"assignable_after":snapshot.Current,"cache_change":snapshot.Change,
@@ -736,6 +969,12 @@ if not plain:
     # lowering that materializes it. Do not recompute or alter its sources.
     text=once(text,'l.entriesRecordTypesKnown = true',
         'l.entriesRecordTypesKnown = true\n defer func(){l.checker.BoxRecordStorage(l.entriesRecordTypes)}()')
+    text=once(text,'append(l.entriesRecordTypes, l.checker.GetTypeAtLocation(node))',
+        'append(l.entriesRecordTypes, l.checker.BoxRecordSource(l.checker.GetTypeAtLocation(node), node, "literal_own_type"))')
+    text=once(text,'append(l.entriesRecordTypes, contextual)',
+        'append(l.entriesRecordTypes, l.checker.BoxRecordSource(contextual, node, "contextual_type"))')
+    text=once(text,'append(l.entriesRecordTypes, l.checker.GetTypeAtLocation(parent.Name()))',
+        'append(l.entriesRecordTypes, l.checker.BoxRecordSource(l.checker.GetTypeAtLocation(parent.Name()), parent.Name(), "variable_declared_type"))')
     start=text.index('func (l *lowering) typesMayReach(')
     end=text.index('\n}',start)+2
     body=text[start:end]
