@@ -261,12 +261,15 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 	}
 	free(taken);
 	// Written back as V8 does, index by index: each held reference becomes the array's, and what it
-	// held there is let go. Past a length the comparator shrank, the array grows again.
+	// held there is let go. Past a length the comparator shrank, the array grows again. The take comes
+	// before the store: a take that merges regions takes the count off every edge it brings inside,
+	// read from the slots as they are, so the slot must still hold its old value, whose edge count
+	// it is, and not the new one, whose count the take releases itself (graph_regions.c, #5nrs3q2).
 	for (size_t index = 0; index < length; index++) {
 		if (index < array->length) {
 			adamic_value old = array->elements[index];
-			array->elements[index] = work[index];
 			if (references) { adamic_graph_take(array, work[index].reference); }
+			array->elements[index] = work[index];
 			if (references) {
 				if (adamic_graph_is(array)) { adamic_graph_drop(array, old.reference); } else { adamic_release(old.reference); }
 			}
