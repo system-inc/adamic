@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/widened/head-entry/overlay.json",
+    "-o",
+    "/workspace/scratch/widened/head-entry-bin",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/scratch/widened/head",
+  "exit": 0,
+  "wall_seconds": 27.083072678000008,
+  "stopped": null
+}

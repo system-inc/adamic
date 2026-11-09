@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "vet",
+    "./internal/lower"
+  ],
+  "cwd": "/workspace/scratch/widened/head",
+  "sha": "183fc95bd0a4f0d79bc974401a3cf6cd0e9fd06b",
+  "GOWORK": "/workspace/scratch/widened/head.work",
+  "exit": 0,
+  "wall_seconds": 19.19975214200008,
+  "stopped": null
+}

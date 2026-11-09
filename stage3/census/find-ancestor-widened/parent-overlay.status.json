@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/widened/parent",
+    "/workspace/scratch/widened/parent-overlay"
+  ],
+  "cwd": "/workspace/scratch/widened/parent",
+  "exit": 0,
+  "wall_seconds": 2.0063137709998955,
+  "stopped": null
+}
