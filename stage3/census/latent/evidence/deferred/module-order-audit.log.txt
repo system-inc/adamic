@@ -1,0 +1,69 @@
+FFFF
+======================================================================
+FAIL: test_order_error_is_a_lowering_finding_for_every_eligible_unit (__main__.ModuleOrderOutput.test_order_error_is_a_lowering_finding_for_every_eligible_unit) (mode='first-error')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 61, in test_order_error_is_a_lowering_finding_for_every_eligible_unit
+    row=self.run_mode(mode)['a-clean.ts']
+        ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 44, in run_mode
+    self.assertEqual(result.returncode,0,log.read_text())
+AssertionError: 2 != 0 : panic: load: /tmp/adamic-gate/latent-order-error-0chwgh83/source is not an Adamic source; want a .ts or .a file
+
+goroutine 1 [running]:
+main.main()
+	github.com/system-inc/adamic/stage3/census/latent/tool/main.go:48 +0x1085
+
+
+======================================================================
+FAIL: test_order_error_is_a_lowering_finding_for_every_eligible_unit (__main__.ModuleOrderOutput.test_order_error_is_a_lowering_finding_for_every_eligible_unit) (mode='full')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 61, in test_order_error_is_a_lowering_finding_for_every_eligible_unit
+    row=self.run_mode(mode)['a-clean.ts']
+        ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 44, in run_mode
+    self.assertEqual(result.returncode,0,log.read_text())
+AssertionError: 2 != 0 : panic: load: /tmp/adamic-gate/latent-order-error-0chwgh83/source is not an Adamic source; want a .ts or .a file
+
+goroutine 1 [running]:
+main.main()
+	github.com/system-inc/adamic/stage3/census/latent/tool/main.go:48 +0x1085
+
+
+======================================================================
+FAIL: test_order_error_is_a_lowering_finding_for_every_eligible_unit (__main__.ModuleOrderOutput.test_order_error_is_a_lowering_finding_for_every_eligible_unit) (mode='speculative')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 61, in test_order_error_is_a_lowering_finding_for_every_eligible_unit
+    row=self.run_mode(mode)['a-clean.ts']
+        ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 44, in run_mode
+    self.assertEqual(result.returncode,0,log.read_text())
+AssertionError: 2 != 0 : panic: load: /tmp/adamic-gate/latent-order-error-0chwgh83/source is not an Adamic source; want a .ts or .a file
+
+goroutine 1 [running]:
+main.main()
+	github.com/system-inc/adamic/stage3/census/latent/tool/main.go:48 +0x1085
+
+
+======================================================================
+FAIL: test_order_error_is_emitted_for_file_with_only_deferred_units (__main__.ModuleOrderOutput.test_order_error_is_emitted_for_file_with_only_deferred_units)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 76, in test_order_error_is_emitted_for_file_with_only_deferred_units
+    row=self.run_mode('full','a-deferred.ts')['a-deferred.ts']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/census/latent/module_order_audit.py", line 44, in run_mode
+    self.assertEqual(result.returncode,0,log.read_text())
+AssertionError: 2 != 0 : panic: load: /tmp/adamic-gate/latent-order-error-r9_3xnn5/source is not an Adamic source; want a .ts or .a file
+
+goroutine 1 [running]:
+main.main()
+	github.com/system-inc/adamic/stage3/census/latent/tool/main.go:48 +0x1085
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.607s
+
+FAILED (failures=4)

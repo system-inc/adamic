@@ -137,7 +137,7 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 						latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(file.AsNode()), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
 					}
 				}()
-				latentRecord(fresh().latentRefuse(file))
+				fresh().latentScan(file)
 			}()
 		}
 		// Registration is prepared once per file, then deep-copied per attempted unit.
@@ -210,6 +210,9 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 				}
 				l := base.latentSnapshot()
 				l.latentAncestors = candidate.ancestors
+				if l.latentDeferredUnit(node) {
+					return
+				}
 				if node.Kind != ast.KindFunctionDeclaration {
 					_, err := l.statement(node)
 					latentRecord(err)
