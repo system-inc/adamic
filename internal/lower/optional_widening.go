@@ -145,8 +145,30 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	if target.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		return l.optionalWidened(source, l.checker.GetBaseConstraintOfType(target), skip, visited)
 	}
-	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
+	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return nil
+	}
+	// Non-object sources include object, primitives, any, unknown and instantiable types.
+	// Keep the never and nullish exemption: these values have no fields to hide.
+	// Keep primitive spreads exempt too, since they copy no named field. Keep any
+	// exempt: it is a host value or a hatch other rules judge, not a structural source
+	// this rule reads member by member. Other sources must declare the target's optional
+	// members through their apparent type.
+	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
+		if source.Flags()&checker.TypeFlagsAny != 0 {
+			return nil
+		}
+		if source.Flags()&(checker.TypeFlagsNever|checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 {
+			return nil
+		}
+		if source.Flags()&checker.TypeFlagsInstantiable != 0 {
+			if constraint := l.checker.GetBaseConstraintOfType(source); constraint != nil && constraint != source {
+				return l.optionalWidened(constraint, target, skip, visited)
+			}
+		}
+		if skip != nil && source.Flags()&checker.TypeFlagsPrimitive != 0 {
+			return nil
+		}
 	}
 	// Container elements are views too. Avoid walking library methods, whose generic signatures
 	// describe operations rather than value fields.
