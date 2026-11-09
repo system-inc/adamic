@@ -16,6 +16,15 @@ assert rows==[json.loads(line) for line in (out/'census.jsonl').read_text().spli
 for i in range(1,80):
  s=json.loads((out/f'root-{i:02}-status.json').read_text());assert s['exit_code']==0 and s['process_group_cleaned']
 entry=json.loads((out/'entry-census-status.json').read_text());assert entry['process_group_cleaned']
+import hashlib
+manifest=json.loads((out/'apply-source-manifest.json').read_text())
+adapted=Path('/workspace/scratch/next-stops-adapted')
+assert manifest=={str(p.relative_to(adapted)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((adapted/'src/compiler').rglob('*')) if p.is_file()}
+for binary in json.loads((out/'binaries.json').read_text()).values():
+ assert hashlib.sha256(Path(binary['path']).read_bytes()).hexdigest()==binary['sha256']
+assert not any(arg.startswith('-overlay') for arg in json.loads((out/'build-status.json').read_text())['command'])
+assert any(arg.startswith('-overlay') for arg in json.loads((out/'entry-build-status.json').read_text())['command'])
+assert subprocess.check_output(['git','-C','/workspace/scratch/typescript-source','rev-parse','HEAD'],text=True).strip()=='050880ce59e30b356b686bd3144efe24f875ebc8'
 pending=[]
 for line in subprocess.check_output(['ps','-eo','pid=,comm='],text=True).splitlines():
  pid,comm=line.split(maxsplit=1)
