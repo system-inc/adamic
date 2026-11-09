@@ -1,0 +1,2 @@
+Previous HEAD position was e5531c8c7 lower: condition 3's pin is the generic-to-plain branch, since tsc refuses the unfixed any[] against a generic slot itself (#7fd51gk)
+HEAD is now at bbb63464c lower: rule G keeps main's raw relation for a generic target where a written any meets a typed position, so tsc's forEachChildTable cast stays refused (#7fd51gk, Adamic's ruling)

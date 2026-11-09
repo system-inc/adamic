@@ -1,0 +1,13 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 2f5e30365..79c0f9c99 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -188,7 +188,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
+ 			// main's refusal into an admission, as tsc's forEachChildTable seen as Record<SyntaxKind,
+ 			// ForEachChildFunction<any>> would be (parser.ts:1253, Adamic's ruling on #7fd51gk). Such a
+ 			// pair keeps main's raw relation.
+-			if len(toSignatures[0].TypeParameters()) == 0 || l.signatureAny(instantiated, target) == nil {
++			if true {
+ 				fromSignatures, toSignatures = []*checker.Signature{instantiated}, []*checker.Signature{target}
+ 			}
+ 		}

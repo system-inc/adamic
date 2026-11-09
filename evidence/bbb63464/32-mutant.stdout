@@ -1,0 +1,30 @@
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== RUN   TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== CONT  TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal
+=== RUN   TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a
+=== RUN   TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.ts
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.ts
+=== CONT  TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a
+=== CONT  TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.ts
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== NAME  TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.ts
+    rule_g_test.go:109: stops at: /tmp/adamic-gate/TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal.ts2586525414/001/main.ts:13:14: stage 0 can't lower a member typed any (1(0)) related to NodeA at the assertion site yet
+=== NAME  TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a
+    rule_g_test.go:109: stops at: /tmp/adamic-gate/TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal.a151384287/001/main.a:13:14: stage 0 can't lower a member typed any (1(0)) related to NodeA at the assertion site yet
+--- PASS: TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal (0.00s)
+    --- PASS: TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.ts (0.19s)
+    --- PASS: TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a (0.22s)
+--- PASS: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot (0.00s)
+    --- PASS: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts (1.00s)
+    --- PASS: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a (1.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.102s

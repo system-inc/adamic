@@ -1,0 +1,17 @@
+=== RUN   TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal
+=== CONT  TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal
+=== RUN   TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a
+=== RUN   TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.ts
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.ts
+=== CONT  TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a
+=== CONT  TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.ts
+    rule_g_test.go:109: stops at: /tmp/adamic-gate/TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal.ts4073819133/001/main.ts:13:14: Adamic 0.1 refuses a function taking (node: Node) => T | undefined seen as one taking (node: Node) => T | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== NAME  TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a
+    rule_g_test.go:109: stops at: /tmp/adamic-gate/TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal.a3388361756/001/main.a:13:14: Adamic 0.1 refuses a function taking (node: Node) => T | undefined seen as one taking (node: Node) => T | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast)
+--- PASS: TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal (0.00s)
+    --- PASS: TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.ts (0.21s)
+    --- PASS: TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal/.a (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.261s

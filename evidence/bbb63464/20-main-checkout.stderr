@@ -1,0 +1,14 @@
+Warning: you are leaving 4 commits behind, not connected to
+any of your branches:
+
+  bbb63464c lower: rule G keeps main's raw relation for a generic target where a written any meets a typed position, so tsc's forEachChildTable cast stays refused (#7fd51gk, Adamic's ruling)
+  e5531c8c7 lower: condition 3's pin is the generic-to-plain branch, since tsc refuses the unfixed any[] against a generic slot itself (#7fd51gk)
+  ec5e9b2bf lower: condition 3's pin puts NoInfer on the provider's side, where it leaves T unfixed (#7fd51gk)
+  2594029da lower: rule G's pins reach the relation: setTimeout imported from node:timers, L2 as a class method, and i2's lying twin dropped since tsc itself refuses it (#7fd51gk)
+
+If you want to keep them by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> bbb63464c
+
+HEAD is now at e3aa0bb76 native: library_intl.c gets its own GCC audit product and test, and its row in gccRuntimeUnits and the product order, so the unfused runtime census counts it (#zjndrx5 head 1)
