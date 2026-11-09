@@ -1479,6 +1479,12 @@ reads stage3/fixtures oracle/adamic.mjs
 # build-hook.py off the tree; phase:stage3 used to run the package for any stage3 change, and covered it (#4gp2ytz).
 reads stage3/fixtures stage3/caches.py
 reads stage3/fixtures stage3/fixtures/*.py
+# stage3/fixtures builds the oracle hook, internal/oracle's own test binary (go test -c ./internal/oracle, products_test.go's
+# fixtureHookInputsScript), and runs it from the repository's root: its key holds internal/oracle's whole closure with its
+# tests through the compiler declaration (compiler-dependencies.json), and what the hook reads at run time here. Nov 9:
+# 4bab5622 moved oracle's ruled backend divergences to testdata/backend_divergences.json, read at package load, and block
+# 2042 reused all six stage3/fixtures units on a key that named neither (#fw9vbw0, Node's ruling on #1hc2zvw).
+reads stage3/fixtures internal/oracle/testdata/*
 # TestProduct_Stage3Adapted10, 40, 70 and 99 and their TracksInputs tests (#hefhych): stage3/apply.py, caches.py,
 # source.json, the API package pins and stage3/adapt, traced and audited in stage3/applyproducts/READS.md, and the
 # root .gitattributes buildcache's git lookup reads. stage3/* also takes the lane and oracle, which these products
