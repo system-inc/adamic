@@ -1,0 +1,1 @@
+internal/oracle/testdata/stdout_handle_view/n3_annotated.ts:3:94: Adamic 0.1 refuses optional property fd in { setBlocking?: (value: boolean) => void; readonly fd?: number; } absent from structural source { setBlocking(blocking: boolean): void; }, which can hide fields; declare fd on the source type, or build a fresh object with known fields (adamic/no-optional-widening)

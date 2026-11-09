@@ -338,6 +338,9 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 	case "process.execArgv":
 		call.Operation, call.Of = "execArgv", ir.Array
 	case "process.stdout._handle":
+		if stop := l.stdoutHandleView(node); stop != "" {
+			return nil, true, l.notYet(node, stop)
+		}
 		call.Operation, call.Of = "handle", ir.Object
 	case "os.EOL":
 		call.Operation, call.Of = "eol", ir.String
