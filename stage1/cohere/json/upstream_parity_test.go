@@ -185,7 +185,7 @@ func TestJSONUpstreamParityRekeys(t *testing.T) {
 	edit("stage1/cohere/json/oracles/parity.go", `strings.HasPrefix(name, "generated/16/")`, `strings.HasPrefix(name, "generated/15/")`, false)
 	edit("stage1/cohere/json/known-upstream-differences.txt", "generated/16/package.json", "generated/15/package.json", false)
 	edit("stage1/cohere/json/testdata/library.mjs", "texts in", "cases in", false)
-	edit("stage1/cohere/json/testdata/corpus.pin", `"count": 1113`, `"count": 1114`, false)
+	edit("stage1/cohere/json/testdata/corpus.pin", `"count": 1278`, `"count": 1279`, false)
 	if keys(corpusfiles.CohereCommit, repositoryCorpusCommit, []byte("oracle")) != base {
 		t.Fatal("restoring every file did not restore the key")
 	}
