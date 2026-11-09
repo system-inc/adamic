@@ -8,7 +8,7 @@ root = pathlib.Path(__file__).resolve().parents[2]
 source = (root / 'cmd/adamic/runtimes_test.go').read_text()
 products = dict(re.findall(
     r'func (TestProduct_\w+)\(t \*testing.T\)\s*\{\s*t.Parallel\(\);?\s*'
-    r'commandRuntimeProduct\(t, "([^"]+)"\)', source))
+    r'(?:debugDriverEnvironment\(t\)\s*)?commandRuntimeProduct\(t, "([^"]+)"\)', source))
 tests = {name: test for test, name in products.items()}
 table = source.split('var commandRuntimes = []commandRuntimeSpec{', 1)[1].split('\n}', 1)[0]
 table = '\n'.join(line for line in table.splitlines() if not line.strip().startswith('//'))

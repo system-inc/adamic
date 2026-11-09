@@ -1,23 +1,39 @@
 package oracle
 
 import (
+	"context"
 	"encoding/gob"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"testing"
+	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 )
+
+func hostBindingProcessOracleLower(t testing.TB) string {
+	t.Helper()
+	return buildcache.GoTest(t, "", "host-binding-process-oracle-lower.test", "./internal/lower", nil)
+}
+
+func TestProduct_HostBindingProcessOracleLower(t *testing.T) {
+	t.Parallel()
+	hostBindingProcessOracleLower(t)
+}
 
 // Typed declarations are synthetic host rows, admitted only by lower's isolated test builder. Keep
 // their native observations uncached: the private test table is not a production compiler input.
 func hostBindingTypedProcessAgrees(t *testing.T, of string) {
 	t.Helper()
 	output := filepath.Join(t.TempDir(), "program.gob")
-	command := exec.CommandContext(t.Context(), "timeout", "900", "go", "test", "./internal/lower", "-count=1", "-run", "^TestHostBindingProcessOracleIR$")
-	command.Dir = repository
+	lowerBinary := hostBindingProcessOracleLower(t)
+	ctx, cancel := context.WithTimeout(t.Context(), 900*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, lowerBinary, "-test.run=^TestHostBindingProcessOracleIR$", "-test.count=1", "-test.timeout=900s")
+	command.Dir = filepath.Join(repository, "internal", "lower")
 	command.Env = append(os.Environ(), "ADAMIC_PROCESS_ORACLE_TYPE="+of, "ADAMIC_PROCESS_ORACLE_IR="+output)
 	if log, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("typed-row builder: %v\n%s", err, log)
