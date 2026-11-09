@@ -19,7 +19,9 @@ import (
 // as a value, which stops first at the parent and here alike (Codex 01a1beee), so n4 pins that stop and
 // the cwd road is unreached today; the rule closes it if that stop lifts. processPath's own ?. admission,
 // process?.cwd() on the process binding, stops at the rule, since a member's name can't
-// tell its proven receiver from a local. p1, a method the program declares, called through ?. on a
+// tell its proven receiver from a local. n5 is the optional method call's road, entry?.isFile?.() on a
+// Dirent | undefined, which optionalMethodCall leaves to optionalCall's own stop, an optional call, before
+// this rule (Codex 01a1bf7b and 01a1bf8c, entry.isFile?.() on a Dirent stops there too). p1, a method the program declares, called through ?. on a
 // receiver undefined and then present, still lowers and agrees with Node on release, sanitized native
 // and the JavaScript backend. The table is empty, so no row holds a guarded host method to Node. Each
 // program's whole stop is pinned in its .stop file, or "lowers". Mutants
@@ -78,7 +80,7 @@ func TestOptionalHostCalls(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 10 {
-		t.Fatalf("found %d programs, want 10", programs)
+	if programs != 12 {
+		t.Fatalf("found %d programs, want 12", programs)
 	}
 }
