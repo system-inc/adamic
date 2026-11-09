@@ -1,0 +1,11 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/next-stops-census",
+    "./stage3/census/tool"
+  ],
+  "exit_code": 1,
+  "reason": "TypeScript submodule was still provisioning; completed build is build-status.json"
+}

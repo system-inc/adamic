@@ -1,0 +1,15 @@
+{
+  "command": [
+    "tar",
+    "-czf",
+    "/workspace/adamic/stage3/census/next-stops-c3b7baf0/guarded-entry-overlay.tar.gz",
+    "-C",
+    "/workspace/scratch",
+    "next-stops-overlay",
+    "next-stops-entry-overlay"
+  ],
+  "exit_code": 0,
+  "seconds": 0.03439307100006772,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

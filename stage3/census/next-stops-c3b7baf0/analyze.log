@@ -1,0 +1,6 @@
+73 core.ts:2599:15 NotYet unchanged the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,
+2 - accepted unchanged -
+1 commandLineParser.ts:293:35 NotYet unchanged reading an enum before its runtime initialization; move the call after the enum declaration
+1 debug.ts:525:37 Refused unchanged a cast the runtime can't check
+1 diagnosticInformationMap.generated.ts:13:45 NotYet unchanged reading an enum before its runtime initialization; move the call after the enum declaration
+1 semver.ts:71:9 NotYet unchanged a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration

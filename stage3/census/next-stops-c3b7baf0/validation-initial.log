@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/next-stops-c3b7baf0/validate.py", line 13, in <module>
+    roots=json.loads((out/'roots.json').read_text());assert len(roots)==79 and roots==sorted(roots)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

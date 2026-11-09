@@ -1,0 +1,12 @@
+{
+  "root": "hostErrors.ts",
+  "loader_outcome": "accepted",
+  "counted_group": 2,
+  "focused_probe": "hostErrors-probe.jsonl",
+  "alternative_reported_stop": "hostErrors.ts:3:59",
+  "alternative_reported_reason": "in when a possibly absent spread has no property presence descriptors",
+  "alternative_reason_emitter": "internal/lower/unknown.go:56",
+  "alternative_reason_constructor": "internal/lower/unknown.go:314",
+  "bisect_required": false,
+  "reason": "The measured loader-based root program lowers whole."
+}

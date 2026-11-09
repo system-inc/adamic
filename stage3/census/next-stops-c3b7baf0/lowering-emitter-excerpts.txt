@@ -1,0 +1,146 @@
+internal/lower/host_bindings.go
+96: func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
+97: 	if _, err := load.HostBindings(); err != nil {
+98: 		return true, err
+99: 	}
+100: 	var stop error
+101: 	for _, declaration := range statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
+102: 		row := l.hostBindingRow(declaration)
+103: 		if row == nil {
+104: 			return false, nil
+105: 		}
+106: 		if reason := hostBindingStop(*row); stop == nil && reason != "" {
+107: 			stop = l.notYet(declaration, reason)
+108: 		}
+109: 	}
+
+internal/lower/host_bindings.go
+124: func hostBindingStop(row load.HostBinding) string {
+125: 	var waits []string
+126: 	for _, target := range row.Targets() {
+127: 		if target.Column.Answer == load.HostBindingPending {
+128: 			waits = append(waits, possessive(target.Column.Owner)+" clearance of its "+target.Target+" column")
+129: 		}
+130: 	}
+131: 	if row.Model.Path == "" && row.Model.Task != "" {
+132: 		waits = append(waits, possessive(row.Model.Task)+" host model")
+133: 	}
+134: 	if len(waits) > 0 {
+135: 		said := waits[len(waits)-1]
+136: 		if len(waits) > 1 {
+137: 			said = strings.Join(waits[:len(waits)-1], ", ") + " and " + said
+138: 		}
+139: 		return "the host binding " + row.Name + ", pending " + said + ","
+140: 	}
+141: 	if row.Native.Answer != row.JavaScript.Answer || row.Native.Answer != row.WASM32.Answer {
+
+internal/lower/cast_proof.go
+180: 	}
+181: 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
+182: 	target := l.concrete(l.checker.GetTypeAtLocation(node))
+183: 	if l.phantomCast(source, target) {
+184: 		return castProof{}, nil
+185: 	}
+186: 	// A value the host audit models as never is never had, so its cast has nothing to check, whatever
+187: 	// the operand's declared any says (host-any.md's Modelled rows).
+188: 	if l.hostModelledNever(as.Expression) {
+189: 		return castProof{}, nil
+190: 	}
+191: 	operand, from := l.mintOperand(as)
+192: 	if mint := l.brandMintOf(operand, from, target); mint != nil {
+193: 		return castProof{brandMint: mint}, l.brandMintRefusal(node, target, mint)
+194: 	}
+195: 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
+196: 	inner := ast.SkipParentheses(as.Expression)
+197: 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
+198: 		if l.overloadDefaultPair(node) {
+199: 			return castProof{overloadDefault: true}, nil
+200: 		}
+201: 		return castProof{}, refused
+202: 	}
+
+internal/lower/namespaces.go
+260: func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+261: 	initialized := map[*ast.Node]bool{}
+262: 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+263: 	checkCall := func(target *ast.Node) error {
+264: 		for declaration, read := range graph.reach(target) {
+265: 			if !initialized[declaration] {
+266: 				if declaration.Kind == ast.KindEnumDeclaration {
+267: 					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
+268: 				}
+269: 				return l.notYet(read, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+270: 			}
+271: 		}
+
+internal/lower/namespaces.go
+308: 			}
+309: 			initialized[node] = true
+310: 			return nil
+311: 		}
+312: 		// The enum object exists while its own member assignments execute.
+313: 		if node.Kind == ast.KindEnumDeclaration {
+314: 			initialized[node] = true
+315: 		}
+316: 		if l.namespaceValueNode(node) {
+317: 			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
+318: 				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
+319: 			}
+320: 			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] {
+321: 				return l.notYet(node, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+322: 			}
+323: 		}
+
+internal/lower/unknown.go
+51: 	}
+52: 	if key.Text() == "stack" || key.Text() == "cause" || key.Text() == "errno" || key.Text() == "syscall" || key.Text() == "path" {
+53: 		return nil, l.notYet(key, "in on an Error internal or optional property (host descriptor metadata)")
+54: 	}
+55: 	if reason := l.presenceHazard(key.Text()); reason != "" {
+56: 		return nil, l.notYet(node, "in when "+reason)
+57: 	}
+
+internal/lower/unknown.go
+302: // Native absent-spread slots and ambient class fields are storage, not proof of JS presence.
+303: func (l *lowering) presenceHazard(name string) string {
+304: 	modules, err := l.moduleOrder(l.program.Files()[0])
+305: 	if err != nil {
+306: 		return "runtime shapes are not known"
+307: 	}
+308: 	reason := ""
+309: 	var visit ast.Visitor
+310: 	visit = func(node *ast.Node) bool {
+311: 		if node.Kind == ast.KindObjectLiteralExpression {
+312: 			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+313: 				if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
+314: 					reason = "a possibly absent spread has no property presence descriptors"
+315: 				}
+316: 			}
+
+internal/load/load.go
+59: func compilerOptions() *core.CompilerOptions {
+60: 	return &core.CompilerOptions{
+61: 		Strict:                     core.TSTrue,
+62: 		NoUncheckedIndexedAccess:   core.TSTrue,
+63: 		ExactOptionalPropertyTypes: core.TSTrue,
+64: 		ErasableSyntaxOnly:         core.TSFalse,
+65: 		VerbatimModuleSyntax:       core.TSTrue,
+66: 		AllowImportingTsExtensions: core.TSTrue,
+67: 		NoEmit:                     core.TSTrue,
+68: 		Module:                     core.ModuleKindESNext,
+69: 		// Every Adamic file is a module, imports or not, as the oracle runs it. Without this, a file with
+70: 		// no import is a script to the checker, and its top-level names collide with the prelude's.
+71: 		ModuleDetection:  core.ModuleDetectionKindForce,
+72: 		ModuleResolution: core.ModuleResolutionKindBundler,
+73: 		Target:           core.ScriptTargetES2024,
+74: 		Lib:              []string{"lib.es2024.d.ts"},
+75: 		Types:            []string{},
+76: 	}
+77: }
+78: 
+79: // Load checks the program made of the given files and whatever they import.
+80: //
+81: // Each path is an Adamic source: a .ts file or a .a file.
+82: func Load(paths []string) (*Program, error) {
+83: 	return load(paths, nil, nil)
+84: }

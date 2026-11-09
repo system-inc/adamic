@@ -1,0 +1,181 @@
+[
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 23.295959758
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 23.477728307
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 20.375714829
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/binder.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 23.936543858
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builder.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 24.37759868
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 22.593503763
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 21.696875772
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 19.94080762
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 24.282788228
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 24.915428155
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/debug.ts:525:37",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 26.794455064
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.095265534
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 6.668017689
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 5.459262617
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 23.877075513
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 29.883571156
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 24.575658321
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 23.684448844
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 34.412039122
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/core.ts:2599:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "seconds": 33.692470682
+  }
+]
