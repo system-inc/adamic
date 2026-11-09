@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Canonical entry-first census on one checker. Optional smoke slice: --limit 200.
+# --plain omits relation hooks and source/pair overlays for timing the same walk.
 # House proof environments are release-owned: source env.sh, never rerun setup.sh over it.
 # See cloud/env-owner.sh, cloud/setup.sh, and stage3/meter/twice-daily.sh.
 # Unit counts retain canonical generic deferral and checker-body skip policies.
@@ -7,13 +8,14 @@ set -euo pipefail
 repository=$(cd "$(dirname "$0")/../../.." && pwd)
 cd "$repository"
 limit=0
-if [[ $# != 0 ]]; then
-    [[ $# == 2 && $1 == --limit && $2 =~ ^[1-9][0-9]*$ ]] || {
-        echo 'usage: bash stage3/census/relation-overflow-real/walk-on-box.sh [--limit N]' >&2
-        exit 2
-    }
-    limit=$2
-fi
+plain=0
+while (( $# )); do
+    case "$1" in
+        --limit) [[ $# -ge 2 && $2 =~ ^[1-9][0-9]*$ ]] || { echo 'missing positive --limit N' >&2; exit 2; }; limit=$2; shift 2 ;;
+        --plain) plain=1; shift ;;
+        *) echo 'usage: bash stage3/census/relation-overflow-real/walk-on-box.sh [--limit N] [--plain]' >&2; exit 2 ;;
+    esac
+done
 source_override=${ADAMIC_TYPESCRIPT_SOURCE:-}
 if [[ -n ${ADAMIC_TOOLS_ENV:-} ]]; then
     [[ -r $ADAMIC_TOOLS_ENV ]] || { echo "missing tools environment: $ADAMIC_TOOLS_ENV" >&2; exit 1; }
@@ -196,6 +198,7 @@ cat > "$work/box_attribution.go" <<'GO'
 package checker
 
 import (
+    "fmt"
     "runtime"
     "slices"
     "sort"
@@ -211,14 +214,44 @@ type boxAttributionState struct {
     rows map[boxRelationKey]*boxRelationTotal
     pcs []uintptr
     memo map[uint64][]boxStackMemo
+    outerCalls uint64
+    nonGrowingChange,observerGrowth int64
+    pair boxPairContext
+    pairs map[boxPairKey]*BoxPairRow
+    texts map[*Type]string
+    storage map[*Type]bool
+    storageObservations uint64
 }
-type boxRelationToken struct { entered,outer bool; before int64; row *boxRelationTotal }
+type boxPairContext struct { receiver,source *Type; direction string }
+type boxPairKey struct { key boxRelationKey; receiver,source *Type; direction string }
+type BoxPairRow struct {
+    Key string `json:"key"`
+    Relation string `json:"relation"`
+    ReceiverID TypeId `json:"receiver_id"`
+    SourceID TypeId `json:"source_id"`
+    Receiver string `json:"receiver_member_type"`
+    Source string `json:"source_type"`
+    Direction string `json:"direction"`
+    Calls uint64 `json:"growing_calls"`
+    Growth int64 `json:"growth"`
+}
+type BoxStorageRow struct {
+    ID TypeId `json:"type_id"`
+    Text string `json:"type"`
+    Members int `json:"union_member_count"`
+}
+type BoxStorageReport struct {
+    Distinct int `json:"distinct_sources"`
+    Observations uint64 `json:"storage_list_observations"`
+    Largest []BoxStorageRow `json:"largest20"`
+}
+type boxRelationToken struct { entered,outer bool; before int64; relation *Relation }
 type BoxRelationRow struct {
     Key string `json:"key"`
     Function string `json:"function"`
     Caller string `json:"caller"`
     Relation string `json:"relation"`
-    Calls uint64 `json:"calls"`
+    Calls uint64 `json:"growing_calls"`
     Growth int64 `json:"growth"`
 }
 type BoxRelationAttribution struct {
@@ -234,12 +267,16 @@ type BoxRelationAttribution struct {
     Assessment string `json:"unattributed_assessment"`
     AccountingOK bool `json:"accounting_ok"`
     OuterCalls uint64 `json:"outer_calls"`
+    GrowingCalls uint64 `json:"growing_calls"`
+    NonGrowingChange int64 `json:"non_growing_call_change"`
+    ObserverGrowth int64 `json:"observer_type_text_growth"`
+    Pairs []BoxPairRow `json:"typesMayReach_pairs"`
     Rows []BoxRelationRow `json:"rows"`
     NoLowerRows []BoxRelationRow `json:"hooked_without_lower_frame"`
 }
 func (c *Checker) BoxAttributionStart() {
     size:=int64(c.assignableRelation.size())
-    c.boxAttribution=&boxAttributionState{baseline:size,last:size,rows:map[boxRelationKey]*boxRelationTotal{},pcs:make([]uintptr,64),memo:map[uint64][]boxStackMemo{}}
+    c.boxAttribution=&boxAttributionState{baseline:size,last:size,rows:map[boxRelationKey]*boxRelationTotal{},pcs:make([]uintptr,64),memo:map[uint64][]boxStackMemo{},pairs:map[boxPairKey]*BoxPairRow{},texts:map[*Type]string{},storage:map[*Type]bool{}}
 }
 // Resolve inline frames correctly, memoizing exact PC sequences, not just a hash.
 func (a *boxAttributionState) frameKey(relation string) boxRelationKey {
@@ -277,11 +314,8 @@ func (c *Checker) boxRelationEnter(relation *Relation) boxRelationToken {
     token.before=int64(c.assignableRelation.size())
     // Independently measure cache changes between observed calls, including deletions.
     a.gaps+=token.before-a.last
-    key:=a.frameKey(c.boxWalkCache(relation))
-    row:=a.rows[key]
-    if row==nil {row=&boxRelationTotal{};a.rows[key]=row}
-    row.calls++
-    token.row=row
+    a.outerCalls++
+    token.relation=relation
     return token
 }
 func (c *Checker) boxRelationExit(token boxRelationToken) {
@@ -290,18 +324,35 @@ func (c *Checker) boxRelationExit(token boxRelationToken) {
     if token.outer {
         if a.depth!=1 {panic("relation attribution depth mismatch")}
         after:=int64(c.assignableRelation.size())
-        token.row.growth+=after-token.before
-        a.last=after
+        growth:=after-token.before
+        if growth>0 {
+            // Capture here, while the original lowering caller is still on the stack.
+            key:=a.frameKey(c.boxWalkCache(token.relation))
+            row:=a.rows[key];if row==nil {row=&boxRelationTotal{};a.rows[key]=row}
+            row.calls++;row.growth+=growth
+            if pair:=a.pair;pair.receiver!=nil && strings.HasSuffix(key.function,".(*lowering).typesMayReach") {
+                pk:=boxPairKey{key,pair.receiver,pair.source,pair.direction}
+                pr:=a.pairs[pk]
+                if pr==nil {
+                    pr=&BoxPairRow{Key:key.function+" <- "+key.caller,Relation:key.relation,
+                        ReceiverID:pair.receiver.Id(),SourceID:pair.source.Id(),Direction:pair.direction,
+                        Receiver:c.boxText(pair.receiver),Source:c.boxText(pair.source)}
+                    a.pairs[pk]=pr
+                }
+                pr.Calls++;pr.Growth+=growth
+            }
+        } else {a.nonGrowingChange+=growth}
+        a.last=int64(c.assignableRelation.size())
     }
     a.depth--
     if a.depth<0 {panic("negative relation attribution depth")}
 }
 func boxAttributionFinish(s *BoxRelationAttribution) {
     s.Change=s.Current-s.Baseline
-    s.SumKeyGrowth=0;s.NoLowerGrowth=0;s.OuterCalls=0
-    for _,row:=range s.Rows {s.SumKeyGrowth+=row.Growth;s.OuterCalls+=row.Calls}
-    for _,row:=range s.NoLowerRows {s.NoLowerGrowth+=row.Growth;s.OuterCalls+=row.Calls}
-    s.Remainder=s.NoLowerGrowth+s.UnhookedGrowth
+    s.SumKeyGrowth=0;s.NoLowerGrowth=0;s.GrowingCalls=0
+    for _,row:=range s.Rows {s.SumKeyGrowth+=row.Growth;s.GrowingCalls+=row.Calls}
+    for _,row:=range s.NoLowerRows {s.NoLowerGrowth+=row.Growth;s.GrowingCalls+=row.Calls}
+    s.Remainder=s.NoLowerGrowth+s.UnhookedGrowth+s.NonGrowingChange
     s.AccountingOK=s.Change==s.SumKeyGrowth+s.Remainder
     denominator:=s.Change;if denominator<0 {denominator=-denominator};if denominator<1 {denominator=1}
     magnitude:=s.Remainder;if magnitude<0 {magnitude=-magnitude}
@@ -316,12 +367,24 @@ func boxAttributionFinish(s *BoxRelationAttribution) {
         return rows[i].Relation<rows[j].Relation
     })}
     order(s.Rows);order(s.NoLowerRows)
+    sort.Slice(s.Pairs,func(i,j int)bool {
+        x,y:=s.Pairs[i],s.Pairs[j]
+        if x.Growth!=y.Growth {return x.Growth>y.Growth}
+        if x.Key!=y.Key {return x.Key<y.Key}
+        if x.ReceiverID!=y.ReceiverID {return x.ReceiverID<y.ReceiverID}
+        if x.SourceID!=y.SourceID {return x.SourceID<y.SourceID}
+        return x.Direction<y.Direction
+    })
 }
 func (c *Checker) BoxAttributionSnapshot() BoxRelationAttribution {
     a:=c.boxAttribution
-    if a==nil || a.depth!=0 {panic("attribution snapshot requires an idle, enabled checker")}
+    if a==nil {return BoxRelationAttribution{}}
+    if a.depth!=0 {panic("attribution snapshot requires an idle checker")}
     s:=BoxRelationAttribution{Baseline:a.baseline,Current:int64(c.assignableRelation.size()),Rows:[]BoxRelationRow{},NoLowerRows:[]BoxRelationRow{}}
     s.UnhookedGrowth=a.gaps+(s.Current-a.last)
+    s.OuterCalls=a.outerCalls;s.NonGrowingChange=a.nonGrowingChange;s.ObserverGrowth=a.observerGrowth
+    s.Pairs=[]BoxPairRow{}
+    for _,pair:=range a.pairs {s.Pairs=append(s.Pairs,*pair)}
     for key,total:=range a.rows {
         row:=BoxRelationRow{key.function+" <- "+key.caller,key.function,key.caller,key.relation,total.calls,total.growth}
         if key.lower {s.Rows=append(s.Rows,row)} else {s.NoLowerRows=append(s.NoLowerRows,row)}
@@ -344,8 +407,62 @@ func (c *Checker) BoxAttributionDelta(before,after BoxRelationAttribution) BoxRe
     s:=BoxRelationAttribution{Baseline:before.Current,Current:after.Current,
         UnhookedGrowth:after.UnhookedGrowth-before.UnhookedGrowth,
         Rows:subtract(before.Rows,after.Rows),NoLowerRows:subtract(before.NoLowerRows,after.NoLowerRows)}
+    s.OuterCalls=after.OuterCalls-before.OuterCalls
+    s.NonGrowingChange=after.NonGrowingChange-before.NonGrowingChange
+    s.ObserverGrowth=after.ObserverGrowth-before.ObserverGrowth
+    oldPairs:=map[string]BoxPairRow{}
+    pairKey:=func(r BoxPairRow)string{return fmt.Sprintf("%s/%s/%d/%d/%s",r.Key,r.Relation,r.ReceiverID,r.SourceID,r.Direction)}
+    for _,r:=range before.Pairs {oldPairs[pairKey(r)]=r}
+    s.Pairs=[]BoxPairRow{}
+    for _,r:=range after.Pairs {
+        old:=oldPairs[pairKey(r)];r.Calls-=old.Calls;r.Growth-=old.Growth
+        if r.Calls!=0 || r.Growth!=0 {s.Pairs=append(s.Pairs,r)}
+    }
     boxAttributionFinish(&s)
     return s
+}
+// Cache text only for growing typesMayReach pairs and the storage report's top 20.
+// Formatting runs nested under the hook, and any cache changes it causes go to
+// the independently measured observer/unattributed bucket, never to a rule.
+func (c *Checker) boxText(t *Type) string {
+    a:=c.boxAttribution
+    if text,ok:=a.texts[t];ok {return text}
+    before:=int64(c.assignableRelation.size())
+    if a.depth==0 {a.gaps+=before-a.last}
+    a.depth++
+    defer func(){
+        a.depth--
+        delta:=int64(c.assignableRelation.size())-before
+        a.gaps+=delta;a.observerGrowth+=delta
+        if a.depth==0 {a.last=int64(c.assignableRelation.size())}
+    }()
+    text:=c.TypeToString(t);a.texts[t]=text
+    return text
+}
+func (c *Checker) BoxTypesMayReachAssignable(receiver,source *Type,receiverToSource bool) bool {
+    a:=c.boxAttribution
+    if a!=nil {
+        old:=a.pair;direction:="source to receiver";if receiverToSource {direction="receiver to source"}
+        a.pair=boxPairContext{receiver,source,direction}
+        defer func(){a.pair=old}()
+    }
+    if receiverToSource {return c.IsTypeAssignableTo(receiver,source)}
+    return c.IsTypeAssignableTo(source,receiver)
+}
+func (c *Checker) BoxRecordStorage(types []*Type) {
+    a:=c.boxAttribution;if a==nil {return}
+    a.storageObservations++
+    for _,t:=range types {if t!=nil {a.storage[t]=true}}
+}
+func (c *Checker) BoxStorageSnapshot() BoxStorageReport {
+    a:=c.boxAttribution
+    report:=BoxStorageReport{Distinct:len(a.storage),Observations:a.storageObservations,Largest:[]BoxStorageRow{}}
+    types:=make([]*Type,0,len(a.storage));for t:=range a.storage {types=append(types,t)}
+    members:=func(t *Type)int {if t.Flags()&TypeFlagsUnion!=0 {return len(t.Types())};return 1}
+    sort.Slice(types,func(i,j int)bool {x,y:=members(types[i]),members(types[j]);if x!=y {return x>y};return types[i].Id()<types[j].Id()})
+    if len(types)>20 {types=types[:20]}
+    for _,t:=range types {report.Largest=append(report.Largest,BoxStorageRow{t.Id(),c.boxText(t),members(t)})}
+    return report
 }
 GO
 cat > "$work/box_load.go" <<'GO'
@@ -411,7 +528,8 @@ import (
 )
 type position struct { Unit string `json:"unit"`; Phase string `json:"phase"` }
 func main() {
-    if len(os.Args)!=4 {panic("usage: box-walk entry limit records.jsonl")}
+    if len(os.Args)!=5 {panic("usage: box-walk entry limit records.jsonl plain")}
+    plain:=os.Args[4]=="1"
     limit,err:=strconv.ParseUint(os.Args[2],10,64);if err!=nil {panic(err)}
     started:=time.Now()
     var done atomic.Uint64
@@ -461,32 +579,48 @@ func main() {
         if other!=c {panic("walk uses more than one checker")};release()
         total+=len(file.Statements.Nodes)
     }
-    // Attribution begins after checking. Reporting and snapshots ask no relations.
-    c.BoxAttributionStart()
+    // Attribution begins after checking. Snapshots ask no relations; storage text
+    // formatting is measured separately in observer_type_text_growth.
+    if !plain {c.BoxAttributionStart()}
     at1500:=c.BoxAttributionSnapshot()
     window:=at1500
     have1500,haveWindow:=false,false
     attribution:=func(reason string) {
+        if plain {return}
+        storage:=c.BoxStorageSnapshot()
         snapshot:=c.BoxAttributionSnapshot()
         n:=done.Load()
         if n==1500 && !have1500 {at1500=snapshot;have1500=true}
         if n==2000 && have1500 && !haveWindow {window=c.BoxAttributionDelta(at1500,snapshot);haveWindow=true}
         table:=filepath.Join(filepath.Dir(os.Args[3]),fmt.Sprintf("relation-attribution-%06d-%s.json",n,reason))
-        report:=map[string]any{"units_done":n,"reason":reason,"growth_metric":"net assignableRelation entries; nested checks charged to the outermost relation", "cumulative":snapshot,
+        report:=map[string]any{"units_done":n,"reason":reason,"growth_metric":"positive net assignableRelation entries per outermost call; per-key counts count growing calls only", "cumulative":snapshot,"record_storage":storage,
             "window_1500_2000":map[string]any{"available":haveWindow}}
         if haveWindow {report["window_1500_2000"]=map[string]any{"available":true,"from_units":1500,"to_units":2000,"data":window}}
         data,err:=json.MarshalIndent(report,"","  ");if err!=nil {panic(err)}
-        if err=os.WriteFile(table,append(data,'\n'),0644);err!=nil {panic(err)}
+        // Publish complete files, then stream the full table so a yielded box's
+        // retained stdout includes every key and the window, not only a path.
+        file,err:=os.CreateTemp(filepath.Dir(table),".attribution-*");if err!=nil {panic(err)}
+        if _,err=file.Write(append(data,'\n'));err!=nil {panic(err)}
+        if err=file.Sync();err!=nil {panic(err)}
+        if err=file.Close();err!=nil {panic(err)}
+        if err=os.Rename(file.Name(),table);err!=nil {panic(err)}
+        report["event"]="relation_attribution_table";report["table_path"]=table
+        say(report)
         top:=snapshot.Rows;if len(top)>20 {top=top[:20]}
         row:=map[string]any{"event":"relation_attribution","reason":reason,"top20":top,"table_path":table,
             "assignable_before":snapshot.Baseline,"assignable_after":snapshot.Current,"cache_change":snapshot.Change,
             "sum_key_growth":snapshot.SumKeyGrowth,"hooked_without_lower_frame_growth":snapshot.NoLowerGrowth,
             "unhooked_growth":snapshot.UnhookedGrowth,"unattributed_remainder":snapshot.Remainder,
             "unattributed_large":snapshot.UnattributedLarge,"unattributed_assessment":snapshot.Assessment,"accounting_ok":snapshot.AccountingOK,
-            "outer_calls":snapshot.OuterCalls,"window_1500_2000":map[string]any{"available":haveWindow}}
+            "outer_calls":snapshot.OuterCalls,"growing_calls":snapshot.GrowingCalls,
+            "non_growing_call_change":snapshot.NonGrowingChange,"observer_type_text_growth":snapshot.ObserverGrowth,
+            "record_storage":storage,"window_1500_2000":map[string]any{"available":haveWindow}}
+        topPairs:=snapshot.Pairs;if len(topPairs)>20 {topPairs=topPairs[:20]}
+        row["typesMayReach_top20"]=topPairs
         if haveWindow {
+            topWindowPairs:=window.Pairs;if len(topWindowPairs)>20 {topWindowPairs=topWindowPairs[:20]}
             topWindow:=window.Rows;if len(topWindow)>20 {topWindow=topWindow[:20]}
-            row["window_1500_2000"]=map[string]any{"available":true,"from_units":1500,"to_units":2000,"top20":topWindow,
+            row["window_1500_2000"]=map[string]any{"available":true,"from_units":1500,"to_units":2000,"top20":topWindow,"typesMayReach_top20":topWindowPairs,
                 "cache_change":window.Change,"sum_key_growth":window.SumKeyGrowth,"unhooked_growth":window.UnhookedGrowth,
                 "hooked_without_lower_frame_growth":window.NoLowerGrowth,"unattributed_remainder":window.Remainder,
                 "unattributed_large":window.UnattributedLarge,"unattributed_assessment":window.Assessment,"accounting_ok":window.AccountingOK}
@@ -501,7 +635,7 @@ func main() {
         say(row)
         attribution(reason)
     }
-    say(map[string]any{"event":"start","entry":os.Args[1],"files":len(program.Files()),"units_total":total,"limit":limit,"heartbeat_seconds":60,"checkpoint_every":500,"shim_offsets_checked":true})
+    say(map[string]any{"event":"start","entry":os.Args[1],"files":len(program.Files()),"units_total":total,"limit":limit,"heartbeat_seconds":60,"checkpoint_every":500,"shim_offsets_checked":true,"plain":plain})
     counts("checked")
     lower.BoxWalkEnter=func(node *ast.Node,phase string) {
         label:=program.Where(node)+" ["+node.Kind.String()+"]"
@@ -525,7 +659,7 @@ func main() {
 GO
 cat > "$work/instrument.py" <<'PY'
 import json,pathlib,re,sys
-repo=pathlib.Path(sys.argv[1]);work=pathlib.Path(sys.argv[2])
+repo=pathlib.Path(sys.argv[1]);work=pathlib.Path(sys.argv[2]);plain=sys.argv[3]=='1'
 replace=json.loads((work/'entry/overlay.json').read_text())['Replace']
 def read(name):return pathlib.Path(replace.get(str(repo/name),str(repo/name))).read_text()
 def put(name,text):
@@ -559,7 +693,7 @@ text=once(text,old,'''boxWalkSourceText:=c.TypeToString(source)
 # These cover the public IsTypeAssignableTo method, shim linkname identical/
 # strict-subtype methods, ordinary subtype/comparable paths, direct diagnostic
 # comparisons, and elaboration. All actual Relaters are entered through Ex.
-for name in ['isTypeRelatedTo','checkTypeRelatedTo','checkTypeRelatedToEx','checkTypeRelatedToAndOptionallyElaborate']:
+for name in ([] if plain else ['isTypeRelatedTo','checkTypeRelatedTo','checkTypeRelatedToEx','checkTypeRelatedToAndOptionallyElaborate']):
     pattern=r'(func \(c \*Checker\) '+name+r'\([\s\S]*?\) bool \{)'
     text,n=re.subn(pattern,lambda match:match[1]+'\n boxRelationToken := c.boxRelationEnter(relation)\n defer c.boxRelationExit(boxRelationToken)',text)
     assert n==1,('relation entry',name,n)
@@ -596,13 +730,27 @@ new='''
 text=text[:body_start]+new+text[end:]
 put('internal/lower/latent_hook.go',text)
 put('internal/lower/box_walk.go',(work/'box_lower.go').read_text())
+if not plain:
+    text=read('internal/lower/entries_records.go')
+    # Observe exactly the list the production method computes, once per fresh
+    # lowering that materializes it. Do not recompute or alter its sources.
+    text=once(text,'l.entriesRecordTypesKnown = true',
+        'l.entriesRecordTypesKnown = true\n defer func(){l.checker.BoxRecordStorage(l.entriesRecordTypes)}()')
+    start=text.index('func (l *lowering) typesMayReach(')
+    end=text.index('\n}',start)+2
+    body=text[start:end]
+    body=once(body,'l.checker.IsTypeAssignableTo(source, receiver)',
+        'l.checker.BoxTypesMayReachAssignable(receiver, source, false)')
+    body=once(body,'l.checker.IsTypeAssignableTo(receiver, source)',
+        'l.checker.BoxTypesMayReachAssignable(receiver, source, true)')
+    put('internal/lower/entries_records.go',text[:start]+body+text[end:])
 put('stage3/census/latent/tool/main.go',(work/'box_main.go').read_text())
 (work/'walk-overlay.json').write_text(json.dumps({'Replace':replace},indent=2)+'\n')
 PY
-run instrumentation file python3 "$work/instrument.py" "$repository" "$work"
+run instrumentation file python3 "$work/instrument.py" "$repository" "$work" "$plain"
 # Compile sequentially. The only native-checker change is observational instrumentation.
 run build file go build -buildvcs=false -overlay="$work/walk-overlay.json" -o "$work/walk" ./stage3/census/latent/tool
 # Exclude inherited census mutants and full/speculative modes from a house environment.
 while IFS= read -r name; do unset "$name"; done < <(compgen -v LATENT_ || true)
 export LATENT_FULL=0 LATENT_SPECULATIVE=0 LATENT_ASSERT_NO_OUTPUT=1
-run walk stream "$work/walk" "$work/adapted/src/tsc/tsc.ts" "$limit" "$work/records.jsonl"
+run walk stream "$work/walk" "$work/adapted/src/tsc/tsc.ts" "$limit" "$work/records.jsonl" "$plain"
