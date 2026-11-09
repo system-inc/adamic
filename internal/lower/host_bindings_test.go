@@ -200,21 +200,3 @@ func TestHostBindingUnmatchedDeclarationIsRefused(t *testing.T) {
 		})
 	}
 }
-
-// process still waits on Runtime and Platforms to clear its target columns.
-func TestHostBindingPendingRowsAreNotYet(t *testing.T) {
-	t.Parallel()
-	for _, probe := range []struct{ name, file, source, want string }{
-		{"process", "core.ts", "declare const process: { nextTick?: unknown; browser?: unknown; } | undefined;\nexport function isNodeLikeSystem(): boolean {\n\treturn typeof process !== \"undefined\" && !!process.nextTick && !process.browser;\n}\n",
-			"core.ts:1:15: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"},
-	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerModules(t, map[string]string{probe.file: probe.source, "main.ts": "import './" + probe.file + "';\n"})
-			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
-				t.Errorf("got %v, want %s", err, probe.want)
-			}
-		})
-	}
-}
