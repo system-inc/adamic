@@ -1,0 +1,86 @@
+// An optional index or join declares its receiver in effects (lower/optional_indexing.go, optional_join.go).
+// On a branch that runs only sometimes (the right of || and &&, an arm of ?:, the fallback of ??) it is
+// declared inside the branch's block and let go of there, after the branch used it and on a throw after it
+// (#pjr22te). Each receiver is an array the program builds, of strings it builds, held by the branch alone.
+let made = 0;
+function built(present: boolean): string[] | undefined {
+    made++;
+    return present ? [`first${made}`, `second${made}`] : undefined;
+}
+function orRight(flag: boolean, present: boolean, wanted: string): boolean {
+    return flag || (built(present)?.[0] ?? '') === wanted;
+}
+function andRight(flag: boolean, present: boolean, wanted: string): boolean {
+    return flag && (built(present)?.[1] ?? '') === wanted;
+}
+function eitherText(text: string, present: boolean): string | undefined {
+    return text || built(present)?.[0];
+}
+function bothText(text: string, present: boolean): string | undefined {
+    return text && built(present)?.[1];
+}
+function arm(flag: boolean, present: boolean): string | undefined {
+    return flag ? built(present)?.[0] : built(present)?.join('+');
+}
+function fallback(first: string | undefined, present: boolean): string | undefined {
+    return first ?? built(present)?.join('-');
+}
+console.log(`${orRight(true, true, 'first1')} ${orRight(false, true, 'first1')} ${orRight(false, true, 'first1')} ${orRight(false, false, '')} ${made}`);
+console.log(`${andRight(false, true, 'second5')} ${andRight(true, true, 'second5')} ${andRight(true, true, 'second5')} ${andRight(true, false, '')} ${made}`);
+console.log(`${eitherText(`kept${made}`, true)} ${eitherText('', true)} ${eitherText('', false)} ${made}`);
+console.log(`${bothText('', true)} ${bothText(`text${made}`, true)} ${bothText(`text${made}`, false)} ${made}`);
+console.log(`${arm(true, true)} ${arm(false, true)} ${arm(true, false)} ${arm(false, false)} ${made}`);
+console.log(`${fallback(`given${made}`, true)} ${fallback(undefined, true)} ${fallback(undefined, false)} ${made}`);
+
+// A throw inside the branch after the receiver is declared: the index and the separator are evaluated
+// only where the receiver is present, and throw there.
+function boom(): number {
+    throw new Error(`index${made}`);
+}
+function separator(): string {
+    throw new Error(`separator${made}`);
+}
+function thrownIndex(flag: boolean, present: boolean): boolean {
+    return flag || (built(present)?.[boom()] ?? '') === 'never';
+}
+function thrownJoin(text: string, present: boolean): string | undefined {
+    return text || built(present)?.join(separator());
+}
+function thrownArm(flag: boolean, present: boolean): string | undefined {
+    return flag ? built(present)?.[boom()] : `not${made}`;
+}
+for (const present of [false, true]) {
+    try {
+        console.log(`${thrownIndex(false, present)} ${made}`);
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(`caught ${error.message}`);
+        }
+    }
+    try {
+        console.log(`${thrownJoin('', present)} ${made}`);
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(`caught ${error.message}`);
+        }
+    }
+    try {
+        console.log(`${thrownArm(true, present)} ${made}`);
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(`caught ${error.message}`);
+        }
+    }
+}
+// The same throw caught in the function whose branch declared the receiver.
+function caughtHere(flag: boolean, present: boolean): string {
+    try {
+        return `${flag || (built(present)?.[boom()] ?? '') === 'never'}`;
+    } catch (error) {
+        if (error instanceof Error) {
+            return `caught here ${error.message}`;
+        }
+        return 'caught here';
+    }
+}
+console.log(`${caughtHere(false, true)} ${caughtHere(false, false)} ${caughtHere(true, true)} ${made}`);
