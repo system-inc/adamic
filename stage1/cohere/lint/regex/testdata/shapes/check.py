@@ -20,7 +20,8 @@ code, baseline = run('gate', extra)
 if code != 0:
     raise SystemExit('fixture gate failed; see evidence/gate.log')
 code, mutant = run('mutant', ['-mutant'])
-if code == 0 or 'base/consistency_require_pagination_argument_name.go:27: source Node fixture mismatch' not in mutant:
+# Census 89 to 74 at cohere 5360753e: 20 removed, 5 added; pagination moved from line 27 to 30.
+if code == 0 or 'base/consistency_require_pagination_argument_name.go:30: source Node fixture mismatch' not in mutant:
     raise SystemExit('translation mutant was not killed by its match comparison')
 code, forced = run('forced-native', ['-force-native'])
 # Census 89 to 74 at cohere 5360753e: 20 removed, 5 added. Keep this guard handwritten.
