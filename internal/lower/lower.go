@@ -508,12 +508,15 @@ type lowering struct {
 	entriesRecords             map[*ast.Node]bool
 	entriesProgramRecords      bool
 	entriesProgramRecordsKnown bool
-	// entriesRecordTypes, once entriesRecordTypesKnown, are the types the program's records are made
+	// entriesRecordTypes, once entriesRecordTypesKnown, are the types the program's records are held
 	// as, and recordGuardedReads the union and maybe field reads admitted beside them, each checked
-	// again once every view is registered (entries_records.go).
+	// again once every view is registered (entries_records.go). emptyObject, once emptyObjectKnown, is
+	// the type `{}`, every record's implicit source (recordEmptyObject).
 	entriesRecordTypes      []*checker.Type
 	entriesRecordTypesKnown bool
 	recordGuardedReads      []recordGuardedRead
+	emptyObject             *checker.Type
+	emptyObjectKnown        bool
 	// mergedClassTypes, once mergedClassTypesKnown, are the instance types of the program's classes
 	// merged with an interface, and plainAsked each receiver id plainReceiver has judged
 	// (entries_records.go, #9jnjwrw).
