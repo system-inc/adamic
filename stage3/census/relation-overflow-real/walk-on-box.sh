@@ -30,7 +30,7 @@ else
 fi
 [[ -z $source_override ]] || export ADAMIC_TYPESCRIPT_SOURCE=$source_override
 missing=()
-for tool in go gofmt node npm python3 git; do
+for tool in go gofmt node python3 git; do
     command -v "$tool" > /dev/null 2>&1 || missing+=("$tool")
 done
 if (( ${#missing[@]} )); then
@@ -42,7 +42,6 @@ export GOWORK="$repository/go.work"
 go version >&2
 node_version=$(node --version)
 [[ $node_version == v24.* ]] || { echo "missing required Node 24: found $node_version" >&2; exit 1; }
-npm --version >&2
 pinned=050880ce59e30b356b686bd3144efe24f875ebc8
 [[ -n ${ADAMIC_TYPESCRIPT_SOURCE:-} && -f $ADAMIC_TYPESCRIPT_SOURCE/src/tsc/tsc.ts ]] || {
     echo 'missing pinned TypeScript 6.0.3 source: ADAMIC_TYPESCRIPT_SOURCE must name the box gate input checkout' >&2
@@ -155,7 +154,13 @@ for parent,name in [('.', 'cohere'),('cohere','TypeScript')]:
         sys.exit(f'dirty {parent}/{name} loader submodule')
 PY
 # The meter uses the lockfile install, then apply verifies the package byte digest.
-run packages file npm ci --prefix stage3/api --ignore-scripts --no-audit --no-fund
+# A house proof lays stage3/api/node_modules itself and has no npm; install only when absent.
+if [[ -d stage3/api/node_modules ]]; then
+    echo 'walk: stage3/api/node_modules laid by the proof; skipping npm ci' >&2
+else
+    command -v npm > /dev/null 2>&1 || { echo 'missing stage3/api/node_modules and no npm to install it' >&2; exit 1; }
+    run packages file npm ci --prefix stage3/api --ignore-scripts --no-audit --no-fund
+fi
 run apply file bash stage3/apply.sh "$work/adapted"
 run latent-overlay file python3 stage3/census/latent/make_overlay.py "$repository" "$work/latent"
 run entry-overlay file python3 stage3/meter/entry_overlay.py "$work/latent" "$work/entry"
