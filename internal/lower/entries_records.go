@@ -65,6 +65,10 @@ func (l *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
 	if node.Kind == ast.KindAsExpression && ast.IsConstTypeReference(node.AsAsExpression().Type) {
 		return l.entriesLiteralOrigin(node.AsAsExpression().Expression, depth+1)
 	}
+	// satisfies leaves its operand the value it was, of the type it had (rulings.md:14).
+	if node.Kind == ast.KindSatisfiesExpression {
+		return l.entriesLiteralOrigin(node.AsSatisfiesExpression().Expression, depth+1)
+	}
 	if !ast.IsIdentifier(node) {
 		return nil
 	}
@@ -98,7 +102,7 @@ func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool {
 
 func (l *lowering) entriesRecordLiteralWalk(literal *ast.Node) bool {
 	parent := literal.Parent
-	for parent != nil && (parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindParenthesizedExpression) {
+	for parent != nil && (parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindSatisfiesExpression || parent.Kind == ast.KindParenthesizedExpression) {
 		parent = parent.Parent
 	}
 	if parent == nil || parent.Kind != ast.KindVariableDeclaration || parent.Parent.Flags&ast.NodeFlagsConst == 0 {
@@ -253,7 +257,7 @@ func init() {
 // A record is a table behind one slot, never a fixed shape, so a plain union or maybe field read of
 // one would find no field (the runtime stops it: object.c's adamic_refuse_record_fixed_read). In a
 // program with records, such a read lowers only when no record can be its receiver: not one of the
-// types records are made as (rule b), not a type one of them is assignable to (rule c, which covers
+// types records are held as (rule b), not a type one of them is assignable to (rule c, which covers
 // a record passed through a parameter, a generic or a union member, and the reverse, which covers a
 // record narrowed to a subtype or an intersection), and not a field a checked view registered, since
 // a record reaches a fixed type through a view (rule a, checkRecordGuardedReads). Today (a) and (b)
@@ -264,12 +268,12 @@ type recordGuardedRead struct {
 	name           string
 }
 
-// entriesRecordStorageTypes are the types the program's record literals are made as: the literal's own,
-// its contextual type and its variable's declared type, each as a stored value has it. Freshness belongs
-// to the literal expression at its own position, never to a stored value (Adamic's ruling on #ny0c3gb,
-// with rulings.md:66, :68 and :89), so a fresh object literal type is related as its widened type: a
-// fresh `{}` is exact, and every receiver that declares a property failed against it both ways, which
-// is a "no" freshness gave and nothing proved. Each type is related once, however many literals share it.
+// entriesRecordStorageTypes are the types the program holds its record literals as, each once. Freshness
+// belongs to the literal expression at its own position, never to a stored value, so a literal's fresh type is
+// never one: a fresh `{}` is exact, and its "no" against every receiver that declares a property proved nothing
+// (Adamic's ruling on #ny0c3gb, with rulings.md:66, :68 and :89). A stored literal is seen only through the places
+// that hold it (entriesRecordHandles), and where none holds it as anything more specific than itself, it's held
+// as its own regular widened type, so a literal whose holding place goes unnamed fails closed.
 func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	if l.entriesRecordTypesKnown {
 		return l.entriesRecordTypes
@@ -279,19 +283,19 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	if err != nil {
 		return nil
 	}
+	seen := map[*checker.Type]bool{}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindObjectLiteralExpression && l.entriesRecordLiteral(node) {
-			l.entriesRecordTypes = append(l.entriesRecordTypes, l.checker.GetTypeAtLocation(node))
-			if contextual := l.slotType(node); contextual != nil {
-				l.entriesRecordTypes = append(l.entriesRecordTypes, contextual)
+			handles := l.entriesRecordHandles(node)
+			if len(handles) == 0 {
+				handles = []*checker.Type{l.checker.GetWidenedType(l.checker.GetTypeAtLocation(node))}
 			}
-			parent := node.Parent
-			for parent != nil && (parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindParenthesizedExpression) {
-				parent = parent.Parent
-			}
-			if parent != nil && parent.Kind == ast.KindVariableDeclaration {
-				l.entriesRecordTypes = append(l.entriesRecordTypes, l.checker.GetTypeAtLocation(parent.Name()))
+			for _, handle := range handles {
+				if !seen[handle] {
+					seen[handle] = true
+					l.entriesRecordTypes = append(l.entriesRecordTypes, handle)
+				}
 			}
 		}
 		return node.ForEachChild(visit)
@@ -299,19 +303,52 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	for _, module := range modules {
 		module.AsNode().ForEachChild(visit)
 	}
-	stored := l.entriesRecordTypes[:0]
-	seen := map[*checker.Type]bool{}
-	for _, made := range l.entriesRecordTypes {
-		if made != nil && made.Flags()&checker.TypeFlagsObject != 0 && made.ObjectFlags()&checker.ObjectFlagsFreshLiteral != 0 {
-			made = l.checker.GetWidenedType(made)
-		}
-		if !seen[made] {
-			seen[made] = true
-			stored = append(stored, made)
+	return l.entriesRecordTypes
+}
+
+// entriesRecordHandles are the types of the places that hold literal, as the checker types each place after
+// instantiation: the target of each `as` it's asserted to (the cast itself is judged by the cast rules), and the
+// slot of the place it's written into, when that place is a declared variable (one with a type annotation), a
+// parameter, a property, an element, an argument or a return. These hold nothing: `satisfies T`, whose operand
+// stays the type it had (rulings.md:14), `as const`, which keeps the literal's own type, a variable with no
+// annotation, which takes the literal's own type, and a slot that's a type parameter or otherwise instantiable,
+// such as a generic's parameter before inference, since `f<T>(x: T)` holds `{}` as the T inferred for it. Any
+// other place is one this can't name, and holds nothing either, so the literal's own widened type stands.
+func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
+	var handles []*checker.Type
+	held := literal
+	for held.Parent != nil && (held.Parent.Kind == ast.KindAsExpression || held.Parent.Kind == ast.KindSatisfiesExpression || held.Parent.Kind == ast.KindParenthesizedExpression) {
+		held = held.Parent
+		if held.Kind == ast.KindAsExpression && !ast.IsConstTypeReference(held.AsAsExpression().Type) {
+			handles = append(handles, l.checker.GetTypeFromTypeNode(held.AsAsExpression().Type))
 		}
 	}
-	l.entriesRecordTypes = stored
-	return l.entriesRecordTypes
+	holder := held.Parent
+	holds := false
+	if holder != nil {
+		switch holder.Kind {
+		case ast.KindVariableDeclaration, ast.KindParameter, ast.KindPropertyDeclaration:
+			holds = holder.Type() != nil
+		case ast.KindPropertyAssignment, ast.KindArrayLiteralExpression, ast.KindReturnStatement:
+			holds = true
+		case ast.KindArrowFunction:
+			holds = holder.Body() == held
+		case ast.KindCallExpression, ast.KindNewExpression:
+			for _, argument := range holder.Arguments() {
+				holds = holds || argument == held
+			}
+		}
+	}
+	if holds {
+		handles = append(handles, l.slotType(held))
+	}
+	kept := handles[:0]
+	for _, handle := range handles {
+		if handle != nil && handle.Flags()&checker.TypeFlagsInstantiable == 0 {
+			kept = append(kept, handle)
+		}
+	}
+	return kept
 }
 
 // recordMayReach says whether a record could be the receiver of a field read whose receiver has
