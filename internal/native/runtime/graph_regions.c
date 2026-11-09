@@ -44,7 +44,9 @@ typedef struct graph_region {
 	size_t counted_out;
 #endif
 	bool shared;
-	// Scratch for one merge at a time: searched and reaches for its search, merging for its union.
+	// Scratch for one merge at a time: searched, reaches and search_index for its search, merging
+	// for its union.
+	size_t search_index;
 	bool searched;
 	bool reaches;
 	bool merging;
@@ -235,38 +237,52 @@ static void each_edge(graph_region *region, void (*visit)(adamic_heap *, graph_r
 }
 
 // between finds the regions on a counted path from from to the target (a root, or a member with no
-// region) and marks them merging. The search visits regions, never members, and remembers them, so
-// each is visited once: first every region from reaches, then, to a fixed point, which of them reach
-// the target.
+// region) and marks them merging. The search visits each region and each counted edge once: a walk
+// from from records every region it reaches and the edges between them, then, since the counted
+// region graph has no cycle, one post-order pass marks the regions with a path to the target.
 static _Thread_local graph_region **search_list;
 static _Thread_local size_t search_count, search_capacity;
+static _Thread_local size_t *search_edges, *search_starts, *search_stack, *search_next;
+static _Thread_local size_t search_edge_count, search_edge_capacity, search_node_capacity;
 static _Thread_local graph_region *search_target_root, *search_at;
 static _Thread_local adamic_heap *search_target_lone;
-static _Thread_local bool search_changed;
+static void *search_grow(void *array, size_t count, size_t size) {
+	if (count > SIZE_MAX / size) { FAIL("graph region count overflow"); }
+	void *grown = realloc(array, count * size);
+	if (grown == NULL) { FAIL("out of memory"); }
+	return grown;
+}
 static void search_add(graph_region *region) {
 	if (search_count == search_capacity) {
 		size_t capacity = search_capacity == 0 ? 8 : search_capacity * 2;
-		if (capacity < search_capacity || capacity > SIZE_MAX / sizeof *search_list) { FAIL("graph region count overflow"); }
-		graph_region **grown = realloc(search_list, capacity * sizeof *grown);
-		if (grown == NULL) { FAIL("out of memory"); }
-		search_list = grown;
+		if (capacity < search_capacity) { FAIL("graph region count overflow"); }
+		search_list = search_grow(search_list, capacity, sizeof *search_list);
 		search_capacity = capacity;
 	}
 	region->searched = true;
+	region->search_index = search_count;
 	search_list[search_count++] = region;
 }
-static void search_out(adamic_heap *heap, graph_region *root) {
-	if ((search_target_root != NULL && root == search_target_root) || (root == NULL && heap == search_target_lone)) {
-		search_at->reaches = true;
-	} else if (root != NULL && !root->searched) {
-		search_add(root);
+// A recorded edge names the index of the region it reaches; this one names the target.
+#define SEARCH_TARGET SIZE_MAX
+static void search_edge(size_t to) {
+	if (search_edge_count == search_edge_capacity) {
+		size_t capacity = search_edge_capacity == 0 ? 16 : search_edge_capacity * 2;
+		if (capacity < search_edge_capacity) { FAIL("graph region count overflow"); }
+		search_edges = search_grow(search_edges, capacity, sizeof *search_edges);
+		search_edge_capacity = capacity;
 	}
+	search_edges[search_edge_count++] = to;
 }
-static void search_back(adamic_heap *heap, graph_region *root) {
-	(void)heap;
-	if (!search_at->reaches && root != NULL && root->searched && root->reaches) {
-		search_at->reaches = true;
-		search_changed = true;
+static void search_out(adamic_heap *heap, graph_region *root) {
+#ifdef ADAMIC_COUNT
+	adamic_counted.graph_searched++;
+#endif
+	if ((search_target_root != NULL && root == search_target_root) || (root == NULL && heap == search_target_lone)) {
+		search_edge(SEARCH_TARGET);
+	} else if (root != NULL) {
+		if (!root->searched) { search_add(root); }
+		search_edge(root->search_index);
 	}
 }
 static void between(graph_region *from, graph_region *target_root, adamic_heap *target_lone) {
@@ -276,17 +292,58 @@ static void between(graph_region *from, graph_region *target_root, adamic_heap *
 	if (from == NULL || target_root == NULL || target_root->incoming == 0) { return; }
 	search_target_root = target_root;
 	search_target_lone = target_lone;
-	search_count = 0;
+	search_count = search_edge_count = 0;
 	search_add(from);
+	// The walk: region i's edges are search_edges[search_starts[i]] up to search_starts[i + 1].
 	for (size_t i = 0; i < search_count; i++) {
+		if (search_node_capacity < search_count + 1) {
+			size_t capacity = search_node_capacity == 0 ? 16 : search_node_capacity;
+			while (capacity < search_count + 1) { capacity *= 2; }
+			search_starts = search_grow(search_starts, capacity, sizeof *search_starts);
+			search_stack = search_grow(search_stack, capacity, sizeof *search_stack);
+			search_next = search_grow(search_next, capacity, sizeof *search_next);
+			search_node_capacity = capacity;
+		}
+		search_starts[i] = search_edge_count;
 		search_at = search_list[i];
 		each_edge(search_at, search_out);
 	}
-	for (search_changed = true; search_changed;) {
-		search_changed = false;
-		for (size_t i = 0; i < search_count; i++) {
-			search_at = search_list[i];
-			each_edge(search_at, search_back);
+	if (search_node_capacity < search_count + 1) {
+		search_starts = search_grow(search_starts, search_count + 1, sizeof *search_starts);
+		search_stack = search_grow(search_stack, search_count + 1, sizeof *search_stack);
+		search_next = search_grow(search_next, search_count + 1, sizeof *search_next);
+		search_node_capacity = search_count + 1;
+	}
+	search_starts[search_count] = search_edge_count;
+	// The post-order pass: a region reaches the target when an edge goes there or to a region that
+	// does. With no cycle, every successor is done before its region is, and each edge is read once.
+	size_t depth = 0;
+	search_list[0]->searched = false;
+	search_stack[depth++] = 0;
+	search_next[0] = search_starts[0];
+	while (depth != 0) {
+		size_t at = search_stack[depth - 1];
+		graph_region *region = search_list[at];
+		if (search_next[at] == search_starts[at + 1]) {
+			depth--;
+			continue;
+		}
+		size_t to = search_edges[search_next[at]++];
+#ifdef ADAMIC_COUNT
+		// Every edge read is counted, in this pass as in the walk, so a quadratic pass shows.
+		adamic_counted.graph_searched++;
+#endif
+		if (to == SEARCH_TARGET) {
+			region->reaches = true;
+		} else if (search_list[to]->searched) {
+			// Not yet entered: searched stays set until a region is entered, then clears.
+			search_list[to]->searched = false;
+			search_next[to] = search_starts[to];
+			search_stack[depth++] = to;
+			// Its answer is read when it's done, by revisiting this edge.
+			search_next[at]--;
+		} else if (search_list[to]->reaches) {
+			region->reaches = true;
 		}
 	}
 	for (size_t i = 0; i < search_count; i++) {
@@ -297,10 +354,7 @@ static void between(graph_region *from, graph_region *target_root, adamic_heap *
 		}
 		region->searched = region->reaches = false;
 	}
-#ifdef ADAMIC_COUNT
-	adamic_counted.graph_searched += search_count;
-#endif
-	search_count = 0;
+	search_count = search_edge_count = 0;
 	search_target_root = search_at = NULL;
 	search_target_lone = NULL;
 }
