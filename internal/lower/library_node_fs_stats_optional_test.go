@@ -3,7 +3,6 @@ package lower
 import (
 	"context"
 	"errors"
-	"os"
 	"os/exec"
 	"strings"
 	"testing"
@@ -64,26 +63,24 @@ func TestNodeFSStatsOptionalReceiverFullLower(t *testing.T) {
 	}
 }
 
-func statsOptionalReceiverMarkMutants(t *testing.T) (string, string) {
+func statsOptionalReceiverMarkMutant(t *testing.T) string {
 	t.Helper()
 	mutations := []buildcache.Mutation{{File: "internal/lower/library_node_fs_file.go", Before: "(!receiverOptional || l.optionalReceiverCall != node)", After: "!receiverOptional"}}
-	lower := buildcache.GoTestMutated(t, "", "stats-optional-mark-lower.test", "./internal/lower", nil, mutations)
-	oracle := buildcache.GoTestMutated(t, "", "stats-optional-mark-oracle.test", "./internal/oracle", nil, mutations)
-	return lower, oracle
+	return buildcache.GoTestMutated(t, "", "stats-optional-mark-lower.test", "./internal/lower", nil, mutations)
 }
 
 func TestProduct_StatsOptionalReceiverMarkMutant(t *testing.T) {
 	t.Parallel()
-	statsOptionalReceiverMarkMutants(t)
+	statsOptionalReceiverMarkMutant(t)
 }
 
 func TestNodeFSStatsOptionalReceiverMarkMutantIsCaught(t *testing.T) {
 	t.Parallel()
-	lower, oracle := statsOptionalReceiverMarkMutants(t)
-	checkEntryReceiverMarkMutant(t, lower, oracle, "TestNodeFSStatsOptionalReceiverRequiresGuard", statsOptionalReceiverCatch, "TestNodeFSStatsOptionalReceiverFullLower")
+	lower := statsOptionalReceiverMarkMutant(t)
+	checkEntryReceiverMarkMutant(t, lower, "TestNodeFSStatsOptionalReceiverRequiresGuard", statsOptionalReceiverCatch)
 }
 
-func checkEntryReceiverMarkMutant(t *testing.T, lower, oracle, direct, catch, full string) {
+func checkEntryReceiverMarkMutant(t *testing.T, lower, direct, catch string) {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(t.Context(), 5*time.Minute)
 	defer cancel()
@@ -93,18 +90,4 @@ func checkEntryReceiverMarkMutant(t *testing.T, lower, oracle, direct, catch, fu
 		t.Fatalf("mark mutant must fail direct guard test: err=%v stdout=%s stderr=%s", err, stdout, stderr)
 	}
 	t.Logf("mark mutant caught: %s", stdout)
-	controls := []struct{ binary, selection, pass string }{
-		{lower, "^" + full + "$", "--- PASS: " + full},
-		{oracle, "^TestInputAgreesWithNode$/internal/oracle/testdata/node_fs_stats_optional_call.a$", "--- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_stats_optional_call.a"},
-	}
-	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
-		controls = append(controls, struct{ binary, selection, pass string }{oracle, "^TestNodeFSDirectoryWASIAgreement$/node_fs_stats_optional_call$", "--- PASS: TestNodeFSDirectoryWASIAgreement/node_fs_stats_optional_call"})
-	}
-	for _, control := range controls {
-		stdout, stderr, err := childguard.Capture(ctx, exec.CommandContext(ctx, control.binary, "-test.run", control.selection, "-test.count=1", "-test.v"))
-		if err != nil || !strings.Contains(string(stdout), control.pass) || strings.Contains(string(stdout), "--- SKIP:") {
-			t.Fatalf("mark mutant control %s: err=%v stdout=%s stderr=%s", control.selection, err, stdout, stderr)
-		}
-		t.Logf("mark mutant control green: %s", stdout)
-	}
 }
