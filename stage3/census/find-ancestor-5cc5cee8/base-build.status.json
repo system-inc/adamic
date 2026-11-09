@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/bar-base-entry/overlay.json",
+    "-o",
+    "/workspace/scratch/bar-base-bin",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "wall_seconds": 59.772,
+  "stopped": null
+}

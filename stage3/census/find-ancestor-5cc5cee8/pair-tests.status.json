@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "-E",
+    "-S",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "stage3/census/pair",
+    "-p",
+    "test_*.py"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "wall_seconds": 28.109,
+  "stopped": null
+}

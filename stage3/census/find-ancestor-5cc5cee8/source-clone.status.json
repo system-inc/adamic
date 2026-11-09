@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--no-checkout",
+    "https://github.com/microsoft/TypeScript.git",
+    "/workspace/scratch/bar-typescript"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "wall_seconds": 248.992,
+  "stopped": null
+}

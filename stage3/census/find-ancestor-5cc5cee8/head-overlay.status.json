@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/bar-head",
+    "/workspace/scratch/bar-head-overlay"
+  ],
+  "cwd": "/workspace/scratch/bar-head",
+  "exit": 0,
+  "wall_seconds": 1.002,
+  "stopped": null
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/bar-head-entry/overlay.json",
+    "-o",
+    "/workspace/scratch/bar-head-bin",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/scratch/bar-head",
+  "exit": 0,
+  "wall_seconds": 35.224,
+  "stopped": null
+}

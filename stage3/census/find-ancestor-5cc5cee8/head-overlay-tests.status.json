@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-count=1",
+    "-overlay=/workspace/scratch/bar-head-overlay/overlay.json",
+    "./stage3/census/latent/tool",
+    "-run",
+    "^TestLatent(Census|Stream|RelationOverflowHooks)"
+  ],
+  "cwd": "/workspace/scratch/bar-head",
+  "exit": 0,
+  "wall_seconds": 58.683,
+  "stopped": null
+}

@@ -1,0 +1,11 @@
+apply child_exit=0 wall_seconds=942.899
+base-overlay child_exit=0 wall_seconds=4.016
+base-entry-overlay child_exit=0 wall_seconds=1.008
+base-build child_exit=0 wall_seconds=59.772
+base-overlay-tests child_exit=0 wall_seconds=40.114
+head-worktree child_exit=0 wall_seconds=18.057
+head-overlay child_exit=0 wall_seconds=1.002
+head-entry-overlay child_exit=0 wall_seconds=1.137
+head-build child_exit=0 wall_seconds=35.224
+head-overlay-tests child_exit=0 wall_seconds=58.683
+prepare child_exit=0
