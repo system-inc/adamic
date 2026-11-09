@@ -8,5 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/react"
 )
 
-func oracleForwardRefUsesRef() rule.Rule                 { return rules.ForwardRefUsesRef }
+func oracleForwardRefUsesRef(options any) rule.Bound {
+	return bindOracle(rules.ForwardRefUsesReference, options)
+}
 func oracleForwardRefUsesRefOptions(fields []string) any { return nil }

@@ -8,5 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoTemplateCurlyInString() rule.Rule                 { return rules.NoTemplateCurlyInString }
+func oracleNoTemplateCurlyInString(options any) rule.Bound {
+	return bindOracle(rules.NoTemplateCurlyInString, options)
+}
 func oracleNoTemplateCurlyInStringOptions(fields []string) any { return nil }

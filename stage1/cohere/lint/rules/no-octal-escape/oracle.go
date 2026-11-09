@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoOctalEscape() rule.Rule                 { return rules.NoOctalEscape }
+func oracleNoOctalEscape(options any) rule.Bound     { return bindOracle(rules.NoOctalEscape, options) }
 func oracleNoOctalEscapeOptions(fields []string) any { return nil }

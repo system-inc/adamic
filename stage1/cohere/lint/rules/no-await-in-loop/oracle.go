@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoAwaitInLoop() rule.Rule                 { return rules.NoAwaitInLoop }
+func oracleNoAwaitInLoop(options any) rule.Bound     { return bindOracle(rules.NoAwaitInLoop, options) }
 func oracleNoAwaitInLoopOptions(fields []string) any { return nil }

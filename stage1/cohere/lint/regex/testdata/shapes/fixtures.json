@@ -1,6 +1,6 @@
 [
   {
-    "id": "base/consistency_require_pagination_argument_name.go:27",
+    "id": "base/consistency_require_pagination_argument_name.go:30",
     "rule": "consistency-require-pagination-argument-name",
     "shape": "plain",
     "expression": "`PaginationInput$`",
@@ -76,7 +76,7 @@
     "runtime_file": "plain/000_runtime.a"
   },
   {
-    "id": "base/consistency_require_pagination_argument_name.go:30",
+    "id": "base/consistency_require_pagination_argument_name.go:33",
     "rule": "consistency-require-pagination-argument-name",
     "shape": "plain",
     "expression": "`Pagination$`",
@@ -245,7 +245,7 @@
     "runtime_file": "plain/002_runtime.a"
   },
   {
-    "id": "core/no_warning_comments.go:383",
+    "id": "core/no_warning_comments.go:356",
     "rule": "no-warning-comments",
     "shape": "plain",
     "expression": "`\\bno-warning-comments\\b`",
@@ -338,7 +338,7 @@
     "runtime_file": "plain/003_runtime.a"
   },
   {
-    "id": "core/require_description.go:217",
+    "id": "core/require_description.go:222",
     "rule": "require-description",
     "shape": "plain",
     "expression": "jsWhitespace + `-{2,}` + jsWhitespace",
@@ -477,7 +477,7 @@
     "runtime_file": "plain/004_runtime.a"
   },
   {
-    "id": "core/require_description.go:220",
+    "id": "core/require_description.go:225",
     "rule": "require-description",
     "shape": "plain",
     "expression": "`^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:` + jsWhitespace + `|$)`",
@@ -604,7 +604,7 @@
     "runtime_file": "plain/005_runtime.a"
   },
   {
-    "id": "core/require_description.go:225",
+    "id": "core/require_description.go:230",
     "rule": "require-description",
     "shape": "plain",
     "expression": "`^eslint-disable-(next-)?line$`",
@@ -668,7 +668,7 @@
     "runtime_file": "plain/006_runtime.a"
   },
   {
-    "id": "core/require_description.go:236",
+    "id": "core/require_description.go:241",
     "rule": "require-description",
     "shape": "dynamic",
     "expression": "`^(` + strings.Join(quoted, \"|\") + `)(?:` + jsWhitespace + `|$)`",
@@ -744,7 +744,7 @@
     "runtime_file": "dynamic/007_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:169",
+    "id": "next/no_html_link_for_pages_routes.go:180",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "`\\.[jt]sx?$`",
@@ -837,7 +837,7 @@
     "runtime_file": "plain/008_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:170",
+    "id": "next/no_html_link_for_pages_routes.go:181",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "`^index\\.[jt]sx?$`",
@@ -901,7 +901,7 @@
     "runtime_file": "plain/009_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:171",
+    "id": "next/no_html_link_for_pages_routes.go:182",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "`^page\\.[jt]sx?$`",
@@ -965,7 +965,7 @@
     "runtime_file": "plain/010_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:172",
+    "id": "next/no_html_link_for_pages_routes.go:183",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "`^layout\\.[jt]sx?$`",
@@ -1029,7 +1029,7 @@
     "runtime_file": "plain/011_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:281",
+    "id": "next/no_html_link_for_pages_routes.go:292",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "\"\\\\[[^\\n\\r\\u2028\\u2029]*\\\\]\"",
@@ -1307,374 +1307,6 @@
     "runtime_file": "i/013_runtime.a"
   },
   {
-    "id": "nexus/abbreviation_vocabulary.go:162",
-    "rule": "abbreviation-vocabulary",
-    "shape": "dynamic",
-    "expression": "`^` + entry.Abbreviation + `[A-Z]`",
-    "go_pattern": "^cfg[A-Z]",
-    "pattern": "^cfg[A-Z]",
-    "flags": "gu",
-    "binding": "abbreviation=cfg",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "cfgA",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "cfgA"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "cfgA"
-          }
-        ]
-      },
-      {
-        "input": "xcfgA",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "cfgA\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "cfgA"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "cfgA"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "dynamic/014.a",
-    "runtime_file": "dynamic/014_runtime.a"
-  },
-  {
-    "id": "nexus/abbreviation_vocabulary.go:176",
-    "rule": "abbreviation-vocabulary",
-    "shape": "dynamic",
-    "expression": "`(^|[^a-zA-Z])` + word + `($|[A-Z0-9])`",
-    "go_pattern": "(^|[^a-zA-Z])Cfg($|[A-Z0-9])",
-    "pattern": "(^|[^a-zA-Z])Cfg((?![\\s\\S])|[A-Z0-9])",
-    "flags": "gu",
-    "binding": "word=Cfg",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "Cfg",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "Cfg"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "Cfg"
-          }
-        ]
-      },
-      {
-        "input": "xCfg",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "Cfg\n",
-        "go_matches": [],
-        "node_matches": []
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "dynamic/015.a",
-    "runtime_file": "dynamic/015_runtime.a"
-  },
-  {
-    "id": "nexus/abbreviation_vocabulary.go:177",
-    "rule": "abbreviation-vocabulary",
-    "shape": "dynamic",
-    "expression": "`[a-z0-9]` + word + `($|[A-Z0-9])`",
-    "go_pattern": "[a-z0-9]Cfg($|[A-Z0-9])",
-    "pattern": "[a-z0-9]Cfg((?![\\s\\S])|[A-Z0-9])",
-    "flags": "gu",
-    "binding": "word=Cfg",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "0Cfg",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "0Cfg"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "0Cfg"
-          }
-        ]
-      },
-      {
-        "input": "x0Cfg",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 5,
-            "text": "0Cfg"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 5,
-            "text": "0Cfg"
-          }
-        ]
-      },
-      {
-        "input": "0Cfg\n",
-        "go_matches": [],
-        "node_matches": []
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "dynamic/016.a",
-    "runtime_file": "dynamic/016_runtime.a"
-  },
-  {
-    "id": "nexus/abbreviation_vocabulary.go:178",
-    "rule": "abbreviation-vocabulary",
-    "shape": "dynamic",
-    "expression": "word + `($|[A-Z0-9])`",
-    "go_pattern": "Cfg($|[A-Z0-9])",
-    "pattern": "Cfg((?![\\s\\S])|[A-Z0-9])",
-    "flags": "gu",
-    "binding": "word=Cfg",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "Cfg",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "Cfg"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "Cfg"
-          }
-        ]
-      },
-      {
-        "input": "xCfg",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 4,
-            "text": "Cfg"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 4,
-            "text": "Cfg"
-          }
-        ]
-      },
-      {
-        "input": "Cfg\n",
-        "go_matches": [],
-        "node_matches": []
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "dynamic/017.a",
-    "runtime_file": "dynamic/017_runtime.a"
-  },
-  {
-    "id": "nexus/consistency_no_abbreviated_identifier.go:50",
-    "rule": "consistency-no-abbreviated-identifier",
-    "shape": "plain",
-    "expression": "`([a-z])Ms($|[A-Z])`",
-    "go_pattern": "([a-z])Ms($|[A-Z])",
-    "pattern": "([a-z])Ms((?![\\s\\S])|[A-Z])",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "aMs",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "aMs"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "aMs"
-          }
-        ]
-      },
-      {
-        "input": "xaMs",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 4,
-            "text": "aMs"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 4,
-            "text": "aMs"
-          }
-        ]
-      },
-      {
-        "input": "aMs\n",
-        "go_matches": [],
-        "node_matches": []
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/018.a",
-    "runtime_file": "plain/018_runtime.a"
-  },
-  {
     "id": "nexus/consistency_no_ambiguous_identifier.go:17",
     "rule": "consistency-no-ambiguous-identifier",
     "shape": "(?i)",
@@ -1820,8 +1452,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "i/019.a",
-    "runtime_file": "i/019_runtime.a"
+    "file": "i/014.a",
+    "runtime_file": "i/014_runtime.a"
   },
   {
     "id": "nexus/consistency_no_ambiguous_identifier.go:18",
@@ -1913,8 +1545,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/020.a",
-    "runtime_file": "plain/020_runtime.a"
+    "file": "plain/015.a",
+    "runtime_file": "plain/015_runtime.a"
   },
   {
     "id": "nexus/consistency_no_ambiguous_identifier.go:19",
@@ -2011,8 +1643,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/021.a",
-    "runtime_file": "plain/021_runtime.a"
+    "file": "plain/016.a",
+    "runtime_file": "plain/016_runtime.a"
   },
   {
     "id": "nexus/consistency_no_boolean_outcome.go:48",
@@ -2138,11 +1770,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/022.a",
-    "runtime_file": "plain/022_runtime.a"
+    "file": "plain/017.a",
+    "runtime_file": "plain/017_runtime.a"
   },
   {
-    "id": "nexus/consistency_no_return_void.go:100",
+    "id": "nexus/consistency_no_return_void.go:104",
     "rule": "consistency-no-return-void",
     "shape": "plain",
     "expression": "`^(function|class|let|async)\\b`",
@@ -2248,11 +1880,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/023.a",
-    "runtime_file": "plain/023_runtime.a"
+    "file": "plain/018.a",
+    "runtime_file": "plain/018_runtime.a"
   },
   {
-    "id": "nexus/consistency_no_return_void.go:116",
+    "id": "nexus/consistency_no_return_void.go:124",
     "rule": "consistency-no-return-void",
     "shape": "dynamic",
     "expression": "`^return\\s+void\\s+` + regexp.QuoteMeta(operandText) + `\\s*;$`",
@@ -2312,11 +1944,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "dynamic/024.a",
-    "runtime_file": "dynamic/024_runtime.a"
+    "file": "dynamic/019.a",
+    "runtime_file": "dynamic/019_runtime.a"
   },
   {
-    "id": "nexus/consistency_require_constant_casing.go:355",
+    "id": "nexus/consistency_require_constant_casing.go:437",
     "rule": "consistency-require-constant-casing",
     "shape": "plain",
     "expression": "`(Creator|Factory)$`",
@@ -2439,11 +2071,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/025.a",
-    "runtime_file": "plain/025_runtime.a"
+    "file": "plain/020.a",
+    "runtime_file": "plain/020_runtime.a"
   },
   {
-    "id": "nexus/consistency_require_matching_return_type.go:216",
+    "id": "nexus/consistency_require_matching_return_type.go:88",
     "rule": "consistency-require-matching-return-type",
     "shape": "plain",
     "expression": "`^return\\s+undefined;$`",
@@ -2503,11 +2135,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/026.a",
-    "runtime_file": "plain/026_runtime.a"
+    "file": "plain/021.a",
+    "runtime_file": "plain/021_runtime.a"
   },
   {
-    "id": "nexus/localization_no_untranslated_value.go:408",
+    "id": "nexus/localization_no_untranslated_value.go:426",
     "rule": "localization-no-untranslated-value",
     "shape": "plain",
     "expression": "`^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*$`",
@@ -2630,2235 +2262,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/027.a",
-    "runtime_file": "plain/027_runtime.a"
+    "file": "plain/022.a",
+    "runtime_file": "plain/022_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:123",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`[0-9_]`",
-    "go_pattern": "[0-9_]",
-    "pattern": "[0-9_]",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "0",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "0"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "0"
-          }
-        ]
-      },
-      {
-        "input": "x0",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 2,
-            "text": "0"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 2,
-            "text": "0"
-          }
-        ]
-      },
-      {
-        "input": "0\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "0"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "0"
-          }
-        ]
-      },
-      {
-        "input": "var a = 1; // TODO: later",
-        "go_matches": [
-          {
-            "start": 8,
-            "end": 9,
-            "text": "1"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 8,
-            "end": 9,
-            "text": "1"
-          }
-        ]
-      },
-      {
-        "input": "className=\"flex-grow-2\"",
-        "go_matches": [
-          {
-            "start": 21,
-            "end": 22,
-            "text": "2"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 21,
-            "end": 22,
-            "text": "2"
-          }
-        ]
-      },
-      {
-        "input": "__String",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "_"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "_"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "_"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "_"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/028.a",
-    "runtime_file": "plain/028_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:124",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`[AEIOUY]`",
-    "go_pattern": "[AEIOUY]",
-    "pattern": "[AEIOUY]",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 2,
-            "text": "O"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 2,
-            "text": "O"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          }
-        ]
-      },
-      {
-        "input": " TODO",
-        "go_matches": [
-          {
-            "start": 2,
-            "end": 3,
-            "text": "O"
-          },
-          {
-            "start": 4,
-            "end": 5,
-            "text": "O"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 2,
-            "end": 3,
-            "text": "O"
-          },
-          {
-            "start": 4,
-            "end": 5,
-            "text": "O"
-          }
-        ]
-      },
-      {
-        "input": "A",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "A"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "A"
-          }
-        ]
-      },
-      {
-        "input": "xA",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 2,
-            "text": "A"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 2,
-            "text": "A"
-          }
-        ]
-      },
-      {
-        "input": "A\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "A"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "A"
-          }
-        ]
-      },
-      {
-        "input": "PaginationInput",
-        "go_matches": [
-          {
-            "start": 10,
-            "end": 11,
-            "text": "I"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 10,
-            "end": 11,
-            "text": "I"
-          }
-        ]
-      },
-      {
-        "input": "TODO",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 2,
-            "text": "O"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 2,
-            "text": "O"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          }
-        ]
-      },
-      {
-        "input": "🌍TODO",
-        "go_matches": [
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          },
-          {
-            "start": 5,
-            "end": 6,
-            "text": "O"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          },
-          {
-            "start": 5,
-            "end": 6,
-            "text": "O"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/029.a",
-    "runtime_file": "plain/029_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:125",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`\\b[A-Z][A-Z0-9_]*\\b`",
-    "go_pattern": "\\b[A-Z][A-Z0-9_]*\\b",
-    "pattern": "\\b[A-Z][A-Z0-9_]*\\b",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "TODO"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "TODO"
-          }
-        ]
-      },
-      {
-        "input": " TODO",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 5,
-            "text": "TODO"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 5,
-            "text": "TODO"
-          }
-        ]
-      },
-      {
-        "input": "A",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "A"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "A"
-          }
-        ]
-      },
-      {
-        "input": "xA",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "A\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "A"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "A"
-          }
-        ]
-      },
-      {
-        "input": "TODO",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "TODO"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "TODO"
-          }
-        ]
-      },
-      {
-        "input": "K",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "K"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "K"
-          }
-        ]
-      },
-      {
-        "input": "S",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "S"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "S"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/030.a",
-    "runtime_file": "plain/030_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:149",
-    "rule": "shouting",
-    "shape": "(?s)",
-    "expression": "\"(?s)```.*?```\"",
-    "go_pattern": "(?s)```.*?```",
-    "pattern": "```[\\s\\S]*?```",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "``````",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 6,
-            "text": "``````"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 6,
-            "text": "``````"
-          }
-        ]
-      },
-      {
-        "input": "x``````",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 7,
-            "text": "``````"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 7,
-            "text": "``````"
-          }
-        ]
-      },
-      {
-        "input": "``````\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 6,
-            "text": "``````"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 6,
-            "text": "``````"
-          }
-        ]
-      },
-      {
-        "input": "/**\n * Determines whether a path starts with an absolute path component (i.e. `/`, `c:/`, `file://`, etc.).\n *\n * ```ts\n * // POSIX\n * pathIsAbsolute(\"/path/to/file.ext\") === true\n * // DOS\n * pathIsAbsolute(\"c:/path/to/file.ext\") === true\n * // URL\n * pathIsAbsolute(\"file:///path/to/file.ext\") === true\n * // Non-absolute\n * pathIsAbsolute(\"path/to/file.ext\") === false\n * pathIsAbsolute(\"./path/to/file.ext\") === false\n * ```\n *\n * @internal\n */",
-        "go_matches": [
-          {
-            "start": 114,
-            "end": 428,
-            "text": "```ts\n * // POSIX\n * pathIsAbsolute(\"/path/to/file.ext\") === true\n * // DOS\n * pathIsAbsolute(\"c:/path/to/file.ext\") === true\n * // URL\n * pathIsAbsolute(\"file:///path/to/file.ext\") === true\n * // Non-absolute\n * pathIsAbsolute(\"path/to/file.ext\") === false\n * pathIsAbsolute(\"./path/to/file.ext\") === false\n * ```"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 114,
-            "end": 428,
-            "text": "```ts\n * // POSIX\n * pathIsAbsolute(\"/path/to/file.ext\") === true\n * // DOS\n * pathIsAbsolute(\"c:/path/to/file.ext\") === true\n * // URL\n * pathIsAbsolute(\"file:///path/to/file.ext\") === true\n * // Non-absolute\n * pathIsAbsolute(\"path/to/file.ext\") === false\n * pathIsAbsolute(\"./path/to/file.ext\") === false\n * ```"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "s/031.a",
-    "runtime_file": "s/031_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:155",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "\"`[^`]*`\"",
-    "go_pattern": "`[^`]*`",
-    "pattern": "`[^`]*`",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "``",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "``"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "``"
-          }
-        ]
-      },
-      {
-        "input": "x``",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 3,
-            "text": "``"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 3,
-            "text": "``"
-          }
-        ]
-      },
-      {
-        "input": "``\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "``"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "``"
-          }
-        ]
-      },
-      {
-        "input": "// `export import x = mod.x` being treated as instantiated:",
-        "go_matches": [
-          {
-            "start": 3,
-            "end": 28,
-            "text": "`export import x = mod.x`"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 3,
-            "end": 28,
-            "text": "`export import x = mod.x`"
-          }
-        ]
-      },
-      {
-        "input": "/** May store more in future. For now, this will simply be `true` to indicate when a diagnostic is an unused-identifier diagnostic. */",
-        "go_matches": [
-          {
-            "start": 59,
-            "end": 65,
-            "text": "`true`"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 59,
-            "end": 65,
-            "text": "`true`"
-          }
-        ]
-      },
-      {
-        "input": "//       order in the generated program (see `getDefaultLibFilePriority` in program.ts). This",
-        "go_matches": [
-          {
-            "start": 45,
-            "end": 72,
-            "text": "`getDefaultLibFilePriority`"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 45,
-            "end": 72,
-            "text": "`getDefaultLibFilePriority`"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/032.a",
-    "runtime_file": "plain/032_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:162",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`\"[^\"\\n]*\"`",
-    "go_pattern": "\"[^\"\\n]*\"",
-    "pattern": "\"[^\"\\n]*\"",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "\"\"",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "\"\""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "\"\""
-          }
-        ]
-      },
-      {
-        "input": "x\"\"",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 3,
-            "text": "\"\""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 3,
-            "text": "\"\""
-          }
-        ]
-      },
-      {
-        "input": "\"\"\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "\"\""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "\"\""
-          }
-        ]
-      },
-      {
-        "input": "className=\"flex-grow-2\"",
-        "go_matches": [
-          {
-            "start": 10,
-            "end": 23,
-            "text": "\"flex-grow-2\""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 10,
-            "end": 23,
-            "text": "\"flex-grow-2\""
-          }
-        ]
-      },
-      {
-        "input": "// Skip for invalid syntax like this: export { \"x\" }",
-        "go_matches": [
-          {
-            "start": 47,
-            "end": 50,
-            "text": "\"x\""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 47,
-            "end": 50,
-            "text": "\"x\""
-          }
-        ]
-      },
-      {
-        "input": "// typeof x === \"string\"",
-        "go_matches": [
-          {
-            "start": 16,
-            "end": 24,
-            "text": "\"string\""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 16,
-            "end": 24,
-            "text": "\"string\""
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/033.a",
-    "runtime_file": "plain/033_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:168",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`'[A-Za-z0-9_.\\-/]+'`",
-    "go_pattern": "'[A-Za-z0-9_.\\-/]+'",
-    "pattern": "'[A-Za-z0-9_.\\-/]+'",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "'A'",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "'A'"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "'A'"
-          }
-        ]
-      },
-      {
-        "input": "x'A'",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 4,
-            "text": "'A'"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 4,
-            "text": "'A'"
-          }
-        ]
-      },
-      {
-        "input": "'A'\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "'A'"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "'A'"
-          }
-        ]
-      },
-      {
-        "input": "/**\n * Iterates through 'array' by index and performs the callback on each element of array until the callback\n * returns a truthy value, then returns that value.\n * If no such value is found, the callback is applied to each element of array and undefined is returned.\n *\n * @internal\n */",
-        "go_matches": [
-          {
-            "start": 24,
-            "end": 31,
-            "text": "'array'"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 24,
-            "end": 31,
-            "text": "'array'"
-          }
-        ]
-      },
-      {
-        "input": "// If there is richer color support, e.g. 256+ we can use extended ANSI codes which are not just generic 'blue'",
-        "go_matches": [
-          {
-            "start": 105,
-            "end": 111,
-            "text": "'blue'"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 105,
-            "end": 111,
-            "text": "'blue'"
-          }
-        ]
-      },
-      {
-        "input": "// 'using' helpers",
-        "go_matches": [
-          {
-            "start": 3,
-            "end": 10,
-            "text": "'using'"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 3,
-            "end": 10,
-            "text": "'using'"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/034.a",
-    "runtime_file": "plain/034_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:177",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`'[A-Z0-9_][A-Z0-9_ .,:=\\-/]*[A-Z0-9_]'`",
-    "go_pattern": "'[A-Z0-9_][A-Z0-9_ .,:=\\-/]*[A-Z0-9_]'",
-    "pattern": "'[A-Z0-9_][A-Z0-9_ .,:=\\-/]*[A-Z0-9_]'",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "'AA'",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "'AA'"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "'AA'"
-          }
-        ]
-      },
-      {
-        "input": "x'AA'",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 5,
-            "text": "'AA'"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 5,
-            "text": "'AA'"
-          }
-        ]
-      },
-      {
-        "input": "'AA'\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "'AA'"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 4,
-            "text": "'AA'"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/035.a",
-    "runtime_file": "plain/035_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:179",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`[^\\n]`",
-    "go_pattern": "[^\\n]",
-    "pattern": "[^\\n]",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "🌍"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "🌍"
-          }
-        ]
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "T"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "O"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "D"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "T"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "O"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "D"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          }
-        ]
-      },
-      {
-        "input": " TODO",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": " "
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "T"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "O"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "D"
-          },
-          {
-            "start": 4,
-            "end": 5,
-            "text": "O"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": " "
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "T"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "O"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "D"
-          },
-          {
-            "start": 4,
-            "end": 5,
-            "text": "O"
-          }
-        ]
-      },
-      {
-        "input": "a",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "a"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "a"
-          }
-        ]
-      },
-      {
-        "input": "xa",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "x"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "a"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "x"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "a"
-          }
-        ]
-      },
-      {
-        "input": "a\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "a"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "a"
-          }
-        ]
-      },
-      {
-        "input": "PaginationInput",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "P"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "a"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "g"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "i"
-          },
-          {
-            "start": 4,
-            "end": 5,
-            "text": "n"
-          },
-          {
-            "start": 5,
-            "end": 6,
-            "text": "a"
-          },
-          {
-            "start": 6,
-            "end": 7,
-            "text": "t"
-          },
-          {
-            "start": 7,
-            "end": 8,
-            "text": "i"
-          },
-          {
-            "start": 8,
-            "end": 9,
-            "text": "o"
-          },
-          {
-            "start": 9,
-            "end": 10,
-            "text": "n"
-          },
-          {
-            "start": 10,
-            "end": 11,
-            "text": "I"
-          },
-          {
-            "start": 11,
-            "end": 12,
-            "text": "n"
-          },
-          {
-            "start": 12,
-            "end": 13,
-            "text": "p"
-          },
-          {
-            "start": 13,
-            "end": 14,
-            "text": "u"
-          },
-          {
-            "start": 14,
-            "end": 15,
-            "text": "t"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "P"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "a"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "g"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "i"
-          },
-          {
-            "start": 4,
-            "end": 5,
-            "text": "n"
-          },
-          {
-            "start": 5,
-            "end": 6,
-            "text": "a"
-          },
-          {
-            "start": 6,
-            "end": 7,
-            "text": "t"
-          },
-          {
-            "start": 7,
-            "end": 8,
-            "text": "i"
-          },
-          {
-            "start": 8,
-            "end": 9,
-            "text": "o"
-          },
-          {
-            "start": 9,
-            "end": 10,
-            "text": "n"
-          },
-          {
-            "start": 10,
-            "end": 11,
-            "text": "I"
-          },
-          {
-            "start": 11,
-            "end": 12,
-            "text": "n"
-          },
-          {
-            "start": 12,
-            "end": 13,
-            "text": "p"
-          },
-          {
-            "start": 13,
-            "end": 14,
-            "text": "u"
-          },
-          {
-            "start": 14,
-            "end": 15,
-            "text": "t"
-          }
-        ]
-      },
-      {
-        "input": "Pagination",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "P"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "a"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "g"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "i"
-          },
-          {
-            "start": 4,
-            "end": 5,
-            "text": "n"
-          },
-          {
-            "start": 5,
-            "end": 6,
-            "text": "a"
-          },
-          {
-            "start": 6,
-            "end": 7,
-            "text": "t"
-          },
-          {
-            "start": 7,
-            "end": 8,
-            "text": "i"
-          },
-          {
-            "start": 8,
-            "end": 9,
-            "text": "o"
-          },
-          {
-            "start": 9,
-            "end": 10,
-            "text": "n"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "P"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "a"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "g"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "i"
-          },
-          {
-            "start": 4,
-            "end": 5,
-            "text": "n"
-          },
-          {
-            "start": 5,
-            "end": 6,
-            "text": "a"
-          },
-          {
-            "start": 6,
-            "end": 7,
-            "text": "t"
-          },
-          {
-            "start": 7,
-            "end": 8,
-            "text": "i"
-          },
-          {
-            "start": 8,
-            "end": 9,
-            "text": "o"
-          },
-          {
-            "start": 9,
-            "end": 10,
-            "text": "n"
-          }
-        ]
-      },
-      {
-        "input": "TODO",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "T"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "O"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "D"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "T"
-          },
-          {
-            "start": 1,
-            "end": 2,
-            "text": "O"
-          },
-          {
-            "start": 2,
-            "end": 3,
-            "text": "D"
-          },
-          {
-            "start": 3,
-            "end": 4,
-            "text": "O"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/036.a",
-    "runtime_file": "plain/036_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:180",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`^\\s*\\*?\\s?`",
-    "go_pattern": "^\\s*\\*?\\s?",
-    "pattern": "^[ \\t\\n\\f\\r]*\\*?[ \\t\\n\\f\\r]?",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ]
-      },
-      {
-        "input": "🌍",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ]
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ]
-      },
-      {
-        "input": " TODO",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ]
-      },
-      {
-        "input": "x",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ]
-      },
-      {
-        "input": "\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "\n"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "\n"
-          }
-        ]
-      },
-      {
-        "input": "PaginationInput",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ]
-      },
-      {
-        "input": "Pagination",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 0,
-            "text": ""
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/037.a",
-    "runtime_file": "plain/037_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:183",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`^[ \\t]*\\*(?: |\\t|$)`",
-    "go_pattern": "^[ \\t]*\\*(?: |\\t|$)",
-    "pattern": "^[ \\t]*\\*(?: |\\t|(?![\\s\\S]))",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "*\t",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "*\t"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "*\t"
-          }
-        ]
-      },
-      {
-        "input": "x*\t",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "*\t\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "*\t"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "*\t"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/038.a",
-    "runtime_file": "plain/038_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:184",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`^@example\\b`",
-    "go_pattern": "^@example\\b",
-    "pattern": "^@example\\b",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "@example",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 8,
-            "text": "@example"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 8,
-            "text": "@example"
-          }
-        ]
-      },
-      {
-        "input": "x@example",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "@example\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 8,
-            "text": "@example"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 8,
-            "text": "@example"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/039.a",
-    "runtime_file": "plain/039_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:185",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`^@\\w+`",
-    "go_pattern": "^@\\w+",
-    "pattern": "^@\\w+",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "@A",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "@A"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "@A"
-          }
-        ]
-      },
-      {
-        "input": "x@A",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "@A\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "@A"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 2,
-            "text": "@A"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/040.a",
-    "runtime_file": "plain/040_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:186",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`^\\s*(\\$|ahra\\s|git\\s|pnpm\\s|npm\\s|sqlite3\\s|curl\\s|s\\s+c\\b)`",
-    "go_pattern": "^\\s*(\\$|ahra\\s|git\\s|pnpm\\s|npm\\s|sqlite3\\s|curl\\s|s\\s+c\\b)",
-    "pattern": "^[ \\t\\n\\f\\r]*(\\$|ahra[ \\t\\n\\f\\r]|git[ \\t\\n\\f\\r]|pnpm[ \\t\\n\\f\\r]|npm[ \\t\\n\\f\\r]|sqlite3[ \\t\\n\\f\\r]|curl[ \\t\\n\\f\\r]|s[ \\t\\n\\f\\r]+c\\b)",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "$",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "$"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "$"
-          }
-        ]
-      },
-      {
-        "input": "x$",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "$\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "$"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 1,
-            "text": "$"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/041.a",
-    "runtime_file": "plain/041_runtime.a"
-  },
-  {
-    "id": "nexus/shouting.go:466",
-    "rule": "shouting",
-    "shape": "plain",
-    "expression": "`s\\s+c`",
-    "go_pattern": "s\\s+c",
-    "pattern": "s[ \\t\\n\\f\\r]+c",
-    "flags": "gu",
-    "binding": "",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "s\tc",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "s\tc"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "s\tc"
-          }
-        ]
-      },
-      {
-        "input": "xs\tc",
-        "go_matches": [
-          {
-            "start": 1,
-            "end": 4,
-            "text": "s\tc"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 1,
-            "end": 4,
-            "text": "s\tc"
-          }
-        ]
-      },
-      {
-        "input": "s\tc\n",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "s\tc"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 3,
-            "text": "s\tc"
-          }
-        ]
-      },
-      {
-        "input": "// 4. Export alias declarations pointing at only uninstantiated modules or things uninstantiated modules contain",
-        "go_matches": [
-          {
-            "start": 103,
-            "end": 106,
-            "text": "s c"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 103,
-            "end": 106,
-            "text": "s c"
-          }
-        ]
-      },
-      {
-        "input": "// child is const enum only - record state and continue searching",
-        "go_matches": [
-          {
-            "start": 10,
-            "end": 13,
-            "text": "s c"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 10,
-            "end": 13,
-            "text": "s c"
-          }
-        ]
-      },
-      {
-        "input": "// since they're ambiguous. This is consistent with",
-        "go_matches": [
-          {
-            "start": 34,
-            "end": 37,
-            "text": "s c"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 34,
-            "end": 37,
-            "text": "s c"
-          }
-        ]
-      }
-    ],
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans",
-    "file": "plain/042.a",
-    "runtime_file": "plain/042_runtime.a"
-  },
-  {
-    "id": "react/boolean_prop_naming.go:627",
+    "id": "react/boolean_prop_naming.go:638",
     "rule": "boolean-prop-naming",
     "shape": "plain",
     "expression": "`\\{\\{\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*\\}\\}`",
@@ -4942,8 +2350,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/043.a",
-    "runtime_file": "plain/043_runtime.a"
+    "file": "plain/023.a",
+    "runtime_file": "plain/023_runtime.a"
   },
   {
     "id": "react/conformance/classify.go:95",
@@ -5018,11 +2426,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "m/044.a",
-    "runtime_file": "m/044_runtime.a"
+    "file": "m/024.a",
+    "runtime_file": "m/024_runtime.a"
   },
   {
-    "id": "react/conformance/classify.go:98",
+    "id": "react/conformance/classify.go:100",
     "rule": "classify",
     "shape": "plain",
     "expression": "`\\buse[A-Z]\\w*\\s*\\(`",
@@ -5111,11 +2519,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/045.a",
-    "runtime_file": "plain/045_runtime.a"
+    "file": "plain/025.a",
+    "runtime_file": "plain/025_runtime.a"
   },
   {
-    "id": "react/exhaustive_deps.go:452",
+    "id": "react/exhaustive_deps.go:420",
     "rule": "exhaustive-deps",
     "shape": "plain",
     "expression": "`Effect($|[^a-z])`",
@@ -5216,11 +2624,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/046.a",
-    "runtime_file": "plain/046_runtime.a"
+    "file": "plain/026.a",
+    "runtime_file": "plain/026_runtime.a"
   },
   {
-    "id": "react/no_unstable_nested_components.go:450",
+    "id": "react/no_unstable_nested_components.go:303",
     "rule": "no-unstable-nested-components",
     "shape": "plain",
     "expression": "`^use[A-Z0-9].*$`",
@@ -5297,11 +2705,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/047.a",
-    "runtime_file": "plain/047_runtime.a"
+    "file": "plain/027.a",
+    "runtime_file": "plain/027_runtime.a"
   },
   {
-    "id": "react/no_unstable_nested_components.go:893",
+    "id": "react/no_unstable_nested_components.go:396",
     "rule": "no-unstable-nested-components",
     "shape": "dynamic",
     "expression": "builder.String()",
@@ -5378,11 +2786,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "dynamic/048.a",
-    "runtime_file": "dynamic/048_runtime.a"
+    "file": "dynamic/028.a",
+    "runtime_file": "dynamic/028_runtime.a"
   },
   {
-    "id": "react/sort_comp.go:120",
+    "id": "react/sort_comp.go:105",
     "rule": "sort-comp",
     "shape": "plain",
     "expression": "`/(.*)/([gimsuy]*)`",
@@ -5517,8 +2925,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/049.a",
-    "runtime_file": "plain/049_runtime.a"
+    "file": "plain/029.a",
+    "runtime_file": "plain/029_runtime.a"
   },
   {
     "id": "tailwind/class_existence.go:63",
@@ -5581,8 +2989,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/050.a",
-    "runtime_file": "plain/050_runtime.a"
+    "file": "plain/030.a",
+    "runtime_file": "plain/030_runtime.a"
   },
   {
     "id": "tailwind/class_existence.go:70",
@@ -5645,11 +3053,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/051.a",
-    "runtime_file": "plain/051_runtime.a"
+    "file": "plain/031.a",
+    "runtime_file": "plain/031_runtime.a"
   },
   {
-    "id": "tailwind/class_matchers.go:783",
+    "id": "tailwind/class_matchers.go:521",
     "rule": "class-matchers",
     "shape": "plain",
     "expression": "`^[A-Z_a-z][0-9A-Z_a-z]*$`",
@@ -5772,11 +3180,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/052.a",
-    "runtime_file": "plain/052_runtime.a"
+    "file": "plain/032.a",
+    "runtime_file": "plain/032_runtime.a"
   },
   {
-    "id": "tailwind/class_order_strict.go:89",
+    "id": "tailwind/class_order_strict.go:54",
     "rule": "class-order-strict",
     "shape": "plain",
     "expression": "`^(.*):`",
@@ -5911,11 +3319,478 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/053.a",
-    "runtime_file": "plain/053_runtime.a"
+    "file": "plain/033.a",
+    "runtime_file": "plain/033_runtime.a"
   },
   {
-    "id": "tailwind/collapse/utility_nodes.go:131",
+    "id": "tailwind/collapse/canonicalizer_arbitrary.go:615",
+    "rule": "canonicalizer-arbitrary",
+    "shape": "plain",
+    "expression": "`^--[A-Za-z0-9_-]+$`",
+    "go_pattern": "^--[A-Za-z0-9_-]+$",
+    "pattern": "^--[A-Za-z0-9_-]+(?![\\s\\S])",
+    "flags": "gu",
+    "binding": "",
+    "outside": "",
+    "samples": [
+      {
+        "input": "",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "🌍",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "TODO\n",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": " TODO",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "--A",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "--A"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "--A"
+          }
+        ]
+      },
+      {
+        "input": "x--A",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "--A\n",
+        "go_matches": [],
+        "node_matches": []
+      }
+    ],
+    "native_expectation": "awaits codex/regex-runtime-compiler",
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/034.a",
+    "runtime_file": "plain/034_runtime.a"
+  },
+  {
+    "id": "tailwind/collapse/canonicalizer_arbitrary.go:652",
+    "rule": "canonicalizer-arbitrary",
+    "shape": "dynamic",
+    "expression": "`var\\(` + variable + `[,)]`",
+    "go_pattern": "var\\(--foo[,)]",
+    "pattern": "var\\(--foo[,)]",
+    "flags": "gu",
+    "binding": "variable=--foo",
+    "outside": "",
+    "samples": [
+      {
+        "input": "",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "🌍",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "TODO\n",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": " TODO",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "var(--foo)",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "var(--foo)"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "var(--foo)"
+          }
+        ]
+      },
+      {
+        "input": "xvar(--foo)",
+        "go_matches": [
+          {
+            "start": 1,
+            "end": 11,
+            "text": "var(--foo)"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 1,
+            "end": 11,
+            "text": "var(--foo)"
+          }
+        ]
+      },
+      {
+        "input": "var(--foo)\n",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "var(--foo)"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "var(--foo)"
+          }
+        ]
+      }
+    ],
+    "native_expectation": "awaits codex/regex-runtime-compiler",
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/035.a",
+    "runtime_file": "dynamic/035_runtime.a"
+  },
+  {
+    "id": "tailwind/collapse/class_list.go:68",
+    "rule": "class-list",
+    "shape": "plain",
+    "expression": "`(\\d+)_(\\d+)`",
+    "go_pattern": "(\\d+)_(\\d+)",
+    "pattern": "(\\d+)_(\\d+)",
+    "flags": "gu",
+    "binding": "",
+    "outside": "",
+    "samples": [
+      {
+        "input": "",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "🌍",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "TODO\n",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": " TODO",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "0_0",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "0_0"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "0_0"
+          }
+        ]
+      },
+      {
+        "input": "x0_0",
+        "go_matches": [
+          {
+            "start": 1,
+            "end": 4,
+            "text": "0_0"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 1,
+            "end": 4,
+            "text": "0_0"
+          }
+        ]
+      },
+      {
+        "input": "0_0\n",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "0_0"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "0_0"
+          }
+        ]
+      }
+    ],
+    "native_expectation": "awaits codex/regex-runtime-compiler",
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/036.a",
+    "runtime_file": "plain/036_runtime.a"
+  },
+  {
+    "id": "tailwind/collapse/signature.go:71",
+    "rule": "signature",
+    "shape": "(?i)",
+    "expression": "`(?i)#(?:[a-f0-9]{8}|[a-f0-9]{6}|[a-f0-9]{4}|[a-f0-9]{3})`",
+    "go_pattern": "(?i)#(?:[a-f0-9]{8}|[a-f0-9]{6}|[a-f0-9]{4}|[a-f0-9]{3})",
+    "pattern": "#(?:[a-f0-9]{8}|[a-f0-9]{6}|[a-f0-9]{4}|[a-f0-9]{3})",
+    "flags": "gui",
+    "binding": "",
+    "outside": "",
+    "samples": [
+      {
+        "input": "",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "🌍",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "TODO\n",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": " TODO",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "#AAAAAAAA",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "#AAAAAAAA"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "#AAAAAAAA"
+          }
+        ]
+      },
+      {
+        "input": "x#AAAAAAAA",
+        "go_matches": [
+          {
+            "start": 1,
+            "end": 10,
+            "text": "#AAAAAAAA"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 1,
+            "end": 10,
+            "text": "#AAAAAAAA"
+          }
+        ]
+      },
+      {
+        "input": "#AAAAAAAA\n",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "#AAAAAAAA"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "#AAAAAAAA"
+          }
+        ]
+      },
+      {
+        "input": "// TODO: GH#18217",
+        "go_matches": [
+          {
+            "start": 11,
+            "end": 16,
+            "text": "#1821"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 11,
+            "end": 16,
+            "text": "#1821"
+          }
+        ]
+      },
+      {
+        "input": "// Omit declaration files from bundle results, too // TODO: GH#18217",
+        "go_matches": [
+          {
+            "start": 62,
+            "end": 67,
+            "text": "#1821"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 62,
+            "end": 67,
+            "text": "#1821"
+          }
+        ]
+      },
+      {
+        "input": "// TODO: GH#18217 Optional methods are frequently used as non-optional",
+        "go_matches": [
+          {
+            "start": 11,
+            "end": 16,
+            "text": "#1821"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 11,
+            "end": 16,
+            "text": "#1821"
+          }
+        ]
+      }
+    ],
+    "native_expectation": "awaits codex/regex-runtime-compiler",
+    "native_when_accepted": "required identical matches and spans",
+    "file": "i/037.a",
+    "runtime_file": "i/037_runtime.a"
+  },
+  {
+    "id": "tailwind/collapse/signature_compile.go:74",
+    "rule": "signature-compile",
+    "shape": "plain",
+    "expression": "`--alpha\\(|--spacing\\(|--theme\\(|theme\\(`",
+    "go_pattern": "--alpha\\(|--spacing\\(|--theme\\(|theme\\(",
+    "pattern": "--alpha\\(|--spacing\\(|--theme\\(|theme\\(",
+    "flags": "gu",
+    "binding": "",
+    "outside": "",
+    "samples": [
+      {
+        "input": "",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "🌍",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "TODO\n",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": " TODO",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "--alpha(",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "--alpha("
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "--alpha("
+          }
+        ]
+      },
+      {
+        "input": "x--alpha(",
+        "go_matches": [
+          {
+            "start": 1,
+            "end": 9,
+            "text": "--alpha("
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 1,
+            "end": 9,
+            "text": "--alpha("
+          }
+        ]
+      },
+      {
+        "input": "--alpha(\n",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "--alpha("
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "--alpha("
+          }
+        ]
+      }
+    ],
+    "native_expectation": "awaits codex/regex-runtime-compiler",
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/038.a",
+    "runtime_file": "plain/038_runtime.a"
+  },
+  {
+    "id": "tailwind/collapse/utility_nodes.go:134",
     "rule": "utility-nodes",
     "shape": "plain",
     "expression": "`\\\\\\*`",
@@ -6026,11 +3901,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/054.a",
-    "runtime_file": "plain/054_runtime.a"
+    "file": "plain/039.a",
+    "runtime_file": "plain/039_runtime.a"
   },
   {
-    "id": "tailwind/collapse/utility_nodes.go:138",
+    "id": "tailwind/collapse/utility_nodes.go:141",
     "rule": "utility-nodes",
     "shape": "plain",
     "expression": "`--(.*?)\\s--(.*?)`",
@@ -6131,11 +4006,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/055.a",
-    "runtime_file": "plain/055_runtime.a"
+    "file": "plain/040.a",
+    "runtime_file": "plain/040_runtime.a"
   },
   {
-    "id": "tailwind/collapse/utility_nodes.go:140",
+    "id": "tailwind/collapse/utility_nodes.go:143",
     "rule": "utility-nodes",
     "shape": "plain",
     "expression": "`\\s+`",
@@ -6265,11 +4140,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/056.a",
-    "runtime_file": "plain/056_runtime.a"
+    "file": "plain/041.a",
+    "runtime_file": "plain/041_runtime.a"
   },
   {
-    "id": "tailwind/collapse/utility_nodes.go:142",
+    "id": "tailwind/collapse/utility_nodes.go:145",
     "rule": "utility-nodes",
     "shape": "plain",
     "expression": "`(-\\*){2,}`",
@@ -6353,8 +4228,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/057.a",
-    "runtime_file": "plain/057_runtime.a"
+    "file": "plain/042.a",
+    "runtime_file": "plain/042_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:64",
@@ -6417,8 +4292,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/058.a",
-    "runtime_file": "plain/058_runtime.a"
+    "file": "plain/043.a",
+    "runtime_file": "plain/043_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:65",
@@ -6481,8 +4356,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/059.a",
-    "runtime_file": "plain/059_runtime.a"
+    "file": "plain/044.a",
+    "runtime_file": "plain/044_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:66",
@@ -6545,8 +4420,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/060.a",
-    "runtime_file": "plain/060_runtime.a"
+    "file": "plain/045.a",
+    "runtime_file": "plain/045_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:67",
@@ -6609,8 +4484,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/061.a",
-    "runtime_file": "plain/061_runtime.a"
+    "file": "plain/046.a",
+    "runtime_file": "plain/046_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:68",
@@ -6673,8 +4548,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/062.a",
-    "runtime_file": "plain/062_runtime.a"
+    "file": "plain/047.a",
+    "runtime_file": "plain/047_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:69",
@@ -6737,8 +4612,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/063.a",
-    "runtime_file": "plain/063_runtime.a"
+    "file": "plain/048.a",
+    "runtime_file": "plain/048_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:73",
@@ -6801,8 +4676,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/064.a",
-    "runtime_file": "plain/064_runtime.a"
+    "file": "plain/049.a",
+    "runtime_file": "plain/049_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:74",
@@ -6865,8 +4740,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/065.a",
-    "runtime_file": "plain/065_runtime.a"
+    "file": "plain/050.a",
+    "runtime_file": "plain/050_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:75",
@@ -6929,8 +4804,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/066.a",
-    "runtime_file": "plain/066_runtime.a"
+    "file": "plain/051.a",
+    "runtime_file": "plain/051_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:76",
@@ -6993,8 +4868,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/067.a",
-    "runtime_file": "plain/067_runtime.a"
+    "file": "plain/052.a",
+    "runtime_file": "plain/052_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:77",
@@ -7057,8 +4932,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/068.a",
-    "runtime_file": "plain/068_runtime.a"
+    "file": "plain/053.a",
+    "runtime_file": "plain/053_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:78",
@@ -7121,8 +4996,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/069.a",
-    "runtime_file": "plain/069_runtime.a"
+    "file": "plain/054.a",
+    "runtime_file": "plain/054_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:82",
@@ -7185,8 +5060,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/070.a",
-    "runtime_file": "plain/070_runtime.a"
+    "file": "plain/055.a",
+    "runtime_file": "plain/055_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:83",
@@ -7249,8 +5124,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/071.a",
-    "runtime_file": "plain/071_runtime.a"
+    "file": "plain/056.a",
+    "runtime_file": "plain/056_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:84",
@@ -7313,8 +5188,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/072.a",
-    "runtime_file": "plain/072_runtime.a"
+    "file": "plain/057.a",
+    "runtime_file": "plain/057_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:85",
@@ -7377,8 +5252,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/073.a",
-    "runtime_file": "plain/073_runtime.a"
+    "file": "plain/058.a",
+    "runtime_file": "plain/058_runtime.a"
   },
   {
     "id": "tailwind/no_deprecated_classes.go:87",
@@ -7441,11 +5316,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/074.a",
-    "runtime_file": "plain/074_runtime.a"
+    "file": "plain/059.a",
+    "runtime_file": "plain/059_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:88",
+    "id": "tailwind/no_deprecated_classes.go:89",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^decoration-slice$`",
@@ -7505,11 +5380,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/075.a",
-    "runtime_file": "plain/075_runtime.a"
+    "file": "plain/060.a",
+    "runtime_file": "plain/060_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:89",
+    "id": "tailwind/no_deprecated_classes.go:95",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^decoration-clone$`",
@@ -7569,11 +5444,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/076.a",
-    "runtime_file": "plain/076_runtime.a"
+    "file": "plain/061.a",
+    "runtime_file": "plain/061_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:92",
+    "id": "tailwind/no_deprecated_classes.go:102",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^bg-left-top$`",
@@ -7633,11 +5508,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/077.a",
-    "runtime_file": "plain/077_runtime.a"
+    "file": "plain/062.a",
+    "runtime_file": "plain/062_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:93",
+    "id": "tailwind/no_deprecated_classes.go:103",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^bg-left-bottom$`",
@@ -7697,11 +5572,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/078.a",
-    "runtime_file": "plain/078_runtime.a"
+    "file": "plain/063.a",
+    "runtime_file": "plain/063_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:94",
+    "id": "tailwind/no_deprecated_classes.go:104",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^bg-right-top$`",
@@ -7761,11 +5636,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/079.a",
-    "runtime_file": "plain/079_runtime.a"
+    "file": "plain/064.a",
+    "runtime_file": "plain/064_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:95",
+    "id": "tailwind/no_deprecated_classes.go:105",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^bg-right-bottom$`",
@@ -7825,11 +5700,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/080.a",
-    "runtime_file": "plain/080_runtime.a"
+    "file": "plain/065.a",
+    "runtime_file": "plain/065_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:96",
+    "id": "tailwind/no_deprecated_classes.go:106",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^object-left-top$`",
@@ -7889,11 +5764,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/081.a",
-    "runtime_file": "plain/081_runtime.a"
+    "file": "plain/066.a",
+    "runtime_file": "plain/066_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:97",
+    "id": "tailwind/no_deprecated_classes.go:108",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^object-left-bottom$`",
@@ -7953,11 +5828,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/082.a",
-    "runtime_file": "plain/082_runtime.a"
+    "file": "plain/067.a",
+    "runtime_file": "plain/067_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:98",
+    "id": "tailwind/no_deprecated_classes.go:113",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^object-right-top$`",
@@ -8017,11 +5892,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/083.a",
-    "runtime_file": "plain/083_runtime.a"
+    "file": "plain/068.a",
+    "runtime_file": "plain/068_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:99",
+    "id": "tailwind/no_deprecated_classes.go:115",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^object-right-bottom$`",
@@ -8081,11 +5956,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/084.a",
-    "runtime_file": "plain/084_runtime.a"
+    "file": "plain/069.a",
+    "runtime_file": "plain/069_runtime.a"
   },
   {
-    "id": "tailwind/no_physical_direction.go:287",
+    "id": "tailwind/no_physical_direction.go:290",
     "rule": "no-physical-direction",
     "shape": "plain",
     "expression": "`^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?$`",
@@ -8208,11 +6083,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/085.a",
-    "runtime_file": "plain/085_runtime.a"
+    "file": "plain/070.a",
+    "runtime_file": "plain/070_runtime.a"
   },
   {
-    "id": "tailwind/tools/generate_variant/main.go:232",
+    "id": "tailwind/tools/generate_variant/main.go:261",
     "rule": "main",
     "shape": "plain",
     "expression": "`(?:class|className)\\s*=\\s*\"([^\"\\n{}$]+)\"`",
@@ -8313,8 +6188,8 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/086.a",
-    "runtime_file": "plain/086_runtime.a"
+    "file": "plain/071.a",
+    "runtime_file": "plain/071_runtime.a"
   },
   {
     "id": "typescript/ban_tslint_comment.go:24",
@@ -8389,11 +6264,11 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/087.a",
-    "runtime_file": "plain/087_runtime.a"
+    "file": "plain/072.a",
+    "runtime_file": "plain/072_runtime.a"
   },
   {
-    "id": "typescript/no_unnecessary_template_expression.go:575",
+    "id": "typescript/no_unnecessary_template_expression.go:579",
     "rule": "no-unnecessary-template-expression",
     "shape": "plain",
     "expression": "`\\$$`",
@@ -8465,7 +6340,7 @@
     ],
     "native_expectation": "awaits codex/regex-runtime-compiler",
     "native_when_accepted": "required identical matches and spans",
-    "file": "plain/088.a",
-    "runtime_file": "plain/088_runtime.a"
+    "file": "plain/073.a",
+    "runtime_file": "plain/073_runtime.a"
   }
 ]

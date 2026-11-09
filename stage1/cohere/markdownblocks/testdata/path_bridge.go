@@ -52,21 +52,19 @@ func adamicPathObserve(root *Node) string {
 		}
 	}
 	even := func(node *Node) bool { return ids[node]%2 == 0 }
-	some := func(value any, name any, index int, hasIndex bool) bool {
-		_, node := value.(*Node)
-		_, property := name.(string)
-		return node && (name == nil || property) && (!hasIndex || index >= -1)
+	some := func(value printing.Value[*Node], name string, index int, hasIndex bool) bool {
+		_, node := value.Node()
+		return node && (!hasIndex || index >= -1)
 	}
-	never := func(value any, name any, index int, hasIndex bool) bool {
-		_, node := value.(*Node)
-		_, property := name.(string)
-		return node && property && hasIndex && index == -9
+	never := func(value printing.Value[*Node], name string, index int, hasIndex bool) bool {
+		_, node := value.Node()
+		return node && name != "" && hasIndex && index == -9
 	}
-	var snapshot func(*printing.AstPath[*Node]) string
-	snapshot = func(path *printing.AstPath[*Node]) string {
+	var snapshot func(*astPath) string
+	snapshot = func(path *astPath) string {
 		stack := []string{}
 		owner := -1
-		for _, value := range path.Stack() {
+		for _, value := range adamicPathStack(path) {
 			if node, ok := value.(*Node); ok && node != nil {
 				owner = ids[node]
 			}
@@ -85,28 +83,28 @@ func adamicPathObserve(root *Node) string {
 		for count := 0; count < 5; count++ {
 			nodes = append(nodes, fmt.Sprint(number(path.GetNode(count))))
 		}
-		return strings.Join([]string{strings.Join(stack, ","), frame(path.Value(), owner), key, fmt.Sprint(index), frame(path.Name(), owner),
+		return strings.Join([]string{strings.Join(stack, ","), frame(adamicPathValue(path.Value()), owner), key, fmt.Sprint(index), frame(adamicPathName(path), owner),
 			fmt.Sprint(number(path.Node())), fmt.Sprint(number(path.Parent())), fmt.Sprint(number(path.Grandparent())), fmt.Sprint(number(path.Root())),
 			fmt.Sprint(number(path.Next())), fmt.Sprint(number(path.Previous())), fmt.Sprint(path.IsRoot()), fmt.Sprint(path.IsInArray()), fmt.Sprint(path.IsFirst()), fmt.Sprint(path.IsLast()),
 			strings.Join(ancestors, ","), strings.Join(nodes, ","), fmt.Sprint(number(path.GetParentNode(1))), fmt.Sprint(number(path.FindAncestor(even))), fmt.Sprint(path.HasAncestor(even)),
 			fmt.Sprint(path.Match()), fmt.Sprint(path.Match(nil)), fmt.Sprint(path.Match(some, nil)), fmt.Sprint(path.Match(some, some)), fmt.Sprint(path.Match(never))}, "|")
 	}
-	identity := func(path *printing.AstPath[*Node], i int, _ any) int {
+	identity := func(path *astPath, i int) int {
 		node, _ := path.Node()
 		owner := -1
-		for _, value := range path.Stack() {
+		for _, value := range adamicPathStack(path) {
 			if n, ok := value.(*Node); ok && n != nil && n != node {
 				owner = ids[n]
 			}
 		}
 		return (ids[node]+1)*1000000 + (i+1)*1000 + owner
 	}
-	observe := func(path *printing.AstPath[*Node]) string {
-		rows := []string{snapshot(path), printing.Call(path, snapshot, "children"), printing.Call(path, snapshot, "children", -1), printing.Call(path, snapshot, "children", 999999), printing.Call(path, snapshot, "absent")}
+	observe := func(path *astPath) string {
+		rows := []string{snapshot(path), printing.Call(path, snapshot, "children"), printing.CallElement(path, snapshot, -1, "children"), printing.CallElement(path, snapshot, 999999, "children"), printing.Call(path, snapshot, "absent")}
 		for count := 0; count < min(3, len(path.Ancestors())); count++ {
-			rows = append(rows, printing.CallParent(path, snapshot, count), fmt.Sprint(printing.CallParent(path, func(p *printing.AstPath[*Node]) int { return number(p.Node()) }, count)), fmt.Sprint(printing.CallParent(path, func(p *printing.AstPath[*Node]) bool { return p.IsFirst() }, count)))
+			rows = append(rows, printing.CallParent(path, snapshot, count), fmt.Sprint(printing.CallParent(path, func(p *astPath) int { return number(p.Node()) }, count)), fmt.Sprint(printing.CallParent(path, func(p *astPath) bool { return p.IsFirst() }, count)))
 		}
-		rows = append(rows, fmt.Sprint(printing.Call(path, func(p *printing.AstPath[*Node]) int { return number(p.Node()) }, "children", 0)), snapshot(path))
+		rows = append(rows, fmt.Sprint(printing.CallElement(path, func(p *astPath) int { return number(p.Node()) }, 0, "children")), snapshot(path))
 		values := printing.Map(path, identity, "children")
 		text := []string{}
 		for _, v := range values {
@@ -114,30 +112,67 @@ func adamicPathObserve(root *Node) string {
 		}
 		rows = append(rows, strings.Join(text, ","))
 		text = nil
-		path.Each(func(p *printing.AstPath[*Node], i int, a any) { text = append(text, fmt.Sprint(identity(p, i, a))) }, "children")
+		path.Each(func(p *astPath, i int) { text = append(text, fmt.Sprint(identity(p, i))) }, "children")
 		rows = append(rows, strings.Join(text, ","), snapshot(path))
 		return strings.Join(rows, "\n")
 	}
 	rows := []string{}
-	path := printing.NewAstPath(root)
-	var walk func(*printing.AstPath[*Node])
-	walk = func(p *printing.AstPath[*Node]) {
+	path := printing.NewAstPath(root, (*settings)(nil))
+	var walk func(*astPath)
+	walk = func(p *astPath) {
 		node, _ := p.Node()
 		if len(node.Children) > 0 || p.IsRoot() {
 			rows = append(rows, observe(p))
 		} else {
 			rows = append(rows, snapshot(p))
 		}
-		p.Each(func(p *printing.AstPath[*Node], _ int, _ any) { walk(p) }, "children")
+		p.Each(func(p *astPath, _ int) { walk(p) }, "children")
 	}
 	walk(path)
 	return strings.Join(rows, "\n")
 }
 
 func AdamicPathKeyWitness() string {
-	path := printing.NewAstPath(&Node{NodeType: "root", IsParent: true, Children: []*Node{}})
-	return printing.Call(path, func(p *printing.AstPath[*Node]) string {
+	path := printing.NewAstPath(&Node{NodeType: "root", IsParent: true, Children: []*Node{}}, (*settings)(nil))
+	return printing.CallElement(path, func(p *astPath) string {
 		key, present := p.Key()
 		return fmt.Sprintf("key=%q present=%t\n", key, present)
-	}, "absent", "children", 0)
+	}, 0, "absent", "children")
+}
+
+// Keep the transport's alternating name/value stack while cohere stores typed frames.
+func adamicPathValue(value printing.Value[*Node]) any {
+	if node, ok := value.Node(); ok {
+		return node
+	}
+	if nodes, ok := value.Nodes(); ok {
+		return nodes
+	}
+	if leaf, ok := value.Leaf(); ok {
+		return leaf
+	}
+	return nil
+}
+func adamicPathFrameName(name printing.PathName) any {
+	if name.IsIndex {
+		return name.Index
+	}
+	return name.Property
+}
+func adamicPathStack(path *astPath) []any {
+	var stack []any
+	for index, entry := range path.Stack() {
+		if index > 0 {
+			stack = append(stack, adamicPathFrameName(entry.Name))
+		}
+		stack = append(stack, adamicPathValue(entry.Value))
+	}
+	return stack
+}
+func adamicPathName(path *astPath) any {
+	stack := path.Stack()
+	if len(stack) == 1 {
+		return nil
+	}
+	return adamicPathFrameName(stack[len(stack)-1].Name)
 }

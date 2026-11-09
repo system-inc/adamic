@@ -1,0 +1,12 @@
+// tailwind/collapse/canonicalizer_arbitrary.go:652; `var\(` + variable + `[,)]`
+import { observe } from '../observe.a';
+const pattern = "var\\(--foo[,)]";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "var(--foo)", 4);
+observe(regex, "xvar(--foo)", 5);
+observe(regex, "var(--foo)\n", 6);

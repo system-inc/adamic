@@ -8,7 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoExtraBind() rule.Rule { return rules.NoExtraBind }
+func oracleNoExtraBind(options any) rule.Bound { return bindOracle(rules.NoExtraBind, options) }
 
 // The upstream rule has an empty options schema and ignores options.
 func oracleNoExtraBindOptions(fields []string) any {

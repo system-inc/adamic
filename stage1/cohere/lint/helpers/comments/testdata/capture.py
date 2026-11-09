@@ -13,10 +13,10 @@ consumers = {r['rule'] for r in ledger['remaining'] if any('/comments.' in h for
 with tempfile.TemporaryDirectory(prefix='adamic-comments-capture-') as scratch:
     scratch = Path(scratch)
     harness = COHERE / 'internal/lint/testing/rule_testing.go'
-    original = 'return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}'
+    original = 'expectEachFixParses(test, sourceFile, diagnostics)\n\treturn Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}'
     source = harness.read_text()
     assert source.count(original) == 1
-    replacement = 'result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result'
+    replacement = 'expectEachFixParses(test, sourceFile, diagnostics)\n\tresult := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n\tRecordAssertedCase(test, result)\n\treturn result'
     side = scratch / 'harness.go'
     side.write_text(source.replace(original, replacement))
     overlay = scratch / 'overlay.json'

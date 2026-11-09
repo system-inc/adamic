@@ -96,7 +96,7 @@ func main() {
 			before := time.Now()
 			actual := type_checking.GetConstrainedTypeAtLocation(typeChecker, node)
 			var frame strings.Builder
-			for part := range type_checking.UnionTypePartsSeq(actual) {
+			for part := range type_checking.UnionTypePartsSequence(actual) {
 				name := typeChecker.TypeToString(part)
 				fmt.Fprintf(&frame, "%d\n%d\n%s", part.Flags(), len(utf16.Encode([]rune(name))), name)
 			}
@@ -131,7 +131,7 @@ func main() {
 		listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) {
 			d.RuleName = subject.Name
 			collected = append(collected, d)
-		}}, nil)
+		}}, rule.Given[rule.NoOptions]{})
 		var walk func(*ast.Node)
 		walk = func(node *ast.Node) {
 			if node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindMinusToken {

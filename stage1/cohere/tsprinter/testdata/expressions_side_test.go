@@ -13,7 +13,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/system-inc/cohere/internal/format/estree"
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 )
 
 type portExpressionCase struct {
@@ -456,7 +456,7 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 			rejected["generated-expanded-argument"]++
 		}
 	}
-	options := formatoptions.Default()
+	options := format_options.Default()
 	options.PrintWidth = 80
 	var input, answers strings.Builder
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
@@ -720,7 +720,7 @@ func TestAdamicExpressionBenchmark(t *testing.T) {
 		}
 		return result.String()
 	}
-	options := formatoptions.Default()
+	options := format_options.Default()
 	options.PrintWidth = 80
 	if width := os.Getenv("ADAMIC_TS_BENCH_WIDTH"); width != "" {
 		options.PrintWidth, err = strconv.Atoi(width)

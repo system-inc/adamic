@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUnderscoreDangle() rule.Rule { return rules.NoUnderscoreDangle }
+func oracleNoUnderscoreDangle(options any) rule.Bound {
+	return bindOracle(rules.NoUnderscoreDangle, options)
+}
 func oracleNoUnderscoreDangleOptions(fields []string) any {
 	var options rules.NoUnderscoreDangleOptions
 	if len(fields) > 5 && fields[5] != "" {

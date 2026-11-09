@@ -1,4 +1,4 @@
-// base/consistency_require_pagination_argument_name.go:27; `PaginationInput$`
+// base/consistency_require_pagination_argument_name.go:30; `PaginationInput$`
 import { observe } from '../observe.a';
 const pattern = "PaginationInput(?![\\s\\S])";
 const flags = "gu";

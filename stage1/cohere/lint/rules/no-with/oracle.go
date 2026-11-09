@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoWith() rule.Rule                 { return rules.NoWith }
+func oracleNoWith(options any) rule.Bound     { return bindOracle(rules.NoWith, options) }
 func oracleNoWithOptions(fields []string) any { return nil }

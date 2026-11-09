@@ -8,7 +8,9 @@ import (
 	"github.com/system-inc/cohere/internal/lint/rules/nexus"
 )
 
-func oracleNexusNoStutteringName() rule.Rule { return nexus.ConsistencyNoStutteringName }
+func oracleNexusNoStutteringName(options any) rule.Bound {
+	return bindOracle(nexus.ConsistencyNoStutteringName, options)
+}
 func oracleNexusNoStutteringNameOptions(fields []string) any {
 	var options nexus.ConsistencyNoStutteringNameOptions
 	if len(fields) > 5 && fields[5] != "" && fields[5] != "null" {

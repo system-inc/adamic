@@ -9,7 +9,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoReturnAssign() rule.Rule { return rules.NoReturnAssign }
+func oracleNoReturnAssign(options any) rule.Bound { return bindOracle(rules.NoReturnAssign, options) }
 
 // oracleNoReturnAssignOptions decodes the rule's one option, a mode written as a bare JSON string such as
 // "always". Anything else carries no mode: a null row, or an "all" row's object of other rules' options,
