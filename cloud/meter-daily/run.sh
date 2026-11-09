@@ -2,7 +2,8 @@
 # cloud/meter-daily/run.sh runs the stage 3 meter once on main's tip, the daily recipe in stage3/meter/README.md,
 # with no session behind it: meter-daily.service starts it as adamicmeter, a user of its own with network but no
 # keys, no push rights and no sudo (Loom's ruling; loomtest stays sealed behind #keydoor). It never commits or
-# pushes; submit.sh, as ahra, does that from the finished run directory, and only after this exits 0.
+# pushes; submit.sh, as ahra, does that from the finished run directory, and only after this exits 0 or 3, the
+# meter's whole record with a relation budget that isn't ok (#ny0c3gb), which is committed too.
 #
 #   sudo systemctl start meter-daily.service   (or by hand, as adamicmeter: bash cloud/meter-daily/run.sh)
 #
@@ -14,8 +15,9 @@
 #                     with no sha change can be traced to the tools. Outside work/ on purpose: once a run lands
 #                     on main, the next day's checkout would refuse to write a tracked file over its untracked twin
 #   logs/<stamp>.log  this script's steps and the meter's whole output, kept on failure
-#   status            the last run, key=value: outcome (Running, Succeeded, Failed), the step it reached, the main
-#                     sha, the run directory, the log, and the last line the failing step printed
+#   status            the last run, key=value: outcome (Running, Succeeded, OverBudget, BudgetUnknown, Failed), the
+#                     step it reached, the main sha, the run directory, the log, and the last line the failing step
+#                     printed, or the relation budget's why
 #
 # The toolchain is the box's own env.sh (ADAMIC_METER_TOOLS_ENV), which adamicmeter reads through an ACL: traverse
 # on /home/ahra, read on ~/adamic-tools. npm is bootstrapped from the pin and integrity in
@@ -34,8 +36,10 @@ mkdir -p "$home/logs" "$runs"
 log=$home/logs/$stamp.log
 toolchain=$home/logs/$stamp.toolchain.txt
 status=$home/status
+# outcome.py, beside this script (/srv/adamic-meter when installed), names what a finished meter's exit means.
+outcomes=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/outcome.py
 started=$(date -u +%FT%TZ)
-step=start sha="" run="" isLocked=false
+step=start sha="" run="" isLocked=false isRecorded=false
 
 say() { printf '%s meter-daily: %s\n' "$(date -u +%FT%TZ)" "$*" | tee -a "$log"; }
 
@@ -58,6 +62,8 @@ begin() {
 finish() {
 	local code=$?
 	[ "$code" = 0 ] && return 0
+	# A finished meter's outcome is recorded already, OverBudget or BudgetUnknown with the meter's own 3.
+	"$isRecorded" && return 0
 	# A run that never held the lock leaves the status to the run that does.
 	"$isLocked" || return 0
 	# A red run commits nothing, but the run directory the meter made, if it got that far, keeps what it used.
@@ -167,18 +173,36 @@ say "running stage3/meter/twice-daily.sh (per-ref, first-error, 3 h limit) on $s
 # when main moves between this fetch and the meter's own. The limit is 3 h, up from 2: on Nov 5 the latent census
 # of tsc's entry slowed past 2 h (#20pb346, tracing.ts's dumpTypes 41 s to 157 s) and the run was killed with no
 # record. It goes back to 2 h when #20pb346's cause is fixed; a hang still fails here, an hour later.
+meterExit=0
+# set -e is off inside a subshell that a || follows, so its cd stops it by hand.
 (
-	cd "$work"
+	cd "$work" || exit 1
 	STAGE3_METER_COMPILER=per-ref STAGE3_METER_LATENT=first-error STAGE3_METER_RUNS=$runs STAGE3_METER_MAIN_REF=$sha \
 		timeout --kill-after=60s 10800 bash stage3/meter/twice-daily.sh
-) >> "$log" 2>&1
+) >> "$log" 2>&1 || meterExit=$?
+# 3 is a whole record whose relation budget isn't ok; any other non-zero, the timeout's 124 among them, is Failed.
+case $meterExit in
+	0 | 3) ;;
+	*) exit "$meterExit" ;;
+esac
 run=$(sed -n 's/^run: //p' "$log" | tail -n 1)
-[ -n "$run" ] && [ -f "$run/report.md" ] && [ -f "$run/report.json" ] || { say "the meter exited 0 but left no report in '$run'"; exit 1; }
+[ -n "$run" ] && [ -f "$run/report.md" ] && [ -f "$run/report.json" ] || { say "the meter exited $meterExit but left no report in '$run'"; exit 1; }
 cp "$toolchain" "$run/toolchain.txt"
 # twice-daily.sh makes the run with mktemp -d, mode 0700, and under a default ACL those group bits become the mask,
 # which would leave ahra's read entry worth nothing. Opening the group bits opens the mask; the group is this user's.
 chmod -R g+rX "$run"
 
 step=done
-record Succeeded 0 "$(head -n 1 "$run/report.md")"
-say "measured $sha in $run"
+# The outcome on its first line, and for OverBudget or BudgetUnknown the budget's why on its second.
+verdict=$(python3 -I "$outcomes" meter "$meterExit" "$run/report.json")
+outcome=${verdict%%$'\n'*}
+if [ "$outcome" = Succeeded ]; then
+	record Succeeded 0 "$(head -n 1 "$run/report.md")"
+else
+	why=""
+	[[ $verdict != *$'\n'* ]] || why=${verdict#*$'\n'}
+	record "$outcome" "$meterExit" "$why"
+fi
+isRecorded=true
+say "measured $sha in $run: $outcome"
+exit "$meterExit"

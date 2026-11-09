@@ -24,3 +24,14 @@ test_relation_budget_unknown_day_without_trailer_exits_nonzero: 0 != 3
 ## Mutant (c): the script stops right after report.py, before gzip, timing and README (expected red)
 FAILED (failures=8): every measure() test 3 != 0, and both red-day tests
 "timing.json missing: the record stopped before the exit".
+
+# cloud/meter-daily: a day that exits 3 is recorded as OverBudget or BudgetUnknown and still committed (Correctness's ruling)
+# python3 -m unittest outcome_test, from cloud/meter-daily, on Kirk's Mac (pure Python). Fixed: Ran 9 tests, OK.
+# Each mutant is a copy of outcome.py named by METER_OUTCOME_UNDER_TEST.
+m1, red becomes Succeeded: FAIL test_three_red_is_over_budget_with_its_why
+m2, unknown becomes OverBudget: FAIL test_three_unknown_is_budget_unknown_with_its_why, test_three_never_reads_ok_as_green
+m3, exit 2 becomes a budget exit: FAIL test_any_other_exit_is_failed (code=2)
+m4, Failed is submittable: FAIL test_exactly_the_three_are_submitted (outcome='Failed')
+m5, BudgetUnknown isn't submittable: FAIL test_exactly_the_three_are_submitted (outcome='BudgetUnknown')
+run.sh and submit.sh themselves are checked by bash -n only; their first proof is the box's next run after
+/srv/adamic-meter is reinstalled with outcome.py beside them.
