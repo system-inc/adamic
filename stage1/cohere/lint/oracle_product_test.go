@@ -1,9 +1,11 @@
 package lint
 
 import (
-	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
-
+	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
+	typed "github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/oracles"
 )
 
 // lintGoOracleProduct is the Go oracle over this package's live registry and rule oracles, laid over cohere
@@ -14,4 +16,13 @@ func lintGoOracleProduct(t *testing.T) string { t.Helper(); return oracles.LintG
 func TestProduct_LintFindsGoOracle(t *testing.T) {
 	t.Parallel()
 	lintGoOracleProduct(t)
+}
+
+func TestProduct_LintFindsTypedOwnership(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	typed.TypedOwnership(t, root)
 }
