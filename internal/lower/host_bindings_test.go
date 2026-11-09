@@ -93,7 +93,7 @@ func TestHostBindingReadsOutsideTheirGuardAreNotYet(t *testing.T) {
 // A guard is matched to the table's declaration by symbol, never by name: a local that shadows a host
 // binding's name is judged as the local (Language's condition 2 on #00qn5az). Mutant (c): hostBindingOf
 // takes the row by name, and the parameter's guarded call becomes the placeholder, while the local
-// performance stops as the pending row.
+// performance is judged by its model.
 func TestHostBindingShadowingLocalIsTheLocal(t *testing.T) {
 	t.Parallel()
 	t.Run("a parameter named onProfilerEvent beside the declaration", func(t *testing.T) {
@@ -201,17 +201,12 @@ func TestHostBindingUnmatchedDeclarationIsRefused(t *testing.T) {
 	}
 }
 
-// process and performance are Provided on Node, but their native column waits on Runtime's clearance,
-// their wasm32 column on Runtime's and Platforms', and performance's reads on #m36zjrk's host model, so
-// each stops as not yet at its declaration, naming what it waits on, never Node's answer printed where a
-// host has nothing.
+// process still waits on Runtime and Platforms to clear its target columns.
 func TestHostBindingPendingRowsAreNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, file, source, want string }{
 		{"process", "core.ts", "declare const process: { nextTick?: unknown; browser?: unknown; } | undefined;\nexport function isNodeLikeSystem(): boolean {\n\treturn typeof process !== \"undefined\" && !!process.nextTick && !process.browser;\n}\n",
 			"core.ts:1:15: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"},
-		{"performance", "performanceCore.ts", "interface Performance {\n\tnow(): number;\n}\ndeclare const performance: Performance | undefined;\nexport function now(): number {\n\treturn typeof performance === \"object\" ? performance.now() : 0;\n}\n",
-			"performanceCore.ts:4:15: stage 0 can't lower the host binding performance, pending Runtime's clearance of its native column, Runtime and Platforms' clearance of its wasm32 column and #m36zjrk's host model, yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

@@ -15,3 +15,24 @@ Adamic's isNodeLikeSystem mutant, `process` folded Absent turning isNodeLikeSyst
 | (g) The operands of the receiver not judged | lower/host_bindings.go, `hostBindingGlobalThisRefusal`: `if !l.globalObject(receiver) && !l.globalObjectOperand(receiver) {` made `if !l.globalObject(receiver) {` | TestHostBindingWritesAreRefused, the union the checker reduces to its other member: `(flag ? globalThis : other).process = other.process`, where other's type is a supertype of typeof globalThis, so the conditional's type is other's alone. Rule 50 lets it by, and it stops only as the global object as a value at its globalThis arm (head 2 alone: lowering's "reading process" at other's initializer, a line before) |
 | (h) A widening to object admitted | lower/global_object.go, `globalObjectAdmitted`: `case ast.KindParenthesizedExpression:` made `case ast.KindParenthesizedExpression, ast.KindVariableDeclaration:`, so an initializer may take the global object | TestGlobalObjectAsAValueIsNotYet, nine rows. The object and empty-object views with Reflect.set, Object.assign and defineProperty carry the global object past the stop as an `object` and stop only on lowering's "reading globalThis", the Reflect.set road through. The Record and index-signature views fall back to the record view's not yet, and the alias's three rows stop a line later, at the call that takes the alias, no longer where the global object became a value |
 | (i) No result of the global object judged | lower/global_object.go, `globalObjectResult`: `return global != nil && l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(global), l.checker.GetTypeAtLocation(node))` made `return global != nil && false` | TestGlobalObjectAsAValueIsNotYet, the nine valueOf rows: Reflect.set on globalThis.valueOf() (Language's p01), and through globalThis.globalThis, an element-access callee, an optional call and valueOf of valueOf, stop as "a namespace member without a lowered binding"; Object.assign on it (p02) as Object.assign's shape stop; Object.defineProperty on it (p03) as defineProperty's refusal; the widening to object (p08) as lowering's "reading globalThis"; and global.valueOf() (p04) as node:globals.global. None stops as the global object as a value, so lifting any of those would reopen Reflect.set's road |
+
+| (j) `performance` folded Absent | internal/load/host_bindings.json, performance's native, javascript and wasm32 columns each made `{"answer": "Absent"}`, and its model's path `""` (a row with no Provided column names no model) | TestHostBindingsHeldToNode/performance: all three columns disagree with Node's `object`; native, sanitized and javascript print `undefined` where Node prints `object` |
+
+Measured for (j) on Nov 8, 2026, against the performance Provided change on cd42fd2126b63e1647f6ee2e6c3dd2c87bdda2fe:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -run '^TestHostBindingsHeldToNode$/^performance$'
+```
+
+Exit 1. The failing assertion lines, verbatim:
+
+```text
+        host_bindings_test.go:74: the native column says Absent where Node's typeof is "object"
+        host_bindings_test.go:74: the javascript column says Absent where Node's typeof is "object"
+        host_bindings_test.go:74: the wasm32 column says Absent where Node's typeof is "object"
+        host_bindings_test.go:91: native: stdout differs, stdout "undefined\n", stderr ""
+        host_bindings_test.go:91: sanitized: stdout differs, stdout "undefined\n", stderr ""
+        host_bindings_test.go:91: javascript: stdout differs, stdout "undefined\n", stderr ""
+```
+
+The mutant was undone immediately after the run; performance's Provided row and node:perf_hooks model were restored byte for byte.
