@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-overlay=/tmp/ny0-overlay-corrected/census.json",
+    "-o",
+    "/tmp/ny0-census-corrected",
+    "./stage3/census/relation-overflow-real/tool"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 93.7828779220581
+}

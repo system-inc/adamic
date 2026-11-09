@@ -1,0 +1,34 @@
+{
+  "phase": "checked",
+  "checker": "0x1a43fb8c1508",
+  "RelationOverflow": "",
+  "RelationOverflowMarked": false,
+  "caches": {
+    "assignableRelation": {
+      "size": 51840,
+      "overflow": 0
+    },
+    "comparableRelation": {
+      "size": 15704,
+      "overflow": 0
+    },
+    "enumRelation": {
+      "size": 0,
+      "overflow": 0
+    },
+    "identityRelation": {
+      "size": 5738,
+      "overflow": 0
+    },
+    "strictSubtypeRelation": {
+      "size": 14928,
+      "overflow": 0
+    },
+    "subtypeRelation": {
+      "size": 15278,
+      "overflow": 0
+    }
+  },
+  "TS2859": [],
+  "pairs": []
+}
