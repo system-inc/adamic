@@ -1,5 +1,4 @@
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { Bindings } from './bindings.a';
 import type { RuleContext } from '../../context.ts';
 import { abbreviation } from './abbreviation_vocabulary.a';
 import { betweenToken, emit, foreign, last, name, parent } from './helpers.a';
@@ -40,72 +39,18 @@ function binding(context: RuleContext, index: number): number {
             'MethodSignature',
             'GetAccessor',
             'SetAccessor',
+            'EnumDeclaration',
             'EnumMember',
+            'NamedTupleMember',
+            'NamespaceExport',
+            'NamespaceExportDeclaration',
+            'JsxAttribute',
             'ModuleDeclaration',
         ].includes(node.kind)
     ) {
         return name(context, index);
     }
     return -1;
-}
-function nonbinding(kind: string): boolean {
-    return [
-        'PropertyAssignment',
-        'ShorthandPropertyAssignment',
-        'PropertyAccessExpression',
-        'PropertySignature',
-        'PropertyDeclaration',
-        'MethodDeclaration',
-        'MethodSignature',
-        'GetAccessor',
-        'SetAccessor',
-        'ExportSpecifier',
-        'EnumMember',
-        'JsxAttribute',
-    ].includes(kind);
-}
-function rest(context: RuleContext, index: number): boolean {
-    const owner = parent(context, index);
-    return (
-        owner >= 0 &&
-        ['Parameter', 'BindingElement'].includes(context.node(owner).kind) &&
-        binding(context, owner) === index &&
-        context.has(owner, 'DotDotDotToken')
-    );
-}
-function prepareBindings(context: RuleContext, state: Bindings): void {
-    if(state.bindingsReady) {
-        return;
-    }
-    for(let index = 0; index < context.parser.nodes.length; index++) {
-        const node = context.node(index);
-        if(node.kind !== 'Identifier') {
-            continue;
-        }
-        const owner = parent(context, index);
-        if(owner < 0 || binding(context, owner) !== index) {
-            continue;
-        }
-        const kind = context.node(owner).kind;
-        const importBinding = [
-            'ImportClause',
-            'NamespaceImport',
-            'ImportSpecifier',
-            'ImportEqualsDeclaration',
-        ].includes(kind);
-        if(importBinding || !nonbinding(kind)) {
-            state.recordBinding(node.text, importBinding, rest(context, index));
-        }
-    }
-    state.completeBindings();
-}
-function imported(context: RuleContext, text: string, state: Bindings): boolean {
-    prepareBindings(context, state);
-    return state.importedNames.has(text);
-}
-function onlyRest(context: RuleContext, state: Bindings): boolean {
-    prepareBindings(context, state);
-    return state.argsBound && !state.argsNonRest;
 }
 function nested(context: RuleContext, index: number): boolean {
     const owner = parent(context, index);
@@ -286,50 +231,72 @@ function referenceProperty(context: RuleContext, index: number): boolean {
     }
     return false;
 }
-function noAbbreviatedIdentifier(context: RuleContext, node: ParseNode, index: number, state: Bindings): void {
-    const text = node.text;
-    const finding = abbreviation(text);
-    if(finding === undefined) {
-        return;
-    }
+// Reads as declaresName and ast.IsDeclarationName, with a label added and import-equals excluded.
+function declaresName(context: RuleContext, index: number): boolean {
     const owner = parent(context, index);
-    const typeKey =
-        owner >= 0 &&
-        ['PropertySignature', 'MethodSignature'].includes(context.node(owner).kind) &&
-        name(context, owner) === index;
-    if(foreign(context, index) && !typeKey) {
-        return;
+    if(owner < 0) { return false; }
+    const kind = context.kind(owner);
+    if(kind === 'LabeledStatement') { return context.child(owner, 0) === index; }
+    if(kind === 'ImportEqualsDeclaration') { return false; }
+    return [
+        'VariableDeclaration', 'Parameter', 'BindingElement', 'FunctionDeclaration', 'FunctionExpression',
+        'ClassDeclaration', 'ClassExpression', 'InterfaceDeclaration', 'TypeAliasDeclaration',
+        'TypeParameter', 'EnumDeclaration', 'EnumMember', 'ModuleDeclaration', 'ImportClause',
+        'NamespaceImport', 'ImportSpecifier', 'ExportSpecifier', 'NamespaceExport',
+        'NamespaceExportDeclaration', 'NamedTupleMember', 'JsxAttribute',
+    ].includes(kind) && binding(context, owner) === index;
+}
+// Reads as abbreviatedPropertyMember. A computed string is a key; other computed names are reads.
+function propertyMember(context: RuleContext, index: number): number {
+    let key = index;
+    let owner = parent(context, key);
+    if(context.kind(owner) === 'ComputedPropertyName' && context.kind(index) === 'StringLiteral') {
+        key = owner;
+        owner = parent(context, key);
     }
-    if(imported(context, text, state) || (routeContract(context.parser.path, text) && !nested(context, index))) {
-        return;
+    if(owner < 0 || name(context, owner) !== key) { return -1; }
+    return ['PropertySignature', 'MethodSignature', 'PropertyDeclaration', 'MethodDeclaration',
+        'GetAccessor', 'SetAccessor', 'PropertyAssignment', 'ShorthandPropertyAssignment',
+    ].includes(context.kind(owner)) ? owner : -1;
+}
+// Reads as abbreviatedOwnsProperty with TypeChecker == nil, the context this syntax port supplies.
+// Contextual, inherited, combined and merged-symbol ownership need checker facts; none are guessed here.
+function ownsProperty(context: RuleContext, member: number): boolean {
+    const owner = parent(context, member);
+    if(owner < 0) { return false; }
+    if(context.kind(owner) === 'ObjectLiteralExpression') { return true; }
+    const path = context.parser.path.split('\\').join('/');
+    if(path.endsWith('.d.ts') || path.endsWith('.d.mts') || path.endsWith('.d.cts') || path.includes('/node_modules/')) { return false; }
+    for(let cursor = member; cursor >= 0; cursor = parent(context, cursor)) {
+        if(context.kind(cursor) !== 'ModuleDeclaration') { continue; }
+        const key = name(context, cursor);
+        if(context.node(cursor).operator === 'GlobalKeyword' || context.kind(key) === 'StringLiteral') { return false; }
     }
-    if(
-        finding.word === 'params' &&
-        ['whole', 'suffix'].includes(finding.form) &&
-        (filePattern(context, 'frameworkparameterfilepatterns') || frameworkScope(context, index))
-    ) {
-        return;
+    return true;
+}
+// Reads as ConsistencyNoAbbreviatedIdentifier.Run's judge, without a rename or any fixes.
+function noAbbreviatedIdentifier(context: RuleContext, node: ParseNode, index: number): void {
+    const text = node.kind === 'PrivateIdentifier' && node.text.startsWith('#') ? node.text.slice(1) : node.text;
+    const member = propertyMember(context, index);
+    const property = member >= 0;
+    if(property) {
+        if(!ownsProperty(context, member)) { return; }
     }
-    if(finding.form === 'whole') {
-        if(finding.word === 'ref' && referenceProperty(context, index)) {
-            return;
-        }
-        if(finding.word === 'config' && filePattern(context, 'frameworkconstantfilepatterns')) {
-            return;
-        }
-        if(finding.word === 'args' && (rest(context, index) || onlyRest(context, state))) {
-            return;
-        }
+    else if(node.kind !== 'Identifier' || !declaresName(context, index) || foreign(context, index)) { return; }
+    if(!property && routeContract(context.parser.path, text) && !nested(context, index)) { return; }
+    const finding = abbreviation(text, !property);
+    if(finding === undefined) { return; }
+    if(!property && finding.word === 'params' && ['whole', 'suffix'].includes(finding.form) &&
+        (filePattern(context, 'frameworkparameterfilepatterns') || frameworkScope(context, index))) { return; }
+    if(!property && finding.form === 'whole') {
+        if(finding.word === 'ref' && referenceProperty(context, index)) { return; }
+        if(finding.word === 'config' && filePattern(context, 'frameworkconstantfilepatterns')) { return; }
     }
     emit(context, index, 'nexus/consistency-no-abbreviated-identifier', finding.id, finding.fields);
 }
-
 export class Rule {
     readonly context: RuleContext;
-    readonly bindings: Bindings = new Bindings();
     constructor(context: RuleContext) { this.context = context; }
-    visit(node: ParseNode, index: number): void {
-        noAbbreviatedIdentifier(this.context, node, index, this.bindings);
-    }
+    visit(node: ParseNode, index: number): void { noAbbreviatedIdentifier(this.context, node, index); }
 }
 export function create(context: RuleContext): Rule { return new Rule(context); }
