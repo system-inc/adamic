@@ -1,0 +1,35 @@
+job 01M6ZEM2KH006CNCJ3MN4F768N on Home: Accepted, the box stood down for it
+job 01M6ZEM4DGN8HRDDEKJBM2GGV2 on Home: Accepted
+submodule exit=0
+head eab085d60b93b3ad162e1079ad75fd01cba266ab parent 0f44327f7aaf29fd302014e2ae438ce74a8074e1
+64
+ 23:06:42 up 2 days,  8:10,  1 user,  load average: 0.80, 1.01, 1.16
+build head exit=0
+build parent exit=0
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]
+compile parent exit=0
+compile head exit=0
+parent output: 47500000
+head output: 47500000
+parent round=1 wall=0.94 user=0.94 rss_kb=1624
+head round=1 wall=1.15 user=1.15 rss_kb=1624
+parent round=2 wall=0.93 user=0.93 rss_kb=1620
+head round=2 wall=1.17 user=1.17 rss_kb=1624
+parent round=3 wall=0.95 user=0.95 rss_kb=1596
+head round=3 wall=1.18 user=1.17 rss_kb=1624
+parent round=4 wall=0.94 user=0.94 rss_kb=1608
+head round=4 wall=1.14 user=1.14 rss_kb=1596
+parent round=5 wall=0.95 user=0.95 rss_kb=1624
+head round=5 wall=1.15 user=1.14 rss_kb=1608
+parent median wall 0.94 min 0.93 max 0.95 rss_kb 1624
+head median wall 1.15 min 1.14 max 1.18 rss_kb 1624
+head/parent wall 1.2234
+counted compile parent exit=2
+  adamic --help | -h
+  adamic --version
+counted compile head exit=2
+  adamic --help | -h
+  adamic --version
+job 01M6ZEM4DGN8HRDDEKJBM2GGV2 on Home: exit 1
+job 01M6ZEVBSZ30K0N2Y0S1H7KPF8 on Home: Accepted, the box stood down for it
+exit=1

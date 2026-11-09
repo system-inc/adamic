@@ -1,0 +1,24 @@
+// A tsc-shaped loop for #41vb71c's cost: a graph program (a cycle of Nodes), and interface-method calls
+// through a parameter, whose targets the analysis can't bound, each handed fresh objects it doesn't keep.
+interface Node { name: string; next: Node[]; kids: Node[][] }
+interface Info { depth: number; flags: number }
+interface Visitor { visit(n: Node, info: Info, path: number[]): number }
+const a: Node = { name: 'a' + '', next: [], kids: [] };
+const b: Node = { name: 'b' + '', next: [a], kids: [] };
+a.next.push(b); // a cycle: the program is a graph program
+function run(v: Visitor, n: Node, count: number): number {
+	let sum = 0;
+	for (let i = 0; i < count; i++) {
+		sum += v.visit(n, { depth: i & 7, flags: i & 255 }, [i & 3, i & 5]);
+	}
+	return sum;
+}
+const visitors: Visitor[] = [
+	{ visit: (n: Node, info: Info, path: number[]): number => info.depth + n.name.length + path.length },
+	{ visit: (n: Node, info: Info, path: number[]): number => (info.flags & 1) + n.next.length + (path[0] ?? 0) },
+];
+let total = 0;
+for (const v of visitors) {
+	total += run(v, a, 5000000);
+}
+console.log(`${total}`);
