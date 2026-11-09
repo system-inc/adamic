@@ -190,7 +190,7 @@ output = pathlib.Path(replace[str(repository / 'internal/lower/functions.go')])
 source = output.read_text()
 needle = '\tpending := l.signed[index]'
 assert source.count(needle) == 1
-source = source.replace(needle, '\tif latentPieceSkipBody(declaration) { return nil }\n' + needle)
+source = source.replace(needle, '\tif latentPieceSkipBody(declaration) { return nil }\n if latentFindingOwner != l.program.Where(declaration) { if stop := l.latentDeferredStop(declaration); stop != nil { return &latentDeferredFailure{cause: stop} } }\n' + needle)
 output.write_text(source)
 overlay('internal/lower/latent_progress.go', (territory / 'progress.go.txt').read_text())
 overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt').read_text())
