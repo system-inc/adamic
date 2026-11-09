@@ -495,8 +495,12 @@ func latentCanaryState(c *checker.Checker, after string) {
 		}
 		results := relation.Elem().FieldByName("results")
 		if !results.IsValid() || results.Kind() != reflect.Map {
+			parts = append(parts, name+"Size=unreadable")
 			continue
 		}
+		// The relation's size sets the budget a new check gets (relater.go:378), so each cache's size is
+		// printed beside the overflow count (Lower's addition on #448a51k).
+		parts = append(parts, fmt.Sprintf("%sSize=%d", name, results.Len()))
 		for iterator := results.MapRange(); iterator.Next(); {
 			if iterator.Value().Uint()&(1<<5) != 0 {
 				overflowed++
