@@ -1,0 +1,5 @@
+stage3/census/record-handle-fixtures/receivers/10-symbol--path--direct.ts:132:7: error TS2322: Type 'Holding' is not assignable to type 'Receiver'.
+  Type 'MapLike<Symbol>' provides no match for the signature '(path: string): string'.
+stage3/census/record-handle-fixtures/receivers/10-symbol--path--direct.ts:133:29: error TS2554: Expected 1 arguments, but got 2.
+stage3/census/record-handle-fixtures/receivers/10-symbol--path--direct.ts:134:33: error TS2554: Expected 1 arguments, but got 2.
+stage3/census/record-handle-fixtures/receivers/10-symbol--path--direct.ts:136:30: error TS2554: Expected 1 arguments, but got 2.

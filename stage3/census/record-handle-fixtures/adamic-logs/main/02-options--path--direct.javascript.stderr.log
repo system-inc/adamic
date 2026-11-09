@@ -1,0 +1,5 @@
+stage3/census/record-handle-fixtures/receivers/02-options--path--direct.ts:38:7: error TS2322: Type 'CompilerOptions' is not assignable to type 'Receiver'.
+  Type 'CompilerOptions' provides no match for the signature '(path: string): string'.
+stage3/census/record-handle-fixtures/receivers/02-options--path--direct.ts:39:29: error TS2554: Expected 1 arguments, but got 2.
+stage3/census/record-handle-fixtures/receivers/02-options--path--direct.ts:40:33: error TS2554: Expected 1 arguments, but got 2.
+stage3/census/record-handle-fixtures/receivers/02-options--path--direct.ts:42:30: error TS2554: Expected 1 arguments, but got 2.

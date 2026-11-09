@@ -1,0 +1,5 @@
+stage3/census/record-handle-fixtures/receivers/03-watch--path--direct.ts:16:7: error TS2322: Type 'Holding' is not assignable to type 'Receiver'.
+  Type 'MapLike<WatchDirectoryFlags>' provides no match for the signature '(path: string): string'.
+stage3/census/record-handle-fixtures/receivers/03-watch--path--direct.ts:17:29: error TS2554: Expected 1 arguments, but got 2.
+stage3/census/record-handle-fixtures/receivers/03-watch--path--direct.ts:18:33: error TS2554: Expected 1 arguments, but got 2.
+stage3/census/record-handle-fixtures/receivers/03-watch--path--direct.ts:20:30: error TS2554: Expected 1 arguments, but got 2.

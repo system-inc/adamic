@@ -1,0 +1,5 @@
+stage3/census/record-handle-fixtures/receivers/07-position--path--direct.ts:12:7: error TS2322: Type 'Holding' is not assignable to type 'Receiver'.
+  Type 'Holding' provides no match for the signature '(path: string): string'.
+stage3/census/record-handle-fixtures/receivers/07-position--path--direct.ts:13:29: error TS2554: Expected 1 arguments, but got 2.
+stage3/census/record-handle-fixtures/receivers/07-position--path--direct.ts:14:33: error TS2554: Expected 1 arguments, but got 2.
+stage3/census/record-handle-fixtures/receivers/07-position--path--direct.ts:16:30: error TS2554: Expected 1 arguments, but got 2.

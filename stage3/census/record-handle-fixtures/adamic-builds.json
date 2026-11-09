@@ -1,0 +1,50 @@
+{
+  "revisions": [
+    {
+      "label": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "binary": "/tmp/ny0c3gb-adamic-main",
+      "binary_sha256": "98c2af32126b3b76dc62aa30b333e30822527a03524031238c94b7b1d2b43212",
+      "checkout": "/workspace/ny0c3gb-main",
+      "cohere_pin": "06af2e399c6c1fb93fd570b774027942747400b4",
+      "typescript_pin": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+      "build_command": [
+        "go",
+        "build",
+        "-o",
+        "/tmp/ny0c3gb-adamic-main",
+        "./cmd/adamic"
+      ],
+      "build_cwd": "/workspace/ny0c3gb-main",
+      "GOFLAGS": "-buildvcs=false -trimpath",
+      "build_exit": 0,
+      "oracle_node_sha256": "25a552d17b58f734029ac5395b585a2950c96baa9fe45b880ca812d4db5b21fd",
+      "oracle_runtime_sha256": "c6547d2b7bf5ab8ebafecd42d2d1a9390934b10c1eacccc2abb0b7d176e2825c"
+    },
+    {
+      "label": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "binary": "/tmp/ny0c3gb-adamic-lower",
+      "binary_sha256": "aae1b8fa2a2ba1d15b5d9207fae7b5ca01b39392d5ee512abad5a690a44bcd64",
+      "checkout": "/workspace/ny0c3gb-lower",
+      "cohere_pin": "06af2e399c6c1fb93fd570b774027942747400b4",
+      "typescript_pin": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+      "build_command": [
+        "go",
+        "build",
+        "-o",
+        "/tmp/ny0c3gb-adamic-lower",
+        "./cmd/adamic"
+      ],
+      "build_cwd": "/workspace/ny0c3gb-lower",
+      "GOFLAGS": "-buildvcs=false -trimpath",
+      "build_exit": 0,
+      "oracle_node_sha256": "25a552d17b58f734029ac5395b585a2950c96baa9fe45b880ca812d4db5b21fd",
+      "oracle_runtime_sha256": "c6547d2b7bf5ab8ebafecd42d2d1a9390934b10c1eacccc2abb0b7d176e2825c"
+    }
+  ],
+  "go_version": "go version go1.27.1 linux/amd64",
+  "node_version": "v24.19.0",
+  "mode": ".ts supported directly by cmd/adamic --help",
+  "cohere_reuse": "Identical pinned checkout symlinked from /workspace/adamic/cohere; no compiler source changes."
+}

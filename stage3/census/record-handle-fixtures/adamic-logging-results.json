@@ -1,0 +1,3854 @@
+{
+  "revisions": [
+    {
+      "label": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "binary": "/tmp/ny0c3gb-adamic-main",
+      "binary_sha256": "98c2af32126b3b76dc62aa30b333e30822527a03524031238c94b7b1d2b43212",
+      "checkout": "/workspace/ny0c3gb-main"
+    },
+    {
+      "label": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "binary": "/tmp/ny0c3gb-adamic-lower",
+      "binary_sha256": "aae1b8fa2a2ba1d15b5d9207fae7b5ca01b39392d5ee512abad5a690a44bcd64",
+      "checkout": "/workspace/ny0c3gb-lower"
+    }
+  ],
+  "versions": {
+    "node": {
+      "command": [
+        "node",
+        "--version"
+      ],
+      "cwd": "/workspace/ny0c3gb",
+      "exit": 0,
+      "timed_out": false,
+      "stdout": "v24.19.0\n",
+      "stderr": "",
+      "stdout_file": "adamic-logs/versions/node.stdout.log",
+      "stderr_file": "adamic-logs/versions/node.stderr.log"
+    },
+    "tsc": {
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": "/workspace/ny0c3gb",
+      "exit": 0,
+      "timed_out": false,
+      "stdout": "Version 6.0.3\n",
+      "stderr": "",
+      "stdout_file": "adamic-logs/versions/tsc.stdout.log",
+      "stderr_file": "adamic-logs/versions/tsc.stderr.log"
+    },
+    "main": {
+      "command": [
+        "/tmp/ny0c3gb-adamic-main",
+        "--version"
+      ],
+      "cwd": "/workspace/ny0c3gb",
+      "exit": 0,
+      "timed_out": false,
+      "stdout": "adamic unknown\ngo go1.27.1\nclang /workspace/adamic-tools/bin/clang: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\n",
+      "stderr": "",
+      "stdout_file": "adamic-logs/versions/main.stdout.log",
+      "stderr_file": "adamic-logs/versions/main.stderr.log"
+    },
+    "main-help": {
+      "command": [
+        "/tmp/ny0c3gb-adamic-main",
+        "--help"
+      ],
+      "cwd": "/workspace/ny0c3gb",
+      "exit": 0,
+      "timed_out": false,
+      "stdout": "usage:\n  adamic types <file.a|file.ts>...\n  adamic c <file.a|file.ts> [--explain-checks]\n  adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]\n  adamic js <file.a|file.ts> [--explain-checks]\n  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]\n  adamic --help | -h\n  adamic --version\n",
+      "stderr": "",
+      "stdout_file": "adamic-logs/versions/main-help.stdout.log",
+      "stderr_file": "adamic-logs/versions/main-help.stderr.log"
+    },
+    "lower": {
+      "command": [
+        "/tmp/ny0c3gb-adamic-lower",
+        "--version"
+      ],
+      "cwd": "/workspace/ny0c3gb",
+      "exit": 0,
+      "timed_out": false,
+      "stdout": "adamic unknown\ngo go1.27.1\nclang /workspace/adamic-tools/bin/clang: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\n",
+      "stderr": "",
+      "stdout_file": "adamic-logs/versions/lower.stdout.log",
+      "stderr_file": "adamic-logs/versions/lower.stderr.log"
+    },
+    "lower-help": {
+      "command": [
+        "/tmp/ny0c3gb-adamic-lower",
+        "--help"
+      ],
+      "cwd": "/workspace/ny0c3gb",
+      "exit": 0,
+      "timed_out": false,
+      "stdout": "usage:\n  adamic types <file.a|file.ts>...\n  adamic c <file.a|file.ts> [--explain-checks]\n  adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]\n  adamic js <file.a|file.ts> [--explain-checks]\n  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]\n  adamic --help | -h\n  adamic --version\n",
+      "stderr": "",
+      "stdout_file": "adamic-logs/versions/lower-help.stdout.log",
+      "stderr_file": "adamic-logs/versions/lower-help.stderr.log"
+    }
+  },
+  "baselines": [
+    {
+      "fixture": "adamic-logging/01-options-value--construct--assign-function.ts",
+      "sha256": "59fe7a1dcc745d278e7a2596b5e76ebc0a3ac0ab817c8671595c39bdba3012af",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-01-options-value--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-01-options-value--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-01-options-value--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-01-options-value--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/01-options-value--optional--assign-function.ts",
+      "sha256": "fe3a3816841ecc4db118b03c8f7f375eae280c26608180f5faa5b4f499998808",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-01-options-value--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-01-options-value--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-01-options-value--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-01-options-value--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/01-options-value--path--assign-function.ts",
+      "sha256": "8f0e03f81379734e112242202cd4610372861d900bd2e7793e0dfe46de911600",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-01-options-value--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-01-options-value--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-01-options-value--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-01-options-value--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/02-options--construct--assign-function.ts",
+      "sha256": "358f172584fd27ad2878d60a20ab0bb5839f2bcb67f9899d2644572ec3b1c737",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-02-options--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-02-options--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-02-options--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-02-options--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/02-options--optional--assign-function.ts",
+      "sha256": "324d701a3c831de877e7e04d6a29d67e6aebbd437bdf58e7b85615b750c5923b",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-02-options--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-02-options--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-02-options--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-02-options--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/02-options--path--assign-function.ts",
+      "sha256": "33979cfe661d0bfd3ed5ea7515fc0859c8172bc1211e0b4ff4a55d26e5a5f033",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-02-options--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-02-options--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-02-options--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-02-options--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/03-watch--construct--assign-function.ts",
+      "sha256": "617869cb3eab7bd71a2a0904e52f0e0be19c48cb6fac2af2987785fc0196fad9",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-03-watch--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-03-watch--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-03-watch--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-03-watch--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/03-watch--optional--assign-function.ts",
+      "sha256": "5a4dfcdb8c3bfb10ab5c2e61e75989ecc0b0a7469538b535f4230e66523ed5dc",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-03-watch--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-03-watch--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-03-watch--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-03-watch--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/03-watch--path--assign-function.ts",
+      "sha256": "a3c27691464bf72af4b11319773915ed4e1f505e086de34dd576c0811ff013bf",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-03-watch--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-03-watch--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-03-watch--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-03-watch--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/04-group-by--construct--assign-function.ts",
+      "sha256": "ab11793a56aa74b54b38d55b7e3f25be4a79b03086568602276993029f519dbe",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-04-group-by--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-04-group-by--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-04-group-by--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-04-group-by--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/04-group-by--optional--assign-function.ts",
+      "sha256": "64a0be49f0856864a0aa3da356f8782f648b7389209e9942b165d72f514dc985",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-04-group-by--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-04-group-by--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-04-group-by--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-04-group-by--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/04-group-by--path--assign-function.ts",
+      "sha256": "b86f755375d5338f8aafc6590cf2825c8f172583711e39741df3c46e77662e0d",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-04-group-by--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-04-group-by--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-04-group-by--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-04-group-by--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/05-extend--construct--assign-function.ts",
+      "sha256": "dddaa2f95a02dade661b4b119613907a123c5816ba2b36bc4e0634a6a398c6fc",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-05-extend--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-05-extend--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-05-extend--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-05-extend--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/05-extend--optional--assign-function.ts",
+      "sha256": "6ba4a4379e5cd5ad4e03a618a9155aeba2943cfdea459d852a1b4d3f437c6c38",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-05-extend--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-05-extend--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-05-extend--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-05-extend--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/05-extend--path--assign-function.ts",
+      "sha256": "2875418be7a9ff92de69e794b18a58b58225fa471cc0c1715b039692ab12936a",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-05-extend--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-05-extend--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-05-extend--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-05-extend--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/06-string-arrays--construct--assign-function.ts",
+      "sha256": "81d6e7a824901822509c53bf465a7da733546133f4f1034d2d26a2a224b70e0a",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-06-string-arrays--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-06-string-arrays--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-06-string-arrays--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-06-string-arrays--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/06-string-arrays--optional--assign-function.ts",
+      "sha256": "4f8d519cfb25bcb0752e10eb996405b466fe5523045a76083b9d81f28f00a570",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-06-string-arrays--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-06-string-arrays--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-06-string-arrays--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-06-string-arrays--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/06-string-arrays--path--assign-function.ts",
+      "sha256": "732d84d47d8ab41270aef0c74fad77bc6715f29d99f021f92f6ae1bd75214623",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-06-string-arrays--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-06-string-arrays--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-06-string-arrays--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-06-string-arrays--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/07-position--construct--assign-function.ts",
+      "sha256": "20d5cbf32e909aa6decbb5a426221f5bf49857f7b85e58b6e30e1d1061cd8c2c",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-07-position--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-07-position--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-07-position--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-07-position--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/07-position--optional--assign-function.ts",
+      "sha256": "6fec9bf72af60ff42f97a168a511f942b4cbe3b6b6a409254c1f2287a5fc810c",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-07-position--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-07-position--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-07-position--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-07-position--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/07-position--path--assign-function.ts",
+      "sha256": "68471bdb77e0858a79f5e15242ae786b9e42d0bbc16b9f7771f1b53a93fc547f",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-07-position--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-07-position--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-07-position--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-07-position--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/08-string--construct--assign-function.ts",
+      "sha256": "b34ccfca97ff2769f57023a450f6bccf248c02d19f52b639eab436da4c706e1e",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-08-string--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-08-string--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-08-string--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-08-string--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/08-string--optional--assign-function.ts",
+      "sha256": "ecad242a4a65ebe8c6dafc022143313aa66dc5d83e5a54bb432004d7d5b0cd50",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-08-string--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-08-string--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-08-string--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-08-string--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/08-string--path--assign-function.ts",
+      "sha256": "3a84ba1aec090601914c2d81f948f10bab94b168fc72994b991c96e5228f8661",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-08-string--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-08-string--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-08-string--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-08-string--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/09-type--construct--assign-function.ts",
+      "sha256": "4b691105a9164a8545be9d97dd23190a6a831e2d41c038f7d6de523dc6ccb6d1",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-09-type--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-09-type--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-09-type--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-09-type--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/09-type--optional--assign-function.ts",
+      "sha256": "2f56e2f2ca129e111cdca90034173f90b1d509a79180a55942fdbd7bf1878aa7",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-09-type--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-09-type--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-09-type--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-09-type--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/09-type--path--assign-function.ts",
+      "sha256": "894e5a1e315f8f67cf1cab2ba47fe99aa37ef2aade5e3394bd850b0cbcc24e07",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-09-type--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-09-type--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-09-type--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-09-type--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/10-symbol--construct--assign-function.ts",
+      "sha256": "f1080165b406e96adbbc78c9f8576eb3a5c45d8820226a834b7522ed54ad3ed8",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-10-symbol--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-10-symbol--construct--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\nconstruct threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-10-symbol--construct--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-10-symbol--construct--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/10-symbol--optional--assign-function.ts",
+      "sha256": "12642047bea517afa9cf3c9de9838ede72c4f96cf3fbdf3d966eb2ca7b05fc8f",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-10-symbol--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-10-symbol--optional--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-10-symbol--optional--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-10-symbol--optional--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/10-symbol--path--assign-function.ts",
+      "sha256": "5431a7be55dfbc6bfe33fcca82c1d25766c1a89be25c814340093e701123095c",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-10-symbol--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-10-symbol--path--assign-function.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "same record: true\ntypeof receiver: object\ncall threw: TypeError\n",
+        "stderr": "",
+        "stdout_file": "adamic-logs/node/logging-10-symbol--path--assign-function.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-10-symbol--path--assign-function.stderr.log"
+      }
+    },
+    {
+      "fixture": "adamic-logging/box.ts",
+      "sha256": "8d6cb0bc679a881f88132be2a60c30119f40e4ff0cbc3d9a243a1234e3c8c8ed",
+      "tsc": {
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noEmit",
+          "--target",
+          "es2024",
+          "--lib",
+          "es2020,dom",
+          "--typeRoots",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_file": "adamic-logs/tsc/logging-box.stdout.log",
+        "stderr_file": "adamic-logs/tsc/logging-box.stderr.log"
+      },
+      "node": {
+        "command": [
+          "node",
+          "--experimental-strip-types",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "file:///workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts:7\nconsole.log(\"\" + copy.read());\n                      ^\n\nTypeError: copy.read is not a function\n    at Object.<anonymous> (file:///workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts:7:23)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n",
+        "stdout_file": "adamic-logs/node/logging-box.stdout.log",
+        "stderr_file": "adamic-logs/node/logging-box.stderr.log"
+      }
+    }
+  ],
+  "rows": [
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/01-options-value--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-01-options-value--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-01-options-value--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-01-options-value--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-01-options-value--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-01-options-value--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/01-options-value--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-01-options-value--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-01-options-value--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-01-options-value--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-01-options-value--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-01-options-value--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/01-options-value--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-01-options-value--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-01-options-value--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-01-options-value--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-01-options-value--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-01-options-value--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/02-options--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-02-options--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-02-options--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-02-options--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-02-options--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-02-options--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/02-options--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-02-options--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-02-options--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-02-options--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-02-options--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-02-options--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/02-options--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-02-options--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-02-options--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-02-options--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-02-options--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-02-options--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/03-watch--construct--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-03-watch--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-03-watch--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-03-watch--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-03-watch--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-03-watch--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/03-watch--optional--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-03-watch--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-03-watch--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-03-watch--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-03-watch--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-03-watch--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/03-watch--path--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-03-watch--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-03-watch--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-03-watch--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-03-watch--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-03-watch--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/04-group-by--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-04-group-by--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts:14:26: stage 0 can't lower a ClassExpression yet\n",
+        "stdout_file": "adamic-logs/main/logging-04-group-by--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-04-group-by--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts:14:26: stage 0 can't lower a ClassExpression yet\n",
+        "stdout_file": "adamic-logs/main/logging-04-group-by--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-04-group-by--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/04-group-by--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-04-group-by--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts:15:7: stage 0 can't lower a value of type Holding<T> & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-04-group-by--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-04-group-by--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts:15:7: stage 0 can't lower a value of type Holding<T> & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-04-group-by--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-04-group-by--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/04-group-by--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-04-group-by--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts:15:7: stage 0 can't lower a value of type Holding<T> & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-04-group-by--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-04-group-by--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts:15:7: stage 0 can't lower a value of type Holding<T> & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-04-group-by--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-04-group-by--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/05-extend--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-05-extend--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-05-extend--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-05-extend--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-05-extend--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-05-extend--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/05-extend--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-05-extend--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-05-extend--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-05-extend--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-05-extend--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-05-extend--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/05-extend--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-05-extend--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-05-extend--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-05-extend--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-05-extend--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-05-extend--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/06-string-arrays--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-06-string-arrays--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-06-string-arrays--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-06-string-arrays--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-06-string-arrays--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-06-string-arrays--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/06-string-arrays--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-06-string-arrays--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-06-string-arrays--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-06-string-arrays--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-06-string-arrays--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-06-string-arrays--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/06-string-arrays--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-06-string-arrays--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-06-string-arrays--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-06-string-arrays--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-06-string-arrays--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-06-string-arrays--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/07-position--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-07-position--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-07-position--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-07-position--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-07-position--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-07-position--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/07-position--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-07-position--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-07-position--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-07-position--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-07-position--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-07-position--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/07-position--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-07-position--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-07-position--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-07-position--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-07-position--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-07-position--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/08-string--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-08-string--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-08-string--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-08-string--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-08-string--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-08-string--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/08-string--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-08-string--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-08-string--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-08-string--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-08-string--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-08-string--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/08-string--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-08-string--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-08-string--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-08-string--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/main/logging-08-string--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-08-string--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/09-type--construct--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-09-type--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-09-type--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-09-type--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-09-type--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-09-type--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/09-type--optional--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-09-type--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-09-type--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-09-type--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-09-type--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-09-type--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/09-type--path--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-09-type--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-09-type--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-09-type--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-09-type--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-09-type--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/10-symbol--construct--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-10-symbol--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-10-symbol--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-10-symbol--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-10-symbol--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-10-symbol--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/10-symbol--optional--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-10-symbol--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-10-symbol--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-10-symbol--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-10-symbol--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-10-symbol--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/10-symbol--path--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-10-symbol--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-10-symbol--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-10-symbol--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/main/logging-10-symbol--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-10-symbol--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "main",
+      "sha": "86fc5a546bc85325756b472a4ba3d24306ec9a5c",
+      "fixture": "adamic-logging/box.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-main-box"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts:6:19: Adamic 0.1 refuses Object.assign; each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields\n",
+        "stdout_file": "adamic-logs/main/logging-box.build.stdout.log",
+        "stderr_file": "adamic-logs/main/logging-box.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-main",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts:6:19: Adamic 0.1 refuses Object.assign; each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields\n",
+        "stdout_file": "adamic-logs/main/logging-box.javascript.mjs",
+        "stderr_file": "adamic-logs/main/logging-box.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/01-options-value--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-01-options-value--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-01-options-value--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-01-options-value--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--construct--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-01-options-value--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-01-options-value--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/01-options-value--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-01-options-value--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-01-options-value--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-01-options-value--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--optional--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-01-options-value--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-01-options-value--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/01-options-value--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-01-options-value--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-01-options-value--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-01-options-value--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/01-options-value--path--assign-function.ts:28:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-01-options-value--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-01-options-value--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/02-options--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-02-options--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-02-options--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-02-options--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--construct--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-02-options--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-02-options--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/02-options--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-02-options--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-02-options--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-02-options--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--optional--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-02-options--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-02-options--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/02-options--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-02-options--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-02-options--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-02-options--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/02-options--path--assign-function.ts:40:7: stage 0 can't lower a value of type CompilerOptions & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-02-options--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-02-options--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/03-watch--construct--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-03-watch--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-03-watch--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-03-watch--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--construct--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-03-watch--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-03-watch--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/03-watch--optional--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-03-watch--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-03-watch--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-03-watch--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--optional--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-03-watch--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-03-watch--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/03-watch--path--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-03-watch--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-03-watch--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-03-watch--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/03-watch--path--assign-function.ts:7:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-03-watch--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-03-watch--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/04-group-by--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-04-group-by--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts:14:26: stage 0 can't lower a ClassExpression yet\n",
+        "stdout_file": "adamic-logs/lower/logging-04-group-by--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-04-group-by--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--construct--assign-function.ts:14:26: stage 0 can't lower a ClassExpression yet\n",
+        "stdout_file": "adamic-logs/lower/logging-04-group-by--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-04-group-by--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/04-group-by--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-04-group-by--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts:15:7: stage 0 can't lower a value of type Holding<T> & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-04-group-by--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-04-group-by--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--optional--assign-function.ts:15:7: stage 0 can't lower a value of type Holding<T> & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-04-group-by--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-04-group-by--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/04-group-by--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-04-group-by--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts:15:7: stage 0 can't lower a value of type Holding<T> & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-04-group-by--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-04-group-by--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/04-group-by--path--assign-function.ts:15:7: stage 0 can't lower a value of type Holding<T> & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-04-group-by--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-04-group-by--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/05-extend--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-05-extend--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-05-extend--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-05-extend--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--construct--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-05-extend--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-05-extend--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/05-extend--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-05-extend--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-05-extend--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-05-extend--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--optional--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-05-extend--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-05-extend--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/05-extend--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-05-extend--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-05-extend--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-05-extend--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/05-extend--path--assign-function.ts:19:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-05-extend--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-05-extend--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/06-string-arrays--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-06-string-arrays--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-06-string-arrays--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-06-string-arrays--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-06-string-arrays--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-06-string-arrays--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/06-string-arrays--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-06-string-arrays--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-06-string-arrays--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-06-string-arrays--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-06-string-arrays--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-06-string-arrays--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/06-string-arrays--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-06-string-arrays--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-06-string-arrays--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-06-string-arrays--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/06-string-arrays--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-06-string-arrays--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-06-string-arrays--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/07-position--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-07-position--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-07-position--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-07-position--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-07-position--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-07-position--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/07-position--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-07-position--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-07-position--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-07-position--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-07-position--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-07-position--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/07-position--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-07-position--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-07-position--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-07-position--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/07-position--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-07-position--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-07-position--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/08-string--construct--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-08-string--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-08-string--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-08-string--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--construct--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-08-string--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-08-string--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/08-string--optional--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-08-string--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-08-string--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-08-string--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--optional--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-08-string--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-08-string--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/08-string--path--assign-function.ts",
+      "native_outcome": "NotYet",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-08-string--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-08-string--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-08-string--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "NotYet",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/08-string--path--assign-function.ts:14:7: stage 0 can't lower a value of type Holding & Receiver yet\n",
+        "stdout_file": "adamic-logs/lower/logging-08-string--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-08-string--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/09-type--construct--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-09-type--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-09-type--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-09-type--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--construct--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-09-type--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-09-type--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/09-type--optional--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-09-type--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-09-type--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-09-type--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--optional--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-09-type--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-09-type--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/09-type--path--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-09-type--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-09-type--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-09-type--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/09-type--path--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-09-type--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-09-type--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/10-symbol--construct--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-10-symbol--construct--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-10-symbol--construct--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-10-symbol--construct--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--construct--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-10-symbol--construct--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-10-symbol--construct--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/10-symbol--optional--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-10-symbol--optional--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-10-symbol--optional--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-10-symbol--optional--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--optional--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-10-symbol--optional--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-10-symbol--optional--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/10-symbol--path--assign-function.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-10-symbol--path--assign-function"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-10-symbol--path--assign-function.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-10-symbol--path--assign-function.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/10-symbol--path--assign-function.ts:9:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n",
+        "stdout_file": "adamic-logs/lower/logging-10-symbol--path--assign-function.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-10-symbol--path--assign-function.javascript.stderr.log"
+      },
+      "javascript_run": null
+    },
+    {
+      "revision": "lower",
+      "sha": "554335247893a0488673a1b5076bb3edc18b2ca7",
+      "fixture": "adamic-logging/box.ts",
+      "native_outcome": "Refused",
+      "native_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "build",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts",
+          "-o",
+          "/tmp/ny0c3gb-native-lower-box"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts:6:19: Adamic 0.1 refuses Object.assign; each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields\n",
+        "stdout_file": "adamic-logs/lower/logging-box.build.stdout.log",
+        "stderr_file": "adamic-logs/lower/logging-box.build.stderr.log"
+      },
+      "native_run": null,
+      "javascript_outcome": "Refused",
+      "javascript_compile": {
+        "command": [
+          "/tmp/ny0c3gb-adamic-lower",
+          "js",
+          "/workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts"
+        ],
+        "cwd": "/workspace/ny0c3gb",
+        "exit": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "adamic: /workspace/ny0c3gb/stage3/census/record-handle-fixtures/adamic-logging/box.ts:6:19: Adamic 0.1 refuses Object.assign; each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields\n",
+        "stdout_file": "adamic-logs/lower/logging-box.javascript.mjs",
+        "stderr_file": "adamic-logs/lower/logging-box.javascript.stderr.log"
+      },
+      "javascript_run": null
+    }
+  ]
+}
