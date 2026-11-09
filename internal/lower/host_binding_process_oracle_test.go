@@ -2,6 +2,7 @@ package lower
 
 import (
 	"encoding/gob"
+	"errors"
 	"flag"
 	"os"
 	"path/filepath"
@@ -11,14 +12,41 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-// The oracle runs this test alone in a subprocess. The real row matches unknown exactly; these
-// three synthetic rows exercise the model judgment and read representation without changing that
-// production boundary. Isolation keeps the private hostBindingRows replacement out of parallel tests.
+// Ordinary runs check that the real table refuses all three typed process declarations. The row
+// matches unknown exactly, so these fixtures must stop at their declarations. With the oracle
+// environment set, this test runs alone in a subprocess with a synthetic row to exercise the model
+// judgment and read representation. Isolation keeps that private replacement out of parallel tests.
 func TestHostBindingProcessOracleIR(t *testing.T) {
 	t.Parallel()
 	of := os.Getenv("ADAMIC_PROCESS_ORACLE_TYPE")
 	if of == "" {
-		t.Skip("only the oracle's isolated typed-row builder runs this test")
+		for _, of := range []string{"boolean", "string", "number"} {
+			t.Run(of, func(t *testing.T) {
+				path, err := filepath.Abs(filepath.Join("..", "oracle", "testdata", "host_bindings", "process_browser_"+of, "main.ts"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				loaded, err := load.Load([]string{path})
+				if err != nil {
+					t.Fatal(err)
+				}
+				_, err = Lower(t.Context(), loaded)
+				var notYet *NotYet
+				var refused *Refused
+				var where, what string
+				switch {
+				case errors.As(err, &notYet):
+					where, what = notYet.Where, notYet.What
+				case errors.As(err, &refused):
+					where, what = refused.Where, refused.What
+				}
+				want := filepath.Join(filepath.Dir(path), "core.ts") + ":3:1"
+				if where != want || what != "an ambient value declaration" {
+					t.Fatalf("want an ambient value declaration stop at %s, got %v", want, err)
+				}
+			})
+		}
+		return
 	}
 	if flag.Lookup("test.run").Value.String() != "^TestHostBindingProcessOracleIR$" {
 		t.Fatal("the typed-row builder must be the only selected test")
