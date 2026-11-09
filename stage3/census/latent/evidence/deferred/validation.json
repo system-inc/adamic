@@ -1,0 +1,93 @@
+{
+  "setup": 0,
+  "npm_ci": 0,
+  "packages": 0,
+  "statecopy_whole": 0,
+  "predicates_census": 0,
+  "predicate_families": 0,
+  "meter_report": {
+    "exit": 0,
+    "tests": 43,
+    "optional_skips": 2
+  },
+  "pair": {
+    "exit": 0,
+    "tests": 18
+  },
+  "overlay_build": 0,
+  "real_census_pin": 0,
+  "full_pin": 0,
+  "speculative_pin": 0,
+  "dropped_read_mutant": {
+    "exit": 1,
+    "expected": 1,
+    "fixture_findings": []
+  },
+  "note": "Two superseded cold build jobs were terminated with child exit 143. A pin invocation before overlay generation finished and a directory audit invoked with the entry binary each returned 1; corrected invocations are retained separately. The module/unit location collision exposed speculative deduplication merging the two phases; the final complete-mode logs pass after preserving both phase and owner.",
+  "module_order_audit": 0,
+  "final_modes": {
+    "first-error": 0,
+    "full": 0,
+    "speculative": 0
+  },
+  "final_mutant": {
+    "exit": 1,
+    "expected": 1,
+    "fixture_findings": []
+  },
+  "corrected_scan_priority": {
+    "build": 0,
+    "whole_packages": 0,
+    "first-error": 0,
+    "full": 0,
+    "speculative": 0,
+    "mutant_exit": 1,
+    "mutant_expected": 1
+  },
+  "predicate_seam": 0,
+  "generic_body_coverage": {
+    "build": 0,
+    "whole_packages": 0,
+    "first-error": 0,
+    "full": 0,
+    "speculative": 0,
+    "mutant_exit": 1,
+    "mutant_expected": 1,
+    "mutant_owner": "callWrittenAny",
+    "mutant_findings": []
+  },
+  "generic_predicate_seam": 0,
+  "generic_module_order_audit": 0,
+  "baseline_census_exit": 0,
+  "final_head_census": "completed with child exit 0; paired successfully",
+  "paired_count": 0,
+  "own_live_processes_at_stop": [],
+  "final_destination_pushed": "Publication is verified outside this commit to avoid recording its own future outcome.",
+  "source_hashes_unchanged_after_baseline": true,
+  "reference_guard": {
+    "base": "018b7c21",
+    "exit": 0,
+    "inherited_main_relative_violations": 7,
+    "production_files_edited_to_fix_inherited_violations": false
+  },
+  "resumed_head_exit": 0,
+  "paired_measurement_exit": 0,
+  "source_hashes_unchanged_after_head": true,
+  "resume_checks": {
+    "packages": 0,
+    "statecopy_whole": 0,
+    "predicates": 0,
+    "meter_report": 0,
+    "pair_tests": 0,
+    "predicate_families": 0,
+    "first_error_pin": 0,
+    "full_pin": 0,
+    "speculative_pin": 0,
+    "mutant_exit": 1,
+    "mutant_expected": 1,
+    "predicate_seam": 0,
+    "module_order": 0,
+    "overlay_build": 0,
+    "reference_guard": 0
+  }
+}
