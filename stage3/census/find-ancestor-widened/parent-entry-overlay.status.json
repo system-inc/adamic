@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/workspace/scratch/widened/parent-overlay",
+    "/workspace/scratch/widened/parent-entry"
+  ],
+  "cwd": "/workspace/scratch/widened/parent",
+  "exit": 0,
+  "wall_seconds": 1.0047827769999458,
+  "stopped": null
+}

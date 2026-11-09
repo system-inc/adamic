@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "vet",
+    "./internal/lower"
+  ],
+  "cwd": "/workspace/scratch/widened/parent",
+  "sha": "34035b64f8f45b60c7b76e1481ad6add9a349fca",
+  "GOWORK": "/workspace/scratch/widened/parent.work",
+  "exit": 0,
+  "wall_seconds": 457.12399537799996,
+  "stopped": null
+}
