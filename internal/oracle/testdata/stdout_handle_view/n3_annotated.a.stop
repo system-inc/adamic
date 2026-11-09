@@ -1,0 +1,1 @@
+internal/oracle/testdata/stdout_handle_view/n3_annotated.a:3:91: stage 0 can't lower process.stdout._handle seen as { setBlocking?: (value: boolean) => void; readonly fd?: number; } | undefined, which names fd where the runtime's stdout handle holds only setBlocking yet
