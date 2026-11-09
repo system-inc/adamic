@@ -189,3 +189,44 @@ the runner exited 0 only after verifying all six red results and restorations. (
 its same process_provided oracle command still reports the same native, sanitized and JavaScript
 stdout disagreement. (f) uses the direct numeric command above. The whole lower package and
 HostBinding oracle suites with and without WASI run on the restored tree.
+
+### (g) Preserve assertion and alias coverage in the gate
+
+The third head uses `ast.SkipOuterExpressions(node, ast.OEKAll)` and passes every
+identifier spelling to processPath's symbol lookup. Property and element arms are unchanged.
+The q4 import-alias pin and all assertion pins require rule 70's exact diagnostic payload,
+`process.browser outside a plain property read`, rather than accepting a later unrelated stop.
+
+Mutant (g) replaces only the SkipOuterExpressions line with the old loop:
+
+```go
+for {
+    node = ast.SkipParentheses(node)
+    if node.Kind != ast.KindAsExpression { break }
+    node = node.AsAsExpression().Expression
+}
+```
+
+```sh
+ADAMIC_GATE_UNCACHED=1 timeout 900 go test ./internal/lower -count=1 -run '^TestHostBindingProcessBrowserRoadsStop$/^assert_(non-null|satisfies)'
+```
+
+Exit 1. The non-null and satisfies pins stop on the wrong rules:
+
+```text
+--- FAIL: TestHostBindingProcessBrowserRoadsStop (0.00s)
+    --- FAIL: TestHostBindingProcessBrowserRoadsStop/assert_satisfies_assign (0.43s)
+        host_binding_process_test.go:140: want rule 70's browser stop, got /tmp/adamic-gate/TestHostBindingProcessBrowserRoadsStopassert_satisfies_assign2154581929/001/core.ts:4:15: stage 0 can't lower Object.assign on a shape not proven by a plain literal or its const binding yet
+    --- FAIL: TestHostBindingProcessBrowserRoadsStop/assert_non-null_write (0.44s)
+        host_binding_process_test.go:140: want rule 70's browser stop, got /tmp/adamic-gate/TestHostBindingProcessBrowserRoadsStopassert_non-null_write2775091635/001/core.ts:4:1: stage 0 can't lower writing a possibly absent optional own field yet
+    --- FAIL: TestHostBindingProcessBrowserRoadsStop/assert_non-null_assign (0.47s)
+        host_binding_process_test.go:140: want rule 70's browser stop, got /tmp/adamic-gate/TestHostBindingProcessBrowserRoadsStopassert_non-null_assign205515346/001/core.ts:4:15: stage 0 can't lower Object.assign on a shape not proven by a plain literal or its const binding yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.488s
+FAIL
+```
+
+All seven process mutants (a) through (g) were reapplied separately on the third head,
+each named test exited 1, and every mutated file was restored byte for byte in a finally block.
+The restored tree then ran formatting, vet, load, whole lower, both HostBinding oracle modes
+and the parallel/census guards. Boolean/string remain agreement pins only for (f).
