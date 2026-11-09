@@ -245,7 +245,12 @@ func TestHostBindingRowsStopInACommonJSBundle(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			directory := t.TempDir()
-			for name, source := range map[string]string{probe.file: probe.source, "main.ts": "import './" + probe.file + "';\n"} {
+			main := "import './" + probe.file + "';\n"
+			if strings.Contains(probe.name, "process") {
+				// The routed row's model export is node:process's, which the program has to load (processModules).
+				main = "import 'node:process';\n" + main
+			}
+			for name, source := range map[string]string{probe.file: probe.source, "main.ts": main} {
 				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
 					t.Fatal(err)
 				}
