@@ -19,8 +19,9 @@ static inline adamic_graph_header *adamic_graph_header_of(void *value) {
 
 // Adoption requires a new, unshared allocation with no published aliases.
 // Size is the complete allocation size, including object metadata but excluding
-// separate container buffers. adamic_graph_adopt_owned joins initialized graph
-// slots and transfers their counts; direct self slots are re-aimed after moving.
+// separate container buffers. adamic_graph_adopt_owned keeps the counts its
+// initialized member slots hold, as counted edges out of a region of one, and
+// joins nothing (graph_regions.c); direct self slots are re-aimed after moving.
 // The kind region adoption can't move, named for a refusal, or NULL (graph_regions.c).
 const char *adamic_region_unmovable(const adamic_heap *heap);
 void *adamic_graph_adopt(void *value, size_t size);
