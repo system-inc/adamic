@@ -63,6 +63,10 @@ type entry struct {
 	RepairAgree            *bool        `json:"repair_agree,omitempty"`
 	Sampled                bool         `json:"sampled"`
 	VoidReason             string       `json:"void_reason,omitempty"`
+	// TimedOut is every runtime command of this program's run, or its repair's, that hit its timeout, before the
+	// one retry (#pajbaba); Retried says the run was retried alone because of it.
+	TimedOut []string `json:"timed_out,omitempty"`
+	Retried  bool     `json:"retried,omitempty"`
 }
 type report struct {
 	NegativeWitnessCount        int                `json:"negative_witness_count"`
@@ -104,6 +108,11 @@ type report struct {
 	Omitted                     int                `json:"omitted"`
 	BudgetSeconds               float64            `json:"budget_seconds"`
 	BudgetUsedSeconds           float64            `json:"budget_used_seconds"`
+	// TimedOutRuns is how many runs, a program's or a repair's, hit a runtime timeout; RetriedRuns how many of them
+	// were retried alone; StillTimedOutRuns how many timed out again and voided their program (#pajbaba).
+	TimedOutRuns      int `json:"timed_out_runs"`
+	RetriedRuns       int `json:"retried_runs"`
+	StillTimedOutRuns int `json:"still_timed_out_runs"`
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
@@ -536,14 +545,43 @@ func run(args []string) error {
 		}
 		return
 	}
+	// observeAlone is observe with one retry: a run that hit a runtime timeout under the gate's load runs once more,
+	// alone, before its timeout counts, so a load timeout never reads as a red (#pajbaba). still names every command
+	// that timed out again; first names every one that timed out the first time.
+	observeAlone := func(name, path string) (node, jsCompile, javascript, nativeCompile, native observation, first, still []string, err error) {
+		node, jsCompile, javascript, nativeCompile, native, err = observe(name, path)
+		if err != nil {
+			return
+		}
+		first = timedOut(node, jsCompile, javascript, nativeCompile, native)
+		if len(first) == 0 {
+			return
+		}
+		result.TimedOutRuns++
+		result.RetriedRuns++
+		node, jsCompile, javascript, nativeCompile, native, err = observe(name+"-alone", path)
+		if err != nil {
+			return
+		}
+		still = timedOut(node, jsCompile, javascript, nativeCompile, native)
+		if len(still) > 0 {
+			result.StillTimedOutRuns++
+		}
+		return
+	}
 	for _, index := range selected {
 		record := &result.Programs[index]
 		record.Sampled = true
 		source := filepath.Join(headTree, record.Path)
-		node, jsCompile, javascript, nativeCompile, native, e := observe(fmt.Sprintf("program-%d", index), record.Path)
+		node, jsCompile, javascript, nativeCompile, native, first, still, e := observeAlone(fmt.Sprintf("program-%d", index), record.Path)
 		if e != nil {
 			return e
 		}
+		record.TimedOut = append(record.TimedOut, first...)
+		record.Retried = len(first) > 0
+		// repairStill is every repair command that timed out again: the witness is then unjudged, so the program is
+		// void, never charged as a red.
+		var repairStill []string
 		record.Node = &node
 		record.JavaScriptCompile = &jsCompile
 		record.JavaScript = &javascript
@@ -570,10 +608,15 @@ func run(args []string) error {
 				if e := os.WriteFile(repairPath, repairedSource(data, witness), 0600); e != nil {
 					return e
 				}
-				repairNode, _, repairJavaScript, _, repairNative, e := observe(fmt.Sprintf("repair-%d", index), repairPath)
+				repairNode, _, repairJavaScript, _, repairNative, repairFirst, repairTimedOut, e := observeAlone(fmt.Sprintf("repair-%d", index), repairPath)
 				if e != nil {
 					return e
 				}
+				for _, command := range repairFirst {
+					record.TimedOut = append(record.TimedOut, "repair "+command)
+				}
+				record.Retried = record.Retried || len(repairFirst) > 0
+				repairStill = repairTimedOut
 				repairAgree := outputsAgree(repairNode, repairJavaScript, repairNative)
 				record.RepairAgree = &repairAgree
 				record.NegativeWitness = repairAgree
@@ -603,8 +646,13 @@ func run(args []string) error {
 		}
 		record.Agree = &agree
 		if !agree && !record.NegativeWitness && !record.RuledRuntimeStop && !record.RuledBackendDivergence {
-			if command := timedOut(node, jsCompile, javascript, nativeCompile, native); command != "" {
-				record.VoidReason = command + " timeout"
+			var reasons []string
+			reasons = append(reasons, still...)
+			for _, command := range repairStill {
+				reasons = append(reasons, "repair "+command)
+			}
+			if len(reasons) > 0 {
+				record.VoidReason = strings.Join(reasons, ", ") + " timeout"
 				voids = append(voids, record.Path+": "+record.VoidReason)
 			} else {
 				result.Verdict = "fail"
@@ -634,6 +682,7 @@ func run(args []string) error {
 	}
 	fmt.Fprintf(os.Stderr, "ruled run-time stops: %d\n", result.RuledRuntimeStops)
 	fmt.Fprintf(os.Stderr, "ruled backend divergences: %d\n", result.RuledBackendDivergences)
+	fmt.Fprintf(os.Stderr, "runtime timeouts: %d runs timed out, %d retried alone, %d timed out again\n", result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns)
 	// diff_count is how many programs base..head added or changed, never how many differ from Node, so
 	// the line says so (#zhgxzjg, a 24 read as differences).
 	fmt.Fprintf(os.Stderr, "changed programs: %d\n", result.DiffCount)
@@ -667,17 +716,18 @@ func run(args []string) error {
 	return nil
 }
 
-// timedOut names the first of a program's runtime commands that hit its timeout, or is empty.
-func timedOut(node, jsCompile, javascript, nativeCompile, native observation) string {
+// timedOut names every one of a run's commands that hit its timeout, in the order they run, or is empty.
+func timedOut(node, jsCompile, javascript, nativeCompile, native observation) []string {
+	var names []string
 	for _, command := range []struct {
 		name string
 		o    observation
 	}{{"node", node}, {"javascript compile", jsCompile}, {"javascript", javascript}, {"native compile", nativeCompile}, {"native", native}} {
 		if command.o.Error == "timeout" {
-			return command.name
+			names = append(names, command.name)
 		}
 	}
-	return ""
+	return names
 }
 
 // samplingSeed is the given hex seed's bytes, or head's SHA-256 when none is given, so one unit key always samples
