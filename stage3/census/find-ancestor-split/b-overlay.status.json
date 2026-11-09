@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/fa-b",
+    "/workspace/scratch/fa-b-overlay"
+  ],
+  "cwd": "/workspace/scratch/fa-b",
+  "exit": 0,
+  "wall_seconds": 15.2,
+  "stopped": null
+}
