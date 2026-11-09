@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 // Not parallel: t.Setenv changes the process environment variable WASI_SYSROOT.
@@ -45,6 +47,32 @@ func TestWASIHostTargetRefusals(t *testing.T) {
 			}
 			if !strings.Contains(refused.Error(), want.Reason) {
 				t.Fatal(refused)
+			}
+		})
+	}
+}
+
+// __filename and __dirname, bound in a bundled image's .ts files, are refused on wasm32-wasi by name, as
+// process.argv is (Adamic's ruling, Nov 6, #redxes2): a read's C names its runtime function, and that function's row
+// refuses it as the binding the program wrote. TestWASIHostTargetRefusals holds every row to the build boundary.
+// Mutants: either row taken out of wasiHostRefusals, or nodeProcessCall mapping its operation to another function.
+func TestWASIRefusesCommonJSModuleValuesByName(t *testing.T) {
+	t.Parallel()
+	for _, one := range []struct {
+		operation, function string
+		want                TargetRefused
+	}{
+		{"filename", "adamic_node_filename", TargetRefused{"__filename", "WASI has no executable paths"}},
+		{"dirname", "adamic_node_dirname", TargetRefused{"__dirname", "WASI has no executable paths"}},
+	} {
+		t.Run(one.operation, func(t *testing.T) {
+			t.Parallel()
+			program := &ir.Program{Source: "commonjs.ts", Main: []ir.Statement{ir.WriteLine{Stream: ir.Stdout, Value: ir.ProcessCall{Operation: one.operation, Of: ir.String}}}}
+			if code := C(program); !strings.Contains(code, one.function+"()") {
+				t.Fatalf("a read of %s doesn't call %s", one.want.Member, one.function)
+			}
+			if refusal, found := wasiHostRefusals[one.function]; !found || refusal != one.want {
+				t.Fatalf("want %v, got %v (found %t)", one.want, refusal, found)
 			}
 		})
 	}

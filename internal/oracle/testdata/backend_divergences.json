@@ -1,5 +1,5 @@
 {
-  "_comment": "Adding a row is a ruling routed to @system_adamic, and only Adamic adds one. Each row is one fixture whose backends are ruled to differ, from each other, or, where node is set, both from the source on Node while they agree with each other; name is the ruled divergence, which may hold more than one fixture. Schema: divergences lists fixture (the program's repository path, once), name (absent for a lone row), ruling (who ruled, naming the task; a row whose ruling is empty or names no task is refused), reason, node (absent where Node's side isn't ruled), native and javascript, each outcome its exact stdout, stderr and exit_code. internal/oracle's backend divergence test holds each fixture's runs to its row byte for byte, and the admission delta reads a newly admitted program at a row's fixture as that divergence only when native and JavaScript agree and Node's and native's runs are exactly the row's. Membership never excuses any other output.",
+  "_comment": "Adding a row is a ruling routed to @system_adamic, and only Adamic adds one. Each row is one fixture whose backends are ruled to differ, from each other, or, where node is set, both from the source on Node while they agree with each other; name is the ruled divergence, which may hold more than one fixture. Schema: divergences lists fixture (the program's repository path, once), name (absent for a lone row), ruling (who ruled, naming the task; a row whose ruling is empty or names no task is refused), reason, format (absent for a program built as an ES module; CommonJSBundle for one built only as one bundled image, which the installed-layout harness runs with each leg's lib directory written <lib>), node (absent where Node's side isn't ruled), native and javascript, each outcome its exact stdout, stderr and exit_code. internal/oracle's backend divergence test holds each fixture's runs to its row byte for byte, and the admission delta reads a newly admitted program at a row's fixture as that divergence only when native and JavaScript agree and Node's and native's runs are exactly the row's. Membership never excuses any other output.",
   "divergences": [
     {
       "fixture": "internal/oracle/testdata/d96d304_try_stack.a",
@@ -180,6 +180,72 @@
       },
       "javascript": {
         "stdout": "failed: Cannot load JavaScript module './plugin.js': a native Adamic program can't run JavaScript; run it on Node to load modules at run time\nafter\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/installed_layout/filename.ts",
+      "name": "installed-layout-path",
+      "ruling": "@system_adamic, task #redxes2, Nov 6; Adamic and Platforms on #0ta3dk9",
+      "reason": "A bundled image's __filename is the running image's real path, lib/_tsc natively, where Node's is lib/_tsc.js: the raw path differs by the program file's own name alone, and __dirname agrees. tsc never prints either; what it derives from them, the default lib, the case probe and a locale's messages, is held to Node by TestInstalledLayoutReadsAreNodes.",
+      "format": "CommonJSBundle",
+      "node": {
+        "stdout": "<lib>/_tsc.js\n<lib>\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "<lib>/_tsc\n<lib>\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "<lib>/_tsc.mjs\n<lib>\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/installed_layout/module_path.ts",
+      "name": "javascript-module-path",
+      "ruling": "@system_adamic, task #redxes2, Nov 6; Adamic and Platforms on #0ta3dk9",
+      "reason": "The JavaScript backend's program is an ES module, so a bundled image's __filename there is the module's own path from import.meta.url, lib/_tsc.mjs, where Node's is lib/_tsc.js; __dirname agrees.",
+      "format": "CommonJSBundle",
+      "node": {
+        "stdout": "<lib>/_tsc.js\n<lib>\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "<lib>/_tsc\n<lib>\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "<lib>/_tsc.mjs\n<lib>\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/installed_layout/per_file",
+      "name": "per-file-module-directory",
+      "ruling": "@system_adamic, task #redxes2; Adamic's ruling on #0ta3dk9 (18:12Z), on Language's must",
+      "reason": "A CommonJS declaration is one bundled image (Adamic's ruling on #0ta3dk9), so every module's __dirname is the image's directory, lib natively and in JavaScript; Node, run a file per module, gives each module its own, lib/lib for lib/util.ts. tsc ships one bundle, _tsc.js, whose modules all read the bundle's, as TestInstalledLayoutReadsAreNodes holds.",
+      "format": "CommonJSBundle",
+      "node": {
+        "stdout": "util <lib>/lib\nmain <lib>\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "util <lib>\nmain <lib>\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "util <lib>\nmain <lib>\n",
         "stderr": "",
         "exit_code": 0
       }
