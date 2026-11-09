@@ -2101,6 +2101,18 @@ func (a *analysis) expressionEffect(statement ir.Statement) {
 		a.value(statement.Index)
 		held := a.value(statement.Value)
 		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+	case ir.If:
+		a.value(statement.Condition)
+		before := a.state.copy()
+		for _, inner := range statement.Then {
+			a.expressionEffect(inner)
+		}
+		then := a.state
+		a.state = before
+		for _, inner := range statement.Else {
+			a.expressionEffect(inner)
+		}
+		a.state.join(then)
 	case ir.Block:
 		for _, inner := range statement.Body {
 			a.expressionEffect(inner)
