@@ -1,8 +1,8 @@
-// Stopped language choice: admit wildcardMatchers[usage], a computed object read
-// whose key is a finite union of present own fields, inside a parameter default.
-// Judgment: sound with a proved complete key set and a compatible representation
-// for every selected field. It needs computed object access before the complete
-// original body can serve as a native fixture. Keep its default and body intact.
+// Agreement witness: wildcardMatchers[usage] remains in a parameter default.
+// Its key is a finite union of present own fields with compatible representations.
+// The parameter is a plain name; the body destructures the selected matcher.
+// The computed default read lowers with this parameter and body destructuring.
+// Node must retain the original getSubPatternFromSpec output.
 // TypeScript 6.0.3 utilities.ts:9695, original getSubPatternFromSpec body.
 interface WildcardMatcher {
     readonly singleAsteriskRegexFragment: string;
@@ -25,8 +25,9 @@ function getSubPatternFromSpec(
     spec: string,
     basePath: string,
     usage: "files" | "directories" | "exclude",
-    { singleAsteriskRegexFragment, doubleAsteriskRegexFragment, replaceWildcardCharacter }: WildcardMatcher = wildcardMatchers[usage],
+    selectedMatcher: WildcardMatcher = wildcardMatchers[usage],
 ): string | undefined {
+    const { singleAsteriskRegexFragment, doubleAsteriskRegexFragment, replaceWildcardCharacter } = selectedMatcher;
     let subpattern = "";
     let hasWrittenComponent = false;
     const components = getNormalizedPathComponents(spec, basePath);

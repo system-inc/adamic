@@ -1,6 +1,6 @@
-// && keeps a falsy left value, and a missing reference typed null is null: item && item.ready is
-// boolean | null, which Node prints as null. Stage 0 refuses the type rather than give the absent
-// boolean | undefined pair a Maybe holds, which would print undefined.
+// Review witness: a boolean | null value from none && none.ready.
+// A null test prints null on Node; lowering currently reaches a native panic.
+// This measured disagreement awaits Lower's review; it is not a refusal pin.
 class Item {
 	value = 1;
 	ready = true;
@@ -9,4 +9,9 @@ function find(flag: boolean): Item | null {
 	return flag ? new Item() : null;
 }
 const none = find(false);
-console.log(`${none && none.ready}`);
+const value = none && none.ready;
+if (value === null) {
+    console.log('null');
+} else {
+    console.log(value ? 'true' : 'false');
+}
