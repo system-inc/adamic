@@ -1,6 +1,6 @@
 {
-  "name": "shouting_fourth_token_omitted",
-  "file": "messages.a",
-  "from": "tokens.slice(0, 4)",
-  "to": "tokens.slice(0, 3)"
+  "name": "shouting_word_omitted",
+  "file": "rule.a",
+  "from": "shoutingMessage([token])",
+  "to": "shoutingMessage([])"
 }
