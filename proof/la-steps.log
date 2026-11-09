@@ -1,0 +1,176 @@
+=== INITIAL ATTEMPT (exit=0; missing TMPDIR directory)
+go version go1.27.1 linux/amd64
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /workspace/adamic-tools/llvm/bin
+v24.19.0
+mktemp: failed to create directory via template ‘/tmp/adamic-gate/tmp.XXXXXXXXXX’: No such file or directory
+mkdir: cannot create directory ‘/la’: Permission denied
+head fb1da27593845a884c171ecb908582393ae1b43b
+
+=== STEP gofmt: gofmt -l internal
+/tmp/la-proof.sh: line 5: /la/gofmt.log: No such file or directory
+=== STEP gofmt exit=1
+grep: /la/gofmt.log: No such file or directory
+grep: /la/gofmt.log: No such file or directory
+
+=== STEP vet: go vet ./internal/native/ ./internal/oracle/
+/tmp/la-proof.sh: line 5: /la/vet.log: No such file or directory
+=== STEP vet exit=1
+grep: /la/vet.log: No such file or directory
+grep: /la/vet.log: No such file or directory
+
+=== STEP witnesses: env ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run ^TestGraphOracleGraphRegionsLogicalAssignment
+/tmp/la-proof.sh: line 5: /la/witnesses.log: No such file or directory
+=== STEP witnesses exit=1
+grep: /la/witnesses.log: No such file or directory
+grep: /la/witnesses.log: No such file or directory
+
+=== STEP native: go test -count=1 -timeout 25m -skip Debug ./internal/native -run Logical|Graph
+/tmp/la-proof.sh: line 5: /la/native.log: No such file or directory
+=== STEP native exit=1
+grep: /la/native.log: No such file or directory
+grep: /la/native.log: No such file or directory
+
+=== STEP counts-update: env ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run TestCountsAreRecorded -args -update-counts
+/tmp/la-proof.sh: line 5: /la/counts-update.log: No such file or directory
+=== STEP counts-update exit=1
+grep: /la/counts-update.log: No such file or directory
+grep: /la/counts-update.log: No such file or directory
+=== PATCH
+=== END PATCH
+
+=== STEP oracle-whole: env ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle
+/tmp/la-proof.sh: line 5: /la/oracle-whole.log: No such file or directory
+=== STEP oracle-whole exit=1
+grep: /la/oracle-whole.log: No such file or directory
+grep: /la/oracle-whole.log: No such file or directory
+=== RERUN (created /tmp/adamic-gate; script unchanged)
+go version go1.27.1 linux/amd64
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /workspace/adamic-tools/llvm/bin
+v24.19.0
+head fb1da27593845a884c171ecb908582393ae1b43b
+
+=== STEP gofmt: gofmt -l internal
+=== STEP gofmt exit=0
+
+=== STEP vet: go vet ./internal/native/ ./internal/oracle/
+=== STEP vet exit=0
+
+=== STEP witnesses: env ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run ^TestGraphOracleGraphRegionsLogicalAssignment
+=== STEP witnesses exit=1
+panic: test timed out after 10m0s
+FAIL	github.com/system-inc/adamic/internal/oracle	600.152s
+FAIL
+
+=== STEP native: go test -count=1 -timeout 25m -skip Debug ./internal/native -run Logical|Graph
+=== STEP native exit=0
+ok  	github.com/system-inc/adamic/internal/native	455.755s
+
+=== STEP counts-update: env ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run TestCountsAreRecorded -args -update-counts
+=== STEP counts-update exit=1
+--- FAIL: TestCountsAreRecorded_026 (0.17s)
+--- FAIL: TestCountsAreRecorded_023 (0.09s)
+panic: test timed out after 10m0s
+FAIL	github.com/system-inc/adamic/internal/oracle	600.327s
+FAIL
+--- FAIL: TestCountsAreRecorded_026 (0.17s)
+    --- FAIL: TestCountsAreRecorded_026/Program_region:_internal/oracle/testdata/program_region/parse.a_(Program=false) (143.25s)
+        program_region_parse_counts_test.go:22: build program-parse-source-false d077ae0c392f miss 27.05
+        program_region_parse_test.go:28: build program-parse-source-false d077ae0c392f hit 0.28
+        program_region_parse_test.go:23: build program-parse-false-false 938983cf6d61 miss 116.17
+        program_region_parse_counts_test.go:33: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestCountsAreRecorded_023 (0.09s)
+    --- FAIL: TestCountsAreRecorded_023/Program_region:_internal/oracle/testdata/program_region/parse.a_(Program=true) (123.96s)
+        program_region_parse_counts_test.go:22: build program-parse-source-true 18aafc3358be miss 33.98
+        program_region_parse_test.go:28: build program-parse-source-true 18aafc3358be hit 0.15
+        program_region_parse_test.go:40: build native-runtime a56418494d6f miss 34.44
+        program_region_parse_test.go:23: build program-parse-true-false d97d54958376 miss 89.93
+        program_region_parse_counts_test.go:33: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+panic: test timed out after 10m0s
+	running tests:
+		TestCountsAreRecorded_005/internal/load/testdata/0.1/compile/06_stack.ts (1s)
+		TestCountsAreRecorded_005/internal/oracle/testdata/json_stringify_options.a (0s)
+		TestCountsAreRecorded_005/internal/oracle/testdata/library_math_number_math.a (1s)
+		TestCountsAreRecorded_005/internal/oracle/testdata/loops.a (1s)
+		TestCountsAreRecorded_006/internal/oracle/testdata/node_fs_directory_system.a (25s)
+
+=== PATCH
+=== END PATCH
+
+=== STEP oracle-whole: env ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle
+=== STEP oracle-whole exit=1
+--- FAIL: TestGraphMeasurementMillion (23.19s)
+--- FAIL: TestProduct_ProgramTscSource (0.00s)
+--- FAIL: TestAsyncOriginalTypeofRetainBudget (0.86s)
+--- FAIL: TestAsyncCountPayload (26.10s)
+--- FAIL: TestAsyncOriginalThrowRetainBudget (1.12s)
+--- FAIL: TestAsyncOriginalThreeRetainBudget (1.13s)
+--- FAIL: TestAsyncOriginalPlainRetainBudget (1.17s)
+--- FAIL: TestAsyncOriginalNestedRetainBudget (1.12s)
+--- FAIL: TestAsyncOriginalCoverageValuesRetainBudget (1.54s)
+--- FAIL: TestAsyncOriginalCoverageTypeofRetainBudget (1.04s)
+--- FAIL: TestAsyncOriginalCoverageUnionsRetainBudget (1.31s)
+--- FAIL: TestAsyncOriginalCoverageRejectNestedRetainBudget (1.36s)
+--- FAIL: TestAsyncOriginalCoverageRejectEmptyRetainBudget (1.22s)
+--- FAIL: TestAsyncOriginalCoverageRejectEagerRetainBudget (1.23s)
+--- FAIL: TestAsyncOriginalCoverageParametersRetainBudget (1.18s)
+--- FAIL: TestAsyncOriginalCoverageDiscardRetainBudget (1.61s)
+--- FAIL: TestAsyncCountRootError (2.87s)
+--- FAIL: TestAsyncCountThrown (3.16s)
+--- FAIL: TestAsyncCountParameter (2.20s)
+--- FAIL: TestAsyncCountExpressionWrite (2.33s)
+--- FAIL: TestGraphMeasurementMillion (23.19s)
+    oracle_test.go:637: build go_build_./oracle/json_types.go_json-types 9eee30f6b6d7 miss 8.06
+    graph_regions_gap_probe_test.go:134: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestProduct_ProgramTscSource (0.00s)
+    program_region_source_test.go:15: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestAsyncOriginalTypeofRetainBudget (0.86s)
+    async_counts_test.go:406: build async-count-true-async_typeof ce8309de391c miss 0.69
+    async_counts_test.go:406: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncCountPayload (26.10s)
+    async_counts_test.go:423: build async-count-false-payload 9de375cefba6 hit 23.41
+    oracle_test.go:637: build go_build_./oracle/json_types.go_json-types 9eee30f6b6d7 hit 0.01
+    async_counts_test.go:423: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalThrowRetainBudget (1.12s)
+    async_counts_test.go:397: build async-count-true-async_throw 2259582413c7 miss 0.93
+    async_counts_test.go:397: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalThreeRetainBudget (1.13s)
+    async_counts_test.go:388: build async-count-true-async_three 7b1d55c26b1b hit 0.81
+    async_counts_test.go:388: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalPlainRetainBudget (1.17s)
+    async_counts_test.go:379: build async-count-true-async_plain b3e900e15670 miss 1.00
+    async_counts_test.go:379: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalNestedRetainBudget (1.12s)
+    async_counts_test.go:370: build async-count-true-async_nested fc0f86c6a03b miss 0.91
+    async_counts_test.go:370: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalCoverageValuesRetainBudget (1.54s)
+    async_counts_test.go:361: build async-count-true-async_coverage_values 2220cba5857d miss 1.13
+    async_counts_test.go:361: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalCoverageTypeofRetainBudget (1.04s)
+    async_counts_test.go:343: build async-count-true-async_coverage_typeof edb35c5f86e1 miss 0.77
+    async_counts_test.go:343: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalCoverageUnionsRetainBudget (1.31s)
+    async_counts_test.go:352: build async-count-true-async_coverage_unions f1124cbd06ed miss 1.09
+    async_counts_test.go:352: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalCoverageRejectNestedRetainBudget (1.36s)
+    async_counts_test.go:334: build async-count-true-async_coverage_reject_nested e7585158f409 miss 1.20
+    async_counts_test.go:334: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalCoverageRejectEmptyRetainBudget (1.22s)
+    async_counts_test.go:325: build async-count-true-async_coverage_reject_empty 75c6c1a8d7af miss 0.91
+    async_counts_test.go:325: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalCoverageRejectEagerRetainBudget (1.23s)
+    async_counts_test.go:316: build async-count-true-async_coverage_reject_eager 56222cb9b09b miss 1.00
+    async_counts_test.go:316: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalCoverageParametersRetainBudget (1.18s)
+    async_counts_test.go:307: build async-count-true-async_coverage_parameters a614e9171dd5 miss 0.99
+    async_counts_test.go:307: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncOriginalCoverageDiscardRetainBudget (1.61s)
+    async_counts_test.go:298: build async-count-true-async_coverage_discard c8244f30096f miss 1.40
+    async_counts_test.go:298: open testdata/counts/runtime/internal/oracle/testdata/graph_regions/logical_assignment_element.a.counts: no such file or directory
+--- FAIL: TestAsyncCountRootError (2.87s)
+    async_counts_test.go:285: build async-count-false-root_error 5c3349eeb16b hit 1.51
