@@ -59,7 +59,7 @@
   "generic_predicate_seam": 0,
   "generic_module_order_audit": 0,
   "baseline_census_exit": 0,
-  "final_head_census": "incomplete, deliberately terminated with SIGTERM",
+  "final_head_census": "completed with child exit 0; pairing pending",
   "paired_count": null,
   "own_live_processes_at_stop": [],
   "final_destination_pushed": false,
@@ -69,5 +69,6 @@
     "exit": 0,
     "inherited_main_relative_violations": 7,
     "production_files_edited_to_fix_inherited_violations": false
-  }
+  },
+  "resumed_head_exit": 0
 }
