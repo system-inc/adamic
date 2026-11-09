@@ -64,6 +64,9 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"bytes", "finalized"},
 		// async_host_impl.h's host promise settlement and timers_impl.h's Timeout.
 		{"body", "status"}, {"#identity"},
+		// node_fs_watch_impl.h's watch error, in Node's key order: errno, code and path sit where the
+		// realpath error above holds other fields, so all three go by name.
+		{"name", "message", "errno", "syscall", "code", "path", "filename"},
 		{"heapUsed"}, {"name", "entryType", "startTime", "duration"}, {"setBlocking"},
 		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
 	} {
