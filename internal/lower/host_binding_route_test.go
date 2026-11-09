@@ -31,7 +31,7 @@ import (
 //     Pins b2 and a2 lower: timeOrigin declared writable over the model's read only field. Pin b doesn't move,
 //     since a member typed other than the model's isn't a widening; the assignability check holds it.
 //   - (m4) library_node_process.go, nodeProcessPath routing by the registered type, not the symbol:
-//     before `if row, _ := l.hostBindingOf(node); row != nil && hostBindingRouted(*row) {`, the line
+//     before `if row, _ := l.hostBindingOf(node); row != nil && l.hostBindingRouted(*row) {`, the line
 //     `if l.hostBindingViews()[l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node)).Symbol()] != nil { return "performance" }`.
 //     Pin h07 goes red: the literal's now() becomes a host call.
 //   - (m3) host_bindings.go, hostBindingModelRefusal's member assignability:
