@@ -31,7 +31,9 @@ func weakFieldReads(program *ir.Program) int {
 // reaches: their records have no handle, so both reads are weak_field_read. The control, handle.ts, holds its
 // record as Record<string, number>, so only Hints's is, and Options's reads its slot. empty_source.ts holds its
 // record as Held, which relates to its all-optional Read in neither direction, so only the `{}` question keeps
-// the read checked. Every one lowers and agrees with Node natively and on the JavaScript backend.
+// the read checked. generic_holder.ts holds its record inside extend<T> as Record<string, T | undefined>, which
+// the walk relates as Record<string, unknown>, so a read through the type literal Shape stays checked beside the
+// all-optional Read's. Every one lowers and agrees with Node natively and on the JavaScript backend.
 //
 // The second group is Language's roads on #ny0c3gb, each a record literal seen as `{}` and then as an
 // all-optional Read whose number field holds the record's string, which Node prints. Each program's .stop file
@@ -40,10 +42,11 @@ func weakFieldReads(program *ir.Program) int {
 // the stop lowering gives, whole, its path relative to the repository.
 //
 // The mutants in internal/lower/record-source-handles.mutants.md: `satisfies T` counted as a holding place turns
-// satisfies red, and the `{}` question dropped turns empty_source and t2_parameter_return red.
+// satisfies red, the `{}` question dropped turns empty_source and t2_parameter_return red, and a type parameter
+// related as itself, not unknown, turns generic_holder red.
 func TestRecordSourceHandles(t *testing.T) {
 	t.Parallel()
-	for name, checkedReads := range map[string]int{"bare": 2, "satisfies": 2, "generic": 2, "handle": 1, "empty_source": 1} {
+	for name, checkedReads := range map[string]int{"bare": 2, "satisfies": 2, "generic": 2, "handle": 1, "empty_source": 1, "generic_holder": 2} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, recordSourceHandles, name+".ts"))

@@ -322,8 +322,14 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 // stays the type it had (rulings.md:14), `as const`, which keeps the literal's own type, a variable with no
 // annotation, which takes the literal's own type, and a slot that's a type parameter or otherwise instantiable,
 // or has such a member (instantiableMember), such as a generic's parameter before inference, since
-// `f<T>(x: T)` holds `{}` as the T inferred for it. Any
-// other place is one this can't name, and holds nothing either, so the literal's own widened type stands.
+// `f<T>(x: T)` holds `{}` as the T inferred for it. Any other place is one this can't name, and holds nothing
+// either, so the literal's own widened type stands.
+//
+// The walk relates declarations, so it meets a type parameter of a declaration around the literal uninstantiated,
+// and relates it as unknown (Adamic's ruling on #ny0c3gb, 16:12:33Z). Related as a rigid T it would fail open:
+// tsc's core.ts holds a MapLike<T | undefined> record inside a generic, and a receiver such as
+// `{ label: string; size?: number }` relates to that in neither direction, though the record each instantiation
+// makes may reach it. Seen as MapLike<unknown>, the receiver's implicit index signature relates it.
 func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 	var handles []*checker.Type
 	held := literal
@@ -352,6 +358,26 @@ func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 	if holds {
 		handles = append(handles, l.slotType(held))
 	}
+	var parameters []*checker.Type
+	for around := literal.Parent; around != nil; around = around.Parent {
+		if ast.IsFunctionLike(around) && around.FunctionLikeData() != nil || around.Kind == ast.KindClassDeclaration || around.Kind == ast.KindClassExpression || around.Kind == ast.KindInterfaceDeclaration || around.Kind == ast.KindTypeAliasDeclaration {
+			for _, parameter := range around.TypeParameters() {
+				parameters = append(parameters, l.checker.GetTypeAtLocation(parameter.Name()))
+			}
+		}
+	}
+	if len(parameters) > 0 {
+		unknowns := make([]*checker.Type, len(parameters))
+		for index := range unknowns {
+			unknowns[index] = l.checker.GetUnknownType()
+		}
+		mapper := newTypeMapper(parameters, unknowns)
+		for index, handle := range handles {
+			if handle != nil {
+				handles[index] = instantiateType(l.checker, handle, mapper)
+			}
+		}
+	}
 	kept := handles[:0]
 	for _, handle := range handles {
 		if handle != nil && !instantiableMember(handle) {
@@ -362,9 +388,9 @@ func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 }
 
 // instantiableMember says whether t is instantiable, a type parameter among them, or a union or intersection
-// with such a member anywhere (`T | undefined`), which entriesRecordHandles holds no handle. A generic type that
-// isn't one, such as MapLike<T> inside a generic body, is kept as a handle for now, pending the differential on
-// #ny0c3gb.
+// with such a member anywhere (`T | undefined`), which entriesRecordHandles holds no handle. It sees a handle
+// once the type parameters of the declarations around the literal are unknown, so what it drops is what that
+// mapping left instantiable.
 func instantiableMember(t *checker.Type) bool {
 	if t.Flags()&checker.TypeFlagsInstantiable != 0 {
 		return true

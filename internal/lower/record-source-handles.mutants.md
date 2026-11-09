@@ -61,3 +61,25 @@ words and the JavaScript backend prints text, where the pin wants the weak read'
 stop at the hiding rule before lowering finishes (rulings.md:71), the second guard, and stay as they were. bare,
 satisfies and generic stay green, since their Options declares a required label `{}` lacks, and so does handle.ts,
 whose Hints its Record<string, number> handle already reaches.
+
+## (c) A type parameter related as itself
+
+The walk relates declarations, so a type parameter of a declaration around the literal is unknown there (Adamic's
+ruling on #ny0c3gb, 16:12:33Z). In entries_records.go, entriesRecordHandles, the old text
+
+```go
+	if len(parameters) > 0 {
+		unknowns := make([]*checker.Type, len(parameters))
+```
+
+becomes
+
+```go
+	if false && len(parameters) > 0 {
+		unknowns := make([]*checker.Type, len(parameters))
+```
+
+Red: TestRecordSourceHandles/generic_holder. The record is held as Record<string, T | undefined> with T rigid, and
+Shape, `{ label: string; size?: number }`, relates to it in neither direction (a string isn't a T | undefined), and `{}`
+lacks Shape's label, so Shape's read loses its weak_field_read (1 helper, want 2). The other subtests hold no record
+inside a generic and stay as they were.

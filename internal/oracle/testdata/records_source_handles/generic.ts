@@ -15,7 +15,7 @@ for (const key of Object.keys(table)) console.log(key);
 function count(values: Record<string, number>): number {
 	return Object.keys(values).length;
 }
-console.log(count(keep(table)));
+console.log(String(count(keep(table))));
 function mode(options: Options): string {
 	return String(options.mode);
 }
