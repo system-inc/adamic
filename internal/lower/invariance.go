@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"slices"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -222,6 +223,13 @@ func (l *lowering) widenedParameters(from *checker.Signature, to *checker.Signat
 	// void` is related Error to Error (#6xzs6gj).
 	for position := range anyRelatedPositions(from, to) {
 		takes, given := l.callableParameterTypeAt(from, position), l.callableParameterTypeAt(to, position)
+		if os.Getenv("ADAMIC_PROBE_WIDENED") != "" && takes != given && l.checker.TypeToString(takes) == l.checker.TypeToString(given) && strings.Contains(l.checker.TypeToString(takes), "EmitHint") {
+			before := load.RelationOverflowMarked(l.checker)
+			enumOK := l.enumAssignable(given, takes)
+			assignable := l.checker.IsTypeAssignableTo(given, takes)
+			after := load.RelationOverflowMarked(l.checker)
+			fmt.Fprintf(os.Stderr, "probe-widened\tparameters\tposition=%d\ttakes=%s\tgiven=%s\tenumAssignable=%t\tassignable=%t\toverflowBefore=%t\toverflowAfter=%t\n", position, probeTypeText(l.checker, takes), probeTypeText(l.checker, given), enumOK, assignable, before, after)
+		}
 		if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
 			// tsc relates a method's parameters both ways (method bivariance), so a method taking
 			// a Dog can be seen as one taking any Animal, and handed a Cat.
