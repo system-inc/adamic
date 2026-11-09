@@ -398,3 +398,37 @@ file preparation failures and unit boundaries. `module_order_audit.py BINARY`
 exercises a real production dynamic-import refusal on a tiny fixture, including
 a selected file containing only generic deferrals. It uses an already built guarded
 overlay and never builds one in a gate test.
+
+## Deferred refusals
+
+The `deferred` phase records the refusal registry's lowest-priority NotYet.
+Production resets `refusal.deferred` for each module, visits its nodes in registry
+order, and returns the first deferred stop only if no ordinary refusal wins
+anywhere in that module. It does this before declaration and body lowering.
+Today only `refuseAnyRelation` (ordinal 3270) defers: either a written-any member
+relation or its structural-depth limit. `refuseInSlot` also selects this fallback
+inside its value walk, then restores the enclosing deferred state.
+
+Independent census units first honor ordinary scan findings already recorded for
+that owner. Only the remaining units probe the production `refuseNode` walk on
+disposable state before body lowering. This avoids repeating costly predicate
+proofs for a unit whose ordinary refusal already suppresses its deferred result. An ordinary refusal anywhere in that unit suppresses
+its deferred result; otherwise it records the deferred NotYet and stops the unit.
+The continuing module scan reports its deferred fallback only when it collected
+no ordinary finding, in phase `deferred_scan`. This separate scan phase prevents
+a module at line 1 from impersonating its first unit at the same location.
+Deferred findings retain their unit or module owner. Pairing treats unit
+`deferred` findings as first stops and keeps `deferred_scan` module events separate. No lowering state field is added.
+
+The real written-any regression runs in process with the census overlay:
+`go test -tags=census_overlay -overlay=OVERLAY/overlay.json ./stage3/census/latent`.
+The ordinary package guards the driver hooks. `deferred_read_mutant.py` copies
+an overlay and replaces the shared fallback read with nil; the same census pin
+must then fail because its eligible written-any function has no deferred stop.
+Speculative mode records the stop and continues its deliberate recovery walk.
+
+Instantiated dependency bodies also probe at actual body entry, after checker
+body skips and piece ownership guards. A wrapped deferred failure keeps its phase
+while propagating to the caller. The real pin covers both a direct written-any
+function and a concrete generic call, including an ordinary refusal later in the
+callee. No new lowering field carries this error.
