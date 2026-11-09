@@ -499,6 +499,9 @@
     "stage1/cohere/lint TestProduct_LintFindsSuggestionAlongsideGoOracle": [
       "stage1/cohere/lint/oracles TestProduct_SuggestionAlongsideGoOracle"
     ],
+    "stage1/cohere/lint TestProduct_LintFindsTypedOwnership": [
+      "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/oracles TestProduct_TypedOwnership"
+    ],
     "stage1/cohere/lint TestProduct_LintFindsYepestaSetup": [
       "stage1/cohere/lint/oracles TestProduct_YepestaSetup"
     ],
