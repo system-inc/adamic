@@ -398,3 +398,27 @@ file preparation failures and unit boundaries. `module_order_audit.py BINARY`
 exercises a real production dynamic-import refusal on a tiny fixture, including
 a selected file containing only generic deferrals. It uses an already built guarded
 overlay and never builds one in a gate test.
+
+## Deferred refusals
+
+The `deferred` phase records the refusal registry's lowest-priority NotYet.
+Production resets `refusal.deferred` for each module, visits its nodes in registry
+order, and returns the first deferred stop only if no ordinary refusal wins
+anywhere in that module. It does this before declaration and body lowering.
+Today only `refuseAnyRelation` (ordinal 3270) defers: either a written-any member
+relation or its structural-depth limit. `refuseInSlot` also selects this fallback
+inside its value walk, then restores the enclosing deferred state.
+
+Independent census units probe the production `refuseNode` walk on disposable
+state before body lowering. An ordinary refusal anywhere in that unit suppresses
+its deferred result; otherwise it records the deferred NotYet and stops the unit.
+The continuing module scan reports its deferred fallback only when it collected
+no ordinary finding. Deferred findings retain their unit or module owner, and
+pairing treats them as unit first stops. No lowering state field is added.
+
+The real written-any regression runs in process with the census overlay:
+`go test -tags=census_overlay -overlay=OVERLAY/overlay.json ./stage3/census/latent`.
+The ordinary package guards the driver hooks. `deferred_read_mutant.py` copies
+an overlay and replaces the shared fallback read with nil; the same census pin
+must then fail because its eligible written-any function has no deferred stop.
+Speculative mode records the stop and continues its deliberate recovery walk.

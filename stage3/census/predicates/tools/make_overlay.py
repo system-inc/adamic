@@ -35,6 +35,8 @@ if marker in body:
     begin = body.index(marker)
     finish = body.index('\tvar found error', begin)
     body = body[:begin] + body[finish:]
+# The driver selects the module fallback only when no ordinary finding won.
+body = body.replace('if found == nil {\n\t\tfound = l.refusal.deferred\n\t}', '')
 body = body.replace('return found != nil', 'latentRecord(found); found = nil; return false')
 body = body.replace('\t\t\treturn &Refused{Where:', '\t\t\tlatentRecord(&Refused{Where:')
 body = body.replace('Fix: "remove it and fix any type errors"}', 'Fix: "remove it and fix any type errors"})')

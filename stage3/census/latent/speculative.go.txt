@@ -319,7 +319,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 					latentRecord(fmt.Errorf("refusal scan panic: %v", crash))
 				}
 			}()
-			latentRecord(l.latentRefuse(file))
+			l.latentScan(file)
 		}()
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		latentProgressPhase("registration")
@@ -353,6 +353,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			} else {
 				copy := l.latentSnapshot()
 				copy.latentPiecePrepare(node)
+				copy.latentDeferredUnit(node)
 				copy.latentSpecWalk(node)
 			}
 			latentCheckUnitRelation(program, checker, &unit)
