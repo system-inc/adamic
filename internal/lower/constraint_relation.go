@@ -156,7 +156,8 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 		declared := l.checker.GetTypeOfSymbol(parameters[at])
 		given, slot := instantiateType(l.checker, declared, binding.mapper), instantiateType(l.checker, declared, asConstraint)
 		if probeWidenedAt(l.program.Where(argument)) {
-			fmt.Fprintf(os.Stderr, "probe-widened\targument\t%s\tdeclared=%s\tgiven=%s\tslot=%s\tsame=%t\tassignable=%t\n", l.program.Where(argument), probeTypeText(l.checker, declared), probeTypeText(l.checker, given), probeTypeText(l.checker, slot), given == slot, l.checker.IsTypeAssignableTo(regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(argument)), slot))
+			located := regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(argument))
+			fmt.Fprintf(os.Stderr, "probe-widened\targument\t%s\tdeclared=%s\tgiven=%s\tslot=%s\tsame=%t\tassignable=%t\tlocated=%s\tlocatedFlags=%#x\tgivenAssignable=%t\tlocatedToGiven=%t\n", l.program.Where(argument), probeTypeText(l.checker, declared), probeTypeText(l.checker, given), probeTypeText(l.checker, slot), given == slot, l.checker.IsTypeAssignableTo(located, slot), probeTypeText(l.checker, located), uint64(located.Flags()), l.checker.IsTypeAssignableTo(given, slot), l.checker.IsTypeAssignableTo(located, given))
 		}
 		if given == slot {
 			continue
