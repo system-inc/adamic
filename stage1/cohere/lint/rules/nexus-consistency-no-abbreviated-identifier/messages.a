@@ -18,7 +18,7 @@ export function policyMessage(rule: string, id: string, fields: readonly string[
             break;
         case 'nexus/consistency-no-abbreviated-identifier/abbreviatedWordSegment':
             text =
-                'Identifier "{{name}}" abbreviates "{{word}}". Use "{{suggestion}}". A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant.';
+                'Identifier "{{name}}" abbreviates "{{word}}". {{advice}} A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant.';
             break;
         default: return panic(`unknown abbreviation message ${id}`);
     }
