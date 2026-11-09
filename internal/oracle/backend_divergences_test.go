@@ -2,9 +2,11 @@ package oracle
 
 import (
 	"bytes"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -40,6 +42,14 @@ const requireInESModule = "ReferenceError: require is not defined"
 // (cmd/adamic-admission-delta) reads the same rows (#tqm95v6). Only Adamic adds a row.
 const backendDivergencesPath = "internal/oracle/testdata/backend_divergences.json"
 
+// backendDivergencesJSON is that file, compiled into the test binary, so the rows never depend on the
+// working directory the binary runs from: stage3's fixture hook builds this package's test binary
+// (stage3/build-hook.py) and runs it from the repository root, where a read of repository's "../.."
+// points outside the checkout (Emit's red on #tqm95v6). A missing file fails the build.
+//
+//go:embed testdata/backend_divergences.json
+var backendDivergencesJSON []byte
+
 // Only these exact fixtures have ruled differences. Each side remains pinned:
 // membership never excuses an arbitrary exit, diagnostic or output change. A row whose node is set
 // pins the source on Node too, for fixtures where native and the JavaScript backend agree with each
@@ -47,7 +57,7 @@ const backendDivergencesPath = "internal/oracle/testdata/backend_divergences.jso
 // The rows are read once, as the package loads: a list that can't be read panics there, failing every
 // test in the package rather than comparing against no rows.
 var ruledBackendDivergences = func() []ruledBackendDivergence {
-	rows, err := readRuledBackendDivergences(filepath.Join(repository, backendDivergencesPath))
+	rows, err := parseRuledBackendDivergences(backendDivergencesPath, backendDivergencesJSON)
 	if err != nil {
 		panic(err)
 	}
@@ -75,9 +85,18 @@ func (outcome backendDivergenceOutcome) run() run {
 	return run{stdout: []byte(outcome.Stdout), stderr: []byte(outcome.Stderr), exitCode: outcome.ExitCode}
 }
 
-// readRuledBackendDivergences reads the rows in the file's order. A row with no fixture, no ruling or no
-// reason is refused, as is a field the rows don't have.
+// readRuledBackendDivergences reads the rows of the file at path (parseRuledBackendDivergences).
 func readRuledBackendDivergences(path string) ([]ruledBackendDivergence, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	return parseRuledBackendDivergences(path, data)
+}
+
+// parseRuledBackendDivergences reads the rows in the file's order. A row with no fixture, no ruling or no
+// reason is refused, as is a field the rows don't have.
+func parseRuledBackendDivergences(path string, data []byte) ([]ruledBackendDivergence, error) {
 	var list struct {
 		Comment     string `json:"_comment"`
 		Divergences []struct {
@@ -90,13 +109,9 @@ func readRuledBackendDivergences(path string) ([]ruledBackendDivergence, error) 
 			JavaScript backendDivergenceOutcome  `json:"javascript"`
 		} `json:"divergences"`
 	}
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	if err = decoder.Decode(&list); err != nil {
+	if err := decoder.Decode(&list); err != nil {
 		return nil, fmt.Errorf("%s: %w", path, err)
 	}
 	if !strings.Contains(list.Comment, "Adding a row is a ruling") || !strings.Contains(list.Comment, "@system_adamic") {
@@ -263,5 +278,26 @@ func TestRuledBackendDivergencesRefuseAnEmptyRuling(t *testing.T) {
 		if read(ruling) == nil {
 			t.Errorf("a row whose ruling is %q read", ruling)
 		}
+	}
+}
+
+// The rows load wherever the test binary runs: this test reruns its own binary from an empty working
+// directory, as stage3's fixture hook runs it from the repository root, and a cheap test must pass there
+// (Emit's red on #tqm95v6). Mutant: read the rows from filepath.Join(repository, backendDivergencesPath)
+// again, and the rerun panics as the package loads. The embedded bytes are the file's, so the delta,
+// which reads the file by path, reads the same rows.
+func TestRuledBackendDivergencesLoadFromAnyWorkingDirectory(t *testing.T) {
+	t.Parallel()
+	file, err := os.ReadFile(filepath.Join(repository, backendDivergencesPath))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(file, backendDivergencesJSON) {
+		t.Fatalf("the embedded rows aren't %s's bytes", backendDivergencesPath)
+	}
+	command := exec.Command(os.Args[0], "-test.run=^TestRuledBackendDivergencesRefuseAnEmptyRuling$", "-test.count=1")
+	command.Dir = t.TempDir()
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("the test binary from another working directory: %v\n%s", err, output)
 	}
 }
