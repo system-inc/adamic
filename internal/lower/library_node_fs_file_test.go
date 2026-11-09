@@ -120,3 +120,12 @@ func TestNodeFSFileScratchOverloadsAreNamed(t *testing.T) {
 		}
 	}
 }
+
+func TestNodeFSStatsOptionalCallKeepsOtherHostRefusal(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `import process from 'node:process'; process.stdout?.write('x');`)
+	var missing *NotYet
+	if !errors.As(err, &missing) || missing.What != "node:process.Process.stdout.write through an optional chain" {
+		t.Fatalf("want unchanged optional host refusal, got %v", err)
+	}
+}
