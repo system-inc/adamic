@@ -49,8 +49,10 @@ func (l *lowering) optionalMethodCall(node *ast.Node) (optionalMethod, bool, err
 	if !isCall {
 		return optionalMethod{}, true, l.notYet(node, optionalCallNotYet)
 	}
-	property, isProperty := call.Closure.(ir.Property)
-	if !isProperty || !property.Method || property.Object.Type() != ir.Object || !optionalMethodResult(call.Returns) {
+	// ir.MethodCallee, so a narrowed callee ('m' in o, then o.m?.()) is the same method call: the emitters
+	// test the call's own ?. on what the lookup finds before the narrowing's check (#6na4x1b).
+	property, _, isMethod := ir.MethodCallee(call.Closure)
+	if !isMethod || property.Object.Type() != ir.Object || !optionalMethodResult(call.Returns) {
 		return optionalMethod{}, true, l.notYet(node, optionalCallNotYet)
 	}
 	if l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsVoid != 0 {
