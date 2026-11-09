@@ -1,4 +1,4 @@
-// nexus/shouting.go:179; `[^\n]`
+// tailwind/collapse/class_list.go:68; `(\d+)_(\d+)`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,9 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "a", 4);
-observe(regex, "xa", 5);
-observe(regex, "a\n", 6);
-observe(regex, "PaginationInput", 7);
-observe(regex, "Pagination", 8);
-observe(regex, "TODO", 9);
+observe(regex, "0_0", 4);
+observe(regex, "x0_0", 5);
+observe(regex, "0_0\n", 6);

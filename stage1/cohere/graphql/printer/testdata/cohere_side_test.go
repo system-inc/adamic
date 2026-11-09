@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/cohere/internal/format/estree"
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 )
 
 // Not parallel: writes the fixed output paths supplied by the environment request.
@@ -65,7 +65,7 @@ func TestAdamicPrinter(t *testing.T) {
 			switch value := node.Get(key).(type) {
 			case *estree.Node:
 				walk(value)
-			case []*estree.Node:
+			case estree.Nodes:
 				for _, child := range value {
 					walk(child)
 				}
@@ -73,7 +73,7 @@ func TestAdamicPrinter(t *testing.T) {
 		}
 	}
 	var answers, cases strings.Builder
-	options := formatoptions.Default()
+	options := format_options.Default()
 	switch request.Mode {
 	case "narrow":
 		options.PrintWidth = 80

@@ -9,7 +9,9 @@ import (
 	typescript "github.com/system-inc/cohere/internal/lint/rules/typescript"
 )
 
-func oraclePreferLiteralEnumMember() rule.Rule { return typescript.PreferLiteralEnumMember }
+func oraclePreferLiteralEnumMember(options any) rule.Bound {
+	return bindOracle(typescript.PreferLiteralEnumMember, options)
+}
 
 // oraclePreferLiteralEnumMemberOptions decodes field 5's captured options into the upstream type, and with none leaves the
 // rule its defaults, as the shared oracle's decoder did before this rule moved.

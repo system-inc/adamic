@@ -1,4 +1,4 @@
-// tailwind/class_matchers.go:783; `^[A-Z_a-z][0-9A-Z_a-z]*$`
+// tailwind/no_deprecated_classes.go:76; `^divide-opacity-(.*)$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,9 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "A", 4);
-observe(regex, "xA", 5);
-observe(regex, "A\n", 6);
-observe(regex, "PaginationInput", 7);
-observe(regex, "Pagination", 8);
-observe(regex, "TODO", 9);
+observe(regex, "divide-opacity-", 4);
+observe(regex, "xdivide-opacity-", 5);
+observe(regex, "divide-opacity-\n", 6);

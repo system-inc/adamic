@@ -8,5 +8,7 @@ import (
 	typescript "github.com/system-inc/cohere/internal/lint/rules/typescript"
 )
 
-func oracleNoWrapperObjectTypes() rule.Rule                 { return typescript.NoWrapperObjectTypes }
+func oracleNoWrapperObjectTypes(options any) rule.Bound {
+	return bindOracle(typescript.NoWrapperObjectTypes, options)
+}
 func oracleNoWrapperObjectTypesOptions(fields []string) any { return nil }

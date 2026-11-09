@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oraclePreferDestructuring() rule.Rule { return rules.PreferDestructuring }
+func oraclePreferDestructuring(options any) rule.Bound {
+	return bindOracle(rules.PreferDestructuring, options)
+}
 
 // Captures carry the shipped decoder's typed result, not its raw schema tuple.
 func oraclePreferDestructuringOptions(fields []string) any {

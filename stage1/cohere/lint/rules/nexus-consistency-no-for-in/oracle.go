@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/nexus"
 )
 
-func oracleNexusConsistencyNoForIn() rule.Rule { return rules.ConsistencyNoForIn }
+func oracleNexusConsistencyNoForIn(options any) rule.Bound {
+	return bindOracle(rules.ConsistencyNoForIn, options)
+}
 
 // Upstream explicitly has no options type or decoder and ignores options.
 // Decode the payload supplied by all-rule rows, preserving that upstream behavior

@@ -8,7 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoIterator() rule.Rule { return rules.NoIterator }
+func oracleNoIterator(options any) rule.Bound { return bindOracle(rules.NoIterator, options) }
 
 // NoIterator defines no options type and ignores options upstream. Preserve any
 // supplied JSON value rather than dropping it before the shared adapter guard.

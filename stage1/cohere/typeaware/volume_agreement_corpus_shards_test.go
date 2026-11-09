@@ -52,7 +52,7 @@ func volumeAgreementOracleSubjects(t *testing.T) []string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, list, ok := strings.Cut(string(data), "subjects := []rule.Rule{")
+	_, list, ok := strings.Cut(string(data), "subjects := []rule.Bound{")
 	list, _, closed := strings.Cut(list, "}")
 	if !ok || !closed {
 		t.Fatal("oracle_volume.go has no subject list")

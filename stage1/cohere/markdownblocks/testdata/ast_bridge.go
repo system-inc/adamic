@@ -44,7 +44,7 @@ func adamicAstSerialize(root *Node, source string) string {
 	offsets[len(source)] = units
 	offset := func(value int) int { return offsets[value] }
 	for _, node := range nodes {
-		mask := flag(node.Raw != nil, 1) + flag(node.IsParent, 2) + flag(node.Ordered, 4) + flag(node.IsIndented, 8) + flag(node.IsAligned, 16) + flag(node.OriginalAltText != nil, 32) + flag(node.IsLiteral, 64) + flag(node.IsCJ, 128) + flag(node.HasLeadingPunctuation, 256) + flag(node.HasTrailingPunctuation, 512) + flag(node.Position != nil, 1024)
+		mask := flag(node.Raw != nil, 1) + flag(node.IsParent, 2) + flag(node.Ordered, 4) + flag(node.IsIndented, 8) + flag(node.IsAligned, 16) + flag(node.OriginalAltText != nil, 32) + flag(node.IsLiteral, 64) + flag(node.IsCj, 128) + flag(node.HasLeadingPunctuation, 256) + flag(node.HasTrailingPunctuation, 512) + flag(node.Position != nil, 1024)
 		raw, alt := "", ""
 		if node.Raw != nil {
 			raw = *node.Raw

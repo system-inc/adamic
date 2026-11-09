@@ -410,3 +410,4 @@ func TestCSSNumbers_357(t *testing.T) { t.Parallel(); runCSSNumbersShard(t, 357)
 func TestCSSNumbers_358(t *testing.T) { t.Parallel(); runCSSNumbersShard(t, 358) }
 func TestCSSNumbers_359(t *testing.T) { t.Parallel(); runCSSNumbersShard(t, 359) }
 func TestCSSNumbers_360(t *testing.T) { t.Parallel(); runCSSNumbersShard(t, 360) }
+func TestCSSNumbers_361(t *testing.T) { t.Parallel(); runCSSNumbersShard(t, 361) }

@@ -1,12 +1,12 @@
-// react/boolean_prop_naming.go:627; `\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}`
+// tailwind/no_deprecated_classes.go:64; `^shadow$`
 import { observe } from '../observe.a';
-const pattern = "\\{\\{[ \\t\\n\\f\\r]*([A-Za-z_][A-Za-z0-9_]*)[ \\t\\n\\f\\r]*\\}\\}";
+const pattern = "^shadow(?![\\s\\S])";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "{{A}}", 4);
-observe(regex, "x{{A}}", 5);
-observe(regex, "{{A}}\n", 6);
+observe(regex, "shadow", 4);
+observe(regex, "xshadow", 5);
+observe(regex, "shadow\n", 6);
