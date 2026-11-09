@@ -1,0 +1,11 @@
+// Object.values of a Record<string, Node> is a RecordCall, which carries GraphTypes and graphFlows plans (#y7wexf5).
+interface Node { name: string; next: Node[] }
+function valuesOf(record: Record<string, Node>): Node[] {
+ return Object.values(record);
+}
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b); // this cycle makes the program a graph program, so Node values must be in a region
+const record: Record<string, Node> = { b: b };
+a.next = valuesOf(record); // a holds the values, the values hold b, b holds a
+console.log(`${a.name} ${a.next.length} ${a.next[0]?.name} ${a.next[0]?.next[0] === a}`);
