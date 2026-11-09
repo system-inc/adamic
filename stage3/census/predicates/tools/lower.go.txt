@@ -308,6 +308,13 @@ func (l *lowering) latentUseProgramFacts(facts **latentProgramFacts) {
 // Probe the same registry walk as production on an independent census unit.
 // Preserve the prepared context, but isolate the per-walk refusal state.
 func (l *lowering) latentDeferredUnit(node *ast.Node) bool {
+	// The continuing scan has already established these higher-priority stops.
+	// Rechecking cannot admit a deferred result and repeats costly predicate proofs.
+	for _, finding := range latentFindings {
+		if finding.Unit == latentFindingOwner && (finding.Phase == "refusal_scan" || finding.Phase == "contract_scan") && (finding.Kind == "Refused" || finding.Kind == "NotYet") {
+			return false
+		}
+	}
 	probe := *l
 	probe.refusal = refusalPass{}
 	ordinary := probe.refuseNode(node)

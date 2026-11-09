@@ -409,8 +409,10 @@ Today only `refuseAnyRelation` (ordinal 3270) defers: either a written-any membe
 relation or its structural-depth limit. `refuseInSlot` also selects this fallback
 inside its value walk, then restores the enclosing deferred state.
 
-Independent census units probe the production `refuseNode` walk on disposable
-state before body lowering. An ordinary refusal anywhere in that unit suppresses
+Independent census units first honor ordinary scan findings already recorded for
+that owner. Only the remaining units probe the production `refuseNode` walk on
+disposable state before body lowering. This avoids repeating costly predicate
+proofs for a unit whose ordinary refusal already suppresses its deferred result. An ordinary refusal anywhere in that unit suppresses
 its deferred result; otherwise it records the deferred NotYet and stops the unit.
 The continuing module scan reports its deferred fallback only when it collected
 no ordinary finding, in phase `deferred_scan`. This separate scan phase prevents

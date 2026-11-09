@@ -34,5 +34,15 @@
     "exit": 1,
     "expected": 1,
     "fixture_findings": []
-  }
+  },
+  "corrected_scan_priority": {
+    "build": 0,
+    "whole_packages": 0,
+    "first-error": 0,
+    "full": 0,
+    "speculative": 0,
+    "mutant_exit": 1,
+    "mutant_expected": 1
+  },
+  "predicate_seam": 0
 }
