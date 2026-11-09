@@ -98,6 +98,13 @@ func (e *emitter) thrownSite(holds []string, depth int) *throwSite {
 	// A copy: kept and taken delete from the list in place, and the site lets go of what the
 	// statement owned when it ran.
 	site.owned = slices.Clone(statement)
+	// The scopes of the asides inside the statement (asideWith) hold locals declared in their blocks,
+	// which the rest of the way, written where the statement ends, is outside of: they're let go of
+	// first, here, and the rest of the way lets go of the scopes outside them.
+	outside := len(e.scopes)
+	for index := len(e.asides) - 1; index >= 0 && e.asides[index].level > depth; index-- {
+		outside = e.asides[index].scope
+	}
 	site.before = e.captured(e.indent+1, func() {
 		for _, hold := range holds {
 			e.line("adamic_release(%s);", hold)
@@ -111,8 +118,11 @@ func (e *emitter) thrownSite(holds []string, depth int) *throwSite {
 					e.line("adamic_release(%s);", e.outerOwned[outer][index])
 				}
 			}
+			e.releaseScopes(outside)
 		}
 	})
+	scopes := e.scopes
+	e.scopes = e.scopes[:outside]
 	site.way = e.captured(0, func() {
 		for outer := min(depth, len(e.outerOwned)) - 1; outer >= 0; outer-- {
 			for index := len(e.outerOwned[outer]) - 1; index >= 0; index-- {
@@ -126,6 +136,7 @@ func (e *emitter) thrownSite(holds []string, depth int) *throwSite {
 		}
 		e.jumpThrown()
 	})
+	e.scopes = scopes
 	site.inline = e.captured(e.indent, func() {
 		e.line("if (adamic_thrown != NULL) {")
 		e.out.WriteString(site.before)

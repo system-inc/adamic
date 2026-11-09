@@ -518,6 +518,9 @@ type emitter struct {
 	handlers   []*handler
 	outerOwned [][]string
 
+	// asides is each aside being emitted's scope, innermost last (asideWith).
+	asides []asideScope
+
 	// ladder is the checks of the statement being emitted, which may share one way out
 	// (exceptions.go), or nil where a check is written in place.
 	ladder *ladder
