@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 # cloud/meter-daily/submit.sh hands a finished daily meter run to Loom's Queue, as ahra. meter-daily.service starts
-# it (OnSuccess=) after run.sh exits 0; by hand it reports the last run and does the same.
+# it (OnSuccess=) after run.sh exits 0 or 3; by hand it reports the last run and does the same.
 #
 #   bash cloud/meter-daily/submit.sh [--dry-run]
 #
-# It reads run.sh's status file, and only a Succeeded run goes further; a red run commits nothing and its logs stay
-# on the box. The run directory, read and never written, is copied to staging, where each .log is gzipped to .log.gz
-# (the shape of the hand-committed 20261020T014828Z.POASDN; the root .gitignore ignores raw .log). What git's ignore
-# rules then keep is committed alone on a fresh branch cut from origin/main's tip, nothing force-added: so
-# stage3/meter/.gitignore's census.jsonl.gz and latent.jsonl.gz stay out until that file says otherwise. It is
-# pushed with a deploy key scoped to adamic, and submitted for system_adamic_compiler_correctness with a
-# submit-only token: the same POST /changes that `ahra loom submit <branch> --owner <owner> --yes` makes with
-# --base off, whose body carries the merge base of the tip and origin/main. A write is never retried.
+# It reads run.sh's status file, and only a run outcome.py calls submittable goes further: Succeeded, and OverBudget
+# or BudgetUnknown, a whole record whose relation budget isn't ok (#ny0c3gb), committed with the verdict in its first
+# line so the day lands on main. A failed run commits nothing and its logs stay on the box. The run directory, read
+# and never written, is copied to staging, where each .log is gzipped to .log.gz (the shape of the hand-committed
+# 20261020T014828Z.POASDN; the root .gitignore ignores raw .log). What git's ignore rules then keep is committed
+# alone on a fresh branch cut from origin/main's tip, nothing force-added: so stage3/meter/.gitignore's
+# census.jsonl.gz and latent.jsonl.gz stay out until that file says otherwise. It is pushed with a deploy key scoped
+# to adamic, and submitted for system_adamic_compiler_correctness with a submit-only token: the same POST /changes
+# that `ahra loom submit <branch> --owner <owner> --yes` makes with --base off, whose body carries the merge base of
+# the tip and origin/main. A write is never retried.
 #
 # Both secrets are paths named in /etc/adamic-meter/submit.env (ADAMIC_METER_SUBMIT_ENV overrides it):
 #
@@ -46,6 +48,8 @@ queue=https://loom.system.inc
 origin=https://github.com/system-inc/adamic.git
 pushOrigin=git@github.com:system-inc/adamic.git
 status=$meterHome/status
+# outcome.py, beside this script (/srv/adamic-meter when installed), names which outcomes are committed.
+outcomes=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/outcome.py
 
 say() { echo "meter-daily-submit: $*"; }
 # field <key>: one line of run.sh's status file
@@ -56,7 +60,12 @@ outcome=None
 if [ -r "$status" ]; then
 	outcome=$(field outcome)
 	say "last meter run: $outcome at step $(field step), main $(field sha), started $(field started), log $(field log)"
-	[ "$outcome" = Succeeded ] || [ -z "$(field detail)" ] || say "  $(field detail)"
+	case $outcome in
+		Succeeded) ;;
+		OverBudget) say "relation budget red: $(field detail)" ;;
+		BudgetUnknown) say "relation budget unknown: $(field detail)" ;;
+		*) [ -z "$(field detail)" ] || say "  $(field detail)" ;;
+	esac
 else
 	say "no meter run recorded ($status is absent or unreadable)"
 fi
@@ -81,7 +90,13 @@ if [ -n "$problems" ] && ! "$isDryRun"; then
 	exit 3
 fi
 
-[ "$outcome" = Succeeded ] || { say "no finished run to submit. Nothing pushed, nothing submitted."; exit 1; }
+python3 -I "$outcomes" submittable "$outcome" || { say "no finished run to submit ($outcome). Nothing pushed, nothing submitted."; exit 1; }
+# The commit's first line carries a relation budget that isn't ok, so main's log says it without opening the run.
+budget=""
+case $outcome in
+	OverBudget) budget=", relation budget over" ;;
+	BudgetUnknown) budget=", relation budget unknown" ;;
+esac
 run=$(field run)
 measured=$(field sha)
 stamp=$(basename "$run")
@@ -133,8 +148,9 @@ else
 	printf '%s\n' "$changed" | grep -qx "stage3/meter/runs/$stamp/report.md" || { say "the commit leaves out report.md"; exit 1; }
 	message=$state/staging/$stamp.message
 	{
-		printf 'stage3/meter: the daily run %s on main %s\n\n' "$stamp" "${measured:0:12}"
+		printf 'stage3/meter: the daily run %s on main %s%s\n\n' "$stamp" "${measured:0:12}" "$budget"
 		printf 'Measured by meter-daily.service on %s, as adamicmeter, from main %s.\n' "$(hostname)" "$measured"
+		[ -z "$budget" ] || printf 'Relation budget %s: %s\n' "${budget##* }" "$(field detail)"
 		printf '%s\n\nTask: #badrnrf\n' "$(head -n 2 "$run/report.md")"
 	} > "$message"
 	tip=$(git -c user.name="${ADAMIC_METER_AUTHOR_NAME:-meter-daily on $(hostname)}" -c user.email="${ADAMIC_METER_AUTHOR_EMAIL:-ahra@ahra.ai}" \
