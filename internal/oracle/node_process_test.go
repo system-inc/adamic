@@ -69,14 +69,9 @@ func TestNodeProcessTerminal(t *testing.T) {
 			command []string
 		}{{"native", []string{binary}}, {"javascript", []string{"node", "--disable-warning=ExperimentalWarning", runner, script}}} {
 			got := nodeProcessTerminal(t, destination, backend.command...)
+			// #qa1g5f3's JavaScript guard-and-call agrees with Node on every destination: sys.ts's guarded
+			// handle.setBlocking(true) is a narrowed method call, which keeps its object (#6na4x1b).
 			want := truth
-			if backend.name == "javascript" && destination != "file" {
-				// Open finding #qa1g5f3 (Library's): main's plain-dot form already passes a raw
-				// Node function to adamicCall after sys.ts's exact guard. Pin its bytes until that
-				// lands, then this row moves to plain agreement; never skip it.
-				want = run{stdout: []byte("handle function\n"), stderr: []byte("adamic: panic: TypeError: closure.code is not a function\n"), exitCode: 70}
-				t.Logf("open finding #qa1g5f3, the JavaScript host-method guard-and-call on %s: exact stdout, stderr and exit 70 are pinned", destination)
-			}
 			if difference := disagreement(want, got); difference != "" {
 				t.Fatalf("%s %s: %s\nwant %d %q %q\ngot %d %q %q", destination, backend.name, difference, want.exitCode, want.stdout, want.stderr, got.exitCode, got.stdout, got.stderr)
 			}
