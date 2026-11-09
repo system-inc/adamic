@@ -252,9 +252,9 @@ int main(void) {
 	if err != nil || nodeBytes == 0 {
 		t.Fatalf("invalid node allocation size: %s", size[1])
 	}
-	// Metadata is a 16-byte header per member and one 96-byte region record: the record holds the
-	// boundary list and, in the counted build, counted_out (#5nrs3q2; 64 bytes before).
-	want := fmt.Sprintf("live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000096", 1000000*nodeBytes, 950001*nodeBytes, 49999*nodeBytes)
+	// Metadata is a 16-byte header per member and one 104-byte region record: the record holds the
+	// boundary list, the incoming count and, in the counted build, counted_out (#5nrs3q2; 64 before).
+	want := fmt.Sprintf("live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000104", 1000000*nodeBytes, 950001*nodeBytes, 49999*nodeBytes)
 	if !strings.Contains(string(output), want) {
 		t.Fatal(string(output))
 	}
