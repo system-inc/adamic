@@ -92,14 +92,19 @@ func runtimePropertyHarness(t *testing.T) string {
 	aliases := runtimePropertyAliases(t)
 	var source, rows strings.Builder
 	source.WriteString("#include \"regexp_compile.h\"\n")
-	names := map[string]string{}
+	// Every spelling of one property shares its Set, or for a property of
+	// strings its sequences, so that identity is the property's.
+	names := map[any]string{}
 	rangeEntries, stringEntries := 0, 0
 	for _, alias := range aliases {
 		property, ok := unicodeproperties.Lookup(alias, true)
 		if !ok {
 			t.Fatalf("Go provider rejected %q", alias)
 		}
-		key := property.Name + "=" + property.Value
+		var key any = property.Set
+		if property.Kind == unicodeproperties.KindStrings {
+			key = &property.Sequences[0]
+		}
 		name, exists := names[key]
 		if !exists {
 			name = fmt.Sprintf("expected_%d", len(names))

@@ -3,12 +3,16 @@
 // properties in the spec's table of binary Unicode properties, and the
 // properties of strings the v flag admits.
 //
-// The tables are generated from the Unicode Character Database of the version
-// Node reports (process.versions.unicode: 17.0, whose data files are 17.0.0).
-// Names are matched exactly, the way the spec's UnicodeMatchProperty does:
-// case, spaces, hyphens and underscores all count, and an alias the spec does
-// not list does not match. Node is the oracle for membership, not the source
-// of the tables; internal/unicodeproperties/node_test.go is that check.
+// The code-point properties are cohere's unicodeproperties, the one home for
+// them, read through its Lookup; this package keeps no copy. The properties of
+// strings and the Canonicalize tables are generated here, from the Unicode
+// Character Database of the same version, which is the version Node reports
+// (process.versions.unicode: 17.0, whose data files are 17.0.0). Names are
+// matched exactly, the way the spec's UnicodeMatchProperty does: case, spaces,
+// hyphens and underscores all count, and an alias the spec does not list does
+// not match. Node is the oracle for membership, not the source of the tables;
+// internal/unicodeproperties/node_test.go is that check, of the sets this
+// package answers.
 //
 // \P is the complement of what Lookup returns, over every code point from 0 to
 // U+10FFFF, surrogates included. A property of strings has no code-point
@@ -24,13 +28,20 @@ package unicodeproperties
 // fails when the Node the oracle runs has moved to a different Unicode version.
 //go:generate go run generate.go
 
-import "sort"
+import (
+	"sort"
+	"sync"
 
-// Version is the Unicode Character Database version these tables were built from.
-// NodeUnicodeVersion is what process.versions.unicode prints for that version
+	cohere "github.com/system-inc/cohere/unicodeproperties"
+)
+
+// Version is the Unicode Character Database version every table here is from.
+// cohere's is the source: its code-point tables are the ones Lookup reads, and
+// generate.go writes the strings and Canonicalize tables from that version's
+// files. NodeUnicodeVersion is what process.versions.unicode prints for it
 // (Node says "17.0" for 17.0.0).
 const (
-	Version            = "17.0.0"
+	Version            = cohere.Version
 	NodeUnicodeVersion = "17.0"
 )
 
@@ -99,18 +110,12 @@ const (
 	KindStrings
 )
 
-// Property is one resolved \p{...} escape.
+// Property is one resolved \p{...} escape. Every spelling of one property
+// resolves to the same Set, or for a property of strings the same Sequences,
+// so that identity is the property's: "gc=Ll" and "Lowercase_Letter" share a
+// Set, and "sc=Latin" and "scx=Latin" do not.
 type Property struct {
 	Kind Kind
-	// Name is the canonical property name: "ASCII", "General_Category",
-	// "Script", "Script_Extensions", "RGI_Emoji".
-	Name string
-	// Value is the canonical property value. Binary properties and properties
-	// of strings are "True", the only value the spec's compilation accepts for
-	// them (Node rejects \p{ASCII=Yes}). General_Category, Script and
-	// Script_Extensions use the long name from PropertyValueAliases.txt
-	// ("Lowercase_Letter", "Latin").
-	Value string
 	// Set is non-nil for KindCodePoints. Callers must not modify it.
 	Set *Set
 	// Sequences is non-nil for KindStrings: each string is one sequence the
@@ -145,81 +150,49 @@ func (p Property) ContainsSequence(text string) bool {
 // "Script=Latin" is, and "scx=Latn" is the extensions of that script, a
 // different set. A binary property is only the bare name ("White_Space",
 // "space", "WSpace"), never "White_Space=Yes".
+//
+// A code-point property is cohere's: its Lookup takes the same exact spellings
+// (#cz54235 held its 1,715 Names, and each one's ranges, to what this package's
+// own tables accepted before they went). The spec reads a lone name as a General_Category value, then a
+// binary property, then (v flag only) a property of strings. No name is two of
+// those today, so cohere's single table and then the strings is that order.
 func Lookup(expression string, unicodeSets bool) (Property, bool) {
-	if !expressionOK(expression) {
-		return Property{}, false
-	}
-	if name, value, isPair := splitPair(expression); isPair {
-		var table map[string]entry
-		switch name {
-		case "General_Category", "gc":
-			table = generalCategoryNames
-		case "Script", "sc":
-			table = scriptNames
-		case "Script_Extensions", "scx":
-			table = scriptExtensionNames
-		default:
-			return Property{}, false
+	if property, ok := cohere.Lookup(expression); ok {
+		// No cohere property is empty; one would be an empty Set.
+		set := &Set{}
+		if len(property.Ranges) > 0 {
+			set = codePointSets()[&property.Ranges[0]]
 		}
-		return codePoint(table, value)
-	}
-	// A lone name is a General_Category value first, then a binary property,
-	// then (v flag only) a property of strings. The spec checks in that order.
-	// No value of one is a name of another today; the order is what would decide.
-	if p, ok := codePoint(generalCategoryNames, expression); ok {
-		return p, true
-	}
-	if p, ok := codePoint(binaryNames, expression); ok {
-		return p, true
+		return Property{Kind: KindCodePoints, Set: set}, true
 	}
 	if unicodeSets {
 		if s, ok := stringProperties[expression]; ok {
-			return Property{Kind: KindStrings, Name: s.name, Value: "True", Sequences: s.sequences}, true
+			return Property{Kind: KindStrings, Sequences: s.sequences}, true
 		}
 	}
 	return Property{}, false
 }
 
-func codePoint(table map[string]entry, name string) (Property, bool) {
-	e, ok := table[name]
-	if !ok {
-		return Property{}, false
-	}
-	return Property{Kind: KindCodePoints, Name: e.name, Value: e.value, Set: sets[e.set]}, true
-}
-
-// expressionOK is the lexical shape of UnicodePropertyValueExpression: letters,
-// digits and underscores, with at most one "=". The grammar admits nothing else,
-// so a space or a hyphen is a different expression and not a property.
-func expressionOK(expression string) bool {
-	if expression == "" || expression == "=" {
-		return false
-	}
-	equals := 0
-	for i := 0; i < len(expression); i++ {
-		c := expression[i]
-		switch {
-		case c == '=':
-			equals++
-			if equals > 1 || i == 0 || i == len(expression)-1 {
-				return false
-			}
-		case c >= 'A' && c <= 'Z', c >= 'a' && c <= 'z', c >= '0' && c <= '9', c == '_':
-		default:
-			return false
+// codePointSets is each of cohere's properties as a Set, keyed by the address
+// of its first range. cohere's spellings of one property share its ranges, so
+// they share one Set here. Its ranges are cohere's, sorted and disjoint, and
+// cohere merges adjacent ones, which is what a Set needs (TestSetBoundaries
+// fails the day one isn't). Made once, on the first Lookup.
+var codePointSets = sync.OnceValue(func() map[*cohere.Range]*Set {
+	sets := map[*cohere.Range]*Set{}
+	for _, name := range cohere.Names() {
+		property, _ := cohere.Lookup(name)
+		if len(property.Ranges) == 0 || sets[&property.Ranges[0]] != nil {
+			continue
 		}
-	}
-	return true
-}
-
-func splitPair(expression string) (string, string, bool) {
-	for i := 0; i < len(expression); i++ {
-		if expression[i] == '=' {
-			return expression[:i], expression[i+1:], true
+		set := &Set{Ranges: make([]Range, len(property.Ranges))}
+		for index, interval := range property.Ranges {
+			set.Ranges[index] = Range{Start: uint32(interval.Lo), End: uint32(interval.Hi)}
 		}
+		sets[&property.Ranges[0]] = set
 	}
-	return "", "", false
-}
+	return sets
+})
 
 // entry is one alias's canonical name, canonical value and set index.
 type entry struct {
