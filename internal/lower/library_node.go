@@ -158,7 +158,7 @@ type nodeHostViewPair struct {
 // and anything callable through its call and construct results. So a container holding one, or a
 // function giving one, is the host object seen through the container's view. A type parameter in
 // the view is seen as its constraint, which is all its body can name.
-func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen map[nodeHostViewPair]bool, parameter bool) string {
+func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen map[nodeHostViewPair]bool, parameter bool, absent ...map[string]bool) string {
 	if own == nil || view == nil || own == view {
 		return ""
 	}
@@ -243,6 +243,10 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 		}
 	}
 	for _, property := range l.checker.GetPropertiesOfType(view) {
+		// Only declaration admission supplies absent; recursive and later views register every member.
+		if len(absent) != 0 && absent[0][property.Name] {
+			continue
+		}
 		member := l.checker.GetPropertyOfType(own, property.Name)
 		if host && (member == nil || !registered(member)) {
 			if name := nodeLibraryName(member); name != "" {
