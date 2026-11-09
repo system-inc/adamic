@@ -16,10 +16,10 @@ and when `build` parses a flag the block doesn't name.
 ```text
 usage:
   adamic types <file.a|file.ts>...
-  adamic c <file.a|file.ts> [--explain-checks]
+  adamic c <file.a|file.ts> [--module-format commonjs-bundle|esm] [--explain-checks]
   adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
-  adamic js <file.a|file.ts> [--explain-checks]
-  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]
+  adamic js <file.a|file.ts> [--module-format commonjs-bundle|esm] [--explain-checks]
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--module-format commonjs-bundle|esm] [--explain-checks]
   adamic --help | -h
   adamic --version
 ```
@@ -44,7 +44,8 @@ directory (`cmd/adamic/main.go:relative`). `.a` and `.ts` are both accepted (`do
 | `--help`, `-h` | prints the usage; loads nothing | stdout | `cmd/adamic/main.go:run` |
 | `--version` | prints, a line each, `adamic <commit>` (go build's `vcs.revision`, with `(modified)` for a changed tree, or `unknown` when nothing was stamped, as under `go run`), `go <version>`, and `clang <path>: <its --version's first line>` for the clang `toolchain.Path` resolves; a clang that can't be found or run is `clang: not found (<error>)` and still exits 0; loads nothing | stdout | `cmd/adamic/main.go:run,writeVersion,revision,clangVersion` |
 
-`c` and `js` take exactly one file (`cmd/adamic/main.go:run`); `types` takes one or more
+`c` and `js` take exactly one file, and may follow it with `--module-format <format>`
+(`cmd/adamic/main.go:run,renderArguments`); `types` takes one or more
 (`cmd/adamic/main.go:run`). A program that uses the tsgo checker library can't be printed:
 `c` says `adamic: tsgo requires a native build with --tsgo <archive>` and `js` says
 `adamic: tsgo is an external native checker library; JavaScript is not supported`, both exit 1
@@ -78,6 +79,7 @@ usage error.
 | `--reactor` | `build`, wasm32-wasi only | a reactor module: `_initialize` runs once and the entry module's crossing `export function`s are exported through ABI v1 (`docs/wasm-abi.md`), instead of a command entered at `main`. Without it a module with crossing exports is a reactor anyway | `cmd/adamic/tsgo.go:buildWithNative`, `docs/wasm-abi.md` |
 | `--export <name>` | `build`, wasm32-wasi only | exports only the named functions, and implies `--reactor`; repeats, one name each. A name that isn't a crossing export exits 1 | `cmd/adamic/tsgo.go:buildWithNative`, `cmd/adamic/exports.go:exportSignatures,compileExports` |
 | `--abi-json <path>` | `build`, wasm32-wasi only | after a successful build, writes the export table (`{"version": 1, "exports": [...]}`) as JSON at `<path>`, which Workers generates its bindings from | `cmd/adamic/tsgo.go:buildWithNative`, `docs/wasm-abi.md` |
+| `--module-format commonjs-bundle\|esm` | `c`, `js`, `build` | the module format the program is declared in, a build input `internal/lowered`'s key holds with every other lowering option. `commonjs-bundle` declares one bundled image of CommonJS modules, as tsc ships as `_tsc.js`: every `.ts` module's `__filename` and `__dirname` are the running image's real path and its directory (in JavaScript, the emitted module's path and its directory), never a module's own; a `.a` file keeps them NotYet, and wasm32-wasi refuses them by name. `esm`, the default, keeps them NotYet everywhere (`docs/rulings.md:211`). A plain `commonjs` exits 2 saying it isn't a format Adamic builds and to use `commonjs-bundle`; any other value, a second `--module-format` or a missing value is a usage error | `cmd/adamic/main.go:renderArguments,loweringOptions,moduleFormatRefusals`, `cmd/adamic/tsgo.go:buildWithNativeExports`, `internal/lower/library_node_commonjs.go:lowering.nodeCommonJSModuleValuesBound` |
 | `--explain-checks` | `c`, `js`, `build` | writes every predicate-overload and non-null check site, proven or checked, and their totals to stderr; stdout is unchanged | `cmd/adamic/checks.go:explainPredicateChecks,explainNonNullChecks` |
 
 `--count` and `--sanitize` may be combined (`internal/native/target.go:ValidateOptions` refuses neither).

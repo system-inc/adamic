@@ -10,6 +10,10 @@
 //
 // build --count makes a binary that counts its allocations, frees, retains and releases and writes
 // them to stderr as it exits, for measuring what the memory model costs.
+//
+// c, js and build take --module-format commonjs-bundle to declare the program one bundled image of
+// CommonJS modules, where every .ts module's __filename and __dirname are the image's
+// (lower.ModuleFormat); esm, the default, declares an ES module.
 package main
 
 import (
@@ -33,10 +37,10 @@ import (
 
 const usage = `usage:
   adamic types <file.a|file.ts>...
-  adamic c <file.a|file.ts> [--explain-checks]
+  adamic c <file.a|file.ts> [--module-format commonjs-bundle|esm] [--explain-checks]
   adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
-  adamic js <file.a|file.ts> [--explain-checks]
-  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]
+  adamic js <file.a|file.ts> [--module-format commonjs-bundle|esm] [--explain-checks]
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--module-format commonjs-bundle|esm] [--explain-checks]
   adamic --help | -h
   adamic --version`
 
@@ -60,8 +64,15 @@ func run(arguments []string) (code int) {
 		}
 	}
 	if explain {
-		if len(filtered) == 2 && (filtered[0] == "c" || filtered[0] == "js") {
-			return renderWithChecks(filtered[0], filtered[1])
+		if len(filtered) >= 2 && (filtered[0] == "c" || filtered[0] == "js") {
+			path, format, refusal, ok := renderArguments(filtered[1:])
+			if ok {
+				return renderWithChecks(filtered[0], path, format)
+			}
+			if refusal != "" {
+				fmt.Fprintln(os.Stderr, refusal)
+				return 2
+			}
 		}
 		if len(filtered) > 0 && filtered[0] == "build" {
 			arguments = append(filtered, "--explain-checks")
@@ -90,8 +101,16 @@ func run(arguments []string) (code int) {
 			fmt.Printf("%s:%d:%d: %s %s: %s\n", relative(declaration.File), declaration.Line, declaration.Column, declaration.Kind, declaration.Name, declaration.Type)
 		}
 		return 0
-	case len(arguments) == 2 && arguments[0] == "c":
-		lowered, code := compile(arguments[1])
+	case len(arguments) >= 2 && arguments[0] == "c":
+		path, format, refusal, ok := renderArguments(arguments[1:])
+		if refusal != "" {
+			fmt.Fprintln(os.Stderr, refusal)
+			return 2
+		}
+		if !ok {
+			break
+		}
+		lowered, code := compileLibrary(path, false, false, format)
 		if lowered == nil {
 			return code
 		}
@@ -101,8 +120,16 @@ func run(arguments []string) (code int) {
 		}
 		fmt.Print(native.C(lowered))
 		return 0
-	case len(arguments) == 2 && arguments[0] == "js":
-		lowered, code := compile(arguments[1])
+	case len(arguments) >= 2 && arguments[0] == "js":
+		path, format, refusal, ok := renderArguments(arguments[1:])
+		if refusal != "" {
+			fmt.Fprintln(os.Stderr, refusal)
+			return 2
+		}
+		if !ok {
+			break
+		}
+		lowered, code := compileLibrary(path, false, false, format)
 		if lowered == nil {
 			return code
 		}
@@ -199,12 +226,44 @@ func check(paths []string) (*load.Program, int) {
 	return program, 0
 }
 
-// compile checks and lowers one program.
-func compile(path string) (*ir.Program, int) {
-	return compileLibrary(path, false, false)
+// moduleFormats are the words --module-format takes, and the format each declares.
+var moduleFormats = map[string]lower.ModuleFormat{"commonjs-bundle": lower.ModuleFormatCommonJSBundle, "esm": lower.ModuleFormatEcmaScript}
+
+// moduleFormatRefusals are words --module-format refuses by name, each with what it says in place of the usage: a
+// word that reads as a format Adamic doesn't build is told what it isn't and what to write. Each is a usage error,
+// exit 2. A plain commonjs would read as a CommonJS module a file each, whose __dirname Node gives each module of its
+// own, where the declaration Adamic builds is one bundled image (Adamic's ruling on #0ta3dk9).
+var moduleFormatRefusals = map[string]string{
+	"commonjs": "adamic: --module-format commonjs is not a format Adamic builds: a CommonJS declaration is one bundled image, where every module's __filename and __dirname are the image's; use --module-format commonjs-bundle",
 }
 
-func compileLibrary(path string, tsgo, debug bool) (*ir.Program, int) {
+// renderArguments is what c and js take after their name: a file, and the format a
+// `--module-format <format>` after it declares, an ES module when there's none. ok is false for
+// anything else, a usage error; refusal is what to say for a format refused by name
+// (moduleFormatRefusals), "" for any other.
+func renderArguments(arguments []string) (string, lower.ModuleFormat, string, bool) {
+	switch {
+	case len(arguments) == 1:
+		return arguments[0], lower.ModuleFormatEcmaScript, "", true
+	case len(arguments) == 3 && arguments[1] == "--module-format":
+		format, known := moduleFormats[arguments[2]]
+		return arguments[0], format, moduleFormatRefusals[arguments[2]], known
+	}
+	return "", lower.ModuleFormatEcmaScript, "", false
+}
+
+// compile checks and lowers one program, as an ES module.
+func compile(path string) (*ir.Program, int) {
+	return compileLibrary(path, false, false, lower.ModuleFormatEcmaScript)
+}
+
+// loweringOptions is what every command lowers with: the environment's opt-ins, as lower.Lower reads
+// them, debug, and the module format the command was given.
+func loweringOptions(debug bool, format lower.ModuleFormat) lower.Options {
+	return lower.Options{ProgramRegion: programRegionRequested(), OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1", Debug: debug, ModuleFormat: format}
+}
+
+func compileLibrary(path string, tsgo, debug bool, format lower.ModuleFormat) (*ir.Program, int) {
 	program, code := check([]string{path})
 	if program == nil {
 		return nil, code
@@ -212,8 +271,7 @@ func compileLibrary(path string, tsgo, debug bool) (*ir.Program, int) {
 	if tsgo {
 		program.EnableTSGo()
 	}
-	options := lower.Options{ProgramRegion: programRegionRequested(), OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1", Debug: debug}
-	lowered, err := lower.LowerWithOptions(context.Background(), program, options)
+	lowered, err := lower.LowerWithOptions(context.Background(), program, loweringOptions(debug, format))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
 		return nil, 1
