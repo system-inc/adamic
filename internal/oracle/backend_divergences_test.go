@@ -10,6 +10,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 // installed-layout's error is Node's answer to require("source-map-support") where tsc 6.0.3 is
@@ -53,7 +55,10 @@ var backendDivergencesJSON []byte
 // Only these exact fixtures have ruled differences. Each side remains pinned:
 // membership never excuses an arbitrary exit, diagnostic or output change. A row whose node is set
 // pins the source on Node too, for fixtures where native and the JavaScript backend agree with each
-// other and differ from the source; name is the ruled row's, which may hold more than one fixture.
+// other and differ from the source; name is the ruled row's, which may hold more than one fixture. A
+// row whose format is lower.ModuleFormatCommonJSBundle is built only as one bundled image, so its
+// fixture is never among the oracle's, which lower every program as an ES module: the installed-layout
+// harness runs it (TestInstalledLayoutPathDivergences), with each leg's lib directory made <lib>.
 // The rows are read once, as the package loads: a list that can't be read panics there, failing every
 // test in the package rather than comparing against no rows.
 var ruledBackendDivergences = func() []ruledBackendDivergence {
@@ -69,6 +74,7 @@ type ruledBackendDivergence struct {
 	name       string
 	ruling     string
 	reason     string
+	format     lower.ModuleFormat
 	node       *run
 	native     run
 	javascript run
@@ -95,7 +101,7 @@ func readRuledBackendDivergences(path string) ([]ruledBackendDivergence, error) 
 }
 
 // parseRuledBackendDivergences reads the rows in the file's order. A row with no fixture, no ruling or no
-// reason is refused, as is a field the rows don't have.
+// reason is refused, as is a format no build declares and a field the rows don't have.
 func parseRuledBackendDivergences(path string, data []byte) ([]ruledBackendDivergence, error) {
 	var list struct {
 		Comment     string `json:"_comment"`
@@ -104,6 +110,7 @@ func parseRuledBackendDivergences(path string, data []byte) ([]ruledBackendDiver
 			Name       string                    `json:"name"`
 			Ruling     string                    `json:"ruling"`
 			Reason     string                    `json:"reason"`
+			Format     lower.ModuleFormat        `json:"format"`
 			Node       *backendDivergenceOutcome `json:"node"`
 			Native     backendDivergenceOutcome  `json:"native"`
 			JavaScript backendDivergenceOutcome  `json:"javascript"`
@@ -122,7 +129,10 @@ func parseRuledBackendDivergences(path string, data []byte) ([]ruledBackendDiver
 		if row.Fixture == "" || strings.TrimSpace(row.Ruling) == "" || row.Reason == "" {
 			return nil, fmt.Errorf("%s: row %d needs its fixture, its ruling and its reason", path, index+1)
 		}
-		divergence := ruledBackendDivergence{fixture: row.Fixture, name: row.Name, ruling: row.Ruling, reason: row.Reason, native: row.Native.run(), javascript: row.JavaScript.run()}
+		if row.Format != lower.ModuleFormatEcmaScript && row.Format != lower.ModuleFormatCommonJSBundle {
+			return nil, fmt.Errorf("%s: row %d declares format %q, which no build declares", path, index+1, row.Format)
+		}
+		divergence := ruledBackendDivergence{fixture: row.Fixture, name: row.Name, ruling: row.Ruling, reason: row.Reason, format: row.Format, native: row.Native.run(), javascript: row.JavaScript.run()}
 		if row.Node != nil {
 			node := row.Node.run()
 			divergence.node = &node
@@ -299,5 +309,28 @@ func TestRuledBackendDivergencesLoadFromAnyWorkingDirectory(t *testing.T) {
 	command.Dir = t.TempDir()
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("the test binary from another working directory: %v\n%s", err, output)
+	}
+}
+
+// The loader reads a row declared one bundled image and refuses a format no build declares, which would otherwise
+// leave its fixture among neither the oracle's nor the installed-layout harness's. Mutant: readRuledBackendDivergences
+// without its format check reads "CommonJS".
+func TestRuledBackendDivergencesRefuseAnUnknownFormat(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "divergences.json")
+	read := func(format string) ([]ruledBackendDivergence, error) {
+		t.Helper()
+		row := fmt.Sprintf(`{"fixture": "internal/oracle/testdata/installed_layout/filename.ts", "ruling": "@system_adamic, task #redxes2", "reason": "a reason", "format": %q, "native": {"stdout": "", "stderr": "", "exit_code": 0}, "javascript": {"stdout": "", "stderr": "", "exit_code": 0}}`, format)
+		if err := os.WriteFile(path, []byte(`{"_comment": "Adding a row is a ruling routed to @system_adamic", "divergences": [`+row+`]}`), 0600); err != nil {
+			t.Fatal(err)
+		}
+		return readRuledBackendDivergences(path)
+	}
+	rows, err := read(string(lower.ModuleFormatCommonJSBundle))
+	if err != nil || len(rows) != 1 || rows[0].format != lower.ModuleFormatCommonJSBundle {
+		t.Fatalf("a bundled row read as %+v, %v", rows, err)
+	}
+	if _, err := read("CommonJS"); err == nil {
+		t.Error("a row declaring format CommonJS read")
 	}
 }

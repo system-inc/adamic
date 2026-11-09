@@ -142,9 +142,11 @@ func TestNodeProcessMissingMark(t *testing.T) {
 	}
 }
 
-// The cwd bootstrap belongs to the shared runtime, not this copied process unit.
+// The cwd bootstrap and node:path's functions belong to the shared runtime, not this copied process
+// unit: node_process.c's __dirname calls node_path.c's adamic_node_path_dirname, which no copy defines.
 func nodeProcessMutantNames(source, prefix string) string {
 	renamed := strings.ReplaceAll(source, "adamic_node_", prefix)
+	renamed = strings.ReplaceAll(renamed, prefix+"path_", "adamic_node_path_")
 	return strings.ReplaceAll(renamed, prefix+"wasi_cwd", "adamic_node_wasi_cwd")
 }
 
