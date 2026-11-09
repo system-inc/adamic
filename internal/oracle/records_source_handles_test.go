@@ -33,7 +33,10 @@ func weakFieldReads(program *ir.Program) int {
 // record as Held, which relates to its all-optional Read in neither direction, so only the `{}` question keeps
 // the read checked. generic_holder.ts holds its record inside extend<T> as Record<string, T | undefined>, which
 // the walk relates as Record<string, unknown>, so a read through the type literal Shape stays checked beside the
-// all-optional Read's. Every one lowers and agrees with Node natively and on the JavaScript backend.
+// all-optional Read's. object_receiver.ts reads through `object & Options`: the `{}` question skips the
+// non-primitive `object` member, and the sources loop keeps the read checked there, since every record handle is
+// assignable to object (Compiler's condition on e831758b); Options alone reads its slot, as handle.ts shows.
+// Every one lowers and agrees with Node natively and on the JavaScript backend.
 //
 // The second group is Language's roads on #ny0c3gb, each a record literal seen as `{}` and then as an
 // all-optional Read whose number field holds the record's string, which Node prints. Each program's .stop file
@@ -46,7 +49,7 @@ func weakFieldReads(program *ir.Program) int {
 // related as itself, not unknown, turns generic_holder red.
 func TestRecordSourceHandles(t *testing.T) {
 	t.Parallel()
-	for name, checkedReads := range map[string]int{"bare": 2, "satisfies": 2, "generic": 2, "handle": 1, "empty_source": 1, "generic_holder": 2} {
+	for name, checkedReads := range map[string]int{"bare": 2, "satisfies": 2, "generic": 2, "handle": 1, "empty_source": 1, "generic_holder": 2, "object_receiver": 1} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, recordSourceHandles, name+".ts"))
@@ -82,7 +85,7 @@ func TestRecordSourceHandles(t *testing.T) {
 			}
 		})
 	}
-	for _, name := range []string{"t1_empty", "t2_parameter_return", "t3_assignment", "spread_copy", "iife_argument", "destructuring_default"} {
+	for _, name := range []string{"t1_empty", "t2_parameter_return", "t3_assignment", "spread_copy", "iife_argument", "destructuring_default", "w_road"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			relative := filepath.Join(recordSourceHandles, name+".ts")

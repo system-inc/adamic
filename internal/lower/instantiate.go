@@ -22,6 +22,12 @@ func newTypeMapper(sources []*checker.Type, targets []*checker.Type) *typeMapper
 //go:linkname instantiateType github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateType
 func instantiateType(receiver *checker.Checker, proven *checker.Type, mapper *typeMapper) *checker.Type
 
+// regularTypeOfObjectLiteral is an object literal's type with its freshness taken off (the checker's own
+// getRegularTypeOfObjectLiteral), the type a stored literal has (#ny0c3gb). Any other type comes back as it is.
+//
+//go:linkname regularTypeOfObjectLiteral github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getRegularTypeOfObjectLiteral
+func regularTypeOfObjectLiteral(receiver *checker.Checker, proven *checker.Type) *checker.Type
+
 // typeMapperOf is what a class's type parameters stand for in a type of it, as a mapper the checker
 // instantiates with, or the one in force when the class has none.
 func (l *lowering) typeMapperOf(declaration *ast.Node, classType *checker.Type) *typeMapper {

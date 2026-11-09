@@ -276,13 +276,16 @@ type recordGuardedRead struct {
 // as its own regular widened type, so a literal whose holding place goes unnamed fails closed.
 //
 // The list holds only each literal's own holding places, never the later hops a value takes (a parameter and a
-// return, an assignment, a binding element, a spread copy). Two guards stand for those hops. First, the empty
-// object type is every record's implicit source (recordEmptyObject): any value can be seen as `{}` and then as
-// whatever `{}` is assignable to, so typesMayReach answers "may reach" for such a receiver whatever hop the `{}`
-// sits at (Language's t1 on #ny0c3gb: Held to `{}` to an all-optional Read, each hop legal, Held to Read not).
-// Second, every hop that could widen a record's view is judged at its own relation site: a structural source
-// seen as a type with an optional field it doesn't declare is refused (adamic/no-optional-widening,
-// rulings.md:71), and a read of that field through such a view is checked (rulings.md:72).
+// return, an assignment, a binding element, a spread copy). Two guards stand for those hops, and they don't cover
+// the same roads. First, the empty object type is every record's implicit source (recordEmptyObject): any value
+// can be seen as `{}` and then as whatever `{}` is assignable to, so typesMayReach answers "may reach" for every
+// receiver `{}` reaches, whatever hop the `{}` sits at (Language's t1 on #ny0c3gb: Held to `{}` to an all-optional
+// Read). Second, every other hop that drops a field stands on its own relation site: a structural source seen as
+// a type with an optional field it doesn't declare is refused (adamic/no-optional-widening, rulings.md:71), and
+// a read of that field through such a view is checked (rulings.md:72). Language's W road is the second guard's
+// alone: `{ a: string; b: number }` seen as `{ b: number }`, then as `{ b: number; a?: number }`, which `{}`
+// doesn't reach (b is required). rulings.md:71 misses an `object` source until #1q9w1yf lands, so until then the
+// two guards leave that road open between them.
 func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	if l.entriesRecordTypesKnown {
 		return l.entriesRecordTypes
@@ -351,6 +354,12 @@ func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 			for _, argument := range holder.Arguments() {
 				holds = holds || argument == held
 			}
+		default:
+			// A holder this doesn't name (an assignment's right side, a binding default, a conditional arm, a
+			// `??` or `||` right side, a spread) holds the literal as its slot where it has one, never narrower
+			// than the slot (Language's should on #ny0c3gb: `{ a: string }` reaches less than the Rec it's
+			// written into). Only where there's no slot does the literal's own type stand alone.
+			holds = l.slotType(held) != nil
 		}
 	}
 	if holds {
@@ -366,7 +375,9 @@ func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 	}
 	// Where no handle names the literal, or one it has was dropped below, the literal is also held as its own
 	// regular widened type, so a place this can't relate fails closed rather than going unrelated.
-	own := l.checker.GetWidenedType(l.checker.GetTypeAtLocation(literal))
+	// The literal's regular type, freshness taken off by the checker's own rule, then widened: never fresh, so
+	// never the exact `{}` whose "no" this whole list exists to avoid (Compiler's condition on e831758b).
+	own := l.checker.GetWidenedType(regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(literal)))
 	if len(parameters) > 0 {
 		unknowns := make([]*checker.Type, len(parameters))
 		for index := range unknowns {
@@ -392,7 +403,13 @@ func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 	if len(kept) == 0 || dropped {
 		// Still instantiable after the mapping (a `this` type, say), it's `{}`: every record's implicit
 		// source already answers for that, and a nil here would relate nothing.
-		if own != nil && !instantiableMember(own) {
+		switch {
+		case own != nil && own.ObjectFlags()&checker.ObjectFlagsFreshLiteral != 0:
+			// Never by the checker's rule; if it ever were, `{}` relates to more than any fresh type does.
+			if empty := l.recordEmptyObject(); empty != nil {
+				kept = append(kept, empty)
+			}
+		case own != nil && !instantiableMember(own):
 			kept = append(kept, own)
 		}
 	}
