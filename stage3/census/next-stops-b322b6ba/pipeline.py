@@ -13,7 +13,9 @@ with (out/'census-buildinfo.txt').open('w') as f:
  print('buildinfo child_exit='+str(result.returncode),flush=True);result.check_returncode()
 tree=Path('/workspace/scratch/next-stops-adapted')
 (out/'apply-source-manifest.json').write_text(json.dumps({str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src/compiler').rglob('*')) if p.is_file()},indent=2)+'\n')
-checkpoint('apply')
+# The apply wrapper pushes its checkpoint immediately, before this pipeline.
+while not (out/'checkpoint-push-apply-status.json').exists():time.sleep(1)
+assert json.loads((out/'checkpoint-push-apply-status.json').read_text())['exit_code']==0
 with (out/'groups-runner.log').open('w') as f:
  result=subprocess.run([sys.executable,str(out/'run.py'),'groups'],stdout=f,stderr=f)
 print('groups child_exit='+str(result.returncode),flush=True)
