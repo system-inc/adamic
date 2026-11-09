@@ -78,6 +78,10 @@ func hostBindingAbsentAccess(node *ast.Node) (receiver *ast.Node, runtime bool) 
 // hostBindingAbsentMemberRefusal keeps the constant process.browser read exact: no program may
 // install that member, and run-time key operations never read an ordinary object slot. A structural
 // view naming browser is still unregistered (nodeHostViewReach), before its reads or writes lower.
+// The undefined fold rests on two stops: this rule judges writes naming process, and the
+// process-as-a-value stop blocks handing it elsewhere (a parameter, generic or array element).
+// Lowering process as a value must bring this judgment to the receiving side, or the fold
+// is no longer exact.
 func (l *lowering) hostBindingAbsentMemberRefusal(node *ast.Node) error {
 	stop := func(runtime bool) error {
 		if runtime {

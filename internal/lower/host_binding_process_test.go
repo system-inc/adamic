@@ -142,6 +142,17 @@ func TestHostBindingProcessBrowserRoadsStop(t *testing.T) {
 			t.Log(err)
 		})
 	}
+	// s1 witnesses the process-as-a-value stop that the absent-member fold also depends on.
+	t.Run("s1 parameter view read", func(t *testing.T) {
+		t.Parallel()
+		modules := processModules("read(process);\nconsole.log(String(process.browser));")
+		modules["core.ts"] += "function read(p: { browser?: unknown }): void { console.log(String(p.browser)); }\n"
+		_, err := lowerModules(t, modules)
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || notYet.What != "process as a value (use its supported process operation directly)" {
+			t.Fatalf("want the process-as-a-value stop, got %v", err)
+		}
+	})
 }
 
 // Admission is by the model export and member name, with both optionality and undefined required.
