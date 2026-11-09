@@ -5,16 +5,96 @@ import type { RuleContext } from '../../context.ts';
 export const singleLowercaseLetter = /^[a-z](?![\s\S])/u;
 const handlerNamePattern = /handle|on[A-Z]|event/iu;
 const eventHandlerKeyPattern = /^on[A-Z]/u;
-export function comparator(context: RuleContext, index: number): boolean {
-    for(let cursor = context.parent(index); cursor >= 0; cursor = context.parent(cursor)) {
-        const kind = context.kind(cursor);
-        if(kind !== 'ArrowFunction' && kind !== 'FunctionExpression') { continue; }
-        const call = context.parent(cursor);
-        if(context.kind(call) !== 'CallExpression' || context.arguments(call)[0] !== cursor) { return false; }
-        const callee = context.child(call, 0);
-        return context.kind(callee) === 'PropertyAccessExpression' && context.node(context.property(callee)).text === 'sort';
+// Reads as isAmbiguousDeclarationName and ast.IsDeclarationName: a declaration's name,
+// except shorthand reads, plus the label where it is chosen and a first JavaScript this property.
+export function ambiguousDeclarationName(context: RuleContext, index: number): boolean {
+    const owner = context.parent(index);
+    if(owner < 0) { return false; }
+    const kind = context.kind(owner);
+    if(kind === 'ShorthandPropertyAssignment') { return false; }
+    if(kind === 'BindingElement') {
+        const parts = context.node(owner).children.filter((child) => context.kind(child) !== 'DotDotDotToken');
+        const first = parts[0] ?? -1;
+        const renamed = first >= 0 && context.scanAt(context.node(first).end) === 'ColonToken';
+        return (renamed ? parts[1] ?? -1 : first) === index;
     }
-    return false;
+    if(kind === 'LabeledStatement') { return context.child(owner, 0) === index; }
+    if([
+        'VariableDeclaration', 'Parameter', 'FunctionDeclaration',
+        'FunctionExpression', 'ClassDeclaration', 'ClassExpression', 'PropertyDeclaration',
+        'PropertySignature', 'MethodDeclaration', 'MethodSignature', 'GetAccessor', 'SetAccessor',
+        'EnumDeclaration', 'EnumMember', 'InterfaceDeclaration', 'TypeAliasDeclaration',
+        'TypeParameter', 'ModuleDeclaration', 'ImportClause', 'NamespaceImport', 'ImportSpecifier',
+        'ExportSpecifier', 'ImportEqualsDeclaration', 'NamespaceExport', 'NamespaceExportDeclaration',
+        'NamedTupleMember', 'PropertyAssignment',
+        'JsxAttribute',
+    ].includes(kind) && context.name(owner) === index) { return true; }
+    return firstThisPropertyDeclaration(context, index);
+}
+// Reads as thisPropertyDeclarationOwner, ast.GetAssignmentDeclarationKind and ast.GetThisContainer.
+// A class member owns this across arrows, but not across ordinary functions or nested containers.
+function thisPropertyOwner(context: RuleContext, index: number): number {
+    if(!context.parser.javascript) { return -1; }
+    const access = context.parent(index);
+    if(context.kind(access) !== 'PropertyAccessExpression' || context.property(access) !== index ||
+        context.kind(context.child(access, 0)) !== 'ThisKeyword') { return -1; }
+    const assignment = context.parent(access);
+    if(context.kind(assignment) !== 'BinaryExpression' || context.child(assignment, 0) !== access ||
+        context.kind(context.child(assignment, 1)) !== 'EqualsToken') { return -1; }
+    for(let cursor = context.parent(assignment); cursor >= 0; cursor = context.parent(cursor)) {
+        const kind = context.kind(cursor);
+        if(kind === 'ComputedPropertyName') { cursor = context.parent(cursor); continue; }
+        if(kind === 'Decorator') {
+            const decorated = context.parent(cursor);
+            if(context.kind(decorated) === 'Parameter' && classMember(context.kind(context.parent(decorated)))) {
+                cursor = context.parent(decorated);
+            }
+            else if(classMember(context.kind(decorated))) { cursor = decorated; }
+            continue;
+        }
+        if(classMember(kind)) {
+            const owner = context.parent(cursor);
+            return ['ClassDeclaration', 'ClassExpression'].includes(context.kind(owner)) ? cursor : -1;
+        }
+        if(['FunctionDeclaration', 'FunctionExpression', 'ModuleDeclaration', 'PropertySignature',
+            'MethodSignature', 'CallSignature', 'ConstructSignature', 'IndexSignature',
+            'EnumDeclaration', 'SourceFile'].includes(kind)) { return -1; }
+    }
+    return -1;
+}
+function classMember(kind: string): boolean {
+    return ['Constructor', 'PropertyDeclaration', 'MethodDeclaration', 'GetAccessor',
+        'SetAccessor', 'ClassStaticBlockDeclaration'].includes(kind);
+}
+function staticMember(context: RuleContext, index: number): boolean {
+    return context.kind(index) === 'ClassStaticBlockDeclaration' || context.has(index, 'StaticKeyword');
+}
+// Reads as isFirstThisPropertyDeclaration: an explicit member wins, otherwise source order wins,
+// keeping instance and static property tables separate as the binder does.
+function firstThisPropertyDeclaration(context: RuleContext, index: number): boolean {
+    const owner = thisPropertyOwner(context, index);
+    if(owner < 0) { return false; }
+    const classIndex = context.parent(owner);
+    const isStatic = staticMember(context, owner);
+    const name = context.node(index).text;
+    for(const member of context.members(classIndex)) {
+        const key = context.name(member);
+        if(key >= 0 && ['Identifier', 'StringLiteral'].includes(context.kind(key)) &&
+            context.node(key).text === name && staticMember(context, member) === isStatic) { return false; }
+    }
+    return firstThisPropertyIn(context, classIndex, classIndex, isStatic, name) === index;
+}
+function firstThisPropertyIn(context: RuleContext, index: number, classIndex: number, isStatic: boolean, name: string): number {
+    const node = context.node(index);
+    if(node.kind === 'Identifier' && node.text === name) {
+        const owner = thisPropertyOwner(context, index);
+        if(owner >= 0 && context.parent(owner) === classIndex && staticMember(context, owner) === isStatic) { return index; }
+    }
+    for(const child of node.children) {
+        const found = firstThisPropertyIn(context, child, classIndex, isStatic, name);
+        if(found >= 0) { return found; }
+    }
+    return -1;
 }
 export function eventContext(context: RuleContext, index: number): string {
     const declaration = context.parent(index);
