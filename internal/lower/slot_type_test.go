@@ -164,6 +164,7 @@ var signatureReaders = map[string]string{
 	"instantiateFunction":               "the callee's instantiation, to lower a generic function",
 	"libraryCallOnPrimitives":           "the callee's declaration, whether the library or the prelude declares it, to judge a call that can't reach program code",
 	"libraryCallResult":                 "the callee's declaration, whether the library declares it",
+	"objectAssignCall":                  "the callee's declaration, whether it is lib's ObjectConstructor.assign; each source is judged by its own type, never by a parameter's slot",
 	"notePlaceholderSlots":              "a program parameter's symbol, to carry a placeholder into it; lib's any parameter is never a placeholder",
 	"predicateArguments":                "the callee's declaration and type predicate, to check the predicate's argument",
 	"predicateProducerProven":           "a producer call's result type, to read the claim its returned predicate makes at this call",

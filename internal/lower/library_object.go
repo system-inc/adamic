@@ -365,11 +365,12 @@ func (l *lowering) objectAssignCall(call *ast.Node) bool {
 		return false
 	}
 	declaration := signature.Declaration()
-	if declaration.Kind != ast.KindMethodSignature || declaration.Name() == nil || declaration.Name().Text() != "assign" || !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+	// A method's name may be computed ([Symbol.iterator]), whose node has no text: only an identifier is asked.
+	if declaration.Kind != ast.KindMethodSignature || !ast.IsIdentifier(declaration.Name()) || declaration.Name().Text() != "assign" || !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 		return false
 	}
 	owner := declaration.Parent
-	return owner != nil && owner.Kind == ast.KindInterfaceDeclaration && owner.Name().Text() == "ObjectConstructor"
+	return owner != nil && owner.Kind == ast.KindInterfaceDeclaration && ast.IsIdentifier(owner.Name()) && owner.Name().Text() == "ObjectConstructor"
 }
 
 // callableOrConstructable reports whether any part of a type has a call or construct signature, or is lib's
