@@ -123,7 +123,7 @@ func (l *lowering) hostBindingAbsentMemberRefusal(node *ast.Node) error {
 		if node.Name().Kind == ast.KindIdentifier {
 			// Judge a later view before the generic process-as-a-value stop hides its member name.
 			own := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.Initializer()))
-			if row, _ := l.hostBindingOf(node.Initializer()); row != nil && hostBindingRouted(*row) {
+			if row, _ := l.hostBindingOf(node.Initializer()); row != nil && l.hostBindingRouted(*row) {
 				if model := l.hostBindingModel(*row); model != nil {
 					own = model
 				}
