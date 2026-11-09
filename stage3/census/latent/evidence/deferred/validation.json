@@ -44,5 +44,16 @@
     "mutant_exit": 1,
     "mutant_expected": 1
   },
-  "predicate_seam": 0
+  "predicate_seam": 0,
+  "generic_body_coverage": {
+    "build": 0,
+    "whole_packages": 0,
+    "first-error": 0,
+    "full": 0,
+    "speculative": 0,
+    "mutant_exit": 1,
+    "mutant_expected": 1,
+    "mutant_owner": "callWrittenAny",
+    "mutant_findings": []
+  }
 }

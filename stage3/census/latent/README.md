@@ -426,3 +426,9 @@ The ordinary package guards the driver hooks. `deferred_read_mutant.py` copies
 an overlay and replaces the shared fallback read with nil; the same census pin
 must then fail because its eligible written-any function has no deferred stop.
 Speculative mode records the stop and continues its deliberate recovery walk.
+
+Instantiated dependency bodies also probe at actual body entry, after checker
+body skips and piece ownership guards. A wrapped deferred failure keeps its phase
+while propagating to the caller. The real pin covers both a direct written-any
+function and a concrete generic call, including an ordinary refusal later in the
+callee. No new lowering field carries this error.
