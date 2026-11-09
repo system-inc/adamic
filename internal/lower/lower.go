@@ -481,6 +481,11 @@ type lowering struct {
 	nodeHostViews   map[nodeHostViewKey]string
 	nodeHostHolders map[*checker.Type]bool
 
+	// hostBindingViewTypes, once hostBindingViewsKnown, is each Provided host binding's declared type's
+	// symbol by its model export's type, which nodeHostObject judges it as (host_bindings.go).
+	hostBindingViewTypes  map[*ast.Symbol]*checker.Type
+	hostBindingViewsKnown bool
+
 	// For the cycle finder (cycles.go): the checker's type of each local, and where it's declared;
 	// every function value made, with its type; and the class type being instantiated, for this.
 	localTypes     map[int]*checker.Type
