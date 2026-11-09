@@ -355,6 +355,36 @@
 `graph_regions.c:outside_release:1`
 `graph_regions.c:freeing_root:1`
 `graph_regions.c:freeing_lone:1`
+# A merge's scratch (#5nrs3q2): its set of regions to unite, the edge walk's region and visitor,
+# the search's regions, recorded edges and post-order stack, the members a union takes in, prune's
+# crossing count, the counted build's acyclic root, adoption's child count and free's crossing
+# count. Each is thread-local and used by one merge, adoption or free at a time; the arrays are
+# kept for the thread's next merge.
+`graph_regions.c:merge_list:1`
+`graph_regions.c:merge_count:1`
+`graph_regions.c:merge_capacity:1`
+`graph_regions.c:edge_from:1`
+`graph_regions.c:edge_visit:1`
+`graph_regions.c:search_list:1`
+`graph_regions.c:search_count:1`
+`graph_regions.c:search_capacity:1`
+`graph_regions.c:search_edges:1`
+`graph_regions.c:search_starts:1`
+`graph_regions.c:search_stack:1`
+`graph_regions.c:search_next:1`
+`graph_regions.c:search_edge_count:1`
+`graph_regions.c:search_edge_capacity:1`
+`graph_regions.c:search_node_capacity:1`
+`graph_regions.c:search_target_root:1`
+`graph_regions.c:search_at:1`
+`graph_regions.c:search_target_lone:1`
+`graph_regions.c:merging_one:1`
+`graph_regions.c:merging_two:1`
+`graph_regions.c:crossing_root:1`
+`graph_regions.c:crossing:1`
+`graph_regions.c:acyclic_root:1`
+`graph_regions.c:joined:1`
+`graph_regions.c:freeing_crossing:1`
 `runtime-file:graph_regions.c`
 `runtime-file:graph_regions.h`
 
