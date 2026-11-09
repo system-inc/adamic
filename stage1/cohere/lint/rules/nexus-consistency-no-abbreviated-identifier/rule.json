@@ -1,7 +1,9 @@
 {
   "name": "nexus/consistency-no-abbreviated-identifier",
   "kinds": [
-    "Identifier"
+    "Identifier",
+    "StringLiteral",
+    "PrivateIdentifier"
   ],
   "node": true,
   "visit": "visit",
