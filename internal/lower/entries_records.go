@@ -297,9 +297,6 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindObjectLiteralExpression && l.entriesRecordLiteral(node) {
 			handles := l.entriesRecordHandles(node)
-			if len(handles) == 0 {
-				handles = []*checker.Type{l.checker.GetWidenedType(l.checker.GetTypeAtLocation(node))}
-			}
 			for _, handle := range handles {
 				if !seen[handle] {
 					seen[handle] = true
@@ -323,7 +320,8 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 // annotation, which takes the literal's own type, and a slot that's a type parameter or otherwise instantiable,
 // or has such a member (instantiableMember), such as a generic's parameter before inference, since
 // `f<T>(x: T)` holds `{}` as the T inferred for it. Any other place is one this can't name, and holds nothing
-// either, so the literal's own widened type stands.
+// either. Where no handle names the literal, or one was dropped, its own regular widened type stands beside
+// the rest, mapped as the handles are.
 //
 // The walk relates declarations, so it meets a type parameter of a declaration around the literal uninstantiated,
 // and relates it as unknown (Adamic's ruling on #ny0c3gb, 16:12:33Z). Related as a rigid T it would fail open:
@@ -366,6 +364,9 @@ func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 			}
 		}
 	}
+	// Where no handle names the literal, or one it has was dropped below, the literal is also held as its own
+	// regular widened type, so a place this can't relate fails closed rather than going unrelated.
+	own := l.checker.GetWidenedType(l.checker.GetTypeAtLocation(literal))
 	if len(parameters) > 0 {
 		unknowns := make([]*checker.Type, len(parameters))
 		for index := range unknowns {
@@ -377,11 +378,22 @@ func (l *lowering) entriesRecordHandles(literal *ast.Node) []*checker.Type {
 				handles[index] = instantiateType(l.checker, handle, mapper)
 			}
 		}
+		own = instantiateType(l.checker, own, mapper)
 	}
 	kept := handles[:0]
+	dropped := false
 	for _, handle := range handles {
 		if handle != nil && !instantiableMember(handle) {
 			kept = append(kept, handle)
+		} else {
+			dropped = true
+		}
+	}
+	if len(kept) == 0 || dropped {
+		// Still instantiable after the mapping (a `this` type, say), it's `{}`: every record's implicit
+		// source already answers for that, and a nil here would relate nothing.
+		if own != nil && !instantiableMember(own) {
+			kept = append(kept, own)
 		}
 	}
 	return kept
