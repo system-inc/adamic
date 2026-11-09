@@ -8,8 +8,8 @@ import (
 	base "github.com/system-inc/cohere/internal/lint/rules/base"
 )
 
-func oracleRequirePaginationArgumentName() rule.Rule {
-	return base.ConsistencyRequirePaginationArgumentName
+func oracleRequirePaginationArgumentName(options any) rule.Bound {
+	return bindOracle(base.ConsistencyRequirePaginationArgumentName, options)
 }
 
 // Upstream has no options type and ignores its options argument. Decode and retain

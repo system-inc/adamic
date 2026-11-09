@@ -9,7 +9,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoCaller() rule.Rule { return rules.NoCaller }
+func oracleNoCaller(options any) rule.Bound { return bindOracle(rules.NoCaller, options) }
 
 // NoCaller defines no options struct and ignores its any argument. Decode captured
 // JSON nevertheless so an explicit options row never silently drops its payload.

@@ -199,7 +199,7 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "formatfiles")
+	packageDirectory := filepath.Join(cohere, "internal", "format", "format_files")
 	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
 	overlay, err := json.Marshal(map[string]any{"Replace": replace})
 	if err != nil {
@@ -209,7 +209,7 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/formatfiles")
+	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/format_files")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := combinedOutput(command); err != nil {

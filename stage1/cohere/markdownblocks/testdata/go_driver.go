@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 	"github.com/system-inc/cohere/internal/format/markdown"
 	"github.com/system-inc/cohere/internal/format/native"
 )
@@ -33,7 +33,7 @@ func main() {
 	scanner := bufio.NewScanner(source)
 	scanner.Buffer(make([]byte, 65536), 32*1024*1024)
 	encoder := json.NewEncoder(os.Stdout)
-	options := formatoptions.Default()
+	options := format_options.Default()
 	formatter := native.Formatter{Options: options}
 	offOnly := len(os.Args) > 2 && os.Args[2] == "off-only"
 	for scanner.Scan() {

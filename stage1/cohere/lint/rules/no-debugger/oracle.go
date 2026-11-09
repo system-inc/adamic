@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoDebugger() rule.Rule                 { return rules.NoDebugger }
+func oracleNoDebugger(options any) rule.Bound     { return bindOracle(rules.NoDebugger, options) }
 func oracleNoDebuggerOptions(fields []string) any { return nil }

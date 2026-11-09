@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 	"os"
 	"strconv"
 	"strings"
@@ -50,7 +50,7 @@ func TestAdamicPrinterCases(t *testing.T) {
 		if line[1] == 'S' {
 			parser = "scss"
 		}
-		options := formatoptions.PrettierDefaults()
+		options := format_options.PrettierDefaults()
 		if request.Mode == "narrow" {
 			options.PrintWidth = 24
 			options.TabWidth = 4
@@ -58,7 +58,7 @@ func TestAdamicPrinterCases(t *testing.T) {
 			options.SingleQuote = true
 			options.TrailingComma = "none"
 		}
-		formatted, err := formatWithParser(text, options, parser)
+		formatted, err := formatWithParser(text, options, parser, nil)
 		fmt.Fprintf(&answers, "case %d\n", count)
 		count++
 		var answer any
@@ -125,7 +125,7 @@ func TestAdamicPrinterThroughput(t *testing.T) {
 		texts = append(texts, text)
 		parsers = append(parsers, parser)
 	}
-	options := formatoptions.PrettierDefaults()
+	options := format_options.PrettierDefaults()
 	repetitions := 10
 	if request.Repeat == "once" {
 		repetitions = 1
@@ -139,7 +139,7 @@ func TestAdamicPrinterThroughput(t *testing.T) {
 		started := time.Now()
 		for repeat := 0; repeat < repetitions; repeat++ {
 			for index, text := range texts {
-				formatted, err := formatWithParser(text, options, parsers[index])
+				formatted, err := formatWithParser(text, options, parsers[index], nil)
 				if err != nil {
 					t.Fatal(err)
 				}

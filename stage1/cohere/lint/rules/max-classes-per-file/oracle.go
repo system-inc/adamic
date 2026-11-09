@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleMaxClassesPerFile() rule.Rule { return rules.MaxClassesPerFile }
+func oracleMaxClassesPerFile(options any) rule.Bound {
+	return bindOracle(rules.MaxClassesPerFile, options)
+}
 
 func oracleMaxClassesPerFileOptions(fields []string) any {
 	decoded := rules.DefaultMaxClassesPerFileSettings()

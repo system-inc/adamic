@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoSparseArrays() rule.Rule                 { return rules.NoSparseArrays }
+func oracleNoSparseArrays(options any) rule.Bound     { return bindOracle(rules.NoSparseArrays, options) }
 func oracleNoSparseArraysOptions(fields []string) any { return nil }
