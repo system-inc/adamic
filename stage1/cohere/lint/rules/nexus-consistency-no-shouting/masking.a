@@ -1,7 +1,7 @@
 import { utf8Length } from 'adamic';
 import { fencedBlock, inlineBackticks, doubleQuoted, singleQuotedToken,
-    singleQuotedCapitalPhrase, notNewline, jsDocGutter, blockCommentGutter,
-    exampleTag, anyJsDocTag, commandLine } from './patterns.a';
+    singleQuotedCapitalPhrase, jsDocGutter, blockCommentGutter,
+    exampleTag, anyJsDocTag, promptLine, commandWordLine, lowercaseWord, dotBetweenLetters, uppercaseToken } from './patterns.a';
 
 // MatchString has no persistent cursor in Go. Reset JS global literals for each predicate.
 export function accepts(pattern: RegExp, text: string): boolean {
@@ -19,7 +19,11 @@ function blank(text: string, pattern: RegExp, keepNewlines: boolean): string {
             break;
         }
         const value = match[0] ?? '';
-        const replacement = keepNewlines ? value.replace(notNewline, ' ') : ' '.repeat(utf8Length(value));
+        const blanked: string[] = [];
+        for(const line of value.split('\n')) {
+            blanked.push(' '.repeat(utf8Length(line)));
+        }
+        const replacement = keepNewlines ? blanked.join('\n') : ' '.repeat(utf8Length(value));
         result += text.slice(cursor, match.index) + replacement;
         cursor = match.index + value.length;
     }
@@ -76,8 +80,8 @@ function indentedBlocks(text: string): string {
     for(let index = 0; index < lines.length; index++) {
         const line = lines[index] ?? '';
         const content = line.replace(blockCommentGutter, '');
-        // Go strings.TrimSpace uses Unicode White_Space, including NEL but excluding BOM.
-        if(/^[\t-\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]*$/u.test(content)) {
+        // Reads: text.TrimWhitespace, the ECMAScript whitespace set.
+        if(content.trim() === '') {
             previousIsBlank = true;
             continue;
         }
@@ -91,7 +95,7 @@ function indentedBlocks(text: string): string {
     return lines.join('\n');
 }
 
-function examplesAndCommands(text: string): string {
+function jsDocExamples(text: string): string {
     const lines = text.split('\n');
     let insideExample = false;
     for(let index = 0; index < lines.length; index++) {
@@ -109,15 +113,77 @@ function examplesAndCommands(text: string): string {
             lines[index] = ' '.repeat(utf8Length(line));
         }
     }
+    return lines.join('\n');
+}
+
+// Reads: shouting.indentation, after blockCommentGutter, in spaces or tabs.
+function indentation(line: string): number {
+    const body = line.replace(blockCommentGutter, '');
+    let index = 0;
+    while(index < body.length && (body[index] === ' ' || body[index] === '\t')) {
+        index++;
+    }
+    return index;
+}
+
+// Reads: shouting.isCommandShaped.
+function isCommandShaped(word: string): boolean {
+    if('-<["\'`+/~.'.includes(word.slice(0, 1)) || word.includes('/') || word.includes('=') ||
+        accepts(dotBetweenLetters, word) || word.endsWith(':')) {
+        return true;
+    }
+    uppercaseToken.lastIndex = 0;
+    const match = uppercaseToken.exec(word);
+    return match !== null && match[0] === word;
+}
+
+// Reads: shouting.commandWordReadsAsProse. strings.Fields uses Go's whitespace set.
+function commandWordReadsAsProse(previousLine: string, line: string, afterWord: string): boolean {
+    let previous = previousLine.replace(jsDocGutter, '').trim();
+    if(previous.startsWith('/*')) {
+        previous = previous.slice(2);
+    }
+    while(previous.startsWith('*')) {
+        previous = previous.slice(1);
+    }
+    previous = previous.trim();
+    if(previous === '' || '.:!?;'.includes(previous.slice(-1)) || indentation(line) > indentation(previousLine)) {
+        return false;
+    }
+    const words = afterWord.split(/[\t-\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+/u).filter(word => word !== '');
+    for(let index = 0; index < 3; index++) {
+        const word = words[index];
+        if(word === undefined || isCommandShaped(word)) {
+            return false;
+        }
+        if(!accepts(lowercaseWord, word)) {
+            return true;
+        }
+    }
+    return true;
+}
+
+// Reads: shouting.blankCommandLines. Each line sees the previous line already masked.
+function commandLines(text: string): string {
+    const lines = text.split('\n');
     for(let index = 0; index < lines.length; index++) {
         const line = lines[index] ?? '';
-        if(accepts(commandLine, line.replace(jsDocGutter, ''))) {
+        const content = line.replace(jsDocGutter, '');
+        let isCommand = accepts(promptLine, content);
+        commandWordLine.lastIndex = 0;
+        const starter = commandWordLine.exec(content);
+        if(starter !== null) {
+            isCommand = !commandWordReadsAsProse(lines[index - 1] ?? '', line, content.slice((starter[0] ?? '').length));
+        }
+        if(isCommand) {
             lines[index] = ' '.repeat(utf8Length(line));
         }
     }
     return lines.join('\n');
 }
 
+// Reads: shouting.MaskCodeAndCommands, in the same order. Every mask blanks one
+// space per byte, as Go does, including indentation later read by commandWordReadsAsProse.
 export function maskCodeAndCommands(text: string): string {
     let masked = blank(text, fencedBlock, true);
     masked = indentedBlocks(masked);
@@ -126,5 +192,6 @@ export function maskCodeAndCommands(text: string): string {
     masked = wrappedDoubleQuotes(masked);
     masked = blank(masked, singleQuotedToken, false);
     masked = capitalPhrases(masked);
-    return examplesAndCommands(masked);
+    masked = jsDocExamples(masked);
+    return commandLines(masked);
 }
