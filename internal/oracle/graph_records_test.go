@@ -16,14 +16,16 @@ import (
 // a record on a cycle is a counted allocation inside it, and the cycle leaks. The write rule in
 // cycles.go refuses a cycle closed by a write into a record (a.r['k'] = ...), but a record built whole
 // and stored into a graph field closes one with no such write. a.r = { k: a.next.slice() } freed 5 of
-// 20 by the counted build on main fd8b74b9, clean under ASan (#a9e21hc). It now stops, as a Promise
-// on a cycle does, until #1vb0x5s gives records their region; a record off every cycle lowers.
+// 20 by the counted build on main fd8b74b9, clean under ASan (#a9e21hc). A record written into a graph
+// slot on a cycle now stops, until #1vb0x5s gives records their region. A record only near a cycle's
+// types, never written into a slot on it, lowers: method_bind.a's dictionary is the control in the
+// corpus, beside the three here.
 //
-// Mutant: drop the throughRecord stop from graphTypes (graph_types.go), and the first case lowers
-// and leaks by the counted build.
-const graphRecordNode = `interface Node { name: string; next: Node[]; r: Record<string, Node[]>; tags: Record<string, string> }
-const a: Node = { name: 'a' + '', next: [], r: {}, tags: {} };
-const b: Node = { name: 'b' + '', next: [a], r: {}, tags: {} };
+// Mutant: make noteRecordSlot (internal/lower/graph_records.go) return at once, and both stopped cases
+// lower and leak by the counted build.
+const graphRecordNode = `interface Node { name: string; next: Node[]; r: Record<string, Node[]>; rs: Record<string, Node[]>[] }
+const a: Node = { name: 'a' + '', next: [], r: {}, rs: [] };
+const b: Node = { name: 'b' + '', next: [a], r: {}, rs: [] };
 a.next.push(b);
 `
 
@@ -33,7 +35,10 @@ func TestGraphRecordOnACycle(t *testing.T) {
 		{"a record literal stored into a graph field", graphRecordNode + `a.r = { k: a.next.slice() };
 const got = a.r['k'];
 console.log(` + "`${a.name} ${got === undefined ? -1 : got.length}`" + `);
-`, "a record whose values can reach back to what holds it, in a graph program"},
+`, "a record written into a graph slot"},
+		{"a record literal pushed into a graph array", graphRecordNode + `a.rs.push({ k: a.next.slice() });
+console.log(` + "`${a.name} ${a.rs.length}`" + `);
+`, "a record written into a graph slot"},
 		// The same cycle through an array field: its allocations are graph members, so it frees.
 		{"the same cycle through an array", `interface Node { name: string; next: Node[]; kids: Node[][] }
 const a: Node = { name: 'a' + '', next: [], kids: [] };
