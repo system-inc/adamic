@@ -248,10 +248,21 @@ func main() {
 	}
 }
 
-// bindOracle preserves the distinction between absent and supplied case options.
+// bindOracle preserves absent versus supplied options. Rules that never read options
+// ignored the case's value before typed binding; rules that read them asserted strictly.
 func bindOracle[Options any](subject rule.Rule[Options], options any) rule.Bound {
+	if noOptions, ok := any(subject).(rule.Rule[rule.NoOptions]); ok {
+		if options == nil {
+			return rule.Bind(noOptions, rule.Given[rule.NoOptions]{})
+		}
+		return rule.Bind(noOptions, rule.Configured(rule.NoOptions{}))
+	}
 	if options == nil {
 		return rule.Bind(subject, rule.Given[Options]{})
 	}
-	return rule.Bind(subject, rule.Configured(options.(Options)))
+	typed, matches := options.(Options)
+	if !matches {
+		panic(fmt.Sprintf("rule %s reads options as %T, but the case supplied %T", subject.Name, *new(Options), options))
+	}
+	return rule.Bind(subject, rule.Configured(typed))
 }
