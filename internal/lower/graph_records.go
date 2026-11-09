@@ -3,6 +3,7 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/fresh"
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 // noteRecordSlot keeps the first seed whose written value can be a record, for graphTypes to return
@@ -49,7 +50,10 @@ func (f *cycleFinder) holdsRecordSeen(proven *checker.Type, seen map[*checker.Ty
 		}
 		return false
 	}
-	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	if f.l.isArrayType(proven) {
+		return f.holdsRecordSeen(f.l.elementTypeOfArray(proven), seen)
+	}
+	if checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			if f.holdsRecordSeen(argument, seen) {
 				return true
@@ -57,4 +61,26 @@ func (f *cycleFinder) holdsRecordSeen(proven *checker.Type, seen map[*checker.Ty
 		}
 	}
 	return false
+}
+
+// reassigned reports whether a local is assigned after its declaration anywhere in the program: an
+// ir.Assign to it, which can put a record into a cell a function value already captures (let r; const f =
+// () => r; r = { f }). A captured local only ever bound by its declaration, such as the receiver bind
+// keeps (method_bind.a's bound_value), isn't stopped here. A record that reaches its own cell through
+// its initializer (a hoisted function, or a closure the literal makes) is the gap #1vb0x5s closes.
+func (f *cycleFinder) reassigned(local int) bool {
+	if f.assigned == nil {
+		f.assigned = map[int]bool{}
+		visit := func(node any) bool {
+			if assign, ok := node.(ir.Assign); ok {
+				f.assigned[assign.Local] = true
+			}
+			return true
+		}
+		walk(f.l.result.Main, visit)
+		for _, function := range f.l.result.Functions {
+			walk(function.Body, visit)
+		}
+	}
+	return f.assigned[local]
 }
