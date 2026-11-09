@@ -1,14 +1,17 @@
 package oracle
 
 import (
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/leakcheck"
-	"github.com/system-inc/adamic/internal/native"
+	"errors"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 // Refused record shapes are pinned by TestRecordRefusal* in records_refusal_test.go.
@@ -214,4 +217,22 @@ func TestRecordNarrowingMutant(t *testing.T) {
 		t.Fatalf("stale narrowing mutant survived: mutant %+v; checked %+v", got, want)
 	}
 	t.Log("unchecked deleted scalar read caught by checked exit 70")
+}
+
+// This witness must stop at its registered construct, with the same reason.
+func TestRecordR24StringConversionRefusalPin(t *testing.T) {
+	t.Parallel()
+	path := "internal/oracle/testdata/records_refuse/r24.a"
+	absolute, err := filepath.Abs(filepath.Join(repository, path))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowered(t, absolute)
+	const reason = "String conversion of an object, array, map or function (ToPrimitive is not lowered)"
+	const location = "r24.a:4:"
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), reason) || !strings.Contains(notYet.Where, location) {
+		t.Fatalf("want located refusal %q at %s: %v", reason, location, err)
+	}
+	t.Logf("%v", err)
 }

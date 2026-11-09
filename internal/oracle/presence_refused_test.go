@@ -44,3 +44,29 @@ func TestInUnionNarrowingIsRefused(t *testing.T) {
 		t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 	}
 }
+
+// This witness must stop at its registered construct, with the same reason.
+func TestAbsentOptionalOwnFieldWriteRefusalPin(t *testing.T) {
+	t.Parallel()
+	path := "internal/oracle/testdata/presence_refused/optional_field_write.a"
+	absolute, err := filepath.Abs(filepath.Join(repository, path))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowered(t, absolute)
+	const reason = "writing a possibly absent optional own field"
+	const location = "optional_field_write.a:9:"
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), reason) || !strings.Contains(notYet.Where, location) {
+		t.Fatalf("want located refusal %q at %s: %v", reason, location, err)
+	}
+	expected, readErr := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
+	if readErr != nil {
+		t.Fatal(readErr)
+	}
+	got := strings.ReplaceAll(err.Error(), strings.TrimSuffix(absolute, path), "")
+	if got != strings.TrimSpace(string(expected)) {
+		t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+	}
+	t.Logf("%v", err)
+}
