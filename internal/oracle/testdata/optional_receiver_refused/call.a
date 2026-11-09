@@ -1,0 +1,4 @@
+function probe(items: ((value: string) => void)[] | undefined): void {
+    items?.reduce((left, right) => left, (value: string) => console.log(value))('next');
+}
+probe(undefined);

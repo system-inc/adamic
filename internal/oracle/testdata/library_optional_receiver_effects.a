@@ -1,0 +1,24 @@
+let receivers = 0;
+let argumentsSeen = 0;
+function receiver(links: Set<string> | undefined): Set<string> | undefined {
+    receivers++;
+    console.log('receiver');
+    return links;
+}
+function argument(): string {
+    argumentsSeen++;
+    console.log('argument');
+    return 'link';
+}
+function callback(): (item: string) => void {
+    argumentsSeen++;
+    console.log('callback');
+    return item => console.log(item);
+}
+const links = new Set<string>(['link', 'kept']);
+console.log(`${receiver(links)?.delete(argument())}`);
+console.log(`${links.has('link')}`);
+console.log(`${receiver(undefined)?.delete(argument())}`);
+receiver(links)?.forEach(callback());
+receiver(undefined)?.forEach(callback());
+console.log(`${receivers} ${argumentsSeen}`);
