@@ -1,0 +1,16 @@
+{
+  "kind": "pooled-checker overflow",
+  "after_load": "",
+  "first_observed_phase": "run-end relation probe",
+  "first_observed_after_timed_unit": "/workspace/scratch/zb0q0zd-adapted/src/tsc/_namespaces/ts.ts:3:1",
+  "last_timing_row": {
+    "file": "/workspace/scratch/zb0q0zd-adapted/src/tsc/_namespaces/ts.ts",
+    "where": "/workspace/scratch/zb0q0zd-adapted/src/tsc/_namespaces/ts.ts:3:1",
+    "wall_seconds": 0.316727852,
+    "cpu_seconds": 1.2969220000004498
+  },
+  "per_unit_overflow_answers_recorded": false,
+  "onset_unit": null,
+  "diagnostic": "error TS2859: Excessive complexity comparing types '\" \"' and '{}'.",
+  "interpretation": "The mark was first observed at run end after the last timed unit. Timing rows contain duration only, so they cannot identify the unit that introduced the pooled-checker overflow."
+}
