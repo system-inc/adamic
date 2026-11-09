@@ -183,7 +183,14 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 			if l.signatureAny(instantiated, target) != nil && l.signatureAny(fromSignatures[0], target) == nil {
 				return &widening{source: from, target: to, unfixedGeneric: true}
 			}
-			fromSignatures, toSignatures = []*checker.Signature{instantiated}, []*checker.Signature{target}
+			// A generic target relates only where no written any meets a typed position: the program's
+			// own any is never an authorization (rulings.md:37), and relating through one would turn
+			// main's refusal into an admission, as tsc's forEachChildTable seen as Record<SyntaxKind,
+			// ForEachChildFunction<any>> would be (parser.ts:1253, Adamic's ruling on #7fd51gk). Such a
+			// pair keeps main's raw relation.
+			if len(toSignatures[0].TypeParameters()) == 0 || l.signatureAny(instantiated, target) == nil {
+				fromSignatures, toSignatures = []*checker.Signature{instantiated}, []*checker.Signature{target}
+			}
 		}
 		if found := l.widenedParameters(fromSignatures[0], toSignatures[0], visited); found != nil {
 			return found

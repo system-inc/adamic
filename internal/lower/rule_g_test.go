@@ -74,3 +74,42 @@ console.log("made");
 		t.Fatalf("got %v, want the unfixed type parameter named as NotYet", err)
 	}
 }
+
+// A generic target relates through rule G only where no written any meets a typed position (Adamic's
+// ruling on #7fd51gk): tsc's forEachChildTable, its per-kind generic functions viewed through a cast as
+// Record<SyntaxKind, ForEachChildFunction<any>> (parser.ts:1253), keeps main's refusal, since rule G would
+// relate <T>(node: any) against <T>(node: QualifiedName) and pass through the program's own any.
+func TestAGenericTableCastThroughAWrittenAnyKeepsMainsRefusal(t *testing.T) {
+	t.Parallel()
+	source := `enum Kind { A = 1, B = 2 }
+interface Node { readonly kind: Kind; }
+interface NodeA extends Node { readonly kind: Kind.A; readonly a: number; }
+interface NodeB extends Node { readonly kind: Kind.B; readonly b: string; }
+type Nodes = NodeA | NodeB;
+type Visit<TNode> = <T>(node: TNode, cb: (node: Node) => T | undefined) => T | undefined;
+type Table = { [TNode in Nodes as TNode["kind"]]: Visit<TNode>; };
+const table: Table = {
+	[Kind.A]: function visitA<T>(node: NodeA, cb: (node: Node) => T | undefined): T | undefined { return node.a > 0 ? cb(node) : undefined; },
+	[Kind.B]: function visitB<T>(node: NodeB, cb: (node: Node) => T | undefined): T | undefined { return node.b.length > 0 ? cb(node) : undefined; },
+};
+function each<T>(node: Node, cb: (node: Node) => T | undefined): T | undefined {
+	const fn = (table as Record<Kind, Visit<any>>)[node.kind];
+	return fn === undefined ? undefined : fn(node, cb);
+}
+const a: NodeA = { kind: Kind.A, a: 1 };
+console.log(String(each(a, (node: Node): number => node.kind)));
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, source, extension)
+			if err == nil {
+				t.Fatal("lowered, but the cast relates the table's functions through a written any")
+			}
+			t.Logf("stops at: %v", err)
+			if !strings.Contains(err.Error(), "13:14") && !strings.Contains(err.Error(), "13:13") {
+				t.Fatalf("got %v, want the cast at 13:14 refused", err)
+			}
+		})
+	}
+}
