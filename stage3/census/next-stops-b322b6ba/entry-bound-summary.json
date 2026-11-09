@@ -1,0 +1,22 @@
+{
+  "status": {
+    "command": [
+      "/workspace/scratch/next-stops-entry",
+      "/workspace/scratch/next-stops-adapted/src/tsc/tsc.ts",
+      "/workspace/adamic/stage3/census/next-stops-b322b6ba/entry-latent.jsonl"
+    ],
+    "exit_code": -15,
+    "seconds": 1800.2723908539997,
+    "stopping_reason": "elapsed bound",
+    "process_group_cleaned": true
+  },
+  "records": 1,
+  "expected_sources": 81,
+  "completed_sources": 0,
+  "emitted_finding_totals": {
+    "NotYet": 0,
+    "Refused": 0,
+    "panic": 0
+  },
+  "interpretation": "Bounded incomplete entry ledger. Counts describe emitted findings only; full latent totals are unknown."
+}
