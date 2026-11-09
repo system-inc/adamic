@@ -1,0 +1,13 @@
+diff --git a/internal/lower/any_relations.go b/internal/lower/any_relations.go
+index ed26bd991..085ffb6d5 100644
+--- a/internal/lower/any_relations.go
++++ b/internal/lower/any_relations.go
+@@ -50,7 +50,7 @@ func (l *lowering) refuseAnyRelation(node *ast.Node) error {
+ 	return nil
+ }
+ 
+-func init() { refusalRules.register(3270, "refuseAnyRelation", (*lowering).refuseAnyRelation) }
++func init() {}
+ 
+ // anyRelation is a position where a member typed any meets a member that isn't any or unknown.
+ type anyRelation struct {

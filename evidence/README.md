@@ -66,3 +66,7 @@ Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made
 ## Guard proof at bbb63464
 
 [Steps 1–3](bbb63464/steps-1-3.md) and [whole lower suite](bbb63464/step-4.md): formatting, vet and focused/full suites pass. Main and guarded head refuse the new cast at 13:14. Unguarded e5531c8 and the guard mutant also refuse at 13:14 with a different member-typed-any diagnostic, so the new pin stays green under mutation and does not establish guard sensitivity. Full suite exit 0 in 1619.275s; no failures. Source restored exactly.
+
+## Rule G-2 pin at f7277112
+
+[Focused suite and refuseAnyRelation mutant](f7277112/results.md): formatting clean; focused suite passes; removing the refusal registration makes both .ts/.a subtests red at a computed-field-name stop (9:2), rather than the required written-any refusal (13:14). Exact source restored.

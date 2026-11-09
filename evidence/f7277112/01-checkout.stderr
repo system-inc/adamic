@@ -1,0 +1,11 @@
+Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  bbb63464c lower: rule G keeps main's raw relation for a generic target where a written any meets a typed position, so tsc's forEachChildTable cast stays refused (#7fd51gk, Adamic's ruling)
+
+If you want to keep it by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> bbb63464c
+
+HEAD is now at f72771125 lower: a generic table cast through a written any stays NotYet under rule G, pinned on tsc's forEachChildTable shape (#7fd51gk)

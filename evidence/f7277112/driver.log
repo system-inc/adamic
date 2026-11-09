@@ -1,0 +1,34 @@
+{
+  "01-checkout": 0,
+  "02-revision": 0,
+  "03-submodules": 0,
+  "04-clean": 0,
+  "05-go-version": 0,
+  "06-clang-version": 0,
+  "07-node-version": 0,
+  "10-gofmt": 0,
+  "11-focused": 0,
+  "20-mutant-patch": 0,
+  "21-mutant": 1,
+  "22-restoration": 0,
+  "23-final-status": 0
+}
+=== RUN   TestAGenericTableCastThroughAWrittenAnyStaysNotYet
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyStaysNotYet
+=== CONT  TestAGenericTableCastThroughAWrittenAnyStaysNotYet
+=== RUN   TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.a
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.a
+=== RUN   TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.ts
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.ts
+=== CONT  TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.a
+=== CONT  TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.ts
+    rule_g_test.go:111: got /tmp/adamic-gate/TestAGenericTableCastThroughAWrittenAnyStaysNotYet.ts1155923692/001/main.ts:9:2: stage 0 can't lower a computed field name yet, want the cast at 13:14 stopped for its written any
+=== NAME  TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.a
+    rule_g_test.go:111: got /tmp/adamic-gate/TestAGenericTableCastThroughAWrittenAnyStaysNotYet.a2741024954/001/main.a:9:2: stage 0 can't lower a computed field name yet, want the cast at 13:14 stopped for its written any
+--- FAIL: TestAGenericTableCastThroughAWrittenAnyStaysNotYet (0.00s)
+    --- FAIL: TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.ts (0.12s)
+    --- FAIL: TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.a (0.12s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.137s
+FAIL
+ 
