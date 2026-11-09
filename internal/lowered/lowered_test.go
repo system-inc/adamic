@@ -150,6 +150,7 @@ func TestTheKeyMovesWithEachInputTheLoweringReads(t *testing.T) {
 		{"Debug", Options{Lower: lower.Options{Debug: true}}, quiet},
 		{"ProgramRegion", Options{Lower: lower.Options{ProgramRegion: true}}, quiet},
 		{"OwnershipQuery", Options{Lower: lower.Options{OwnershipQuery: true}}, quiet},
+		{"ModuleFormat", Options{Lower: lower.Options{ModuleFormat: lower.ModuleFormatCommonJSBundle}}, quiet},
 		{"TSGo", Options{TSGo: true}, quiet},
 		{"ADAMIC_PROGRAM_REGION", Options{}, setting("ADAMIC_PROGRAM_REGION")},
 		{"ADAMIC_OWNERSHIP_QUERY", Options{}, setting("ADAMIC_OWNERSHIP_QUERY")},
