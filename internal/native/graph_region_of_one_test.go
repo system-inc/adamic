@@ -28,6 +28,9 @@ import (
 //   - release_outside skips a counted edge out of the region: "teardown" leaks a graph.
 //   - adamic_array_sort stores before its take again: "sorted" frees a member early (ASan) and
 //     leaks the one it wrote over.
+//   - adamic_graph_merge unites only its two endpoints (no between): "third", "diamond" and "taken"
+//     keep a cycle of counted edges, which the counted build's acyclic check reports.
+//   - between stops at the first region it finds that reaches the target: "diamond" leaves x2 out.
 const graphRegionOfOneHarness = `#define ADAMIC_CANONICAL_CLOSURES 1
 #include "adamic.h"
 #include "graph_regions.h"
@@ -58,6 +61,13 @@ static adamic_array *copy(adamic_object *a, adamic_object *b) {
  adamic_array *array = adamic_array_make(0, adamic_ir_Union);
  adamic_array_push(array, (adamic_value){.reference = adamic_retain(a)});
  if (b != NULL) { adamic_array_push(array, (adamic_value){.reference = adamic_retain(b)}); }
+ return adamic_graph_adopt_owned(array, sizeof *array);
+}
+// holder makes an adopted array of the given members, each counted, as a spread or literal of them is.
+static adamic_array *holder(void *first, void *second) {
+ adamic_array *array = adamic_array_make(0, adamic_ir_Union);
+ adamic_array_push(array, (adamic_value){.reference = adamic_retain(first)});
+ if (second != NULL) { adamic_array_push(array, (adamic_value){.reference = adamic_retain(second)}); }
  return adamic_graph_adopt_owned(array, sizeof *array);
 }
 static int by_label(adamic_value left, adamic_value right, void *context) {
@@ -133,6 +143,65 @@ int main(int count, char **arguments) {
   adamic_array_sort(held, by_label, NULL);
   label(held->elements[0].reference);
   adamic_release(held);
+ } else if (strcmp(mode, "third") == 0) {
+  // graph_regions_entries' shape: a pair holds a, an array holds the pair, and b stores the array.
+  // The store joins b's graph and the array; the pair between them, holding one and held by the
+  // other, has to join too, or the three keep a cycle of counted edges.
+  adamic_array *pair = copy(a, NULL);
+  adamic_array *outer = holder(pair, NULL);
+  adamic_release(pair);
+  link(b, 1, outer);
+  adamic_release(outer);
+  label(((adamic_array *)((adamic_array *)b->slots[1].reference)->elements[0].reference)->elements[0].reference);
+ } else if (strcmp(mode, "diamond") == 0) {
+  // Language's diamond: one store closes two paths at once, through x1 and through x2.
+  adamic_array *x1 = copy(a, NULL), *x2 = copy(b, NULL);
+  adamic_array *top = holder(x1, x2);
+  adamic_release(x1);
+  adamic_release(x2);
+  link(a, 1, top);
+  adamic_release(top);
+  label(b);
+ } else if (strcmp(mode, "taken") == 0) {
+  // take merges as hold does: a moved value closes the same cycle a held one would.
+  adamic_array *pair = copy(a, NULL);
+  adamic_array *outer = holder(pair, NULL);
+  adamic_release(pair);
+  void *old = b->slots[1].reference;
+  b->slots[1].reference = adamic_graph_take(b, adamic_retain(outer));
+  adamic_graph_drop(b, old);
+  adamic_release(outer);
+  label(a);
+ } else if (strcmp(mode, "chain") == 0) {
+  // The worst case for one store: a chain of regions, each holding the one before, closed by a
+  // single store. The search visits every region in the chain once, and all of them merge.
+  adamic_array *chain = copy(a, NULL);
+  for (long i = 0; i < loops; i++) {
+   adamic_array *next = holder(chain, NULL);
+   adamic_release(chain);
+   chain = next;
+  }
+  size_t before = adamic_counted.graph_searched;
+  link(b, 1, chain);
+  printf("searched %zu\n", adamic_counted.graph_searched - before);
+  adamic_release(chain);
+ } else if (strcmp(mode, "unrelated") == 0) {
+  // The worst case for many stores: the same chain stored, again and again, into fresh nodes it
+  // doesn't reach back to. Each search visits the chain and finds nothing to merge.
+  adamic_array *chain = copy(a, NULL);
+  for (long i = 0; i < loops; i++) {
+   adamic_array *next = holder(chain, NULL);
+   adamic_release(chain);
+   chain = next;
+  }
+  size_t before = adamic_counted.graph_searched;
+  for (long i = 0; i < loops; i++) {
+   adamic_object *fresh = node(&name_c);
+   link(fresh, 1, chain);
+   adamic_release(fresh);
+  }
+  printf("searched %zu\n", adamic_counted.graph_searched - before);
+  adamic_release(chain);
  } else {
   return 3;
  }
@@ -169,7 +238,7 @@ func TestGraphRegionOfOne(t *testing.T) {
 		}
 		return leakcheck.Run{Stdout: []byte(stdout.String()), Stderr: []byte(stderr.String()), ExitCode: exit}
 	}
-	for _, mode := range []string{"dropped", "stored", "closed", "escape", "overwrite", "teardown", "sorted"} {
+	for _, mode := range []string{"dropped", "stored", "closed", "escape", "overwrite", "teardown", "sorted", "third", "diamond", "taken", "chain", "unrelated"} {
 		t.Run(mode, func(t *testing.T) {
 			t.Parallel()
 			for _, binary := range []string{sanitized, counted} {
@@ -183,6 +252,23 @@ func TestGraphRegionOfOne(t *testing.T) {
 			}
 		})
 	}
+	// The search's cost, written down for Adamic's no-pause line (#5nrs3q2): the regions visited by
+	// one store that closes a chain of N, and by N stores of that chain into fresh nodes. Logged, with
+	// the chain's merge checked by the counted build above; a bound is ruled on these numbers.
+	t.Run("search cost", func(t *testing.T) {
+		t.Parallel()
+		searched := regexp.MustCompile(`searched (\d+)`)
+		for _, mode := range []string{"chain", "unrelated"} {
+			for _, loops := range []string{"10", "1000"} {
+				result := run(counted, mode, loops)
+				match := searched.FindSubmatch(result.Stdout)
+				if result.ExitCode != 0 || match == nil {
+					t.Fatalf("%s %s: exit %d\n%s%s", mode, loops, result.ExitCode, result.Stdout, result.Stderr)
+				}
+				t.Logf("%s, N = %s: %s regions searched", mode, loops, match[1])
+			}
+		}
+	})
 	t.Run("dropped peak", func(t *testing.T) {
 		t.Parallel()
 		peak := func(loops string) int {
@@ -203,4 +289,69 @@ func TestGraphRegionOfOne(t *testing.T) {
 			t.Fatalf("peak %d at 10 loops, %d at 1000: a dropped copy outlives its loop", few, many)
 		}
 	})
+}
+
+// A boundary edge into the Program region stays plain (#5nrs3q2, Language's third condition): a
+// Program member is no graph member, so adoption never counts it, and the Program region is freed
+// once at its end (rulings.md:330). A copy that holds a Program member, held back by that member,
+// is a cycle the Program region's end lets go: clean by the counted build and LeakSanitizer. A copy
+// still held past that end releases into freed memory, which is why every boundary edge must go
+// first: "late" is the mutant, and ASan reports it.
+const graphRegionProgramHarness = `#define ADAMIC_CANONICAL_CLOSURES 1
+#include "adamic.h"
+#include "graph_regions.h"
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+
+static const char *const names[] = {"held"};
+static const bool references[] = {true};
+static const adamic_field_kind kinds[] = {adamic_field_reference};
+static const adamic_shape shape = {1, names, references, NULL, kinds};
+
+int main(int count, char **arguments) {
+ if (count != 2) { return 2; }
+ adamic_object *program = adamic_object_new(&shape);
+ program = adamic_program_adopt_owned(program, adamic_object_size(1));
+ adamic_array *copy = adamic_array_make(0, adamic_ir_Union);
+ adamic_array_push(copy, (adamic_value){.reference = adamic_retain(program)});
+ copy = adamic_graph_adopt_owned(copy, sizeof *copy);
+ program->slots[0].reference = adamic_retain(copy);
+ if (strcmp(arguments[1], "cycle") == 0) {
+  adamic_release(copy);
+  puts("cycle");
+  adamic_program_region_end();
+  assert(adamic_counted.allocations == adamic_counted.frees + adamic_counted.regions);
+  return 0;
+ }
+ adamic_program_region_end();
+ adamic_release(copy);
+ return 0;
+}
+`
+
+func TestGraphRegionProgramEdge(t *testing.T) {
+	t.Parallel()
+	binary := filepath.Join(t.TempDir(), "program")
+	if err := native.Build(graphRegionProgramHarness, binary, native.Options{Sanitize: true, Count: true, ProgramRegion: true}); err != nil {
+		t.Fatal(err)
+	}
+	for _, mode := range []string{"cycle", "late"} {
+		command := exec.Command(binary, mode)
+		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
+		output, err := command.CombinedOutput()
+		switch mode {
+		case "cycle":
+			if err != nil {
+				t.Fatalf("cycle: %v\n%s", err, output)
+			}
+			if report := leakcheck.Unbalanced(leakcheck.Run{Stderr: output}); report != "" {
+				t.Fatalf("cycle: %s\n%s", report, output)
+			}
+		case "late":
+			if err == nil || !strings.Contains(string(output), "heap-use-after-free") {
+				t.Fatalf("a copy released after the Program region's end isn't reported: %v\n%s", err, output)
+			}
+		}
+	}
 }
