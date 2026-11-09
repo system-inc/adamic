@@ -1,0 +1,8 @@
+// sys.ts:683: discard Set.delete's boolean through an optional field.
+interface Watcher { links: Set<string> | undefined; }
+function remove(x: Watcher, v: string): void { x.links?.delete(v); }
+const links = new Set<string>(['link', 'kept']);
+remove({links}, 'link');
+console.log(`${links.has('link')} ${links.has('kept')}`);
+remove({links: undefined}, 'link');
+console.log('absent');

@@ -1,0 +1,15 @@
+interface Watcher { links: Set<string> | undefined; }
+function remove(x: Watcher, v: string): void {
+    const removed = x.links?.delete(v);
+    console.log(`${removed}`);
+}
+const links = new Set<string>(['link']);
+remove({links}, 'link');
+remove({links}, 'link');
+remove({links: undefined}, 'link');
+function nullable(links: Set<string> | null): void {
+    const removed = links?.delete('link');
+    console.log(`${removed}`);
+}
+nullable(new Set<string>(['link']));
+nullable(null);

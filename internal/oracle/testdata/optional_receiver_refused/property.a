@@ -1,0 +1,2 @@
+function probe(x: Set<string> | undefined): number | undefined { return x?.add('link').size; }
+console.log(`${probe(undefined)}`);

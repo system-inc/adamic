@@ -13,12 +13,12 @@ import (
 
 // isSet reports whether a node is one of the library's Sets.
 func (l *lowering) isSet(node *ast.Node) bool {
-	return l.isLibraryType(l.checker.GetTypeAtLocation(node), "Set", "ReadonlySet")
+	return l.isLibraryType(l.intrinsicReceiverType(node), "Set", "ReadonlySet")
 }
 
 // setElement is the representation of a Set's elements, strings or numbers in 0.2.
 func (l *lowering) setElement(node *ast.Node) (ir.Type, error) {
-	arguments := l.typeArguments(l.checker.GetTypeAtLocation(node))
+	arguments := l.typeArguments(l.intrinsicReceiverType(node))
 	if len(arguments) != 1 {
 		return 0, l.notYet(node, "a Set whose element type isn't known")
 	}
