@@ -3,7 +3,7 @@ root=pathlib.Path(__file__).resolve().parents[5]
 here=pathlib.Path(__file__).resolve().parent
 inv=json.loads((here.parents[1]/'inventory/inventory.json').read_text())
 rules=[r for r in inv['rules'] if r['wave']=='syntax waiting on helpers' and not any('ported with' in b['status'] or 'partial port:' in b['status'] for b in r['stage1'])]
-schemas=json.loads((root/'cohere/internal/lint/optionschema/schemas.json').read_text())['rules']
+schemas=json.loads((root/'cohere/internal/lint/option_schema/schemas.json').read_text())['rules']
 unsupported={'pattern','patternProperties','contains','dependencies','exclusiveMaximum','exclusiveMinimum','format','if','then','else','maxProperties','minProperties','multipleOf','propertyNames','$data'}
 def features(s):
  if not isinstance(s,dict):return set()
@@ -58,7 +58,7 @@ for r in rules:
  for value in seeds(s,s):
   text=json.dumps(value,ensure_ascii=True,separators=(',',':'))
   if len(text) < 5000 and text not in seen:cases.append(dict(Kind='schema',Rule=name,Schema=json.dumps(s,separators=(',',':')),Input=text));seen.add(text)
-samples=json.loads((root/'cohere/internal/lint/optionschema/testdata/samples.json').read_text())['samples']
+samples=json.loads((root/'cohere/internal/lint/option_schema/testdata/samples.json').read_text())['samples']
 for sample in samples:
  name=sample['rule']
  if name in supported:cases.append(dict(Kind='schema',Rule=name,Schema=json.dumps(schemas[name],separators=(',',':')),Input=json.dumps(sample['elements'],separators=(',',':')),Expected='valid' if sample['eslint']=='accepts' else 'invalid'))

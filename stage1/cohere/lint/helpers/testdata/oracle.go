@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/system-inc/cohere/internal/lint/optionschema"
+	"github.com/system-inc/cohere/internal/lint/option_schema"
 	"github.com/system-inc/cohere/policy"
 	"io"
 	"os"
@@ -44,8 +44,8 @@ func main() {
 	if err := json.Unmarshal(data, &corpus); err != nil {
 		panic(err)
 	}
-	// Each schema is compiled once and validated many times, as optionschema.For holds a rule's schema in cohere.
-	compiled := map[string]*optionschema.Schema{}
+	// Each schema is compiled once and validated many times, as option_schema.For holds a rule's schema in cohere.
+	compiled := map[string]*option_schema.Schema{}
 	for _, c := range corpus.Cases {
 		if c.Schema != "" {
 			c.Schema = corpus.Definitions[c.Schema]
@@ -67,7 +67,7 @@ func main() {
 			schema := compiled[c.Schema]
 			if schema == nil {
 				var err error
-				if schema, err = optionschema.Compile([]byte(c.Schema)); err != nil {
+				if schema, err = option_schema.Compile([]byte(c.Schema)); err != nil {
 					panic(err)
 				}
 				compiled[c.Schema] = schema

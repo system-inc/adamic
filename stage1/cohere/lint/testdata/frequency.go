@@ -21,14 +21,14 @@ type result struct {
 	failed               string
 }
 
-func count(subject rule.Rule, file *ast.SourceFile) (count int, failure string) {
+func count(subject rule.Bound, file *ast.SourceFile) (count int, failure string) {
 	defer func() {
 		if value := recover(); value != nil {
 			failure = fmt.Sprint(value)
 		}
 	}()
 	ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(rule.Diagnostic) { count++ }}
-	listeners := subject.Run(ctx, nil)
+	listeners := subject.Run(ctx)
 	var walk func(*ast.Node)
 	walk = func(n *ast.Node) {
 		if visit := listeners[n.Kind]; visit != nil {
@@ -71,7 +71,7 @@ func main() {
 	fmt.Fprintf(out, "files\t%d\n", len(files))
 	results := []result{}
 	for _, registration := range registrations {
-		subject := registration.Rule
+		subject := registration.Unconfigured
 		if subject.NeedsTypeChecker {
 			fmt.Fprintf(out, "skip-types\t%s\n", subject.Name)
 			continue

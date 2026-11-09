@@ -24,7 +24,7 @@ func GoOracle(t *testing.T) (string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "formatfiles")
+	packageDirectory := filepath.Join(cohere, "internal", "format", "format_files")
 	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
 	overlay, err := json.Marshal(map[string]any{"Replace": replace})
 	if err != nil {
@@ -43,7 +43,7 @@ func stockOracle(t *testing.T, arguments []string) string {
 	t.Helper()
 	const output = "formatfiles.test-owner-v1"
 	const module = "cohere"
-	const pkg = "./internal/format/formatfiles"
+	const pkg = "./internal/format/format_files"
 	if producer {
 		return buildcache.GoTest(t, module, output, pkg, arguments)
 	}

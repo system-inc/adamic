@@ -7,5 +7,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUnusedLabels() rule.Rule                 { return rules.NoUnusedLabels }
+func oracleNoUnusedLabels(options any) rule.Bound     { return bindOracle(rules.NoUnusedLabels, options) }
 func oracleNoUnusedLabelsOptions(fields []string) any { return nil }

@@ -9,7 +9,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoWarningComments() rule.Rule { return rules.NoWarningComments }
+func oracleNoWarningComments(options any) rule.Bound {
+	return bindOracle(rules.NoWarningComments, options)
+}
 
 // oracleNoWarningCommentsOptions decodes field 5's captured options into the upstream type, and with none gives
 // the type's zero value, as the shared oracle's decoder did before this rule moved.

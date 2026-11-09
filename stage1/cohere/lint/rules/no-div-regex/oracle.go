@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoDivRegex() rule.Rule                 { return rules.NoDivRegex }
+func oracleNoDivRegex(options any) rule.Bound     { return bindOracle(rules.NoDivRegex, options) }
 func oracleNoDivRegexOptions(fields []string) any { return nil }

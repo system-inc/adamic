@@ -8,5 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/react"
 )
 
-func oracleJsxNoCommentTextnodes() rule.Rule                 { return rules.JsxNoCommentTextnodes }
+func oracleJsxNoCommentTextnodes(options any) rule.Bound {
+	return bindOracle(rules.JsxNoCommentTextnodes, options)
+}
 func oracleJsxNoCommentTextnodesOptions(fields []string) any { return nil }

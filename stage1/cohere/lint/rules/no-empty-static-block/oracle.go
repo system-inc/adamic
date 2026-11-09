@@ -9,7 +9,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoEmptyStaticBlock() rule.Rule { return rules.NoEmptyStaticBlock }
+func oracleNoEmptyStaticBlock(options any) rule.Bound {
+	return bindOracle(rules.NoEmptyStaticBlock, options)
+}
 
 // Upstream has no configurable options or options type. Decode its empty object
 // explicitly so an options-bearing row cannot reach a nil adapter result.

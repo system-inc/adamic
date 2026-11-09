@@ -9,7 +9,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoEmpty() rule.Rule { return rules.NoEmpty }
+func oracleNoEmpty(options any) rule.Bound { return bindOracle(rules.NoEmpty, options) }
 func oracleNoEmptyOptions(fields []string) any {
 	if len(fields) > 5 && fields[5] != "" && fields[5] != "null" {
 		options := rules.NoEmptyOptions{AllowEmptyCatch: fields[4] == "true"}

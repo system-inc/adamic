@@ -8,5 +8,7 @@ import (
 	adamic "github.com/system-inc/cohere/internal/lint/rules/adamic"
 )
 
-func oracleNoTypePredicate() rule.Rule                 { return adamic.NoTypePredicate }
+func oracleNoTypePredicate(options any) rule.Bound {
+	return bindOracle(adamic.NoTypePredicate, options)
+}
 func oracleNoTypePredicateOptions(fields []string) any { return nil }
