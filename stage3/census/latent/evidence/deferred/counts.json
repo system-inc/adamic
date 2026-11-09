@@ -1,0 +1,575 @@
+{
+  "lowered_to_stopped": 0,
+  "units": [],
+  "changed_existing_stops": 10,
+  "changed_existing_units": [
+    {
+      "identity": [
+        "src/compiler/transformers/destructuring.ts",
+        "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+        9941
+      ],
+      "unit": {
+        "body_end": 14200,
+        "body_start": 10279,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "flattenDestructuringBinding",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:244:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:244:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:273:82"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertNode parameter node cannot be served by implementation parameter node",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:273:61: Adamic 0.1 refuses overload 1 of assertNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:244:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:273:61"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/destructuring.ts",
+        "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+        29608
+      ],
+      "unit": {
+        "body_end": 29824,
+        "body_start": 29702,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "makeArrayBindingPattern",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:600:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:600:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:86"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertEachNode parameter nodes cannot be served by implementation parameter nodes",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:65: Adamic 0.1 refuses overload 1 of assertEachNode parameter nodes cannot be served by implementation parameter nodes; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:600:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:65"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/destructuring.ts",
+        "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+        29828
+      ],
+      "unit": {
+        "body_end": 30119,
+        "body_start": 29925,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "makeArrayAssignmentPattern",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:605:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:605:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:86"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertEachNode parameter nodes cannot be served by implementation parameter nodes",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:65: Adamic 0.1 refuses overload 1 of assertEachNode parameter nodes cannot be served by implementation parameter nodes; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:605:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:65"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/destructuring.ts",
+        "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+        30123
+      ],
+      "unit": {
+        "body_end": 30336,
+        "body_start": 30218,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "makeObjectBindingPattern",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:610:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:610:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:86"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertEachNode parameter nodes cannot be served by implementation parameter nodes",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:65: Adamic 0.1 refuses overload 1 of assertEachNode parameter nodes cannot be served by implementation parameter nodes; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:610:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:65"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/destructuring.ts",
+        "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+        30340
+      ],
+      "unit": {
+        "body_end": 30635,
+        "body_start": 30438,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "makeObjectAssignmentPattern",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:615:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:615:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:86"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of assertEachNode parameter nodes cannot be served by implementation parameter nodes",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:65: Adamic 0.1 refuses overload 1 of assertEachNode parameter nodes cannot be served by implementation parameter nodes; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/destructuring.ts:615:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/debug.ts:257:65"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/es2016.ts",
+        "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7",
+        420
+      ],
+      "unit": {
+        "body_end": 4517,
+        "body_start": 532,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "transformES2016",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2016.ts:21:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2016.ts:21:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2016.ts:21:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/es2019.ts",
+        "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293",
+        304
+      ],
+      "unit": {
+        "body_end": 1561,
+        "body_start": 416,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "transformES2019",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2019.ts:17:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2019.ts:17:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2019.ts:17:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/es2020.ts",
+        "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a",
+        914
+      ],
+      "unit": {
+        "body_end": 13126,
+        "body_start": 1026,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "transformES2020",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2020.ts:42:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2020.ts:42:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2020.ts:42:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/es2021.ts",
+        "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684",
+        611
+      ],
+      "unit": {
+        "body_end": 4142,
+        "body_start": 723,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "transformES2021",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2021.ts:25:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2021.ts:25:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/es2021.ts:25:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/legacyDecorators.ts",
+        "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0",
+        1929
+      ],
+      "unit": {
+        "body_end": 36738,
+        "body_start": 2051,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "transformLegacyDecorators",
+        "status": "attempted",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/legacyDecorators.ts:88:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/legacyDecorators.ts:88:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:587:119"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+        "root_kind": "",
+        "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48: Adamic 0.1 refuses overload 1 of visitEachChild parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/transformers/legacyDecorators.ts:88:1",
+        "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/visitorPublic.ts:585:48"
+      }
+    }
+  ],
+  "other_new_stops": 0,
+  "other_new_units": [],
+  "stopped_to_lowered": 0,
+  "cleared_unit_stops": [],
+  "new_findings_by_reason_and_file": [
+    {
+      "reason": "a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/classFields.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/es2017.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/es2018.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/ts.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking NamedExportBindings seen as one taking NamedExports (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/ts.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking NamedImportBindings seen as one taking NonNullable<NamedImportBindings | undefined> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/ts.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking Node seen as one taking NonNullable<BindingOrAssignmentElement> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/destructuring.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking Node seen as one taking NonNullable<Expression & AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: ThisExpression; }> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/classFields.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking Node seen as one taking NonNullable<Expression & CallExpression & { readonly expression: Identifier; }> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/classFields.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a function taking Node seen as one taking NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration> (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "file": "src/compiler/transformers/es2018.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "a value of type (ArrayLiteralExpression | AssignmentExpression<EqualsToken> | BindingElement | ElementAccessExpression | ... 9 more ... | VariableDeclaration)[] | undefined seen as BindingOrAssignmentElement[] | undefined, which can write BindingOrAssignmentElement where ArrayLiteralExpression | AssignmentExpression<EqualsToken> | BindingElement | ElementAccessExpression | ... 9 more ... | VariableDeclaration is read",
+      "file": "src/compiler/transformers/destructuring.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "optional property modifiers in ArrowFunction absent from structural source never, which can hide fields",
+      "file": "src/compiler/transformers/ts.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "overload 1 of assertEachNode parameter nodes cannot be served by implementation parameter nodes",
+      "file": "src/compiler/debug.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "overload 1 of assertNode parameter node cannot be served by implementation parameter node",
+      "file": "src/compiler/debug.ts",
+      "raw": 1,
+      "distinct": 1
+    },
+    {
+      "reason": "overload 1 of visitEachChild parameter node cannot be served by implementation parameter node",
+      "file": "src/compiler/visitorPublic.ts",
+      "raw": 1,
+      "distinct": 1
+    }
+  ],
+  "metrics": {
+    "raw_findings": {
+      "new_findings": 17,
+      "new_sites": 17,
+      "cleared_findings": 73,
+      "moved_findings": 2,
+      "changed_unit_first_stops": 10,
+      "panics_before": 0,
+      "panics_after": 0,
+      "totals": {
+        "before": {
+          "Refused": 4545,
+          "NotYet": 4629
+        },
+        "after": {
+          "Refused": 4501,
+          "NotYet": 4615
+        }
+      }
+    },
+    "distinct_reads": {
+      "new_findings": 17,
+      "new_sites": 17,
+      "cleared_findings": 73,
+      "moved_findings": 2,
+      "changed_unit_first_stops": 10,
+      "panics_before": 0,
+      "panics_after": 0,
+      "totals": {
+        "before": {
+          "Refused": 4350,
+          "NotYet": 4622
+        },
+        "after": {
+          "Refused": 4306,
+          "NotYet": 4608
+        }
+      }
+    }
+  },
+  "production_root_first_stops_moved": 0,
+  "production_roots": 73,
+  "production_first_stop": "core.ts:2599:15",
+  "production_note": "Production lowering and refusal sources are byte-identical to 018b7c21. The 73 production roots were not recompiled.",
+  "baseline_overflow": {
+    "kind": "pooled-checker overflow",
+    "after_load": "",
+    "first_observed_phase": "run-end relation probe",
+    "first_observed_after_timed_unit": "/workspace/scratch/zb0q0zd-adapted/src/tsc/_namespaces/ts.ts:3:1",
+    "last_timing_row": {
+      "file": "/workspace/scratch/zb0q0zd-adapted/src/tsc/_namespaces/ts.ts",
+      "where": "/workspace/scratch/zb0q0zd-adapted/src/tsc/_namespaces/ts.ts:3:1",
+      "wall_seconds": 0.316727852,
+      "cpu_seconds": 1.2969220000004498
+    },
+    "per_unit_overflow_answers_recorded": false,
+    "onset_unit": null,
+    "diagnostic": "error TS2859: Excessive complexity comparing types '\" \"' and '{}'.",
+    "interpretation": "The mark was first observed at run end after the last timed unit. Timing rows contain duration only, so they cannot identify the unit that introduced the pooled-checker overflow."
+  }
+}
