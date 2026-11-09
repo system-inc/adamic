@@ -1636,7 +1636,7 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
 	if callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().QuestionDotToken != nil && call.AsCallExpression().QuestionDotToken == nil {
 		if method := l.checker.GetSymbolAtLocation(callee); method != nil && len(method.Declarations) > 0 && !load.IsLibrary(ast.GetSourceFileOfNode(method.Declarations[0])) {
-			return nil
+			return l.optionalHostCall(call, method)
 		}
 	}
 	return l.notYet(call, optionalCallNotYet)
