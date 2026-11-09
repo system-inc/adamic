@@ -3,6 +3,7 @@ package lower
 
 import (
 	"context"
+	"github.com/system-inc/adamic/stage3/census/latent"
 	"errors"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -49,6 +50,8 @@ func latentRecord(err error) {
 		return
 	}
 	finding := LatentFinding{PieceAtom: latentPieceOrigin, Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "error", Text: err.Error()}
+	var deferred *latentDeferredFailure
+	if errors.As(err, &deferred) { finding.Phase = "deferred" }
 	var refused *Refused
 	var notYet *NotYet
 	var skipped *LatentDependencySkipped
@@ -292,7 +295,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(file.AsNode()), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
 				}
 			}()
-			latentRecord(fresh().latentRefuse(file))
+			fresh().latentScan(file)
 		}()
 		for _, node := range file.Statements.Nodes {
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
@@ -343,6 +346,9 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 				if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); l.noteOmittedOptionals(modules) }() }
 				l.latentRegister(program.Files())
 				l.latentUseProgramFacts(&facts)
+				if l.latentDeferredUnit(node) {
+					return
+				}
 				if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == os.Getenv("LATENT_MUTANT_FUNCTION") && (os.Getenv("LATENT_MUTANT_WHERE") == "" || program.Where(node) == os.Getenv("LATENT_MUTANT_WHERE")) {
 					latentRecord(l.notYet(node, "latent planted extra NotYet"))
 				}
@@ -417,4 +423,42 @@ func latentPrepassTimer(method string) func() {
   closeErr := output.Close()
   if err != nil { panic(err) }; if closeErr != nil { panic(closeErr) }
  }
+}
+
+// A deferred failure retains its phase while returning through instantiated bodies.
+type latentDeferredFailure struct { cause error }
+func (e *latentDeferredFailure) Error() string { return e.cause.Error() }
+func (e *latentDeferredFailure) Unwrap() error { return e.cause }
+
+// Probe the production registry without changing the unit's refusal state.
+func (l *lowering) latentDeferredStop(node *ast.Node) error {
+    for _, finding := range latentFindings {
+        if (finding.Unit == latentFindingOwner || finding.Unit == l.program.Where(node)) && (finding.Phase == "refusal_scan" || finding.Phase == "contract_scan") && (finding.Kind == "Refused" || finding.Kind == "NotYet") { return nil }
+    }
+    probe := *l
+    probe.refusal = refusalPass{}
+    ordinary := probe.refuseNode(node)
+    return latent.DeferredStop(ordinary, probe.refusal.deferred)
+}
+
+func (l *lowering) latentDeferredUnit(node *ast.Node) bool {
+    stop := l.latentDeferredStop(node)
+    if stop == nil { return false }
+    latentRecord(&latentDeferredFailure{cause: stop})
+    return true
+}
+
+// The continuing scan clears its ordinary error binding after each finding.
+// Its deferred state is valid only if no ordinary finding was collected.
+func (l *lowering) latentScan(file *ast.SourceFile) {
+	first := len(latentFindings)
+	err := l.latentRefuse(file)
+	latentRecord(err)
+	if len(latentFindings) != first {
+		return
+	}
+	owner, phase := latentFindingOwner, latentFindingPhase
+	latentFindingOwner, latentFindingPhase = l.program.Where(file.AsNode()), "deferred_scan"
+	latentRecord(latent.DeferredStop(err, l.refusal.deferred))
+	latentFindingOwner, latentFindingPhase = owner, phase
 }

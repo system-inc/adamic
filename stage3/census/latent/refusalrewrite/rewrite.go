@@ -245,6 +245,18 @@ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
 	if badReturn || outerReturns < 2 {
 		return nil, fail("unsupported outer refusal returns")
 	}
+	// The continuing visitor clears found after every ordinary refusal. Selecting
+	// the module fallback here would report it even when an ordinary refusal won.
+	// The driver selects deferred after checking whether the scan recorded any.
+	var body []ast.Stmt
+	for _, statement := range clone.Body.List {
+		conditional, ok := statement.(*ast.IfStmt)
+		if ok && conditional.Init == nil && conditional.Else == nil && printed(conditional.Cond) == "found == nil" && len(conditional.Body.List) == 1 && printed(conditional.Body.List[0]) == "found = l.refusal.deferred" {
+			continue
+		}
+		body = append(body, statement)
+	}
+	clone.Body.List = body
 	collectReturns(clone.Body)
 	clone.Body.List = append(clone.Body.List, &ast.ReturnStmt{Results: []ast.Expr{ast.NewIdent("nil")}})
 	file.Decls = append(file.Decls, clone)
