@@ -193,7 +193,8 @@ int main(int count, char **arguments) {
   adamic_release(chain);
  } else if (strcmp(mode, "unrelated") == 0) {
   // The worst case for many stores: the same chain stored, again and again, into fresh nodes it
-  // doesn't reach back to. Each search visits the chain and finds nothing to merge.
+  // doesn't reach back to. Each fresh node is paired with another, so it has a region, one nothing
+  // points into: the incoming check, not the member-with-no-region rule, is what skips the search.
   adamic_array *chain = copy(a, NULL);
   for (long i = 0; i < loops; i++) {
    adamic_array *next = holder(chain, NULL);
@@ -202,7 +203,9 @@ int main(int count, char **arguments) {
   }
   size_t before = adamic_counted.graph_searched;
   for (long i = 0; i < loops; i++) {
-   adamic_object *fresh = node(&name_c);
+   adamic_object *fresh = node(&name_c), *partner = node(&name_c);
+   link(fresh, 0, partner);
+   adamic_release(partner);
    link(fresh, 1, chain);
    adamic_release(fresh);
   }

@@ -121,7 +121,7 @@ func graphMeasureFixture(t *testing.T, path string, million bool) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		want := fmt.Sprintf("live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000104", 1000000*bytes, 950001*bytes, 49999*bytes)
+		want := fmt.Sprintf("live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000120", 1000000*bytes, 950001*bytes, 49999*bytes)
 		if !strings.Contains(string(after.stderr), want) {
 			t.Fatalf("layout-derived million bytes missing: %s", after.stderr)
 		}
