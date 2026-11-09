@@ -41,8 +41,8 @@ func TestNodeFSStatsOptionalCallNullishMutant(t *testing.T) {
 		changed++
 		return effects
 	})
-	if changed != 10 {
-		t.Fatalf("want ten removed nullish guards, got %d", changed)
+	if changed != 18 {
+		t.Fatalf("want eighteen removed nullish guards, got %d", changed)
 	}
 	shared := sharedDirectory(t)
 	bad, _ := inputNatively(t, how, program, shared)
