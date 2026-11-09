@@ -1,0 +1,218 @@
+{
+  "sites": 30,
+  "all_inputs_identical": true,
+  "all_same_false": true,
+  "all_assignable_true_to_false": true,
+  "lines": [
+    {
+      "site": "compiler/transformers/es2015.ts:512:13",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:512:13\tdeclared=#4457 T[]\tgiven=#41010 VariableDeclaration[]\tslot=#75526 {}[]\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:512:13\tdeclared=#4457 T[]\tgiven=#41010 VariableDeclaration[]\tslot=#75526 {}[]\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/es2018.ts:1264:49",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1264:49\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1264:49\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/es2018.ts:1273:45",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1273:45\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1273:45\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/es2018.ts:1307:41",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1307:41\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1307:41\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/es2018.ts:1325:41",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1325:41\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1325:41\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/es2018.ts:218:13",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:218:13\tdeclared=#4457 T[]\tgiven=#41010 VariableDeclaration[]\tslot=#75526 {}[]\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:218:13\tdeclared=#4457 T[]\tgiven=#41010 VariableDeclaration[]\tslot=#75526 {}[]\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/esDecorators.ts:753:41",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:753:41\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:753:41\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/esDecorators.ts:914:50",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:914:50\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:914:50\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/esDecorators.ts:924:46",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:924:46\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:924:46\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:266:13\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:266:13\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/esnextAnd2015.ts:297:17",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:297:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:297:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1485:21",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1485:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1485:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1505:17",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1505:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1505:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1560:21",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1560:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1560:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1577:21",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1577:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1577:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1604:21",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1604:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1604:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1753:17",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1753:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1753:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1772:33",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1788:17",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1788:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1788:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1805:33",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1886:37",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1886:37\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1886:37\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1894:37",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1894:37\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1894:37\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:1898:33",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/module.ts:2138:29",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:2138:29\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:2138:29\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/system.ts:1189:29",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:1189:29\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:1189:29\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/system.ts:802:17",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:802:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:802:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/system.ts:816:40",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:40\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:40\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/system.ts:837:13",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:837:13\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:837:13\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/system.ts:894:33",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:894:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:894:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    },
+    {
+      "site": "compiler/transformers/module/system.ts:909:37",
+      "parent": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:37\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true",
+      "head": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:37\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false",
+      "input_fields_identical": true,
+      "same_flag_switched": false
+    }
+  ]
+}

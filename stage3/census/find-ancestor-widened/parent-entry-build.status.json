@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-p=2",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/widened/parent-entry/overlay.json",
+    "-o",
+    "/workspace/scratch/widened/parent-entry-bin",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/scratch/widened/parent",
+  "exit": 0,
+  "wall_seconds": 43.16341828199984,
+  "stopped": null
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/workspace/scratch/widened/head-overlay",
+    "/workspace/scratch/widened/head-entry"
+  ],
+  "cwd": "/workspace/scratch/widened/head",
+  "exit": 0,
+  "wall_seconds": 1.0015409089999139,
+  "stopped": null
+}

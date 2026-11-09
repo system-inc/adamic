@@ -1,0 +1,1997 @@
+[
+  {
+    "site": "compiler/transformers/esDecorators.ts:753:41",
+    "stderr_line": 19506,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:753:34\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:753:41",
+    "stderr_line": 19507,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:753:41\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:753:41",
+    "stderr_line": 19508,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:753:65\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:914:50",
+    "stderr_line": 19577,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:914:43\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:914:50",
+    "stderr_line": 19578,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:914:50\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:914:50",
+    "stderr_line": 19579,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:914:75\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:924:46",
+    "stderr_line": 19588,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:924:39\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:924:46",
+    "stderr_line": 19589,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:924:46\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:924:46",
+    "stderr_line": 19590,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:924:71\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20791,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:26\targument=#97449 BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20792,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:36\tdeclared=#63503 TIn\tgiven=#97449 BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike\tslot=#9193 Node | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20793,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:36\tvalue=#97449 BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike\tslot=#9193 Node | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20794,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:42\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#100136 Visitor<NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>, Node>\tslot=#98965 Visitor<Node, Node>\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20795,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:42\tvalue=#99752 (node: Node) => VisitResult<Node>\tslot=#98965 Visitor<Node, Node>\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20796,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:51\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#97967 (node: Node) => node is PropertyName\tslot=#97967 (node: Node) => node is PropertyName\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20798,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:26\targument=#7687 Node\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20799,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:36\tdeclared=#63503 TIn\tgiven=#97449 BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike\tslot=#97449 BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20800,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:42\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#100136 Visitor<NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>, Node>\tslot=#863121 Visitor<NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>, Node | undefined>\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20801,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:51\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#97967 (node: Node) => node is PropertyName\tslot=#97967 (node: Node) => node is PropertyName\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20803,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:26\targument=#11218 PropertyName\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20804,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:36\tdeclared=#63503 TIn\tgiven=#97449 BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike\tslot=#97449 BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20805,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:42\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#100136 Visitor<NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>, Node>\tslot=#100136 Visitor<NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>, Node>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20806,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:51\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#97967 (node: Node) => node is PropertyName\tslot=#539427 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20807,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:51\tvalue=#50587 (node: Node) => node is PropertyName\tslot=#539427 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1931:42",
+    "stderr_line": 20808,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1931:42\town=#99752 (node: Node) => VisitResult<Node>\tcontextual=#100136 Visitor<NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>, Node>\tsource=#7687 Node\ttarget=#100135 NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIdentifier | StringLiteralLike>\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20846,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:16\targument=#50589 BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20847,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:26\tdeclared=#63503 TIn\tgiven=#50589 BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral\tslot=#9193 Node | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20848,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:26\tvalue=#50589 BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral\tslot=#9193 Node | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20849,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:32\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#99832 Visitor<NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>, Node>\tslot=#98965 Visitor<Node, Node>\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20850,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:32\tvalue=#99752 (node: Node) => VisitResult<Node>\tslot=#98965 Visitor<Node, Node>\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20851,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:41\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#97967 (node: Node) => node is PropertyName\tslot=#97967 (node: Node) => node is PropertyName\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20853,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:16\targument=#7687 Node\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20854,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:26\tdeclared=#63503 TIn\tgiven=#50589 BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral\tslot=#50589 BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20855,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:32\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#99832 Visitor<NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>, Node>\tslot=#863132 Visitor<NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>, Node | undefined>\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20856,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:41\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#97967 (node: Node) => node is PropertyName\tslot=#97967 (node: Node) => node is PropertyName\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20858,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:16\targument=#11218 PropertyName\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20859,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:26\tdeclared=#63503 TIn\tgiven=#50589 BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral\tslot=#50589 BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20860,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:32\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#99832 Visitor<NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>, Node>\tslot=#99832 Visitor<NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>, Node>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20861,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:41\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#97967 (node: Node) => node is PropertyName\tslot=#539427 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20862,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:41\tvalue=#50587 (node: Node) => node is PropertyName\tslot=#539427 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/esDecorators.ts:1954:32",
+    "stderr_line": 20863,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/esDecorators.ts:1954:32\town=#99752 (node: Node) => VisitResult<Node>\tcontextual=#99832 Visitor<NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>, Node>\tsource=#7687 Node\ttarget=#99831 NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral>\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/es2017.ts:163:26",
+    "stderr_line": 21308,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2017.ts:163:26\town=#100293 (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void\tcontextual=#16877 (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void\tsource=#100294 (hint: EmitHint, node: Node) => void\ttarget=#16876 (hint: EmitHint, node: Node) => void\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:168:26",
+    "stderr_line": 21769,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:168:26\town=#100416 (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void\tcontextual=#16877 (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void\tsource=#100417 (hint: EmitHint, node: Node) => void\ttarget=#16876 (hint: EmitHint, node: Node) => void\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:218:13",
+    "stderr_line": 21771,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:217:44\targument=#11022 VariableDeclaration\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:218:13",
+    "stderr_line": 21772,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:218:13\tdeclared=#4457 T[]\tgiven=#41010 VariableDeclaration[]\tslot=#75526 {}[]\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:218:13",
+    "stderr_line": 21773,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:219:13\tdeclared=#4456 T | undefined\tgiven=#14115 VariableDeclaration | undefined\tslot=#15623 {} | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:218:13",
+    "stderr_line": 21774,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:219:13\tvalue=#11022 VariableDeclaration\tslot=#15623 {} | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21986,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:27\targument=#86905 MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21987,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:37\tdeclared=#63503 TIn\tgiven=#86905 MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration\tslot=#9193 Node | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21988,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:37\tvalue=#86905 MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration\tslot=#9193 Node | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21989,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:40\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#100500 Visitor<NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>, Node>\tslot=#98965 Visitor<Node, Node>\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21990,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:49\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#100501 (node: Node) => node is ObjectLiteralElementLike\tslot=#100501 (node: Node) => node is ObjectLiteralElementLike\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21992,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:27\targument=#7687 Node\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21993,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:37\tdeclared=#63503 TIn\tgiven=#86905 MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration\tslot=#86905 MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21994,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:40\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#100500 Visitor<NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>, Node>\tslot=#872973 Visitor<NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>, Node | undefined>\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21995,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:49\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#100501 (node: Node) => node is ObjectLiteralElementLike\tslot=#100501 (node: Node) => node is ObjectLiteralElementLike\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21997,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:27\targument=#11107 ObjectLiteralElementLike\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21998,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:37\tdeclared=#63503 TIn\tgiven=#86905 MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration\tslot=#86905 MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 21999,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:40\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#100500 Visitor<NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>, Node>\tslot=#100500 Visitor<NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>, Node>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 22000,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:49\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#100501 (node: Node) => node is ObjectLiteralElementLike\tslot=#539427 (node: Node) => node is Node\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:499:40",
+    "stderr_line": 22001,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:499:40\town=#100446 (node: Node) => VisitResult<Node>\tcontextual=#100500 Visitor<NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>, Node>\tsource=#7687 Node\ttarget=#100499 NonNullable<MethodDeclaration | ShorthandPropertyAssignment | AccessorDeclaration>\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:757:17",
+    "stderr_line": 22216,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:757:17\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:757:17",
+    "stderr_line": 22217,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:757:24\tdeclared=#4457 T[]\tgiven=#15201 Statement[]\tslot=#75526 {}[]\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:757:17",
+    "stderr_line": 22218,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:757:24\town=#15201 Statement[]\tcontextual=#75526 {}[]\tsource=#11079 Statement\ttarget=#38 {}\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:757:17",
+    "stderr_line": 22219,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:757:24\tvalue=#15201 Statement[]\tslot=#75526 {}[]\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:757:24: Adamic 0.1 refuses a value of type Statement[] seen as {}[], which can write {} where Statement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:757:17",
+    "stderr_line": 22220,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:757:24\town=#15201 Statement[]\tcontextual=#75526 {}[]\tsource=#11079 Statement\ttarget=#38 {}\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1264:49",
+    "stderr_line": 22587,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1264:42\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1264:49",
+    "stderr_line": 22588,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1264:49\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1264:49",
+    "stderr_line": 22589,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1264:61\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1273:45",
+    "stderr_line": 22613,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1273:38\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1273:45",
+    "stderr_line": 22614,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1273:45\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1273:45",
+    "stderr_line": 22615,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1273:57\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1307:41",
+    "stderr_line": 22695,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1307:34\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1307:41",
+    "stderr_line": 22696,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1307:41\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1307:41",
+    "stderr_line": 22697,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1307:53\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1325:41",
+    "stderr_line": 22704,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1325:34\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1325:41",
+    "stderr_line": 22705,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1325:41\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2018.ts:1325:41",
+    "stderr_line": 22706,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2018.ts:1325:53\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:512:13",
+    "stderr_line": 23712,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:511:44\targument=#11022 VariableDeclaration\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:512:13",
+    "stderr_line": 23713,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:512:13\tdeclared=#4457 T[]\tgiven=#41010 VariableDeclaration[]\tslot=#75526 {}[]\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:512:13",
+    "stderr_line": 23714,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:513:13\tdeclared=#4456 T | undefined\tgiven=#14115 VariableDeclaration | undefined\tslot=#15623 {} | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:512:13",
+    "stderr_line": 23715,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:513:13\tvalue=#11022 VariableDeclaration\tslot=#15623 {} | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:2756:35",
+    "stderr_line": 24748,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:2756:35\targument=#10531 Expression\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:2756:35",
+    "stderr_line": 24749,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:2756:42\tdeclared=#4459 T[] | undefined\tgiven=#64866 Expression[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:2756:35",
+    "stderr_line": 24750,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:2756:42\town=#64866 Expression[] | undefined\tcontextual=#76407 {}[] | undefined\tsource=#10531 Expression\ttarget=#38 {}\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:2756:35",
+    "stderr_line": 24751,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:2756:42\tvalue=#64866 Expression[] | undefined\tslot=#76407 {}[] | undefined\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:2756:42: Adamic 0.1 refuses a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/es2015.ts:2756:35",
+    "stderr_line": 24752,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/es2015.ts:2756:42\town=#64866 Expression[] | undefined\tcontextual=#76407 {}[] | undefined\tsource=#10531 Expression\ttarget=#38 {}\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:247:57",
+    "stderr_line": 27256,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:247:57\targument=#11019 CallExpression\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:247:57",
+    "stderr_line": 27257,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:247:64\tdeclared=#4459 T[] | undefined\tgiven=#103067 CallExpression[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:247:57",
+    "stderr_line": 27258,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:247:99\tdeclared=#4454 T\tgiven=#11019 CallExpression\tslot=#38 {}\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:247:57",
+    "stderr_line": 27259,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:247:99\tvalue=#11019 CallExpression\tslot=#38 {}\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28136,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1484:30\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28137,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1485:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28138,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1486:21\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28140,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1486:21\targument=#11120 VariableStatement\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28141,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1487:25\tdeclared=#55204 T\tgiven=#11120 VariableStatement\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28142,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1487:25\tvalue=#11120 VariableStatement\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28143,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1497:38\tdeclared=#9193 Node | undefined\tgiven=#9193 Node | undefined\tslot=#9193 Node | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28145,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1487:25\targument=#11120 VariableStatement\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28146,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1488:29\tdeclared=#55269 T\tgiven=#11120 VariableStatement\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28147,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1488:29\town=#11120 VariableStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28148,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1488:29\tvalue=#11120 VariableStatement\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1488:29: Adamic 0.1 refuses a value of type VariableStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1485:21",
+    "stderr_line": 28149,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1488:29\town=#11120 VariableStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28151,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1504:26\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28152,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1505:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28153,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1506:17\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28155,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1510:29\targument=#11022 VariableDeclaration\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28156,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1511:33\tdeclared=#55204 T\tgiven=#11022 VariableDeclaration\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28157,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1511:33\tvalue=#11022 VariableDeclaration\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28158,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1520:46\tdeclared=#9193 Node | undefined\tgiven=#9193 Node | undefined\tslot=#9193 Node | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28160,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1511:33\targument=#11022 VariableDeclaration\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28161,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1512:37\tdeclared=#55269 T\tgiven=#11022 VariableDeclaration\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28162,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1512:37\town=#11022 VariableDeclaration\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28163,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1512:37\tvalue=#11022 VariableDeclaration\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1512:37: Adamic 0.1 refuses a value of type VariableDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28164,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1512:37\town=#11022 VariableDeclaration\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28166,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1513:41\targument=#10525 Identifier\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28167,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1513:59\tdeclared=#16649 T\tgiven=#10525 Identifier\tslot=#9193 Node | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1505:17",
+    "stderr_line": 28168,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1513:59\tvalue=#10525 Identifier\tslot=#9193 Node | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28170,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1559:30\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28171,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1560:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28172,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1561:21\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28174,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1561:21\targument=#12356 ExpressionStatement\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28175,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1562:25\tdeclared=#55204 T\tgiven=#12356 ExpressionStatement\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28176,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1562:25\tvalue=#12356 ExpressionStatement\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28177,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1571:25\tdeclared=#9193 Node | undefined\tgiven=#9193 Node | undefined\tslot=#9193 Node | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28179,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1562:25\targument=#12356 ExpressionStatement\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28180,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1563:29\tdeclared=#55269 T\tgiven=#12356 ExpressionStatement\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28181,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1563:29\town=#12356 ExpressionStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28182,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1563:29\tvalue=#12356 ExpressionStatement\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1563:29: Adamic 0.1 refuses a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1560:21",
+    "stderr_line": 28183,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1563:29\town=#12356 ExpressionStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28185,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1576:30\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28186,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1577:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28187,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1578:21\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28189,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1578:21\targument=#11120 VariableStatement\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28190,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1579:25\tdeclared=#55204 T\tgiven=#11120 VariableStatement\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28191,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1579:25\tvalue=#11120 VariableStatement\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28192,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1596:25\tdeclared=#9193 Node | undefined\tgiven=#9193 Node | undefined\tslot=#9193 Node | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28194,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1579:25\targument=#11120 VariableStatement\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28195,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1580:29\tdeclared=#55269 T\tgiven=#11120 VariableStatement\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28196,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1580:29\town=#11120 VariableStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28197,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1580:29\tvalue=#11120 VariableStatement\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1580:29: Adamic 0.1 refuses a value of type VariableStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28198,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1580:29\town=#11120 VariableStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28200,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1585:45\targument=#10525 Identifier\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28201,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1585:63\tdeclared=#16649 T\tgiven=#10525 Identifier\tslot=#9193 Node | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1577:21",
+    "stderr_line": 28202,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1585:63\tvalue=#10525 Identifier\tslot=#9193 Node | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28204,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1603:30\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28205,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1604:21\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28206,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1605:21\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28208,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1605:21\targument=#12356 ExpressionStatement\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28209,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1606:25\tdeclared=#55204 T\tgiven=#12356 ExpressionStatement\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28210,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1606:25\tvalue=#12356 ExpressionStatement\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28211,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1612:25\tdeclared=#9193 Node | undefined\tgiven=#9193 Node | undefined\tslot=#9193 Node | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28213,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1606:25\targument=#12356 ExpressionStatement\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28214,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1607:29\tdeclared=#55269 T\tgiven=#12356 ExpressionStatement\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28215,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1607:29\town=#12356 ExpressionStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28216,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1607:29\tvalue=#12356 ExpressionStatement\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1607:29: Adamic 0.1 refuses a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1604:21",
+    "stderr_line": 28217,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1607:29\town=#12356 ExpressionStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28288,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1752:26\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28289,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1753:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28290,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1754:17\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28292,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1754:17\targument=#11076 FunctionDeclaration\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28293,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1755:21\tdeclared=#55204 T\tgiven=#11076 FunctionDeclaration\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28294,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1755:21\tvalue=#11076 FunctionDeclaration\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28295,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1767:34\tdeclared=#9193 Node | undefined\tgiven=#9193 Node | undefined\tslot=#9193 Node | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28297,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1755:21\targument=#11076 FunctionDeclaration\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28298,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1756:25\tdeclared=#55269 T\tgiven=#11076 FunctionDeclaration\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28299,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1756:25\town=#11076 FunctionDeclaration\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28300,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1756:25\tvalue=#11076 FunctionDeclaration\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1756:25: Adamic 0.1 refuses a value of type FunctionDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28301,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1756:25\town=#11076 FunctionDeclaration\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28303,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:29\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28305,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:29\targument=#13755 NodeArray<ModifierLike> | undefined\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28306,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:40\tdeclared=#55245 TInArray\tgiven=#13755 NodeArray<ModifierLike> | undefined\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28307,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:40\tvalue=#13755 NodeArray<ModifierLike> | undefined\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28308,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:56\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28309,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:73\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98130 (node: Node) => node is Modifier\tslot=#98130 (node: Node) => node is Modifier\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28311,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:29\targument=#13606 Modifier\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28312,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:40\tdeclared=#55245 TInArray\tgiven=#13755 NodeArray<ModifierLike> | undefined\tslot=#13755 NodeArray<ModifierLike> | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28313,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:56\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28314,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:73\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98130 (node: Node) => node is Modifier\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28315,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1757:73\tvalue=#41966 (node: Node) => node is Modifier\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28317,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:29\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28319,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:29\targument=#13745 NodeArray<ParameterDeclaration>\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28320,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:40\tdeclared=#55245 TInArray\tgiven=#13745 NodeArray<ParameterDeclaration>\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28321,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:40\tvalue=#13745 NodeArray<ParameterDeclaration>\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28322,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:57\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28323,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:66\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#94348 (node: Node) => node is ParameterDeclaration\tslot=#94348 (node: Node) => node is ParameterDeclaration\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28325,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:29\targument=#11061 ParameterDeclaration\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28326,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:40\tdeclared=#55245 TInArray\tgiven=#13745 NodeArray<ParameterDeclaration>\tslot=#13745 NodeArray<ParameterDeclaration>\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28327,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:57\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28328,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:66\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#94348 (node: Node) => node is ParameterDeclaration\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28329,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1761:66\tvalue=#12328 (node: Node) => node is ParameterDeclaration\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28331,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1763:29\targument=#12341 Block\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28332,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1763:44\tdeclared=#55241 T | undefined\tgiven=#13779 Block | undefined\tslot=#9193 Node | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28333,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1763:44\tvalue=#13779 Block | undefined\tslot=#9193 Node | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28334,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1763:55\tdeclared=#55236 Visitor\tgiven=#55236 Visitor\tslot=#55236 Visitor\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1753:17",
+    "stderr_line": 28335,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1763:64\tdeclared=#55235 TransformationContext | undefined\tgiven=#55235 TransformationContext | undefined\tslot=#55235 TransformationContext | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 28337,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:26\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 28338,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 28339,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:45\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 28341,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:45\targument=#11076 FunctionDeclaration\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 28342,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:60\tdeclared=#55231 T\tgiven=#11076 FunctionDeclaration\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 28343,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:60\tvalue=#11076 FunctionDeclaration\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 28344,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:66\tdeclared=#55236 Visitor\tgiven=#55236 Visitor\tslot=#55236 Visitor\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1772:33",
+    "stderr_line": 28345,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1772:75\tdeclared=#55235 TransformationContext | undefined\tgiven=#55235 TransformationContext | undefined\tslot=#55235 TransformationContext | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28347,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1787:26\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28348,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1788:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28349,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1789:17\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28351,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1789:17\targument=#11090 ClassDeclaration\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28352,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1790:21\tdeclared=#55204 T\tgiven=#11090 ClassDeclaration\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28353,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1790:21\tvalue=#11090 ClassDeclaration\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28354,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1800:21\tdeclared=#9193 Node | undefined\tgiven=#9193 Node | undefined\tslot=#9193 Node | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28356,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1790:21\targument=#11090 ClassDeclaration\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28357,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1791:25\tdeclared=#55269 T\tgiven=#11090 ClassDeclaration\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28358,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1791:25\town=#11090 ClassDeclaration\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28359,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1791:25\tvalue=#11090 ClassDeclaration\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1791:25: Adamic 0.1 refuses a value of type ClassDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28360,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1791:25\town=#11090 ClassDeclaration\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28362,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:29\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28364,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:29\targument=#13755 NodeArray<ModifierLike> | undefined\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28365,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:40\tdeclared=#55245 TInArray\tgiven=#13755 NodeArray<ModifierLike> | undefined\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28366,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:40\tvalue=#13755 NodeArray<ModifierLike> | undefined\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28367,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:56\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28368,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:73\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#97961 (node: Node) => node is ModifierLike\tslot=#97961 (node: Node) => node is ModifierLike\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28370,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:29\targument=#13608 ModifierLike\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28371,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:40\tdeclared=#55245 TInArray\tgiven=#13755 NodeArray<ModifierLike> | undefined\tslot=#13755 NodeArray<ModifierLike> | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28372,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:56\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28373,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:73\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#97961 (node: Node) => node is ModifierLike\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28374,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1792:73\tvalue=#44839 (node: Node) => node is ModifierLike\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28376,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:29\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28378,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:29\targument=#14122 NodeArray<HeritageClause> | undefined\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28379,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:40\tdeclared=#55245 TInArray\tgiven=#14122 NodeArray<HeritageClause> | undefined\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28380,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:40\tvalue=#14122 NodeArray<HeritageClause> | undefined\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28381,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:62\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28382,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:71\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98131 (node: Node) => node is HeritageClause\tslot=#98131 (node: Node) => node is HeritageClause\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28384,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:29\targument=#13394 HeritageClause\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28385,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:40\tdeclared=#55245 TInArray\tgiven=#14122 NodeArray<HeritageClause> | undefined\tslot=#14122 NodeArray<HeritageClause> | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28386,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:62\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28387,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:71\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98131 (node: Node) => node is HeritageClause\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28388,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1795:71\tvalue=#45465 (node: Node) => node is HeritageClause\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28390,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:29\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28392,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:29\targument=#14123 NodeArray<ClassElement>\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28393,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:40\tdeclared=#55245 TInArray\tgiven=#14123 NodeArray<ClassElement>\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28394,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:40\tvalue=#14123 NodeArray<ClassElement>\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28395,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:54\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28396,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:63\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98133 (node: Node) => node is ClassElement\tslot=#98133 (node: Node) => node is ClassElement\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28398,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:29\targument=#11069 ClassElement\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28399,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:40\tdeclared=#55245 TInArray\tgiven=#14123 NodeArray<ClassElement>\tslot=#14123 NodeArray<ClassElement>\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28400,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:54\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28401,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:63\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98133 (node: Node) => node is ClassElement\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1788:17",
+    "stderr_line": 28402,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1796:63\tvalue=#43578 (node: Node) => node is ClassElement\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 28404,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:26\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 28405,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 28406,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:45\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 28408,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:45\targument=#11090 ClassDeclaration\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 28409,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:60\tdeclared=#55231 T\tgiven=#11090 ClassDeclaration\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 28410,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:60\tvalue=#11090 ClassDeclaration\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 28411,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:66\tdeclared=#55236 Visitor\tgiven=#55236 Visitor\tslot=#55236 Visitor\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1805:33",
+    "stderr_line": 28412,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1805:75\tdeclared=#55235 TransformationContext | undefined\tgiven=#55235 TransformationContext | undefined\tslot=#55235 TransformationContext | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1886:37",
+    "stderr_line": 28495,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1886:30\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1886:37",
+    "stderr_line": 28496,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1886:37\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1886:37",
+    "stderr_line": 28497,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1886:49\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1894:37",
+    "stderr_line": 28514,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1894:30\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1894:37",
+    "stderr_line": 28515,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1894:37\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1894:37",
+    "stderr_line": 28516,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1894:49\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 28518,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:26\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 28519,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 28520,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:45\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 28522,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:45\targument=#11120 VariableStatement\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 28523,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:60\tdeclared=#55231 T\tgiven=#11120 VariableStatement\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 28524,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:60\tvalue=#11120 VariableStatement\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 28525,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:66\tdeclared=#55236 Visitor\tgiven=#55236 Visitor\tslot=#55236 Visitor\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:1898:33",
+    "stderr_line": 28526,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:1898:75\tdeclared=#55235 TransformationContext | undefined\tgiven=#55235 TransformationContext | undefined\tslot=#55235 TransformationContext | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:2138:29",
+    "stderr_line": 28573,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:2138:22\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:2138:29",
+    "stderr_line": 28574,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:2138:29\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/module.ts:2138:29",
+    "stderr_line": 28575,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/module.ts:2138:41\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28737,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:801:33\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28738,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:802:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28739,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:803:17\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28741,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:21\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28743,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:21\targument=#13755 NodeArray<ModifierLike> | undefined\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28744,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:32\tdeclared=#55245 TInArray\tgiven=#13755 NodeArray<ModifierLike> | undefined\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28745,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:32\tvalue=#13755 NodeArray<ModifierLike> | undefined\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28746,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:48\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28747,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:65\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#97961 (node: Node) => node is ModifierLike\tslot=#97961 (node: Node) => node is ModifierLike\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28749,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:21\targument=#13608 ModifierLike\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28750,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:32\tdeclared=#55245 TInArray\tgiven=#13755 NodeArray<ModifierLike> | undefined\tslot=#13755 NodeArray<ModifierLike> | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28751,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:48\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28752,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:65\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#97961 (node: Node) => node is ModifierLike\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28753,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:805:65\tvalue=#44839 (node: Node) => node is ModifierLike\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28755,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:21\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28757,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:21\targument=#13745 NodeArray<ParameterDeclaration>\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28758,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:32\tdeclared=#55245 TInArray\tgiven=#13745 NodeArray<ParameterDeclaration>\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28759,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:32\tvalue=#13745 NodeArray<ParameterDeclaration>\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28760,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:49\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28761,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:58\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#94348 (node: Node) => node is ParameterDeclaration\tslot=#94348 (node: Node) => node is ParameterDeclaration\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28763,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:21\targument=#11061 ParameterDeclaration\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28764,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:32\tdeclared=#55245 TInArray\tgiven=#13745 NodeArray<ParameterDeclaration>\tslot=#13745 NodeArray<ParameterDeclaration>\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28765,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:49\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28766,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:58\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#94348 (node: Node) => node is ParameterDeclaration\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28767,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:809:58\tvalue=#12328 (node: Node) => node is ParameterDeclaration\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28769,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:21\targument=#13779 Block | undefined\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28770,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:31\tdeclared=#63503 TIn\tgiven=#13779 Block | undefined\tslot=#9193 Node | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28771,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:31\tvalue=#13779 Block | undefined\tslot=#9193 Node | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28772,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:42\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#99278 Visitor<Block, Node>\tslot=#98965 Visitor<Node, Node>\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28773,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:51\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#98640 (node: Node) => node is Block\tslot=#98640 (node: Node) => node is Block\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28775,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:21\targument=#7687 Node\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28776,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:31\tdeclared=#63503 TIn\tgiven=#13779 Block | undefined\tslot=#13779 Block | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28777,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:42\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#99278 Visitor<Block, Node>\tslot=#94978 Visitor<Block, Node | undefined>\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28778,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:51\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#98640 (node: Node) => node is Block\tslot=#98640 (node: Node) => node is Block\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28780,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:21\targument=#12341 Block\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28781,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:31\tdeclared=#63503 TIn\tgiven=#13779 Block | undefined\tslot=#13779 Block | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28782,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:42\tdeclared=#63516 Visitor<NonNullable<TIn>, TVisited>\tgiven=#99278 Visitor<Block, Node>\tslot=#99278 Visitor<Block, Node>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28783,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:51\tdeclared=#63514 (node: Node) => node is TOut\tgiven=#98640 (node: Node) => node is Block\tslot=#539427 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:802:17",
+    "stderr_line": 28784,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:811:51\tvalue=#43551 (node: Node) => node is Block\tslot=#539427 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 28786,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:33\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 28787,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:40\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 28788,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:59\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 28790,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:59\targument=#11076 FunctionDeclaration\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 28791,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:74\tdeclared=#55231 T\tgiven=#11076 FunctionDeclaration\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 28792,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:74\tvalue=#11076 FunctionDeclaration\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 28793,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:80\tdeclared=#55236 Visitor\tgiven=#55236 Visitor\tslot=#55236 Visitor\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:816:40",
+    "stderr_line": 28794,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:816:89\tdeclared=#55235 TransformationContext | undefined\tgiven=#55235 TransformationContext | undefined\tslot=#55235 TransformationContext | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28796,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:836:22\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28797,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:837:13\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28798,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:838:13\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28800,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:838:13\targument=#12356 ExpressionStatement\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28801,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:839:17\tdeclared=#55269 T\tgiven=#12356 ExpressionStatement\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28802,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:839:17\town=#12356 ExpressionStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28803,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:839:17\tvalue=#12356 ExpressionStatement\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:839:17: Adamic 0.1 refuses a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28804,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:839:17\town=#12356 ExpressionStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28806,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:842:25\targument=#11092 ClassExpression\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28807,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:843:29\tdeclared=#55269 T\tgiven=#11092 ClassExpression\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28808,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:843:29\town=#11092 ClassExpression\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28809,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:843:29\tvalue=#11092 ClassExpression\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:843:29: Adamic 0.1 refuses a value of type ClassExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28810,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:843:29\town=#11092 ClassExpression\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28812,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:33\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28814,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:33\targument=#13755 NodeArray<ModifierLike> | undefined\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28815,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:44\tdeclared=#55245 TInArray\tgiven=#13755 NodeArray<ModifierLike> | undefined\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28816,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:44\tvalue=#13755 NodeArray<ModifierLike> | undefined\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28817,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:60\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28818,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:77\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#97961 (node: Node) => node is ModifierLike\tslot=#97961 (node: Node) => node is ModifierLike\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28820,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:33\targument=#13608 ModifierLike\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28821,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:44\tdeclared=#55245 TInArray\tgiven=#13755 NodeArray<ModifierLike> | undefined\tslot=#13755 NodeArray<ModifierLike> | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28822,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:60\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28823,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:77\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#97961 (node: Node) => node is ModifierLike\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28824,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:844:77\tvalue=#44839 (node: Node) => node is ModifierLike\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28826,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:33\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28828,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:33\targument=#14122 NodeArray<HeritageClause> | undefined\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28829,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:44\tdeclared=#55245 TInArray\tgiven=#14122 NodeArray<HeritageClause> | undefined\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28830,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:44\tvalue=#14122 NodeArray<HeritageClause> | undefined\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28831,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:66\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28832,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:75\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98131 (node: Node) => node is HeritageClause\tslot=#98131 (node: Node) => node is HeritageClause\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28834,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:33\targument=#13394 HeritageClause\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28835,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:44\tdeclared=#55245 TInArray\tgiven=#14122 NodeArray<HeritageClause> | undefined\tslot=#14122 NodeArray<HeritageClause> | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28836,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:66\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28837,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:75\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98131 (node: Node) => node is HeritageClause\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28838,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:847:75\tvalue=#45465 (node: Node) => node is HeritageClause\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28840,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:33\targument=#7687 Node\tconstraint=#7687 Node\tsame=true\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28842,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:33\targument=#14123 NodeArray<ClassElement>\tconstraint=#10464 NodeArray<Node> | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28843,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:44\tdeclared=#55245 TInArray\tgiven=#14123 NodeArray<ClassElement>\tslot=#10464 NodeArray<Node> | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28844,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:44\tvalue=#14123 NodeArray<ClassElement>\tslot=#10464 NodeArray<Node> | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28845,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:58\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28846,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:67\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98133 (node: Node) => node is ClassElement\tslot=#98133 (node: Node) => node is ClassElement\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28848,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:33\targument=#11069 ClassElement\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28849,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:44\tdeclared=#55245 TInArray\tgiven=#14123 NodeArray<ClassElement>\tslot=#14123 NodeArray<ClassElement>\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28850,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:58\tdeclared=#81790 Visitor<TIn, Node | undefined>\tgiven=#81803 Visitor<Node, Node | undefined>\tslot=#81803 Visitor<Node, Node | undefined>\tsame=true\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28851,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:67\tdeclared=#81793 (node: Node) => node is TOut\tgiven=#98133 (node: Node) => node is ClassElement\tslot=#81804 (node: Node) => node is Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:837:13",
+    "stderr_line": 28852,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:848:67\tvalue=#43578 (node: Node) => node is ClassElement\tslot=#81804 (node: Node) => node is Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:894:33",
+    "stderr_line": 28885,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:894:26\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:894:33",
+    "stderr_line": 28886,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:894:33\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:894:33",
+    "stderr_line": 28887,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:894:45\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 28895,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:30\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 28896,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:37\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 28897,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:49\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 28899,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:49\targument=#12356 ExpressionStatement\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 28900,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:62\tdeclared=#55269 T\tgiven=#12356 ExpressionStatement\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 28901,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:62\town=#12356 ExpressionStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 28902,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:62\tvalue=#12356 ExpressionStatement\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:62: Adamic 0.1 refuses a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:909:37",
+    "stderr_line": 28903,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:909:62\town=#12356 ExpressionStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:1189:29",
+    "stderr_line": 28950,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:1189:22\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:1189:29",
+    "stderr_line": 28951,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:1189:29\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/system.ts:1189:29",
+    "stderr_line": 28952,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/system.ts:1189:41\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29619,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:265:22\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29620,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:266:13\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29621,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:267:13\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29623,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:267:13\targument=#11120 VariableStatement\tconstraint=#7687 Node\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29624,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:268:17\tdeclared=#55204 T\tgiven=#11120 VariableStatement\tslot=#7687 Node\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29625,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:268:17\tvalue=#11120 VariableStatement\tslot=#7687 Node\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29626,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:285:17\tdeclared=#9193 Node | undefined\tgiven=#9193 Node | undefined\tslot=#9193 Node | undefined\tsame=true\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29628,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:268:17\targument=#11120 VariableStatement\tconstraint=#12502 TextRange\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29629,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:269:21\tdeclared=#55269 T\tgiven=#11120 VariableStatement\tslot=#12502 TextRange\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29630,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:269:21\town=#11120 VariableStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29631,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:269:21\tvalue=#11120 VariableStatement\tslot=#12502 TextRange\terr=/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:269:21: Adamic 0.1 refuses a value of type VariableStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29632,
+    "line": "probe-widened\trefusal\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:269:21\town=#11120 VariableStatement\tcontextual=#12502 TextRange\tsource=#15 number\ttarget=#15 number\tsame=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29634,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:274:37\targument=#10525 Identifier\tconstraint=#9193 Node | undefined\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29635,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:274:55\tdeclared=#16649 T\tgiven=#10525 Identifier\tslot=#9193 Node | undefined\tsame=false\tassignable=true"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:266:13",
+    "stderr_line": 29636,
+    "line": "probe-widened\tjudged\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:274:55\tvalue=#10525 Identifier\tslot=#9193 Node | undefined\terr=<nil>"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:297:17",
+    "stderr_line": 29638,
+    "line": "probe-widened\tbinding\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:296:26\targument=#11079 Statement\tconstraint=#38 {}\tsame=false\twritten=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:297:17",
+    "stderr_line": 29639,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:297:17\tdeclared=#4459 T[] | undefined\tgiven=#15202 Statement[] | undefined\tslot=#76407 {}[] | undefined\tsame=false\tassignable=false"
+  },
+  {
+    "site": "compiler/transformers/module/esnextAnd2015.ts:297:17",
+    "stderr_line": 29640,
+    "line": "probe-widened\targument\t/workspace/scratch/fa-adapted/src/compiler/transformers/module/esnextAnd2015.ts:298:17\tdeclared=#4454 T\tgiven=#11079 Statement\tslot=#38 {}\tsame=false\tassignable=false"
+  }
+]
