@@ -103,6 +103,11 @@ class ReportTests(unittest.TestCase):
         for label in ['main', 'area']:
             write_entry(self.tree, self.run / label / 'tsc',
                         diagnostics=[] if label == 'main' else ['error TS2307: entry-only missing module'])
+        if hasattr(self, 'relation_trailer'):
+            from report import ENTRY_MEASUREMENT
+            with (self.run / 'main/tsc/latent.jsonl').open('a') as output:
+                output.write(json.dumps({'status': 'relation_report', 'measurement': ENTRY_MEASUREMENT,
+                                         'relation_overflow': self.relation_trailer, 'findings': []}) + '\n')
         for label in ['main', 'area']:
             if hasattr(self, 'unit_times'):
                 (self.run / label / 'latent-times.jsonl').write_text(
@@ -123,6 +128,21 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(result['trees']['main']['tree_ref'], 'origin/main')
         self.assertEqual((self.run / 'report.md').read_text().splitlines()[:2],
                          ['Whole program: main: 3/4; area: 0/4', 'Own file: main: 4/4; area: 3/4'])
+
+    def test_relation_budget_reaches_report_json_and_heads_the_entry_section(self):
+        from report import RELATION_CACHES
+        self.relation_trailer = {'after_load': '', 'end': '',
+                                 'cache_sizes': dict(dict.fromkeys(RELATION_CACHES, 0), assignable=1_000_001)}
+        result = self.render_pair()
+        disk = json.loads((self.run / 'report.json').read_text())
+        self.assertEqual(disk['relation_budget'], result['relation_budget'])
+        self.assertEqual(disk['relation_budget'], {'status': 'red', 'assignable': 1_000_001, 'threshold': 1_000_000,
+                                                   'overflow_marked': False,
+                                                   'why': 'assignable cache 1,000,001 pairs, past 1,000,000'})
+        lines = (self.run / 'report.md').read_text().splitlines()
+        heading = lines.index('tsc entry lowering, main: measured on a checker-clean entry-root program.')
+        self.assertEqual(lines[heading - 1],
+                         'Relation budget: red; assignable 1,000,001 of 1,000,000 pairs; assignable cache 1,000,001 pairs, past 1,000,000.')
 
     def test_meter_unit_times_block_sorts_files_and_shortens_units(self):
         prefix = str(self.tree / 'src/compiler')
@@ -678,3 +698,55 @@ class RelationTrailerReportTests(unittest.TestCase):
                      [header, file, dict(trailer, relation_overflow=dict(after_load=''))]):
             with self.subTest(rows=rows), self.assertRaises(ValueError):
                 lowering_summary(rows, {'/only.a'}, MEASUREMENT)
+
+
+class RelationBudgetTests(unittest.TestCase):
+    def verdict(self, trailer=True, **relation):
+        from report import lowering_summary, relation_budget
+        rows = [{'status': 'measurement', 'measurement': MEASUREMENT, 'checker_rejected': False},
+                {'file': '/only.a', 'measurement': MEASUREMENT, 'findings': []}]
+        if trailer:
+            rows.append({'status': 'relation_report', 'measurement': MEASUREMENT, 'findings': [],
+                         'relation_overflow': dict({'after_load': '', 'end': ''}, **relation)})
+        return relation_budget({'lowering_census': lowering_summary(rows, {'/only.a'}, MEASUREMENT)})
+
+    def sizes(self, assignable, **others):
+        from report import RELATION_CACHES
+        return dict(dict.fromkeys(RELATION_CACHES, 0), assignable=assignable, **others)
+
+    def test_measured_head_is_ok(self):
+        self.assertEqual(self.verdict(cache_sizes=self.sizes(299_624)),
+                         {'status': 'ok', 'assignable': 299_624, 'threshold': 1_000_000, 'overflow_marked': False,
+                          'why': 'assignable cache 299,624 pairs, within 1,000,000'})
+
+    def test_threshold_is_ok_and_one_past_it_is_red(self):
+        self.assertEqual(self.verdict(cache_sizes=self.sizes(1_000_000))['status'], 'ok')
+        verdict = self.verdict(cache_sizes=self.sizes(1_000_001))
+        self.assertEqual((verdict['status'], verdict['assignable']), ('red', 1_000_001))
+        self.assertEqual(verdict['why'], 'assignable cache 1,000,001 pairs, past 1,000,000')
+
+    def test_overflow_mark_at_the_end_is_red_under_the_threshold(self):
+        verdict = self.verdict(end='a type relation the checker marked as overflowed, whose diagnostic it dropped',
+                               cache_sizes=self.sizes(299_624))
+        self.assertEqual((verdict['status'], verdict['overflow_marked'], verdict['assignable']), ('red', True, 299_624))
+        self.assertIn('marked as overflowed', verdict['why'])
+
+    def test_unreadable_cache_is_red(self):
+        for sizes in (self.sizes(299_624, enum=-1), self.sizes(-1), {'assignable': 299_624}):
+            with self.subTest(sizes=sizes):
+                verdict = self.verdict(cache_sizes=sizes)
+                self.assertEqual(verdict['status'], 'red')
+                self.assertIn('unreadable relation caches', verdict['why'])
+
+    def test_missing_trailer_is_unknown(self):
+        verdict = self.verdict(trailer=False)
+        self.assertEqual((verdict['status'], verdict['assignable']), ('unknown', None))
+        self.assertIn('did not complete', verdict['why'])
+
+    def test_trailer_without_sizes_is_unknown(self):
+        self.assertEqual(self.verdict()['status'], 'unknown')
+        self.assertEqual(self.verdict(cache_sizes={})['status'], 'unknown')
+
+    def test_blocked_entry_is_unknown(self):
+        from report import relation_budget
+        self.assertEqual(relation_budget({'lowering_census': None})['status'], 'unknown')

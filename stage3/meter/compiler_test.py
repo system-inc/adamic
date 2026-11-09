@@ -17,6 +17,7 @@ import (
     "fmt"
     "os"
     "path/filepath"
+    "strconv"
     "meterprobe/internal/compiler"
 )
 func main() {
@@ -52,6 +53,16 @@ func main() {
                 encoder.Encode(map[string]any{"file":dependency, "measurement":label, "findings":[]any{
                     map[string]any{"measurement":label, "kind":"NotYet", "where":dependency+":1:1", "reason":"compiled with "+compiler.Name, "text":"entry compiler provenance"},
                 }})
+                // The entry pass's relation trailer, at Lower's measured head unless a test plants another day.
+                if os.Getenv("METER_RELATION_TRAILER") != "absent" {
+                    sizes := map[string]any{"subtype":0, "strictSubtype":0, "assignable":299624, "comparable":0, "identity":0, "enum":0}
+                    if value := os.Getenv("METER_ASSIGNABLE"); value != "" {
+                        assignable, err := strconv.Atoi(value)
+                        if err != nil { panic(err) }
+                        sizes["assignable"] = assignable
+                    }
+                    encoder.Encode(map[string]any{"measurement":label, "status":"relation_report", "relation_overflow":map[string]any{"after_load":"", "end":os.Getenv("METER_RELATION_END"), "cache_sizes":sizes}, "findings":[]any{}})
+                }
             }
         } else {
             kind := "accepted"
@@ -104,6 +115,8 @@ class CompilerSelectionTests(unittest.TestCase):
         self.env.pop('STAGE3_METER_LATENT', None)
         self.env.pop('STAGE3_METER_MAIN_REF', None)
         self.env.pop('STAGE3_METER_AREA_REF', None)
+        for name in ('METER_ASSIGNABLE', 'METER_RELATION_END', 'METER_RELATION_TRAILER'):
+            self.env.pop(name, None)
         self.command('git', 'init', '-b', 'main')
         source = Path(__file__).resolve().parent
         for name in ('report.py', 'owners.json', 'box.py', 'node_readiness.py'):
@@ -175,6 +188,45 @@ class CompilerSelectionTests(unittest.TestCase):
             tree = report['trees'][label]
             self.assertEqual(tree['tree_commit'], self.main)
         return run, report
+
+    def measure_red(self):
+        """Run a day whose relation budget isn't ok: its record is whole and only its exit is red."""
+        path = self.root / 'meter.log'
+        with path.open('w') as log:
+            result = subprocess.run(['bash', 'stage3/meter/twice-daily.sh'], cwd=self.repository,
+                                    env=self.env, stdout=log, stderr=log, timeout=120)
+        self.assertEqual(result.returncode, 3, path.read_text())
+        run, = (self.repository / 'stage3/meter/runs').iterdir()
+        for name in ('report.json', 'report.md', 'README.md', 'timing.json'):
+            self.assertTrue((run / name).exists(), name + ' missing: the record stopped before the exit')
+        self.assertIn('Elapsed:', (run / 'README.md').read_text())
+        for label in ('main', 'area'):
+            for relative in ('census.jsonl', 'latent.jsonl', 'latent-times.jsonl', 'tsc/census.jsonl', 'tsc/latent.jsonl'):
+                self.assertTrue((run / label / (relative + '.gz')).exists(), f'{label}/{relative} not gzipped')
+                self.assertFalse((run / label / relative).exists(), f'{label}/{relative} left raw')
+        return run, json.loads((run / 'report.json').read_text()), path.read_text()
+
+    def test_relation_budget_ok_day_exits_zero(self):
+        run, result = self.measure()
+        self.assertEqual(result['relation_budget'], {'status': 'ok', 'assignable': 299624, 'threshold': 1000000,
+                                                     'overflow_marked': False,
+                                                     'why': 'assignable cache 299,624 pairs, within 1,000,000'})
+        self.assertIn('Relation budget: ok; assignable 299,624 of 1,000,000 pairs;', (run / 'report.md').read_text())
+
+    def test_relation_budget_red_day_keeps_its_record_and_exits_nonzero(self):
+        self.env['METER_ASSIGNABLE'] = '1000001'
+        run, result, log = self.measure_red()
+        self.assertEqual(result['relation_budget']['status'], 'red')
+        self.assertEqual(result['relation_budget']['assignable'], 1000001)
+        self.assertIn('relation budget red: assignable 1000001 of 1000000 pairs', log)
+        self.assertIn('Relation budget: red; assignable 1,000,001 of 1,000,000 pairs;', (run / 'report.md').read_text())
+
+    def test_relation_budget_unknown_day_without_trailer_exits_nonzero(self):
+        self.env['METER_RELATION_TRAILER'] = 'absent'
+        run, result, log = self.measure_red()
+        self.assertEqual(result['relation_budget']['status'], 'unknown')
+        self.assertIsNone(result['relation_budget']['assignable'])
+        self.assertIn('relation budget unknown:', log)
 
     def test_default_uses_checkout_compiler_for_both_trees(self):
         run, result = self.measure()
