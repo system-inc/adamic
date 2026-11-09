@@ -68,8 +68,8 @@ func TestNarrowedMethodCallKeepsTheMethodArm(t *testing.T) {
 // callee to a Property is a pass that would take `if (o.m) o.m()` for a plain function value and call it
 // with no receiver, which is what #0bxc4jh moved the narrowed call off of.
 var calleeFieldReaders = map[string]string{
-	"internal/lower/expression.go:callClosure":          "lowering's own spread stop for a checked callable view, which the native emitter's checked packing needs only for a bare field: a narrowed call packs its arguments as before (emit_functions.go's callThrough)",
-	"internal/native/emit_functions.go:callThrough":     "chooses the checked callable view's packing for a bare field alone, as lowering's spread stop does, so a narrowed call packs its arguments as it did on the plain road",
+	"internal/lower/expression.go:callClosure":          "lowering's own spread stop for a checked callable view, which the native emitter's checked packing needs only for a bare field: a narrowed call packs its arguments as before (emit_functions.go's calledThrough)",
+	"internal/native/emit_functions.go:calledThrough":   "chooses the checked callable view's packing for a bare field alone, as lowering's spread stop does, so a narrowed call packs its arguments as it did on the plain road",
 	"internal/lower/iterable_views.go:handNextView":     "a hand-driven x.next() over an Iterable view, whose callee is a library method that is never optional, so never narrowed",
 	"internal/lower/iterable_views.go:handNextReceiver": "the receiver of a hand-driven next() over a parameter, as handNextView reads it: the callee is a library next that is never optional, so never narrowed; a Defined it passes is around the receiver, not the callee",
 }
