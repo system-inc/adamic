@@ -5,7 +5,7 @@
 Description=Adamic stage 3 daily meter on main, as adamicmeter (#badrnrf)
 Wants=network-online.target
 After=network-online.target
-# The finished run goes to the Queue only after this exits 0; a failed run pushes nothing.
+# The finished run goes to the Queue only after this exits 0, or 3 (SuccessExitStatus below); a failed run pushes nothing.
 OnSuccess=meter-daily-submit.service
 
 [Service]
@@ -20,6 +20,8 @@ PrivateTmp=yes
 # The box's toolchain, read through an ACL: traverse on /home/ahra, read on ~/adamic-tools.
 Environment=ADAMIC_METER_TOOLS_ENV=/home/ahra/adamic-tools/env.sh
 ExecStart=/usr/bin/bash /srv/adamic-meter/run.sh
+# 3 is a whole record whose relation budget isn't ok (OverBudget or BudgetUnknown), committed so it lands on main.
+SuccessExitStatus=3
 # run.sh gives the meter 3 h (timeout 10800, up from 2 h for #20pb346); this leaves room for the clone, fetch, submodules and npm around it.
 TimeoutStartSec=3h30m
 Nice=10
