@@ -145,8 +145,35 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	if target.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		return l.optionalWidened(source, l.checker.GetBaseConstraintOfType(target), skip, visited)
 	}
-	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
+	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return nil
+	}
+	// Sources without Object or Intersection flags that need the walk are object,
+	// unknown and instantiable types without a different base constraint.
+	// Keep never and nullish values exempt: they have no fields to hide. Keep any
+	// exempt as a host value or a hatch other rules judge, not a structural source.
+	// Keep every primitive exempt. Seeing a primitive as an object type is a
+	// representation question owned by #thrpakr (NotYet there, brands exempt).
+	// A phantom brand's optional member never exists on the primitive it holds.
+	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
+		if source.Flags()&checker.TypeFlagsAny != 0 {
+			return nil
+		}
+		if source.Flags()&(checker.TypeFlagsNever|checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 {
+			return nil
+		}
+		if source.Flags()&checker.TypeFlagsPrimitive != 0 {
+			return nil
+		}
+		if source.Flags()&checker.TypeFlagsInstantiable != 0 {
+			// The recursion asks again whether the constraint is assignable to target, and reads nil when it
+			// isn't. That's safe: tsc relates an instantiable source to an object target through its
+			// constraint, so an accepted source whose constraint isn't assignable was related another way
+			// (to itself, or through a type parameter), which the arms above judge.
+			if constraint := l.checker.GetBaseConstraintOfType(source); constraint != nil && constraint != source {
+				return l.optionalWidened(constraint, target, skip, visited)
+			}
+		}
 	}
 	// Container elements are views too. Avoid walking library methods, whose generic signatures
 	// describe operations rather than value fields.
