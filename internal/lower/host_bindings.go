@@ -21,7 +21,7 @@ import (
 //
 // One IR feeds every target, so a row lowers only when its three columns are equal and none is pending
 // its owner's clearance; any other row is not yet, named (hostBindingStop), at its declaration and at
-// every use. Of the rows today only onProfilerEvent lowers, Absent on every target.
+// every use. The cleared rows lower together; onProfilerEvent is Absent on every target.
 //
 // Absent: typeof answers the constant "undefined", which every backend compares as it compares any
 // string, so a guard's test is false at run time with no folding. The name itself is never read. A read
@@ -43,8 +43,9 @@ import (
 // stands for (hostBindingModelRefusal): its type may name only members the model's registration names,
 // each typed as the model's is, none writable where the model's is read only. After the declaration
 // every read is typed by the program's own interface, so nodeHostObject judges a later view of that
-// interface as the model's host object (hostBindingViews). Of the rows today, process and performance
-// are Provided but pending, so none routes yet.
+// interface as the model's host object (hostBindingViews). process and performance are Provided on
+// every target. Only named optional absent members whose type admits undefined are admitted beyond
+// the model; their constant reads are held exact by hostBindingAbsentMemberRefusal (#zqz01vh).
 
 // hostBindingRows is the table lowering reads. Only tests replace it, to lower a row the real table
 // doesn't hold yet; production never assigns it.
@@ -145,24 +146,36 @@ func hostBindingRouted(row load.HostBinding) bool {
 // hostBindingModel is the type of a Provided row's model export: the value named as the row in the
 // ambient module of its model path, which a Node library file declares; nil when there's none.
 func (l *lowering) hostBindingModel(row load.HostBinding) *checker.Type {
-	if exported := l.nodeModuleExport(l.checker.TryFindAmbientModule(row.Model.Path), row.Name); exported != nil {
+	module := l.checker.TryFindAmbientModule(row.Model.Path)
+	if exported := l.nodeModuleExport(module, row.Name); exported != nil {
 		return l.checker.GetTypeOfSymbol(exported)
 	}
+	// The row's model only, never nodeModuleExport's other readers: a namespace import's member read
+	// must not resolve to the export= value.
+	if nodeLibraryModule(module) {
+		return l.hostBindingExportEqualsModel(module, row.Name)
+	}
 	return nil
+}
+
+// nodeLibraryModule reports whether a Node library file declares the ambient module.
+func nodeLibraryModule(module *ast.Symbol) bool {
+	if module == nil {
+		return false
+	}
+	for _, declaration := range module.Declarations {
+		if declaration.Kind == ast.KindModuleDeclaration && load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return true
+		}
+	}
+	return false
 }
 
 // nodeModuleExport is the value an ambient module exports by name, resolved, where a Node library file
 // declares the module; nil for another module or no such value. A namespace import of the module reads
 // the same export (hostOriginExport).
 func (l *lowering) nodeModuleExport(module *ast.Symbol, name string) *ast.Symbol {
-	if module == nil {
-		return nil
-	}
-	declared := false
-	for _, declaration := range module.Declarations {
-		declared = declared || declaration.Kind == ast.KindModuleDeclaration && load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration))
-	}
-	if !declared {
+	if !nodeLibraryModule(module) {
 		return nil
 	}
 	for _, exported := range l.checker.GetExportsOfModule(module) {
@@ -174,6 +187,26 @@ func (l *lowering) nodeModuleExport(module *ast.Symbol, name string) *ast.Symbol
 		}
 	}
 	return nil
+}
+
+// hostBindingExportEqualsModel admits only the export= value's own name, never another row's.
+// node:process exports its process value this way (#zqz01vh, Adamic and Lower, Nov 8 2026).
+func (l *lowering) hostBindingExportEqualsModel(module *ast.Symbol, name string) *checker.Type {
+	exported := module.Exports[ast.InternalSymbolNameExportEquals]
+	if exported == nil {
+		return nil
+	}
+	if resolved := l.resolvedExport(exported); resolved != nil && resolved.Name == name && resolved.Flags&ast.SymbolFlagsValue != 0 {
+		return l.checker.GetTypeOfSymbol(resolved)
+	}
+	return nil
+}
+
+// hostBindingAbsentMembers names members Node's own model value lacks, including its prototypes.
+// Each entry is held to Node in ES modules and CommonJS by TestHostBindingAbsentMembersHeldToNode.
+var hostBindingAbsentMembers = map[string]map[string]bool{
+	// Adamic and Lower on #zqz01vh, Nov 8 2026; TestHostBindingAbsentMembersHeldToNode is the witness.
+	"node:process.process": {"browser": true},
 }
 
 // hostBindingModelRefusal judges a Provided row's declaration against its model export, since every
@@ -190,7 +223,17 @@ func (l *lowering) hostBindingModelRefusal(declaration *ast.Node, row load.HostB
 	}
 	view := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(declaration.Name()))
 	subject := "the host binding " + row.Name + ", declared as " + l.checker.TypeToString(view) + ","
-	if reached := l.nodeHostViewReach(model, view, 0, map[nodeHostViewPair]bool{}, false); reached != "" {
+	absent := map[string]bool{}
+	for _, property := range l.checker.GetPropertiesOfType(view) {
+		if l.checker.GetPropertyOfType(model, property.Name) != nil {
+			continue
+		}
+		if !hostBindingAbsentMembers[export][property.Name] || property.Flags&ast.SymbolFlagsOptional == 0 || !l.checker.IsTypeAssignableTo(l.checker.GetUndefinedType(), l.checker.GetTypeOfSymbol(property)) {
+			return l.notYet(declaration, subject+" whose "+property.Name+" its model export "+export+" doesn't have,")
+		}
+		absent[property.Name] = true
+	}
+	if reached := l.nodeHostViewReach(model, view, 0, map[nodeHostViewPair]bool{}, false, absent); reached != "" {
 		switch {
 		case strings.HasPrefix(reached, nodeHostViewOpaque):
 			return l.notYet(declaration, subject+" which hides its model export "+export+" behind any, unknown or an unbound type parameter,")
@@ -202,6 +245,9 @@ func (l *lowering) hostBindingModelRefusal(declaration *ast.Node, row load.HostB
 	// tsc never related the model to the declaration, so each member's type is related here, and the
 	// first that the model's doesn't fit is named.
 	for _, property := range l.checker.GetPropertiesOfType(view) {
+		if absent[property.Name] {
+			continue
+		}
 		member := l.checker.GetPropertyOfType(model, property.Name)
 		if member == nil {
 			return l.notYet(declaration, subject+" whose "+property.Name+" its model export "+export+" doesn't have,")
