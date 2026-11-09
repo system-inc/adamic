@@ -11,9 +11,10 @@ import (
 func TestPrimitiveObjectViewNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want, fixed string }{
-		{"length", "const r: { length?: number } = \"abc\";\nconsole.log(String(r.length));\n", "main.a:1:32: stage 0 can't lower a string seen as the object type { length?: number; } isn't lowered yet; read it as string yet", "const r: string = \"abc\";\nconsole.log(String(r.length));\n"},
-		{"number", "const r: { toFixed?: (d: number) => string } = 1;\nconsole.log(String(r.toFixed));\n", "main.a:1:48: stage 0 can't lower a number seen as the object type { toFixed?: (d: number) => string; } isn't lowered yet; read it as number yet", "const r: number = 1;\nconsole.log(r.toFixed(0));\n"},
-		{"parameter", "function f(x: { length?: number }): number { return x.length ?? 0; }\nconsole.log(String(f(\"abc\")));\n", "main.a:2:22: stage 0 can't lower a string seen as the object type { length?: number; } isn't lowered yet; read it as string yet", "function f(x: string): number { return x.length; }\nconsole.log(String(f(\"abc\")));\n"},
+		{"length", "const r: { length?: number } = \"abc\";\nconsole.log(String(r.length));\n", "main.a:1:32: stage 0 can't lower a string seen as the object type { length?: number; } (read it as string) yet", "const r: string = \"abc\";\nconsole.log(String(r.length));\n"},
+		{"number", "const r: { toFixed?: (d: number) => string } = 1;\nconsole.log(String(r.toFixed));\n", "main.a:1:48: stage 0 can't lower a number seen as the object type { toFixed?: (d: number) => string; } (read it as number) yet", "const r: number = 1;\nconsole.log(r.toFixed(0));\n"},
+		{"parameter", "function f(x: { length?: number }): number { return x.length ?? 0; }\nconsole.log(String(f(\"abc\")));\n", "main.a:2:22: stage 0 can't lower a string seen as the object type { length?: number; } (read it as string) yet", "function f(x: string): number { return x.length; }\nconsole.log(String(f(\"abc\")));\n"},
+		{"carried falsy", "function f(flag: number): void {\nconst obj: { valueOf?: () => number } = { valueOf: () => 1 };\nconst v: { valueOf?: () => number } = flag && obj;\nconsole.log('ok');\n}\nf(0);\nf(1);\n", "main.a:3:39: stage 0 can't lower a number seen as the object type { valueOf?: () => number; } (read it as number) yet", "function f(flag: number): void { const v: number = flag; console.log(String(v)); }\nf(0);\nf(1);\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -51,4 +52,30 @@ func TestPrimitiveObjectViewArrayFromExistingGap(t *testing.T) {
 	if !errors.As(err, &gap) || !strings.HasSuffix(err.Error(), want) {
 		t.Fatalf("got %v, want NotYet ending %q", err, want)
 	}
+}
+
+// Mutant run and restored: omit the operand exclusions. The two || controls
+// and truthy && control stop on discarded numeric members; the nullish control stays green.
+func TestPrimitiveObjectViewLogicalValues(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"declaration", "interface Declaration { kind: number }\nfunction pick(flag: number, value: Declaration): Declaration { return (flag && value) || value; }\nconsole.log(String(pick(0, { kind: 1 }).kind));\nconsole.log(String(pick(1, { kind: 2 }).kind));\n"},
+		{"length", "function f(flag: number): void {\nconst obj: { length?: number } = { length: 2 };\nconst v: { length?: number } = (flag && obj) || obj;\nconsole.log(String(v.length));\n}\nf(0);\nf(1);\n"},
+		{"truthy and", "function f(flag: 1): void {\nconst obj: { length?: number } = { length: 2 };\nconst v: { length?: number } = flag && obj;\nconsole.log(String(v.length));\n}\nf(1);\n"},
+		{"nullish", "function f(flag: number): void {\nconst obj: { length?: number } = { length: 2 };\nconst v: { length?: number } = ((flag && obj) || undefined) ?? obj;\nconsole.log(String(v.length));\n}\nf(0);\nf(1);\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) { t.Parallel(); lowersAndAgreesWithNode(t, probe.source) })
+	}
+}
+
+func TestPrimitiveObjectViewCarriedString(t *testing.T) {
+	t.Parallel()
+	const source = "function f(flag: boolean): void {\nconst v: { length?: number } | undefined = flag ? \"abc\" : undefined;\nconsole.log(String(v?.length));\n}\nf(true);\nf(false);\n"
+	_, err := lowerSource(t, source)
+	var gap *NotYet
+	want := "main.a:2:44: stage 0 can't lower a string seen as the object type { length?: number; } (read it as string) yet"
+	if !errors.As(err, &gap) || !strings.HasSuffix(err.Error(), want) {
+		t.Fatalf("got %v, want NotYet ending %q", err, want)
+	}
+	lowersAndAgreesWithNode(t, "function f(flag: boolean): void {\nconst v: string | undefined = flag ? \"abc\" : undefined;\nconsole.log(String(v?.length));\n}\nf(true);\nf(false);\n")
 }

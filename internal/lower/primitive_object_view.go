@@ -13,6 +13,37 @@ func (l *lowering) primitiveObjectViewGap(node *ast.Node) error {
 	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
 		return nil
 	}
+	// A logical operand is not a slot value: || and ?? discard some members,
+	// and && keeps only its left's falsy members. Judge the whole expression's
+	// checker type at its own site instead. Parentheses do not create a new site.
+	child := node
+	for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
+		child = child.Parent
+	}
+	if parent := child.Parent; parent != nil {
+		switch parent.Kind {
+		case ast.KindBinaryExpression:
+			binary := parent.AsBinaryExpression()
+			switch binary.OperatorToken.Kind {
+			case ast.KindBarBarToken, ast.KindQuestionQuestionToken, ast.KindAmpersandAmpersandToken:
+				return nil
+			case ast.KindCommaToken:
+				if binary.Left == child {
+					return nil
+				}
+			}
+		case ast.KindVoidExpression:
+			return nil
+		case ast.KindConditionalExpression:
+			if parent.AsConditionalExpression().Condition == child {
+				return nil
+			}
+		}
+	}
+	// Keep impliedTarget's carried conditional branches, array elements, return
+	// values and arrow expression bodies. Its callable context can also reach a
+	// conditional's discarded condition, excluded above. It currently gives no
+	// target to a comma's left or a void operand; keep those excluded explicitly.
 	var target *checker.Type
 	if viewSite(node) {
 		target = l.slotType(node)
@@ -87,7 +118,7 @@ func (l *lowering) primitiveObjectView(node *ast.Node, source, target *checker.T
 	}
 	for _, member := range l.checker.GetPropertiesOfType(target) {
 		if programDeclared(member) {
-			return l.notYet(node, "a "+primitive+" seen as the object type "+l.checker.TypeToString(target)+" isn't lowered yet; read it as "+primitive)
+			return l.notYet(node, "a "+primitive+" seen as the object type "+l.checker.TypeToString(target)+" (read it as "+primitive+")")
 		}
 	}
 	return nil
