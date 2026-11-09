@@ -2,24 +2,15 @@ package lower
 
 import "github.com/microsoft/TypeScript/tsc/shim/ast"
 
-// hostBindingProcessSyntax is the cheap gate for rule 70: only the process spelling, or
+// hostBindingProcessSyntax is the cheap gate for rule 70: only an identifier, or
 // globalThis.process / globalThis["process"], can need a host lookup. It proves no binding identity.
 func hostBindingProcessSyntax(node *ast.Node) *ast.Node {
 	if node == nil {
 		return nil
 	}
-	for {
-		node = ast.SkipParentheses(node)
-		if node.Kind != ast.KindAsExpression {
-			break
-		}
-		node = node.AsAsExpression().Expression
-	}
+	node = ast.SkipOuterExpressions(node, ast.OEKAll)
 	if ast.IsIdentifier(node) {
-		if node.Text() == "process" {
-			return node
-		}
-		return nil
+		return node
 	}
 	var global *ast.Node
 	switch node.Kind {
