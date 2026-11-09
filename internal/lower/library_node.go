@@ -138,7 +138,35 @@ const (
 	nodeHostViewDepth   = 8
 	nodeHostViewTooDeep = "past the depth the view check follows, at "
 	nodeHostViewOpaque  = "an opaque view of "
+	nodeHostViewMethod  = "a host method, "
 )
+
+// nodeHostSlotMethods are the registered host methods the runtime shape holds as slots, keyed by the
+// host type's name and the member's, so a view the program declares reads them where the host put them
+// (node_process.c's performance object, fields.go's performance row). Every other registered host
+// method is lowered only where it's called on its own type.
+var nodeHostSlotMethods = map[string]bool{
+	"node:perf_hooks.Performance.now":           true,
+	"node:perf_hooks.Performance.mark":          true,
+	"node:perf_hooks.Performance.measure":       true,
+	"node:perf_hooks.Performance.clearMarks":    true,
+	"node:perf_hooks.Performance.clearMeasures": true,
+}
+
+// nodeHostMethodOffShape reports whether a host object's registered member is a method a Node library
+// declares (a method signature or declaration) that its runtime shape doesn't hold as a slot.
+func nodeHostMethodOffShape(own *checker.Type, member *ast.Symbol) bool {
+	if member == nil || own.Symbol() == nil {
+		return false
+	}
+	method := false
+	for _, declaration := range member.Declarations {
+		if load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) && (declaration.Kind == ast.KindMethodSignature || declaration.Kind == ast.KindMethodDeclaration) {
+			method = true
+		}
+	}
+	return method && !nodeHostSlotMethods[nodeLibraryName(own.Symbol())+"."+member.Name]
+}
 
 // parameter distinguishes the opaque-view policy of a callback's incoming values from the
 // existing result policy. Keep both in the seen key: visiting one must not suppress the other.
@@ -253,6 +281,14 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 				return name
 			}
 			return l.checker.TypeToString(own) + "." + property.Name
+		}
+		// A registered host method is lowered where it's called on its own type, and the runtime shape
+		// holds it as a slot only where nodeHostSlotMethods says so. Named through a view the program
+		// declares, as a method or a function-valued property, the call reads the view's slot instead:
+		// Stats seen as { isFile(): boolean } died natively with "a method the checker proved is there is
+		// missing", and seen as { isFile?: () => boolean } read it absent, where Node calls it (#sn788gx).
+		if host && programDeclared(property) && nodeHostMethodOffShape(own, member) {
+			return nodeHostViewMethod + nodeLibraryName(member)
 		}
 		if member == nil {
 			continue
@@ -444,6 +480,9 @@ func (l *lowering) nodeHostViewRefusal(node *ast.Node, own, view *checker.Type, 
 	}
 	if strings.HasPrefix(reached, nodeHostViewOpaque) {
 		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which hides a host object behind any, unknown or an unbound type parameter")
+	}
+	if method, found := strings.CutPrefix(reached, nodeHostViewMethod); found {
+		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which names "+method+", a host method its runtime shape doesn't hold (call it on the host's own type, or wrap it in a closure)")
 	}
 	if strings.HasPrefix(reached, nodeHostViewTooDeep) {
 		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which goes "+reached+", where it may hold a host object")
