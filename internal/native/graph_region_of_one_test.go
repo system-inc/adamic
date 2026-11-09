@@ -33,6 +33,8 @@ import (
 //   - between stops at the first region it finds that reaches the target: "diamond" leaves x2 out.
 //   - between skips no search on a region with no edge in: "search cost" counts N squared for the
 //     unrelated stores at N = 1000.
+//   - between's post-order pass is the discovery-order fixed point again: "search cost" counts about N
+//     squared edge reads for the chain at N = 1000.
 //   - between reads the holder member instead of its region (passing it as a target with no
 //     region): "member" leaks a graph.
 const graphRegionOfOneHarness = `#define ADAMIC_CANONICAL_CLOSURES 1
@@ -281,12 +283,14 @@ func TestGraphRegionOfOne(t *testing.T) {
 			}
 		})
 	}
-	// The search's cost, as numbers (#5nrs3q2, Adamic's ruling): regions visited in the counted build.
-	// A chain of N regions closed by one store visits at most N + 2, each merged once. The chain stored into N
-	// fresh nodes visits none, since nothing points into a fresh node's region; without the incoming
-	// check it was N squared (1,002,000 at N = 1000), which is the mutant. The open bound, a store into
-	// a region with edges in that the value doesn't reach, visits what the value reaches, N + 1, and is
-	// recorded here so it can't grow unseen; #fhcjc66 bounds it per store.
+	// The search's cost, as numbers (#5nrs3q2, Adamic's ruling): counted edges read in the counted
+	// build, by the walk and by the post-order pass, so a pass that rereads the chain shows. A chain of
+	// N regions closed by one store reads at most 3N + 4, each region merged once; the discovery-order
+	// fixed point the pass replaced read about N squared there (Language's read), and is the mutant. The
+	// chain stored into N fresh nodes reads none, since nothing points into a fresh node's region;
+	// without the incoming check it was N squared, the other mutant. The open bound, a store into a
+	// region with edges in that the value doesn't reach, reads what the value reaches, and is held to the
+	// same 3N + 4 so it can't grow unseen; #fhcjc66 bounds it per store.
 	t.Run("search cost", func(t *testing.T) {
 		t.Parallel()
 		searched := regexp.MustCompile(`searched (\d+)`)
@@ -303,18 +307,18 @@ func TestGraphRegionOfOne(t *testing.T) {
 			return value
 		}
 		for _, loops := range []int{10, 1000} {
-			if got := visits("chain", loops); got > loops+2 {
-				t.Errorf("chain of %d: %d regions searched, want at most %d", loops, got, loops+2)
+			if got := visits("chain", loops); got > 3*loops+4 {
+				t.Errorf("chain of %d: %d edges read, want at most %d", loops, got, 3*loops+4)
 			} else {
-				t.Logf("chain of %d closed by one store: %d regions searched", loops, got)
+				t.Logf("chain of %d closed by one store: %d edges read", loops, got)
 			}
 			if got := visits("unrelated", loops); got != 0 {
-				t.Errorf("chain of %d stored into %d fresh nodes: %d regions searched, want 0", loops, loops, got)
+				t.Errorf("chain of %d stored into %d fresh nodes: %d edges read, want 0", loops, loops, got)
 			}
-			if got := visits("open", loops); got > loops+2 {
-				t.Errorf("open bound, chain of %d: %d regions searched, want at most %d", loops, got, loops+2)
+			if got := visits("open", loops); got > 3*loops+4 {
+				t.Errorf("open bound, chain of %d: %d edges read, want at most %d", loops, got, 3*loops+4)
 			} else {
-				t.Logf("open bound, chain of %d: %d regions searched", loops, got)
+				t.Logf("open bound, chain of %d: %d edges read", loops, got)
 			}
 		}
 	})

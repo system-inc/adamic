@@ -26,7 +26,7 @@ typedef struct adamic_counts {
 	_Atomic size_t regions;
 	_Atomic size_t graph_regions;
 	_Atomic size_t graph_merges;
-	// graph_searched is how many regions merges' searches visited (graph_regions.c's between).
+	// graph_searched is how many counted edges merges' searches read (graph_regions.c's between).
 	_Atomic size_t graph_searched;
 } adamic_counts;
 
