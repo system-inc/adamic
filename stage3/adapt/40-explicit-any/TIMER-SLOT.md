@@ -66,10 +66,10 @@ file is refreshed and generate_shards.py --check passes.
 
 ## Sharded oracle
 
-| Tree | Accepted units | Passing | Expected failing | Pending | Longest command |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Control | 398 | 106,366 | 1 | 0 | 11.553 s |
-| Retyped | 398 | 106,366 | 1 | 0 | 11.440 s |
+| Tree    | Accepted units | Passing | Expected failing | Pending | Longest command |
+| ------- | -------------: | ------: | ---------------: | ------: | --------------: |
+| Control |            398 | 106,366 |                1 |       0 |        11.553 s |
+| Retyped |            398 | 106,366 |                1 |       0 |        11.440 s |
 
 All 106,367 test identities, statuses and multiplicities match. The sole
 failure is the existing Public APIs acknowledgement failure. Both API baseline

@@ -80,7 +80,6 @@ The current `phantomField` predicate in internal/lower/view_unions_primitive_bra
 
 Both binaries use the same scratch compiler worktree, with 55c1c38fbb0840fbd4c2b93579c8722d4c1df35b cherry-picked only there. Each uses the meter's overlay generation, gofmt and Go build command, with LATENT_FULL=0 and LATENT_ASSERT_NO_OUTPUT=1. See provenance.json for exact pins, commands and binary hashes. The comparison counts unique (kind, where, reason, text) sites, as the meter does.
 
-
 The first-error census completes on all 79 files: **12,826 → 3,273 distinct NotYet/Refused sites** (NotYet 811 → 840; Refused 12,015 → 2,433). Void-container element reads fall **9,610 → 0**; generic instantiations at void fall **76 → 0**. Both loads retain 144 checker diagnostics. The meter's existing lowering_summary validator accepts both complete ledgers. Error and panic sites remain zero; checker-diagnosed dependency skips grow 1 → 2, with the added skip at watch.ts:843:1 from executeCommandLine.ts:1011:1.
 
 **Stop condition met:** 244 refusal-reason counts change and 52 reasons are new or grow. [Every changed reason](evidence/brands-undefined/census-delta.md), [every new or growing reason with example locations](evidence/brands-undefined/new-or-growing.md), and [the structured examples](evidence/brands-undefined/census-delta.json) are retained, together with both compressed raw ledgers. Tree roots are removed from embedded source locations in where/reason/text before comparison; the meter's distinct-site tuple is otherwise unchanged.

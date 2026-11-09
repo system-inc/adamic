@@ -3,43 +3,42 @@
 Sites 138 (filesystem entry classification), 58 (array predicate input), and 143 (opaque solution-builder timer slot) are done.
 The original census remains below for traceability.
 
-
 The original disjoint classification below describes the 207-token census after the first three owner edits, not the original 210-token census. Brands (36), enum display (23), diagnostics (6), the array predicate input (1), filesystem entry classification (1), Error host members (4), and the opaque solution-builder timer slot (1) are now done, as recorded in PROGRESS.md, ERROR-HOST.md, and TIMER-SLOT.md: 75 tokens removed in total, 135 remaining. The location sections retain original site IDs for traceability. Every token has an ID and exact file:line:column in evidence/classification.json. Multiple tokens on one line remain separate sites. The counts below are semantic patterns; erased syntax is an independent axis, not a catch-all class. All suggested types remain proposals until checked against owners and consumers. A type-only candidate is not a completed proof.
 
 Completed classes: brands 36, enum display 23, diagnostics 6, array predicate input 1, filesystem entry classification 1, Error host members 4, opaque timer slot 1, plus the earlier three core owners: 75 of 210 tokens done.
 
 Remaining classes:
 
-| Pattern | Tokens | Proposed rule |
-| --- | ---: | --- |
-| JSON and config value pipeline | 38 | Unknown plus checked narrowing at genuinely untyped JSON/API boundaries; propagate validated recursive JSON/config value types through the internal pipeline. |
-| Timer handles and variadic timer forwarding | 15 | Generic parameters for the host timer handle and argument tuple, carried together through registration, storage, callback and cancellation declarations. |
-| Incomplete runtime constructors and storage initialization | 11 | Decline until constructor return and staged initialization contracts are modeled at their owners. |
-| Generic enumerable copy and metadata copy | 10 | Decline until enumerable copy results and writable key relationships have an owner contract. |
-| Standard runtime feature probes | 4 | Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API. |
-| AST subtype properties and mutable manufactured nodes | 6 | Real type: the precise node union or manufactured node shape at the owning declaration. |
-| Display projections on known internal objects | 6 | Real type: declare the actual optional display fields or recursive option display value at the object owner, preserving existing control flow. |
-| Generic builder program factory escapes | 5 | Decline until the generic program type is tied to the selected factory and persisted builder result at the owner. |
-| Broad generic API shape references | 4 | Real type: use the declared generic bound, BuilderProgram for ProgramHost and Node for NodeArray. |
-| Sorted array brand assertions | 4 | Decline until sortedness proof and its branded result are expressible at the sorting/empty-array owner. |
-| Heterogeneous node callback dispatch | 3 | Generic parameter associating the node kind and concrete node type with the callback input/output at registration and dispatch. |
-| Generic defaults and constraints | 3 | Generic parameter: retain the argument tuple and checked input/output relationship explicitly, removing permissive defaults after auditing explicit generic callers. |
-| Optional process and stream extensions | 3 | Unknown plus checked narrowing only for genuinely untyped host extensions at process.browser, process.recordreplay and stdout._handle. |
-| Resolution instrumentation payload | 3 | Generic parameter for before/after instrumentation data, with void for an ignored after-hook result. |
-| Heterogeneous watcher callbacks | 3 | Generic parameter carrying the watcher callback argument tuple through the cache and logging wrapper. |
-| Recursive compiler data comparison | 2 | Real type: recursive compiler data domain including object/array, scalar, null/undefined and ignored function members. |
-| Mutable Debug assertion table | 2 | Decline: the restore assignment stores a cache entry object where the declared slot is callable; a truthful callable replacement exposes a runtime contract mismatch. |
-| Pragma argument name domain | 2 | Real type: string as the PragmaArgumentSpecification name parameter bound. |
-| Optional builder program feature access | 2 | Real type: an optional getSemanticDiagnosticsOfNextAffectedFile capability on the program owner, preserving the existing presence test. |
-| Default string comparator escape | 1 | Decline until the string default comparer is restricted to a string element branch or a generic caller supplies its comparator. |
-| System to config-host shape | 1 | Real type: the actual ParseConfigFileHost capability subset at the host declaration, proving required optional System methods before construction. |
-| Distributive conditional type | 1 | Generic parameter: use the identity condition U extends U to preserve distribution without a top-type escape. |
-| Delegated generator next-input type | 1 | Generic parameter carrying the delegated iterator next-input type through flatMapIterator. |
-| Key-only mapped type | 1 | Real type: never as the unobserved mapped value, retaining the existing key remapping. |
-| Module resolution enum key | 1 | Real type: the actual ModuleResolutionKind string-key domain at the declaration producing moduleKindName. |
-| Variable-like declaration family | 1 | Real type: the variable-like declaration union including JSDoc property-like tags required by its callers. |
-| Resolution result update | 1 | Real type: declare the mutable resolvedModule result field at its actual owner. |
-| Unused scanner reduction state | 1 | Real type: undefined, the state passed by both getLeadingCommentRanges and getTrailingCommentRanges. |
+| Pattern                                                    | Tokens | Proposed rule                                                                                                                                                         |
+| ---------------------------------------------------------- | -----: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| JSON and config value pipeline                             |     38 | Unknown plus checked narrowing at genuinely untyped JSON/API boundaries; propagate validated recursive JSON/config value types through the internal pipeline.         |
+| Timer handles and variadic timer forwarding                |     15 | Generic parameters for the host timer handle and argument tuple, carried together through registration, storage, callback and cancellation declarations.              |
+| Incomplete runtime constructors and storage initialization |     11 | Decline until constructor return and staged initialization contracts are modeled at their owners.                                                                     |
+| Generic enumerable copy and metadata copy                  |     10 | Decline until enumerable copy results and writable key relationships have an owner contract.                                                                          |
+| Standard runtime feature probes                            |      4 | Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API.                         |
+| AST subtype properties and mutable manufactured nodes      |      6 | Real type: the precise node union or manufactured node shape at the owning declaration.                                                                               |
+| Display projections on known internal objects              |      6 | Real type: declare the actual optional display fields or recursive option display value at the object owner, preserving existing control flow.                        |
+| Generic builder program factory escapes                    |      5 | Decline until the generic program type is tied to the selected factory and persisted builder result at the owner.                                                     |
+| Broad generic API shape references                         |      4 | Real type: use the declared generic bound, BuilderProgram for ProgramHost and Node for NodeArray.                                                                     |
+| Sorted array brand assertions                              |      4 | Decline until sortedness proof and its branded result are expressible at the sorting/empty-array owner.                                                               |
+| Heterogeneous node callback dispatch                       |      3 | Generic parameter associating the node kind and concrete node type with the callback input/output at registration and dispatch.                                       |
+| Generic defaults and constraints                           |      3 | Generic parameter: retain the argument tuple and checked input/output relationship explicitly, removing permissive defaults after auditing explicit generic callers.  |
+| Optional process and stream extensions                     |      3 | Unknown plus checked narrowing only for genuinely untyped host extensions at process.browser, process.recordreplay and stdout._handle.                                |
+| Resolution instrumentation payload                         |      3 | Generic parameter for before/after instrumentation data, with void for an ignored after-hook result.                                                                  |
+| Heterogeneous watcher callbacks                            |      3 | Generic parameter carrying the watcher callback argument tuple through the cache and logging wrapper.                                                                 |
+| Recursive compiler data comparison                         |      2 | Real type: recursive compiler data domain including object/array, scalar, null/undefined and ignored function members.                                                |
+| Mutable Debug assertion table                              |      2 | Decline: the restore assignment stores a cache entry object where the declared slot is callable; a truthful callable replacement exposes a runtime contract mismatch. |
+| Pragma argument name domain                                |      2 | Real type: string as the PragmaArgumentSpecification name parameter bound.                                                                                            |
+| Optional builder program feature access                    |      2 | Real type: an optional getSemanticDiagnosticsOfNextAffectedFile capability on the program owner, preserving the existing presence test.                               |
+| Default string comparator escape                           |      1 | Decline until the string default comparer is restricted to a string element branch or a generic caller supplies its comparator.                                       |
+| System to config-host shape                                |      1 | Real type: the actual ParseConfigFileHost capability subset at the host declaration, proving required optional System methods before construction.                    |
+| Distributive conditional type                              |      1 | Generic parameter: use the identity condition U extends U to preserve distribution without a top-type escape.                                                         |
+| Delegated generator next-input type                        |      1 | Generic parameter carrying the delegated iterator next-input type through flatMapIterator.                                                                            |
+| Key-only mapped type                                       |      1 | Real type: never as the unobserved mapped value, retaining the existing key remapping.                                                                                |
+| Module resolution enum key                                 |      1 | Real type: the actual ModuleResolutionKind string-key domain at the declaration producing moduleKindName.                                                             |
+| Variable-like declaration family                           |      1 | Real type: the variable-like declaration union including JSDoc property-like tags required by its callers.                                                            |
+| Resolution result update                                   |      1 | Real type: declare the mutable resolvedModule result field at its actual owner.                                                                                       |
+| Unused scanner reduction state                             |      1 | Real type: undefined, the state passed by both getLeadingCommentRanges and getTrailingCommentRanges.                                                                  |
 
 Original total: 207 tokens, 28 files, 33 disjoint classes. The remaining table excludes completed classes and the four completed Error sites: 135 tokens in 28 classes. No token remains unclassified.
 
@@ -62,6 +61,7 @@ Config parsing and option validation, package.json, sourcemaps and JSON.parse. B
 Rule: Unknown plus checked narrowing at genuinely untyped JSON/API boundaries; propagate validated recursive JSON/config value types through the internal pipeline.
 
 Locations:
+
 - 9: `src/compiler/commandLineParser.ts:2267:110`
 - 10: `src/compiler/commandLineParser.ts:2277:91`
 - 11: `src/compiler/commandLineParser.ts:2430:16`
@@ -110,6 +110,7 @@ Rule: any becomes undefined at each of the 36 declarations, retaining every key 
 The same 27 public brand lines are sanctioned as undefined. See [the current brand record](BRANDS-UNDEFINED.md) and [per-member searches](evidence/brands-void/member-audit.json).
 
 Locations:
+
 - 1: `src/compiler/builder.ts:1074:88`
 - 2: `src/compiler/builder.ts:1076:100`
 - 3: `src/compiler/checker.ts:1452:32`
@@ -154,6 +155,7 @@ formatEnum and its cache reflect numeric enum objects; getEnumMembers filters ty
 Rule: Real type: numeric-enum reflection map with string-or-number values, and the actual typeof namespace/enum at each owner.
 
 Locations:
+
 - 69: `src/compiler/debug.ts:389:55`
 - 70: `src/compiler/debug.ts:420:37`
 - 71: `src/compiler/debug.ts:422:41`
@@ -185,6 +187,7 @@ The original 16 sites include five callback/rest argument tokens and eleven opaq
 Rule: Generic parameters for the host timer handle and argument tuple, carried together through registration, storage, callback and cancellation declarations.
 
 Locations:
+
 - 123: `src/compiler/sys.ts:50:48`
 - 124: `src/compiler/sys.ts:50:82`
 - 125: `src/compiler/sys.ts:51:39`
@@ -209,6 +212,7 @@ NodeLinks construction, Symbol.links initialization and nine objectAllocator con
 Rule: Decline until constructor return and staged initialization contracts are modeled at their owners.
 
 Locations:
+
 - 4: `src/compiler/checker.ts:2940:76`
 - 183: `src/compiler/utilities.ts:8486:14`
 - 184: `src/compiler/utilities.ts:8553:39`
@@ -228,6 +232,7 @@ clone, extend, copyProperties and SourceFile metadata copying enumerate string k
 Rule: Decline until enumerable copy results and writable key relationships have an owner contract.
 
 Locations:
+
 - 49: `src/compiler/core.ts:1479:19`
 - 50: `src/compiler/core.ts:1482:37`
 - 51: `src/compiler/core.ts:1496:35`
@@ -251,6 +256,7 @@ See [ERROR-HOST.md](ERROR-HOST.md) for build, emission, API and mutant proof.
 Rule: Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API.
 
 Locations:
+
 - 47: `src/compiler/core.ts:1066:119`
 - 48: `src/compiler/core.ts:1067:36`
 - 66: `src/compiler/debug.ts:200:23`
@@ -267,6 +273,7 @@ Fresh parentName.isTypeOf mutation; parent access on JSDoc parsing elements; opt
 Rule: Real type: the precise node union or manufactured node shape at the owning declaration.
 
 Locations:
+
 - 5: `src/compiler/checker.ts:6834:40`
 - 101: `src/compiler/parser.ts:10207:25`
 - 102: `src/compiler/parser.ts:10208:40`
@@ -281,6 +288,7 @@ Diagnostic formatter, resolution trace and scanner/parser diagnostic arguments. 
 Rule: Real type: the diagnostic substitution domain established from callers, string | number | boolean | readonly string[] | SourceFile | undefined; scanner/parser arg0 is optional string | number.
 
 Locations:
+
 - 8: `src/compiler/commandLineParser.ts:2206:72`
 - 94: `src/compiler/moduleNameResolver.ts:118:88`
 - 100: `src/compiler/parser.ts:2176:75`
@@ -295,6 +303,7 @@ __debugFlags, function.name, nested compiler option values, Type.objectFlags/int
 Rule: Real type: declare the actual optional display fields or recursive option display value at the object owner, preserving existing control flow.
 
 Locations:
+
 - 6: `src/compiler/checker.ts:10953:77`
 - 68: `src/compiler/debug.ts:373:29`
 - 95: `src/compiler/moduleNameResolver.ts:954:69`
@@ -309,6 +318,7 @@ Default emit-and-semantic factory and readBuilderProgram results are cast to arb
 Rule: Decline until the generic program type is tied to the selected factory and persisted builder result at the owner.
 
 Locations:
+
 - 146: `src/compiler/tsbuildPublic.ts:1355:64`
 - 197: `src/compiler/watch.ts:862:91`
 - 198: `src/compiler/watchPublic.ts:150:88`
@@ -322,6 +332,7 @@ ProgramHost readFile/host projections and emit NodeArray callbacks. Type-only ge
 Rule: Real type: use the declared generic bound, BuilderProgram for ProgramHost and Node for NodeArray.
 
 Locations:
+
 - 104: `src/compiler/program.ts:393:27`
 - 174: `src/compiler/types.ts:9857:64`
 - 175: `src/compiler/types.ts:9858:63`
@@ -334,6 +345,7 @@ Empty arrays are vacuously sorted; deduplication preserves its sorted input. as 
 Rule: Decline until sortedness proof and its branded result are expressible at the sorting/empty-array owner.
 
 Locations:
+
 - 43: `src/compiler/core.ts:736:50`
 - 44: `src/compiler/core.ts:759:28`
 - 45: `src/compiler/core.ts:764:18`
@@ -346,6 +358,7 @@ ParenthesizerRule, forEachChildTable and visitEachChildTable erase heterogeneous
 Rule: Generic parameter associating the node kind and concrete node type with the callback input/output at registration and dispatch.
 
 Locations:
+
 - 90: `src/compiler/emitter.ts:1274:53`
 - 99: `src/compiler/parser.ts:1253:78`
 - 194: `src/compiler/visitorPublic.ts:603:82`
@@ -357,6 +370,7 @@ maybeBind already carries A; cast and tryCast default TIn to any. Replacing the 
 Rule: Generic parameter: retain the argument tuple and checked input/output relationship explicitly, removing permissive defaults after auditing explicit generic callers.
 
 Locations:
+
 - 57: `src/compiler/core.ts:1522:40`
 - 59: `src/compiler/core.ts:1778:49`
 - 60: `src/compiler/core.ts:1783:46`
@@ -368,6 +382,7 @@ These three sites inspect external runtime extensions: browser marker, replay ma
 Rule: Unknown plus checked narrowing only for genuinely untyped host extensions at process.browser, process.recordreplay and stdout._handle.
 
 Locations:
+
 - 61: `src/compiler/core.ts:2593:25`
 - 136: `src/compiler/sys.ts:1594:203`
 - 137: `src/compiler/sys.ts:1609:51`
@@ -379,6 +394,7 @@ ResolutionCache host hooks return a before payload and pass it unchanged into th
 Rule: Generic parameter for before/after instrumentation data, with void for an ignored after-hook result.
 
 Locations:
+
 - 108: `src/compiler/resolutionCache.ts:209:8`
 - 109: `src/compiler/resolutionCache.ts:215:15`
 - 110: `src/compiler/resolutionCache.ts:216:8`
@@ -390,6 +406,7 @@ File and directory callback families have different arities; sys uses a never mi
 Rule: Generic parameter carrying the watcher callback argument tuple through the cache and logging wrapper.
 
 Locations:
+
 - 129: `src/compiler/sys.ts:516:30`
 - 130: `src/compiler/sys.ts:516:58`
 - 207: `src/compiler/watchUtilities.ts:814:23`
@@ -401,6 +418,7 @@ compareDataObjects recursively compares compiler option data and skips functions
 Rule: Real type: recursive compiler data domain including object/array, scalar, null/undefined and ignored function members.
 
 Locations:
+
 - 181: `src/compiler/utilities.ts:8147:41`
 - 182: `src/compiler/utilities.ts:8147:51`
 
@@ -411,6 +429,7 @@ setAssertionLevel assigns cachedFunc, not cachedFunc.assertion, to Debug[key]. s
 Rule: Decline: the restore assignment stores a cache entry object where the declared slot is callable; a truthful callable replacement exposes a runtime contract mismatch.
 
 Locations:
+
 - 64: `src/compiler/debug.ts:170:31`
 - 65: `src/compiler/debug.ts:190:23`
 
@@ -421,6 +440,7 @@ Type-level pragma shapes already constrain the name parameter to strings. These 
 Rule: Real type: string as the PragmaArgumentSpecification name parameter bound.
 
 Locations:
+
 - 177: `src/compiler/types.ts:10323:91`
 - 178: `src/compiler/types.ts:10332:155`
 
@@ -431,6 +451,7 @@ A builder family is probed for a method and conditionally invoked. Calling the m
 Rule: Real type: an optional getSemanticDiagnosticsOfNextAffectedFile capability on the program owner, preserving the existing presence test.
 
 Locations:
+
 - 144: `src/compiler/tsbuildPublic.ts:992:34`
 - 145: `src/compiler/tsbuildPublic.ts:993:33`
 
@@ -441,6 +462,7 @@ Site 58 was already classified as Generic array predicate input. The October 7 f
 Rule: unknown input, retaining the existing readonly unknown[] predicate and body. Done: one token removed, zero public lines.
 
 Locations:
+
 - 58: `src/compiler/core.ts:1750:32`
 
 ### Default string comparator escape (1)
@@ -450,6 +472,7 @@ deduplicateSorted falls back to compareStringsCaseSensitive while T is unconstra
 Rule: Decline until the string default comparer is restricted to a string element branch or a generic caller supplies its comparator.
 
 Locations:
+
 - 46: `src/compiler/core.ts:810:120`
 
 ### System to config-host shape (1)
@@ -459,6 +482,7 @@ watch adapts a typed System into a config-reading host. It is not untyped host i
 Rule: Real type: the actual ParseConfigFileHost capability subset at the host declaration, proving required optional System methods before construction.
 
 Locations:
+
 - 195: `src/compiler/watch.ts:221:49`
 
 ### Distributive conditional type (1)
@@ -468,6 +492,7 @@ UnionToIntersection uses a naked type parameter conditional solely to distribute
 Rule: Generic parameter: use the identity condition U extends U to preserve distribution without a top-type escape.
 
 Locations:
+
 - 176: `src/compiler/types.ts:10320:49`
 
 ### Filesystem entry classification (done: 1, remaining: 0)
@@ -481,6 +506,7 @@ changes; no emitted declaration or API sanction changes. Reproduction and
 full-build wrong-type mutant are in filesystem-proof.cjs.
 
 Locations:
+
 - 138: `src/compiler/sys.ts:1853:31`
 
 ### Delegated generator next-input type (1)
@@ -490,6 +516,7 @@ yield* can forward caller next values to the delegated iterator, even though thi
 Rule: Generic parameter carrying the delegated iterator next-input type through flatMapIterator.
 
 Locations:
+
 - 42: `src/compiler/core.ts:437:136`
 
 ### Key-only mapped type (1)
@@ -499,6 +526,7 @@ CompilerOptionKeys applies keyof to the mapped type; only its keys are consumed.
 Rule: Real type: never as the unobserved mapped value, retaining the existing key remapping.
 
 Locations:
+
 - 193: `src/compiler/utilities.ts:9029:97`
 
 ### Module resolution enum key (1)
@@ -508,6 +536,7 @@ Runtime string indexes an enum and falls back to Node16; derive the valid key un
 Rule: Real type: the actual ModuleResolutionKind string-key domain at the declaration producing moduleKindName.
 
 Locations:
+
 - 107: `src/compiler/program.ts:4379:81`
 
 ### Variable-like declaration family (1)
@@ -517,6 +546,7 @@ widenTypeForVariableLikeDeclaration is an internal checker helper. Derive its de
 Rule: Real type: the variable-like declaration union including JSDoc property-like tags required by its callers.
 
 Locations:
+
 - 7: `src/compiler/checker.ts:12480:87`
 
 ### Resolution result update (1)
@@ -526,6 +556,7 @@ The primary resolution result is updated after lookup; the any cast is on the as
 Rule: Real type: declare the mutable resolvedModule result field at its actual owner.
 
 Locations:
+
 - 111: `src/compiler/resolutionCache.ts:563:46`
 
 ### Unused scanner reduction state (1)
@@ -535,4 +566,5 @@ appendCommentRange does not read _state and its two owners pass undefined explic
 Rule: Real type: undefined, the state passed by both getLeadingCommentRanges and getTrailingCommentRanges.
 
 Locations:
+
 - 113: `src/compiler/scanner.ts:952:111`
