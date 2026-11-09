@@ -7,7 +7,8 @@ root = Path(__file__).resolve().parents[2]
 path = root / 'cloud/fast-gate/product-order.json'
 order = json.loads(path.read_text())
 assert order['version'] == 1
-order['waits']['internal/lower TestProduct_StatsOptionalReceiverMarkMutant'] = []
+for name in ('StatsOptionalReceiverMarkMutant', 'DirentOptionalReceiverMarkMutant'):
+    order['waits']['internal/lower TestProduct_' + name] = []
 if '--check' in sys.argv:
     if json.loads(path.read_text()) != order:
         raise SystemExit('run cloud/fast-gate/stats-optional-product-order.py')
