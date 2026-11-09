@@ -239,6 +239,8 @@ func (l *lowering) hostBindingModelRefusal(declaration *ast.Node, row load.HostB
 			return l.notYet(declaration, subject+" which hides its model export "+export+" behind any, unknown or an unbound type parameter,")
 		case strings.HasPrefix(reached, nodeHostViewTooDeep):
 			return l.notYet(declaration, subject+" which goes "+reached+" in its model export "+export+",")
+		case strings.HasPrefix(reached, nodeHostViewMethod):
+			return l.notYet(declaration, subject+" which names "+strings.TrimPrefix(reached, nodeHostViewMethod)+" of its model export "+export+", a host method its runtime shape doesn't hold,")
 		}
 		return l.notYet(declaration, subject+" which reaches "+reached+" of its model export "+export+", a member no host registration names,")
 	}
