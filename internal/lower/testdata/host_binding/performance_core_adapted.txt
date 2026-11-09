@@ -1,0 +1,23 @@
+/** @internal */
+export interface PerformanceHooks {
+    shouldWriteNativeEvents: boolean;
+    performance?: Performance | undefined;
+    performanceTime?: PerformanceTime | undefined;
+}
+
+/** @internal */
+export interface PerformanceTime {
+    now(): number;
+    readonly timeOrigin: number;
+}
+
+/** @internal */
+export interface Performance extends PerformanceTime {
+    mark(name: string): void;
+    measure(name: string, startMark?: string, endMark?: string): void;
+    clearMeasures(name?: string): void;
+    clearMarks(name?: string): void;
+}
+
+// Browser globals for the Web Performance User Timings API
+declare const performance: Performance | undefined;

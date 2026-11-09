@@ -28,6 +28,11 @@ func init() {
 func (l *lowering) nodeProcessPath(node *ast.Node) string {
 	node = ast.SkipParentheses(node)
 	if ast.IsIdentifier(node) {
+		// A Provided host binding the program declares reads as its model (host_bindings.go). The row is
+		// matched by the symbol the name resolves to, so a local of the same name stays the local.
+		if row, _ := l.hostBindingOf(node); row != nil && hostBindingRouted(*row) {
+			return hostBindingRoute(*row)
+		}
 		symbol := l.symbol(node)
 		if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
 			symbol = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
