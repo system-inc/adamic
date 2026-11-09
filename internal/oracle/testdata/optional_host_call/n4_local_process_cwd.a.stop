@@ -1,0 +1,1 @@
+internal/oracle/testdata/optional_host_call/n4_local_process_cwd.a:4:9: stage 0 can't lower a call through ?. to a Node host method whose lowering doesn't guard an optional receiver (node:process.Process.cwd; #3625x53) yet

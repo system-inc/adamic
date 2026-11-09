@@ -2,8 +2,9 @@
 
 The pins are `TestOptionalHostCalls` (internal/oracle/optional_host_call_test.go) over
 internal/oracle/testdata/optional_host_call/: n1 a Dirent's `entry?.isFile()` on an undefined entry, n2 a
-Stats', n3 the `Stats | Dirent | undefined` shape, each stopping by the rule in its .a and .ts twin, and p1 a
-method the program declares, which lowers and agrees with Node. Each mutant is one edit, run on a house box,
+Stats', n3 the `Stats | Dirent | undefined` shape, n4 `host?.cwd()` on a local `NodeJS.Process | undefined`,
+each stopping by the rule in its .a and .ts twin, and p1 a method the program declares, which lowers and
+agrees with Node. Each mutant is one edit, run on a house box,
 then put back. Neither has been measured yet.
 
 ## (a) The rule removed
@@ -29,7 +30,11 @@ The call reaches nodeFSDirectoryCall's Dirent arm, which never reads the optiona
 host call. Run, `kind(undefined)` is a null access natively and a TypeError on the JavaScript backend, where
 Node prints `undefined`. n2 stops at nodeFSFile's own `node:fs.StatsBase.isFile through an optional call`, red
 on its stop text. n3 goes whichever way the union's first declaration sends it: nodeHostMember stops reading at
-StatsBase's, so it's nodeFSFile's stop, and with Dirent's first it lowers as n1 does. p1 lowers as before.
+StatsBase's, so it's nodeFSFile's stop, and with Dirent's first it lowers as n1 does. n4 is the second
+miscompile: red on `/n4_local_process_cwd.a` and `.ts`, `lowered, want "...(node:process.Process.cwd;
+#3625x53) yet"`. processPath can't name a local, so the call falls through processValue to nodeHost, which
+lowers cwd to a plain host_cwd call without reading the receiver. Run, `check(undefined)` prints `present`
+where Node prints `undefined`. p1 lowers as before.
 
 ## (b) An unguarded member put in the table
 

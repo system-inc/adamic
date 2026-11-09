@@ -14,11 +14,16 @@ import (
 // access natively and a TypeError on the JavaScript backend, where Node prints undefined. n2 is a
 // Stats' isFile, which nodeFSFile already refused through ?. and still stops, at the rule now. n3 is
 // the Stats | Dirent | undefined shape, a union property whose roots are both members, so both are
-// named. p1, a method the program declares, called through ?. on a receiver undefined and then
-// present, still lowers and agrees with Node on release, sanitized native and the JavaScript backend.
-// The table is empty, so no row holds a guarded host method to Node. Each program's whole stop is
-// pinned in its .stop file, or "lowers". Mutants (internal/lower/optional-host-call.mutants.md): the
-// rule removed, and n1 lowers; an unguarded member put in the table, and n1 lowers.
+// named. n4 calls process's cwd through ?. on a local NodeJS.Process | undefined, undefined in one call
+// and process in the other: nodeHost lowers cwd to host_cwd without reading the receiver, so before the
+// rule the undefined call gave the working directory where Node gives undefined. processPath's own ?.
+// admission, process?.cwd() on the process binding, stops at the rule too, since a member's name can't
+// tell its proven receiver from a local. p1, a method the program declares, called through ?. on a
+// receiver undefined and then present, still lowers and agrees with Node on release, sanitized native
+// and the JavaScript backend. The table is empty, so no row holds a guarded host method to Node. Each
+// program's whole stop is pinned in its .stop file, or "lowers". Mutants
+// (internal/lower/optional-host-call.mutants.md): the rule removed, and n1 and n4 lower; an unguarded
+// member put in the table, and n1 lowers.
 func TestOptionalHostCalls(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/optional_host_call"
@@ -72,7 +77,7 @@ func TestOptionalHostCalls(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 8 {
-		t.Fatalf("found %d programs, want 8", programs)
+	if programs != 10 {
+		t.Fatalf("found %d programs, want 10", programs)
 	}
 }
