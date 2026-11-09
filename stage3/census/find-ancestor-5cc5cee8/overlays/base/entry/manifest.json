@@ -1,0 +1,117 @@
+[
+  {
+    "logical": "/workspace/adamic/internal/load/latent_hook.go",
+    "evidence": "00-entry_load_hook.go.txt",
+    "sha256": "a21f0d172cce99b74fc6ca8d80159a18d3a2775dbb6f5468041523a9cea0e681"
+  },
+  {
+    "logical": "/workspace/adamic/internal/load/load.go",
+    "evidence": "01-internal_load_load.go.txt",
+    "sha256": "09ed256da9beedc908843e89d042e8a501521fc5d9c25a6ebfa4e57261a47b25"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/entries_records.go",
+    "evidence": "02-internal_lower_entries_records.go.txt",
+    "sha256": "3581183be01d9e0332c4f206dbee2427073f952e37f43046591fd601efa0bd8d"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/expression.go",
+    "evidence": "03-internal_lower_expression.go.txt",
+    "sha256": "822e32d3b6aa757a9184e2aca85fbc35ab09fbbf57b23882a9af43ed0752edb5"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/functions.go",
+    "evidence": "04-internal_lower_functions.go.txt",
+    "sha256": "e27727da4f2788a7a7bd6efbcfdd427062c4c81d079adad1d43623ffaec4a1ed"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/generic.go",
+    "evidence": "05-internal_lower_generic.go.txt",
+    "sha256": "41e0de3c799522abebf7c5546520aad6cc7ba4260ec85114d97343b54ff3aac0"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_full.go",
+    "evidence": "06-internal_lower_latent_full.go.txt",
+    "sha256": "2b884f363369ae05730700b87dddf7ad2a640256e1470fdb3078388ea8cc9c44"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_hook.go",
+    "evidence": "07-internal_lower_latent_hook.go.txt",
+    "sha256": "7a6bcf8774fef685a4c31fc10355bcdc4ffaf1a6d07d412e73eaff86986e68de"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_piece.go",
+    "evidence": "08-internal_lower_latent_piece.go.txt",
+    "sha256": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_progress.go",
+    "evidence": "09-internal_lower_latent_progress.go.txt",
+    "sha256": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_relation_overflow.go",
+    "evidence": "10-internal_lower_latent_relation_overflow.go.txt",
+    "sha256": "9897c23b3b4a5b79d8696b685b03192d74d95df4ccd911a6aea2cb9ac88ce1cc"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_replay.go",
+    "evidence": "11-internal_lower_latent_replay.go.txt",
+    "sha256": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_speculative.go",
+    "evidence": "12-internal_lower_latent_speculative.go.txt",
+    "sha256": "2bb71c56a4e37493cad97363688cb3984205c5e16df5e27e1e7195fb45cab0ac"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_state.go",
+    "evidence": "13-internal_lower_latent_state.go.txt",
+    "sha256": "8bd295b684c847b427b67a8e788f742093fb921a289570066fec49a6615432ea"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_timing.go",
+    "evidence": "14-internal_lower_latent_timing.go.txt",
+    "sha256": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/latent_units.go",
+    "evidence": "15-internal_lower_latent_units.go.txt",
+    "sha256": "1489ae5ba39a87369ce3d028e8ddf016525b5bca0d3a7837fc4d9062cb235063"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/locals.go",
+    "evidence": "16-internal_lower_locals.go.txt",
+    "sha256": "9f7eaef46469ee896c75bdccdd70269f4bbe302f0a4d1a475f4b27be8278a4b6"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/lower.go",
+    "evidence": "17-internal_lower_lower.go.txt",
+    "sha256": "5e6dcf712bdb84d2e5c1ef792e11a960fe8152c83b1dacc07b8fdd10fcaaf9b8"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/refusals.go",
+    "evidence": "18-internal_lower_refusals.go.txt",
+    "sha256": "bf1bffb6100545a009ef69529ab1acf3a80cdcdc82478b345f2ae0d3aaffb14a"
+  },
+  {
+    "logical": "/workspace/adamic/internal/lower/statements.go",
+    "evidence": "19-internal_lower_statements.go.txt",
+    "sha256": "c31d7990705f7b45bbef902834a29d63328cbc0f60e21d5ea6f3ffcb7476c283"
+  },
+  {
+    "logical": "/workspace/adamic/stage3/census/latent/replay/worker/main.go",
+    "evidence": "20-stage3_census_latent_replay_worker_main.go.txt",
+    "sha256": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34"
+  },
+  {
+    "logical": "/workspace/adamic/stage3/census/latent/tool/main.go",
+    "evidence": "21-entry_main.go.txt",
+    "sha256": "d5b86400cd24f11b6c9f05b3dd2892fd2a78f719810bf432adffa4205da4be0c"
+  },
+  {
+    "logical": "/workspace/adamic/stage3/census/latent/tool/relation_overflow_test.go",
+    "evidence": "22-stage3_census_latent_tool_relation_overflow_test.go.txt",
+    "sha256": "45f799c6e50dc6b77307830a43336f1102c4c0bc1cf35da9bb51cc7edcd48afb"
+  }
+]
