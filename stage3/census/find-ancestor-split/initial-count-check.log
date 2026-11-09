@@ -1,0 +1,8 @@
+source hash check child exit: 0
+check-sources.py child_exit=0
+Traceback (most recent call last):
+  File "/workspace/scratch/fa-parent/stage3/census/find-ancestor-split/render.py", line 28, in <module>
+    assert len(cleared)==28 and len(added)==5
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+render.py child_exit=1
