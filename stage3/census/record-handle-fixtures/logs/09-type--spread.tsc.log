@@ -1,0 +1,3 @@
+stage3/census/record-handle-fixtures/09-type--spread.ts(241,35): error TS2418: Type of computed property's value is 'Fn', which is not assignable to type 'Type'.
+stage3/census/record-handle-fixtures/09-type--spread.ts(244,7): error TS2322: Type 'Type' is not assignable to type 'Fn'.
+  Type 'Type' provides no match for the signature '(path: string): string'.

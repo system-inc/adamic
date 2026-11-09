@@ -1,0 +1,656 @@
+{
+  "versions": {
+    "node": "v24.19.0",
+    "tsc": "Version 6.0.3"
+  },
+  "rows": [
+    {
+      "fixture": "01-options-value--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/01-options-value--assign-h.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/01-options-value--assign-h.ts(30,7): error TS2322: Type 'string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | null' is not assignable to type 'Fn'.\n  Type 'null' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "01-options-value--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/01-options-value--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "01-options-value--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/01-options-value--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "01-options-value--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/01-options-value--cast.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/01-options-value--cast.ts(26,18): error TS2352: Conversion of type 'Holding' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  'string' index signatures are incompatible.\n    Type 'CompilerOptionsValue' is not comparable to type 'Fn'.\n      Type 'ProjectReference[]' is not comparable to type 'Fn'.\n        Type 'ProjectReference[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "01-options-value--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/01-options-value--direct.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/01-options-value--direct.ts(26,8): error TS2322: Type 'Fn' is not assignable to type 'CompilerOptionsValue'.\nstage3/census/record-handle-fixtures/01-options-value--direct.ts(30,7): error TS2322: Type 'string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | null' is not assignable to type 'Fn'.\n  Type 'null' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "01-options-value--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/01-options-value--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "01-options-value--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/01-options-value--spread.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/01-options-value--spread.ts(26,40): error TS2322: Type 'Fn' is not assignable to type 'CompilerOptionsValue'.\nstage3/census/record-handle-fixtures/01-options-value--spread.ts(29,7): error TS2322: Type 'string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | null' is not assignable to type 'Fn'.\n  Type 'null' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "01-options-value--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/01-options-value--unknown-helper.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/01-options-value--unknown-helper.ts(31,7): error TS2322: Type 'string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | null' is not assignable to type 'Fn'.\n  Type 'null' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "02-options--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/02-options--assign-h.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/02-options--assign-h.ts(42,7): error TS2322: Type 'string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | TsConfigSourceFile | null' is not assignable to type 'Fn'.\n  Type 'null' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "02-options--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/02-options--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "02-options--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/02-options--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "02-options--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/02-options--cast.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/02-options--cast.ts(38,18): error TS2352: Conversion of type 'CompilerOptions' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  'string' index signatures are incompatible.\n    Type 'CompilerOptionsValue | TsConfigSourceFile' is not comparable to type 'Fn'.\n      Type 'TsConfigSourceFile' is not comparable to type 'Fn'.\n        Type 'TsConfigSourceFile' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "02-options--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/02-options--direct.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/02-options--direct.ts(38,8): error TS2322: Type 'Fn' is not assignable to type 'CompilerOptionsValue | TsConfigSourceFile'.\nstage3/census/record-handle-fixtures/02-options--direct.ts(42,7): error TS2322: Type 'string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | TsConfigSourceFile | null' is not assignable to type 'Fn'.\n  Type 'null' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "02-options--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/02-options--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "02-options--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/02-options--spread.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/02-options--spread.ts(38,40): error TS2322: Type 'Fn' is not assignable to type 'CompilerOptionsValue | TsConfigSourceFile'.\nstage3/census/record-handle-fixtures/02-options--spread.ts(41,7): error TS2322: Type 'string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | TsConfigSourceFile | null' is not assignable to type 'Fn'.\n  Type 'null' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "02-options--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/02-options--unknown-helper.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/02-options--unknown-helper.ts(43,7): error TS2322: Type 'string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | TsConfigSourceFile | null' is not assignable to type 'Fn'.\n  Type 'null' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "03-watch--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/03-watch--assign-h.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/03-watch--assign-h.ts(20,7): error TS2322: Type 'WatchDirectoryFlags' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "03-watch--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/03-watch--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "03-watch--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/03-watch--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "03-watch--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/03-watch--cast.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/03-watch--cast.ts(16,18): error TS2352: Conversion of type 'Holding' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  Type 'WatchDirectoryFlags' is not comparable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "03-watch--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/03-watch--direct.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/03-watch--direct.ts(16,1): error TS2322: Type 'Fn' is not assignable to type 'WatchDirectoryFlags'.\nstage3/census/record-handle-fixtures/03-watch--direct.ts(20,7): error TS2322: Type 'WatchDirectoryFlags' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "03-watch--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/03-watch--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "03-watch--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/03-watch--spread.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/03-watch--spread.ts(16,35): error TS2418: Type of computed property's value is 'Fn', which is not assignable to type 'WatchDirectoryFlags'.\nstage3/census/record-handle-fixtures/03-watch--spread.ts(19,7): error TS2322: Type 'WatchDirectoryFlags' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "03-watch--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/03-watch--unknown-helper.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/03-watch--unknown-helper.ts(21,7): error TS2322: Type 'WatchDirectoryFlags' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "04-group-by--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/04-group-by--assign-h.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/04-group-by--assign-h.ts(17,7): error TS2322: Type 'T[]' is not assignable to type 'Fn'.\n  Type 'T[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "04-group-by--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/04-group-by--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "04-group-by--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/04-group-by--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "04-group-by--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/04-group-by--cast.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/04-group-by--cast.ts(13,18): error TS2352: Conversion of type 'Holding<T>' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  'string' index signatures are incompatible.\n    Type 'T[]' is not comparable to type 'Fn'.\n      Type 'T[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "04-group-by--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/04-group-by--direct.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/04-group-by--direct.ts(13,1): error TS2322: Type 'Fn' is not assignable to type 'T[]'.\nstage3/census/record-handle-fixtures/04-group-by--direct.ts(17,7): error TS2322: Type 'T[]' is not assignable to type 'Fn'.\n  Type 'T[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "04-group-by--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/04-group-by--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "04-group-by--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/04-group-by--spread.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/04-group-by--spread.ts(13,38): error TS2418: Type of computed property's value is 'Fn', which is not assignable to type 'T[]'.\nstage3/census/record-handle-fixtures/04-group-by--spread.ts(16,7): error TS2322: Type 'T[]' is not assignable to type 'Fn'.\n  Type 'T[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "04-group-by--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/04-group-by--unknown-helper.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/04-group-by--unknown-helper.ts(18,7): error TS2322: Type 'T[]' is not assignable to type 'Fn'.\n  Type 'T[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "05-extend.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/05-extend.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "06-string-arrays--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/06-string-arrays--assign-h.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/06-string-arrays--assign-h.ts(16,7): error TS2322: Type 'string[]' is not assignable to type 'Fn'.\n  Type 'string[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "06-string-arrays--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/06-string-arrays--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "06-string-arrays--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/06-string-arrays--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "06-string-arrays--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/06-string-arrays--cast.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/06-string-arrays--cast.ts(12,18): error TS2352: Conversion of type 'Holding' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  'string' index signatures are incompatible.\n    Type 'string[]' is not comparable to type 'Fn'.\n      Type 'string[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "06-string-arrays--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/06-string-arrays--direct.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/06-string-arrays--direct.ts(12,1): error TS2322: Type 'Fn' is not assignable to type 'string[]'.\nstage3/census/record-handle-fixtures/06-string-arrays--direct.ts(16,7): error TS2322: Type 'string[]' is not assignable to type 'Fn'.\n  Type 'string[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "06-string-arrays--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/06-string-arrays--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "06-string-arrays--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/06-string-arrays--spread.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/06-string-arrays--spread.ts(12,35): error TS2418: Type of computed property's value is 'Fn', which is not assignable to type 'string[]'.\nstage3/census/record-handle-fixtures/06-string-arrays--spread.ts(15,7): error TS2322: Type 'string[]' is not assignable to type 'Fn'.\n  Type 'string[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "06-string-arrays--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/06-string-arrays--unknown-helper.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/06-string-arrays--unknown-helper.ts(17,7): error TS2322: Type 'string[]' is not assignable to type 'Fn'.\n  Type 'string[]' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "07-position--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/07-position--assign-h.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/07-position--assign-h.ts(16,7): error TS2322: Type 'string | { value: string; pos: number; end: number; }' is not assignable to type 'Fn'.\n  Type 'string' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "07-position--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/07-position--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "07-position--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/07-position--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "07-position--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/07-position--cast.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/07-position--cast.ts(12,18): error TS2352: Conversion of type 'Holding' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  'string' index signatures are incompatible.\n    Type 'string | { value: string; pos: number; end: number; }' is not comparable to type 'Fn'.\n      Type '{ value: string; pos: number; end: number; }' is not comparable to type 'Fn'.\n        Type '{ value: string; pos: number; end: number; }' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "07-position--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/07-position--direct.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/07-position--direct.ts(12,8): error TS2322: Type 'Fn' is not assignable to type 'string | { value: string; pos: number; end: number; }'.\nstage3/census/record-handle-fixtures/07-position--direct.ts(16,7): error TS2322: Type 'string | { value: string; pos: number; end: number; }' is not assignable to type 'Fn'.\n  Type 'string' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "07-position--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/07-position--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "07-position--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/07-position--spread.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/07-position--spread.ts(12,40): error TS2322: Type 'Fn' is not assignable to type 'string | { value: string; pos: number; end: number; }'.\nstage3/census/record-handle-fixtures/07-position--spread.ts(15,7): error TS2322: Type 'string | { value: string; pos: number; end: number; }' is not assignable to type 'Fn'.\n  Type 'string' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "07-position--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/07-position--unknown-helper.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/07-position--unknown-helper.ts(17,7): error TS2322: Type 'string | { value: string; pos: number; end: number; }' is not assignable to type 'Fn'.\n  Type 'string' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "08-string--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/08-string--assign-h.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/08-string--assign-h.ts(16,7): error TS2322: Type 'string' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "08-string--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/08-string--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "08-string--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/08-string--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "08-string--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/08-string--cast.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/08-string--cast.ts(12,18): error TS2352: Conversion of type 'Holding' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  'string' index signatures are incompatible.\n    Type 'string | undefined' is not comparable to type 'Fn'.\n      Type 'string' is not comparable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "08-string--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/08-string--direct.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/08-string--direct.ts(12,8): error TS2322: Type 'Fn' is not assignable to type 'string'.\nstage3/census/record-handle-fixtures/08-string--direct.ts(16,7): error TS2322: Type 'string' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "08-string--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/08-string--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "08-string--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/08-string--spread.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/08-string--spread.ts(12,40): error TS2322: Type 'Fn' is not assignable to type 'string'.\nstage3/census/record-handle-fixtures/08-string--spread.ts(15,7): error TS2322: Type 'string' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "08-string--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/08-string--unknown-helper.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/08-string--unknown-helper.ts(17,7): error TS2322: Type 'string' is not assignable to type 'Fn'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "09-type--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/09-type--assign-h.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/09-type--assign-h.ts(245,7): error TS2322: Type 'Type' is not assignable to type 'Fn'.\n  Type 'Type' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "09-type--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/09-type--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "09-type--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/09-type--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "09-type--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/09-type--cast.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/09-type--cast.ts(241,18): error TS2352: Conversion of type 'Holding' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  Type 'Type' is not comparable to type 'Fn'.\n    Type 'Type' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "09-type--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/09-type--direct.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/09-type--direct.ts(241,1): error TS2322: Type 'Fn' is not assignable to type 'Type'.\nstage3/census/record-handle-fixtures/09-type--direct.ts(245,7): error TS2322: Type 'Type' is not assignable to type 'Fn'.\n  Type 'Type' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "09-type--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/09-type--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "09-type--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/09-type--spread.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/09-type--spread.ts(241,35): error TS2418: Type of computed property's value is 'Fn', which is not assignable to type 'Type'.\nstage3/census/record-handle-fixtures/09-type--spread.ts(244,7): error TS2322: Type 'Type' is not assignable to type 'Fn'.\n  Type 'Type' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "09-type--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/09-type--unknown-helper.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/09-type--unknown-helper.ts(246,7): error TS2322: Type 'Type' is not assignable to type 'Fn'.\n  Type 'Type' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "10-symbol--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/10-symbol--assign-h.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/10-symbol--assign-h.ts(136,7): error TS2322: Type 'Symbol' is not assignable to type 'Fn'.\n  Type 'Symbol' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "10-symbol--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/10-symbol--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "10-symbol--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/10-symbol--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "10-symbol--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/10-symbol--cast.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/10-symbol--cast.ts(132,18): error TS2352: Conversion of type 'Holding' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  Type 'Symbol' is not comparable to type 'Fn'.\n    Type 'Symbol' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "10-symbol--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/10-symbol--direct.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/10-symbol--direct.ts(132,1): error TS2322: Type 'Fn' is not assignable to type 'Symbol'.\nstage3/census/record-handle-fixtures/10-symbol--direct.ts(136,7): error TS2322: Type 'Symbol' is not assignable to type 'Fn'.\n  Type 'Symbol' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "10-symbol--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/10-symbol--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "10-symbol--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/10-symbol--spread.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/10-symbol--spread.ts(132,35): error TS2418: Type of computed property's value is 'Fn', which is not assignable to type 'Symbol'.\nstage3/census/record-handle-fixtures/10-symbol--spread.ts(135,7): error TS2322: Type 'Symbol' is not assignable to type 'Fn'.\n  Type 'Symbol' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "10-symbol--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/10-symbol--unknown-helper.ts",
+      "exit": 2,
+      "diagnostic": "stage3/census/record-handle-fixtures/10-symbol--unknown-helper.ts(137,7): error TS2322: Type 'Symbol' is not assignable to type 'Fn'.\n  Type 'Symbol' provides no match for the signature '(path: string): string'.\n",
+      "runtime": null,
+      "runtime_exit": null
+    },
+    {
+      "fixture": "11-control--assign-h.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/11-control--assign-h.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "11-control--assign-result.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/11-control--assign-result.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "11-control--cast-unknown.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/11-control--cast-unknown.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "11-control--cast.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/11-control--cast.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "11-control--direct.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/11-control--direct.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "11-control--erased.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/11-control--erased.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "11-control--spread.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/11-control--spread.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    },
+    {
+      "fixture": "11-control--unknown-helper.ts",
+      "command": "node /workspace/adamic/stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noEmit --lib es2020,dom --typeRoots /workspace/ny0c3gb/stage3/census/record-handle-fixtures/empty-types /workspace/ny0c3gb/stage3/census/record-handle-fixtures/11-control--unknown-helper.ts",
+      "exit": 0,
+      "diagnostic": "",
+      "runtime": "called\n",
+      "runtime_exit": 0
+    }
+  ]
+}

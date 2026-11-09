@@ -1,0 +1,3 @@
+stage3/census/record-handle-fixtures/10-symbol--cast.ts(132,18): error TS2352: Conversion of type 'Holding' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Symbol' is not comparable to type 'Fn'.
+    Type 'Symbol' provides no match for the signature '(path: string): string'.

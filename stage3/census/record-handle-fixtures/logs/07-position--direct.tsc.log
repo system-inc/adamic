@@ -1,0 +1,3 @@
+stage3/census/record-handle-fixtures/07-position--direct.ts(12,8): error TS2322: Type 'Fn' is not assignable to type 'string | { value: string; pos: number; end: number; }'.
+stage3/census/record-handle-fixtures/07-position--direct.ts(16,7): error TS2322: Type 'string | { value: string; pos: number; end: number; }' is not assignable to type 'Fn'.
+  Type 'string' is not assignable to type 'Fn'.

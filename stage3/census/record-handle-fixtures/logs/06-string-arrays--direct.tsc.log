@@ -1,0 +1,3 @@
+stage3/census/record-handle-fixtures/06-string-arrays--direct.ts(12,1): error TS2322: Type 'Fn' is not assignable to type 'string[]'.
+stage3/census/record-handle-fixtures/06-string-arrays--direct.ts(16,7): error TS2322: Type 'string[]' is not assignable to type 'Fn'.
+  Type 'string[]' provides no match for the signature '(path: string): string'.

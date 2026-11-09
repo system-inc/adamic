@@ -1,0 +1,5 @@
+stage3/census/record-handle-fixtures/02-options--cast.ts(38,18): error TS2352: Conversion of type 'CompilerOptions' to type 'MapLike<Fn>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  'string' index signatures are incompatible.
+    Type 'CompilerOptionsValue | TsConfigSourceFile' is not comparable to type 'Fn'.
+      Type 'TsConfigSourceFile' is not comparable to type 'Fn'.
+        Type 'TsConfigSourceFile' provides no match for the signature '(path: string): string'.
