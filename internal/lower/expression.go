@@ -1142,6 +1142,14 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 				// (tsc's __String), so Node's "" would reach a slot that can't say it.
 				return nil, l.notYet(node, "a logical string operand converted to "+typeName(of)+", whose falsy \"\" the result can't hold")
 			}
+			if operator == ast.KindAmpersandAmpersandToken && of == ir.Union {
+				if missing, err := l.logicalNullLeft(node.AsBinaryExpression().Left, left); missing != nil || err != nil {
+					if err != nil {
+						return nil, err
+					}
+					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: missing, Of: of}, nil
+				}
+			}
 			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
 		}
 		lowered := ir.And
