@@ -1,0 +1,16 @@
+{
+  "pid": 14291,
+  "command": [
+    "/workspace/scratch/widened/head-entry-bin",
+    "/workspace/scratch/fa-adapted/src/tsc/tsc.ts",
+    "/workspace/scratch/widened/report/stage3/census/find-ancestor-widened/head-entry-run.jsonl"
+  ],
+  "flags": {
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMEMLIMIT": "5GiB",
+    "GOGC": "70",
+    "ADAMIC_PROBE_BINDINGS": "1",
+    "ADAMIC_PROBE_WIDENED": "all",
+    "LATENT_TIMES": "/workspace/scratch/widened/report/stage3/census/find-ancestor-widened/head-entry-run-units.jsonl"
+  }
+}

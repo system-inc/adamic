@@ -1,0 +1,14 @@
+compiler/transformers/es2016.ts:21:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+compiler/transformers/es2017.ts:119:1 | refusal_scan | Refused | compiler/transformers/es2017.ts:163:26 | a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void
+compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:168:26 | a function taking (hint: EmitHint, node: Node) => void seen as one taking (hint: EmitHint, node: Node) => void
+compiler/transformers/es2018.ts:154:1 | refusal_scan | Refused | compiler/transformers/es2018.ts:499:40 | a function taking Node seen as one taking NonNullable<MethodDeclaration | ShorthandPropertyAssignment | Access
+compiler/transformers/es2019.ts:17:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+compiler/transformers/es2020.ts:42:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+compiler/transformers/es2021.ts:25:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1931:42 | a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NumericLiteral | PrivateIde
+compiler/transformers/esDecorators.ts:295:1 | refusal_scan | Refused | compiler/transformers/esDecorators.ts:1954:32 | a function taking Node seen as one taking NonNullable<BigIntLiteral | Identifier | NoSubstitutionTemplateLiter
+compiler/transformers/legacyDecorators.ts:88:1 | lowering | Refused | compiler/visitorPublic.ts:585:48 | overload 1 of visitEachChild parameter node cannot be served by implementation parameter node
+compiler/utilities.ts:3125:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+compiler/utilities.ts:3130:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+compiler/utilities.ts:3150:1 | lowering | NotYet | compiler/binder.ts:1034:17 | writing a checked object field without its source-slot type certificate
+compiler/utilitiesPublic.ts:1566:1 | lowering | NotYet | compiler/utilitiesPublic.ts:1562:1 | checked predicate overload target ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: E
