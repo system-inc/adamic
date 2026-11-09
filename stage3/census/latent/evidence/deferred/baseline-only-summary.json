@@ -1,0 +1,145 @@
+{
+  "scope": "baseline only; not a paired result",
+  "attempted_units": 4059,
+  "unit_statuses": {
+    "attempted": 4059,
+    "deferred_generic_instantiation": 504
+  },
+  "source_records": 81,
+  "source_count": 81,
+  "finding_events": {
+    "Refused": 4748,
+    "NotYet": 5189
+  },
+  "unique_findings": {
+    "NotYet": 4628,
+    "Refused": 4545
+  },
+  "reference_parser_cast": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/utilities.ts:960:1",
+      "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/utilities.ts:8959:1",
+      "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/utilities.ts:12426:1",
+      "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1249:1",
+      "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a member typed any (167(0)) related to QualifiedName at the assertion site",
+      "root_kind": "",
+      "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17: stage 0 can't lower a member typed any (167(0)) related to QualifiedName at the assertion site yet",
+      "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:10824:1",
+      "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:490:1",
+      "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "/workspace/scratch/zb0q0zd-adapted/src/compiler/binder.ts:350:1",
+      "where": "/workspace/scratch/zb0q0zd-adapted/src/compiler/parser.ts:1253:17"
+    }
+  ],
+  "relation_report": {
+    "findings": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "relation_overflow_conservative_all_units",
+        "reason": "a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.)",
+        "root_kind": "",
+        "text": "program: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (error TS2859: Excessive complexity comparing types '\" \"' and '{}'.) yet",
+        "unit": "program",
+        "where": "program"
+      }
+    ],
+    "measurement": "measured on a checker-clean entry-root program",
+    "relation_overflow": {
+      "after_load": "",
+      "attribution": "overflow discovered only at run end; every attempted unit conservatively marked because the first affected unit is unknown",
+      "end": "error TS2859: Excessive complexity comparing types '\" \"' and '{}'.",
+      "per_unit": false
+    },
+    "status": "relation_report"
+  },
+  "child_status": {
+    "command": [
+      "env",
+      "-u",
+      "LATENT_FULL",
+      "-u",
+      "LATENT_SPECULATIVE",
+      "-u",
+      "LATENT_ONLY_FILE",
+      "GOMEMLIMIT=5GiB",
+      "LATENT_ASSERT_NO_OUTPUT=1",
+      "LATENT_TIMES=/workspace/adamic/stage3/census/latent/evidence/deferred/base-times.jsonl",
+      "/tmp/zb0q0zd-base",
+      "/workspace/scratch/zb0q0zd-adapted/src/tsc/tsc.ts",
+      "/workspace/adamic/stage3/census/latent/evidence/deferred/base.jsonl"
+    ],
+    "child_exit": 0,
+    "stopped": null,
+    "wall_seconds": 3942.00796835,
+    "peak_rss_kib": 5247768,
+    "user_seconds": 4664.101231,
+    "system_seconds": 100.133286,
+    "peak_observed_combined_rss_kib": 5248156,
+    "rss_ceiling_kib": 15204352
+  }
+}
