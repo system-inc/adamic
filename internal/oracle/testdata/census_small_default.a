@@ -1,8 +1,8 @@
-// Stopped language choice: admit wildcardMatchers[usage], a computed object read
-// whose key is a finite union of present own fields, inside a parameter default.
-// Judgment: sound with a proved complete key set and a compatible representation
-// for every selected field. It needs computed object access before the complete
-// original body can serve as a native fixture. Keep its default and body intact.
+// Agreement witness: wildcardMatchers[usage] selects three distinct matchers.
+// The computed read remains in a plain-name parameter default.
+// Defaulted files, directories and exclude calls print distinct fragments.
+// Each defaulted input exercises wildcard replacement and an interior **.
+// An explicit matcher argument is the control for default lookup mutations.
 // TypeScript 6.0.3 utilities.ts:9695, original getSubPatternFromSpec body.
 interface WildcardMatcher {
     readonly singleAsteriskRegexFragment: string;
@@ -16,7 +16,12 @@ const implicitExcludePathRegexPattern = '';
 let order = '';
 function replace(match: string): string { return match === '*' ? '[^/]*' : '[^/]'; }
 const matcher: WildcardMatcher = { singleAsteriskRegexFragment: '[^/]*', doubleAsteriskRegexFragment: '.*', replaceWildcardCharacter: replace };
-const wildcardMatchers = { files: matcher, directories: matcher, exclude: matcher };
+function replaceDirectories(match: string): string { return match === '*' ? '(directories-star)' : '(directories-question)'; }
+function replaceExclude(match: string): string { return match === '*' ? '(exclude-star)' : '(exclude-question)'; }
+const filesMatcher: WildcardMatcher = { singleAsteriskRegexFragment: '[^/]*', doubleAsteriskRegexFragment: '.*', replaceWildcardCharacter: replace };
+const directoriesMatcher: WildcardMatcher = { singleAsteriskRegexFragment: '(directories-single)', doubleAsteriskRegexFragment: '(directories-double)', replaceWildcardCharacter: replaceDirectories };
+const excludeMatcher: WildcardMatcher = { singleAsteriskRegexFragment: '(exclude-single)', doubleAsteriskRegexFragment: '(exclude-double)', replaceWildcardCharacter: replaceExclude };
+const wildcardMatchers = { files: filesMatcher, directories: directoriesMatcher, exclude: excludeMatcher };
 function getNormalizedPathComponents(spec: string, basePath: string): string[] { return spec.split('/'); }
 function last(values: readonly string[]): string | undefined { return values[values.length - 1]; }
 function removeTrailingDirectorySeparator(path: string | undefined): string { return (path ?? '').endsWith('/') ? (path ?? '').slice(0, -1) : path ?? ''; }
@@ -25,8 +30,9 @@ function getSubPatternFromSpec(
     spec: string,
     basePath: string,
     usage: "files" | "directories" | "exclude",
-    { singleAsteriskRegexFragment, doubleAsteriskRegexFragment, replaceWildcardCharacter }: WildcardMatcher = wildcardMatchers[usage],
+    selectedMatcher: WildcardMatcher = wildcardMatchers[usage],
 ): string | undefined {
+    const { singleAsteriskRegexFragment, doubleAsteriskRegexFragment, replaceWildcardCharacter } = selectedMatcher;
     let subpattern = "";
     let hasWrittenComponent = false;
     const components = getNormalizedPathComponents(spec, basePath);
@@ -102,8 +108,7 @@ function getSubPatternFromSpec(
     return subpattern;
 }
 
-console.log(getSubPatternFromSpec('one/two', '', 'files') ?? 'missing');
-console.log(getSubPatternFromSpec('one/**', '', 'files') ?? 'missing');
-console.log(getSubPatternFromSpec('one/*', '', 'exclude') ?? 'missing');
-console.log(getSubPatternFromSpec('one/?', '', 'directories') ?? 'missing');
-console.log(getSubPatternFromSpec('one/*', '', 'files', matcher) ?? 'missing');
+console.log('files:' + (getSubPatternFromSpec('one/*/x*?/**/leaf', '', 'files') ?? 'missing'));
+console.log('directories:' + (getSubPatternFromSpec('one/*/x*?/**/leaf', '', 'directories') ?? 'missing'));
+console.log('exclude:' + (getSubPatternFromSpec('one/*/x*?/**/leaf', '', 'exclude') ?? 'missing'));
+console.log('explicit:' + (getSubPatternFromSpec('one/*', '', 'files', matcher) ?? 'missing'));
