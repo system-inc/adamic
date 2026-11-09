@@ -28,9 +28,10 @@ becomes
 		}
 ```
 
-Red: TestRecordSourceHandles/satisfies. The record is held as Record<string, number> alone, which Options (a required
-label) relates to in neither direction, so Options's read loses its weak_field_read and the fixture lowers one helper,
-not two. Every other subtest stays as it was: no other fixture holds a record under `satisfies`.
+No red pin today, measured (Codex 01a1c13c at 55433524): a `{}` under `satisfies Record<string, number>` is never a
+record, since the const holds its own `{}`, a fixed object, and satisfies.ts stops at its declaration ("a {} seen as
+Record<string, number> (fixed objects and records have different storage)") before any read. So whether satisfies
+holds anything has no program to observe yet, and this entry records the rule until such a record exists.
 
 ## (b) The `{}` question dropped
 
@@ -55,12 +56,7 @@ becomes
 ```
 
 Red: TestRecordSourceHandles/empty_source, whose record is held as Held, which relates to Read in neither direction, so
-Read's read loses its weak_field_read (0 helpers, want 1). And TestRecordSourceHandles/t2_parameter_return, if it
-lowers as its .stop reads: Read's read is plain, so native stops at the record's fixed read with the runtime's own
-words and the JavaScript backend prints text, where the pin wants the weak read's stop. t1_empty and the other roads
-stop at the hiding rule before lowering finishes (rulings.md:71), the second guard, and stay as they were. bare,
-satisfies and generic stay green, since their Options declares a required label `{}` lacks, and so does handle.ts,
-whose Hints its Record<string, number> handle already reaches.
+Read's read loses its weak_field_read (0 helpers, want 1).
 
 ## (c) A type parameter related as itself
 

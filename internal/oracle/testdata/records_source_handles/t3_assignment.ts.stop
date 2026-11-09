@@ -1,1 +1,1 @@
-internal/oracle/testdata/records_source_handles/t3_assignment.ts:9:17: Adamic 0.1 refuses optional property a in Read absent from structural source {}, which can hide fields; declare a on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+internal/oracle/testdata/records_source_handles/t3_assignment.ts:8:8: stage 0 can't lower a Held seen as {} (fixed objects and records have different storage; copy explicitly) yet

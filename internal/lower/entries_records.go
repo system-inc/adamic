@@ -285,7 +285,9 @@ type recordGuardedRead struct {
 // a read of that field through such a view is checked (rulings.md:72). Language's W road is the second guard's
 // alone: `{ a: string; b: number }` seen as `{ b: number }`, then as `{ b: number; a?: number }`, which `{}`
 // doesn't reach (b is required). rulings.md:71 misses an `object` source until #1q9w1yf lands, so until then the
-// two guards leave that road open between them.
+// two guards leave that road open between them. Today a record seen as any fixed type, `{}` and W included, stops
+// first at the storage NotYet ("fixed objects and records have different storage"), so neither guard is what a
+// record road meets yet (Codex 01a1c13c measured each of Language's roads there); they stand for when it lowers.
 func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	if l.entriesRecordTypesKnown {
 		return l.entriesRecordTypes
