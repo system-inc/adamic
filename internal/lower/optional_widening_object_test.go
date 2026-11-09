@@ -72,6 +72,9 @@ func TestOptionalWideningObjectExemptions(t *testing.T) {
 	for _, probe := range []struct{ name, source string }{
 		{"undefined spread", "interface Read { a?: number }\nfunction f(flag: boolean): void { const s: Read = { ...(flag ? { a: 1 } : undefined) }; console.log(String(s.a)); }\nf(true);\nf(false);\n"},
 		{"readonly class view", "interface Read { readonly a?: number }\nclass D { a = 1 }\nconst r: Read = new D();\nconsole.log(String((r.a ?? 0) + 1));\n"},
+		{"optional string brand", "type Name = string & { readonly _name?: undefined };\nconst name = 'abc' as Name;\nconsole.log(name.toUpperCase());\n"},
+		{"optional never brand", "type Name = string & { readonly _name?: never };\nconst name = 'abc' as Name;\nconsole.log(name.toUpperCase());\nconsole.log(String(name._name));\n"},
+		{"optional number brand", "type Count = number & { marker?: undefined };\nconsole.log(String((3 as Count)['marker']));\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

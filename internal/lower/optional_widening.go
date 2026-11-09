@@ -148,12 +148,13 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return nil
 	}
-	// Non-object sources include object, primitives, any, unknown and instantiable types.
-	// Keep the never and nullish exemption: these values have no fields to hide.
-	// Keep primitive spreads exempt too, since they copy no named field. Keep any
-	// exempt: it is a host value or a hatch other rules judge, not a structural source
-	// this rule reads member by member. Other sources must declare the target's optional
-	// members through their apparent type.
+	// Sources without Object or Intersection flags that need the walk are object,
+	// unknown and instantiable types without a different base constraint.
+	// Keep never and nullish values exempt: they have no fields to hide. Keep any
+	// exempt as a host value or a hatch other rules judge, not a structural source.
+	// Keep every primitive exempt. Seeing a primitive as an object type is a
+	// representation question owned by #thrpakr (NotYet there, brands exempt).
+	// A phantom brand's optional member never exists on the primitive it holds.
 	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		if source.Flags()&checker.TypeFlagsAny != 0 {
 			return nil
@@ -161,13 +162,13 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		if source.Flags()&(checker.TypeFlagsNever|checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 {
 			return nil
 		}
+		if source.Flags()&checker.TypeFlagsPrimitive != 0 {
+			return nil
+		}
 		if source.Flags()&checker.TypeFlagsInstantiable != 0 {
 			if constraint := l.checker.GetBaseConstraintOfType(source); constraint != nil && constraint != source {
 				return l.optionalWidened(constraint, target, skip, visited)
 			}
-		}
-		if skip != nil && source.Flags()&checker.TypeFlagsPrimitive != 0 {
-			return nil
 		}
 	}
 	// Container elements are views too. Avoid walking library methods, whose generic signatures
