@@ -74,6 +74,8 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 // identities. They select the existing allocation emission without runtime work.
 // follow classifies every IR expression by graphFlowRules (graph_flow_classes.go), and a graph
 // value through one the plan doesn't follow is NotYet at the site that demanded it, never a leak.
+// An argument passed to a function value whose targets are Unknown is followed too, quietly: it
+// plans what it reaches and never stops (#41vb71c).
 func (f *cycleFinder) graphFlows() error {
 	program := f.l.result
 	next := 0
@@ -111,6 +113,16 @@ func (f *cycleFinder) graphFlows() error {
 			queue = append(queue, node)
 		}
 	}
+	// A quiet demand plans and never stops. It runs once every graph-typed demand has, so a node
+	// already followed for its type isn't followed again.
+	quietlyWanted := map[int]bool{}
+	quietQueue := []int{}
+	demandQuietly := func(node int) {
+		if !wanted[node] && !quietlyWanted[node] {
+			quietlyWanted[node] = true
+			quietQueue = append(quietQueue, node)
+		}
+	}
 	for local, proven := range f.l.localTypes {
 		if graphType(proven) {
 			demand(local + 1)
@@ -131,6 +143,9 @@ func (f *cycleFinder) graphFlows() error {
 		at         graphDemand
 	}
 	pending := []graphPending{}
+	// quietly is every argument passed to a function value whose targets are Unknown: no parameter it
+	// reaches has it as a source, so it's demanded at the call, whatever its type (#41vb71c).
+	quietly := []ir.Expression{}
 	// Site retains the checker view of the actual slot being written.
 	slot := func(site int, name string, argument int) bool {
 		if site <= 0 || site > len(f.l.writeSites) {
@@ -230,7 +245,8 @@ func (f *cycleFinder) graphFlows() error {
 			case ir.CallClosure:
 				targets := program.ClosureTargets(value)
 				if targets.Unknown {
-					// Opaque function values are a documented leak-only frontier.
+					// A spread argument is its array, the operand followed here like any other.
+					quietly = append(quietly, value.Arguments...)
 					break
 				}
 				for _, target := range targets.Functions {
@@ -239,6 +255,12 @@ func (f *cycleFinder) graphFlows() error {
 							sources[param+1] = append(sources[param+1], value.Arguments[i])
 						}
 					}
+				}
+			case ir.ArrayReduce:
+				// The callback is handed Initial as its first accumulator and the array itself; its
+				// elements were planned where they were stored.
+				if program.ClosureTargets(value).Unknown {
+					quietly = append(quietly, value.Initial, value.Array)
 				}
 			case ir.SetProperty:
 				if slot(value.Site, value.Name, 0) {
@@ -292,12 +314,15 @@ func (f *cycleFinder) graphFlows() error {
 	}
 	// The stop reported is the least by place and words, so it doesn't hang on map order.
 	var stopped *NotYet
-	var follow func(ir.Expression, graphDemand)
-	follow = func(expression ir.Expression, at graphDemand) {
+	var follow func(ir.Expression, graphDemand, bool)
+	follow = func(expression ir.Expression, at graphDemand, quiet bool) {
 		if expression == nil {
 			return
 		}
 		step := graphFlowStepOf(expression, program)
+		if step.stop && quiet {
+			return
+		}
 		if step.stop {
 			failure := &NotYet{Where: where(at), What: fmt.Sprintf("a graph value through %T the plan doesn't follow", expression)}
 			if stopped == nil || failure.Where < stopped.Where || failure.Where == stopped.Where && failure.What < stopped.What {
@@ -308,27 +333,41 @@ func (f *cycleFinder) graphFlows() error {
 		if step.planned {
 			program.GraphTypes[step.site] = true
 		}
+		ask := demand
+		if quiet {
+			ask = demandQuietly
+		}
 		for _, operand := range step.sources.operands {
-			follow(operand, at)
+			follow(operand, at, quiet)
 		}
 		for _, local := range step.sources.locals {
-			demand(local + 1)
+			ask(local + 1)
 		}
 		for _, function := range step.sources.results {
-			demand(resultNode(function))
+			ask(resultNode(function))
 		}
 		for _, function := range step.sources.yields {
-			demand(yieldNode(function))
+			ask(yieldNode(function))
 		}
 	}
 	for _, each := range pending {
-		follow(each.expression, each.at)
+		follow(each.expression, each.at, false)
 	}
 	for len(queue) > 0 {
 		node := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
 		for _, expression := range sources[node] {
-			follow(expression, graphDemand{node: node})
+			follow(expression, graphDemand{node: node}, false)
+		}
+	}
+	for _, argument := range quietly {
+		follow(argument, graphDemand{}, true)
+	}
+	for len(quietQueue) > 0 {
+		node := quietQueue[len(quietQueue)-1]
+		quietQueue = quietQueue[:len(quietQueue)-1]
+		for _, expression := range sources[node] {
+			follow(expression, graphDemand{node: node}, true)
 		}
 	}
 	if stopped != nil {

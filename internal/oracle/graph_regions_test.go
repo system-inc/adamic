@@ -32,6 +32,10 @@ var graphOracleFixtures = []string{
 	"internal/oracle/testdata/graph_regions/flow_record_values.a",
 	"internal/oracle/testdata/graph_regions/flow_to_reversed.a",
 	"internal/oracle/testdata/graph_regions/flow_to_sorted.a",
+	"internal/oracle/testdata/graph_regions/flow_unknown_argument.a",
+	"internal/oracle/testdata/graph_regions/flow_unknown_map.a",
+	"internal/oracle/testdata/graph_regions/flow_unknown_reduce.a",
+	"internal/oracle/testdata/graph_regions/flow_unknown_result.a",
 	"internal/oracle/testdata/graph_regions_accessor.a",
 	"internal/oracle/testdata/graph_regions_anchor.a",
 	"internal/oracle/testdata/graph_regions_cache.a",
@@ -213,6 +217,29 @@ func TestGraphOracleGraphRegionsFlowToReversed(t *testing.T) {
 func TestGraphOracleGraphRegionsFlowToSorted(t *testing.T) {
 	t.Parallel()
 	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_to_sorted.a")
+}
+
+// What's passed to and returned from a function value whose targets are Unknown (Memory's probes on
+// #41vb71c): f3, an argument the callee stores, leaked at main (frees 5 of 14) and is demanded at the
+// call now; f1, f2 and f4, results planned at their Returns, freed everything already.
+func TestGraphOracleGraphRegionsFlowUnknownArgument(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_unknown_argument.a")
+}
+
+func TestGraphOracleGraphRegionsFlowUnknownMap(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_unknown_map.a")
+}
+
+func TestGraphOracleGraphRegionsFlowUnknownReduce(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_unknown_reduce.a")
+}
+
+func TestGraphOracleGraphRegionsFlowUnknownResult(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_unknown_result.a")
 }
 
 func TestGraphOracleGraphRegionsAccessor(t *testing.T) {
