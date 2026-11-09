@@ -21,12 +21,14 @@ type backendOutcome struct {
 // ruledBackendDivergence is one row of the list internal/oracle's backend divergence test pins
 // (internal/oracle/testdata/backend_divergences.json, #tqm95v6): a fixture whose backends are ruled to differ,
 // from each other, or, where Node is set, both from the source on Node while they agree with each other. The
-// tool reads the oracle's own rows, never a list of its own.
+// tool reads the oracle's own rows, never a list of its own. Format is set on a row whose fixture is built only as
+// one bundled image (CommonJSBundle), whose outcomes are the installed-layout harness's, never a delta program's.
 type ruledBackendDivergence struct {
 	Fixture    string          `json:"fixture"`
 	Name       string          `json:"name,omitempty"`
 	Ruling     string          `json:"ruling"`
 	Reason     string          `json:"reason"`
+	Format     string          `json:"format,omitempty"`
 	Node       *backendOutcome `json:"node,omitempty"`
 	Native     backendOutcome  `json:"native"`
 	JavaScript backendOutcome  `json:"javascript"`
@@ -93,13 +95,15 @@ func (outcome backendOutcome) ran(o observation) bool {
 // code and stdout); the program's path is a row's fixture, on a row that rules Node's side; and Node's run is
 // exactly that row's Node outcome, and native's its native outcome. The row's JavaScript outcome is carried but not
 // compared here: JavaScript is held to native's exit and stdout, as outputsAgree holds it, so the javascript column is
-// the oracle test's to check, never this one's. A program on no row is never one, whatever it prints.
+// the oracle test's to check, never this one's. A program on no row is never one, whatever it prints, and nor is a
+// program at a row declaring a format: the delta lowers and runs every program as an ES module, and that row's runs
+// are its bundled image's, in the installed layout, with each lib directory written <lib>.
 func acceptsRuledBackendDivergence(path string, list ruledBackendDivergenceList, node, javascript, native observation) bool {
 	if javascript.Error != "" || native.Error != "" || javascript.Exit != native.Exit || javascript.Stdout != native.Stdout {
 		return false
 	}
 	for _, row := range list.Divergences {
-		if row.Fixture == path && row.Node != nil {
+		if row.Fixture == path && row.Node != nil && row.Format == "" {
 			return row.Node.ran(node) && row.Native.ran(native)
 		}
 	}
