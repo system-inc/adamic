@@ -1,0 +1,7 @@
+                // if we're in es2015, attach the method to a shared prototype for `FlowNode`
+                // so the method doesn't show up in the watch window.
+                if (!flowNodeProto) {
+                    flowNodeProto = Object.create(Object.prototype) as FlowNode;
+                    attachFlowNodeDebugInfoWorker(flowNodeProto);
+                }
+                Object.setPrototypeOf(flowNode, flowNodeProto);
