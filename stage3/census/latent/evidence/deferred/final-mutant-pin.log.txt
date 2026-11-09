@@ -1,0 +1,8 @@
+=== RUN   TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+=== PAUSE TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+=== CONT  TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+    deferred_census_test.go:71: written-any unit reads as lowering: unit=&{Measurement:measured on a checker-rejected program Where:/tmp/adamic-gate/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd1410725396/001/main.ts:1:1 Kind:KindFunctionDeclaration BodyStart:44 BodyEnd:75 RelationOverflow:<nil> Instantiated:false Status:attempted CheckerDiagnostics:[] Name:writtenAny Parent: Top: Depth:0} findings=[]
+--- FAIL: TestLatentWrittenAnyDeferredCensusStopsZb0q0zd (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent	0.089s
+FAIL

@@ -1,0 +1,25 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_FULL",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "-u",
+    "LATENT_ONLY_FILE",
+    "GOMEMLIMIT=5GiB",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/adamic/stage3/census/latent/evidence/deferred/head-times.jsonl",
+    "/tmp/zb0q0zd-head",
+    "/workspace/scratch/zb0q0zd-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/latent/evidence/deferred/head.jsonl"
+  ],
+  "child_exit": -15,
+  "stopped": null,
+  "wall_seconds": 317.20487964600034,
+  "peak_rss_kib": 1215940,
+  "user_seconds": 326.915214,
+  "system_seconds": 11.170429,
+  "peak_observed_combined_rss_kib": 6157256,
+  "rss_ceiling_kib": 15204352
+}
