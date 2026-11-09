@@ -1,0 +1,23 @@
+{
+  "compiler_commit": "f0c358f2caa605525a58dad49fabb38bd92418a9",
+  "adaptation_commit": "fd8b74b9bd4fa5d8012dfcc0c0252c3f1964cd4d",
+  "typescript_source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere_commit": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "cohere_typescript_commit": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "report_parent_commit": "d7b05dc830678b13734bcf0bc4c809aa9b75c8fe",
+  "test_sha256": "2c2237447c244247bb5cd93ab96f0a573f643c63974a4ecd2cfbbe82c85c9d5b",
+  "scratch_patch_sha256": "7d1671621a638af4caed696a4945869a63db1659dfaa8fc1302989c74964ac7c",
+  "binary_sha256": "145bc9c48c0b9db80bbcd11536852657247fe54242e2e35016e40abf55cf019a",
+  "source_manifest_sha256": "df10b6f80f338d703457a7bece296ef661239bba3f36294bf039ca64855bc024",
+  "successful_child_exit_codes": {
+    "setup": 0,
+    "npm_ci": 0,
+    "apply": 0,
+    "final_test_build": 0,
+    "observer_fixture": 0
+  },
+  "measured_run": {
+    "child_exit_code": 0,
+    "silent_30_minutes": false
+  }
+}

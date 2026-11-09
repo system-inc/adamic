@@ -1,0 +1,245 @@
+package lower
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/fresh"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
+	"sort"
+	"testing"
+	"time"
+)
+
+var censusLastWrite *fresh.Write
+var censusSelectionCompleted bool
+var censusPhase string
+
+var censusCyclesReached, censusSelectionReached, censusForceFalse bool
+var censusComponents []map[string]any
+
+func censusWhere(p *load.Program, n *ast.Node) string {
+	if n == nil {
+		return ""
+	}
+	return p.Where(n)
+}
+func censusComponent(f *cycleFinder, component []cycleNode, seeds map[cycleNode]bool, modules []*ast.SourceFile) {
+	members := []map[string]any{}
+	hasRecord := false
+	for _, n := range component {
+		m := map[string]any{}
+		if n.cell != 0 {
+			m["cell"] = n.cell
+			m["name"] = f.l.result.Locals[n.cell-1].Name
+			m["where"] = censusWhere(f.l.program, f.l.localNodes[n.cell-1])
+		} else {
+			t := n.proven
+			m["type_id"] = t.Id()
+			m["type"] = f.l.checker.TypeToString(t)
+			m["where"] = censusWhere(f.l.program, f.where[t])
+			decls := []string{}
+			if sym := t.Symbol(); sym != nil {
+				for _, d := range sym.Declarations {
+					decls = append(decls, f.l.program.Where(d))
+				}
+			}
+			m["declarations"] = decls
+			record := f.l.recordElement(t) != nil
+			m["record"] = record
+			hasRecord = hasRecord || record
+			if record {
+				sites := []map[string]any{}
+				for _, module := range modules {
+					var visit ast.Visitor
+					visit = func(node *ast.Node) bool {
+						if ast.IsPartOfTypeNode(node) {
+							return false
+						}
+						if node.Kind == ast.KindObjectLiteralExpression {
+							views := []*checker.Type{f.l.checker.GetTypeAtLocation(node), f.l.slotType(node)}
+							if node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Name() != nil {
+								views = append(views, f.l.checker.GetTypeAtLocation(node.Parent.Name()))
+							}
+							for _, view := range views {
+								if censusHasType(f.l, view, t) {
+									sites = append(sites, map[string]any{"where": f.l.program.Where(node), "load_index": censusLoadIndex[f.l.program.FileName(module)]})
+									break
+								}
+							}
+						}
+						return node.ForEachChild(visit)
+					}
+					module.AsNode().ForEachChild(visit)
+				}
+				m["literal_sites"] = sites
+			}
+		}
+		if seeds[n] {
+			if n.cell != 0 {
+				m["seed"] = map[string]any{"kind": "captured_cell", "where": censusWhere(f.l.program, f.l.localNodes[n.cell-1])}
+			} else {
+				censusLastWrite = nil
+				cause := f.slotsOf(n.proven)
+				m["seed"] = map[string]any{"kind": "unproven_slot_write", "cause": fmt.Sprint(cause)}
+				if w := censusLastWrite; w != nil {
+					kind := map[fresh.WriteKind]string{fresh.WriteField: "field", fresh.WriteElement: "array_element", fresh.WriteMapEntry: "map_or_record_entry", fresh.WriteSetElement: "set_element", fresh.WriteUnknown: "unknown"}[w.Kind]
+					m["seed"] = map[string]any{"kind": "unproven_slot_write", "write_kind": kind, "field": w.Name, "where": f.l.writeSiteWhere(w.Site), "function": f.l.functionName(w.Function), "reason": w.Why, "cause": fmt.Sprint(cause)}
+				}
+
+			}
+		}
+		members = append(members, m)
+	}
+	sort.Slice(members, func(i, j int) bool {
+		a, _ := json.Marshal(members[i])
+		b, _ := json.Marshal(members[j])
+		return string(a) < string(b)
+	})
+	censusComponents = append(censusComponents, map[string]any{"has_record": hasRecord, "members": members})
+}
+
+var censusLoadIndex map[string]int
+
+func TestRecordSelectCensus(t *testing.T) {
+	entry := os.Getenv("RECORD_SELECT_ENTRY")
+	if entry == "" {
+		t.Skip("scratch measurement only")
+	}
+	output, err := os.Create(os.Getenv("RECORD_SELECT_OUT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	enc := json.NewEncoder(output)
+	emit := func(v any) {
+		if err := enc.Encode(v); err != nil {
+			t.Fatal(err)
+		}
+		if err := output.Sync(); err != nil {
+			t.Fatal(err)
+		}
+	}
+	program, err := load.Load([]string{entry})
+	if err != nil {
+		t.Fatal(err)
+	}
+	root := program.Files()[0]
+	c, release := program.Checker(context.Background(), root)
+	defer release()
+	modules, cyclic := ESMModuleOrder(c, root)
+	censusLoadIndex = map[string]int{}
+	order := []string{}
+	for i, m := range modules {
+		name := program.FileName(m)
+		censusLoadIndex[name] = i
+		order = append(order, name)
+	}
+	emit(map[string]any{"kind": "header", "entry": entry, "config": os.Getenv("RECORD_SELECT_CONFIG"), "diagnostics": program.CensusDiagnostics, "esm_order": order, "esm_cyclic": cyclic, "compiler_files": len(program.CensusFiles()), "scope": "entry-root compiler program; each group uses normal production lowering"})
+	files := append([]*ast.SourceFile{root}, program.CensusFiles()...)
+	seen := map[*ast.SourceFile]bool{}
+	for _, file := range files {
+		if seen[file] {
+			continue
+		}
+		seen[file] = true
+		for _, control := range []bool{false, true} {
+			censusPhase = "start"
+			censusForceFalse = control
+			censusCyclesReached = false
+			censusSelectionReached = false
+			censusSelectionCompleted = false
+			censusComponents = []map[string]any{}
+			started := time.Now()
+			name := program.FileName(file)
+			fmt.Fprintf(os.Stderr, "START %s control=%v\n", name, control)
+			group := map[string]any{"kind": "group", "entry": name, "control_through_record_false": control}
+			func() {
+				defer func() {
+					if v := recover(); v != nil {
+						group["panic"] = fmt.Sprint(v)
+					}
+				}()
+				_, failure := lowerCheckedWithCycleTypes(program, c, file, nil, false, false, map[int]*checker.Type{})
+				if failure != nil {
+					group["failure"] = failure.Error()
+				}
+			}()
+			group["last_phase"] = censusPhase
+			group["cycles_reached"] = censusCyclesReached
+			group["selection_reached"] = censusSelectionReached
+			group["selection_completed"] = censusSelectionCompleted
+			group["selected_components"] = censusComponents
+			group["seconds"] = time.Since(started).Seconds()
+			emit(group)
+			fmt.Fprintf(os.Stderr, "DONE %s control=%v cycles=%v selection=%v components=%d time=%s\n", filepath.Base(name), control, censusCyclesReached, censusSelectionReached, len(censusComponents), time.Since(started))
+		}
+	}
+}
+
+// This fixture checks the observer and the control even when all tsc groups stop earlier.
+func TestRecordSelectObserverFixture(t *testing.T) {
+	if os.Getenv("RECORD_SELECT_CONFIG") == "" {
+		t.Skip("scratch measurement only")
+	}
+	dir := t.TempDir()
+	entry := filepath.Join(dir, "cycle.ts")
+	source := `interface A { next: A[]; r: { [key: string]: A[] } | undefined }
+ function connect(a: A, b: A): void { a.next.push(b); a.r = { k: a.next.slice() }; }
+ function run(): void { const a: A = { next: [], r: undefined }; const b: A = { next: [], r: undefined }; connect(a, b); connect(b, a); }
+ run();
+ `
+	if err := os.WriteFile(entry, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	p, err := load.Load([]string{entry})
+	if err != nil {
+		t.Fatal(err)
+	}
+	c, release := p.Checker(context.Background(), p.Files()[0])
+	defer release()
+	evidence := []map[string]any{}
+	for _, control := range []bool{false, true} {
+		censusForceFalse = control
+		censusCyclesReached = false
+		censusSelectionReached = false
+		censusSelectionCompleted = false
+		censusComponents = []map[string]any{}
+		censusLoadIndex = map[string]int{entry: 0}
+		_, failure := lowerCheckedWithCycleTypes(p, c, p.Files()[0], nil, false, false, map[int]*checker.Type{})
+		evidence = append(evidence, map[string]any{"control_through_record_false": control, "cycles_reached": censusCyclesReached, "selection_reached": censusSelectionReached, "selection_completed": censusSelectionCompleted, "selected_components": censusComponents, "failure": fmt.Sprint(failure)})
+		if !censusSelectionReached || len(censusComponents) == 0 {
+			t.Fatalf("fixture did not select: %v", failure)
+		}
+	}
+	out, err := os.Create(os.Getenv("RECORD_SELECT_FIXTURE_OUT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer out.Close()
+	if err := json.NewEncoder(out).Encode(evidence); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func censusHasType(l *lowering, view, target *checker.Type) bool {
+	if view == nil {
+		return false
+	}
+	view = l.concrete(view)
+	if view == target || l.checker.GetNonNullableType(view) == target {
+		return true
+	}
+	if view.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range view.Types() {
+			if censusHasType(l, member, target) {
+				return true
+			}
+		}
+	}
+	return false
+}

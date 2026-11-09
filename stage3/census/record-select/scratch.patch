@@ -1,0 +1,223 @@
+diff --git a/internal/load/load.go b/internal/load/load.go
+index 92addd0d2..56d61b4c0 100644
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -35,6 +35,7 @@ var errReadOnly = errors.New("load: the source file system is read-only")
+ 
+ // Program is a loaded Adamic program that the checker accepted.
+ type Program struct {
++	CensusDiagnostics []string
+ 	// tsgo opts this compilation into the external native checker library.
+ 	tsgo bool
+ 
+@@ -129,7 +130,11 @@ func load(paths []string, overlay map[string]string, display func(string) string
+ 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
+ 	// the stats module resolution repeats.
+ 	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
+-	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
++	parsed, configErrors := tsoptions.GetParsedCommandLineOfConfigFile(currentDirectory.ResolveFile(os.Getenv("RECORD_SELECT_CONFIG")), nil, nil, fileSystem, nil)
++	if parsed == nil || len(configErrors) != 0 {
++		return nil, fmt.Errorf("census config parse failed: %v", configErrors)
++	}
++	config := tsoptions.NewParsedCommandLine(parsed.CompilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+ 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
+ 	program := compiler.NewProgram(compiler.ProgramOptions{
+ 		Config:         config,
+@@ -153,7 +158,7 @@ func load(paths []string, overlay map[string]string, display func(string) string
+ 		fs.nodeTypes = true
+ 		roots = append(roots, index)
+ 		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
+-		options := compilerOptions()
++		options := parsed.CompilerOptions()
+ 		options.TypeRoots = []tspath.RootedDirectoryPath{tspath.RootedDirectoryPathFromNormalized(nodeTypesRoot)}
+ 		config = tsoptions.NewParsedCommandLine(options, roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+ 		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
+@@ -165,7 +170,7 @@ func load(paths []string, overlay map[string]string, display func(string) string
+ 
+ 	loaded := &Program{compiler: program, fs: fs}
+ 	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
+-		return nil, &CheckError{Diagnostics: diagnostics}
++		loaded.CensusDiagnostics = diagnostics
+ 	}
+ 
+ 	// Every root must be in the program. One that is not would be a file silently left unchecked.
+@@ -307,3 +312,14 @@ func (p *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int,
+ 
+ // CompilerProgram exposes the checked program to public checker and lint adapters.
+ func (p *Program) CompilerProgram() *compiler.Program { return p.compiler }
++
++// Scratch only: retain the entry-root compiler program, including diagnostics.
++func (p *Program) CensusFiles() []*ast.SourceFile {
++	var files []*ast.SourceFile
++	for _, f := range p.compiler.GetSourceFiles() {
++		if !f.IsDeclarationFile && !IsLibrary(f) && !IsPrelude(f) {
++			files = append(files, f)
++		}
++	}
++	return files
++}
+diff --git a/internal/lower/cycles.go b/internal/lower/cycles.go
+index 59ff69eb7..e76b1fe76 100644
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -91,6 +91,7 @@ type cycleFinder struct {
+ // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
+ // proven not to close a cycle (fresh.go), or returns nil.
+ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
++	censusCyclesReached = true
+ 	// Generated frame/Promise/reaction layouts are IR identities, never checker declarations.
+ 	// Only their runtime-owned protocol edges are exempt. Source types, including a class
+ 	// called adamic_async_frame, continue through slotsOf with no name-based escape hatch.
+diff --git a/internal/lower/fresh.go b/internal/lower/fresh.go
+index 784cc2b4e..e64ec176f 100644
+--- a/internal/lower/fresh.go
++++ b/internal/lower/fresh.go
+@@ -72,6 +72,7 @@ func (f *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name
+ 
+ // writtenAt names an unproven write: where it is, or, for one lowering didn't record, what it is.
+ func (f *cycleFinder) writtenAt(write *fresh.Write) string {
++	censusLastWrite = write
+ 	if write.Site == 0 {
+ 		return "a write in " + f.l.functionName(write.Function)
+ 	}
+diff --git a/internal/lower/graph_types.go b/internal/lower/graph_types.go
+index 42435ee05..b2c5c07c9 100644
+--- a/internal/lower/graph_types.go
++++ b/internal/lower/graph_types.go
+@@ -87,6 +87,7 @@ func graphSeed(err error) (bool, error) {
+ // The old refusal sites still determine the seeds. The ownership SCC includes
+ // all strong connecting paths, including readonly and proven-fresh slots.
+ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
++	censusSelectionReached = true
+ 	// Graph regions don't follow record values, so a cycle through a record stays refused rather than seeded.
+ 	for _, proven := range f.seen {
+ 		if f.l.recordElement(proven) != nil {
+@@ -123,6 +124,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
+ 		}
+ 	}
+ 	if len(seeds) == 0 {
++		censusSelectionCompleted = true
+ 		return nil
+ 	}
+ 	// Literals may have narrower types than the mutable view through which they
+@@ -218,6 +220,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
+ 			}
+ 		}
+ 		if selected {
++			censusComponent(f, component, seeds, modules)
+ 			for _, each := range component {
+ 				graph[each] = true
+ 				if each.proven != nil && f.l.isLibraryType(each.proven, "Promise") && throughPromise == nil {
+@@ -234,6 +237,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
+ 			visit(node)
+ 		}
+ 	}
++	censusSelectionCompleted = true
+ 	// A region frees a cycle only when every value on it is a member. A Promise never is (its
+ 	// payload is a counted value outside any region), so a cycle through one would keep its region
+ 	// alive forever: refuse it, as before graph regions.
+@@ -260,7 +264,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
+ 	// field closes one with no such write: a.r = { k: a.next.slice() } freed 5 of 20 by the counted build
+ 	// (#a9e21hc). So a record on a cycle stops here, until #1vb0x5s gives records their region. A record
+ 	// outside every selected component (a record of graph values nothing in the graph holds) lowers.
+-	if throughRecord != nil {
++	if throughRecord != nil && !censusForceFalse {
+ 		where := f.where[throughRecord[0].proven]
+ 		if where == nil {
+ 			where = modules[0].AsNode()
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index ebb7b96ee..8b3294619 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -98,22 +98,30 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
+ 
+ 	// The base name only, so the same program emits the same C on every machine.
+ 	lowering.result.Source = filepath.Base(program.FileName(entry))
++	censusPhase = "moduleOrder"
+ 	modules, err := lowering.moduleOrder(entry)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 	// Before any view is made or any element read lowers, so every read is keyed by the whole program.
++	censusPhase = "collectViewedElements"
+ 	lowering.collectViewedElements(modules)
++	censusPhase = "noteInheritance"
+ 	lowering.noteInheritance(modules)
++	censusPhase = "enumInitialization"
+ 	if err := lowering.enumInitialization(modules); err != nil {
+ 		return nil, err
+ 	}
++	censusPhase = "noteAccessorNames"
+ 	lowering.noteAccessorNames(modules)
++	censusPhase = "noteOmittedOptionals"
+ 	lowering.noteOmittedOptionals(modules)
++	censusPhase = "namespaceInitialization"
+ 	if err := lowering.namespaceInitialization(modules); err != nil {
+ 		return nil, err
+ 	}
+ 	for _, module := range modules {
++		censusPhase = "refuse"
+ 		if err := lowering.refuse(module); err != nil {
+ 			return nil, err
+ 		}
+@@ -123,11 +131,14 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
+ 	for _, module := range modules {
+ 		declarations = append(declarations, module.Statements.Nodes...)
+ 	}
++	censusPhase = "declareModule"
+ 	if err := lowering.declareModule(declarations); err != nil {
+ 		return nil, err
+ 	}
++	censusPhase = "recordExports"
+ 	lowering.recordExports(entry)
+ 	for _, module := range modules {
++		censusPhase = "moduleStatements"
+ 		body, err := lowering.moduleStatements(module)
+ 		if err != nil {
+ 			return nil, err
+@@ -138,28 +149,37 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
+ 		return nil, lowering.unlowerable
+ 	}
+ 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
++	censusPhase = "finishClassCalls"
+ 	lowering.finishClassCalls()
++	censusPhase = "finishAccessors"
+ 	if err := lowering.finishAccessors(); err != nil {
+ 		return nil, err
+ 	}
++	censusPhase = "finishToPrimitive"
+ 	lowering.finishToPrimitive()
+ 	// Before exceptions: a view a generator feeds is rewritten into its dispatch here, and the
+ 	// dispatch's steps are throws the fixed point must see, each its own generator's ResumeMayThrow.
++	censusPhase = "checkIterableViews"
+ 	if err := lowering.checkIterableViews(); err != nil {
+ 		return nil, err
+ 	}
++	censusPhase = "exceptions"
+ 	if err := lowering.exceptions(); err != nil {
+ 		return nil, err
+ 	}
++	censusPhase = "checkLibrarySpreads"
+ 	if err := lowering.checkLibrarySpreads(modules); err != nil {
+ 		return nil, err
+ 	}
++	censusPhase = "checkAccessorSpreads"
+ 	if err := lowering.checkAccessorSpreads(); err != nil {
+ 		return nil, err
+ 	}
++	censusPhase = "checkRecordGuardedReads"
+ 	if err := lowering.checkRecordGuardedReads(); err != nil {
+ 		return nil, err
+ 	}
++	censusPhase = "checkDynamicKeyedGetters"
+ 	if err := lowering.checkDynamicKeyedGetters(); err != nil {
+ 		return nil, err
+ 	}
+@@ -181,6 +201,7 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
+ 		lowering.result.Functions[lowering.result.AsyncEntry-1].Source = source
+ 		lowering.result.MainModules = []ir.MainModule{{Module: source.Module, Statements: len(lowering.result.Main)}}
+ 	}
++	censusPhase = "findCycles"
+ 	if err := lowering.findCycles(modules); err != nil {
+ 		return nil, err
+ 	}
