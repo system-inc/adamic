@@ -115,6 +115,8 @@ func unitOffsets(text string) []int {
 }
 func jsonValue(value any, offsets []int) any {
 	switch typed := value.(type) {
+	case nil:
+		return nil
 	case *estree.Node:
 		if typed == nil {
 			return nil
@@ -129,12 +131,40 @@ func jsonValue(value any, offsets []int) any {
 			}
 		}
 		return result
+	case estree.Nodes:
+		return jsonValue([]*estree.Node(typed), offsets)
 	case []*estree.Node:
 		result := make([]any, len(typed))
 		for index, child := range typed {
 			result[index] = jsonValue(child, offsets)
 		}
 		return result
+	case estree.Values:
+		if typed == nil {
+			return nil
+		}
+		result := make([]any, len(typed))
+		for index, element := range typed {
+			result[index] = jsonValue(element, offsets)
+		}
+		return result
+	case estree.Record:
+		if typed == nil {
+			return nil
+		}
+		result := make(map[string]any, len(typed))
+		for key, member := range typed {
+			result[key] = jsonValue(member, offsets)
+		}
+		return result
+	case estree.String:
+		return string(typed)
+	case estree.Boolean:
+		return bool(typed)
+	case estree.Number:
+		return float64(typed)
+	case estree.Integer:
+		return int(typed)
 	case *estree.Regex:
 		return map[string]any{"pattern": typed.Pattern, "flags": typed.Flags}
 	case *estree.TemplateValue:
@@ -144,7 +174,7 @@ func jsonValue(value any, offsets []int) any {
 		}
 		return map[string]any{"raw": typed.Raw, "cooked": cooked}
 	default:
-		return typed
+		panic(fmt.Sprintf("unrepresented Go JSON value %T", value))
 	}
 }
 func jsonRun(path string, raw bool) {
