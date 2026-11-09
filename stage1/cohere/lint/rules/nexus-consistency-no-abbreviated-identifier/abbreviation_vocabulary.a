@@ -14,31 +14,28 @@ export class Abbreviation {
         this.fields = fields;
     }
 }
-function capitalized(value: string): string {
-    return value.slice(0, 1).toUpperCase() + value.slice(1);
+function capitalized(value: string): string { return value.slice(0, 1).toUpperCase() + value.slice(1); }
+// Reads as abbreviation.quoted and useAdvice, preserving every meaning in policy order.
+function quoted(names: readonly string[]): string {
+    const words = names.map((name) => `"${name}"`);
+    if(words.length < 2) { return words.join(''); }
+    return words.slice(0, -1).join(', ') + ' or ' + (words[words.length - 1] ?? '');
 }
-function prefixFinding(text: string, entry: readonly string[]): Abbreviation {
-    const word = entry[0] ?? panic('word');
-    const expansion = entry[1] ?? '';
-    const advisory = entry[5] === 'advice';
-    return new Abbreviation('prefix', word, 'abbreviatedIdentifier', [
-        'name',
-        advisory ? word : text,
-        'advice',
-        advisory ? (entry[2] ?? '') : `Use "${expansion + text.slice(word.length)}".`,
-    ]);
+function useAdvice(names: readonly string[]): string {
+    return `Use ${quoted(names)}${names.length === 1 ? '.' : ', whichever it means.'}`;
 }
 // The policy is prepared in vocabulary order once, never mutated by a walk.
 class Word {
     readonly entry: string[];
     readonly word: string;
     readonly capitalizedWord: string;
-    readonly replacement: string;
+    readonly expansions: string[];
     constructor(entry: string[]) {
         this.entry = entry;
         this.word = entry[0] ?? panic('word');
         this.capitalizedWord = capitalized(this.word);
-        this.replacement = entry[8] === '' ? capitalized(entry[1] ?? '') : (entry[8] ?? '');
+        const first = entry[1] ?? '';
+        this.expansions = first === '' ? [] : [first].concat(entry.slice(12));
     }
 }
 class Policy {
@@ -49,112 +46,102 @@ class Policy {
     readonly late: Word[] = [];
     readonly segment: Word[] = [];
     constructor() {
-        for(const text of allowedNames) {
-            this.allowed.add(text);
-        }
+        for(const text of allowedNames) { this.allowed.add(text); }
         for(const entry of vocabulary) {
             const item = new Word(entry);
-            if(entry[3] !== '') {
-                this.whole.set(item.word, item);
-            }
-            if(entry[4] === 'early') {
-                this.early.push(item);
-            }
-            if(entry[6] === 'true') {
-                this.suffix.push(item);
-            }
-            if(entry[4] === 'late') {
-                this.late.push(item);
-            }
-            if(entry[10] === 'true') {
-                this.segment.push(item);
-            }
+            if(entry[3] !== '') { this.whole.set(item.word, item); }
+            if(entry[4] === 'early') { this.early.push(item); }
+            if(entry[6] === 'true') { this.suffix.push(item); }
+            if(entry[4] === 'late') { this.late.push(item); }
+            if(entry[10] === 'true') { this.segment.push(item); }
         }
     }
 }
 const policy = new Policy();
 const millisecondWord = /([a-z])Ms((?![\s\S])|[A-Z])/u;
 
-export function abbreviation(text: string): Abbreviation | undefined {
-    if(policy.allowed.has(text)) {
-        return undefined;
-    }
+// Reads as nexus.findAbbreviation's strict binding guard. These are the reserved and future-reserved
+// words scanner.GetIdentifierToken recognizes, plus arguments and eval; keys keep vocabulary advice.
+function unbindable(text: string): boolean {
+    return ['break', 'case', 'catch', 'class', 'const', 'continue', 'debugger', 'default', 'delete',
+        'do', 'else', 'enum', 'export', 'extends', 'false', 'finally', 'for', 'function', 'if',
+        'import', 'in', 'instanceof', 'new', 'null', 'return', 'super', 'switch', 'this', 'throw',
+        'true', 'try', 'typeof', 'var', 'void', 'while', 'with', 'implements', 'interface', 'let',
+        'package', 'private', 'protected', 'public', 'static', 'yield', 'arguments', 'eval'].includes(text);
+}
+function prefixFinding(text: string, item: Word): Abbreviation {
+    const advisory = item.entry[5] === 'advice';
+    const names = item.expansions.map((expansion) => expansion + text.slice(item.word.length));
+    return new Abbreviation('prefix', item.word, 'abbreviatedIdentifier', [
+        'name', advisory ? item.word : text,
+        'advice', advisory ? (item.entry[2] ?? '') : useAdvice(names),
+    ]);
+}
+// Reads as abbreviation.Vocabulary.Find and nexus.findAbbreviation: whole, early prefix, suffix,
+// late prefix, then segment. The strict-binding adjustment applies only to a whole name.
+export function abbreviation(text: string, binds: boolean): Abbreviation | undefined {
+    if(policy.allowed.has(text)) { return undefined; }
     const whole = policy.whole.get(text);
     if(whole !== undefined) {
         const entry = whole.entry;
         const word = whole.word;
-        const expansion = entry[1] ?? '';
         if(text === word && entry[3] !== '') {
             const style = entry[3];
-            const advice =
-                style === 'advice'
-                    ? (entry[2] ?? '')
-                    : `Use "${expansion}"${style === 'plain' ? '.' : ' or a more descriptive name.'}`;
+            let advice = style === 'advice' ? (entry[2] ?? '') : style === 'plain'
+                ? useAdvice(whole.expansions)
+                : `Use ${quoted(whole.expansions)}${whole.expansions.length > 1 ? ', whichever it means,' : ''} or a more descriptive name.`;
+            const expansion = whole.expansions[0] ?? '';
+            if(binds && whole.expansions.length === 1 && unbindable(expansion)) {
+                advice = `Use a descriptive name ending in "${capitalized(expansion)}", since strict code cannot bind "${expansion}".`;
+            }
             return new Abbreviation('whole', word, 'abbreviatedIdentifier', ['name', text, 'advice', advice]);
         }
     }
     for(const item of policy.early) {
-        const word = item.word;
-        if(!prefixMatches(word, text)) {
-            continue;
-        }
+        if(!prefixMatches(item.word, text)) { continue; }
         let allowed = false;
         for(const segment of allowedSegments) {
-            if(text.includes(segment) && segment.toLowerCase().includes(word)) {
-                allowed = true;
-            }
+            if(text.includes(segment) && segment.toLowerCase().includes(item.word)) { allowed = true; }
         }
-        if(!allowed) {
-            return prefixFinding(text, item.entry);
-        }
+        if(!allowed) { return prefixFinding(text, item); }
     }
     for(const item of policy.suffix) {
         const entry = item.entry;
-        const word = item.word;
         if(entry[7] === 'millisecondWord') {
             if(text.includes('Ms') && millisecondWord.test(text)) {
-                return new Abbreviation('suffix', word, 'millisecondSuffix', [
-                    'name', text, 'suggestion',
-                    text.replace(millisecondWord, '$1' + (entry[8] ?? '') + '$2'),
+                return new Abbreviation('suffix', item.word, 'millisecondSuffix', [
+                    'name', text, 'suggestion', text.replace(millisecondWord, '$1' + (entry[8] ?? '') + '$2'),
                 ]);
             }
         }
-        else {
-            const suffix = item.capitalizedWord;
-            if(text.endsWith(suffix)) {
-                const advice =
-                    entry[9] === ''
-                        ? `Use "${text.slice(0, text.length - suffix.length) + item.replacement}".`
-                        : (entry[9] ?? '');
-                return new Abbreviation('suffix', word, 'abbreviatedSuffix', [
-                    'name', text, 'suffix', suffix, 'advice', advice,
-                ]);
-            }
+        else if(text.endsWith(item.capitalizedWord)) {
+            const head = text.slice(0, text.length - item.capitalizedWord.length);
+            const names = entry[8] === '' ? item.expansions.map((expansion) => head + capitalized(expansion))
+                : [head + (entry[8] ?? '')];
+            return new Abbreviation('suffix', item.word, 'abbreviatedSuffix', [
+                'name', text, 'suffix', item.capitalizedWord,
+                'advice', entry[9] === '' ? useAdvice(names) : (entry[9] ?? ''),
+            ]);
         }
     }
     for(const item of policy.late) {
-        if(prefixMatches(item.word, text)) {
-            return prefixFinding(text, item.entry);
-        }
+        if(prefixMatches(item.word, text)) { return prefixFinding(text, item); }
     }
     for(const segment of allowedSegments) {
-        if(text.includes(segment)) {
-            return undefined;
-        }
+        if(text.includes(segment)) { return undefined; }
     }
     for(const item of policy.segment) {
-        const word = item.word;
-        if(!segmentMatches(word, text)) {
-            continue;
+        if(!text.includes(item.capitalizedWord) || !segmentMatches(item.word, text)) { continue; }
+        let advice = item.entry[2] ?? '';
+        if(item.entry[11] !== 'advice') {
+            // Go replaces the first right-bounded occurrence, which can precede the left-bounded match.
+            const names = item.expansions.map((expansion) => replaceSegment(item.word, text, capitalized(expansion)));
+            if(names.includes(text)) { continue; }
+            advice = useAdvice(names);
         }
-        // Go replaces the first right-bounded occurrence, which can precede the
-        // left-bounded occurrence that established a segment match.
-        const suggestion = replaceSegment(word, text, item.replacement);
-        if(suggestion !== text) {
-            return new Abbreviation('segment', word, 'abbreviatedWordSegment', [
-                'name', text, 'word', item.capitalizedWord, 'suggestion', suggestion,
-            ]);
-        }
+        return new Abbreviation('segment', item.word, 'abbreviatedWordSegment', [
+            'name', text, 'word', item.capitalizedWord, 'advice', advice,
+        ]);
     }
     return undefined;
 }
