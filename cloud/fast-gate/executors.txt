@@ -1742,6 +1742,12 @@ reads internal/corpusfiles cohere
 reads internal/oracle stage3/drivers/scanner/probes/*/main.a
 reads internal/oracle stage3/fixtures/*
 reads internal/lower internal/oracle/testdata/*.a
+# internal/lower's program region census (program_region_census_test.go) reads the pinned tsc corpus, internal/oracle's
+# TestProduct_ProgramTscSource product, keyed by stage3/source.json's TypeScript pin and the region parse manifest
+# (internal/programsource/source.go:34-39): lower's key named neither, so a pin move reused its census (#vah7g5n, Node's
+# ruling).
+reads internal/lower stage3/source.json
+reads internal/lower internal/oracle/testdata/program_region/parse_manifest.json
 reads internal/flow internal/load/testdata/*.ts
 reads internal/fresh internal/load/testdata/*.ts
 reads internal/native internal/regexp/testdata/*

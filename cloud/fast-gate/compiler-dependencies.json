@@ -217,6 +217,16 @@
       "internal/flow",
       "cmd/adamic"
     ],
+    "internal/split": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic",
+      "internal/oracle"
+    ],
     "internal/testguard": [
       "internal/load",
       "internal/lower",
