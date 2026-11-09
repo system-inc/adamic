@@ -23,6 +23,37 @@ class PairTests(unittest.TestCase):
             base, head = (pair.load(root / f'{side}.jsonl.gz') for side in ('base', 'head'))
             cls.witnesses[label] = pair.compare(base, head, root / 'tree', TS)
 
+    def test_deferred_is_a_unit_first_stop_zb0q0zd(self):
+        unit = dict(where='input.ts:1:1', kind='KindVariableStatement', status='attempted')
+        result = self.synthetic('const value = 1;', [], [(1, 'written-any relation', 'deferred')], [unit])
+        for view in ('raw_findings', 'distinct_reads'):
+            changes = result[view]['unit_first_stop_delta']
+            self.assertEqual(len(changes), 1)
+            self.assertIsNone(changes[0]['base'])
+            self.assertEqual(changes[0]['head']['phase'], 'deferred')
+            self.assertEqual(result[view]['regressions'][0]['type'], 'previously_finding_free_unit')
+
+    def test_module_deferred_scan_does_not_impersonate_first_unit_zb0q0zd(self):
+        unit = dict(where='input.ts:1:1', kind='KindVariableStatement', status='attempted')
+        result = self.synthetic('const value = 1;', [], [(1, 'written-any relation', 'deferred_scan')], [unit])
+        self.assertEqual(result['raw_findings']['unit_first_stop_delta'], [])
+
+    def test_program_relation_report_is_preserved_without_a_source_location_zb0q0zd(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'input.ts').write_text('const value = 1;')
+            unit = dict(where='input.ts:1:1', kind='KindVariableStatement', status='attempted')
+            finding = dict(kind='NotYet', where='program', unit='program',
+                           phase='relation_overflow_conservative_all_units',
+                           reason='checker relation overflow', text='program overflow')
+            base = [HEADER, dict(file='input.ts', units=[unit], findings=[])]
+            head = base + [dict(status='relation_report', findings=[finding])]
+            result = pair.compare(base, head, root, TS)
+            for view in ('raw_findings', 'distinct_reads'):
+                self.assertEqual(result[view]['unit_first_stop_delta'], [])
+                self.assertEqual(result[view]['new_findings'][0]['identity'], ('<program>', '', 0))
+                self.assertEqual(result[view]['new_findings'][0]['finding'], finding)
+
     def test_qeanycw_distinct_reads_cleared_with_no_new(self):
         d = self.witnesses['qeanycw']['distinct_reads']
         self.assertEqual(len(d['new_sites']), 0)
