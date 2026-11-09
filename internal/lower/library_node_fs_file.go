@@ -436,10 +436,11 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 // Node declarations are separate from the bundled library used by libraryMember.
-// Only these already-lowered Stats methods may use optionalIntrinsic's guard.
-func (l *lowering) nodeFSStatsMethod(node *ast.Node) bool {
+// Only these already-lowered Stats and Dirent methods may use optionalIntrinsic's guard.
+func (l *lowering) nodeFSEntryMethod(node *ast.Node) bool {
 	switch l.nodeLibraryMember(node) {
-	case "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.isBlockDevice", "node:fs.StatsBase.isCharacterDevice", "node:fs.StatsBase.isFIFO", "node:fs.StatsBase.isSocket":
+	case "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.isBlockDevice", "node:fs.StatsBase.isCharacterDevice", "node:fs.StatsBase.isFIFO", "node:fs.StatsBase.isSocket",
+		"node:fs.Dirent.isFile", "node:fs.Dirent.isDirectory", "node:fs.Dirent.isSymbolicLink", "node:fs.Dirent.isBlockDevice", "node:fs.Dirent.isCharacterDevice", "node:fs.Dirent.isFIFO", "node:fs.Dirent.isSocket":
 		return true
 	}
 	return false
