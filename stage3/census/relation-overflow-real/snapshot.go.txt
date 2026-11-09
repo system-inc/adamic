@@ -1,0 +1,139 @@
+package load
+
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"os"
+	"reflect"
+	"sort"
+)
+
+type RelationPair struct {
+	Cache string `json:"cache"`
+	Key   string `json:"key"`
+	Flags uint64 `json:"flags"`
+}
+type RelationCount struct {
+	Size     int    `json:"size"`
+	Overflow int    `json:"overflow"`
+	Error    string `json:"error,omitempty"`
+}
+type RelationSnapshot struct {
+	Phase    string                   `json:"phase"`
+	Checker  string                   `json:"checker"`
+	Overflow string                   `json:"RelationOverflow"`
+	Marked   bool                     `json:"RelationOverflowMarked"`
+	Caches   map[string]RelationCount `json:"caches"`
+	TS2859   []string                 `json:"TS2859"`
+	Pairs    []RelationPair           `json:"pairs"`
+}
+
+func (p *Program) MeasureRelations(c *checker.Checker, phase, output string) {
+	s := RelationSnapshot{Phase: phase, Checker: fmt.Sprintf("%p", c), Overflow: p.RelationOverflow(c), Marked: RelationOverflowMarked(c), Caches: map[string]RelationCount{}, TS2859: []string{}, Pairs: []RelationPair{}}
+	v := reflect.ValueOf(c).Elem()
+	for _, name := range append(append([]string{}, relationTables...), "enumRelation") {
+		f := v.FieldByName(name)
+		if f.Kind() == reflect.Pointer {
+			if f.IsNil() {
+				s.Caches[name] = RelationCount{}
+				continue
+			}
+			f = f.Elem().FieldByName("results")
+		}
+		if !f.IsValid() || f.Kind() != reflect.Map {
+			panic("unreadable cache: " + name)
+		}
+		count := RelationCount{Size: f.Len()}
+		it := f.MapRange()
+		for it.Next() {
+			flags := it.Value().Uint()
+			if flags&relationOverflowMark != 0 {
+				count.Overflow++
+				s.Pairs = append(s.Pairs, RelationPair{name, fmt.Sprint(readable(it.Key())), flags})
+			}
+		}
+		s.Caches[name] = count
+	}
+	sort.Slice(s.Pairs, func(i, j int) bool {
+		if s.Pairs[i].Cache != s.Pairs[j].Cache {
+			return s.Pairs[i].Cache < s.Pairs[j].Cache
+		}
+		return s.Pairs[i].Key < s.Pairs[j].Key
+	})
+	f := v.FieldByName("diagnostics")
+	for _, d := range (*ast.DiagnosticsCollection)(f.Addr().UnsafePointer()).GetDiagnostics() {
+		if d.Code() == 2859 {
+			s.TS2859 = append(s.TS2859, p.formatDiagnostic(d))
+		}
+	}
+	sort.Strings(s.TS2859)
+	data, err := json.MarshalIndent(s, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+	if err = os.WriteFile(output, data, 0644); err != nil {
+		panic(err)
+	}
+}
+func readable(v reflect.Value) any {
+	switch v.Kind() {
+	case reflect.Struct:
+		a := map[string]any{}
+		for i := 0; i < v.NumField(); i++ {
+			a[v.Type().Field(i).Name] = readable(v.Field(i))
+		}
+		return a
+	case reflect.Pointer, reflect.UnsafePointer:
+		return fmt.Sprintf("0x%x", v.Pointer())
+	case reflect.String:
+		return v.String()
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		return v.Int()
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		return v.Uint()
+	default:
+		return fmt.Sprint(v)
+	}
+}
+
+func (p *Program) RenderRelationPairs(c *checker.Checker, output string) {
+	v := reflect.ValueOf(c).Elem()
+	events := v.FieldByName("measureOverflowPairs")
+	rows := []map[string]any{}
+	for i := 0; i < events.Len() && len(rows) < 50; i++ {
+		e := events.Index(i)
+		cache := ""
+		for _, name := range relationTables {
+			if v.FieldByName(name).Pointer() == e.FieldByName("relation").Pointer() {
+				cache = name
+			}
+		}
+		if cache == "" {
+			panic("unidentified relation")
+		}
+		key := e.FieldByName("key")
+		key = reflect.NewAt(key.Type(), key.Addr().UnsafePointer()).Elem()
+		results := v.FieldByName(cache).Elem().FieldByName("results")
+		flags := results.MapIndex(key)
+		if !flags.IsValid() || flags.Uint()&relationOverflowMark == 0 {
+			continue
+		}
+		source := (*checker.Type)(e.FieldByName("source").UnsafePointer())
+		target := (*checker.Type)(e.FieldByName("target").UnsafePointer())
+		node := (*ast.Node)(e.FieldByName("node").UnsafePointer())
+		site := ""
+		if node != nil && ast.GetSourceFileOfNode(node) != nil {
+			site = p.Where(node)
+		}
+		rows = append(rows, map[string]any{"cache": cache, "key": fmt.Sprint(readable(key)), "flags": flags.Uint(), "source_id": source.Id(), "target_id": target.Id(), "source": c.TypeToString(source), "target": c.TypeToString(target), "site": site, "stack": e.FieldByName("stack").String()})
+	}
+	data, err := json.MarshalIndent(rows, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+	if err = os.WriteFile(output, data, 0644); err != nil {
+		panic(err)
+	}
+}

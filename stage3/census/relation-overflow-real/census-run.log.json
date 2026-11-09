@@ -1,0 +1,15 @@
+{
+  "command": [
+    "env",
+    "ADAMIC_PROGRAM_REGION=0",
+    "ADAMIC_OWNERSHIP_QUERY=0",
+    "LATENT_FULL=0",
+    "LATENT_SPECULATIVE=0",
+    "/tmp/ny0-census-corrected",
+    "census",
+    "/tmp/ny0-adapted/src/tsc/tsc.ts",
+    "/workspace/adamic/stage3/census/relation-overflow-real"
+  ],
+  "exit_code": -15,
+  "elapsed_seconds": 2548.1295273303986
+}

@@ -1,0 +1,20 @@
+package checker
+
+import (
+ "runtime/debug"
+ "github.com/microsoft/TypeScript/tsc/internal/ast"
+)
+// Passive evidence only. No type queries or formatting at the point of overflow.
+type measureOverflowPair struct {
+ source, target *Type
+ relation *Relation
+ key CacheHashKey
+ node *ast.Node
+ stack string
+}
+func (c *Checker) measureOverflow(source,target *Type,relation *Relation,key CacheHashKey,node *ast.Node) {
+ if len(c.measureOverflowPairs)>=50 {return}
+ for _,pair:=range c.measureOverflowPairs {if pair.relation==relation && pair.key==key {return}}
+ if node==nil {node=c.currentNode}
+ c.measureOverflowPairs=append(c.measureOverflowPairs,measureOverflowPair{source,target,relation,key,node,string(debug.Stack())})
+}
