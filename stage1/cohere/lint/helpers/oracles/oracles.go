@@ -30,10 +30,14 @@ func Helpers(t *testing.T) string {
 	if strings.Count(string(register), anchor) != 1 {
 		t.Fatal("registration capture anchor changed")
 	}
-	captured := strings.Replace(string(register), anchor, anchor+"\n AdamicRegistrations = append(AdamicRegistrations, registrations...)", 1)
-	capturedPath := filepath.Join(t.TempDir(), "register.go")
-	if err := os.WriteFile(capturedPath, []byte(captured), 0644); err != nil {
+	captured := strings.Replace(string(register), anchor, anchor+"\n\tAdamicRegistrations = append(AdamicRegistrations, registrations...)", 1)
+	capturedPath, _ := filepath.Abs("testdata/register_capture.go")
+	stored, err := os.ReadFile(capturedPath)
+	if err != nil {
 		t.Fatal(err)
+	}
+	if string(stored) != captured {
+		t.Fatal("registration capture overlay differs from pinned register.go")
 	}
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{registerPath: capturedPath, filepath.Join(root, "internal/lint/rule/adamic_bridge.go"): filepath.Join(filepath.Dir(descriptors), "rule_bridge.go"), virtual: side, filepath.Join(root, "policy/adamic_helpers.go"): catalog, filepath.Join(root, "adamic_helper_descriptors.go"): descriptors}})
 	path := filepath.Join(t.TempDir(), "overlay.json")

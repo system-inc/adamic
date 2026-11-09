@@ -12,8 +12,8 @@ with tempfile.TemporaryDirectory(prefix='adamic-helper-metadata-') as directory:
  anchor='func Register(registrations ...Registrant) {'
  source=register.read_text()
  assert source.count(anchor)==1
- captured=directory/'register.go'
- captured.write_text(source.replace(anchor,anchor+'\n AdamicRegistrations = append(AdamicRegistrations, registrations...)',1))
+ captured=here/'register_capture.go'
+ assert captured.read_text()==source.replace(anchor,anchor+'\n\tAdamicRegistrations = append(AdamicRegistrations, registrations...)',1), 'registration capture overlay differs from pinned register.go'
  overlay['Replace'][str(register)]=str(captured)
  overlay['Replace'][str(cohere/'internal/lint/rule/adamic_bridge.go')]=str(here/'rule_bridge.go')
  path=directory/'overlay.json';path.write_text(json.dumps(overlay))
