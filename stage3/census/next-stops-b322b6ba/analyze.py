@@ -18,7 +18,12 @@ for (where,kind,reason),roots in sorted(groups.items(),key=lambda x:(-len(x[1]),
  known=(where,kind,reason) in baseline.values()
  result.append(dict(where=where,kind=kind,reason=reason,roots=roots,count=len(roots),unchanged=unchanged,moved=len(roots)-unchanged,comparison='unchanged' if unchanged==len(roots) else 'moved' if known else 'new'))
 (out/'grouped-first-stops.json').write_text(json.dumps(result,indent=2)+'\n')
-(out/'comparison.json').write_text(json.dumps([dict(root=normalize(r['roots'][0]),before=baseline[normalize(r['roots'][0])],after=(normalize(r.get('where','-')),r['kind'],r.get('reason','-'))) for r in rows],indent=2)+'\n')
+comparisons=[]
+for r in rows:
+ root=normalize(r['roots'][0]);before=baseline[root];after=(normalize(r.get('where','-')),r['kind'],r.get('reason','-'))
+ classification='unchanged' if before==after else 'moved' if after in baseline.values() else 'new'
+ comparisons.append(dict(root=root,before=before,after=after,classification=classification))
+(out/'comparison.json').write_text(json.dumps(comparisons,indent=2)+'\n')
 (out/'census.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
 (out/'adapted-source-manifest.json').write_text(json.dumps({str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src/compiler').rglob('*')) if p.is_file()},indent=2)+'\n')
 for r in result:print(r['count'],r['where'],r['kind'],r['comparison'],r['reason'])
