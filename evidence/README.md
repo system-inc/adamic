@@ -70,3 +70,7 @@ Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made
 ## Rule G-2 pin at f7277112
 
 [Focused suite and refuseAnyRelation mutant](f7277112/results.md): formatting clean; focused suite passes; removing the refusal registration makes both .ts/.a subtests red at a computed-field-name stop (9:2), rather than the required written-any refusal (13:14). Exact source restored.
+
+## Rule G-3 at d70b3516
+
+[Formatting, vet, focused and full lower-suite validation](d70b3516/results.md): all exit 0; formatting and vet output empty; every selected focused test passes; full suite passes in 1625.832s with no failures. Exact source remains unchanged.

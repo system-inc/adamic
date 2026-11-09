@@ -1,0 +1,14 @@
+Warning: you are leaving 4 commits behind, not connected to
+any of your branches:
+
+  f72771125 lower: a generic table cast through a written any stays NotYet under rule G, pinned on tsc's forEachChildTable shape (#7fd51gk)
+  e5531c8c7 lower: condition 3's pin is the generic-to-plain branch, since tsc refuses the unfixed any[] against a generic slot itself (#7fd51gk)
+  ec5e9b2bf lower: condition 3's pin puts NoInfer on the provider's side, where it leaves T unfixed (#7fd51gk)
+  2594029da lower: rule G's pins reach the relation: setTimeout imported from node:timers, L2 as a class method, and i2's lying twin dropped since tsc itself refuses it (#7fd51gk)
+
+If you want to keep them by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> f72771125
+
+HEAD is now at d70b35160 lower: a generic table cast through a written any stays NotYet under rule G, pinned on tsc's forEachChildTable shape (#7fd51gk)

@@ -1,0 +1,235 @@
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers
+=== RUN   TestAHostMethodAViewMakesGenericStops
+=== PAUSE TestAHostMethodAViewMakesGenericStops
+=== RUN   TestNodeWatchFilePollingForms
+=== PAUSE TestNodeWatchFilePollingForms
+=== RUN   TestNodeWatchFileOtherFormsRefused
+=== PAUSE TestNodeWatchFileOtherFormsRefused
+=== RUN   TestNodeWatchFileTscCloseShape
+=== PAUSE TestNodeWatchFileTscCloseShape
+=== RUN   TestNodeWatchFileVoidViewCannotHideOwnedResult
+=== PAUSE TestNodeWatchFileVoidViewCannotHideOwnedResult
+=== RUN   TestNodeWatchFileUsesLibrarySymbols
+=== PAUSE TestNodeWatchFileUsesLibrarySymbols
+=== RUN   TestNodeWatchFileCallbackViews
+=== PAUSE TestNodeWatchFileCallbackViews
+=== RUN   TestNodeWatchFileMtimeUnaryPlus
+=== PAUSE TestNodeWatchFileMtimeUnaryPlus
+=== RUN   TestNodeWatchFileOptionTypeRefusals
+=== PAUSE TestNodeWatchFileOptionTypeRefusals
+=== RUN   TestNodeWatchTscShape
+=== PAUSE TestNodeWatchTscShape
+=== RUN   TestNodeWatchDirectForms
+=== PAUSE TestNodeWatchDirectForms
+=== RUN   TestNodeWatchOtherFormsRefused
+=== PAUSE TestNodeWatchOtherFormsRefused
+=== RUN   TestNodeWatchUsesLibrarySymbols
+=== PAUSE TestNodeWatchUsesLibrarySymbols
+=== RUN   TestNodeWatchInheritedOnStaysNotYet
+=== PAUSE TestNodeWatchInheritedOnStaysNotYet
+=== RUN   TestNodeWatchInheritedOnMutant
+    library_node_watch_test.go:161: TestNodeWatchInheritedOnStaysNotYet goes red with the inherited declaration registered
+--- PASS: TestNodeWatchInheritedOnMutant (1.90s)
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused
+=== PAUSE TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== RUN   TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers
+=== PAUSE TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers
+=== RUN   TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== PAUSE TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== RUN   TestAGenericTableCastThroughAWrittenAnyStaysNotYet
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyStaysNotYet
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g1,_T_unused_on_both_sides.a
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g1,_T_unused_on_both_sides.a
+=== CONT  TestNodeWatchTscShape
+=== CONT  TestNodeWatchFileOptionTypeRefusals
+=== RUN   TestNodeWatchFileOptionTypeRefusals/persistent
+=== CONT  TestNodeWatchFileMtimeUnaryPlus
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g1,_T_unused_on_both_sides.ts
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g1,_T_unused_on_both_sides.ts
+=== CONT  TestNodeWatchFileVoidViewCannotHideOwnedResult
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g4,_T_only_in_a_callback's_type.a
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g4,_T_only_in_a_callback's_type.a
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g4,_T_only_in_a_callback's_type.ts
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g4,_T_only_in_a_callback's_type.ts
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g5,_generic_on_the_source_side_only.a
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g5,_generic_on_the_source_side_only.a
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g5,_generic_on_the_source_side_only.ts
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g5,_generic_on_the_source_side_only.ts
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g6,_generic_on_the_target_side_only.a
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g6,_generic_on_the_target_side_only.a
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g6,_generic_on_the_target_side_only.ts
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g6,_generic_on_the_target_side_only.ts
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g7,_an_interface_seen_as_another.a
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g7,_an_interface_seen_as_another.a
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/g7,_an_interface_seen_as_another.ts
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/g7,_an_interface_seen_as_another.ts
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/o2,_an_overloaded_generic_view.a
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/o2,_an_overloaded_generic_view.a
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/o2,_an_overloaded_generic_view.ts
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/o2,_an_overloaded_generic_view.ts
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/one_class's_generic_method_under_two_type_arguments.a
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/one_class's_generic_method_under_two_type_arguments.a
+=== RUN   TestAGenericMethodSeenThroughANarrowerViewStops/one_class's_generic_method_under_two_type_arguments.ts
+=== PAUSE TestAGenericMethodSeenThroughANarrowerViewStops/one_class's_generic_method_under_two_type_arguments.ts
+=== CONT  TestNodeWatchFileCallbackViews
+=== RUN   TestNodeWatchFileCallbackViews/h11
+--- PASS: TestNodeWatchFileVoidViewCannotHideOwnedResult (2.14s)
+=== CONT  TestNodeWatchFileUsesLibrarySymbols
+--- PASS: TestNodeWatchTscShape (2.43s)
+=== CONT  TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/map
+--- PASS: TestNodeWatchFileMtimeUnaryPlus (2.44s)
+=== CONT  TestAGenericTableCastThroughAWrittenAnyStaysNotYet
+=== RUN   TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.a
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.a
+=== RUN   TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.ts
+=== PAUSE TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.ts
+=== CONT  TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet
+=== RUN   TestNodeWatchFileOptionTypeRefusals/interval
+=== RUN   TestNodeWatchFileCallbackViews/any
+--- PASS: TestAGenericFunctionWhoseSlotDoesntFixItsTypeParameterIsNotYet (0.51s)
+=== CONT  TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers
+=== RUN   TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a
+=== PAUSE TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a
+=== RUN   TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts
+=== PAUSE TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== RUN   TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== PAUSE TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+=== CONT  TestNodeWatchFilePollingForms
+=== RUN   TestNodeWatchFileCallbackViews/unknown
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/class
+--- PASS: TestNodeWatchFileOptionTypeRefusals (6.12s)
+    --- PASS: TestNodeWatchFileOptionTypeRefusals/persistent (2.47s)
+    --- PASS: TestNodeWatchFileOptionTypeRefusals/interval (3.65s)
+=== CONT  TestNodeWatchFileTscCloseShape
+--- PASS: TestNodeWatchFileUsesLibrarySymbols (3.99s)
+=== CONT  TestNodeWatchFileOtherFormsRefused
+--- PASS: TestNodeWatchFilePollingForms (3.28s)
+=== CONT  TestNodeWatchUsesLibrarySymbols
+--- PASS: TestNodeWatchUsesLibrarySymbols (0.32s)
+=== CONT  TestNodeWatchInheritedOnStaysNotYet
+=== RUN   TestNodeWatchInheritedOnStaysNotYet/direct
+--- PASS: TestNodeWatchFileCallbackViews (7.35s)
+    --- PASS: TestNodeWatchFileCallbackViews/h11 (2.56s)
+    --- PASS: TestNodeWatchFileCallbackViews/any (3.08s)
+    --- PASS: TestNodeWatchFileCallbackViews/unknown (1.71s)
+=== CONT  TestAHostMethodAViewMakesGenericStops
+=== RUN   TestAHostMethodAViewMakesGenericStops/setMaxListeners.a
+=== PAUSE TestAHostMethodAViewMakesGenericStops/setMaxListeners.a
+=== RUN   TestAHostMethodAViewMakesGenericStops/setMaxListeners.ts
+=== PAUSE TestAHostMethodAViewMakesGenericStops/setMaxListeners.ts
+=== CONT  TestNodeWatchOtherFormsRefused
+=== RUN   TestNodeWatchOtherFormsRefused/arguments
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/primitive_union
+--- PASS: TestNodeWatchFileTscCloseShape (1.44s)
+=== CONT  TestNodeWatchDirectForms
+=== RUN   TestNodeWatchInheritedOnStaysNotYet/view
+=== RUN   TestNodeWatchOtherFormsRefused/option
+--- PASS: TestNodeWatchDirectForms (1.59s)
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).a
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).a
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).ts
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).ts
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.a
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.a
+=== RUN   TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.ts
+=== PAUSE TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.ts
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g1,_T_unused_on_both_sides.a
+=== RUN   TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/string_union
+--- PASS: TestNodeWatchInheritedOnStaysNotYet (2.64s)
+    --- PASS: TestNodeWatchInheritedOnStaysNotYet/direct (1.09s)
+    --- PASS: TestNodeWatchInheritedOnStaysNotYet/view (1.55s)
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/one_class's_generic_method_under_two_type_arguments.ts
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/one_class's_generic_method_under_two_type_arguments.a
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/o2,_an_overloaded_generic_view.ts
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/o2,_an_overloaded_generic_view.a
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g7,_an_interface_seen_as_another.ts
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g7,_an_interface_seen_as_another.a
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g6,_generic_on_the_target_side_only.ts
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g6,_generic_on_the_target_side_only.a
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g5,_generic_on_the_source_side_only.ts
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g5,_generic_on_the_source_side_only.a
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g4,_T_only_in_a_callback's_type.ts
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g4,_T_only_in_a_callback's_type.a
+=== CONT  TestAGenericMethodSeenThroughANarrowerViewStops/g1,_T_unused_on_both_sides.ts
+=== CONT  TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.a
+=== RUN   TestNodeWatchOtherFormsRefused/persistent_missing
+--- PASS: TestAGenericMethodSeenThroughANarrowerViewStops (0.00s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g1,_T_unused_on_both_sides.a (0.11s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/one_class's_generic_method_under_two_type_arguments.ts (0.09s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/o2,_an_overloaded_generic_view.ts (0.08s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/one_class's_generic_method_under_two_type_arguments.a (0.29s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/o2,_an_overloaded_generic_view.a (0.25s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g7,_an_interface_seen_as_another.ts (0.09s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g6,_generic_on_the_target_side_only.ts (0.11s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g7,_an_interface_seen_as_another.a (0.18s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g5,_generic_on_the_source_side_only.ts (0.06s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g6,_generic_on_the_target_side_only.a (0.12s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g5,_generic_on_the_source_side_only.a (0.06s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g4,_T_only_in_a_callback's_type.a (0.07s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g4,_T_only_in_a_callback's_type.ts (0.13s)
+    --- PASS: TestAGenericMethodSeenThroughANarrowerViewStops/g1,_T_unused_on_both_sides.ts (0.14s)
+=== CONT  TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.ts
+=== CONT  TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a
+--- PASS: TestAGenericTableCastThroughAWrittenAnyStaysNotYet (0.00s)
+    --- PASS: TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.a (0.22s)
+    --- PASS: TestAGenericTableCastThroughAWrittenAnyStaysNotYet/.ts (0.13s)
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a
+=== CONT  TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts
+--- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused (7.87s)
+    --- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/map (3.37s)
+    --- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/class (1.75s)
+    --- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/primitive_union (1.65s)
+    --- PASS: TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused/string_union (1.10s)
+=== CONT  TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts
+--- PASS: TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers (0.00s)
+    --- PASS: TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.a (0.07s)
+    --- PASS: TestAGenericMethodWithANarrowerConstraintAndTheViewsParametersLowers/.ts (0.19s)
+=== CONT  TestAHostMethodAViewMakesGenericStops/setMaxListeners.a
+=== RUN   TestNodeWatchOtherFormsRefused/persistent_run_time
+=== CONT  TestAHostMethodAViewMakesGenericStops/setMaxListeners.ts
+--- PASS: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot (0.00s)
+    --- PASS: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.a (0.97s)
+    --- PASS: TestASetTimeoutProviderIsRelatedThroughTheNoInferSlot/.ts (1.18s)
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).a
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.ts
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.a
+=== CONT  TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).ts
+--- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers (0.00s)
+    --- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.ts (0.06s)
+    --- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).a (0.07s)
+    --- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers/a_class_seen_through_the_interface_it_implements.a (0.07s)
+    --- PASS: TestAGenericMethodSeenAsItsIdenticalTypeLowers/g2,_an_honest_handle<T>(x:_Animal).ts (0.08s)
+=== RUN   TestNodeWatchOtherFormsRefused/arms_differ
+--- PASS: TestAHostMethodAViewMakesGenericStops (0.00s)
+    --- PASS: TestAHostMethodAViewMakesGenericStops/setMaxListeners.a (1.01s)
+    --- PASS: TestAHostMethodAViewMakesGenericStops/setMaxListeners.ts (0.88s)
+=== RUN   TestNodeWatchOtherFormsRefused/rest_listener
+--- PASS: TestNodeWatchFileOtherFormsRefused (6.50s)
+=== RUN   TestNodeWatchOtherFormsRefused/numeric_slot
+=== RUN   TestNodeWatchOtherFormsRefused/other_event
+=== RUN   TestNodeWatchOtherFormsRefused/detached_close
+=== RUN   TestNodeWatchOtherFormsRefused/detached_on
+--- PASS: TestNodeWatchOtherFormsRefused (7.37s)
+    --- PASS: TestNodeWatchOtherFormsRefused/arguments (1.65s)
+    --- PASS: TestNodeWatchOtherFormsRefused/option (1.11s)
+    --- PASS: TestNodeWatchOtherFormsRefused/persistent_missing (0.95s)
+    --- PASS: TestNodeWatchOtherFormsRefused/persistent_run_time (1.00s)
+    --- PASS: TestNodeWatchOtherFormsRefused/arms_differ (0.43s)
+    --- PASS: TestNodeWatchOtherFormsRefused/rest_listener (0.42s)
+    --- PASS: TestNodeWatchOtherFormsRefused/numeric_slot (0.39s)
+    --- PASS: TestNodeWatchOtherFormsRefused/other_event (0.45s)
+    --- PASS: TestNodeWatchOtherFormsRefused/detached_close (0.44s)
+    --- PASS: TestNodeWatchOtherFormsRefused/detached_on (0.53s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	16.929s
