@@ -4,10 +4,15 @@
 // another region carries one, on the target and its region, as any outside holder's does. Adoption
 // makes a region of one: a new allocation keeps the counts its member children already hold, so a
 // copy of a long-lived graph's array that's dropped frees at its last release instead of joining the
-// graph until it dies (#5nrs3q2). Only a store merges two regions (adamic_graph_hold, _take), and
-// adamic_graph_merge un-counts the edges the union makes internal, so after any store no counted edge
-// lies inside a region. A cycle among members closes only through a store, since a member's slots are
-// written only by hold, take or adoption, and adoption's edges run from a new allocation to older ones.
+// graph until it dies (#5nrs3q2). Only a store merges regions (adamic_graph_hold, _take).
+//
+// Two invariants hold after every merge: no counted edge lies inside a region, and the counted edges
+// between regions form no cycle, since a cycle of regions holding each other by counted edges never
+// reaches zero. Adoption keeps both, since a new allocation's edges run only to older members. A union
+// of two regions would close a cycle through any third region on a counted path between them, so
+// adamic_graph_merge unites every region on such a path, either way round, and un-counts every edge
+// the union brings inside (graph_regions_entries.a: a store joined node and its entries array, and the
+// [key, node] pair between them kept a cycle of counted edges until it was merged too).
 #include "graph_regions.h"
 #include "count.h"
 
@@ -34,6 +39,10 @@ typedef struct graph_region {
 	size_t counted_out;
 #endif
 	bool shared;
+	// Scratch for one merge at a time: searched and reaches for its search, merging for its union.
+	bool searched;
+	bool reaches;
+	bool merging;
 } graph_region;
 
 static void fail(const char *message, size_t size) {
@@ -185,35 +194,120 @@ static void boundary_add(graph_region *region, adamic_heap *heap) {
 	region->boundary[region->boundary_count++] = heap;
 }
 
-// Scratch for one merge's walk at a time, per thread, as adoption's and free's are.
-static _Thread_local graph_region *uncount_from, *uncount_root;
-static _Thread_local adamic_heap *uncount_lone;
-static void uncount(void *value) {
+// Scratch for one merge at a time, per thread, as adoption's and free's are.
+static _Thread_local graph_region **merge_list;
+static _Thread_local size_t merge_count, merge_capacity;
+static void merge_add(graph_region *region) {
+	if (merge_count == merge_capacity) {
+		size_t capacity = merge_capacity == 0 ? 8 : merge_capacity * 2;
+		if (capacity < merge_capacity || capacity > SIZE_MAX / sizeof *merge_list) { FAIL("graph region count overflow"); }
+		graph_region **grown = realloc(merge_list, capacity * sizeof *grown);
+		if (grown == NULL) { FAIL("out of memory"); }
+		merge_list = grown;
+		merge_capacity = capacity;
+	}
+	merge_list[merge_count++] = region;
+}
+
+// each_edge visits every counted edge out of a region: each member child of its boundary members
+// whose root is another region, or a member with no region.
+static _Thread_local graph_region *edge_from;
+static _Thread_local void (*edge_visit)(adamic_heap *, graph_region *);
+static void edge_child(void *value) {
 	adamic_heap *heap = member(value);
 	if (heap == NULL) { return; }
 	graph_region *root = region_of(heap);
-	if ((uncount_root != NULL && root == uncount_root) || (uncount_root == NULL && heap == uncount_lone)) {
-		// The edge comes inside the union: its count goes, from the target and from its region.
+	if (root != edge_from) { edge_visit(heap, root); }
+}
+static void each_edge(graph_region *region, void (*visit)(adamic_heap *, graph_region *)) {
+	graph_region *saved_from = edge_from;
+	void (*saved_visit)(adamic_heap *, graph_region *) = edge_visit;
+	edge_from = region;
+	edge_visit = visit;
+	for (size_t i = 0; i < region->boundary_count; i++) { children(region->boundary[i], edge_child); }
+	edge_from = saved_from;
+	edge_visit = saved_visit;
+}
+
+// between finds the regions on a counted path from from to the target (a root, or a member with no
+// region) and marks them merging. The search visits regions, never members, and remembers them, so
+// each is visited once: first every region from reaches, then, to a fixed point, which of them reach
+// the target.
+static _Thread_local graph_region **search_list;
+static _Thread_local size_t search_count, search_capacity;
+static _Thread_local graph_region *search_target_root, *search_at;
+static _Thread_local adamic_heap *search_target_lone;
+static _Thread_local bool search_changed;
+static void search_add(graph_region *region) {
+	if (search_count == search_capacity) {
+		size_t capacity = search_capacity == 0 ? 8 : search_capacity * 2;
+		if (capacity < search_capacity || capacity > SIZE_MAX / sizeof *search_list) { FAIL("graph region count overflow"); }
+		graph_region **grown = realloc(search_list, capacity * sizeof *grown);
+		if (grown == NULL) { FAIL("out of memory"); }
+		search_list = grown;
+		search_capacity = capacity;
+	}
+	region->searched = true;
+	search_list[search_count++] = region;
+}
+static void search_out(adamic_heap *heap, graph_region *root) {
+	if ((search_target_root != NULL && root == search_target_root) || (root == NULL && heap == search_target_lone)) {
+		search_at->reaches = true;
+	} else if (root != NULL && !root->searched) {
+		search_add(root);
+	}
+}
+static void search_back(adamic_heap *heap, graph_region *root) {
+	(void)heap;
+	if (!search_at->reaches && root != NULL && root->searched && root->reaches) {
+		search_at->reaches = true;
+		search_changed = true;
+	}
+}
+static void between(graph_region *from, graph_region *target_root, adamic_heap *target_lone) {
+	if (from == NULL) { return; }
+	search_target_root = target_root;
+	search_target_lone = target_lone;
+	search_count = 0;
+	search_add(from);
+	for (size_t i = 0; i < search_count; i++) {
+		search_at = search_list[i];
+		each_edge(search_at, search_out);
+	}
+	for (search_changed = true; search_changed;) {
+		search_changed = false;
+		for (size_t i = 0; i < search_count; i++) {
+			search_at = search_list[i];
+			each_edge(search_at, search_back);
+		}
+	}
+	for (size_t i = 0; i < search_count; i++) {
+		graph_region *region = search_list[i];
+		if (region != from && region->reaches && !region->merging) {
+			region->merging = true;
+			merge_add(region);
+		}
+		region->searched = region->reaches = false;
+	}
+#ifdef ADAMIC_COUNT
+	adamic_counted.graph_searched += search_count;
+#endif
+	search_count = 0;
+	search_target_root = search_at = NULL;
+	search_target_lone = NULL;
+}
+
+// uncount takes the count off an edge the union brings inside, from the target and its region.
+static _Thread_local adamic_heap *merging_one, *merging_two;
+static void uncount(adamic_heap *heap, graph_region *root) {
+	if ((root != NULL && root->merging) || (root == NULL && (heap == merging_one || heap == merging_two))) {
 		if (heap->references == 0 || (root != NULL && root->references == 0)) { FAIL("compiler bug: graph released without ownership"); }
 		heap->references--;
 		if (root != NULL) { root->references--; }
 #ifdef ADAMIC_COUNT
-		uncount_from->counted_out--;
+		edge_from->counted_out--;
 #endif
 	}
-}
-
-// uncount_edges takes the count off every edge from from's boundary into to (a region's root, or a
-// member with none yet), before the union, while the two roots still tell the edges apart.
-static void uncount_edges(graph_region *from, graph_region *to_root, adamic_heap *to_lone) {
-	if (from == NULL) { return; }
-	uncount_from = from;
-	uncount_root = to_root;
-	uncount_lone = to_lone;
-	for (size_t i = 0; i < from->boundary_count; i++) { children(from->boundary[i], uncount); }
-	uncount_from = NULL;
-	uncount_root = NULL;
-	uncount_lone = NULL;
 }
 
 static _Thread_local graph_region *crossing_root;
@@ -244,18 +338,9 @@ static void prune(graph_region *region) {
 #endif
 }
 
-void adamic_graph_merge(void *left, void *right) {
-	adamic_heap *one = member(left), *two = member(right);
-	if (one == NULL || two == NULL) { FAIL("compiler bug: merging non-graph values"); }
-	graph_region *a = region_of(one), *b = region_of(two);
-	if (one == two || (a != NULL && a == b)) { return; }
-	if ((a != NULL && a->shared) || (b != NULL && b->shared)) {
-		FAIL("merging shared graph regions is not yet supported");
-	}
-	// A member with no region holds no counted edge (adoption gives one to any member that does),
-	// but it can be the target of one.
-	uncount_edges(a, b, b == NULL ? two : NULL);
-	uncount_edges(b, a, a == NULL ? one : NULL);
+// unite joins two regions, or a region and a member with none, and returns the root. A member with
+// no region holds no counted edge, since adoption gives one to any member that does.
+static graph_region *unite(graph_region *a, adamic_heap *one, graph_region *b, adamic_heap *two) {
 	if (a == NULL && b != NULL) {
 		adamic_heap *swap = one; one = two; two = swap;
 		a = b; b = NULL;
@@ -287,9 +372,68 @@ void adamic_graph_merge(void *left, void *right) {
 		b->counted_out = 0;
 #endif
 	}
-	prune(a);
 #ifdef ADAMIC_COUNT
 	adamic_counted.graph_merges++;
+#endif
+	return a;
+}
+
+#ifdef ADAMIC_COUNT
+// acyclic checks, in the counted build, that no counted path leads from root back to itself: the
+// one place a merge could have left a cycle of regions.
+static _Thread_local graph_region *acyclic_root;
+static void acyclic_out(adamic_heap *heap, graph_region *root) {
+	(void)heap;
+	if (root == acyclic_root) { FAIL("compiler bug: counted edges between graph regions close a cycle"); }
+	if (root != NULL && !root->searched) { search_add(root); }
+}
+static void acyclic(graph_region *root) {
+	acyclic_root = root;
+	search_count = 0;
+	search_add(root);
+	for (size_t i = 0; i < search_count; i++) { each_edge(search_list[i], acyclic_out); }
+	for (size_t i = 0; i < search_count; i++) { search_list[i]->searched = false; }
+	search_count = 0;
+	acyclic_root = NULL;
+}
+#endif
+
+void adamic_graph_merge(void *left, void *right) {
+	adamic_heap *one = member(left), *two = member(right);
+	if (one == NULL || two == NULL) { FAIL("compiler bug: merging non-graph values"); }
+	graph_region *a = region_of(one), *b = region_of(two);
+	if (one == two || (a != NULL && a == b)) { return; }
+	if ((a != NULL && a->shared) || (b != NULL && b->shared)) {
+		FAIL("merging shared graph regions is not yet supported");
+	}
+	// Every region on a counted path between the two, either way round, joins them: left out, it would
+	// hold the union and be held by it, a cycle of counted edges no region could see.
+	merge_count = 0;
+	if (a != NULL) { a->merging = true; }
+	if (b != NULL) { b->merging = true; }
+	between(b, a, a == NULL ? one : NULL);
+	between(a, b, b == NULL ? two : NULL);
+	for (size_t i = 0; i < merge_count; i++) {
+		if (merge_list[i]->shared) { FAIL("merging shared graph regions is not yet supported"); }
+	}
+	// Then every edge among them is inside: its count goes, read while each root still names its side.
+	merging_one = a == NULL ? one : NULL;
+	merging_two = b == NULL ? two : NULL;
+	if (a != NULL) { each_edge(a, uncount); }
+	if (b != NULL) { each_edge(b, uncount); }
+	for (size_t i = 0; i < merge_count; i++) { each_edge(merge_list[i], uncount); }
+	merging_one = merging_two = NULL;
+	if (a != NULL) { a->merging = false; }
+	if (b != NULL) { b->merging = false; }
+	for (size_t i = 0; i < merge_count; i++) { merge_list[i]->merging = false; }
+	graph_region *root = unite(a, one, b, two);
+	for (size_t i = 0; i < merge_count; i++) {
+		if (find(merge_list[i]) != root) { root = unite(root, NULL, merge_list[i], NULL); }
+	}
+	merge_count = 0;
+	prune(root);
+#ifdef ADAMIC_COUNT
+	acyclic(root);
 #endif
 }
 
@@ -401,7 +545,11 @@ static void count_owned(void *value) {
 }
 
 // The new member keeps the count each member child already holds, as a counted edge into that
-// child's region, and becomes a region of one on its boundary. It joins nothing until a store does.
+// child's region, and becomes a region of one on its boundary. It joins nothing until a store does,
+// and it can't close a cycle of regions: its edges run only to members older than it, which no
+// counted path leads back from. The only unions are hold's and take's, both through
+// adamic_graph_merge; Program adoption, relocation (adamic_heap_graph_storage) and share.c, which
+// refuses graph values, join no regions.
 void *adamic_graph_adopt_owned(void *value, size_t bytes) {
 	if (adamic_graph_is(value)) { return value; }
 	joining = adamic_graph_adopt(value, bytes);
