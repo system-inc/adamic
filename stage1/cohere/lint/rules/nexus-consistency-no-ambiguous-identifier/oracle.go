@@ -8,8 +8,8 @@ import (
 	"github.com/system-inc/cohere/internal/lint/rules/nexus"
 )
 
-func oracleNexusConsistencyNoAmbiguousIdentifier() rule.Rule {
-	return nexus.ConsistencyNoAmbiguousIdentifier
+func oracleNexusConsistencyNoAmbiguousIdentifier(options any) rule.Bound {
+	return bindOracle(nexus.ConsistencyNoAmbiguousIdentifier, options)
 }
 
 func oracleNexusConsistencyNoAmbiguousIdentifierOptions(fields []string) any {

@@ -8,7 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoExAssign() rule.Rule { return rules.NoExAssign }
+func oracleNoExAssign(options any) rule.Bound { return bindOracle(rules.NoExAssign, options) }
 
 // Upstream has no options type and reads no options. Validate supplied JSON
 // and return an explicit empty value so the harness never silently drops it.

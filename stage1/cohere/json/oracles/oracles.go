@@ -186,7 +186,7 @@ type PrinterMutation struct{ Name, File, From, To string }
 
 var printerMutations = []PrinterMutation{
 	{"missing final newline", "print_json.go", `return concatIn(path, print("node", nil), hardline)`, `return print("node", nil)`},
-	{"missing property space", "print_json.go", `print("key", nil), ": ", print("value", nil)`, `print("key", nil), ":", print("value", nil)`},
+	{"missing property space", "print_json.go", `print("key", nil), doc.Text(": "), print("value", nil)`, `print("key", nil), doc.Text(":"), print("value", nil)`},
 	{"wrong filename parser", "printer.go", `return "json-stringify"`, `return "json"`},
 }
 

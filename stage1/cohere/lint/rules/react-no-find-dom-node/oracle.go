@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/react"
 )
 
-func oracleNoFindDOMNode() rule.Rule                 { return rules.NoFindDOMNode }
+func oracleNoFindDOMNode(options any) rule.Bound     { return bindOracle(rules.NoFindDomNode, options) }
 func oracleNoFindDOMNodeOptions(fields []string) any { return nil }

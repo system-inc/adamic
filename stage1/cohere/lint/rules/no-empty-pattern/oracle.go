@@ -10,7 +10,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoEmptyPattern() rule.Rule { return rules.NoEmptyPattern }
+func oracleNoEmptyPattern(options any) rule.Bound { return bindOracle(rules.NoEmptyPattern, options) }
 
 func oracleNoEmptyPatternOptions(fields []string) any {
 	var options rules.NoEmptyPatternOptions

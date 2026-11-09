@@ -8,5 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUnexpectedMultiline() rule.Rule                 { return rules.NoUnexpectedMultiline }
+func oracleNoUnexpectedMultiline(options any) rule.Bound {
+	return bindOracle(rules.NoUnexpectedMultiline, options)
+}
 func oracleNoUnexpectedMultilineOptions(fields []string) any { return nil }

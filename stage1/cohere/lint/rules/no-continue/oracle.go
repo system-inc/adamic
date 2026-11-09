@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoContinue() rule.Rule                 { return rules.NoContinue }
+func oracleNoContinue(options any) rule.Bound     { return bindOracle(rules.NoContinue, options) }
 func oracleNoContinueOptions(fields []string) any { return nil }

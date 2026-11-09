@@ -8,5 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUnusedPrivateClassMembers() rule.Rule                 { return rules.NoUnusedPrivateClassMembers }
+func oracleNoUnusedPrivateClassMembers(options any) rule.Bound {
+	return bindOracle(rules.NoUnusedPrivateClassMembers, options)
+}
 func oracleNoUnusedPrivateClassMembersOptions(fields []string) any { return nil }

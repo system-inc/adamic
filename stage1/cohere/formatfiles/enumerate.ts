@@ -1,10 +1,10 @@
-// A port of cohere's internal/format/formatfiles/enumerate.go to Adamic 0.1: which files a tree offers
+// A port of cohere's internal/format/format_files/enumerate.go to Adamic 0.1: which files a tree offers
 // the formatter, the walk, its ignore layers, and an account of every file it did not offer. Each piece
 // names the Go it reads as.
 //
 // Where the port differs from the Go, and why:
 //
-//   - The format options. The Go's Enumerate starts by calling formatoptions.Resolve(root), which walks
+//   - The format options. The Go's Enumerate starts by calling format_options.Resolve(root), which walks
 //     up from the root reading settings files as JSON, and 0.1 has no JSON. The port takes Resolve's
 //     answer as given (Resolution): the house ignore list and whether one was declared. The test's Go
 //     side calls Resolve on each tree and writes its answer into the cases, so the port is held to the
@@ -23,7 +23,7 @@ import { base, clean, dir } from '../gitignore/path.ts';
 import { DiskTree, lstat, statExists, statIsDirectory, type LinkStatus } from './disk.ts';
 import { ext, goToLower, join, rel } from './golang.ts';
 
-// formatoptions: what Resolve gives Enumerate. houseIgnore is the format block's `ignore` list, and
+// format_options: what Resolve gives Enumerate. houseIgnore is the format block's `ignore` list, and
 // houseIgnoreDeclared whether any tier declared one; source is the settings file that governs root, ''
 // for none, and ignorePatterns its globs.
 export interface Resolution {
@@ -33,7 +33,7 @@ export interface Resolution {
 	readonly ignorePatterns: readonly string[];
 }
 
-// formatoptions.ErrPrettierConfigRemains and NexusTierFileName, which the refusal of a .prettierignore
+// format_options.ErrPrettierConfigRemains and NexusTierFileName, which the refusal of a .prettierignore
 // names.
 const errPrettierConfigRemains = 'Prettier config remains where cohere no longer reads it';
 const nexusTierFileName = 'NexusCohereSettings.json';
@@ -43,6 +43,8 @@ const nexusTierFileName = 'NexusCohereSettings.json';
 export const GitignoreLayer = '.gitignore';
 export const HouseIgnoreLayer = 'format.ignore';
 export const IgnorePatternsLayer = 'ignorePatterns';
+export const FixturesLayer = 'testdata';
+export const VendoredLayer = 'Vendor';
 
 // enumerate.go: Enumeration, what a walk found, and why each file did not survive it. Every number is a
 // subtraction someone can check: walked minus the ignore counts minus unhandled minus symbolicLinks is
@@ -64,6 +66,10 @@ export class Enumeration {
 		this.root = root;
 	}
 }
+
+// enumerate.go: NeverEntered, the directory names no walk of cohere's enters. A directory skipped
+// here is counted under its own name, only when no ignore layer already named it.
+export const NeverEntered = new Set<string>(['node_modules', '.build', '.cache', '.git', FixturesLayer]);
 
 // What Enumerate gives: the enumeration, or the Go's error.
 export type Enumerated = { readonly kind: 'Ok'; readonly enumeration: Enumeration } | { readonly kind: 'Error'; readonly message: string };
@@ -332,6 +338,11 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
 				enumeration.nestedRepositories.push(relative);
 				return skipDirectory;
 			}
+			// enumerate.go: fixtures are never entered, before the ignore layers, and counted under testdata.
+			if (base(path) === FixturesLayer) {
+				count(FixturesLayer);
+				return skipDirectory;
+			}
 			// Prune an ignored directory rather than descending and filtering its contents.
 			if (relative === '.') {
 				enumeration.directories.push(path);
@@ -347,6 +358,16 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
 					count(layer.name);
 					return skipDirectory;
 				}
+			}
+			// enumerate.go: what no ignore layer named and cohere never enters, before scope.Enter.
+			if (NeverEntered.has(base(path))) {
+				count(base(path));
+				return skipDirectory;
+			}
+			// enumerate.go: Vendor at any depth holds someone else's code, counted under VendoredLayer.
+			if (base(path) === VendoredLayer) {
+				count(VendoredLayer);
+				return skipDirectory;
 			}
 			disk.load(`${relative}/.git`);
 			disk.load(`${relative}/${IgnoreFileName}`);

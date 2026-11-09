@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUnsafeNegation() rule.Rule { return rules.NoUnsafeNegation }
+func oracleNoUnsafeNegation(options any) rule.Bound {
+	return bindOracle(rules.NoUnsafeNegation, options)
+}
 func oracleNoUnsafeNegationOptions(fields []string) any {
 	var options rules.NoUnsafeNegationOptions
 	if len(fields) > 5 && fields[5] != "" {

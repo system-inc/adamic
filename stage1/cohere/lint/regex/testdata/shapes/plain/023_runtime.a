@@ -1,4 +1,4 @@
-// nexus/consistency_no_return_void.go:100; `^(function|class|let|async)\b`
+// react/boolean_prop_naming.go:638; `\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,8 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "function", 4);
-observe(regex, "xfunction", 5);
-observe(regex, "function\n", 6);
-observe(regex, "let", 7);
-observe(regex, "class", 8);
+observe(regex, "{{A}}", 4);
+observe(regex, "x{{A}}", 5);
+observe(regex, "{{A}}\n", 6);

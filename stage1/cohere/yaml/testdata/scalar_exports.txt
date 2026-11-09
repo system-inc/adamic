@@ -2,8 +2,8 @@
 func PortScalarOutline(token *cst.Token, atRoot bool) string {
     hex := func(units []uint16) string { var b strings.Builder; for _,u:=range units { fmt.Fprintf(&b,"%04x",u) }; return b.String() }
     var errors []string
-    onError := func(source any,code,message string,warning bool) {
-        pos:=getErrorPos(source)
+    onError := func(source errorSource,code,message string,warning bool) {
+        pos:=source.position()
         errors=append(errors,fmt.Sprintf("%d,%d,%s,%s",pos[0],pos[1],code,hex([]uint16(stringToUnits(message)))))
     }
     var result scalarResolution

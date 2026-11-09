@@ -1,5 +1,5 @@
 // This file is not built here. mediaquery_test.go lays it into cohere's own package,
-// cohere/internal/format/css/mediaquery, with `go test -overlay`, so that it can call cohere's Parse and
+// cohere/internal/format/css/media_query, with `go test -overlay`, so that it can call cohere's Parse and
 // cohere's own test helpers (mediaQueryFixtures and utf16OffsetsOf, from oracle_test.go) exactly as
 // cohere's tests do, without a byte of the submodule changing.
 //
@@ -9,7 +9,7 @@
 // and of its refusals; then generated params, from a seeded generator over the pieces media queries
 // are made of and the characters the parser treats specially.
 
-package mediaquery
+package media_query
 
 import (
 	"encoding/json"
@@ -98,7 +98,7 @@ func TestAdamicPortCases(t *testing.T) {
 
 	var params []string
 	for _, fixture := range mediaQueryFixtures {
-		params = append(params, fixture.params)
+		params = append(params, fixture.parameters)
 	}
 	params = append(params, adamicGoldenAndRefusalParams...)
 	// One case for each character of adamicWhitespace and adamicNotWhitespace, wherever the parser
@@ -147,7 +147,7 @@ func TestAdamicPortCases(t *testing.T) {
 func adamicRender(t *testing.T, node *estree.Node, depth int, offsets []int, builder *strings.Builder) {
 	t.Helper()
 	keys := slices.Sorted(slices.Values(node.Keys()))
-	_, isContainer := node.Get("nodes").([]*estree.Node)
+	_, isContainer := node.Get("nodes").(estree.Nodes)
 	want := []string{"after", "before", "sourceIndex", "value"}
 	if isContainer {
 		want = []string{"after", "before", "nodes", "sourceIndex", "value"}
@@ -159,7 +159,8 @@ func adamicRender(t *testing.T, node *estree.Node, depth int, offsets []int, bui
 	if nodeType == "" {
 		nodeType = "<undefined>"
 	}
-	sourceIndex, isInt := node.Get("sourceIndex").(int)
+	rawSourceIndex, isInt := node.Get("sourceIndex").(estree.Integer)
+	sourceIndex := int(rawSourceIndex)
 	if !isInt || sourceIndex < 0 || sourceIndex >= len(offsets) {
 		t.Fatalf("a %q node's sourceIndex is %v", node.Type(), node.Get("sourceIndex"))
 	}
@@ -177,8 +178,8 @@ func adamicRender(t *testing.T, node *estree.Node, depth int, offsets []int, bui
 
 // adamicQuote is main.ts's quote for a string, and <undefined> for anything else, which the port can't
 // print, so that a property the port takes for a string and the Go leaves out shows as a difference.
-func adamicQuote(value any) string {
-	text, isString := value.(string)
+func adamicQuote(value estree.Value) string {
+	text, isString := value.(estree.String)
 	if !isString {
 		return "<undefined>"
 	}

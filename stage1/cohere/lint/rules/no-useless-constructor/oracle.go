@@ -8,5 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUselessConstructor() rule.Rule                 { return rules.NoUselessConstructor }
+func oracleNoUselessConstructor(options any) rule.Bound {
+	return bindOracle(rules.NoUselessConstructor, options)
+}
 func oracleNoUselessConstructorOptions(fields []string) any { return nil }

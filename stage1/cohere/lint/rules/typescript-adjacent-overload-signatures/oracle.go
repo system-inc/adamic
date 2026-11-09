@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
 )
 
-func oracleAdjacentOverloadSignatures() rule.Rule { return rules.AdjacentOverloadSignatures }
+func oracleAdjacentOverloadSignatures(options any) rule.Bound {
+	return bindOracle(rules.AdjacentOverloadSignatures, options)
+}
 
 // This upstream rule has an empty options schema and ignores options in Run.
 // Decode supplied JSON rather than silently dropping the manifest field.

@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUselessRename() rule.Rule { return rules.NoUselessRename }
+func oracleNoUselessRename(options any) rule.Bound {
+	return bindOracle(rules.NoUselessRename, options)
+}
 func oracleNoUselessRenameOptions(fields []string) any {
 	settings := rules.DefaultNoUselessRenameSettings()
 	if fields[5] != "" && fields[5] != "null" {
