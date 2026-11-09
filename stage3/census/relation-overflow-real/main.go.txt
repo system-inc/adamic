@@ -1,0 +1,95 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	prodlower "github.com/system-inc/adamic/internal/relationreal"
+	"os"
+	"path/filepath"
+	"time"
+)
+
+func main() {
+	if len(os.Args) != 4 {
+		panic("usage: helper real|census entry output-directory")
+	}
+	mode, entry, out := os.Args[1], os.Args[2], os.Args[3]
+	ctx := context.Background()
+	start := time.Now()
+	var p *load.Program
+	var err error
+	if mode == "real" {
+		p, err = load.Load([]string{entry})
+	} else {
+		p, err = load.LatentLoad([]string{entry})
+	}
+	if err != nil {
+		panic(err)
+	}
+	c, release := p.Checker(ctx, p.Files()[0])
+	release()
+	snapshot := func(phase string) {
+		p.MeasureRelations(c, phase, filepath.Join(out, mode+"-"+phase+".json"))
+		fmt.Fprintln(os.Stderr, mode, phase, time.Since(start))
+	}
+	snapshot("checked")
+	if mode == "real" {
+		built, failure := prodlower.Lower(ctx, p)
+		detail := map[string]any{"result_non_nil": built != nil, "failure": fmt.Sprint(failure), "elapsed_seconds": time.Since(start).Seconds()}
+		data, _ := json.MarshalIndent(detail, "", "  ")
+		if err = os.WriteFile(filepath.Join(out, "real-lower.json"), data, 0644); err != nil {
+			panic(err)
+		}
+		snapshot("lowered")
+	}
+	p.LatentReplayEntryReach()
+	for _, file := range p.Files() {
+		current, done := p.Checker(ctx, file)
+		if current != c {
+			panic("entry graph uses more than one checker")
+		}
+		done()
+	}
+	output, err := os.Create(filepath.Join(out, mode+"-units.jsonl"))
+	if err != nil {
+		panic(err)
+	}
+	encoder := json.NewEncoder(output)
+	files, units := 0, 0
+	lower.Latent(ctx, p, func(record lower.LatentFile) {
+		label := "measured on a checker-clean entry-root program"
+		if len(p.LatentDiagnostics()) > 0 {
+			label = "measured on a checker-rejected entry-root program"
+		}
+		record.Measurement = label
+		for i := range record.Declarations {
+			record.Declarations[i].Measurement = label
+		}
+		for i := range record.Units {
+			record.Units[i].Measurement = label
+		}
+		for i := range record.Findings {
+			record.Findings[i].Measurement = label
+		}
+
+		if err := encoder.Encode(record); err != nil {
+			panic(err)
+		}
+		files++
+		units += len(record.Units)
+		fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings))
+	})
+	if err = output.Close(); err != nil {
+		panic(err)
+	}
+	snapshot("units")
+	data, _ := json.MarshalIndent(map[string]any{"files": files, "units": units, "checker_diagnostics": len(p.LatentDiagnostics()), "elapsed_seconds": time.Since(start).Seconds()}, "", "  ")
+	if err = os.WriteFile(filepath.Join(out, mode+"-work.json"), data, 0644); err != nil {
+		panic(err)
+	}
+	p.RenderRelationPairs(c, filepath.Join(out, mode+"-pairs.json"))
+	snapshot("rendered")
+}
