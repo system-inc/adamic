@@ -622,6 +622,9 @@ export class RuleSet {
             if(this.selected56) { this.rule56.visit(node, index); }
             if(this.selected68) { this.rule68.visit(node, index); }
             break;
+        case 'PrivateIdentifier':
+            if(this.selected30) { this.rule30.visit(node, index); }
+            break;
         case 'PropertyAccessExpression':
             if(this.selected23) { this.rule23.visit(node, index); }
             if(this.selected38) { this.rule38.visit(node, index); }
@@ -664,6 +667,7 @@ export class RuleSet {
         case 'StringLiteral':
             if(this.selected5) { this.rule5.visit(index); }
             if(this.selected9) { this.rule9.visit(index); }
+            if(this.selected30) { this.rule30.visit(node, index); }
             if(this.selected59) { this.rule59.visit(node, index, parent); }
             if(this.selected63) { this.rule63.visit(node, index); }
             break;
