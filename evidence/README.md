@@ -54,3 +54,7 @@ Full suite exit 1 in 1751.026 seconds, no timeout. No compiler changes were made
 ## L5 comparison
 
 [Generic function property form, two compilers, stock tsc and Node](l5/results.md): both revisions refuse every native/JS .ts/.a compile with adamic/no-void-read. Stock tsc 6.0.3 accepts; source Node throws TypeError. Full refusals, outputs and exit codes retained.
+
+## C1/C2 table casts
+
+[Generic and non-generic table-to-record probes](c1-c2/results.md): both pinned compilers refuse both .ts/.a probes in native and JS compilation because fixed objects and records have different storage. Source Node throws node.bark TypeError for both; no sanitizer run or report.
