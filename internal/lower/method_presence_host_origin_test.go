@@ -138,17 +138,10 @@ func hostOriginNode(t *testing.T, file *ast.SourceFile, kind ast.Kind, text stri
 	return found
 }
 
-// These run one after another, never t.Parallel(), for host_binding_route_test.go's reason: each lowers
-// against the package's hostBindingRows swapped for the routed table and restored with defer.
-// Not parallel: it swaps hostBindingRows, which every lowering in the package reads.
+// These lower against the real table, where performance's row is Provided on every target through
+// node:perf_hooks (#m36zjrk), so they swap nothing and run in parallel.
 func TestMethodPresenceThroughHostOrigin(t *testing.T) {
-	rows, err := routedPerformanceRows()
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer func(table func() ([]load.HostBinding, error)) { hostBindingRows = table }(hostBindingRows)
-	hostBindingRows = func() ([]load.HostBinding, error) { return rows, nil }
-
+	t.Parallel()
 	// (a3, moved here from host_binding_route_test.go, where it pinned this task's wall) tsc's own body:
 	// tryGetPerformance's literal holding the routed binding, destructured back out of its const, then
 	// tested for now, mark, measure, clearMarks and clearMeasures. Every one of those tests gets past the
