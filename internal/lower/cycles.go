@@ -90,6 +90,8 @@ type cycleFinder struct {
 	// recordStop is the first slot slotsOf seeds whose value can be a record (noteRecordSlot), returned
 	// by graphTypes after the boundary's refusals: a record is never a graph member.
 	recordStop error
+	// assigned is every local an ir.Assign writes after its declaration (reassigned), found once.
+	assigned map[int]bool
 }
 
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't

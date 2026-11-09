@@ -21,8 +21,9 @@ import (
 // types, never written into a slot on it, lowers: method_bind.a's dictionary is the control in the
 // corpus, beside the three here.
 //
-// Mutant: make noteRecordSlot (internal/lower/graph_records.go) return at once, and both stopped cases
-// lower and leak by the counted build.
+// Mutants: make noteRecordSlot (internal/lower/graph_records.go) return at once, and the field and
+// element cases lower and leak by the counted build; drop the reassigned cell's stop in graphTypes, and
+// the captured-variable case lowers.
 const graphRecordNode = `interface Node { name: string; next: Node[]; r: Record<string, Node[]>; rs: Record<string, Node[]>[] }
 const a: Node = { name: 'a' + '', next: [], r: {}, rs: [] };
 const b: Node = { name: 'b' + '', next: [a], r: {}, rs: [] };
@@ -39,6 +40,13 @@ console.log(` + "`${a.name} ${got === undefined ? -1 : got.length}`" + `);
 		{"a record literal pushed into a graph array", graphRecordNode + `a.rs.push({ k: a.next.slice() });
 console.log(` + "`${a.name} ${a.rs.length}`" + `);
 `, "a record written into a graph slot"},
+		// A captured variable assigned again with a record holding the closure that captures it: the cell
+		// holds the record, the record the closure, the closure the cell.
+		{"a reassigned captured variable holding a record", graphRecordNode + `let table: Record<string, () => number> = {};
+const size = (): number => (table['size'] === undefined ? 0 : 1);
+table = { size: size };
+console.log(` + "`${a.name} ${size()}`" + `);
+`, "a record held by 'table'"},
 		// The same cycle through an array field: its allocations are graph members, so it frees.
 		{"the same cycle through an array", `interface Node { name: string; next: Node[]; kids: Node[][] }
 const a: Node = { name: 'a' + '', next: [], kids: [] };
