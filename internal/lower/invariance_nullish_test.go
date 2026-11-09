@@ -42,3 +42,27 @@ func TestWritableTypeParameterUnionStillRefusesWidening(t *testing.T) {
 		t.Fatalf("got %v, want a refusal ending %q", err, want)
 	}
 }
+
+// The undefined ternary arm serves the optional member before widened reaches the
+// open numeric enum arm. E has one member so E.A is its whole open numeric
+// enum type, as in utilities.ts:877. Both calls observe the selected arm against Node.
+// Mutant run and restored via a Go overlay: remove widened's nullish-member
+// early return. This pin refuses at main.a:3:9 with "an unproven value assigned
+// to a numeric literal or enum member slot E" (adamic/enum-literal).
+func TestUndefinedMemberIntoOpenNumericEnumUnion(t *testing.T) {
+	t.Parallel()
+	const source = "enum E { A = 1 }\nfunction f(flag: boolean): E | undefined {\n\treturn flag ? E.A : undefined;\n}\nconsole.log(String(f(true)));\nconsole.log(String(f(false)));\n"
+	lowersAndAgreesWithNode(t, source)
+}
+
+// The checker rejects the literal 7 before lowering; a value typed number is
+// allowed into a whole numeric enum. Keep the literal twin's exact checker stop.
+func TestArbitraryNumberIntoOptionalOpenNumericEnum(t *testing.T) {
+	t.Parallel()
+	const source = "enum E { A = 1 }\nfunction f(flag: boolean): E | undefined {\n\treturn flag ? E.A : 7;\n}\nf(false);\n"
+	_, err := load.Load([]string{writeAgreementSource(t, "main.a", source)})
+	want := "main.a:3:22: error TS2322: Type '7' is not assignable to type 'E'."
+	if err == nil || !strings.HasSuffix(err.Error(), want) {
+		t.Fatalf("got %v, want an error ending %q", err, want)
+	}
+}
