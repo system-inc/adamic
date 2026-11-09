@@ -439,7 +439,11 @@ func instantiableMember(t *checker.Type) bool {
 // recordMayReach says whether a record could be the receiver of a field read whose receiver has
 // this type. Unknown fails closed: an unconstrained type parameter, any and unknown may be a record.
 func (l *lowering) recordMayReach(receiver *checker.Type) bool {
-	return l.typesMayReach(receiver, l.entriesRecordStorageTypes(), true, 0)
+	verdict := l.typesMayReach(receiver, l.entriesRecordStorageTypes(), true, 0)
+	if recordProbe {
+		l.recordProbeVerdict(receiver, verdict)
+	}
+	return verdict
 }
 
 // recordEmptyObject is the type `{}`, every record's implicit source (entriesRecordStorageTypes), one per
