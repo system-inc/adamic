@@ -70,21 +70,19 @@
       "typeof": "object"
     },
     "native": {
-      "answer": "Pending",
-      "owner": "Runtime"
+      "answer": "Provided"
     },
     "javascript": {
       "answer": "Provided"
     },
     "wasm32": {
-      "answer": "Pending",
-      "owner": "Runtime and Platforms"
+      "answer": "Provided"
     },
     "model": {
-      "path": "",
-      "task": "#m36zjrk"
+      "path": "node:perf_hooks",
+      "task": ""
     },
     "divergence": "",
-    "ruling": "@system_adamic on #00qn5az, Nov 6 2026 00:05Z: Provided on Node, not yet until #3sh9398's host model exists"
+    "ruling": "@system_adamic_runtime on #m36zjrk, Nov 8 2026: native and wasm32 cleared, Provided through node:perf_hooks' performance, the same object on Node (globalThis.performance === perf_hooks.performance); wasm32 proven by WebAssembly on #m36zjrk"
   }
 ]
