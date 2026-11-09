@@ -35,7 +35,7 @@ log=$home/logs/$stamp.log
 toolchain=$home/logs/$stamp.toolchain.txt
 status=$home/status
 started=$(date -u +%FT%TZ)
-step=start sha="" run="" isLocked=false
+step=start sha="" run="" isLocked=false isSkipped=false
 
 say() { printf '%s meter-daily: %s\n' "$(date -u +%FT%TZ)" "$*" | tee -a "$log"; }
 
@@ -58,8 +58,9 @@ begin() {
 finish() {
 	local code=$?
 	[ "$code" = 0 ] && return 0
-	# A run that never held the lock leaves the status to the run that does.
+	# A run that never held the lock leaves the status to the run that does, and a skipped day has said so already.
 	"$isLocked" || return 0
+	! "$isSkipped" || return 0
 	# A red run commits nothing, but the run directory the meter made, if it got that far, keeps what it used.
 	[ -n "$run" ] || run=$(sed -n 's/^run: //p' "$log" 2> /dev/null | tail -n 1 || true)
 	if [ -n "$run" ] && [ -d "$run" ]; then
@@ -80,6 +81,20 @@ flock -n 9 || { say "another meter-daily run holds $home/run.lock"; exit 1; }
 isLocked=true
 record Running 0 ""
 say "log $log"
+
+# The timer runs outside any gap, so on a line box it could meet a Loom hand job. It never starts beside one: it
+# waits up to 30 minutes for the box to come free, then skips the day with status Skipped and exit 75, which keeps
+# meter-daily-submit.service (OnSuccess) from starting (Loom's condition for the timer on Pupa, Nov 9).
+begin wait
+# shellcheck source=cloud/meter-daily/hand-jobs.sh
+. "$(dirname "$0")/hand-jobs.sh"
+waited=0
+waitForHandJobs say || waited=$?
+if [ "$waited" != 0 ]; then
+	isSkipped=true
+	record Skipped "$waited" "a Loom hand job held the box for the whole wait; nothing measured, nothing pushed"
+	exit "$waited"
+fi
 
 begin toolchain
 [ -r "$toolsEnvironment" ] || { say "no readable toolchain env at $toolsEnvironment (ADAMIC_METER_TOOLS_ENV)"; exit 1; }

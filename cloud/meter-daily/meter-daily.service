@@ -1,6 +1,6 @@
 # The stage 3 meter once on main's tip, as adamicmeter: network, no keys, no push rights, no sudo
 # (cloud/meter-daily/README.md).
-# Installed to /etc/systemd/system with run.sh and submit.sh in /srv/adamic-meter. Never on a Mac.
+# Installed to /etc/systemd/system with run.sh, hand-jobs.sh and submit.sh in /srv/adamic-meter. Never on a Mac.
 [Unit]
 Description=Adamic stage 3 daily meter on main, as adamicmeter (#badrnrf)
 Wants=network-online.target
@@ -20,6 +20,7 @@ PrivateTmp=yes
 # The box's toolchain, read through an ACL: traverse on /home/ahra, read on ~/adamic-tools.
 Environment=ADAMIC_METER_TOOLS_ENV=/home/ahra/adamic-tools/env.sh
 ExecStart=/usr/bin/bash /srv/adamic-meter/run.sh
-# run.sh gives the meter 3 h (timeout 10800, up from 2 h for #20pb346); this leaves room for the clone, fetch, submodules and npm around it.
-TimeoutStartSec=3h30m
+# run.sh waits up to 30 min for a box a hand job holds (hand-jobs.sh), then gives the meter 3 h (timeout 10800, up
+# from 2 h for #20pb346); this leaves room for that wait and the clone, fetch, submodules and npm around it.
+TimeoutStartSec=4h
 Nice=10
