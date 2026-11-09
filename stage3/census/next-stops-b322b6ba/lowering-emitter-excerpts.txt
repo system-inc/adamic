@@ -1,0 +1,125 @@
+internal/lower/ambient.go
+61: func (l *lowering) ambientRefusal(node *ast.Node) error {
+62: 	what := ""
+63: 	if node.Kind == ast.KindModuleDeclaration {
+64: 		switch {
+65: 		case ast.IsGlobalScopeAugmentation(node):
+66: 			what = "a global augmentation"
+67: 		case !ast.IsIdentifier(node.Name()):
+68: 			what = "a module augmentation or ambient external module"
+69: 		case ambientDeclaration(node) && ambientNamespaceValues(node):
+70: 			what = "an ambient namespace or module holding values"
+71: 		}
+72: 	} else if ambientDeclaration(node) {
+73: 		switch node.Kind {
+74: 		case ast.KindVariableStatement:
+75: 			// A .ts file's declaration a host-binding row names lowers by its row (host_bindings.go).
+76: 			if matched, err := l.hostBindingStatement(node); matched {
+77: 				return err
+78: 			}
+79: 			what = "an ambient value declaration"
+80: 		case ast.KindFunctionDeclaration:
+81: 			what = "an ambient function declaration"
+82: 		case ast.KindClassDeclaration:
+83: 			what = "an ambient class declaration"
+84: 		case ast.KindEnumDeclaration:
+85: 			what = "an ambient enum declaration"
+86: 		}
+87: 	}
+88: 	if what == "" {
+89: 		return nil
+90: 	}
+91: 	return &Refused{Where: l.program.Where(node), What: what, Fix: "define the values in a module and import them; use Adamic-generated platform bindings for host values"}
+92: }
+93: 
+94: func init() { refusalRules.register(2200, "ambientRefusal", (*lowering).ambientRefusal) }
+internal/lower/cast_proof.go
+185: 	}
+186: 	// A value the host audit models as never is never had, so its cast has nothing to check, whatever
+187: 	// the operand's declared any says (host-any.md's Modelled rows).
+188: 	if l.hostModelledNever(as.Expression) {
+189: 		return castProof{}, nil
+190: 	}
+191: 	operand, from := l.mintOperand(as)
+192: 	if mint := l.brandMintOf(operand, from, target); mint != nil {
+193: 		return castProof{brandMint: mint}, l.brandMintRefusal(node, target, mint)
+194: 	}
+195: 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
+196: 	inner := ast.SkipParentheses(as.Expression)
+197: 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
+198: 		if l.overloadDefaultPair(node) {
+199: 			return castProof{overloadDefault: true}, nil
+200: 		}
+201: 		return castProof{}, refused
+internal/lower/namespaces.go
+250: 			}
+251: 		}
+252: 	}
+253: 	return nil
+254: }
+255: 
+256: func init() { refusalRules.register(2100, "namespaceRefusal", (*lowering).namespaceRefusal) }
+257: 
+258: // Follow statically known callees before executing a module statement. An unresolved
+259: // edge keeps namespace reads checked at runtime; it is never proof of no effects.
+260: func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+261: 	initialized := map[*ast.Node]bool{}
+262: 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+263: 	checkCall := func(target *ast.Node) error {
+264: 		for declaration, read := range graph.reach(target) {
+265: 			if !initialized[declaration] {
+266: 				if declaration.Kind == ast.KindEnumDeclaration {
+267: 					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
+268: 				}
+269: 				return l.notYet(read, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+270: 			}
+271: 		}
+272: 		return nil
+273: 	}
+274: 	var visit func(*ast.Node) error
+275: 	visit = func(node *ast.Node) error {
+internal/lower/namespaces.go
+305: 				if err := visit(statement); err != nil {
+306: 					return err
+307: 				}
+308: 			}
+309: 			initialized[node] = true
+310: 			return nil
+311: 		}
+312: 		// The enum object exists while its own member assignments execute.
+313: 		if node.Kind == ast.KindEnumDeclaration {
+314: 			initialized[node] = true
+315: 		}
+316: 		if l.namespaceValueNode(node) {
+317: 			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
+318: 				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
+319: 			}
+320: 			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] {
+321: 				return l.notYet(node, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+322: 			}
+323: 		}
+324: 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {
+325: 			if target := l.namespaceCallable(node.Expression()); target != nil {
+internal/lower/host_bindings.go
+105: // hostBindingStatement reports whether every declarator of an ambient variable statement is a host
+106: // binding's declaration, and if so, the stop for the first whose row doesn't lower, or nil.
+107: func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
+108: 	if _, err := hostBindingRows(); err != nil {
+109: 		return true, err
+110: 	}
+111: 	var stop error
+112: 	for _, declaration := range statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
+113: 		row := l.hostBindingRow(declaration)
+114: 		if row == nil {
+115: 			return false, nil
+116: 		}
+117: 		if stop != nil {
+118: 			continue
+119: 		}
+120: 		if reason := hostBindingStop(*row); reason != "" {
+121: 			stop = l.notYet(declaration, reason)
+122: 		} else if row.Native.Answer == load.HostBindingProvided {
+123: 			stop = l.hostBindingModelRefusal(declaration, *row)
+124: 		}
+125: 	}
+126: 	return true, stop
