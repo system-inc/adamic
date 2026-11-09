@@ -23,7 +23,8 @@ code, mutant = run('mutant', ['-mutant'])
 if code == 0 or 'base/consistency_require_pagination_argument_name.go:27: source Node fixture mismatch' not in mutant:
     raise SystemExit('translation mutant was not killed by its match comparison')
 code, forced = run('forced-native', ['-force-native'])
-if 'awaits codex/regex-runtime-compiler=89' in baseline:
+# Census 89 to 74 at cohere 5360753e: 20 removed, 5 added. Keep this guard handwritten.
+if 'awaits codex/regex-runtime-compiler=74' in baseline:
     if code == 0 or 'forced native requirement caught refusal' not in forced:
         raise SystemExit('forced native check did not expose the named pending refusal')
 elif code != 0:
