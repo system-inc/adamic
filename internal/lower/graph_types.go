@@ -119,10 +119,10 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 					Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
 				}
 			}
-			// A cell that can hold a record seeds a cycle through a record no graph region holds: stopped,
-			// conservatively, as a record written into any graph slot is (noteRecordSlot).
-			if f.holdsRecord(proven) && f.recordStop == nil {
-				f.recordStop = f.l.notYet(f.l.localNodes[local], "a record held by '"+declared.Name+"', a variable a function value captures on a cycle, in a graph program: a record can't join a graph region")
+			// A captured cell reassigned with a value that can be a record seeds a cycle through a record
+			// no graph region holds: stopped, as a record written into a graph slot is (noteRecordSlot).
+			if f.recordStop == nil && f.holdsRecord(proven) && f.reassigned(local) {
+				f.recordStop = f.l.notYet(f.l.localNodes[local], "a record held by '"+declared.Name+"', a variable a function value captures and the program assigns again, on a cycle, in a graph program: a record can't join a graph region")
 			}
 			seeds[cycleNode{cell: local + 1}] = true
 		}
