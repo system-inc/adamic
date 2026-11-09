@@ -328,7 +328,7 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 
 	// Stops: made outside the plan, or refused in a graph program.
 	reflect.TypeFor[ir.IteratorNext]():         {class: graphFlowStops, why: "a fresh { value, done } (generator.go:27) with no GraphTypes, which holds the yielded value: a graph type when the program holds results (Memory's row 12)"},
-	reflect.TypeFor[ir.CollectionIterator]():   {class: graphFlowStops, why: "a new iterator holding its collection (library_map_set.go:3), linked to it in the cycle proof (graph_types.go:401), with no GraphTypes"},
+	reflect.TypeFor[ir.CollectionIterator]():   {class: graphFlowElsewhere, why: "a new iterator holding its collection (library_map_set.go:3), linked to it in the cycle proof (graph_types.go:401), which the runtime plans itself: adamic_collection_iterator adopts the iterator, its state and its closure whenever its collection is a graph member (runtime map_set.c:178-199), as adamic_map_entries adopts a graph map's pairs; fresh_refused's map_iterator and set_iterator are its witnesses"},
 	reflect.TypeFor[ir.JSONDecode]():           {class: graphFlowStops, why: "a decoded tree the runtime makes outside every region (library_json_decode.go:42), whose type can be a graph type"},
 	reflect.TypeFor[ir.ParallelMap]():          {class: graphFlowStops, why: "a new array of the callbacks' results (ir.go:1091) with no GraphTypes"},
 	reflect.TypeFor[ir.DynamicProperty]():      {class: graphFlowStops, why: "a dynamic-shape read, which graphAdoptionBoundary refuses in a graph program (graph_types.go:475) before this stop is read"},

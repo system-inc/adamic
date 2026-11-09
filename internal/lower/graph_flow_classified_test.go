@@ -116,7 +116,7 @@ func TestGraphFlowSteps(t *testing.T) {
 		{"a field read is planned where it was stored", ir.Property{Object: value, Name: "next", Of: ir.Object}, graphFlowStep{}},
 		{"a string can't hold a graph value", ir.StringCall{Method: "split"}, graphFlowStep{}},
 		{"an iterator's result stops", ir.IteratorNext{}, graphFlowStep{stop: true}},
-		{"a collection's iterator stops", ir.CollectionIterator{}, graphFlowStep{stop: true}},
+		{"a collection's iterator is the runtime's to plan", ir.CollectionIterator{}, graphFlowStep{}},
 		{"a decoded tree stops", ir.JSONDecode{}, graphFlowStep{stop: true}},
 		{"a host object stops", ir.NodeHostCall{Returns: ir.Object}, graphFlowStep{stop: true}},
 		{"a host string holds no graph value", ir.NodeHostCall{Returns: ir.String}, graphFlowStep{}},
