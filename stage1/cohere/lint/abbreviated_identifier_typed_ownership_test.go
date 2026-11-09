@@ -54,9 +54,12 @@ func TestAbbreviatedIdentifierTypedOwnershipGap(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "tsconfig.json"), []byte(config), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	t.Cleanup(cancel)
-	want := ownedWitnessExecute(t, ctx, oracle, path).output
+	// The typed oracle's run owns its deadline, and each side below owns its own, started when the side starts: the
+	// sides are parallel, so they wait for the parent to return and for a free slot, and a deadline the parent started
+	// would spend that wait.
+	oracleContext, cancelOracle := context.WithTimeout(context.Background(), 90*time.Second)
+	want := ownedWitnessExecute(t, oracleContext, oracle, path).output
+	cancelOracle()
 	manifestPath := manifest(t, []string{path + "\tnexus/consistency-no-abbreviated-identifier"})
 	runner := filepath.Join(root, "oracle/node.mjs")
 	nodeModule := filepath.Join(packageDirectory, "main.ts")
@@ -70,6 +73,8 @@ func TestAbbreviatedIdentifierTypedOwnershipGap(t *testing.T) {
 	} {
 		t.Run(side.name, func(t *testing.T) {
 			t.Parallel()
+			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+			defer cancel()
 			got := ownedWitnessExecute(t, ctx, side.command, side.arguments...).output
 			if err := contextualKeyGapAgreement(path, got, want); err != nil {
 				t.Fatal(err)
