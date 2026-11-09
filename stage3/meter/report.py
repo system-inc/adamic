@@ -18,7 +18,9 @@ REJECTED_ENTRY_MEASUREMENT = 'measured on a checker-rejected entry-root program'
 # record-sources head on Nov 9 (#ny0c3gb), and well under the checker's 16M cap. A relation call's step budget is
 # (16M - size) / 8, so a cache that grows toward the cap starves every later relation until they overflow.
 ASSIGNABLE_THRESHOLD = 1_000_000
-RELATION_CACHES = ('subtype', 'strictSubtype', 'assignable', 'comparable', 'identity', 'enum')
+# The relation report's cache_sizes: each cache's pairs, then flaggedPairs (pairs marked as having spent their budget)
+# and ts2859 (the checker's TS2859 diagnostics), either of which past 0 is red (#ferqs8v). Each must be readable.
+RELATION_CACHES = ('subtype', 'strictSubtype', 'assignable', 'comparable', 'identity', 'enum', 'flaggedPairs', 'ts2859')
 
 
 def reason_owner(reason, owners):
@@ -227,6 +229,9 @@ def relation_budget(entry):
             verdict['assignable'] = sizes['assignable']
             if sizes['assignable'] > ASSIGNABLE_THRESHOLD:
                 red.append(f"assignable cache {sizes['assignable']:,} pairs, past {ASSIGNABLE_THRESHOLD:,}")
+        for name, what in (('flaggedPairs', 'pairs flagged as overflowed'), ('ts2859', 'TS2859 diagnostics')):
+            if name not in unread and sizes[name] > 0:
+                red.append(f'{sizes[name]:,} {what}')
     if red:
         return dict(verdict, status='red', why='; '.join(red))
     if not isinstance(sizes, dict) or not sizes:

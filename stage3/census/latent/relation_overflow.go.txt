@@ -4,6 +4,7 @@ package lower
 import (
 	"context"
 	"encoding/json"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
@@ -31,9 +32,11 @@ var latentRelationCaches = []struct{ field, name string }{
 }
 
 // latentRelationCacheSizes is how many pairs each relation cache holds at the end of the run, the daily meter's
-// relation budget (#ny0c3gb). The caches are unexported, so they're read by name as load.RelationOverflowMarked
-// reads their marks, and only read. A cache that isn't where it's expected is -1, which the meter reads as over
-// budget, so it fails closed.
+// relation budget (#ny0c3gb, #ferqs8v), and beside them two counts: flaggedPairs, the pairs across every cache
+// marked as having spent their budget, and ts2859, the TS2859 diagnostics the checker holds. The caches and the
+// diagnostics are unexported, so they're read by name as load.RelationOverflowMarked and load.RelationOverflow read
+// them, and only read. Anything that isn't where it's expected is -1, which the meter reads as over budget, so it
+// fails closed.
 func latentRelationCacheSizes(ctx context.Context, program *load.Program) map[string]int64 {
 	files := program.Files()
 	if len(files) == 0 {
@@ -43,9 +46,23 @@ func latentRelationCacheSizes(ctx context.Context, program *load.Program) map[st
 	defer release()
 	sizes := map[string]int64{}
 	value := reflect.ValueOf(typeChecker).Elem()
+	flagged := int64(0)
+	// size counts a cache's pairs and adds its flagged ones to flagged; a cache it can't read makes both -1.
 	size := func(results reflect.Value) int64 {
 		if !results.IsValid() || results.Kind() != reflect.Map {
+			flagged = -1
 			return -1
+		}
+		switch results.Type().Elem().Kind() {
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		default:
+			flagged = -1
+			return -1
+		}
+		for iterator := results.MapRange(); iterator.Next() && flagged >= 0; {
+			if iterator.Value().Uint()&latentRelationOverflowMark != 0 {
+				flagged++
+			}
 		}
 		return int64(results.Len())
 	}
@@ -54,6 +71,7 @@ func latentRelationCacheSizes(ctx context.Context, program *load.Program) map[st
 		switch {
 		case !relation.IsValid() || relation.Kind() != reflect.Pointer:
 			sizes[cache.name] = -1
+			flagged = -1
 		case relation.IsNil():
 			sizes[cache.name] = 0 // A relation the checker never made holds no pairs.
 		default:
@@ -61,8 +79,25 @@ func latentRelationCacheSizes(ctx context.Context, program *load.Program) map[st
 		}
 	}
 	sizes["enum"] = size(value.FieldByName("enumRelation"))
+	sizes["flaggedPairs"] = flagged
+	sizes["ts2859"] = -1
+	if field := value.FieldByName("diagnostics"); field.IsValid() && field.Type() == reflect.TypeOf(ast.DiagnosticsCollection{}) {
+		sizes["ts2859"] = 0
+		for _, diagnostic := range (*ast.DiagnosticsCollection)(field.Addr().UnsafePointer()).GetDiagnostics() {
+			if diagnostic.Code() == latentRelationOverflowCode {
+				sizes["ts2859"]++
+			}
+		}
+	}
 	return sizes
 }
+
+// latentRelationOverflowMark and latentRelationOverflowCode are load's relationOverflowMark (relater.go:72's
+// RelationComparisonResultComplexityOverflow) and relationOverflowCode (TS2859), which load keeps unexported.
+const (
+	latentRelationOverflowMark = 1 << 5
+	latentRelationOverflowCode = 2859
+)
 
 func latentReadCheckedRelation(program *load.Program, typeChecker *checker.Checker, where string) string {
 	started := time.Now()
