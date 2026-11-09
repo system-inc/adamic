@@ -204,3 +204,54 @@ func TestNodeHostViewStopsHeld(t *testing.T) {
 		})
 	}
 }
+
+// A registered host method is lowered where it's called on its own type, so a view the program declares
+// that names one the runtime shape doesn't hold as a slot is NotYet at the relation (library_node.go,
+// nodeHostMethodOffShape): as a method, as a function-valued property, optional, beside a field, through
+// a parameter and inside a container, on Stats and on a Dirent. On main b322b6ba each lowered: native died
+// with "compiler bug: a method the checker proved is there is missing" and the JavaScript backend threw,
+// and the optional view read isFile absent natively, printing true where Node prints false (#sn788gx,
+// Codex 01a1c173 and 01a1c182). performance's methods are slots, so "now related" above still lowers.
+// With ADAMIC_HOST_METHOD_MUTANT=1 (the clause taken out), each pin must lower and disagree with Node.
+func TestNodeHostMethodViewNotYet(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ file, at, member, node string }{
+		{"node_host_method_view_property.ts", "2:47", "node:fs.StatsBase.isFile", "false\n"},
+		{"node_host_method_view_signature.ts", "2:34", "node:fs.StatsBase.isFile", "false\n"},
+		{"node_host_method_view_optional.ts", "2:48", "node:fs.StatsBase.isFile", "false\n"},
+		{"node_host_method_view_beside_field.ts", "2:62", "node:fs.StatsBase.isDirectory", "true\n"},
+		{"node_host_method_view_dirent.ts", "2:95", "node:fs.Dirent.isFile", "boolean\n"},
+		{"node_host_method_view_parameter.ts", "3:19", "node:fs.StatsBase.isFile", "false\n"},
+		{"node_host_method_view_container.ts", "3:64", "node:fs.StatsBase.isFile", "false\n"},
+	} {
+		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			program, err := lowered(t, path)
+			if os.Getenv("ADAMIC_HOST_METHOD_MUTANT") == "1" {
+				if err != nil {
+					t.Fatalf("the mutant must admit it: %v", err)
+				}
+				native, _ := nativelyUncached(t, program)
+				release := releasedUncached(t, program)
+				if disagreement(truth, native) == "" && disagreement(truth, release) == "" {
+					t.Fatalf("the mutant's program agrees with Node: native %q, release %q", native.stdout, release.stdout)
+				}
+				t.Logf("mutant admits it: native exit %d stdout %q stderr %q, release stdout %q, where Node prints %q", native.exitCode, native.stdout, native.stderr, release.stdout, truth.stdout)
+				return
+			}
+			what := ", which names " + probe.member + ", a host method its runtime shape doesn't hold"
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.file+":"+probe.at+": stage 0 can't lower ") || !strings.Contains(err.Error(), what) {
+				t.Fatalf("want %s:%s and %q, got %v", probe.file, probe.at, what, err)
+			}
+		})
+	}
+}

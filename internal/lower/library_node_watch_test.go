@@ -144,8 +144,10 @@ func TestNodeWatchInheritedOnStaysNotYet(t *testing.T) {
 }
 
 // Library's mutant: the inherited declaration registered instead of FSWatcher's own name lets the
-// second host type lower, which TestNodeWatchInheritedOnStaysNotYet refuses. Not parallel: it changes
-// the registration every lowering reads, while the parallel tests wait.
+// second host type's direct call lower, which TestNodeWatchInheritedOnStaysNotYet refuses. Its view is
+// then stopped by the second guard, nodeHostMethodOffShape (#sn788gx): ChildProcess's shape holds no on,
+// so a view naming it is NotYet whatever the registration says. Not parallel: it changes the
+// registration every lowering reads, while the parallel tests wait.
 func TestNodeWatchInheritedOnMutant(t *testing.T) {
 	const inherited = "node:events.InternalEventEmitter.on"
 	if implementedNodeMembers[inherited] {
@@ -154,7 +156,15 @@ func TestNodeWatchInheritedOnMutant(t *testing.T) {
 	implementedNodeMembers[inherited] = true
 	defer delete(implementedNodeMembers, inherited)
 	for _, probe := range inheritedOnSources {
-		if _, err := lowerSource(t, probe.code); err != nil {
+		_, err := lowerSource(t, probe.code)
+		if probe.name == "view" {
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "names node:events.InternalEventEmitter.on, a host method its runtime shape doesn't hold") {
+				t.Fatalf("view: under the mutant the view must stop at the host method rule, got %v", err)
+			}
+			continue
+		}
+		if err != nil {
 			t.Fatalf("%s: the mutant must let the second host type lower: %v", probe.name, err)
 		}
 	}
