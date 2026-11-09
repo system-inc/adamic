@@ -44,6 +44,10 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{"internal/oracle/testdata/library_optional_intrinsic_null.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{"internal/oracle/testdata/host_scanner_never.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string
