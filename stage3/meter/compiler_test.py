@@ -55,7 +55,7 @@ func main() {
                 }})
                 // The entry pass's relation trailer, at Lower's measured head unless a test plants another day.
                 if os.Getenv("METER_RELATION_TRAILER") != "absent" {
-                    sizes := map[string]any{"subtype":0, "strictSubtype":0, "assignable":299624, "comparable":0, "identity":0, "enum":0}
+                    sizes := map[string]any{"subtype":0, "strictSubtype":0, "assignable":299624, "comparable":0, "identity":0, "enum":0, "flaggedPairs":0, "ts2859":0}
                     if value := os.Getenv("METER_ASSIGNABLE"); value != "" {
                         assignable, err := strconv.Atoi(value)
                         if err != nil { panic(err) }

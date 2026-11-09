@@ -731,8 +731,16 @@ class RelationBudgetTests(unittest.TestCase):
         self.assertEqual((verdict['status'], verdict['overflow_marked'], verdict['assignable']), ('red', True, 299_624))
         self.assertIn('marked as overflowed', verdict['why'])
 
+    def test_one_flagged_pair_or_ts2859_is_red_under_the_threshold(self):
+        # The end answer is left empty here so only the counts can turn it red (#ferqs8v).
+        for field, why in (('flaggedPairs', '1 pairs flagged as overflowed'), ('ts2859', '1 TS2859 diagnostics')):
+            with self.subTest(field=field):
+                verdict = self.verdict(cache_sizes=self.sizes(299_624, **{field: 1}))
+                self.assertEqual((verdict['status'], verdict['why']), ('red', why))
+
     def test_unreadable_cache_is_red(self):
-        for sizes in (self.sizes(299_624, enum=-1), self.sizes(-1), {'assignable': 299_624}):
+        for sizes in (self.sizes(299_624, enum=-1), self.sizes(299_624, flaggedPairs=-1), self.sizes(299_624, ts2859=-1),
+                      self.sizes(-1), {'assignable': 299_624}):
             with self.subTest(sizes=sizes):
                 verdict = self.verdict(cache_sizes=sizes)
                 self.assertEqual(verdict['status'], 'red')
