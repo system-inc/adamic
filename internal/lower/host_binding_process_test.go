@@ -115,6 +115,10 @@ func TestHostBindingProcessBrowserRoadsStop(t *testing.T) {
 		{"q3 bracket Reflect.set", "Reflect.set(globalThis['process'], 'browser', true);", "", ""},
 		{"q4 imported alias", "Object.assign(nodeProcess, { browser: true });", "import nodeProcess from 'node:process';\n", ""},
 		{"q6 another module's global", "mutate();", "import { mutate } from './mutator.ts';\n", "export function mutate(): void { Object.assign(process, { browser: true }); }\n"},
+		{"assert non-null assign", "Object.assign(process!, { browser: true });", "", ""},
+		{"assert satisfies assign", "Object.assign((process satisfies object), { browser: true });", "", ""},
+		{"assert angle assign", "Object.assign(<any>process, { browser: true });", "", ""},
+		{"assert non-null write", "(process!).browser = true;", "", ""},
 		{"q7 cast receiver", "(process as { browser?: unknown }).browser = true;", "", ""},
 		{"q8 destructuring assignment", "({ browser: process.browser } = { browser: true });", "", ""},
 		{"q9 for-of target", "for (process.browser of [true]) {}", "", ""},
@@ -132,7 +136,7 @@ func TestHostBindingProcessBrowserRoadsStop(t *testing.T) {
 			if !errors.As(err, &notYet) && !errors.As(err, &refused) {
 				t.Fatalf("mutation road did not stop; compare its run with Node before changing lowering: %v", err)
 			}
-			if (strings.HasPrefix(probe.name, "q1 ") || strings.HasPrefix(probe.name, "q2 ") || strings.HasPrefix(probe.name, "q3 ")) && (notYet == nil || notYet.What != "process.browser outside a plain property read") {
+			if (strings.HasPrefix(probe.name, "q1 ") || strings.HasPrefix(probe.name, "q2 ") || strings.HasPrefix(probe.name, "q3 ") || strings.HasPrefix(probe.name, "q4 ") || strings.HasPrefix(probe.name, "assert ")) && (notYet == nil || notYet.What != "process.browser outside a plain property read") {
 				t.Fatalf("want rule 70's browser stop, got %v", err)
 			}
 			t.Log(err)
