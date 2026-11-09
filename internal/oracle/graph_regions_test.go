@@ -27,6 +27,9 @@ var graphOracleFixtures = []string{
 	"internal/oracle/testdata/graph_regions/classification_mixed.a",
 	"internal/oracle/testdata/graph_regions/classification_override.a",
 	"internal/oracle/testdata/graph_regions/classification_return.a",
+	"internal/oracle/testdata/graph_regions/logical_assignment_element.a",
+	"internal/oracle/testdata/graph_regions/logical_assignment_nullish.a",
+	"internal/oracle/testdata/graph_regions/logical_assignment_property.a",
 	"internal/oracle/testdata/graph_regions_accessor.a",
 	"internal/oracle/testdata/graph_regions_anchor.a",
 	"internal/oracle/testdata/graph_regions_cache.a",
@@ -181,6 +184,24 @@ func TestGraphOracleGraphRegionsClassificationOverride(t *testing.T) {
 func TestGraphOracleGraphRegionsClassificationReturn(t *testing.T) {
 	t.Parallel()
 	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/classification_return.a")
+}
+
+// A logical assignment into a graph member's field or element is held and dropped through the graph, as
+// = is (#89tq0ef). Each was a crash or a leak on main; each is held to Node, sanitized, leaking nothing,
+// and freeing everything by the counted build.
+func TestGraphOracleGraphRegionsLogicalAssignmentProperty(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/logical_assignment_property.a")
+}
+
+func TestGraphOracleGraphRegionsLogicalAssignmentNullish(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/logical_assignment_nullish.a")
+}
+
+func TestGraphOracleGraphRegionsLogicalAssignmentElement(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/logical_assignment_element.a")
 }
 
 func TestGraphOracleGraphRegionsAccessor(t *testing.T) {
