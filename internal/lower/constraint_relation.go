@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"os"
 	"slices"
 	"strings"
 	_ "unsafe"
