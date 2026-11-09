@@ -36,3 +36,104 @@ Exit 1. The failing assertion lines, verbatim:
 ```
 
 The mutant was undone immediately after the run; performance's Provided row and node:perf_hooks model were restored byte for byte.
+
+## Process Provided row (#zqz01vh, Nov 8 2026)
+
+Measured on managed Cloud from 3d30fc641ca71e2025c72bfbcdfa5a6c3578fa69, with Node v24.19.0,
+Go 1.27.1, `GOFLAGS=-buildvcs=false`, `ADAMIC_GATE_UNCACHED=1`, and
+`ADAMIC_TYPESCRIPT_SOURCE` at stage3/source.json's 050880ce59e30b356b686bd3144efe24f875ebc8.
+These (a) through (e) belong to #zqz01vh, independently of the older letters above.
+Each edit was applied alone, its command below exited 1, and its file was restored byte for byte
+in a finally block before the next edit. The restored tree then ran the whole lower package.
+
+| Mutant | Exact edit | Red test |
+| --- | --- | --- |
+| (a) Drop export= lookup | host_bindings.go: `return l.hostBindingExportEqualsModel(module, row.Name)` becomes `return nil` | TestHostBindingProcessReads: the model export cannot be found, stop 1 |
+| (b) Empty the absent table | host_bindings.go: remove the `"node:process.process": {"browser": true},` entry | TestHostBindingProcessReads: the model doesn't have browser, stop 2 |
+| (c) Claim a present member absent | host_bindings.go: the entry becomes `"node:process.process": {"browser": true, "version": true},` | TestHostBindingAbsentMembersHeldToNode: version is own and in the object in both module modes |
+| (d) Read browser as true | library_node_process.go: `return ir.Undefined{Of: ir.Object}, true, nil` becomes `return fit(ir.BooleanConstant{Value: true}, ir.Object), true, nil` | TestHostBindingsAgreeWithNode/process_provided: native, sanitized and javascript disagree with Node |
+| (e) Admit every optional member | hostBindingModelRefusal: immediately before `absent := map[string]bool{}`, insert the all-optional admission below | TestHostBindingProcessModel/unlisted_release: admission returns nil, losing the named release stop |
+
+Mutant (e)'s inserted code, exactly:
+
+```go
+optional := true
+for _, property := range l.checker.GetPropertiesOfType(view) { optional = optional && property.Flags&ast.SymbolFlagsOptional != 0 }
+if optional { return nil }
+```
+
+The altered-type pins call hostBindingModelRefusal directly: otherwise the real table's exact
+inline declaration text would reject bogus, required browser and release before model admission.
+Mutant (e) therefore measures that judgment admitting release, rather than an unrelated row-text stop.
+The negative pins inspect NotYet.What, not the temporary path; release must be the member reached,
+not merely a name in the declared type. The mutation and view pins likewise inspect the diagnostic
+payload, so a subtest directory containing browser cannot make a pin pass.
+
+### (a)
+
+```sh
+timeout 900 go test ./internal/lower -count=1 -run '^TestHostBindingProcessReads$'
+```
+
+Exit 1. Failing assertion excerpt:
+
+```text
+        host_binding_process_test.go:39: want it to lower, got /tmp/adamic-gate/TestHostBindingProcessReadsconst_browser_=_process.browser_con1075817021/001/core.ts:1:15: stage 0 can't lower the host binding process's model export node:process.process, which lowering can't find, yet
+```
+
+### (b)
+
+```sh
+timeout 900 go test ./internal/lower -count=1 -run '^TestHostBindingProcessReads$'
+```
+
+Exit 1. Failing assertion excerpt:
+
+```text
+        host_binding_process_test.go:39: want it to lower, got /tmp/adamic-gate/TestHostBindingProcessReadsconsole.log(typeof_process.browser)497628677/001/core.ts:1:15: stage 0 can't lower the host binding process, declared as { nextTick?: unknown; browser?: unknown; }, whose browser its model export node:process.process doesn't have, yet
+```
+
+### (c)
+
+```sh
+timeout 900 go test ./internal/lower -count=1 -run '^TestHostBindingAbsentMembersHeldToNode$'
+```
+
+Exit 1. Failing assertion excerpt:
+
+```text
+        host_binding_process_test.go:191: Node: exit status 1, output {
+              value: 'v24.19.0',
+              writable: false,
+              enumerable: true,
+              configurable: true
+            }
+            true
+            true
+```
+
+### (d)
+
+```sh
+timeout 900 go test ./internal/oracle -count=1 -run '^TestHostBindingsAgreeWithNode$/^process_provided$'
+```
+
+Exit 1. Failing assertion excerpt:
+
+```text
+        host_bindings_test.go:110: native: stdout differs, stdout "false\nobject\ntrue\nfalse\n", stderr ""
+        host_bindings_test.go:110: sanitized: stdout differs, stdout "false\nobject\ntrue\nfalse\n", stderr ""
+        host_bindings_test.go:110: javascript: stdout differs, stdout "false\nobject\ntrue\nfalse\n", stderr ""
+```
+
+### (e)
+
+```sh
+timeout 900 go test ./internal/lower -count=1 -run '^TestHostBindingProcessModel$/^unlisted_release$'
+```
+
+Exit 1. Failing assertion excerpt:
+
+```text
+        host_binding_process_test.go:161: want stop containing "which reaches node:process.Process.release", got <nil>
+```
