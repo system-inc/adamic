@@ -116,6 +116,33 @@ func cycleRegionlessAllocationGuard(err error) bool {
 	return false
 }
 
+// cycleExhaustiveFlowStop reports whether err is graphFlows' stop for a graph value through an
+// expression its plan doesn't follow (#y7wexf5), which the frozen scanning reference predates: its
+// follow returned silently there, and the allocation went unplanned.
+func cycleExhaustiveFlowStop(err error) bool {
+	var notYet *NotYet
+	return errors.As(err, &notYet) && strings.HasPrefix(notYet.What, "a graph value through ir.") && strings.HasSuffix(notYet.What, " the plan doesn't follow")
+}
+
+// cycleExhaustiveFlowSites takes out of the indexed program's GraphTypes the allocation sites (the
+// negative keys, which only graphFlows sets) the scanning reference's plan lacks, and returns them.
+// graphFlows' follow enters wrappers and record calls the reference's never reached (#y7wexf5), so
+// the indexed plan is a superset; what's left, checker identities and every other field included,
+// must still be equal, and the emitted C with it.
+func cycleExhaustiveFlowSites(scanning, indexed *ir.Program) []int {
+	var extra []int
+	for id := range indexed.GraphTypes {
+		if id < 0 && !scanning.GraphTypes[id] {
+			extra = append(extra, id)
+		}
+	}
+	for _, id := range extra {
+		delete(indexed.GraphTypes, id)
+	}
+	slices.Sort(extra)
+	return extra
+}
+
 func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 	t.Helper()
 	absolute, err := filepath.Abs(filepath.Join("../..", path))
@@ -167,6 +194,15 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		if scanErr == nil && cycleRegionlessAllocationGuard(indexErr) {
 			t.Logf("%s: ProgramRegion=%t not compared: the indexed pipeline stops on a regionless allocation guard the frozen scanning reference predates: %v", path, region, indexErr)
 			continue
+		}
+		if scanErr == nil && cycleExhaustiveFlowStop(indexErr) {
+			t.Logf("%s: ProgramRegion=%t not compared: the indexed pipeline stops on a graph value its exhaustive plan doesn't follow, which the frozen scanning reference left unplanned (#y7wexf5): %v", path, region, indexErr)
+			continue
+		}
+		if scanErr == nil && indexErr == nil {
+			if extra := cycleExhaustiveFlowSites(before, after); len(extra) != 0 {
+				t.Logf("%s: ProgramRegion=%t: the indexed pipeline plans allocation sites %v the frozen scanning reference's follow doesn't reach (#y7wexf5); compared without them", path, region, extra)
+			}
 		}
 		var scanRefused, indexRefused *Refused
 		errors.As(scanErr, &scanRefused)

@@ -55,6 +55,7 @@ var localFields = map[string]localField{
 	"ObjectLiteral.GraphTypes":        {why: "allocation sites and graph types"},
 	"SetNew.GraphTypes":               {why: "allocation sites and graph types"},
 	"SetValues.GraphTypes":            {why: "allocation sites and graph types"},
+	"RecordCall.GraphTypes":           {why: "allocation sites and graph types"},
 	"ArrayFill.Site":                  {why: "a write site, numbered for the cycle proof"},
 	"ArrayPush.Site":                  {why: "a write site, numbered for the cycle proof"},
 	"ArraySplice.Site":                {why: "a write site, numbered for the cycle proof"},

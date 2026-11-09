@@ -357,16 +357,22 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			f.l.result.Classes[instance.class-1].Graph = true
 		}
 	}
-	f.graphFlows()
+	// The view pair guard and the boundary's refusal come before a plan's stop, so a program either
+	// refuses reads the stop it always has.
+	flows := f.graphFlows()
 	if err := f.viewPairGuard(); err != nil {
 		return err
 	}
 	// The boundary's refusals come first, so the older record form, ObjectLiteral{Record}, keeps its own
-	// words; then a record written into a graph slot on a cycle (#a9e21hc).
+	// words; then a record written into a graph slot on a cycle (#a9e21hc); then a graph value through an
+	// expression the plan doesn't follow (#y7wexf5).
 	if err := f.graphAdoptionBoundary(); err != nil {
 		return err
 	}
-	return f.recordStop
+	if f.recordStop != nil {
+		return f.recordStop
+	}
+	return flows
 }
 
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {

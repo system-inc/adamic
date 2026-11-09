@@ -27,6 +27,11 @@ var graphOracleFixtures = []string{
 	"internal/oracle/testdata/graph_regions/classification_mixed.a",
 	"internal/oracle/testdata/graph_regions/classification_override.a",
 	"internal/oracle/testdata/graph_regions/classification_return.a",
+	"internal/oracle/testdata/graph_regions/flow_group_by.a",
+	"internal/oracle/testdata/graph_regions/flow_record_entries.a",
+	"internal/oracle/testdata/graph_regions/flow_record_values.a",
+	"internal/oracle/testdata/graph_regions/flow_to_reversed.a",
+	"internal/oracle/testdata/graph_regions/flow_to_sorted.a",
 	"internal/oracle/testdata/graph_regions/logical_assignment_element.a",
 	"internal/oracle/testdata/graph_regions/logical_assignment_nullish.a",
 	"internal/oracle/testdata/graph_regions/logical_assignment_property.a",
@@ -184,6 +189,33 @@ func TestGraphOracleGraphRegionsClassificationOverride(t *testing.T) {
 func TestGraphOracleGraphRegionsClassificationReturn(t *testing.T) {
 	t.Parallel()
 	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/classification_return.a")
+}
+
+// The four allocations graphFlows' follow didn't reach at main, which leaked in the counted build
+// (Memory's rows 5, 10 and 11 on #djwd1t2): each frees everything now and prints what Node prints.
+func TestGraphOracleGraphRegionsFlowGroupBy(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_group_by.a")
+}
+
+func TestGraphOracleGraphRegionsFlowRecordEntries(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_record_entries.a")
+}
+
+func TestGraphOracleGraphRegionsFlowRecordValues(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_record_values.a")
+}
+
+func TestGraphOracleGraphRegionsFlowToReversed(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_to_reversed.a")
+}
+
+func TestGraphOracleGraphRegionsFlowToSorted(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_to_sorted.a")
 }
 
 // A logical assignment into a graph member's field or element is held and dropped through the graph, as
