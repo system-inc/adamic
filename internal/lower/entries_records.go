@@ -265,7 +265,11 @@ type recordGuardedRead struct {
 }
 
 // entriesRecordStorageTypes are the types the program's record literals are made as: the literal's own,
-// its contextual type and its variable's declared type.
+// its contextual type and its variable's declared type, each as a stored value has it. Freshness belongs
+// to the literal expression at its own position, never to a stored value (Adamic's ruling on #ny0c3gb,
+// with rulings.md:66, :68 and :89), so a fresh object literal type is related as its widened type: a
+// fresh `{}` is exact, and every receiver that declares a property failed against it both ways, which
+// is a "no" freshness gave and nothing proved. Each type is related once, however many literals share it.
 func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	if l.entriesRecordTypesKnown {
 		return l.entriesRecordTypes
@@ -295,6 +299,18 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	for _, module := range modules {
 		module.AsNode().ForEachChild(visit)
 	}
+	stored := l.entriesRecordTypes[:0]
+	seen := map[*checker.Type]bool{}
+	for _, made := range l.entriesRecordTypes {
+		if made != nil && made.Flags()&checker.TypeFlagsObject != 0 && made.ObjectFlags()&checker.ObjectFlagsFreshLiteral != 0 {
+			made = l.checker.GetWidenedType(made)
+		}
+		if !seen[made] {
+			seen[made] = true
+			stored = append(stored, made)
+		}
+	}
+	l.entriesRecordTypes = stored
 	return l.entriesRecordTypes
 }
 
