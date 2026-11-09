@@ -11,15 +11,16 @@ import (
 )
 
 // A record on a graph cycle is stopped by one of two rules, since neither form joins a graph region:
-// graphTypes stops a selected component that holds a record type, which catches ir.RecordLiteral (how
-// a record literal lowers today), and graphAdoptionBoundary refuses ir.ObjectLiteral{Record: true} (the
-// older form). #a9e21hc was a record form the boundary's rule didn't see. So every IR expression whose
-// Type method answers ir.Record outright, a record maker, is named here with the rule that covers it,
-// and a new one is red until someone decides which rule holds it.
+// slotsOf's seeds stop a record written into a graph slot (noteRecordSlot), which catches
+// ir.RecordLiteral (how a record literal lowers today), and graphAdoptionBoundary refuses
+// ir.ObjectLiteral{Record: true} (the older form). #a9e21hc was a record form the boundary's rule
+// didn't see. So every IR expression whose Type method answers ir.Record outright, a record maker, is
+// named here with the rule that covers it, and a new one is red until someone decides which rule holds
+// it.
 func TestGraphRecordFormsMeetARule(t *testing.T) {
 	t.Parallel()
 	covered := map[string]string{
-		"RecordLiteral": "graphTypes' record-in-component stop (#a9e21hc)",
+		"RecordLiteral": "noteRecordSlot's stop at a seed whose written value can be a record (#a9e21hc)",
 	}
 	paths, err := filepath.Glob("../ir/*.go")
 	if err != nil {
@@ -62,7 +63,7 @@ func TestGraphRecordFormsMeetARule(t *testing.T) {
 	}
 	for _, maker := range makers {
 		if covered[maker] == "" {
-			t.Errorf("ir.%s answers Record: decide which rule stops it on a graph cycle (graphTypes' record-in-component stop, or graphAdoptionBoundary's refusal), then name it here", maker)
+			t.Errorf("ir.%s answers Record: decide which rule stops it on a graph cycle (noteRecordSlot's stop, or graphAdoptionBoundary's refusal), then name it here", maker)
 		}
 	}
 	for name := range covered {
