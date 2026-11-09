@@ -138,7 +138,45 @@ const (
 	nodeHostViewDepth   = 8
 	nodeHostViewTooDeep = "past the depth the view check follows, at "
 	nodeHostViewOpaque  = "an opaque view of "
+	nodeHostViewMethod  = "a host method, "
 )
+
+// nodeHostSlotMethods are the registered host methods the runtime shape holds as slots, keyed by the
+// host type's name and the member's, so a view the program declares reads them where the host put them:
+// node_process.c's performance object and node_fs_watch_impl.h's fs_watcher_shape ({close, on}, which
+// tsc's FsWatchWorkerWatcher view reads), each fields.go's row. An FSWatcher's on is keyed by FSWatcher,
+// the type that holds it, never by InternalEventEmitter, which declares it for ChildProcess too, whose
+// shape has no on. Every other registered host method is lowered only where it's called on its own type.
+var nodeHostSlotMethods = map[string]bool{
+	"node:perf_hooks.Performance.now":           true,
+	"node:perf_hooks.Performance.mark":          true,
+	"node:perf_hooks.Performance.measure":       true,
+	"node:perf_hooks.Performance.clearMarks":    true,
+	"node:perf_hooks.Performance.clearMeasures": true,
+	"node:fs.FSWatcher.close":                   true,
+	"node:fs.FSWatcher.on":                      true,
+}
+
+// nodeHostMethodOffShape reports whether a host object's registered member is callable, and its
+// runtime shape doesn't hold it as a slot. It's judged by the member's type, not by how Node's
+// declarations spell it: a method signature or declaration, or a property whose type has a call
+// signature, since a callable the runtime dispatches reads absent through a view either way
+// (Compiler's condition on #sn788gx).
+func (l *lowering) nodeHostMethodOffShape(own *checker.Type, member *ast.Symbol) bool {
+	if member == nil || own.Symbol() == nil {
+		return false
+	}
+	method := false
+	for _, declaration := range member.Declarations {
+		if declaration.Kind == ast.KindMethodSignature || declaration.Kind == ast.KindMethodDeclaration {
+			method = true
+		}
+	}
+	if !method && len(l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(member)), checker.SignatureKindCall)) == 0 {
+		return false
+	}
+	return !nodeHostSlotMethods[nodeLibraryName(own.Symbol())+"."+member.Name]
+}
 
 // parameter distinguishes the opaque-view policy of a callback's incoming values from the
 // existing result policy. Keep both in the seen key: visiting one must not suppress the other.
@@ -253,6 +291,17 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 				return name
 			}
 			return l.checker.TypeToString(own) + "." + property.Name
+		}
+		// A registered host method, or any registered callable, is lowered where it's called on its own
+		// type, and the runtime shape holds it as a slot only where nodeHostSlotMethods says so. Named through a view the program
+		// declares, as a method or a function-valued property, the call reads the view's slot instead:
+		// Stats seen as { isFile(): boolean } died natively with "a method the checker proved is there is
+		// missing", and seen as { isFile?: () => boolean } read it absent, where Node calls it (#sn788gx).
+		// A routed host binding's declared type is the one view this doesn't judge: every read through it
+		// lowers through the model's own path (host_bindings.go), never off the view's slots, so
+		// process.nextTick through core.ts's `declare var process` is the host's nextTick.
+		if host && programDeclared(property) && l.hostBindingViews()[view.Symbol()] == nil && l.nodeHostMethodOffShape(own, member) {
+			return nodeHostViewMethod + nodeLibraryName(member)
 		}
 		if member == nil {
 			continue
@@ -444,6 +493,9 @@ func (l *lowering) nodeHostViewRefusal(node *ast.Node, own, view *checker.Type, 
 	}
 	if strings.HasPrefix(reached, nodeHostViewOpaque) {
 		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which hides a host object behind any, unknown or an unbound type parameter")
+	}
+	if method, found := strings.CutPrefix(reached, nodeHostViewMethod); found {
+		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which names "+method+", a host method its runtime shape doesn't hold (call it on the host's own type, or wrap it in a closure)")
 	}
 	if strings.HasPrefix(reached, nodeHostViewTooDeep) {
 		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which goes "+reached+", where it may hold a host object")
