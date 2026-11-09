@@ -1,19 +1,120 @@
+import { utf8Length } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { fileComments } from './comments.a';
+import { fileComments, CommentRange } from './comments.a';
 import { maskCodeAndCommands, accepts } from './masking.a';
-import { digitOrUnderscore, vowel, uppercaseToken } from './patterns.a';
-import { allowedUppercaseTokens, currencyCodes, shoutedTwoLetterWords } from './policy_data.a';
+import { digitOrUnderscore, vowel, uppercaseToken, generatedMarker } from './patterns.a';
+import { allowedUppercaseTokens, shoutedTwoLetterWords } from './policy_data.a';
 import { shoutingMessage } from './messages.a';
+import { sourceOffset, byteSlice } from './offsets.a';
 
+// Reads: cohere internal/shouting/shouting.go, isShoutedToken.
 function isShoutedToken(token: string): boolean {
-    if(allowedUppercaseTokens.includes(token) || currencyCodes.includes(token)) {
+    if(allowedUppercaseTokens.includes(token)) {
         return false;
     }
     if(accepts(digitOrUnderscore, token) || token.length < 2) {
         return false;
     }
     return token.length === 2 ? shoutedTwoLetterWords.includes(token) : accepts(vowel, token);
+}
+
+// Reads: shouting.HasAdjacentUppercaseLetters, a superset gate before masking.
+function hasAdjacentUppercaseLetters(text: string): boolean {
+    let previousWasUppercase = false;
+    for(let index = 0; index < text.length; index++) {
+        const character = text[index] ?? '';
+        const isUppercase = character >= 'A' && character <= 'Z';
+        if(isUppercase && previousWasUppercase) {
+            return true;
+        }
+        previousWasUppercase = isUppercase;
+    }
+    return false;
+}
+
+// Reads: consistency_no_shouting.go, commentBodySpan and commentBody.
+class CommentBodySpan {
+    readonly comment: CommentRange;
+    readonly joinedStart: number;
+    readonly joinedEnd: number;
+    readonly bodyStart: number;
+    readonly bodyText: string;
+    constructor(comment: CommentRange, joinedStart: number) {
+        this.comment = comment;
+        let body = comment.text;
+        if(body.startsWith('//')) {
+            body = body.slice(2);
+            if(body.startsWith(' ')) {
+                body = body.slice(1);
+            }
+            this.bodyStart = comment.text.length - body.length;
+        }
+        else {
+            body = body.startsWith('/*') ? body.slice(2) : body;
+            this.bodyStart = comment.text.length - body.length;
+            body = body.endsWith('*/') ? body.slice(0, -2) : body;
+        }
+        this.joinedStart = joinedStart;
+        this.joinedEnd = joinedStart + utf8Length(body);
+        this.bodyText = body;
+    }
+    body(): string {
+        return this.bodyText;
+    }
+}
+
+// Reads: consistency_no_shouting.go, continuesLineCommentRun.
+function continuesLineCommentRun(source: string, run: readonly CommentRange[], comment: CommentRange): boolean {
+    const previous = run[run.length - 1];
+    if(previous === undefined || comment.text.startsWith('/*') || previous.text.startsWith('/*') ||
+        previous.endLine + 1 !== comment.line) {
+        return false;
+    }
+    return source.slice(previous.end, comment.start).trim() === '';
+}
+
+// Reads: consistency_no_shouting.go, reportShoutedWords, and shouting.ShoutedTokensInMasked.
+function reportShoutedWords(context: RuleContext, run: readonly CommentRange[]): void {
+    let joined = '';
+    let joinedBytes = 0;
+    const spans: CommentBodySpan[] = [];
+    for(let index = 0; index < run.length; index++) {
+        const comment = run[index];
+        if(comment === undefined) {
+            continue;
+        }
+        if(index > 0) {
+            joined += '\n';
+            joinedBytes++;
+        }
+        const span = new CommentBodySpan(comment, joinedBytes);
+        joined += span.body();
+        joinedBytes = span.joinedEnd;
+        spans.push(span);
+    }
+    if(!hasAdjacentUppercaseLetters(joined)) {
+        return;
+    }
+    const masked = maskCodeAndCommands(joined);
+    for(const span of spans) {
+        const body = byteSlice(masked, span.joinedStart, span.joinedEnd);
+        uppercaseToken.lastIndex = 0;
+        for(;;) {
+            const match = uppercaseToken.exec(body);
+            if(match === null) {
+                break;
+            }
+            const token = match[0] ?? '';
+            if(!isShoutedToken(token)) {
+                continue;
+            }
+            const byteOffset = utf8Length(body.slice(0, match.index));
+            const start = span.comment.start + span.bodyStart + sourceOffset(span.body(), byteOffset);
+            context.reportRange(start, start + token.length, 'nexus/consistency-no-shouting',
+                'shoutingInComment', shoutingMessage([token]));
+        }
+    }
 }
 
 export class Rule {
@@ -23,31 +124,21 @@ export class Rule {
     }
     visit(node: ParseNode, index: number): void {
         const context = this.context;
-        const additionalAllowed = context.settings.list('allow', []);
+        // Reads: commentRuns. scanAt(0) skips trivia to the first token, as scanner.SkipTrivia does.
+        context.scanAt(0);
+        const firstToken = context.scanStart();
+        let run: CommentRange[] = [];
         for(const comment of fileComments(context, node)) {
-            const masked = maskCodeAndCommands(comment.text);
-            const seen = new Set<string>();
-            const tokens: string[] = [];
-            uppercaseToken.lastIndex = 0;
-            for(;;) {
-                const match = uppercaseToken.exec(masked);
-                if(match === null) {
-                    break;
-                }
-                const token = match[0] ?? '';
-                if(seen.has(token) || !isShoutedToken(token)) {
-                    continue;
-                }
-                seen.add(token);
-                if(!additionalAllowed.includes(token)) {
-                    tokens.push(token);
-                }
+            if(comment.end <= firstToken && accepts(generatedMarker, comment.text)) {
+                continue;
             }
-            if(tokens.length > 0) {
-                context.reportRange(comment.start, comment.end, 'nexus/consistency-no-shouting',
-                    'shoutingInComment', shoutingMessage(tokens));
+            if(run.length > 0 && !continuesLineCommentRun(context.source, run, comment)) {
+                reportShoutedWords(context, run);
+                run = [];
             }
+            run.push(comment);
         }
+        reportShoutedWords(context, run);
     }
 }
 
