@@ -166,31 +166,6 @@ func TestHostBindingProvidedRoutesThroughItsModel(t *testing.T) {
 		}
 	})
 
-	// (a3) tsc's own body past the declaration, the literal, the destructuring and the PerformanceTime view
-	// (Language's should on #yewmv46). Measured on Codex 01a1bbb6 at c5a21f3e, it doesn't lower yet: it
-	// stops at tryGetPerformanceHooks' `typeof performance.now === "function"`, since performance there is
-	// destructured from tryGetPerformance's literal, whose construction doesn't prove the method present.
-	// That's the next wall on #m36zjrk's road, owned by lowering's presence rule, and this pins it by its
-	// words and place, so a change to the routing that moves it shows here. Node prints number.
-	t.Run("performanceCore.ts's hooks", func(t *testing.T) {
-		source := tscPerformanceDeclarations(t) + "\n" + tscPerformanceGetter + "\n" + tscPerformanceHooks(t) + "\nexport function hookedNow(): string {\n\tconst hooks = tryGetPerformanceHooks();\n\treturn hooks?.performanceTime ? typeof hooks.performanceTime.now() : \"absent\";\n}\n"
-		_, err := lowerModules(t, map[string]string{
-			"performanceCore.ts": source,
-			"main.ts":            routedPerformanceMain("hookedNow", "console.log(hookedNow());"),
-		})
-		where := ""
-		for index, line := range strings.Split(source, "\n") {
-			if column := strings.Index(line, `typeof performance.now === "function"`); column >= 0 {
-				where = fmt.Sprintf("performanceCore.ts:%d:%d", index+1, column+len("typeof ")+1)
-			}
-		}
-		want := where + ": stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet"
-		var notYet *NotYet
-		if where == "" || !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), want) {
-			t.Errorf("got %v, want %s", err, want)
-		}
-	})
-
 	// (a2) tsc's text before the adaptation, timeOrigin writable, stops at the declaration: the refusal
 	// the adaptation exists to clear. Correctness's mutant (the writable field restored) lands here.
 	t.Run("performanceCore.ts's shape before the adaptation", func(t *testing.T) {

@@ -145,7 +145,16 @@ func hostBindingRouted(row load.HostBinding) bool {
 // hostBindingModel is the type of a Provided row's model export: the value named as the row in the
 // ambient module of its model path, which a Node library file declares; nil when there's none.
 func (l *lowering) hostBindingModel(row load.HostBinding) *checker.Type {
-	module := l.checker.TryFindAmbientModule(row.Model.Path)
+	if exported := l.nodeModuleExport(l.checker.TryFindAmbientModule(row.Model.Path), row.Name); exported != nil {
+		return l.checker.GetTypeOfSymbol(exported)
+	}
+	return nil
+}
+
+// nodeModuleExport is the value an ambient module exports by name, resolved, where a Node library file
+// declares the module; nil for another module or no such value. A namespace import of the module reads
+// the same export (hostOriginExport).
+func (l *lowering) nodeModuleExport(module *ast.Symbol, name string) *ast.Symbol {
 	if module == nil {
 		return nil
 	}
@@ -157,11 +166,11 @@ func (l *lowering) hostBindingModel(row load.HostBinding) *checker.Type {
 		return nil
 	}
 	for _, exported := range l.checker.GetExportsOfModule(module) {
-		if exported.Name != row.Name {
+		if exported.Name != name {
 			continue
 		}
 		if resolved := l.resolvedExport(exported); resolved != nil && resolved.Flags&ast.SymbolFlagsValue != 0 {
-			return l.checker.GetTypeOfSymbol(resolved)
+			return resolved
 		}
 	}
 	return nil
