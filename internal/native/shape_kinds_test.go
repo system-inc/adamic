@@ -49,7 +49,7 @@ var shapeProducers = []struct{ name, path string }{
 	{"AsyncFrameObjects", ""}, {"WASIRecords", ""},
 	{"NodeFSDirectory", "runtime/node_fs_directory.c"},
 	{"Directory", "runtime/directory.c"}, {"Input", "runtime/input.c"},
-	{"Exceptions", "runtime/exceptions.c"}, {"AsyncHost", "runtime/async_host_impl.h"},
+	{"Exceptions", "runtime/exceptions.c"}, {"AsyncHost", "runtime/async_host_impl.h"}, {"Timers", "runtime/timers_impl.h"},
 	{"Record", "runtime/record.c"}, {"RegExp", "runtime/regexp.c"},
 	{"TSGo", "runtime/tsgo.c"}, {"NodeProcess", "runtime/node_process.c"}, {"ProcessStatus", "runtime/process.c"},
 	{"NodeFS", "runtime/node_fs_file.c"}, {"NodeFSWatch", "runtime/node_fs_watch_impl.h"}, {"NodeCrypto", "runtime/node_crypto.c"},
@@ -324,6 +324,8 @@ func TestShapeKindsInput(t *testing.T) { t.Parallel(); checkShapeProducer(t, "In
 func TestShapeKindsExceptions(t *testing.T) { t.Parallel(); checkShapeProducer(t, "Exceptions") }
 
 func TestShapeKindsAsyncHost(t *testing.T) { t.Parallel(); checkShapeProducer(t, "AsyncHost") }
+
+func TestShapeKindsTimers(t *testing.T) { t.Parallel(); checkShapeProducer(t, "Timers") }
 
 func TestShapeKindsRecord(t *testing.T) { t.Parallel(); checkShapeProducer(t, "Record") }
 
