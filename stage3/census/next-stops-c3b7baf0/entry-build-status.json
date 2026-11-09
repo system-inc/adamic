@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-overlay=/workspace/scratch/next-stops-entry-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/next-stops-entry",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 698.660064785,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
