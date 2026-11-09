@@ -9,8 +9,8 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/nexus"
 )
 
-func oracleConsistencyNoMultilineArrowFunction() rule.Rule {
-	return rules.ConsistencyNoMultilineArrowFunction
+func oracleConsistencyNoMultilineArrowFunction(options any) rule.Bound {
+	return bindOracle(rules.ConsistencyNoMultilineArrowFunction, options)
 }
 
 // Upstream accepts any and reads no options. Decode the actual JSON value rather than

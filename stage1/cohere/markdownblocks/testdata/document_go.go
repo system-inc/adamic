@@ -23,7 +23,7 @@ func main() {
 		return value
 	}
 	var documents []doc.Doc
-	groups := map[int]*doc.GroupID{}
+	groups := map[int]*doc.GroupId{}
 	for _, line := range strings.Split(string(source), "\n") {
 		if line == "" {
 			continue
@@ -36,7 +36,7 @@ func main() {
 			}
 			fmt.Println(encode.Replace(value))
 			documents = nil
-			groups = map[int]*doc.GroupID{}
+			groups = map[int]*doc.GroupId{}
 			continue
 		}
 		if fields[0] != "D" {
@@ -49,11 +49,11 @@ func main() {
 				children = append(children, documents[integer(child)])
 			}
 		}
-		var id *doc.GroupID
+		var id *doc.GroupId
 		if gid >= 0 {
 			id = groups[gid]
 			if id == nil {
-				id = doc.NewGroupID("fixture")
+				id = doc.NewGroupId("fixture")
 				groups[gid] = id
 			}
 		}
@@ -78,7 +78,7 @@ func main() {
 		case "f":
 			built = doc.NewFill(children)
 		case "g":
-			options := doc.GroupOptions{ID: id, ShouldBreak: flags&1 != 0}
+			options := doc.GroupOptions{Id: id, ShouldBreak: flags&1 != 0}
 			if flags&2 != 0 {
 				options.ExpandedStates = children
 			}

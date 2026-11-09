@@ -139,7 +139,8 @@ func main() {
 	if e = json.Unmarshal(data, &fixtures); e != nil {
 		fail("%v", e)
 	}
-	if len(fixtures) != 89 {
+	// Census 89 to 74 at cohere 5360753e: 20 removed, 5 added. Keep this guard handwritten.
+	if len(fixtures) != 74 {
 		fail("lost table rows: %d", len(fixtures))
 	}
 	table, e := os.ReadFile(filepath.Join(root, "../../table.json"))

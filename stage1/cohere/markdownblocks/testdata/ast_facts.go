@@ -71,7 +71,7 @@ func AdamicASTFacts(path string) {
 			offsets = append(offsets, len(source))
 		case "N":
 			mask := integer(f[3])
-			n := &Node{NodeType: f[1], Value: unescape(f[2]), IsParent: mask&2 != 0, Ordered: mask&4 != 0, IsIndented: mask&8 != 0, IsAligned: mask&16 != 0, IsLiteral: mask&64 != 0, IsCJ: mask&128 != 0, HasLeadingPunctuation: mask&256 != 0, HasTrailingPunctuation: mask&512 != 0, Kind: f[13]}
+			n := &Node{NodeType: f[1], Value: unescape(f[2]), IsParent: mask&2 != 0, Ordered: mask&4 != 0, IsIndented: mask&8 != 0, IsAligned: mask&16 != 0, IsLiteral: mask&64 != 0, IsCj: mask&128 != 0, HasLeadingPunctuation: mask&256 != 0, HasTrailingPunctuation: mask&512 != 0, Kind: f[13]}
 			if mask&1 != 0 {
 				raw := unescape(f[4])
 				n.Raw = &raw

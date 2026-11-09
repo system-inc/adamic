@@ -1,4 +1,4 @@
-// nexus/consistency_no_ambiguous_identifier.go:18; `^on[A-Z]`
+// nexus/consistency_require_constant_casing.go:437; `(Creator|Factory)$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,7 +9,9 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "onA", 4);
-observe(regex, "xonA", 5);
-observe(regex, "onA\n", 6);
-observe(regex, "onClick", 7);
+observe(regex, "Creator", 4);
+observe(regex, "xCreator", 5);
+observe(regex, "Creator\n", 6);
+observe(regex, "BaseNodeFactory", 7);
+observe(regex, "createEmitHelperFactory", 8);
+observe(regex, "CustomTransformerFactory", 9);

@@ -8,5 +8,5 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleRequireYield() rule.Rule                 { return rules.RequireYield }
+func oracleRequireYield(options any) rule.Bound     { return bindOracle(rules.RequireYield, options) }
 func oracleRequireYieldOptions(fields []string) any { return nil }

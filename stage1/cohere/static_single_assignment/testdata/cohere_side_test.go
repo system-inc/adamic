@@ -242,8 +242,8 @@ func (oracleGraph) EachTerminalPlace(block *oracleBlock, visit func(*oraclePlace
 func (oracleGraph) SetTerminalOrder(block *oracleBlock, order ssa.EvaluationOrder) {
 	block.terminalOrder = order
 }
-func (oracleGraph) Params(f *oracleFunction) []oraclePlace { return f.params }
-func (oracleGraph) Returns(f *oracleFunction) *oraclePlace { return f.returns }
+func (oracleGraph) Parameters(f *oracleFunction) []oraclePlace { return f.params }
+func (oracleGraph) Returns(f *oracleFunction) *oraclePlace     { return f.returns }
 func (oracleGraph) Declaration(f *oracleFunction, id ssa.IdentifierId) ssa.DeclarationId {
 	return f.identifiers[id].declaration
 }
@@ -331,11 +331,11 @@ func runOracleFunction(out *strings.Builder, f *oracleFunction) {
 	}
 	line("table %s", strings.Join(found, " "))
 	line("identifiers %d", len(f.identifiers))
-	kinds := map[ssa.SSAViolationKind]string{ssa.SSAViolationMultipleDefinitions: "MultipleDefinitions", ssa.SSAViolationUseNotDominated: "UseNotDominated"}
-	for _, violation := range ssa.VerifySSA(graph, f) {
+	kinds := map[ssa.StaticSingleAssignmentViolationKind]string{ssa.StaticSingleAssignmentViolationMultipleDefinitions: "MultipleDefinitions", ssa.StaticSingleAssignmentViolationUseNotDominated: "UseNotDominated"}
+	for _, violation := range ssa.VerifyStaticSingleAssignment(graph, f) {
 		line("violation %s %d %d %s", kinds[violation.Kind], violation.Identifier, violation.Block, violation.Detail)
 	}
-	stats := ssa.CollectSSAStats(graph, f)
+	stats := ssa.CollectStaticSingleAssignmentStatistics(graph, f)
 	line("stats %d %d %d", stats.Phis, stats.NamedValues, stats.Uses)
 	dominance := ssa.ComputeDominance(graph, f)
 	for _, block := range f.blocks {
@@ -528,7 +528,7 @@ func oracleFromTest(name string, f *testFunction, passes string) *oracleFunction
 	for declaration, is := range f.contextual {
 		oracle.contextual[declaration] = is
 	}
-	for _, param := range f.params {
+	for _, param := range f.parameters {
 		oracle.params = append(oracle.params, oraclePlace{id: param.id, tag: param.tag})
 	}
 	if f.returns != nil {

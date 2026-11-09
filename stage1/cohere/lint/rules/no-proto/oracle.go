@@ -8,7 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoProto() rule.Rule { return rules.NoProto }
+func oracleNoProto(options any) rule.Bound { return bindOracle(rules.NoProto, options) }
 
 // Upstream has no configuration type. Preserve supplied JSON rather than silently
 // dropping it: the oracle's option guard also applies to configuration-free rules.

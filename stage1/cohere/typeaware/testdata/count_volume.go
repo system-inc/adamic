@@ -108,10 +108,10 @@ func main() {
 	defer out.Flush()
 	findings := 0
 	counts := map[string]int{}
-	subjects := []rule.Rule{}
+	subjects := []rule.Bound{}
 	for _, subject := range registry.All() {
 		if subject.NeedsTypeChecker {
-			subjects = append(subjects, subject)
+			subjects = append(subjects, subject.Unconfigured)
 			counts[subject.Name] = 0
 		}
 	}
@@ -129,11 +129,11 @@ func main() {
 		callbacks := map[ast.Kind][]func(*ast.Node){}
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {
-			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) {
+			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject.Traits), FileCache: cache, Report: func(d rule.Diagnostic) {
 				d.RuleName = subject.Name
 				collected = append(collected, d)
 				counts[subject.Name]++
-			}}, nil)
+			}})
 			for kind, callback := range listeners {
 				callbacks[kind] = append(callbacks[kind], callback)
 			}

@@ -23,13 +23,13 @@ func TestAdamicDocuments(t *testing.T) {
 		generator := &specGenerator{random: random}
 		opt := Options{PrintWidth: 8 + random.Intn(40), TabWidth: []int{2, 4}[random.Intn(2)], UseTabs: random.Intn(4) == 0}
 		options = append(options, opt)
-		cases = append(cases, printCase{Spec: generator.node(), Options: map[string]any{"printWidth": opt.PrintWidth, "tabWidth": opt.TabWidth, "useTabs": opt.UseTabs}})
+		cases = append(cases, printCase{Spec: generator.node(), Options: &upstreamPrintOptions{PrintWidth: opt.PrintWidth, TabWidth: opt.TabWidth, UseTabs: opt.UseTabs}})
 	}
 	specs, boundaries := boundaryCases()
 	for index, shape := range specs {
 		opt := boundaries[index]
 		options = append(options, opt)
-		cases = append(cases, printCase{Spec: shape, Options: map[string]any{"printWidth": opt.PrintWidth, "tabWidth": opt.TabWidth, "useTabs": opt.UseTabs}})
+		cases = append(cases, printCase{Spec: shape, Options: &upstreamPrintOptions{PrintWidth: opt.PrintWidth, TabWidth: opt.TabWidth, UseTabs: opt.UseTabs}})
 	}
 	var protocol, answers strings.Builder
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
@@ -51,7 +51,7 @@ func TestAdamicDocuments(t *testing.T) {
 		var flatten func(*spec) int
 		flatten = func(node *spec) int {
 			if node.Kind == "sharedGroup" {
-				return groups[node.Ref]
+				return groups[node.Reference]
 			}
 			if node.Kind == "hardline" || node.Kind == "literalline" {
 				line := row(node.Kind+"WithoutBreakParent", "", "", 0, false, nil)
@@ -62,9 +62,9 @@ func TestAdamicDocuments(t *testing.T) {
 			for _, child := range node.Children {
 				children = append(children, flatten(child))
 			}
-			result := row(node.Kind, node.Text, node.ID, node.Number, node.Flag, children)
-			if node.Kind == "group" && node.Ref != 0 {
-				groups[node.Ref] = result
+			result := row(node.Kind, node.Text, node.Id, node.Number, node.Flag, children)
+			if node.Kind == "group" && node.Reference != 0 {
+				groups[node.Reference] = result
 			}
 			return result
 		}

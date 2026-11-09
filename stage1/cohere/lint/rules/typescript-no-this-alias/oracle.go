@@ -8,7 +8,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
 )
 
-func oracleNoThisAlias() rule.Rule { return rules.NoThisAlias }
+func oracleNoThisAlias(options any) rule.Bound { return bindOracle(rules.NoThisAlias, options) }
 func oracleNoThisAliasOptions(fields []string) any {
 	var options rules.NoThisAliasOptions
 	if len(fields) > 5 && fields[5] != "" && fields[5] != "null" {

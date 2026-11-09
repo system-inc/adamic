@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUnsafeFinally() rule.Rule { return rules.NoUnsafeFinally }
+func oracleNoUnsafeFinally(options any) rule.Bound {
+	return bindOracle(rules.NoUnsafeFinally, options)
+}
 
 // The upstream rule has no options type and ignores its options argument.
 // Decode supplied JSON nevertheless so an options row cannot reach a nil adapter.

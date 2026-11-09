@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/format_options"
 	"github.com/system-inc/cohere/internal/format/javascript"
 )
 
@@ -24,7 +24,7 @@ func main() {
 			continue
 		}
 		parts := strings.SplitN(line, "\t", 2)
-		text, err := javascript.FormatJSON(parts[0], unescape.Replace(parts[1]), formatoptions.PrettierDefaults())
+		text, err := javascript.FormatJson(parts[0], unescape.Replace(parts[1]), format_options.PrettierDefaults())
 		if err != nil {
 			fmt.Fprintf(&output, "error\t%s\n", escape.Replace(err.Error()))
 		} else {

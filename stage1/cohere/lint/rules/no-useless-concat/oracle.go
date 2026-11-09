@@ -8,7 +8,9 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUselessConcat() rule.Rule { return rules.NoUselessConcat }
+func oracleNoUselessConcat(options any) rule.Bound {
+	return bindOracle(rules.NoUselessConcat, options)
+}
 
 // This upstream rule has no options type or schema entries and ignores its options argument.
 // Decode explicit JSON instead of dropping it, including on all-rule rows with other rules' bags.

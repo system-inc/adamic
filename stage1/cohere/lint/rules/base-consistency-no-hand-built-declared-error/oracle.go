@@ -9,8 +9,8 @@ import (
 	base "github.com/system-inc/cohere/internal/lint/rules/base"
 )
 
-func oracleConsistencyNoHandBuiltDeclaredError() rule.Rule {
-	return base.ConsistencyNoHandBuiltDeclaredError
+func oracleConsistencyNoHandBuiltDeclaredError(options any) rule.Bound {
+	return bindOracle(base.ConsistencyNoHandBuiltDeclaredError, options)
 }
 
 func oracleConsistencyNoHandBuiltDeclaredErrorOptions(fields []string) any {

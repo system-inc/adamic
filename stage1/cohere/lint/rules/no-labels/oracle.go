@@ -9,7 +9,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoLabels() rule.Rule { return rules.NoLabels }
+func oracleNoLabels(options any) rule.Bound { return bindOracle(rules.NoLabels, options) }
 
 // oracleNoLabelsOptions decodes field 5's captured options into the upstream type, and with none gives
 // the type's zero value, as the shared oracle's decoder did before this rule moved.

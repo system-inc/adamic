@@ -875,8 +875,8 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
-	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
+	original := "expectEachFixParses(test, sourceFile, diagnostics)\n\treturn Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
+	replacement := "expectEachFixParses(test, sourceFile, diagnostics)\n\tresult := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n\tRecordAssertedCase(test, result)\n\treturn result"
 	if strings.Count(string(data), original) != 1 {
 		return nil, fmt.Errorf("capture overlay anchor changed")
 	}

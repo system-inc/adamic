@@ -11,7 +11,7 @@ import (
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
-func oracleNoUselessCatch() rule.Rule { return rules.NoUselessCatch }
+func oracleNoUselessCatch(options any) rule.Bound { return bindOracle(rules.NoUselessCatch, options) }
 
 // Upstream declares no options type and ignores options. Decode supplied JSON
 // without inventing fields or returning nil for a row that carries options.
