@@ -4,6 +4,8 @@ import (
 	"os"
 	"strings"
 	"testing"
+
+	cohere "github.com/system-inc/cohere/unicodeproperties"
 )
 
 // Version is cohere's, and generate.go writes the strings and Canonicalize
@@ -23,5 +25,18 @@ func TestGeneratedTablesVersion(t *testing.T) {
 	}
 	if !strings.HasPrefix(Version, NodeUnicodeVersion+".") {
 		t.Errorf("Version %s is not Node's Unicode %s", Version, NodeUnicodeVersion)
+	}
+}
+
+// Every spelling cohere's Names lists Looks up to a code-point property with a
+// Set, the one codePointSets made for its ranges. Lookup panics on a spelling
+// with none, so a gap between cohere's Lookup and its Names stops by name.
+func TestEveryNameHasASet(t *testing.T) {
+	t.Parallel()
+	for _, name := range cohere.Names() {
+		property, ok := Lookup(name, false)
+		if !ok || property.Kind != KindCodePoints || property.Set == nil {
+			t.Errorf("Lookup(%q) = %v, kind %d, set %v", name, ok, property.Kind, property.Set)
+		}
 	}
 }
