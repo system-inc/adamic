@@ -96,23 +96,23 @@ coordinates and exact full messages, including the two large object types, are
 in `evidence/stops.json`. Every row is inside `src/compiler`; every meter message
 match is **No**.
 
-| Stop | Original file:line:column | Stopping message | Minimal witness |
-|---|---|---|---|
-| 1 | builder.ts:1246:69 | TS2345: Path or undefined passed as string | [01](probes/01-indexed-path.a) |
-| 2 | builder.ts:1258:65 | TS2488: optional [Path, FileInfo] tuple destructured | [02](probes/02-tuple-parameter.a) |
-| 3 | builder.ts:2273:9 | TS2375: present-undefined outSignature field | [03](probes/03-present-undefined-field.a) |
-| 4 | builder.ts:395:118 | TS2345: Path or undefined passed as Path | [04](probes/04-optional-path-argument.a) |
-| 5 | builder.ts:991:17 | TS2345: Path or undefined passed as Path | [05](probes/05-optional-path-argument.a) |
-| 6 | checker.ts:10022:63 | TS2345: Symbol or undefined passed as Symbol | [06](probes/06-optional-symbol-argument.a) |
-| 7 | checker.ts:10026:97 | TS2345: Symbol or undefined passed as Symbol | [07](probes/07-optional-symbol-argument.a) |
-| 8 | checker.ts:10033:67 | TS18048: m is possibly undefined | [08](probes/08-optional-member-read.a) |
-| 9 | checker.ts:10034:53 | TS2345: "real" passed as never (placeholder-induced) | [09](probes/09-never-argument.a) |
-| 10 | checker.ts:10319:83 | TS2345: Symbol or undefined passed as Symbol | [10](probes/10-optional-symbol-argument.a) |
-| 11 | checker.ts:10320:51 | TS2345: array with undefined passed as readonly Symbol array | [11](probes/11-optional-symbol-array.a) |
-| 12 | checker.ts:10941:33 | TS2379: present-undefined modifiers argument | [12](probes/12-present-undefined-argument.a) |
-| 13 | checker.ts:12034:30 | TS18048: file is possibly undefined | [13](probes/13-optional-file-read.a) |
-| 14 | checker.ts:12859:13 | TS2322: void or Type assigned as Type or undefined (placeholder-induced) | [14](probes/14-void-result.a) |
-| 15 | checker.ts:13986:47 | TS2345: Declaration or undefined passed as Node | [15](probes/15-optional-declaration-argument.a) |
+| Stop | Original file:line:column | Stopping message                                                         | Minimal witness                                 |
+| ---- | ------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------- |
+| 1    | builder.ts:1246:69        | TS2345: Path or undefined passed as string                               | [01](probes/01-indexed-path.a)                  |
+| 2    | builder.ts:1258:65        | TS2488: optional [Path, FileInfo] tuple destructured                     | [02](probes/02-tuple-parameter.a)               |
+| 3    | builder.ts:2273:9         | TS2375: present-undefined outSignature field                             | [03](probes/03-present-undefined-field.a)       |
+| 4    | builder.ts:395:118        | TS2345: Path or undefined passed as Path                                 | [04](probes/04-optional-path-argument.a)        |
+| 5    | builder.ts:991:17         | TS2345: Path or undefined passed as Path                                 | [05](probes/05-optional-path-argument.a)        |
+| 6    | checker.ts:10022:63       | TS2345: Symbol or undefined passed as Symbol                             | [06](probes/06-optional-symbol-argument.a)      |
+| 7    | checker.ts:10026:97       | TS2345: Symbol or undefined passed as Symbol                             | [07](probes/07-optional-symbol-argument.a)      |
+| 8    | checker.ts:10033:67       | TS18048: m is possibly undefined                                         | [08](probes/08-optional-member-read.a)          |
+| 9    | checker.ts:10034:53       | TS2345: "real" passed as never (placeholder-induced)                     | [09](probes/09-never-argument.a)                |
+| 10   | checker.ts:10319:83       | TS2345: Symbol or undefined passed as Symbol                             | [10](probes/10-optional-symbol-argument.a)      |
+| 11   | checker.ts:10320:51       | TS2345: array with undefined passed as readonly Symbol array             | [11](probes/11-optional-symbol-array.a)         |
+| 12   | checker.ts:10941:33       | TS2379: present-undefined modifiers argument                             | [12](probes/12-present-undefined-argument.a)    |
+| 13   | checker.ts:12034:30       | TS18048: file is possibly undefined                                      | [13](probes/13-optional-file-read.a)            |
+| 14   | checker.ts:12859:13       | TS2322: void or Type assigned as Type or undefined (placeholder-induced) | [14](probes/14-void-result.a)                   |
+| 15   | checker.ts:13986:47       | TS2345: Declaration or undefined passed as Node                          | [15](probes/15-optional-declaration-argument.a) |
 
 All fifteen witnesses exit 0 on Node. Each native witness build exits 1 at the
 same checker code. Thirteen reproduce the full first-line message text exactly.
