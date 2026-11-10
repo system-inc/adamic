@@ -58,7 +58,7 @@ console.log(held[0]);
 			l.result.GraphTypes[int(each.Id())] = true
 		}
 		if planned {
-			l.result.GraphTypes[int(pairType.Id())] = true
+			l.result.GraphTypes[l.cycleTypeID(pairType)] = true
 		}
 		return (&cycleFinder{l: l, selected: selected}).graphAdoptionBoundary()
 	}
