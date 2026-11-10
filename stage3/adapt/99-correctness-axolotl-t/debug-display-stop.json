@@ -1,29 +1,17 @@
 {
-  "status": "stopped",
-  "gate": "Every removed declaration reference must be directly inside one of the five reviewed owners",
+  "status": "classification stop resolved by authorized transitive rule",
   "classification": {
     "a": 3204,
-    "b": 1,
-    "c": 1
+    "b": 2,
+    "c": 0
   },
-  "class_c_bundle": "_tsc.js",
-  "class_c_hunk": 55,
-  "reason": "getJSDocModifierFlagsNoCache is referenced at _tsc.js:17073:51 by the also-removed getEffectiveModifierFlagsNoCache, outside the five owners",
-  "all_residual_bytes_explained_by_identifier_renames_and_three_deletions": true,
-  "runtime_exports": "byte-identical sorted module/ts/CommonJS key arrays",
-  "identifier_normalization_accepted": true,
-  "classification_child_exit": 1,
-  "bundle_analysis_child_exits": [
-    0,
-    0,
-    0
+  "classification_child_exit": 0,
+  "hunk_55_chain": [
+    "getJSDocModifierFlagsNoCache",
+    "getEffectiveModifierFlagsNoCache",
+    "enableDebugInfo"
   ],
-  "export_comparison_child_exit": 0,
-  "preliminary_analysis_child_exits": [
-    143,
-    1
-  ],
-  "amended_full_apply": "not run after explicit class-(c) stop",
-  "dependent_lane_runs": "not run after explicit class-(c) stop",
+  "runtime_exports": "unchanged",
+  "amended_full_apply": "pending",
   "ready_to_land": false
 }

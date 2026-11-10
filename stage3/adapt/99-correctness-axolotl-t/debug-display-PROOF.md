@@ -9,10 +9,10 @@ debug-display-all-emitted-javascript-hunks.patch.gz.
 
 | Bundle | (a) pure rename | (b) removed declaration | (c) stop |
 | --- | ---: | ---: | ---: |
-| _tsc.js | 772 | 1 | 1 |
+| _tsc.js | 772 | 2 | 0 |
 | typescript.js | 1185 | 0 | 0 |
 | run.js | 1247 | 0 | 0 |
-| Total | 3204 | 1 | 1 |
+| Total | 3204 | 2 | 0 |
 
 The analyzer first replaces exactly the five owner texts with their after
 texts, then inventories every residual hunk with three context lines. For (a),
@@ -32,14 +32,18 @@ declaration names themselves are excluded from the reference count.
 | getEffectiveModifierFlagsNoCache | _tsc.js:1791:42 | enableDebugInfo | Yes |
 | isArrayTypeNode | _tsc.js:1775:1231 | enableDebugInfo | Yes |
 
-The isArrayTypeNode deletion hunk is (b). The hunk deleting both modifier
-helpers is (c): getJSDocModifierFlagsNoCache has a reference outside the five
-owners, inside the also-removed getEffectiveModifierFlagsNoCache. Its removal
-is a mechanically explained transitive cascade, but it does not satisfy the
-specified requirement that every reference be directly inside one of the five
-owners. No other functions or bindings disappear. Whole residual bundles are
-byte-identical after identifier normalization plus exactly these three
-declaration deletions; there is no unexplained remaining emitted delta.
+Both deletion hunks are (b), using the transitive closure authorized in the
+follow-up. A removed declaration is class (b) when every reference to it is
+inside a reviewed owner or inside another removed declaration that is itself
+class (b). The classifier computes the least fixed point and records reference
+edges and full chains; unanchored cycles fail closed.
+
+Hunk 55 records getJSDocModifierFlagsNoCache ->
+getEffectiveModifierFlagsNoCache -> enableDebugInfo. The direct reference at
+17073 is inside the removed modifier helper, whose reference at 1791 is inside
+enableDebugInfo. isArrayTypeNode's sole reference is directly in enableDebugInfo.
+All three bundles compare byte-identically after identifier normalization and
+these three declaration deletions. There are zero class-(c) hunks.
 
 The runtime export comparison passes on Node v24.19.0. Loading each real
 normal typescript.js through Node import and require gives byte-identical
@@ -48,11 +52,9 @@ object/CommonJS exports. No key is added or removed. The complete arrays and
 hashes are in debug-display-runtime-export-keys.json; the executable check is
 debug-display-export-keys.cjs.
 
-Current result: STOP under the direct-reference condition of class (b).
-ready_to_land remains false. The amended full apply and dependent lane runs
-are not started after this explicit class-(c) stop. The FlowGraphNode widening
-at debug.ts:1021:29 is untouched. This follow-up changes evidence and prose
-only, not adapt.cjs or pins.json.
+Current result: classification and export gates pass. Full amended apply and
+final lane are pending, so ready_to_land remains false for now. FlowGraphNode
+at debug.ts:1021:29 is untouched. The source adaptation and pins are unchanged.
 
 ## Earlier measurement record
 
