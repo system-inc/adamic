@@ -1,0 +1,9 @@
+// A destructured parameter's defaults lower as a declaration's do, a later one reading an earlier one.
+// Node prints 1, 9 and 6.
+function area({ width = 1, height = width }: { width?: number; height?: number }): number {
+	return width * height;
+}
+
+console.log(area({}));
+console.log(area({ width: 3 }));
+console.log(area({ width: 3, height: 2 }));

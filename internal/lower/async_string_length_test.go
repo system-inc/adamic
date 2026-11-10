@@ -55,8 +55,9 @@ func TestAsyncStringLengthConsumption(t *testing.T) {
 // condition evaluated first, a callee, a property read, a computed key, a tagged template's tag, a
 // destructuring default, a comma expression. Each stops: named for the string-length limit where the
 // proof is what stops it, since an await consumes its own promise only, never the statement's later
-// awaits; and a computed key, a tagged template and a destructuring default stop earlier, at
-// lowering's own NotYet for each, and are pinned there, so lowering one of them shows up here.
+// awaits, a destructuring default's among them once defaults lowered (#smqr4vn); and a computed key
+// and a tagged template stop earlier, at lowering's own NotYet for each, and are pinned there, so
+// lowering one of them shows up here.
 func TestAsyncStringLengthProbes(t *testing.T) {
 	t.Parallel()
 	const word = "async function word(text: string): Promise<string> {\n\treturn `${text}!`;\n}\n"
@@ -72,7 +73,7 @@ func TestAsyncStringLengthProbes(t *testing.T) {
 		{"a2: a property read first", setup + "const box = { x: 'k' };\nconsole.log(`${box.x}${await p}|${await q}`);\n", ""},
 		{"a3: a computed key first", setup + "const key = 'k';\nconst record = { [key]: `${await p}|${await q}` };\nconsole.log(record.k);\n", "a computed field name"},
 		{"a4: a tagged template's tag first", setup + "function tag(parts: TemplateStringsArray, ...values: string[]): string {\n\treturn values.join('|');\n}\nconsole.log(tag`${await p}|${await q}`);\n", "a value of type TemplateStringsArray"},
-		{"a5: a destructuring default", setup + "const holder: { v?: string } = {};\nconst { v = `${await p}|${await q}` } = holder;\nconsole.log(v);\n", "a destructured name that isn't plain"},
+		{"a5: a destructuring default", setup + "const holder: { v?: string } = {};\nconst { v = `${await p}|${await q}` } = holder;\nconsole.log(v);\n", ""},
 		{"a6: a comma expression", setup + "console.log((big.length, `${await p}|${await q}`));\n", ""},
 
 		// One pending promise (Language's probes, 11:34Z, on Language's later(), which rejects only at

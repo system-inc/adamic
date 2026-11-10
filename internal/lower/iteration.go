@@ -417,6 +417,13 @@ func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node
 		}
 		step = append(step, ir.Declare{Local: local, Value: value})
 	} else {
+		for _, binding := range name.AsBindingPattern().Elements.Nodes {
+			if binding.Kind == ast.KindBindingElement && binding.AsBindingElement().Initializer != nil {
+				// A default runs while the step is bound, before state.active is set, so one that throws
+				// would leave the iterator unclosed where JavaScript closes it.
+				return nil, l.notYet(binding, "a destructuring default in a for-of over an iterator")
+			}
+		}
 		valueType := l.checker.GetTypeOfSymbol(l.checker.GetPropertyOfType(plan.step, "value"))
 		heldValue := l.iterationLocal("iteration_value", plan.element, l.functionIndex)
 		bound, err := l.destructureFrom(name, valueType, plan.element, heldValue)
