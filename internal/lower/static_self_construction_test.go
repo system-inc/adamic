@@ -56,9 +56,9 @@ func staticAssertBox(call string) string {
 // at the dead-zone rule, since the class's outer binding isn't initialized while its statics run
 // (Node throws a ReferenceError there if the function is called), a static method read as a value is
 // refused as unbound, a static arrow field reading a later static is refused at its own initializer by
-// the source-order rule, and an arrow written in the constructor is walked as the constructor's own. So no
-// program today hands assert a function that reads a later static and reaches the per-edge judgment:
-// the per-edge check is defense for whatever lifts one of those stops (its mutant has no live witness). A member call on a library global runs no program code when both
+// the source-order rule, and an arrow written in the constructor is walked as the constructor's own. Each of
+// those names the class; the per-edge judgment's witness reaches the later static without naming it
+// (TestStaticWalkPerEdgeWitness). A member call on a library global runs no program code when both
 // resolve by symbol to Node's Error.captureStackTrace, which lowers; a program object's
 // captureStackTrace is program code and keeps the indirect call's stop (Node prints program code
 // object, then 1). Mutants: static-self-construction.mutants.md.
@@ -135,5 +135,37 @@ func TestTscVersionZeroPassesTheStaticWalk(t *testing.T) {
 	_, err = lowerSourceAs(t, string(source), ".ts")
 	if err == nil || !strings.HasSuffix(err.Error(), want) {
 		t.Fatalf("got %v, want ...%s", err, want)
+	}
+}
+
+// The per-edge judgment's witness (Language, on #1451npc): a function declaration handed to a function
+// that calls it reaches a later static without naming the class, through an instance getter on the instance
+// it's handed, so neither the dead-zone rule nor the source-order rule sees it, and only staticParameterCalls
+// walks reader's body from run's read(version) edge. Node prints undefined for the number-typed static; the
+// control, later declared first, lowers (Node prints 7). Compiler's road, an arrow written in the static
+// initializer and handed to the constructor, is the third row. Mutant "No per-edge check" in
+// static-self-construction.mutants.md makes the first row lower.
+func TestStaticWalkPerEdgeWitness(t *testing.T) {
+	t.Parallel()
+	const reader = "function run(read: (version: Version) => number, version: Version): number {\n\treturn read(version);\n}\nfunction reader(version: Version): number {\n\treturn version.size;\n}\n"
+	const getter = "\tget size(): number {\n\t\treturn Version.later;\n\t}\n}\nconsole.log(String(Version.zero));\n"
+	for _, row := range []struct{ name, source, where, want string }{
+		{"a declared function reading a later static through a getter", reader + "class Version {\n\tstatic zero: number = run(reader, new Version());\n\tstatic later: number = 7;\n" + getter, "11:10", "Adamic 0.1 refuses a static field read before its initializer has run: Version.later; declare the field earlier, or move the read after that field's initialization"},
+		{"the same with the static declared first", reader + "class Version {\n\tstatic later: number = 7;\n\tstatic zero: number = run(reader, new Version());\n" + getter, "", ""},
+		{"an arrow in the static initializer handed to the constructor", "class Box {\n\tstatic zero: Box = new Box(() => Box.later);\n\tstatic later: number = 5;\n\tconstructor(read: () => number) {\n\t\tconsole.log(String(read()));\n\t}\n}\nconsole.log(typeof Box.zero);\n", "2:35", "Adamic 0.1 refuses a static field read before its initializer has run: Box.later; declare the field earlier, or move the read after that field's initialization"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, row.source)
+			if row.want == "" {
+				if err != nil {
+					t.Fatalf("must lower: %v", err)
+				}
+				return
+			}
+			if err == nil || !strings.HasSuffix(err.Error(), "/main.a:"+row.where+": "+row.want) {
+				t.Errorf("got %v, want main.a:%s: %s", err, row.where, row.want)
+			}
+		})
 	}
 }
