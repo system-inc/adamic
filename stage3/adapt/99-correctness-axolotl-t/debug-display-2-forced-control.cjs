@@ -1,0 +1,1 @@
+const ts=require('/workspace/scratch/debug-display-2-counted/built/local/typescript.js');ts.Debug.isDebugging=true;ts.Debug.enableDebugInfo();ts.Debug.attachFlowNodeDebugInfo({id:0,flags:ts.FlowFlags.Start});ts.Debug.attachNodeArrayDebugInfo([]);ts.Debug.attachDebugPrototypeIfDebug({kind:ts.TypeMapKind.Simple});

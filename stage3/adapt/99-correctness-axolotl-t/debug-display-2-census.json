@@ -767,5 +767,9 @@
       }
     ],
     "interpretation": "Ordinary lowering stops earlier at semver.ts. The unchanged full latent census independently reaches and restores Object.setPrototypeOf."
-  }
+  },
+  "compiler_base": "9d6b1c37cdc08e426b094c9f5e6214771ff95632",
+  "production_lower_tree": "8e02f2ed9b920afb575bcc1392db4cc343e2b9fe",
+  "ordinary_binary_sha256": "9cfbb435f991be51709b2532e320a37e48a792c82af1667f34961f289b7e7191",
+  "latent_binary_sha256": "7b39d8b38b2a62064c5005e07fe7a9372074f1f919322a1a1bd9a5dd655ad9c0"
 }

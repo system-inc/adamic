@@ -9,5 +9,7 @@
   "original_apply_completed_adaptations": 88,
   "original_apply_log_sha256": "0e65b04b2540a9e110a527da38a862ac07463f646d615f69c3138f661e559c86",
   "pre_refresh_count_log_sha256": "ee17339af9782df709d9d1291e9134a172e6c233846ff175115ccd6223df8b55",
-  "recovery": "Fresh full apply from pinned source; only the 183 unfinished count shards rerun, then all 398 ordinary reports reconciled."
+  "recovery": "Fresh full apply from pinned source; only the 183 unfinished count shards rerun, then all 398 ordinary reports reconciled.",
+  "count_recovery_child_exit": 0,
+  "all_398_ordinary_guards_pass": true
 }
