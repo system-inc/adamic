@@ -8,33 +8,33 @@ The directory matched the ten requested fixtures, plus `array-arm.a` and `fs-opt
 
 Each outcome below records exit code, stdout and stderr. `\n` is an LF byte. N and J identify the native and JavaScript runs, respectively; identical outcome identifiers mean byte-identical stdout/stderr and equal exit codes. Before is `.a`; after is `.ts`.
 
-| File (now .ts) | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| callable-producer-wrong.ts | N1 | N1 | J1 | J1 | yes | no | no | no |
-| fixed-tuple-good.ts | N2 | N2 | J2 | J2 | yes | no | no | no |
-| fixed-tuple-wrong.ts | N3 | N3 | J3 | J3 | yes | no | no | no |
-| mixed-read-write.ts | N4 | N4 | J4 | J4 | yes | no | no | no |
-| null-read-write.ts | N5 | N5 | J5 | J5 | yes | no | no | no |
-| representation-read-write.ts | N6 | N6 | J6 | J6 | yes | no | no | no |
-| snapshot-maybe-boolean.ts | N7 | N7 | J7 | J7 | yes | no | no | no |
-| snapshot-maybe-number.ts | N8 | N8 | J8 | J8 | yes | no | no | no |
-| tuple-identity-wrong.ts | N9 | N9 | J9 | J9 | yes | no | no | no |
-| undefined-read-write.ts | N10 | N10 | J10 | J10 | yes | no | no | no |
+| File (now .ts)               | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
+| ---------------------------- | ------------- | ------------ | ----------------- | ---------------- | --------- | -------------- | ------------------ | ------------------- |
+| callable-producer-wrong.ts   | N1            | N1           | J1                | J1               | yes       | no             | no                 | no                  |
+| fixed-tuple-good.ts          | N2            | N2           | J2                | J2               | yes       | no             | no                 | no                  |
+| fixed-tuple-wrong.ts         | N3            | N3           | J3                | J3               | yes       | no             | no                 | no                  |
+| mixed-read-write.ts          | N4            | N4           | J4                | J4               | yes       | no             | no                 | no                  |
+| null-read-write.ts           | N5            | N5           | J5                | J5               | yes       | no             | no                 | no                  |
+| representation-read-write.ts | N6            | N6           | J6                | J6               | yes       | no             | no                 | no                  |
+| snapshot-maybe-boolean.ts    | N7            | N7           | J7                | J7               | yes       | no             | no                 | no                  |
+| snapshot-maybe-number.ts     | N8            | N8           | J8                | J8               | yes       | no             | no                 | no                  |
+| tuple-identity-wrong.ts      | N9            | N9           | J9                | J9               | yes       | no             | no                 | no                  |
+| undefined-read-write.ts      | N10           | N10          | J10               | J10              | yes       | no             | no                 | no                  |
 
 No file failed to be a twin. Every native result also equals its JavaScript result.
 
-| Outcomes | Exit | Stdout (JSON string) | Stderr (JSON string) |
-| --- | --- | --- | --- |
-| N1, J1 | 0 | `"true\n"` | `""` |
-| N2, J2 | 0 | `"first:1\nfirst:1\n"` | `""` |
-| N3, J3 | 70 | `""` | `"adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"` |
-| N4, J4 | 0 | `"first\nsecond\n"` | `""` |
-| N5, J5 | 0 | `"true\n"` | `""` |
-| N6, J6 | 0 | `"ok\ntrue:true\n41:-42:3.5\n"` | `""` |
-| N7, J7 | 0 | `"true / true\nfalse / false\nfalse / undefined\n"` | `""` |
-| N8, J8 | 0 | `"7\n0\nundefined\n"` | `""` |
-| N9, J9 | 70 | `""` | `"adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n"` |
-| N10, J10 | 0 | `"true\n"` | `""` |
+| Outcomes | Exit | Stdout (JSON string)                                | Stderr (JSON string)                                                                                                                                  |
+| -------- | ---- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| N1, J1   | 0    | `"true\n"`                                          | `""`                                                                                                                                                  |
+| N2, J2   | 0    | `"first:1\nfirst:1\n"`                              | `""`                                                                                                                                                  |
+| N3, J3   | 70   | `""`                                                | `"adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"`  |
+| N4, J4   | 0    | `"first\nsecond\n"`                                 | `""`                                                                                                                                                  |
+| N5, J5   | 0    | `"true\n"`                                          | `""`                                                                                                                                                  |
+| N6, J6   | 0    | `"ok\ntrue:true\n41:-42:3.5\n"`                     | `""`                                                                                                                                                  |
+| N7, J7   | 0    | `"true / true\nfalse / false\nfalse / undefined\n"` | `""`                                                                                                                                                  |
+| N8, J8   | 0    | `"7\n0\nundefined\n"`                               | `""`                                                                                                                                                  |
+| N9, J9   | 70   | `""`                                                | `"adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n"` |
+| N10, J10 | 0    | `"true\n"`                                          | `""`                                                                                                                                                  |
 
 ## Method and readers
 

@@ -8,33 +8,33 @@ The directory matched exactly the ten requested fixtures. All ten fixtures were 
 
 Each outcome below records exit code, stdout and stderr. `\n` is an LF byte. N and J identify native and JavaScript runs; identical identifiers mean byte-identical stdout/stderr and equal exit codes. Before is `.a`; after is `.ts`.
 
-| File (now .ts) | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| depth-200.ts | N1 | N1 | J1 | J1 | yes | no | no | no |
-| depth-2000.ts | N2 | N2 | J2 | J2 | yes | no | no | no |
-| depth-65.ts | N3 | N3 | J3 | J3 | yes | no | no | no |
-| p09.ts | N4 | N4 | J4 | J4 | yes | no | no | no |
-| p32.ts | N5 | N5 | J5 | J5 | yes | no | no | no |
-| p33.ts | N6 | N6 | J6 | J6 | yes | no | no | no |
-| p67.ts | N7 | N7 | J7 | J7 | yes | no | no | no |
-| p72.ts | N8 | N8 | J8 | J8 | yes | no | no | no |
-| scalar-static.ts | N9 | N9 | J9 | J9 | yes | no | no | no |
-| scalar-tuple.ts | N10 | N10 | J10 | J10 | yes | no | no | no |
+| File (now .ts)   | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
+| ---------------- | ------------- | ------------ | ----------------- | ---------------- | --------- | -------------- | ------------------ | ------------------- |
+| depth-200.ts     | N1            | N1           | J1                | J1               | yes       | no             | no                 | no                  |
+| depth-2000.ts    | N2            | N2           | J2                | J2               | yes       | no             | no                 | no                  |
+| depth-65.ts      | N3            | N3           | J3                | J3               | yes       | no             | no                 | no                  |
+| p09.ts           | N4            | N4           | J4                | J4               | yes       | no             | no                 | no                  |
+| p32.ts           | N5            | N5           | J5                | J5               | yes       | no             | no                 | no                  |
+| p33.ts           | N6            | N6           | J6                | J6               | yes       | no             | no                 | no                  |
+| p67.ts           | N7            | N7           | J7                | J7               | yes       | no             | no                 | no                  |
+| p72.ts           | N8            | N8           | J8                | J8               | yes       | no             | no                 | no                  |
+| scalar-static.ts | N9            | N9           | J9                | J9               | yes       | no             | no                 | no                  |
+| scalar-tuple.ts  | N10           | N10          | J10               | J10              | yes       | no             | no                 | no                  |
 
 No file failed to be a twin. Every native result also equals its JavaScript result.
 
-| Outcomes | Exit | Stdout (JSON string) | Stderr (JSON string) |
-| --- | --- | --- | --- |
-| N1, J1 | 0 | `"true\n"` | `""` |
-| N2, J2 | 0 | `"true\n"` | `""` |
-| N3, J3 | 0 | `"true\n"` | `""` |
-| N4, J4 | 70 | `""` | `"adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"` |
-| N5, J5 | 70 | `"3\n"` | `"adamic: panic: field read failed: viewed.name is not a string; expected string, found number\n"` |
-| N6, J6 | 70 | `"3\n"` | `"adamic: panic: field read failed: value.name is not a string; expected string, found number\n"` |
-| N7, J7 | 70 | `""` | `"adamic: panic: field read failed: viewed.value matches no member of number \| Inner; expected number \| Inner, found function\n"` |
-| N8, J8 | 70 | `""` | `"adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"` |
-| N9, J9 | 70 | `""` | `"adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found function\n"` |
-| N10, J10 | 70 | `""` | `"adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found array\n"` |
+| Outcomes | Exit | Stdout (JSON string) | Stderr (JSON string)                                                                                                                                 |
+| -------- | ---- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| N1, J1   | 0    | `"true\n"`           | `""`                                                                                                                                                 |
+| N2, J2   | 0    | `"true\n"`           | `""`                                                                                                                                                 |
+| N3, J3   | 0    | `"true\n"`           | `""`                                                                                                                                                 |
+| N4, J4   | 70   | `""`                 | `"adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"` |
+| N5, J5   | 70   | `"3\n"`              | `"adamic: panic: field read failed: viewed.name is not a string; expected string, found number\n"`                                                   |
+| N6, J6   | 70   | `"3\n"`              | `"adamic: panic: field read failed: value.name is not a string; expected string, found number\n"`                                                    |
+| N7, J7   | 70   | `""`                 | `"adamic: panic: field read failed: viewed.value matches no member of number \| Inner; expected number \| Inner, found function\n"`                  |
+| N8, J8   | 70   | `""`                 | `"adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"` |
+| N9, J9   | 70   | `""`                 | `"adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found function\n"`                                              |
+| N10, J10 | 70   | `""`                 | `"adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found array\n"`                                                 |
 
 ## Method and readers
 
@@ -78,15 +78,15 @@ Final scope audit verified unchanged bodies for all ten renamed fixtures, unchan
 
 Each full before row was compared with its after row after substituting only the fixture path. These are the six numeric columns before and after; every numeric diff is empty.
 
-| Fixture | Before numbers | After numbers | Numeric diff |
-| --- | --- | --- | --- |
-| depth-200.ts | 201, 201, 205, 209, 201, 0 | 201, 201, 205, 209, 201, 0 | empty |
-| depth-2000.ts | 2001, 2001, 2005, 2009, 2001, 0 | 2001, 2001, 2005, 2009, 2001, 0 | empty |
-| depth-65.ts | 66, 66, 70, 74, 66, 0 | 66, 66, 70, 74, 66, 0 | empty |
-| p09.ts | 2, 0, 6, 5, 2, 0 | 2, 0, 6, 5, 2, 0 | empty |
-| p32.ts | 4, 2, 9, 11, 3, 0 | 4, 2, 9, 11, 3, 0 | empty |
-| p33.ts | 5, 2, 10, 11, 4, 0 | 5, 2, 10, 11, 4, 0 | empty |
-| p67.ts | 2, 0, 8, 6, 2, 0 | 2, 0, 8, 6, 2, 0 | empty |
-| p72.ts | 3, 0, 6, 5, 3, 0 | 3, 0, 6, 5, 3, 0 | empty |
-| scalar-static.ts | 2, 0, 6, 6, 2, 0 | 2, 0, 6, 6, 2, 0 | empty |
-| scalar-tuple.ts | 2, 0, 5, 5, 2, 0 | 2, 0, 5, 5, 2, 0 | empty |
+| Fixture          | Before numbers                  | After numbers                   | Numeric diff |
+| ---------------- | ------------------------------- | ------------------------------- | ------------ |
+| depth-200.ts     | 201, 201, 205, 209, 201, 0      | 201, 201, 205, 209, 201, 0      | empty        |
+| depth-2000.ts    | 2001, 2001, 2005, 2009, 2001, 0 | 2001, 2001, 2005, 2009, 2001, 0 | empty        |
+| depth-65.ts      | 66, 66, 70, 74, 66, 0           | 66, 66, 70, 74, 66, 0           | empty        |
+| p09.ts           | 2, 0, 6, 5, 2, 0                | 2, 0, 6, 5, 2, 0                | empty        |
+| p32.ts           | 4, 2, 9, 11, 3, 0               | 4, 2, 9, 11, 3, 0               | empty        |
+| p33.ts           | 5, 2, 10, 11, 4, 0              | 5, 2, 10, 11, 4, 0              | empty        |
+| p67.ts           | 2, 0, 8, 6, 2, 0                | 2, 0, 8, 6, 2, 0                | empty        |
+| p72.ts           | 3, 0, 6, 5, 3, 0                | 3, 0, 6, 5, 3, 0                | empty        |
+| scalar-static.ts | 2, 0, 6, 6, 2, 0                | 2, 0, 6, 6, 2, 0                | empty        |
+| scalar-tuple.ts  | 2, 0, 5, 5, 2, 0                | 2, 0, 5, 5, 2, 0                | empty        |

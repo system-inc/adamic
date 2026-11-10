@@ -8,39 +8,39 @@ The directory matched all 13 requested fixtures, plus five excluded fixtures: `o
 
 Each outcome records exit code, stdout and stderr. `\n` is an LF byte. N and J identify native and JavaScript; identical identifiers mean byte-identical stdout/stderr and equal exit codes. Before is `.a`; after is `.ts`.
 
-| File (now .ts) | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| diagnostic-boolean.ts | N1 | N1 | J1 | J1 | yes | no | no | no |
-| diagnostic-code-wrong.ts | N2 | N2 | J2 | J2 | yes | no | no | no |
-| diagnostic-good.ts | N3 | N3 | J3 | J3 | yes | no | no | no |
-| diagnostic-wrong.ts | N4 | N4 | J4 | J4 | yes | no | no | no |
-| literal-boolean.ts | N5 | N5 | J5 | J5 | yes | no | no | no |
-| literal-good.ts | N6 | N6 | J6 | J6 | yes | no | no | no |
-| literal-negative-wrong.ts | N7 | N7 | J7 | J7 | yes | no | no | no |
-| literal-text-wrong.ts | N8 | N8 | J8 | J8 | yes | no | no | no |
-| node-indicator-false.ts | N9 | N9 | J9 | J9 | yes | no | no | no |
-| node-indicator-flags-wrong.ts | N10 | N10 | J10 | J10 | yes | no | no | no |
-| node-indicator-good.ts | N11 | N11 | J11 | J11 | yes | no | no | no |
-| node-indicator-wrong.ts | N12 | N12 | J12 | J12 | yes | no | no | no |
-| required-missing.ts | N13 | N13 | J13 | J13 | yes | no | no | no |
+| File (now .ts)                | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
+| ----------------------------- | ------------- | ------------ | ----------------- | ---------------- | --------- | -------------- | ------------------ | ------------------- |
+| diagnostic-boolean.ts         | N1            | N1           | J1                | J1               | yes       | no             | no                 | no                  |
+| diagnostic-code-wrong.ts      | N2            | N2           | J2                | J2               | yes       | no             | no                 | no                  |
+| diagnostic-good.ts            | N3            | N3           | J3                | J3               | yes       | no             | no                 | no                  |
+| diagnostic-wrong.ts           | N4            | N4           | J4                | J4               | yes       | no             | no                 | no                  |
+| literal-boolean.ts            | N5            | N5           | J5                | J5               | yes       | no             | no                 | no                  |
+| literal-good.ts               | N6            | N6           | J6                | J6               | yes       | no             | no                 | no                  |
+| literal-negative-wrong.ts     | N7            | N7           | J7                | J7               | yes       | no             | no                 | no                  |
+| literal-text-wrong.ts         | N8            | N8           | J8                | J8               | yes       | no             | no                 | no                  |
+| node-indicator-false.ts       | N9            | N9           | J9                | J9               | yes       | no             | no                 | no                  |
+| node-indicator-flags-wrong.ts | N10           | N10          | J10               | J10              | yes       | no             | no                 | no                  |
+| node-indicator-good.ts        | N11           | N11          | J11               | J11              | yes       | no             | no                 | no                  |
+| node-indicator-wrong.ts       | N12           | N12          | J12               | J12              | yes       | no             | no                 | no                  |
+| required-missing.ts           | N13           | N13          | J13               | J13              | yes       | no             | no                 | no                  |
 
 No file failed to be a twin. Every native result also equals its JavaScript result. Three fixtures finish with exit 0; ten retain their checked panic with exit 70. None uses a type predicate, non-null assertion or definite assignment.
 
-| Outcomes | Exit | Stdout (JSON string) | Stderr (JSON string) |
-| --- | --- | --- | --- |
-| N1, J1 | 70 | `""` | `"adamic: panic: field read failed: value.messageText matches no member of string \| Chain; expected string \| Chain, found boolean\n"` |
-| N2, J2 | 70 | `""` | `"adamic: panic: field read failed: value.messageText matches no member of string \| Chain; expected string \| Chain, found object\n"` |
-| N3, J3 | 0 | `"plain\nnested\n"` | `""` |
-| N4, J4 | 70 | `""` | `"adamic: panic: field read failed: value.messageText matches no member of string \| Chain; expected string \| Chain, found object\n"` |
-| N5, J5 | 70 | `""` | `"adamic: panic: field read failed: type.value matches no member of string \| number \| PseudoBigInt; expected string \| number \| PseudoBigInt, found boolean\n"` |
-| N6, J6 | 0 | `"text\n42\ntrue:123\n43\nfalse:456\n"` | `""` |
-| N7, J7 | 70 | `""` | `"adamic: panic: field read failed: type.value matches no member of string \| number \| PseudoBigInt; expected string \| number \| PseudoBigInt, found object\n"` |
-| N8, J8 | 70 | `""` | `"adamic: panic: field read failed: member.base10Value is not a string; expected string, found number\n"` |
-| N9, J9 | 70 | `""` | `"adamic: panic: field read failed: value.externalModuleIndicator matches no member of true \| Node \| undefined; expected true \| Node \| undefined, found boolean\n"` |
-| N10, J10 | 70 | `""` | `"adamic: panic: field read failed: member.flags is not a number; expected number, found boolean\n"` |
-| N11, J11 | 0 | `"true\nIdentifier\nabsent\n"` | `""` |
-| N12, J12 | 70 | `""` | `"adamic: panic: field read failed: value.externalModuleIndicator matches no member of true \| Node \| undefined; expected true \| Node \| undefined, found object\n"` |
-| N13, J13 | 70 | `""` | `"adamic: panic: field read failed: value.value is not initialized; expected true \| Node \| undefined, found missing\n"` |
+| Outcomes | Exit | Stdout (JSON string)                    | Stderr (JSON string)                                                                                                                                                    |
+| -------- | ---- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| N1, J1   | 70   | `""`                                    | `"adamic: panic: field read failed: value.messageText matches no member of string \| Chain; expected string \| Chain, found boolean\n"`                                 |
+| N2, J2   | 70   | `""`                                    | `"adamic: panic: field read failed: value.messageText matches no member of string \| Chain; expected string \| Chain, found object\n"`                                  |
+| N3, J3   | 0    | `"plain\nnested\n"`                     | `""`                                                                                                                                                                    |
+| N4, J4   | 70   | `""`                                    | `"adamic: panic: field read failed: value.messageText matches no member of string \| Chain; expected string \| Chain, found object\n"`                                  |
+| N5, J5   | 70   | `""`                                    | `"adamic: panic: field read failed: type.value matches no member of string \| number \| PseudoBigInt; expected string \| number \| PseudoBigInt, found boolean\n"`      |
+| N6, J6   | 0    | `"text\n42\ntrue:123\n43\nfalse:456\n"` | `""`                                                                                                                                                                    |
+| N7, J7   | 70   | `""`                                    | `"adamic: panic: field read failed: type.value matches no member of string \| number \| PseudoBigInt; expected string \| number \| PseudoBigInt, found object\n"`       |
+| N8, J8   | 70   | `""`                                    | `"adamic: panic: field read failed: member.base10Value is not a string; expected string, found number\n"`                                                               |
+| N9, J9   | 70   | `""`                                    | `"adamic: panic: field read failed: value.externalModuleIndicator matches no member of true \| Node \| undefined; expected true \| Node \| undefined, found boolean\n"` |
+| N10, J10 | 70   | `""`                                    | `"adamic: panic: field read failed: member.flags is not a number; expected number, found boolean\n"`                                                                    |
+| N11, J11 | 0    | `"true\nIdentifier\nabsent\n"`          | `""`                                                                                                                                                                    |
+| N12, J12 | 70   | `""`                                    | `"adamic: panic: field read failed: value.externalModuleIndicator matches no member of true \| Node \| undefined; expected true \| Node \| undefined, found object\n"`  |
+| N13, J13 | 70   | `""`                                    | `"adamic: panic: field read failed: value.value is not initialized; expected true \| Node \| undefined, found missing\n"`                                               |
 
 ## Method and readers
 

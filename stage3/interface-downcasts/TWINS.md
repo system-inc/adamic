@@ -8,29 +8,29 @@ All 8 requested fixtures were moved with `git mv`, with unchanged source bytes. 
 
 Each outcome records exit code, stdout and stderr. `\n` is an LF byte. N and J identify native and JavaScript runs. Repeated identifiers mean byte-identical stdout/stderr and equal exit codes. Before is `.a`; after is `.ts`.
 
-| File (now .ts) | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| default-boxed-string.ts | N1 | N1 | J1 | J1 | yes | no | no | no |
-| default-destructure.ts | N2 | N2 | J2 | J2 | yes | no | no | no |
-| default-literal.ts | N3 | N3 | J3 | J3 | yes | no | no | no |
-| default-wrong-boolean.ts | N4 | N4 | J4 | J4 | yes | no | no | no |
-| default-wrong-type.ts | N5 | N5 | J5 | J5 | yes | no | no | no |
-| missing-name.ts | N6 | N6 | J6 | J6 | yes | no | no | no |
-| visitor.ts | N7 | N7 | J7 | J7 | yes | no | no | no |
-| wrong-kind.ts | N8 | N8 | J8 | J8 | yes | no | no | no |
+| File (now .ts)           | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
+| ------------------------ | ------------- | ------------ | ----------------- | ---------------- | --------- | -------------- | ------------------ | ------------------- |
+| default-boxed-string.ts  | N1            | N1           | J1                | J1               | yes       | no             | no                 | no                  |
+| default-destructure.ts   | N2            | N2           | J2                | J2               | yes       | no             | no                 | no                  |
+| default-literal.ts       | N3            | N3           | J3                | J3               | yes       | no             | no                 | no                  |
+| default-wrong-boolean.ts | N4            | N4           | J4                | J4               | yes       | no             | no                 | no                  |
+| default-wrong-type.ts    | N5            | N5           | J5                | J5               | yes       | no             | no                 | no                  |
+| missing-name.ts          | N6            | N6           | J6                | J6               | yes       | no             | no                 | no                  |
+| visitor.ts               | N7            | N7           | J7                | J7               | yes       | no             | no                 | no                  |
+| wrong-kind.ts            | N8            | N8           | J8                | J8               | yes       | no             | no                 | no                  |
 
 No file failed to be a twin. Every native result also equals its JavaScript result.
 
-| Outcomes | Exit | Stdout (JSON string) | Stderr (JSON string) |
-| --- | --- | --- | --- |
-| N1, J1 | 0 | `"okok\n"` | `""` |
-| N2, J2 | 0 | `"okok\n"` | `""` |
-| N3, J3 | 70 | `""` | `"adamic: panic: field read failed: (node as Identifier).name expected \"wanted\", found string other\n"` |
-| N4, J4 | 70 | `""` | `"adamic: panic: field read failed: (node as Identifier).ready is not a boolean; expected boolean, found number\n"` |
-| N5, J5 | 70 | `""` | `"adamic: panic: field read failed: (node as Identifier).name is not a string; expected string, found number\n"` |
-| N6, J6 | 70 | `""` | `"adamic: panic: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n"` |
-| N7, J7 | 0 | `"idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n"` | `""` |
-| N8, J8 | 70 | `"casting\n"` | `"adamic: panic: cast failed: this Node is not a Identifier\n"` |
+| Outcomes | Exit | Stdout (JSON string)                              | Stderr (JSON string)                                                                                                  |
+| -------- | ---- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| N1, J1   | 0    | `"okok\n"`                                        | `""`                                                                                                                  |
+| N2, J2   | 0    | `"okok\n"`                                        | `""`                                                                                                                  |
+| N3, J3   | 70   | `""`                                              | `"adamic: panic: field read failed: (node as Identifier).name expected \"wanted\", found string other\n"`             |
+| N4, J4   | 70   | `""`                                              | `"adamic: panic: field read failed: (node as Identifier).ready is not a boolean; expected boolean, found number\n"`   |
+| N5, J5   | 70   | `""`                                              | `"adamic: panic: field read failed: (node as Identifier).name is not a string; expected string, found number\n"`      |
+| N6, J6   | 70   | `""`                                              | `"adamic: panic: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n"` |
+| N7, J7   | 0    | `"idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n"` | `""`                                                                                                                  |
+| N8, J8   | 70   | `"casting\n"`                                     | `"adamic: panic: cast failed: this Node is not a Identifier\n"`                                                       |
 
 ## Method and readers
 

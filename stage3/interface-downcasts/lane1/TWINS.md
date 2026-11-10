@@ -8,35 +8,35 @@ All 11 requested fixtures were moved with `git mv`, with unchanged source bytes.
 
 Each outcome records exit code, stdout and stderr. `\n` is an LF byte. N and J identify native and JavaScript runs. Repeated identifiers mean byte-identical stdout/stderr and equal exit codes. Before is `.a`; after is `.ts`.
 
-| File (now .ts) | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| flag-downcast-wrong.ts | N1 | N1 | J1 | J1 | yes | no | no | no |
-| interfaces-good.ts | N2 | N2 | J2 | J2 | yes | no | no | no |
-| interfaces-missing-inherited.ts | N3 | N3 | J3 | J3 | yes | no | no | no |
-| interfaces-uninitialized-object.ts | N4 | N4 | J4 | J4 | yes | no | no | yes |
-| interfaces-wrong-inherited.ts | N5 | N5 | J5 | J5 | yes | no | no | no |
-| objects-good.ts | N6 | N6 | J6 | J6 | yes | no | no | no |
-| objects-missing-nested.ts | N7 | N7 | J7 | J7 | yes | no | no | no |
-| objects-uninitialized-nested.ts | N8 | N8 | J8 | J8 | yes | no | no | yes |
-| objects-untagged-good.ts | N9 | N9 | J9 | J9 | yes | no | no | no |
-| objects-untagged-wrong.ts | N10 | N10 | J10 | J10 | yes | no | no | no |
-| objects-wrong-nested.ts | N11 | N11 | J11 | J11 | yes | no | no | no |
+| File (now .ts)                     | Native before | Native after | JavaScript before | JavaScript after | Identical | Type predicate | Non-null assertion | Definite assignment |
+| ---------------------------------- | ------------- | ------------ | ----------------- | ---------------- | --------- | -------------- | ------------------ | ------------------- |
+| flag-downcast-wrong.ts             | N1            | N1           | J1                | J1               | yes       | no             | no                 | no                  |
+| interfaces-good.ts                 | N2            | N2           | J2                | J2               | yes       | no             | no                 | no                  |
+| interfaces-missing-inherited.ts    | N3            | N3           | J3                | J3               | yes       | no             | no                 | no                  |
+| interfaces-uninitialized-object.ts | N4            | N4           | J4                | J4               | yes       | no             | no                 | yes                 |
+| interfaces-wrong-inherited.ts      | N5            | N5           | J5                | J5               | yes       | no             | no                 | no                  |
+| objects-good.ts                    | N6            | N6           | J6                | J6               | yes       | no             | no                 | no                  |
+| objects-missing-nested.ts          | N7            | N7           | J7                | J7               | yes       | no             | no                 | no                  |
+| objects-uninitialized-nested.ts    | N8            | N8           | J8                | J8               | yes       | no             | no                 | yes                 |
+| objects-untagged-good.ts           | N9            | N9           | J9                | J9               | yes       | no             | no                 | no                  |
+| objects-untagged-wrong.ts          | N10           | N10          | J10               | J10              | yes       | no             | no                 | no                  |
+| objects-wrong-nested.ts            | N11           | N11          | J11               | J11              | yes       | no             | no                 | no                  |
 
 No file failed to be a twin. Every native result also equals its JavaScript result.
 
-| Outcomes | Exit | Stdout (JSON string) | Stderr (JSON string) |
-| --- | --- | --- | --- |
-| N1, J1 | 70 | `""` | `"adamic: panic: field read failed: (symbol as TransientSymbol).links.checkFlags is not a number; expected number, found boolean\n"` |
-| N2, J2 | 0 | `"true:okok\ntrue\n"` | `""` |
-| N3, J3 | 70 | `""` | `"adamic: panic: field read failed: view.child.ready is not initialized; expected boolean, found missing\n"` |
-| N4, J4 | 70 | `""` | `"adamic: panic: field read failed: view.child.next is not initialized; expected Child, found uninitialized\n"` |
-| N5, J5 | 70 | `""` | `"adamic: panic: field read failed: view.child.ready is not a boolean; expected boolean, found number\n"` |
-| N6, J6 | 0 | `"true:okok\ntrue\n"` | `""` |
-| N7, J7 | 70 | `""` | `"adamic: panic: field read failed: view.child.ready is not initialized; expected boolean, found missing\n"` |
-| N8, J8 | 70 | `""` | `"adamic: panic: field read failed: view.child.ready is not initialized; expected boolean, found uninitialized\n"` |
-| N9, J9 | 0 | `"true:okok\ntrue:1\n"` | `""` |
-| N10, J10 | 70 | `""` | `"adamic: panic: field read failed: view.child.ready is not a boolean; expected boolean, found number\n"` |
-| N11, J11 | 70 | `""` | `"adamic: panic: field read failed: view.child.ready is not a boolean; expected boolean, found number\n"` |
+| Outcomes | Exit | Stdout (JSON string)    | Stderr (JSON string)                                                                                                                 |
+| -------- | ---- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| N1, J1   | 70   | `""`                    | `"adamic: panic: field read failed: (symbol as TransientSymbol).links.checkFlags is not a number; expected number, found boolean\n"` |
+| N2, J2   | 0    | `"true:okok\ntrue\n"`   | `""`                                                                                                                                 |
+| N3, J3   | 70   | `""`                    | `"adamic: panic: field read failed: view.child.ready is not initialized; expected boolean, found missing\n"`                         |
+| N4, J4   | 70   | `""`                    | `"adamic: panic: field read failed: view.child.next is not initialized; expected Child, found uninitialized\n"`                      |
+| N5, J5   | 70   | `""`                    | `"adamic: panic: field read failed: view.child.ready is not a boolean; expected boolean, found number\n"`                            |
+| N6, J6   | 0    | `"true:okok\ntrue\n"`   | `""`                                                                                                                                 |
+| N7, J7   | 70   | `""`                    | `"adamic: panic: field read failed: view.child.ready is not initialized; expected boolean, found missing\n"`                         |
+| N8, J8   | 70   | `""`                    | `"adamic: panic: field read failed: view.child.ready is not initialized; expected boolean, found uninitialized\n"`                   |
+| N9, J9   | 0    | `"true:okok\ntrue:1\n"` | `""`                                                                                                                                 |
+| N10, J10 | 70   | `""`                    | `"adamic: panic: field read failed: view.child.ready is not a boolean; expected boolean, found number\n"`                            |
+| N11, J11 | 70   | `""`                    | `"adamic: panic: field read failed: view.child.ready is not a boolean; expected boolean, found number\n"`                            |
 
 ## Method and readers
 

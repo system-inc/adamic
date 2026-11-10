@@ -63,18 +63,18 @@ The assertions input is `origin/codex/stage3-fixtures-assertions` 5b173f3920ab2c
 
 The follow-up refinement of only those 2,553 other sites is reproduced by [refine-other.cjs](refine-other.cjs), with [summary](other-summary.json) and [all locations](other-locations.tsv). Stock TypeScript 6.0.3 reports zero diagnostics; original source hashes, expression offsets/text, type strings (normalizing checkout paths only) and both assignability directions are checked against the shared ledger. Nested assertions are matched by both start and end offsets.
 
-| Other refinement | Sites |
-| --- | ---: |
-| Tagged declared base-interface downcasts | 1,758 |
-| Tagged interface unions without a valid partition | 57 |
-| Tagged composite/generic/mapped narrowings | 25 |
-| Tagged tuple narrowings | 2 |
-| Other structural/union narrowings | 255 |
-| Type-parameter narrowings | 3 |
-| Nullish removal to interface | 6 |
-| Non-assignable assertions | 343 |
-| Any involved | 104 |
-| Declared class downcasts | 0 |
+| Other refinement                                  | Sites |
+| ------------------------------------------------- | ----: |
+| Tagged declared base-interface downcasts          | 1,758 |
+| Tagged interface unions without a valid partition |    57 |
+| Tagged composite/generic/mapped narrowings        |    25 |
+| Tagged tuple narrowings                           |     2 |
+| Other structural/union narrowings                 |   255 |
+| Type-parameter narrowings                         |     3 |
+| Nullish removal to interface                      |     6 |
+| Non-assignable assertions                         |   343 |
+| Any involved                                      |   104 |
+| Declared class downcasts                          |     0 |
 
 The 1,758 include 1,497 single-interface and 261 interface-union targets, with 1,757 kind fields and one operator. Declared ancestry is checked through explicit extends chains, including instantiated interfaces; same-declaration generic refinements are not counted as inheritance. Node-to-Identifier occurs 27 times. The 25 tagged composites include Node-to-Mutable<Identifier> and stricter BindableObjectDefinePropertyCall shapes: a kind still does not prove their payload. The 57 union cases expose open members rather than sound closed partitions. This refinement does not reclassify the other original categories; zero class downcasts is scoped to the other bucket. Any erases the information needed to certify subtype identity.
 
@@ -110,18 +110,18 @@ Wrong-kind source prints casting and otherother on Node because its unchecked ca
 
 Mutants and their evidence:
 
-| Mutant | Independent catch |
-| --- | --- |
+| Mutant                            | Independent catch                                                                                                                                                                           |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | tag-only, omit construction proof | Missing-name refusal assertion fails. Accepted mutant emits valid C and reaches the runtime missing-field compiler-bug guard after passing the tag. Clang and sanitizers are not the catch. |
-| omit required-field presence | Lowering test expects missing-payload refusal, gets nil. |
-| omit payload type relation | Lowering test expects wrong-payload refusal, gets nil. |
-| ignore alias writes | Lowering test expects write refusal, gets nil. |
-| scan only entry module | Imported malformed factory refusal assertion fails. |
-| skip runtime tag | Valid C exits 0 and prints otherother where checked contract requires exit 70. Hidden payload keeps this mutant from relying on a missing-field guard. |
-| skip numeric runtime tag | Checked exit 70 becomes valid C exit 0 with payloadpayload, matching unchecked Node. |
-| skip boolean runtime tag | Checked exit 70 becomes valid C exit 0 with payloadpayload, matching unchecked Node. |
-| wrong runtime tag | Visitor exits 70 where Node and checked success require 0. |
-| evaluate operand twice | Visitor prints once3 and calls 3 against Node's once2 and calls 2. |
+| omit required-field presence      | Lowering test expects missing-payload refusal, gets nil.                                                                                                                                    |
+| omit payload type relation        | Lowering test expects wrong-payload refusal, gets nil.                                                                                                                                      |
+| ignore alias writes               | Lowering test expects write refusal, gets nil.                                                                                                                                              |
+| scan only entry module            | Imported malformed factory refusal assertion fails.                                                                                                                                         |
+| skip runtime tag                  | Valid C exits 0 and prints otherother where checked contract requires exit 70. Hidden payload keeps this mutant from relying on a missing-field guard.                                      |
+| skip numeric runtime tag          | Checked exit 70 becomes valid C exit 0 with payloadpayload, matching unchecked Node.                                                                                                        |
+| skip boolean runtime tag          | Checked exit 70 becomes valid C exit 0 with payloadpayload, matching unchecked Node.                                                                                                        |
+| wrong runtime tag                 | Visitor exits 70 where Node and checked success require 0.                                                                                                                                  |
+| evaluate operand twice            | Visitor prints once3 and calls 3 against Node's once2 and calls 2.                                                                                                                          |
 
 [mutants.py](mutants.py) runs the five source mutants sequentially, restores the compiler in finally, and rejects build/sanitizer failures as catches. Runtime mutants alter IR in the oracle test. Logs preserve all ten catches.
 
@@ -242,7 +242,6 @@ counts passed in 66.324s. Commands and output are in main-b6b1538-packages.log a
 main-b6b1538-oracle.log. Full repository gate was not run. This is the prerequisite
 merge, not default cast admission or a new ledger lowering count.
 
-
 ## Default scalar admission checkpoint
 
 The production flag and construction admission gate are gone. Required scalar
@@ -266,10 +265,10 @@ assertions ledger with SHA256 15739c81ad33071014c88e0b4514b08c7562cb3191d0bd20e7
 produce the target-contract audit in default-contract-summary.json. All 2,936 selected
 source expression offsets/text match, with zero stock-checker diagnostics:
 
-| Bucket | Eligible complete contracts | Callable member refusal | Broader contract NotYet | Untagged admission NotYet |
-| --- | ---: | ---: | ---: | ---: |
-| Tagged | 0/1,758 | 19 | 1,739 | 0 |
-| Untagged | 0/1,178 | 71 | 1,106 | 1 |
+| Bucket   | Eligible complete contracts | Callable member refusal | Broader contract NotYet | Untagged admission NotYet |
+| -------- | --------------------------: | ----------------------: | ----------------------: | ------------------------: |
+| Tagged   |                     0/1,758 |                      19 |                   1,739 |                         0 |
+| Untagged |                     0/1,178 |                      71 |                   1,106 |                         1 |
 
 These are outside-checker rejection upper bounds, not observations of compiling
 all tsc files. The zero eligible contracts establishes zero supported sites;
