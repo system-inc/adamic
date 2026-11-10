@@ -15,21 +15,21 @@ allowlist. A future field must get a policy before either path builds.
 
 For every Function field:
 
-| Fields | Action | Why |
-| --- | --- | --- |
-| SourceLength, ProgramRegion, GraphClosure, CheckedUnionNarrow, Name, MethodName, Position, ArgumentsCount, ReadsArguments, ForwardsArguments, Receiver, RestElement, Returns, Async, AsyncSite, AsyncReturns, Generator, Yields, ResumeMayThrow, Closure, NestedParent, ForwardedNestedParent, NestedFrame, FrameIdentity, MayThrow | Copied by value | Scalars, enums, strings, or the scalar-only SourcePosition aggregate. They contain no mutable descendants. |
-| Boundary | Deep-copied | Own its parameter slice, return schema pointer, and nested schema graph. The shared `seen` map preserves aliases between schema references within the snapshot. |
-| Source | Deep-copied | Own its Declaration ancestry slice while preserving the stable identity strings. |
-| Parameters, OptionalParameters, Body, Environment, FrameEnvironment, ReferenceParents | Deep-copied | These are lowering-owned slices, maps, or dynamic statement graphs. Failed lowering must not mutate the checkpoint. |
+| Fields                                                                                                                                                                                                                                                                                                                              | Action          | Why                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SourceLength, ProgramRegion, GraphClosure, CheckedUnionNarrow, Name, MethodName, Position, ArgumentsCount, ReadsArguments, ForwardsArguments, Receiver, RestElement, Returns, Async, AsyncSite, AsyncReturns, Generator, Yields, ResumeMayThrow, Closure, NestedParent, ForwardedNestedParent, NestedFrame, FrameIdentity, MayThrow | Copied by value | Scalars, enums, strings, or the scalar-only SourcePosition aggregate. They contain no mutable descendants.                                                      |
+| Boundary                                                                                                                                                                                                                                                                                                                            | Deep-copied     | Own its parameter slice, return schema pointer, and nested schema graph. The shared `seen` map preserves aliases between schema references within the snapshot. |
+| Source                                                                                                                                                                                                                                                                                                                              | Deep-copied     | Own its Declaration ancestry slice while preserving the stable identity strings.                                                                                |
+| Parameters, OptionalParameters, Body, Environment, FrameEnvironment, ReferenceParents                                                                                                                                                                                                                                               | Deep-copied     | These are lowering-owned slices, maps, or dynamic statement graphs. Failed lowering must not mutate the checkpoint.                                             |
 
 Private fields retain the single `irPrivateFields` table in `main.go`:
 
-| Field | Action | Why |
-| --- | --- | --- |
-| Program.argumentFacts | Started empty; require the source to be nil | Backend-only derived facts; census lowering never populates them. A populated value remains an explicit invalid-state refusal, not an unnamed-field schema failure. |
-| Program.methodTables | Started empty | The IR rebuilds the cache from copied method declarations. |
-| BoundaryStringTable.indexes | Started empty | The IR rebuilds it from copied Values. |
-| GeneratedType.identity | Share the owning GeneratedType pointer | Immutable owner identity is compared by pointer. Copying its facade would change identity. |
+| Field                       | Action                                      | Why                                                                                                                                                                 |
+| --------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Program.argumentFacts       | Started empty; require the source to be nil | Backend-only derived facts; census lowering never populates them. A populated value remains an explicit invalid-state refusal, not an unnamed-field schema failure. |
+| Program.methodTables        | Started empty                               | The IR rebuilds the cache from copied method declarations.                                                                                                          |
+| BoundaryStringTable.indexes | Started empty                               | The IR rebuilds it from copied Values.                                                                                                                              |
+| GeneratedType.identity      | Share the owning GeneratedType pointer      | Immutable owner identity is compared by pointer. Copying its facade would change identity.                                                                          |
 
 All other exported IR fields are individually named in `ir_fields.go`, with
 copied scalar values or deep copies of mutable graphs. Deep traversal uses the

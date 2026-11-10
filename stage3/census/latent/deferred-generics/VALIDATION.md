@@ -133,21 +133,21 @@ in the task response.
 
 ## Mutants and catchers
 
-| Mutant | Catcher |
-| --- | --- |
-| Drop never-reached list, legacy/full/speculative | Independent gap ledger audit in audit_deferred.py |
-| Count a deferred function as attempted, all three modes | Independent status-membership count in audit_deferred.py |
-| Credit deferred bytes as examined, legacy/full | Independent byte-mask oracle in closure rerun audit, despite balanced aggregate subtraction |
-| Drop full-report never-reached list | full_report.audit_counts deferred coverage assertion |
-| Speculative drop-list or deferred-as-examined | speculative/verify.py gap ledger and independent byte coverage |
-| Speculative headline depth, top-20 count, omitted source or false byte share | speculative/verify.py exact recount and inventory |
-| Plain-map optional-parameter snapshot | Speculative depth/continuation audit after successful mutant build |
-| First-error/no-stubs speculative continuation | speculative/audit.py nested depth and count assertions |
-| Zero all failure depths | speculative/audit.py exact depth control |
-| Token-position AST attribution | speculative/prove_identity.py async-root depth identity |
-| Leak a stub into C or JS output | Overlay-off byte comparison, both backends |
-| Signature included in body eligibility | latent/audit.py signature/body range assertion |
-| Extra NotYet attributed to the wrong file | latent/audit.py sibling-file equality |
+| Mutant                                                                       | Catcher                                                                                     |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Drop never-reached list, legacy/full/speculative                             | Independent gap ledger audit in audit_deferred.py                                           |
+| Count a deferred function as attempted, all three modes                      | Independent status-membership count in audit_deferred.py                                    |
+| Credit deferred bytes as examined, legacy/full                               | Independent byte-mask oracle in closure rerun audit, despite balanced aggregate subtraction |
+| Drop full-report never-reached list                                          | full_report.audit_counts deferred coverage assertion                                        |
+| Speculative drop-list or deferred-as-examined                                | speculative/verify.py gap ledger and independent byte coverage                              |
+| Speculative headline depth, top-20 count, omitted source or false byte share | speculative/verify.py exact recount and inventory                                           |
+| Plain-map optional-parameter snapshot                                        | Speculative depth/continuation audit after successful mutant build                          |
+| First-error/no-stubs speculative continuation                                | speculative/audit.py nested depth and count assertions                                      |
+| Zero all failure depths                                                      | speculative/audit.py exact depth control                                                    |
+| Token-position AST attribution                                               | speculative/prove_identity.py async-root depth identity                                     |
+| Leak a stub into C or JS output                                              | Overlay-off byte comparison, both backends                                                  |
+| Signature included in body eligibility                                       | latent/audit.py signature/body range assertion                                              |
+| Extra NotYet attributed to the wrong file                                    | latent/audit.py sibling-file equality                                                       |
 
 The planted overlay-only NotYet is observed as exactly +1 at the selected target;
 the imported sibling and other file remain unchanged. No upstream corpus runs,
