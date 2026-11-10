@@ -1,0 +1,7 @@
+[typescript/tracing-assert 0b2bcf81d] stage3: pass a boolean to the stopTracing assertion (baobab)
+ 6 files changed, 216 insertions(+)
+ create mode 100644 stage3/adapt/99-correctness-tracing-assert/PROOF.md
+ create mode 100644 stage3/adapt/99-correctness-tracing-assert/README.md
+ create mode 100644 stage3/adapt/99-correctness-tracing-assert/adapt.cjs
+ create mode 100644 stage3/adapt/99-correctness-tracing-assert/pins.json
+ create mode 100644 stage3/adapt/99-correctness-tracing-assert/witness.cjs

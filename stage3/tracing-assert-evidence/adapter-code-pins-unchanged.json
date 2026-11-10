@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--exit-code",
+    "7e5bb070b894ed6187f3714ef3ae2f470e8ad65b",
+    "--",
+    "stage3/adapt/99-correctness-tracing-assert/adapt.cjs",
+    "stage3/adapt/99-correctness-tracing-assert/pins.json",
+    "stage3/adapt/99-correctness-tracing-assert/witness.cjs"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "seconds": 0.10096163599973806
+}
