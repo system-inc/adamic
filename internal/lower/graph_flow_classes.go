@@ -218,13 +218,13 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 	reflect.TypeFor[ir.Call](): {class: graphFlowForwards, why: "its targets' results (ir.go:442)", sources: func(expression ir.Expression, program *ir.Program) (graphFlowSources, bool) {
 		return graphFlowSources{results: program.CallTargets(expression.(ir.Call))}, true
 	}},
-	reflect.TypeFor[ir.CallClosure](): {class: graphFlowForwards, why: "its targets' results (ir.go:900); a function value whose targets are Unknown is the documented leak-only frontier, as at main", sources: func(expression ir.Expression, program *ir.Program) (graphFlowSources, bool) {
+	reflect.TypeFor[ir.CallClosure](): {class: graphFlowForwards, why: "its targets' results (ir.go:900); a function value whose targets are Unknown plans its result at each target's Return, and collect demands each argument at the call (#41vb71c)", sources: func(expression ir.Expression, program *ir.Program) (graphFlowSources, bool) {
 		return graphFlowSources{results: program.ClosureTargets(expression.(ir.CallClosure)).Functions}, true
 	}},
 	reflect.TypeFor[ir.BoundMethod](): {class: graphFlowForwards, why: "the closure its Factory function makes and returns (native emit_expressions.go:976)", sources: func(expression ir.Expression, _ *ir.Program) (graphFlowSources, bool) {
 		return graphFlowSources{results: []int{expression.(ir.BoundMethod).Factory}}, true
 	}},
-	reflect.TypeFor[ir.ArrayReduce](): {class: graphFlowForwards, why: "Initial or what the callback last returned (ir.go:855); a callback whose targets are Unknown is the leak-only frontier CallClosure's is", sources: func(expression ir.Expression, program *ir.Program) (graphFlowSources, bool) {
+	reflect.TypeFor[ir.ArrayReduce](): {class: graphFlowForwards, why: "Initial or what the callback last returned (ir.go:855); a callback whose targets are Unknown plans its result at each target's Return, and collect demands Initial and the array it's handed at the reduce (#41vb71c)", sources: func(expression ir.Expression, program *ir.Program) (graphFlowSources, bool) {
 		reduce := expression.(ir.ArrayReduce)
 		return graphFlowSources{operands: []ir.Expression{reduce.Initial}, results: program.ClosureTargets(reduce).Functions}, true
 	}},
