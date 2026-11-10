@@ -246,6 +246,17 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 	return false
 }
 
+// mayHoldNull reports whether a value of type proven may be null, failing closed: a null member, or a type
+// that could be anything at all, unknown, any, or one still open after concrete. A default is taken only
+// for undefined, never for a present null, so wherever null and undefined would be held alike this answer
+// decides between ?? and a NotYet (a parameter's default in functions.go, a destructured field's in
+// collections.go). includesNull alone reads unknown as holding no null (Compiler's must on #1mw3c4x, and
+// again on #smqr4vn).
+func (l *lowering) mayHoldNull(proven *checker.Type) bool {
+	concrete := l.concrete(proven)
+	return l.includesNull(concrete) || concrete.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsInstantiable) != 0
+}
+
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
