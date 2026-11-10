@@ -49,31 +49,31 @@ checker-diagnosed bodies but performs no lowering or concrete generic
 instantiations. It does not execute other refusal checks. The requested full
 latent streams therefore cannot be replaced by this result.
 
-| Form | Source-scan sites |
-| --- | ---: |
-| argument | 76 |
-| return-of-void | 39 |
-| assignment | 1 |
-| initializer, field, other | 0 |
+| Form                      | Source-scan sites |
+| ------------------------- | ----------------: |
+| argument                  |                76 |
+| return-of-void            |                39 |
+| assignment                |                 1 |
+| initializer, field, other |                 0 |
 
 | File under src/compiler | Sites |
-| --- | ---: |
-| binder.ts | 36 |
-| checker.ts | 43 |
-| emitter.ts | 17 |
-| factory/nodeFactory.ts | 2 |
-| parser.ts | 7 |
-| program.ts | 2 |
-| symbolWalker.ts | 5 |
-| transformers/es2017.ts | 1 |
-| utilities.ts | 2 |
-| watch.ts | 1 |
+| ----------------------- | ----: |
+| binder.ts               |    36 |
+| checker.ts              |    43 |
+| emitter.ts              |    17 |
+| factory/nodeFactory.ts  |     2 |
+| parser.ts               |     7 |
+| program.ts              |     2 |
+| symbolWalker.ts         |     5 |
+| transformers/es2017.ts  |     1 |
+| utilities.ts            |     2 |
+| watch.ts                |     1 |
 
-| Judgment | Sites |
-| --- | ---: |
-| type-only adaptation | 111 |
-| real value | 4 |
-| unclassified | 1 |
+| Judgment                        |    Sites |
+| ------------------------------- | -------: |
+| type-only adaptation            |      111 |
+| real value                      |        4 |
+| unclassified                    |        1 |
 | public, needs a statement split | 0 proved |
 
 The extractor independently reproduces the supplied first-error run's 88 sites.
