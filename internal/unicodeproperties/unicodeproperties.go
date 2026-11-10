@@ -24,8 +24,9 @@
 // LegacyEquivalents are the sets a character class has to close over.
 package unicodeproperties
 
-// tables.go is generated from the Unicode Character Database. TestVersionMatchesNode
-// fails when the Node the oracle runs has moved to a different Unicode version.
+// tables.go (the properties of strings) and canonicalize_tables.go are generated
+// from the Unicode Character Database. TestVersionMatchesNode fails when the Node
+// the oracle runs has moved to a different Unicode version.
 //go:generate go run generate.go
 
 import (
@@ -153,9 +154,10 @@ func (p Property) ContainsSequence(text string) bool {
 //
 // A code-point property is cohere's: its Lookup takes the same exact spellings
 // (#cz54235 held its 1,715 Names, and each one's ranges, to what this package's
-// own tables accepted before they went). The spec reads a lone name as a General_Category value, then a
-// binary property, then (v flag only) a property of strings. No name is two of
-// those today, so cohere's single table and then the strings is that order.
+// own tables accepted before they went). The spec reads a lone name as a
+// General_Category value, then a binary property, then (v flag only) a property
+// of strings. No name is two of those today, so cohere's single table and then
+// the strings is that order.
 func Lookup(expression string, unicodeSets bool) (Property, bool) {
 	if property, ok := cohere.Lookup(expression); ok {
 		// No cohere property is empty; one would be an empty Set.
@@ -166,8 +168,8 @@ func Lookup(expression string, unicodeSets bool) (Property, bool) {
 		return Property{Kind: KindCodePoints, Set: set}, true
 	}
 	if unicodeSets {
-		if s, ok := stringProperties[expression]; ok {
-			return Property{Kind: KindStrings, Sequences: s.sequences}, true
+		if sequences, ok := stringProperties[expression]; ok {
+			return Property{Kind: KindStrings, Sequences: sequences}, true
 		}
 	}
 	return Property{}, false
@@ -193,15 +195,3 @@ var codePointSets = sync.OnceValue(func() map[*cohere.Range]*Set {
 	}
 	return sets
 })
-
-// entry is one alias's canonical name, canonical value and set index.
-type entry struct {
-	name  string
-	value string
-	set   int
-}
-
-type sequences struct {
-	name      string
-	sequences []string
-}

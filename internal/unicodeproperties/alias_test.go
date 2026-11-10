@@ -336,24 +336,24 @@ func TestStringPropertyCensus(t *testing.T) {
 		t.Fatalf("%d string properties, want %d", len(stringProperties), len(stringPropertyCensus))
 	}
 	for name, want := range stringPropertyCensus {
-		property, ok := stringProperties[name]
+		sequences, ok := stringProperties[name]
 		if !ok {
 			t.Errorf("missing %s", name)
 			continue
 		}
-		sum := sha256.Sum256([]byte(strings.Join(property.sequences, "\n")))
+		sum := sha256.Sum256([]byte(strings.Join(sequences, "\n")))
 		got := hex.EncodeToString(sum[:])
-		if len(property.sequences) != want.count || got != want.digest {
-			t.Errorf("%s: %d sequences, sha256 %s", name, len(property.sequences), got)
+		if len(sequences) != want.count || got != want.digest {
+			t.Errorf("%s: %d sequences, sha256 %s", name, len(sequences), got)
 		}
 		resolved, ok := Lookup(name, true)
-		if !ok || resolved.Kind != KindStrings || len(resolved.Sequences) != len(property.sequences) {
+		if !ok || resolved.Kind != KindStrings || len(resolved.Sequences) != len(sequences) {
 			t.Errorf("Lookup %s: ok %v kind %v len %d", name, ok, resolved.Kind, len(resolved.Sequences))
 		}
-		if len(property.sequences) > 0 && !resolved.ContainsSequence(property.sequences[0]) {
+		if len(sequences) > 0 && !resolved.ContainsSequence(sequences[0]) {
 			t.Errorf("%s does not contain its first sequence", name)
 		}
-		if resolved.ContainsSequence(property.sequences[0] + "\u0000") {
+		if resolved.ContainsSequence(sequences[0] + "\u0000") {
 			t.Errorf("%s contains a sequence with a NUL added", name)
 		}
 	}
