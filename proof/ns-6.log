@@ -1,0 +1,40 @@
+=== STEP gofmt
+=== EXIT CODE 0
+=== STEP oracle
+=== RUN   TestNamespaceValueAgreesWithNode
+=== PAUSE TestNamespaceValueAgreesWithNode
+=== CONT  TestNamespaceValueAgreesWithNode
+=== RUN   TestNamespaceValueAgreesWithNode/tracing/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/tracing/main.a
+=== RUN   TestNamespaceValueAgreesWithNode/identity/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/identity/main.a
+=== RUN   TestNamespaceValueAgreesWithNode/literal.a
+=== PAUSE TestNamespaceValueAgreesWithNode/literal.a
+=== RUN   TestNamespaceValueAgreesWithNode/stage3/10_tracing_escape.a
+=== PAUSE TestNamespaceValueAgreesWithNode/stage3/10_tracing_escape.a
+=== CONT  TestNamespaceValueAgreesWithNode/tracing/main.a
+=== CONT  TestNamespaceValueAgreesWithNode/literal.a
+=== CONT  TestNamespaceValueAgreesWithNode/stage3/10_tracing_escape.a
+=== CONT  TestNamespaceValueAgreesWithNode/identity/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 5b7a1fd61491 hit 299.08
+=== NAME  TestNamespaceValueAgreesWithNode/literal.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 5b7a1fd61491 hit 299.08
+=== NAME  TestNamespaceValueAgreesWithNode/tracing/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 5b7a1fd61491 miss 299.08
+=== NAME  TestNamespaceValueAgreesWithNode/stage3/10_tracing_escape.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 5b7a1fd61491 hit 237.72
+--- PASS: TestNamespaceValueAgreesWithNode (0.00s)
+    --- PASS: TestNamespaceValueAgreesWithNode/identity/main.a (357.43s)
+    --- PASS: TestNamespaceValueAgreesWithNode/literal.a (357.43s)
+    --- PASS: TestNamespaceValueAgreesWithNode/stage3/10_tracing_escape.a (357.45s)
+    --- PASS: TestNamespaceValueAgreesWithNode/tracing/main.a (357.46s)
+PASS
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	357.491s
+=== EXIT CODE 0
+=== STEP lower
+=== EXIT CODE 137
+=== ENVIRONMENT INTERRUPTION
+The execution environment transitioned while internal/lower was running. The original recording shell disappeared. Both go test (PID 6124) and lower.test (PID 6244) subsequently had Linux zombie raw wait status 9 (SIGKILL); 137 above is the recovered shell-convention status, not an exit code printed by the original shell. No internal/lower --- FAIL or ok/FAIL package line was emitted. This invocation was not rerun.
