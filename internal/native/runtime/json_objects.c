@@ -67,6 +67,9 @@ static const adamic_json_schema *field_schema(const adamic_object *object, size_
 			// An object, an array, a map or a function held as T | null and one held as T | undefined
 			// are both a null pointer, and only a literal null or undefined written there leaves a byte
 			// that tells them apart. A value that was null or undefined in a variable leaves its type's.
+			// Lowering refuses every type that shows such a field (jsonNullablePointer, until #ckxcnr6),
+			// so this is the backstop for an allocation its reach couldn't see, pinned by
+			// testdata/json-objects-runtime/harness.c (TestJSONObjectsNullPointers).
 			stop("NotYet: JSON.stringify a reference field holding null or undefined that the allocation doesn't record which");
 		}
 	}
