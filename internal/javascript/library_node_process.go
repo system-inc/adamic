@@ -25,6 +25,15 @@ const hostStdoutHandleRuntime = "let adamicStdoutHandleValue, adamicStdoutHandle
 // setBlocking, called off the handle, is Node's with the handle as its receiver.
 const stdoutHandleCallee = "if (object === adamicStdoutHandleValue && object !== undefined && object[name] instanceof AdamicClosure && object[name].code === adamicIllegalInvocation) return { code: (closure, values) => adamicStdoutHandleNode.setBlocking(...values) }; "
 
+// stdoutHandleOptionalCall is adamicOptionalMethodCall's splice, the same test on what its lookup found:
+// handle.setBlocking?.(true) doesn't go through adamicCallee, so without it the handle's own call reached
+// the closure detached and threw where Node blocks (Runtime's must 1 on #0bxc4jh).
+const stdoutHandleOptionalCall = "if (object === adamicStdoutHandleValue && object !== undefined && fn instanceof AdamicClosure && fn.code === adamicIllegalInvocation) return adamicStdoutHandleNode.setBlocking(...values()); "
+
+// stdoutHandleOptionalAnchor is where stdoutHandleOptionalCall goes in adamicOptionalMethodCall: after
+// the lookup's undefined test, before the call.
+const stdoutHandleOptionalAnchor = "if (fn == null) return undefined; "
+
 func (e *emitter) nodeProcessCall(call ir.ProcessCall) (string, bool) {
 	if call.Operation == "tmpdir" {
 		return "adamicNodeTmpdir()", true
