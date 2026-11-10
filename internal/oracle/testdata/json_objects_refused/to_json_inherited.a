@@ -1,0 +1,11 @@
+// A toJSON a base class declares is on the subclass's prototype chain, and Node calls it.
+class Base {
+	toJSON(): string {
+		return 'base';
+	}
+}
+class Leaf extends Base {
+	readonly value = 1;
+}
+const leaf = new Leaf();
+console.log(JSON.stringify(leaf) ?? '<undefined>');

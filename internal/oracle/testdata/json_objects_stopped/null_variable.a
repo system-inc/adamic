@@ -1,0 +1,11 @@
+// A field a variable set to null holds a null pointer whose write recorded the variable's type, Object,
+// not null: an object held as T | null and one held as T | undefined can't be told apart there, so
+// native stops where Node prints null (#d9ep7de).
+class Link {
+	readonly target: { readonly v: number } | null;
+	constructor(target: { readonly v: number } | null) {
+		this.target = target;
+	}
+}
+console.log(JSON.stringify(new Link({ v: 1 })) ?? '<undefined>');
+console.log(JSON.stringify(new Link(null)) ?? '<undefined>');

@@ -1,0 +1,14 @@
+// Node follows a Weak link like any other field, so what it reaches could close a cycle.
+import type { Weak } from 'adamic';
+interface Child {
+	readonly name: string;
+	parent: Weak<Parent> | undefined;
+}
+interface Parent {
+	readonly children: Child[];
+}
+const parent: Parent = { children: [] };
+const child: Child = { name: 'child', parent: undefined };
+child.parent = parent;
+parent.children.push(child);
+console.log(JSON.stringify(child) ?? '<undefined>');

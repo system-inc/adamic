@@ -1,0 +1,10 @@
+// A class itself is a function on Node, which JSON.stringify leaves out; Adamic holds it as an object.
+class Thing {
+	static readonly count = 1;
+}
+interface Registry {
+	readonly name: string;
+	readonly kind: typeof Thing;
+}
+const registry: Registry = { name: 'registry', kind: Thing };
+console.log(JSON.stringify(registry) ?? '<undefined>');

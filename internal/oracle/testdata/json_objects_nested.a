@@ -1,0 +1,22 @@
+// Objects inside objects and arrays of objects, each printed from its own allocation (#d9ep7de), and an
+// object held in a union with a string.
+interface Inner {
+	readonly label: string;
+	readonly values: readonly number[];
+	readonly count?: number;
+}
+interface Outer {
+	readonly id: number;
+	readonly inner: Inner;
+	readonly list: readonly Inner[];
+	readonly flags: readonly boolean[];
+}
+const outer: Outer = { id: 1, inner: { label: 'a', values: [1, 2], count: 3 }, list: [{ label: 'b', values: [] }, { label: 'c', values: [NaN] }], flags: [true, false] };
+console.log(JSON.stringify(outer) ?? '<undefined>');
+const many: readonly Outer[] = [outer, { id: 2, inner: { label: 'd', values: [4] }, list: [], flags: [] }];
+console.log(JSON.stringify(many, null, '\t') ?? '<undefined>');
+function either(flag: boolean): Inner | string {
+	return flag ? { label: 'e', values: [5] } : 'text';
+}
+console.log(JSON.stringify(either(true)) ?? '<undefined>', JSON.stringify(either(false)) ?? '<undefined>');
+console.log(JSON.stringify({ wrapped: outer.inner, at: 0 }) ?? '<undefined>');

@@ -1,0 +1,30 @@
+// A null field prints null and an undefined one is left out (#d9ep7de), whether a literal or a variable
+// wrote it, and a null or undefined reference prints as Node prints it at the top and in an array.
+interface Box {
+	readonly v: number;
+}
+interface Holder {
+	readonly a: Box | null;
+	readonly b: Box | undefined;
+	readonly c: string | null;
+	readonly d: number | undefined;
+	readonly e: string | undefined;
+}
+const holder: Holder = { a: null, b: undefined, c: null, d: undefined, e: undefined };
+console.log(JSON.stringify(holder) ?? '<undefined>');
+const filled: Holder = { a: { v: 1 }, b: { v: 2 }, c: 'c', d: 4, e: 'e' };
+console.log(JSON.stringify(filled) ?? '<undefined>');
+function text(flag: boolean): string | undefined {
+	return flag ? 'x'.repeat(2) : undefined;
+}
+const written: Holder = { a: null, b: undefined, c: null, d: undefined, e: text(false) };
+console.log(JSON.stringify(written) ?? '<undefined>');
+function maybe(flag: boolean): Box | null {
+	return flag ? { v: 1 } : null;
+}
+function optional(flag: boolean): Box | undefined {
+	return flag ? { v: 1 } : undefined;
+}
+console.log(JSON.stringify(maybe(false)) ?? '<undefined>', JSON.stringify(maybe(true)) ?? '<undefined>');
+console.log(JSON.stringify(optional(false)) ?? '<undefined>');
+console.log(JSON.stringify([maybe(false), optional(false), maybe(true)]) ?? '<undefined>');
