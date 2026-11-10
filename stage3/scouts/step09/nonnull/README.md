@@ -16,12 +16,12 @@ assertion census.
 
 The four erasure candidates are:
 
-| Stock location | Expression | Operand type |
-| --- | --- | --- |
-| src/compiler/builder.ts:1793:46 | state.program! | Program |
-| src/compiler/checker.ts:15960:125 | memberName! | __String |
-| src/compiler/checker.ts:43368:22 | getSymbolOfDeclaration(node)! | Symbol |
-| src/compiler/transformers/declarations.ts:717:48 | oldDiag! | GetSymbolAccessibilityDiagnostic |
+| Stock location                                   | Expression                    | Operand type                     |
+| ------------------------------------------------ | ----------------------------- | -------------------------------- |
+| src/compiler/builder.ts:1793:46                  | state.program!                | Program                          |
+| src/compiler/checker.ts:15960:125                | memberName!                   | __String                         |
+| src/compiler/checker.ts:43368:22                 | getSymbolOfDeclaration(node)! | Symbol                           |
+| src/compiler/transformers/declarations.ts:717:48 | oldDiag!                      | GetSymbolAccessibilityDiagnostic |
 
 Types are queried on the operand before asserting it, using typescript@6.0.3.
 Every union constituent must be non-nullish; any, unknown, void and unconstrained
@@ -83,11 +83,11 @@ The three committed .a programs therefore have truthful refusal a-check headers.
 Main and the feature area refuse them exactly. observe.cjs writes temporary .ts
 copies in scratch to exercise the feature:
 
-| Fixture | Real stock site | Node | Area native and JS |
-| --- | --- | --- | --- |
-| 01_erased.a | builder.ts:1793, pending program read | 7 | same; proven 1, checked 0 |
-| 02_checked_pass.a | core.ts:519, getOrUpdate map read | 17 then 17 | same; proven 0, checked 1 |
-| 03_checked_stop.a | core.ts:1896, memoize reset | 42 then after | 42; named undefined! panic, exit 70 |
+| Fixture           | Real stock site                       | Node          | Area native and JS                  |
+| ----------------- | ------------------------------------- | ------------- | ----------------------------------- |
+| 01_erased.a       | builder.ts:1793, pending program read | 7             | same; proven 1, checked 0           |
+| 02_checked_pass.a | core.ts:519, getOrUpdate map read     | 17 then 17    | same; proven 0, checked 1           |
+| 03_checked_stop.a | core.ts:1896, memoize reset           | 42 then after | 42; named undefined! panic, exit 70 |
 
 The reductions preserve the asserted operations with typed scaffolding, not entire
 compiler owners. Program is a scalar; getOrUpdate specializes K=string, V=number;
@@ -164,7 +164,6 @@ records that interruption and the resumed 16-project receipt rather than inventi
 a continuous-run elapsed time. probe-contract.cjs independently requires exactly
 one undefined observation of the unconditional Script_Extensions initializer in
 each process; an actual probe-log omission mutant exercises that check.
-
 
 Ruled follow-up: placeholders and real type lies
 

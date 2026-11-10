@@ -8,15 +8,15 @@ No row is newly certified as an Adamic upcast. The upstream API accepts the 19 s
 
 ## Decisions
 
-| Decision | Sites |
-| --- | ---: |
-| construction proof or checked view | 1 |
-| root correlation proof or checked view | 2 |
-| truthful builtin specialization | 4 |
-| generic write and construction proof | 2 |
-| truthful internal declaration | 17 |
-| truthful throwing host binding | 2 |
-| correlated generic protocol proof | 3 |
+| Decision                               | Sites |
+| -------------------------------------- | ----: |
+| construction proof or checked view     |     1 |
+| root correlation proof or checked view |     2 |
+| truthful builtin specialization        |     4 |
+| generic write and construction proof   |     2 |
+| truthful internal declaration          |    17 |
+| truthful throwing host binding         |     2 |
+| correlated generic protocol proof      |     3 |
 
 There are 21 virtual type-only proposals: 15 helper call views, four split casts and two nonempty-array consumers. The measurement checks the full adapted closure for zero upstream semantic diagnostics, and byte-identical emitted JavaScript in every changed file. It removes erased assertion parentheses as well as each assertion where required to preserve emitted bytes. These checks do not claim native admission. In particular, the four split sites still need Adamic's capture-free builtin proof (or checked element views); globally changing regex split to string[] is false.
 
@@ -24,39 +24,39 @@ The remaining ten rows cannot be discharged by merely annotating the current exp
 
 ## Every adapted location
 
-| ID | Adapted file:line:column | Adaptation | Decision |
-| --- | --- | --- | --- |
-| 01 | src/compiler/checker.ts:14147:20 | stage3/adapt/41-explicit-any-remaining/ | construction proof or checked view |
-| 02 | src/compiler/commandLineParser.ts:2461:117 | stage3/adapt/43-any-returns/ | root correlation proof or checked view |
-| 03 | src/compiler/commandLineParser.ts:2466:108 | stage3/adapt/43-any-returns/ | root correlation proof or checked view |
-| 04 | src/compiler/emitter.ts:4105:54 | stage3/adapt/45-regex-captures/ | truthful builtin specialization |
-| 05 | src/compiler/emitter.ts:4976:46 | stage3/adapt/45-regex-captures/ | truthful builtin specialization |
-| 06 | src/compiler/factory/nodeFactory.ts:1216:15 | stage3/adapt/60-temporary-factory-local-symbol/ | generic write and construction proof |
-| 07 | src/compiler/factory/nodeFactory.ts:5496:15 | stage3/adapt/61-temporary-factory-type-expression/ | generic write and construction proof |
-| 08 | src/compiler/moduleNameResolver.ts:670:66 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 09 | src/compiler/moduleNameResolver.ts:1625:90 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 10 | src/compiler/moduleNameResolver.ts:1644:94 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 11 | src/compiler/moduleNameResolver.ts:1668:68 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 12 | src/compiler/moduleNameResolver.ts:1993:43 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 13 | src/compiler/moduleNameResolver.ts:2008:58 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 14 | src/compiler/moduleNameResolver.ts:2136:60 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 15 | src/compiler/moduleNameResolver.ts:2468:54 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 16 | src/compiler/moduleNameResolver.ts:2528:86 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 17 | src/compiler/moduleNameResolver.ts:2529:88 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 18 | src/compiler/moduleNameResolver.ts:3066:62 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 19 | src/compiler/moduleNameResolver.ts:3081:66 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 20 | src/compiler/moduleNameResolver.ts:3159:95 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 21 | src/compiler/moduleNameResolver.ts:3192:98 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 22 | src/compiler/moduleNameResolver.ts:3336:58 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 23 | src/compiler/moduleSpecifiers.ts:590:76 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 24 | src/compiler/moduleSpecifiers.ts:1198:76 | stage3/adapt/32-indexed-reads-program/ | truthful internal declaration |
-| 25 | src/compiler/parser.ts:10784:43 | stage3/adapt/45-regex-captures/ | truthful builtin specialization |
-| 26 | src/compiler/semver.ts:287:64 | stage3/adapt/45-regex-captures/ | truthful builtin specialization |
-| 27 | src/compiler/tracing.ts:338:17 | stage3/adapt/62-temporary-tracing-write/ | truthful throwing host binding |
-| 28 | src/compiler/tracing.ts:357:13 | stage3/adapt/63-temporary-tracing-legend/ | truthful throwing host binding |
-| 29 | src/compiler/watchUtilities.ts:736:27 | stage3/adapt/32-indexed-reads-program/ | correlated generic protocol proof |
-| 30 | src/compiler/watchUtilities.ts:811:39 | stage3/adapt/32-indexed-reads-program/ | correlated generic protocol proof |
-| 31 | src/compiler/watchUtilities.ts:818:21 | stage3/adapt/32-indexed-reads-program/ | correlated generic protocol proof |
+| ID  | Adapted file:line:column                    | Adaptation                                         | Decision                               |
+| --- | ------------------------------------------- | -------------------------------------------------- | -------------------------------------- |
+| 01  | src/compiler/checker.ts:14147:20            | stage3/adapt/41-explicit-any-remaining/            | construction proof or checked view     |
+| 02  | src/compiler/commandLineParser.ts:2461:117  | stage3/adapt/43-any-returns/                       | root correlation proof or checked view |
+| 03  | src/compiler/commandLineParser.ts:2466:108  | stage3/adapt/43-any-returns/                       | root correlation proof or checked view |
+| 04  | src/compiler/emitter.ts:4105:54             | stage3/adapt/45-regex-captures/                    | truthful builtin specialization        |
+| 05  | src/compiler/emitter.ts:4976:46             | stage3/adapt/45-regex-captures/                    | truthful builtin specialization        |
+| 06  | src/compiler/factory/nodeFactory.ts:1216:15 | stage3/adapt/60-temporary-factory-local-symbol/    | generic write and construction proof   |
+| 07  | src/compiler/factory/nodeFactory.ts:5496:15 | stage3/adapt/61-temporary-factory-type-expression/ | generic write and construction proof   |
+| 08  | src/compiler/moduleNameResolver.ts:670:66   | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 09  | src/compiler/moduleNameResolver.ts:1625:90  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 10  | src/compiler/moduleNameResolver.ts:1644:94  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 11  | src/compiler/moduleNameResolver.ts:1668:68  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 12  | src/compiler/moduleNameResolver.ts:1993:43  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 13  | src/compiler/moduleNameResolver.ts:2008:58  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 14  | src/compiler/moduleNameResolver.ts:2136:60  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 15  | src/compiler/moduleNameResolver.ts:2468:54  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 16  | src/compiler/moduleNameResolver.ts:2528:86  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 17  | src/compiler/moduleNameResolver.ts:2529:88  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 18  | src/compiler/moduleNameResolver.ts:3066:62  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 19  | src/compiler/moduleNameResolver.ts:3081:66  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 20  | src/compiler/moduleNameResolver.ts:3159:95  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 21  | src/compiler/moduleNameResolver.ts:3192:98  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 22  | src/compiler/moduleNameResolver.ts:3336:58  | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 23  | src/compiler/moduleSpecifiers.ts:590:76     | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 24  | src/compiler/moduleSpecifiers.ts:1198:76    | stage3/adapt/32-indexed-reads-program/             | truthful internal declaration          |
+| 25  | src/compiler/parser.ts:10784:43             | stage3/adapt/45-regex-captures/                    | truthful builtin specialization        |
+| 26  | src/compiler/semver.ts:287:64               | stage3/adapt/45-regex-captures/                    | truthful builtin specialization        |
+| 27  | src/compiler/tracing.ts:338:17              | stage3/adapt/62-temporary-tracing-write/           | truthful throwing host binding         |
+| 28  | src/compiler/tracing.ts:357:13              | stage3/adapt/63-temporary-tracing-legend/          | truthful throwing host binding         |
+| 29  | src/compiler/watchUtilities.ts:736:27       | stage3/adapt/32-indexed-reads-program/             | correlated generic protocol proof      |
+| 30  | src/compiler/watchUtilities.ts:811:39       | stage3/adapt/32-indexed-reads-program/             | correlated generic protocol proof      |
+| 31  | src/compiler/watchUtilities.ts:818:21       | stage3/adapt/32-indexed-reads-program/             | correlated generic protocol proof      |
 
 ## Exact type and smallest proposal by family
 
@@ -176,11 +176,11 @@ The post-write Omit shapes describe the field effect relative to the assumed bas
 
 These are three reduced witnesses, retaining the exact adapted cast/write/call expression. They do not copy full emitter/factory/tracing function implementations. Support types, driver setup, and the tracing catch are reduced or added to isolate observations. Source comments name adapted TypeScript 6.0.3 spans.
 
-| Fixture | Node observation | Source mutant caught by independent golden | Current native result |
-| --- | --- | --- | --- |
-| 01_capture_free_split.a | Three newline forms produce ["a","b"]; empty input produces [""] | Optional capture separator introduces extra/undefined array elements | Refused unchecked cast |
-| 02_generic_field_write.a | Identity retained; expression written then a present undefined field through the alias | Replace the expression write with undefined | Refused unchecked cast |
-| 03_tracing_undefined_data.a | JSON object data writes; undefined data throws TypeError | Replace undefined with an empty string, allowing the second call to continue | Refused callable parameter widening |
+| Fixture                     | Node observation                                                                       | Source mutant caught by independent golden                                   | Current native result               |
+| --------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------- |
+| 01_capture_free_split.a     | Three newline forms produce ["a","b"]; empty input produces [""]                       | Optional capture separator introduces extra/undefined array elements         | Refused unchecked cast              |
+| 02_generic_field_write.a    | Identity retained; expression written then a present undefined field through the alias | Replace the expression write with undefined                                  | Refused unchecked cast              |
+| 03_tracing_undefined_data.a | JSON object data writes; undefined data throws TypeError                               | Replace undefined with an empty string, allowing the second call to continue | Refused callable parameter widening |
 
 The fs witness imports real node:fs with its full overload declarations; adaptation 65 instead gives the adapted tracing fs variable a six-operation local shape. Consequently its native refusal text mentions the real buffer overload, while the ledger source shape has the string overload. Both expose the same unsafe admission of undefined, and the exact diagnostics are retained separately.
 
