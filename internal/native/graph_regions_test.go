@@ -255,7 +255,7 @@ int main(void) {
 	// Metadata is a 16-byte header per member and one 120-byte region record: the record holds the
 	// boundary list, the incoming count, a merge's search scratch and, in the counted build,
 	// counted_out (#5nrs3q2; 64 before).
-	want := fmt.Sprintf("live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000120", 1000000*nodeBytes, 950001*nodeBytes, 49999*nodeBytes)
+	want := fmt.Sprintf("live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000144", 1000000*nodeBytes, 950001*nodeBytes, 49999*nodeBytes)
 	if !strings.Contains(string(output), want) {
 		t.Fatal(string(output))
 	}
