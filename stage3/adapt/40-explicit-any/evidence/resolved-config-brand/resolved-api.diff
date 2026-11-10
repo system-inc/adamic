@@ -1,0 +1,11 @@
+--- control/typescript.d.ts
++++ treatment/typescript.d.ts
+@@ -6002,7 +6002,7 @@
+      * tsconfig file, e.g. "/root/blah/tsconfig.json"
+      */
+     type ResolvedConfigFileName = string & {
+-        _isResolvedConfigFileName: never;
++        _isResolvedConfigFileName: undefined;
+     };
+     interface WriteFileCallbackData {
+     }

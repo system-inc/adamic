@@ -57,6 +57,11 @@
       "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"Path\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"__pathBrand\"],[\"UndefinedKeyword\"]]]]]"
     },
     {
+      "declaration": "TypeAliasDeclaration:[\"ts\",\"ResolvedConfigFileName\"]#0",
+      "before": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ResolvedConfigFileName\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"_isResolvedConfigFileName\"],[\"NeverKeyword\"]]]]]",
+      "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ResolvedConfigFileName\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"_isResolvedConfigFileName\"],[\"UndefinedKeyword\"]]]]]"
+    },
+    {
       "declaration": "TypeAliasDeclaration:[\"ts\",\"server\",\"ModuleImportResult\"]#0",
       "before": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ModuleImportResult\"],[\"UnionType\",[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"module\"],[\"TypeLiteral\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"UndefinedKeyword\"]]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"module\"],[\"UndefinedKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"stack\"],[\"QuestionToken\"],[\"StringKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"message\"],[\"QuestionToken\"],[\"StringKeyword\"]]]]]]]",
       "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ModuleImportResult\"],[\"UnionType\",[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"module\"],[\"TypeLiteral\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"UndefinedKeyword\"]]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"module\"],[\"UndefinedKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"UnknownKeyword\"]]]]]"
@@ -3121,6 +3126,14 @@
       "line": 8489
     },
     {
+      "adaptation": "adapt/40-explicit-any/api-sanctions.json row 1 {\"path\":[\"ResolvedConfigFileName\",\"_isResolvedConfigFileName\"],\"kind\":\"PropertySignature\",\"before\":\"never\",\"after\":\"undefined\",\"why\":\"Adamic's Oct 29 brands ruling (#p7t8tmh) and #666zzs5: the absent phantom member reads as undefined.\"}",
+      "path": [
+        "ResolvedConfigFileName",
+        "_isResolvedConfigFileName"
+      ],
+      "line": 6003
+    },
+    {
       "adaptation": "adapt/52-json-values/api-sanctions.json row 1 {\"path\":[\"server\",\"protocol\",\"Request\",\"arguments\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
       "path": [
         "server",
@@ -3484,7 +3497,7 @@
     },
     {
       "file": "stage3/adapt/40-explicit-any/class-rules.json",
-      "sha256": "0879b71c393b0aac9c28676df002b4539a4d7b7d5d9158a167c98e821a8f7567"
+      "sha256": "215ecf3a168203ecdbd24949fecaaf7f8ebb8d9d456ae884c532673b51b2d576"
     },
     {
       "file": "stage3/adapt/75-optional-widening/evidence/wave2/api.json",
@@ -3504,7 +3517,7 @@
     },
     {
       "file": "stage3/adapt/32-indexed-reads-program/public-host-sites.json",
-      "sha256": "775c2ae6d7d1f784ca2d249dd277737526f7bac44de5c368c98db9cf0bd1ae2b"
+      "sha256": "1f641e9402f9cccda75e52209fea74f827e40fe21103ce743062c943ef170776"
     },
     {
       "file": "stage3/adapt/32-indexed-reads-program/resumed-watch/api.json",
@@ -3561,6 +3574,10 @@
     {
       "file": "stage3/adapt/79-exit-code/proofs/api-owner.json",
       "sha256": "37a765a6491e6232bdff3f17f9680d19daac0ba9370b00a94f4849034f831f55"
+    },
+    {
+      "file": "stage3/adapt/40-explicit-any/api-sanctions.json",
+      "sha256": "46fbadac878db34dd9408c2eeb7009d63d83a72b5cd7bf5fc47bc5c1a26366fa"
     },
     {
       "file": "stage3/adapt/52-json-values/api-sanctions.json",
@@ -4587,6 +4604,15 @@
     "     }\n",
     "     /**\n",
     "      * Branded string for keeping track of when we've turned an ambiguous path\n",
+    "@@ -6000,7 +5998,7 @@\n",
+    "      * tsconfig file, e.g. \"/root/blah/tsconfig.json\"\n",
+    "      */\n",
+    "     type ResolvedConfigFileName = string & {\n",
+    "-        _isResolvedConfigFileName: never;\n",
+    "+        _isResolvedConfigFileName: undefined;\n",
+    "     };\n",
+    "     interface WriteFileCallbackData {\n",
+    "     }\n",
     "@@ -6168,7 +6166,7 @@\n",
     "         emitSkipped: boolean;\n",
     "         /** Contains declaration emit diagnostics */\n",
