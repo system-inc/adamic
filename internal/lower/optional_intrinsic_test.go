@@ -3,7 +3,10 @@ package lower
 import (
 	"errors"
 	"fmt"
+	"os"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 func TestOptionalIntrinsicKeepsNullableStringRefusal(t *testing.T) {
@@ -44,4 +47,90 @@ func TestOptionalIntrinsicBooleanPlainToStringLowers(t *testing.T) {
 	if _, err := lowerSourceAs(t, "function text(value: boolean): string { return value.toString(); }\nconsole.log(text(true));", ".ts"); err != nil {
 		t.Fatal(err)
 	}
+}
+
+func TestOptionalIntrinsicArgumentsAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"delete", "foreach", "effects", "result"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			source, err := os.ReadFile("../oracle/testdata/library_optional_receiver_" + name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			lowersAndAgreesWithNode(t, string(source))
+		})
+	}
+}
+
+func TestOptionalIntrinsicArgumentBoundariesRefuse(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"property", "optional_property", "non_null_property", "call", "spread", "function"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			source, err := os.ReadFile("../oracle/testdata/optional_receiver_refused/" + name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowerSource(t, string(source))
+			var refused *NotYet
+			if name == "optional_property" {
+				// The second ?. owns its guard. The current property representation,
+				// rather than the call continuation rule, still refuses Set.add's result.
+				if !errors.As(err, &refused) || refused.What != "optional chaining to .size on a value" {
+					t.Fatalf("want the optional size property refusal, got %v", err)
+				}
+			} else if name == "non_null_property" {
+				var assertion *Refused
+				if !errors.As(err, &assertion) || assertion.What != "the non-null assertion !" {
+					t.Fatalf("want the non-null assertion refusal, got %v", err)
+				}
+				// TypeScript admits !, but property lowering still refuses the chain.
+				_, err = lowerTypeScriptAssertionSource(t, string(source))
+				if !errors.As(err, &refused) || refused.What != "an optional chain longer than one step" {
+					t.Fatalf("want the continuation refusal through !, got %v", err)
+				}
+			} else if !errors.As(err, &refused) || (refused.What != "a call through ?. (an optional call)" && refused.What != "an optional chain longer than one step") {
+				t.Fatalf("want optional call/chain refusal, got %v", err)
+			}
+		})
+	}
+}
+
+// Library calls have ?. only on the receiver; optional declared methods have it
+// on the call. Neither handler may take the other's shape before optionalCall.
+// Output alone cannot identify the dispatcher; IR counts pin both call protocols.
+func TestOptionalIntrinsicAndDeclaredMethodDispatch(t *testing.T) {
+	t.Parallel()
+	const source = `interface Runner { run?(value: string): void; }
+function library(receiver: Set<string> | undefined): void { receiver?.delete('x'); }
+function declared(receiver: Runner | undefined): void { receiver?.run?.('called'); }
+const entries = new Set<string>();
+entries.add('x');
+library(entries);
+library(undefined);
+console.log(String(entries.has('x')));
+declared({ run: (value: string): void => console.log(value) });
+declared(undefined);
+declared({});
+`
+	program, err := lowerSource(t, source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	deletes := 0
+	visit := func(node any) bool {
+		if _, ok := node.(ir.MapDelete); ok {
+			deletes++
+		}
+		return true
+	}
+	walk(program.Main, visit)
+	for _, function := range program.Functions {
+		walk(function.Body, visit)
+	}
+	if deletes != 1 || optionalCalls(program) != 1 {
+		t.Fatalf("want one library deletion and one optional declared-method call, got %d and %d", deletes, optionalCalls(program))
+	}
+	lowersAndAgreesWithNode(t, source)
 }
