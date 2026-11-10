@@ -12,14 +12,14 @@ The fixture builds a string containing a supplementary character and lone surrog
 
 Every mutant keeps valid IR and finishes without leaks or sanitizer failures, but differs from source Node in both backends:
 
-| Mutant | Wrong behavior | Catcher |
-| --- | --- | --- |
-| relative-start | reverses negative-start branch | stdout comparison |
-| truncate | uses floor instead of truncation | stdout comparison |
-| NaN | omits NaN normalization | stdout comparison |
-| undefined-length | defaults missing length to zero | stdout comparison |
-| length-not-end | treats count as slice end | stdout comparison |
-| length-clamp | allows negative count | stdout comparison |
+| Mutant           | Wrong behavior                             | Catcher           |
+| ---------------- | ------------------------------------------ | ----------------- |
+| relative-start   | reverses negative-start branch             | stdout comparison |
+| truncate         | uses floor instead of truncation           | stdout comparison |
+| NaN              | omits NaN normalization                    | stdout comparison |
+| undefined-length | defaults missing length to zero            | stdout comparison |
+| length-not-end   | treats count as slice end                  | stdout comparison |
+| length-clamp     | allows negative count                      | stdout comparison |
 | evaluation-order | exchanges effectful start and length calls | stdout comparison |
 
 The first length-clamp mutant survived because lengths had no negative integer inside the string's range. Adding -1 and -4.9 supplied the missing witness; all seven then failed for the intended output disagreement. An initial fixture included substr() and an undefined start, which the bundled TypeScript signature rejects. Removed those calls before final validation; the fixture now matches that signature.
@@ -43,28 +43,28 @@ Ownership was checked from fetched origin/codex/notyet-* histories. libraryStrin
 
 Remaining per-kind status is skipped, with no design ruling inferred:
 
-| Sites | Kind | Reason |
-| ---: | --- | --- |
-| 46 | checked write without source-slot certificate | checked-view write prerequisites absent |
-| 25 | generic or unnamed nested function declaration | nested-function prerequisites absent |
-| 10 | SpreadElement | arrayLiteral is being edited by object-small; kind dispatch also owned |
-| 9 | ModuleDeclaration | namespace lowering already differs from measured base; no exact lesson established |
-| 7 | overload argument with different implementation representation | measured nested/phantom overload paths absent |
-| 5 | overloaded function read as value | measured phantom overload proof path absent |
-| 4 | first-class nested reference from another nested function | nested-function prerequisites absent |
-| 3 | dictionary checked view | checked-view prerequisites absent |
-| 1 | ClassExpression | enumNeverValue is being edited by this-outside/void-value |
-| 1 | PostfixUnaryExpression | enumNeverValue is being edited by this-outside/void-value |
-| 1 | field of boolean or undefined | measured logical assignmentReference absent |
-| 1 | optional comparator requiring recursive default conversion | view_array_consumers.go absent |
-| 1 | uninitialized object field without supported declared slot | measured objectLiteral path differs; no exact reduction established |
-| 1 | untyped length Array escaping without element proof | array-hole prerequisites absent |
-| 1 | checked predicate overload target intersection | predicates_proof.go absent |
-| 1 | generic overload result proofs | phantom_overload_results.go absent |
-| 1 | node:fs.unwatchFile | Node fs prerequisites absent |
-| 1 | node:fs.watch | Node fs prerequisites absent |
-| 1 | node:fs.watchFile | Node fs prerequisites absent |
-| 1 | statSync dynamic options | Node fs prerequisites absent |
-| 1 | toLocaleTimeString | Node fs prerequisites absent |
+| Sites | Kind                                                           | Reason                                                                             |
+| ----: | -------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+|    46 | checked write without source-slot certificate                  | checked-view write prerequisites absent                                            |
+|    25 | generic or unnamed nested function declaration                 | nested-function prerequisites absent                                               |
+|    10 | SpreadElement                                                  | arrayLiteral is being edited by object-small; kind dispatch also owned             |
+|     9 | ModuleDeclaration                                              | namespace lowering already differs from measured base; no exact lesson established |
+|     7 | overload argument with different implementation representation | measured nested/phantom overload paths absent                                      |
+|     5 | overloaded function read as value                              | measured phantom overload proof path absent                                        |
+|     4 | first-class nested reference from another nested function      | nested-function prerequisites absent                                               |
+|     3 | dictionary checked view                                        | checked-view prerequisites absent                                                  |
+|     1 | ClassExpression                                                | enumNeverValue is being edited by this-outside/void-value                          |
+|     1 | PostfixUnaryExpression                                         | enumNeverValue is being edited by this-outside/void-value                          |
+|     1 | field of boolean or undefined                                  | measured logical assignmentReference absent                                        |
+|     1 | optional comparator requiring recursive default conversion     | view_array_consumers.go absent                                                     |
+|     1 | uninitialized object field without supported declared slot     | measured objectLiteral path differs; no exact reduction established                |
+|     1 | untyped length Array escaping without element proof            | array-hole prerequisites absent                                                    |
+|     1 | checked predicate overload target intersection                 | predicates_proof.go absent                                                         |
+|     1 | generic overload result proofs                                 | phantom_overload_results.go absent                                                 |
+|     1 | node:fs.unwatchFile                                            | Node fs prerequisites absent                                                       |
+|     1 | node:fs.watch                                                  | Node fs prerequisites absent                                                       |
+|     1 | node:fs.watchFile                                              | Node fs prerequisites absent                                                       |
+|     1 | statSync dynamic options                                       | Node fs prerequisites absent                                                       |
+|     1 | toLocaleTimeString                                             | Node fs prerequisites absent                                                       |
 
 These are uncompleted kinds, not claims that the expanded backend territory makes them impossible. Resuming the missing families requires resolving the measured compiler-lineage mismatch. There are no new C runtime helpers for review.

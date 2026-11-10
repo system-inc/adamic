@@ -21,30 +21,30 @@ Fetched all origin/codex/notyet-* refs and checked each branch history under int
 
 All kinds below are skipped because the initial exact replay and base prerequisites block implementation. Later kinds were not replayed or reduced. No design refusal ruling is inferred.
 
-| Sites | Kind | Specific prerequisite or limit |
-| ---: | --- | --- |
-| 46 | checked write without source-slot certificate | measured checked-view write path absent |
-| 25 | generic or unnamed nested function declaration | nested_functions.go absent |
-| 10 | SpreadElement | not attempted after initial block |
-| 9 | ModuleDeclaration | namespace implementation differs; not attempted |
-| 7 | overload argument with different implementation representation | nested and phantom overload paths absent |
-| 5 | overloaded function read as a value | phantom_overload_results.go absent |
-| 5 | substr with a length argument | measured substr admission absent |
-| 4 | first-class nested reference from another nested function | nested_functions.go absent |
-| 3 | dictionary checked view | view_objects.go absent |
-| 1 | ClassExpression | not attempted |
-| 1 | PostfixUnaryExpression | not attempted |
-| 1 | field of boolean or undefined | measured assignmentReference absent |
-| 1 | optional comparator requiring recursive default string conversion | view_array_consumers.go absent |
-| 1 | uninitialized object field without supported declared slot type | measured objectLiteral path differs; not attempted |
-| 1 | untyped length Array escaping without proven element representation | library_array_holes.go absent |
-| 1 | checked predicate overload target intersection | predicates_proof.go absent |
-| 1 | generic overload result proofs | phantom_overload_results.go absent |
-| 1 | node:fs.unwatchFile | Node fs lowering absent |
-| 1 | node:fs.watch | Node fs lowering absent |
-| 1 | node:fs.watchFile | Node fs lowering absent |
-| 1 | statSync options other than fixed literal or plain const binding | library_node_fs_file.go absent |
-| 1 | toLocaleTimeString in fs file host | library_node_fs_file.go absent |
+| Sites | Kind                                                                | Specific prerequisite or limit                     |
+| ----: | ------------------------------------------------------------------- | -------------------------------------------------- |
+|    46 | checked write without source-slot certificate                       | measured checked-view write path absent            |
+|    25 | generic or unnamed nested function declaration                      | nested_functions.go absent                         |
+|    10 | SpreadElement                                                       | not attempted after initial block                  |
+|     9 | ModuleDeclaration                                                   | namespace implementation differs; not attempted    |
+|     7 | overload argument with different implementation representation      | nested and phantom overload paths absent           |
+|     5 | overloaded function read as a value                                 | phantom_overload_results.go absent                 |
+|     5 | substr with a length argument                                       | measured substr admission absent                   |
+|     4 | first-class nested reference from another nested function           | nested_functions.go absent                         |
+|     3 | dictionary checked view                                             | view_objects.go absent                             |
+|     1 | ClassExpression                                                     | not attempted                                      |
+|     1 | PostfixUnaryExpression                                              | not attempted                                      |
+|     1 | field of boolean or undefined                                       | measured assignmentReference absent                |
+|     1 | optional comparator requiring recursive default string conversion   | view_array_consumers.go absent                     |
+|     1 | uninitialized object field without supported declared slot type     | measured objectLiteral path differs; not attempted |
+|     1 | untyped length Array escaping without proven element representation | library_array_holes.go absent                      |
+|     1 | checked predicate overload target intersection                      | predicates_proof.go absent                         |
+|     1 | generic overload result proofs                                      | phantom_overload_results.go absent                 |
+|     1 | node:fs.unwatchFile                                                 | Node fs lowering absent                            |
+|     1 | node:fs.watch                                                       | Node fs lowering absent                            |
+|     1 | node:fs.watchFile                                                   | Node fs lowering absent                            |
+|     1 | statSync options other than fixed literal or plain const binding    | library_node_fs_file.go absent                     |
+|     1 | toLocaleTimeString in fs file host                                  | library_node_fs_file.go absent                     |
 
 No fixtures, counts rows, semantic tests or mutants added. No whole package or full gate ran. Required setup go build ./... passed, and git diff --check passed. Evidence contains stable setup and completed-input replay; replay-findings.json omits the declaration catalog but retains selected units and every finding.
 
