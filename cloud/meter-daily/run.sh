@@ -15,9 +15,9 @@
 #                     with no sha change can be traced to the tools. Outside work/ on purpose: once a run lands
 #                     on main, the next day's checkout would refuse to write a tracked file over its untracked twin
 #   logs/<stamp>.log  this script's steps and the meter's whole output, kept on failure
-#   status            the last run, key=value: outcome (Running, Succeeded, OverBudget, BudgetUnknown, Failed), the
-#                     step it reached, the main sha, the run directory, the log, and the last line the failing step
-#                     printed, or the relation budget's why
+#   status            the last run, key=value: outcome (Running, Succeeded, OverBudget, BudgetUnknown, Skipped,
+#                     Failed), the step it reached, the main sha, the run directory, the log, and the last line the
+#                     failing step printed, or the relation budget's why
 #
 # The toolchain is the box's own env.sh (ADAMIC_METER_TOOLS_ENV), which adamicmeter reads through an ACL: traverse
 # on /home/ahra, read on ~/adamic-tools. npm is bootstrapped from the pin and integrity in
@@ -39,7 +39,7 @@ status=$home/status
 # outcome.py, beside this script (/srv/adamic-meter when installed), names what a finished meter's exit means.
 outcomes=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/outcome.py
 started=$(date -u +%FT%TZ)
-step=start sha="" run="" isLocked=false isRecorded=false
+step=start sha="" run="" isLocked=false isRecorded=false isSkipped=false
 
 say() { printf '%s meter-daily: %s\n' "$(date -u +%FT%TZ)" "$*" | tee -a "$log"; }
 
@@ -64,6 +64,8 @@ finish() {
 	[ "$code" = 0 ] && return 0
 	# A finished meter's outcome is recorded already, OverBudget or BudgetUnknown with the meter's own 3.
 	"$isRecorded" && return 0
+	# A day skipped for a hand job has said so already, with status Skipped.
+	"$isSkipped" && return 0
 	# A run that never held the lock leaves the status to the run that does.
 	"$isLocked" || return 0
 	# A red run commits nothing, but the run directory the meter made, if it got that far, keeps what it used.
@@ -86,6 +88,20 @@ flock -n 9 || { say "another meter-daily run holds $home/run.lock"; exit 1; }
 isLocked=true
 record Running 0 ""
 say "log $log"
+
+# The timer runs outside any gap, so on a line box it could meet a Loom hand job. It never starts beside one: it
+# waits up to 30 minutes for the box to come free, then skips the day with status Skipped and exit 75, which keeps
+# meter-daily-submit.service (OnSuccess) from starting (Loom's condition for the timer on Pupa, Nov 9).
+begin wait
+# shellcheck source=cloud/meter-daily/hand-jobs.sh
+. "$(dirname "${BASH_SOURCE[0]}")/hand-jobs.sh"
+waited=0
+waitForHandJobs say || waited=$?
+if [ "$waited" != 0 ]; then
+	isSkipped=true
+	record Skipped "$waited" "a Loom hand job held the box for the whole wait; nothing measured, nothing pushed"
+	exit "$waited"
+fi
 
 begin toolchain
 [ -r "$toolsEnvironment" ] || { say "no readable toolchain env at $toolsEnvironment (ADAMIC_METER_TOOLS_ENV)"; exit 1; }
