@@ -42,6 +42,9 @@ type widening struct {
 	readonlyField string
 	enum          bool
 
+	// methodField names a method seen as a writable field, when that's the slot (#9dmh4em).
+	methodField string
+
 	// parameter is a function's parameter of type source seen as taking target, which it can't.
 	parameter bool
 
@@ -251,6 +254,18 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			continue
 		}
 		source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
+		if viewed.Flags&ast.SymbolFlagsMethod == 0 && inside.Flags&ast.SymbolFlagsMethod != 0 && !l.hostDeclaredSymbol(inside) && !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
+			// A method seen as a writable field is a slot the view writes: tsc admits
+			// `const view: { fail: () => void } = { fail(): never { ... } }`, and view.fail = () => {} then
+			// puts a returning function where the method's type promises never. A write to the method
+			// itself is refused as an unbound method, but the field can be written through the view, so the
+			// field's rule applies: the view may write only what the method's type holds (#9dmh4em,
+			// Optimizer's probe on #8n7eet3, Adamic's ruling). A readonly field, and a method seen as a
+			// method, write nothing here. A host's own method (hostDeclaredSymbol: process's, a Hash's, a
+			// RegExp's) is judged by the host rules, which stop a view of it or a write to it in their own
+			// words (nodeHostObject, the unstored-member rule, the host binding's relation).
+			return &widening{source: source, target: target, methodField: viewed.Name}
+		}
 		if viewed.Flags&ast.SymbolFlagsMethod != 0 || inside.Flags&ast.SymbolFlagsMethod != 0 {
 			// A method isn't a slot anything writes, but what it returns and takes are views: the
 			// program's own methods. The library's (an Iterable's, an array's own) are left to the
@@ -1143,6 +1158,10 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 	if found.parameter {
 		what = "a function taking " + l.checker.TypeToString(found.source) + " seen as one taking " + l.checker.TypeToString(found.target) + " (tsc relates a method's parameters both ways), so it can be handed what it can't take"
 		fix = "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+	}
+	if found.methodField != "" {
+		what = "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", whose method " + found.methodField + " becomes a writable field: a write of " + l.checker.TypeToString(found.target) + " would replace a method of type " + l.checker.TypeToString(found.source)
+		fix = "make " + found.methodField + " readonly in the type it's seen as (readonly " + found.methodField + ": ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
 	}
 	if found.readonlyField != "" {
 		what = "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", whose readonly field " + found.readonlyField + " becomes writable: a readonly field may hold something narrower than " + l.checker.TypeToString(found.source) + ", which a write of " + l.checker.TypeToString(found.target) + " would replace"
