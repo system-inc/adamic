@@ -82,14 +82,14 @@ proof refusals still matter: declarations are 518 after, and argument contracts 
 These observations do not establish that 63 declarations became executable.
 
 | Configuration | Predicate declaration refusals | Predicate argument refusals | Checked-view field NotYet |
-|---|---:|---:|---:|
-| main | 581 | 0 | 0 |
-| taste | 581 | 0 | 0 |
-| flags | 581 | 0 | 0 |
-| namespaces | 581 | 0 | 0 |
-| nested | 581 | 0 | 0 |
-| cumulative | 581 | 0 | 0 |
-| predicates | 518 | 451 | 246 |
+| ------------- | -----------------------------: | --------------------------: | ------------------------: |
+| main          |                            581 |                           0 |                         0 |
+| taste         |                            581 |                           0 |                         0 |
+| flags         |                            581 |                           0 |                         0 |
+| namespaces    |                            581 |                           0 |                         0 |
+| nested        |                            581 |                           0 |                         0 |
+| cumulative    |                            581 |                           0 |                         0 |
+| predicates    |                            518 |                         451 |                       246 |
 
 The cumulative/after comparison has 4275 common eligible units,
 32 newly eligible units and 0 no-longer-eligible units.
@@ -101,14 +101,14 @@ instantiations; these counts are diagnostic sites, not accepted syntax-node coun
 # Full measurement totals
 
 | Configuration | Checker diagnostics | Units | Bodies skipped | NotYet | Refused | Dependency skips | Errors | Panics |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| main | 2165 | 4530 | 256 | 1938 | 1813 | 23 | 0 | 0 |
-| taste | 2165 | 4530 | 256 | 1864 | 1708 | 25 | 0 | 0 |
-| flags | 1985 | 4530 | 255 | 1177 | 2106 | 23 | 0 | 0 |
-| namespaces | 1985 | 4530 | 255 | 1188 | 2129 | 23 | 1 | 0 |
-| nested | 2165 | 4530 | 256 | 1943 | 1809 | 23 | 0 | 0 |
-| cumulative | 1985 | 4530 | 255 | 1032 | 1983 | 25 | 1 | 0 |
-| predicates | 1650 | 4530 | 223 | 1005 | 2651 | 25 | 1 | 3 |
+| ------------- | ------------------: | ----: | -------------: | -----: | ------: | ---------------: | -----: | -----: |
+| main          |                2165 |  4530 |            256 |   1938 |    1813 |               23 |      0 |      0 |
+| taste         |                2165 |  4530 |            256 |   1864 |    1708 |               25 |      0 |      0 |
+| flags         |                1985 |  4530 |            255 |   1177 |    2106 |               23 |      0 |      0 |
+| namespaces    |                1985 |  4530 |            255 |   1188 |    2129 |               23 |      1 |      0 |
+| nested        |                2165 |  4530 |            256 |   1943 |    1809 |               23 |      0 |      0 |
+| cumulative    |                1985 |  4530 |            255 |   1032 |    1983 |               25 |      1 |      0 |
+| predicates    |                1650 |  4530 |            223 |   1005 |    2651 |               25 |      1 |      3 |
 
 The after run records two refusal-scan panics: `builder.ts` (QualifiedName.Text)
 and `transformers/declarations/diagnostics.ts` (ComputedPropertyName.Text). Those
@@ -120,15 +120,15 @@ the raw ledger. They were not erased or converted into proof/admission counts.
 
 # Provenance
 
-| Configuration | Scratch head | cohere | checker |
-|---|---|---|---|
-| main | 65be00ae33fe4d394de1cb9468ddb472c3184e8f | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
-| taste | b556f77ab985384d4822b2a7399498972e14116e | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
-| flags | f1b33ccef61d71d299f139d3569024a1d9a24c75 | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
-| namespaces | 5c65c6cae00a03a18e4f49c2fafff94001de1989 | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
-| nested | e5e7073ae6bcb4a13d22ea7536f30f6c3de6bc8f | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
-| cumulative | 9396f8c212bd68f72b291fbe60b7c751fbbd928c | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
-| predicates | b209456a2e7743bf2dca47a8cefa97e7b3a9c002 | 7945d102a6c18dd36adf9114a758ce646e8b2359 | d92d9bfee114c80be2c375d72edae966176e3a4f |
+| Configuration | Scratch head                             | cohere                                   | checker                                  |
+| ------------- | ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| main          | 65be00ae33fe4d394de1cb9468ddb472c3184e8f | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
+| taste         | b556f77ab985384d4822b2a7399498972e14116e | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
+| flags         | f1b33ccef61d71d299f139d3569024a1d9a24c75 | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
+| namespaces    | 5c65c6cae00a03a18e4f49c2fafff94001de1989 | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
+| nested        | e5e7073ae6bcb4a13d22ea7536f30f6c3de6bc8f | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
+| cumulative    | 9396f8c212bd68f72b291fbe60b7c751fbbd928c | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
+| predicates    | b209456a2e7743bf2dca47a8cefa97e7b3a9c002 | 7945d102a6c18dd36adf9114a758ce646e8b2359 | d92d9bfee114c80be2c375d72edae966176e3a4f |
 
 REPORT.json also records every preparation/feature SHA, never-pushed branch,
 binary hash, overlay hashes and build/run duration. Source hashes are independent
