@@ -113,19 +113,19 @@ Each mutant changes one copied artifact; reviewed goldens stay intact. The three
 CLI probes rerun the real tsc against the tiny project, using the same comparison
 function as all corpus cases. A mutant killed by an unrelated error does not count.
 
-| Mutant | Dedicated catch | Result |
-|---|---|---|
-| Golden stdout first column: `(2,6)` becomes `(2,7)` | stdout bytes | `FAIL tiny: stdout`, harness exit 1 |
-| Golden stderr gains `changed stderr` | stderr bytes | `FAIL tiny: stderr`, harness exit 1 |
-| Golden CLI exit becomes 0 instead of 2 | exit bytes | `FAIL tiny: exit`, harness exit 1 |
-| Input source gains a newline | source SHA256 | caught |
-| Upstream baseline gains a newline | baseline SHA256 | caught |
-| Derived expectation changes `error TS` to `error XX` | baseline summary derivation | caught |
-| Expected empty stderr gains a line | expected stderr | caught |
-| Clean expected exit becomes 2 | expected exit | caught |
-| Selection loses one entry | case population | caught |
-| Manifest option differs from the source header | header options | caught |
-| Manifest adds TS99999 | baseline codes | caught |
+| Mutant                                               | Dedicated catch             | Result                              |
+| ---------------------------------------------------- | --------------------------- | ----------------------------------- |
+| Golden stdout first column: `(2,6)` becomes `(2,7)`  | stdout bytes                | `FAIL tiny: stdout`, harness exit 1 |
+| Golden stderr gains `changed stderr`                 | stderr bytes                | `FAIL tiny: stderr`, harness exit 1 |
+| Golden CLI exit becomes 0 instead of 2               | exit bytes                  | `FAIL tiny: exit`, harness exit 1   |
+| Input source gains a newline                         | source SHA256               | caught                              |
+| Upstream baseline gains a newline                    | baseline SHA256             | caught                              |
+| Derived expectation changes `error TS` to `error XX` | baseline summary derivation | caught                              |
+| Expected empty stderr gains a line                   | expected stderr             | caught                              |
+| Clean expected exit becomes 2                        | expected exit               | caught                              |
+| Selection loses one entry                            | case population             | caught                              |
+| Manifest option differs from the source header       | header options              | caught                              |
+| Manifest adds TS99999                                | baseline codes              | caught                              |
 
 `evidence/mutants.log` and the three dedicated diff logs retain these catches.
 The `NATIVE_TSC` slot also passed a smoke run using a transparent executable
