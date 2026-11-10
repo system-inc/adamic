@@ -1,0 +1,37 @@
+{
+  "primaryCommit": "31e90645713d6ebb144bb393e58f198b35843b5a",
+  "base": "337cf6917f7231422b5e168bc215888752a9f194",
+  "branch": "typescript/each-node",
+  "singleCommit": true,
+  "finalAcceptance": {
+    "passed": true,
+    "allFrozenAdaptationInputsUnchanged": true,
+    "sourceFiles": 747,
+    "normalJavaScriptFiles": 10,
+    "sourceByteIdenticalToMeasuredCandidate": true,
+    "javascriptByteIdenticalToMeasuredCandidate": true,
+    "publicDeclarationsIdentical": true,
+    "exportKeysIdentical": true,
+    "exportKeyCount": 2256
+  },
+  "lane": {
+    "passed": true,
+    "generatedShardFunctionsMatched": true,
+    "acceptedUnitsExactlyOnce": 398,
+    "planSha256": "4f9a04a9fe4d62c01ba0abc3843fd7d5eb7dddb27b5941b146101d8552bab6ea",
+    "nodeProcesses": 797,
+    "oracle": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "totals": {
+      "defined": 1086412,
+      "exposed": 0,
+      "throws": 0
+    },
+    "distinctCallbackSources": 26,
+    "allSourceClassificationsNonSensitive": true
+  },
+  "compilerLimitation": "Both mutant and loop meet overload 1 test contract on this main; no restoring delta or for-of-specific stop is claimed."
+}
