@@ -382,9 +382,11 @@ func (f *cycleFinder) jsonReach(proven *checker.Type) (string, []*checker.Type) 
 	if l.isArrayType(proven) || checker.IsTupleType(proven) {
 		return "", l.checker.GetTypeArguments(proven)
 	}
-	if symbol := l.unbranded(proven).Symbol(); symbol != nil && libraryDeclared(symbol) {
+	if l.jsonLibrary(proven, map[*checker.Type]bool{}) {
 		return "a value that can reach " + name + ", a library value whose own fields aren't what Node prints", nil
 	}
+	// The checker's properties of a class include what its bases declare: a toJSON a base declares is
+	// on the prototype chain, and Node calls it as it calls the leaf's own.
 	if l.checker.GetPropertyOfType(proven, "toJSON") != nil {
 		return "a value that can reach " + name + ", which has a toJSON member", nil
 	}
@@ -397,14 +399,34 @@ func (f *cycleFinder) jsonReach(proven *checker.Type) (string, []*checker.Type) 
 	for _, field := range f.fields(proven) {
 		next = append(next, l.checker.GetTypeOfSymbol(field))
 	}
-	// A class's bases are what it extends: a library one's storage is its own (an Error's, a Map's).
-	next = append(next, l.classBases(proven)...)
 	for _, shape := range f.shapeCandidates(proven) {
 		if shape != proven && l.checker.IsTypeAssignableTo(shape, proven) {
 			next = append(next, shape)
 		}
 	}
 	return "", next
+}
+
+// jsonLibrary reports whether a type is the library's, the prelude's or Node's, or a class extending one:
+// such a value's storage is its own (a Date's, an Error's, a Map's), never the own fields Node prints. An
+// interface extending one declares no storage; the allocation behind it is judged as its own shape.
+func (l *lowering) jsonLibrary(proven *checker.Type, seen map[*checker.Type]bool) bool {
+	if seen[proven] {
+		return false
+	}
+	seen[proven] = true
+	if symbol := l.unbranded(proven).Symbol(); symbol != nil && libraryDeclared(symbol) {
+		return true
+	}
+	if !isClassInstance(proven) {
+		return false
+	}
+	for _, base := range l.classBases(proven) {
+		if l.jsonLibrary(base, seen) {
+			return true
+		}
+	}
+	return false
 }
 
 // literalAccessor reports whether an accessor is an object literal's own, which Node calls when it
