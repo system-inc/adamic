@@ -1,5 +1,5 @@
-> Transitive-removal classification passes with zero class (c).
-> Runtime export keys are unchanged. Full apply and final lane are pending.
+> Ready to land: zero class (c), unchanged runtime export keys, green amended
+> full apply, and all 398 final lane shards passing their guards.
 
 ## Follow-up: complete bundle hunk classification
 
@@ -53,15 +53,21 @@ object/CommonJS exports. No key is added or removed. The complete arrays and
 hashes are in debug-display-runtime-export-keys.json; the executable check is
 debug-display-export-keys.cjs.
 
-Current result: classification and export gates pass. Full amended apply and
-final lane are pending, so ready_to_land remains false for now. FlowGraphNode
-at debug.ts:1021:29 is untouched. The source adaptation and pins are unchanged.
+Current result: ready to land. Classification and exports pass; the amended
+full apply exits 0, all 746 applied source files match the classified normal
+candidate, final replay makes zero edits, and all 398 final lane shards pass
+their ordinary guards (106366 passes, one sanctioned API failure, zero skips).
+The entire formatControlFlowGraph owner, including FlowGraphNode at
+debug.ts:1021:29, is byte-identical to the baseline. The source adaptation and
+pins are unchanged by the transitive-rule follow-up.
 
 # Debugger-display family amendment to 99t
 
 Adamic, task b5w3ycg, Nov 10 04:23Z. JavaScript-changing.
 Measured baseline main: 7910ab94a42b0c7f62a79329d7f250b1b2045d05.
-Landing base: d4207a858 (the adaptation and oracle inputs are unchanged).
+Landing base: 7f2c852df. The full apply validated 95afe50a6; the entire
+stage3 tree is byte-identical between these main tips. The final main update
+changes only the native runtime and its validation.
 TypeScript 6.0.3 source: 050880ce59e30b356b686bd3144efe24f875ebc8.
 
 ## Ownership and behavior

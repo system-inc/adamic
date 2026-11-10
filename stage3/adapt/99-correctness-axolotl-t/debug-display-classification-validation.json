@@ -1,13 +1,21 @@
 {
-  "classification_counts": {
+  "status": "pass",
+  "review_base": "7f2c852dffe31163e9699f0c91a158596757b888",
+  "apply_validated_main": "95afe50a6e94dbff360a399458b5f45f43cfccad",
+  "main_stage3_inputs_identical": true,
+  "classification": {
     "a": 3204,
-    "b": 1,
-    "c": 1
+    "b": 2,
+    "c": 0
   },
   "runtime_exports_pass": true,
+  "apply_child_exit": 0,
+  "lane_child_exit": 0,
+  "complete_source_equivalence": true,
   "source_adapter_and_pins_unchanged": true,
   "FlowGraphNode_untouched": true,
-  "classification_script_sha256": "438bddcaf6ebbf2bcfb362508af2c645eca9255e5dc7aa2d995e8484dba29ec6",
-  "reference_script_sha256": "79a39ad9d59039019082a2ddc6c205e1b2396069134311ea86cfdd9c7f9d37e4",
-  "ready_to_land": false
+  "adapter_sha256": "4d1c9d1aa7b3b13554a28cb1c3e4c683b86ca32d76425a729dd00a64bd5f86fd",
+  "pins_sha256": "01a66126340697b63f32c660c812f794fc3ee69ee956e986ea0b2a001e42dc4f",
+  "classifier_sha256": "d9afb05d83ef684864139e0e29984a261a4069e693c2df250504882bfe3d3c93",
+  "ready_to_land": true
 }

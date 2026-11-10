@@ -1,19 +1,17 @@
 {
-  "status": "classification stop resolved by authorized transitive rule",
+  "status": "resolved by authorized transitive-removal rule and completed validation",
   "classification": {
     "a": 3204,
     "b": 2,
     "c": 0
   },
-  "classification_child_exit": 0,
   "hunk_55_chain": [
     "getJSDocModifierFlagsNoCache",
     "getEffectiveModifierFlagsNoCache",
     "enableDebugInfo"
   ],
   "runtime_exports": "unchanged",
-  "amended_full_apply": "pass; child exit 0",
-  "ready_to_land": false,
-  "source_equivalence": "746 files byte-identical",
-  "lane": "running"
+  "amended_full_apply_child_exit": 0,
+  "lane_controller_child_exit": 0,
+  "ready_to_land": true
 }
