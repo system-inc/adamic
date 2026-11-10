@@ -16,6 +16,13 @@ func TestNamespaceValueAgreesWithNode(t *testing.T) {
 			generatorAgrees(t, "internal/oracle/testdata/namespace_value/"+program)
 		})
 	}
+	// stage3's own tracing-escape fixture, tsc's tracing.ts shape cut down, whose status.json row this
+	// change moved to Compiles: TestFixturesNamespaces holds it natively, sanitized and leak-checked, and
+	// this holds it on the JavaScript backend too.
+	t.Run("stage3/10_tracing_escape.a", func(t *testing.T) {
+		t.Parallel()
+		generatorAgrees(t, "stage3/fixtures/namespaces/10_tracing_escape.a")
+	})
 }
 
 // The name read as a value before its block ran, through an edge the initialization walk can't follow,
