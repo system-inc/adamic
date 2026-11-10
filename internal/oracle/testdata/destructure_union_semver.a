@@ -1,0 +1,17 @@
+function text(value: string | readonly string[] | undefined): string {
+    if (value === undefined) return "undefined";
+    if (typeof value === "string") return value;
+    return value.join(",");
+}
+interface Fields { prerelease?: string | readonly string[]; build?: string | readonly string[]; }
+function show(fields: Fields): void {
+    const { prerelease, build } = fields;
+    console.log(`${text(prerelease)}|${text(build)}`);
+    const dflt: readonly string[] = ["default", "pre"];
+    const dflt2 = "default-build";
+    const { prerelease: pre = dflt, build: metadata = dflt2 } = fields;
+    console.log(`${text(pre)}|${text(metadata)}`);
+}
+show({});
+show({ prerelease: "beta", build: "sha" });
+show({ prerelease: ["rc", "1"], build: ["sha", "2"] });

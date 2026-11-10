@@ -12,9 +12,9 @@ import (
 // present null, in source order, after the names before it, and the name holds its own type. Version.with's
 // shape from tsc's semver.ts:124, a default with an effect, a default reading an earlier name, a let
 // pattern and a destructured parameter each agree with Node natively, sanitized and on
-// JavaScript. A field whose type holds null, or is unknown, stops before its default is judged, pinned in internal/lower's
-// TestDestructuringDefaultNullStops. The mutants in internal/lower/destructuring-defaults.mutants.md: the
-// default evaluated eagerly turns default_effect.a red.
+// JavaScript. Union fields containing null and unknown are held to Node by
+// TestDestructureUnionAgrees. The eager-default mutant is documented in
+// internal/lower/destructuring-defaults.mutants.md.
 func TestDestructuringDefaultsAgree(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/destructuring_defaults"
