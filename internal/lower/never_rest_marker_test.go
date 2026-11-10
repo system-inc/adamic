@@ -132,8 +132,10 @@ func neverRestStops(t *testing.T, source, want string) {
 // never-rest parameter, lowers and agrees on both backends, the hole's failure caught with the mark
 // present; in .ts and .a without asserts signatures; and through Error.captureStackTrace(e, mark ||
 // fail), tsc's own fail, which evaluates its arguments and nothing else. With tsc's asserts signatures,
-// the marker takes the value and lowering goes on to the overload's own predicate, which R-T80 judges and
-// stops at its declaration: the next stop is the predicate rule's, past the value (Home, 8a93675).
+// the marker takes the value and lowering goes on to the predicates: assertIsDefined is proven by its body,
+// since its failing branch calls fail, a function declaration that never returns (#8n7eet3), so the next
+// stop is assertEachIsDefined's own asserts overload, which R-T80 judges and stops at its implementation
+// (Home, 8a93675, moved from assertIsDefined's line by #8n7eet3).
 func TestNeverRestMarkerLowersTscShape(t *testing.T) {
 	t.Parallel()
 	const want = "ok\na hole (marked)\nafter\n"
@@ -143,7 +145,7 @@ func TestNeverRestMarkerLowersTscShape(t *testing.T) {
 	})
 	t.Run("ts asserts", func(t *testing.T) {
 		t.Parallel()
-		neverRestStops(t, neverRestTsc+neverRestTscRun, "main.ts:11:1: stage 0 can't lower checked predicate overload target Node yet")
+		neverRestStops(t, neverRestTsc+neverRestTscRun, "main.ts:17:1: stage 0 can't lower checked predicate overload target Node yet")
 	})
 	t.Run("a", func(t *testing.T) {
 		t.Parallel()
