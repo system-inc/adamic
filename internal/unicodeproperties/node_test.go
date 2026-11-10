@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"os/exec"
-	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -14,6 +13,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/toolchain"
+	cohere "github.com/system-inc/cohere/unicodeproperties"
 )
 
 // nodeScanner is one Node process. It builds a string of every code point, split
@@ -166,28 +166,14 @@ func nodeVersion(t *testing.T) (string, string) {
 	return fields[0], fields[1]
 }
 
-func codePointExpressions() []string {
-	expressions := make([]string, 0, len(binaryNames)+len(generalCategoryNames)*3+len(scriptNames)*4)
-	for name := range binaryNames {
-		expressions = append(expressions, name)
-	}
-	for name := range generalCategoryNames {
-		expressions = append(expressions, name, "gc="+name, "General_Category="+name)
-	}
-	for name := range scriptNames {
-		expressions = append(expressions, "sc="+name, "Script="+name)
-	}
-	for name := range scriptExtensionNames {
-		expressions = append(expressions, "scx="+name, "Script_Extensions="+name)
-	}
-	sort.Strings(expressions)
-	return expressions
-}
-
+// TestNodeAgrees is Node's check of the sets the compiler reads: every spelling
+// cohere's Names lists, through this package's Lookup, so cohere's tables and
+// the Set each becomes here are both held to Node at every code point.
+//
 // Not parallel: it runs Node over every code point of every property, and the
 // two workers below already use both cores.
 func TestNodeAgrees(t *testing.T) {
-	expressions := codePointExpressions()
+	expressions := cohere.Names()
 	// Each Node process pays about 0.3 s on one core to build every code point and self-check before its first
 	// expression, so four batches instead of twenty-two do the same scans with that cost paid four times. A batch of
 	// 440 is a few seconds of Node, far inside runScanner's four-minute deadline.
