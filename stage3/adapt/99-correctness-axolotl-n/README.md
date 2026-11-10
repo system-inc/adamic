@@ -1,3 +1,8 @@
+> Nov 10 debugger-display Change 2: the active hasNode pin remains exact.
+> Replay accepts the verified moved owner in src/deprecatedCompat/controlFlowGraph.ts
+> through a virtual original home, without writing restored source. See
+> [the 99t amendment](../99-correctness-axolotl-t/debug-display-2-README.md).
+
 # 99n: hasNode observes a readonly FlowNode
 
 H10 / CW157 is kept. The other 25 sites are dropped with independent checker and lowering evidence. The branch is based on main `ab8a85bebf2a14a06fa8c3c4ca8cc93201a2309f`; the upstream source is TypeScript 6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`.
