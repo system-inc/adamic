@@ -1,0 +1,11 @@
+// A root module that never reads stdout's handle calls setBlocking through a computed key off a
+// parameter; the module it imports reads the handle, as tsc's sys.ts does for its own roots. Node blocks;
+// the call stops by name, since the scan reads every module lowered, not the roots alone (Lower's must
+// on #0bxc4jh).
+import { openHandle, type Handle } from './node_process_handle_module/reader.a';
+function block(handle: Handle): void {
+	if (handle.setBlocking) handle['setBlocking'](true);
+}
+const handle = openHandle();
+if (handle !== undefined) block(handle);
+console.log('blocked');
