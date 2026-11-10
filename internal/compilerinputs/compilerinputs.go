@@ -32,7 +32,7 @@ var lowering = []string{
 	"cohere/TypeScript/tsc/internal/stringutil", "cohere/TypeScript/tsc/internal/symlinks",
 	"cohere/TypeScript/tsc/internal/tracing", "cohere/TypeScript/tsc/internal/transformers",
 	"cohere/TypeScript/tsc/internal/tsoptions", "cohere/TypeScript/tsc/internal/tspath",
-	"cohere/TypeScript/tsc/internal/vfs",
+	"cohere/TypeScript/tsc/internal/vfs", "cohere/go.mod", "cohere/go.sum", "cohere/unicode_properties",
 }
 
 // Lowering is the compiler's repository paths, relative to the repository root, as a key's Files names them: a fresh
