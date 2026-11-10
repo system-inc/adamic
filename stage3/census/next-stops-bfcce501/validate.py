@@ -26,7 +26,7 @@ assert not any(arg.startswith('-overlay') for arg in json.loads((out/'build-stat
 assert any(arg.startswith('-overlay') for arg in json.loads((out/'entry-build-status.json').read_text())['command'])
 assert subprocess.check_output(['git','-C','/workspace/scratch/typescript-source','rev-parse','HEAD'],text=True).strip()=='050880ce59e30b356b686bd3144efe24f875ebc8'
 single={}
-for name in ['debug','semver']:
+for name in ['debug','semver','tracing']:
  records=[json.loads(line) for line in (out/(name+'-full.jsonl')).read_text().splitlines()]
  assert records[0]['latent_mode']=='full'
  assert records[-1]['status']=='relation_report'
