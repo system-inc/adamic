@@ -1,0 +1,87 @@
+internal/lower/namespaces.go
+220: 				return l.notYet(node, "var inside namespace control flow; direct singleton var is hoisted, block var is not yet modeled")
+221: 			}
+222: 		}
+223: 	}
+224: 	if l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {
+225: 		parent := node.Parent
+226: 		if l.namespaceMergedFunction(node) {
+227: 			if l.callableNamespaceUse(node) {
+228: 				return nil
+229: 			}
+230: 			return l.notYet(node, "observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented")
+231: 		}
+232: 		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != node {
+233: 			return l.notYet(node, "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports")
+234: 		}
+235: 	}
+236: 	if l.isExpression(node) && l.namespaceMember(node) {
+237: 		parent := node.Parent
+238: 		if parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == node && ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind) {
+239: 			if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
+240: 				symbol := l.symbol(node)
+
+internal/lower/namespaces.go
+254: }
+255: 
+256: func init() { refusalRules.register(2100, "namespaceRefusal", (*lowering).namespaceRefusal) }
+257: 
+258: // Follow statically known callees before executing a module statement. An unresolved
+259: // edge keeps namespace reads checked at runtime; it is never proof of no effects.
+260: func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+261: 	initialized := map[*ast.Node]bool{}
+262: 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+263: 	checkCall := func(target *ast.Node) error {
+264: 		for declaration, read := range graph.reach(target) {
+265: 			if !initialized[declaration] {
+266: 				if declaration.Kind == ast.KindEnumDeclaration {
+267: 					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
+268: 				}
+269: 				return l.notYet(read, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+270: 			}
+271: 		}
+272: 		return nil
+273: 	}
+
+internal/lower/namespaces.go
+310: 			return nil
+311: 		}
+312: 		// The enum object exists while its own member assignments execute.
+313: 		if node.Kind == ast.KindEnumDeclaration {
+314: 			initialized[node] = true
+315: 		}
+316: 		if l.namespaceValueNode(node) {
+317: 			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
+318: 				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
+319: 			}
+320: 			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] {
+321: 				return l.notYet(node, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+322: 			}
+323: 		}
+324: 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {
+325: 			if target := l.namespaceCallable(node.Expression()); target != nil {
+
+internal/lower/phantom_brands.go
+22: 		} else if proven.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
+23: 			primitive = proven
+24: 		} else if proven.Flags()&checker.TypeFlagsObject != 0 {
+25: 			objects = append(objects, proven)
+26: 		}
+27: 	}
+28: 	if primitive == nil || l.phantomOverloadOnly(node) {
+29: 		return nil
+30: 	}
+31: 	for _, object := range objects {
+32: 		for _, field := range l.checker.GetPropertiesOfType(object) {
+33: 			if checker.IsKnownSymbol(field) {
+34: 				return &Refused{Where: l.program.Where(node), What: "a primitive brand member keyed by a symbol", Fix: "key the brand member by a name the primitive does not have on its own properties or prototype chain"}
+35: 			}
+36: 			if primitiveMember(primitive.Flags(), field.Name) {
+37: 				return &Refused{Where: l.program.Where(node), What: "a primitive brand member " + field.Name + " that exists on the primitive", Fix: "use a member name the primitive does not have on its own properties or prototype chain"}
+38: 			}
+39: 			if !phantomField(l.checker.GetTypeOfSymbol(field)) {
+40: 				return &Refused{Where: l.program.Where(node), What: "a primitive brand member " + field.Name + " whose type is not void", Fix: "make " + field.Name + " undefined (or void) so the brand is phantom"}
+41: 			}
+42: 		}
+43: 	}
+44: 	return nil
