@@ -1,0 +1,1108 @@
+[
+  {
+    "root": "_namespaces/ts.moduleSpecifiers.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "_namespaces/ts.performance.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "_namespaces/ts.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "binder.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "builder.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "builderPublic.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "builderState.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "builderStatePublic.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "checker.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "commandLineParser.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "core.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "corePublic.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "debug.ts",
+    "before": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "after": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "diagnosticInformationMap.generated.ts",
+    "before": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "emitter.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "executeCommandLine.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "expressionToTypeNode.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/baseNodeFactory.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/emitHelpers.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/emitNode.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/nodeChildren.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/nodeConverters.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/nodeFactory.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/nodeTests.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/parenthesizerRules.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/utilities.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "factory/utilitiesPublic.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "hostErrors.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "moduleNameResolver.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "moduleSpecifiers.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "parser.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "path.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "performance.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "performanceCore.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "program.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "programDiagnostics.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "resolutionCache.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "scanner.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "semver.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "sourcemap.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "symbolWalker.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "sys.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "tracing.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformer.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/classFields.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/classThis.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/declarations/diagnostics.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/declarations.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/destructuring.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/es2015.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/es2016.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/es2017.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/es2018.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/es2019.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/es2020.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/es2021.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/esDecorators.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/esnext.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/generators.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/jsx.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/legacyDecorators.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/module/esnextAnd2015.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/module/impliedNodeFormatDependent.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/module/module.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/module/system.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/namedEvaluation.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/taggedTemplate.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/ts.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/typeSerializer.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "transformers/utilities.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "tsbuild.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "tsbuildPublic.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "types.ts",
+    "before": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "utilities.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "utilitiesPublic.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "visitorPublic.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "watch.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "watchPublic.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  },
+  {
+    "root": "watchUtilities.ts",
+    "before": [
+      "core.ts:2599:80",
+      "Refused",
+      "an ambient value declaration"
+    ],
+    "after": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "classification": "moved"
+  }
+]

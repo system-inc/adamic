@@ -2,5 +2,7 @@
   "parent": 5352,
   "groups": 10907,
   "action": "Pause only the outer driver while ordinary groups complete; census children retain their own 1800-second bounds.",
-  "paused_at": 1794283055.4026968
+  "paused_at": 1794283055.4026968,
+  "resumed_at": 1794284131.7731106,
+  "reason": "Group runner exited; resume driver to collect its actual child exit."
 }
