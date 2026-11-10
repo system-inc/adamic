@@ -239,7 +239,10 @@ func (p *predicateFlowProof) statement(node *ast.Node, paths []predicateFlowPath
 	case ast.KindEmptyStatement:
 		return paths, nil
 	case ast.KindExpressionStatement, ast.KindVariableStatement:
-		if node.Kind == ast.KindExpressionStatement && p.l.isPanicCall(node.Expression()) {
+		// A call that never returns ends the path as a throw does: the prelude's panic, or a function
+		// whose one body is proven never to return and that can't be replaced (neverCall, #8n7eet3), as
+		// debug.ts's assertIsDefined calls fail. Its arguments run first, but nothing after it does.
+		if node.Kind == ast.KindExpressionStatement && (&predicateVerifier{l: p.l}).neverCall(node.Expression(), map[*ast.Node]bool{}) {
 			return nil, nil
 		}
 		if predicateEffects(node) {

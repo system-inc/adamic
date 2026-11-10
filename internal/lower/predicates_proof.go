@@ -663,8 +663,12 @@ func (l *lowering) proveConditionAssertion(node *ast.Node) (predicateProof, erro
 	return predicateProof{}, nil
 }
 
-// A never annotation alone is not evidence. Inspect a direct implementation's
-// exits; recursive or bodyless failure helpers have no termination summary.
+// A never annotation alone is not evidence, and neither is a body the call might not run. A call ends a
+// path only when its callee can't be replaced and its one body never returns (#8n7eet3): the callee
+// names, bare or through a namespace or module, a symbol whose one declaration is a function declaration
+// with a body. A method, an object-literal member, a class member, a function value or a parameter can
+// each be replaced through an alias, so the body read isn't the one that runs, and an overload set has
+// no one body. Recursive or bodyless failure helpers have no termination summary.
 func (v *predicateVerifier) neverCall(node *ast.Node, visiting map[*ast.Node]bool) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindCallExpression {
@@ -673,31 +677,32 @@ func (v *predicateVerifier) neverCall(node *ast.Node, visiting map[*ast.Node]boo
 	if v.l.isPanicCall(node) {
 		return true
 	}
-	call := node.AsCallExpression()
-	callee := ast.SkipParentheses(call.Expression)
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if !ast.IsIdentifier(callee) && callee.Kind != ast.KindPropertyAccessExpression {
 		return false
 	}
 	symbol := v.l.symbol(callee)
-	if symbol == nil {
+	if symbol == nil || len(symbol.Declarations) != 1 {
 		return false
 	}
-	for _, declaration := range symbol.Declarations {
-		if !ast.IsFunctionLike(declaration) || declaration.Body() == nil || visiting[declaration] {
-			continue
-		}
-		signature := v.l.checker.GetSignatureFromDeclaration(declaration)
-		if signature == nil || v.l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsNever == 0 {
-			continue
-		}
-		visiting[declaration] = true
-		proved := v.neverStatement(declaration.Body(), visiting)
-		delete(visiting, declaration)
-		if proved {
-			return true
-		}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindFunctionDeclaration || declaration.Body() == nil || visiting[declaration] {
+		return false
 	}
-	return false
+	// The same test a checked predicate's direct call passes: the callee is the declaration itself, by
+	// its bare name or as a member of an object that is only a namespace or module, never a value that
+	// holds it.
+	if !v.l.directPredicateCallee(callee, declaration) {
+		return false
+	}
+	signature := v.l.checker.GetSignatureFromDeclaration(declaration)
+	if signature == nil || v.l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsNever == 0 {
+		return false
+	}
+	visiting[declaration] = true
+	proved := v.neverStatement(declaration.Body(), visiting)
+	delete(visiting, declaration)
+	return proved
 }
 
 func (v *predicateVerifier) neverStatement(node *ast.Node, visiting map[*ast.Node]bool) bool {
