@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/audit_deferred.py", line 97, in <module>
+    assert named['called'].get('instantiated_by') == expected[:5], (mode, 'called witnesses', named['called'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('legacy', 'called witnesses', {'measurement': 'measured on a checker-rejected program', 'where': '/workspace/scratch/abrq61p/witness-mutant/source/a.a:3:1', 'kind': 'KindFunctionDeclaration', 'body_start': 170, 'body_end': 188, 'instantiated': True, 'status': 'deferred_generic_instantiation', 'checker_diagnostics': [], 'name': 'called'})

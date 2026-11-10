@@ -86,7 +86,7 @@ def compare(base, head, tree, typescript, normalize=True):
         if bu.keys() != hu.keys():
             raise ValueError('unit identities differ')
         for u in bu:
-            stable = lambda v: {k: x for k, x in v.items() if k not in ('where', 'status', 'instantiated')}
+            stable = lambda v: {k: x for k, x in v.items() if k not in ('where', 'status', 'instantiated', 'instantiated_by')}
             if stable(bu[u]) != stable(hu[u]) or ((bu[u]['status'] in ('attempted', 'panic')) !=
                                                (hu[u]['status'] in ('attempted', 'panic'))):
                 raise ValueError(f'unit eligibility differs: {u}')

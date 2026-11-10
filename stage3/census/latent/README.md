@@ -278,8 +278,12 @@ The overlay records `instantiated` for each deferred unit after all files have
 been processed. It means a body entry was reached through a concrete generic
 call with all binders mapped; it does not mean successful lowering or exhaustive
 instantiation coverage. A nested unit needs its own body entry witness. Witnesses
-survive recovery rollback and callers in later files. Never-reached units are
-unexamined coverage gaps, never clean code. Deferred body bytes form their own
+survive recovery rollback and callers in later files. A false flag means no
+fully mapped body-entry witness, not that the body was never attempted. Lowering
+may enter a body with unread binders and either stop or complete it. In particular,
+its generic type-argument readback does not inspect arbitrary record properties
+or mapped record types. The `never_reached` report key lists false flags and must
+not be interpreted as proof of zero body entry. Deferred body bytes form their own
 union bucket, neither examined nor blocked, even when a call witness exists;
 that witness alone cannot prove byte coverage. The speculative traversal is
 reported separately from concrete generic lowering coverage.
@@ -432,3 +436,48 @@ body skips and piece ownership guards. A wrapped deferred failure keeps its phas
 while propagating to the caller. The real pin covers both a direct written-any
 function and a concrete generic call, including an ordinary refusal later in the
 callee. No new lowering field carries this error.
+
+## Deferred caller witnesses
+
+Deferred units also carry `instantiated_by` when witnesses exist: at most five
+unique records, ordered by their serialized `(unit, call_site, type_arguments)`
+fields. `unit` is the independently attempted census unit; `call_site` is the
+concrete generic call. Type arguments follow declaration binder order and use
+checker TypeToString. A nested body inherits the concrete outer call's context.
+The field records the same entry hook as `instantiated`, including its existing
+bodyless-signature cases. It does not establish successful lowering.
+
+The raw witness ledger and scoped generic-call context are run-owned globals,
+not fields of lowering. Statement rollback cannot erase them. Checker/type
+identities are retained until every file and the end relation report complete;
+only then are types printed, witnesses deduplicated/sorted, and the first five
+attached. A missing mapped binder in the old hook is printed as `<unmapped>`.
+No lowering snapshot or program-fact policy changes. The original boolean hook
+and census scope remain unchanged. `LATENT_MUTANT_DROP_INSTANTIATED_BY=1` drops
+only witness recording; audit_deferred.py must reject it.
+
+`LATENT_INSTANTIATION_REQUESTS=PATH` optionally records generic inference entry
+in a separate JSONL stream (`unit`, `call_site`, `target`). It distinguishes a
+caller that never reached a call from an attempted instantiation that failed
+before the concrete body hook. It never adds findings or changes the latent
+stream schema.
+
+### Initializers, failures and unread binders
+
+Recording is independent of the kind of census unit. `audit_deferred.py` checks
+an initializer-only concrete call and a concrete call whose body fails after
+entry. Both set the flag and retain the initializer's unit and call site. An
+initializer-only dropped-witness mutant must fail the new witness assertion.
+The body hook runs before body lowering, not only after successful lowering.
+
+For the abrq61p source, createComputedCompilerOptions and updateCreateProgram
+have one declared binder and zero recovered mappings. The former hides T in a
+mapped record type; the latter hides T in the createProgram property of an
+anonymous record. Their body entries therefore do not qualify for the existing
+fully mapped flag. No inference or recording policy is changed to reclassify
+these calls. See evidence/deferred-reach/revision/CASES.md for the diagnostic
+traces, source-level explanation and first-stop comparison.
+
+The paired reader's metadata exclusion and its positive and red-mutant tests
+ship in this same tooling commit. Restoring instantiated_by to its eligibility
+comparison must make the unchanged positive test fail.

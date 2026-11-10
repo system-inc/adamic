@@ -1,0 +1,28 @@
+{
+  "legacy": {
+    "base_sha256": "4f2dcc7759d6906994062ea57229ac0513b34baf79d8ec6f235e7ae7eb51be78",
+    "stripped_sha256": "4f2dcc7759d6906994062ea57229ac0513b34baf79d8ec6f235e7ae7eb51be78",
+    "head_sha256": "36f69131883effa2e19a2ceef51490667de08012350ecb1bfb831d2adcf38cd6",
+    "units_with_witnesses": 2,
+    "byte_identical_except_instantiated_by": true,
+    "meter_summary_identical": true
+  },
+  "full": {
+    "base_sha256": "8538fc22ea3d65046f223b4650cb6e6bccfa27e772d63485b2f2ec1d8a4a3961",
+    "stripped_sha256": "8538fc22ea3d65046f223b4650cb6e6bccfa27e772d63485b2f2ec1d8a4a3961",
+    "head_sha256": "d74a1becd3692c890be1792684438948e5b11a9cd2d8cd46b4b684cd0b04db7f",
+    "units_with_witnesses": 3,
+    "byte_identical_except_instantiated_by": true,
+    "meter_summary_identical": true
+  },
+  "speculative": {
+    "base_sha256": "0388676aa4726cee94c08cbc5681421182f098693e37a2bbab6a6f7ae6c6f2c5",
+    "stripped_sha256": "0388676aa4726cee94c08cbc5681421182f098693e37a2bbab6a6f7ae6c6f2c5",
+    "head_sha256": "6e1bca5bcba1712fcf365a70226d1195edc43137087a05789d0298f7d43082ba",
+    "units_with_witnesses": 3,
+    "byte_identical_except_instantiated_by": true,
+    "meter_summary_identical": true
+  },
+  "pair_before_fix": "unit eligibility differs: ('a.a', '941fafe397aac0e7f90d6958f4334761237ffbb0bd193fd3b1b3d05b668b82f6', 132)",
+  "pair_with_one_line_fix": "identical counts and no deltas"
+}
