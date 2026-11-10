@@ -11,6 +11,5 @@ async function check(value: Animal, test: ((value: Animal) => boolean) | undefin
 	await Promise.resolve();
 	return test === undefined || test(value);
 }
-check(new Dog(), (dog: Dog): boolean => dog.bark() === 'woof').then((passed: boolean): void => {
-	console.log(String(passed));
-});
+const passed = await check(new Dog(), (dog: Dog): boolean => dog.bark() === 'woof');
+console.log(String(passed));
