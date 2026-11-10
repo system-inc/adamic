@@ -1,0 +1,11 @@
+// stdout's handle's setBlocking called through a computed key off a parameter, a road the origin walk
+// doesn't follow. Node calls it with the handle as this and blocks; the call would reach the closure
+// without its object, so it stops by name in a program that reads the handle (#0bxc4jh).
+import 'node:process';
+type Handle = { setBlocking?: (value: boolean) => void };
+function block(handle: Handle): void {
+	if (handle.setBlocking) handle['setBlocking'](true);
+}
+const handle = (process.stdout as any)._handle as Handle | undefined;
+if (handle !== undefined) block(handle);
+console.log('blocked');
