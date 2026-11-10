@@ -28,9 +28,9 @@ The additional namespaces_observed_narrowing.a regression clears an optional exp
 
 ## Mutants
 
-| Mutation | Check that fails |
-| --- | --- |
-| Change isDebugging initializer to true in IR | Node stdout comparison; native exits cleanly and sanitizers remain clean |
+| Mutation                                                 | Check that fails                                                                                                             |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Change isDebugging initializer to true in IR             | Node stdout comparison; native exits cleanly and sanitizers remain clean                                                     |
 | Restore localRead's old !comparedWithUndefined condition | Native and checked JavaScript exit 70 with the narrowed-value ready-check panic, whereas Node exits 0 and observes undefined |
 
 The second mutation was applied to the compiler and restored in a finally block. The restored regression passes. Logs: /tmp/namespaces-debug-focused2.log, /tmp/namespaces-debug-observation-mutant.log, /tmp/namespaces-debug-observation-restored.log. The first exploratory test failure is retained in /tmp/namespaces-debug-focused.log.

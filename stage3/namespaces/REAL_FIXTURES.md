@@ -6,33 +6,33 @@ All twelve unchanged .a fixtures were built against the base, each of the six or
 
 ## Count moved by each step
 
-| Point | Commit | Compiles / 12 | Delta | Newly compiling fixture |
-| --- | --- | ---: | ---: | --- |
-| base | adc45ca | 1 | baseline | 12_builder_release_cache.a |
-| 1 state | aff39ff | 2 | +1 | 07_parser_singleton.a |
-| 2 enums | b0e9b15 | 3 | +1 | 11_status_type_only.a |
-| 3 bodies | f5161d8 | 3 | +0 | None |
-| 4 exports | 083e7a9 | 4 | +1 | 04_debug_state.a |
-| 5 escape refusal | 2f40563 | 4 | +0 | None |
-| 6 merge refusals | ce8a2ac | 4 | +0 | None |
-| fixture branch merge + hoisting fix | 2ba6a10 | 4 | +0 | None |
+| Point                               | Commit  | Compiles / 12 |    Delta | Newly compiling fixture    |
+| ----------------------------------- | ------- | ------------: | -------: | -------------------------- |
+| base                                | adc45ca |             1 | baseline | 12_builder_release_cache.a |
+| 1 state                             | aff39ff |             2 |       +1 | 07_parser_singleton.a      |
+| 2 enums                             | b0e9b15 |             3 |       +1 | 11_status_type_only.a      |
+| 3 bodies                            | f5161d8 |             3 |       +0 | None                       |
+| 4 exports                           | 083e7a9 |             4 |       +1 | 04_debug_state.a           |
+| 5 escape refusal                    | 2f40563 |             4 |       +0 | None                       |
+| 6 merge refusals                    | ce8a2ac |             4 |       +0 | None                       |
+| fixture branch merge + hoisting fix | 2ba6a10 |             4 |       +0 | None                       |
 
 ## All twelve on the merged branch
 
-| Fixture | Outcome |
-| --- | --- |
-| 01_builder_state.a | NotYet |
-| 02_jsx_names.a | NotYet |
-| 03_react_names.a | NotYet |
-| 04_debug_state.a | Compiles; native and sanitized native match Node |
-| 05_debug_log_merge.a | NotYet |
-| 06_binary_expression_state.a | Refused |
-| 07_parser_singleton.a | Compiles; native and sanitized native match Node |
-| 08_parser_jsdoc_nested.a | NotYet |
-| 09_incremental_parser.a | Refused |
-| 10_tracing_escape.a | NotYet |
-| 11_status_type_only.a | Compiles; native and sanitized native match Node |
-| 12_builder_release_cache.a | Compiles; native and sanitized native match Node |
+| Fixture                      | Outcome                                          |
+| ---------------------------- | ------------------------------------------------ |
+| 01_builder_state.a           | NotYet                                           |
+| 02_jsx_names.a               | NotYet                                           |
+| 03_react_names.a             | NotYet                                           |
+| 04_debug_state.a             | Compiles; native and sanitized native match Node |
+| 05_debug_log_merge.a         | NotYet                                           |
+| 06_binary_expression_state.a | Refused                                          |
+| 07_parser_singleton.a        | Compiles; native and sanitized native match Node |
+| 08_parser_jsdoc_nested.a     | NotYet                                           |
+| 09_incremental_parser.a      | Refused                                          |
+| 10_tracing_escape.a          | NotYet                                           |
+| 11_status_type_only.a        | Compiles; native and sanitized native match Node |
+| 12_builder_release_cache.a   | Compiles; native and sanitized native match Node |
 
 All Node observations were regenerated from the original source using oracle/node.mjs and Node's independent transform, and matched the fixture author's status.json byte for byte. Every successful historical native run matches stdout, stderr and exit status. The final four also match under ASan/UBSan with detect_leaks=1 and halt_on_error=1. No silent miscompile was observed. Exact outputs, diagnostics, commit IDs and outcomes are in [fixture-matrix.json](fixture-matrix.json). The historical fixture author's status.json and validation.json are preserved.
 

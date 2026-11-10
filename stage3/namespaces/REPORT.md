@@ -29,18 +29,18 @@ NAMESPACE_TYPESCRIPT=/tmp/namespaces-stock/node_modules/typescript node stage3/n
 
 The generator, census.json and results.json are committed. Declaration shapes preserve names, export flags, declaration kinds, missing initializers, eager calls, generic arity, overload signatures, destructuring, nested declarations and relevant merges. External types, function bodies and enum expressions are normalized. This establishes which isolated declaration shapes lower, not which original implementations run.
 
-| Namespace | Shape result | Observed first blocker |
-| --- | --- | --- |
-| BuilderState | Lowers | None in normalized shape |
-| JsxNames | Lowers | None in normalized shape |
-| ReactNames | Lowers | None in normalized shape |
-| BinaryExpressionState | Lowers | None in normalized shape |
-| Parser.JSDocParser | Lowers | None in normalized shape |
-| Parser | NotYet | Scanner/factory initialization call |
-| IncrementalParser | NotYet | Bodyless overload signature |
-| Debug | NotYet | Cache initialization call |
-| Debug.log | NotYet | Callable namespace container |
-| tracingEnabled | NotYet | Escaped namespace container |
+| Namespace             | Shape result | Observed first blocker              |
+| --------------------- | ------------ | ----------------------------------- |
+| BuilderState          | Lowers       | None in normalized shape            |
+| JsxNames              | Lowers       | None in normalized shape            |
+| ReactNames            | Lowers       | None in normalized shape            |
+| BinaryExpressionState | Lowers       | None in normalized shape            |
+| Parser.JSDocParser    | Lowers       | None in normalized shape            |
+| Parser                | NotYet       | Scanner/factory initialization call |
+| IncrementalParser     | NotYet       | Bodyless overload signature         |
+| Debug                 | NotYet       | Cache initialization call           |
+| Debug.log             | NotYet       | Callable namespace container        |
+| tracingEnabled        | NotYet       | Escaped namespace container         |
 
 Parser has 437 functions, 30 var declarations, two enums, a nested namespace, 18 overload signatures and a destructured factory var binding. Supporting its mutable state and enums is necessary but insufficient for the day 3 proof. Debug also has a class, overloads and a callable merge. Full compiler types and bodies were not compiled. The inference that the five accepted shapes can lower their original implementations is not established.
 
@@ -64,21 +64,21 @@ ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNamespace|TestNativeA
 
 ## Mutant evidence
 
-| Mutation | What caught it |
-| --- | --- |
-| Wrong scoped function result | Independent Node stdout, clean native exit and sanitizers |
-| Wrong scoped constant | Independent Node stdout, clean native exit and sanitizers |
-| Parser enum SourceElements changed to 99 | Independent Node stdout, clean native exit and sanitizers |
-| Swap the last two initialized namespace/module outputs | Independent Node stdout, clean native exit and sanitizers |
-| Outside exported state write changed from 3 to 30 | Independent Node stdout, clean native exit and sanitizers |
-| Drop assignment initializing parser string state | Independent Node comparison catches ready-check failure |
-| Remove all hoisted token declarations | Independent Node comparison catches premature read failure |
-| Remove singleton ready check | Checked JavaScript exit comparison catches native failure-contract difference |
-| Remove escaped-container guard | Specific NotYet reason regression fails; later unbound-name refusal is insufficient |
-| Remove callable merge guard | Specific callable-container reason regression fails |
-| Remove constructor merge guard | Regression fails because formerly refused class merge lowers |
-| Remove namespace-class guard | Regression fails because formerly refused class declaration lowers |
-| Remove control-flow var guard | Regression fails because expected NotYet becomes a generic var Refused |
+| Mutation                                               | What caught it                                                                      |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| Wrong scoped function result                           | Independent Node stdout, clean native exit and sanitizers                           |
+| Wrong scoped constant                                  | Independent Node stdout, clean native exit and sanitizers                           |
+| Parser enum SourceElements changed to 99               | Independent Node stdout, clean native exit and sanitizers                           |
+| Swap the last two initialized namespace/module outputs | Independent Node stdout, clean native exit and sanitizers                           |
+| Outside exported state write changed from 3 to 30      | Independent Node stdout, clean native exit and sanitizers                           |
+| Drop assignment initializing parser string state       | Independent Node comparison catches ready-check failure                             |
+| Remove all hoisted token declarations                  | Independent Node comparison catches premature read failure                          |
+| Remove singleton ready check                           | Checked JavaScript exit comparison catches native failure-contract difference       |
+| Remove escaped-container guard                         | Specific NotYet reason regression fails; later unbound-name refusal is insufficient |
+| Remove callable merge guard                            | Specific callable-container reason regression fails                                 |
+| Remove constructor merge guard                         | Regression fails because formerly refused class merge lowers                        |
+| Remove namespace-class guard                           | Regression fails because formerly refused class declaration lowers                  |
+| Remove control-flow var guard                          | Regression fails because expected NotYet becomes a generic var Refused              |
 
 Runtime mutant evidence is in /tmp/namespaces-final-uncached2.log. Guard mutations were run against the real compiler, one at a time, then restored: /tmp/namespaces-escape-mutant.log, /tmp/namespaces-function-merge-mutant2.log, /tmp/namespaces-class-merge-mutant2.log, /tmp/namespaces-namespace-class-mutant.log, /tmp/namespaces-block-var-mutant.log. A guard mutant proves a diagnostic boundary, not correct runtime object semantics.
 
