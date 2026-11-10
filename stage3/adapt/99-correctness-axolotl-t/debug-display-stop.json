@@ -1,17 +1,29 @@
 {
   "status": "stopped",
-  "gate": "normal emitted JavaScript diff must be limited to the reviewed owners",
-  "normal_comparison_child_exit": 1,
-  "normal_candidate_build_child_exit": 0,
-  "amended_full_apply": "not run after the failing emitted-byte gate",
-  "source_delta": "only five owners in debug.ts",
-  "counterexample": "_tsc.js removes getJSDocModifierFlagsNoCache, getEffectiveModifierFlagsNoCache and isArrayTypeNode outside the five owners; enum and predicate bindings are also renamed throughout bundles",
-  "normal_changed_bundles": [
-    "_tsc.js",
-    "typescript.js",
-    "run.js"
+  "gate": "Every removed declaration reference must be directly inside one of the five reviewed owners",
+  "classification": {
+    "a": 3204,
+    "b": 1,
+    "c": 1
+  },
+  "class_c_bundle": "_tsc.js",
+  "class_c_hunk": 55,
+  "reason": "getJSDocModifierFlagsNoCache is referenced at _tsc.js:17073:51 by the also-removed getEffectiveModifierFlagsNoCache, outside the five owners",
+  "all_residual_bytes_explained_by_identifier_renames_and_three_deletions": true,
+  "runtime_exports": "byte-identical sorted module/ts/CommonJS key arrays",
+  "identifier_normalization_accepted": true,
+  "classification_child_exit": 1,
+  "bundle_analysis_child_exits": [
+    0,
+    0,
+    0
   ],
-  "public_declarations": "byte-identical",
-  "no_normalization_accepted": true,
+  "export_comparison_child_exit": 0,
+  "preliminary_analysis_child_exits": [
+    143,
+    1
+  ],
+  "amended_full_apply": "not run after explicit class-(c) stop",
+  "dependent_lane_runs": "not run after explicit class-(c) stop",
   "ready_to_land": false
 }

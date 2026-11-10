@@ -1,4 +1,4 @@
-> Candidate status: stopped at the normal bundle owner-only diff gate; not ready to land.
+> Candidate status: stopped at one class-(c) hunk under the revised direct-reference rule; runtime export keys are unchanged.
 
 > Nov 10 debugger-display amendment: current behavior and evidence are in
 > [debug-display-README.md](debug-display-README.md) and

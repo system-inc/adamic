@@ -1,5 +1,59 @@
-> STOPPED at the normal emitted-JavaScript owner-only gate. The candidate is
-> not ready to land. See debug-display-stop.json and debug-display-PROOF.md.
+> STOPPED: one class-(c) hunk under the revised direct-reference rule.
+> Runtime export keys are unchanged. ready_to_land remains false.
+
+## Follow-up: complete bundle hunk classification
+
+The revised gate permits mechanical bundler fallout. Every outside-owner hunk
+is classified in debug-display-bundle-classification.json. The complete normal
+before/after emitted patch, including the five owner edits, is retained in
+debug-display-all-emitted-javascript-hunks.patch.gz.
+
+| Bundle | (a) pure rename | (b) removed declaration | (c) stop |
+| --- | ---: | ---: | ---: |
+| _tsc.js | 772 | 1 | 1 |
+| typescript.js | 1185 | 0 | 0 |
+| run.js | 1247 | 0 | 0 |
+| Total | 3204 | 1 | 1 |
+
+The analyzer first replaces exactly the five owner texts with their after
+texts, then inventories every residual hunk with three context lines. For (a),
+only terminal decimal suffixes on AST Identifier nodes are normalized. Strings,
+comments, numeric literals, punctuation and whitespace are untouched. Every
+class-(a) hunk compares byte-identically after that transformation; both
+normalized hashes are retained for each hunk. A mixed rename/deletion hunk
+receives only one class, not two.
+
+Only _tsc.js drops declarations. The reference list below is exhaustive and
+resolved by TypeScript symbol identity in the original unadapted bundle;
+declaration names themselves are excluded from the reference count.
+
+| Removed function | Every original reference | Enclosing function | Inside a reviewed owner? |
+| --- | --- | --- | --- |
+| getJSDocModifierFlagsNoCache | _tsc.js:17073:51 | getEffectiveModifierFlagsNoCache | No |
+| getEffectiveModifierFlagsNoCache | _tsc.js:1791:42 | enableDebugInfo | Yes |
+| isArrayTypeNode | _tsc.js:1775:1231 | enableDebugInfo | Yes |
+
+The isArrayTypeNode deletion hunk is (b). The hunk deleting both modifier
+helpers is (c): getJSDocModifierFlagsNoCache has a reference outside the five
+owners, inside the also-removed getEffectiveModifierFlagsNoCache. Its removal
+is a mechanically explained transitive cascade, but it does not satisfy the
+specified requirement that every reference be directly inside one of the five
+owners. No other functions or bindings disappear. Whole residual bundles are
+byte-identical after identifier normalization plus exactly these three
+declaration deletions; there is no unexplained remaining emitted delta.
+
+The runtime export comparison passes on Node v24.19.0. Loading each real
+normal typescript.js through Node import and require gives byte-identical
+sorted Object.keys arrays: 2258 module keys and 2256 keys on the separate ts
+object/CommonJS exports. No key is added or removed. The complete arrays and
+hashes are in debug-display-runtime-export-keys.json; the executable check is
+debug-display-export-keys.cjs.
+
+Current result: STOP under the direct-reference condition of class (b).
+ready_to_land remains false. The amended full apply and dependent lane runs
+are not started after this explicit class-(c) stop. The FlowGraphNode widening
+at debug.ts:1021:29 is untouched. This follow-up changes evidence and prose
+only, not adapt.cjs or pins.json.
 
 # Debugger-display family amendment to 99t
 
