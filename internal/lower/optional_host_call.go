@@ -12,18 +12,35 @@ import (
 // (#3625x53). optionalCall admits object?.method(...) when lib doesn't declare the method, and Node's
 // @types files aren't lib's (load.IsNodeLibrary, not load.IsLibrary), so such a call went on to builtin,
 // whose host lowering lowered it as a plain call unless it read the optional flag itself. Dirent's
-// predicates (nodeFSDirectoryCall) don't: an undefined entry was a null access natively and a TypeError
+// predicates (nodeFSDirectoryCall) didn't: an undefined entry was a null access natively and a TypeError
 // on the JavaScript backend, where Node gives undefined. So the call is NotYet unless the host lowering
 // of every Node declaration it may reach is named in optionalHostCallGuarded.
 
 // optionalHostCallGuarded names each Node host method whose own lowering of a call through ?. tests the
 // receiver, evaluates it once and gives undefined where it's missing, by its registration name
-// (nodeLibraryName). It's empty: of the host lowerings that read NodeFlagsOptionalChain, each refuses
-// the optional call or read (Error.captureStackTrace and global.gc, process.platform, process.env,
-// realpathSync.native, process.stdout.write and isTTY, fs.watchFile and unwatchFile, Stats' predicates,
-// fs.watch and FSWatcher.on), and the rest don't read it. A host lowering that comes to guard its
-// receiver adds its member here, with a pin that runs it on an undefined receiver against Node.
-var optionalHostCallGuarded = map[string]bool{}
+// (nodeLibraryName). StatsBase's and Dirent's predicates guard through optionalIntrinsic's scoped mark,
+// checked by nodeFSFile (library_node_fs_file.go) and nodeFSDirectoryCall (library_node_fs_directory.go).
+// The other host lowerings that read NodeFlagsOptionalChain refuse the optional call or read
+// (Error.captureStackTrace and global.gc, process.platform, process.env, realpathSync.native,
+// process.stdout.write and isTTY, fs.watchFile and unwatchFile, fs.watch and FSWatcher.on), and the rest
+// don't read it. A host lowering that comes to guard its receiver adds its member here, with a pin
+// that runs it on an undefined receiver against Node.
+var optionalHostCallGuarded = map[string]bool{
+	"node:fs.StatsBase.isFile":            true,
+	"node:fs.StatsBase.isDirectory":       true,
+	"node:fs.StatsBase.isSymbolicLink":    true,
+	"node:fs.StatsBase.isBlockDevice":     true,
+	"node:fs.StatsBase.isCharacterDevice": true,
+	"node:fs.StatsBase.isFIFO":            true,
+	"node:fs.StatsBase.isSocket":          true,
+	"node:fs.Dirent.isFile":               true,
+	"node:fs.Dirent.isDirectory":          true,
+	"node:fs.Dirent.isSymbolicLink":       true,
+	"node:fs.Dirent.isBlockDevice":        true,
+	"node:fs.Dirent.isCharacterDevice":    true,
+	"node:fs.Dirent.isFIFO":               true,
+	"node:fs.Dirent.isSocket":             true,
+}
 
 // optionalHostCallNotYet is what a call through ?. to a Node host method stops as when its lowering
 // isn't named in optionalHostCallGuarded, followed by the members it reaches.
