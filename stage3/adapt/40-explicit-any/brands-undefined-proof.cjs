@@ -67,6 +67,8 @@ if (mode === 'resolved-before' || mode === 'resolved-after') {
         assert.throws(() => resolved.plan(source.replace('_isResolvedConfigFileName: never', '_isResolvedConfigFileName: string')));
         assert.equal(resolved.plan(resolved.plan(source).text).files, 0);
         const report = {class: resolved.rule.class, sourceSites: 1, publicLines: 1,
+            compilerSources: Object.keys(state.sources).length, changedSource: resolved.rule.file,
+            sourceBeforeSha256: hash(source), sourceAfterSha256: hash(state.sources[resolved.rule.file]),
             jsFiles: Object.keys(state.js).length, emittedJavaScriptByteIdentical: true,
             declarationFiles: Object.keys(state.declarations).length, changedDeclarations,
             referenceUnchanged: true, ownerDriftRejected: true, idempotent: true};
