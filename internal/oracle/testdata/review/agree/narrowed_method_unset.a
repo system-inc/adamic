@@ -1,0 +1,24 @@
+// A narrowed optional method cleared behind the narrowing, then called with ?. (Lower's should on
+// #0bxc4jh). The checker keeps counter.add narrowed across clear's call, which writes undefined into
+// it, so only the call's own ?. sees it's gone: the call is undefined and its argument is never
+// evaluated, as on Node. The Method road's lookup is what the ?. tests, never the narrowing.
+interface Counter {
+	x: number;
+	add?: (amount: number) => number;
+}
+function clear(counter: Counter): void {
+	counter.add = undefined;
+}
+function argument(): number {
+	console.log('argument evaluated');
+	return 1;
+}
+function run(counter: Counter): void {
+	if (counter.add) {
+		console.log(String(counter.add(4)));
+		clear(counter);
+		console.log(String(counter.add?.(argument())));
+	}
+}
+run({ x: 3, add: (amount: number): number => amount + 3 });
+console.log('done');
