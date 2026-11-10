@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/workspace/overload-parent-overlay",
+    "/workspace/overload-parent-entry"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 2.006985942999961,
+  "peak_rss_kib": 9344,
+  "user_seconds": 0.041079,
+  "system_seconds": 0.026483999999999997
+}

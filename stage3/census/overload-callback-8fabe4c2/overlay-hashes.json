@@ -1,0 +1,238 @@
+{
+  "parent": [
+    {
+      "source": "/workspace/overload-census/internal/load/latent_hook.go",
+      "overlay": "/workspace/overload-parent-entry/entry_load_hook.go",
+      "sha256": "3ab844f5c284339a089be8d442e361fff557833b1f2635aba3387fb67f14a7e8"
+    },
+    {
+      "source": "/workspace/overload-census/internal/load/load.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_load_load.go",
+      "sha256": "fb7e14fd673f689330564b6486c5db6e0722bf5b3a8fab103322bd7d49f3eb07"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/entries_records.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_entries_records.go",
+      "sha256": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/expression.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_expression.go",
+      "sha256": "4cdbe398760b8ea6b56ecc20a1abdbf7788be34106edc73825d2c2e5191d6754"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/functions.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_functions.go",
+      "sha256": "dc3869f8a2ae29c27d2b8129a4e0bd3e558e208f78ea26abc101d51a6ff3cee5"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/generic.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_generic.go",
+      "sha256": "41e0de3c799522abebf7c5546520aad6cc7ba4260ec85114d97343b54ff3aac0"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_full.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_full.go",
+      "sha256": "e88d36d8fa47efebe1983d3d8860f19ea069690cd3c9c80128fda592d0216877"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_hook.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_hook.go",
+      "sha256": "83995a1dd563117f03902382d72634f6c83dc8f3cbc6af55319b8b4b04bdcb32"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_piece.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_piece.go",
+      "sha256": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_progress.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_progress.go",
+      "sha256": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_relation_overflow.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_relation_overflow.go",
+      "sha256": "1630d2346899454d170faff069c67e6cdeea959cba13477e4a8a3d6026e4cf63"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_replay.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_replay.go",
+      "sha256": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_speculative.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_speculative.go",
+      "sha256": "5ef44cd41bb053d7fa5642fdacd9ea6bb4ac7c9f59fb10861f72b14dee41333f"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_state.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_state.go",
+      "sha256": "adf38ad3cf04201923be198f9d54acb8d392c2659f667fcce337f588fff0d30e"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_timing.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_timing.go",
+      "sha256": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/latent_units.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_latent_units.go",
+      "sha256": "197ead8f7f0575dfe0534832b411d424acef56f7d0476970af1c94b77e4742ee"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/locals.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_locals.go",
+      "sha256": "9f7eaef46469ee896c75bdccdd70269f4bbe302f0a4d1a475f4b27be8278a4b6"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/lower.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_lower.go",
+      "sha256": "f792b5f057256d8e31fedf5c70a0361fdf7afcb241b1a42ce7771dfac4b85d7b"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/refusals.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_refusals.go",
+      "sha256": "285dae5f5b638809096cd8375e660908bde6a1f9b057c0269ba4955686a2e0e3"
+    },
+    {
+      "source": "/workspace/overload-census/internal/lower/statements.go",
+      "overlay": "/workspace/overload-parent-overlay/internal_lower_statements.go",
+      "sha256": "a46c2a21649942d69e81d5634b137184a8ce6fd8e4931396e7230c1f717cad36"
+    },
+    {
+      "source": "/workspace/overload-census/stage3/census/latent/replay/worker/main.go",
+      "overlay": "/workspace/overload-parent-overlay/stage3_census_latent_replay_worker_main.go",
+      "sha256": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34"
+    },
+    {
+      "source": "/workspace/overload-census/stage3/census/latent/tool/main.go",
+      "overlay": "/workspace/overload-parent-entry/entry_main.go",
+      "sha256": "d5b86400cd24f11b6c9f05b3dd2892fd2a78f719810bf432adffa4205da4be0c"
+    },
+    {
+      "source": "/workspace/overload-census/stage3/census/latent/tool/relation_overflow_test.go",
+      "overlay": "/workspace/overload-parent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+      "sha256": "e63247a585d0722fcbfe1a9f32b9f4e672d48f6f4520b7459100b94d61907c6c"
+    }
+  ],
+  "parent_binary_sha256": "3c9d3f51209a141753aeb986a23d97f0bff48d2c080de7b8b26730aa74504297",
+  "head": [
+    {
+      "source": "/workspace/overload-head/internal/load/latent_hook.go",
+      "overlay": "/workspace/overload-head-entry/entry_load_hook.go",
+      "sha256": "3ab844f5c284339a089be8d442e361fff557833b1f2635aba3387fb67f14a7e8"
+    },
+    {
+      "source": "/workspace/overload-head/internal/load/load.go",
+      "overlay": "/workspace/overload-head-overlay/internal_load_load.go",
+      "sha256": "fb7e14fd673f689330564b6486c5db6e0722bf5b3a8fab103322bd7d49f3eb07"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/entries_records.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_entries_records.go",
+      "sha256": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/expression.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_expression.go",
+      "sha256": "4cdbe398760b8ea6b56ecc20a1abdbf7788be34106edc73825d2c2e5191d6754"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/functions.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_functions.go",
+      "sha256": "dc3869f8a2ae29c27d2b8129a4e0bd3e558e208f78ea26abc101d51a6ff3cee5"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/generic.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_generic.go",
+      "sha256": "41e0de3c799522abebf7c5546520aad6cc7ba4260ec85114d97343b54ff3aac0"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_full.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_full.go",
+      "sha256": "e88d36d8fa47efebe1983d3d8860f19ea069690cd3c9c80128fda592d0216877"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_hook.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_hook.go",
+      "sha256": "83995a1dd563117f03902382d72634f6c83dc8f3cbc6af55319b8b4b04bdcb32"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_piece.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_piece.go",
+      "sha256": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_progress.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_progress.go",
+      "sha256": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_relation_overflow.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_relation_overflow.go",
+      "sha256": "1630d2346899454d170faff069c67e6cdeea959cba13477e4a8a3d6026e4cf63"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_replay.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_replay.go",
+      "sha256": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_speculative.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_speculative.go",
+      "sha256": "5ef44cd41bb053d7fa5642fdacd9ea6bb4ac7c9f59fb10861f72b14dee41333f"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_state.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_state.go",
+      "sha256": "adf38ad3cf04201923be198f9d54acb8d392c2659f667fcce337f588fff0d30e"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_timing.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_timing.go",
+      "sha256": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/latent_units.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_latent_units.go",
+      "sha256": "197ead8f7f0575dfe0534832b411d424acef56f7d0476970af1c94b77e4742ee"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/locals.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_locals.go",
+      "sha256": "9f7eaef46469ee896c75bdccdd70269f4bbe302f0a4d1a475f4b27be8278a4b6"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/lower.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_lower.go",
+      "sha256": "f792b5f057256d8e31fedf5c70a0361fdf7afcb241b1a42ce7771dfac4b85d7b"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/refusals.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_refusals.go",
+      "sha256": "285dae5f5b638809096cd8375e660908bde6a1f9b057c0269ba4955686a2e0e3"
+    },
+    {
+      "source": "/workspace/overload-head/internal/lower/statements.go",
+      "overlay": "/workspace/overload-head-overlay/internal_lower_statements.go",
+      "sha256": "a46c2a21649942d69e81d5634b137184a8ce6fd8e4931396e7230c1f717cad36"
+    },
+    {
+      "source": "/workspace/overload-head/stage3/census/latent/replay/worker/main.go",
+      "overlay": "/workspace/overload-head-overlay/stage3_census_latent_replay_worker_main.go",
+      "sha256": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34"
+    },
+    {
+      "source": "/workspace/overload-head/stage3/census/latent/tool/main.go",
+      "overlay": "/workspace/overload-head-entry/entry_main.go",
+      "sha256": "d5b86400cd24f11b6c9f05b3dd2892fd2a78f719810bf432adffa4205da4be0c"
+    },
+    {
+      "source": "/workspace/overload-head/stage3/census/latent/tool/relation_overflow_test.go",
+      "overlay": "/workspace/overload-head-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+      "sha256": "e63247a585d0722fcbfe1a9f32b9f4e672d48f6f4520b7459100b94d61907c6c"
+    }
+  ],
+  "head_binary_sha256": "93fc2dc28a87ea67b2994cb0183106fcb22cca2678b981e3c1cb7868709af564"
+}
