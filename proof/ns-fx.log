@@ -1,0 +1,19 @@
+=== STEP TestFixturesNamespaces
+=== RUN   TestFixturesNamespaces
+=== PAUSE TestFixturesNamespaces
+=== CONT  TestFixturesNamespaces
+    products_test.go:145: python3 timed out: context deadline exceeded
+--- FAIL: TestFixturesNamespaces (185.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	185.239s
+FAIL
+=== EXIT CODE 1
+=== STEP whole-package
+--- FAIL: TestFixturesSelfCompareArrayFill (186.67s)
+    products_test.go:145: python3 timed out: context deadline exceeded
+--- FAIL: TestFixturesAssignmentProofs (366.70s)
+    products_test.go:145: python3 timed out: context deadline exceeded
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	792.680s
+FAIL
+=== EXIT CODE 1
