@@ -140,7 +140,6 @@ error mutant removes exactly one row. Native execution remains blocked by the
 previously recorded typed captureStackTrace marker refusal; this expanded
 coverage result is a Node reference proof, not a native proof.
 
-
 ## Driver JSON escaping
 
 The driver quotes strings directly instead of calling JSON.stringify on a

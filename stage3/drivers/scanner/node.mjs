@@ -9,20 +9,23 @@ const ts = require(process.env.SCANNER_TYPESCRIPT);
 const runtime = pathToFileURL(process.env.SCANNER_RUNTIME).href;
 registerHooks({
     resolve(specifier, context, nextResolve) {
-        if (specifier === 'adamic') return { url: runtime, shortCircuit: true };
-        if (specifier.startsWith('.') && specifier.endsWith('.js')) {
+        if(specifier === 'adamic') return { url: runtime, shortCircuit: true };
+        if(specifier.startsWith('.') && specifier.endsWith('.js')) {
             const url = new URL(specifier.slice(0, -3) + '.ts', context.parentURL);
-            if (existsSync(fileURLToPath(url))) return { url: url.href, shortCircuit: true };
+            if(existsSync(fileURLToPath(url))) return { url: url.href, shortCircuit: true };
         }
         return nextResolve(specifier, context);
     },
     load(url, context, nextLoad) {
-        if (url.endsWith('.ts') || url.endsWith('.a')) {
+        if(url.endsWith('.ts') || url.endsWith('.a')) {
             const source = readFileSync(fileURLToPath(url), 'utf8');
             const output = ts.transpileModule(source, {
                 fileName: fileURLToPath(url).replace(/\.a$/, '.ts'),
-                compilerOptions: { target: ts.ScriptTarget.ESNext, module: ts.ModuleKind.ESNext,
-                    verbatimModuleSyntax: true },
+                compilerOptions: {
+                    target: ts.ScriptTarget.ESNext,
+                    module: ts.ModuleKind.ESNext,
+                    verbatimModuleSyntax: true,
+                },
             });
             return { format: 'module', source: output.outputText, shortCircuit: true };
         }
@@ -36,9 +39,10 @@ try {
     // Upstream initializes its compiler through the barrel entry. Starting
     // the cyclic ESM graph at scanner.ts instead hits parser's load-time read.
     const barrel = new URL('./adapted/src/compiler/_namespaces/ts.ts', pathToFileURL(program));
-    if (existsSync(fileURLToPath(barrel))) await import(barrel);
+    if(existsSync(fileURLToPath(barrel))) await import(barrel);
     await import(pathToFileURL(program).href);
-} catch (error) {
+}
+catch(error) {
     console.error(error.stack);
     process.exitCode = 1;
 }
