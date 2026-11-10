@@ -1,0 +1,4 @@
+{"command": ["python3", "-B", "/workspace/scratch/baobab-evidence/lane-summary.py"], "cwd": "/workspace/adamic", "exit": 0, "seconds": 0.8247467569999571}
+{"command": ["python3", "-B", "/workspace/scratch/baobab-evidence/finalize-content.py"], "cwd": "/workspace/adamic", "exit": 0, "seconds": 0.07891964300051768}
+{"command": ["git", "add", "stage3/adapt/99-correctness-tracing-assert", "stage3/upstream/LEDGER.md"], "cwd": "/workspace/adamic", "exit": 0, "seconds": 0.29607865900015895}
+{"command": ["git", "diff", "--cached", "--check"], "cwd": "/workspace/adamic", "exit": 0, "seconds": 0.02367764700011321}

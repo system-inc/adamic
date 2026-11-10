@@ -1,0 +1,27 @@
+{
+  "wholeLaneExit": 0,
+  "units": 398,
+  "oracleCountsCheckedByEachGoUnit": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "processRecords": 797,
+  "assertCalls": 0,
+  "differences": 0,
+  "oracleNeverCallsStopTracing": true,
+  "controls": {
+    "baseline-control-counts": {
+      "calls": 2,
+      "differences": 0,
+      "onePassingAndOneFailing": true
+    },
+    "control-counts": {
+      "calls": 2,
+      "differences": 0,
+      "onePassingAndOneFailing": true
+    }
+  },
+  "preparedArtifactKey": "992a2f82aa271647ada0e23b446f5cf9c161ee2fa63c47629d3e51a1825d2a11",
+  "instrumentation": "Temporary emitted bundle copies with VM-aware preload; measurement-only Go overlay selects the copied product and carries the preload through toolchain.Env. Dependency directory removed only from temporary product copy."
+}
