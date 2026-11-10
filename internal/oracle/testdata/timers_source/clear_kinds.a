@@ -2,7 +2,8 @@
 // object shaped like native's handle, objects whose _onTimeout is falsy (0, false and the empty
 // string, which Node's truthiness test passes over), null and undefined each do nothing and don't
 // throw, so the first timer still fires. Clearing a handle that already fired, and the same handle
-// twice, do nothing more.
+// twice, do nothing more. Each timer is armed after every shorter one, so their order is Node's
+// timer lists' and never rests on how long the lines between them take.
 import 'node:timers';
 
 // Each object reaches clearTimeout as unknown, its _onTimeout hidden from the type, as a run-time
@@ -11,6 +12,15 @@ function viewed(value: unknown): unknown {
     return value;
 }
 
+const fired = setTimeout(() => { console.log('fired'); }, 1);
+const twice = setTimeout(() => { console.log('twice fired'); }, 2);
+clearTimeout(twice);
+clearTimeout(twice);
+console.log('cleared twice');
+setTimeout(() => {
+    clearTimeout(fired);
+    console.log('cleared after it fired');
+}, 3);
 const live = setTimeout(() => { console.log('live fired'); }, 6);
 clearTimeout(1);
 clearTimeout('1');
@@ -21,12 +31,3 @@ clearTimeout(viewed({ _onTimeout: '' }));
 clearTimeout(null);
 clearTimeout(undefined);
 console.log(`live ${live ? 'held' : 'released'}`);
-const fired = setTimeout(() => { console.log('fired'); }, 1);
-setTimeout(() => {
-    clearTimeout(fired);
-    console.log('cleared after it fired');
-}, 3);
-const twice = setTimeout(() => { console.log('twice fired'); }, 2);
-clearTimeout(twice);
-clearTimeout(twice);
-console.log('cleared twice');

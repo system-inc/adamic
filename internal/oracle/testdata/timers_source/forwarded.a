@@ -1,6 +1,8 @@
 // tsc's sys.ts:377, host.setTimeout(callback, interval, label, queue): the callback (:289) takes the
 // label and the queue it's handed. Each queue and label is built inside schedule, so once it returns
-// the timer provider holds the only references, and each callback reads them after.
+// the timer provider holds the only references, and each callback reads them after. The 2 ms
+// queue is armed first, so the 4 ms one is due at least 2 ms after it however long the two calls
+// take apart: an order Node's timer lists hold, never a race between two clocks.
 import 'node:timers';
 
 interface PollingQueue {
@@ -20,5 +22,5 @@ function schedule(kind: string, interval: number, names: string[]): void {
     console.log(`${label} scheduled ${String(queue.pollScheduled)}`);
 }
 
-schedule('PollingInterval', 4, ['a', 'b']);
 schedule('LowPollingInterval', 2, ['c']);
+schedule('PollingInterval', 4, ['a', 'b']);
