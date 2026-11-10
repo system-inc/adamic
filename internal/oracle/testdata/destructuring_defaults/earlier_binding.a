@@ -1,0 +1,20 @@
+// A default reads a name the pattern bound before it, renamed or not. Node prints 3 6, 3 4, 5 6 and 5 1.
+interface Pair {
+	a: number;
+	b?: number;
+}
+
+function both(given: Pair): string {
+	const { a, b = a * 2 } = given;
+	return `${a} ${b}`;
+}
+
+function renamed(given: Pair): string {
+	const { a: first, b: second = first + 1 } = given;
+	return `${first} ${second}`;
+}
+
+console.log(both({ a: 3 }));
+console.log(both({ a: 3, b: 4 }));
+console.log(renamed({ a: 5 }));
+console.log(renamed({ a: 5, b: 1 }));

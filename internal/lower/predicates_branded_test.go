@@ -181,7 +181,7 @@ const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "checke
 		{"spread", `function show(n: Node): void { if (isTypeElementLie(n)) { const c = { ...n }; console.log(String(c.name)); } }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a whole-object copy of a value of checked view type TypeElement"},
 		{"rest", `function show(n: Node): void { if (isTypeElementLie(n)) { const { kind, ...rest } = n; console.log(String(rest.name)); } }
-const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a destructured name that isn't plain"},
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a rest element in destructuring"},
 		{"assign", `function show(n: Node): void { if (isTypeElementLie(n)) { const c = Object.assign({}, n); console.log(String(c.name)); } }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "refuses Object.assign"},
 		{"class", `class Signature implements TypeElement { _declarationBrand: undefined; _typeElementBrand: undefined; kind = 171; pos = 1; }
