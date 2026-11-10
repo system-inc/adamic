@@ -1,3 +1,7 @@
+> Nov 10 Change 2: current behavior and complete evidence are in
+> [debug-display-2-README.md](debug-display-2-README.md). The graph module
+> home also amends 99n; earlier Change 1 records below remain historical.
+
 # Completed debugger-display proof
 
 Ready to land. Final main: 7f2c852dffe31163e9699f0c91a158596757b888.
