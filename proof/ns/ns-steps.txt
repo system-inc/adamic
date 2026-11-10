@@ -1,0 +1,10 @@
+=== STEP gofmt exit=0
+=== STEP vet exit=0
+=== STEP ir-flow-census exit=0
+=== STEP lower exit=1
+=== STEP oracle-namespace-value exit=0
+=== STEP oracle-namespace-existing exit=0
+=== STEP oracle-namespace-fixtures-internal exit=0
+=== STEP oracle-namespace-fixtures-stage3 exit=0
+=== STEP oracle-namespace-fixtures-stage3-fixtures exit=0
+logs in /tmp/ns-logs
