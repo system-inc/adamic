@@ -115,11 +115,13 @@ func (l *lowering) neverRestImplementation(symbol *ast.Symbol) *ast.Node {
 // neverRestPlace reports whether a function declaration sits where its every read is a name the
 // reference index sees: at a file's top level, or in the block of a namespace declared at a file's top
 // level by a plain name and not ambient, as tsc's debug.ts declares its helpers inside namespace Debug.
-// A namespace member is read bare inside the namespace and as Debug.f outside it, and the namespace
-// itself is never a runtime object: reading it as a value, or a member by a computed name, is already
-// NotYet (namespaceRefusal, namespaceExpression), and so is an ESM namespace object read as a value
-// (moduleNamespaceRefusal), so no read the index misses can lower. A nested function, a nested or dotted
-// namespace's member and a class's member answer no.
+// A namespace member is read bare inside the namespace and as Debug.f outside it. A namespace read as a
+// value has an object holding each exported function's ordinary value (namespace_value.go), but every
+// read through it is x.f, a read of f the index sees and answers no for unless it's a call, and nothing
+// else can see the object's fields: a member by a computed name, reflection and any other view of it are
+// NotYet (namespaceRefusal), and so is an ESM namespace object read as a value (moduleNamespaceRefusal),
+// so no read the index misses can lower. A nested function, a nested or dotted namespace's member and a
+// class's member answer no.
 func neverRestPlace(declaration *ast.Node) bool {
 	parent := declaration.Parent
 	if parent == nil {
