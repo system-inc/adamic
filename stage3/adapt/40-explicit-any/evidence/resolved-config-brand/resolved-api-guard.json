@@ -1,0 +1,31 @@
+{
+  "guard": "stage3/lane/check.py:api_check",
+  "changedPublicLines": 1,
+  "declaration": "TypeAliasDeclaration:[\"ts\",\"ResolvedConfigFileName\"]#0",
+  "control": {
+    "errors": [],
+    "counts": {
+      "reference_declarations": 28,
+      "composed_declarations": 266,
+      "sanctioned_declarations": 266,
+      "added_lines": 320,
+      "removed_lines": 238
+    }
+  },
+  "treatment": {
+    "errors": [],
+    "counts": {
+      "reference_declarations": 28,
+      "composed_declarations": 267,
+      "sanctioned_declarations": 267,
+      "added_lines": 321,
+      "removed_lines": 239
+    }
+  },
+  "undo": {
+    "exit": 1,
+    "errors": [
+      "missing sanctioned API declaration: TypeAliasDeclaration:[\"ts\",\"ResolvedConfigFileName\"]#0"
+    ]
+  }
+}

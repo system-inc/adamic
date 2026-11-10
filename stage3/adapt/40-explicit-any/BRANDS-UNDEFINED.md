@@ -10,7 +10,64 @@ The member audit is regenerated at [member-audit.json](evidence/brands-void/memb
 
 The lane generator reconstructs the same 27 public brand owners from class-rules.json and pinned pristine Git objects. ErrorCallback is the unchanged 28th adaptation-40 API declaration. The generator, normalized sanction and API-reference writer all use undefined.
 
-## Current follow-up: all later pins inventoried
+## ResolvedConfigFileName amendment (#666zzs5)
+
+Base: origin/main 68213b0a62261a4ca40a19f3c1b36e5603640e22.
+The resolved-config-phantom-brand class pins the complete ResolvedConfigFileName
+owner before and after, changing only its required member from never to undefined.
+It is separate from the historical 36-member any-only brands class, whose rules
+and counts remain unchanged. The Oct 29 ruling (#p7t8tmh) covers the absent
+member. The per-adaptation api-sanctions.json records its PropertySignature;
+the lane generator is unchanged and reconstructs one additional public alias.
+The accepted reference is left at never; the emitted public declaration changes.
+
+The existing brands-undefined-proof.cjs audit now also scans this member throughout
+the checkout, including the tracked lib/typescript.d.ts and public API baseline.
+Its resolved-before and resolved-after modes compare the complete built JavaScript
+inventory, all compiler sources, every emitted declaration and the API reference.
+Large snapshots and logs stay outside the repository.
+
+Validation: both complete applies and upstream builds exit 0. All 747 source
+files are identical except this one annotation. All ten emitted JavaScript
+artifacts are byte-identical. Of 716 emitted declaration files, only the compiler
+module declaration, public bundle and internal bundle change, each by this member.
+The public bundle differs in exactly one line, never to undefined. The real lane
+API guard accepts all 267 composed declarations; undoing just this annotation
+exits 1 with exactly one missing sanction, ResolvedConfigFileName. The unchanged
+reference still has the original annotation.
+
+The whole-checkout audit finds one compiler declaration and two declaration
+copies (the upstream lib and API reference), with zero reads, writes or tests.
+The whole adaptation 40 rerun on its exact output prefix writes zero files.
+No later source pin moves. The 90 checker, 91 utilities and 92 sys pins remain
+unchanged; later types.ts owner guards accept their existing contracts. Historical
+whole-source manifests are evidence, not active adapter guards. No later
+adaptation is changed.
+
+The per-file tracing.ts census reproduces the control refusal at types.ts:4560:38.
+After the retype, its new first stop on this main tip is sys.ts:1654:13,
+"a checked view with a callable contract". The expected namespace value stop at
+tracing.ts:96:19 is not reached. No Lower change is made.
+
+All 22 existing generator checks pass. The existing lane guard suite passes
+36 of 37 checks; its fixed total expects 266 sanctioned declarations, while this
+amendment adds the 267th. That count assertion is outside the allowed scope and
+is unchanged. The full upstream lane is not run. These limits do not change the
+direct API guard's acceptance or the one-declaration undo rejection.
+
+Small evidence is in [evidence/resolved-config-brand](evidence/resolved-config-brand).
+Large build snapshots and logs remain under /workspace/scratch/resolved-evidence.
+After preparing and building the base control and amended treatment, reproduce
+with the pinned 6.0.3 API on NODE_PATH:
+
+```sh
+node stage3/adapt/40-explicit-any/brands-undefined-proof.cjs audit "$treatment" "$proof/audit" > "$proof/audit.log" 2>&1
+node stage3/adapt/40-explicit-any/brands-undefined-proof.cjs resolved-before "$control" "$proof" > "$proof/before.log" 2>&1
+node stage3/adapt/40-explicit-any/brands-undefined-proof.cjs resolved-after "$treatment" "$proof" > "$proof/after.log" 2>&1
+python3 -B stage3/adapt/40-explicit-any/sanction-undo-mutant.py resolved-prove "$control" "$treatment" "$proof" > "$proof/api.log" 2>&1
+```
+
+## Previous follow-up: all later pins inventoried
 
 The later-pin refresh is now authorized for every brand-touched file. The complete grep listing and active source-pin inventory are in evidence/brands-undefined-3. Active fixed source hashes occur in 90 (binder.ts, checker.ts, emitter.ts, parser.ts, program.ts, symbolWalker.ts, transformers/es2017.ts), 91 (factory/nodeFactory.ts, utilities.ts), and 92 (sys.ts). Only checker.ts and utilities.ts overlap the 36 brand sites. sys.ts carries no adaptation-40 brand and 92's hashes are unchanged. Other SHA-256 matches are runtime fingerprints or historical proof artifacts, not additional fixed input-file guards.
 

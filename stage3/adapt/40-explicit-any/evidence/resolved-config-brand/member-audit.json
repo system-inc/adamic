@@ -1,0 +1,26 @@
+{
+  "key": "_isResolvedConfigFileName",
+  "declarations": [
+    {
+      "file": "lib/typescript.d.ts",
+      "owner": "ResolvedConfigFileName",
+      "line": 6003
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "owner": "ResolvedConfigFileName",
+      "line": 4560
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "owner": "ResolvedConfigFileName",
+      "line": 6003
+    }
+  ],
+  "sourceDeclarations": 1,
+  "publicDeclarations": 2,
+  "reads": 0,
+  "writes": 0,
+  "tests": 0,
+  "scope": "whole checkout except dependencies, Git metadata and generated builds"
+}

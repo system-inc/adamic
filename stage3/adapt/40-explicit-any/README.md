@@ -1,5 +1,9 @@
 # Explicit any owner adaptation (partial)
 
+The ResolvedConfigFileName amendment (#666zzs5) is a separate pinned never-to-undefined
+phantom-brand class in this adaptation, with its own per-adaptation API sanction.
+See [BRANDS-UNDEFINED.md](BRANDS-UNDEFINED.md) for the proof and validation.
+
 Current hasProperty amendment, task b5w3ycg: the final helper is generic over
 T extends object, with map: T and its original body. Its whole-owner planner
 and pins live here in hasproperty.cjs and hasproperty-owner.json. The early

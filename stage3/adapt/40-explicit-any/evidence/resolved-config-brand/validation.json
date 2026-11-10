@@ -1,0 +1,31 @@
+{
+  "setupExit": 0,
+  "apiInstallExit": 0,
+  "upstreamInstallExits": {
+    "control": 0,
+    "treatment": 0
+  },
+  "upstreamBuildExits": {
+    "control": 0,
+    "treatment": 0
+  },
+  "javascriptAndDeclarationComparisonExit": 0,
+  "apiGuardAndUndoProofExit": 0,
+  "perFileCensusExits": {
+    "control": 0,
+    "treatment": 0
+  },
+  "generatorChecks": {
+    "passed": 22,
+    "failed": 0
+  },
+  "laneGuardChecks": {
+    "passed": 36,
+    "failed": 1,
+    "reason": "fixed manifest total expects 266; the additional sanctioned alias makes 267",
+    "countAssertionUnchanged": true
+  },
+  "fullUpstreamLaneRun": false,
+  "refreshedPins": [],
+  "taskLogs": "/workspace/scratch/resolved-evidence"
+}

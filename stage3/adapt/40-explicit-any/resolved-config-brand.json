@@ -1,0 +1,10 @@
+{
+  "class": "resolved-config-phantom-brand",
+  "file": "src/compiler/types.ts",
+  "owner": "ResolvedConfigFileName",
+  "key": "_isResolvedConfigFileName",
+  "before": "export type ResolvedConfigFileName = string & { _isResolvedConfigFileName: never; };",
+  "after": "export type ResolvedConfigFileName = string & { _isResolvedConfigFileName: undefined; };",
+  "beforeSha256": "c00c6dc4c524e34ce76ae721f8b191d85a8772bb7cc8147f6b5988171a78a2aa",
+  "afterSha256": "cc465bed35d3f1a8007abe2e9db2630718cee01cc156ce20351be07615847af3"
+}
