@@ -1,0 +1,14 @@
+{
+  "name": "tsc-first-head",
+  "command": [
+    "/workspace/never-call-tools/head/census",
+    "/workspace/never-call-adapted/src/tsc/tsc.ts",
+    "/workspace/never-call-report/stage3/census/never-call-392cb60b/tsc-first-head.jsonl"
+  ],
+  "cwd": "/workspace/never-call-head",
+  "started_utc": "2026-11-10T18:46:41Z",
+  "seconds": 23.039063468999984,
+  "peak_rss_kib": 860524,
+  "child_exit_code": 0,
+  "silent_cutoff": false
+}
