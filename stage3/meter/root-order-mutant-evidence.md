@@ -15,11 +15,11 @@ Value imports used only as types and const enums remain real evaluation edges.
 The effective config is retained in each probe's compiler-options.json.
 Emit and timeout results were 0 and false, respectively, for all three roots.
 
-| Root | Node exit | First error line |
-| --- | ---: | --- |
-| src/compiler/debug.ts | 1 | TypeError: Cannot read properties of undefined (reading 'assert') |
-| src/compiler/diagnosticInformationMap.generated.ts | 1 | TypeError: Cannot read properties of undefined (reading 'AbstractKeyword') |
-| src/compiler/types.ts | 1 | TypeError: Cannot read properties of undefined (reading 'Error') |
+| Root                                               | Node exit | First error line                                                           |
+| -------------------------------------------------- | --------: | -------------------------------------------------------------------------- |
+| src/compiler/debug.ts                              |         1 | TypeError: Cannot read properties of undefined (reading 'assert')          |
+| src/compiler/diagnosticInformationMap.generated.ts |         1 | TypeError: Cannot read properties of undefined (reading 'AbstractKeyword') |
+| src/compiler/types.ts                              |         1 | TypeError: Cannot read properties of undefined (reading 'Error')           |
 
 The diagnostic-map root throws at scanner.ts:136:26, before the anticipated
 commandLineParser FixedPollingInterval read. The types.ts root throws at
@@ -80,11 +80,11 @@ The report retains all three artifacts and prints the next stops behind them:
 
 Lowering, file roots: 2/79; root-order artifacts: 3.
 
-| Root | Stop | Reason | Node result | Classification | Program result from entry census |
-| --- | --- | --- | --- | --- | --- |
-| src/compiler/debug.ts | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;assert&#x27;) | root-order artifact | NotYet src/compiler/binder.ts:427:31: a Map or Set interface implemented by a value that isn&#x27;t a Map or Set (read from the entry census; source order) |
-| src/compiler/diagnosticInformationMap.generated.ts | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;AbstractKeyword&#x27;) | root-order artifact | NotYet src/compiler/binder.ts:427:31: a Map or Set interface implemented by a value that isn&#x27;t a Map or Set (read from the entry census; source order) |
-| src/compiler/types.ts | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;Error&#x27;) | root-order artifact | NotYet src/compiler/binder.ts:427:31: a Map or Set interface implemented by a value that isn&#x27;t a Map or Set (read from the entry census; source order) |
+| Root                                               | Stop                                                     | Reason                                                                                                                                       | Node result                                                                                                            | Classification      | Program result from entry census                                                                                                                            |
+| -------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| src/compiler/debug.ts                              | src/compiler/semver.ts:71:9                              | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;assert&#x27;)          | root-order artifact | NotYet src/compiler/binder.ts:427:31: a Map or Set interface implemented by a value that isn&#x27;t a Map or Set (read from the entry census; source order) |
+| src/compiler/diagnosticInformationMap.generated.ts | src/compiler/commandLineParser.ts:293:35                 | reading an enum before its runtime initialization; move the call after the enum declaration                                                  | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;AbstractKeyword&#x27;) | root-order artifact | NotYet src/compiler/binder.ts:427:31: a Map or Set interface implemented by a value that isn&#x27;t a Map or Set (read from the entry census; source order) |
+| src/compiler/types.ts                              | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration                                                  | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;Error&#x27;)           | root-order artifact | NotYet src/compiler/binder.ts:427:31: a Map or Set interface implemented by a value that isn&#x27;t a Map or Set (read from the entry census; source order) |
 
 Commands after extracting and remapping the saved streams into scratch:
 
@@ -205,7 +205,6 @@ pins the third outcome: a qualifying per-root enum stop still fails its file
 when Node exits 0. The daily integration regression asserts both labels' counts,
 full artifact rows, JSON lists, and the generated README table.
 
-
 ## Gate repair on the re-cut branch, 2026-11-05
 
 Base origin/main: `ab8a85bebf2a14a06fa8c3c4ca8cc93201a2309f`.
@@ -251,12 +250,12 @@ measurement below.
 python3 -E -S -B stage3/meter/check-root-order-mutants.py > /workspace/scratch/meter-mutants.log 2>&1
 ```
 
-| Mutant | Named test | Result |
-| --- | --- | --- |
+| Mutant                                | Named test                                                                    | Result              |
+| ------------------------------------- | ----------------------------------------------------------------------------- | ------------------- |
 | artifact-clean-own-file-implies-whole | test_artifact_with_clean_own_file_and_refused_dependency_does_not_lower_whole | red, AssertionError |
-| ignore-entry-readiness | test_entry_order_readiness_still_counts_against_root_file | red, AssertionError |
-| count-root-order-artifact-as-failure | test_root_only_readiness_with_node_throw_is_visible_artifact | red, AssertionError |
-| elide-value-import-used-only-as-type | test_value_import_used_only_as_type_keeps_its_evaluation_edge | red, AssertionError |
+| ignore-entry-readiness                | test_entry_order_readiness_still_counts_against_root_file                     | red, AssertionError |
+| count-root-order-artifact-as-failure  | test_root_only_readiness_with_node_throw_is_visible_artifact                  | red, AssertionError |
+| elide-value-import-used-only-as-type  | test_value_import_used_only_as_type_keeps_its_evaluation_edge                 | red, AssertionError |
 
 The harness exited 0 and confirmed all three root-order mutants and the
 value-import elision mutant went red on their named tests.
@@ -272,13 +271,13 @@ Both commands exited 0. Cold setup completed successfully in 734.423 seconds.
 The meter run uses `-parallel=1` to measure the wrappers without contention
 between suites; the wrappers remain parallel-safe.
 
-| Meter unit | Seconds | Result |
-| --- | ---: | --- |
-| TestReportPython | 0.45 | pass |
-| TestGeneratorPython | 1.59 | pass |
-| TestNodeReadinessPython | 9.69 | pass |
-| TestCompilerPython | 17.99 | pass |
-| TestEntryPython | 0.17 | pass |
+| Meter unit              | Seconds | Result |
+| ----------------------- | ------: | ------ |
+| TestReportPython        |    0.45 | pass   |
+| TestGeneratorPython     |    1.59 | pass   |
+| TestNodeReadinessPython |    9.69 | pass   |
+| TestCompilerPython      |   17.99 | pass   |
+| TestEntryPython         |    0.17 | pass   |
 
 Meter package elapsed: 29.912 seconds. All five units are below 30 seconds.
 The first run overlapped cold setup and other validation; it passed but its
@@ -315,10 +314,10 @@ Both `cmp` calls exited 0. `/workspace/scratch/report-cmp.log` records the
 exact byte comparisons. Both reports have 82 files, 79 source roots, checker
 79/79, own file 79/79, lowering 2/79 and three root-order artifacts.
 
-| Output | SHA256 before and after |
-| --- | --- |
+| Output      | SHA256 before and after                                          |
+| ----------- | ---------------------------------------------------------------- |
 | report.json | 69d3487f20dbb079c187445a22756fd6ea6108528eddac5ab44d63f8582278d2 |
-| report.md | fa0723f0602834529940e58455b1c37b0fa0773518f929197724020824c41633 |
+| report.md   | fa0723f0602834529940e58455b1c37b0fa0773518f929197724020824c41633 |
 
 The existing `check-unit-time-mutant.py` also exited 0: its dropped
 `latent_time` field was caught with the expected KeyError.

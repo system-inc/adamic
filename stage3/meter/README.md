@@ -221,7 +221,6 @@ A scratch overlay mutant that leaves Program.Files restricted to the entry root
 must fail this test's reach count (one source instead of two). Compiler-selection
 probes exercise the entry command wiring in both default and per-ref modes.
 
-
 Full latent mode is the default for both compiler-file roots and the tsc entry.
 `STAGE3_METER_LATENT=first-error` retains the historical body skips and first-error
 behavior for comparison. Unknown modes fail before making a run directory.
