@@ -1,0 +1,139 @@
+Base commit: 71900e0841e492edf9f44b37434b926b5b0c34d9
+=== MUTANT 1
+Applied: yes
+ internal/lower/namespace_value.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+diff --git a/internal/lower/namespace_value.go b/internal/lower/namespace_value.go
+index 99f4694cc..804e9ab43 100644
+--- a/internal/lower/namespace_value.go
++++ b/internal/lower/namespace_value.go
+@@ -107,7 +107,7 @@ func (l *lowering) namespaceContainerStatements(declaration *ast.Node) ([]ir.Sta
+ // readiness, which turns true only once the block has run. namespaceInitialization stops a read it can
+ // prove comes first; a read reached through an edge it can't follow is checked here as it runs.
+ func (l *lowering) namespaceValueRead(declaration *ast.Node) ir.Expression {
+-	value := ir.Expression(ir.Read{Local: l.namespaceContainer(declaration), Of: ir.Object})
++	value, _ := l.namespaceContainerLiteral(declaration)
+ 	check := l.namespaceReadyCheck(declaration, "namespace "+declaration.Name().Text()+" read as a value before its block ran")
+ 	b := l.libraryArrayBuilder([]ir.Expression{check, value})
+ 	return b.finish("namespace_value", b.read(b.parameters[1]))
+$ ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle -run '^TestNamespaceValueAgreesWithNode$' -v
+=== RUN   TestNamespaceValueAgreesWithNode
+=== PAUSE TestNamespaceValueAgreesWithNode
+=== CONT  TestNamespaceValueAgreesWithNode
+=== RUN   TestNamespaceValueAgreesWithNode/tracing/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/tracing/main.a
+=== RUN   TestNamespaceValueAgreesWithNode/identity/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/identity/main.a
+=== CONT  TestNamespaceValueAgreesWithNode/tracing/main.a
+=== CONT  TestNamespaceValueAgreesWithNode/identity/main.a
+=== NAME  TestNamespaceValueAgreesWithNode/tracing/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 8e0f017924ad hit 279.33
+=== NAME  TestNamespaceValueAgreesWithNode/identity/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 8e0f017924ad miss 279.33
+    namespace_value_test.go:16: native: stdout differs, stdout "same false false false\nmembers true true\ncalls 1 2 2\n", stderr ""
+    namespace_value_test.go:16: sanitized: stdout differs, stdout "same false false false\nmembers true true\ncalls 1 2 2\n", stderr ""
+    namespace_value_test.go:16: javascript: stdout differs, stdout "same false false false\nmembers true true\ncalls 1 2 2\n", stderr ""
+=== NAME  TestNamespaceValueAgreesWithNode/tracing/main.a
+    namespace_value_test.go:16: native: stdout differs, stdout "before undefined\nreport false off\nstarted object false\npush check:a\npush check:a > check:b\nreport false on\nreport true on\npop check:b\npush check:a > emit:c\npop emit:c\nstopped undefined\nreport false off\n", stderr ""
+    namespace_value_test.go:16: sanitized: stdout differs, stdout "before undefined\nreport false off\nstarted object false\npush check:a\npush check:a > check:b\nreport false on\nreport true on\npop check:b\npush check:a > emit:c\npop emit:c\nstopped undefined\nreport false off\n", stderr ""
+    namespace_value_test.go:16: javascript: stdout differs, stdout "before undefined\nreport false off\nstarted object false\npush check:a\npush check:a > check:b\nreport false on\nreport true on\npop check:b\npush check:a > emit:c\npop emit:c\nstopped undefined\nreport false off\n", stderr ""
+--- FAIL: TestNamespaceValueAgreesWithNode (0.00s)
+    --- FAIL: TestNamespaceValueAgreesWithNode/identity/main.a (328.73s)
+    --- FAIL: TestNamespaceValueAgreesWithNode/tracing/main.a (328.74s)
+FAIL
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	328.767s
+FAIL
+Exit status: 1
+$ go test -count=1 -timeout 20m ./internal/lower -run 'NamespaceValue' -v
+=== RUN   TestNamespaceValueStops
+=== PAUSE TestNamespaceValueStops
+=== RUN   TestNamespaceValueIdentityAgrees
+=== PAUSE TestNamespaceValueIdentityAgrees
+=== CONT  TestNamespaceValueStops
+=== RUN   TestNamespaceValueStops/merged_blocks
+=== PAUSE TestNamespaceValueStops/merged_blocks
+=== RUN   TestNamespaceValueStops/exported_let
+=== PAUSE TestNamespaceValueStops/exported_let
+=== RUN   TestNamespaceValueStops/Object.keys
+=== PAUSE TestNamespaceValueStops/Object.keys
+=== RUN   TestNamespaceValueStops/spread
+=== PAUSE TestNamespaceValueStops/spread
+=== RUN   TestNamespaceValueStops/computed_name
+=== PAUSE TestNamespaceValueStops/computed_name
+=== RUN   TestNamespaceValueStops/structural_view
+=== PAUSE TestNamespaceValueStops/structural_view
+=== RUN   TestNamespaceValueStops/unknown
+=== PAUSE TestNamespaceValueStops/unknown
+=== RUN   TestNamespaceValueStops/generic_argument
+=== PAUSE TestNamespaceValueStops/generic_argument
+=== RUN   TestNamespaceValueStops/logical_value
+=== PAUSE TestNamespaceValueStops/logical_value
+=== RUN   TestNamespaceValueStops/member_write
+=== PAUSE TestNamespaceValueStops/member_write
+=== CONT  TestNamespaceValueStops/merged_blocks
+=== CONT  TestNamespaceValueStops/unknown
+=== CONT  TestNamespaceValueStops/member_write
+=== CONT  TestNamespaceValueIdentityAgrees
+=== CONT  TestNamespaceValueStops/spread
+=== CONT  TestNamespaceValueStops/Object.keys
+=== CONT  TestNamespaceValueStops/exported_let
+=== CONT  TestNamespaceValueStops/logical_value
+=== CONT  TestNamespaceValueStops/generic_argument
+=== CONT  TestNamespaceValueStops/structural_view
+=== NAME  TestNamespaceValueIdentityAgrees
+    namespace_value_test.go:61: JavaScript backend stdout = "false false true 2\n", source Node = "true true true 2\n"
+--- FAIL: TestNamespaceValueIdentityAgrees (0.91s)
+=== CONT  TestNamespaceValueStops/computed_name
+--- PASS: TestNamespaceValueStops (0.00s)
+    --- PASS: TestNamespaceValueStops/unknown (0.42s)
+    --- PASS: TestNamespaceValueStops/member_write (0.46s)
+    --- PASS: TestNamespaceValueStops/spread (0.47s)
+    --- PASS: TestNamespaceValueStops/merged_blocks (0.58s)
+    --- PASS: TestNamespaceValueStops/Object.keys (0.46s)
+    --- PASS: TestNamespaceValueStops/logical_value (0.47s)
+    --- PASS: TestNamespaceValueStops/exported_let (0.51s)
+    --- PASS: TestNamespaceValueStops/generic_argument (0.39s)
+    --- PASS: TestNamespaceValueStops/structural_view (0.22s)
+    --- PASS: TestNamespaceValueStops/computed_name (0.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.135s
+FAIL
+Exit status: 1
+After restore: git diff --stat
+Restore confirmed: empty diff
+=== MUTANT 3
+Applied: yes
+ internal/lower/namespace_value.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+diff --git a/internal/lower/namespace_value.go b/internal/lower/namespace_value.go
+index 99f4694cc..8e9e4ff94 100644
+--- a/internal/lower/namespace_value.go
++++ b/internal/lower/namespace_value.go
+@@ -108,7 +108,7 @@ func (l *lowering) namespaceContainerStatements(declaration *ast.Node) ([]ir.Sta
+ // prove comes first; a read reached through an edge it can't follow is checked here as it runs.
+ func (l *lowering) namespaceValueRead(declaration *ast.Node) ir.Expression {
+ 	value := ir.Expression(ir.Read{Local: l.namespaceContainer(declaration), Of: ir.Object})
+-	check := l.namespaceReadyCheck(declaration, "namespace "+declaration.Name().Text()+" read as a value before its block ran")
++	check := ir.Expression(ir.BooleanConstant{Value: true})
+ 	b := l.libraryArrayBuilder([]ir.Expression{check, value})
+ 	return b.finish("namespace_value", b.read(b.parameters[1]))
+ }
+$ ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle -run '^TestNamespaceValueReadBeforeItsBlockIsChecked$' -v
+=== RUN   TestNamespaceValueReadBeforeItsBlockIsChecked
+=== PAUSE TestNamespaceValueReadBeforeItsBlockIsChecked
+=== CONT  TestNamespaceValueReadBeforeItsBlockIsChecked
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types dff5b19f8169 miss 28.32
+    namespace_value_test.go:38: want the readiness check to stop natively (exit 70) where Node runs on: native 0, stdout "undefined\n1\n", stderr ""; Node 0
+--- FAIL: TestNamespaceValueReadBeforeItsBlockIsChecked (37.59s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	37.620s
+FAIL
+Exit status: 1
+After restore: git diff --stat
+Restore confirmed: empty diff
