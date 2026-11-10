@@ -1,0 +1,10 @@
+{
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "/workspace/scratch/baobab-before"
+  ],
+  "exit": 0,
+  "log": "baobab-before-apply.log",
+  "base": "e24f2600a5d8a8521c5128827cad395d47c81c81"
+}

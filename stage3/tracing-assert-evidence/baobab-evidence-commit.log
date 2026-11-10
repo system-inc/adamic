@@ -1,0 +1,32 @@
+[typescript/tracing-assert-evidence f6a9c326d] baobab: retain setup and owner audit evidence checkpoint
+ 30 files changed, 44656 insertions(+)
+ create mode 100644 stage3/tracing-assert-evidence/STATUS.md
+ create mode 100644 stage3/tracing-assert-evidence/adapter-guards.json
+ create mode 100644 stage3/tracing-assert-evidence/baobab-after-apply.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-before-apply.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-census-build.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-checkpoint-edit.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-checkpoint-restored.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-checkpoint.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-compiler-build.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-evidence-worktree.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-npm.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-overlay.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-prepare-shards.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-root-census-build.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-root-overlay.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-setup.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-source.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-switch.log
+ create mode 100644 stage3/tracing-assert-evidence/baobab-typescript-npm.log
+ create mode 100644 stage3/tracing-assert-evidence/base.txt
+ create mode 100644 stage3/tracing-assert-evidence/checkpoint-edit.sha
+ create mode 100644 stage3/tracing-assert-evidence/checkpoint-history.json
+ create mode 100644 stage3/tracing-assert-evidence/compare.cjs
+ create mode 100644 stage3/tracing-assert-evidence/instrument.cjs
+ create mode 100644 stage3/tracing-assert-evidence/make-adapter.py
+ create mode 100644 stage3/tracing-assert-evidence/obsolete-latent-build.json
+ create mode 100644 stage3/tracing-assert-evidence/ownership.json
+ create mode 100644 stage3/tracing-assert-evidence/preload.cjs
+ create mode 100644 stage3/tracing-assert-evidence/prepare-count.py
+ create mode 100644 stage3/tracing-assert-evidence/run.py

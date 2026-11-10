@@ -1,0 +1,9 @@
+{
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "/workspace/scratch/baobab-after"
+  ],
+  "exit": 0,
+  "log": "baobab-after-apply.log"
+}

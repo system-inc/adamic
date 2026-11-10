@@ -1,0 +1,23 @@
+[
+  {
+    "file": "_tsc.js",
+    "hunk": 1,
+    "header": "@@ -2221,7 +2221,7 @@",
+    "classification": "stopTracing argument",
+    "text": "@@ -2221,7 +2221,7 @@\n   }\n   tracingEnabled2.startTracing = startTracing2;\n   function stopTracing() {\n-    Debug.assert(tracing, \"Tracing is not in progress\");\n+    Debug.assert(!!tracing, \"Tracing is not in progress\");\n     Debug.assert(!!typeCatalog.length === (mode !== \"server\"));\n     fs.writeSync(traceFd, `\n ]\n"
+  },
+  {
+    "file": "run.js",
+    "hunk": 1,
+    "header": "@@ -2611,7 +2611,7 @@",
+    "classification": "stopTracing argument",
+    "text": "@@ -2611,7 +2611,7 @@\n       }\n       tracingEnabled2.startTracing = startTracing2;\n       function stopTracing() {\n-        Debug.assert(tracing, \"Tracing is not in progress\");\n+        Debug.assert(!!tracing, \"Tracing is not in progress\");\n         Debug.assert(!!typeCatalog.length === (mode !== \"server\"));\n         fs3.writeSync(traceFd, `\n ]\n"
+  },
+  {
+    "file": "typescript.js",
+    "hunk": 1,
+    "header": "@@ -4817,7 +4817,7 @@",
+    "classification": "stopTracing argument",
+    "text": "@@ -4817,7 +4817,7 @@\n   }\n   tracingEnabled2.startTracing = startTracing2;\n   function stopTracing() {\n-    Debug.assert(tracing, \"Tracing is not in progress\");\n+    Debug.assert(!!tracing, \"Tracing is not in progress\");\n     Debug.assert(!!typeCatalog.length === (mode !== \"server\"));\n     fs.writeSync(traceFd, `\n ]\n"
+  }
+]

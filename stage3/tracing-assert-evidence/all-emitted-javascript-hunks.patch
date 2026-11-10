@@ -1,0 +1,33 @@
+--- before/_tsc.js
++++ after/_tsc.js
+@@ -2221,7 +2221,7 @@
+   }
+   tracingEnabled2.startTracing = startTracing2;
+   function stopTracing() {
+-    Debug.assert(tracing, "Tracing is not in progress");
++    Debug.assert(!!tracing, "Tracing is not in progress");
+     Debug.assert(!!typeCatalog.length === (mode !== "server"));
+     fs.writeSync(traceFd, `
+ ]
+--- before/run.js
++++ after/run.js
+@@ -2611,7 +2611,7 @@
+       }
+       tracingEnabled2.startTracing = startTracing2;
+       function stopTracing() {
+-        Debug.assert(tracing, "Tracing is not in progress");
++        Debug.assert(!!tracing, "Tracing is not in progress");
+         Debug.assert(!!typeCatalog.length === (mode !== "server"));
+         fs3.writeSync(traceFd, `
+ ]
+--- before/typescript.js
++++ after/typescript.js
+@@ -4817,7 +4817,7 @@
+   }
+   tracingEnabled2.startTracing = startTracing2;
+   function stopTracing() {
+-    Debug.assert(tracing, "Tracing is not in progress");
++    Debug.assert(!!tracing, "Tracing is not in progress");
+     Debug.assert(!!typeCatalog.length === (mode !== "server"));
+     fs.writeSync(traceFd, `
+ ]
