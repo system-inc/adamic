@@ -11,7 +11,7 @@ for(const file of fs.readdirSync(path.join(root,'built/local')).filter(file=>fil
    const first=n.body.statements[0];
    let pos=n.body.getStart(sf)+1;
    if(name==='enableDebugInfo'){assert(ts.isIfStatement(first));assert(/^isDebugInfoEnabled[0-9]*$/.test(first.expression.getText(sf)));assert(ts.isReturnStatement(first.thenStatement));pos=first.end;}
-   if(name==='attachDebugPrototypeIfDebug'){assert(ts.isIfStatement(first));assert(/^isDebugging[0-9]*$/.test(first.expression.getText(sf)));assert(ts.isBlock(first.thenStatement));pos=first.thenStatement.getStart(sf)+1;}
+   if(name==='attachDebugPrototypeIfDebug'){assert(ts.isIfStatement(first));assert(ts.isPropertyAccessExpression(first.expression) && /^Debug[0-9]*$/.test(first.expression.expression.getText(sf)) && first.expression.name.text==='isDebugging');assert(ts.isBlock(first.thenStatement));pos=first.thenStatement.getStart(sf)+1;}
    edits.push({pos,value:`\n globalThis.__debugDisplayCount(${JSON.stringify(name)});\n`});
   }
   ts.forEachChild(n,visit);

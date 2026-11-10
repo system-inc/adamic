@@ -1,0 +1,14 @@
+"use strict";
+const fs=require("node:fs"),path=require("node:path"),assert=require("node:assert/strict"),ts=require("typescript"),esbuild=require("../../typescript/node_modules/esbuild");
+const root=process.argv[2],base=process.argv[3],output=process.argv[4],modulePath=root+"/src/deprecatedCompat/controlFlowGraph.ts";
+const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]);
+const roots=walk(root+"/src/compiler").filter(n=>n.endsWith(".ts")&&!n.endsWith(".d.ts")).sort();assert.equal(roots.length,79);
+const program=ts.createProgram(roots,{target:ts.ScriptTarget.ES2020,module:ts.ModuleKind.NodeNext,moduleResolution:ts.ModuleResolutionKind.NodeNext,noEmit:true});
+assert(!program.getSourceFiles().some(s=>path.resolve(s.fileName)===modulePath));
+esbuild.buildSync({entryPoints:[modulePath],outfile:output,bundle:true,platform:"node",format:"cjs",logLevel:"silent"});
+const moved=require(output),original=require(base+"/built/local/typescript.js");assert.deepEqual(Object.keys(moved).sort(),["formatControlFlowGraph","printControlFlowGraph"]);
+const fixture=()=>({flags:original.FlowFlags.Start,id:0});const a=original.Debug.formatControlFlowGraph(fixture()),b=moved.formatControlFlowGraph(fixture());assert.equal(a,b);
+const messages=[],old=console.log;console.log=x=>messages.push(x);try{moved.printControlFlowGraph(fixture());}finally{console.log=old;}assert.deepEqual(messages,[a]);
+const info=JSON.parse(fs.readFileSync(root+"/built/local/deprecatedCompat/tsconfig.tsbuildinfo","utf8"));assert(info.fileNames.some(n=>n.endsWith("/controlFlowGraph.ts")));
+fs.writeFileSync(__dirname+"/debug-display-2-module-home.json",JSON.stringify({status:"pass",module:"src/deprecatedCompat/controlFlowGraph.ts",compiler_roots:79,in_any_compiler_root_import_closure:false,typechecked_by_normal_node_build:true,standalone_node_bundle_loads:true,exports:Object.keys(moved).sort(),formatter_fixture_byte_identical:true,print_fixture_byte_identical:true,fixture_output:b},null,2)+"\n");
+console.log("79 root closure, build typecheck, standalone Node load, formatter and printer fixture all pass.");

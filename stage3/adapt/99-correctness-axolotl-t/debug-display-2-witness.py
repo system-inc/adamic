@@ -33,5 +33,10 @@ def run(item):
     return result
 with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:rows=list(pool.map(run,enumerate(cases)))
 assert len(rows)==200 and all(r and r['identical'] for r in rows)
-report={'status':'pass','cases':200,'all_byte_identical':True,'selection':'Same first 200 sorted single-file compiler inputs and fixed CLI flags as Change 1.','rows':rows}
+for a,b in zip(prior['rows'],rows):
+    assert a['case_sha256']==b['case_sha256']
+    for side in ['plain','debug']:
+        assert a[side]['exit']==b[side]['child_exit']
+        for key in ['stdout_sha256','stderr_sha256','stdout_bytes','stderr_bytes']:assert a[side][key]==b[side][key]
+report={'same_case_hashes_as_change_1':True,'same_all_stream_hashes_and_exits_as_change_1':True,'status':'pass','cases':200,'all_byte_identical':True,'selection':'Same first 200 sorted single-file compiler inputs and fixed CLI flags as Change 1.','rows':rows}
 (unit/'debug-display-2-witness.json').write_text(json.dumps(report,indent=2)+'\n')

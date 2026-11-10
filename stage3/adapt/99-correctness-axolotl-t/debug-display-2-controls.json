@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "rows": [
+    {
+      "forced_debug": false,
+      "child_exit": 0,
+      "counts": {
+        "attachFlowNodeDebugInfoWorker": 0,
+        "attachNodeArrayDebugInfoWorker": 0,
+        "attachDebugPrototypeIfDebug": 0,
+        "enableDebugInfo": 0
+      }
+    },
+    {
+      "forced_debug": true,
+      "child_exit": 0,
+      "counts": {
+        "attachFlowNodeDebugInfoWorker": 1,
+        "attachNodeArrayDebugInfoWorker": 1,
+        "attachDebugPrototypeIfDebug": 1,
+        "enableDebugInfo": 1
+      }
+    }
+  ]
+}
