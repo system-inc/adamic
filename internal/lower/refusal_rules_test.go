@@ -79,6 +79,8 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"3270 refuseAnyRelation",
 		// A member the program declares any is refused where it's declared (#tmdhz1d, step 2).
 		"3280 refuseAnyMember",
+		// Primitive object views are representation gaps, before optional field hiding.
+		"3290 primitiveObjectViewGap",
 		"3300 refuseOptionalWidening",
 		"3330 narrowedNullishReadGap",
 		// constraintRelationRefusal judges the type arguments a site binds once every rule has judged
