@@ -1,0 +1,10 @@
+// f4, a control: core.ts's map shape, a loop pushing f(x) for a function-valued parameter, each copy planned at its Return (#41vb71c).
+interface Node { name: string; next: Node[]; kids: Node[][] }
+const a: Node = { name: 'a' + '', next: [], kids: [] };
+const b: Node = { name: 'b' + '', next: [a], kids: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const byName = (x: Node, y: Node): number => (x.name < y.name ? -1 : 1);
+function mapNodes(xs: Node[], f: (x: Node) => Node[]): Node[][] { const r: Node[][] = []; for (const x of xs) r.push(f(x)); return r; }
+a.kids = mapNodes([b], (n: Node): Node[] => n.next.toSorted(byName));
+const k = a.kids[0];
+console.log(`${a.kids.length} ${k === undefined ? -1 : k.length}`);

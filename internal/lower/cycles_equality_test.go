@@ -127,8 +127,9 @@ func cycleExhaustiveFlowStop(err error) bool {
 
 // cycleExhaustiveFlowSites takes out of the indexed program's GraphTypes the allocation sites (the
 // negative keys, which only graphFlows sets) the scanning reference's plan lacks, and returns them.
-// graphFlows' follow enters wrappers and record calls the reference's never reached (#y7wexf5), so
-// the indexed plan is a superset; what's left, checker identities and every other field included,
+// graphFlows' follow enters wrappers and record calls the reference's never reached (#y7wexf5), and
+// demands what's passed to a function value whose targets are Unknown (#41vb71c), so the indexed plan
+// is a superset; what's left, checker identities and every other field included,
 // must still be equal, and the emitted C with it.
 func cycleExhaustiveFlowSites(scanning, indexed *ir.Program) []int {
 	var extra []int
