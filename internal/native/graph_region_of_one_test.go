@@ -41,6 +41,9 @@ import (
 //     for "beyond".
 //   - adamic_graph_merge searches from the later region to the earlier: "chain" misses the path, and
 //     the counted build's acyclic check panics "counted edges between graph regions close a cycle".
+//   - adamic_graph_merge links the moving regions in discovery order (no qsort): "moving order" panics
+//     "a counted edge runs against the graph regions' order".
+//   - adamic_graph_merge skips relinking the moving regions after the union: "late" panics the same.
 const graphRegionOfOneHarness = `#define ADAMIC_CANONICAL_CLOSURES 1
 #include "adamic.h"
 #include "graph_regions.h"
@@ -258,6 +261,27 @@ int main(int count, char **arguments) {
   adamic_release(chain);
   adamic_release(held);
   adamic_release(keep);
+ } else if (strcmp(mode, "moving order") == 0) {
+  // Language's should 1 on #fhcjc66: the search finds regions breadth first, not in the order. e
+  // holds b in its first slot and a in its second, and a holds b, so discovery reads b before a. The
+  // store into h, ordered after them all with an edge in, moves them after the union, and only the sort
+  // by label keeps a before b.
+  adamic_object *x = node(&name_c);
+  adamic_array *bb = copy(x, NULL);
+  adamic_release(x);
+  adamic_array *aa = holder(bb, NULL);
+  adamic_array *e = holder(bb, aa);
+  adamic_release(aa);
+  adamic_release(bb);
+  adamic_object *h = node(&name_c), *partner = node(&name_c);
+  link(h, 0, partner);
+  adamic_release(partner);
+  adamic_array *in = copy(h, NULL);
+  link(h, 1, e);
+  adamic_release(e);
+  adamic_release(in);
+  adamic_release(h);
+  label(a);
  } else if (strcmp(mode, "late") == 0) {
   // The order's limit: a chain of N regions over c, made first, stored into x, a graph made after it
   // whose region has an edge in. The chain is ordered before x's region, so all of it is between
@@ -353,7 +377,7 @@ func TestGraphRegionOfOne(t *testing.T) {
 		}
 		return leakcheck.Run{Stdout: []byte(stdout.String()), Stderr: []byte(stderr.String()), ExitCode: exit}
 	}
-	for _, mode := range []string{"dropped", "stored", "closed", "escape", "overwrite", "teardown", "sorted", "third", "diamond", "taken", "chain", "unrelated", "member", "open", "beyond", "late", "program", "program chain"} {
+	for _, mode := range []string{"dropped", "stored", "closed", "escape", "overwrite", "teardown", "sorted", "third", "diamond", "taken", "chain", "unrelated", "member", "open", "beyond", "moving order", "late", "program", "program chain"} {
 		t.Run(mode, func(t *testing.T) {
 			t.Parallel()
 			for _, binary := range []string{sanitized, counted} {
