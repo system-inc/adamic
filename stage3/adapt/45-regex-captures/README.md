@@ -1,8 +1,10 @@
 # 45: Proven regex captures and split density
 
-`adapt.cjs` resolves all 29 upstream-config regex diagnostics with 19 AST-planned
-edits in eight compiler files. It uses stock typescript@6.0.3, reparses current
-source, preserves line endings, and refuses unreviewed shapes before writing.
+`adapt.cjs` resolves all 29 upstream-config regex diagnostics. The original
+proof recorded 19 AST-planned edits in eight compiler files; the parseRange
+amendment below also removes the obsolete separator declaration. It uses stock
+typescript@6.0.3, reparses current source, preserves line endings, and refuses
+unreviewed shapes before writing.
 The regex participation analyzer is in proof.cjs. It checks regex syntax,
 counts captures, unions guarantees through concatenation, intersects them
 across alternatives, and clears guarantees under zero-minimum quantifiers.
@@ -316,3 +318,162 @@ getfunctionname-home.json in this directory. Full paired replay and the
 original-home apply outcome are recorded by
 99-correctness-core-getfunctionname-move. This is a replay-recognition
 amendment, with no new emitted JavaScript edit in this earlier adaptation.
+
+## parseRange literal-at-call amendment
+
+Adamic's Nov 10 05:40Z ruling for #b5w3ycg, row 4. This amends this owner;
+it creates no new adaptation directory. The TypeScript pin stays
+050880ce59e30b356b686bd3144efe24f875ebc8. base.json records the original and
+final main bases and the unchanged measurement inputs across main's advance.
+
+The amendment writes `range.split(/\s+/) as string[]`. Stage 0's
+internal/lower/cast_split.go accepts a string receiver, a literal written at
+this call, a string-array target, and a separator with no capturing groups.
+It never follows a RegExp variable. The assertion therefore stays and erases.
+The adapter pins the exact flag-free separator, validates its sole declaration
+and sole use, and rejects additional references before writing.
+
+A search of every source file in the completed baseline adapted tree found
+only the semver.ts declaration at 249 and the split at 287. The declaration
+is removed with its newline retained, avoiding noUnusedLocals while keeping
+line positions stable. All 746 source files were compared; only semver.ts
+changes. source-inventory.json and semver-source.diff.gz record both source
+hunks. The ledger records the new per-call RegExp allocation, ignored lastIndex,
+and absence of flags or state carried between calls.
+
+Both full applies exit 0. Both upstream builds and harness builds exit 0.
+The seven direct adapted parseRange observations are byte-identical, covering
+single spaces, runs of spaces, tabs, leading/trailing whitespace, alternatives,
+hyphen ranges and the empty string. Before/after JSONL files are retained.
+The isolated adapter probe uses the existing exact getFunctionName prerequisite
+pin; its replay reports zero edits. It does not claim the historical full suite.
+
+### Full-mode single-file latent census
+
+The user's follow-up supersedes the initial first-stop method. A root-semver
+census first encounters imported debug.ts, so its first stop cannot establish
+the semver split result. Those earlier records are retained as provenance only.
+
+The corrected measurement uses the meter's unchanged
+stage3/census/latent/make_overlay.py and latent tool, with LATENT_FULL=1,
+LATENT_ONLY_FILE set to the exact selected semver.ts path, and
+LATENT_ASSERT_NO_OUTPUT=1. The source-directory argument still loads the whole
+compiler. No production lowering rule or earlier owner is bypassed or changed.
+The overlay is the meter's no-output measurement binary, not native acceptance.
+All three processes exit 0, have empty checker diagnostics, and emit their
+complete relation trailers. latent-provenance.json pins the generator, binary,
+and generated overlay files.
+
+| Tree | Units | Finding occurrences | Unique phase/kind/site/reason entries |
+| --- | --- | --- | --- |
+| Main | 29 | 60 | 19 |
+| Amended | 28 | 57 | 16 |
+| Restoring mutant | 29 | 60 | 19 |
+
+The amendment removes exactly these three occurrences, with no added findings:
+
+| Phase | Kind | semver.ts site | Meaning |
+| --- | --- | --- | --- |
+| refusal_scan | Refused | 287:34 | A cast the runtime cannot check |
+| lowering | Refused | 287:34 | The same split cast |
+| lowering | Boundary | 287:13 | Rollback of the failed for-of statement |
+
+The restoring mutant's semver.ts is byte-identical to main. Its ordered full
+finding list equals main's after normalizing only the tree path prefix. The
+surviving amended occurrences equal main's after excluding the three rows above;
+byte offsets are omitted from that comparison because declaration removal
+changes offsets. The first emitted remaining semver-local Refused/NotYet finding is
+NotYet at 124:13, a destructured name that is not plain. The other remaining
+own concrete sites are 47:41 (constructor escape), 130:28 (reading major),
+380:13 (switch case type), and 452:37 (template interpolation).
+
+**Every finding occurrence, phase, unit, site and reason for all three runs is
+listed in full in [latent-sites.md](semver-split-evidence/latent-sites.md).**
+Imported debug.ts findings and rollback boundaries are included. The complete
+raw streams are latent-main.jsonl, latent-amended.jsonl and latent-mutant.jsonl.
+semver-split-latent-audit.py checks the exact three-way delta and restoring
+identity; latent-audit.json records its passing result.
+
+### Whole-lane split count
+
+The complete sharded lane executes **1,109 parseRange split calls, with zero
+element differences**. All 398 commands pass their unchanged lane checks:
+106,366 passing tests, one sanctioned Public APIs failure, and zero pending.
+The coordinator exits 0. The maximum shard wall is 16.610 seconds, below the
+30-second bound; total wall is 1,586.466 seconds at concurrency 2.
+count-audit.json records the complete count and coverage proof.
+
+The counter and instrumenter operate only on a temporary built copy. Each executed split computes the old shared-separator array and
+the new literal-separator array, checks every element, records both arrays,
+and returns the new array. A mismatch throws. The separate positive control
+calls the actual instrumented adapted VersionRange and records one call with
+zero differences; its records never enter the lane total. split-calls.jsonl.gz
+retains both arrays for every one of the 1,109 calls. The auditor requires every
+row to contain string arrays with identical elements, and verifies the exact
+instrumented bundle bytes after the run. lane-shard-observations.jsonl.gz and
+lane-shard-reports.jsonl.gz preserve all test identities and unit reports.
+
+### Every emitted JavaScript hunk
+
+All ten emitted JavaScript files were compared. These are all seven hunks:
+
+| File | Before hunk line | Classification |
+| --- | --- | --- |
+| _tsc.js | 2386 | Shared declaration removal |
+| _tsc.js | 2400 | parseRange split |
+| run.js | 2639 | parseRange split |
+| run.js | 2775 | Shared declaration binding removal |
+| run.js | 2873 | Shared declaration initialization removal |
+| typescript.js | 4963 | Shared declaration removal |
+| typescript.js | 4977 | parseRange split |
+
+semver-split-emitted.py removes only those approved declaration forms and
+substitutes the split in the baseline output, then requires exact equality to
+the amended output. This passes with zero outside changes and zero identifier
+renames; identifier normalization is unnecessary. emitted.diff lists every
+hunk, and emitted.json records their classification and normalized hashes.
+
+### Reproduction
+
+Setup sources /workspace/adamic-tools/env.sh, runs cloud/setup.sh and
+npm ci --prefix stage3/api, and exports ADAMIC_TYPESCRIPT_SOURCE to the pinned
+TypeScript checkout. The recorded full applications use /tmp/semver-split-before
+and /tmp/semver-split-after. Each completed output tree runs its locked npm ci,
+npm run build, and npm exec hereby -- tests. Their logs are retained compressed.
+
+The corrected latent build follows the meter's build_census:
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage3/census/latent/make_overlay.py "$PWD" /tmp/semver-split-latent-overlay
+gofmt -w /tmp/semver-split-latent-overlay/*.go
+go build -buildvcs=false -overlay=/tmp/semver-split-latent-overlay/overlay.json -o /tmp/semver-split-latent-census ./stage3/census/latent/tool
+```
+
+For each completed main, amended and restoring-mutant tree, with TREE and OUT
+set to its absolute paths:
+
+```sh
+LATENT_FULL=1 LATENT_ONLY_FILE="$TREE/src/compiler/semver.ts" LATENT_ASSERT_NO_OUTPUT=1 /tmp/semver-split-latent-census "$TREE/src/compiler" "$OUT" > "$OUT.log" 2>&1
+code=$?
+printf 'latent child exit=%s\n' "$code"
+```
+
+The whole-lane producer copies the completed built tree to COUNTED, excluding
+only its root node_modules, and installs the pinned stage3/typescript package
+for the lane's private views. The instrumenter changes exactly one call each
+in _tsc.js, typescript.js and run.js. With COUNTED, CALLS and RESULTS set to fresh
+absolute paths:
+
+```sh
+NODE_PATH="$PWD/stage3/api/node_modules" node stage3/adapt/45-regex-captures/semver-split-instrument.cjs "$COUNTED"
+STAGE3_ADAPTED_TREE="$COUNTED" SEMVER_SPLIT_RECORDS="$CALLS" NODE_OPTIONS="--require=$PWD/stage3/adapt/45-regex-captures/semver-split-count.cjs" python3 -B stage3/lane/measure_shards.py "$RESULTS" --concurrency 2 > /tmp/semver-split-shards.log 2>&1
+code=$?
+printf 'shard coordinator exit=%s\n' "$code"
+```
+
+The count auditor checks every unit's observation identity against the committed
+398-unit manifest, its expected counts and sanctioned API failure, every call
+record, and the exact three permitted temporary instrumentation edits. It
+retains all per-call arrays, unit observations and unit reports as compressed
+JSONL. No adaptation source is instrumented.
