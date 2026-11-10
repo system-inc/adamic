@@ -1,0 +1,33 @@
+submodule cache: off
+v24.19.0
+setup: node ready (0.235s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.250s)
+Cloning into '/workspace/adamic/cohere'...
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.624s)
+setup: tsc ready (TypeScript 6.0.3) (1.473s)
+From https://github.com/system-inc/cohere
+ * [new tag]           v0.1.0     -> v0.1.0
+ * [new tag]           v0.1.1     -> v0.1.1
+From https://github.com/system-inc/cohere
+ * branch              5360753e19e4417675a90e92a1823bea66b13918 -> FETCH_HEAD
+npm error code E503
+npm error 503 Service Unavailable - GET https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.6.0.tgz
+npm error A complete log of this run can be found in: /workspace/adamic-tools/markdown-install-_726z3kg/cache/_logs/2026-11-10T20_05_33_015Z-debug-0.log
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/setup-markdown-width.py", line 104, in <module>
+    answer = prepare(*sys.argv[1:])
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/cloud/setup-markdown-width.py", line 81, in prepare
+    subprocess.run([node, str(scratch / 'package/bin/npm-cli.js'), 'ci',
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/workspace/adamic-tools/bin/node', '/workspace/adamic-tools/markdown-install-_726z3kg/package/bin/npm-cli.js', 'ci', '--prefix', '/workspace/adamic-tools/markdown-install-_726z3kg/dependencies', '--cache', '/workspace/adamic-tools/markdown-install-_726z3kg/cache', '--ignore-scripts', '--no-audit', '--no-fund', '--fetch-retries=0', '--global=false', '--dry-run=false', '--install-strategy=hoisted', '--registry=https://registry.npmjs.org']' returned non-zero exit status 1.
+Submodule path 'cohere': checked out '5360753e19e4417675a90e92a1823bea66b13918'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/adamic/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (248.645s)

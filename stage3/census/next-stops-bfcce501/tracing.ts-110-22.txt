@@ -1,0 +1,7 @@
+
+    /** Stops tracing for the in-progress project and dumps the type catalog. */
+    export function stopTracing(): void {
+        Debug.assert(tracing, "Tracing is not in progress");
+        Debug.assert(!!typeCatalog.length === (mode !== "server")); // Have a type catalog iff not in server mode
+
+        fs.writeSync(traceFd, `\n]\n`);

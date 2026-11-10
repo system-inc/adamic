@@ -1,0 +1,11 @@
+{
+  "command": [
+    "bash",
+    "-c",
+    "gofmt -w /workspace/scratch/next-stops-entry-overlay/*.go"
+  ],
+  "exit_code": 0,
+  "seconds": 0.04914353200001642,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

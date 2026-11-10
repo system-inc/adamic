@@ -1,0 +1,180 @@
+[
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 20.300496904
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 15.981946881
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 16.425781632
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/binder.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 17.121440805
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builder.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 18.699476861
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 19.088417927
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 18.601885734
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 21.371300388
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 18.057032816
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 16.860366514
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/core.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 20.944784431
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.082178108
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 4.329443628
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 5.622280565
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 20.751451297
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 16.529027206
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 17.870431121
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 16.085062686
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 16.006859442
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:110:22",
+    "reason": "a namespace value seen as an argument to a callee whose body can't be named",
+    "seconds": 24.485992759
+  }
+]
