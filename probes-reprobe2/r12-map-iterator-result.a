@@ -1,0 +1,10 @@
+// Row 12: a Map values() iterator's next() result, held in a graph slot and never read by field:
+// a holds steps, steps holds the result, the result's value is b, b holds a.
+interface Node { name: string; next: Node[]; steps: IteratorResult<Node, undefined>[] }
+const a: Node = { name: 'a' + '', next: [], steps: [] };
+const b: Node = { name: 'b' + '', next: [a], steps: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const map = new Map<string, Node>([['b', b]]);
+const iterator = map.values();
+a.steps.push(iterator.next());
+console.log(`${a.name} ${a.steps.length}`);

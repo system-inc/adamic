@@ -1,0 +1,9 @@
+// Row 12 through a generator with a number return: its next() result held in a graph slot.
+interface Node { name: string; next: Node[]; steps: IteratorResult<Node, number>[] }
+const a: Node = { name: 'a' + '', next: [], steps: [] };
+const b: Node = { name: 'b' + '', next: [a], steps: [] };
+a.next.push(b); // a cycle: the program is a graph program
+function* walk(node: Node): Generator<Node, number, undefined> { yield node; return 1; }
+const steps = walk(b);
+a.steps.push(steps.next());
+console.log(`${a.name} ${a.steps.length}`);
