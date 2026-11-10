@@ -1,11 +1,11 @@
 # Validation and delivery
 
-| Group | Added topics | Delivery commit |
-|---|---|---|
-| 1 | checked non-null; four namespace reads/receiver/class/callable fixes; ruled runtime drop | `1d60ab525` |
-| 2 | conditions, 78 historical sites and 241 samples | `d40016bd9` |
-| 3 | overloads, statements-small, element-access, syntax-kinds; refreshed counts | `e0e234ea2` |
-| 4 | devirtualize-review coverage plus this conflict/validation report | commit containing this report |
+| Group | Added topics                                                                             | Delivery commit               |
+| ----- | ---------------------------------------------------------------------------------------- | ----------------------------- |
+| 1     | checked non-null; four namespace reads/receiver/class/callable fixes; ruled runtime drop | `1d60ab525`                   |
+| 2     | conditions, 78 historical sites and 241 samples                                          | `d40016bd9`                   |
+| 3     | overloads, statements-small, element-access, syntax-kinds; refreshed counts              | `e0e234ea2`                   |
+| 4     | devirtualize-review coverage plus this conflict/validation report                        | commit containing this report |
 
 Only compiler/area-stack was pushed. Each group is pushed once after its checks finish. No pull request, area/ push, main push, or merge of an unapproved topic branch. No changes were copied from cohere; checker dependencies use its pinned submodule.
 
