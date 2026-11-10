@@ -41,13 +41,11 @@ New (present is otherwise unused, which Go refuses):
 	chosen := ir.Coalesce{Value: held, Fallback: fallback, Of: of}
 ```
 
-No live witness. Every field whose type holds null and undefined is held as a union with a null member,
-which destructureFrom stops before destructuredDefault is reached ("a destructured name held otherwise than
-its field", pinned by internal/lower's TestDestructuringDefaultNullStops), and a reference field whose null
-and undefined are held alike stops in destructuredDefault itself. So the undefined test is never asked to
-tell a present null from undefined today. Whoever admits a null-holding field's union to destructuring
-holds a present null to Node first (Node prints null where ?? takes the default), and this mutant must turn
-that pin red.
+Live witness: `TestDestructureUnionAgrees/null/native`, `/sanitized` and
+`/javascript`, over internal/oracle/testdata/destructure_union_null.a. Union fields
+now reach the undefined-only guard. A present null stays null on Node but takes
+the default under this mutant. The fixture's adjacent `.mutant.md` spells out the
+undefined-or-null condition mutant that was run and caught on all three backends.
 
 ## (c) mayHoldNull narrowed to includesNull
 
@@ -63,8 +61,8 @@ New:
 	return l.includesNull(concrete)
 ```
 
-Red: no destructuring witness today. An unknown field stops at destructureFrom's union gate before
-destructuredDefault is reached (TestDestructuringDefaultNullStops' unknown row; Codex 01a1c64c showed the
-mutant leaves that stop unchanged), so the guard it narrows is defense for whatever admits that field next.
-Its live witness is #1mw3c4x's unknown_param.a, once functions.go's parameter default calls mayHoldNull,
-which the second of the two changes to land does.
+There is no destructuring witness for this narrower guard: unknown is held as
+Union and deliberately bypasses mayHoldNull because its null sentinel is distinct.
+The former unknown refusal is now an agreement in
+internal/oracle/testdata/destructure_union_former_stops.a. The parameter-default
+witness remains #1mw3c4x's unknown_param.a.

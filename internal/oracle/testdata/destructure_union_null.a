@@ -1,0 +1,18 @@
+function required(o: { a: string | null }): void {
+    const { a = 'd' } = o;
+    console.log(a === null ? "null" : a);
+}
+function optional(o: { a?: string | null }): void {
+    const { a = 'd' } = o;
+    console.log(a === null ? "null" : a);
+}
+required({ a: null });
+required({ a: "present" });
+optional({ a: null });
+optional({});
+function explicitUndefined(o: { a: string | null | undefined }): void {
+    const { a = 'd' } = o;
+    console.log(a === null ? "null" : a);
+}
+explicitUndefined({ a: undefined });
+optional({ a: "present" });
