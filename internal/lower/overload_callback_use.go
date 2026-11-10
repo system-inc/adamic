@@ -163,9 +163,11 @@ func (l *lowering) overloadCallbackPresenceTest(reference *ast.Node) bool {
 // overloadCallbackCall is whether reference is the callee of a call, through parentheses or a non-null !,
 // with no ?. and no spread, whose argument at each of promised's positions serves promised's parameter
 // there (rule 1). A missing argument is undefined, which serves an optional parameter and nothing else. An
-// argument past promised's parameters is evaluated and ignored, so its type serves nothing; the walk still
-// judges any use of the callback inside it. A rest in promised takes every argument from its position on,
-// each judged against the rest's element there, and a missing rest item is just a shorter array.
+// argument past promised's parameters, with no rest there, refuses: the callee is the caller's function,
+// and tsc lets one with a further optional parameter, `(dog: Dog, label?: string) => boolean`, stand
+// where `(value: T) => boolean` is promised, so the extra lands in a parameter the promise never showed
+// (Language's must on #8n7eet3). A rest in promised takes every argument from its position on, each judged
+// against the rest's element there, and a missing rest item is just a shorter array.
 func (l *lowering) overloadCallbackCall(implementation, overload, reference *ast.Node, promised *checker.Signature) bool {
 	callee := reference
 	for callee.Parent != nil && (callee.Parent.Kind == ast.KindParenthesizedExpression || callee.Parent.Kind == ast.KindNonNullExpression) {
@@ -189,7 +191,7 @@ func (l *lowering) overloadCallbackCall(implementation, overload, reference *ast
 	}
 	for position := 0; position < max(fixed, len(call.Arguments.Nodes)); position++ {
 		if position >= fixed && !promised.HasRestParameter() {
-			continue // JavaScript evaluates and ignores extra arguments.
+			return false
 		}
 		argument := l.checker.GetUndefinedType()
 		if position < len(call.Arguments.Nodes) {

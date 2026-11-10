@@ -151,3 +151,50 @@ func TestOverloadCallbackRefusals(t *testing.T) {
 		})
 	}
 }
+
+// An argument past the promised callback's parameters lands in the caller's function, which tsc lets declare
+// a further optional parameter the promise never showed: `(dog: Dog, label?: string) => boolean` stands
+// where `(value: T) => boolean` is promised. So the implementation's `test(value, 5)` would hand label a
+// number, and `test(value, new Animal())` would hand a Dog parameter an Animal, each a TypeError on Node.
+// Both keep the census's refusal (Language's must on #8n7eet3, x1 and x2). Mutant: an extra argument
+// skipped as evaluated and ignored, and both lower.
+func TestOverloadCallbackExtraArgumentRefuses(t *testing.T) {
+	t.Parallel()
+	const animals = `class Animal { readonly name: string = "animal"; }
+class Dog extends Animal { bark(): string { return "woof"; } }
+`
+	const refusal = "overload 1 of check parameter test cannot be served by implementation parameter test"
+	for _, probe := range []struct{ name, source string }{
+		{"a number into an optional string", animals + `function check<T extends Animal>(value: T, test: (value: T) => boolean): boolean;
+function check(value: Animal, test: ((value: Animal, extra: number) => boolean) | undefined): boolean {
+	return test === undefined || test(value, 5);
+}
+console.log(String(check(new Dog(), (dog: Dog, label?: string): boolean => {
+	if (label === undefined) { return true; }
+	console.log(label.toUpperCase());
+	return false;
+})));
+`},
+		{"an Animal into an optional Dog", animals + `function check<T extends Animal>(value: T, test: (value: T) => boolean): boolean;
+function check(value: Animal, test: ((value: Animal, other: Animal) => boolean) | undefined): boolean {
+	return test === undefined || test(value, new Animal());
+}
+console.log(String(check(new Dog(), (dog: Dog, other?: Dog): boolean => {
+	if (other === undefined) { return true; }
+	console.log(other.bark());
+	return false;
+})));
+`},
+	} {
+		for _, extension := range []string{".ts", ".a"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(refused.What, refusal) {
+					t.Fatalf("want %q, got %v", refusal, err)
+				}
+			})
+		}
+	}
+}
