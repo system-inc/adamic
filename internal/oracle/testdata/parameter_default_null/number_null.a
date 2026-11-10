@@ -1,0 +1,7 @@
+// A passed null keeps null: the default is taken only for undefined (#parameter default, Lower).
+function f(x: number | null = 1): string {
+	return x === null ? 'null' : String(x);
+}
+console.log(f(null));
+console.log(f());
+console.log(f(7));
