@@ -1,0 +1,16 @@
+parent attached exit observer to existing compiler 14034
+head attached exit observer to existing compiler 14121
+{"name": "tsc-entry-ordered-first-parent", "command": ["/workspace/never-call-tools/parent/census-entry-ordered", "/workspace/never-call-adapted/src/tsc/tsc.ts", "/workspace/never-call-live/tsc-entry-ordered-first-parent.jsonl"], "cwd": "/workspace/never-call-report", "started_utc": "2026-11-10T19:19:50.184540+00:00", "seconds": 2636.800752294, "peak_rss_kib": 3912728, "child_exit_code": 0, "silent_cutoff": false, "measurement_recovered": true, "peak_rss_method": "/proc/PID/status VmHWM at PTRACE_EVENT_EXIT", "peak_rss_exact_exit_observation": true, "raw_wait_status": 0, "ptrace_exit_event_wait_status": 0, "pid": 14034}
+archive child exit code: 0
+post-run child exit code: 0
+child exit code: 0 ['git', 'add']
+child exit code: 0 ['git', 'push']
+{"label": "tsc-entry-ordered-first-parent-recovered-complete", "sha": "e8db1b00fe4e10b89298670327f81c64c5040ddf", "ref": "refs/heads/typescript/never-call-census-checkpoint-tsc-entry-ordered-first-parent-recovered-complete"}
+post-run child exit code: 0
+{"name": "tsc-entry-ordered-first-head", "command": ["/workspace/never-call-tools/head/census-entry-ordered", "/workspace/never-call-adapted/src/tsc/tsc.ts", "/workspace/never-call-live/tsc-entry-ordered-first-head.jsonl"], "cwd": "/workspace/never-call-head", "started_utc": "2026-11-10T19:20:47.474559+00:00", "seconds": 2637.7966710690002, "peak_rss_kib": 4036068, "child_exit_code": 0, "silent_cutoff": false, "measurement_recovered": true, "peak_rss_method": "/proc/PID/status VmHWM at PTRACE_EVENT_EXIT", "peak_rss_exact_exit_observation": true, "raw_wait_status": 0, "ptrace_exit_event_wait_status": 0, "pid": 14121}
+archive child exit code: 0
+post-run child exit code: 0
+child exit code: 0 ['git', 'add']
+child exit code: 0 ['git', 'push']
+{"label": "tsc-entry-ordered-first-head-recovered-complete", "sha": "a7b56ddd73ee78ecb753a842f08d7e03e5a4e2e1", "ref": "refs/heads/typescript/never-call-census-checkpoint-tsc-entry-ordered-first-head-recovered-complete"}
+post-run child exit code: 0

@@ -1,0 +1,786 @@
+{
+  "debug-full": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  },
+  "semver-full": {
+    "raw_findings": {
+      "lowered": 4,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 6,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 3,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 6,
+      "regressions": 0
+    }
+  },
+  "tsc-entry-ordered-first": {
+    "raw_findings": {
+      "lowered": 11,
+      "moved": 0,
+      "new_findings": 5,
+      "new_sites": 4,
+      "unit_first_stop_delta": 19,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 11,
+      "moved": 0,
+      "new_findings": 5,
+      "new_sites": 4,
+      "unit_first_stop_delta": 19,
+      "regressions": 0
+    }
+  },
+  "entry_moved_units": [
+    {
+      "identity": [
+        "src/compiler/builder.ts",
+        "03cd217e69a1d3f9c0c05271a6f445d2bf302dd2ab0f117d446a02b8f264da7c",
+        40094
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/builder.ts:921:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 40161,
+        "body_end": 40382,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "isChangedSignature"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/builder.ts:921:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target Map<Path, string | false>",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target Map<Path, string | false> yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/builder.ts:921:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:236:16",
+        "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:236:16: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/builder.ts",
+        "03cd217e69a1d3f9c0c05271a6f445d2bf302dd2ab0f117d446a02b8f264da7c",
+        116883
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/builder.ts:2478:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 117085,
+        "body_end": 118706,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "createRedirectedBuilderProgram"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/builder.ts:2478:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target Program",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target Program yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/builder.ts:2478:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/builder.ts:2486:31",
+        "reason": "an assignment value to a member",
+        "text": "/workspace/never-call-adapted/src/compiler/builder.ts:2486:31: stage 0 can't lower an assignment value to a member yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        68308
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/factory/utilities.ts:1565:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 68463,
+        "body_end": 68587,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "formatIdentifier"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/factory/utilities.ts:1565:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "a checked predicate target whose base has no required field to check ((name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string)",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower a checked predicate target whose base has no required field to check ((name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string) yet"
+      },
+      "head": null
+    },
+    {
+      "identity": [
+        "src/compiler/moduleNameResolver.ts",
+        "e1a374f124a8d33d656059239217d058cbcb8ed501ac4ff76047e750847e2dbd",
+        16443
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/moduleNameResolver.ts:427:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 16566,
+        "body_end": 17707,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "readPackageJsonTypesVersionPaths"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/moduleNameResolver.ts:427:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target Comparator[][]",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target Comparator[][] yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/moduleNameResolver.ts:427:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33",
+        "reason": "a value of type never",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/moduleNameResolver.ts",
+        "e1a374f124a8d33d656059239217d058cbcb8ed501ac4ff76047e750847e2dbd",
+        17776
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/moduleNameResolver.ts:461:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 17893,
+        "body_end": 18417,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getPackageJsonTypesVersionsPaths"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/moduleNameResolver.ts:461:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; }",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; } yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/moduleNameResolver.ts:461:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33",
+        "reason": "a value of type never",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/moduleNameResolver.ts",
+        "e1a374f124a8d33d656059239217d058cbcb8ed501ac4ff76047e750847e2dbd",
+        157670
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/moduleNameResolver.ts:2989:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 157768,
+        "body_end": 158091,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "isApplicableVersionedTypesKey"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/moduleNameResolver.ts:2989:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target Comparator[][]",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target Comparator[][] yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/moduleNameResolver.ts:2989:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33",
+        "reason": "a value of type never",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/program.ts",
+        "0ed189a95d2204a4c8a0e7bd6602d09cd85e1705ea9495f224905a24f16f3688",
+        48872
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/program.ts:1196:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 49008,
+        "body_end": 50390,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getReferencedFileLocation"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/program.ts:1196:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target SourceFile",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target SourceFile yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/program.ts:1196:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/program.ts:1209:29",
+        "reason": "destructuring a value made in the assignment itself",
+        "text": "/workspace/never-call-adapted/src/compiler/program.ts:1209:29: stage 0 can't lower destructuring a value made in the assignment itself yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/resolutionCache.ts",
+        "a2a02f0f675ff9c65c350da8af0868ff8b30604559d222aa7bbe68a010742ed8",
+        21272
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/resolutionCache.ts:532:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 21626,
+        "body_end": 23653,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveModuleNameUsingGlobalCache"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/resolutionCache.ts:532:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "a checked predicate target whose base has no required field to check ((externalModuleName: string) => string)",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower a checked predicate target whose base has no required field to check ((externalModuleName: string) => string) yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/resolutionCache.ts:532:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/resolutionCache.ts:563:14",
+        "reason": "assigning to an AsExpression",
+        "text": "/workspace/never-call-adapted/src/compiler/resolutionCache.ts:563:14: stage 0 can't lower assigning to an AsExpression yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/semver.ts",
+        "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25",
+        1919
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/semver.ts:46:1",
+        "kind": "KindClassDeclaration",
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "Version"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:46:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; }",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; } yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:46:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33",
+        "reason": "a value of type never",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/semver.ts",
+        "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25",
+        9069
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/semver.ts:207:1",
+        "kind": "KindClassDeclaration",
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "VersionRange"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:207:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target Comparator[][]",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target Comparator[][] yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:207:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33",
+        "reason": "a value of type never",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/semver.ts",
+        "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25",
+        12214
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/semver.ts:297:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 12249,
+        "body_end": 12788,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "parsePartial"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:297:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; }",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; } yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:297:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33",
+        "reason": "a value of type never",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/semver.ts",
+        "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25",
+        12792
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/semver.ts:314:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 12868,
+        "body_end": 13555,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "parseHyphen"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:314:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; }",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; } yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:314:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33",
+        "reason": "a value of type never",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/semver.ts",
+        "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25",
+        13559
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/semver.ts:336:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 13654,
+        "body_end": 16253,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "parseComparator"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:336:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; }",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; } yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:336:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33",
+        "reason": "a value of type never",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/semver.ts",
+        "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25",
+        17079
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/semver.ts:425:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 17172,
+        "body_end": 17567,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "testComparator"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:425:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; }",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; } yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/semver.ts:425:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33",
+        "reason": "a value of type never",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/transformers/taggedTemplate.ts",
+        "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb",
+        4022
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/transformers/taggedTemplate.ts:110:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 4128,
+        "body_end": 5487,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getRawLiteral"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/transformers/taggedTemplate.ts:110:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/factory/nodeFactory.ts:6111:21",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "text": "/workspace/never-call-adapted/src/compiler/factory/nodeFactory.ts:6111:21: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/transformers/taggedTemplate.ts:110:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/never-call-adapted/src/compiler/utilities.ts:10656:6",
+        "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "text": "/workspace/never-call-adapted/src/compiler/utilities.ts:10656:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        81292
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/utilities.ts:2383:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 81410,
+        "body_end": 81479,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getTextOfPropertyName"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/utilities.ts:2383:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "a checked predicate target whose base has no required field to check (void & { __escapedIdentifier: void; })",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower a checked predicate target whose base has no required field to check (void & { __escapedIdentifier: void; }) yet"
+      },
+      "head": null
+    },
+    {
+      "identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        339022
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/utilities.ts:8584:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 339107,
+        "body_end": 339218,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "formatStringFromArgs"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/utilities.ts:8584:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target readonly string[]",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target readonly string[] yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/utilities.ts:8584:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/utilities.ts:8585:66",
+        "reason": "a BinaryExpression with a string and a union of differently held members",
+        "text": "/workspace/never-call-adapted/src/compiler/utilities.ts:8585:66: stage 0 can't lower a BinaryExpression with a string and a union of differently held members yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        431501
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/utilities.ts:10769:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 431568,
+        "body_end": 432921,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "expressionResultIsUnused"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/utilities.ts:10769:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target Node",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target Node yet"
+      },
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/utilities.ts:10769:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/binder.ts:1109:17",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "text": "/workspace/never-call-adapted/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+      }
+    },
+    {
+      "identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        447394
+      ],
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/never-call-adapted/src/compiler/utilities.ts:11117:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 447483,
+        "body_end": 447556,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getJSDocSatisfiesExpressionType"
+      },
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/never-call-adapted/src/compiler/utilities.ts:11117:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5",
+        "reason": "checked predicate overload target TypeNode",
+        "text": "/workspace/never-call-adapted/src/compiler/debug.ts:227:5: stage 0 can't lower checked predicate overload target TypeNode yet"
+      },
+      "head": null
+    }
+  ],
+  "entry_regressions": [],
+  "audit_extra_new_site_regressions": []
+}

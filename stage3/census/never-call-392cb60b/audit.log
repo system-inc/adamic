@@ -1,0 +1,172 @@
+compiler/tool source diff child exit code: 0
+compiler/tool source diff child exit code: 0
+{
+  "exit_observer_probe": {
+    "expected_child_exit_code": 7,
+    "actual_child_exit_code": 7,
+    "raw_exit_status": 1792,
+    "exit_event_status": 1792,
+    "peak_rss_kib_at_exit": 71552,
+    "rusage_children_peak_rss_kib": 71552,
+    "passed": true
+  },
+  "debug-full-parent": {
+    "files": 1,
+    "units": 81,
+    "findings": 22,
+    "statuses": {
+      "attempted": 62,
+      "deferred_generic_instantiation": 19
+    },
+    "child_exit_code": 0,
+    "relation_overflow": {
+      "per_unit": false,
+      "after_load": "",
+      "end": "",
+      "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+      "cache_sizes": {
+        "assignable": 53802,
+        "comparable": 15693,
+        "enum": 0,
+        "flaggedPairs": 0,
+        "identity": 5767,
+        "strictSubtype": 15612,
+        "subtype": 15050,
+        "ts2859": 0
+      }
+    }
+  },
+  "debug-full-head": {
+    "files": 1,
+    "units": 81,
+    "findings": 22,
+    "statuses": {
+      "attempted": 62,
+      "deferred_generic_instantiation": 19
+    },
+    "child_exit_code": 0,
+    "relation_overflow": {
+      "per_unit": false,
+      "after_load": "",
+      "end": "",
+      "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+      "cache_sizes": {
+        "assignable": 53802,
+        "comparable": 15693,
+        "enum": 0,
+        "flaggedPairs": 0,
+        "identity": 5769,
+        "strictSubtype": 15612,
+        "subtype": 15050,
+        "ts2859": 0
+      }
+    }
+  },
+  "semver-full-parent": {
+    "files": 1,
+    "units": 28,
+    "findings": 57,
+    "statuses": {
+      "attempted": 28
+    },
+    "child_exit_code": 0,
+    "relation_overflow": {
+      "per_unit": false,
+      "after_load": "",
+      "end": "",
+      "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+      "cache_sizes": {
+        "assignable": 52941,
+        "comparable": 15693,
+        "enum": 0,
+        "flaggedPairs": 0,
+        "identity": 5742,
+        "strictSubtype": 15612,
+        "subtype": 15050,
+        "ts2859": 0
+      }
+    }
+  },
+  "semver-full-head": {
+    "files": 1,
+    "units": 28,
+    "findings": 43,
+    "statuses": {
+      "attempted": 28
+    },
+    "child_exit_code": 0,
+    "relation_overflow": {
+      "per_unit": false,
+      "after_load": "",
+      "end": "",
+      "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+      "cache_sizes": {
+        "assignable": 52941,
+        "comparable": 15693,
+        "enum": 0,
+        "flaggedPairs": 0,
+        "identity": 5745,
+        "strictSubtype": 15612,
+        "subtype": 15050,
+        "ts2859": 0
+      }
+    }
+  },
+  "tsc-entry-ordered-first-parent": {
+    "files": 81,
+    "units": 4562,
+    "findings": 5749,
+    "statuses": {
+      "attempted": 4058,
+      "deferred_generic_instantiation": 504
+    },
+    "child_exit_code": 0,
+    "relation_overflow": {
+      "per_unit": false,
+      "after_load": "",
+      "end": "",
+      "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+      "cache_sizes": {
+        "assignable": 298577,
+        "comparable": 15725,
+        "enum": 0,
+        "flaggedPairs": 0,
+        "identity": 9431,
+        "strictSubtype": 38941,
+        "subtype": 15083,
+        "ts2859": 0
+      }
+    }
+  },
+  "tsc-entry-ordered-first-head": {
+    "files": 81,
+    "units": 4562,
+    "findings": 5746,
+    "statuses": {
+      "attempted": 4058,
+      "deferred_generic_instantiation": 504
+    },
+    "child_exit_code": 0,
+    "relation_overflow": {
+      "per_unit": false,
+      "after_load": "",
+      "end": "",
+      "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+      "cache_sizes": {
+        "assignable": 298681,
+        "comparable": 15725,
+        "enum": 0,
+        "flaggedPairs": 0,
+        "identity": 9438,
+        "strictSubtype": 38941,
+        "subtype": 15083,
+        "ts2859": 0
+      }
+    }
+  },
+  "extra_new_site_regressions_raw_findings": [],
+  "extra_new_site_regressions_distinct_reads": [],
+  "closure_hashes_unchanged": true,
+  "original_source_root_count": 1,
+  "unit_inventory_total": 4562
+}
