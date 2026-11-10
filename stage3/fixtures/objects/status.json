@@ -192,7 +192,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/16_version_defaults.a:15:13: stage 0 can't lower a destructured name that isn't plain yet"
+      "what": "stage3/fixtures/objects/16_version_defaults.a:18:13: stage 0 can't lower a destructured name held otherwise than its field yet"
     }
   },
   {

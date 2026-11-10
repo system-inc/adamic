@@ -66,7 +66,7 @@ func TestViewCopyVariantsRefused(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, at, what string }{
 		{"view_spread_assign.ts", "3:122", "each source must have its complete shape proven by a literal or const binding"},
-		{"view_spread_rest.ts", "3:86", "a destructured name that isn't plain"},
+		{"view_spread_rest.ts", "3:86", "a rest element in destructuring"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
