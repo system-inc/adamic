@@ -1,5 +1,5 @@
 {
-  "status": "IN_PROGRESS",
+  "status": "PASS",
   "base": "7f2c852dffe31163e9699f0c91a158596757b888",
   "apply_exit": {
     "before": 0,
@@ -18,38 +18,40 @@
     "after": 0,
     "mutant": 0
   },
-  "first_stop": {
-    "file": "src/compiler/debug.ts",
-    "line": 525,
-    "column": 37,
-    "reason": "a cast the runtime can't check",
-    "expression": "Object.create(Object.prototype) as FlowNode",
-    "same_in": [
-      "before",
-      "after",
-      "mutant"
-    ]
-  },
   "semver_specific_stop": "full-mode latent sites: cast refusal removed in both phases with no added findings; restoring mutant exactly matches main",
   "witness": {
     "cases": 7,
     "byte_identical": true
   },
   "oracle": {
-    "status": "running",
-    "completed_shards": 356,
-    "total_shards": 398,
-    "partial_calls": 1109,
-    "partial_differences": 0
+    "status": "PASS",
+    "calls": 1109,
+    "differences": 0,
+    "units": 398,
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "coordinator_exit": 0,
+    "wall_seconds": 1586.4658964619998,
+    "maximum_shard_seconds": 16.609567476999928
   },
   "counter_control": {
+    "entry": "actual instrumented adapted VersionRange",
     "calls": 1,
-    "differences": 0
+    "differences": 0,
+    "excluded_from_lane_total": true
   },
   "emitted_hunks": 7,
   "outside_permitted_edits": 0,
   "identifier_renames": 0,
-  "final_branch_pushed": false,
   "latent": {
     "status": "PASS",
     "main_findings": 60,
@@ -100,5 +102,17 @@
       "mutant": 29
     }
   },
-  "initial_base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6"
+  "initial_base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6",
+  "historical_root_census_first_stop": {
+    "file": "src/compiler/debug.ts",
+    "line": 525,
+    "column": 37,
+    "reason": "a cast the runtime can't check",
+    "expression": "Object.create(Object.prototype) as FlowNode",
+    "same_in": [
+      "before",
+      "after",
+      "mutant"
+    ]
+  }
 }

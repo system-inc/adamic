@@ -4,10 +4,10 @@ import gzip,hashlib,json,sys
 sys.dont_write_bytecode=True
 root=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(root/'stage3/lane'))
-from shard_plan import names_digest,runtime_hash,unit_inputs_hash
+from shard_plan import names_digest,runtime_hash,unit_inputs_hash,load_plan
 results,calls,out,original,counted=map(Path,sys.argv[1:])
 plan_path=root/'stage3/lane/shards.json'
-plan=json.loads(plan_path.read_text());units=plan['units']
+plan=load_plan();units=plan['units']
 ledger=json.loads((results/'ledger.json').read_text())
 assert {r['name'] for r in ledger['units']}=={r['name'] for r in units}
 assert len(ledger['units'])==len(units)

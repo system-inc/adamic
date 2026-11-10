@@ -396,13 +396,22 @@ identity; latent-audit.json records its passing result.
 
 ### Whole-lane split count
 
-The whole-lane shard run is in progress. The final count will be recorded in
-count-audit.json. The counter and instrumenter operate only on a temporary
-built copy. Each executed split computes the old shared-separator array and
+The complete sharded lane executes **1,109 parseRange split calls, with zero
+element differences**. All 398 commands pass their unchanged lane checks:
+106,366 passing tests, one sanctioned Public APIs failure, and zero pending.
+The coordinator exits 0. The maximum shard wall is 16.610 seconds, below the
+30-second bound; total wall is 1,586.466 seconds at concurrency 2.
+count-audit.json records the complete count and coverage proof.
+
+The counter and instrumenter operate only on a temporary built copy. Each executed split computes the old shared-separator array and
 the new literal-separator array, checks every element, records both arrays,
 and returns the new array. A mismatch throws. The separate positive control
 calls the actual instrumented adapted VersionRange and records one call with
-zero differences; its records never enter the lane total.
+zero differences; its records never enter the lane total. split-calls.jsonl.gz
+retains both arrays for every one of the 1,109 calls. The auditor requires every
+row to contain string arrays with identical elements, and verifies the exact
+instrumented bundle bytes after the run. lane-shard-observations.jsonl.gz and
+lane-shard-reports.jsonl.gz preserve all test identities and unit reports.
 
 ### Every emitted JavaScript hunk
 
