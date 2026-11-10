@@ -1,0 +1,66 @@
+{
+  "FlowGraphNode_owner_sha256": "f8a818197e7aed66dd2f969b257e0fc7a48e641ab88b36012052e7b2a2e41b82",
+  "status": "pass",
+  "apply_child_exit": 0,
+  "apply_command": "bash stage3/apply.sh /workspace/scratch/debug-display-final-tree",
+  "source_files": 746,
+  "complete_applied_source_byte_identical_to_normal_candidate": true,
+  "source_inventory_sha256": "4377f8b933d30cc24b278898448df74e3dd4548edcadfc34052059bc7e85974e",
+  "normal_javascript": [
+    {
+      "file": "_tsc.js",
+      "sha256": "421a391f76be70aa4617c466c2d2f9c95a59b59a3b1644ed2e65e57515ee53fb",
+      "matches_classified_candidate_and_lane": true
+    },
+    {
+      "file": "_tsserver.js",
+      "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "matches_classified_candidate_and_lane": true
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "matches_classified_candidate_and_lane": true
+    },
+    {
+      "file": "run.js",
+      "sha256": "39c15309c84f3d42967c8fe7dec8a1d688e3d2ed47ced71a0c8a631e1fa9cfb2",
+      "matches_classified_candidate_and_lane": true
+    },
+    {
+      "file": "tsc.js",
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "matches_classified_candidate_and_lane": true
+    },
+    {
+      "file": "tsserver.js",
+      "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "matches_classified_candidate_and_lane": true
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "matches_classified_candidate_and_lane": true
+    },
+    {
+      "file": "typescript.js",
+      "sha256": "9e439f8d958be3071e3213e4c99df66e052ef1c731a250eb7dc1004dd5c93055",
+      "matches_classified_candidate_and_lane": true
+    },
+    {
+      "file": "typingsInstaller.js",
+      "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "matches_classified_candidate_and_lane": true
+    },
+    {
+      "file": "watchGuard.js",
+      "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "matches_classified_candidate_and_lane": true
+    }
+  ],
+  "apply_log_sha256": "494b615e8e6851a0a25344698dfef16d8d2a31a68e464d95a40a7bb9485540a3",
+  "adapter_sha256": "4d1c9d1aa7b3b13554a28cb1c3e4c683b86ca32d76425a729dd00a64bd5f86fd",
+  "pins_sha256": "01a66126340697b63f32c660c812f794fc3ee69ee956e986ea0b2a001e42dc4f",
+  "main": "95afe50a6e94dbff360a399458b5f45f43cfccad",
+  "FlowGraphNode_unchanged": true
+}

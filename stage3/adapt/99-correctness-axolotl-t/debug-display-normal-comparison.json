@@ -1,0 +1,78 @@
+{
+  "status": "blocked",
+  "javascript": [
+    {
+      "file": "_tsc.js",
+      "identical": false,
+      "only_five_owners": false,
+      "before_sha256": "8e5aa1f5be14970979e9f688a338467162497bdf39266597715f19a849317988",
+      "after_sha256": "421a391f76be70aa4617c466c2d2f9c95a59b59a3b1644ed2e65e57515ee53fb"
+    },
+    {
+      "file": "_tsserver.js",
+      "identical": true,
+      "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "identical": true,
+      "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "file": "run.js",
+      "identical": false,
+      "only_five_owners": false,
+      "before_sha256": "a62672516443f46e3d0be8b5c16522346dcc1006d0a9c2ac970449e3a18fd6da",
+      "after_sha256": "39c15309c84f3d42967c8fe7dec8a1d688e3d2ed47ced71a0c8a631e1fa9cfb2"
+    },
+    {
+      "file": "tsc.js",
+      "identical": true,
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "file": "tsserver.js",
+      "identical": true,
+      "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "identical": true,
+      "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "file": "typescript.js",
+      "identical": false,
+      "only_five_owners": false,
+      "before_sha256": "a1675e1918093d2c7f432bc18d21ef3602b8f4087aa1471f5ab22b0ad09f8ef9",
+      "after_sha256": "9e439f8d958be3071e3213e4c99df66e052ef1c731a250eb7dc1004dd5c93055"
+    },
+    {
+      "file": "typingsInstaller.js",
+      "identical": true,
+      "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "file": "watchGuard.js",
+      "identical": true,
+      "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    }
+  ],
+  "declarations": [
+    {
+      "file": "typescript.d.ts",
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "identical": true
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "identical": true
+    }
+  ],
+  "changed_source": [
+    "src/compiler/debug.ts"
+  ]
+}

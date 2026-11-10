@@ -1,0 +1,38 @@
+{
+  "base": "7910ab94a42b0c7f62a79329d7f250b1b2045d05",
+  "node": "v24.19.0",
+  "source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/typescript-6.0.3",
+  "logs": {
+    "debug-display-setup.log": {
+      "child_exit": 0,
+      "bytes": 1884,
+      "sha256": "ea1ece2a293b5fef2c33b8a30efed7db3bd5e20b71e213aecffe069a0682effe"
+    },
+    "debug-display-api.log": {
+      "child_exit": 0,
+      "bytes": 232,
+      "sha256": "312abe6df6d367f5fdddce4ca41919fed54c934bb1b0beecc01997274fe7535b"
+    },
+    "debug-display-typescript-deps.log": {
+      "child_exit": 0,
+      "bytes": 823,
+      "sha256": "3e04ff58d7994cad78e4e6d792f8b173bd9d4c728d1405659f15f35391d7749b"
+    },
+    "debug-display-before-apply.log": {
+      "child_exit": 0,
+      "bytes": 842645,
+      "sha256": "47a5dd344aa4d98feb8cfbddd17b28999af3408117cb73be5e70d412fdbf132e"
+    },
+    "debug-display-before-build.log": {
+      "child_exit": 0,
+      "bytes": 2654,
+      "sha256": "f08d44e215846ee2301607ce5dcfe4440ded412a718eb1ca368bbf6481767b80"
+    },
+    "debug-display-before-harness.log": {
+      "child_exit": 0,
+      "bytes": 477,
+      "sha256": "673481d03f9643de71268b52c03e11c07bc1ab796409b8f3f4a3edaa55ed9c81"
+    }
+  }
+}

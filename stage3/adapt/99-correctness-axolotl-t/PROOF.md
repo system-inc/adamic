@@ -1,3 +1,11 @@
+> Candidate status: ready to land. Transitive classification, runtime exports, amended full apply and the complete final lane pass.
+
+> Nov 10 debugger-display amendment: current behavior and evidence are in
+> [debug-display-README.md](debug-display-README.md) and
+> [debug-display-PROOF.md](debug-display-PROOF.md). The original measurements
+> below predate this amendment; CW143 and automatic getter installation are
+> withdrawn with enableDebugInfo's body.
+
 # 99t proof record
 
 The final measured compiler and stack base is main a7b6da7f622bd768a99a443706490e80667dd547. The original requested branch remained dd57a3c6; main acquired the unchanged 99n directory, so the working branch was rebased onto main as instructed. Main's 99k, 99l and 99m touch core.ts and builder.ts, not these four owners. No other adaptation is edited.
