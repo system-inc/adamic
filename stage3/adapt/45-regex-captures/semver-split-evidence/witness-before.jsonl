@@ -1,0 +1,7 @@
+{"range":">=1.0.0 <2.0.0","parsed":[[{"operator":">=","operand":{"major":1,"minor":0,"patch":0,"prerelease":[],"build":[]}},{"operator":"<","operand":{"major":2,"minor":0,"patch":0,"prerelease":[],"build":[]}}]]}
+{"range":">=1.0.0    <2.0.0","parsed":[[{"operator":">=","operand":{"major":1,"minor":0,"patch":0,"prerelease":[],"build":[]}},{"operator":"<","operand":{"major":2,"minor":0,"patch":0,"prerelease":[],"build":[]}}]]}
+{"range":">=1.0.0\t<2.0.0","parsed":[[{"operator":">=","operand":{"major":1,"minor":0,"patch":0,"prerelease":[],"build":[]}},{"operator":"<","operand":{"major":2,"minor":0,"patch":0,"prerelease":[],"build":[]}}]]}
+{"range":"  >=1.0.0 <2.0.0  ","parsed":[[{"operator":">=","operand":{"major":1,"minor":0,"patch":0,"prerelease":[],"build":[]}},{"operator":"<","operand":{"major":2,"minor":0,"patch":0,"prerelease":[],"build":[]}}]]}
+{"range":"1.0.0 || >=2.0.0 <3.0.0","parsed":[[{"operator":"=","operand":{"major":1,"minor":0,"patch":0,"prerelease":[],"build":[]}}],[{"operator":">=","operand":{"major":2,"minor":0,"patch":0,"prerelease":[],"build":[]}},{"operator":"<","operand":{"major":3,"minor":0,"patch":0,"prerelease":[],"build":[]}}]]}
+{"range":"1.0.0 - 2.0.0","parsed":[[{"operator":">=","operand":{"major":1,"minor":0,"patch":0,"prerelease":[],"build":[]}},{"operator":"<=","operand":{"major":2,"minor":0,"patch":0,"prerelease":[],"build":[]}}]]}
+{"range":"","parsed":[]}

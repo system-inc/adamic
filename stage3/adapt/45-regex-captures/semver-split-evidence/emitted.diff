@@ -1,0 +1,66 @@
+--- before/_tsc.js
++++ after/_tsc.js
+@@ -2386,7 +2386,6 @@
+   }
+ };
+ var logicalOrRegExp = /\|\|/;
+-var whitespaceRegExp = /\s+/;
+ var partialRegExp = /^([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:-([a-z0-9-.]+))?(?:\+([a-z0-9-.]+))?)?)?$/i;
+ var hyphenRegExp = /^\s*([a-z0-9-+.*]+)\s+-\s+([a-z0-9-+.*]+)\s*$/i;
+ var rangeRegExp = /^([~^<>=]|<=|>=)?\s*([a-z0-9-+.*]+)$/i;
+@@ -2400,7 +2399,7 @@
+     if (match) {
+       if (!parseHyphen(match[1], match[2], comparators)) return void 0;
+     } else {
+-      for (const simple of range.split(whitespaceRegExp)) {
++      for (const simple of range.split(/\s+/)) {
+         const match2 = rangeRegExp.exec(simple.trim());
+         if (!match2 || !parseComparator(match2[1], match2[2], comparators)) return void 0;
+       }
+--- before/run.js
++++ after/run.js
+@@ -2639,7 +2639,7 @@
+     if (match) {
+       if (!parseHyphen(match[1], match[2], comparators)) return void 0;
+     } else {
+-      for (const simple of range.split(whitespaceRegExp)) {
++      for (const simple of range.split(/\s+/)) {
+         const match2 = rangeRegExp.exec(simple.trim());
+         if (!match2 || !parseComparator(match2[1], match2[2], comparators)) return void 0;
+       }
+@@ -2775,7 +2775,7 @@
+ function formatComparator(comparator) {
+   return `${comparator.operator}${comparator.operand}`;
+ }
+-var versionRegExp, prereleaseRegExp, prereleasePartRegExp, buildRegExp, buildPartRegExp, numericIdentifierRegExp, _Version, Version, VersionRange, logicalOrRegExp, whitespaceRegExp, partialRegExp, hyphenRegExp, rangeRegExp;
++var versionRegExp, prereleaseRegExp, prereleasePartRegExp, buildRegExp, buildPartRegExp, numericIdentifierRegExp, _Version, Version, VersionRange, logicalOrRegExp, partialRegExp, hyphenRegExp, rangeRegExp;
+ var init_semver = __esm({
+   "src/compiler/semver.ts"() {
+     "use strict";
+@@ -2873,7 +2873,6 @@
+       }
+     };
+     logicalOrRegExp = /\|\|/;
+-    whitespaceRegExp = /\s+/;
+     partialRegExp = /^([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:-([a-z0-9-.]+))?(?:\+([a-z0-9-.]+))?)?)?$/i;
+     hyphenRegExp = /^\s*([a-z0-9-+.*]+)\s+-\s+([a-z0-9-+.*]+)\s*$/i;
+     rangeRegExp = /^([~^<>=]|<=|>=)?\s*([a-z0-9-+.*]+)$/i;
+--- before/typescript.js
++++ after/typescript.js
+@@ -4963,7 +4963,6 @@
+   }
+ };
+ var logicalOrRegExp = /\|\|/;
+-var whitespaceRegExp = /\s+/;
+ var partialRegExp = /^([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:-([a-z0-9-.]+))?(?:\+([a-z0-9-.]+))?)?)?$/i;
+ var hyphenRegExp = /^\s*([a-z0-9-+.*]+)\s+-\s+([a-z0-9-+.*]+)\s*$/i;
+ var rangeRegExp = /^([~^<>=]|<=|>=)?\s*([a-z0-9-+.*]+)$/i;
+@@ -4977,7 +4976,7 @@
+     if (match) {
+       if (!parseHyphen(match[1], match[2], comparators)) return void 0;
+     } else {
+-      for (const simple of range.split(whitespaceRegExp)) {
++      for (const simple of range.split(/\s+/)) {
+         const match2 = rangeRegExp.exec(simple.trim());
+         if (!match2 || !parseComparator(match2[1], match2[2], comparators)) return void 0;
+       }

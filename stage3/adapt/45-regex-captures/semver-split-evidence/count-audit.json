@@ -1,0 +1,162 @@
+{
+  "status": "PASS",
+  "calls": 1109,
+  "differences": 0,
+  "units": 398,
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "maximum_shard_seconds": 16.609567476999928,
+  "wall_seconds": 1586.4658964619998,
+  "concurrency": 2,
+  "coordinator_exit": 0,
+  "plan_sha256": "c6aac4b07abc5164021e2382fccef265b7a0047de40bd33b2151b6ce5185a647",
+  "runtime_hash": "144022c09fc02ba8e554f9b78fe2f8ae40f3fdfa314e30db07ea50dc6ec661dd",
+  "instrumented_files": [
+    {
+      "file": "_tsc.js",
+      "sites": 1,
+      "original_sha256": "6327f0bc1669bea08d3130ce87a0d50b12d8a262e9eb6981a764bf01f4c42c06",
+      "instrumented_sha256": "3bf88b191c87e1cfe0e460f8e710f09245c815c73ca81581f7664e045c39bf30"
+    },
+    {
+      "file": "run.js",
+      "sites": 1,
+      "original_sha256": "abb8712407d33957c5774f83829412ea7b924618a255abde2242bc398f850627",
+      "instrumented_sha256": "02b66712ead80b5e942414a917c87471c8829ecbd6ded5134a3676793cb7beb5"
+    },
+    {
+      "file": "typescript.js",
+      "sites": 1,
+      "original_sha256": "0882358b1a173ddd7b5567a6a80e5561d91c4f396cf6711612d8dc19eda3b46a",
+      "instrumented_sha256": "73f6af8fafad1bff672d73a4afe19b58b24534cf5a33b359f61f0759f0b0a525"
+    }
+  ],
+  "processes": [
+    {
+      "pid": 20906,
+      "calls": 6,
+      "sha256": "ae53afeb087d1341ec91f647589075bdf61a695a3e24c6beab283140a0cd9dd0"
+    },
+    {
+      "pid": 21202,
+      "calls": 3,
+      "sha256": "1efea191bcab4ff21ed96c897972dbcd41de7af14eafad405e6b203a79fbefbe"
+    },
+    {
+      "pid": 21344,
+      "calls": 791,
+      "sha256": "02777cec12ce184ac2b0209b96560ddceff67822782de6c1e14e7fcc5a672655"
+    },
+    {
+      "pid": 21411,
+      "calls": 9,
+      "sha256": "419d6ca771b3df0e0c437f5eaa303bad59f0cd3fd934745b706cb3d70a63ecd1"
+    },
+    {
+      "pid": 21471,
+      "calls": 6,
+      "sha256": "ae53afeb087d1341ec91f647589075bdf61a695a3e24c6beab283140a0cd9dd0"
+    },
+    {
+      "pid": 21516,
+      "calls": 6,
+      "sha256": "ae53afeb087d1341ec91f647589075bdf61a695a3e24c6beab283140a0cd9dd0"
+    },
+    {
+      "pid": 21636,
+      "calls": 4,
+      "sha256": "d3a3885a2219f3e32468442844af3bea564ea88ebaf57cc27f790678ca8b3884"
+    },
+    {
+      "pid": 21919,
+      "calls": 4,
+      "sha256": "b066682c7866ffd5a406f966a059c2f642028113583de544dfa539684e92b289"
+    },
+    {
+      "pid": 22394,
+      "calls": 6,
+      "sha256": "908ee66b2346edde6a36832ed910477407553e015f5bc73bfdb8945f62291e58"
+    },
+    {
+      "pid": 22409,
+      "calls": 6,
+      "sha256": "d5ab1e68570c91be487c34f1b2c5d83ac1fe68bf3d70fc885ce7ad9076bd3770"
+    },
+    {
+      "pid": 22559,
+      "calls": 11,
+      "sha256": "a57b1ea885d28aa5931de9cdce6dd3f8dda05b53447d087ece86a87dbae03563"
+    },
+    {
+      "pid": 22924,
+      "calls": 9,
+      "sha256": "419d6ca771b3df0e0c437f5eaa303bad59f0cd3fd934745b706cb3d70a63ecd1"
+    },
+    {
+      "pid": 23363,
+      "calls": 3,
+      "sha256": "de0aab8ff50745c86e5d58884a92d1c89553bf58191231521138d1819804c520"
+    },
+    {
+      "pid": 23483,
+      "calls": 2,
+      "sha256": "158c554938f2019b127233d35c73b8ca93f6c98040c0884fa3d3ef68f3811a2a"
+    },
+    {
+      "pid": 23668,
+      "calls": 4,
+      "sha256": "4fa18a5295d07ae27853acf65b465a1050958867aec1bc4775a679ca099c7e2a"
+    },
+    {
+      "pid": 23683,
+      "calls": 4,
+      "sha256": "d3a3885a2219f3e32468442844af3bea564ea88ebaf57cc27f790678ca8b3884"
+    },
+    {
+      "pid": 23728,
+      "calls": 64,
+      "sha256": "bf69efff97e6ed0b0f75a0ad533fe7c20d0048dfdfb943a991149088fa1634de"
+    },
+    {
+      "pid": 23743,
+      "calls": 6,
+      "sha256": "ae53afeb087d1341ec91f647589075bdf61a695a3e24c6beab283140a0cd9dd0"
+    },
+    {
+      "pid": 23863,
+      "calls": 4,
+      "sha256": "d3a3885a2219f3e32468442844af3bea564ea88ebaf57cc27f790678ca8b3884"
+    },
+    {
+      "pid": 23878,
+      "calls": 2,
+      "sha256": "e6b696ccdfc0b82cfd6b9fb7d283e329aa75ac83d8c9aaa39e6d9a2eaee13ea4"
+    },
+    {
+      "pid": 24741,
+      "calls": 6,
+      "sha256": "d5ab1e68570c91be487c34f1b2c5d83ac1fe68bf3d70fc885ce7ad9076bd3770"
+    },
+    {
+      "pid": 24966,
+      "calls": 9,
+      "sha256": "419d6ca771b3df0e0c437f5eaa303bad59f0cd3fd934745b706cb3d70a63ecd1"
+    },
+    {
+      "pid": 25026,
+      "calls": 144,
+      "sha256": "374685e0b904495dc6383d4d6dc693238f21bee815779bdbfacd236583f66cf9"
+    }
+  ],
+  "control_directory_excluded": true,
+  "archive_sha256": "baa850c203cf637a731ff24003610199f8b22114dcca9040f7102f5fa7b86e83"
+}

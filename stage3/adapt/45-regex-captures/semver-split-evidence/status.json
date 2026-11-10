@@ -1,0 +1,118 @@
+{
+  "status": "PASS",
+  "base": "7f2c852dffe31163e9699f0c91a158596757b888",
+  "apply_exit": {
+    "before": 0,
+    "after": 0
+  },
+  "build_exit": {
+    "before": 0,
+    "after": 0
+  },
+  "harness_build_exit": {
+    "before": 0,
+    "after": 0
+  },
+  "census_tool_exit": {
+    "before": 0,
+    "after": 0,
+    "mutant": 0
+  },
+  "semver_specific_stop": "full-mode latent sites: cast refusal removed in both phases with no added findings; restoring mutant exactly matches main",
+  "witness": {
+    "cases": 7,
+    "byte_identical": true
+  },
+  "oracle": {
+    "status": "PASS",
+    "calls": 1109,
+    "differences": 0,
+    "units": 398,
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "coordinator_exit": 0,
+    "wall_seconds": 1586.4658964619998,
+    "maximum_shard_seconds": 16.609567476999928
+  },
+  "counter_control": {
+    "entry": "actual instrumented adapted VersionRange",
+    "calls": 1,
+    "differences": 0,
+    "excluded_from_lane_total": true
+  },
+  "emitted_hunks": 7,
+  "outside_permitted_edits": 0,
+  "identifier_renames": 0,
+  "latent": {
+    "status": "PASS",
+    "main_findings": 60,
+    "amended_findings": 57,
+    "mutant_findings": 60,
+    "added_findings": 0,
+    "removed": [
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "phase": "refusal_scan",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "TREE/src/compiler/semver.ts:287:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "TREE/src/compiler/semver.ts:276:1",
+        "where": "TREE/src/compiler/semver.ts:287:34"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "TREE/src/compiler/semver.ts:287:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "TREE/src/compiler/semver.ts:276:1",
+        "where": "TREE/src/compiler/semver.ts:287:34"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "TREE/src/compiler/semver.ts:287:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "TREE/src/compiler/semver.ts:276:1",
+        "where": "TREE/src/compiler/semver.ts:287:13"
+      }
+    ],
+    "mutant_exact_main_order_and_findings": true,
+    "exit_codes": {
+      "main": 0,
+      "amended": 0,
+      "mutant": 0
+    },
+    "units": {
+      "main": 29,
+      "amended": 28,
+      "mutant": 29
+    }
+  },
+  "initial_base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6",
+  "historical_root_census_first_stop": {
+    "file": "src/compiler/debug.ts",
+    "line": 525,
+    "column": 37,
+    "reason": "a cast the runtime can't check",
+    "expression": "Object.create(Object.prototype) as FlowNode",
+    "same_in": [
+      "before",
+      "after",
+      "mutant"
+    ]
+  }
+}

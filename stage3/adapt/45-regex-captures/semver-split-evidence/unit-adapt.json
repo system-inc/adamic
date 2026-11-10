@@ -1,0 +1,149 @@
+{
+  "files": 7,
+  "edits": 19,
+  "evidence": [
+    {
+      "file": "parser.ts",
+      "line": 10717,
+      "original": "tripleSlash[1]",
+      "replacement": "tripleSlash[1]!",
+      "reason": "mandatory group 1 of /^\\/\\/\\/\\s*<(\\S+)\\s.*?\\/>/m"
+    },
+    {
+      "file": "parser.ts",
+      "line": 10733,
+      "original": "matchResult[1]",
+      "replacement": "matchResult[1]!",
+      "reason": "mandatory group 1 of getNamedArgRegEx fixed template"
+    },
+    {
+      "file": "parser.ts",
+      "line": 10731,
+      "original": "matchResult[2] || matchResult[3]",
+      "replacement": "(matchResult[2] || matchResult[3])!",
+      "reason": "authorized checked boundary; empty single quotes remain a latent bug"
+    },
+    {
+      "file": "parser.ts",
+      "line": 10769,
+      "original": "match[1]",
+      "replacement": "match[1]!",
+      "reason": "mandatory group 1 of /^\\/\\/\\/?\\s*@([^\\s:]+)((?:[^\\S\\r\\n]|:).*)?$/m"
+    },
+    {
+      "file": "sourcemap.ts",
+      "line": 394,
+      "original": "comment[1]",
+      "replacement": "comment[1]!",
+      "reason": "mandatory group 1 of /^\\/\\/[@#] source[M]appingURL=(.+)\\r?\\n?$/"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "line": 708,
+      "original": "matchResult[1]",
+      "replacement": "matchResult[1]!",
+      "reason": "mandatory group 1 of /^([a-z]+)(?:[_-]([a-z]+))?$/"
+    },
+    {
+      "file": "semver.ts",
+      "line": 145,
+      "original": "const [, major, minor = \"0\", patch = \"0\", prerelease = \"\", build = \"\"] = match;",
+      "replacement": "const major = match[1]!;\r\n    const [, , minor = \"0\", patch = \"0\", prerelease = \"\", build = \"\"] = match;",
+      "reason": "mandatory major of /^(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$/i; defaults unchanged"
+    },
+    {
+      "file": "semver.ts",
+      "line": 300,
+      "original": "const [, major, minor = \"*\", patch = \"*\", prerelease, build] = match;",
+      "replacement": "const major = match[1]!;\r\n    const [, , minor = \"*\", patch = \"*\", prerelease, build] = match;",
+      "reason": "mandatory major of /^([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$/i; defaults unchanged"
+    },
+    {
+      "file": "semver.ts",
+      "line": 283,
+      "original": "match[1]",
+      "replacement": "match[1]!",
+      "reason": "mandatory group 1 of /^\\s*([a-z0-9-+.*]+)\\s+-\\s+([a-z0-9-+.*]+)\\s*$/i"
+    },
+    {
+      "file": "semver.ts",
+      "line": 283,
+      "original": "match[2]",
+      "replacement": "match[2]!",
+      "reason": "mandatory group 2 of /^\\s*([a-z0-9-+.*]+)\\s+-\\s+([a-z0-9-+.*]+)\\s*$/i"
+    },
+    {
+      "file": "semver.ts",
+      "line": 288,
+      "original": "match[2]",
+      "replacement": "match[2]!",
+      "reason": "mandatory group 2 of /^([~^<>=]|<=|>=)?\\s*([a-z0-9-+.*]+)$/i"
+    },
+    {
+      "file": "semver.ts",
+      "line": 334,
+      "original": "string",
+      "replacement": "string | undefined",
+      "reason": "optional range operator already handled by case undefined"
+    },
+    {
+      "file": "checker.ts",
+      "line": 8062,
+      "original": "line",
+      "replacement": "line!",
+      "reason": "capture-free separator yields only strings"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1330,
+      "original": "line",
+      "replacement": "line!",
+      "reason": "capture-free separator yields only strings"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 4105,
+      "original": "text.split(/\\r\\n?|\\n/)",
+      "replacement": "text.split(/\\r\\n?|\\n/) as string[]",
+      "reason": "capture-free separator /\\r\\n?|\\n/ yields a dense string array"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 4976,
+      "original": "text.split(/\\r\\n?|\\n/)",
+      "replacement": "text.split(/\\r\\n?|\\n/) as string[]",
+      "reason": "capture-free separator /\\r\\n?|\\n/ yields a dense string array"
+    },
+    {
+      "file": "parser.ts",
+      "line": 10784,
+      "original": "text.trim().split(/\\s+/)",
+      "replacement": "text.trim().split(/\\s+/) as string[]",
+      "reason": "capture-free separator /\\s+/ yields a dense string array"
+    },
+    {
+      "file": "semver.ts",
+      "line": 248,
+      "original": "const whitespaceRegExp = /\\s+/;",
+      "replacement": "",
+      "reason": "remove now-unused shared whitespace separator"
+    },
+    {
+      "file": "semver.ts",
+      "line": 286,
+      "original": "range.split(whitespaceRegExp)",
+      "replacement": "range.split(/\\s+/) as string[]",
+      "reason": "capture-free separator /\\s+/ yields a dense string array"
+    }
+  ],
+  "declined": [
+    {
+      "site": "XML value groups 2 and 3",
+      "reason": "alternative branches; whole-expression checked boundary authorized instead"
+    },
+    {
+      "site": "range operator group 1",
+      "reason": "optional; truthful parameter includes undefined"
+    }
+  ]
+}
