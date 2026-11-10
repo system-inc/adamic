@@ -49,13 +49,13 @@ It reconciles all 91 positions against the previous independent checker
 classification. [resumed-coverage.csv](resumed-coverage.csv) records every root;
 [resumed-coverage.json](resumed-coverage.json) records the counts:
 
-| Group | Roots | New rule shape coverage |
-| --- | ---: | ---: |
-| Array-derived receivers | 72 | 0 |
-| Finite data-field keys | 15 | 15 |
-| Fixed tuple union | 1 | 1 |
-| Open dictionaries | 3 | 0 |
-| Total | 91 | 16 |
+| Group                   | Roots | New rule shape coverage |
+| ----------------------- | ----: | ----------------------: |
+| Array-derived receivers |    72 |                       0 |
+| Finite data-field keys  |    15 |                      15 |
+| Fixed tuple union       |     1 |                       1 |
+| Open dictionaries       |     3 |                       0 |
+| Total                   |    91 |                      16 |
 
 The previous seven optional ordinary-array shapes are additional roots and are
 not added to the original 91-site count. There are no string receivers or
@@ -69,14 +69,14 @@ exit codes and every non-boundary finding are in
 [resumed-replays.json](resumed-replays.json). Replay exit 1 means the selected
 signature did not reproduce; it alone does not establish successful lowering.
 
-| Example | Before prerequisite merge | Final observation |
-| --- | --- | --- |
-| binder.ts:1746:21 | a NonNullExpression | an ElementAccessExpression at 1746:21 |
-| binder.ts:1757:28 | a NonNullExpression | an ElementAccessExpression at 1757:28 |
-| parser.ts:10787:26 | fixed tuple-union read unsupported | Read lowers; next stop reading args at 10788:14 |
-| checker.ts:14176:16 | finite read unsupported | Read lowers; next stop a BinaryExpression with a value and a value at 14177:17 |
-| checker.ts:45839:34 | unrelated getter-name guard | Read advances to a BinaryExpression with a value and a value at 45839:16 |
-| checker.ts:46488:34 | unrelated getter-name guard | Read advances to a BinaryExpression with a value and a value at 46488:16 |
+| Example             | Before prerequisite merge          | Final observation                                                              |
+| ------------------- | ---------------------------------- | ------------------------------------------------------------------------------ |
+| binder.ts:1746:21   | a NonNullExpression                | an ElementAccessExpression at 1746:21                                          |
+| binder.ts:1757:28   | a NonNullExpression                | an ElementAccessExpression at 1757:28                                          |
+| parser.ts:10787:26  | fixed tuple-union read unsupported | Read lowers; next stop reading args at 10788:14                                |
+| checker.ts:14176:16 | finite read unsupported            | Read lowers; next stop a BinaryExpression with a value and a value at 14177:17 |
+| checker.ts:45839:34 | unrelated getter-name guard        | Read advances to a BinaryExpression with a value and a value at 45839:16       |
+| checker.ts:46488:34 | unrelated getter-name guard        | Read advances to a BinaryExpression with a value and a value at 46488:16       |
 
 The requested original binder commands were run with the baseline elementAccess
 hook removed and restored before implementation validation. Both original
@@ -98,17 +98,17 @@ python3 stage3/notyet-element-access/read_mutants.py tuple
 python3 stage3/notyet-element-access/read_mutants.py presence
 ```
 
-| Mutant | What caught it |
-| --- | --- |
-| finite wrong-dispatch: equality to inequality | Native and backend stdout differ from Node |
-| unrelated-getter-name: restore blanket name guard | Fixture fails Lower with the computed own-field NotYet |
-| finite missing-absence: Absent false | Native exit 70 instead of Node exit 0 |
-| finite repeated-receiver: evaluate receiver as a third argument | Extra receiver output and count 2 instead of 1 in both backends |
-| tuple fractional-index: equality to less-or-equal | Native and backend stdout differ from Node |
-| tuple missing-slot: Absent false | ASan heap-buffer-overflow on shorter tuple member |
-| tuple out-of-range: return slot zero instead of undefined | Native and backend stdout differ from Node |
-| tuple repeated-receiver: evaluate receiver as a third argument | Extra receiver output and wrong call count |
-| missing-presence-check: return unchecked value | UBSan null object access; release exit differs from Node's TypeError panic |
+| Mutant                                                          | What caught it                                                             |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| finite wrong-dispatch: equality to inequality                   | Native and backend stdout differ from Node                                 |
+| unrelated-getter-name: restore blanket name guard               | Fixture fails Lower with the computed own-field NotYet                     |
+| finite missing-absence: Absent false                            | Native exit 70 instead of Node exit 0                                      |
+| finite repeated-receiver: evaluate receiver as a third argument | Extra receiver output and count 2 instead of 1 in both backends            |
+| tuple fractional-index: equality to less-or-equal               | Native and backend stdout differ from Node                                 |
+| tuple missing-slot: Absent false                                | ASan heap-buffer-overflow on shorter tuple member                          |
+| tuple out-of-range: return slot zero instead of undefined       | Native and backend stdout differ from Node                                 |
+| tuple repeated-receiver: evaluate receiver as a third argument  | Extra receiver output and wrong call count                                 |
+| missing-presence-check: return unchecked value                  | UBSan null object access; release exit differs from Node's TypeError panic |
 
 Each mutant's fixture exits 1 from go test. All three runner commands exit 0
 only after detecting those failures and restoring their source. No Go or clang

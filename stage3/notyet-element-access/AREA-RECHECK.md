@@ -24,15 +24,15 @@ valid source on Node before pinning the exact named compiler-area stop.
 These are boundary witnesses, not runtime certificates for unsupported shapes.
 No new backend, IR, runtime C or another worker's lowering function was edited.
 
-| Shape | Raw root sites | Observed reduced stop | Required owner / ruling |
-| --- | ---: | --- | --- |
-| NodeArray | 62 | an ElementAccessExpression | representation and elementType; metadata-preserving array storage/construction |
-| Readonly<PathPathComponents> | 6 | a function returning Path | undefined | representation must first support the branded string Path; then the mapped readonly branded array representation and elementType |
-| TemplateStringsArray | 2 | an ElementAccessExpression | representation/elementType and reference-valued raw metadata |
-| SortedReadonlyArray | 1 | an ElementAccessExpression | representation/elementType and void brand policy on this area |
-| JSDocArray | 1 | an ElementAccessExpression | representation/elementType and optional jsDocCache storage |
-| Record<number, FlowGraphNode> | 1 | an ElementAccessExpression | open numeric dictionary representation; index-signature policy remains in force on this area |
-| MapLike<string> | 1 | Refused: an index signature | docs/0.1.md:92 ruling; area dictionary representation and operations are not admitted |
+| Shape                         | Raw root sites | Observed reduced stop       | Required owner / ruling                                                                      |
+| ----------------------------- | -------------: | --------------------------- | -------------------------------------------------------------------------------------------- |
+| NodeArray                     |             62 | an ElementAccessExpression  | representation and elementType; metadata-preserving array storage/construction               |
+| Readonly<PathPathComponents>  |              6 | a function returning Path   | undefined                                                                                    | representation must first support the branded string Path; then the mapped readonly branded array representation and elementType |
+| TemplateStringsArray          |              2 | an ElementAccessExpression  | representation/elementType and reference-valued raw metadata                                 |
+| SortedReadonlyArray           |              1 | an ElementAccessExpression  | representation/elementType and void brand policy on this area                                |
+| JSDocArray                    |              1 | an ElementAccessExpression  | representation/elementType and optional jsDocCache storage                                   |
+| Record<number, FlowGraphNode> |              1 | an ElementAccessExpression  | open numeric dictionary representation; index-signature policy remains in force on this area |
+| MapLike<string>               |              1 | Refused: an index signature | docs/0.1.md:92 ruling; area dictionary representation and operations are not admitted        |
 
 TemplateStringsArray's structural declaration is included in its witness so
 it does not depend on the restricted library exporting that global interface.

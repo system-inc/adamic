@@ -11,13 +11,13 @@ shows representation work through 95a72c07 and the c41c0e06 merge at 3cead3fd.
 The elementType owner is origin/codex/notyet-element-type, including 024f7856.
 Neither function was edited. No IR/backend/runtime change was made.
 
-| Shape | Raw CSV roots | Required work / reason to move on |
-| --- | ---: | --- |
-| NodeArray | 62 | representation must preserve indexed storage and pos/end/hasTrailingComma/transformFlags across MutableNodeArray construction and readonly views; then elementType must recover generic base element storage. |
-| Readonly<PathPathComponents> | 6 | representation/objectIntersection must establish a plain-array view for the intersection with __pathComponensBrand: void. The field is void, not a proven absent undefined field: decide how brand presence and writes behave before treating it as phantom. elementType must unwrap that established base. |
-| TemplateStringsArray | 2 | representation must preserve raw array metadata and identity alongside numeric string slots; elementType must recognize the readonly base. |
-| SortedReadonlyArray | 1 | representation must decide the void-valued " __sortedArrayBrand" contract for the array interface; elementType must recover MappedPosition storage. |
-| JSDocArray | 1 | representation must preserve mutable optional jsDocCache alongside indexed JSDoc storage; elementType must recover the Array base. |
+| Shape                        | Raw CSV roots | Required work / reason to move on                                                                                                                                                                                                                                                                           |
+| ---------------------------- | ------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NodeArray                    |            62 | representation must preserve indexed storage and pos/end/hasTrailingComma/transformFlags across MutableNodeArray construction and readonly views; then elementType must recover generic base element storage.                                                                                               |
+| Readonly<PathPathComponents> |             6 | representation/objectIntersection must establish a plain-array view for the intersection with __pathComponensBrand: void. The field is void, not a proven absent undefined field: decide how brand presence and writes behave before treating it as phantom. elementType must unwrap that established base. |
+| TemplateStringsArray         |             2 | representation must preserve raw array metadata and identity alongside numeric string slots; elementType must recognize the readonly base.                                                                                                                                                                  |
+| SortedReadonlyArray          |             1 | representation must decide the void-valued " __sortedArrayBrand" contract for the array interface; elementType must recover MappedPosition storage.                                                                                                                                                         |
+| JSDocArray                   |             1 | representation must preserve mutable optional jsDocCache alongside indexed JSDoc storage; elementType must recover the Array base.                                                                                                                                                                          |
 
 The exact declarations inspected are adapted compiler/types.ts:1589 (NodeArray),
 path.ts:457 (PathPathComponents), lib/es5.d.ts:603 (TemplateStringsArray),

@@ -115,11 +115,11 @@ produced no diagnostics. No whole-package test or full gate was run.
 All mutants used that same focused uncached oracle command, each restored before
 the next. Logs are /tmp/element-access-mutant-NAME.log:
 
-| Mutant | Result and catcher |
-| --- | --- |
-| lowering-optional-flag: emit Optional false | Exit 1; UBSan null array access, backend TypeError, and Node disagreement |
-| native-eager-key: emit key work before the present branch | Exit 1; native prints key:2 and 2 2 where Node prints no second key and 2 1 |
-| native-repeat-receiver-valid: repeat receiver inside a correctly scoped branch | Exit 1; native prints 3 1 where Node prints 2 1 |
+| Mutant                                                                         | Result and catcher                                                          |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| lowering-optional-flag: emit Optional false                                    | Exit 1; UBSan null array access, backend TypeError, and Node disagreement   |
+| native-eager-key: emit key work before the present branch                      | Exit 1; native prints key:2 and 2 2 where Node prints no second key and 2 1 |
+| native-repeat-receiver-valid: repeat receiver inside a correctly scoped branch | Exit 1; native prints 3 1 where Node prints 2 1                             |
 
 The first native-repeat-receiver attempt had undeclared C temporaries and was
 caught by compilation. It is explicitly not a valid semantic mutant and is not
