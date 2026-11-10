@@ -1,0 +1,19 @@
+// A field a narrower type hides is still an own key of the allocation, and Node prints it (#d9ep7de).
+interface Base {
+	readonly id: number;
+}
+interface Wide extends Base {
+	readonly secret: string;
+	readonly nested: { readonly deep: boolean };
+}
+const wide: Wide = { id: 1, secret: 's', nested: { deep: true } };
+const base: Base = wide;
+console.log(JSON.stringify(base) ?? '<undefined>');
+class Animal {
+	constructor(readonly name: string) {}
+}
+class Dog extends Animal {
+	readonly barks = true;
+}
+const animal: Animal = new Dog('rex');
+console.log(JSON.stringify(animal) ?? '<undefined>');

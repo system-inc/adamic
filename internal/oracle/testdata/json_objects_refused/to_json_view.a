@@ -1,0 +1,12 @@
+// A toJSON field written through a view the allocation can be seen as is an own toJSON, and Node calls it.
+interface Plain {
+	readonly value: number;
+}
+interface Hooked {
+	value: number;
+	toJSON?: () => string;
+}
+const hooked: Hooked = { value: 1 };
+hooked.toJSON = (): string => 'view';
+const plain: Plain = hooked;
+console.log(JSON.stringify(plain) ?? '<undefined>');
