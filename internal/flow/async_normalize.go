@@ -208,6 +208,21 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		return ir.Read{Local: local, Of: value.Type()}
 	case ir.Coalesce:
 		held := n.expression(value.Value, out, true)
+		// The split's test is ?? 's own idea of missing, as both backends emit Coalesce: a number or
+		// boolean pair holds no null (lowering boxes number | null into a Union), so for it missing is not
+		// present; a Union holds null as its own box and a nullable reference as a null pointer, so for
+		// those it's undefined or null. A test narrower than that sends a null to the present arm
+		// (#wkfwexm: x ?? await g() with x null read 0 natively where Node read g()'s value).
+		var absent ir.Expression
+		switch {
+		case held.Type().IsMaybe():
+			absent = ir.IsUndefined{Value: held}
+		case held.Type().IsReference():
+			absent = ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: held}, Right: ir.IsNull{Value: held}}
+		default:
+			n.failure = n.errorAt(value, suspending(n.program.Functions[n.function], "await in the fallback of a ?? whose left side is held as a plain scalar is not yet proven"))
+			return value
+		}
 		local := n.temporary(value.Of)
 		result := ir.Read{Local: local, Of: value.Of}
 		*out = append(*out, ir.Declare{Local: local})
@@ -219,8 +234,13 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		} else {
 			missing = append(missing, ir.Assign{Local: local, Value: fallback})
 		}
-		present := []ir.Statement{ir.Assign{Local: local, Value: ir.Coalesce{Value: held, Fallback: result, Of: value.Of}}}
-		*out = append(*out, ir.If{Condition: ir.IsUndefined{Value: held}, Then: missing, Else: present})
+		// The present arm makes what ?? makes from a present value, through Coalesce's own conversion, and
+		// never reads result, which is the local it's assigning: if the test above and Coalesce ever
+		// disagree again, it stops loudly instead of reading an unset local.
+		index := len(n.program.Strings)
+		n.program.Strings = append(n.program.Strings, "compiler bug: a ?? split by suspension found its left side missing in the present arm")
+		present := []ir.Statement{ir.Assign{Local: local, Value: ir.Coalesce{Value: held, Panic: ir.StringConstant{Index: index}, Of: value.Of}}}
+		*out = append(*out, ir.If{Condition: absent, Then: missing, Else: present})
 		return result
 	case ir.Binary:
 		if value.Operator == ir.And || value.Operator == ir.Or {
