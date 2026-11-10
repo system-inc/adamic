@@ -273,7 +273,7 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 			} else {
 				body = member.AsPropertyDeclaration().Initializer
 			}
-			if err := l.staticInitializationReads(body, declaration, available, map[*ast.Node]uint8{}, true); err != nil {
+			if err := l.staticInitializationReads(body, declaration, available, map[*ast.Node]uint8{}, true, false); err != nil {
 				return nil, err
 			}
 		}
@@ -336,7 +336,9 @@ func (l *lowering) staticWriteSite(node *ast.Node) int {
 
 // JavaScript leaves future fields undefined. A nonnullable native slot cannot pretend that
 // value is its declared type, including when an initializer calls a helper that reads it.
-func (l *lowering) staticInitializationReads(node, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8, receiver bool) error {
+// judged says node is the body or a parameter of a function every call edge reaching it in this
+// walk has judged (staticParameterCalls), so a call of that function's own parameter is known.
+func (l *lowering) staticInitializationReads(node, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8, receiver, judged bool) error {
 	pending := false
 	for _, member := range declaration.Members() {
 		if member.Kind == ast.KindPropertyDeclaration && ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) && !available[member.Name().Text()] {
@@ -346,6 +348,9 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 	state := uint8(1)
 	if receiver {
 		state = 2
+	}
+	if judged {
+		state <<= 2
 	}
 	if node == nil || seen[node]&state != 0 {
 		return nil
@@ -372,13 +377,13 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 				if symbol != nil && len(symbol.Declarations) > 0 {
 					member := symbol.Declarations[0]
 					if member.Kind == ast.KindPropertyDeclaration && !available[member.Name().Text()] {
-						failure = &Refused{Where: l.program.Where(child), What: "a static field read before its initializer has run", Fix: "declare the field earlier, or move the read after that field's initialization"}
+						failure = &Refused{Where: l.program.Where(child), What: "a static field read before its initializer has run: " + declaration.Name().Text() + "." + member.Name().Text(), Fix: "declare the field earlier, or move the read after that field's initialization"}
 						return true
 					}
 					if accessorMember(member) {
 						for _, candidate := range symbol.Declarations {
 							if accessorMember(candidate) {
-								failure = l.staticInitializationReads(candidate.Body(), declaration, available, seen, true)
+								failure = l.staticInitializationReads(candidate.Body(), declaration, available, seen, true, false)
 								if failure != nil {
 									break
 								}
@@ -386,6 +391,20 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 						}
 						if failure != nil {
 							return true
+						}
+					}
+				}
+			}
+			// An instance accessor of this class runs whenever an instance it constructed
+			// during static initialization is read or written, so its bodies are reached too.
+			if !current {
+				if symbol := l.checker.GetSymbolAtLocation(child.Name()); symbol != nil {
+					for _, candidate := range symbol.Declarations {
+						if accessorMember(candidate) && candidate.Parent == declaration && !ast.HasSyntacticModifier(candidate, ast.ModifierFlagsStatic) {
+							failure = l.staticInitializationReads(candidate.Body(), declaration, available, seen, false, false)
+							if failure != nil {
+								return true
+							}
 						}
 					}
 				}
@@ -398,8 +417,18 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 			}
 			parent := child.Parent
 			if pending && (parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != child) {
-				failure = &Refused{Where: l.program.Where(child), What: "a constructor object escaping before static fields are initialized", Fix: "publish the class value after the last static field initializer"}
-				return true
+				if construction := selfConstruction(child); construction != nil && !extendsClass(declaration) {
+					// The class constructing itself is judged by what the construction reads, as
+					// the future-read ruling judges any initializer (#1451npc): the constructor and
+					// everything it reaches, against the same available fields. The arguments are
+					// the new expression's own children and are walked after this.
+					failure = l.staticConstructionReads(construction, declaration, available, seen)
+				} else {
+					failure = &Refused{Where: l.program.Where(child), What: "a constructor object escaping before static fields are initialized", Fix: "publish the class value after the last static field initializer"}
+				}
+				if failure != nil {
+					return true
+				}
 			}
 		}
 		if child.Kind == ast.KindThisKeyword && receiver {
@@ -421,7 +450,10 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 				known = load.IsLibrary(ast.GetSourceFileOfNode(target)) || load.IsPrelude(ast.GetSourceFileOfNode(target))
 				if target.Kind == ast.KindFunctionDeclaration {
 					known = true
-					failure = l.staticInitializationReads(target.Body(), declaration, available, seen, false)
+					failure = l.staticParameterCalls(target, child, declaration, available, seen)
+					if failure == nil {
+						failure = l.staticInitializationReads(target.Body(), declaration, available, seen, false, true)
+					}
 				}
 				if target.Kind == ast.KindMethodDeclaration && ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic) {
 					known = true
@@ -430,8 +462,18 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 						object := ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
 						current = (receiver && (object.Kind == ast.KindThisKeyword || object.Kind == ast.KindSuperKeyword)) || (ast.IsIdentifier(object) && l.symbol(object) == l.symbol(declaration.Name()))
 					}
-					failure = l.staticInitializationReads(target.Body(), declaration, available, seen, current)
+					failure = l.staticParameterCalls(target, child, declaration, available, seen)
+					if failure == nil {
+						failure = l.staticInitializationReads(target.Body(), declaration, available, seen, current, true)
+					}
 				}
+				// A parameter of the function this walk is in was judged at every edge that reached it.
+				if judged && target.Kind == ast.KindParameter && target.Parent == node.Parent && !l.assignedSymbol(symbol) {
+					known = true
+				}
+			}
+			if !known && l.staticLibraryCallsNothing(callee) {
+				known = true
 			}
 			if known && symbol != nil && len(symbol.Declarations) > 0 && (load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) || load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))) {
 				for _, argument := range nodesOf(child.AsCallExpression().Arguments) {
@@ -443,7 +485,7 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 					}
 					target := l.symbol(ast.SkipParentheses(argument))
 					if target != nil && len(target.Declarations) == 1 && target.Declarations[0].Kind == ast.KindFunctionDeclaration {
-						failure = l.staticInitializationReads(target.Declarations[0].Body(), declaration, available, seen, false)
+						failure = l.staticInitializationReads(target.Declarations[0].Body(), declaration, available, seen, false, false)
 					} else {
 						failure = l.notYet(argument, "an indirect callback before static fields are initialized; move it after the field initializers")
 					}
@@ -463,6 +505,197 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 	}
 	visit(node)
 	return failure
+}
+
+// selfConstruction is the new expression name, a read of the class's own name, is the constructor
+// of, `new Version(...)`, or nil where the class object is handed somewhere.
+func selfConstruction(name *ast.Node) *ast.Node {
+	parent := name.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	if parent != nil && parent.Kind == ast.KindNewExpression && ast.SkipParentheses(parent.AsNewExpression().Expression) == name {
+		return parent
+	}
+	return nil
+}
+
+// extendsClass reports whether declaration has a base, whose constructor's reach the static
+// initialization walk doesn't follow.
+func extendsClass(declaration *ast.Node) bool {
+	for _, clause := range nodesOf(declaration.ClassLikeData().HeritageClauses) {
+		if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
+			return true
+		}
+	}
+	return false
+}
+
+// Constructing a class without a base runs, in order, the implementation's parameter defaults,
+// the instance field initializers and the constructor body, each with this the new instance
+// rather than the class. Overload signatures have no body and run nothing. construction, the new
+// expression, is the call edge the constructor's own parameter calls are judged by.
+func (l *lowering) staticConstructionReads(construction, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8) error {
+	var implementation *ast.Node
+	for _, member := range declaration.Members() {
+		if member.Kind == ast.KindConstructor && member.Body() != nil {
+			implementation = member
+		}
+	}
+	if implementation != nil {
+		if err := l.staticParameterCalls(implementation, construction, declaration, available, seen); err != nil {
+			return err
+		}
+		for _, parameter := range implementation.Parameters() {
+			if err := l.staticInitializationReads(parameter, declaration, available, seen, false, true); err != nil {
+				return err
+			}
+		}
+	}
+	for _, member := range declaration.Members() {
+		if member.Kind == ast.KindPropertyDeclaration && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+			if err := l.staticInitializationReads(member.AsPropertyDeclaration().Initializer, declaration, available, seen, false, false); err != nil {
+				return err
+			}
+		}
+	}
+	if implementation != nil {
+		return l.staticInitializationReads(implementation.Body(), declaration, available, seen, false, true)
+	}
+	return nil
+}
+
+// A parameter a function calls runs what the call edge passed for it, or its default, so each edge
+// reaching the function in a static initialization walk judges its own (#1451npc, Adamic's ruling):
+// with neither, the parameter is undefined and the call runs no program code (debug.ts's assert,
+// reached with no verboseDebugInfo); a value nothing can call runs none either; a function written
+// in place, or a function declaration, is walked; anything else can't be followed and keeps the stop.
+func (l *lowering) staticParameterCalls(function, edge, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8) error {
+	if function.Body() == nil {
+		return nil
+	}
+	var arguments []*ast.Node
+	switch edge.Kind {
+	case ast.KindCallExpression:
+		arguments = nodesOf(edge.AsCallExpression().Arguments)
+	case ast.KindNewExpression:
+		arguments = nodesOf(edge.AsNewExpression().Arguments)
+	}
+	for index, parameter := range function.Parameters() {
+		symbol := l.symbol(parameter.Name())
+		if symbol == nil || parameter.AsParameterDeclaration().DotDotDotToken != nil || !l.callsParameter(function, symbol) {
+			continue
+		}
+		var argument *ast.Node
+		for position, candidate := range arguments {
+			if candidate.Kind == ast.KindSpreadElement && position <= index {
+				return l.notYet(candidate, "an indirect callback before static fields are initialized; move it after the field initializers")
+			}
+			if position == index {
+				argument = candidate
+			}
+		}
+		if argument == nil {
+			argument = parameter.AsParameterDeclaration().Initializer
+		}
+		if argument == nil || !l.mayBeCallable(l.checker.GetTypeAtLocation(argument)) {
+			continue
+		}
+		inner := ast.SkipParentheses(argument)
+		if ast.IsFunctionLike(inner) {
+			if err := l.staticInitializationReads(inner.Body(), declaration, available, seen, false, false); err != nil {
+				return err
+			}
+			continue
+		}
+		target := l.symbol(inner)
+		if target != nil && len(target.Declarations) == 1 && target.Declarations[0].Kind == ast.KindFunctionDeclaration {
+			if err := l.staticInitializationReads(target.Declarations[0].Body(), declaration, available, seen, false, false); err != nil {
+				return err
+			}
+			continue
+		}
+		return l.notYet(argument, "an indirect callback before static fields are initialized; move it after the field initializers")
+	}
+	return nil
+}
+
+// callsParameter reports whether function, its parameters or its body, calls parameter by name.
+func (l *lowering) callsParameter(function *ast.Node, parameter *ast.Symbol) bool {
+	found := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if found || ast.IsPartOfTypeNode(node) {
+			return found
+		}
+		if node.Kind == ast.KindCallExpression {
+			callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+			if ast.IsIdentifier(callee) && l.symbol(callee) == parameter {
+				found = true
+				return true
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	function.ForEachChild(visit)
+	return found
+}
+
+// mayBeCallable reports whether any member of a value's type can be called: string | (() => string)
+// can, though the union has no call signature of its own.
+func (l *lowering) mayBeCallable(proven *checker.Type) bool {
+	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
+		return true
+	}
+	for _, member := range castMembers(proven) {
+		if len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) > 0 {
+			return true
+		}
+	}
+	return false
+}
+
+// libraryMembersCallingNothing are the library members whose call runs no program code: Node's
+// Error.captureStackTrace sets its target's stack and calls only an installed
+// Error.prepareStackTrace, and every road to installing one, or to replacing captureStackTrace
+// itself, stays stopped (TestPrepareStackTraceStaysStopped). Its constructorOpt is a frame marker V8 never calls. A member
+// that calls its arguments, as Array.from does, isn't one.
+var libraryMembersCallingNothing = map[string]bool{nodeCaptureStackTraceMember: true}
+
+// staticLibraryCallsNothing reports whether callee is a member libraryMembersCallingNothing names,
+// read off a library global. Both resolve by symbol, never by name: the receiver, past parentheses
+// and casts such as tsc's (Error as any), is a global every declaration of which is a library's, and
+// the member is that global's own, found on its declared type.
+func (l *lowering) staticLibraryCallsNothing(callee *ast.Node) bool {
+	callee = ast.SkipOuterExpressions(callee, ast.OEKParentheses|ast.OEKAssertions)
+	if callee.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	receiver := ast.SkipOuterExpressions(callee.AsPropertyAccessExpression().Expression, ast.OEKParentheses|ast.OEKAssertions)
+	if !ast.IsIdentifier(receiver) {
+		return false
+	}
+	global := l.checker.GetSymbolAtLocation(receiver)
+	if !librarySymbol(global) {
+		return false
+	}
+	member := l.checker.GetPropertyOfType(l.checker.GetTypeOfSymbol(global), callee.Name().Text())
+	return librarySymbol(member) && libraryMembersCallingNothing[nodeLibraryName(member)]
+}
+
+// librarySymbol reports whether symbol is declared, every declaration of it, by TypeScript's bundled
+// library or Node's, so no program declaration merges into it.
+func librarySymbol(symbol *ast.Symbol) bool {
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		file := ast.GetSourceFileOfNode(declaration)
+		if !load.IsLibrary(file) && !load.IsNodeLibrary(file) {
+			return false
+		}
+	}
+	return true
 }
 
 // Constructor built-ins have function semantics, not ordinary class storage.
