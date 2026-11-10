@@ -1,57 +1,59 @@
 # Mutants for a call through ?. to a Node host method (#3625x53)
 
-The pins are `TestOptionalHostCalls` (internal/oracle/optional_host_call_test.go) over
-internal/oracle/testdata/optional_host_call/: n1 a Dirent's `entry?.isFile()` on an undefined entry, n2 a
-Stats', n3 the `Stats | Dirent | undefined` shape, each stopping by the rule in its .a and .ts twin, n4 `host?.cwd()` on a local
-`NodeJS.Process | undefined`, which stops first at handing process over as a namespace value, and p1 a method the program declares, which lowers and
-agrees with Node. Each mutant is one edit, run on a house box,
-then put back. Both measured on Codex 01a1beee at 197aece1.
+The pins are `TestOptionalHostCalls` in internal/oracle/optional_host_call_test.go,
+walking internal/oracle/testdata/optional_host_call/. n1 (Dirent), n2 (Stats) and
+n3 (Stats | Dirent | undefined), in both .a and .ts, now lower through the shared
+receiver guard and agree with Node on undefined and present receivers. n3 presents
+both host types. n4 keeps its namespace-value stop, n5 its optional-function-call
+stop, and p1 the program-declared method's agreement.
+
+The unguarded witness is n6_unguarded_process_cwd.a and its .ts twin. A parameter
+is typed NodeJS.Process | undefined and called only with undefined; unlike n4,
+it never hands the process namespace over as a value. Its host method is
+`node:process.Process.cwd`. nodeHost lowers that call to host_cwd, which does not
+read or guard the receiver. Node prints `undefined\n`; an admitted unguarded call
+prints `present\n` on release native, sanitized native and JavaScript, exit 0,
+stderr empty. The difference is stdout line 1, not a compiler or tool failure.
 
 ## (a) The rule removed
 
-internal/lower/expression.go, `optionalCall`. Old:
+In internal/lower/expression.go, optionalCall, replace exactly:
 
 ```go
-		if method := l.checker.GetSymbolAtLocation(callee); method != nil && len(method.Declarations) > 0 && !load.IsLibrary(ast.GetSourceFileOfNode(method.Declarations[0])) {
-			return l.optionalHostCall(call, method)
-		}
+return l.optionalHostCall(call, method)
 ```
 
-New:
+with:
 
 ```go
-		if method := l.checker.GetSymbolAtLocation(callee); method != nil && len(method.Declarations) > 0 && !load.IsLibrary(ast.GetSourceFileOfNode(method.Declarations[0])) {
-			return nil
-		}
+return nil
 ```
 
-Red: `TestOptionalHostCalls/n1_dirent.a` and `/n1_dirent.ts`, `lowered, want "...(node:fs.Dirent.isFile; #3625x53) yet"`.
-The call reaches nodeFSDirectoryCall's Dirent arm, which never reads the optional flag, and lowers as a plain
-host call. Run, `kind(undefined)` is a null access natively and a TypeError on the JavaScript backend, where
-Node prints `undefined`. n2 stops at nodeFSFile's own `node:fs.StatsBase.isFile through an optional call`, red
-on its stop text. n3 goes whichever way the union's first declaration sends it: nodeHostMember stops reading at
-StatsBase's, so it's nodeFSFile's stop, and with Dirent's first it lowers as n1 does. Measured: n1 and n3 lower; at the parent both end in a null-member access natively and a
-TypeError on the JavaScript backend where Node prints undefined. n4 keeps its namespace-value stop. p1 lowers as before.
+The direct pins `TestOptionalHostCalls/n6_unguarded_process_cwd.a` and
+`TestOptionalHostCalls/n6_unguarded_process_cwd.ts` must fail at
+`lowered, want "...node:process.Process.cwd; #3625x53) yet"`.
+The mutated lowering must admit each program, then disagree with Node on all
+three backends with `present\n` versus `undefined\n`. n1 through n3 now guard
+their own receivers and stay green: they are no longer unguarded witnesses.
 
 ## (b) An unguarded member put in the table
 
-The table is empty on f2dcbfd9, so emptying it changes nothing and isn't a mutant here. The edit that shows the
-table is read is the opposite one, an entry for a host lowering that doesn't guard its receiver.
-
-internal/lower/optional_host_call.go. Old:
+In internal/lower/optional_host_call.go, add this one entry to the fourteen
+StatsBase/Dirent members in optionalHostCallGuarded:
 
 ```go
-var optionalHostCallGuarded = map[string]bool{}
+"node:process.Process.cwd": true,
 ```
 
-New:
+The same n6 pair must fail at the same `lowered, want` catch line and the admitted
+programs must show the same stdout-line-1 difference on all three backends.
+nodeFSEntryMethod reads the table's StatsBase/Dirent keys only: admitting some
+other host must not silently install an optionalIntrinsic guard for it. Thus
+this single-entry mutant bypasses the rule but retains cwd's unguarded host
+lowering. No mark or nullish guard is removed in either mutant.
 
-```go
-var optionalHostCallGuarded = map[string]bool{"node:fs.Dirent.isFile": true}
-```
-
-Red: `TestOptionalHostCalls/n1_dirent.a` and `/n1_dirent.ts` lower, with the run-time failure of (a), and
-`/n3_union.a` and `/n3_union.ts` still stop but name only `node:fs.StatsBase.isFile`, red on their stop text.
-n2 and p1 are unchanged. When a host lowering comes to guard its receiver and its member goes in the table, its
-pin row runs it on an undefined and a present receiver against Node, and emptying the table turns that row into
-this NotYet.
+Run each single-edit mutant through the n6 refusal pair, requiring a real red,
+and through a run of the admitted program against Node, requiring the wrong
+line above. Restore the edit; the unmutated fourteen-program walk must pass.
+Keep these oracle checks in the oracle unit, with its declared runtime tools;
+the lower mark catchers remain lower-only.

@@ -8,25 +8,22 @@ import (
 )
 
 // A call through ?. to a Node host method stops unless the method's own host lowering guards an
-// optional receiver, read from lower's optionalHostCallGuarded (#3625x53). n1 calls a Dirent's isFile
-// through ?. on an entry that is undefined at run time: nodeFSDirectoryCall lowers the predicate
-// without reading the optional flag, so before the rule it lowered and ran isFile on undefined, a null
-// access natively and a TypeError on the JavaScript backend, where Node prints undefined. n2 is a
-// Stats' isFile, which nodeFSFile already refused through ?. and still stops, at the rule now. n3 is
-// the Stats | Dirent | undefined shape, a union property whose roots are both members, so both are
-// named. n4 calls process's cwd through ?. on a local NodeJS.Process | undefined: nodeHost lowers cwd
-// to host_cwd without reading the receiver, but handing process to the local is a namespace object used
-// as a value, which stops first at the parent and here alike (Codex 01a1beee), so n4 pins that stop and
-// the cwd road is unreached today; the rule closes it if that stop lifts. processPath's own ?. admission,
-// process?.cwd() on the process binding, stops at the rule, since a member's name can't
-// tell its proven receiver from a local. n5 is the optional method call's road, entry?.isFile?.() on a
-// Dirent | undefined, which optionalMethodCall leaves to optionalCall's own stop, an optional call, before
-// this rule (Codex 01a1bf7b and 01a1bf8c, entry.isFile?.() on a Dirent stops there too). p1, a method the program declares, called through ?. on a
-// receiver undefined and then present, still lowers and agrees with Node on release, sanitized native
-// and the JavaScript backend. The table is empty, so no row holds a guarded host method to Node. Each
-// program's whole stop is pinned in its .stop file, or "lowers". Mutants
-// (internal/lower/optional-host-call.mutants.md): the rule removed, and n1 and n3 lower; an unguarded
-// member put in the table, and n1 lowers.
+// optional receiver, read from lower's optionalHostCallGuarded (#3625x53). n1 (Dirent), n2 (Stats)
+// and n3 (Stats | Dirent | undefined) now guard their predicates through optionalIntrinsic's mark.
+// Each runs on undefined and present receivers against Node on release, sanitized native and
+// JavaScript; n3 presents both Stats and Dirent. These are the table's guarded-host pins.
+// n4 calls process's cwd through ?. on a local NodeJS.Process | undefined: nodeHost lowers cwd
+// to host_cwd without reading the receiver, but handing process to the local is a namespace object
+// used as a value, which stops first. The cwd road there remains unreached; the rule closes it if
+// that stop lifts. process?.cwd() on the process binding stops at the rule too, since a member's
+// name can't tell its proven receiver from a local. n5 is entry?.isFile?.() on Dirent | undefined:
+// optionalMethodCall leaves it to optionalCall's optional-function-call stop before this rule.
+// n6 reaches the unguarded cwd road through a parameter handed only undefined, without handing
+// the process namespace over as a value. It stops here; either removing the rule or admitting
+// node:process.Process.cwd in the table makes it print present where Node prints undefined.
+// p1, a method the program declares, called on undefined and present receivers, still lowers and
+// agrees with Node. Each program's whole stop is pinned in its .stop file, or "lowers". The two
+// mutants are recorded in internal/lower/optional-host-call.mutants.md and caught by n6's pair.
 func TestOptionalHostCalls(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/optional_host_call"
@@ -80,7 +77,7 @@ func TestOptionalHostCalls(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 12 {
-		t.Fatalf("found %d programs, want 12", programs)
+	if programs != 14 {
+		t.Fatalf("found %d programs, want 14", programs)
 	}
 }
