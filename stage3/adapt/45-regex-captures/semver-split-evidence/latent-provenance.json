@@ -9,7 +9,7 @@
     "LATENT_ONLY_FILE": "the selected tree/src/compiler/semver.ts",
     "LATENT_ASSERT_NO_OUTPUT": "1"
   },
-  "overlay_file_sha256": {
+  "overlay_non_test_file_sha256": {
     "overlay.json": "a3b2c9108ec50f4382f1d9eca08910a679fa7326d21604c0bbcd8da072fa0424",
     "internal_lower_latent_speculative.go": "5ef44cd41bb053d7fa5642fdacd9ea6bb4ac7c9f59fb10861f72b14dee41333f",
     "internal_lower_latent_progress.go": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3",
@@ -28,11 +28,11 @@
     "internal_lower_latent_timing.go": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f",
     "internal_lower_latent_units.go": "197ead8f7f0575dfe0534832b411d424acef56f7d0476970af1c94b77e4742ee",
     "internal_lower_latent_full.go": "e88d36d8fa47efebe1983d3d8860f19ea069690cd3c9c80128fda592d0216877",
-    "stage3_census_latent_tool_relation_overflow_test.go": "45f799c6e50dc6b77307830a43336f1102c4c0bc1cf35da9bb51cc7edcd48afb",
     "internal_lower_latent_relation_overflow.go": "9897c23b3b4a5b79d8696b685b03192d74d95df4ccd911a6aea2cb9ac88ce1cc",
     "internal_lower_statements.go": "c31d7990705f7b45bbef902834a29d63328cbc0f60e21d5ea6f3ffcb7476c283",
     "internal_lower_latent_state.go": "6ba88354ecc9cdb466a0a1af9d5fd1374aa1e2982d343521ad98c0258dd804a9",
     "internal_lower_entries_records.go": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040",
     "internal_lower_lower.go": "53d9779ca708c095a7543629ad8c9b6a9c8324e06f2e7c263d6d3f30cedcc24a"
-  }
+  },
+  "excluded_non_build_test_templates": 1
 }
