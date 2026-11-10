@@ -1,0 +1,6 @@
+73 tracing.ts:96:19 NotYet new a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports
+2 - accepted unchanged -
+1 commandLineParser.ts:293:35 NotYet unchanged reading an enum before its runtime initialization; move the call after the enum declaration
+1 diagnosticInformationMap.generated.ts:13:45 NotYet unchanged reading an enum before its runtime initialization; move the call after the enum declaration
+1 semver.ts:71:9 NotYet unchanged a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration
+1 types.ts:4560:38 Refused new a primitive brand member _isResolvedConfigFileName whose type is not void

@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "/workspace/adamic/stage3/census/next-stops-f1c19c6a/run.py",
+    "groups"
+  ],
+  "exit_code": 0,
+  "supervision": "foreground, per-root bounds only"
+}

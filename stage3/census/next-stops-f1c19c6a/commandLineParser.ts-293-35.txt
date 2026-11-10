@@ -1,0 +1,7 @@
+    {
+        name: "watchFile",
+        type: new Map(Object.entries({
+            fixedpollinginterval: WatchFileKind.FixedPollingInterval,
+            prioritypollinginterval: WatchFileKind.PriorityPollingInterval,
+            dynamicprioritypolling: WatchFileKind.DynamicPriorityPolling,
+            fixedchunksizepolling: WatchFileKind.FixedChunkSizePolling,
