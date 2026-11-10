@@ -1,0 +1,10 @@
+// toSorted's copy is an ArraySlice inside an ArraySort, which graphFlows plans through the sort (#y7wexf5).
+interface Node { name: string; next: Node[] }
+function sortedByName(nodes: Node[]): Node[] {
+ return nodes.toSorted((x, y) => (x.name < y.name ? -1 : 1));
+}
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b); // this cycle makes the program a graph program, so Node values must be in a region
+a.next = sortedByName(a.next); // a holds the copy, the copy holds b, b holds a
+console.log(`${a.name} ${a.next.length} ${a.next[0]?.name} ${a.next[0]?.next[0] === a}`);
