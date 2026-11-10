@@ -1,0 +1,9 @@
+{
+  "base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6",
+  "source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "uses_before": [
+    "src/compiler/semver.ts:249 declaration",
+    "src/compiler/semver.ts:287 parseRange split"
+  ],
+  "proof": "internal/lower/cast_split.go: literal at call, string receiver, capture-free separator, string[] target"
+}

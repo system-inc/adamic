@@ -698,3 +698,12 @@ Adamic and Compiler, task 1w5bve2, Nov 7 19:51Z: tsc's `or` adapted, replacing t
 - 99-correctness-core-cast-message: JavaScript-changing. Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts; specific approval Nov 7 22:06:52Z and the subsequent head-2 mutant ruling. cast keeps its condition, Debug.fail call and ${value} (#09dvwny); only the quoted predicate name is removed. The cited and fresh whole-lane failure-message counts are 0, each with a firing control; no real-call counterexample. Restoring the original cast on the moved head-2 tree is rejected by stock tsc and adamic types with missing Debug.getFunctionName, recorded in the adaptation README.
 
 - 99-correctness-core-getfunctionname-move: JavaScript-changing established-shape move, with strict finished-home recognition amendments in 30, 41, 45 and road (b). Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts; specific approval Nov 7 22:06:52Z and the subsequent replay-pin ruling. By Adamic's word: deprecatedCompat ships in typescript.js, not tsc, so when typescript.js comes home after 1.0.0, getFunctionName's reflection (Function.prototype.toString) meets us there. The same body moves byte for byte to its only user; road (b)'s whole-helper guard follows it and still refuses drift. Proof in the adaptation directory.
+
+## parseRange whitespace split allocation (adaptation 45 amendment)
+
+Adamic's Nov 10 05:40Z ruling, #b5w3ycg row 4: write `range.split(/\s+/)`
+at the call, retaining the capture-free `as string[]` proof. This allocates a
+new RegExp object per executed split where upstream shared one. `split` ignores
+lastIndex, and the pattern has no flags, so no state carries between calls.
+The shared declaration is removed because its only other occurrence was this
+call; leaving it would violate upstream's noUnusedLocals.
