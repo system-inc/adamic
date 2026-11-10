@@ -1,0 +1,35 @@
+[
+  {
+    "name": "_tsc.js",
+    "edits": [
+      {
+        "start": 79003,
+        "end": 79021,
+        "before": "range.split(/\\s+/)",
+        "after": "globalThis.__semverSplit(range)"
+      }
+    ]
+  },
+  {
+    "name": "run.js",
+    "edits": [
+      {
+        "start": 89263,
+        "end": 89281,
+        "before": "range.split(/\\s+/)",
+        "after": "globalThis.__semverSplit(range)"
+      }
+    ]
+  },
+  {
+    "name": "typescript.js",
+    "edits": [
+      {
+        "start": 211588,
+        "end": 211606,
+        "before": "range.split(/\\s+/)",
+        "after": "globalThis.__semverSplit(range)"
+      }
+    ]
+  }
+]

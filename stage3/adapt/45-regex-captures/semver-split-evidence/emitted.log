@@ -1,0 +1,58 @@
+{
+  "files_compared": 10,
+  "changed_files": [
+    {
+      "file": "_tsc.js",
+      "hunks": [
+        {
+          "header": "@@ -2386,7 +2386,6 @@",
+          "classification": "shared declaration"
+        },
+        {
+          "header": "@@ -2400,7 +2399,7 @@",
+          "classification": "parseRange split"
+        }
+      ],
+      "normalized_sha256": "6327f0bc1669bea08d3130ce87a0d50b12d8a262e9eb6981a764bf01f4c42c06",
+      "additional_changes": 0
+    },
+    {
+      "file": "run.js",
+      "hunks": [
+        {
+          "header": "@@ -2639,7 +2639,7 @@",
+          "classification": "parseRange split"
+        },
+        {
+          "header": "@@ -2775,7 +2775,7 @@",
+          "classification": "shared declaration"
+        },
+        {
+          "header": "@@ -2873,7 +2873,6 @@",
+          "classification": "shared declaration"
+        }
+      ],
+      "normalized_sha256": "abb8712407d33957c5774f83829412ea7b924618a255abde2242bc398f850627",
+      "additional_changes": 0
+    },
+    {
+      "file": "typescript.js",
+      "hunks": [
+        {
+          "header": "@@ -4963,7 +4963,6 @@",
+          "classification": "shared declaration"
+        },
+        {
+          "header": "@@ -4977,7 +4976,7 @@",
+          "classification": "parseRange split"
+        }
+      ],
+      "normalized_sha256": "0882358b1a173ddd7b5567a6a80e5561d91c4f396cf6711612d8dc19eda3b46a",
+      "additional_changes": 0
+    }
+  ],
+  "hunks": 7,
+  "outside_permitted_edits": 0,
+  "identifier_renames": 0,
+  "normalization": "exact bytes after only the split substitution and shared declaration removal"
+}
