@@ -1,0 +1,6 @@
+package lower
+import("encoding/json";"os";"strings";"github.com/microsoft/TypeScript/tsc/shim/ast")
+var latentProbeUnits=func() map[string]bool { b,e:=os.ReadFile(os.Getenv("LATENT_PROBE_UNITS"));if e!=nil{panic(e)};m:=map[string]bool{};for _,s:=range strings.Split(strings.TrimSpace(string(b)),"\n"){m[s]=true};return m }()
+func latentProbeUnit(where string) bool{return latentProbeUnits[where]}
+func latentProbeFile(file string) bool{for u:=range latentProbeUnits{if strings.HasPrefix(u,file+":"){return true}};return false}
+func latentProbeStage(stage string,l *lowering,node *ast.Node,err error){p:=os.Getenv("LATENT_PROBE_STAGES");if p==""{return};f,e:=os.OpenFile(p,os.O_CREATE|os.O_APPEND|os.O_WRONLY,0600);if e!=nil{panic(e)};text:="";if err!=nil{text=err.Error()};e=json.NewEncoder(f).Encode(map[string]string{"unit":latentFindingOwner,"declaration":l.program.Where(node),"stage":stage,"error":text});ce:=f.Close();if e!=nil{panic(e)};if ce!=nil{panic(ce)}}

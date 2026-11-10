@@ -1,0 +1,57 @@
+stage3/census/deferred-reach/audit_step1.py:17:  actual[file]=dict(file=file,units=len(record['units']),instantiated_true=sum(u['instantiated'] is True for u in deferred),instantiated_false=sum(u['instantiated'] is False for u in deferred))
+stage3/census/deferred-reach/audit_step1.py:22: for unit in scope['deferred_units']:assert unit['instantiated'] is units[unit['where']]['instantiated']
+stage3/census/deferred-reach/audit_step1.py:23: print(name,len(files),'files',len(units),'deferred units',sum(u['instantiated'] for u in units.values()),'reached')
+stage3/census/deferred-reach/audit_step1.py:27:  core=actual['src/compiler/core.ts'];assert core['units']==264 and core['instantiated_true']+core['instantiated_false']==207
+stage3/census/void-widening/extract.py:28:                if key not in sites:
+stage3/census/void-widening/compare.py:17:    if key not in cache:
+stage3/census/void-widening/compare.py:76:print(json.dumps({k:v for k,v in result.items() if k not in ('new','removed','newRefused')} | {'new':len(added), 'newRefused':len(result['newRefused'])}))
+stage3/census/speculative/report.py:152:print(json.dumps({k:v for k,v in result.items() if k not in ('files','top20')},indent=2))
+stage3/census/speculative/project_pieces.py:74:print(json.dumps({k:v for k,v in result.items() if k not in ('measured','workload')},indent=2))
+stage3/meter/runs/20261103T200643Z.GK5jxe/validation/summarize-meter.py:43:print(json.dumps({k:v for k,v in summary.items() if k not in ('first_lowering_stops','ordinary_errors','latent_compiler_panics','latent_compiler_errors','latent_entry_panics','latent_entry_errors')},indent=2))
+review/compiler/admission-delta/runs/run-real.py:96:    print(label+': '+json.dumps({k:v for k,v in STATE['runs'][label].items() if k not in ['disagreements','compiler_errors']}),flush=True)
+review/compiler/loom-census-deferral/run-mutants.py:25:print('no-caller: caught by unused generic instantiated assertion')
+stage3/meter/runs/20261019T233755Z.9xwivl15/validation/provenance.py:28:        return {key: normalize(item, tree) for key, item in value.items() if key not in ('seconds',)}
+stage3/census/speculative/check_piece_union.py:144:            assert key not in findings or findings[key]['depth'] == f['depth']
+stage3/census/speculative/check_piece_union.py:164:print(json.dumps({k:v for k,v in result.items() if k not in ('missing_sites','added_sites','changed_depths','removed_boundaries','added_boundaries','runtimes')},indent=2))
+stage3/census/speculative/evidence/header-check-harness.py:42:print(json.dumps({k:v for k,v in artifact.items() if k not in ('paths','mutants')},indent=2))
+stage3/census/predicates/tools/summarize.py:5:"""Unique finding sites, unit eligibility, and feature deltas from raw measurement events."""
+stage3/census/predicates/tools/summarize.py:15:    if isinstance(v,dict): return {k:normalize(x) for k,x in v.items()}
+stage3/census/latent/module_order_audit.py:34:        env = {k:v for k,v in os.environ.items() if k not in ['LATENT_FULL','LATENT_SPECULATIVE','LATENT_ONLY_FILE']}
+stage3/census/latent/audit_instantiated_by.py:1:"""Prove that instantiated_by is the only byte change in a census stream."""
+stage3/census/latent/audit_instantiated_by.py:16:    token = ',"instantiated_by":'
+stage3/census/latent/audit_instantiated_by.py:30:    assert stripped == before, 'bytes differ after removing instantiated_by'
+stage3/census/latent/audit_instantiated_by.py:34:            witnesses = unit.get('instantiated_by', [])
+stage3/census/latent/audit_instantiated_by.py:39:                assert bool(witnesses) == unit['instantiated'], 'witness/boolean mismatch'
+stage3/census/latent/audit_instantiated_by.py:45:                units_with_witnesses=count, byte_identical_except_instantiated_by=True)
+stage3/census/latent/write_rerun2.py:228:and leaves every other file's entire record and all unit eligibility unchanged.
+stage3/census/latent/write_rerun2.py:247:        text += f"\nDeferred generic units: {coverage['deferred_generic_instantiation']}; reached: {coverage['instantiated_generics']}. Deferred body bytes: {coverage['deferred_body_bytes']}, neither examined nor blocked.\nNever reached (unexamined coverage gaps):\n"
+stage3/census/latent/write_report.py:45:remain distinct. The raw spans and unit eligibility ledger permit an independent recount.
+stage3/census/latent/write_report.py:238:        text += f"\nDeferred generic units: {coverage['deferred_generic_instantiation']}; reached: {coverage['instantiated_generics']}. Deferred body bytes: {coverage['deferred_body_bytes']}, neither examined nor blocked.\nNever reached (unexamined coverage gaps):\n"
+stage3/census/latent/unmerged4.py:46:   lines += ['', f"Deferred generic units: {run['deferred_generic_instantiation']}; concrete instantiations reached: {run['instantiated_generics']}. Deferred body bytes: {run['deferred_body_bytes']}, neither examined nor blocked.", 'Never reached (unexamined coverage gaps):']
+stage3/census/latent/unit_status.py:1:"""Explicit unit eligibility and deferred coverage, shared by census reports."""
+stage3/census/latent/unit_status.py:14:        assert type(unit.get('instantiated')) is bool, 'deferred call witness missing'
+stage3/census/latent/unit_status.py:22:        assert type(unit.get('instantiated')) is bool, 'deferred call witness missing'
+stage3/census/latent/unit_status.py:33:                instantiated_generics=sum(u['instantiated'] for u in deferred),
+stage3/census/latent/unit_status.py:36:                               for u in deferred if not u['instantiated']])
+stage3/census/latent/summarize.py:1:"""Unique finding sites, unit eligibility, and feature deltas from raw measurement events."""
+stage3/census/latent/summarize.py:14:    if isinstance(v,dict): return {k:normalize(x) for k,x in v.items()}
+stage3/census/pair/pair.py:89:            stable = lambda v: {k: x for k, x in v.items() if k not in ('where', 'status', 'instantiated')}
+stage3/census/pair/pair.py:92:                raise ValueError(f'unit eligibility differs: {u}')
+stage3/census/pair/pair.py:102:               for key, f in hf.items() if key not in bf]
+stage3/census/latent/rerun2.py:23: if isinstance(v,dict):return {k:normalize(x,prefix) for k,x in v.items()}
+stage3/census/latent/meter3.py:60:   lines += ['', f"Deferred generic units: {run['deferred_generic_instantiation']}; concrete instantiations reached: {run['instantiated_generics']}. Deferred body bytes: {run['deferred_body_bytes']}, neither examined nor blocked.", 'Never reached (unexamined coverage gaps):']
+stage3/census/latent/audit_deferred.py:80:    assert named['called']['instantiated'], (mode, named['called'])
+stage3/census/latent/audit_deferred.py:81:    assert named['outer']['instantiated'], (mode, named['outer'])
+stage3/census/latent/audit_deferred.py:83:    assert not named['unused']['instantiated'], (mode, named['unused'])
+stage3/census/latent/audit_deferred.py:86:        assert named['nested']['status']==DEFERRED and named['nested']['instantiated'], named['nested']
+stage3/census/latent/audit_deferred.py:87:        assert named['unusedNested']['status']==DEFERRED and not named['unusedNested']['instantiated'], named['unusedNested']
+stage3/census/latent/audit_deferred.py:97:    assert named['called'].get('instantiated_by') == expected[:5], (mode, 'called witnesses', named['called'])
+stage3/census/latent/audit_deferred.py:99:    assert named['outer'].get('instantiated_by') == [outer_witness], (mode, 'outer witnesses', named['outer'])
+stage3/census/latent/audit_deferred.py:100:    assert not named['unused'].get('instantiated_by'), (mode, 'unused witnesses')
+stage3/census/latent/audit_deferred.py:102:        assert named['nested'].get('instantiated_by') == [outer_witness], (mode, 'nested witnesses', named['nested'])
+stage3/census/latent/audit_deferred.py:103:        assert not named['unusedNested'].get('instantiated_by'), (mode, 'unused nested witnesses')
+stage3/census/latent/audit_deferred.py:105:        witnesses = unit.get('instantiated_by', [])
+stage3/census/latent/evidence/carry-facts/measure-proofs.py:15: (out/'invocation.json').write_text(json.dumps(dict(argv=[binary,str(source),str(out/'latent.jsonl')],environment={k:v for k,v in env.items() if k.startswith('LATENT_')}),indent=2)+'\n')
+stage3/census/latent/evidence/prepasses/finish_report.py:24:witnesses = [dict(where=where,name=head_units[where].get('name'),before=base_units[where]['instantiated'],after=head_units[where]['instantiated']) for where in sorted(base_units) if base_units[where]['instantiated']!=head_units[where]['instantiated']]
+stage3/census/latent/evidence/deferred/summarize.py:69:lines += ['', '## Eligibility and other finding changes', '', 'Both runs have the same 4,059 attempted units and 504 deferred generic declarations, including 112 instantiated witnesses. Every unit-ledger entry and the complete relation trailers are identical. Neither run has a deferred or deferred_scan finding on this entry.', '', 'All 17 new findings are Refused: 14 refusal_scan and 3 lowering events. The 73 cleared findings are 61 Refused and 12 NotYet, comprising 70 refusal_scan and 3 lowering events. These are finding removals, not units newly proven to lower.', '', 'The two moved findings are the written-any assertion at parser.ts:1253:17 and the corresponding visitorPublic.ts:603:17 assertion. Both retain the ordinary unchecked-cast refusal. The continuing baseline scan had emitted deferred fallbacks despite ordinary findings; the corrected scan suppresses them.', '', 'Ten existing unit first stops change among ordinary overload refusals: five destructuring units change assertNode/assertEachNode parameter choice, and five transformer units change visitEachChild overload/parameter choice. The exact before/after rows are above; none becomes newly admitted or newly stopped.', '', 'This paired entry therefore measures zero deferred admission overstatement. It does not negate the direct and instantiated written-any regression fixtures, whose dropped-read mutant fails as required. See metadata-comparison.json and paired.json.gz for complete records.']
+stage3/census/latent/full_report.py:253:                  f"Deferred generic units: {summary['deferred_generic_instantiation']}; reached by concrete instantiation: {summary['instantiated_generics']}. Deferred body bytes (neither examined nor blocked): {summary['deferred_body_bytes']}. Never reached (unexamined coverage gaps): {summary['never_reached']}.",

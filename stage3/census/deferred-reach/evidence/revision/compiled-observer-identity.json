@@ -1,0 +1,20 @@
+{
+  "previous_tool": "8fea9f1018dfb124b0c77b4bac702e06f968680f",
+  "revised_tool": "a6e9df28d39e7850a7689fbe615a145697ffda84",
+  "byte_identical": true,
+  "sources": {
+    "stage3/census/latent/make_overlay.py": "c43b80c797c702c7e9f9a56e2fbf05e7ba51f4830978610dfa55d722356f50ae",
+    "stage3/census/latent/full.go.txt": "7b0faf54704a7f58b56fd4b3c3821a2a1cc048e305947a77b04142dac33cf3ec",
+    "stage3/census/latent/load.go.txt": "9317660d1ca1b94888ade040eafa965ca43b126d1c52fdd732148f8cd69e5eac",
+    "stage3/census/latent/lower.go.txt": "2ad5f5ac6876b97c68b6f084abbcc13086a1cf51b683adcaf221b7c0b9b57e3a",
+    "stage3/census/latent/main.go.txt": "fba057d4a0f994f963114250dc6ef81f96a3c92e3ffec6ca2ea8b9506d6e35e8",
+    "stage3/census/latent/piece.go.txt": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee",
+    "stage3/census/latent/progress.go.txt": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3",
+    "stage3/census/latent/relation_overflow.go.txt": "1630d2346899454d170faff069c67e6cdeea959cba13477e4a8a3d6026e4cf63",
+    "stage3/census/latent/relation_overflow_test.go.txt": "e63247a585d0722fcbfe1a9f32b9f4e672d48f6f4520b7459100b94d61907c6c",
+    "stage3/census/latent/replay.go.txt": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a",
+    "stage3/census/latent/scalar_copy_test.go.txt": "cb954586052e4cd1942386f0b52d0600841e0a27a09e392065377383170e4f96",
+    "stage3/census/latent/speculative.go.txt": "b7084dc7084173bbeed420530be23746f64466a0baf631facdd485a4fa125624",
+    "stage3/census/latent/units.go.txt": "fca1bea6405e291f30732d31d263cd5da272d45bb2490e936dd9519a754001f2"
+  }
+}
