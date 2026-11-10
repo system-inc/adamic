@@ -10,6 +10,11 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
+// Brandable primitives are string, number and boolean, plus void and undefined
+// for tsc's __String. Bigint and symbol aren't brandable yet by Adamic's ruling
+// on #yth65gz (Nov 10): their own and prototype names aren't in primitiveMember's inventory.
+const brandablePrimitiveFlags = checker.TypeFlagsStringLike | checker.TypeFlagsNumberLike | checker.TypeFlagsBooleanLike | checker.TypeFlagsVoid | checker.TypeFlagsUndefined
+
 // phantomParts separates a primitive from the object views that give it a checker-only name.
 // Void is included because tsc's __String deliberately brands undefined through void.
 func (l *lowering) phantomParts(proven *checker.Type) (*checker.Type, []*checker.Type) {
@@ -21,7 +26,7 @@ func (l *lowering) phantomParts(proven *checker.Type) (*checker.Type, []*checker
 	var objects []*checker.Type
 	for _, part := range proven.Types() {
 		switch {
-		case part.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0:
+		case part.Flags()&brandablePrimitiveFlags != 0:
 			if primitive != nil {
 				return nil, nil
 			}

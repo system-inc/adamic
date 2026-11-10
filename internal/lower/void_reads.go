@@ -189,9 +189,8 @@ func (l *lowering) returnsExactlyVoid(function *ast.Node) bool {
 	return returns != nil && returns.Flags() == checker.TypeFlagsVoid
 }
 
-// brandRead is whether node reads a property off a value that is a primitive in every member of its
-// type, as tsc's __String brand `string & { __escapedIdentifier: void }` is. A primitive carries no own
-// property, so the read is undefined on Node as it is here: the void it names was never a value.
+// brandRead asks the one phantomBase proof for every present receiver member.
+// Only a proven phantom brand's member names a void that was never a value.
 func (l *lowering) brandRead(node *ast.Node) bool {
 	if node.Kind != ast.KindPropertyAccessExpression {
 		return false
@@ -206,14 +205,7 @@ func (l *lowering) brandRead(node *ast.Node) bool {
 		if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 && member.Flags()&checker.TypeFlagsIntersection == 0 {
 			continue // An optional chain's missing receiver reads nothing.
 		}
-		if member.Flags()&checker.TypeFlagsIntersection == 0 {
-			return false
-		}
-		primitive := false
-		for _, part := range member.Types() {
-			primitive = primitive || part.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsBigIntLike|checker.TypeFlagsESSymbolLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0
-		}
-		if !primitive {
+		if l.phantomBase(member) == nil {
 			return false
 		}
 	}
