@@ -1,0 +1,23 @@
+// A default fires on undefined only: a present null stays null, a string field's and a number field's
+// alike, where ?? would take the default. Node prints null, d, given, d, null and 5.
+interface Holder {
+	text?: string | null | undefined;
+	count?: number | null;
+}
+
+function showText(holder: Holder): string {
+	const { text = 'd' } = holder;
+	return text === null ? 'null' : text;
+}
+
+function showCount(holder: Holder): string {
+	const { count = 5 } = holder;
+	return count === null ? 'null' : `${count}`;
+}
+
+console.log(showText({ text: null }));
+console.log(showText({}));
+console.log(showText({ text: 'given' }));
+console.log(showText({ text: undefined }));
+console.log(showCount({ count: null }));
+console.log(showCount({}));
