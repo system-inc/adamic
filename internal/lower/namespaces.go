@@ -234,8 +234,11 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 		}
 	}
 	if l.isExpression(node) && l.namespaceMember(node) {
-		parent := node.Parent
-		if parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == node && ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind) {
+		// Every assignment target, not only an assignment's left side: a destructuring write ([N.f] = [g],
+		// ({ f: N.f } = o)), a for-of or for-in head and a parenthesized target replace the export as
+		// N.f = g does, while a qualified call stays a direct call to the original (Language's
+		// attack on #8n7eet3, Compiler's row).
+		if ast.IsAssignmentTarget(node) {
 			if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
 				symbol := l.symbol(node)
 				mutable := false
