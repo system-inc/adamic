@@ -171,6 +171,53 @@ func TestNodeProcessHandleDetachedStops(t *testing.T) {
 	t.Logf("Node on a pipe exits %d with %q; stop: %v", truth.exitCode, truth.stderr, err)
 }
 
+// The calls that would reach the handle's setBlocking without its object, through a computed key or a
+// bind, stop by name in a program that reads the handle, wherever the object came from: off a
+// parameter and off a call's result, roads stdoutHandleOrigin doesn't follow. Node calls each with the
+// handle as this and blocks, where the closure would throw Illegal invocation (Runtime's must 2 on
+// #0bxc4jh, Lower's ruling (b); #17pfbkk lifts the computed key's stop). A program that doesn't read
+// the handle keeps o['setBlocking']() as it was. Mutants: the computed key's arm dropped, and both
+// computed fixtures lower; the bind's arm dropped, and the bind fixture lowers; readsStdoutHandle
+// answering false, and all three lower.
+func TestNodeProcessHandleUnheldCallsStop(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []struct{ name, where, what string }{
+		{"node_process_handle_computed_literal.a", ":7:", "a call through a computed key naming setBlocking"},
+		{"node_process_handle_computed_key.a", ":10:", "a call through a computed key naming setBlocking"},
+		{"node_process_handle_bind.a", ":7:", "a bind of a field named setBlocking"},
+	} {
+		t.Run(fixture.name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_handle_refused", fixture.name))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := nodeProcessTerminal(t, "pipe", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+			if truth.exitCode != 0 || string(truth.stdout) != "blocked\n" {
+				t.Fatalf("unexpected Node result %d %q %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			_, err = lowered(t, path)
+			var missing *lower.NotYet
+			if !errors.As(err, &missing) || !strings.Contains(missing.Where, fixture.name+fixture.where) || !strings.Contains(missing.What, fixture.what) {
+				t.Fatalf("want a stop at the call, got %v", err)
+			}
+		})
+	}
+	t.Run("no handle", func(t *testing.T) {
+		t.Parallel()
+		path := filepath.Join(t.TempDir(), "no_handle.a")
+		source := "const o = { setBlocking: (value: boolean): void => { console.log(String(value)); } };\no['setBlocking'](true);\n"
+		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		_, err := lowered(t, path)
+		var missing *lower.NotYet
+		if errors.As(err, &missing) && strings.Contains(missing.What, "naming setBlocking") {
+			t.Fatalf("a program that doesn't read the handle stopped: %v", err)
+		}
+	})
+}
+
 func TestNodeProcessMissingMark(t *testing.T) {
 	t.Parallel()
 	path, binary, script := sanitized(t, "internal/oracle/testdata/node_process_missing_mark.a")
