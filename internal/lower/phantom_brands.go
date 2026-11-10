@@ -19,7 +19,7 @@ func (l *lowering) phantomRefusal(node *ast.Node) error {
 		if base, brands := l.phantomParts(proven); base != nil {
 			primitive = base
 			objects = append(objects, brands...)
-		} else if proven.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
+		} else if proven.Flags()&brandablePrimitiveFlags != 0 {
 			primitive = proven
 		} else if proven.Flags()&checker.TypeFlagsObject != 0 {
 			objects = append(objects, proven)
@@ -71,8 +71,7 @@ func (l *lowering) phantomAssignable(from, to *checker.Type) bool {
 	if base := l.phantomBase(to); base != nil {
 		to = base
 	}
-	primitiveFlags := checker.TypeFlagsStringLike | checker.TypeFlagsNumberLike | checker.TypeFlagsBooleanLike | checker.TypeFlagsVoid | checker.TypeFlagsUndefined
-	if from.Flags()&primitiveFlags == 0 || to.Flags()&primitiveFlags == 0 {
+	if from.Flags()&brandablePrimitiveFlags == 0 || to.Flags()&brandablePrimitiveFlags == 0 {
 		return false
 	}
 	return l.checker.IsTypeAssignableTo(from, to)
