@@ -1,0 +1,62 @@
+{
+  "setup": [
+    "source /workspace/adamic-tools/env.sh",
+    "bash cloud/setup.sh",
+    "npm ci --prefix stage3/api",
+    "export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/abrq61p-typescript"
+  ],
+  "head": {
+    "binary": "head-census",
+    "input": "/workspace/scratch/abrq61p-adapted/src/compiler",
+    "environment": {
+      "LATENT_FULL": "0",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TIMES": "head-times.jsonl",
+      "LATENT_INSTANTIATION_REQUESTS": "head-requests.jsonl"
+    }
+  },
+  "entry": {
+    "binary": "head-entry",
+    "input": "/workspace/scratch/abrq61p-adapted/src/tsc/tsc.ts",
+    "environment": {
+      "LATENT_FULL": "0",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TIMES": "head-entry-times.jsonl"
+    }
+  },
+  "full": {
+    "binary": "head-census",
+    "input": "/workspace/scratch/abrq61p-adapted/src/compiler",
+    "environment": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1"
+    },
+    "selection_scopes": [
+      "/workspace/scratch/abrq61p-adapted/src/compiler/core.ts",
+      "/workspace/scratch/abrq61p-adapted/src/compiler/core.ts\n/workspace/scratch/abrq61p-adapted/src/compiler/utilities.ts"
+    ],
+    "selection_variable": "LATENT_ONLY_FILE"
+  },
+  "probes": {
+    "binary": "caller-probe",
+    "mode": "first-error",
+    "unit_files": [
+      "caller-probe-units.txt",
+      "caller-probe-extra-units.txt",
+      "caller-probe-callback-units.txt"
+    ],
+    "environment_variables": [
+      "LATENT_PROBE_UNITS",
+      "LATENT_PROBE_STAGES",
+      "LATENT_INSTANTIATION_REQUESTS",
+      "LATENT_TIMES"
+    ]
+  },
+  "broader_full_attempt": {
+    "script": "full-callers.py",
+    "selection": "full-core-callers-files.json",
+    "result": "full-core-callers-result.json",
+    "memory_guard_bytes": 15032385536,
+    "time_budget_seconds": 1200
+  }
+}

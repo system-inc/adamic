@@ -1,0 +1,23 @@
+package main
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "sort"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+)
+func main() {
+ paths:=[]string{}
+ if err:=filepath.WalkDir(os.Args[1],func(path string, entry os.DirEntry, err error) error { if err!=nil{return err};if !entry.IsDir()&&filepath.Ext(path)==".ts"{paths=append(paths,path)};return nil });err!=nil{panic(err)}
+ sort.Strings(paths)
+ program,err:=load.LatentLoad(paths);if err!=nil{panic(err)}
+ if output,failure:=lower.Lower(context.Background(),program);output!=nil||failure==nil{panic("usable output")}
+ record,selectionError:=lower.LatentReplay(context.Background(),program,os.Args[2],"NotYet","deliberately absent signature")
+ output,err:=os.Create(os.Args[3]);if err!=nil{panic(err)};defer output.Close()
+ message:="";if selectionError!=nil{message=selectionError.Error()}
+ if err:=json.NewEncoder(output).Encode(map[string]any{"record":record,"selection_error":message});err!=nil{panic(err)}
+ fmt.Fprintln(os.Stderr,"selected unit findings",len(record.Findings))
+}

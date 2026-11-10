@@ -1,0 +1,9 @@
+legacy missing never-reached list: caught by deferred coverage gap
+legacy deferred as attempted: caught by deferred counted as attempted
+legacy deferred bytes as examined: caught by independent byte-mask audit
+full missing never-reached list: caught by deferred coverage gap
+full deferred as attempted: caught by deferred counted as attempted
+full deferred bytes as examined: caught by independent byte-mask audit
+speculative missing never-reached list: caught by deferred coverage gap
+speculative deferred as attempted: caught by deferred counted as attempted
+PASS: never reached, cross-file concrete caller, diagnosed deferral, nested gap, explicit counts and bytes
