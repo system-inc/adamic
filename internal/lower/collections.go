@@ -333,7 +333,8 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 }
 
 // destructureFrom declares a pattern's names from the local held, which holds a value of type
-// destructured (held as heldAs): a tuple's elements by position, an object's fields by name.
+// destructured (held as heldAs): a tuple's elements by position, an object's fields by name. An
+// object's name may have a default, { a = 1 } (destructuredDefault); a tuple's may not yet.
 func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
 	tuple := pattern.Kind == ast.KindArrayBindingPattern
 	if tuple && heldAs == ir.Array && l.matchArray(destructured) {
@@ -359,8 +360,16 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			continue
 		}
 		declared := binding.AsBindingElement()
-		if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
-			return nil, l.notYet(binding, "a destructured name that isn't plain")
+		if declared.DotDotDotToken != nil {
+			return nil, l.notYet(binding, "a rest element in destructuring")
+		}
+		if !ast.IsIdentifier(binding.Name()) {
+			return nil, l.notYet(binding, "a nested destructuring pattern")
+		}
+		if tuple && declared.Initializer != nil {
+			// A tuple's optional element is typed without its undefined, so its field's representation
+			// can't be trusted to tell a missing element apart.
+			return nil, l.notYet(binding, "a tuple element default")
 		}
 		var field string
 		var fieldType *checker.Type
@@ -386,24 +395,82 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			fieldType = l.checker.GetTypeOfSymbol(property)
 			absent = property.Flags&ast.SymbolFlagsOptional != 0
 		}
+		var fallback ir.Expression
+		if declared.Initializer != nil {
+			// Lowered after the names before it are declared, so { a, b = a } reads a, and before its own,
+			// which the default can't see.
+			var err error
+			if fallback, err = l.expression(declared.Initializer); err != nil {
+				return nil, err
+			}
+		}
 		local, err := l.declareLocal(binding.Name())
 		if err != nil {
 			return nil, err
 		}
-		of := l.result.Locals[local].Type
-		if element, isKnown := l.representation(fieldType); !isKnown || element != of || (slotless(of) && !(of == ir.Union && l.writable(fieldType))) {
+		// The field is read as it's stored. Without a default that's the name's own representation;
+		// with one, the name's type has lost the field's undefined, so it may be held otherwise.
+		stored := l.result.Locals[local].Type
+		element, isKnown := l.representation(fieldType)
+		if fallback != nil {
+			stored = element
+		}
+		if !isKnown || element != stored || (slotless(stored) && !(stored == ir.Union && l.writable(fieldType))) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
-		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
+		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: stored, Absent: absent}
 		value.View = sourceExpression(binding) + " (field " + field + ")"
 		value.ViewReceiverTypeID = l.viewFieldReceiverTypeID(nil, destructured)
 		value.ViewTypeID = l.viewTypeID(fieldType)
 		value.ViewWhere = l.program.Where(binding)
 		value.ViewType = l.checker.TypeToString(fieldType)
 		value.ViewAllowed = l.viewLiterals(fieldType)
-		statements = append(statements, l.initializeLocal(local, value)...)
+		if fallback == nil {
+			statements = append(statements, l.initializeLocal(local, value)...)
+			continue
+		}
+		defaulted, err := l.destructuredDefault(binding, fieldType, value, local, fallback)
+		if err != nil {
+			return nil, err
+		}
+		statements = append(statements, defaulted...)
 	}
 	return statements, nil
+}
+
+// destructuredDefault declares the name local of { a = fallback } from its field's read, as
+// JavaScript does: the field is read once, into a local of the field's own representation, and the
+// default, already lowered, is evaluated only when that read is undefined, never when it's null.
+// So the field's representation must tell the two apart: a maybe pair can't hold null, and a union
+// holds null as a sentinel of its own, but any other reference holds null and undefined as one null
+// pointer, and that stays not yet rather than take the default for a null.
+func (l *lowering) destructuredDefault(binding *ast.Node, fieldType *checker.Type, read ir.Property, local int, fallback ir.Expression) ([]ir.Statement, error) {
+	of := l.result.Locals[local].Type
+	switch {
+	case read.Of == ir.Weak:
+		return nil, l.notYet(binding, "a destructuring default for a weak field")
+	case !read.Of.IsMaybe() && !read.Of.IsReference():
+		return nil, l.notYet(binding, "a destructuring default for a field of type "+l.checker.TypeToString(fieldType)+", which is never undefined")
+	case read.Of != ir.Union && l.mayHoldNull(fieldType):
+		return nil, l.notYet(binding, "a destructuring default for a field of type "+l.checker.TypeToString(fieldType)+", whose null and undefined are held alike")
+	}
+	field := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured_field", Type: read.Of, Function: l.functionIndex})
+	held := ir.Read{Local: field, Of: read.Of}
+	// Where the field is read, the name is it: as it's stored, or a number or boolean | undefined
+	// pair's present value, which the test below has proven present.
+	present := ir.Expression(held)
+	if read.Of != of {
+		if !read.Of.IsMaybe() || read.Of.Present() != of {
+			return nil, l.notYet(binding, "a destructuring default whose name is held otherwise than its field")
+		}
+		present = ir.Unwrap{Value: held, Proven: true}
+	}
+	if fallback = fit(fallback, of); fallback.Type() != of {
+		return nil, l.notYet(binding, "a destructuring default of another representation than its name")
+	}
+	chosen := ir.Conditional{Condition: ir.IsUndefined{Value: held}, WhenTrue: fallback, WhenNot: present, Of: of}
+	return append([]ir.Statement{ir.Declare{Local: field, Value: read}}, l.initializeLocal(local, chosen)...), nil
 }
 
 // destructuredField is the field { x } reads off a value of type destructured, in a declaration or

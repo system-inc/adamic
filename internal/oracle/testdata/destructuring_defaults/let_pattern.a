@@ -1,0 +1,23 @@
+// A let pattern's names take their defaults and can be written after, in a function and at the top
+// level. Node prints 11 none!, 12 x!, top. and 2.
+interface Settings {
+	level?: number;
+	title?: string;
+}
+
+function run(settings: Settings): string {
+	let { level = 1, title = 'none' } = settings;
+	level += 10;
+	title = title + '!';
+	return `${level} ${title}`;
+}
+
+console.log(run({}));
+console.log(run({ level: 2, title: 'x' }));
+
+const settings: Settings = {};
+let { title = 'top', level = 1 } = settings;
+title = title + '.';
+level++;
+console.log(title);
+console.log(`${level}`);
