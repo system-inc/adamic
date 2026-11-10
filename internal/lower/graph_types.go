@@ -357,16 +357,22 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			f.l.result.Classes[instance.class-1].Graph = true
 		}
 	}
-	f.graphFlows()
+	// The view pair guard and the boundary's refusal come before a plan's stop, so a program either
+	// refuses reads the stop it always has.
+	flows := f.graphFlows()
 	if err := f.viewPairGuard(); err != nil {
 		return err
 	}
 	// The boundary's refusals come first, so the older record form, ObjectLiteral{Record}, keeps its own
-	// words; then a record written into a graph slot on a cycle (#a9e21hc).
+	// words; then a record written into a graph slot on a cycle (#a9e21hc); then a graph value through an
+	// expression the plan doesn't follow (#y7wexf5).
 	if err := f.graphAdoptionBoundary(); err != nil {
 		return err
 	}
-	return f.recordStop
+	if f.recordStop != nil {
+		return f.recordStop
+	}
+	return flows
 }
 
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
@@ -688,9 +694,10 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 	// a decoded value that holds a container can be closed into a cycle outside every region and leak
 	// (#bvsjdte, 2a; 2b gives the decoder the plan and lifts this). It's our analysis that can't hold
 	// it yet, not the program that's wrong.
-	// Each of these was measured leaking in a graph program, by the counted build with a literal
-	// control beside it (#djwd1t2): toSorted 3 of 10 freed, toReversed 2 of 9, Map.groupBy 5 of 15,
-	// a Record's values 6 of 13. They stop until #y7wexf5 plans them where lowering makes them.
+	// A record's entries over elements a cycle could run through stops too: the plan adopts each pair
+	// only through the entries array, so a pair stored alone stays counted, measured freeing 7 of 16
+	// (Memory's e3 on #y7wexf5). What else lowering makes, toSorted, toReversed, Map.groupBy and a
+	// record's values among it, graphFlows plans where it's made.
 	if len(f.l.graphUnplanned) != 0 {
 		first := f.l.graphUnplanned[0]
 		return f.l.notYet(first.node, first.what+" in a graph program, whose result lowering makes outside the program's graph regions")

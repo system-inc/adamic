@@ -292,9 +292,9 @@ type lowering struct {
 	// the type it decodes, where graphAdoptionBoundary names a decode a graph program can't hold yet.
 	graphDecodeSite *ast.Node
 	graphDecodeType string
-	// graphUnplanned are allocations lowering builds outside expression, so graphAllocation never
-	// plans them, over elements a graph program could close a cycle through (#djwd1t2), each with
-	// what it is; graphAdoptionBoundary stops the first in a graph program until #y7wexf5 plans them.
+	// graphUnplanned are allocations the graph plan can't hold whole, over elements a graph program could
+	// close a cycle through, each with what it is; graphAdoptionBoundary stops the first in a graph
+	// program. Only a record's entries is recorded now (unplannedAllocation says why).
 	graphUnplanned []graphUnplannedSite
 	// dynamicKeyedSite is the first run-time key read (reflectGet or viewKeyedRead), where
 	// checkDynamicKeyedGetters says why a class getter keeps the program from reading by a run-time key.

@@ -5,15 +5,17 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
-// graphUnplannedSite is one allocation lowering builds outside expression: where, and what it is.
+// graphUnplannedSite is one allocation the graph plan can't hold whole: where, and what it is.
 type graphUnplannedSite struct {
 	node *ast.Node
 	what string
 }
 
-// unplannedAllocation records an allocation lowering built outside expression, which graphAllocation
-// never plans, unless its element is cycleInert: no value it holds can lead back to it. An element type
-// the caller couldn't name is recorded, failing closed.
+// unplannedAllocation records an allocation the graph plan can't hold whole, unless its element is
+// cycleInert: no value it holds can lead back to it. An element type the caller couldn't name is
+// recorded, failing closed. Only a record's entries is recorded now: the plan adopts its [key, value]
+// pairs only through the entries array, so a pair read out and stored alone stays counted and leaks a
+// cycle through it (Memory's e3 on #y7wexf5, 7 of 16 freed). #dps0kp6 plans pairs by their tuple type.
 func (l *lowering) unplannedAllocation(node *ast.Node, element *checker.Type, what string) {
 	if element == nil || !l.cycleInert(element, map[*checker.Type]bool{}) {
 		l.graphUnplanned = append(l.graphUnplanned, graphUnplannedSite{node: node, what: what})
