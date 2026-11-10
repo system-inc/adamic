@@ -229,6 +229,12 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if !missing.IsMaybe() && !missing.IsReference() {
 			return l.notYet(parameter, "a default for a "+typeName(missing)+" parameter")
 		}
+		// A default is taken only for undefined, never for a passed null, so the incoming value's
+		// representation must tell the two apart: a maybe pair can't hold null, and a union holds null as a
+		// sentinel of its own, but any other reference holds null and undefined as one null pointer.
+		if parameterType := l.checker.GetTypeAtLocation(parameter.Name()); !missing.IsMaybe() && missing != ir.Union && l.includesNull(l.concrete(parameterType)) {
+			return l.notYet(parameter, "a default for a parameter of type "+l.checker.TypeToString(parameterType)+", whose null and undefined are held alike")
+		}
 		incoming := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: parameter.Name().Text(), Type: missing, Function: index})
 		function.Parameters = append(function.Parameters, incoming)
@@ -345,8 +351,18 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 			err = l.notYet(parameter.initializer, "a default of another type than its parameter")
 			break
 		}
+		// The default runs only when the argument is undefined: a passed null keeps null, as JavaScript
+		// does, where Coalesce (??) would take the default for it too.
 		incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
-		prologue = append(prologue, ir.Declare{Local: parameter.local, Value: ir.Coalesce{Value: incoming, Fallback: fallback, Of: of}})
+		present := ir.Expression(incoming)
+		if incoming.Of != of {
+			if !incoming.Of.IsMaybe() || incoming.Of.Present() != of {
+				err = l.notYet(parameter.initializer, "a default whose parameter is held otherwise than its argument")
+				break
+			}
+			present = ir.Unwrap{Value: incoming, Proven: true}
+		}
+		prologue = append(prologue, ir.Declare{Local: parameter.local, Value: ir.Conditional{Condition: ir.IsUndefined{Value: incoming}, WhenTrue: fallback, WhenNot: present, Of: of}})
 	}
 	if err != nil {
 		l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
