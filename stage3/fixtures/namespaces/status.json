@@ -151,7 +151,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/namespaces/10_tracing_escape.a:38:11: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "11_status_type_only.a",
