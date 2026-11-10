@@ -7,6 +7,8 @@
     "40-explicit-any": "enum-display edits formatEnum; historical whole-file hashes are evidence rather than active input pins. Readonly-view evidence mentions the worker.",
     "99-cli-debug-assertion-level": "Pins assertion-level owners, not debugger-display owners.",
     "99-correctness-core-debug-messages": "Ownership audit records 99t enableDebugInfo whole-owner pin; no overlapping message owner.",
-    "64-temporary-parser-range-read": "README mention only."
+    "64-temporary-parser-range-read": "README mention only.",
+    "30-indexed-reads": "whole-files.cjs examines only the assertionCache declaration in debug.ts; it does not pin debug.ts whole.",
+    "41-explicit-any-remaining": "Debugger proof covers Debug.fail only; no debugger-display owner pin."
   }
 }
