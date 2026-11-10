@@ -1,0 +1,96 @@
+package oracle
+
+import (
+	"errors"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+)
+
+// A Map's [key, value] pair is made in map.c, outside graphAllocation, and before #dps0kp6 it joined a
+// graph region only when the map was a graph member. A pair held by a graph slot on a cycle, from a
+// map no graph slot holds, stayed counted, and the cycle through it leaked (e2 freed 9 of 20 by the
+// counted build on main 32e7abb8, e4 10 of 20, each matching Node and clean under ASan). Each pair is
+// now planned by its own tuple type (mapEntries, adamic_map_entries_planned), and a pair a graph
+// program could hold as some other graph type, which no plan names, stops (unplannedPair).
+//
+// Mutants, each red here by the counted build or by the stop's absence:
+//   - map.c's entries_of ignores planned: "e2" and "e4" leak.
+//   - mapEntries leaves PairGraphTypes empty: "e2", "e4" and "for-of" leak.
+//   - unplannedPair returns nil: "a labeled tuple" lowers, and leaks.
+const mapEntriesPairsNode = `interface Node { name: string; next: Node[]; pairs: [string, Node][] }
+const a: Node = { name: 'a' + '', next: [], pairs: [] };
+const b: Node = { name: 'b' + '', next: [a], pairs: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const map = new Map<string, Node>();
+map.set('b', b);
+`
+
+const mapEntriesPairsPrint = `const pair = a.pairs[0];
+if (pair !== undefined) console.log(` + "`${a.pairs.length} ${pair[0]} ${pair[1].name} ${pair[1].next[0] === a}`" + `);
+`
+
+func TestMapEntriesPairs(t *testing.T) {
+	t.Parallel()
+	cases := []struct{ name, source, stopped string }{
+		// e2: the entries array, held by a; each pair holds b, b holds a.
+		{"e2", mapEntriesPairsNode + "a.pairs = [...map.entries()];\n" + mapEntriesPairsPrint, ""},
+		// e4: one pair stored alone, the array dropped.
+		{"e4", mapEntriesPairsNode + "const first = [...map.entries()][0];\nif (first !== undefined) a.pairs.push(first);\n" + mapEntriesPairsPrint, ""},
+		// The for-of road (iterated): each pair a for-of gives, stored.
+		{"for-of", mapEntriesPairsNode + "for (const entry of map) a.pairs.push(entry);\n" + mapEntriesPairsPrint, ""},
+		// The control: the same pair as a literal.
+		{"literal", mapEntriesPairsNode + "a.pairs = [['b', b]];\n" + mapEntriesPairsPrint, ""},
+		// A for-of over the same map whose pairs no slot holds: they're planned all the same, and free.
+		{"read only", mapEntriesPairsNode + "let names = '';\nfor (const [name, node] of map) names += name + node.name;\nconsole.log(names);\n", ""},
+		// A pair held as a labeled tuple: [string, Node] isn't the slot's type, so its plan can't name the
+		// pair, and it stops.
+		{"a labeled tuple", `interface Node { name: string; next: Node[]; pairs: [key: string, value: Node][] }
+const a: Node = { name: 'a' + '', next: [], pairs: [] };
+const b: Node = { name: 'b' + '', next: [a], pairs: [] };
+a.next.push(b);
+const map = new Map<string, Node>();
+map.set('b', b);
+a.pairs = [...map.entries()];
+console.log(String(a.pairs.length));
+`, "a Map's [key, value] pair held as another graph type in a graph program"},
+	}
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "main.a")
+			if err := os.WriteFile(path, []byte(c.source), 0600); err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if c.stopped != "" {
+				var notYet *lower.NotYet
+				if !errors.As(err, &notYet) || !strings.Contains(notYet.What, c.stopped) {
+					t.Fatalf("got %v, want NotYet naming %q", err, c.stopped)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			got, _ := natively(t, program)
+			if difference := disagreement(truth, got); difference != "" {
+				t.Fatalf("native: %s; Node %q; native %q; stderr %q", difference, truth.stdout, got.stdout, got.stderr)
+			}
+			counted := filepath.Join(t.TempDir(), "counted")
+			if err := native.Build(native.C(program), counted, native.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
+			ran := execute(t, counted)
+			if report := leakcheck.Unbalanced(leakcheck.Run{Stdout: ran.stdout, Stderr: ran.stderr, ExitCode: ran.exitCode}); report != "" {
+				t.Fatal(report)
+			}
+		})
+	}
+}

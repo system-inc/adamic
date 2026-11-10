@@ -418,6 +418,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"MapDelete.Key":                      {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"MapDelete.KeyType":                  {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"MapEntries.GraphTypes":              {"[]int", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
+	"MapEntries.PairGraphTypes":          {"[]int", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"MapEntries.ProgramRegion":           {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"MapEntries.Map":                     {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"MapEntries.KeyType":                 {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},

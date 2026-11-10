@@ -1247,6 +1247,9 @@ void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic
 
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
+// adamic_map_entries_planned is the same, each pair adopted into a graph region of its own, for a pair
+// whose tuple type is a graph type: it can reach a graph slot while its array is dropped (#dps0kp6).
+adamic_array *adamic_map_entries_planned(const adamic_map *map, const adamic_shape *pair);
 
 // adamic_array_join is array.join(separator), each element written as String() would, and the empty
 // string when the join would be longer than V8's longest (adamic_string_check_length).

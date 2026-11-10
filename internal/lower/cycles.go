@@ -92,6 +92,8 @@ type cycleFinder struct {
 	recordStop error
 	// assigned is every local an ir.Assign writes after its declaration (reassigned), found once.
 	assigned map[int]bool
+	// selected is every type graphTypes made a graph type, which unplannedPair reads (#dps0kp6).
+	selected []*checker.Type
 }
 
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
