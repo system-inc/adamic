@@ -1,0 +1,1054 @@
+{
+  "debug.ts": {
+    "declarations": [
+      {
+        "name": "shouldLog",
+        "owner": "",
+        "where": "debug.ts:121:5",
+        "start_line": 121,
+        "end_line": 123,
+        "start": 2851,
+        "end": 2953
+      },
+      {
+        "name": "logMessage",
+        "owner": "",
+        "where": "debug.ts:125:5",
+        "start_line": 125,
+        "end_line": 129,
+        "start": 2961,
+        "end": 3122
+      },
+      {
+        "name": "log",
+        "owner": "",
+        "where": "debug.ts:131:5",
+        "start_line": 131,
+        "end_line": 133,
+        "start": 3130,
+        "end": 3214
+      },
+      {
+        "name": "error",
+        "owner": "",
+        "where": "debug.ts:136:9",
+        "start_line": 136,
+        "end_line": 138,
+        "start": 3254,
+        "end": 3349
+      },
+      {
+        "name": "warn",
+        "owner": "",
+        "where": "debug.ts:140:9",
+        "start_line": 140,
+        "end_line": 142,
+        "start": 3361,
+        "end": 3457
+      },
+      {
+        "name": "log",
+        "owner": "",
+        "where": "debug.ts:144:9",
+        "start_line": 144,
+        "end_line": 146,
+        "start": 3469,
+        "end": 3561
+      },
+      {
+        "name": "trace",
+        "owner": "",
+        "where": "debug.ts:148:9",
+        "start_line": 148,
+        "end_line": 150,
+        "start": 3573,
+        "end": 3670
+      },
+      {
+        "name": "getAssertionLevel",
+        "owner": "",
+        "where": "debug.ts:153:5",
+        "start_line": 153,
+        "end_line": 155,
+        "start": 3685,
+        "end": 3784
+      },
+      {
+        "name": "setAssertionLevel",
+        "owner": "",
+        "where": "debug.ts:157:5",
+        "start_line": 157,
+        "end_line": 159,
+        "start": 3792,
+        "end": 3903
+      },
+      {
+        "name": "shouldAssert",
+        "owner": "",
+        "where": "debug.ts:161:5",
+        "start_line": 161,
+        "end_line": 163,
+        "start": 3911,
+        "end": 4028
+      },
+      {
+        "name": "shouldAssertFunction",
+        "owner": "",
+        "where": "debug.ts:171:5",
+        "start_line": 171,
+        "end_line": 173,
+        "start": 4376,
+        "end": 4517
+      },
+      {
+        "name": "fail",
+        "owner": "",
+        "where": "debug.ts:175:5",
+        "start_line": 175,
+        "end_line": 183,
+        "start": 4525,
+        "end": 4899
+      },
+      {
+        "name": "failBadSyntaxKind",
+        "owner": "",
+        "where": "debug.ts:185:5",
+        "start_line": 185,
+        "end_line": 190,
+        "start": 4907,
+        "end": 5204
+      },
+      {
+        "name": "assert",
+        "owner": "",
+        "where": "debug.ts:192:5",
+        "start_line": 192,
+        "end_line": 200,
+        "start": 5212,
+        "end": 5752
+      },
+      {
+        "name": "assertEqual",
+        "owner": "",
+        "where": "debug.ts:202:5",
+        "start_line": 202,
+        "end_line": 207,
+        "start": 5760,
+        "end": 6070
+      },
+      {
+        "name": "assertLessThan",
+        "owner": "",
+        "where": "debug.ts:209:5",
+        "start_line": 209,
+        "end_line": 213,
+        "start": 6078,
+        "end": 6314
+      },
+      {
+        "name": "assertLessThanOrEqual",
+        "owner": "",
+        "where": "debug.ts:215:5",
+        "start_line": 215,
+        "end_line": 219,
+        "start": 6322,
+        "end": 6544
+      },
+      {
+        "name": "assertGreaterThanOrEqual",
+        "owner": "",
+        "where": "debug.ts:221:5",
+        "start_line": 221,
+        "end_line": 225,
+        "start": 6552,
+        "end": 6780
+      },
+      {
+        "name": "assertIsDefined",
+        "owner": "",
+        "where": "debug.ts:227:5",
+        "start_line": 227,
+        "end_line": 232,
+        "start": 6788,
+        "end": 7108
+      },
+      {
+        "name": "checkDefined",
+        "owner": "",
+        "where": "debug.ts:234:5",
+        "start_line": 234,
+        "end_line": 237,
+        "start": 7116,
+        "end": 7377
+      },
+      {
+        "name": "assertEachIsDefined",
+        "owner": "",
+        "where": "debug.ts:239:5",
+        "start_line": 239,
+        "end_line": 239,
+        "start": 7385,
+        "end": 7537
+      },
+      {
+        "name": "assertEachIsDefined",
+        "owner": "",
+        "where": "debug.ts:240:5",
+        "start_line": 240,
+        "end_line": 240,
+        "start": 7543,
+        "end": 7695
+      },
+      {
+        "name": "assertEachIsDefined",
+        "owner": "",
+        "where": "debug.ts:241:5",
+        "start_line": 241,
+        "end_line": 245,
+        "start": 7701,
+        "end": 7943
+      },
+      {
+        "name": "checkEachDefined",
+        "owner": "",
+        "where": "debug.ts:247:5",
+        "start_line": 247,
+        "end_line": 250,
+        "start": 7951,
+        "end": 8185
+      },
+      {
+        "name": "assertNever",
+        "owner": "",
+        "where": "debug.ts:252:5",
+        "start_line": 252,
+        "end_line": 255,
+        "start": 8193,
+        "end": 8583
+      },
+      {
+        "name": "assertEachNode",
+        "owner": "",
+        "where": "debug.ts:257:5",
+        "start_line": 257,
+        "end_line": 257,
+        "start": 8591,
+        "end": 8781
+      },
+      {
+        "name": "assertEachNode",
+        "owner": "",
+        "where": "debug.ts:258:5",
+        "start_line": 258,
+        "end_line": 258,
+        "start": 8787,
+        "end": 8977
+      },
+      {
+        "name": "assertEachNode",
+        "owner": "",
+        "where": "debug.ts:259:5",
+        "start_line": 259,
+        "end_line": 259,
+        "start": 8983,
+        "end": 9197
+      },
+      {
+        "name": "assertEachNode",
+        "owner": "",
+        "where": "debug.ts:260:5",
+        "start_line": 260,
+        "end_line": 260,
+        "start": 9203,
+        "end": 9417
+      },
+      {
+        "name": "assertEachNode",
+        "owner": "",
+        "where": "debug.ts:261:5",
+        "start_line": 261,
+        "end_line": 261,
+        "start": 9423,
+        "end": 9577
+      },
+      {
+        "name": "assertEachNode",
+        "owner": "",
+        "where": "debug.ts:262:5",
+        "start_line": 262,
+        "end_line": 271,
+        "start": 9583,
+        "end": 10091
+      },
+      {
+        "name": "assertNode",
+        "owner": "",
+        "where": "debug.ts:273:5",
+        "start_line": 273,
+        "end_line": 273,
+        "start": 10099,
+        "end": 10273
+      },
+      {
+        "name": "assertNode",
+        "owner": "",
+        "where": "debug.ts:274:5",
+        "start_line": 274,
+        "end_line": 274,
+        "start": 10279,
+        "end": 10429
+      },
+      {
+        "name": "assertNode",
+        "owner": "",
+        "where": "debug.ts:275:5",
+        "start_line": 275,
+        "end_line": 284,
+        "start": 10435,
+        "end": 10961
+      },
+      {
+        "name": "assertNotNode",
+        "owner": "",
+        "where": "debug.ts:286:5",
+        "start_line": 286,
+        "end_line": 286,
+        "start": 10969,
+        "end": 11161
+      },
+      {
+        "name": "assertNotNode",
+        "owner": "",
+        "where": "debug.ts:287:5",
+        "start_line": 287,
+        "end_line": 287,
+        "start": 11167,
+        "end": 11320
+      },
+      {
+        "name": "assertNotNode",
+        "owner": "",
+        "where": "debug.ts:288:5",
+        "start_line": 288,
+        "end_line": 297,
+        "start": 11326,
+        "end": 11870
+      },
+      {
+        "name": "assertOptionalNode",
+        "owner": "",
+        "where": "debug.ts:299:5",
+        "start_line": 299,
+        "end_line": 299,
+        "start": 11878,
+        "end": 12048
+      },
+      {
+        "name": "assertOptionalNode",
+        "owner": "",
+        "where": "debug.ts:300:5",
+        "start_line": 300,
+        "end_line": 300,
+        "start": 12054,
+        "end": 12248
+      },
+      {
+        "name": "assertOptionalNode",
+        "owner": "",
+        "where": "debug.ts:301:5",
+        "start_line": 301,
+        "end_line": 301,
+        "start": 12254,
+        "end": 12412
+      },
+      {
+        "name": "assertOptionalNode",
+        "owner": "",
+        "where": "debug.ts:302:5",
+        "start_line": 302,
+        "end_line": 311,
+        "start": 12418,
+        "end": 12966
+      },
+      {
+        "name": "assertOptionalToken",
+        "owner": "",
+        "where": "debug.ts:313:5",
+        "start_line": 313,
+        "end_line": 313,
+        "start": 12974,
+        "end": 13165
+      },
+      {
+        "name": "assertOptionalToken",
+        "owner": "",
+        "where": "debug.ts:314:5",
+        "start_line": 314,
+        "end_line": 314,
+        "start": 13171,
+        "end": 13386
+      },
+      {
+        "name": "assertOptionalToken",
+        "owner": "",
+        "where": "debug.ts:315:5",
+        "start_line": 315,
+        "end_line": 315,
+        "start": 13392,
+        "end": 13536
+      },
+      {
+        "name": "assertOptionalToken",
+        "owner": "",
+        "where": "debug.ts:316:5",
+        "start_line": 316,
+        "end_line": 325,
+        "start": 13542,
+        "end": 14112
+      },
+      {
+        "name": "assertMissingNode",
+        "owner": "",
+        "where": "debug.ts:327:5",
+        "start_line": 327,
+        "end_line": 327,
+        "start": 14120,
+        "end": 14253
+      },
+      {
+        "name": "assertMissingNode",
+        "owner": "",
+        "where": "debug.ts:328:5",
+        "start_line": 328,
+        "end_line": 337,
+        "start": 14259,
+        "end": 14721
+      },
+      {
+        "name": "type",
+        "owner": "",
+        "where": "debug.ts:344:5",
+        "start_line": 344,
+        "end_line": 344,
+        "start": 15032,
+        "end": 15092
+      },
+      {
+        "name": "type",
+        "owner": "",
+        "where": "debug.ts:345:5",
+        "start_line": 345,
+        "end_line": 345,
+        "start": 15098,
+        "end": 15138
+      },
+      {
+        "name": "formatSymbol",
+        "owner": "",
+        "where": "debug.ts:349:5",
+        "start_line": 349,
+        "end_line": 351,
+        "start": 15154,
+        "end": 15417
+      },
+      {
+        "name": "formatEnum",
+        "owner": "",
+        "where": "debug.ts:356:5",
+        "start_line": 356,
+        "end_line": 385,
+        "start": 15521,
+        "end": 16620
+      },
+      {
+        "name": "getEnumMembers",
+        "owner": "",
+        "where": "debug.ts:389:5",
+        "start_line": 389,
+        "end_line": 409,
+        "start": 16752,
+        "end": 17673
+      },
+      {
+        "name": "formatSyntaxKind",
+        "owner": "",
+        "where": "debug.ts:411:5",
+        "start_line": 411,
+        "end_line": 413,
+        "start": 17681,
+        "end": 17907
+      },
+      {
+        "name": "formatSnippetKind",
+        "owner": "",
+        "where": "debug.ts:415:5",
+        "start_line": 415,
+        "end_line": 417,
+        "start": 17915,
+        "end": 18145
+      },
+      {
+        "name": "formatScriptKind",
+        "owner": "",
+        "where": "debug.ts:419:5",
+        "start_line": 419,
+        "end_line": 421,
+        "start": 18153,
+        "end": 18379
+      },
+      {
+        "name": "formatNodeFlags",
+        "owner": "",
+        "where": "debug.ts:423:5",
+        "start_line": 423,
+        "end_line": 425,
+        "start": 18387,
+        "end": 18610
+      },
+      {
+        "name": "formatNodeCheckFlags",
+        "owner": "",
+        "where": "debug.ts:427:5",
+        "start_line": 427,
+        "end_line": 429,
+        "start": 18618,
+        "end": 18861
+      },
+      {
+        "name": "formatModifierFlags",
+        "owner": "",
+        "where": "debug.ts:431:5",
+        "start_line": 431,
+        "end_line": 433,
+        "start": 18869,
+        "end": 19108
+      },
+      {
+        "name": "formatTransformFlags",
+        "owner": "",
+        "where": "debug.ts:435:5",
+        "start_line": 435,
+        "end_line": 437,
+        "start": 19116,
+        "end": 19359
+      },
+      {
+        "name": "formatEmitFlags",
+        "owner": "",
+        "where": "debug.ts:439:5",
+        "start_line": 439,
+        "end_line": 441,
+        "start": 19367,
+        "end": 19590
+      },
+      {
+        "name": "formatSymbolFlags",
+        "owner": "",
+        "where": "debug.ts:443:5",
+        "start_line": 443,
+        "end_line": 445,
+        "start": 19598,
+        "end": 19829
+      },
+      {
+        "name": "formatTypeFlags",
+        "owner": "",
+        "where": "debug.ts:447:5",
+        "start_line": 447,
+        "end_line": 449,
+        "start": 19837,
+        "end": 20060
+      },
+      {
+        "name": "formatSignatureFlags",
+        "owner": "",
+        "where": "debug.ts:451:5",
+        "start_line": 451,
+        "end_line": 453,
+        "start": 20068,
+        "end": 20311
+      },
+      {
+        "name": "formatObjectFlags",
+        "owner": "",
+        "where": "debug.ts:455:5",
+        "start_line": 455,
+        "end_line": 457,
+        "start": 20319,
+        "end": 20550
+      },
+      {
+        "name": "formatFlowFlags",
+        "owner": "",
+        "where": "debug.ts:459:5",
+        "start_line": 459,
+        "end_line": 461,
+        "start": 20558,
+        "end": 20781
+      },
+      {
+        "name": "formatRelationComparisonResult",
+        "owner": "",
+        "where": "debug.ts:463:5",
+        "start_line": 463,
+        "end_line": 465,
+        "start": 20789,
+        "end": 21074
+      },
+      {
+        "name": "formatCheckMode",
+        "owner": "",
+        "where": "debug.ts:467:5",
+        "start_line": 467,
+        "end_line": 469,
+        "start": 21082,
+        "end": 21303
+      },
+      {
+        "name": "formatSignatureCheckMode",
+        "owner": "",
+        "where": "debug.ts:471:5",
+        "start_line": 471,
+        "end_line": 473,
+        "start": 21311,
+        "end": 21568
+      },
+      {
+        "name": "formatTypeFacts",
+        "owner": "",
+        "where": "debug.ts:475:5",
+        "start_line": 475,
+        "end_line": 477,
+        "start": 21576,
+        "end": 21799
+      },
+      {
+        "name": "attachFlowNodeDebugInfoWorker",
+        "owner": "",
+        "where": "debug.ts:483:5",
+        "start_line": 483,
+        "end_line": 517,
+        "start": 21894,
+        "end": 22027
+      },
+      {
+        "name": "attachFlowNodeDebugInfo",
+        "owner": "",
+        "where": "debug.ts:519:5",
+        "start_line": 519,
+        "end_line": 536,
+        "start": 22035,
+        "end": 22169
+      },
+      {
+        "name": "attachNodeArrayDebugInfoWorker",
+        "owner": "",
+        "where": "debug.ts:540:5",
+        "start_line": 540,
+        "end_line": 557,
+        "start": 22233,
+        "end": 22337
+      },
+      {
+        "name": "attachNodeArrayDebugInfo",
+        "owner": "",
+        "where": "debug.ts:559:5",
+        "start_line": 559,
+        "end_line": 575,
+        "start": 22345,
+        "end": 22454
+      },
+      {
+        "name": "enableDebugInfo",
+        "owner": "",
+        "where": "debug.ts:580:5",
+        "start_line": 580,
+        "end_line": 774,
+        "start": 22542,
+        "end": 23015
+      },
+      {
+        "name": "formatVariance",
+        "owner": "",
+        "where": "debug.ts:776:5",
+        "start_line": 776,
+        "end_line": 790,
+        "start": 23023,
+        "end": 23758
+      },
+      {
+        "name": "DebugTypeMapper",
+        "owner": "",
+        "where": "debug.ts:793:5",
+        "start_line": 793,
+        "end_line": 857,
+        "start": 23898,
+        "end": 28580
+      },
+      {
+        "name": "kind",
+        "owner": "DebugTypeMapper",
+        "where": "debug.ts:794:9",
+        "start_line": 794,
+        "end_line": 794,
+        "start": 23938,
+        "end": 23964
+      },
+      {
+        "name": "__debugToString",
+        "owner": "DebugTypeMapper",
+        "where": "debug.ts:795:9",
+        "start_line": 795,
+        "end_line": 856,
+        "start": 23974,
+        "end": 28573
+      },
+      {
+        "name": "attachDebugPrototypeIfDebug",
+        "owner": "",
+        "where": "debug.ts:859:5",
+        "start_line": 859,
+        "end_line": 864,
+        "start": 28588,
+        "end": 28702
+      }
+    ],
+    "calls": [
+      {
+        "where": "debug.ts:235:9",
+        "owner": "checkDefined",
+        "expression": "assertIsDefined(value, message, stackCrawlMark || checkDefined)"
+      },
+      {
+        "where": "debug.ts:243:13",
+        "owner": "assertEachIsDefined",
+        "expression": "assertIsDefined(v, message, stackCrawlMark || assertEachIsDefined)"
+      },
+      {
+        "where": "debug.ts:248:9",
+        "owner": "checkEachDefined",
+        "expression": "assertEachIsDefined(value, message, stackCrawlMark || checkEachDefined)"
+      }
+    ]
+  },
+  "semver.ts": {
+    "declarations": [
+      {
+        "name": "Version",
+        "owner": "",
+        "where": "semver.ts:46:1",
+        "start_line": 46,
+        "end_line": 139,
+        "start": 1919,
+        "end": 6123
+      },
+      {
+        "name": "zero",
+        "owner": "Version",
+        "where": "semver.ts:47:5",
+        "start_line": 47,
+        "end_line": 47,
+        "start": 1947,
+        "end": 2007
+      },
+      {
+        "name": "major",
+        "owner": "Version",
+        "where": "semver.ts:49:5",
+        "start_line": 49,
+        "end_line": 49,
+        "start": 2015,
+        "end": 2038
+      },
+      {
+        "name": "minor",
+        "owner": "Version",
+        "where": "semver.ts:50:5",
+        "start_line": 50,
+        "end_line": 50,
+        "start": 2044,
+        "end": 2067
+      },
+      {
+        "name": "patch",
+        "owner": "Version",
+        "where": "semver.ts:51:5",
+        "start_line": 51,
+        "end_line": 51,
+        "start": 2073,
+        "end": 2096
+      },
+      {
+        "name": "prerelease",
+        "owner": "Version",
+        "where": "semver.ts:52:5",
+        "start_line": 52,
+        "end_line": 52,
+        "start": 2102,
+        "end": 2141
+      },
+      {
+        "name": "build",
+        "owner": "Version",
+        "where": "semver.ts:53:5",
+        "start_line": 53,
+        "end_line": 53,
+        "start": 2147,
+        "end": 2181
+      },
+      {
+        "name": "constructor",
+        "owner": "Version",
+        "where": "semver.ts:55:5",
+        "start_line": 55,
+        "end_line": 55,
+        "start": 2189,
+        "end": 2215
+      },
+      {
+        "name": "constructor",
+        "owner": "Version",
+        "where": "semver.ts:56:5",
+        "start_line": 56,
+        "end_line": 56,
+        "start": 2221,
+        "end": 2357
+      },
+      {
+        "name": "constructor",
+        "owner": "Version",
+        "where": "semver.ts:57:5",
+        "start_line": 57,
+        "end_line": 78,
+        "start": 2363,
+        "end": 3510
+      },
+      {
+        "name": "tryParse",
+        "owner": "Version",
+        "where": "semver.ts:80:5",
+        "start_line": 80,
+        "end_line": 86,
+        "start": 3518,
+        "end": 3806
+      },
+      {
+        "name": "compareTo",
+        "owner": "Version",
+        "where": "semver.ts:88:5",
+        "start_line": 88,
+        "end_line": 107,
+        "start": 3814,
+        "end": 4931
+      },
+      {
+        "name": "increment",
+        "owner": "Version",
+        "where": "semver.ts:109:5",
+        "start_line": 109,
+        "end_line": 120,
+        "start": 4939,
+        "end": 5396
+      },
+      {
+        "name": "with",
+        "owner": "Version",
+        "where": "semver.ts:122:5",
+        "start_line": 122,
+        "end_line": 131,
+        "start": 5404,
+        "end": 5846
+      },
+      {
+        "name": "toString",
+        "owner": "Version",
+        "where": "semver.ts:133:5",
+        "start_line": 133,
+        "end_line": 138,
+        "start": 5854,
+        "end": 6120
+      },
+      {
+        "name": "tryParseComponents",
+        "owner": "",
+        "where": "semver.ts:141:1",
+        "start_line": 141,
+        "end_line": 156,
+        "start": 6127,
+        "end": 6674
+      },
+      {
+        "name": "comparePrereleaseIdentifiers",
+        "owner": "",
+        "where": "semver.ts:158:1",
+        "start_line": 158,
+        "end_line": 200,
+        "start": 6678,
+        "end": 8951
+      },
+      {
+        "name": "VersionRange",
+        "owner": "",
+        "where": "semver.ts:207:1",
+        "start_line": 207,
+        "end_line": 236,
+        "start": 9069,
+        "end": 10062
+      },
+      {
+        "name": "_alternatives",
+        "owner": "VersionRange",
+        "where": "semver.ts:208:5",
+        "start_line": 208,
+        "end_line": 208,
+        "start": 9102,
+        "end": 9160
+      },
+      {
+        "name": "constructor",
+        "owner": "VersionRange",
+        "where": "semver.ts:210:5",
+        "start_line": 210,
+        "end_line": 212,
+        "start": 9168,
+        "end": 9313
+      },
+      {
+        "name": "tryParse",
+        "owner": "VersionRange",
+        "where": "semver.ts:214:5",
+        "start_line": 214,
+        "end_line": 222,
+        "start": 9321,
+        "end": 9601
+      },
+      {
+        "name": "test",
+        "owner": "VersionRange",
+        "where": "semver.ts:228:5",
+        "start_line": 228,
+        "end_line": 231,
+        "start": 9784,
+        "end": 9969
+      },
+      {
+        "name": "toString",
+        "owner": "VersionRange",
+        "where": "semver.ts:233:5",
+        "start_line": 233,
+        "end_line": 235,
+        "start": 9977,
+        "end": 10059
+      },
+      {
+        "name": "parseRange",
+        "owner": "",
+        "where": "semver.ts:276:1",
+        "start_line": 276,
+        "end_line": 295,
+        "start": 11441,
+        "end": 12210
+      },
+      {
+        "name": "parsePartial",
+        "owner": "",
+        "where": "semver.ts:297:1",
+        "start_line": 297,
+        "end_line": 312,
+        "start": 12214,
+        "end": 12788
+      },
+      {
+        "name": "parseHyphen",
+        "owner": "",
+        "where": "semver.ts:314:1",
+        "start_line": 314,
+        "end_line": 334,
+        "start": 12792,
+        "end": 13555
+      },
+      {
+        "name": "parseComparator",
+        "owner": "",
+        "where": "semver.ts:336:1",
+        "start_line": 336,
+        "end_line": 399,
+        "start": 13559,
+        "end": 16253
+      },
+      {
+        "name": "isWildcard",
+        "owner": "",
+        "where": "semver.ts:401:1",
+        "start_line": 401,
+        "end_line": 403,
+        "start": 16257,
+        "end": 16353
+      },
+      {
+        "name": "createComparator",
+        "owner": "",
+        "where": "semver.ts:405:1",
+        "start_line": 405,
+        "end_line": 407,
+        "start": 16357,
+        "end": 16474
+      },
+      {
+        "name": "testDisjunction",
+        "owner": "",
+        "where": "semver.ts:409:1",
+        "start_line": 409,
+        "end_line": 416,
+        "start": 16478,
+        "end": 16824
+      },
+      {
+        "name": "testAlternative",
+        "owner": "",
+        "where": "semver.ts:418:1",
+        "start_line": 418,
+        "end_line": 423,
+        "start": 16828,
+        "end": 17075
+      },
+      {
+        "name": "testComparator",
+        "owner": "",
+        "where": "semver.ts:425:1",
+        "start_line": 425,
+        "end_line": 441,
+        "start": 17079,
+        "end": 17567
+      },
+      {
+        "name": "formatDisjunction",
+        "owner": "",
+        "where": "semver.ts:443:1",
+        "start_line": 443,
+        "end_line": 445,
+        "start": 17571,
+        "end": 17722
+      },
+      {
+        "name": "formatAlternative",
+        "owner": "",
+        "where": "semver.ts:447:1",
+        "start_line": 447,
+        "end_line": 449,
+        "start": 17726,
+        "end": 17851
+      },
+      {
+        "name": "formatComparator",
+        "owner": "",
+        "where": "semver.ts:451:1",
+        "start_line": 451,
+        "end_line": 453,
+        "start": 17855,
+        "end": 17968
+      }
+    ],
+    "calls": []
+  }
+}
