@@ -135,21 +135,36 @@ type graphPairSite struct {
 	pair *checker.Type
 }
 
-// mapEntries is map's [key, value] pairs, each planned by its own tuple type (#dps0kp6). A pair is
-// made in the runtime, outside graphAllocation, and it can reach a graph slot while the array it came
-// in is dropped or while the map is no graph member, so the array's plan and the map's don't cover it.
+// mapEntries is map's [key, value] pairs, each planned by its own tuple type (pairGraphTypes).
 func (l *lowering) mapEntries(node, receiver *ast.Node, collection ir.Expression, key, value ir.Type) ir.MapEntries {
-	entries := ir.MapEntries{Map: collection, KeyType: key, ValueType: value}
-	pair := l.mapPairType(l.checker.GetTypeAtLocation(receiver))
-	if pair != nil {
-		entries.PairGraphTypes = []int{l.cycleTypeID(pair)}
-	}
-	l.graphPairs = append(l.graphPairs, graphPairSite{node: node, pair: pair})
-	return entries
+	return ir.MapEntries{Map: collection, KeyType: key, ValueType: value, PairGraphTypes: l.pairGraphTypes(node, receiver)}
 }
 
-// mapPairType is the tuple a Map's entries() gives, [K, V] as the checker names it (the element of
-// its iterator's type), or nil.
+// collectionIterator is a collection's library iterator over part; an entries() iterator's pairs are
+// each planned by their own tuple type (pairGraphTypes).
+func (l *lowering) collectionIterator(node, receiver *ast.Node, collection ir.Expression, part string, key, value ir.Type, set bool) ir.CollectionIterator {
+	iterator := ir.CollectionIterator{Collection: collection, Part: part, Key: key, Value: value, Set: set}
+	if part == "entries" {
+		iterator.PairGraphTypes = l.pairGraphTypes(node, receiver)
+	}
+	return iterator
+}
+
+// pairGraphTypes plans a collection's [key, value] pairs by their own tuple type (#dps0kp6), and
+// records the site for graphAdoptionBoundary. A pair is made in the runtime, outside graphAllocation,
+// and it can reach a graph slot while the array or iterator it came in is dropped, or while the
+// collection is no graph member, so no other plan covers it.
+func (l *lowering) pairGraphTypes(node, receiver *ast.Node) []int {
+	pair := l.mapPairType(l.checker.GetTypeAtLocation(receiver))
+	l.graphPairs = append(l.graphPairs, graphPairSite{node: node, pair: pair})
+	if pair == nil {
+		return nil
+	}
+	return []int{l.cycleTypeID(pair)}
+}
+
+// mapPairType is the tuple a Map's or a Set's entries() gives, [K, V] as the checker names it (the
+// element of its iterator's type), or nil.
 func (l *lowering) mapPairType(mapType *checker.Type) *checker.Type {
 	mapType = checker.Checker_getApparentType(l.checker, l.concrete(mapType))
 	entries := l.checker.GetPropertyOfType(mapType, "entries")

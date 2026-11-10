@@ -1019,6 +1019,9 @@ typedef struct adamic_map_iterator {
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
 adamic_object *adamic_string_iterator(adamic_string *string);
 adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
+// adamic_collection_iterator_planned is the same, each entries() pair adopted into a graph region of
+// its own as next() makes it, for a pair whose tuple type is a graph type (#dps0kp6).
+adamic_object *adamic_collection_iterator_planned(adamic_map *collection, int part, int key, int value, bool set);
 // adamic_iterator_result is one step's { value, done }, value in slot 0 and done in slot 1, as every
 // runtime-built iterator's next() gives it (map_set.c). kind is the value slot's field kind, and
 // element_tag its representation byte, ir.Type's. The result is owned by the caller, and the element

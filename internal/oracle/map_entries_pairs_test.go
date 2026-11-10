@@ -12,16 +12,18 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// A Map's [key, value] pair is made in map.c, outside graphAllocation, and before #dps0kp6 it joined a
-// graph region only when the map was a graph member. A pair held by a graph slot on a cycle, from a
-// map no graph slot holds, stayed counted, and the cycle through it leaked (e2 freed 9 of 20 by the
-// counted build on main 32e7abb8, e4 10 of 20, each matching Node and clean under ASan). Each pair is
-// now planned by its own tuple type (mapEntries, adamic_map_entries_planned), and a pair a graph
-// program could hold as some other graph type, which no plan names, stops (unplannedPair).
+// A Map's [key, value] pair is made in the runtime, outside graphAllocation: by an entries()
+// iterator's next (map_set.c's collection_next), which every road here takes, and by map.c's
+// adamic_map_entries. Before #dps0kp6, next never adopted a pair, and map.c only when the map was a
+// graph member, so a pair held by a graph slot on a cycle stayed counted and the cycle leaked (e2
+// freed 9 of 20 by the counted build on main 32e7abb8, e4 10 of 20, each matching Node and clean
+// under ASan). Each pair is now planned by its own tuple type (pairGraphTypes, and the iterator's
+// planned state), and a pair a graph program could hold as some other graph type, which no plan
+// names, stops (unplannedPair).
 //
 // Mutants, each red here by the counted build or by the stop's absence:
-//   - map.c's entries_of ignores planned: "e2" and "e4" leak.
-//   - mapEntries leaves PairGraphTypes empty: "e2", "e4" and "for-of" leak.
+//   - collection_next ignores planned: "e2", "e4" and "for-of" leak.
+//   - pairGraphTypes returns nil for a named pair: "e2", "e4" and "for-of" leak.
 //   - unplannedPair returns nil: "a labeled tuple" lowers, and leaks.
 const mapEntriesPairsNode = `interface Node { name: string; next: Node[]; pairs: [string, Node][] }
 const a: Node = { name: 'a' + '', next: [], pairs: [] };
@@ -58,7 +60,7 @@ const map = new Map<string, Node>();
 map.set('b', b);
 a.pairs = [...map.entries()];
 console.log(String(a.pairs.length));
-`, "a Map's [key, value] pair held as another graph type in a graph program"},
+`, "a Map's or a Set's [key, value] pair held as another graph type in a graph program"},
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {

@@ -699,9 +699,9 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 		return f.l.notYet(first.node, first.what+" in a graph program, whose result lowering makes outside the program's graph regions")
 	}
 	if site := f.unplannedPair(); site != nil {
-		what := "a Map's [key, value] pair in a graph program, whose type the checker didn't name"
+		what := "a Map's or a Set's [key, value] pair in a graph program, whose type the checker didn't name"
 		if site.pair != nil {
-			what = "a Map's [key, value] pair held as another graph type in a graph program, so no plan names the pair"
+			what = "a Map's or a Set's [key, value] pair held as another graph type in a graph program, so no plan names the pair"
 		}
 		return f.l.notYet(site.node, what)
 	}

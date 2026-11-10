@@ -115,6 +115,9 @@ var localFields = map[string]localField{
 	"RegExpReplacementGroup.Argument": {why: "a capture group's number"},
 	"SourceLine.Line":                 {why: "a source line"},
 	"StringConstant.Index":            {why: "a string constant's index"},
+
+	// An entries() iterator's pairs, planned by their own tuple type (#dps0kp6).
+	"CollectionIterator.PairGraphTypes": {why: "allocation sites and graph types"},
 }
 
 // localUseCount counts how lowered nodes name a local: its reads, its writes and any other naming,

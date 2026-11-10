@@ -7,6 +7,9 @@ type CollectionIterator struct {
 	Part       string
 	Key, Value Type
 	Set        bool
+	// PairGraphTypes is an entries() pair's own tuple type, which plans each pair next() makes: a
+	// pair can reach a graph slot from a collection no graph slot holds (#dps0kp6).
+	PairGraphTypes []int
 }
 
 func (CollectionIterator) Type() Type { return Object }
