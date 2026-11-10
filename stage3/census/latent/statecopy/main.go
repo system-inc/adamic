@@ -47,15 +47,21 @@ var irPrivateFields = map[string]privateIRField{
 	"GeneratedType.identity":      privateShared, // Immutable owner identity, compared by pointer.
 }
 
-// Only audited program facts are listed. Every unlisted field keeps the normal
+// Audited program facts and scoped AST identities are listed. Every unlisted field keeps the normal
 // typed unit snapshot; adding a lowering field does not require a carry decision.
 // Maps remain owned copies in each unit and statement snapshot.
 // bindGetters is an ordinary owned unit memo, not a carried program fact.
 type loweringFieldPolicy uint8
 
-const programFact loweringFieldPolicy = 1
+const (
+	programFact loweringFieldPolicy = iota + 1
+	scopedASTIdentity
+)
 
 var loweringFieldPolicies = map[string]loweringFieldPolicy{
+	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
+	// It is not a carried program fact.
+	"optionalReceiverCall":       scopedASTIdentity,
 	"omittedOptionals":           programFact, // Contextual omission facts are program-only; installations and snapshots own their map.
 	"entriesRecords":             programFact,
 	"entriesProgramRecords":      programFact,
@@ -275,7 +281,12 @@ func generate(repository, lowerInput string) []byte {
 				}
 				for _, id := range field.Names {
 					var expr string
-					if name == "lowering" && id.Name == "impliedTargetQuery" && printed(field.Type) == "func(*ast.Node) *checker.Type" {
+					if name == "lowering" && loweringFieldPolicies[id.Name] == scopedASTIdentity {
+						if printed(field.Type) != "*ast.Node" {
+							panic("state copy: scoped AST identity type changed: " + id.Name)
+						}
+						expr = "value." + id.Name
+					} else if name == "lowering" && id.Name == "impliedTargetQuery" && printed(field.Type) == "func(*ast.Node) *checker.Type" {
 						// Production leaves this test query nil. A closure needs an audited copier.
 						fmt.Fprint(&body, "if value.impliedTargetQuery != nil {panic(\"latent state copy: populated impliedTargetQuery is unsupported\")};")
 						expr = "value." + id.Name
