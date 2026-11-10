@@ -10,7 +10,7 @@ run('artifact-classification',[sys.executable,str(out/'classify-artifacts.py')])
 run('latent-totals',[sys.executable,str(out/'latent-totals.py')])
 run('source-excerpts',[sys.executable,str(out/'source-excerpts.py')])
 binaries={}
-for name,filename in [('ordinary','next-stops-census'),('guarded_entry','next-stops-entry')]:
+for name,filename in [('ordinary','next-stops-census'),('guarded_entry','next-stops-entry'),('latent','next-stops-latent')]:
  p=Path('/workspace/scratch')/filename
  binaries[name]={'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
  with (out/(name+'-buildinfo.txt')).open('w') as f:

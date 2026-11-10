@@ -17,12 +17,18 @@ for g in groups:
 c=collections.Counter(r['classification'] for r in comparison)
 lines+=['',f'Total: {c["unchanged"]} unchanged, {c["moved"]} moved, {c["new"]} new. Exact before and after reasons are in comparison.json.','','| Root | Classification | Before location / kind | After location / kind |','| --- | --- | --- | --- |']
 for r in comparison:lines.append(f'| {q(r["root"])} | {r["classification"]} | {q(r["before"][0])} {r["before"][1]} | {q(r["after"][0])} {r["after"][1]} |')
-emitters={"a cast the runtime can't check":'internal/lower/cast_proof.go:195 (castRefusal).', 'reading an enum before its runtime initialization; move the call after the enum declaration':'internal/lower/namespaces.go:267 and :318 emit this NotYet reason.', 'a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration':'internal/lower/namespaces.go:269 and :321 emit this NotYet reason.'}
+emitters={"a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports":'internal/lower/namespaces.go:233 emits this NotYet reason.', "a cast the runtime can't check":'internal/lower/cast_proof.go:195 (castRefusal).', 'reading an enum before its runtime initialization; move the call after the enum declaration':'internal/lower/namespaces.go:267 and :318 emit this NotYet reason.', 'a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration':'internal/lower/namespaces.go:269 and :321 emit this NotYet reason.'}
 lines+=['','## Stop source and lowering emitters','']
 for g in groups:
  if g['where']=='-':continue
  e=next(e for e in excerpts if e['where']==g['where'])
  lines += [f'### {g["where"]}','',g['kind']+': '+q(g['reason'])+'. '+emitters.get(g['reason'], 'See lowering-emitter-excerpts.txt for exact emitting lines.'),'','```ts',e['text'].rstrip(),'```','']
+for name in ['debug','semver']:
+ findings=read(name+'-full-findings.json'); status=read(name+'-full-status.json')
+ lines += ['## '+name+'.ts single-file full-mode census','', 'LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1, LATENT_ONLY_FILE set to the exact adapted src/compiler/'+name+'.ts path. The meter latent binary loaded the complete compiler directory. Child exit '+str(status['exit_code'])+'; elapsed '+format(status['seconds'],'.3f')+' seconds. Findings below are in source order; all kinds and phases are retained.','', '| Phase | Kind | Location | Exact reason |','| --- | --- | --- | --- |']
+ for f in findings:
+  lines.append('| '+f.get('phase','')+' | '+f.get('kind','')+' | '+q(f.get('where','').split('/src/compiler/')[-1])+' | '+f.get('reason','').replace('|','\\|').replace('\n','<br>')+' |')
+ lines += ['']
 lines+=['## Root-order evidence','',f'Classification: {art["status"]}. '+(art.get('stopping_reason') or 'The entry per-source ledger completed.'),'','The baseline report.py criteria require attempted-source and readiness-finding evidence from the entry run plus a Node throw. An incomplete entry ledger cannot establish an artifact. Independent stops remain counted.','','| Root | Independent stop | Node exit | First error | Label |','| --- | --- | ---: | --- | --- |']
 for r in art['checks']:lines.append(f'| {q(r["root"])} | {q(r["where"])} | {r["node"]["exit"]} | {r["node"]["first_error"]} | {r["classification"]} |')
 e=totals['guarded_entry'];s=e['child_status'];c=e['finding_totals'];o=totals['ordinary_counted_observations']['first_stop_totals']
