@@ -1,0 +1,18 @@
+// Row 3: a NodeArray made by tsc's shape, an array literal cast to an interface extending Array with
+// range fields, held in a graph slot on a cycle: a holds the list, the list holds b, b holds a.
+interface TextRange { pos: number; end: number }
+interface NodeArray<T> extends Array<T>, TextRange { hasTrailingComma: boolean }
+interface Node { name: string; next: Node[]; lists: NodeArray<Node>[] }
+function make(node: Node): NodeArray<Node> {
+  const nodes = [node] as NodeArray<Node>;
+  nodes.pos = -1;
+  nodes.end = 7;
+  nodes.hasTrailingComma = false;
+  return nodes;
+}
+const a: Node = { name: 'a' + '', next: [], lists: [] };
+const b: Node = { name: 'b' + '', next: [a], lists: [] };
+a.next.push(b); // a cycle: the program is a graph program
+a.lists.push(make(b));
+const list = a.lists[0];
+if (list !== undefined) console.log(`${a.lists.length} ${list.length} ${list.end} ${list[0] === b}`);

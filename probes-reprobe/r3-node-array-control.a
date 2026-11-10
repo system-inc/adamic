@@ -1,0 +1,12 @@
+// Row 3 control: the same cycle through a plain array.
+interface Node { name: string; next: Node[]; lists: Node[][] }
+function make(node: Node): Node[] {
+  const nodes: Node[] = [node];
+  return nodes;
+}
+const a: Node = { name: 'a' + '', next: [], lists: [] };
+const b: Node = { name: 'b' + '', next: [a], lists: [] };
+a.next.push(b); // a cycle: the program is a graph program
+a.lists.push(make(b));
+const list = a.lists[0];
+if (list !== undefined) console.log(`${a.lists.length} ${list.length} ${list[0] === b}`);

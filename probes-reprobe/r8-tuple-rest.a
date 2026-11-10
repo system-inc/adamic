@@ -1,0 +1,10 @@
+// Row 8: an array rest binding over a tuple makes a new array of the remaining items.
+interface Node { name: string; next: Node[]; tails: Node[][] }
+const a: Node = { name: 'a' + '', next: [], tails: [] };
+const b: Node = { name: 'b' + '', next: [a], tails: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const pool: [Node, Node] = [a, b];
+const [first, ...rest] = pool;
+a.tails.push(rest); // a holds rest, rest holds b, b holds a
+const tail = a.tails[0];
+if (tail !== undefined) console.log(`${first.name} ${a.tails.length} ${tail.length} ${tail[0] === b}`);
