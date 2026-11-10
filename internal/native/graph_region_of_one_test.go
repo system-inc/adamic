@@ -37,6 +37,10 @@ import (
 //     squared edge reads for the chain at N = 1000.
 //   - between reads the holder member instead of its region (passing it as a target with no
 //     region): "member" leaks a graph.
+//   - search_out enters a region ordered after the target (no label test): "search cost" reads 3N
+//     for "beyond".
+//   - adamic_graph_merge searches from the later region to the earlier: "chain" misses the path, and
+//     the counted build's acyclic check panics "counted edges between graph regions close a cycle".
 const graphRegionOfOneHarness = `#define ADAMIC_CANONICAL_CLOSURES 1
 #include "adamic.h"
 #include "graph_regions.h"
@@ -236,6 +240,83 @@ int main(int count, char **arguments) {
   printf("searched %zu\n", adamic_counted.graph_searched - before);
   adamic_release(chain);
   adamic_release(w);
+ } else if (strcmp(mode, "beyond") == 0) {
+  // The order's bound (#fhcjc66): the value reaches a chain of N regions, all ordered after the
+  // holder, which has an edge in. Only a path to the holder could close a cycle, and none of the
+  // chain is ordered before it, so the search reads the value's one edge and stops.
+  adamic_array *chain = copy(a, NULL), *held = NULL;
+  for (long i = 0; i < loops; i++) {
+   adamic_array *next = holder(chain, NULL);
+   if (i == loops - 1) { held = holder(chain, NULL); }
+   adamic_release(chain);
+   chain = next;
+  }
+  adamic_array *keep = holder(held, NULL);
+  size_t before = adamic_counted.graph_searched;
+  adamic_array_push(held, (adamic_value){.reference = adamic_graph_hold(held, chain)});
+  printf("searched %zu\n", adamic_counted.graph_searched - before);
+  adamic_release(chain);
+  adamic_release(held);
+  adamic_release(keep);
+ } else if (strcmp(mode, "late") == 0) {
+  // The order's limit: a chain of N regions over c, made first, stored into x, a graph made after it
+  // whose region has an edge in. The chain is ordered before x's region, so all of it is between
+  // the two and the search reads it, though none of it reaches x.
+  adamic_object *c = node(&name_c);
+  adamic_array *chain = copy(c, NULL);
+  adamic_release(c);
+  for (long i = 0; i < loops; i++) {
+   adamic_array *next = holder(chain, NULL);
+   adamic_release(chain);
+   chain = next;
+  }
+  adamic_object *x = node(&name_c), *y = node(&name_c);
+  link(x, 0, y);
+  adamic_release(y);
+  adamic_array *in = copy(x, NULL);
+  size_t before = adamic_counted.graph_searched;
+  link(x, 1, chain);
+  printf("searched %zu\n", adamic_counted.graph_searched - before);
+  adamic_release(chain);
+  adamic_release(in);
+  adamic_release(x);
+ } else if (strcmp(mode, "program") == 0 || strcmp(mode, "program chain") == 0) {
+  // tsc's shape (Runtime's question): a long-lived graph made first, then a loop that makes a holder
+  // with an edge in, copies an array of the long-lived graph, and stores the copy into the holder.
+  // "program" is the long-lived graph as stores make it, one region; "program chain" is N regions
+  // that no store joined, a chain of arrays each holding the one before.
+  adamic_array *chain = NULL;
+  if (strcmp(mode, "program") == 0) {
+   for (long i = 0; i < loops; i++) {
+    adamic_object *n = node(&name_c);
+    link(n, 0, a);
+    link(b, 1, n);
+    adamic_release(n);
+   }
+  } else {
+   chain = copy(a, NULL);
+   for (long i = 0; i < loops; i++) {
+    adamic_array *next = holder(chain, NULL);
+    adamic_release(chain);
+    chain = next;
+   }
+  }
+  size_t searched = 0;
+  for (long i = 0; i < loops; i++) {
+   adamic_object *h = node(&name_c), *partner = node(&name_c);
+   link(h, 0, partner);
+   adamic_release(partner);
+   adamic_array *in = copy(h, NULL);
+   adamic_array *held = chain == NULL ? copy(a, b) : holder(chain, NULL);
+   size_t before = adamic_counted.graph_searched;
+   link(h, 1, held);
+   searched += adamic_counted.graph_searched - before;
+   adamic_release(held);
+   adamic_release(in);
+   adamic_release(h);
+  }
+  printf("searched %zu\n", searched);
+  if (chain != NULL) { adamic_release(chain); }
  } else {
   return 3;
  }
@@ -272,7 +353,7 @@ func TestGraphRegionOfOne(t *testing.T) {
 		}
 		return leakcheck.Run{Stdout: []byte(stdout.String()), Stderr: []byte(stderr.String()), ExitCode: exit}
 	}
-	for _, mode := range []string{"dropped", "stored", "closed", "escape", "overwrite", "teardown", "sorted", "third", "diamond", "taken", "chain", "unrelated", "member", "open"} {
+	for _, mode := range []string{"dropped", "stored", "closed", "escape", "overwrite", "teardown", "sorted", "third", "diamond", "taken", "chain", "unrelated", "member", "open", "beyond", "late", "program", "program chain"} {
 		t.Run(mode, func(t *testing.T) {
 			t.Parallel()
 			for _, binary := range []string{sanitized, counted} {
@@ -291,9 +372,10 @@ func TestGraphRegionOfOne(t *testing.T) {
 	// N regions closed by one store reads at most 3N + 4, each region merged once; the discovery-order
 	// fixed point the pass replaced read about N squared there (Language's read), and is the mutant. The
 	// chain stored into N fresh nodes reads none, since nothing points into a fresh node's region;
-	// without the incoming check it was N squared, the other mutant. The open bound, a store into a
-	// region with edges in that the value doesn't reach, reads what the value reaches, and is held to the
-	// same 3N + 4 so it can't grow unseen; #fhcjc66 bounds it per store.
+	// without the incoming check it was N squared, the other mutant. Since the regions keep a
+	// topological order (#fhcjc66), a store searches only from the earlier of its two regions, through
+	// regions ordered before the later: "open" and "beyond" read a constant, and "late", whose chain is
+	// ordered between the two, reads the chain, the stated limit.
 	t.Run("search cost", func(t *testing.T) {
 		t.Parallel()
 		searched := regexp.MustCompile(`searched (\d+)`)
@@ -318,10 +400,34 @@ func TestGraphRegionOfOne(t *testing.T) {
 			if got := visits("unrelated", loops); got != 0 {
 				t.Errorf("chain of %d stored into %d fresh nodes: %d edges read, want 0", loops, loops, got)
 			}
-			if got := visits("open", loops); got > 3*loops+4 {
-				t.Errorf("open bound, chain of %d: %d edges read, want at most %d", loops, got, 3*loops+4)
+			// The value's region comes after the holder's in the order and nothing points into it, so no
+			// search runs at all.
+			if got := visits("open", loops); got > 4 {
+				t.Errorf("open bound, chain of %d: %d edges read, want at most 4", loops, got)
+			}
+			// The chain is ordered after the holder: the search never enters it. Without the label test at
+			// search_out (the mutant) it reads the chain, 3N.
+			if got := visits("beyond", loops); got > 4 {
+				t.Errorf("beyond, chain of %d: %d edges read, want at most 4", loops, got)
+			}
+			// The limit, pinned both ways: the chain is ordered between, so it's read, and nothing past it.
+			if got := visits("late", loops); got > 3*loops+4 || got < loops {
+				t.Errorf("late, chain of %d: %d edges read, want between %d and %d", loops, got, loops, 3*loops+4)
 			} else {
-				t.Logf("open bound, chain of %d: %d edges read", loops, got)
+				t.Logf("late, chain of %d: %d edges read", loops, got)
+			}
+			// tsc's shape, with the long-lived graph one region: N stores read a constant each.
+			if got := visits("program", loops); got > 4*loops+4 {
+				t.Errorf("program, %d stores: %d edges read, want at most %d", loops, got, 4*loops+4)
+			} else {
+				t.Logf("program, %d stores: %d edges read", loops, got)
+			}
+			// The same with the long-lived graph a chain of N regions no store joined: each store's window
+			// holds the chain. Held under N stores of 3N + 4 so it can't grow unseen.
+			if got := visits("program chain", loops); got > loops*(3*loops+4) {
+				t.Errorf("program chain, %d stores: %d edges read, want at most %d", loops, got, loops*(3*loops+4))
+			} else {
+				t.Logf("program chain, %d stores: %d edges read", loops, got)
 			}
 		}
 	})
