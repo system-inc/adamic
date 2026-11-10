@@ -1,0 +1,220 @@
+go version go1.27.1 linux/amd64
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+v24.19.0
+=== NODE p01_plain.ts: 2 1 2
+=== NODE p02_bind_param.ts: 2
+3
+=== NODE p03_bind_return.ts: 1
+=== NODE p04_bind_field.ts: 2
+=== NODE p05_bind_array.ts: 2
+3
+=== NODE p06_nested.ts: 2
+=== NODE p07_method.ts: 2
+=== NODE p08_library.ts: 2 2 3 1
+=== NODE p09_iterator_next.ts: 0
+=== NODE p10_collator.ts: 2
+=== NODE p11_class.ts: 2
+=== NODE p12_async_generator.ts: 2 1
+=== NODE p15_bind_method.ts: 2 1
+=== NODE p16_bind_closure_value.ts: 1 0
+=== NODE p17_bind_local.ts: 2
+go: creating work dir: stat /tmp/adamic-gate: no such file or directory
+Compiler build failed with exit status 1
+go: creating work dir: stat /tmp/adamic-gate: no such file or directory
+go test exit status: 1
+
+=== RETRY after creating missing /tmp/adamic-gate ===
+=== JS p01_plain.ts: node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'adamic' imported from /tmp/x.mjs
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+=== JS p02_bind_param.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p02_bind_param.ts:2:46: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== JS p03_bind_return.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p03_bind_return.ts:4:20: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== JS p04_bind_field.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p04_bind_field.ts:3:20: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== JS p05_bind_array.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p05_bind_array.ts:3:42: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== JS p06_nested.ts: node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'adamic' imported from /tmp/x.mjs
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+=== JS p07_method.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p07_method.ts:7:26: Adamic 0.1 refuses a method read as a value (add would lose its object, and this with it); call it in an arrow that keeps the object: (step, times) => counter.add(step, times) (unbound-method)
+=== JS p08_library.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p08_library.ts:2:22: Adamic 0.1 refuses a method read as a value (max would lose its object, and this with it); call it in an arrow that keeps the object: (values) => Math.max(values) (unbound-method)
+=== JS p09_iterator_next.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p09_iterator_next.ts:3:26: Adamic 0.1 refuses a method read as a value (next would lose its object, and this with it); call it in an arrow that keeps the object: () => entries.next() (unbound-method)
+=== JS p10_collator.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p10_collator.ts:2:18: stage 0 can't lower new Intl.Collator without exactly a locale and options (only tsc's { usage: "sort", sensitivity: "variant", numeric: true } is built) yet
+=== JS p11_class.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p11_class.ts:7:26: Adamic 0.1 refuses a void-returning function at the argument site through .apply seen as (this: Function, thisArg: any, argArray?: any) => any; declare the function's real return type (adamic/no-void-widening)
+=== JS p12_async_generator.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p12_async_generator.ts:4:38: stage 0 can't lower a generator function used as a value (#qk8rztp) yet
+=== JS p15_bind_method.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p15_bind_method.ts:5:46: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== JS p16_bind_closure_value.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p16_bind_closure_value.ts:2:46: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== JS p17_bind_local.ts: adamic: /workspace/adamic/internal/oracle/testdata/zzlen/p17_bind_local.ts:4:20: stage 0 can't lower a bound function's length (bound length metadata) yet
+=== RUN   TestZZLength
+=== PAUSE TestZZLength
+=== CONT  TestZZLength
+=== RUN   TestZZLength/p01_plain.ts
+=== PAUSE TestZZLength/p01_plain.ts
+=== RUN   TestZZLength/p02_bind_param.ts
+=== PAUSE TestZZLength/p02_bind_param.ts
+=== RUN   TestZZLength/p03_bind_return.ts
+=== PAUSE TestZZLength/p03_bind_return.ts
+=== RUN   TestZZLength/p04_bind_field.ts
+=== PAUSE TestZZLength/p04_bind_field.ts
+=== RUN   TestZZLength/p05_bind_array.ts
+=== PAUSE TestZZLength/p05_bind_array.ts
+=== RUN   TestZZLength/p06_nested.ts
+=== PAUSE TestZZLength/p06_nested.ts
+=== RUN   TestZZLength/p07_method.ts
+=== PAUSE TestZZLength/p07_method.ts
+=== RUN   TestZZLength/p08_library.ts
+=== PAUSE TestZZLength/p08_library.ts
+=== RUN   TestZZLength/p09_iterator_next.ts
+=== PAUSE TestZZLength/p09_iterator_next.ts
+=== RUN   TestZZLength/p10_collator.ts
+=== PAUSE TestZZLength/p10_collator.ts
+=== RUN   TestZZLength/p11_class.ts
+=== PAUSE TestZZLength/p11_class.ts
+=== RUN   TestZZLength/p12_async_generator.ts
+=== PAUSE TestZZLength/p12_async_generator.ts
+=== RUN   TestZZLength/p15_bind_method.ts
+=== PAUSE TestZZLength/p15_bind_method.ts
+=== RUN   TestZZLength/p16_bind_closure_value.ts
+=== PAUSE TestZZLength/p16_bind_closure_value.ts
+=== RUN   TestZZLength/p17_bind_local.ts
+=== PAUSE TestZZLength/p17_bind_local.ts
+=== CONT  TestZZLength/p01_plain.ts
+=== CONT  TestZZLength/p09_iterator_next.ts
+=== CONT  TestZZLength/p17_bind_local.ts
+=== CONT  TestZZLength/p16_bind_closure_value.ts
+=== CONT  TestZZLength/p15_bind_method.ts
+=== NAME  TestZZLength/p16_bind_closure_value.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p15_bind_method.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p09_iterator_next.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p01_plain.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p17_bind_local.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p09_iterator_next.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p09_iterator_next.ts:3:26: Adamic 0.1 refuses a method read as a value (next would lose its object, and this with it); call it in an arrow that keeps the object: () => entries.next() (unbound-method)
+=== CONT  TestZZLength/p05_bind_array.ts
+=== NAME  TestZZLength/p01_plain.ts
+    oracle_test.go:688: gate cache native miss
+=== NAME  TestZZLength/p16_bind_closure_value.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p16_bind_closure_value.ts:2:46: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== CONT  TestZZLength/p08_library.ts
+=== NAME  TestZZLength/p15_bind_method.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p15_bind_method.ts:5:46: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== CONT  TestZZLength/p12_async_generator.ts
+=== NAME  TestZZLength/p17_bind_local.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p17_bind_local.ts:4:20: stage 0 can't lower a bound function's length (bound length metadata) yet
+=== CONT  TestZZLength/p07_method.ts
+=== NAME  TestZZLength/p05_bind_array.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p08_library.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p07_method.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p12_async_generator.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p05_bind_array.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p05_bind_array.ts:3:42: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== CONT  TestZZLength/p11_class.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p08_library.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p08_library.ts:2:22: Adamic 0.1 refuses a method read as a value (max would lose its object, and this with it); call it in an arrow that keeps the object: (values) => Math.max(values) (unbound-method)
+=== CONT  TestZZLength/p06_nested.ts
+=== NAME  TestZZLength/p12_async_generator.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p12_async_generator.ts:4:38: stage 0 can't lower a generator function used as a value (#qk8rztp) yet
+=== CONT  TestZZLength/p10_collator.ts
+=== NAME  TestZZLength/p07_method.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p07_method.ts:7:26: Adamic 0.1 refuses a method read as a value (add would lose its object, and this with it); call it in an arrow that keeps the object: (step, times) => counter.add(step, times) (unbound-method)
+=== CONT  TestZZLength/p03_bind_return.ts
+=== NAME  TestZZLength/p06_nested.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p10_collator.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p03_bind_return.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p11_class.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p11_class.ts:7:26: Adamic 0.1 refuses a void-returning function at the argument site through .apply seen as (this: Function, thisArg: any, argArray?: any) => any; declare the function's real return type (adamic/no-void-widening)
+=== CONT  TestZZLength/p04_bind_field.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p06_nested.ts
+    oracle_test.go:688: gate cache native miss
+=== NAME  TestZZLength/p03_bind_return.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p03_bind_return.ts:4:20: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== CONT  TestZZLength/p02_bind_param.ts
+=== NAME  TestZZLength/p10_collator.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p10_collator.ts:2:18: stage 0 can't lower new Intl.Collator without exactly a locale and options (only tsc's { usage: "sort", sensitivity: "variant", numeric: true } is built) yet
+=== NAME  TestZZLength/p02_bind_param.ts
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p04_bind_field.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p04_bind_field.ts:3:20: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== NAME  TestZZLength/p02_bind_param.ts
+    zz_probe_test.go:11: /workspace/adamic/internal/oracle/testdata/zzlen/p02_bind_param.ts:2:46: Adamic 0.1 refuses a dynamic-shape object in a graph program; keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)
+=== NAME  TestZZLength/p06_nested.ts
+    oracle_test.go:681: gate cache native miss
+=== NAME  TestZZLength/p01_plain.ts
+    oracle_test.go:681: gate cache native miss
+    zz_probe_test.go:11: gate cache node miss
+=== NAME  TestZZLength/p06_nested.ts
+    zz_probe_test.go:11: gate cache node miss
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 375c4c10f009 hit 266.98
+=== NAME  TestZZLength/p01_plain.ts
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 375c4c10f009 miss 267.02
+=== NAME  TestZZLength/p06_nested.ts
+    oracle_test.go:695: gate cache native hit
+=== NAME  TestZZLength/p01_plain.ts
+    oracle_test.go:695: gate cache native hit
+--- FAIL: TestZZLength (0.00s)
+    --- FAIL: TestZZLength/p09_iterator_next.ts (46.10s)
+    --- FAIL: TestZZLength/p16_bind_closure_value.ts (46.14s)
+    --- FAIL: TestZZLength/p15_bind_method.ts (46.18s)
+    --- FAIL: TestZZLength/p17_bind_local.ts (46.21s)
+    --- FAIL: TestZZLength/p05_bind_array.ts (0.44s)
+    --- FAIL: TestZZLength/p08_library.ts (0.52s)
+    --- FAIL: TestZZLength/p12_async_generator.ts (0.50s)
+    --- FAIL: TestZZLength/p07_method.ts (0.58s)
+    --- FAIL: TestZZLength/p11_class.ts (0.34s)
+    --- FAIL: TestZZLength/p03_bind_return.ts (0.36s)
+    --- FAIL: TestZZLength/p10_collator.ts (0.58s)
+    --- FAIL: TestZZLength/p04_bind_field.ts (0.42s)
+    --- FAIL: TestZZLength/p02_bind_param.ts (0.32s)
+    --- PASS: TestZZLength/p06_nested.ts (302.25s)
+    --- PASS: TestZZLength/p01_plain.ts (348.93s)
+FAIL
+gate cache: native hits=2 misses=4
+gate cache: node hits=0 misses=17
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	349.013s
+FAIL
+go test exit status: 1
