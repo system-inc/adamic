@@ -36,9 +36,11 @@
     "byte_identical": true
   },
   "oracle": {
-    "status": "not run after confirming prerequisite blocker",
-    "calls": null,
-    "differences": null
+    "status": "running",
+    "completed_shards": 212,
+    "total_shards": 398,
+    "partial_calls": 861,
+    "partial_differences": 0
   },
   "counter_control": {
     "calls": 1,
