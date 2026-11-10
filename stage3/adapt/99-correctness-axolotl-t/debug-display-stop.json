@@ -1,0 +1,17 @@
+{
+  "status": "stopped",
+  "gate": "normal emitted JavaScript diff must be limited to the reviewed owners",
+  "normal_comparison_child_exit": 1,
+  "normal_candidate_build_child_exit": 0,
+  "amended_full_apply": "not run after the failing emitted-byte gate",
+  "source_delta": "only five owners in debug.ts",
+  "counterexample": "_tsc.js removes getJSDocModifierFlagsNoCache, getEffectiveModifierFlagsNoCache and isArrayTypeNode outside the five owners; enum and predicate bindings are also renamed throughout bundles",
+  "normal_changed_bundles": [
+    "_tsc.js",
+    "typescript.js",
+    "run.js"
+  ],
+  "public_declarations": "byte-identical",
+  "no_normalization_accepted": true,
+  "ready_to_land": false
+}
