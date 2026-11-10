@@ -397,6 +397,9 @@ func (f *cycleFinder) jsonReach(proven *checker.Type) (string, []*checker.Type) 
 		}
 	}
 	for _, field := range f.fields(proven) {
+		if declared := l.checker.GetNonMissingTypeOfSymbol(field); jsonNullablePointer(l, declared) {
+			return "a value that can reach " + name + "." + field.Name + ", a field of type " + l.checker.TypeToString(declared) + " held as a pointer, whose null and undefined are both a null pointer when a variable wrote it (lifted by #ckxcnr6)", nil
+		}
 		next = append(next, l.checker.GetTypeOfSymbol(field))
 	}
 	for _, shape := range f.shapeCandidates(proven) {
@@ -405,6 +408,28 @@ func (f *cycleFinder) jsonReach(proven *checker.Type) (string, []*checker.Type) 
 		}
 	}
 	return "", next
+}
+
+// jsonNullablePointer reports whether a field's type is held as a bare pointer (an object, an array, a
+// map, a function, a promise, a typed array) and admits null or undefined. Both are then a null pointer,
+// and the slot's byte tells them apart only when a literal null or undefined wrote it
+// (emit_objects.go's fieldRepresentation), so json_objects.c couldn't say which Node prints. A string, a
+// union, a weak link and a record are boxed where null is possible, so their null pointer is undefined
+// alone, and an optional field's absence is its presence, never a pointer: GetNonMissingTypeOfSymbol
+// leaves the missing type out.
+func jsonNullablePointer(l *lowering, declared *checker.Type) bool {
+	if !l.includesNull(declared) && !l.includesUndefined(declared) {
+		return false
+	}
+	of, known := l.representation(declared)
+	if !known {
+		return false
+	}
+	switch of {
+	case ir.Object, ir.Array, ir.Map, ir.Closure, ir.Promise, ir.Uint8Array, ir.Int32Array, ir.Float64Array, ir.Uint16Array, ir.Generator:
+		return true
+	}
+	return false
 }
 
 // jsonLibrary reports whether a type is the library's, the prelude's or Node's, or a class extending one:

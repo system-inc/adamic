@@ -1,6 +1,5 @@
-// A field a variable set to null holds a null pointer whose write recorded the variable's type, Object,
-// not null: an object held as T | null and one held as T | undefined can't be told apart there, so
-// native stops where Node prints null (#d9ep7de).
+// A field held as a bare pointer that admits null: a variable set to null writes a null pointer whose byte
+// says Object, so native couldn't tell null from undefined there. Refused until #ckxcnr6 records which.
 class Link {
 	readonly target: { readonly v: number } | null;
 	constructor(target: { readonly v: number } | null) {
