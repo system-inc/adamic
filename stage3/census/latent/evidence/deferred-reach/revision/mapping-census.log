@@ -1,0 +1,9 @@
+mapping declaration=/workspace/scratch/abrq61p-adapted/src/compiler/executeCommandLine.ts:981:1 unit=/workspace/scratch/abrq61p-adapted/src/compiler/executeCommandLine.ts:968:1 call=/workspace/scratch/abrq61p-adapted/src/compiler/executeCommandLine.ts:974:5 declared=1 inferred=0 concrete=false
+binder name=T found=false rigid=false
+mapping declaration=/workspace/scratch/abrq61p-adapted/src/compiler/moduleNameResolver.ts:3414:1 unit=/workspace/scratch/abrq61p-adapted/src/compiler/moduleNameResolver.ts:2656:1 call=/workspace/scratch/abrq61p-adapted/src/compiler/moduleNameResolver.ts:2661:16 declared=1 inferred=0 concrete=false
+binder name=T found=false rigid=false
+mapping declaration=/workspace/scratch/abrq61p-adapted/src/compiler/utilities.ts:9031:1 unit=/workspace/scratch/abrq61p-adapted/src/compiler/utilities.ts:9042:1 call=/workspace/scratch/abrq61p-adapted/src/compiler/utilities.ts:9042:26 declared=1 inferred=0 concrete=false
+binder name=T found=false rigid=false
+/workspace/scratch/abrq61p-adapted/src/compiler/executeCommandLine.ts 1 22 measured on a checker-rejected program
+/workspace/scratch/abrq61p-adapted/src/compiler/moduleNameResolver.ts 1 45 measured on a checker-rejected program
+/workspace/scratch/abrq61p-adapted/src/compiler/utilities.ts 1 302 measured on a checker-rejected program

@@ -1,0 +1,33 @@
+test_access_names_chains_elements_utf16_and_separate_reads (test_pair.PairTests.test_access_names_chains_elements_utf16_and_separate_reads) ... ok
+test_call_arguments_are_separate_access_chains (test_pair.PairTests.test_call_arguments_are_separate_access_chains) ... ok
+test_caller_metadata_eligibility_mutant_is_red_abrq61p (test_pair.PairTests.test_caller_metadata_eligibility_mutant_is_red_abrq61p) ... ok
+test_cli_writes_json_and_side_by_side_report (test_pair.PairTests.test_cli_writes_json_and_side_by_side_report) ... ok
+test_deferred_caller_metadata_is_not_eligibility_abrq61p (test_pair.PairTests.test_deferred_caller_metadata_is_not_eligibility_abrq61p) ... ok
+test_deferred_is_a_unit_first_stop_zb0q0zd (test_pair.PairTests.test_deferred_is_a_unit_first_stop_zb0q0zd) ... ok
+test_element_argument_and_outer_access_are_two_reads (test_pair.PairTests.test_element_argument_and_outer_access_are_two_reads) ... ok
+test_element_argument_name_to_access_move_still_pairs (test_pair.PairTests.test_element_argument_name_to_access_move_still_pairs) ... ok
+test_fixture_stream_hashes_match_provenance (test_pair.PairTests.test_fixture_stream_hashes_match_provenance) ... ok
+test_kind_predicates_239_lowered_zero_regressions (test_pair.PairTests.test_kind_predicates_239_lowered_zero_regressions) ... ok
+test_module_deferred_scan_does_not_impersonate_first_unit_zb0q0zd (test_pair.PairTests.test_module_deferred_scan_does_not_impersonate_first_unit_zb0q0zd) ... ok
+test_new_element_argument_read_is_a_regression (test_pair.PairTests.test_new_element_argument_read_is_a_regression) ... ok
+test_normalization_off_mutant_turns_qeanycw_zero_new_red_with_54 (test_pair.PairTests.test_normalization_off_mutant_turns_qeanycw_zero_new_red_with_54) ... ok
+test_old_element_argument_walk_mutant_turns_two_reads_red (test_pair.PairTests.test_old_element_argument_walk_mutant_turns_two_reads_red) ... ok
+test_only_lowering_phase_changes_unit_first_stop (test_pair.PairTests.test_only_lowering_phase_changes_unit_first_stop) ... ok
+test_panic_is_retained_when_read_reason_is_unchanged (test_pair.PairTests.test_panic_is_retained_when_read_reason_is_unchanged) ... ok
+test_program_relation_report_is_preserved_without_a_source_location_zb0q0zd (test_pair.PairTests.test_program_relation_report_is_preserved_without_a_source_location_zb0q0zd) ... ok
+test_property_and_element_receiver_chains_still_merge (test_pair.PairTests.test_property_and_element_receiver_chains_still_merge) ... ok
+test_qeanycw_distinct_reads_cleared_with_no_new (test_pair.PairTests.test_qeanycw_distinct_reads_cleared_with_no_new) ... ok
+test_raw_dedup_across_attempts_and_moves_by_reason (test_pair.PairTests.test_raw_dedup_across_attempts_and_moves_by_reason) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 9.122s
+
+OK
+pair metadata mutant: unchanged positive test is red
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/pair/test_pair.py", line 68, in test_deferred_caller_metadata_is_not_eligibility_abrq61p
+    delta = pair.compare(rows(unit), rows(witnessed), root, TS)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/census/pair/pair.py", line 92, in compare
+    raise ValueError(f'unit eligibility differs: {u}')
+ValueError: unit eligibility differs: ('input.ts', '22c13d17b19031a14f096c26a961c3fe889820b6242c62cae366d9e6c8bcaa71', 0)
