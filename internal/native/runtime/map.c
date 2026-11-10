@@ -276,7 +276,9 @@ bool adamic_map_iterator_next(adamic_map_iterator *iterator, adamic_value *key, 
 	return false;
 }
 
-adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair) {
+// entries makes [...map]'s pairs, each adopted into a graph region of its own when planned says the
+// pair's tuple type is a graph type, or when the map is a graph member (#dps0kp6).
+static adamic_array *entries_of(const adamic_map *map, const adamic_shape *pair, bool planned) {
 	adamic_array *entries = adamic_array_make(map->count, adamic_ir_Union);
 	for (size_t index = 0; index < map->used; index++) {
 		const adamic_map_entry *entry = &map->entries[index];
@@ -294,10 +296,18 @@ adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair
 		if (map->reference_values) {
 			adamic_retain(entry->value.reference);
 		}
-		if (adamic_graph_is(map)) { tuple = adamic_graph_adopt_owned(tuple, adamic_object_size(pair->count)); }
+		if (planned || adamic_graph_is(map)) { tuple = adamic_graph_adopt_owned(tuple, adamic_object_size(pair->count)); }
 		adamic_array_push(entries, (adamic_value){.reference = tuple});
 	}
 	return entries;
+}
+
+adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair) {
+	return entries_of(map, pair, false);
+}
+
+adamic_array *adamic_map_entries_planned(const adamic_map *map, const adamic_shape *pair) {
+	return entries_of(map, pair, true);
 }
 
 void adamic_map_clear(adamic_map *map) {

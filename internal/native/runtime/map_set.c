@@ -49,10 +49,11 @@ static const char *const iterator_names[] = {"next"};
 static const bool iterator_references[] = {true};
 static const adamic_field_kind iterator_kinds[] = {adamic_field_reference};
 static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, &adamic_host_methods, iterator_kinds};
-static const char *const state_names[] = {"iterator", "part", "key", "value", "set"};
-static const bool state_references[] = {true, false, false, false, false};
-static const adamic_field_kind state_kinds[] = {adamic_field_reference, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_boolean};
-static const adamic_shape state_shape = {5, state_names, state_references, &adamic_host_methods, state_kinds};
+// planned says each entries() pair is adopted into a graph region of its own as it's made (#dps0kp6).
+static const char *const state_names[] = {"iterator", "part", "key", "value", "set", "planned"};
+static const bool state_references[] = {true, false, false, false, false, false};
+static const adamic_field_kind state_kinds[] = {adamic_field_reference, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_boolean, adamic_field_boolean};
+static const adamic_shape state_shape = {6, state_names, state_references, &adamic_host_methods, state_kinds};
 // An iterator's result holds value, then done, the order Node's { value, done } has, so its keys
 // enumerate as Node's do (#7nw4kgj).
 static const char *const result_names[] = {"value", "done"};
@@ -149,6 +150,9 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 		adamic_object_field_types(pair)[1] = (unsigned char)value_type;
 		if (collection_reference(key_type)) { adamic_retain(key.reference); }
 		if (collection_reference(value_type)) { adamic_retain(value.reference); }
+		// A pair whose tuple type is a graph type can reach a graph slot while this iterator and its
+		// collection hold none, so it's planned by itself, as a literal of its type would be.
+		if (state->slots[5].boolean) { pair = adamic_graph_adopt_owned(pair, adamic_object_allocation_size(pair)); }
 		element.reference = pair;
 	} else {
 		int type = part == 1 || set ? key_type : value_type;
@@ -175,13 +179,14 @@ bool adamic_collection_iterator_is(const void *value) {
 	return next != NULL && next->code == collection_next;
 }
 
-adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set) {
+static adamic_object *collection_iterator(adamic_map *collection, int part, int key, int value, bool set, bool planned) {
 	adamic_object *state = adamic_object_new(&state_shape);
 	state->slots[0].reference = adamic_map_iterate(collection);
 	state->slots[1].number = part;
 	state->slots[2].number = key;
 	state->slots[3].number = value;
 	state->slots[4].boolean = set;
+	state->slots[5].boolean = planned;
 	if (adamic_graph_is(collection)) { state = adamic_graph_adopt_owned(state, adamic_object_size(state->shape->count)); }
 	adamic_closure *next = adamic_closure_new(collection_next, 1);
 #ifdef ADAMIC_CLOSURE_DISCARDS
@@ -197,6 +202,14 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 	object->slots[0].reference = next;
 	if (adamic_graph_is(collection)) { object = adamic_graph_adopt_owned(object, adamic_object_size(object->shape->count)); }
 	return object;
+}
+
+adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set) {
+	return collection_iterator(collection, part, key, value, set, false);
+}
+
+adamic_object *adamic_collection_iterator_planned(adamic_map *collection, int part, int key, int value, bool set) {
+	return collection_iterator(collection, part, key, value, set, true);
 }
 
 static const char *const string_state_names[] = {"string", "offset"};

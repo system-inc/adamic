@@ -960,9 +960,12 @@ type (
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
-	// are named "0" and "1".
+	// are named "0" and "1". PairGraphTypes is the pair's own tuple type, which plans each pair by
+	// itself: a pair can reach a graph slot while the array it came in is dropped, or while the map
+	// is no graph member (#dps0kp6).
 	MapEntries struct {
 		GraphTypes         []int
+		PairGraphTypes     []int
 		ProgramRegion      bool
 		Map                Expression
 		KeyType, ValueType Type
