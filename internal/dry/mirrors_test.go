@@ -122,7 +122,16 @@ func cohereIDs(root string) (map[string]bool, error) {
 					if !ok {
 						continue
 					}
-					selector, ok := literal.Type.(*ast.SelectorExpr)
+					// cohere's rules are typed by their options since 5360753e, rule.Rule[rule.NoOptions]{...}, so
+					// the literal's type is an index expression around the selector; older ones are rule.Rule{...}.
+					ruleType := literal.Type
+					switch indexed := ruleType.(type) {
+					case *ast.IndexExpr:
+						ruleType = indexed.X
+					case *ast.IndexListExpr:
+						ruleType = indexed.X
+					}
+					selector, ok := ruleType.(*ast.SelectorExpr)
 					if !ok || selector.Sel.Name != "Rule" {
 						continue
 					}
