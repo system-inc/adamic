@@ -40,6 +40,7 @@ with gzip.open(out/'split-calls.jsonl.gz','wt') as archive:
   for line in file.read_text().splitlines():
    row=json.loads(line);assert set(row)=={'range','before','after','same'}
    assert isinstance(row['range'],str)
+   assert isinstance(row['before'],list) and isinstance(row['after'],list)
    assert all(isinstance(x,str) for x in row['before']+row['after'])
    same=row['before']==row['after']
    assert row['same']==same

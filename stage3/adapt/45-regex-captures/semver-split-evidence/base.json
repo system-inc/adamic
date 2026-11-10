@@ -1,9 +1,42 @@
 {
-  "base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6",
+  "base": "7f2c852dffe31163e9699f0c91a158596757b888",
   "source": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "uses_before": [
     "src/compiler/semver.ts:249 declaration",
     "src/compiler/semver.ts:287 parseRange split"
   ],
-  "proof": "internal/lower/cast_split.go: literal at call, string receiver, capture-free separator, string[] target"
+  "proof": "internal/lower/cast_split.go: literal at call, string receiver, capture-free separator, string[] target",
+  "initial_base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6",
+  "unchanged_components_since_initial_base": [
+    "stage3",
+    "internal/lower",
+    "internal/load",
+    "internal/ir",
+    "cohere",
+    "go.mod",
+    "go.sum"
+  ],
+  "intervening_main_paths": [
+    "docs/rulings.md",
+    "internal/native/graph_region_of_one_test.go",
+    "internal/native/graph_regions_test.go",
+    "internal/native/runtime/adamic.h",
+    "internal/native/runtime/array.c",
+    "internal/native/runtime/count.h",
+    "internal/native/runtime/graph_regions.c",
+    "internal/native/runtime/graph_regions.h",
+    "internal/native/testdata/runtime-statics/storage.txt",
+    "internal/oracle/graph_copy_peak_test.go",
+    "internal/oracle/graph_regions_gap_probe_test.go",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/canonical_graph.a.counts",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/canonical_graph_counted.a.counts",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/graph_regions_coverage_arrays.a.counts",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/graph_regions_coverage_iterator.a.counts",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/graph_regions_coverage_maps.a.counts",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/graph_regions_coverage_readonly.a.counts",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/graph_regions_coverage_spread.a.counts",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/graph_regions_entries.a.counts",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/review/agree/fxspptb_aee89b2_map_entries_pattern.a.counts",
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/review/agree/fxspptb_aee89b2_spread_outside.a.counts"
+  ]
 }
