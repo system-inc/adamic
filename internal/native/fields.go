@@ -54,7 +54,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"kind", "path"}, {"name", "type"},
 		{"name", "message", "code"}, {"name", "message", "code", "syscall", "path", "errno"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
 		{"close", "on"},
-		{"next"}, {"iterator", "part", "key", "value", "set"}, {"value", "done"}, {"string", "offset"},
+		{"next"}, {"iterator", "part", "key", "value", "set", "planned"}, {"value", "done"}, {"string", "offset"},
 		// An Intl.Collator's (library_intl.c): compare is a private slot, as Node's collator holds no
 		// own field of that name.
 		{"#compare", "#locale"},
