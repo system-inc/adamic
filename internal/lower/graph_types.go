@@ -741,7 +741,8 @@ func (f *cycleFinder) unplannedPair() *graphPairSite {
 		if site.pair == nil {
 			return site
 		}
-		if f.l.result.GraphTypes[int(site.pair.Id())] || judged[site.pair] {
+		// The plan's own key (pairGraphTypes), so the two can't drift.
+		if f.l.result.GraphTypes[f.l.cycleTypeID(site.pair)] || judged[site.pair] {
 			continue
 		}
 		judged[site.pair] = true
