@@ -1,0 +1,2114 @@
+{
+  "sourceFiles": 709,
+  "calls": [
+    {
+      "where": "src/compiler/checker.ts:7360:28",
+      "callee": "visitNodes",
+      "test": "test"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:259:21",
+      "callee": "visitArrayWorker",
+      "test": "test"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:311:12",
+      "callee": "visitArrayWorker",
+      "test": "test"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:351:17",
+      "callee": "Debug.assertEachNode",
+      "test": "test"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:374:5",
+      "callee": "Debug.assertEachNode",
+      "test": "test"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:384:18",
+      "callee": "nodesVisitor",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:400:19",
+      "callee": "nodesVisitor",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:566:16",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:571:12",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:643:13",
+      "callee": "nodesVisitor",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:653:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:673:13",
+      "callee": "nodesVisitor",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:683:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:695:13",
+      "callee": "nodesVisitor",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:698:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:699:13",
+      "callee": "nodesVisitor",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:707:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:711:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:721:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:730:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:741:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:760:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:761:13",
+      "callee": "nodesVisitor",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:769:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:770:13",
+      "callee": "nodesVisitor",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:778:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:779:13",
+      "callee": "nodesVisitor",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:798:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:805:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:806:13",
+      "callee": "nodesVisitor",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:814:13",
+      "callee": "nodesVisitor",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:815:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:816:13",
+      "callee": "nodesVisitor",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:825:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:832:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeElement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:846:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:867:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:874:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:901:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:954:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeElement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:969:13",
+      "callee": "nodesVisitor",
+      "test": "isTemplateLiteralTypeSpan"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:985:13",
+      "callee": "nodesVisitor",
+      "test": "isBindingElement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:992:13",
+      "callee": "nodesVisitor",
+      "test": "isArrayBindingElement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1010:13",
+      "callee": "nodesVisitor",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1017:13",
+      "callee": "nodesVisitor",
+      "test": "isObjectLiteralElementLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1057:17",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1058:17",
+      "callee": "nodesVisitor",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1063:17",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1064:17",
+      "callee": "nodesVisitor",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1072:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1073:13",
+      "callee": "nodesVisitor",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1081:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1104:13",
+      "callee": "nodesVisitor",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1107:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1117:13",
+      "callee": "nodesVisitor",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1118:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1192:13",
+      "callee": "nodesVisitor",
+      "test": "isTemplateSpan"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1214:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1216:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1217:13",
+      "callee": "nodesVisitor",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1218:13",
+      "callee": "nodesVisitor",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1226:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1278:13",
+      "callee": "nodesVisitor",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1285:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1425:13",
+      "callee": "nodesVisitor",
+      "test": "isVariableDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1432:13",
+      "callee": "nodesVisitor",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1435:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1445:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1447:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1448:13",
+      "callee": "nodesVisitor",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1449:13",
+      "callee": "nodesVisitor",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1456:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1458:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1459:13",
+      "callee": "nodesVisitor",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1460:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeElement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1467:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1469:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1477:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1479:13",
+      "callee": "nodesVisitor",
+      "test": "isEnumMember"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1486:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1495:13",
+      "callee": "nodesVisitor",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1502:13",
+      "callee": "nodesVisitor",
+      "test": "isCaseOrDefaultClause"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1516:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1526:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1536:13",
+      "callee": "nodesVisitor",
+      "test": "isImportAttribute"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1575:13",
+      "callee": "nodesVisitor",
+      "test": "isImportSpecifier"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1591:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1599:13",
+      "callee": "nodesVisitor",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1610:13",
+      "callee": "nodesVisitor",
+      "test": "isExportSpecifier"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1636:13",
+      "callee": "nodesVisitor",
+      "test": "isJsxChild"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1645:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1654:13",
+      "callee": "nodesVisitor",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1678:13",
+      "callee": "nodesVisitor",
+      "test": "isJsxChild"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1694:13",
+      "callee": "nodesVisitor",
+      "test": "isJsxAttributeLike"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1717:13",
+      "callee": "nodesVisitor",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1724:13",
+      "callee": "nodesVisitor",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1731:13",
+      "callee": "nodesVisitor",
+      "test": "isExpressionWithTypeArguments"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:1795:13",
+      "callee": "nodesVisitor",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/destructuring.ts:601:5",
+      "callee": "Debug.assertEachNode",
+      "test": "isArrayBindingElement"
+    },
+    {
+      "where": "src/compiler/transformers/destructuring.ts:606:5",
+      "callee": "Debug.assertEachNode",
+      "test": "isArrayBindingOrAssignmentElement"
+    },
+    {
+      "where": "src/compiler/transformers/destructuring.ts:611:5",
+      "callee": "Debug.assertEachNode",
+      "test": "isBindingElement"
+    },
+    {
+      "where": "src/compiler/transformers/destructuring.ts:616:5",
+      "callee": "Debug.assertEachNode",
+      "test": "isObjectBindingOrAssignmentElement"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:852:13",
+      "callee": "visitNodes",
+      "test": "isObjectLiteralElementLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:892:17",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:895:17",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:896:17",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:910:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:911:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:934:13",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1028:25",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1038:13",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1049:25",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1308:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1309:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1310:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1352:33",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1376:37",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1379:33",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1414:34",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1478:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1479:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1516:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1517:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1541:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1542:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1561:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1583:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1597:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1614:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1745:13",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1754:13",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:2025:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:2187:76",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:2309:30",
+      "callee": "visitNodes",
+      "test": "isImportSpecifier"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:2388:26",
+      "callee": "visitNodes",
+      "test": "isExportSpecifier"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:2455:25",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:941:27",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:960:16",
+      "callee": "visitArray",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:994:17",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1008:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1054:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1353:68",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1360:64",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1378:17",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1457:31",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1893:25",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1894:33",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1921:25",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1997:27",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1998:33",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:2140:23",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:2252:33",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:2278:37",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:2308:33",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:2384:38",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:3159:17",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:3173:17",
+      "callee": "visitNodes",
+      "test": "isObjectLiteralElementLike"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:213:27",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:214:33",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:215:23",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:325:27",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:339:33",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:340:23",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:413:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:416:13",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:417:13",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:424:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:425:13",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:444:17",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:449:17",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:461:17",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:463:17",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:475:17",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:477:17",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:492:17",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:758:19",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:759:19",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1096:35",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1116:31",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1117:37",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1119:29",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1132:31",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1133:37",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1135:29",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1165:33",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1189:37",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1192:33",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1197:27",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1198:28",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1213:42",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1250:31",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1261:27",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1351:59",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1418:32",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1433:32",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1448:32",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1606:46",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1637:35",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2157:30",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2161:32",
+      "callee": "visitNodes",
+      "test": "isObjectLiteralElementLike"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2311:17",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2345:17",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2411:21",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2436:21",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2465:21",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/es2017.ts:416:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/es2017.ts:439:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/es2017.ts:461:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/es2017.ts:476:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/es2017.ts:500:13",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/es2017.ts:531:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/es2017.ts:560:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/es2017.ts:876:46",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2018.ts:1046:19",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/es2018.ts:1075:19",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/es2018.ts:1122:19",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/es2018.ts:1174:57",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2020.ts:143:26",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/es2020.ts:205:29",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/es2020.ts:212:29",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/esnext.ts:176:42",
+      "callee": "visitArray",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/esnext.ts:185:54",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/esnext.ts:244:24",
+      "callee": "visitArray",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:787:30",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:1290:30",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:1697:42",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:1767:42",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:2495:13",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:2576:34",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:2786:34",
+      "callee": "visitNodes",
+      "test": "isVariableDeclaration"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:3342:21",
+      "callee": "visitNodes",
+      "test": "isObjectLiteralElementLike"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:4224:39",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:4339:13",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:4386:32",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:4571:25",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:4737:13",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/generators.ts:1089:37",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/generators.ts:1164:17",
+      "callee": "visitNodes",
+      "test": "isObjectLiteralElementLike"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:309:30",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:647:30",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1067:13",
+      "callee": "visitNodes",
+      "test": "isCaseOrDefaultClause"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1080:13",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1197:13",
+      "callee": "visitNodes",
+      "test": "isExpression"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1757:29",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1761:29",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1792:29",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1795:29",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1796:29",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1836:37",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:389:35",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:805:21",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:809:21",
+      "callee": "visitNodes",
+      "test": "isParameter"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:844:33",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:847:33",
+      "callee": "visitNodes",
+      "test": "isHeritageClause"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:848:33",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:878:31",
+      "callee": "visitNodes",
+      "test": "isModifierLike"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:1477:13",
+      "callee": "visitNodes",
+      "test": "isCaseOrDefaultClause"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:1493:13",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/module/esnextAnd2015.ts:131:34",
+      "callee": "visitArray",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/module/esnextAnd2015.ts:132:34",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:485:139",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:502:132",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:534:32",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:612:64",
+      "callee": "visitNodes",
+      "test": "isArrayBindingElement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:615:65",
+      "callee": "visitNodes",
+      "test": "isBindingElement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:809:80",
+      "callee": "visitNodes",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:982:16",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1234:25",
+      "callee": "visitNodes",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1243:25",
+      "callee": "visitNodes",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1255:25",
+      "callee": "visitNodes",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1427:21",
+      "callee": "visitNodes",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1440:21",
+      "callee": "visitNodes",
+      "test": "isTypeElement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1547:40",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1561:46",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1659:142",
+      "callee": "visitNodes",
+      "test": "isClassElement"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1679:159",
+      "callee": "visitNodes",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1683:69",
+      "callee": "visitNodes",
+      "test": "isExpressionWithTypeArguments"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1762:23",
+      "callee": "visitNodes",
+      "test": "isVariableDeclaration"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1831:20",
+      "callee": "visitArray",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:1852:21",
+      "callee": "visitNodes",
+      "test": "isExpressionWithTypeArguments"
+    },
+    {
+      "where": "src/compiler/expressionToTypeNode.ts:274:21",
+      "callee": "visitNodes",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/expressionToTypeNode.ts:287:39",
+      "callee": "visitNodes",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/expressionToTypeNode.ts:364:25",
+      "callee": "visitNodes",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/expressionToTypeNode.ts:379:25",
+      "callee": "visitNodes",
+      "test": "isTypeParameterDeclaration"
+    },
+    {
+      "where": "src/compiler/expressionToTypeNode.ts:404:21",
+      "callee": "visitNodes",
+      "test": "isModifier"
+    },
+    {
+      "where": "src/compiler/expressionToTypeNode.ts:445:21",
+      "callee": "visitNodes",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/compiler/expressionToTypeNode.ts:592:30",
+      "callee": "visitNodes",
+      "test": "test"
+    },
+    {
+      "where": "src/services/refactors/extractSymbol.ts:1621:37",
+      "callee": "visitNodes",
+      "test": "isStatement"
+    },
+    {
+      "where": "src/services/codefixes/annotateWithTypeFromJSDoc.ts:216:20",
+      "callee": "visitNodes",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/services/codefixes/helpers.ts:982:35",
+      "callee": "visitNodes",
+      "test": "isTypeNode"
+    },
+    {
+      "where": "src/services/textChanges.ts:1402:21",
+      "callee": "visitNodes",
+      "test": "test"
+    }
+  ],
+  "functions": [
+    {
+      "where": "src/compiler/factory/nodeTests.ts:1009:1",
+      "name": "isEnumMember",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1479:13"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:403:1",
+      "name": "isTypeParameterDeclaration",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:698:13",
+        "src/compiler/visitorPublic.ts:711:13",
+        "src/compiler/visitorPublic.ts:760:13",
+        "src/compiler/visitorPublic.ts:769:13",
+        "src/compiler/visitorPublic.ts:805:13",
+        "src/compiler/visitorPublic.ts:815:13",
+        "src/compiler/visitorPublic.ts:1107:13",
+        "src/compiler/visitorPublic.ts:1118:13",
+        "src/compiler/visitorPublic.ts:1216:13",
+        "src/compiler/visitorPublic.ts:1435:13",
+        "src/compiler/visitorPublic.ts:1447:13",
+        "src/compiler/visitorPublic.ts:1458:13",
+        "src/compiler/visitorPublic.ts:1469:13",
+        "src/compiler/transformers/declarations.ts:809:80",
+        "src/compiler/transformers/declarations.ts:1234:25",
+        "src/compiler/transformers/declarations.ts:1243:25",
+        "src/compiler/transformers/declarations.ts:1427:21",
+        "src/compiler/expressionToTypeNode.ts:364:25",
+        "src/compiler/expressionToTypeNode.ts:379:25"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:408:1",
+      "name": "isParameter",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:400:19",
+        "src/compiler/visitorPublic.ts:699:13",
+        "src/compiler/visitorPublic.ts:761:13",
+        "src/compiler/visitorPublic.ts:770:13",
+        "src/compiler/visitorPublic.ts:779:13",
+        "src/compiler/visitorPublic.ts:806:13",
+        "src/compiler/visitorPublic.ts:816:13",
+        "src/compiler/transformers/legacyDecorators.ts:425:13",
+        "src/compiler/transformers/legacyDecorators.ts:449:17",
+        "src/compiler/transformers/legacyDecorators.ts:463:17",
+        "src/compiler/transformers/legacyDecorators.ts:477:17",
+        "src/compiler/transformers/esDecorators.ts:1198:28",
+        "src/compiler/transformers/esDecorators.ts:1418:32",
+        "src/compiler/transformers/esDecorators.ts:1433:32",
+        "src/compiler/transformers/esDecorators.ts:1448:32",
+        "src/compiler/transformers/esDecorators.ts:2311:17",
+        "src/compiler/transformers/esDecorators.ts:2345:17",
+        "src/compiler/transformers/module/module.ts:1761:29",
+        "src/compiler/transformers/module/system.ts:809:21"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:552:1",
+      "name": "isTemplateLiteralTypeSpan",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:969:13"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:570:1",
+      "name": "isBindingElement",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:985:13",
+        "src/compiler/transformers/destructuring.ts:611:5",
+        "src/compiler/transformers/declarations.ts:615:65"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:672:1",
+      "name": "isExpressionWithTypeArguments",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1731:13",
+        "src/compiler/transformers/declarations.ts:1683:69",
+        "src/compiler/transformers/declarations.ts:1852:21"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:706:1",
+      "name": "isTemplateSpan",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1192:13"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:792:1",
+      "name": "isVariableDeclaration",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1425:13",
+        "src/compiler/transformers/es2015.ts:2786:34",
+        "src/compiler/transformers/declarations.ts:1762:23"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:866:1",
+      "name": "isImportAttribute",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1536:13"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:882:1",
+      "name": "isImportSpecifier",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1575:13",
+        "src/compiler/transformers/ts.ts:2309:30"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:898:1",
+      "name": "isExportSpecifier",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1610:13",
+        "src/compiler/transformers/ts.ts:2388:26"
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeTests.ts:985:1",
+      "name": "isHeritageClause",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1217:13",
+        "src/compiler/visitorPublic.ts:1448:13",
+        "src/compiler/visitorPublic.ts:1459:13",
+        "src/compiler/transformers/ts.ts:895:17",
+        "src/compiler/transformers/ts.ts:934:13",
+        "src/compiler/transformers/ts.ts:1038:13",
+        "src/compiler/transformers/classFields.ts:1894:33",
+        "src/compiler/transformers/classFields.ts:1998:33",
+        "src/compiler/transformers/legacyDecorators.ts:214:33",
+        "src/compiler/transformers/legacyDecorators.ts:339:33",
+        "src/compiler/transformers/legacyDecorators.ts:416:13",
+        "src/compiler/transformers/esDecorators.ts:1117:37",
+        "src/compiler/transformers/esDecorators.ts:1133:37",
+        "src/compiler/transformers/module/module.ts:1795:29",
+        "src/compiler/transformers/module/system.ts:847:33"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1647:1",
+      "name": "isModifier",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:643:13",
+        "src/compiler/visitorPublic.ts:673:13",
+        "src/compiler/visitorPublic.ts:695:13",
+        "src/compiler/visitorPublic.ts:814:13",
+        "src/compiler/visitorPublic.ts:1104:13",
+        "src/compiler/visitorPublic.ts:1117:13",
+        "src/compiler/visitorPublic.ts:1432:13",
+        "src/compiler/transformers/ts.ts:892:17",
+        "src/compiler/transformers/ts.ts:1561:13",
+        "src/compiler/transformers/ts.ts:1583:13",
+        "src/compiler/transformers/ts.ts:1597:13",
+        "src/compiler/transformers/ts.ts:2025:13",
+        "src/compiler/transformers/ts.ts:2455:25",
+        "src/compiler/transformers/classFields.ts:941:27",
+        "src/compiler/transformers/classFields.ts:1008:13",
+        "src/compiler/transformers/classFields.ts:1054:13",
+        "src/compiler/transformers/classFields.ts:1893:25",
+        "src/compiler/transformers/classFields.ts:1921:25",
+        "src/compiler/transformers/classFields.ts:1997:27",
+        "src/compiler/transformers/legacyDecorators.ts:213:27",
+        "src/compiler/transformers/legacyDecorators.ts:413:13",
+        "src/compiler/transformers/legacyDecorators.ts:424:13",
+        "src/compiler/transformers/legacyDecorators.ts:444:17",
+        "src/compiler/transformers/legacyDecorators.ts:461:17",
+        "src/compiler/transformers/legacyDecorators.ts:475:17",
+        "src/compiler/transformers/legacyDecorators.ts:492:17",
+        "src/compiler/transformers/esDecorators.ts:1096:35",
+        "src/compiler/transformers/esDecorators.ts:1116:31",
+        "src/compiler/transformers/esDecorators.ts:1132:31",
+        "src/compiler/transformers/esDecorators.ts:1197:27",
+        "src/compiler/transformers/esDecorators.ts:1250:31",
+        "src/compiler/transformers/esDecorators.ts:1261:27",
+        "src/compiler/transformers/esDecorators.ts:1351:59",
+        "src/compiler/transformers/esDecorators.ts:1606:46",
+        "src/compiler/transformers/esDecorators.ts:2411:21",
+        "src/compiler/transformers/esDecorators.ts:2436:21",
+        "src/compiler/transformers/esDecorators.ts:2465:21",
+        "src/compiler/transformers/es2017.ts:416:13",
+        "src/compiler/transformers/es2017.ts:531:13",
+        "src/compiler/transformers/es2017.ts:560:13",
+        "src/compiler/transformers/es2018.ts:1075:19",
+        "src/compiler/transformers/es2018.ts:1122:19",
+        "src/compiler/transformers/es2015.ts:2495:13",
+        "src/compiler/transformers/module/module.ts:1757:29",
+        "src/compiler/transformers/module/module.ts:1836:37",
+        "src/compiler/transformers/declarations.ts:1831:20",
+        "src/compiler/expressionToTypeNode.ts:404:21"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1732:1",
+      "name": "isClassElement",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1218:13",
+        "src/compiler/visitorPublic.ts:1449:13",
+        "src/compiler/transformers/ts.ts:896:17",
+        "src/compiler/transformers/ts.ts:1049:25",
+        "src/compiler/transformers/classFields.ts:960:16",
+        "src/compiler/transformers/classFields.ts:2140:23",
+        "src/compiler/transformers/legacyDecorators.ts:215:23",
+        "src/compiler/transformers/legacyDecorators.ts:340:23",
+        "src/compiler/transformers/legacyDecorators.ts:417:13",
+        "src/compiler/transformers/esDecorators.ts:758:19",
+        "src/compiler/transformers/esDecorators.ts:759:19",
+        "src/compiler/transformers/esDecorators.ts:1119:29",
+        "src/compiler/transformers/esDecorators.ts:1135:29",
+        "src/compiler/transformers/module/module.ts:1796:29",
+        "src/compiler/transformers/module/system.ts:848:33",
+        "src/compiler/transformers/declarations.ts:1659:142"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1778:1",
+      "name": "isModifierLike",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:653:13",
+        "src/compiler/visitorPublic.ts:683:13",
+        "src/compiler/visitorPublic.ts:707:13",
+        "src/compiler/visitorPublic.ts:721:13",
+        "src/compiler/visitorPublic.ts:730:13",
+        "src/compiler/visitorPublic.ts:741:13",
+        "src/compiler/visitorPublic.ts:778:13",
+        "src/compiler/visitorPublic.ts:1214:13",
+        "src/compiler/visitorPublic.ts:1285:13",
+        "src/compiler/visitorPublic.ts:1445:13",
+        "src/compiler/visitorPublic.ts:1456:13",
+        "src/compiler/visitorPublic.ts:1467:13",
+        "src/compiler/visitorPublic.ts:1477:13",
+        "src/compiler/visitorPublic.ts:1486:13",
+        "src/compiler/visitorPublic.ts:1516:13",
+        "src/compiler/visitorPublic.ts:1526:13",
+        "src/compiler/visitorPublic.ts:1591:13",
+        "src/compiler/visitorPublic.ts:1599:13",
+        "src/compiler/transformers/ts.ts:910:13",
+        "src/compiler/transformers/ts.ts:911:13",
+        "src/compiler/transformers/ts.ts:1028:25",
+        "src/compiler/transformers/ts.ts:1308:13",
+        "src/compiler/transformers/ts.ts:1309:13",
+        "src/compiler/transformers/ts.ts:1310:13",
+        "src/compiler/transformers/ts.ts:1478:13",
+        "src/compiler/transformers/ts.ts:1479:13",
+        "src/compiler/transformers/ts.ts:1516:13",
+        "src/compiler/transformers/ts.ts:1517:13",
+        "src/compiler/transformers/ts.ts:1541:13",
+        "src/compiler/transformers/ts.ts:1542:13",
+        "src/compiler/transformers/ts.ts:1614:13",
+        "src/compiler/transformers/classFields.ts:994:17",
+        "src/compiler/transformers/legacyDecorators.ts:325:27",
+        "src/compiler/transformers/es2017.ts:439:13",
+        "src/compiler/transformers/es2017.ts:461:13",
+        "src/compiler/transformers/es2017.ts:476:13",
+        "src/compiler/transformers/es2017.ts:500:13",
+        "src/compiler/transformers/es2018.ts:1046:19",
+        "src/compiler/transformers/module/module.ts:1792:29",
+        "src/compiler/transformers/module/system.ts:805:21",
+        "src/compiler/transformers/module/system.ts:844:33",
+        "src/compiler/transformers/module/system.ts:878:31"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1782:1",
+      "name": "isTypeElement",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:832:13",
+        "src/compiler/visitorPublic.ts:954:13",
+        "src/compiler/visitorPublic.ts:1460:13",
+        "src/compiler/transformers/declarations.ts:1440:21"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1798:1",
+      "name": "isObjectLiteralElementLike",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1017:13",
+        "src/compiler/transformers/ts.ts:852:13",
+        "src/compiler/transformers/classFields.ts:3173:17",
+        "src/compiler/transformers/esDecorators.ts:2161:32",
+        "src/compiler/transformers/es2015.ts:3342:21",
+        "src/compiler/transformers/generators.ts:1164:17"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1815:1",
+      "name": "isTypeNode",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:798:13",
+        "src/compiler/visitorPublic.ts:825:13",
+        "src/compiler/visitorPublic.ts:846:13",
+        "src/compiler/visitorPublic.ts:867:13",
+        "src/compiler/visitorPublic.ts:874:13",
+        "src/compiler/visitorPublic.ts:901:13",
+        "src/compiler/visitorPublic.ts:1057:17",
+        "src/compiler/visitorPublic.ts:1063:17",
+        "src/compiler/visitorPublic.ts:1072:13",
+        "src/compiler/visitorPublic.ts:1081:13",
+        "src/compiler/visitorPublic.ts:1226:13",
+        "src/compiler/visitorPublic.ts:1645:13",
+        "src/compiler/visitorPublic.ts:1654:13",
+        "src/compiler/transformers/declarations.ts:1255:25",
+        "src/compiler/transformers/declarations.ts:1679:159",
+        "src/compiler/expressionToTypeNode.ts:274:21",
+        "src/compiler/expressionToTypeNode.ts:287:39",
+        "src/compiler/expressionToTypeNode.ts:445:21",
+        "src/services/codefixes/annotateWithTypeFromJSDoc.ts:216:20",
+        "src/services/codefixes/helpers.ts:982:35"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1849:1",
+      "name": "isArrayBindingElement",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:992:13",
+        "src/compiler/transformers/destructuring.ts:601:5",
+        "src/compiler/transformers/declarations.ts:612:64"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1905:1",
+      "name": "isObjectBindingOrAssignmentElement",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/transformers/destructuring.ts:616:5"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1932:1",
+      "name": "isArrayBindingOrAssignmentElement",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/transformers/destructuring.ts:606:5"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:2086:1",
+      "name": "isExpression",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:566:16",
+        "src/compiler/visitorPublic.ts:571:12",
+        "src/compiler/visitorPublic.ts:1010:13",
+        "src/compiler/visitorPublic.ts:1058:17",
+        "src/compiler/visitorPublic.ts:1064:17",
+        "src/compiler/visitorPublic.ts:1073:13",
+        "src/compiler/visitorPublic.ts:1795:13",
+        "src/compiler/transformers/ts.ts:1745:13",
+        "src/compiler/transformers/ts.ts:1754:13",
+        "src/compiler/transformers/classFields.ts:1353:68",
+        "src/compiler/transformers/classFields.ts:1360:64",
+        "src/compiler/transformers/classFields.ts:1378:17",
+        "src/compiler/transformers/classFields.ts:3159:17",
+        "src/compiler/transformers/esDecorators.ts:1637:35",
+        "src/compiler/transformers/esDecorators.ts:2157:30",
+        "src/compiler/transformers/es2020.ts:143:26",
+        "src/compiler/transformers/es2020.ts:205:29",
+        "src/compiler/transformers/es2020.ts:212:29",
+        "src/compiler/transformers/es2015.ts:4339:13",
+        "src/compiler/transformers/es2015.ts:4571:25",
+        "src/compiler/transformers/es2015.ts:4737:13",
+        "src/compiler/transformers/generators.ts:1089:37",
+        "src/compiler/transformers/module/module.ts:1197:13"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:2419:1",
+      "name": "isStatement",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:384:18",
+        "src/compiler/visitorPublic.ts:1278:13",
+        "src/compiler/visitorPublic.ts:1495:13",
+        "src/compiler/visitorPublic.ts:1717:13",
+        "src/compiler/visitorPublic.ts:1724:13",
+        "src/compiler/transformers/ts.ts:1352:33",
+        "src/compiler/transformers/ts.ts:1376:37",
+        "src/compiler/transformers/ts.ts:1379:33",
+        "src/compiler/transformers/ts.ts:1414:34",
+        "src/compiler/transformers/ts.ts:2187:76",
+        "src/compiler/transformers/classFields.ts:1457:31",
+        "src/compiler/transformers/classFields.ts:2252:33",
+        "src/compiler/transformers/classFields.ts:2278:37",
+        "src/compiler/transformers/classFields.ts:2308:33",
+        "src/compiler/transformers/classFields.ts:2384:38",
+        "src/compiler/transformers/esDecorators.ts:1165:33",
+        "src/compiler/transformers/esDecorators.ts:1189:37",
+        "src/compiler/transformers/esDecorators.ts:1192:33",
+        "src/compiler/transformers/esDecorators.ts:1213:42",
+        "src/compiler/transformers/es2017.ts:876:46",
+        "src/compiler/transformers/es2018.ts:1174:57",
+        "src/compiler/transformers/esnext.ts:176:42",
+        "src/compiler/transformers/esnext.ts:185:54",
+        "src/compiler/transformers/esnext.ts:244:24",
+        "src/compiler/transformers/es2015.ts:787:30",
+        "src/compiler/transformers/es2015.ts:1290:30",
+        "src/compiler/transformers/es2015.ts:1697:42",
+        "src/compiler/transformers/es2015.ts:1767:42",
+        "src/compiler/transformers/es2015.ts:2576:34",
+        "src/compiler/transformers/es2015.ts:4224:39",
+        "src/compiler/transformers/es2015.ts:4386:32",
+        "src/compiler/transformers/module/module.ts:309:30",
+        "src/compiler/transformers/module/module.ts:647:30",
+        "src/compiler/transformers/module/module.ts:1080:13",
+        "src/compiler/transformers/module/system.ts:389:35",
+        "src/compiler/transformers/module/system.ts:1493:13",
+        "src/compiler/transformers/module/esnextAnd2015.ts:131:34",
+        "src/compiler/transformers/module/esnextAnd2015.ts:132:34",
+        "src/compiler/transformers/declarations.ts:485:139",
+        "src/compiler/transformers/declarations.ts:502:132",
+        "src/compiler/transformers/declarations.ts:534:32",
+        "src/compiler/transformers/declarations.ts:982:16",
+        "src/compiler/transformers/declarations.ts:1547:40",
+        "src/compiler/transformers/declarations.ts:1561:46",
+        "src/services/refactors/extractSymbol.ts:1621:37"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:2468:1",
+      "name": "isJsxChild",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1636:13",
+        "src/compiler/visitorPublic.ts:1678:13"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:2477:1",
+      "name": "isJsxAttributeLike",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1694:13"
+      ]
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:2504:1",
+      "name": "isCaseOrDefaultClause",
+      "parameters": [
+        "node: Node"
+      ],
+      "argumentsRead": false,
+      "canSeeSecond": false,
+      "sites": [
+        "src/compiler/visitorPublic.ts:1502:13",
+        "src/compiler/transformers/module/module.ts:1067:13",
+        "src/compiler/transformers/module/system.ts:1477:13"
+      ]
+    }
+  ],
+  "forwarded": [
+    {
+      "where": "src/compiler/checker.ts:7351:21",
+      "name": "test",
+      "declaredType": "((node: Node) => boolean) | undefined",
+      "signatures": [
+        [
+          "node: Node"
+        ]
+      ],
+      "sites": [
+        "src/compiler/checker.ts:7360:28"
+      ]
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:226:5",
+      "name": "test",
+      "declaredType": "((node: Node) => boolean) | undefined",
+      "signatures": [
+        [
+          "node: Node"
+        ]
+      ],
+      "sites": [
+        "src/compiler/visitorPublic.ts:259:21"
+      ]
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:292:5",
+      "name": "test",
+      "declaredType": "((node: Node) => boolean) | undefined",
+      "signatures": [
+        [
+          "node: Node"
+        ]
+      ],
+      "sites": [
+        "src/compiler/visitorPublic.ts:311:12"
+      ]
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:331:5",
+      "name": "test",
+      "declaredType": "((node: Node) => boolean) | undefined",
+      "signatures": [
+        [
+          "node: Node"
+        ]
+      ],
+      "sites": [
+        "src/compiler/visitorPublic.ts:351:17",
+        "src/compiler/visitorPublic.ts:374:5"
+      ]
+    },
+    {
+      "where": "src/compiler/expressionToTypeNode.ts:588:17",
+      "name": "test",
+      "declaredType": "((node: Node) => boolean) | undefined",
+      "signatures": [
+        [
+          "node: Node"
+        ]
+      ],
+      "sites": [
+        "src/compiler/expressionToTypeNode.ts:592:30"
+      ]
+    },
+    {
+      "where": "src/services/textChanges.ts:1398:5",
+      "name": "test",
+      "declaredType": "((node: Node) => boolean) | undefined",
+      "signatures": [
+        [
+          "node: Node"
+        ]
+      ],
+      "sites": [
+        "src/services/textChanges.ts:1402:21"
+      ]
+    }
+  ],
+  "unresolved": []
+}
