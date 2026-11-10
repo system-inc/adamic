@@ -1,0 +1,10 @@
+// f1, a control: a copy returned through a parameter's function value, whose targets are Unknown, planned at the closure's Return (#41vb71c).
+interface Node { name: string; next: Node[]; kids: Node[][] }
+const a: Node = { name: 'a' + '', next: [], kids: [] };
+const b: Node = { name: 'b' + '', next: [a], kids: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const byName = (x: Node, y: Node): number => (x.name < y.name ? -1 : 1);
+function apply(f: () => Node[]): Node[] { return f(); }
+a.kids.push(apply(() => a.next.toSorted(byName)));
+const k = a.kids[0];
+console.log(`${a.kids.length} ${k === undefined ? -1 : k.length}`);

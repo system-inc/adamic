@@ -199,3 +199,31 @@ e3 on #y7wexf5), and graphAdoptionBoundary stops a record's entries over element
 pairs no graph type selects, so no lowering program reaches the pair plan. #dps0kp6, Memory's road of planning pairs
 by their tuple type, lifts the stop and gives this mutant its witness back: TestRecordGraphArraysAdoptedUnretained
 red on "the entries array ...'s pairs aren't adopted as they're made", and flow_record_entries.a leaking.
+
+## 10. An argument to a function value whose targets are Unknown left undemanded (#41vb71c)
+
+File: internal/lower/graph_flow.go, collect's CallClosure case.
+
+Old:
+
+```go
+				if targets.Unknown {
+					// A spread argument is its array, the operand followed here like any other.
+					quietly = append(quietly, value.Arguments...)
+					break
+				}
+```
+
+New:
+
+```go
+				if targets.Unknown {
+					break
+				}
+```
+
+Expected: TestGraphOracleGraphRegionsFlowUnknownArgument (flow_unknown_argument.a, Memory's f3) leaks again, frees
+5 of 14 as at main: the toSorted copy passed to `g` is never demanded, since `g`'s targets are Unknown and its
+parameter has no Declare, and the callee's `a.kids.push(x)` holds the counted copy inside the cycle. The three
+controls (flow_unknown_result.a, flow_unknown_reduce.a, flow_unknown_map.a) stay green: their copies are results,
+planned at their Returns.
