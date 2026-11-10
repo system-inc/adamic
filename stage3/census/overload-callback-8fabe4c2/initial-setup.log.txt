@@ -1,0 +1,26 @@
+submodule cache: off
+v24.19.0
+go version go1.27.1 linux/amd64
+setup: node ready (0.083s)
+setup: go ready (0.097s)
+Cloning into '/workspace/overload-census/cohere'...
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.536s)
+setup: tsc ready (TypeScript 6.0.3) (1.101s)
+
+added 3 packages in 804ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.431s
+setup: markdown dependencies ready (2.630s)
+From https://github.com/system-inc/cohere
+ * [new tag]           v0.1.0     -> v0.1.0
+ * [new tag]           v0.1.1     -> v0.1.1
+From https://github.com/system-inc/cohere
+ * branch              5360753e19e4417675a90e92a1823bea66b13918 -> FETCH_HEAD
+Submodule path 'cohere': checked out '5360753e19e4417675a90e92a1823bea66b13918'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/overload-census/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (331.324s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (331.335s)

@@ -1,0 +1,47 @@
+{
+  "source_files_unchanged": 747,
+  "runs": {
+    "debug-parent": {
+      "rows": 3,
+      "sources": 81,
+      "units": 81,
+      "raw_events": 22,
+      "complete_trailer": true
+    },
+    "debug-head": {
+      "rows": 3,
+      "sources": 81,
+      "units": 81,
+      "raw_events": 14,
+      "complete_trailer": true
+    },
+    "entry-parent": {
+      "rows": 83,
+      "sources": 81,
+      "units": 4562,
+      "raw_events": 5758,
+      "complete_trailer": true
+    },
+    "entry-head": {
+      "rows": 83,
+      "sources": 81,
+      "units": 4562,
+      "raw_events": 5758,
+      "complete_trailer": true
+    }
+  },
+  "archives": [
+    "debug-parent-times.jsonl.gz",
+    "debug-parent.jsonl.gz",
+    "debug-head-times.jsonl.gz",
+    "debug-head.jsonl.gz",
+    "entry-parent-times.jsonl.gz",
+    "entry-parent.jsonl.gz",
+    "entry-head-times.jsonl.gz",
+    "entry-head.jsonl.gz"
+  ],
+  "debug_pair_source_hashes": 2,
+  "entry_pair_source_hashes": 81,
+  "parent_production_clean": true,
+  "head_production_clean": true
+}

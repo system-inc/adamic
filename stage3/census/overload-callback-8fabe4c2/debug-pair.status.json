@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/pair/pair.py",
+    "stage3/census/overload-callback-8fabe4c2/debug-parent.jsonl.gz",
+    "stage3/census/overload-callback-8fabe4c2/debug-head.jsonl.gz",
+    "/workspace/overload-adapted",
+    "--typescript",
+    "stage3/api/node_modules/typescript",
+    "--json",
+    "stage3/census/overload-callback-8fabe4c2/debug-paired.json",
+    "--report",
+    "stage3/census/overload-callback-8fabe4c2/debug-paired.md"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 2.001727701999698,
+  "peak_rss_kib": 111656,
+  "user_seconds": 0.956758,
+  "system_seconds": 0.8220069999999999
+}

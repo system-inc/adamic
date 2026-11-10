@@ -1,0 +1,21 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/overload-parent-entry/overlay.json",
+    "-o",
+    "/workspace/overload-parent-census",
+    "./stage3/census/latent/tool"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 854.09,
+  "peak_rss_kib": 28860,
+  "user_seconds": 6.2,
+  "system_seconds": 4.94,
+  "exit_status_source": "Linux /proc/PID/stat exit_code after zombie state",
+  "resource_source": "process lifetime CPU ticks and sampled lifetime VmHWM; final sampling interval may miss a peak",
+  "recovery": "Original outer runner ended during environment reconnect; measurement process continued unchanged.",
+  "pid": 4080
+}

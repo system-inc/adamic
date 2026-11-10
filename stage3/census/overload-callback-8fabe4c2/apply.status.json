@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "/workspace/overload-census/stage3/apply.py",
+    "/workspace/overload-adapted"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 1613.27,
+  "peak_rss_kib": 52740,
+  "user_seconds": 3.81,
+  "system_seconds": 2.48,
+  "exit_status_source": "Linux /proc/PID/stat exit_code after zombie state",
+  "resource_source": "process lifetime CPU ticks and sampled lifetime VmHWM; final sampling interval may miss a peak",
+  "recovery": "Original outer runner ended during environment reconnect; measurement process continued unchanged.",
+  "pid": 4859
+}

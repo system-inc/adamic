@@ -1,0 +1,25 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_FULL",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "-u",
+    "LATENT_ONLY_FILE",
+    "-u",
+    "LATENT_PROGRESS_FILE",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "GOMEMLIMIT=5GiB",
+    "LATENT_TIMES=/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/entry-parent-times.jsonl",
+    "/workspace/overload-parent-census",
+    "/workspace/overload-adapted/src/tsc/tsc.ts",
+    "/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/entry-parent.jsonl"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 3725.5371595030006,
+  "peak_rss_kib": 3889268,
+  "user_seconds": 4222.926179,
+  "system_seconds": 99.075305
+}
