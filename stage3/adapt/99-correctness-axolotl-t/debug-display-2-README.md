@@ -2,7 +2,7 @@
 
 Stacked on 9d6b1c37cdc08e426b094c9f5e6214771ff95632. Adamic Nov 10 05:40Z and 05:41Z, task b5w3ycg. JavaScript-changing amendment to 99t, with 99n's nested owner pin recognizing the moved home.
 
-The complete count lane passes all 398 ordinary guards: 106366 passes, one sanctioned API failure, zero skips. All four body counts are zero. The fresh amended full apply is the remaining gate in progress.
+Validation complete. All 398 ordinary lane guards pass: 106366 passes, one sanctioned API failure, zero skips. All four body counts are zero. The fresh amended full apply exits 0; all 747 applied source files and all 47 build-input files match the measured normal candidate. Both amended adapters replay with zero files and edits.
 
 The pre-edit audit grepped all stage3/adapt content at main 7f2c852dffe31163e9699f0c91a158596757b888 and the exact Change 1 base. Active overlapping pins are 99n's Debug.formatControlFlowGraph.hasNode and 99t's enableDebugInfo, hasAntecedents, both attachment functions and both workers. The proposed 99n worker pin is inactive. Other mentions are historical evidence or other owners. Change 1 already emptied both workers and removed all enableDebugInfo patching. This change preserves those exact eight pins and adds a separate exact pin for the mapper attachment and both complete adapted graph owners.
 
@@ -21,3 +21,5 @@ The mapper-restoring mutant returns Refused Object.setPrototypeOf at adapted deb
 The count reference restores Change 1's five installation bodies in a private source copy solely so the workers and enable patching have executable positive controls. It retains all other adapted source. The observer is Change 1's private emitted-JavaScript instrument, extended to count both worker entries, the mapper past its exact namespace-qualified isDebugging test, and enableDebugInfo past its early-return guard. The forced-debug control fires each counter once; the ordinary control records four zeros. No observer is in the candidate or its normal build. All three instrumented bundle hashes match the private reference in every one of the 398 accepted shard views. The 803 process records include interrupted attempts; all are zero. After the environment refresh, 215 completed shard reports were validated and reused and the remaining 183 shards ran to completion. Both controller recovery and all ordinary guards exit 0.
 
 Large evidence and logs use deterministic gzip. debug-display-2-preparation.json retains preliminary failures and corrections. All source adaptation and census tools are unchanged except for the stated owner/home amendments and private evidence scripts.
+
+The final gate inventory is in debug-display-2-final-validation.json. The full apply log, complete accepted lane reports, raw counter records, paired witness and emitted hunk patch are retained as compressed evidence. The ledger names both removed Debug keys and the new module home.

@@ -1,3 +1,7 @@
+> Nov 10 Change 2: current behavior and complete evidence are in
+> [debug-display-2-README.md](debug-display-2-README.md). The graph module
+> home also amends 99n; earlier Change 1 records below remain historical.
+
 > Candidate status: ready to land. Transitive classification, runtime exports, amended full apply and the complete final lane pass.
 
 > Nov 10 debugger-display amendment: current behavior and evidence are in

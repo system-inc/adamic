@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "rows": [
+    {
+      "adapter": "99-correctness-axolotl-n",
+      "result": {
+        "files": 0,
+        "edits": 0,
+        "javascriptChanging": false
+      }
+    },
+    {
+      "adapter": "99-correctness-axolotl-t",
+      "result": {
+        "files": 0,
+        "edits": 0,
+        "javascriptChanging": true
+      }
+    }
+  ]
+}
