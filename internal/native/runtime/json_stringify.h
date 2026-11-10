@@ -43,4 +43,10 @@ adamic_string *adamic_json_stringify_runtime(adamic_value value, const adamic_js
 adamic_string *adamic_json_stringify(adamic_value value, const adamic_json_schema *schema,
 	adamic_value replacer, const adamic_json_schema *replacer_schema,
 	adamic_value space, const adamic_json_schema *space_schema);
+// adamic_json_stringify_objects is adamic_json_stringify with json_objects.c's describe provider, for
+// a call whose value may hold an object reference: the allocation is printed as it is, never as a type
+// says. The descriptors it makes are freed when it returns.
+adamic_string *adamic_json_stringify_objects(adamic_value value, const adamic_json_schema *schema,
+	adamic_value replacer, const adamic_json_schema *replacer_schema,
+	adamic_value space, const adamic_json_schema *space_schema);
 #endif
