@@ -1,0 +1,7 @@
+// The same for a string parameter that may be null.
+function f(x: string | null = 'd'): string {
+	return x === null ? 'null' : x;
+}
+console.log(f(null));
+console.log(f());
+console.log(f('given'));
