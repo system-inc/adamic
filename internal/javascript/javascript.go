@@ -315,6 +315,12 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if emitter.stdoutHandleUsed {
 		const callee = "const adamicCallee = (object, name) => { "
 		code = strings.Replace(code, callee, callee+stdoutHandleCallee, 1)
+		if strings.Contains(code, "adamicOptionalMethodCall(") {
+			if strings.Count(code, stdoutHandleOptionalAnchor) != 1 {
+				panic("compiler bug: adamicOptionalMethodCall's lookup test isn't where the stdout handle's splice goes")
+			}
+			code = strings.Replace(code, stdoutHandleOptionalAnchor, stdoutHandleOptionalAnchor+stdoutHandleOptionalCall, 1)
+		}
 	}
 	if emitter.processExitUsed {
 		code = "import { processExit as adamicProcessExit, processExiting as adamicProcessExiting } from " + runtimeImport + ";\n" + code
