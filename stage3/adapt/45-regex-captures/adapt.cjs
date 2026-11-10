@@ -241,12 +241,35 @@ function adapt(tree, ts) {
             const root = func(file, scope);
             const split = one(root, node => ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === "split" &&
                 (ts.isRegularExpressionLiteral(node.arguments[0]) || node.arguments[0]?.getText() === "whitespaceRegExp"), `${file}:${scope} split`);
-            const proof = ts.isRegularExpressionLiteral(split.arguments[0]) ? regexProof(split.arguments[0].getText(source)) : literalProof(file, "whitespaceRegExp");
+            const separator = split.arguments[0];
+            let splitText = split.getText(source);
+            if (file === "semver") {
+                // Stage 0 proves density only for a fresh literal written at the call.
+                if (split.expression.expression.getText(source) !== "range" || split.arguments.length !== 1) throw new Error("unexpected parseRange split");
+                const references = nodes(source, node => ts.isIdentifier(node) && node.text === "whitespaceRegExp");
+                if (ts.isIdentifier(separator) && separator.text === "whitespaceRegExp") {
+                    const declaration = variable(source, "whitespaceRegExp");
+                    const statement = declaration.parent.parent;
+                    if (references.length !== 2 || !references.includes(declaration.name) || !references.includes(separator) ||
+                        !ts.isVariableStatement(statement) || statement.parent !== source || statement.declarationList.declarations.length !== 1 ||
+                        statement.declarationList.flags !== ts.NodeFlags.Const || declaration.initializer?.getText(source) !== "/\\s+/") {
+                        throw new Error("unexpected whitespaceRegExp declaration or other use");
+                    }
+                    edit(source, statement, "", "remove now-unused shared whitespace separator");
+                    splitText = "range.split(/\\s+/)";
+                }
+                else if (!ts.isRegularExpressionLiteral(separator) || separator.getText(source) !== "/\\s+/" || references.length) {
+                    throw new Error("unexpected adapted parseRange separator");
+                }
+            }
+            else if (!ts.isRegularExpressionLiteral(separator)) throw new Error("split separator must be a literal");
+            const proof = regexProof(file === "semver" ? "/\\s+/" : separator.getText(source));
             if (proof.captures !== 0) throw new Error(`declined split with captures: ${proof.regex}`);
             if (ts.isAsExpression(split.parent)) {
                 if (split.parent.type.getText() !== "string[]") throw new Error("unexpected existing split assertion");
+                edit(source, split, splitText, "literal-at-call capture-free split proof");
             }
-            else edit(source, split, `${split.getText(source)} as string[]`, `capture-free separator ${proof.regex} yields a dense string array`);
+            else edit(source, split, `${splitText} as string[]`, `capture-free separator ${proof.regex} yields a dense string array`);
         }
     }
     if (debugHome.moved && edits.has(sources.get("debug"))) throw new Error("moved getFunctionName must already have its capture proof applied");

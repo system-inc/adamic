@@ -1,0 +1,26 @@
+{
+  "base": "7f2c852dffe31163e9699f0c91a158596757b888",
+  "source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "uses_before": [
+    "src/compiler/semver.ts:249 declaration",
+    "src/compiler/semver.ts:287 parseRange split"
+  ],
+  "proof": "internal/lower/cast_split.go: literal at call, string receiver, capture-free separator, string[] target",
+  "initial_base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6",
+  "unchanged_components_since_initial_base": [
+    "stage3",
+    "internal/lower",
+    "internal/load",
+    "internal/ir",
+    "cohere",
+    "go.mod",
+    "go.sum"
+  ],
+  "intervening_main_path_count": 21,
+  "intervening_main_scope_counts": {
+    "docs": 1,
+    "internal/native": 8,
+    "internal/oracle": 12
+  },
+  "intervening_main_paths_sha256": "2e14c34bf83f4f18487dbfe31f45f53576e7594d6874a5cc674d1809d5575814"
+}
