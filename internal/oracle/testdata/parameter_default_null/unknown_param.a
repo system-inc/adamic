@@ -1,0 +1,8 @@
+// An unknown parameter may hold null, so its default is taken only for undefined (Compiler's must on
+// #1mw3c4x: an unknown read as holding no null kept ?? and took the default for null).
+function f(x: unknown = 1): string {
+	return x === null ? 'null' : typeof x;
+}
+console.log(f(null));
+console.log(f());
+console.log(f('s'));
