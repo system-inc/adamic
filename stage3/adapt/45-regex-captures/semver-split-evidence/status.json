@@ -51,7 +51,16 @@
   "latent": {
     "main_exit": 0,
     "main_findings": 60,
-    "main_units": 29
+    "main_units": 29,
+    "amended_exit": 0,
+    "amended_findings": 57,
+    "amended_units": 28,
+    "added_sites": 0,
+    "removed_sites": [
+      "refusal_scan semver.ts:287:34 cast refusal",
+      "lowering semver.ts:287:34 cast refusal",
+      "lowering semver.ts:287:13 rollback boundary"
+    ]
   },
   "initial_base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6"
 }
