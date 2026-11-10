@@ -348,10 +348,15 @@ func (l *lowering) namespaceValueUse(node *ast.Node) error {
 	return seen("part of " + describe(parent))
 }
 
-// namespaceValueArgument judges a namespace value passed to a call: only into a parameter of its own type,
-// of a call whose signature isn't generic and isn't the library's, whose parameters could see anything.
-// A constructor's argument may become a field, a parameter property, which a view of its instance could
-// see as another shape, so it stops.
+// namespaceValueArgument judges a namespace value passed to a call. It's kept only as an argument to a
+// direct call of one program FunctionDeclaration, named by the callee identifier, with one declaration, a
+// body and no type parameters, whose own parameter at that place is declared typeof N or typeof N |
+// undefined with no type parameter in it. That's the body that runs, so every use of the value inside it is
+// judged by this pass as its own. Anything else could run a body that sees the value as a wider type, where
+// a write through it would lower unjudged: an overload (the chosen signature isn't the body), a function
+// value, a method (an override or implementation may widen its parameter), a generic class's method or an
+// interface reached through I<typeof N>, and a constructor, whose argument may become a field (Lower's and
+// Compiler's musts, the rule for the third shape rather than a fourth case).
 func (l *lowering) namespaceValueArgument(node, outer, call, declaration *ast.Node) error {
 	seen := func(what string) error {
 		return l.notYet(node, "a namespace value seen as "+what)
@@ -366,25 +371,15 @@ func (l *lowering) namespaceValueArgument(node, outer, call, declaration *ast.No
 	if l.slotSet(outer) {
 		return seen("a value written into a slot a caller set")
 	}
-	signature := l.checker.GetResolvedSignature(call)
-	if signature == nil {
-		return seen("an argument to a call whose signature isn't known")
+	callee := ast.SkipParentheses(call.Expression())
+	if callee.Kind == ast.KindPropertyAccessExpression && l.isLibraryGlobal(callee.Expression(), "Object") {
+		return seen("an argument to Object." + callee.Name().Text())
 	}
-	if librarySignature(signature) {
-		callee := ast.SkipParentheses(call.Expression())
-		if callee.Kind == ast.KindPropertyAccessExpression && l.isLibraryGlobal(callee.Expression(), "Object") {
-			return seen("an argument to Object." + callee.Name().Text())
-		}
-		return seen("an argument to a library function")
+	function := l.namespaceDirectCallee(callee)
+	if function == nil {
+		return seen("an argument to a callee whose body can't be named")
 	}
-	if callee := signature.Declaration(); callee != nil && ast.IsFunctionLike(callee) && len(callee.TypeParameters()) > 0 {
-		return seen("a generic argument")
-	}
-	// The parameter is judged as declared, never as instantiated: a generic class's method, or an interface
-	// method reached through I<typeof N>, has no type parameters of its own, and its parameter's slot is
-	// typeof N here while its body sees a type parameter, where a write through the value would lower
-	// unjudged (Lower's must).
-	declared := l.namespaceDeclaredParameter(call, outer, signature)
+	declared := l.namespaceDeclaredParameter(call, outer, function)
 	if declared == nil {
 		return seen("an argument with no declared parameter of its own type")
 	}
@@ -397,14 +392,30 @@ func (l *lowering) namespaceValueArgument(node, outer, call, declaration *ast.No
 	return seen(l.checker.TypeToString(declared))
 }
 
-// namespaceDeclaredParameter is the type a call's argument's parameter is declared with in the callee's own
-// declaration, uninstantiated, or nil when there's no one plain parameter for it (no declaration, a rest
-// parameter, or more arguments than parameters).
-func (l *lowering) namespaceDeclaredParameter(call, argument *ast.Node, signature *checker.Signature) *checker.Type {
-	callee := signature.Declaration()
-	if callee == nil || !ast.IsFunctionLike(callee) {
+// namespaceDirectCallee is the one program FunctionDeclaration a callee identifier names, through an import
+// alias, when it has exactly one declaration, a body and no type parameters, or nil.
+func (l *lowering) namespaceDirectCallee(callee *ast.Node) *ast.Node {
+	if !ast.IsIdentifier(callee) {
 		return nil
 	}
+	symbol := l.symbol(callee)
+	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		symbol = l.checker.GetAliasedSymbol(symbol)
+	}
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return nil
+	}
+	function := symbol.Declarations[0]
+	if function.Kind != ast.KindFunctionDeclaration || function.Body() == nil || len(function.TypeParameters()) > 0 || ast.GetSourceFileOfNode(function).IsDeclarationFile {
+		return nil
+	}
+	return function
+}
+
+// namespaceDeclaredParameter is the type function declares its parameter for a call's argument with,
+// uninstantiated, or nil when there's no one plain parameter for it (a rest or destructured parameter, or
+// more arguments than parameters).
+func (l *lowering) namespaceDeclaredParameter(call, argument, function *ast.Node) *checker.Type {
 	index := -1
 	for position, written := range call.Arguments() {
 		if written == argument {
@@ -412,7 +423,7 @@ func (l *lowering) namespaceDeclaredParameter(call, argument *ast.Node, signatur
 		}
 	}
 	parameters := []*ast.Node{}
-	for _, parameter := range callee.Parameters() {
+	for _, parameter := range function.Parameters() {
 		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
 			continue
 		}
