@@ -1,0 +1,13 @@
+// One object per namespace, whichever module reads its name (#67jk7wq).
+export namespace Counter {
+	let count = 0;
+	export function next(): number {
+		count = count + 1;
+		return count;
+	}
+	export function read(): number {
+		return count;
+	}
+}
+
+export const held: typeof Counter = Counter;
