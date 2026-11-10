@@ -10,7 +10,7 @@ import (
 // sanitized with leaks checked, and on the JavaScript backend.
 func TestNamespaceValueAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	for _, program := range []string{"tracing/main.a", "identity/main.a"} {
+	for _, program := range []string{"tracing/main.a", "identity/main.a", "literal.a"} {
 		t.Run(program, func(t *testing.T) {
 			t.Parallel()
 			generatorAgrees(t, "internal/oracle/testdata/namespace_value/"+program)
