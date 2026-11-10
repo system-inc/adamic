@@ -198,14 +198,16 @@ function check(value: Animal, test: ((value: Animal, extra: number) => boolean) 
 }
 console.log(String(check(new Dog(), (dog: Dog): boolean => dog.bark() === "woof")));
 `, true},
-		// A fixed parameter written any promises nothing at its own position either. The caller takes no
-		// parameter, so nothing at its own argument is judged against any first (a Dog was refused as nominal
-		// there, and unknown as kept weakly). Mutant: the any test dropped, and it lowers.
-		{"an Animal into a parameter of any", animals + `function check<T extends Animal>(value: T, test: (value: any) => boolean): boolean;
-function check(value: Animal, test: ((value: Animal) => boolean) | undefined): boolean {
-	return test === undefined || test(new Animal());
+		// A fixed parameter written any promises nothing at its own position either. Where any is the whole
+		// callback's only difference the census relates the pair before the use-proof runs, so this row's T at
+		// position 0 sends it to the use-proof, which must refuse what lands at the any. The caller takes one
+		// parameter, so nothing at its own argument is judged against any first. Mutant: the any test
+		// dropped, and it lowers.
+		{"an Animal into a parameter of any", animals + `function check<T extends Animal>(value: T, test: (value: T, other: any) => boolean): boolean;
+function check(value: Animal, test: ((value: Animal, other: Animal) => boolean) | undefined): boolean {
+	return test === undefined || test(value, new Animal());
 }
-console.log(String(check(new Dog(), (): boolean => true)));
+console.log(String(check(new Dog(), (dog: Dog): boolean => dog.bark() === "woof")));
 `, true},
 	} {
 		// .a refuses a written any where it's written, before the census reads it.
