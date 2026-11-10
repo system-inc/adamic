@@ -1,0 +1,1108 @@
+[
+  {
+    "root": "_namespaces/ts.moduleSpecifiers.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "_namespaces/ts.performance.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "_namespaces/ts.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "binder.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "builder.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "builderPublic.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "builderState.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "builderStatePublic.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "checker.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "commandLineParser.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "core.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "corePublic.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "debug.ts",
+    "before": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "after": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "diagnosticInformationMap.generated.ts",
+    "before": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "emitter.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "executeCommandLine.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "expressionToTypeNode.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/baseNodeFactory.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/emitHelpers.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/emitNode.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/nodeChildren.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/nodeConverters.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/nodeFactory.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/nodeTests.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/parenthesizerRules.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/utilities.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "factory/utilitiesPublic.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "hostErrors.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "moduleNameResolver.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "moduleSpecifiers.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "parser.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "path.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "performance.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "performanceCore.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "program.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "programDiagnostics.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "resolutionCache.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "scanner.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "semver.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "sourcemap.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "symbolWalker.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "sys.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "tracing.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "types.ts:4560:38",
+      "Refused",
+      "a primitive brand member _isResolvedConfigFileName whose type is not void"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformer.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/classFields.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/classThis.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/declarations/diagnostics.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/declarations.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/destructuring.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/es2015.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/es2016.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/es2017.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/es2018.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/es2019.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/es2020.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/es2021.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/esDecorators.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/esnext.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/generators.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/jsx.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/legacyDecorators.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/module/esnextAnd2015.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/module/impliedNodeFormatDependent.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/module/module.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/module/system.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/namedEvaluation.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/taggedTemplate.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/ts.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/typeSerializer.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "transformers/utilities.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "tsbuild.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "tsbuildPublic.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "types.ts",
+    "before": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "classification": "unchanged"
+  },
+  {
+    "root": "utilities.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "utilitiesPublic.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "visitorPublic.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "watch.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "watchPublic.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  },
+  {
+    "root": "watchUtilities.ts",
+    "before": [
+      "debug.ts:525:37",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "tracing.ts:96:19",
+      "NotYet",
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    ],
+    "classification": "new"
+  }
+]
