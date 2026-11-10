@@ -5,7 +5,7 @@ sys.path.insert(0,str(out));from run import run
 sys.path.insert(0,'/workspace/adamic/stage3/meter');from report import READINESS_REASONS
 rows=[json.loads(x) for x in (out/'census.jsonl').read_text().splitlines()]
 roots=[r['roots'][0] for r in rows if r.get('reason') in READINESS_REASONS]
-run('node-readiness',[sys.executable,'stage3/meter/node_readiness.py','/workspace/scratch/next-stops-adapted',str(out/'node-readiness'),*roots])
+if not (out/'node-readiness-status.json').exists():run('node-readiness',[sys.executable,'stage3/meter/node_readiness.py','/workspace/scratch/next-stops-adapted',str(out/'node-readiness'),*roots])
 run('artifact-classification',[sys.executable,str(out/'classify-artifacts.py')])
 run('latent-totals',[sys.executable,str(out/'latent-totals.py')])
 run('source-excerpts',[sys.executable,str(out/'source-excerpts.py')])
@@ -23,4 +23,3 @@ with tarfile.open(out/'guarded-entry-overlay.tar.gz','w:gz') as t:
  for d in ['next-stops-overlay','next-stops-entry-overlay']:t.add(Path('/workspace/scratch')/d,arcname=d)
 run('write-report',[sys.executable,str(out/'write-report.py')])
 run('validation',[sys.executable,str(out/'validate.py')])
-run('package',[sys.executable,str(out/'package-evidence.py')])

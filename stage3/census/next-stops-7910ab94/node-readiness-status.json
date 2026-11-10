@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/node_readiness.py",
+    "/workspace/scratch/next-stops-adapted",
+    "/workspace/adamic/stage3/census/next-stops-7910ab94/node-readiness",
+    "/workspace/scratch/next-stops-adapted/src/compiler/debug.ts",
+    "/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+    "/workspace/scratch/next-stops-adapted/src/compiler/types.ts"
+  ],
+  "exit_code": 0,
+  "seconds": 12.250715038999715,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
