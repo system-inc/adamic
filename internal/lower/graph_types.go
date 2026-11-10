@@ -285,7 +285,10 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	f.l.result.GraphTypes = map[int]bool{}
 	for node := range graph {
 		if node.proven != nil && !f.weak(node.proven) {
-			f.l.result.GraphTypes[f.l.cycleTypeID(node.proven)] = true
+			if id := f.l.cycleTypeID(node.proven); !f.l.result.GraphTypes[id] {
+				f.l.result.GraphTypes[id] = true
+				f.selected = append(f.selected, node.proven)
+			}
 		}
 		if node.cell != 0 {
 			f.l.result.Locals[node.cell-1].GraphCell = true
@@ -702,6 +705,13 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 		first := f.l.graphUnplanned[0]
 		return f.l.notYet(first.node, first.what+" in a graph program, whose result lowering makes outside the program's graph regions")
 	}
+	if site := f.unplannedPair(); site != nil {
+		what := "a Map's or a Set's [key, value] pair in a graph program, whose type the checker didn't name"
+		if site.pair != nil {
+			what = "a Map's or a Set's [key, value] pair held as another graph type in a graph program, so no plan names the pair"
+		}
+		return f.l.notYet(site.node, what)
+	}
 	if decodes {
 		what := "decodeJson<" + f.l.graphDecodeType + "> in a graph program, whose decoded values the runtime makes outside the program's graph regions"
 		if f.l.graphDecodeSite == nil {
@@ -709,6 +719,37 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 			return &NotYet{Where: f.l.result.Source, What: what}
 		}
 		return f.l.notYet(f.l.graphDecodeSite, what)
+	}
+	return nil
+}
+
+// unplannedPair is the first Map entries site whose pairs a graph program could hold on a cycle with
+// no plan for them, or nil. A pair is planned by its own tuple type (mapEntries); when that type isn't
+// a graph type but the pair can still be held as one, a labeled or readonly tuple, a wider array or a
+// union, map.c makes the pair counted and a cycle through it leaks (#dps0kp6). Assignability is the
+// test, failing closed on a pair whose type the checker didn't name. An exhausted relation budget
+// reads as not assignable (#apyq5ve), which this can't tell apart.
+func (f *cycleFinder) unplannedPair() *graphPairSite {
+	// With no graph type selected there's no graph slot to hold a pair (selectProgramMembership reads
+	// this boundary too).
+	if len(f.selected) == 0 {
+		return nil
+	}
+	judged := map[*checker.Type]bool{}
+	for index := range f.l.graphPairs {
+		site := &f.l.graphPairs[index]
+		if site.pair == nil {
+			return site
+		}
+		if f.l.result.GraphTypes[int(site.pair.Id())] || judged[site.pair] {
+			continue
+		}
+		judged[site.pair] = true
+		for _, held := range f.selected {
+			if f.l.checker.IsTypeAssignableTo(site.pair, held) {
+				return site
+			}
+		}
 	}
 	return nil
 }

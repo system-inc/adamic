@@ -558,7 +558,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if e.dynamicProperties() {
 			e.line("adamic_register_shape_types(&%s_metadata);", pair)
 		}
-		return e.programArray(e.graphArray(fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
+		// A pair whose tuple type is a graph type is adopted as it's made, by its own plan (#dps0kp6).
+		entries := "adamic_map_entries"
+		if e.graphTypes(expression.PairGraphTypes) {
+			entries = "adamic_map_entries_planned"
+		}
+		return e.programArray(e.graphArray(fmt.Sprintf("%s(%s, &%s)", entries, e.value(expression.Map), pair), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 	case ir.ArraySlice:
 		array := e.value(expression.Array)
 		arguments := []string{"0.0", "0.0"}

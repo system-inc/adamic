@@ -1019,6 +1019,9 @@ typedef struct adamic_map_iterator {
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
 adamic_object *adamic_string_iterator(adamic_string *string);
 adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
+// adamic_collection_iterator_planned is the same, each entries() pair adopted into a graph region of
+// its own as next() makes it, for a pair whose tuple type is a graph type (#dps0kp6).
+adamic_object *adamic_collection_iterator_planned(adamic_map *collection, int part, int key, int value, bool set);
 // adamic_iterator_result is one step's { value, done }, value in slot 0 and done in slot 1, as every
 // runtime-built iterator's next() gives it (map_set.c). kind is the value slot's field kind, and
 // element_tag its representation byte, ir.Type's. The result is owned by the caller, and the element
@@ -1247,6 +1250,9 @@ void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic
 
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
+// adamic_map_entries_planned is the same, each pair adopted into a graph region of its own, for a pair
+// whose tuple type is a graph type: it can reach a graph slot while its array is dropped (#dps0kp6).
+adamic_array *adamic_map_entries_planned(const adamic_map *map, const adamic_shape *pair);
 
 // adamic_array_join is array.join(separator), each element written as String() would, and the empty
 // string when the join would be longer than V8's longest (adamic_string_check_length).
