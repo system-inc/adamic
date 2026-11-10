@@ -71,13 +71,13 @@ The old-pin full command `ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m .
 
 Each mutant used a Go overlay, with `ADAMIC_GATE_UNCACHED=1`, `-count=1`, and output in its own log. The exact mutation and observation:
 
-| Mutant | Check and observation |
-|---|---|
-| Replace post-order append with prepend | Filtered order oracle failed, exit 1: Node printed `shared c b a inline main`, native and generated JS printed `main inline a b c shared`. Both builds exited 0, so compilation or sanitizers did not catch it. |
-| Change `if cyclic` to `if cyclic && false` | `TestImportCycleLoadTimeRefusals` failed, exit 1: every expected refusal became `<nil>`. |
-| Force every ImportClause to have a runtime edge | Filtered order oracle failed, exit 1: native and generated JS additionally printed `type-only body must not run`. |
-| Restore per-module declareModule calls | `TestImportCycleRuntimeCalls` failed, exit 1: `odd.a:3:23: stage 0 can't lower reading even yet`. |
-| Disable only the deferred-import guard | Indirect refusal subtest failed, exit 1: expected refusal became `<nil>`. |
+| Mutant                                          | Check and observation                                                                                                                                                                                           |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Replace post-order append with prepend          | Filtered order oracle failed, exit 1: Node printed `shared c b a inline main`, native and generated JS printed `main inline a b c shared`. Both builds exited 0, so compilation or sanitizers did not catch it. |
+| Change `if cyclic` to `if cyclic && false`      | `TestImportCycleLoadTimeRefusals` failed, exit 1: every expected refusal became `<nil>`.                                                                                                                        |
+| Force every ImportClause to have a runtime edge | Filtered order oracle failed, exit 1: native and generated JS additionally printed `type-only body must not run`.                                                                                               |
+| Restore per-module declareModule calls          | `TestImportCycleRuntimeCalls` failed, exit 1: `odd.a:3:23: stage 0 can't lower reading even yet`.                                                                                                               |
+| Disable only the deferred-import guard          | Indirect refusal subtest failed, exit 1: expected refusal became `<nil>`.                                                                                                                                       |
 
 Overlays are /tmp/import-cycles-mutants/{wrong-order,drop-refusal,type-import-runs,module-at-a-time,drop-indirect}.json. Their logs are /tmp/import-cycles-mutant-{order,refusal,type,linking,indirect}.log. These prove the interim checkpoint's checks only; the refusal mutant must be rerun after public integration, and the interim-only indirect mutant will no longer apply.
 
@@ -97,11 +97,11 @@ The conservative interim still refuses production load-time reads while public i
 
 Three more isolated mutants were run with `go test -overlay ... ./internal/lower -run 'TestUndecidedCycleReadsUseReadyChecks/<case>' -count=1 -v`, all exit 1:
 
-| Mutant | Observed failure |
-|---|---|
-| Remove cyclic module-body readiness from checked | Early-value case: generated JS prints `undefined`, native prints `0`, both exit 0; source Node throws the required ReferenceError. |
-| Omit ready storage for classes without static members | Early-class case: generated JS and native print `7` and exit 0; source Node throws `Cannot access 'Box' before initialization`. |
-| Check the internal parent-class storage in extends | Early-extends case: generated JS and native report `Base_class`; Node reports `Base`. |
+| Mutant                                                | Observed failure                                                                                                                   |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Remove cyclic module-body readiness from checked      | Early-value case: generated JS prints `undefined`, native prints `0`, both exit 0; source Node throws the required ReferenceError. |
+| Omit ready storage for classes without static members | Early-class case: generated JS and native print `7` and exit 0; source Node throws `Cannot access 'Box' before initialization`.    |
+| Check the internal parent-class storage in extends    | Early-extends case: generated JS and native report `Base_class`; Node reports `Base`.                                              |
 
 The corresponding overlays are /tmp/import-cycles-mutants/{drop-top-ready,drop-class-ready,internal-base-ready}.json and logs are /tmp/import-cycles-mutant-{top-ready,class-ready,base-ready}.log. The earlier five mutants were regenerated against this implementation and rerun, all exit 1.
 
@@ -129,11 +129,11 @@ Merged origin/codex/stage3-fixtures-cycles at a4ec90d, with merge commit a852810
 
 Ran fresh `node --disable-warning=ExperimentalWarning oracle/node.mjs <entry>` for each entry. All ten stdout/stderr/exit triples equal the bucket records: nine exit 0; fixture 06 exits 70 with `adamic: panic: ReferenceError: Cannot access 'emptyArray' before initialization`. The source bucket's import-order mutant is therefore still distinguished by Node. Our current refusal of both fixtures 05 and 06 does not demonstrate that Adamic distinguishes safe scheduling.
 
-| Population | Refused | Checked | Proven safe | Unassessed |
-| --- | ---: | ---: | ---: | ---: |
-| Ten reduced fixture programs | 10 | 0 | 0 | 0 |
-| 58 original tsc ledger statements | 0 | 0 | 0 | 58 |
-| 914 observed original read occurrences | 0 | 0 | 0 | 914 |
+| Population                             | Refused | Checked | Proven safe | Unassessed |
+| -------------------------------------- | ------: | ------: | ----------: | ---------: |
+| Ten reduced fixture programs           |      10 |       0 |           0 |          0 |
+| 58 original tsc ledger statements      |       0 |       0 |           0 |         58 |
+| 914 observed original read occurrences |       0 |       0 |           0 |        914 |
 
 The original-read zeros mean no compiler classification was obtained, not acceptance. The bucket states that fixture 05 is a scheduling witness for all ledger rows, not a reproduction of their initializers. It explicitly omits the complete factory initializer and many type/allocator dependencies. Consequently refusing that witness cannot establish that 58 original statements or 914 original reads were refused. Nor can the observed Node ordering be promoted to a certificate for branches not executed. Runtime-check coverage for those original sites requires actual lowered original code and source-site mapping; neither is present in this run. The conditional static read is also unassessed.
 
@@ -182,10 +182,10 @@ A safe sibling enters the same object-binding graph through the barrel and print
 
 Fetched pristine TypeScript v6.0.3 at the exact ledger commit 050880ce59e30b356b686bd3144efe24f875ebc8 and generated diagnosticInformationMap with upstream's own script. The audit builds one compiler program rooted at src/tsc/tsc.ts, calls the actual public rule, and uses the same esmModuleOrder/proveModuleReads helpers as Lower. Its computed order of all 80 modules equals the independently verified Node order byte for byte. Every one of the 914 original read occurrences resolves at its source location to the exact declaration/provider recorded by the ledger; missing or mismatched identities fail instead of being counted safe. The direct conditional Debug read is classified too.
 
-| Bounded ledger population | Proven | Checked | Refused |
-| --- | ---: | ---: | ---: |
-| Original top-level statements | 55 | 3 | 0 |
-| Observed original read occurrences | 905 | 9 | 0 |
+| Bounded ledger population          | Proven | Checked | Refused |
+| ---------------------------------- | -----: | ------: | ------: |
+| Original top-level statements      |     55 |       3 |       0 |
+| Observed original read occurrences |    905 |       9 |       0 |
 
 The checked statements are semver.ts:46, parser.ts:1437 and binder.ts:499. Their checked occurrences are Debug at semver.ts:63,64,65,70,71; emptyArray at semver.ts:68; Debug at scanner.ts:4020 and scanner.ts:1115; and Debug at binder.ts:496. These are inside deferred bodies and retain the runtime fallback rather than inheriting the observed invocation's safe timing. Hoisted module function bindings and direct reads after their provider completes are proven. A row is checked if any of its bounded ledger reads is checked; otherwise it is proven.
 

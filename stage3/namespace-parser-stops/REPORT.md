@@ -89,11 +89,11 @@ The final combined oracle passes 34.151s, uncached: native 28 misses/0 hits, Nod
 
 After restoring the intrinsic mutant, scoped namespace tests pass 30.105s. The final fetch advanced main to ffe6efc1bd30de2539c1e1416230ca650105a0c7. Merge 2d706cb3 incorporates that main into this feature branch without rebase or force. Its only changed files are documentation/velocity/landings.csv and stage1/cohere/json/progress_test.go; namespace outcomes and counts do not change. The combined uncached Node/native/JavaScript oracle and repository-wide vet are rerun after that merge; post-merge oracle passes 28.556s with native 28 misses/0 hits and Node 38 misses/0 hits; post-merge vet exits 0. Their raw logs are recorded in evidence.
 
-| Exact parser probe | Before on f0cc334c | Unit moving it | After |
-| --- | --- | --- | --- |
-| native-namespace-object-receiver.a, debug.ts:429/526 | Refused, this attributed to namespace function | bab96720, 1 probe | Node/native/JavaScript match |
-| native-namespace-class.a, debug.ts:739 | NotYet, namespace class member | e444c07b, 1 probe | Node/native/JavaScript match |
-| native-callable-namespace.a, debug.ts:50 | NotYet, runtime merge | This callable commit, 1 probe | Node/native/JavaScript match |
+| Exact parser probe                                   | Before on f0cc334c                             | Unit moving it                | After                        |
+| ---------------------------------------------------- | ---------------------------------------------- | ----------------------------- | ---------------------------- |
+| native-namespace-object-receiver.a, debug.ts:429/526 | Refused, this attributed to namespace function | bab96720, 1 probe             | Node/native/JavaScript match |
+| native-namespace-class.a, debug.ts:739               | NotYet, namespace class member                 | e444c07b, 1 probe             | Node/native/JavaScript match |
+| native-callable-namespace.a, debug.ts:50             | NotYet, runtime merge                          | This callable commit, 1 probe | Node/native/JavaScript match |
 
 These are probe outcomes, not an assertion that entire Debug or the parser now runs. Three probes move, with one separate feature-branch push per finished unit. No main or area branch was pushed or merged into.
 
