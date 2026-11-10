@@ -1,0 +1,7 @@
+{
+  "allOwnKeysIdentical": true,
+  "allOwnKeyCount": 2256,
+  "enumerableKeyCount": 2256,
+  "symbolKeyCount": 0,
+  "comparison": "Reflect.ownKeys(before).map(String).sort() equals Reflect.ownKeys(after).map(String).sort()"
+}

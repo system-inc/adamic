@@ -1727,3 +1727,719 @@
 {"Time":"2026-11-10T22:30:02.936409649Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile305","Elapsed":6.84}
 {"Time":"2026-11-10T22:30:02.936422809Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile303"}
 {"Time":"2026-11-10T22:30:02.936426473Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile303","Output":"=== CONT  TestShard_Stage3LaneFile303\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:08.782822571Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile304","Output":"--- PASS: TestShard_Stage3LaneFile304 (7.17s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:08.783111502Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile304","Elapsed":7.17}
+{"Time":"2026-11-10T22:30:08.783133434Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile302"}
+{"Time":"2026-11-10T22:30:08.783136414Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile302","Output":"=== CONT  TestShard_Stage3LaneFile302\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:09.500705463Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile303","Output":"--- PASS: TestShard_Stage3LaneFile303 (6.56s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:09.50118911Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile303","Elapsed":6.56}
+{"Time":"2026-11-10T22:30:09.501222568Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile301"}
+{"Time":"2026-11-10T22:30:09.501227256Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile301","Output":"=== CONT  TestShard_Stage3LaneFile301\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:15.729482996Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile302","Output":"--- PASS: TestShard_Stage3LaneFile302 (6.95s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:15.729947596Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile302","Elapsed":6.95}
+{"Time":"2026-11-10T22:30:15.729962211Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile300"}
+{"Time":"2026-11-10T22:30:15.729986011Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile300","Output":"=== CONT  TestShard_Stage3LaneFile300\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:17.106148216Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile301","Output":"--- PASS: TestShard_Stage3LaneFile301 (7.60s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:17.110073616Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile301","Elapsed":7.6}
+{"Time":"2026-11-10T22:30:17.110189479Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile299"}
+{"Time":"2026-11-10T22:30:17.110196292Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile299","Output":"=== CONT  TestShard_Stage3LaneFile299\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:23.224094937Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile300","Output":"--- PASS: TestShard_Stage3LaneFile300 (7.49s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:23.224531743Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile300","Elapsed":7.49}
+{"Time":"2026-11-10T22:30:23.22454497Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile298"}
+{"Time":"2026-11-10T22:30:23.224606369Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile298","Output":"=== CONT  TestShard_Stage3LaneFile298\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:24.199178432Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile299","Output":"--- PASS: TestShard_Stage3LaneFile299 (7.09s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:24.199717251Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile299","Elapsed":7.09}
+{"Time":"2026-11-10T22:30:24.199735109Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile297"}
+{"Time":"2026-11-10T22:30:24.199739243Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile297","Output":"=== CONT  TestShard_Stage3LaneFile297\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:30.249245794Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile298","Output":"--- PASS: TestShard_Stage3LaneFile298 (7.03s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:30.249500355Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile298","Elapsed":7.03}
+{"Time":"2026-11-10T22:30:30.249508995Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile296"}
+{"Time":"2026-11-10T22:30:30.24951149Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile296","Output":"=== CONT  TestShard_Stage3LaneFile296\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:31.10723835Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile297","Output":"--- PASS: TestShard_Stage3LaneFile297 (6.91s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:31.107440526Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile297","Elapsed":6.91}
+{"Time":"2026-11-10T22:30:31.107453083Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile295"}
+{"Time":"2026-11-10T22:30:31.107624619Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile295","Output":"=== CONT  TestShard_Stage3LaneFile295\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:38.020459351Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile296","Output":"--- PASS: TestShard_Stage3LaneFile296 (7.77s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:38.020792156Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile296","Elapsed":7.77}
+{"Time":"2026-11-10T22:30:38.020803753Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile294"}
+{"Time":"2026-11-10T22:30:38.020807197Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile294","Output":"=== CONT  TestShard_Stage3LaneFile294\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:39.132063856Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile295","Output":"--- PASS: TestShard_Stage3LaneFile295 (8.02s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:39.133911463Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile295","Elapsed":8.02}
+{"Time":"2026-11-10T22:30:39.133934934Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile293"}
+{"Time":"2026-11-10T22:30:39.133938434Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile293","Output":"=== CONT  TestShard_Stage3LaneFile293\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:44.246534722Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile294","Output":"--- PASS: TestShard_Stage3LaneFile294 (6.23s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:44.24695264Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile294","Elapsed":6.23}
+{"Time":"2026-11-10T22:30:44.246966087Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile292"}
+{"Time":"2026-11-10T22:30:44.246970474Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile292","Output":"=== CONT  TestShard_Stage3LaneFile292\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:45.584928205Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile293","Output":"--- PASS: TestShard_Stage3LaneFile293 (6.45s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:45.585260319Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile293","Elapsed":6.45}
+{"Time":"2026-11-10T22:30:45.585271191Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile291"}
+{"Time":"2026-11-10T22:30:45.58527488Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile291","Output":"=== CONT  TestShard_Stage3LaneFile291\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:50.999214999Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile292","Output":"--- PASS: TestShard_Stage3LaneFile292 (6.75s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:51.001390864Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile292","Elapsed":6.75}
+{"Time":"2026-11-10T22:30:51.001553875Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile290"}
+{"Time":"2026-11-10T22:30:51.001596345Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile290","Output":"=== CONT  TestShard_Stage3LaneFile290\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:51.850769815Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile291","Output":"--- PASS: TestShard_Stage3LaneFile291 (6.27s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:51.850939982Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile291","Elapsed":6.27}
+{"Time":"2026-11-10T22:30:51.850953604Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile289"}
+{"Time":"2026-11-10T22:30:51.850957886Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile289","Output":"=== CONT  TestShard_Stage3LaneFile289\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:58.038719909Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile290","Output":"--- PASS: TestShard_Stage3LaneFile290 (7.04s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:58.039308781Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile290","Elapsed":7.04}
+{"Time":"2026-11-10T22:30:58.039327082Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile288"}
+{"Time":"2026-11-10T22:30:58.03933206Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile288","Output":"=== CONT  TestShard_Stage3LaneFile288\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:58.407227295Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile289","Output":"--- PASS: TestShard_Stage3LaneFile289 (6.56s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:30:58.407360932Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile289","Elapsed":6.56}
+{"Time":"2026-11-10T22:30:58.407414331Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile287"}
+{"Time":"2026-11-10T22:30:58.407425437Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile287","Output":"=== CONT  TestShard_Stage3LaneFile287\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:04.922310793Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile288","Output":"--- PASS: TestShard_Stage3LaneFile288 (6.88s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:04.922667142Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile288","Elapsed":6.88}
+{"Time":"2026-11-10T22:31:04.922679084Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile286"}
+{"Time":"2026-11-10T22:31:04.922682875Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile286","Output":"=== CONT  TestShard_Stage3LaneFile286\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:05.120794444Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile287","Output":"--- PASS: TestShard_Stage3LaneFile287 (6.71s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:05.12180558Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile287","Elapsed":6.71}
+{"Time":"2026-11-10T22:31:05.121830535Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile285"}
+{"Time":"2026-11-10T22:31:05.121834857Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile285","Output":"=== CONT  TestShard_Stage3LaneFile285\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:10.744910717Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile286","Output":"--- PASS: TestShard_Stage3LaneFile286 (5.82s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:10.745276014Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile286","Elapsed":5.82}
+{"Time":"2026-11-10T22:31:10.745288272Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile284"}
+{"Time":"2026-11-10T22:31:10.745292199Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile284","Output":"=== CONT  TestShard_Stage3LaneFile284\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:10.954261433Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile285","Output":"--- PASS: TestShard_Stage3LaneFile285 (5.83s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:10.954467019Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile285","Elapsed":5.83}
+{"Time":"2026-11-10T22:31:10.954478782Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile283"}
+{"Time":"2026-11-10T22:31:10.954482152Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile283","Output":"=== CONT  TestShard_Stage3LaneFile283\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:23.69586936Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile283","Output":"--- PASS: TestShard_Stage3LaneFile283 (12.74s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:23.696396198Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile283","Elapsed":12.74}
+{"Time":"2026-11-10T22:31:23.696409406Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile282"}
+{"Time":"2026-11-10T22:31:23.696431022Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile282","Output":"=== CONT  TestShard_Stage3LaneFile282\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:23.839769329Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile284","Output":"--- PASS: TestShard_Stage3LaneFile284 (13.10s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:23.839831431Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile284","Elapsed":13.1}
+{"Time":"2026-11-10T22:31:23.839891438Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile281"}
+{"Time":"2026-11-10T22:31:23.839895763Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile281","Output":"=== CONT  TestShard_Stage3LaneFile281\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:37.884087205Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile280"}
+{"Time":"2026-11-10T22:31:37.884527778Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile280","Output":"=== CONT  TestShard_Stage3LaneFile280\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:37.888427712Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile282","Output":"--- PASS: TestShard_Stage3LaneFile282 (14.19s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:41.558507022Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile282","Elapsed":14.19}
+{"Time":"2026-11-10T22:31:41.558784316Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile281","Output":"--- PASS: TestShard_Stage3LaneFile281 (17.72s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:41.558797251Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile281","Elapsed":17.72}
+{"Time":"2026-11-10T22:31:41.55880004Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile279"}
+{"Time":"2026-11-10T22:31:41.558834531Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile279","Output":"=== CONT  TestShard_Stage3LaneFile279\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:51.012944522Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile278"}
+{"Time":"2026-11-10T22:31:51.013273028Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile278","Output":"=== CONT  TestShard_Stage3LaneFile278\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:51.016995584Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile280","Output":"--- PASS: TestShard_Stage3LaneFile280 (13.13s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:52.776601635Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile280","Elapsed":13.13}
+{"Time":"2026-11-10T22:31:52.776670024Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile277"}
+{"Time":"2026-11-10T22:31:52.776676487Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile277","Output":"=== CONT  TestShard_Stage3LaneFile277\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:31:52.776935147Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile279","Output":"--- PASS: TestShard_Stage3LaneFile279 (11.22s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:03.39432043Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile279","Elapsed":11.22}
+{"Time":"2026-11-10T22:32:03.396709664Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile278","Output":"--- PASS: TestShard_Stage3LaneFile278 (12.36s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:03.39688312Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile278","Elapsed":12.36}
+{"Time":"2026-11-10T22:32:03.396890745Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile276"}
+{"Time":"2026-11-10T22:32:03.396935371Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile276","Output":"=== CONT  TestShard_Stage3LaneFile276\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:05.439026217Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile277","Output":"--- PASS: TestShard_Stage3LaneFile277 (12.66s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:05.445604871Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile277","Elapsed":12.66}
+{"Time":"2026-11-10T22:32:05.445647063Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile260"}
+{"Time":"2026-11-10T22:32:05.445682562Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile260","Output":"=== CONT  TestShard_Stage3LaneFile260\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:15.297377236Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile276","Output":"--- PASS: TestShard_Stage3LaneFile276 (11.92s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:15.297782599Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile276","Elapsed":11.92}
+{"Time":"2026-11-10T22:32:15.29780621Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile275"}
+{"Time":"2026-11-10T22:32:15.297810499Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile275","Output":"=== CONT  TestShard_Stage3LaneFile275\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:16.380552317Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile260","Output":"--- PASS: TestShard_Stage3LaneFile260 (10.94s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:16.380962743Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile260","Elapsed":10.94}
+{"Time":"2026-11-10T22:32:16.380975565Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile274"}
+{"Time":"2026-11-10T22:32:16.380980469Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile274","Output":"=== CONT  TestShard_Stage3LaneFile274\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:25.608951022Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile275","Output":"--- PASS: TestShard_Stage3LaneFile275 (10.31s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:25.60924156Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile275","Elapsed":10.31}
+{"Time":"2026-11-10T22:32:25.609272323Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile273"}
+{"Time":"2026-11-10T22:32:25.609292899Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile273","Output":"=== CONT  TestShard_Stage3LaneFile273\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:26.517085934Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile274","Output":"--- PASS: TestShard_Stage3LaneFile274 (10.13s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:26.51715393Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile274","Elapsed":10.13}
+{"Time":"2026-11-10T22:32:26.517165219Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile272"}
+{"Time":"2026-11-10T22:32:26.517206168Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile272","Output":"=== CONT  TestShard_Stage3LaneFile272\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:33.152756424Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile273","Output":"--- PASS: TestShard_Stage3LaneFile273 (7.54s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:33.156429956Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile273","Elapsed":7.54}
+{"Time":"2026-11-10T22:32:33.156466336Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile271"}
+{"Time":"2026-11-10T22:32:33.156472463Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile271","Output":"=== CONT  TestShard_Stage3LaneFile271\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:33.752148768Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile272","Output":"--- PASS: TestShard_Stage3LaneFile272 (7.24s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:33.752278091Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile272","Elapsed":7.24}
+{"Time":"2026-11-10T22:32:33.752291044Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile270"}
+{"Time":"2026-11-10T22:32:33.752295478Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile270","Output":"=== CONT  TestShard_Stage3LaneFile270\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:39.677369895Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile271","Output":"--- PASS: TestShard_Stage3LaneFile271 (6.52s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:39.679585699Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile271","Elapsed":6.52}
+{"Time":"2026-11-10T22:32:39.679624209Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile269"}
+{"Time":"2026-11-10T22:32:39.679629697Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile269","Output":"=== CONT  TestShard_Stage3LaneFile269\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:40.435235767Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile268"}
+{"Time":"2026-11-10T22:32:40.435632062Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile268","Output":"=== CONT  TestShard_Stage3LaneFile268\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:40.435674358Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile270","Output":"--- PASS: TestShard_Stage3LaneFile270 (6.68s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:46.788948104Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile270","Elapsed":6.68}
+{"Time":"2026-11-10T22:32:46.789298772Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile269","Output":"--- PASS: TestShard_Stage3LaneFile269 (7.11s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:46.789314985Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile269","Elapsed":7.11}
+{"Time":"2026-11-10T22:32:46.789318832Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile267"}
+{"Time":"2026-11-10T22:32:46.789322532Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile267","Output":"=== CONT  TestShard_Stage3LaneFile267\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:48.917350579Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile268","Output":"--- PASS: TestShard_Stage3LaneFile268 (8.48s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:48.917687434Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile268","Elapsed":8.48}
+{"Time":"2026-11-10T22:32:48.917698893Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile266"}
+{"Time":"2026-11-10T22:32:48.917702722Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile266","Output":"=== CONT  TestShard_Stage3LaneFile266\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:53.460578275Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile267","Output":"--- PASS: TestShard_Stage3LaneFile267 (6.67s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:53.460790462Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile267","Elapsed":6.67}
+{"Time":"2026-11-10T22:32:53.460798435Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile265"}
+{"Time":"2026-11-10T22:32:53.460801426Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile265","Output":"=== CONT  TestShard_Stage3LaneFile265\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:56.111031562Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile266","Output":"--- PASS: TestShard_Stage3LaneFile266 (7.20s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:32:56.115881535Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile266","Elapsed":7.2}
+{"Time":"2026-11-10T22:32:56.115921818Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile264"}
+{"Time":"2026-11-10T22:32:56.115936751Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile264","Output":"=== CONT  TestShard_Stage3LaneFile264\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:00.754146633Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile265","Output":"--- PASS: TestShard_Stage3LaneFile265 (7.29s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:00.754497683Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile265","Elapsed":7.29}
+{"Time":"2026-11-10T22:33:00.754508658Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile263"}
+{"Time":"2026-11-10T22:33:00.754513111Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile263","Output":"=== CONT  TestShard_Stage3LaneFile263\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:02.807332486Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile264","Output":"--- PASS: TestShard_Stage3LaneFile264 (6.69s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:02.808569719Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile264","Elapsed":6.69}
+{"Time":"2026-11-10T22:33:02.808600143Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile262"}
+{"Time":"2026-11-10T22:33:02.808681075Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile262","Output":"=== CONT  TestShard_Stage3LaneFile262\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:07.378229167Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile263","Output":"--- PASS: TestShard_Stage3LaneFile263 (6.63s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:07.378465882Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile263","Elapsed":6.63}
+{"Time":"2026-11-10T22:33:07.378474903Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile261"}
+{"Time":"2026-11-10T22:33:07.378478196Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile261","Output":"=== CONT  TestShard_Stage3LaneFile261\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:09.560173218Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile262","Output":"--- PASS: TestShard_Stage3LaneFile262 (6.75s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:09.560700566Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile262","Elapsed":6.75}
+{"Time":"2026-11-10T22:33:09.560712342Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile131"}
+{"Time":"2026-11-10T22:33:09.560716597Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile131","Output":"=== CONT  TestShard_Stage3LaneFile131\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:14.39411764Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile261","Output":"--- PASS: TestShard_Stage3LaneFile261 (7.01s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:14.394893821Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile261","Elapsed":7.01}
+{"Time":"2026-11-10T22:33:14.394904579Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile259"}
+{"Time":"2026-11-10T22:33:14.394908291Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile259","Output":"=== CONT  TestShard_Stage3LaneFile259\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:17.876192352Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile131","Output":"--- PASS: TestShard_Stage3LaneFile131 (8.32s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:17.876564313Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile131","Elapsed":8.32}
+{"Time":"2026-11-10T22:33:17.876575324Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile258"}
+{"Time":"2026-11-10T22:33:17.876578581Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile258","Output":"=== CONT  TestShard_Stage3LaneFile258\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:22.289720224Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile259","Output":"--- PASS: TestShard_Stage3LaneFile259 (7.90s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:22.290134677Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile259","Elapsed":7.9}
+{"Time":"2026-11-10T22:33:22.290144002Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile257"}
+{"Time":"2026-11-10T22:33:22.290147217Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile257","Output":"=== CONT  TestShard_Stage3LaneFile257\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:24.380386232Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile258","Output":"--- PASS: TestShard_Stage3LaneFile258 (6.50s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:24.380747649Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile258","Elapsed":6.5}
+{"Time":"2026-11-10T22:33:24.380759433Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile256"}
+{"Time":"2026-11-10T22:33:24.380773565Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile256","Output":"=== CONT  TestShard_Stage3LaneFile256\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:29.854969009Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile257","Output":"--- PASS: TestShard_Stage3LaneFile257 (7.57s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:29.855421429Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile257","Elapsed":7.57}
+{"Time":"2026-11-10T22:33:29.855433887Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile255"}
+{"Time":"2026-11-10T22:33:29.855515299Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile255","Output":"=== CONT  TestShard_Stage3LaneFile255\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:30.488391082Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile256","Output":"--- PASS: TestShard_Stage3LaneFile256 (6.11s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:30.488791862Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile256","Elapsed":6.11}
+{"Time":"2026-11-10T22:33:30.488820778Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile254"}
+{"Time":"2026-11-10T22:33:30.488833593Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile254","Output":"=== CONT  TestShard_Stage3LaneFile254\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:36.054181968Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile255","Output":"--- PASS: TestShard_Stage3LaneFile255 (6.20s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:36.054445492Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile255","Elapsed":6.2}
+{"Time":"2026-11-10T22:33:36.054454401Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile253"}
+{"Time":"2026-11-10T22:33:36.054518309Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile253","Output":"=== CONT  TestShard_Stage3LaneFile253\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:37.51030859Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile254","Output":"--- PASS: TestShard_Stage3LaneFile254 (7.02s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:37.510650382Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile254","Elapsed":7.02}
+{"Time":"2026-11-10T22:33:37.510662948Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile252"}
+{"Time":"2026-11-10T22:33:37.510675173Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile252","Output":"=== CONT  TestShard_Stage3LaneFile252\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:43.04798871Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile253","Output":"--- PASS: TestShard_Stage3LaneFile253 (6.99s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:43.048761555Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile253","Elapsed":6.99}
+{"Time":"2026-11-10T22:33:43.048779394Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile251"}
+{"Time":"2026-11-10T22:33:43.048939217Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile251","Output":"=== CONT  TestShard_Stage3LaneFile251\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:45.195588706Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile252","Output":"--- PASS: TestShard_Stage3LaneFile252 (7.69s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:45.195990234Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile252","Elapsed":7.69}
+{"Time":"2026-11-10T22:33:45.19600325Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile250"}
+{"Time":"2026-11-10T22:33:45.196067296Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile250","Output":"=== CONT  TestShard_Stage3LaneFile250\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:50.260704308Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile249"}
+{"Time":"2026-11-10T22:33:50.260997588Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile249","Output":"=== CONT  TestShard_Stage3LaneFile249\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:50.261247633Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile251","Output":"--- PASS: TestShard_Stage3LaneFile251 (7.21s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:52.344681471Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile251","Elapsed":7.21}
+{"Time":"2026-11-10T22:33:52.345424905Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile250","Output":"--- PASS: TestShard_Stage3LaneFile250 (7.15s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:52.345478892Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile250","Elapsed":7.15}
+{"Time":"2026-11-10T22:33:52.34550926Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile248"}
+{"Time":"2026-11-10T22:33:52.345533682Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile248","Output":"=== CONT  TestShard_Stage3LaneFile248\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:58.680480031Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile247"}
+{"Time":"2026-11-10T22:33:58.680960757Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile247","Output":"=== CONT  TestShard_Stage3LaneFile247\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:33:58.681170462Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile249","Output":"--- PASS: TestShard_Stage3LaneFile249 (8.42s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:00.226100872Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile249","Elapsed":8.42}
+{"Time":"2026-11-10T22:34:00.226327711Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile248","Output":"--- PASS: TestShard_Stage3LaneFile248 (7.88s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:00.226340136Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile248","Elapsed":7.88}
+{"Time":"2026-11-10T22:34:00.226342941Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile246"}
+{"Time":"2026-11-10T22:34:00.226345543Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile246","Output":"=== CONT  TestShard_Stage3LaneFile246\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:06.42383466Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile247","Output":"--- PASS: TestShard_Stage3LaneFile247 (7.75s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:06.424278907Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile247","Elapsed":7.75}
+{"Time":"2026-11-10T22:34:06.424300993Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile245"}
+{"Time":"2026-11-10T22:34:06.424305393Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile245","Output":"=== CONT  TestShard_Stage3LaneFile245\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:08.375729729Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile246","Output":"--- PASS: TestShard_Stage3LaneFile246 (8.15s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:08.376268909Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile246","Elapsed":8.15}
+{"Time":"2026-11-10T22:34:08.376293296Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile244"}
+{"Time":"2026-11-10T22:34:08.376310754Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile244","Output":"=== CONT  TestShard_Stage3LaneFile244\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:33.589838353Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile245","Output":"--- PASS: TestShard_Stage3LaneFile245 (27.17s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:33.592506495Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile245","Elapsed":27.17}
+{"Time":"2026-11-10T22:34:33.592576365Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile243"}
+{"Time":"2026-11-10T22:34:33.592650368Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile243","Output":"=== CONT  TestShard_Stage3LaneFile243\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:33.806206466Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile244","Output":"--- PASS: TestShard_Stage3LaneFile244 (25.43s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:33.812505333Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile244","Elapsed":25.43}
+{"Time":"2026-11-10T22:34:33.81253843Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile242"}
+{"Time":"2026-11-10T22:34:33.812542221Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile242","Output":"=== CONT  TestShard_Stage3LaneFile242\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:43.874287305Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile242","Output":"--- PASS: TestShard_Stage3LaneFile242 (10.07s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:43.87715871Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile242","Elapsed":10.07}
+{"Time":"2026-11-10T22:34:43.877171783Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile241"}
+{"Time":"2026-11-10T22:34:43.877175615Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile241","Output":"=== CONT  TestShard_Stage3LaneFile241\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:44.916288918Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile243","Output":"--- PASS: TestShard_Stage3LaneFile243 (11.33s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:44.916471801Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile243","Elapsed":11.33}
+{"Time":"2026-11-10T22:34:44.91647939Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile240"}
+{"Time":"2026-11-10T22:34:44.916482235Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile240","Output":"=== CONT  TestShard_Stage3LaneFile240\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:50.071531147Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile241","Output":"--- PASS: TestShard_Stage3LaneFile241 (6.19s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:50.071737139Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile241","Elapsed":6.19}
+{"Time":"2026-11-10T22:34:50.071744774Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile239"}
+{"Time":"2026-11-10T22:34:50.07174738Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile239","Output":"=== CONT  TestShard_Stage3LaneFile239\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:51.246592258Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile240","Output":"--- PASS: TestShard_Stage3LaneFile240 (6.33s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:51.247120927Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile240","Elapsed":6.33}
+{"Time":"2026-11-10T22:34:51.247135Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile238"}
+{"Time":"2026-11-10T22:34:51.24724487Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile238","Output":"=== CONT  TestShard_Stage3LaneFile238\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:56.768655247Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile239","Output":"--- PASS: TestShard_Stage3LaneFile239 (6.70s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:56.768830372Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile239","Elapsed":6.7}
+{"Time":"2026-11-10T22:34:56.768838205Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile237"}
+{"Time":"2026-11-10T22:34:56.768840842Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile237","Output":"=== CONT  TestShard_Stage3LaneFile237\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:59.260401325Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile238","Output":"--- PASS: TestShard_Stage3LaneFile238 (8.02s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:34:59.260660536Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile238","Elapsed":8.02}
+{"Time":"2026-11-10T22:34:59.260669054Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile236"}
+{"Time":"2026-11-10T22:34:59.260672089Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile236","Output":"=== CONT  TestShard_Stage3LaneFile236\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:02.806952695Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile237","Output":"--- PASS: TestShard_Stage3LaneFile237 (6.04s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:02.807162921Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile237","Elapsed":6.04}
+{"Time":"2026-11-10T22:35:02.807170466Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile235"}
+{"Time":"2026-11-10T22:35:02.807173132Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile235","Output":"=== CONT  TestShard_Stage3LaneFile235\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:06.02256399Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile236","Output":"--- PASS: TestShard_Stage3LaneFile236 (6.76s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:06.022778276Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile236","Elapsed":6.76}
+{"Time":"2026-11-10T22:35:06.02278755Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile234"}
+{"Time":"2026-11-10T22:35:06.02279011Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile234","Output":"=== CONT  TestShard_Stage3LaneFile234\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:10.108949062Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile235","Output":"--- PASS: TestShard_Stage3LaneFile235 (7.30s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:10.109451397Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile235","Elapsed":7.3}
+{"Time":"2026-11-10T22:35:10.109465289Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile233"}
+{"Time":"2026-11-10T22:35:10.109470038Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile233","Output":"=== CONT  TestShard_Stage3LaneFile233\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:12.567835884Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile234","Output":"--- PASS: TestShard_Stage3LaneFile234 (6.54s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:12.56810626Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile234","Elapsed":6.54}
+{"Time":"2026-11-10T22:35:12.56811491Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile232"}
+{"Time":"2026-11-10T22:35:12.568117288Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile232","Output":"=== CONT  TestShard_Stage3LaneFile232\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:17.520727383Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile233","Output":"--- PASS: TestShard_Stage3LaneFile233 (7.41s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:17.521079688Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile233","Elapsed":7.41}
+{"Time":"2026-11-10T22:35:17.521090373Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile231"}
+{"Time":"2026-11-10T22:35:17.521093651Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile231","Output":"=== CONT  TestShard_Stage3LaneFile231\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:19.274201404Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile232","Output":"--- PASS: TestShard_Stage3LaneFile232 (6.71s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:19.274744767Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile232","Elapsed":6.71}
+{"Time":"2026-11-10T22:35:19.274756966Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile230"}
+{"Time":"2026-11-10T22:35:19.274759842Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile230","Output":"=== CONT  TestShard_Stage3LaneFile230\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:23.54496886Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile231","Output":"--- PASS: TestShard_Stage3LaneFile231 (6.02s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:23.545278588Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile231","Elapsed":6.02}
+{"Time":"2026-11-10T22:35:23.545298746Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile229"}
+{"Time":"2026-11-10T22:35:23.545336862Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile229","Output":"=== CONT  TestShard_Stage3LaneFile229\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:26.570130575Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile230","Output":"--- PASS: TestShard_Stage3LaneFile230 (7.29s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:26.570350227Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile230","Elapsed":7.29}
+{"Time":"2026-11-10T22:35:26.570358134Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile228"}
+{"Time":"2026-11-10T22:35:26.57036077Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile228","Output":"=== CONT  TestShard_Stage3LaneFile228\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:30.511622041Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile229","Output":"--- PASS: TestShard_Stage3LaneFile229 (6.97s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:30.51199315Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile229","Elapsed":6.97}
+{"Time":"2026-11-10T22:35:30.5120029Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile227"}
+{"Time":"2026-11-10T22:35:30.512006037Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile227","Output":"=== CONT  TestShard_Stage3LaneFile227\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:32.458128093Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile228","Output":"--- PASS: TestShard_Stage3LaneFile228 (5.89s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:32.458358639Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile228","Elapsed":5.89}
+{"Time":"2026-11-10T22:35:32.45836743Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile226"}
+{"Time":"2026-11-10T22:35:32.458370016Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile226","Output":"=== CONT  TestShard_Stage3LaneFile226\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:36.779414714Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile227","Output":"--- PASS: TestShard_Stage3LaneFile227 (6.27s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:36.77965063Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile227","Elapsed":6.27}
+{"Time":"2026-11-10T22:35:36.779658366Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile225"}
+{"Time":"2026-11-10T22:35:36.779661318Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile225","Output":"=== CONT  TestShard_Stage3LaneFile225\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:39.134641782Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile226","Output":"--- PASS: TestShard_Stage3LaneFile226 (6.68s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:39.134973446Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile226","Elapsed":6.68}
+{"Time":"2026-11-10T22:35:39.13498693Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile224"}
+{"Time":"2026-11-10T22:35:39.134990636Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile224","Output":"=== CONT  TestShard_Stage3LaneFile224\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:43.099997777Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile223"}
+{"Time":"2026-11-10T22:35:43.10021532Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile223","Output":"=== CONT  TestShard_Stage3LaneFile223\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:43.100287206Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile225","Output":"--- PASS: TestShard_Stage3LaneFile225 (6.32s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:46.628211603Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile225","Elapsed":6.32}
+{"Time":"2026-11-10T22:35:46.628500433Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile224","Output":"--- PASS: TestShard_Stage3LaneFile224 (7.49s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:46.629947666Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile224","Elapsed":7.49}
+{"Time":"2026-11-10T22:35:46.62996586Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile222"}
+{"Time":"2026-11-10T22:35:46.630096243Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile222","Output":"=== CONT  TestShard_Stage3LaneFile222\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:49.690736778Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile221"}
+{"Time":"2026-11-10T22:35:49.69108109Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile221","Output":"=== CONT  TestShard_Stage3LaneFile221\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:49.691549285Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile223","Output":"--- PASS: TestShard_Stage3LaneFile223 (6.59s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:55.069188404Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile223","Elapsed":6.59}
+{"Time":"2026-11-10T22:35:55.069490148Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile222","Output":"--- PASS: TestShard_Stage3LaneFile222 (8.44s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:55.071130455Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile222","Elapsed":8.44}
+{"Time":"2026-11-10T22:35:55.071155982Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile220"}
+{"Time":"2026-11-10T22:35:55.07119722Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile220","Output":"=== CONT  TestShard_Stage3LaneFile220\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:57.553148637Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile221","Output":"--- PASS: TestShard_Stage3LaneFile221 (7.86s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:35:57.553386028Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile221","Elapsed":7.86}
+{"Time":"2026-11-10T22:35:57.553394221Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile219"}
+{"Time":"2026-11-10T22:35:57.553397172Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile219","Output":"=== CONT  TestShard_Stage3LaneFile219\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:02.674334492Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile220","Output":"--- PASS: TestShard_Stage3LaneFile220 (7.60s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:02.677771718Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile220","Elapsed":7.6}
+{"Time":"2026-11-10T22:36:02.677836767Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile218"}
+{"Time":"2026-11-10T22:36:02.677912441Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile218","Output":"=== CONT  TestShard_Stage3LaneFile218\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:04.046258848Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile219","Output":"--- PASS: TestShard_Stage3LaneFile219 (6.49s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:04.046613113Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile219","Elapsed":6.49}
+{"Time":"2026-11-10T22:36:04.046621438Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile217"}
+{"Time":"2026-11-10T22:36:04.046677695Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile217","Output":"=== CONT  TestShard_Stage3LaneFile217\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:10.03570352Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile218","Output":"--- PASS: TestShard_Stage3LaneFile218 (7.36s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:10.045389764Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile218","Elapsed":7.36}
+{"Time":"2026-11-10T22:36:10.045501201Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile216"}
+{"Time":"2026-11-10T22:36:10.045506001Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile216","Output":"=== CONT  TestShard_Stage3LaneFile216\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:11.052745379Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile217","Output":"--- PASS: TestShard_Stage3LaneFile217 (7.01s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:11.054276834Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile217","Elapsed":7.01}
+{"Time":"2026-11-10T22:36:11.05461271Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile212"}
+{"Time":"2026-11-10T22:36:11.054653051Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile212","Output":"=== CONT  TestShard_Stage3LaneFile212\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:16.694067812Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile216","Output":"--- PASS: TestShard_Stage3LaneFile216 (6.65s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:16.69435364Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile216","Elapsed":6.65}
+{"Time":"2026-11-10T22:36:16.694362341Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile215"}
+{"Time":"2026-11-10T22:36:16.694365086Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile215","Output":"=== CONT  TestShard_Stage3LaneFile215\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:17.270285611Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile212","Output":"--- PASS: TestShard_Stage3LaneFile212 (6.22s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:17.270355814Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile212","Elapsed":6.22}
+{"Time":"2026-11-10T22:36:17.270363626Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile214"}
+{"Time":"2026-11-10T22:36:17.270396097Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile214","Output":"=== CONT  TestShard_Stage3LaneFile214\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:25.720052589Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile215","Output":"--- PASS: TestShard_Stage3LaneFile215 (9.03s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:25.720377433Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile215","Elapsed":9.03}
+{"Time":"2026-11-10T22:36:25.720386644Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile213"}
+{"Time":"2026-11-10T22:36:25.72038953Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile213","Output":"=== CONT  TestShard_Stage3LaneFile213\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:25.828773965Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile214","Output":"--- PASS: TestShard_Stage3LaneFile214 (8.56s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:25.828898812Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile214","Elapsed":8.56}
+{"Time":"2026-11-10T22:36:25.828910414Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile211"}
+{"Time":"2026-11-10T22:36:25.828914025Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile211","Output":"=== CONT  TestShard_Stage3LaneFile211\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:35.395804189Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile213","Output":"--- PASS: TestShard_Stage3LaneFile213 (9.68s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:35.396212537Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile213","Elapsed":9.68}
+{"Time":"2026-11-10T22:36:35.396241834Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile210"}
+{"Time":"2026-11-10T22:36:35.396333935Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile210","Output":"=== CONT  TestShard_Stage3LaneFile210\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:36.214467745Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile211","Output":"--- PASS: TestShard_Stage3LaneFile211 (10.39s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:36.214556951Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile211","Elapsed":10.39}
+{"Time":"2026-11-10T22:36:36.214567568Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile209"}
+{"Time":"2026-11-10T22:36:36.214571012Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile209","Output":"=== CONT  TestShard_Stage3LaneFile209\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:42.849302319Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile210","Output":"--- PASS: TestShard_Stage3LaneFile210 (7.45s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:42.849636028Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile210","Elapsed":7.45}
+{"Time":"2026-11-10T22:36:42.849648036Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile208"}
+{"Time":"2026-11-10T22:36:42.849651942Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile208","Output":"=== CONT  TestShard_Stage3LaneFile208\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:44.585821251Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile209","Output":"--- PASS: TestShard_Stage3LaneFile209 (8.37s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:44.586213473Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile209","Elapsed":8.37}
+{"Time":"2026-11-10T22:36:44.586225167Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile207"}
+{"Time":"2026-11-10T22:36:44.586229247Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile207","Output":"=== CONT  TestShard_Stage3LaneFile207\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:50.049093686Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile208","Output":"--- PASS: TestShard_Stage3LaneFile208 (7.20s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:50.049577609Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile208","Elapsed":7.2}
+{"Time":"2026-11-10T22:36:50.049628321Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile206"}
+{"Time":"2026-11-10T22:36:50.049633301Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile206","Output":"=== CONT  TestShard_Stage3LaneFile206\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:52.51751013Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile207","Output":"--- PASS: TestShard_Stage3LaneFile207 (7.93s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:52.517810448Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile207","Elapsed":7.93}
+{"Time":"2026-11-10T22:36:52.517827632Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile205"}
+{"Time":"2026-11-10T22:36:52.517830813Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile205","Output":"=== CONT  TestShard_Stage3LaneFile205\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:58.7083894Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile206","Output":"--- PASS: TestShard_Stage3LaneFile206 (8.66s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:36:58.708727749Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile206","Elapsed":8.66}
+{"Time":"2026-11-10T22:36:58.708736954Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile204"}
+{"Time":"2026-11-10T22:36:58.708770258Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile204","Output":"=== CONT  TestShard_Stage3LaneFile204\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:00.803987078Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile205","Output":"--- PASS: TestShard_Stage3LaneFile205 (8.29s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:00.807675781Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile205","Elapsed":8.29}
+{"Time":"2026-11-10T22:37:00.807710859Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile203"}
+{"Time":"2026-11-10T22:37:00.807714921Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile203","Output":"=== CONT  TestShard_Stage3LaneFile203\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:05.971943062Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile204","Output":"--- PASS: TestShard_Stage3LaneFile204 (7.26s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:05.972176613Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile204","Elapsed":7.26}
+{"Time":"2026-11-10T22:37:05.972200074Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile202"}
+{"Time":"2026-11-10T22:37:05.97220441Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile202","Output":"=== CONT  TestShard_Stage3LaneFile202\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:08.275473619Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile203","Output":"--- PASS: TestShard_Stage3LaneFile203 (7.47s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:08.27588108Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile203","Elapsed":7.47}
+{"Time":"2026-11-10T22:37:08.275892889Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile201"}
+{"Time":"2026-11-10T22:37:08.275935722Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile201","Output":"=== CONT  TestShard_Stage3LaneFile201\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:17.398618986Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile202","Output":"--- PASS: TestShard_Stage3LaneFile202 (11.42s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:17.398981603Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile202","Elapsed":11.42}
+{"Time":"2026-11-10T22:37:17.399005413Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile200"}
+{"Time":"2026-11-10T22:37:17.399011528Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile200","Output":"=== CONT  TestShard_Stage3LaneFile200\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:21.229711771Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile201","Output":"--- PASS: TestShard_Stage3LaneFile201 (12.95s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:21.230121244Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile201","Elapsed":12.95}
+{"Time":"2026-11-10T22:37:21.230146292Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile199"}
+{"Time":"2026-11-10T22:37:21.230151877Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile199","Output":"=== CONT  TestShard_Stage3LaneFile199\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:39.514708067Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile200","Output":"--- PASS: TestShard_Stage3LaneFile200 (22.12s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:39.515085623Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile200","Elapsed":22.12}
+{"Time":"2026-11-10T22:37:39.515095588Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile198"}
+{"Time":"2026-11-10T22:37:39.515098469Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile198","Output":"=== CONT  TestShard_Stage3LaneFile198\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:46.706416664Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile197"}
+{"Time":"2026-11-10T22:37:46.706704301Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile197","Output":"=== CONT  TestShard_Stage3LaneFile197\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:37:46.708612146Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile199","Output":"--- PASS: TestShard_Stage3LaneFile199 (25.47s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:20.720946276Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile199","Elapsed":25.47}
+{"Time":"2026-11-10T22:38:20.731832536Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile198","Output":"--- PASS: TestShard_Stage3LaneFile198 (41.18s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:20.746336413Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile198","Elapsed":41.18}
+{"Time":"2026-11-10T22:38:20.747040365Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile196"}
+{"Time":"2026-11-10T22:38:20.747109648Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile196","Output":"=== CONT  TestShard_Stage3LaneFile196\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:21.22918743Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile195"}
+{"Time":"2026-11-10T22:38:21.229449981Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile195","Output":"=== CONT  TestShard_Stage3LaneFile195\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:21.231299738Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile197","Output":"--- PASS: TestShard_Stage3LaneFile197 (34.52s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:33.781324632Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile197","Elapsed":34.52}
+{"Time":"2026-11-10T22:38:33.78153919Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile196","Output":"--- PASS: TestShard_Stage3LaneFile196 (13.09s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:33.783206066Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile196","Elapsed":13.09}
+{"Time":"2026-11-10T22:38:33.783234428Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile194"}
+{"Time":"2026-11-10T22:38:33.783243245Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile194","Output":"=== CONT  TestShard_Stage3LaneFile194\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:34.107599933Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile195","Output":"--- PASS: TestShard_Stage3LaneFile195 (12.88s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:34.107655513Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile195","Elapsed":12.88}
+{"Time":"2026-11-10T22:38:34.107663125Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile193"}
+{"Time":"2026-11-10T22:38:34.10766619Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile193","Output":"=== CONT  TestShard_Stage3LaneFile193\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:41.794619729Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile193","Output":"--- PASS: TestShard_Stage3LaneFile193 (7.69s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:41.794850652Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile193","Elapsed":7.69}
+{"Time":"2026-11-10T22:38:41.794882118Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile192"}
+{"Time":"2026-11-10T22:38:41.794885435Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile192","Output":"=== CONT  TestShard_Stage3LaneFile192\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:42.370980229Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile194","Output":"--- PASS: TestShard_Stage3LaneFile194 (8.59s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:42.371202236Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile194","Elapsed":8.59}
+{"Time":"2026-11-10T22:38:42.37121047Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile191"}
+{"Time":"2026-11-10T22:38:42.371213153Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile191","Output":"=== CONT  TestShard_Stage3LaneFile191\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:50.175445205Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile191","Output":"--- PASS: TestShard_Stage3LaneFile191 (7.80s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:50.177031932Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile191","Elapsed":7.8}
+{"Time":"2026-11-10T22:38:50.177179728Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile190"}
+{"Time":"2026-11-10T22:38:50.177185654Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile190","Output":"=== CONT  TestShard_Stage3LaneFile190\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:50.266990134Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile192","Output":"--- PASS: TestShard_Stage3LaneFile192 (8.47s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:50.26704577Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile192","Elapsed":8.47}
+{"Time":"2026-11-10T22:38:50.267055832Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile189"}
+{"Time":"2026-11-10T22:38:50.267059264Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile189","Output":"=== CONT  TestShard_Stage3LaneFile189\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:57.082107325Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile190","Output":"--- PASS: TestShard_Stage3LaneFile190 (6.91s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:57.082207495Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile190","Elapsed":6.91}
+{"Time":"2026-11-10T22:38:57.082218126Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile188"}
+{"Time":"2026-11-10T22:38:57.082221701Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile188","Output":"=== CONT  TestShard_Stage3LaneFile188\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:58.846711969Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile189","Output":"--- PASS: TestShard_Stage3LaneFile189 (8.58s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:38:58.846890866Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile189","Elapsed":8.58}
+{"Time":"2026-11-10T22:38:58.846902959Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile187"}
+{"Time":"2026-11-10T22:38:58.846906559Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile187","Output":"=== CONT  TestShard_Stage3LaneFile187\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:04.911104888Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile188","Output":"--- PASS: TestShard_Stage3LaneFile188 (7.83s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:04.9137158Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile188","Elapsed":7.83}
+{"Time":"2026-11-10T22:39:04.91404236Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile186"}
+{"Time":"2026-11-10T22:39:04.914060648Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile186","Output":"=== CONT  TestShard_Stage3LaneFile186\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:07.145578331Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile187","Output":"--- PASS: TestShard_Stage3LaneFile187 (8.30s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:07.145744579Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile187","Elapsed":8.3}
+{"Time":"2026-11-10T22:39:07.145753523Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile185"}
+{"Time":"2026-11-10T22:39:07.145756125Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile185","Output":"=== CONT  TestShard_Stage3LaneFile185\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:12.300383283Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile186","Output":"--- PASS: TestShard_Stage3LaneFile186 (7.39s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:12.300926034Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile186","Elapsed":7.39}
+{"Time":"2026-11-10T22:39:12.300951533Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile184"}
+{"Time":"2026-11-10T22:39:12.301012074Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile184","Output":"=== CONT  TestShard_Stage3LaneFile184\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:14.32400614Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile185","Output":"--- PASS: TestShard_Stage3LaneFile185 (7.18s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:14.324188506Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile185","Elapsed":7.18}
+{"Time":"2026-11-10T22:39:14.324198015Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile183"}
+{"Time":"2026-11-10T22:39:14.324200893Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile183","Output":"=== CONT  TestShard_Stage3LaneFile183\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:19.949479347Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile184","Output":"--- PASS: TestShard_Stage3LaneFile184 (7.65s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:19.949729373Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile184","Elapsed":7.65}
+{"Time":"2026-11-10T22:39:19.949769344Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile182"}
+{"Time":"2026-11-10T22:39:19.949804384Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile182","Output":"=== CONT  TestShard_Stage3LaneFile182\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:22.012320945Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile183","Output":"--- PASS: TestShard_Stage3LaneFile183 (7.69s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:22.01282072Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile183","Elapsed":7.69}
+{"Time":"2026-11-10T22:39:22.012829814Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile181"}
+{"Time":"2026-11-10T22:39:22.012832891Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile181","Output":"=== CONT  TestShard_Stage3LaneFile181\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:27.685707766Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile180"}
+{"Time":"2026-11-10T22:39:27.68592845Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile180","Output":"=== CONT  TestShard_Stage3LaneFile180\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:27.686027917Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile182","Output":"--- PASS: TestShard_Stage3LaneFile182 (7.74s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:29.220603126Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile182","Elapsed":7.74}
+{"Time":"2026-11-10T22:39:29.220686379Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile181","Output":"--- PASS: TestShard_Stage3LaneFile181 (7.21s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:29.220697804Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile181","Elapsed":7.21}
+{"Time":"2026-11-10T22:39:29.220700087Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile179"}
+{"Time":"2026-11-10T22:39:29.220757398Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile179","Output":"=== CONT  TestShard_Stage3LaneFile179\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:34.909601379Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile180","Output":"--- PASS: TestShard_Stage3LaneFile180 (7.22s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:34.909752782Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile180","Elapsed":7.22}
+{"Time":"2026-11-10T22:39:34.909761234Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile178"}
+{"Time":"2026-11-10T22:39:34.909763761Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile178","Output":"=== CONT  TestShard_Stage3LaneFile178\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:38.482000874Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile177"}
+{"Time":"2026-11-10T22:39:38.482182965Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile177","Output":"=== CONT  TestShard_Stage3LaneFile177\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:38.490987387Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile179","Output":"--- PASS: TestShard_Stage3LaneFile179 (9.26s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:45.751878383Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile179","Elapsed":9.26}
+{"Time":"2026-11-10T22:39:45.752288466Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile178","Output":"--- PASS: TestShard_Stage3LaneFile178 (10.84s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:45.752908179Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile178","Elapsed":10.84}
+{"Time":"2026-11-10T22:39:45.752934413Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile176"}
+{"Time":"2026-11-10T22:39:45.752939229Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile176","Output":"=== CONT  TestShard_Stage3LaneFile176\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:48.132553113Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile177","Output":"--- PASS: TestShard_Stage3LaneFile177 (9.65s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:48.1327535Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile177","Elapsed":9.65}
+{"Time":"2026-11-10T22:39:48.132790922Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile175"}
+{"Time":"2026-11-10T22:39:48.132807084Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile175","Output":"=== CONT  TestShard_Stage3LaneFile175\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:53.30799986Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile176","Output":"--- PASS: TestShard_Stage3LaneFile176 (7.55s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:53.308089311Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile176","Elapsed":7.55}
+{"Time":"2026-11-10T22:39:53.308097338Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile174"}
+{"Time":"2026-11-10T22:39:53.308100002Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile174","Output":"=== CONT  TestShard_Stage3LaneFile174\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:54.893939292Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile175","Output":"--- PASS: TestShard_Stage3LaneFile175 (6.76s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:39:54.894085612Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile175","Elapsed":6.76}
+{"Time":"2026-11-10T22:39:54.894095875Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile173"}
+{"Time":"2026-11-10T22:39:54.894098864Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile173","Output":"=== CONT  TestShard_Stage3LaneFile173\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:00.281246311Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile174","Output":"--- PASS: TestShard_Stage3LaneFile174 (6.97s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:00.281369097Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile174","Elapsed":6.97}
+{"Time":"2026-11-10T22:40:00.281404831Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile172"}
+{"Time":"2026-11-10T22:40:00.281420563Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile172","Output":"=== CONT  TestShard_Stage3LaneFile172\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:02.066376431Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile173","Output":"--- PASS: TestShard_Stage3LaneFile173 (7.17s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:02.068212607Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile173","Elapsed":7.17}
+{"Time":"2026-11-10T22:40:02.06825789Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile171"}
+{"Time":"2026-11-10T22:40:02.068261904Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile171","Output":"=== CONT  TestShard_Stage3LaneFile171\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:07.390553844Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile172","Output":"--- PASS: TestShard_Stage3LaneFile172 (7.11s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:07.392679786Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile172","Elapsed":7.11}
+{"Time":"2026-11-10T22:40:07.392720704Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile170"}
+{"Time":"2026-11-10T22:40:07.392733623Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile170","Output":"=== CONT  TestShard_Stage3LaneFile170\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:09.147433662Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile171","Output":"--- PASS: TestShard_Stage3LaneFile171 (7.08s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:09.147930625Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile171","Elapsed":7.08}
+{"Time":"2026-11-10T22:40:09.1479607Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile169"}
+{"Time":"2026-11-10T22:40:09.147965537Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile169","Output":"=== CONT  TestShard_Stage3LaneFile169\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:14.923785365Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile170","Output":"--- PASS: TestShard_Stage3LaneFile170 (7.53s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:14.925810126Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile170","Elapsed":7.53}
+{"Time":"2026-11-10T22:40:14.925834972Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile168"}
+{"Time":"2026-11-10T22:40:14.925838455Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile168","Output":"=== CONT  TestShard_Stage3LaneFile168\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:16.799555756Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile169","Output":"--- PASS: TestShard_Stage3LaneFile169 (7.65s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:16.800379365Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile169","Elapsed":7.65}
+{"Time":"2026-11-10T22:40:16.800429952Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile167"}
+{"Time":"2026-11-10T22:40:16.800434139Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile167","Output":"=== CONT  TestShard_Stage3LaneFile167\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:21.177640876Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile168","Output":"--- PASS: TestShard_Stage3LaneFile168 (6.25s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:21.17773299Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile168","Elapsed":6.25}
+{"Time":"2026-11-10T22:40:21.17774134Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile166"}
+{"Time":"2026-11-10T22:40:21.177744211Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile166","Output":"=== CONT  TestShard_Stage3LaneFile166\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:22.913252883Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile167","Output":"--- PASS: TestShard_Stage3LaneFile167 (6.11s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:22.915276513Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile167","Elapsed":6.11}
+{"Time":"2026-11-10T22:40:22.915365988Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile165"}
+{"Time":"2026-11-10T22:40:22.915424931Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile165","Output":"=== CONT  TestShard_Stage3LaneFile165\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:28.032996015Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile166","Output":"--- PASS: TestShard_Stage3LaneFile166 (6.86s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:28.033558833Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile166","Elapsed":6.86}
+{"Time":"2026-11-10T22:40:28.033571459Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile164"}
+{"Time":"2026-11-10T22:40:28.033575101Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile164","Output":"=== CONT  TestShard_Stage3LaneFile164\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:28.728257022Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile165","Output":"--- PASS: TestShard_Stage3LaneFile165 (5.82s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:28.728327815Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile165","Elapsed":5.82}
+{"Time":"2026-11-10T22:40:28.72833538Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile163"}
+{"Time":"2026-11-10T22:40:28.728338463Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile163","Output":"=== CONT  TestShard_Stage3LaneFile163\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:36.10542806Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile164","Output":"--- PASS: TestShard_Stage3LaneFile164 (8.07s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:36.105714782Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile164","Elapsed":8.07}
+{"Time":"2026-11-10T22:40:36.105728987Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile162"}
+{"Time":"2026-11-10T22:40:36.105769206Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile162","Output":"=== CONT  TestShard_Stage3LaneFile162\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:36.818065726Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile163","Output":"--- PASS: TestShard_Stage3LaneFile163 (8.09s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:36.818117108Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile163","Elapsed":8.09}
+{"Time":"2026-11-10T22:40:36.818124613Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile161"}
+{"Time":"2026-11-10T22:40:36.818127509Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile161","Output":"=== CONT  TestShard_Stage3LaneFile161\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:42.907310439Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile162","Output":"--- PASS: TestShard_Stage3LaneFile162 (6.80s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:42.907435421Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile162","Elapsed":6.8}
+{"Time":"2026-11-10T22:40:42.907446865Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile160"}
+{"Time":"2026-11-10T22:40:42.907451049Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile160","Output":"=== CONT  TestShard_Stage3LaneFile160\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:44.966428064Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile161","Output":"--- PASS: TestShard_Stage3LaneFile161 (8.15s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:44.966546548Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile161","Elapsed":8.15}
+{"Time":"2026-11-10T22:40:44.966568343Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile159"}
+{"Time":"2026-11-10T22:40:44.966572847Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile159","Output":"=== CONT  TestShard_Stage3LaneFile159\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:49.897529991Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile160","Output":"--- PASS: TestShard_Stage3LaneFile160 (6.99s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:49.897646306Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile160","Elapsed":6.99}
+{"Time":"2026-11-10T22:40:49.897656944Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile158"}
+{"Time":"2026-11-10T22:40:49.897661084Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile158","Output":"=== CONT  TestShard_Stage3LaneFile158\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:51.181975783Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile159","Output":"--- PASS: TestShard_Stage3LaneFile159 (6.22s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:51.182114276Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile159","Elapsed":6.22}
+{"Time":"2026-11-10T22:40:51.182126433Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile157"}
+{"Time":"2026-11-10T22:40:51.18213067Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile157","Output":"=== CONT  TestShard_Stage3LaneFile157\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:57.270527161Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile158","Output":"--- PASS: TestShard_Stage3LaneFile158 (7.37s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:57.27153928Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile158","Elapsed":7.37}
+{"Time":"2026-11-10T22:40:57.27157788Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile156"}
+{"Time":"2026-11-10T22:40:57.27158381Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile156","Output":"=== CONT  TestShard_Stage3LaneFile156\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:59.114889966Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile157","Output":"--- PASS: TestShard_Stage3LaneFile157 (7.93s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:40:59.119686401Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile157","Elapsed":7.93}
+{"Time":"2026-11-10T22:40:59.119727463Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile155"}
+{"Time":"2026-11-10T22:40:59.119731762Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile155","Output":"=== CONT  TestShard_Stage3LaneFile155\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:05.308589554Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile156","Output":"--- PASS: TestShard_Stage3LaneFile156 (8.03s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:05.310123381Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile156","Elapsed":8.03}
+{"Time":"2026-11-10T22:41:05.310306598Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile154"}
+{"Time":"2026-11-10T22:41:05.310343741Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile154","Output":"=== CONT  TestShard_Stage3LaneFile154\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:06.42150265Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile155","Output":"--- PASS: TestShard_Stage3LaneFile155 (7.30s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:06.421569361Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile155","Elapsed":7.3}
+{"Time":"2026-11-10T22:41:06.421577707Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile153"}
+{"Time":"2026-11-10T22:41:06.421580638Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile153","Output":"=== CONT  TestShard_Stage3LaneFile153\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:13.255767478Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile154","Output":"--- PASS: TestShard_Stage3LaneFile154 (7.95s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:13.259621034Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile154","Elapsed":7.95}
+{"Time":"2026-11-10T22:41:13.259654201Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile152"}
+{"Time":"2026-11-10T22:41:13.259658554Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile152","Output":"=== CONT  TestShard_Stage3LaneFile152\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:14.939830522Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile153","Output":"--- PASS: TestShard_Stage3LaneFile153 (8.52s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:14.939999853Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile153","Elapsed":8.52}
+{"Time":"2026-11-10T22:41:14.940012105Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile151"}
+{"Time":"2026-11-10T22:41:14.940016754Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile151","Output":"=== CONT  TestShard_Stage3LaneFile151\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:21.392711886Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile150"}
+{"Time":"2026-11-10T22:41:21.393459419Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile150","Output":"=== CONT  TestShard_Stage3LaneFile150\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:21.393727323Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile152","Output":"--- PASS: TestShard_Stage3LaneFile152 (8.13s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:22.875927171Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile152","Elapsed":8.13}
+{"Time":"2026-11-10T22:41:22.876028127Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile151","Output":"--- PASS: TestShard_Stage3LaneFile151 (7.94s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:22.876041975Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile151","Elapsed":7.94}
+{"Time":"2026-11-10T22:41:22.87604554Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile149"}
+{"Time":"2026-11-10T22:41:22.876049581Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile149","Output":"=== CONT  TestShard_Stage3LaneFile149\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:28.953562458Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile150","Output":"--- PASS: TestShard_Stage3LaneFile150 (7.56s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:28.953742888Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile150","Elapsed":7.56}
+{"Time":"2026-11-10T22:41:28.953766114Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile148"}
+{"Time":"2026-11-10T22:41:28.953782837Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile148","Output":"=== CONT  TestShard_Stage3LaneFile148\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:32.715424187Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile149","Output":"--- PASS: TestShard_Stage3LaneFile149 (9.84s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:32.715568412Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile149","Elapsed":9.84}
+{"Time":"2026-11-10T22:41:32.715580975Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile147"}
+{"Time":"2026-11-10T22:41:32.715585145Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile147","Output":"=== CONT  TestShard_Stage3LaneFile147\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:37.572512467Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile148","Output":"--- PASS: TestShard_Stage3LaneFile148 (8.62s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:37.572722171Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile148","Elapsed":8.62}
+{"Time":"2026-11-10T22:41:37.572732404Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile146"}
+{"Time":"2026-11-10T22:41:37.572748724Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile146","Output":"=== CONT  TestShard_Stage3LaneFile146\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:40.813898484Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile147","Output":"--- PASS: TestShard_Stage3LaneFile147 (8.10s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:40.814033108Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile147","Elapsed":8.1}
+{"Time":"2026-11-10T22:41:40.81404444Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile145"}
+{"Time":"2026-11-10T22:41:40.814048455Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile145","Output":"=== CONT  TestShard_Stage3LaneFile145\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:44.60970185Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile144"}
+{"Time":"2026-11-10T22:41:44.609802578Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile144","Output":"=== CONT  TestShard_Stage3LaneFile144\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:44.610043765Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile146","Output":"--- PASS: TestShard_Stage3LaneFile146 (7.04s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:47.674373616Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile146","Elapsed":7.04}
+{"Time":"2026-11-10T22:41:47.674487838Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile143"}
+{"Time":"2026-11-10T22:41:47.674495047Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile143","Output":"=== CONT  TestShard_Stage3LaneFile143\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:47.677731963Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile145","Output":"--- PASS: TestShard_Stage3LaneFile145 (6.86s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:53.681074034Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile145","Elapsed":6.86}
+{"Time":"2026-11-10T22:41:53.681217852Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile144","Output":"--- PASS: TestShard_Stage3LaneFile144 (9.07s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:53.681231243Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile144","Elapsed":9.07}
+{"Time":"2026-11-10T22:41:53.681233851Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile142"}
+{"Time":"2026-11-10T22:41:53.681237011Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile142","Output":"=== CONT  TestShard_Stage3LaneFile142\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:55.759454881Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile143","Output":"--- PASS: TestShard_Stage3LaneFile143 (8.09s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:41:55.761134026Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile143","Elapsed":8.09}
+{"Time":"2026-11-10T22:41:55.761160118Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile141"}
+{"Time":"2026-11-10T22:41:55.761165071Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile141","Output":"=== CONT  TestShard_Stage3LaneFile141\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:02.454076162Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile142","Output":"--- PASS: TestShard_Stage3LaneFile142 (8.77s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:02.454225449Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile142","Elapsed":8.77}
+{"Time":"2026-11-10T22:42:02.454235711Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile140"}
+{"Time":"2026-11-10T22:42:02.454239488Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile140","Output":"=== CONT  TestShard_Stage3LaneFile140\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:04.423667444Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile141","Output":"--- PASS: TestShard_Stage3LaneFile141 (8.66s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:04.424011342Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile141","Elapsed":8.66}
+{"Time":"2026-11-10T22:42:04.424024516Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile139"}
+{"Time":"2026-11-10T22:42:04.424027614Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile139","Output":"=== CONT  TestShard_Stage3LaneFile139\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:10.877838279Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile140","Output":"--- PASS: TestShard_Stage3LaneFile140 (8.42s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:10.878108779Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile140","Elapsed":8.42}
+{"Time":"2026-11-10T22:42:10.87813Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile138"}
+{"Time":"2026-11-10T22:42:10.878324154Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile138","Output":"=== CONT  TestShard_Stage3LaneFile138\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:14.024677309Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile137"}
+{"Time":"2026-11-10T22:42:14.025056708Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile137","Output":"=== CONT  TestShard_Stage3LaneFile137\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:14.027292994Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile139","Output":"--- PASS: TestShard_Stage3LaneFile139 (9.60s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:18.744193738Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile139","Elapsed":9.6}
+{"Time":"2026-11-10T22:42:18.744311329Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile136"}
+{"Time":"2026-11-10T22:42:18.744316435Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile136","Output":"=== CONT  TestShard_Stage3LaneFile136\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:18.74433111Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile138","Output":"--- PASS: TestShard_Stage3LaneFile138 (7.86s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:21.591316577Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile138","Elapsed":7.86}
+{"Time":"2026-11-10T22:42:21.591416336Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile137","Output":"--- PASS: TestShard_Stage3LaneFile137 (7.57s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:21.5920283Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile137","Elapsed":7.57}
+{"Time":"2026-11-10T22:42:21.604092512Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile135"}
+{"Time":"2026-11-10T22:42:21.604105918Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile135","Output":"=== CONT  TestShard_Stage3LaneFile135\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:26.770198869Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile136","Output":"--- PASS: TestShard_Stage3LaneFile136 (8.03s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:26.770445616Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile136","Elapsed":8.03}
+{"Time":"2026-11-10T22:42:26.770457603Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile134"}
+{"Time":"2026-11-10T22:42:26.770462329Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile134","Output":"=== CONT  TestShard_Stage3LaneFile134\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:29.552050608Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile135","Output":"--- PASS: TestShard_Stage3LaneFile135 (7.96s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:29.552301069Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile135","Elapsed":7.96}
+{"Time":"2026-11-10T22:42:29.552349286Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile133"}
+{"Time":"2026-11-10T22:42:29.552354709Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile133","Output":"=== CONT  TestShard_Stage3LaneFile133\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:44.101826302Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile132"}
+{"Time":"2026-11-10T22:42:44.102004366Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile132","Output":"=== CONT  TestShard_Stage3LaneFile132\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:44.103601802Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile134","Output":"--- PASS: TestShard_Stage3LaneFile134 (17.33s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:44.711574187Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile134","Elapsed":17.33}
+{"Time":"2026-11-10T22:42:44.71162502Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile133","Output":"--- PASS: TestShard_Stage3LaneFile133 (15.16s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:44.711657613Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile133","Elapsed":15.16}
+{"Time":"2026-11-10T22:42:44.711660234Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile002"}
+{"Time":"2026-11-10T22:42:44.711663441Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile002","Output":"=== CONT  TestShard_Stage3LaneFile002\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:50.28338708Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile002","Output":"--- PASS: TestShard_Stage3LaneFile002 (5.57s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:50.283701513Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile002","Elapsed":5.57}
+{"Time":"2026-11-10T22:42:50.283713989Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneProjectReferenceCases13"}
+{"Time":"2026-11-10T22:42:50.283721143Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneProjectReferenceCases13","Output":"=== CONT  TestShard_Stage3LaneProjectReferenceCases13\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:51.899578925Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile132","Output":"--- PASS: TestShard_Stage3LaneFile132 (7.80s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:51.899668757Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneFile132","Elapsed":7.8}
+{"Time":"2026-11-10T22:42:51.899676674Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase14"}
+{"Time":"2026-11-10T22:42:51.899679583Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase14","Output":"=== CONT  TestShard_Stage3LaneSymlinkCase14\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:56.55656692Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneProjectReferenceCases13","Output":"--- PASS: TestShard_Stage3LaneProjectReferenceCases13 (6.27s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:56.556950034Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneProjectReferenceCases13","Elapsed":6.27}
+{"Time":"2026-11-10T22:42:56.557076061Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase13"}
+{"Time":"2026-11-10T22:42:56.557094406Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase13","Output":"=== CONT  TestShard_Stage3LaneSymlinkCase13\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:57.813889156Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase14","Output":"--- PASS: TestShard_Stage3LaneSymlinkCase14 (5.91s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:42:57.813974918Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase14","Elapsed":5.91}
+{"Time":"2026-11-10T22:42:57.813992504Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase12"}
+{"Time":"2026-11-10T22:42:57.813995973Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase12","Output":"=== CONT  TestShard_Stage3LaneSymlinkCase12\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:43:02.243434011Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase13","Output":"--- PASS: TestShard_Stage3LaneSymlinkCase13 (5.69s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:43:02.24459637Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase13","Elapsed":5.69}
+{"Time":"2026-11-10T22:43:02.2449407Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase11"}
+{"Time":"2026-11-10T22:43:02.244967199Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase11","Output":"=== CONT  TestShard_Stage3LaneSymlinkCase11\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:43:06.609935663Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase12","Output":"--- PASS: TestShard_Stage3LaneSymlinkCase12 (8.80s)\n","OutputType":"frame"}
+{"Time":"2026-11-10T22:43:06.610046162Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase12","Elapsed":8.8}
+{"Time":"2026-11-10T22:43:06.610054084Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase10"}
+{"Time":"2026-11-10T22:43:06.610057988Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestShard_Stage3LaneSymlinkCase10","Output":"=== CONT  TestShard_Stage3LaneSymlinkCase10\n","OutputType":"frame"}
