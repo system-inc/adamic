@@ -1,9 +1,12 @@
 package oracle
 
 import (
+	"errors"
 	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -27,6 +30,10 @@ var graphOracleFixtures = []string{
 	"internal/oracle/testdata/graph_regions/classification_mixed.a",
 	"internal/oracle/testdata/graph_regions/classification_override.a",
 	"internal/oracle/testdata/graph_regions/classification_return.a",
+	"internal/oracle/testdata/graph_regions/flow_group_by.a",
+	"internal/oracle/testdata/graph_regions/flow_record_values.a",
+	"internal/oracle/testdata/graph_regions/flow_to_reversed.a",
+	"internal/oracle/testdata/graph_regions/flow_to_sorted.a",
 	"internal/oracle/testdata/graph_regions/logical_assignment_element.a",
 	"internal/oracle/testdata/graph_regions/logical_assignment_nullish.a",
 	"internal/oracle/testdata/graph_regions/logical_assignment_property.a",
@@ -184,6 +191,56 @@ func TestGraphOracleGraphRegionsClassificationOverride(t *testing.T) {
 func TestGraphOracleGraphRegionsClassificationReturn(t *testing.T) {
 	t.Parallel()
 	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/classification_return.a")
+}
+
+// The four allocations graphFlows' follow didn't reach at main, which leaked in the counted build
+// (Memory's rows 5, 10 and 11 on #djwd1t2): each frees everything now and prints what Node prints.
+func TestGraphOracleGraphRegionsFlowGroupBy(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_group_by.a")
+}
+
+// A record's entries over elements a cycle could run through stops in a graph program: the plan adopts
+// each [key, value] pair only through the entries array, so a pair read out and stored alone, the array
+// dropped, stays counted and leaks, measured freeing 7 of 16 (Memory's e3 on #y7wexf5). Both shapes stop
+// at the call until #dps0kp6 plans pairs by their tuple type; a record's values still lowers.
+//
+// Mutant: drop the graphUnplanned check from graphAdoptionBoundary, and both lower, and the pair alone
+// leaks by the counted build.
+func TestGraphOracleGraphRegionsRecordEntriesStop(t *testing.T) {
+	t.Parallel()
+	for _, path := range []string{
+		"internal/oracle/testdata/graph_regions/flow_record_entries.a",
+		"internal/oracle/testdata/graph_regions/record_entries_pair_alone.a",
+	} {
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			t.Parallel()
+			absolute, err := filepath.Abs(filepath.Join(repository, path))
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowered(t, absolute)
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "a record's entries in a graph program") {
+				t.Fatalf("got %v, want a record's entries stopped in a graph program", err)
+			}
+		})
+	}
+}
+
+func TestGraphOracleGraphRegionsFlowRecordValues(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_record_values.a")
+}
+
+func TestGraphOracleGraphRegionsFlowToReversed(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_to_reversed.a")
+}
+
+func TestGraphOracleGraphRegionsFlowToSorted(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_to_sorted.a")
 }
 
 // A logical assignment into a graph member's field or element is held and dropped through the graph, as
