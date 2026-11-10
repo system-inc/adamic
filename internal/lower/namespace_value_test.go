@@ -30,6 +30,8 @@ func TestNamespaceValueStops(t *testing.T) {
 		{"unknown", namespaceValueSource + "const opaque: unknown = N;\nconsole.log(typeof opaque);\n", "object\n", "a namespace value seen as unknown", false},
 		{"generic argument", namespaceValueSource + "function same<T>(value: T): T { return value; }\nconsole.log(typeof same(N));\n", "object\n", "a namespace value seen as a generic argument", false},
 		{"logical value", namespaceValueSource + "function pick(flag: boolean): void {\n\tconst either = flag || N;\n\tconsole.log(typeof either);\n}\npick(false);\n", "object\n", "a namespace value seen as true", false},
+		{"generic class parameter", namespaceValueSource + "class Holder<T extends { f: () => number }> {\n\tset(x: T): void { x.f = (): number => 2; }\n}\nnew Holder<typeof N>().set(N);\nconsole.log(String(N.f()));\n", "2\n", "a namespace value seen as an argument to a parameter declared with a type parameter", false},
+		{"generic interface parameter", namespaceValueSource + "interface Sink<T> { put(x: T): void; }\nclass Swap<T extends { f: () => number }> implements Sink<T> {\n\tput(x: T): void { x.f = (): number => 2; }\n}\nconst sink: Sink<typeof N> = new Swap<typeof N>();\nsink.put(N);\nconsole.log(String(N.f()));\n", "2\n", "a namespace value seen as an argument to a parameter declared with a type parameter", false},
 		{"member write", namespaceValueSource + "const held = N;\nheld.f = (): number => 2;\nconsole.log(String(N.f()));\n", "2\n", "a write to a namespace member through the namespace's value", true},
 	} {
 		t.Run(row.name, func(t *testing.T) {
@@ -59,4 +61,11 @@ func TestNamespaceValueStops(t *testing.T) {
 func TestNamespaceValueIdentityAgrees(t *testing.T) {
 	t.Parallel()
 	lowersAndAgreesWithNode(t, namespaceValueSource+"const a = N;\nconst b = N;\nfunction again(): typeof N { return N; }\nconsole.log(`${a === b} ${a === again()} ${a.f === N.f} ${b.f() + N.f()}`);\n")
+}
+
+// A namespace value passed into a parameter declared as its own type, or as its own type or undefined,
+// is the same object inside the callee, read and called through ?. there.
+func TestNamespaceValueParameterAgrees(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNode(t, namespaceValueSource+"function call(x: typeof N | undefined): number { return x?.f() ?? 0; }\nfunction same(x: typeof N): boolean { return x === N; }\nconsole.log(`${call(N)} ${call(undefined)} ${same(N)}`);\n")
 }
