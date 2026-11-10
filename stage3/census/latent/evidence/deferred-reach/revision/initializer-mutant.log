@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/audit_deferred.py", line 106, in <module>
+    assert named['initializerOnly'].get('instantiated_by') == [initializer_witness], (mode, 'initializer witnesses', named['initializerOnly'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('legacy', 'initializer witnesses', {'measurement': 'measured on a checker-rejected program', 'where': '/workspace/scratch/abrq61p-revision/mutant-controls/source/a.a:8:1', 'kind': 'KindFunctionDeclaration', 'body_start': 533, 'body_end': 551, 'instantiated': True, 'status': 'deferred_generic_instantiation', 'checker_diagnostics': [], 'name': 'initializerOnly'})

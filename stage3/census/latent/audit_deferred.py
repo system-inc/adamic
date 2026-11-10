@@ -29,6 +29,8 @@ if args.project:
 output.mkdir(parents=True, exist_ok=True)
 source = output/'source'
 source.mkdir(exist_ok=True)
+# Give production source identities an import route to both fixture files.
+(source/'0.a').write_text('import "./a.a";\nimport "./z.a";\n')
 (source/'a.a').write_text('''// a-check: type error TS2322
 export function unused<T>(value: T): T { function unusedNested(): T { return value; } return value; }
 export function called<T>(value: T): T { return value; }
@@ -36,11 +38,18 @@ export function diagnosed<T>(value: T): T { const bad: number = "wrong"; return 
 export function outer<T>(value: T): T { function nested(): T { return value; } return value; }
 export class Box<T> { method<U>(value: U): U { return value; } }
 export const arrow = <T>(value: T): T => value;
+export function initializerOnly<T>(value: T): T { return value; }
+export function enteredButStopped<T>(value: T): T { const untyped: any = value; return untyped; }
 ''')
 (source/'z.a').write_text('''// a-check: type error TS2322
-import { called, outer } from "./a.a";
-export function caller(): number { return called(7) + outer(8); }
+import { called, outer, initializerOnly, enteredButStopped } from "./a.a";
+export function caller(): number { return called<number>(7) + outer<number>(8); }
 ''')
+with (source/'z.a').open('a') as extra:
+    for i in range(7):
+        extra.write(f'export function witness{i}(): number {{ return called<number>({i}); }}\n')
+    extra.write('export const initialized = initializerOnly<number>(11);\n')
+    extra.write('export const stoppedResult = enteredButStopped<number>(12);\n')
 spec = importlib.util.spec_from_file_location('hidden', Path(__file__).resolve().parents[1]/'tsc-closure/hidden.py')
 hidden = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(hidden)
@@ -80,6 +89,33 @@ for mode in ('legacy', 'full', 'speculative'):
     if mode!='legacy':
         assert named['nested']['status']==DEFERRED and named['nested']['instantiated'], named['nested']
         assert named['unusedNested']['status']==DEFERRED and not named['unusedNested']['instantiated'], named['unusedNested']
+    # Use fixture text as an independent oracle for source columns and caller
+    # ownership. Eight reached calls exercise deterministic truncation to five.
+    def expected_witness(line_number, token):
+        line = (source/'z.a').read_text().splitlines()[line_number-1]
+        return dict(unit=str(source/'z.a')+f':{line_number}:1',
+                    call_site=str(source/'z.a')+f':{line_number}:{line.index(token)+1}',
+                    type_arguments=['number'])
+    expected = [expected_witness(n, 'called<number>') for n in range(3,11)]
+    expected.sort(key=lambda w: json.dumps(w, separators=(',', ':')))
+    assert named['called'].get('instantiated_by') == expected[:5], (mode, 'called witnesses', named['called'])
+    outer_witness = expected_witness(3, 'outer<number>')
+    assert named['outer'].get('instantiated_by') == [outer_witness], (mode, 'outer witnesses', named['outer'])
+    initializer_witness = expected_witness(11, 'initializerOnly<number>')
+    assert named['initializerOnly']['instantiated'], (mode, 'initializer flag')
+    assert named['initializerOnly'].get('instantiated_by') == [initializer_witness], (mode, 'initializer witnesses', named['initializerOnly'])
+    stopped_witness = expected_witness(12, 'enteredButStopped<number>')
+    assert named['enteredButStopped']['instantiated'], (mode, 'failed body entry flag')
+    assert named['enteredButStopped'].get('instantiated_by') == [stopped_witness], (mode, 'failed body entry witnesses')
+    assert any(f['unit'] == stopped_witness['unit'] and f['phase'] in ('lowering', 'deferred') for row in rows[1:] for f in row['findings']), (mode, 'body failed after entry')
+    assert not named['unused'].get('instantiated_by'), (mode, 'unused witnesses')
+    if mode!='legacy':
+        assert named['nested'].get('instantiated_by') == [outer_witness], (mode, 'nested witnesses', named['nested'])
+        assert not named['unusedNested'].get('instantiated_by'), (mode, 'unused nested witnesses')
+    for unit in units:
+        witnesses = unit.get('instantiated_by', [])
+        assert len(witnesses)<=5
+        assert witnesses == sorted(witnesses, key=lambda w: json.dumps(w, separators=(',', ':')))
     summary = unit_counts(units)
     check_counts(summary, units)
     assert any(u['where']==named['unused']['where'] for u in summary['never_reached'])
@@ -117,7 +153,11 @@ for mode in ('legacy', 'full', 'speculative'):
     report = dict(closure=dict(root=str(source)), hidden=result)
     report_path = output/(mode+'-hidden.json')
     report_path.write_text(json.dumps(report))
-    command = ['python3', str(Path(__file__).resolve().parents[1]/'tsc-closure/rerun-2026-10-09/audit.py'), str(destination), str(stock_path), str(report_path)]
+    # The archived byte-mask reader predates relation trailers. Pass the same
+    # normalized file rows used by its calculator; retain the complete stream.
+    byte_input = output/(mode+'-byte-input.jsonl')
+    byte_input.write_text(''.join(json.dumps(row)+'\n' for row in rows))
+    command = ['python3', str(Path(__file__).resolve().parents[1]/'tsc-closure/rerun-2026-10-09/audit.py'), str(byte_input), str(stock_path), str(report_path)]
     with (output/(mode+'-byte-audit.log')).open('w') as log:
         subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, timeout=30, check=True)
     # Fold deferred bytes into examined, keeping subtraction arithmetically

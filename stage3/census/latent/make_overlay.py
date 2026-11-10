@@ -119,14 +119,26 @@ needle = 'func (l *lowering) lowerFunction(index int, declaration *ast.Node, thi
 functions = functions.replace(needle, needle + '\n if !latentSpeculativeEnabled() && len(l.latentBodyDiagnostics(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
 # Record actual body entry within a fully mapped concrete generic call. The
 # ledger is run-owned, so per-statement state rollback cannot erase a witness.
-functions = functions.replace(needle, needle + '\n if latentConcreteCallDepth > 0 && latentInstantiated != nil { latentInstantiated[l.program.Where(declaration)] = true }')
+functions = functions.replace(needle, needle + '\n if latentConcreteCallDepth > 0 && latentInstantiated != nil { latentInstantiated[l.program.Where(declaration)] = true; latentRecordInstantiation(l.program.Where(declaration)) }')
 overlay('internal/lower/functions.go', functions)
 generic = (repository / 'internal/lower/generic.go').read_text()
+request_entry = 'func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast.Node, resolved *checker.Signature) (int, error) {'
+assert generic.count(request_entry) == 1
+generic = generic.replace(request_entry, request_entry + '\n l.latentInstantiationRequest(call, declaration)')
+
 needle = 'if err := l.lowerFunction(index, declaration, -1); err != nil {'
 assert generic.count(needle) == 1, 'generic body entry hook'
 generic = generic.replace(needle, '''concreteWitness := len(concreteTypes) == len(declaration.TypeParameters())
 for _, concrete := range concreteTypes { if concrete.Flags() & checker.TypeFlagsTypeParameter != 0 { concreteWitness = false } }
 outerConcreteDepth := latentConcreteCallDepth
+outerInstantiation := latentConcreteInstantiation
+latentConcreteInstantiation = nil
+if concreteWitness {
+ arguments := []*checker.Type{}
+ for _, parameter := range declaration.TypeParameters() { arguments = append(arguments, concreteTypes[l.checker.GetTypeAtLocation(parameter.Name())]) }
+ latentConcreteInstantiation = &latentRawInstantiation{unit:latentFindingOwner,callSite:l.program.Where(call),checker:l.checker,arguments:arguments}
+}
+defer func() { latentConcreteInstantiation = outerInstantiation }()
 if concreteWitness { latentConcreteCallDepth++ } else { latentConcreteCallDepth = 0 }
 defer func() { latentConcreteCallDepth = outerConcreteDepth }()
 ''' + needle)
