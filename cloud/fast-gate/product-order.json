@@ -2738,6 +2738,8 @@
     "internal/lower TestProduct_ProcessOptionalEverywhereMutant": [],
     "internal/lower TestProduct_ProcessOptionalNullableMutant": [],
     "internal/oracle TestProduct_HostBindingProcessOracleLower": [],
-    "internal/lower TestProduct_HostAnyPerformanceToJSONMutant": []
+    "internal/lower TestProduct_HostAnyPerformanceToJSONMutant": [],
+    "internal/lower TestProduct_StatsOptionalReceiverMarkMutant": [],
+    "internal/lower TestProduct_DirentOptionalReceiverMarkMutant": []
   }
 }

@@ -218,8 +218,8 @@ func carryFactGuardGaps(root, lowerInput string) []string {
 			gaps = append(gaps, "carried lowering."+name+" type changed: got "+got+", audited "+want)
 		}
 	}
-	for name := range loweringFieldPolicies {
-		if _, ok := audited[name]; !ok {
+	for name, policy := range loweringFieldPolicies {
+		if _, ok := audited[name]; policy == programFact && !ok {
 			gaps = append(gaps, "unaudited carried lowering."+name)
 		}
 	}
@@ -647,5 +647,36 @@ func TestLatentStatecopyRefusesFixedArrayNeedingCopy(t *testing.T) {
 				g.copy(ty, "value")
 			})
 		}
+	}
+}
+
+func TestLatentScopedOptionalReceiverCallCopyPolicy(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if loweringFieldPolicies["optionalReceiverCall"] != scopedASTIdentity {
+		t.Fatal("optionalReceiverCall must preserve scoped AST identity, not carry a program fact")
+	}
+	input := filepath.Join(root, "internal/lower/lower.go")
+	g := loadGenerator(root, input)
+	found := false
+	for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+		for _, id := range field.Names {
+			if id.Name == "optionalReceiverCall" {
+				found = true
+				if printed(field.Type) != "*ast.Node" || g.copyField("lowering", id, field) != "value.optionalReceiverCall" {
+					t.Fatal("scoped optional receiver must preserve the checker-owned AST node")
+				}
+			}
+		}
+	}
+	if !found {
+		t.Fatal("optionalReceiverCall field missing")
+	}
+	generated := string(generate(root, input))
+	if strings.Contains(generated, "result.optionalReceiverCall =") || strings.Contains(generated, "result.optionalReceiverCall=") {
+		t.Fatal("snapshot must retain scoped AST identity from its initial struct copy")
 	}
 }
