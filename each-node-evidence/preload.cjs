@@ -1,0 +1,11 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const ts=require('/workspace/adamic/stage3/api/node_modules/typescript');
+const records=new Map();let defined=0,throws=0,exposed=0;
+function classify(source){const sf=ts.createSourceFile('callback.js','('+source+')',ts.ScriptTarget.Latest,true,ts.ScriptKind.JS);if(sf.parseDiagnostics.length)throw Error('unparsed callback source: '+source);let fn=sf.statements[0].expression;while(ts.isParenthesizedExpression(fn))fn=fn.expression;if(!ts.isFunctionExpression(fn)&&!ts.isArrowFunction(fn))throw Error('unknown callback: '+source);let argumentsRead=false;function walk(n){if(ts.isIdentifier(n)&&n.text==='arguments')argumentsRead=true;ts.forEachChild(n,walk);}walk(fn.body);const parameters=fn.parameters.map(p=>p.getText(sf));return {parameters,argumentsRead,canSeeSecond:parameters.length>1||fn.parameters.some(p=>p.initializer||p.dotDotDotToken)||argumentsRead};}
+function observe(test,bundle){if(test===undefined)return test;defined++;const source=Function.prototype.toString.call(test);let row=records.get(source);if(!row){row={source,...classify(source),calls:0,throws:0,bundles:[]};records.set(source,row);}row.calls++;if(!row.bundles.includes(bundle))row.bundles.push(bundle);if(row.canSeeSecond)exposed++;return function(...args){try{return Reflect.apply(test,this,args);}catch(e){throws++;row.throws++;throw e;}};}
+globalThis.__eachNodeObserve=observe;
+function inject(c){if(c&&typeof c==='object')Object.defineProperty(c,'__eachNodeObserve',{value:observe,configurable:true});return c;}
+const create=vm.createContext;vm.createContext=function(c={},...args){return Reflect.apply(create,this,[inject(c),...args]);};const run=vm.runInNewContext;vm.runInNewContext=function(code,c={},...args){return Reflect.apply(run,this,[code,inject(c),...args]);};const script=vm.Script.prototype.runInNewContext;vm.Script.prototype.runInNewContext=function(c={},...args){return Reflect.apply(script,this,[inject(c),...args]);};
+process.on('exit',()=>{if(process.env.EACH_NODE_COUNTS){const dir=process.env.EACH_NODE_COUNTS;fs.mkdirSync(dir,{recursive:true});fs.writeFileSync(path.join(dir,process.pid+'.json'),JSON.stringify({pid:process.pid,argv:process.argv,defined,throws,exposed,functions:[...records.values()]})+'\n');}});
+module.exports={classify};
