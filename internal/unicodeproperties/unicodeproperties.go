@@ -165,6 +165,13 @@ func Lookup(expression string, unicodeSets bool) (Property, bool) {
 		if len(property.Ranges) > 0 {
 			set = codePointSets()[&property.Ranges[0]]
 		}
+		// codePointSets is built from cohere's Names, so a spelling its Lookup
+		// takes and its Names leaves out has no Set. That's cohere's two lists
+		// disagreeing, and it stops here by name rather than as a nil Set read
+		// far from the cause (TestEveryNameHasASet).
+		if set == nil {
+			panic("unicodeproperties: cohere's Lookup takes " + expression + ", which its Names doesn't list")
+		}
 		return Property{Kind: KindCodePoints, Set: set}, true
 	}
 	if unicodeSets {
