@@ -1,0 +1,25 @@
+go 1.27
+use (
+/workspace/never-call-report
+/workspace/never-call-report/cohere/TypeScript/tsc
+)
+replace (
+github.com/system-inc/cohere => /workspace/never-call-report/cohere
+github.com/microsoft/TypeScript/tsc/shim/format => /workspace/never-call-report/cohere/TypeScript-shim/format
+github.com/microsoft/TypeScript/tsc/shim/incremental => /workspace/never-call-report/cohere/TypeScript-shim/incremental
+github.com/system-inc/cohere/static_single_assignment => /workspace/never-call-report/cohere/static_single_assignment
+github.com/system-inc/cohere/mutation_aliasing => /workspace/never-call-report/cohere/mutation_aliasing
+github.com/microsoft/TypeScript/tsc/shim/ast => /workspace/never-call-report/cohere/TypeScript-shim/ast
+github.com/microsoft/TypeScript/tsc/shim/bundled => /workspace/never-call-report/cohere/TypeScript-shim/bundled
+github.com/microsoft/TypeScript/tsc/shim/checker => /workspace/never-call-report/cohere/TypeScript-shim/checker
+github.com/microsoft/TypeScript/tsc/shim/compiler => /workspace/never-call-report/cohere/TypeScript-shim/compiler
+github.com/microsoft/TypeScript/tsc/shim/core => /workspace/never-call-report/cohere/TypeScript-shim/core
+github.com/microsoft/TypeScript/tsc/shim/locale => /workspace/never-call-report/cohere/TypeScript-shim/locale
+github.com/microsoft/TypeScript/tsc/shim/parser => /workspace/never-call-report/cohere/TypeScript-shim/parser
+github.com/microsoft/TypeScript/tsc/shim/scanner => /workspace/never-call-report/cohere/TypeScript-shim/scanner
+github.com/microsoft/TypeScript/tsc/shim/tsoptions => /workspace/never-call-report/cohere/TypeScript-shim/tsoptions
+github.com/microsoft/TypeScript/tsc/shim/tspath => /workspace/never-call-report/cohere/TypeScript-shim/tspath
+github.com/microsoft/TypeScript/tsc/shim/vfs => /workspace/never-call-report/cohere/TypeScript-shim/vfs
+github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs => /workspace/never-call-report/cohere/TypeScript-shim/vfs/cachedvfs
+github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs => /workspace/never-call-report/cohere/TypeScript-shim/vfs/osvfs
+)
