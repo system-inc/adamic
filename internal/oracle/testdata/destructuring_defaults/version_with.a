@@ -1,0 +1,38 @@
+// Version.with's shape, as tsc's semver.ts:124 writes it: each name is its field where fields has it,
+// and this version's where it's absent. A present 0 is kept, never taken for absent. Node prints 1.5.3-beta, 0.2.3-7, 1.2.3-beta, 1.2.0-rc and 4.2.3-9.
+interface VersionFields {
+	major?: number;
+	minor?: number | undefined;
+	patch?: number;
+	tag?: string;
+}
+
+class Version {
+	readonly major: number;
+	readonly minor: number;
+	readonly patch: number;
+	readonly tag: string;
+
+	constructor(major: number, minor: number, patch: number, tag: string) {
+		this.major = major;
+		this.minor = minor;
+		this.patch = patch;
+		this.tag = tag;
+	}
+
+	with(fields: VersionFields): Version {
+		const { major = this.major, minor = this.minor, patch = this.patch, tag = this.tag } = fields;
+		return new Version(major, minor, patch, tag);
+	}
+
+	text(): string {
+		return `${this.major}.${this.minor}.${this.patch}-${this.tag}`;
+	}
+}
+
+const version = new Version(1, 2, 3, 'beta');
+console.log(version.with({ minor: 5 }).text());
+console.log(version.with({ major: 0, tag: '7' }).text());
+console.log(version.with({}).text());
+console.log(version.with({ patch: 0, tag: 'rc' }).text());
+console.log(version.with({ major: 4, minor: undefined, tag: '9' }).text());
