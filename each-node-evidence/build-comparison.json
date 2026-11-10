@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "sourceFiles": 747,
+  "sourceDifferences": [
+    "compiler/debug.ts"
+  ],
+  "files": [
+    {
+      "file": "_tsc.js",
+      "before": "90fb001d8c551cb42b2e06d6a4de40b43237510d4732b984ec3c8b8cdb4f76b4",
+      "after": "7e6fcc6d1030088a3310bf2c78633582ddb39573b99a4c77c726f7adddaf2e72",
+      "changed": true,
+      "assertEachNodeBodies": 1,
+      "outsideOwnerByteIdentical": true,
+      "outsideOwner": "byte-identical; identifier token normalization also identical",
+      "esbuildRenames": 0,
+      "beforeNormalized": "ec3e13e7bdfa5a0bbd6e4eecebd8caf0b638a7cef112068116cdaa1f84840c9a",
+      "afterNormalized": "ec3e13e7bdfa5a0bbd6e4eecebd8caf0b638a7cef112068116cdaa1f84840c9a"
+    },
+    {
+      "file": "_tsserver.js",
+      "before": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "after": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "changed": false
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "before": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "after": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "changed": false
+    },
+    {
+      "file": "run.js",
+      "before": "5825c8fbc68b12b9e09b5510fbaa74cf724de2643573ac836b946f7a4d7c80e5",
+      "after": "0bb26d0dead6a5b1439b7a44889958028ee91e8fc258830aa025a9ece3637ea8",
+      "changed": true,
+      "assertEachNodeBodies": 1,
+      "outsideOwnerByteIdentical": true,
+      "outsideOwner": "byte-identical; identifier token normalization also identical",
+      "esbuildRenames": 0,
+      "beforeNormalized": "b28055704466368433570f01881c605f5d9c3c461dcfc03d0eedf98eff9e5d5c",
+      "afterNormalized": "b28055704466368433570f01881c605f5d9c3c461dcfc03d0eedf98eff9e5d5c"
+    },
+    {
+      "file": "tsc.js",
+      "before": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "after": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "changed": false
+    },
+    {
+      "file": "tsserver.js",
+      "before": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "after": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "changed": false
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "before": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "after": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "changed": false
+    },
+    {
+      "file": "typescript.js",
+      "before": "9356172681989561eb96fcedd545714067b2233d4fb83eda2a9c49292ee72237",
+      "after": "4c142bd5379fa1e269f8fe02c251fd6836ab3f1c8064901285742e579454d07c",
+      "changed": true,
+      "assertEachNodeBodies": 1,
+      "outsideOwnerByteIdentical": true,
+      "outsideOwner": "byte-identical; identifier token normalization also identical",
+      "esbuildRenames": 0,
+      "beforeNormalized": "263a9d0e762a4ab8c950bf42df107253559e0b6ae389f1195436fcb34057ff91",
+      "afterNormalized": "263a9d0e762a4ab8c950bf42df107253559e0b6ae389f1195436fcb34057ff91"
+    },
+    {
+      "file": "typingsInstaller.js",
+      "before": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "after": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "changed": false
+    },
+    {
+      "file": "watchGuard.js",
+      "before": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "after": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "changed": false
+    }
+  ],
+  "exportKeys": {
+    "count": 2256,
+    "identical": true,
+    "sha256": "8125408be73cd4b1b940a7ac84511eaebbd209cff601fbbc8e539aa1870fe998"
+  },
+  "publicDeclarations": [
+    {
+      "file": "typescript.d.ts",
+      "sha256": "e14a3c25a0ec4f42f05974fe029a3de87c13cdb9b92e823385a5e9ac321c31bd",
+      "identical": true
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "identical": true
+    }
+  ]
+}

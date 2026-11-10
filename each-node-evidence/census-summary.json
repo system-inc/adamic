@@ -1,0 +1,67 @@
+{
+  "compilerBase": "337cf6917f7231422b5e168bc215888752a9f194",
+  "rule1SourceOnMain": false,
+  "runs": {
+    "mutant": {
+      "exit": 0,
+      "units": 81,
+      "findings": 22,
+      "checkerDiagnostics": 0,
+      "assertEachNode": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/each-node/census-mutant/src/compiler/debug.ts:261:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/each-node/census-mutant/src/compiler/debug.ts:257:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/each-node/census-mutant/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/each-node/census-mutant/src/compiler/debug.ts:262:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/each-node/census-mutant/src/compiler/debug.ts:257:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/each-node/census-mutant/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        }
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "units": 81,
+      "findings": 22,
+      "checkerDiagnostics": 0,
+      "assertEachNode": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/each-node/after/src/compiler/debug.ts:260:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/each-node/after/src/compiler/debug.ts:256:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/each-node/after/src/compiler/debug.ts:256:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/each-node/after/src/compiler/debug.ts:261:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/each-node/after/src/compiler/debug.ts:256:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/each-node/after/src/compiler/debug.ts:256:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        }
+      ]
+    }
+  },
+  "limitation": "Both forms meet the existing overload-1 callback contract on this main. No removal/reintroduction delta or for-of-specific stop is claimed."
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/scratch/each-node/latent",
+    "/workspace/scratch/each-node/after/src/compiler",
+    "/workspace/scratch/each-node/after-census.jsonl"
+  ],
+  "exit": 0,
+  "seconds": 48.0161846699998,
+  "flags": {
+    "LATENT_FULL": "1",
+    "LATENT_ONLY_FILE": "/workspace/scratch/each-node/after/src/compiler/debug.ts",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_TIMES": "/workspace/scratch/each-node/after-census-times.jsonl"
+  }
+}

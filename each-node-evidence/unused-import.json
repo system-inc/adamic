@@ -1,0 +1,630 @@
+{
+  "passed": true,
+  "configuredNoUnusedLocals": "not set",
+  "probeNoUnusedLocals": true,
+  "cases": [
+    {
+      "name": "removed",
+      "diagnostics": [
+        {
+          "code": 6133,
+          "text": "'BigIntLiteralType' is declared but its value is never read.",
+          "line": 5
+        },
+        {
+          "code": 6133,
+          "text": "'FlowLabel' is declared but its value is never read.",
+          "line": 10
+        },
+        {
+          "code": 6133,
+          "text": "'FlowSwitchClause' is declared but its value is never read.",
+          "line": 12
+        },
+        {
+          "code": 6133,
+          "text": "'getEffectiveModifierFlagsNoCache' is declared but its value is never read.",
+          "line": 13
+        },
+        {
+          "code": 6133,
+          "text": "'getEmitFlags' is declared but its value is never read.",
+          "line": 14
+        },
+        {
+          "code": 6133,
+          "text": "'getParseTreeNode' is declared but its value is never read.",
+          "line": 15
+        },
+        {
+          "code": 6133,
+          "text": "'getSourceFileOfNode' is declared but its value is never read.",
+          "line": 16
+        },
+        {
+          "code": 6133,
+          "text": "'getSourceTextOfNodeFromSourceFile' is declared but its value is never read.",
+          "line": 17
+        },
+        {
+          "code": 6133,
+          "text": "'idText' is declared but its value is never read.",
+          "line": 19
+        },
+        {
+          "code": 6133,
+          "text": "'IntrinsicType' is declared but its value is never read.",
+          "line": 20
+        },
+        {
+          "code": 6133,
+          "text": "'isArrayTypeNode' is declared but its value is never read.",
+          "line": 21
+        },
+        {
+          "code": 6133,
+          "text": "'isBigIntLiteral' is declared but its value is never read.",
+          "line": 22
+        },
+        {
+          "code": 6133,
+          "text": "'isCallSignatureDeclaration' is declared but its value is never read.",
+          "line": 23
+        },
+        {
+          "code": 6133,
+          "text": "'isConditionalTypeNode' is declared but its value is never read.",
+          "line": 24
+        },
+        {
+          "code": 6133,
+          "text": "'isConstructorDeclaration' is declared but its value is never read.",
+          "line": 25
+        },
+        {
+          "code": 6133,
+          "text": "'isConstructorTypeNode' is declared but its value is never read.",
+          "line": 26
+        },
+        {
+          "code": 6133,
+          "text": "'isConstructSignatureDeclaration' is declared but its value is never read.",
+          "line": 27
+        },
+        {
+          "code": 6133,
+          "text": "'isDefaultClause' is declared but its value is never read.",
+          "line": 28
+        },
+        {
+          "code": 6133,
+          "text": "'isFunctionTypeNode' is declared but its value is never read.",
+          "line": 29
+        },
+        {
+          "code": 6133,
+          "text": "'isGeneratedIdentifier' is declared but its value is never read.",
+          "line": 30
+        },
+        {
+          "code": 6133,
+          "text": "'isGetAccessorDeclaration' is declared but its value is never read.",
+          "line": 31
+        },
+        {
+          "code": 6133,
+          "text": "'isIdentifier' is declared but its value is never read.",
+          "line": 32
+        },
+        {
+          "code": 6133,
+          "text": "'isImportTypeNode' is declared but its value is never read.",
+          "line": 33
+        },
+        {
+          "code": 6133,
+          "text": "'isIndexedAccessTypeNode' is declared but its value is never read.",
+          "line": 34
+        },
+        {
+          "code": 6133,
+          "text": "'isIndexSignatureDeclaration' is declared but its value is never read.",
+          "line": 35
+        },
+        {
+          "code": 6133,
+          "text": "'isInferTypeNode' is declared but its value is never read.",
+          "line": 36
+        },
+        {
+          "code": 6133,
+          "text": "'isIntersectionTypeNode' is declared but its value is never read.",
+          "line": 37
+        },
+        {
+          "code": 6133,
+          "text": "'isLiteralTypeNode' is declared but its value is never read.",
+          "line": 38
+        },
+        {
+          "code": 6133,
+          "text": "'isMappedTypeNode' is declared but its value is never read.",
+          "line": 39
+        },
+        {
+          "code": 6133,
+          "text": "'isNamedTupleMember' is declared but its value is never read.",
+          "line": 40
+        },
+        {
+          "code": 6133,
+          "text": "'isNumericLiteral' is declared but its value is never read.",
+          "line": 41
+        },
+        {
+          "code": 6133,
+          "text": "'isOptionalTypeNode' is declared but its value is never read.",
+          "line": 42
+        },
+        {
+          "code": 6133,
+          "text": "'isParameter' is declared but its value is never read.",
+          "line": 43
+        },
+        {
+          "code": 6133,
+          "text": "'isParenthesizedTypeNode' is declared but its value is never read.",
+          "line": 44
+        },
+        {
+          "code": 6133,
+          "text": "'isParseTreeNode' is declared but its value is never read.",
+          "line": 45
+        },
+        {
+          "code": 6133,
+          "text": "'isPrivateIdentifier' is declared but its value is never read.",
+          "line": 46
+        },
+        {
+          "code": 6133,
+          "text": "'isRestTypeNode' is declared but its value is never read.",
+          "line": 47
+        },
+        {
+          "code": 6133,
+          "text": "'isSetAccessorDeclaration' is declared but its value is never read.",
+          "line": 48
+        },
+        {
+          "code": 6133,
+          "text": "'isStringLiteral' is declared but its value is never read.",
+          "line": 49
+        },
+        {
+          "code": 6133,
+          "text": "'isThisTypeNode' is declared but its value is never read.",
+          "line": 50
+        },
+        {
+          "code": 6133,
+          "text": "'isTupleTypeNode' is declared but its value is never read.",
+          "line": 51
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeLiteralNode' is declared but its value is never read.",
+          "line": 52
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeOperatorNode' is declared but its value is never read.",
+          "line": 53
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeParameterDeclaration' is declared but its value is never read.",
+          "line": 54
+        },
+        {
+          "code": 6133,
+          "text": "'isTypePredicateNode' is declared but its value is never read.",
+          "line": 55
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeQueryNode' is declared but its value is never read.",
+          "line": 56
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeReferenceNode' is declared but its value is never read.",
+          "line": 57
+        },
+        {
+          "code": 6133,
+          "text": "'isUnionTypeNode' is declared but its value is never read.",
+          "line": 58
+        },
+        {
+          "code": 6133,
+          "text": "'LiteralType' is declared but its value is never read.",
+          "line": 59
+        },
+        {
+          "code": 6133,
+          "text": "'MatchingKeys' is declared but its value is never read.",
+          "line": 61
+        },
+        {
+          "code": 6133,
+          "text": "'maxBy' is declared but its value is never read.",
+          "line": 62
+        },
+        {
+          "code": 6133,
+          "text": "'nodeIsSynthesized' is declared but its value is never read.",
+          "line": 68
+        },
+        {
+          "code": 6133,
+          "text": "'objectAllocator' is declared but its value is never read.",
+          "line": 69
+        },
+        {
+          "code": 6133,
+          "text": "'ObjectType' is declared but its value is never read.",
+          "line": 71
+        },
+        {
+          "code": 6133,
+          "text": "'Signature' is declared but its value is never read.",
+          "line": 74
+        },
+        {
+          "code": 6133,
+          "text": "'symbolName' is declared but its value is never read.",
+          "line": 81
+        },
+        {
+          "code": 6133,
+          "text": "'flowNodeProto' is declared but its value is never read.",
+          "line": 489
+        },
+        {
+          "code": 6133,
+          "text": "'attachFlowNodeDebugInfoWorker' is declared but its value is never read.",
+          "line": 491
+        },
+        {
+          "code": 6133,
+          "text": "'nodeArrayProto' is declared but its value is never read.",
+          "line": 546
+        },
+        {
+          "code": 6133,
+          "text": "'attachNodeArrayDebugInfoWorker' is declared but its value is never read.",
+          "line": 548
+        }
+      ],
+      "everyUnusedDiagnostics": []
+    },
+    {
+      "name": "retained",
+      "diagnostics": [
+        {
+          "code": 6133,
+          "text": "'every' is declared but its value is never read.",
+          "line": 3
+        },
+        {
+          "code": 6133,
+          "text": "'BigIntLiteralType' is declared but its value is never read.",
+          "line": 6
+        },
+        {
+          "code": 6133,
+          "text": "'FlowLabel' is declared but its value is never read.",
+          "line": 11
+        },
+        {
+          "code": 6133,
+          "text": "'FlowSwitchClause' is declared but its value is never read.",
+          "line": 13
+        },
+        {
+          "code": 6133,
+          "text": "'getEffectiveModifierFlagsNoCache' is declared but its value is never read.",
+          "line": 14
+        },
+        {
+          "code": 6133,
+          "text": "'getEmitFlags' is declared but its value is never read.",
+          "line": 15
+        },
+        {
+          "code": 6133,
+          "text": "'getParseTreeNode' is declared but its value is never read.",
+          "line": 16
+        },
+        {
+          "code": 6133,
+          "text": "'getSourceFileOfNode' is declared but its value is never read.",
+          "line": 17
+        },
+        {
+          "code": 6133,
+          "text": "'getSourceTextOfNodeFromSourceFile' is declared but its value is never read.",
+          "line": 18
+        },
+        {
+          "code": 6133,
+          "text": "'idText' is declared but its value is never read.",
+          "line": 20
+        },
+        {
+          "code": 6133,
+          "text": "'IntrinsicType' is declared but its value is never read.",
+          "line": 21
+        },
+        {
+          "code": 6133,
+          "text": "'isArrayTypeNode' is declared but its value is never read.",
+          "line": 22
+        },
+        {
+          "code": 6133,
+          "text": "'isBigIntLiteral' is declared but its value is never read.",
+          "line": 23
+        },
+        {
+          "code": 6133,
+          "text": "'isCallSignatureDeclaration' is declared but its value is never read.",
+          "line": 24
+        },
+        {
+          "code": 6133,
+          "text": "'isConditionalTypeNode' is declared but its value is never read.",
+          "line": 25
+        },
+        {
+          "code": 6133,
+          "text": "'isConstructorDeclaration' is declared but its value is never read.",
+          "line": 26
+        },
+        {
+          "code": 6133,
+          "text": "'isConstructorTypeNode' is declared but its value is never read.",
+          "line": 27
+        },
+        {
+          "code": 6133,
+          "text": "'isConstructSignatureDeclaration' is declared but its value is never read.",
+          "line": 28
+        },
+        {
+          "code": 6133,
+          "text": "'isDefaultClause' is declared but its value is never read.",
+          "line": 29
+        },
+        {
+          "code": 6133,
+          "text": "'isFunctionTypeNode' is declared but its value is never read.",
+          "line": 30
+        },
+        {
+          "code": 6133,
+          "text": "'isGeneratedIdentifier' is declared but its value is never read.",
+          "line": 31
+        },
+        {
+          "code": 6133,
+          "text": "'isGetAccessorDeclaration' is declared but its value is never read.",
+          "line": 32
+        },
+        {
+          "code": 6133,
+          "text": "'isIdentifier' is declared but its value is never read.",
+          "line": 33
+        },
+        {
+          "code": 6133,
+          "text": "'isImportTypeNode' is declared but its value is never read.",
+          "line": 34
+        },
+        {
+          "code": 6133,
+          "text": "'isIndexedAccessTypeNode' is declared but its value is never read.",
+          "line": 35
+        },
+        {
+          "code": 6133,
+          "text": "'isIndexSignatureDeclaration' is declared but its value is never read.",
+          "line": 36
+        },
+        {
+          "code": 6133,
+          "text": "'isInferTypeNode' is declared but its value is never read.",
+          "line": 37
+        },
+        {
+          "code": 6133,
+          "text": "'isIntersectionTypeNode' is declared but its value is never read.",
+          "line": 38
+        },
+        {
+          "code": 6133,
+          "text": "'isLiteralTypeNode' is declared but its value is never read.",
+          "line": 39
+        },
+        {
+          "code": 6133,
+          "text": "'isMappedTypeNode' is declared but its value is never read.",
+          "line": 40
+        },
+        {
+          "code": 6133,
+          "text": "'isNamedTupleMember' is declared but its value is never read.",
+          "line": 41
+        },
+        {
+          "code": 6133,
+          "text": "'isNumericLiteral' is declared but its value is never read.",
+          "line": 42
+        },
+        {
+          "code": 6133,
+          "text": "'isOptionalTypeNode' is declared but its value is never read.",
+          "line": 43
+        },
+        {
+          "code": 6133,
+          "text": "'isParameter' is declared but its value is never read.",
+          "line": 44
+        },
+        {
+          "code": 6133,
+          "text": "'isParenthesizedTypeNode' is declared but its value is never read.",
+          "line": 45
+        },
+        {
+          "code": 6133,
+          "text": "'isParseTreeNode' is declared but its value is never read.",
+          "line": 46
+        },
+        {
+          "code": 6133,
+          "text": "'isPrivateIdentifier' is declared but its value is never read.",
+          "line": 47
+        },
+        {
+          "code": 6133,
+          "text": "'isRestTypeNode' is declared but its value is never read.",
+          "line": 48
+        },
+        {
+          "code": 6133,
+          "text": "'isSetAccessorDeclaration' is declared but its value is never read.",
+          "line": 49
+        },
+        {
+          "code": 6133,
+          "text": "'isStringLiteral' is declared but its value is never read.",
+          "line": 50
+        },
+        {
+          "code": 6133,
+          "text": "'isThisTypeNode' is declared but its value is never read.",
+          "line": 51
+        },
+        {
+          "code": 6133,
+          "text": "'isTupleTypeNode' is declared but its value is never read.",
+          "line": 52
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeLiteralNode' is declared but its value is never read.",
+          "line": 53
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeOperatorNode' is declared but its value is never read.",
+          "line": 54
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeParameterDeclaration' is declared but its value is never read.",
+          "line": 55
+        },
+        {
+          "code": 6133,
+          "text": "'isTypePredicateNode' is declared but its value is never read.",
+          "line": 56
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeQueryNode' is declared but its value is never read.",
+          "line": 57
+        },
+        {
+          "code": 6133,
+          "text": "'isTypeReferenceNode' is declared but its value is never read.",
+          "line": 58
+        },
+        {
+          "code": 6133,
+          "text": "'isUnionTypeNode' is declared but its value is never read.",
+          "line": 59
+        },
+        {
+          "code": 6133,
+          "text": "'LiteralType' is declared but its value is never read.",
+          "line": 60
+        },
+        {
+          "code": 6133,
+          "text": "'MatchingKeys' is declared but its value is never read.",
+          "line": 62
+        },
+        {
+          "code": 6133,
+          "text": "'maxBy' is declared but its value is never read.",
+          "line": 63
+        },
+        {
+          "code": 6133,
+          "text": "'nodeIsSynthesized' is declared but its value is never read.",
+          "line": 69
+        },
+        {
+          "code": 6133,
+          "text": "'objectAllocator' is declared but its value is never read.",
+          "line": 70
+        },
+        {
+          "code": 6133,
+          "text": "'ObjectType' is declared but its value is never read.",
+          "line": 72
+        },
+        {
+          "code": 6133,
+          "text": "'Signature' is declared but its value is never read.",
+          "line": 75
+        },
+        {
+          "code": 6133,
+          "text": "'symbolName' is declared but its value is never read.",
+          "line": 82
+        },
+        {
+          "code": 6133,
+          "text": "'flowNodeProto' is declared but its value is never read.",
+          "line": 490
+        },
+        {
+          "code": 6133,
+          "text": "'attachFlowNodeDebugInfoWorker' is declared but its value is never read.",
+          "line": 492
+        },
+        {
+          "code": 6133,
+          "text": "'nodeArrayProto' is declared but its value is never read.",
+          "line": 547
+        },
+        {
+          "code": 6133,
+          "text": "'attachNodeArrayDebugInfoWorker' is declared but its value is never read.",
+          "line": 549
+        }
+      ],
+      "everyUnusedDiagnostics": [
+        {
+          "code": 6133,
+          "text": "'every' is declared but its value is never read.",
+          "line": 3
+        }
+      ]
+    }
+  ]
+}

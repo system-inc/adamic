@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/scratch/each-node/latent",
+    "/workspace/scratch/each-node/census-mutant/src/compiler",
+    "/workspace/scratch/each-node/mutant-census.jsonl"
+  ],
+  "exit": 0,
+  "seconds": 47.65402832200016,
+  "flags": {
+    "LATENT_FULL": "1",
+    "LATENT_ONLY_FILE": "/workspace/scratch/each-node/census-mutant/src/compiler/debug.ts",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_TIMES": "/workspace/scratch/each-node/mutant-census-times.jsonl"
+  }
+}

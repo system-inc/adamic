@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node",
+    "--stack_size=8192",
+    "/workspace/scratch/each-node/compare-built.cjs",
+    "/workspace/scratch/each-node/artifact-cache/13ca44e13dbf6f1f8cac38ab4435497390f68ce6cfe62d04d451bb75b5f9be23/tree",
+    "/workspace/scratch/each-node/after",
+    "/workspace/scratch/each-node/build-comparison.json"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": -15,
+  "seconds": 286.80312937300005
+}
