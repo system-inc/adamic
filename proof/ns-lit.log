@@ -1,0 +1,89 @@
+=== STEP oracle
+=== RUN   TestNamespaceValueAgreesWithNode
+=== PAUSE TestNamespaceValueAgreesWithNode
+=== CONT  TestNamespaceValueAgreesWithNode
+=== RUN   TestNamespaceValueAgreesWithNode/tracing/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/tracing/main.a
+=== RUN   TestNamespaceValueAgreesWithNode/identity/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/identity/main.a
+=== RUN   TestNamespaceValueAgreesWithNode/literal.a
+=== PAUSE TestNamespaceValueAgreesWithNode/literal.a
+=== CONT  TestNamespaceValueAgreesWithNode/tracing/main.a
+=== CONT  TestNamespaceValueAgreesWithNode/literal.a
+=== CONT  TestNamespaceValueAgreesWithNode/identity/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c2e02585518c hit 320.50
+=== NAME  TestNamespaceValueAgreesWithNode/literal.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c2e02585518c hit 320.50
+=== NAME  TestNamespaceValueAgreesWithNode/tracing/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c2e02585518c miss 320.50
+--- PASS: TestNamespaceValueAgreesWithNode (0.00s)
+    --- PASS: TestNamespaceValueAgreesWithNode/identity/main.a (380.80s)
+    --- PASS: TestNamespaceValueAgreesWithNode/literal.a (380.80s)
+    --- PASS: TestNamespaceValueAgreesWithNode/tracing/main.a (380.81s)
+PASS
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	380.842s
+
+=== MUTATION DIFF
+ internal/native/fields.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+diff --git a/internal/native/fields.go b/internal/native/fields.go
+index 724f925c2..4481fbf94 100644
+--- a/internal/native/fields.go
++++ b/internal/native/fields.go
+@@ -90,7 +90,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
+ 	record := func(fields []ir.Field) {
+ 		for index, field := range fields {
+ 			if before, found := offsets[field.Name]; found && before != index {
+-				offsets[field.Name] = -1 // A conflict stays a conflict, even if a later layout agrees.
++				continue
+ 			} else if !found {
+ 				offsets[field.Name] = index
+ 			}
+
+=== MUTANT
+=== RUN   TestNamespaceValueAgreesWithNode
+=== PAUSE TestNamespaceValueAgreesWithNode
+=== CONT  TestNamespaceValueAgreesWithNode
+=== RUN   TestNamespaceValueAgreesWithNode/tracing/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/tracing/main.a
+=== RUN   TestNamespaceValueAgreesWithNode/identity/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/identity/main.a
+=== RUN   TestNamespaceValueAgreesWithNode/literal.a
+=== PAUSE TestNamespaceValueAgreesWithNode/literal.a
+=== CONT  TestNamespaceValueAgreesWithNode/tracing/main.a
+=== CONT  TestNamespaceValueAgreesWithNode/literal.a
+=== CONT  TestNamespaceValueAgreesWithNode/identity/main.a
+=== NAME  TestNamespaceValueAgreesWithNode/tracing/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c2e02585518c hit 0.42
+=== NAME  TestNamespaceValueAgreesWithNode/literal.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c2e02585518c hit 0.47
+=== NAME  TestNamespaceValueAgreesWithNode/identity/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c2e02585518c hit 0.48
+--- PASS: TestNamespaceValueAgreesWithNode (0.00s)
+    --- PASS: TestNamespaceValueAgreesWithNode/literal.a (9.09s)
+    --- PASS: TestNamespaceValueAgreesWithNode/identity/main.a (9.12s)
+    --- PASS: TestNamespaceValueAgreesWithNode/tracing/main.a (9.16s)
+PASS
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.187s
+
+=== MUTANT EXIT 0
+
+=== RESTORED git diff --stat (must be empty)
+
+=== PROOF CONTEXT
+Base commit: fb8124157249e34dee411c4005b55bf2b82960c0
+Submodules:
+ 06af2e399c6c1fb93fd570b774027942747400b4 cohere (06af2e39)
+ d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (remotes/origin/adamic)
+Command for both runs: ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle -run '^TestNamespaceValueAgreesWithNode$' -v
+Baseline exit: 0
+Mutant exit: 0
+Expected native literal.a failure did not occur; mutant survived.
+Original internal/native/fields.go restored from saved copy.
+Restored git diff --stat: empty
