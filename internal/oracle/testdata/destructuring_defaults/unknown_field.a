@@ -1,0 +1,16 @@
+// A default on an unknown field is taken for undefined only: a present null stays null, as Node keeps it,
+// and an absent field or an explicit undefined takes the default. Node prints null, number, number and
+// string.
+interface Holder {
+	value?: unknown;
+}
+
+function show(holder: Holder): string {
+	const { value = 1 } = holder;
+	return value === null ? 'null' : typeof value;
+}
+
+console.log(show({ value: null }));
+console.log(show({}));
+console.log(show({ value: undefined }));
+console.log(show({ value: 's' }));

@@ -196,6 +196,9 @@ func TestMethodPresenceThroughHostOrigin(t *testing.T) {
 	for _, probe := range []struct{ name, body string }{
 		// Lower's: a program object typed Performance in the literal.
 		{"a program's own Performance", hostOriginGetter("own") + hostOriginPresent("tryGetPerformance()", "")},
+		// Language's: a default, which hands over own wherever the property is undefined. It reached the
+		// walk once destructuring defaults lowered (#smqr4vn), and hostOriginBinding's default check holds it.
+		{"a destructuring with a default", hostOriginGetter("performance") + "export function present(): string {\n    const p = tryGetPerformance();\n    if (!p) return \"absent\";\n    const { performance = own } = p;\n" + hostOriginTested},
 		// Lower's: a parameter, whatever it's handed.
 		{"a parameter", "function tryGetPerformance(given: Performance): " + hostOriginReturnType + " {\n    return { shouldWriteNativeEvents: true, performance: given };\n}\n" + hostOriginPresent("tryGetPerformance(own)", "")},
 		// Lower's: a let, which a write can change.
@@ -226,14 +229,10 @@ func TestMethodPresenceThroughHostOrigin(t *testing.T) {
 		})
 	}
 
-	// Two of Language's roads never reach the walk: an earlier stop closes each, measured on Codex
-	// 01a1bcd8 at 40af54a1. hostOriginBinding's default check and hostOriginProperty's spread check
-	// stay as defense for when those stops lift, and these rows go red then, to be moved into the table
-	// above.
+	// One of Language's roads never reaches the walk: an earlier stop closes it, measured on Codex
+	// 01a1bcd8 at 40af54a1. hostOriginProperty's spread check stays as defense for when that stop
+	// lifts, and this row goes red then, to be moved into the table above, as the default's was.
 	for _, probe := range []struct{ name, body, want string }{
-		// A default, which hands over own wherever the property is undefined: a destructured name with
-		// a default isn't lowered yet.
-		{"a destructuring with a default", hostOriginGetter("performance") + "export function present(): string {\n    const p = tryGetPerformance();\n    if (!p) return \"absent\";\n    const { performance = own } = p;\n" + hostOriginTested, "performanceCore.ts:39:13: stage 0 can't lower a destructured name that isn't plain yet"},
 		// A spread after the host field, which overrides it: a spread anywhere but first is refused
 		// (adamic/single-spread), so the override can't be written. Its performance is optional so tsc
 		// doesn't refuse the field before it as always overwritten.
