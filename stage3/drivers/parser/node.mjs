@@ -18,10 +18,18 @@ registerHooks({
     load(url, context, next) {
         if(url.endsWith('.ts') || url.endsWith('.a')) {
             const source = readFileSync(fileURLToPath(url), 'utf8');
-            return { format: 'module', shortCircuit: true, source: ts.transpileModule(source, {
-                fileName: fileURLToPath(url).replace(/\.a$/, '.ts'),
-                compilerOptions: { target: ts.ScriptTarget.ESNext, module: ts.ModuleKind.ESNext, verbatimModuleSyntax: true },
-            }).outputText };
+            return {
+                format: 'module',
+                shortCircuit: true,
+                source: ts.transpileModule(source, {
+                    fileName: fileURLToPath(url).replace(/\.a$/, '.ts'),
+                    compilerOptions: {
+                        target: ts.ScriptTarget.ESNext,
+                        module: ts.ModuleKind.ESNext,
+                        verbatimModuleSyntax: true,
+                    },
+                }).outputText,
+            };
         }
         return next(url, context);
     },
