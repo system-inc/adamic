@@ -814,8 +814,16 @@ func keyMayNameSetBlocking(checks *checker.Checker, key *checker.Type, depth int
 	return false
 }
 
-// readsStdoutHandle says whether any file of the program reads process.stdout._handle.
+// readsStdoutHandle says whether any module the program lowers reads process.stdout._handle: every one
+// in moduleOrder's order, the list the refusal walk and namespaceInitialization are handed, never
+// load's Files(), which holds only the roots, since tsc reads the handle in sys.ts, which isn't one
+// (Lower's must on #0bxc4jh). moduleOrder holds its answer per entry, so asking it here makes no new
+// side effect; where it refused, the program never reaches this walk, and the answer fails closed.
 func (l *lowering) readsStdoutHandle() bool {
+	modules, err := l.moduleOrder(l.entry)
+	if err != nil {
+		return true
+	}
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -826,8 +834,8 @@ func (l *lowering) readsStdoutHandle() bool {
 		}
 		return found || node.ForEachChild(visit)
 	}
-	for _, file := range l.program.Files() {
-		if file.AsNode().ForEachChild(visit) {
+	for _, module := range modules {
+		if module.AsNode().ForEachChild(visit) {
 			return true
 		}
 	}
