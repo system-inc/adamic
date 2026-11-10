@@ -1,0 +1,14 @@
+go: downloading golang.org/x/tools v0.50.0
+ok  	github.com/system-inc/adamic/internal/ir	228.909s
+ok  	github.com/system-inc/adamic/internal/flow	187.417s
+ok  	github.com/system-inc/adamic/stage3/census/latent	0.016s
+ok  	github.com/system-inc/adamic/stage3/census/latent/importclean	1.625s
+ok  	github.com/system-inc/adamic/stage3/census/latent/overlaytext	0.013s
+ok  	github.com/system-inc/adamic/stage3/census/latent/refusalrewrite	13.096s
+?   	github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd	[no test files]
+?   	github.com/system-inc/adamic/stage3/census/latent/replay	[no test files]
+?   	github.com/system-inc/adamic/stage3/census/latent/replay/worker	[no test files]
+ok  	github.com/system-inc/adamic/stage3/census/latent/statecopy	14.250s
+ok  	github.com/system-inc/adamic/stage3/census/latent/statementrewrite	9.837s
+ok  	github.com/system-inc/adamic/stage3/census/latent/timing	0.015s
+?   	github.com/system-inc/adamic/stage3/census/latent/tool	[no test files]

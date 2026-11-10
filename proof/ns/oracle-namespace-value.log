@@ -1,0 +1,27 @@
+=== RUN   TestNamespaceValueAgreesWithNode
+=== PAUSE TestNamespaceValueAgreesWithNode
+=== RUN   TestNamespaceValueReadBeforeItsBlockIsChecked
+=== PAUSE TestNamespaceValueReadBeforeItsBlockIsChecked
+=== CONT  TestNamespaceValueAgreesWithNode
+=== RUN   TestNamespaceValueAgreesWithNode/tracing/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/tracing/main.a
+=== RUN   TestNamespaceValueAgreesWithNode/identity/main.a
+=== PAUSE TestNamespaceValueAgreesWithNode/identity/main.a
+=== CONT  TestNamespaceValueAgreesWithNode/tracing/main.a
+=== CONT  TestNamespaceValueReadBeforeItsBlockIsChecked
+=== CONT  TestNamespaceValueAgreesWithNode/identity/main.a
+=== NAME  TestNamespaceValueReadBeforeItsBlockIsChecked
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 3339d5829eca miss 5.32
+=== NAME  TestNamespaceValueAgreesWithNode/tracing/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 3339d5829eca hit 5.08
+=== NAME  TestNamespaceValueAgreesWithNode/identity/main.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 3339d5829eca hit 5.21
+--- PASS: TestNamespaceValueReadBeforeItsBlockIsChecked (22.99s)
+--- PASS: TestNamespaceValueAgreesWithNode (0.00s)
+    --- PASS: TestNamespaceValueAgreesWithNode/tracing/main.a (23.00s)
+    --- PASS: TestNamespaceValueAgreesWithNode/identity/main.a (23.00s)
+PASS
+gate cache: native hits=0 misses=7
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	23.016s
