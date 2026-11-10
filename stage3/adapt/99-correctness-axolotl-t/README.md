@@ -1,4 +1,4 @@
-> Candidate status: stopped at one class-(c) hunk under the revised direct-reference rule; runtime export keys are unchanged.
+> Candidate status: transitive bundle classification and runtime exports pass; final apply and lane are pending.
 
 > Nov 10 debugger-display amendment: current behavior and evidence are in
 > [debug-display-README.md](debug-display-README.md) and
