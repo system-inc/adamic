@@ -1210,7 +1210,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-			iterator := ir.CollectionIterator{Collection: iterable, Part: "entries", Key: key, Value: value, Set: l.isSet(iterated)}
+			iterator := l.collectionIterator(iterated, iterated, iterable, "entries", key, value, l.isSet(iterated))
 			return l.libraryForOfIterator(node, iterator, ir.Object, name)
 		}
 		return l.forOfMap(node, iterable, iterated, mapPart, name)

@@ -126,7 +126,7 @@ func (l *lowering) libraryCollectionIterator(node, receiver *ast.Node, part stri
 	if err != nil {
 		return nil, true, err
 	}
-	return ir.CollectionIterator{Collection: collection, Part: part, Key: key, Value: value, Set: set}, true, nil
+	return l.collectionIterator(node, receiver, collection, part, key, value, set), true, nil
 }
 
 func (l *lowering) librarySetLiteral(node *ast.Node, element ir.Type) (ir.Expression, bool, error) {
@@ -343,7 +343,7 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 		if l.isSet(sourceNode) {
 			part = "keys"
 		}
-		source = ir.CollectionIterator{Collection: source, Part: part, Key: k, Value: v, Set: l.isSet(sourceNode)}
+		source = l.collectionIterator(sourceNode, sourceNode, source, part, k, v, l.isSet(sourceNode))
 		iterator = true
 	case ir.Object:
 		var known bool

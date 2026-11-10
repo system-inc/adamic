@@ -296,6 +296,9 @@ type lowering struct {
 	// close a cycle through, each with what it is; graphAdoptionBoundary stops the first in a graph
 	// program. Only a record's entries is recorded now (unplannedAllocation says why).
 	graphUnplanned []graphUnplannedSite
+	// graphPairs are the Map entries sites, each with its pair's tuple type, which graphAdoptionBoundary
+	// reads when a graph program holds a pair as some other type its plan can't name (#dps0kp6).
+	graphPairs []graphPairSite
 	// dynamicKeyedSite is the first run-time key read (reflectGet or viewKeyedRead), where
 	// checkDynamicKeyedGetters says why a class getter keeps the program from reading by a run-time key.
 	dynamicKeyedSite *ast.Node
