@@ -1,0 +1,12 @@
+// sys.ts:732: a lookup's optional field is the Set receiver, not the callback.
+interface Watcher { links: Set<string> | undefined; }
+const cache = new Map<string, Watcher>();
+cache.set('present', {links: new Set<string>(['first', 'second'])});
+cache.set('empty', {links: undefined});
+function visit(key: string): void {
+    console.log(key);
+    cache.get(key)?.links?.forEach(item => console.log(item));
+}
+visit('present');
+visit('missing');
+visit('empty');
