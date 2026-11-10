@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/each-node-8n7eet3/head-entry-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/each-node-8n7eet3/head-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/scratch/each-node-8n7eet3/head",
+  "exit": 0,
+  "wall_seconds": 363.91824865341187
+}

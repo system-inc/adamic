@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/each-node-8n7eet3/parent",
+    "/workspace/scratch/each-node-8n7eet3/parent-overlay"
+  ],
+  "cwd": "/workspace/scratch/each-node-8n7eet3/parent",
+  "exit": 0,
+  "wall_seconds": 5.074654579162598
+}

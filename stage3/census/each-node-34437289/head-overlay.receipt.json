@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/each-node-8n7eet3/head",
+    "/workspace/scratch/each-node-8n7eet3/head-overlay"
+  ],
+  "cwd": "/workspace/scratch/each-node-8n7eet3/head",
+  "exit": 0,
+  "wall_seconds": 6.103475332260132
+}

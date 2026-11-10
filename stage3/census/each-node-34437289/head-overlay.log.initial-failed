@@ -1,0 +1,8 @@
+go: workspace module github.com/microsoft/TypeScript/tsc is replaced at all versions in the go.work file. To fix, remove the replacement from the go.work file or specify the version at which to replace the module.
+Traceback (most recent call last):
+  File "/workspace/scratch/each-node-8n7eet3/head/stage3/census/latent/make_overlay.py", line 55, in <module>
+    subprocess.run(['go', 'run', str(territory / 'statecopy'), str(repository),
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'run', '/workspace/scratch/each-node-8n7eet3/head/stage3/census/latent/statecopy', '/workspace/scratch/each-node-8n7eet3/head', '/workspace/scratch/each-node-8n7eet3/head-overlay/internal_lower_lower.go', '/workspace/scratch/each-node-8n7eet3/head-overlay/internal_lower_latent_state.go']' returned non-zero exit status 1.
+child_exit=1
