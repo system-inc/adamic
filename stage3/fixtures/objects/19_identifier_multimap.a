@@ -55,7 +55,7 @@ const SymbolFlags = {TypeParameter: 262144};
 interface ModuleSpecifierResolutionHost {}
 interface NodeBuilderContext { reportedDiagnostic: boolean; suppressReportInferenceFallback: boolean; trackedSymbols?: [Symbol, Node | undefined, SymbolFlags][]; }
 interface SymbolTracker {
-    trackSymbol?: (symbol: Symbol, node: Node | undefined, meaning: SymbolFlags) => boolean;
+    trackSymbol?(symbol: Symbol, enclosingDeclaration: Node | undefined, meaning: SymbolFlags): boolean;
     reportInaccessibleThisError?: () => void;
     reportPrivateInBaseOfClassExpression?: (propertyName: string) => void;
     reportInaccessibleUniqueSymbolError?: () => void;
