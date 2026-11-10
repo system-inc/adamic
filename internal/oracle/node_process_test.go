@@ -176,15 +176,22 @@ func TestNodeProcessHandleDetachedStops(t *testing.T) {
 // parameter and off a call's result, roads stdoutHandleOrigin doesn't follow. Node calls each with the
 // handle as this and blocks, where the closure would throw Illegal invocation (Runtime's must 2 on
 // #0bxc4jh, Lower's ruling (b); #17pfbkk lifts the computed key's stop). A program that doesn't read
-// the handle keeps o['setBlocking']() as it was. Mutants: the computed key's arm dropped, and both
+// the handle keeps o['setBlocking']() as it was. A key whose type is a union naming setBlocking, or a
+// type parameter constrained to it, stops too (Runtime's must A), and so does a program that reads the
+// handle only as process.stdout['_handle'] (must B). Mutants: the computed key's arm dropped, and the
 // computed fixtures lower; the bind's arm dropped, and the bind fixture lowers; readsStdoutHandle
-// answering false, and all three lower.
+// answering false, and every fixture lowers; the union arm dropped, and only the union fixture lowers;
+// the constraint arm dropped, and only the generic one stops elsewhere; readsStdoutHandle's element arm
+// dropped, and only the element-read fixture lowers.
 func TestNodeProcessHandleUnheldCallsStop(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range []struct{ name, where, what string }{
 		{"node_process_handle_computed_literal.a", ":7:", "a call through a computed key naming setBlocking"},
 		{"node_process_handle_computed_key.a", ":10:", "a call through a computed key naming setBlocking"},
 		{"node_process_handle_bind.a", ":7:", "a bind of a field named setBlocking"},
+		{"node_process_handle_computed_union.a", ":11:", "a call through a computed key naming setBlocking"},
+		{"node_process_handle_computed_generic.a", ":7:", "a call through a computed key naming setBlocking"},
+		{"node_process_handle_element_read.a", ":7:", "a call through a computed key naming setBlocking"},
 	} {
 		t.Run(fixture.name, func(t *testing.T) {
 			t.Parallel()

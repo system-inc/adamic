@@ -757,11 +757,7 @@ func (l *lowering) stdoutHandleUnheldRefusal(node *ast.Node) error {
 	words := ""
 	switch callee.Kind {
 	case ast.KindElementAccessExpression:
-		key := l.checker.GetTypeAtLocation(callee.AsElementAccessExpression().ArgumentExpression)
-		if key.Flags()&checker.TypeFlagsStringLiteral == 0 {
-			return nil
-		}
-		if name, isText := key.AsLiteralType().Value().(string); !isText || name != "setBlocking" {
+		if !keyMayNameSetBlocking(l.checker, l.checker.GetTypeAtLocation(callee.AsElementAccessExpression().ArgumentExpression), 0) {
 			return nil
 		}
 		words = stdoutHandleComputedCall
@@ -779,20 +775,41 @@ func (l *lowering) stdoutHandleUnheldRefusal(node *ast.Node) error {
 	return l.notYet(callee, words)
 }
 
-// namesSetBlocking says whether node, through parentheses and assertions, reads a field named
-// setBlocking: o.setBlocking, or o['setBlocking'] with a key whose type is that literal.
+// namesSetBlocking says whether node, through parentheses and assertions, reads a field that may be
+// named setBlocking: o.setBlocking, or o[k] with a key keyMayNameSetBlocking admits.
 func (l *lowering) namesSetBlocking(node *ast.Node) bool {
 	node = ast.SkipOuterExpressions(node, ast.OEKParentheses|ast.OEKAssertions)
 	switch node.Kind {
 	case ast.KindPropertyAccessExpression:
 		return node.Name().Text() == "setBlocking"
 	case ast.KindElementAccessExpression:
-		key := l.checker.GetTypeAtLocation(node.AsElementAccessExpression().ArgumentExpression)
-		if key.Flags()&checker.TypeFlagsStringLiteral == 0 {
-			return false
-		}
+		return keyMayNameSetBlocking(l.checker, l.checker.GetTypeAtLocation(node.AsElementAccessExpression().ArgumentExpression), 0)
+	}
+	return false
+}
+
+// keyMayNameSetBlocking says whether a key of type key may be the name setBlocking: the string
+// literal itself, a union with it among its members, which element_access_fields.go lowers as one read
+// per name (Runtime's must A on #0bxc4jh), or a type parameter or other generic whose base constraint
+// may be. A key it can't read that way isn't setBlocking by type, and lowering reads it by its own rules.
+func keyMayNameSetBlocking(checks *checker.Checker, key *checker.Type, depth int) bool {
+	if key == nil || depth > 8 {
+		return false
+	}
+	switch {
+	case key.Flags()&checker.TypeFlagsStringLiteral != 0:
 		name, isText := key.AsLiteralType().Value().(string)
 		return isText && name == "setBlocking"
+	case key.Flags()&checker.TypeFlagsUnion != 0:
+		for _, member := range key.Types() {
+			if keyMayNameSetBlocking(checks, member, depth+1) {
+				return true
+			}
+		}
+		return false
+	case key.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsConditional|checker.TypeFlagsIntersection) != 0:
+		constraint := checks.GetBaseConstraintOfType(key)
+		return constraint != nil && constraint != key && keyMayNameSetBlocking(checks, constraint, depth+1)
 	}
 	return false
 }
@@ -802,7 +819,9 @@ func (l *lowering) readsStdoutHandle() bool {
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "_handle" && l.processPath(node) == "process.stdout._handle" {
+		// processPath reads process.stdout['_handle'] as the handle too (process.go), and lowering makes it
+		// one (Runtime's must B on #0bxc4jh).
+		if (node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "_handle" || node.Kind == ast.KindElementAccessExpression) && l.processPath(node) == "process.stdout._handle" {
 			found = true
 		}
 		return found || node.ForEachChild(visit)
