@@ -133,7 +133,8 @@ func directoryFlag(word string) (flag string, named string, found bool) {
 // bin/clang.cfg and bin/clang++.cfg naming `--sysroot=<CFGDIR>/../share/wasi-sysroot`, its own sysroot. Such a
 // directory's bytes enter no key directly: the installation is keyed by its release, its clang's version report, which
 // names the release (wasi-sdk's pinned by WASIClang), so the sysroot it ships moves with it. A directory outside, or a
-// config that sits in no bin/, is no part of a release a key names.
+// config that sits in no bin/, is no part of a release a key names. A file edited inside the installed tree while its
+// archive's sha256 is unchanged is the tools tree's trust to catch (#3xchecf), not a key's (Node's read of #5xsd2ha).
 func insideInstallation(path, directory string) bool {
 	bin := filepath.Dir(path)
 	if filepath.Base(bin) != "bin" || !filepath.IsAbs(directory) {
