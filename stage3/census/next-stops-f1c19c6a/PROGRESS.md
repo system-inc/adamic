@@ -1,0 +1,1 @@
+Guarded entry census in progress with LATENT_FULL=1 and LATENT_ASSERT_NO_OUTPUT=1, bounded to 1800 seconds. Ordinary census complete: 79 counted observations, 158 raw. Single-file debug and semver full-mode runs complete. Entry emitted a header for 81 sources and no completed source ledger yet. Node readiness emit hit its existing 60-second bound; no throw evidence established.

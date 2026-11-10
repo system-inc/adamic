@@ -1,0 +1,7 @@
+        });
+
+        traceFd = fs.openSync(tracePath, "w");
+        tracing = tracingEnabled; // only when traceFd is properly set
+
+        // Start with a prefix that contains some metadata that the devtools profiler expects (also avoids a warning on import)
+        const meta = { cat: "__metadata", ph: "M", ts: 1000 * timestamp(), pid: 1, tid: 1 };
