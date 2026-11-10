@@ -10,6 +10,23 @@ The member audit is regenerated at [member-audit.json](evidence/brands-void/memb
 
 The lane generator reconstructs the same 27 public brand owners from class-rules.json and pinned pristine Git objects. ErrorCallback is the unchanged 28th adaptation-40 API declaration. The generator, normalized sanction and API-reference writer all use undefined.
 
+## ResolvedConfigFileName amendment (#666zzs5)
+
+Base: origin/main 68213b0a62261a4ca40a19f3c1b36e5603640e22.
+The resolved-config-phantom-brand class pins the complete ResolvedConfigFileName
+owner before and after, changing only its required member from never to undefined.
+It is separate from the historical 36-member any-only brands class, whose rules
+and counts remain unchanged. The Oct 29 ruling (#p7t8tmh) covers the absent
+member. The per-adaptation api-sanctions.json records its PropertySignature;
+the lane generator is unchanged and reconstructs one additional public alias.
+The accepted reference is left at never; the emitted public declaration changes.
+
+The existing brands-undefined-proof.cjs audit now also scans this member throughout
+the checkout, including the tracked lib/typescript.d.ts and public API baseline.
+Its resolved-before and resolved-after modes compare the complete built JavaScript
+inventory, all compiler sources, every emitted declaration and the API reference.
+Large snapshots and logs stay outside the repository.
+
 ## Current follow-up: all later pins inventoried
 
 The later-pin refresh is now authorized for every brand-touched file. The complete grep listing and active source-pin inventory are in evidence/brands-undefined-3. Active fixed source hashes occur in 90 (binder.ts, checker.ts, emitter.ts, parser.ts, program.ts, symbolWalker.ts, transformers/es2017.ts), 91 (factory/nodeFactory.ts, utilities.ts), and 92 (sys.ts). Only checker.ts and utilities.ts overlap the 36 brand sites. sys.ts carries no adaptation-40 brand and 92's hashes are unchanged. Other SHA-256 matches are runtime fingerprints or historical proof artifacts, not additional fixed input-file guards.
