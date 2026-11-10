@@ -1,0 +1,26 @@
+interface Holder0 {
+	text?: string | null | undefined;
+}
+function show0(holder: Holder0): string {
+	const { text = 'd' } = holder;
+	return text === null ? 'null' : text;
+}
+console.log(show0({ text: null }));
+
+interface Holder1 {
+	value?: unknown;
+}
+function show1(holder: Holder1): string {
+	const { value = 1 } = holder;
+	return value === null ? 'null' : typeof value;
+}
+console.log(show1({ value: null }));
+
+interface Holder2 {
+	count?: number | null | undefined;
+}
+function show2(holder: Holder2): string {
+	const { count = 5 } = holder;
+	return count === null ? 'null' : `${count}`;
+}
+console.log(show2({ count: null }));

@@ -1,0 +1,8 @@
+interface Holder { v: number | { x: number }; }
+function read(o: Holder): void {
+    const { v } = o;
+    if (typeof v === "number") console.log(`${v}`);
+    else console.log(`${v.x}`);
+}
+read({ v: 7 });
+read({ v: { x: 42 } });

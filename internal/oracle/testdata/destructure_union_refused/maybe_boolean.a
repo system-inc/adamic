@@ -1,0 +1,5 @@
+function read(o: { b?: boolean }): void {
+    const { b } = o;
+    console.log(`${b}`);
+}
+read({});
