@@ -14,11 +14,11 @@ The new lexical fixture exercises escaped closures, independent factory cells, d
 
 ## Final original-kind disposition
 
-| Kind | Roots | Disposition | Validated original roots |
-| --- | ---: | --- | ---: |
-| new an Identifier | 13 | Blocked: weak lifetime support (6), runtime-owned Uint16 integration (1), ordinary-function constructor receiver semantics (5), class-expression registration (1) | 0 |
-| new a ParenthesizedExpression | 8 | Class caches implemented, but actual roots use ordinary-function constructors; NodeLinks additionally uses any, needing a language ruling | 0 |
-| new a PropertyAccessExpression | 1 | Blocked: inspector host adapter; enclosing closure still stops replay | 0 |
+| Kind                           | Roots | Disposition                                                                                                                                                       | Validated original roots |
+| ------------------------------ | ----: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | -----------------------: |
+| new an Identifier              |    13 | Blocked: weak lifetime support (6), runtime-owned Uint16 integration (1), ordinary-function constructor receiver semantics (5), class-expression registration (1) |                        0 |
+| new a ParenthesizedExpression  |     8 | Class caches implemented, but actual roots use ordinary-function constructors; NodeLinks additionally uses any, needing a language ruling                         |                        0 |
+| new a PropertyAccessExpression |     1 | Blocked: inspector host adapter; enclosing closure still stops replay                                                                                             |                        0 |
 
 These are named dependencies, not territory skips. Arbitrary function constructor bodies require allocation, receiver binding and JavaScript return replacement; ordinary calls cannot substitute. Doctrine currently confines this to class constructors/methods and refuses any. Weak collections need an owner-approved lifetime model; strong collections cannot substitute. SymbolLinks needs the class-expression registration owner's change. Runtime Uint16 must arrive via the compiler area; inspector.Session needs a real native host adapter. No unlanded dependency is merged, and no root is cancelled as an echo.
 

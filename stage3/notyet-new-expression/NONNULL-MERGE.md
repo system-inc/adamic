@@ -14,10 +14,10 @@ All 22 replay commands and findings are recorded in evidence/nonnull-roots.json.
 
 Commands sourced /workspace/adamic-tools/env.sh and wrote output to logs:
 python3 stage3/census/latent/make_overlay.py "$PWD" /tmp/new-expression-nonnull-overlay
- go build -buildvcs=false -overlay=/tmp/new-expression-nonnull-overlay/overlay.json -o /tmp/new-expression-nonnull-replay ./stage3/census/latent/replay/worker
- go test ./internal/lower ./internal/oracle -count=1 -timeout 30m
- go test ./internal/ir ./internal/native ./internal/javascript ./internal/flow ./cmd/adamic -count=1 -timeout 30m
- go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
+go build -buildvcs=false -overlay=/tmp/new-expression-nonnull-overlay/overlay.json -o /tmp/new-expression-nonnull-replay ./stage3/census/latent/replay/worker
+go test ./internal/lower ./internal/oracle -count=1 -timeout 30m
+go test ./internal/ir ./internal/native ./internal/javascript ./internal/flow ./cmd/adamic -count=1 -timeout 30m
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
 
 Runtime owner review remains limited to the two new independent files internal/native/runtime/uint16_array.c and uint16_array.h, introduced by b50442f2. Existing runtime C files remain unchanged. Initial setup timing was 231.369s; nproc 5 (CPU quota 4). No full repository gate or PR.
 

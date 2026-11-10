@@ -13,11 +13,11 @@ fetching of the three named refs. Current fetched origin/main
 Only this report and evidence were added after the requested replay-tool merge.
 No production compiler function, shared hook, or cohere code was changed.
 
-| Kind | Assigned roots | Disposition | Validated lowered roots |
-| --- | ---: | --- | ---: |
-| new an Identifier | 13 | skipped: several independent facilities outside newExpression | 0 |
-| new a ParenthesizedExpression | 8 | skipped: runtime constructor values need representation and dispatch work | 0 |
-| new a PropertyAccessExpression | 1 | skipped: external Node inspector constructor; replay encounters earlier closure stop | 0 |
+| Kind                           | Assigned roots | Disposition                                                                          | Validated lowered roots |
+| ------------------------------ | -------------: | ------------------------------------------------------------------------------------ | ----------------------: |
+| new an Identifier              |             13 | skipped: several independent facilities outside newExpression                        |                       0 |
+| new a ParenthesizedExpression  |              8 | skipped: runtime constructor values need representation and dispatch work            |                       0 |
+| new a PropertyAccessExpression |              1 | skipped: external Node inspector constructor; replay encounters earlier closure stop |                       0 |
 
 These are blocked scope findings, not new language refusals. No root is cancelled
 as an echo, and no NotYet is relabeled Refused. Weak collection lifetime semantics
@@ -32,13 +32,13 @@ scratch directory prefix. The table's compiler base is 44583d32; this worker use
 the requested newer compiler-area base. Replay does not establish that an earlier
 stop is an echo or that the original census finding is gone.
 
-| Site | Exit | Observed selected-unit result | Replay total |
-| --- | ---: | --- | ---: |
-| binder.ts:632:16 | 1 | createSymbol signature stops at 630:47, a value of type __String | 117.877s |
-| checker.ts:2635:24 | 1 | createSymbol signature stops at 2633:47, a value of type __String | 2.775s |
-| checker.ts:2940:58 | 0 | reproduced new a ParenthesizedExpression in getNodeLinks | 2.586s |
-| factory/baseNodeFactory.ts:42:16 | 0 | reproduced new a ParenthesizedExpression in createBaseSourceFileNode | 2.275s |
-| sys.ts:1656:29 | 1 | selected enclosing function-expression statement at 1463:1; closure stop at 1469:5 and NonNullExpression at 1964:12 | 2.254s |
+| Site                             | Exit | Observed selected-unit result                                                                                       | Replay total |
+| -------------------------------- | ---: | ------------------------------------------------------------------------------------------------------------------- | -----------: |
+| binder.ts:632:16                 |    1 | createSymbol signature stops at 630:47, a value of type __String                                                    |     117.877s |
+| checker.ts:2635:24               |    1 | createSymbol signature stops at 2633:47, a value of type __String                                                   |       2.775s |
+| checker.ts:2940:58               |    0 | reproduced new a ParenthesizedExpression in getNodeLinks                                                            |       2.586s |
+| factory/baseNodeFactory.ts:42:16 |    0 | reproduced new a ParenthesizedExpression in createBaseSourceFileNode                                                |       2.275s |
+| sys.ts:1656:29                   |    1 | selected enclosing function-expression statement at 1463:1; closure stop at 1469:5 and NonNullExpression at 1964:12 |       2.254s |
 
 The first replay includes cold overlay compilation while setup was warming the
 build cache. Timings are single observations, not comparative benchmarks.

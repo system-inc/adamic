@@ -9,6 +9,7 @@ Removed internal/native/runtime/uint16_array.c and uint16_array.h, their include
 new_expression_uint16_notyet.a constructs one element, writes 70000, and prints its value as a string. TestNewExpressionUint16RemainsNotYet independently requires source Node exit 0, stdout 4464 and empty stderr, then checks the exact typed-array element NotYet. Both the old Uint16 fixture and the new refusal fixture are registered as not lowering; the class-value fixture remains registered as lowering. update-counts removes the old runnable Uint16 row and does not record NotYet fixtures; the class-value row is unchanged.
 
 Validation commands (output in evidence/drop-uint16-*):
+
 - go test ./internal/oracle -run 'TestNewExpressionUint16RemainsNotYet|TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_' -count=1 -timeout 10m
 - python3 stage3/notyet-new-expression/run-uint16-notyet-mutant.py
 - go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
