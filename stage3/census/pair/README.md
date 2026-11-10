@@ -6,10 +6,10 @@ Use this tool when comparing two latent streams measured on the same adapted sou
 
 The complete historical streams give these open-tag results:
 
-| Comparison (head against base) | Raw lowered | Distinct lowered | Distinct moved to another reason | Distinct new findings | Regressions |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| qeanycw, `5b181782` against `b03fe07e` | 74 | 70 | 2 | 0 | 0 |
-| kind-predicates, `b03fe07e` against `df84b974` | 239 | 181 | 5 | 1 | 0 |
+| Comparison (head against base)                 | Raw lowered | Distinct lowered | Distinct moved to another reason | Distinct new findings | Regressions |
+| ---------------------------------------------- | ----------: | ---------------: | -------------------------------: | --------------------: | ----------: |
+| qeanycw, `5b181782` against `b03fe07e`         |          74 |               70 |                                2 |                     0 |           0 |
+| kind-predicates, `b03fe07e` against `df84b974` |         239 |              181 |                                5 |                     1 |           0 |
 
 Thus qeanycw clears 72 distinct open-tag reasons: 70 reads have no remaining finding and 2 retain another reason. This is the exact result of access-chain normalization, refining the original estimate of about 71. Its full open-tag counts are 1,006 -> 987 raw and 854 -> 782 distinct. The kind-predicates counts are 1,251 -> 1,006 raw and 1,040 -> 854 distinct. Its one new finding is an exposed reason at an already blocked site. Both comparisons have zero first-stop changes and zero panics. With normalization disabled, qeanycw reports 54 new sites, reproducing the erroneous regression count (55 new raw findings, one at an already blocked site).
 
