@@ -1,0 +1,195 @@
++ git checkout emit/bind-length-pins
+error: pathspec 'emit/bind-length-pins' did not match any file(s) known to git
++ git fetch origin emit/bind-length-pins
+From https://github.com/system-inc/adamic
+ * branch                emit/bind-length-pins -> FETCH_HEAD
++ git checkout -b emit/bind-length-pins --track origin/emit/bind-length-pins
+fatal: 'origin/emit/bind-length-pins' is not a commit and a branch 'emit/bind-length-pins' cannot be created from it
++ git checkout -b emit/bind-length-pins FETCH_HEAD
+Switched to a new branch 'emit/bind-length-pins'
+++ git rev-parse HEAD
++ test 97d2cc699d68ee3fae14452dfbf703066de174d0 = 97d2cc699d68ee3fae14452dfbf703066de174d0
++ git submodule update --init --recursive
+Submodule 'cohere' (https://github.com/system-inc/cohere.git) registered for path 'cohere'
+Cloning into '/workspace/adamic/cohere'...
+From https://github.com/system-inc/cohere
+ * branch              06af2e399c6c1fb93fd570b774027942747400b4 -> FETCH_HEAD
+Submodule path 'cohere': checked out '06af2e399c6c1fb93fd570b774027942747400b4'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/adamic/cohere/TypeScript'...
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
++ go version
+go version go1.27.1 linux/amd64
++ clang --version
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /workspace/adamic-tools/llvm/bin
++ node --version
+v24.19.0
++ gofmt -l internal/oracle
++ go vet ./internal/oracle
++ go test -count=1 -v -timeout 30m ./internal/oracle -run '^(TestFunctionBindLengthFunctionSlot|TestFunctionBindKeyedLength)$'
+=== RUN   TestFunctionBindLengthFunctionSlot
+=== PAUSE TestFunctionBindLengthFunctionSlot
+=== RUN   TestFunctionBindKeyedLength
+=== PAUSE TestFunctionBindKeyedLength
+=== CONT  TestFunctionBindLengthFunctionSlot
+=== RUN   TestFunctionBindLengthFunctionSlot/length_function_slot.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_function_slot.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_returned.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_returned.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_field.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_field.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_array.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_array.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_method.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_method.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts
+=== CONT  TestFunctionBindKeyedLength
+=== RUN   TestFunctionBindKeyedLength/keyed_length_two.a
+=== CONT  TestFunctionBindLengthFunctionSlot/length_function_slot.ts
+=== PAUSE TestFunctionBindKeyedLength/keyed_length_two.a
+=== RUN   TestFunctionBindKeyedLength/keyed_length_zero.a
+=== PAUSE TestFunctionBindKeyedLength/keyed_length_zero.a
+=== RUN   TestFunctionBindKeyedLength/keyed_length_method.a
+=== PAUSE TestFunctionBindKeyedLength/keyed_length_method.a
+=== RUN   TestFunctionBindKeyedLength/keyed_length_default.a
+=== PAUSE TestFunctionBindKeyedLength/keyed_length_default.a
+=== CONT  TestFunctionBindLengthFunctionSlot/length_field.ts
+=== CONT  TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts
+=== CONT  TestFunctionBindLengthFunctionSlot/length_method.ts
+=== CONT  TestFunctionBindLengthFunctionSlot/length_array.ts
+=== NAME  TestFunctionBindLengthFunctionSlot/length_method.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindLengthFunctionSlot/length_array.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindLengthFunctionSlot/length_function_slot.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindLengthFunctionSlot/length_field.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== CONT  TestFunctionBindLengthFunctionSlot/length_returned.ts
+=== CONT  TestFunctionBindKeyedLength/keyed_length_two.a
+=== CONT  TestFunctionBindKeyedLength/keyed_length_default.a
+=== CONT  TestFunctionBindKeyedLength/keyed_length_method.a
+=== CONT  TestFunctionBindKeyedLength/keyed_length_zero.a
+=== NAME  TestFunctionBindLengthFunctionSlot/length_returned.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindKeyedLength/keyed_length_method.a
+    function_bind_length_test.go:62: gate cache node miss
+=== NAME  TestFunctionBindKeyedLength/keyed_length_two.a
+    function_bind_length_test.go:62: gate cache node miss
+=== NAME  TestFunctionBindKeyedLength/keyed_length_zero.a
+    function_bind_length_test.go:62: gate cache node miss
+=== NAME  TestFunctionBindKeyedLength/keyed_length_default.a
+    function_bind_length_test.go:62: gate cache node miss
+--- PASS: TestFunctionBindLengthFunctionSlot (0.00s)
+    --- PASS: TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts (38.79s)
+    --- PASS: TestFunctionBindLengthFunctionSlot/length_field.ts (38.84s)
+    --- PASS: TestFunctionBindLengthFunctionSlot/length_method.ts (38.84s)
+    --- PASS: TestFunctionBindLengthFunctionSlot/length_function_slot.ts (38.86s)
+    --- PASS: TestFunctionBindLengthFunctionSlot/length_array.ts (38.86s)
+    --- PASS: TestFunctionBindLengthFunctionSlot/length_returned.ts (0.38s)
+=== NAME  TestFunctionBindKeyedLength/keyed_length_two.a
+    function_bind_length_test.go:70: build go_build_./cmd/adamic_adamic 2587de00c757 hit 218.16
+=== NAME  TestFunctionBindKeyedLength/keyed_length_default.a
+    function_bind_length_test.go:70: build go_build_./cmd/adamic_adamic 2587de00c757 hit 218.16
+=== NAME  TestFunctionBindKeyedLength/keyed_length_zero.a
+    function_bind_length_test.go:70: build go_build_./cmd/adamic_adamic 2587de00c757 hit 218.16
+=== NAME  TestFunctionBindKeyedLength/keyed_length_method.a
+    function_bind_length_test.go:70: build go_build_./cmd/adamic_adamic 2587de00c757 miss 218.16
+--- PASS: TestFunctionBindKeyedLength (0.00s)
+    --- PASS: TestFunctionBindKeyedLength/keyed_length_default.a (219.25s)
+    --- PASS: TestFunctionBindKeyedLength/keyed_length_zero.a (219.24s)
+    --- PASS: TestFunctionBindKeyedLength/keyed_length_two.a (219.27s)
+    --- PASS: TestFunctionBindKeyedLength/keyed_length_method.a (219.25s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	258.145s
+++ git status --porcelain
++ test -z ''
++ python3 -
++ git diff --stat
+ internal/lower/graph_types.go | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+++ git diff --name-only
++ test internal/lower/graph_types.go = internal/lower/graph_types.go
++ echo '=== MUTANT'
+=== MUTANT
++ go test -count=1 -v -timeout 30m ./internal/oracle -run '^TestFunctionBindLengthFunctionSlot$'
+=== RUN   TestFunctionBindLengthFunctionSlot
+=== PAUSE TestFunctionBindLengthFunctionSlot
+=== CONT  TestFunctionBindLengthFunctionSlot
+=== RUN   TestFunctionBindLengthFunctionSlot/length_function_slot.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_function_slot.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_returned.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_returned.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_field.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_field.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_array.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_array.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_method.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_method.ts
+=== RUN   TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts
+=== PAUSE TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts
+=== CONT  TestFunctionBindLengthFunctionSlot/length_function_slot.ts
+=== CONT  TestFunctionBindLengthFunctionSlot/length_array.ts
+=== CONT  TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts
+=== CONT  TestFunctionBindLengthFunctionSlot/length_method.ts
+=== CONT  TestFunctionBindLengthFunctionSlot/length_returned.ts
+=== NAME  TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindLengthFunctionSlot/length_array.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindLengthFunctionSlot/length_function_slot.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindLengthFunctionSlot/length_returned.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindLengthFunctionSlot/length_method.ts
+    function_bind_length_test.go:34: gate cache node miss
+=== NAME  TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts
+    function_bind_length_test.go:40: want existing graph/dynamic stop at Function.length, got <nil>
+=== CONT  TestFunctionBindLengthFunctionSlot/length_field.ts
+=== NAME  TestFunctionBindLengthFunctionSlot/length_method.ts
+    function_bind_length_test.go:40: want existing graph/dynamic stop at Function.length, got <nil>
+=== NAME  TestFunctionBindLengthFunctionSlot/length_array.ts
+    function_bind_length_test.go:40: want existing graph/dynamic stop at Function.length, got <nil>
+=== NAME  TestFunctionBindLengthFunctionSlot/length_function_slot.ts
+    function_bind_length_test.go:40: want existing graph/dynamic stop at Function.length, got <nil>
+=== NAME  TestFunctionBindLengthFunctionSlot/length_returned.ts
+    function_bind_length_test.go:40: want existing graph/dynamic stop at Function.length, got <nil>
+=== NAME  TestFunctionBindLengthFunctionSlot/length_field.ts
+    function_bind_length_test.go:34: gate cache node miss
+    function_bind_length_test.go:40: want existing graph/dynamic stop at Function.length, got <nil>
+--- FAIL: TestFunctionBindLengthFunctionSlot (0.00s)
+    --- FAIL: TestFunctionBindLengthFunctionSlot/length_typed_arrow.ts (5.94s)
+    --- FAIL: TestFunctionBindLengthFunctionSlot/length_method.ts (5.96s)
+    --- FAIL: TestFunctionBindLengthFunctionSlot/length_array.ts (5.97s)
+    --- FAIL: TestFunctionBindLengthFunctionSlot/length_function_slot.ts (6.00s)
+    --- FAIL: TestFunctionBindLengthFunctionSlot/length_returned.ts (6.00s)
+    --- FAIL: TestFunctionBindLengthFunctionSlot/length_field.ts (0.22s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	6.176s
+FAIL
++ result=1
++ echo 'mutant exit status: 1'
+mutant exit status: 1
++ git show HEAD:internal/lower/graph_types.go
++ git diff --stat
+++ git diff --stat
++ test -z ''
++ git switch -c emit/bind-length-pins-log
+Switched to a new branch 'emit/bind-length-pins-log'
++ git diff --stat
+++ git status --porcelain
++ test -z ''
++ git check-ignore -v proof/pins.log
+.gitignore:38:*.log	proof/pins.log
