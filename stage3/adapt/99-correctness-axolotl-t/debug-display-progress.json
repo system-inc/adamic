@@ -6,8 +6,10 @@
     "c": 0
   },
   "runtime_exports": "pass",
-  "apply": "pending",
-  "lane": "pending",
+  "apply": "pass; child exit 0",
+  "lane": "running; no failures so far",
   "main": "95afe50a6e94dbff360a399458b5f45f43cfccad",
-  "ready_to_land": false
+  "ready_to_land": false,
+  "source_equivalence": "all 746 files byte-identical",
+  "final_replay": "zero edits"
 }
