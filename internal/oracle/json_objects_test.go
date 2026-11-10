@@ -18,7 +18,8 @@ import (
 // declared type. Each fixture is held to Node on native sanitized and released, the JavaScript backend, wasm32
 // and the counted build. Mutants: walking the shape's names in declaration order instead of
 // adamic_object_ordered reds view_order (its index key comes first on Node); reading every null pointer as null
-// reds nullish (its undefined fields print null).
+// reds nullish (its undefined fields print null); and reading a null pointer in a String slot as null reds
+// nullish too (a string | undefined a variable wrote, as in { name: maybeName }, prints "name":null).
 var jsonObjectsFixtures = []string{"literal", "class", "nested", "optional", "view_order", "hidden", "nullish"}
 
 func TestJSONObjectsAgreeWithNode(t *testing.T) {

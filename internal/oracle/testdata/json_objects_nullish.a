@@ -28,3 +28,7 @@ function optional(flag: boolean): Box | undefined {
 console.log(JSON.stringify(maybe(false)) ?? '<undefined>', JSON.stringify(maybe(true)) ?? '<undefined>');
 console.log(JSON.stringify(optional(false)) ?? '<undefined>');
 console.log(JSON.stringify([maybe(false), optional(false), maybe(true)]) ?? '<undefined>');
+const maybeName = text(false);
+console.log(JSON.stringify({ name: maybeName }) ?? '<undefined>');
+const named: { readonly name: string | undefined } = { name: maybeName };
+console.log(JSON.stringify(named) ?? '<undefined>');
