@@ -432,3 +432,28 @@ body skips and piece ownership guards. A wrapped deferred failure keeps its phas
 while propagating to the caller. The real pin covers both a direct written-any
 function and a concrete generic call, including an ordinary refusal later in the
 callee. No new lowering field carries this error.
+
+## Deferred caller witnesses
+
+Deferred units also carry `instantiated_by` when witnesses exist: at most five
+unique records, ordered by their serialized `(unit, call_site, type_arguments)`
+fields. `unit` is the independently attempted census unit; `call_site` is the
+concrete generic call. Type arguments follow declaration binder order and use
+checker TypeToString. A nested body inherits the concrete outer call's context.
+The field records the same entry hook as `instantiated`, including its existing
+bodyless-signature cases. It does not establish successful lowering.
+
+The raw witness ledger and scoped generic-call context are run-owned globals,
+not fields of lowering. Statement rollback cannot erase them. Checker/type
+identities are retained until every file and the end relation report complete;
+only then are types printed, witnesses deduplicated/sorted, and the first five
+attached. A missing mapped binder in the old hook is printed as `<unmapped>`.
+No lowering snapshot or program-fact policy changes. The original boolean hook
+and census scope remain unchanged. `LATENT_MUTANT_DROP_INSTANTIATED_BY=1` drops
+only witness recording; audit_deferred.py must reject it.
+
+`LATENT_INSTANTIATION_REQUESTS=PATH` optionally records generic inference entry
+in a separate JSONL stream (`unit`, `call_site`, `target`). It distinguishes a
+caller that never reached a call from an attempted instantiation that failed
+before the concrete body hook. It never adds findings or changes the latent
+stream schema.

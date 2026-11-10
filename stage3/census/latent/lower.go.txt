@@ -3,6 +3,8 @@ package lower
 
 import (
 	"context"
+ "encoding/json"
+ "sort"
 	"github.com/system-inc/adamic/stage3/census/latent"
 	"errors"
 	"fmt"
@@ -78,6 +80,7 @@ type LatentUnit struct {
 	BodyEnd            int      `json:"body_end,omitempty"`
 	RelationOverflow   *string  `json:"relation_overflow,omitempty"`
 	Instantiated       bool     `json:"instantiated"`
+ InstantiatedBy []LatentInstantiation `json:"instantiated_by,omitempty"`
 	Status             string   `json:"status"`
 	CheckerDiagnostics []string `json:"checker_diagnostics"`
 	Name               string   `json:"name,omitempty"`
@@ -220,6 +223,54 @@ func (l *lowering) latentRegister(files []*ast.SourceFile) {
 var latentInstantiated map[string]bool
 var latentConcreteCallDepth int
 
+// Run-owned observation state, deliberately outside lowering snapshots. Raw
+// checker identities are retained until measurement ends: printing a type must
+// not change a later lowering query or the measured relation-cache ledger.
+type LatentInstantiation struct {
+ Unit string `json:"unit"`
+ CallSite string `json:"call_site"`
+ TypeArguments []string `json:"type_arguments"`
+}
+type latentRawInstantiation struct {
+ unit, callSite string
+ checker *checker.Checker
+ arguments []*checker.Type
+}
+var latentConcreteInstantiation *latentRawInstantiation
+var latentInstantiationEntries map[string][]latentRawInstantiation
+
+// Optional separate stream for distinguishing a stopped caller from a request
+// that reached generic inference but never entered a concrete body.
+func (l *lowering) latentInstantiationRequest(call, declaration *ast.Node) {
+ path := os.Getenv("LATENT_INSTANTIATION_REQUESTS"); if path == "" { return }
+ output, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600); if err != nil { panic(err) }
+ err = json.NewEncoder(output).Encode(struct { Unit string `json:"unit"`; CallSite string `json:"call_site"`; Target string `json:"target"` }{latentFindingOwner,l.program.Where(call),l.program.Where(declaration)})
+ closeErr := output.Close(); if err != nil { panic(err) }; if closeErr != nil { panic(closeErr) }
+}
+
+func latentRecordInstantiation(where string) {
+ if latentConcreteInstantiation == nil || os.Getenv("LATENT_MUTANT_DROP_INSTANTIATED_BY") == "1" { return }
+ latentInstantiationEntries[where] = append(latentInstantiationEntries[where], *latentConcreteInstantiation)
+}
+
+func latentFormatInstantiations() map[string][]LatentInstantiation {
+ result := map[string][]LatentInstantiation{}
+ for where, entries := range latentInstantiationEntries {
+  unique := map[string]LatentInstantiation{}
+  for _, raw := range entries {
+   witness := LatentInstantiation{Unit:raw.unit, CallSite:raw.callSite, TypeArguments:[]string{}}
+   for _, argument := range raw.arguments { if argument == nil { witness.TypeArguments = append(witness.TypeArguments, "<unmapped>") } else { witness.TypeArguments = append(witness.TypeArguments, raw.checker.TypeToString(argument)) } }
+   key, err := json.Marshal(witness); if err != nil { panic(err) }
+   unique[string(key)] = witness
+  }
+  keys := make([]string,0,len(unique)); for key := range unique { keys = append(keys,key) }; sort.Strings(keys)
+  if len(keys)>5 { keys=keys[:5] }
+  for _, key := range keys { result[where] = append(result[where],unique[key]) }
+ }
+ return result
+}
+
+
 var latentUnitTimer *UnitTimer
 
 func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) LatentRelationReport {
@@ -240,17 +291,22 @@ func LatentWithRelationChecks(ctx context.Context, program *load.Program, perUni
         latentUnitTimer = NewUnitTimer(output)
     }
     latentInstantiated = map[string]bool{}
+    latentInstantiationEntries = map[string][]latentRawInstantiation{}
+    latentConcreteInstantiation = nil
+    defer func() { latentInstantiationEntries = nil; latentConcreteInstantiation = nil }()
     latentConcreteCallDepth = 0
     records := []LatentFile{}
     latentRun(ctx, program, func(record LatentFile) { records = append(records, record) })
     relations.End = latentReadRelationOverflow(ctx, program)
     relations.CacheSizes = latentRelationCacheSizes(ctx, program)
     relations.Complete(records)
+    witnesses := latentFormatInstantiations()
     for _, record := range records {
         for index := range record.Units {
             unit := &record.Units[index]
             if unit.Status == "deferred_generic_instantiation" {
                 unit.Instantiated = latentInstantiated[unit.Where]
+                unit.InstantiatedBy = witnesses[unit.Where]
             }
         }
         emit(record)
