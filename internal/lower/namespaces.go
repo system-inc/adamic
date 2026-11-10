@@ -88,6 +88,12 @@ func (l *lowering) namespaceMember(node *ast.Node) bool {
 }
 
 func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, error) {
+	if len(l.namespaceValues) > 0 && ast.IsIdentifier(node) && !l.namespaceQualifiedReceiver(node) {
+		// The name read as a value is its object (namespace_value.go); the refusal pass admitted it.
+		if declaration := l.namespaceDeclaration(node); declaration != nil && l.namespaceHasValue(declaration) && !l.namespaceMergedFunction(node) {
+			return l.namespaceValueRead(declaration), true, nil
+		}
+	}
 	declaration, err := l.namespaceEnumView(node)
 	if err != nil {
 		return nil, true, err
@@ -157,6 +163,11 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			return l.notYet(node, "a namespace outside module scope")
 		}
 		symbol := l.symbol(node.Name())
+		// Its own words before the reopened stop below: a read between two blocks sees an object Node
+		// hasn't finished, which one object made at the first block couldn't be (namespace_value.go).
+		if l.namespaceHasValue(node) && l.namespaceBlocks(node) > 1 {
+			return l.notYet(node, "a namespace merged across blocks used as a value")
+		}
 		for _, declaration := range symbol.Declarations {
 			if declaration == node || declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindTypeAliasDeclaration {
 				continue
@@ -230,8 +241,13 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			return l.notYet(node, "observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented")
 		}
 		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != node {
-			return l.notYet(node, "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports")
+			if err := l.namespaceValueAdmission(node, l.namespaceDeclaration(node)); err != nil {
+				return err
+			}
 		}
+	}
+	if err := l.namespaceValueUse(node); err != nil {
+		return err
 	}
 	if l.isExpression(node) && l.namespaceMember(node) {
 		parent := node.Parent
@@ -258,6 +274,7 @@ func init() { refusalRules.register(2100, "namespaceRefusal", (*lowering).namesp
 // Follow statically known callees before executing a module statement. An unresolved
 // edge keeps namespace reads checked at runtime; it is never proof of no effects.
 func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+	l.noteNamespaceValues(modules)
 	initialized := map[*ast.Node]bool{}
 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
 	checkCall := func(target *ast.Node) error {
@@ -425,17 +442,22 @@ func (l *lowering) namespaceReadyReads(node *ast.Node, writing bool) []ir.Expres
 		writing = false
 		node = ast.SkipParentheses(node.Expression())
 		if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) {
-			b := l.libraryArrayBuilder([]ir.Expression{ir.Read{Local: l.namespaceReadyLocal(declaration), Of: ir.Boolean}})
 			message := "TypeError: Cannot read properties of undefined (reading '" + member + "')"
 			if setting {
 				message = "TypeError: Cannot set properties of undefined (setting '" + member + "')"
 			}
-			b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
 			// The outer container is read first in Outer.Inner.member.
-			checks = append([]ir.Expression{b.finish("namespace_ready", ir.BooleanConstant{Value: true})}, checks...)
+			checks = append([]ir.Expression{l.namespaceReadyCheck(declaration, message)}, checks...)
 		}
 	}
 	return checks
+}
+
+// namespaceReadyCheck stops with message unless the namespace's block has run.
+func (l *lowering) namespaceReadyCheck(declaration *ast.Node, message string) ir.Expression {
+	b := l.libraryArrayBuilder([]ir.Expression{ir.Read{Local: l.namespaceReadyLocal(declaration), Of: ir.Boolean}})
+	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	return b.finish("namespace_ready", ir.BooleanConstant{Value: true})
 }
 
 func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.Expression {
@@ -509,6 +531,11 @@ func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
 			}
 		}
 	}
+	// The object is made first, as the block's functions already exist (namespace_value.go).
+	container, err := l.namespaceContainerStatements(node)
+	if err != nil {
+		return nil, err
+	}
 	body, err := l.statements(namespaceStatements(node))
 	if err != nil {
 		return nil, err
@@ -516,7 +543,7 @@ func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
 	if namespaceRuntime(node) {
 		body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})
 	}
-	return append(hoisted, body...), nil
+	return append(append(container, hoisted...), body...), nil
 }
 
 // The parser's factory destructuring declares symbols on the renamed identifiers,
