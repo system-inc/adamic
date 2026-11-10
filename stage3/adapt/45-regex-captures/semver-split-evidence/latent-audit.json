@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "main_findings": 60,
+  "amended_findings": 57,
+  "mutant_findings": 60,
+  "added_findings": 0,
+  "removed": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "phase": "refusal_scan",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "TREE/src/compiler/semver.ts:287:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "TREE/src/compiler/semver.ts:276:1",
+      "where": "TREE/src/compiler/semver.ts:287:34"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "TREE/src/compiler/semver.ts:287:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "TREE/src/compiler/semver.ts:276:1",
+      "where": "TREE/src/compiler/semver.ts:287:34"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "TREE/src/compiler/semver.ts:287:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "TREE/src/compiler/semver.ts:276:1",
+      "where": "TREE/src/compiler/semver.ts:287:13"
+    }
+  ],
+  "mutant_exact_main_order_and_findings": true,
+  "exit_codes": {
+    "main": 0,
+    "amended": 0,
+    "mutant": 0
+  },
+  "units": {
+    "main": 29,
+    "amended": 28,
+    "mutant": 29
+  }
+}

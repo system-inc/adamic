@@ -1,0 +1,38 @@
+{
+  "base": "7f2c852dffe31163e9699f0c91a158596757b888",
+  "generator": "stage3/census/latent/make_overlay.py",
+  "generator_sha256": "32ed3f2080f8a5963a1a6ef6039a1543bb0425ef1da34555fe23e90dbef6f88e",
+  "build_command": "go build -buildvcs=false -overlay=/tmp/semver-split-latent-overlay/overlay.json -o /tmp/semver-split-latent-census ./stage3/census/latent/tool",
+  "binary_sha256": "7b39d8b38b2a62064c5005e07fe7a9372074f1f919322a1a1bd9a5dd655ad9c0",
+  "environment": {
+    "LATENT_FULL": "1",
+    "LATENT_ONLY_FILE": "the selected tree/src/compiler/semver.ts",
+    "LATENT_ASSERT_NO_OUTPUT": "1"
+  },
+  "overlay_file_sha256": {
+    "overlay.json": "a3b2c9108ec50f4382f1d9eca08910a679fa7326d21604c0bbcd8da072fa0424",
+    "internal_lower_latent_speculative.go": "5ef44cd41bb053d7fa5642fdacd9ea6bb4ac7c9f59fb10861f72b14dee41333f",
+    "internal_lower_latent_progress.go": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3",
+    "internal_lower_latent_piece.go": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee",
+    "stage3_census_latent_replay_worker_main.go": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34",
+    "stage3_census_latent_tool_main.go": "fba057d4a0f994f963114250dc6ef81f96a3c92e3ffec6ca2ea8b9506d6e35e8",
+    "internal_lower_latent_hook.go": "e84e4ad5ab205a49eff64507c22d7d3e9fe0ead18505ab873873b76580b9f85a",
+    "internal_lower_locals.go": "9f7eaef46469ee896c75bdccdd70269f4bbe302f0a4d1a475f4b27be8278a4b6",
+    "internal_lower_generic.go": "41e0de3c799522abebf7c5546520aad6cc7ba4260ec85114d97343b54ff3aac0",
+    "internal_lower_functions.go": "dc3869f8a2ae29c27d2b8129a4e0bd3e558e208f78ea26abc101d51a6ff3cee5",
+    "internal_lower_expression.go": "4cdbe398760b8ea6b56ecc20a1abdbf7788be34106edc73825d2c2e5191d6754",
+    "internal_load_latent_hook.go": "154155d62954f677731f302b7dc57a3aab914ff373618fd9efc0a1bf3d68b5a4",
+    "internal_load_load.go": "fb7e14fd673f689330564b6486c5db6e0722bf5b3a8fab103322bd7d49f3eb07",
+    "internal_lower_refusals.go": "285dae5f5b638809096cd8375e660908bde6a1f9b057c0269ba4955686a2e0e3",
+    "internal_lower_latent_replay.go": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a",
+    "internal_lower_latent_timing.go": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f",
+    "internal_lower_latent_units.go": "197ead8f7f0575dfe0534832b411d424acef56f7d0476970af1c94b77e4742ee",
+    "internal_lower_latent_full.go": "e88d36d8fa47efebe1983d3d8860f19ea069690cd3c9c80128fda592d0216877",
+    "stage3_census_latent_tool_relation_overflow_test.go": "45f799c6e50dc6b77307830a43336f1102c4c0bc1cf35da9bb51cc7edcd48afb",
+    "internal_lower_latent_relation_overflow.go": "9897c23b3b4a5b79d8696b685b03192d74d95df4ccd911a6aea2cb9ac88ce1cc",
+    "internal_lower_statements.go": "c31d7990705f7b45bbef902834a29d63328cbc0f60e21d5ea6f3ffcb7476c283",
+    "internal_lower_latent_state.go": "6ba88354ecc9cdb466a0a1af9d5fd1374aa1e2982d343521ad98c0258dd804a9",
+    "internal_lower_entries_records.go": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040",
+    "internal_lower_lower.go": "53d9779ca708c095a7543629ad8c9b6a9c8324e06f2e7c263d6d3f30cedcc24a"
+  }
+}
