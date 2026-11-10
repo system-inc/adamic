@@ -1,0 +1,11 @@
+// A parameter whose type holds no null keeps its default as before.
+function g(x: number = 2): number {
+	return x;
+}
+function h(text: string = 'none'): string {
+	return text;
+}
+console.log(String(g()));
+console.log(String(g(3)));
+console.log(h());
+console.log(h('some'));
