@@ -1,0 +1,18 @@
+// A static field constructs its own class, whose constructor, parameter default and instance field
+// initializer read only statics initialized earlier in source order, so every read sees its value
+// (#1451npc). Node prints 6 4 p2, then 10 4 p2.
+class Point {
+	static readonly scale: number = 2;
+	static readonly offset: number = 4;
+	static readonly unit: Point = new Point(3);
+	readonly x: number;
+	readonly y: number;
+	readonly label: string = `p${Point.scale}`;
+	constructor(x: number, y: number = Point.offset) {
+		this.x = x * Point.scale;
+		this.y = y;
+	}
+}
+console.log(`${Point.unit.x} ${Point.unit.y} ${Point.unit.label}`);
+const later = new Point(5);
+console.log(`${later.x} ${later.y} ${later.label}`);
