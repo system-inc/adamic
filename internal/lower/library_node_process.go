@@ -730,6 +730,92 @@ func (l *lowering) stdoutHandleSetBlockingRefusal(node *ast.Node) error {
 	return l.notYet(node, stdoutHandleSetBlockingValue)
 }
 
+// stdoutHandleComputedCall and stdoutHandleBind are stdoutHandleUnheldRefusal's words. The first names
+// a computed-key call, so #17pfbkk, which lowers o['m']() as o.m(), finds and lifts it.
+const (
+	stdoutHandleComputedCall = "a call through a computed key naming setBlocking in a program that reads process.stdout._handle (Node calls the handle's with it as the receiver, and this call would reach it without one)"
+	stdoutHandleBind         = "a bind of a field named setBlocking in a program that reads process.stdout._handle (Node's bound call has the handle as its receiver, and this one would reach it without one)"
+)
+
+// stdoutHandleUnheldRefusal stops the two call roads on which a call of the handle's setBlocking would
+// reach its closure without its object, wherever that object came from, so on roads
+// stdoutHandleOrigin doesn't follow too (a parameter, a field, a call's result): a call through a
+// computed key whose type is the string literal setBlocking, o['setBlocking']() or o[key](), which
+// callClosure keeps on the plain road; and o.setBlocking.bind(...), whose bound call carries no
+// receiver to the handle's test. Node calls both with the object as this, and blocks off the handle,
+// where this head's closure would throw Illegal invocation (Runtime's must 2 on #0bxc4jh, Lower's
+// ruling (b)). Only a program that reads the handle is asked, since only there can the closure be
+// the one reached; the name test comes first, so the scan runs only on a call that names it.
+func (l *lowering) stdoutHandleUnheldRefusal(node *ast.Node) error {
+	if node.Kind != ast.KindCallExpression {
+		return nil
+	}
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if callee.Kind == ast.KindNonNullExpression {
+		callee = ast.SkipParentheses(callee.AsNonNullExpression().Expression)
+	}
+	words := ""
+	switch callee.Kind {
+	case ast.KindElementAccessExpression:
+		key := l.checker.GetTypeAtLocation(callee.AsElementAccessExpression().ArgumentExpression)
+		if key.Flags()&checker.TypeFlagsStringLiteral == 0 {
+			return nil
+		}
+		if name, isText := key.AsLiteralType().Value().(string); !isText || name != "setBlocking" {
+			return nil
+		}
+		words = stdoutHandleComputedCall
+	case ast.KindPropertyAccessExpression:
+		if callee.Name().Text() != "bind" || !l.namesSetBlocking(callee.AsPropertyAccessExpression().Expression) {
+			return nil
+		}
+		words = stdoutHandleBind
+	default:
+		return nil
+	}
+	if !l.readsStdoutHandle() {
+		return nil
+	}
+	return l.notYet(callee, words)
+}
+
+// namesSetBlocking says whether node, through parentheses and assertions, reads a field named
+// setBlocking: o.setBlocking, or o['setBlocking'] with a key whose type is that literal.
+func (l *lowering) namesSetBlocking(node *ast.Node) bool {
+	node = ast.SkipOuterExpressions(node, ast.OEKParentheses|ast.OEKAssertions)
+	switch node.Kind {
+	case ast.KindPropertyAccessExpression:
+		return node.Name().Text() == "setBlocking"
+	case ast.KindElementAccessExpression:
+		key := l.checker.GetTypeAtLocation(node.AsElementAccessExpression().ArgumentExpression)
+		if key.Flags()&checker.TypeFlagsStringLiteral == 0 {
+			return false
+		}
+		name, isText := key.AsLiteralType().Value().(string)
+		return isText && name == "setBlocking"
+	}
+	return false
+}
+
+// readsStdoutHandle says whether any file of the program reads process.stdout._handle.
+func (l *lowering) readsStdoutHandle() bool {
+	found := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "_handle" && l.processPath(node) == "process.stdout._handle" {
+			found = true
+		}
+		return found || node.ForEachChild(visit)
+	}
+	for _, file := range l.program.Files() {
+		if file.AsNode().ForEachChild(visit) {
+			return true
+		}
+	}
+	return found
+}
+
 func init() {
 	refusalRules.register(850, "stdoutHandleSetBlockingRefusal", (*lowering).stdoutHandleSetBlockingRefusal)
+	refusalRules.register(851, "stdoutHandleUnheldRefusal", (*lowering).stdoutHandleUnheldRefusal)
 }
