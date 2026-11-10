@@ -1,0 +1,1798 @@
+{
+  "root": "/workspace/never-call-adapted",
+  "entry": "src/tsc/tsc.ts",
+  "typescript": "6.0.3",
+  "files": [
+    {
+      "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "bytes": 111,
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.performance.ts",
+      "bytes": 101,
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda"
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.ts",
+      "bytes": 3323,
+      "sha256": "fd8a88f2067f9d0a44de7d121ed7c38a3b5effd26cf3ceccbb861255aa879a5b"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "bytes": 195526,
+      "sha256": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "bytes": 118708,
+      "sha256": "03cd217e69a1d3f9c0c05271a6f445d2bf302dd2ab0f117d446a02b8f264da7c"
+    },
+    {
+      "file": "src/compiler/builderPublic.ts",
+      "bytes": 11609,
+      "sha256": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629"
+    },
+    {
+      "file": "src/compiler/builderState.ts",
+      "bytes": 26209,
+      "sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a"
+    },
+    {
+      "file": "src/compiler/builderStatePublic.ts",
+      "bytes": 392,
+      "sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "bytes": 3155948,
+      "sha256": "a3c87ee5a2dd3f55fae2ced5a4c6c22bcde071db2b901af710faea85959bd9fa"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "bytes": 185569,
+      "sha256": "49b442aa6b10782edf3ca9dcecdec5c92ef46a9fbe6c928ccd0bf1c088382636"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "bytes": 93430,
+      "sha256": "265f558b9089f9fc51a25b1e5848c12f416fa831a615d754748b22bc6e33e256"
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "bytes": 1330,
+      "sha256": "579512600ac65a6312f761f46db67357483c010e8e2c271cb03cce67328b32e7"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "bytes": 29507,
+      "sha256": "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad"
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "bytes": 579194,
+      "sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "bytes": 274785,
+      "sha256": "5b95b642df7bb717028545938847f9ccd626119f47145efc247b2e1f27c05cb7"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "bytes": 54191,
+      "sha256": "279c6c1fc40e45025b07244c0b3ce84b6e28a1cc901ac9d789fae0911aed67fb"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "bytes": 70491,
+      "sha256": "501917c5a675172b9f0605af0a98a0c6b71f8890cb404ea851f23d28bfba2f61"
+    },
+    {
+      "file": "src/compiler/factory/baseNodeFactory.ts",
+      "bytes": 2682,
+      "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8"
+    },
+    {
+      "file": "src/compiler/factory/emitHelpers.ts",
+      "bytes": 69204,
+      "sha256": "91b00027e787379b88b6bf7bbf7a0ec8ae57e0d92233e6ddf7f4aa61d90c82ab"
+    },
+    {
+      "file": "src/compiler/factory/emitNode.ts",
+      "bytes": 12800,
+      "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd"
+    },
+    {
+      "file": "src/compiler/factory/nodeChildren.ts",
+      "bytes": 2252,
+      "sha256": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86"
+    },
+    {
+      "file": "src/compiler/factory/nodeConverters.ts",
+      "bytes": 7275,
+      "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "bytes": 336651,
+      "sha256": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de"
+    },
+    {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "bytes": 37936,
+      "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d"
+    },
+    {
+      "file": "src/compiler/factory/parenthesizerRules.ts",
+      "bytes": 34072,
+      "sha256": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09"
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "bytes": 76635,
+      "sha256": "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230"
+    },
+    {
+      "file": "src/compiler/factory/utilitiesPublic.ts",
+      "bytes": 2131,
+      "sha256": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352"
+    },
+    {
+      "file": "src/compiler/hostErrors.ts",
+      "bytes": 758,
+      "sha256": "f4cfdc4cacfdaea6a3d2899b30ceb33974acfe02d2542549e993e4dfd8cb856c"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "bytes": 181882,
+      "sha256": "e1a374f124a8d33d656059239217d058cbcb8ed501ac4ff76047e750847e2dbd"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "bytes": 80070,
+      "sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "bytes": 541346,
+      "sha256": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af"
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "bytes": 44186,
+      "sha256": "4cf2621fcd2d659c0e7561d9177d0ff10f51e85b6357d91cfd30601ac5f29938"
+    },
+    {
+      "file": "src/compiler/performance.ts",
+      "bytes": 6161,
+      "sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3"
+    },
+    {
+      "file": "src/compiler/performanceCore.ts",
+      "bytes": 3360,
+      "sha256": "8b1993ab380a178b24fed0dcc9e7dc312172a3e3be642ee1b533161f792f0dae"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "bytes": 271535,
+      "sha256": "0ed189a95d2204a4c8a0e7bd6602d09cd85e1705ea9495f224905a24f16f3688"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "bytes": 21401,
+      "sha256": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "bytes": 82271,
+      "sha256": "a2a02f0f675ff9c65c350da8af0868ff8b30604559d222aa7bbe68a010742ed8"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "bytes": 219486,
+      "sha256": "6ac1af02e48510c6e8017199ae70fd9d546ef78fff3ccf673f1b4fe854490571"
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "bytes": 17970,
+      "sha256": "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "bytes": 32292,
+      "sha256": "21b405e7d70573550a4b412d924c96e1a8107c5f6f6265a51e3d6f6fb66af255"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "bytes": 8433,
+      "sha256": "c5283ccbff1fd935cc97866a4e3672aa805877a09844530814097497c1bad055"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "bytes": 86128,
+      "sha256": "b607fe5e61112245d0c976ac2f9facf6811883736c9105040cdd7b48602d6700"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "bytes": 15679,
+      "sha256": "f2c22f33bd5ab34b3aae203980931ba32a9ef2ecbc1dfde3fd95cd7080ec94b7"
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "bytes": 30053,
+      "sha256": "16c361fa82114c5eef3824fbe9a6b06f6ab9a9e2b29bf1ba173bfcf6927337e3"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "bytes": 156729,
+      "sha256": "67337f0d2a1b78d8de9776ab5d09e32b09d3424b1339a2de26045d349eb959d8"
+    },
+    {
+      "file": "src/compiler/transformers/classThis.ts",
+      "bytes": 5565,
+      "sha256": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd"
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "bytes": 99946,
+      "sha256": "fb332d121c3ae8352db17052dd173ea14968951f8cdd3ba9de89e58147ae2bdd"
+    },
+    {
+      "file": "src/compiler/transformers/declarations/diagnostics.ts",
+      "bytes": 47414,
+      "sha256": "b1ba366b350ca654bc9b5c627e846bf86dd120a706e2c5edeb500ac28627e24d"
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "bytes": 30894,
+      "sha256": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "bytes": 231854,
+      "sha256": "b3cd96874cfbdc0655f27e063213873f823f32437e8d747bf4ec13472a559918"
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "bytes": 4519,
+      "sha256": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7"
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "bytes": 50205,
+      "sha256": "a7e509c413a72c05f3c054439d930d5fab25b36ccda29975506d34a01d6b8d6e"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "bytes": 69990,
+      "sha256": "c9b798b0542a7f72877004143b8a768e808b9508ef7887b33beb6012a8ab7239"
+    },
+    {
+      "file": "src/compiler/transformers/es2019.ts",
+      "bytes": 1563,
+      "sha256": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293"
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "bytes": 13128,
+      "sha256": "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a"
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "bytes": 4144,
+      "sha256": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "bytes": 127406,
+      "sha256": "572d9ed4aaffe4a4da286122477601fe45ad2cf9354025333b3cabe538e6f7b0"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "bytes": 32654,
+      "sha256": "112a60322a57f7a60835cd1a3e5206556def471d9faae7284ecfe10885d7c12e"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "bytes": 124532,
+      "sha256": "503850d4681b64d51f5ee6cc3c52e1d0ebd6828870f1bd4f4de3cdc0eb3eccd3"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "bytes": 36259,
+      "sha256": "a6152ff5eb16419db8e22e03f942b797e3ed828d095fc74f088d66c11b09f295"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "bytes": 36740,
+      "sha256": "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0"
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "bytes": 18691,
+      "sha256": "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52"
+    },
+    {
+      "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "bytes": 3750,
+      "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "bytes": 111833,
+      "sha256": "a0fb602c1403c3c6f13c398360ec6bb0adfeb8592975e5574cb6bdfb694abe8b"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "bytes": 85511,
+      "sha256": "cdcd5353acc1d86e687e96fefc4793cc0e862c5bbf84e5ab30b80c2f7997600e"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "bytes": 22318,
+      "sha256": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950"
+    },
+    {
+      "file": "src/compiler/transformers/taggedTemplate.ts",
+      "bytes": 5489,
+      "sha256": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "bytes": 116761,
+      "sha256": "58634091ee8e9c336671b0c457b91d1cbdb71ef37eccfa556aedc07192743868"
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "bytes": 28972,
+      "sha256": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd"
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "bytes": 35851,
+      "sha256": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3"
+    },
+    {
+      "file": "src/compiler/tsbuild.ts",
+      "bytes": 5332,
+      "sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "bytes": 114771,
+      "sha256": "4b4e90e3cca4e1c5d3e130db62b77cf354aa311edc94798cc44c16d8132c4ed3"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "bytes": 493828,
+      "sha256": "96e99fe81aabb84c175616336166c9c4ea811c1d4f29be2b9243939f1b27488b"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "bytes": 515375,
+      "sha256": "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2"
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "bytes": 104648,
+      "sha256": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f"
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "bytes": 88114,
+      "sha256": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "bytes": 45864,
+      "sha256": "f307d503114bddb404dcd96bf9e4f53f0c341d722da09959ebb6f1cd4cd93e99"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "bytes": 61488,
+      "sha256": "4cfe3d1f8188532b4ad11cf15a2db9c78d82f222a6d1bd324e732af131e3d8a7"
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "bytes": 35634,
+      "sha256": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93"
+    },
+    {
+      "file": "src/tsc/_namespaces/ts.ts",
+      "bytes": 104,
+      "sha256": "4b028aefe422d79561899f8b5720d88dcaa6564f9051f54dcfe4b025b362db15"
+    },
+    {
+      "file": "src/tsc/tsc.ts",
+      "bytes": 608,
+      "sha256": "fc07517d814068f7225dd8a7e93931f7d4e4ade9d0d63583e7a61b98285cc332"
+    }
+  ],
+  "edges": [
+    {
+      "from": "src/tsc/tsc.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/tsc/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/tsc/_namespaces/ts.ts",
+      "specifier": "../../compiler/_namespaces/ts.js",
+      "line": 3,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../corePublic.js",
+      "line": 3,
+      "column": 1,
+      "to": "src/compiler/corePublic.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../core.js",
+      "line": 4,
+      "column": 1,
+      "to": "src/compiler/core.ts"
+    },
+    {
+      "from": "src/compiler/core.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../debug.js",
+      "line": 5,
+      "column": 1,
+      "to": "src/compiler/debug.ts"
+    },
+    {
+      "from": "src/compiler/debug.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/debug.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 2,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../semver.js",
+      "line": 6,
+      "column": 1,
+      "to": "src/compiler/semver.ts"
+    },
+    {
+      "from": "src/compiler/semver.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../performanceCore.js",
+      "line": 7,
+      "column": 1,
+      "to": "src/compiler/performanceCore.ts"
+    },
+    {
+      "from": "src/compiler/performanceCore.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../tracing.js",
+      "line": 8,
+      "column": 1,
+      "to": "src/compiler/tracing.ts"
+    },
+    {
+      "from": "src/compiler/tracing.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/tracing.ts",
+      "specifier": "./_namespaces/ts.performance.js",
+      "line": 24,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.performance.ts",
+      "specifier": "../performance.js",
+      "line": 3,
+      "column": 1,
+      "to": "src/compiler/performance.ts"
+    },
+    {
+      "from": "src/compiler/performance.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/tracing.ts",
+      "specifier": "./hostErrors.js",
+      "line": 25,
+      "column": 1,
+      "to": "src/compiler/hostErrors.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../types.js",
+      "line": 9,
+      "column": 1,
+      "to": "src/compiler/types.ts"
+    },
+    {
+      "from": "src/compiler/types.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../sys.js",
+      "line": 10,
+      "column": 1,
+      "to": "src/compiler/sys.ts"
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "./hostErrors.js",
+      "line": 51,
+      "column": 1,
+      "to": "src/compiler/hostErrors.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../hostErrors.js",
+      "line": 11,
+      "column": 1,
+      "to": "src/compiler/hostErrors.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../path.js",
+      "line": 12,
+      "column": 1,
+      "to": "src/compiler/path.ts"
+    },
+    {
+      "from": "src/compiler/path.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../diagnosticInformationMap.generated.js",
+      "line": 13,
+      "column": 1,
+      "to": "src/compiler/diagnosticInformationMap.generated.ts"
+    },
+    {
+      "from": "src/compiler/diagnosticInformationMap.generated.ts",
+      "specifier": "./types.js",
+      "line": 4,
+      "column": 1,
+      "to": "src/compiler/types.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../scanner.js",
+      "line": 14,
+      "column": 1,
+      "to": "src/compiler/scanner.ts"
+    },
+    {
+      "from": "src/compiler/scanner.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../utilitiesPublic.js",
+      "line": 15,
+      "column": 1,
+      "to": "src/compiler/utilitiesPublic.ts"
+    },
+    {
+      "from": "src/compiler/utilitiesPublic.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../utilities.js",
+      "line": 16,
+      "column": 1,
+      "to": "src/compiler/utilities.ts"
+    },
+    {
+      "from": "src/compiler/utilities.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/baseNodeFactory.js",
+      "line": 17,
+      "column": 1,
+      "to": "src/compiler/factory/baseNodeFactory.ts"
+    },
+    {
+      "from": "src/compiler/factory/baseNodeFactory.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/parenthesizerRules.js",
+      "line": 18,
+      "column": 1,
+      "to": "src/compiler/factory/parenthesizerRules.ts"
+    },
+    {
+      "from": "src/compiler/factory/parenthesizerRules.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/nodeConverters.js",
+      "line": 19,
+      "column": 1,
+      "to": "src/compiler/factory/nodeConverters.ts"
+    },
+    {
+      "from": "src/compiler/factory/nodeConverters.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/nodeFactory.js",
+      "line": 20,
+      "column": 1,
+      "to": "src/compiler/factory/nodeFactory.ts"
+    },
+    {
+      "from": "src/compiler/factory/nodeFactory.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/emitNode.js",
+      "line": 21,
+      "column": 1,
+      "to": "src/compiler/factory/emitNode.ts"
+    },
+    {
+      "from": "src/compiler/factory/emitNode.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/emitHelpers.js",
+      "line": 22,
+      "column": 1,
+      "to": "src/compiler/factory/emitHelpers.ts"
+    },
+    {
+      "from": "src/compiler/factory/emitHelpers.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/nodeTests.js",
+      "line": 23,
+      "column": 1,
+      "to": "src/compiler/factory/nodeTests.ts"
+    },
+    {
+      "from": "src/compiler/factory/nodeTests.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/nodeChildren.js",
+      "line": 24,
+      "column": 1,
+      "to": "src/compiler/factory/nodeChildren.ts"
+    },
+    {
+      "from": "src/compiler/factory/nodeChildren.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/utilities.js",
+      "line": 25,
+      "column": 1,
+      "to": "src/compiler/factory/utilities.ts"
+    },
+    {
+      "from": "src/compiler/factory/utilities.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../factory/utilitiesPublic.js",
+      "line": 26,
+      "column": 1,
+      "to": "src/compiler/factory/utilitiesPublic.ts"
+    },
+    {
+      "from": "src/compiler/factory/utilitiesPublic.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../parser.js",
+      "line": 27,
+      "column": 1,
+      "to": "src/compiler/parser.ts"
+    },
+    {
+      "from": "src/compiler/parser.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/parser.ts",
+      "specifier": "./_namespaces/ts.performance.js",
+      "line": 403,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../commandLineParser.js",
+      "line": 28,
+      "column": 1,
+      "to": "src/compiler/commandLineParser.ts"
+    },
+    {
+      "from": "src/compiler/commandLineParser.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/commandLineParser.ts",
+      "specifier": "./hostErrors.js",
+      "line": 125,
+      "column": 1,
+      "to": "src/compiler/hostErrors.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../moduleNameResolver.js",
+      "line": 29,
+      "column": 1,
+      "to": "src/compiler/moduleNameResolver.ts"
+    },
+    {
+      "from": "src/compiler/moduleNameResolver.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../binder.js",
+      "line": 30,
+      "column": 1,
+      "to": "src/compiler/binder.ts"
+    },
+    {
+      "from": "src/compiler/binder.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/binder.ts",
+      "specifier": "./_namespaces/ts.performance.js",
+      "line": 312,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../symbolWalker.js",
+      "line": 31,
+      "column": 1,
+      "to": "src/compiler/symbolWalker.ts"
+    },
+    {
+      "from": "src/compiler/symbolWalker.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../checker.js",
+      "line": 32,
+      "column": 1,
+      "to": "src/compiler/checker.ts"
+    },
+    {
+      "from": "src/compiler/checker.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/checker.ts",
+      "specifier": "./_namespaces/ts.moduleSpecifiers.js",
+      "line": 1154,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "specifier": "../moduleSpecifiers.js",
+      "line": 3,
+      "column": 1,
+      "to": "src/compiler/moduleSpecifiers.ts"
+    },
+    {
+      "from": "src/compiler/moduleSpecifiers.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/checker.ts",
+      "specifier": "./_namespaces/ts.performance.js",
+      "line": 1155,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../visitorPublic.js",
+      "line": 33,
+      "column": 1,
+      "to": "src/compiler/visitorPublic.ts"
+    },
+    {
+      "from": "src/compiler/visitorPublic.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../sourcemap.js",
+      "line": 34,
+      "column": 1,
+      "to": "src/compiler/sourcemap.ts"
+    },
+    {
+      "from": "src/compiler/sourcemap.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/sourcemap.ts",
+      "specifier": "./_namespaces/ts.performance.js",
+      "line": 28,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/utilities.js",
+      "line": 35,
+      "column": 1,
+      "to": "src/compiler/transformers/utilities.ts"
+    },
+    {
+      "from": "src/compiler/transformers/utilities.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/destructuring.js",
+      "line": 36,
+      "column": 1,
+      "to": "src/compiler/transformers/destructuring.ts"
+    },
+    {
+      "from": "src/compiler/transformers/destructuring.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/classThis.js",
+      "line": 37,
+      "column": 1,
+      "to": "src/compiler/transformers/classThis.ts"
+    },
+    {
+      "from": "src/compiler/transformers/classThis.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/namedEvaluation.js",
+      "line": 38,
+      "column": 1,
+      "to": "src/compiler/transformers/namedEvaluation.ts"
+    },
+    {
+      "from": "src/compiler/transformers/namedEvaluation.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/taggedTemplate.js",
+      "line": 39,
+      "column": 1,
+      "to": "src/compiler/transformers/taggedTemplate.ts"
+    },
+    {
+      "from": "src/compiler/transformers/taggedTemplate.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/ts.js",
+      "line": 40,
+      "column": 1,
+      "to": "src/compiler/transformers/ts.ts"
+    },
+    {
+      "from": "src/compiler/transformers/ts.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/classFields.js",
+      "line": 41,
+      "column": 1,
+      "to": "src/compiler/transformers/classFields.ts"
+    },
+    {
+      "from": "src/compiler/transformers/classFields.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/typeSerializer.js",
+      "line": 42,
+      "column": 1,
+      "to": "src/compiler/transformers/typeSerializer.ts"
+    },
+    {
+      "from": "src/compiler/transformers/typeSerializer.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/legacyDecorators.js",
+      "line": 43,
+      "column": 1,
+      "to": "src/compiler/transformers/legacyDecorators.ts"
+    },
+    {
+      "from": "src/compiler/transformers/legacyDecorators.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/esDecorators.js",
+      "line": 44,
+      "column": 1,
+      "to": "src/compiler/transformers/esDecorators.ts"
+    },
+    {
+      "from": "src/compiler/transformers/esDecorators.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/es2017.js",
+      "line": 45,
+      "column": 1,
+      "to": "src/compiler/transformers/es2017.ts"
+    },
+    {
+      "from": "src/compiler/transformers/es2017.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/es2018.js",
+      "line": 46,
+      "column": 1,
+      "to": "src/compiler/transformers/es2018.ts"
+    },
+    {
+      "from": "src/compiler/transformers/es2018.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/es2019.js",
+      "line": 47,
+      "column": 1,
+      "to": "src/compiler/transformers/es2019.ts"
+    },
+    {
+      "from": "src/compiler/transformers/es2019.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/es2020.js",
+      "line": 48,
+      "column": 1,
+      "to": "src/compiler/transformers/es2020.ts"
+    },
+    {
+      "from": "src/compiler/transformers/es2020.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/es2021.js",
+      "line": 49,
+      "column": 1,
+      "to": "src/compiler/transformers/es2021.ts"
+    },
+    {
+      "from": "src/compiler/transformers/es2021.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/esnext.js",
+      "line": 50,
+      "column": 1,
+      "to": "src/compiler/transformers/esnext.ts"
+    },
+    {
+      "from": "src/compiler/transformers/esnext.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/jsx.js",
+      "line": 51,
+      "column": 1,
+      "to": "src/compiler/transformers/jsx.ts"
+    },
+    {
+      "from": "src/compiler/transformers/jsx.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/es2016.js",
+      "line": 52,
+      "column": 1,
+      "to": "src/compiler/transformers/es2016.ts"
+    },
+    {
+      "from": "src/compiler/transformers/es2016.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/es2015.js",
+      "line": 53,
+      "column": 1,
+      "to": "src/compiler/transformers/es2015.ts"
+    },
+    {
+      "from": "src/compiler/transformers/es2015.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/generators.js",
+      "line": 54,
+      "column": 1,
+      "to": "src/compiler/transformers/generators.ts"
+    },
+    {
+      "from": "src/compiler/transformers/generators.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/module/module.js",
+      "line": 55,
+      "column": 1,
+      "to": "src/compiler/transformers/module/module.ts"
+    },
+    {
+      "from": "src/compiler/transformers/module/module.ts",
+      "specifier": "../../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/module/system.js",
+      "line": 56,
+      "column": 1,
+      "to": "src/compiler/transformers/module/system.ts"
+    },
+    {
+      "from": "src/compiler/transformers/module/system.ts",
+      "specifier": "../../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/module/esnextAnd2015.js",
+      "line": 57,
+      "column": 1,
+      "to": "src/compiler/transformers/module/esnextAnd2015.ts"
+    },
+    {
+      "from": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "specifier": "../../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/module/impliedNodeFormatDependent.js",
+      "line": 58,
+      "column": 1,
+      "to": "src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+    },
+    {
+      "from": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "specifier": "../../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/declarations/diagnostics.js",
+      "line": 59,
+      "column": 1,
+      "to": "src/compiler/transformers/declarations/diagnostics.ts"
+    },
+    {
+      "from": "src/compiler/transformers/declarations/diagnostics.ts",
+      "specifier": "../../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformers/declarations.js",
+      "line": 60,
+      "column": 1,
+      "to": "src/compiler/transformers/declarations.ts"
+    },
+    {
+      "from": "src/compiler/transformers/declarations.ts",
+      "specifier": "../_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../transformer.js",
+      "line": 61,
+      "column": 1,
+      "to": "src/compiler/transformer.ts"
+    },
+    {
+      "from": "src/compiler/transformer.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/transformer.ts",
+      "specifier": "./_namespaces/ts.performance.js",
+      "line": 76,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../emitter.js",
+      "line": 62,
+      "column": 1,
+      "to": "src/compiler/emitter.ts"
+    },
+    {
+      "from": "src/compiler/emitter.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/emitter.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 2,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/emitter.ts",
+      "specifier": "./_namespaces/ts.performance.js",
+      "line": 426,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../watchUtilities.js",
+      "line": 63,
+      "column": 1,
+      "to": "src/compiler/watchUtilities.ts"
+    },
+    {
+      "from": "src/compiler/watchUtilities.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../program.js",
+      "line": 64,
+      "column": 1,
+      "to": "src/compiler/program.ts"
+    },
+    {
+      "from": "src/compiler/program.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/program.ts",
+      "specifier": "./_namespaces/ts.performance.js",
+      "line": 326,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    },
+    {
+      "from": "src/compiler/program.ts",
+      "specifier": "./hostErrors.js",
+      "line": 327,
+      "column": 1,
+      "to": "src/compiler/hostErrors.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../programDiagnostics.js",
+      "line": 65,
+      "column": 1,
+      "to": "src/compiler/programDiagnostics.ts"
+    },
+    {
+      "from": "src/compiler/programDiagnostics.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../builderStatePublic.js",
+      "line": 66,
+      "column": 1,
+      "to": "src/compiler/builderStatePublic.ts"
+    },
+    {
+      "from": "src/compiler/builderStatePublic.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../builderState.js",
+      "line": 67,
+      "column": 1,
+      "to": "src/compiler/builderState.ts"
+    },
+    {
+      "from": "src/compiler/builderState.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../builder.js",
+      "line": 68,
+      "column": 1,
+      "to": "src/compiler/builder.ts"
+    },
+    {
+      "from": "src/compiler/builder.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../builderPublic.js",
+      "line": 69,
+      "column": 1,
+      "to": "src/compiler/builderPublic.ts"
+    },
+    {
+      "from": "src/compiler/builderPublic.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../resolutionCache.js",
+      "line": 70,
+      "column": 1,
+      "to": "src/compiler/resolutionCache.ts"
+    },
+    {
+      "from": "src/compiler/resolutionCache.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../watch.js",
+      "line": 71,
+      "column": 1,
+      "to": "src/compiler/watch.ts"
+    },
+    {
+      "from": "src/compiler/watch.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../watchPublic.js",
+      "line": 72,
+      "column": 1,
+      "to": "src/compiler/watchPublic.ts"
+    },
+    {
+      "from": "src/compiler/watchPublic.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../tsbuild.js",
+      "line": 73,
+      "column": 1,
+      "to": "src/compiler/tsbuild.ts"
+    },
+    {
+      "from": "src/compiler/tsbuild.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../tsbuildPublic.js",
+      "line": 74,
+      "column": 1,
+      "to": "src/compiler/tsbuildPublic.ts"
+    },
+    {
+      "from": "src/compiler/tsbuildPublic.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/tsbuildPublic.ts",
+      "specifier": "./_namespaces/ts.performance.js",
+      "line": 131,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../executeCommandLine.js",
+      "line": 75,
+      "column": 1,
+      "to": "src/compiler/executeCommandLine.ts"
+    },
+    {
+      "from": "src/compiler/executeCommandLine.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/executeCommandLine.ts",
+      "specifier": "./performance.js",
+      "line": 90,
+      "column": 1,
+      "to": "src/compiler/performance.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "../expressionToTypeNode.js",
+      "line": 76,
+      "column": 1,
+      "to": "src/compiler/expressionToTypeNode.ts"
+    },
+    {
+      "from": "src/compiler/expressionToTypeNode.ts",
+      "specifier": "./_namespaces/ts.js",
+      "line": 1,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "./ts.moduleSpecifiers.js",
+      "line": 77,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    },
+    {
+      "from": "src/compiler/_namespaces/ts.ts",
+      "specifier": "./ts.performance.js",
+      "line": 79,
+      "column": 1,
+      "to": "src/compiler/_namespaces/ts.performance.ts"
+    }
+  ],
+  "host": [
+    {
+      "from": "src/compiler/performanceCore.ts",
+      "specifier": "node:perf_hooks",
+      "line": 2,
+      "column": 1
+    },
+    {
+      "from": "src/compiler/tracing.ts",
+      "specifier": "fs",
+      "line": 64,
+      "column": 22
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "node:fs",
+      "line": 52,
+      "column": 1
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "node:path",
+      "line": 53,
+      "column": 1
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "node:os",
+      "line": 54,
+      "column": 1
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "node:crypto",
+      "line": 55,
+      "column": 1
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "inspector",
+      "line": 1477,
+      "column": 28
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "source-map-support",
+      "line": 1593,
+      "column": 21
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "fs",
+      "line": 1625,
+      "column": 42
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "inspector",
+      "line": 1646,
+      "column": 30
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "inspector",
+      "line": 1646,
+      "column": 59
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "inspector",
+      "line": 1668,
+      "column": 40
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "fs",
+      "line": 1742,
+      "column": 40
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "fs",
+      "line": 1742,
+      "column": 66
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "fs",
+      "line": 1849,
+      "column": 31
+    },
+    {
+      "from": "src/compiler/sys.ts",
+      "specifier": "fs",
+      "line": 1849,
+      "column": 52
+    }
+  ],
+  "unsupported": [
+    {
+      "file": "src/compiler/sys.ts",
+      "expression": "require(modulePath)"
+    }
+  ],
+  "independent": [
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "src/compiler/_namespaces/ts.performance.ts",
+    "src/compiler/_namespaces/ts.ts",
+    "src/compiler/binder.ts",
+    "src/compiler/builder.ts",
+    "src/compiler/builderPublic.ts",
+    "src/compiler/builderState.ts",
+    "src/compiler/builderStatePublic.ts",
+    "src/compiler/checker.ts",
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/core.ts",
+    "src/compiler/corePublic.ts",
+    "src/compiler/debug.ts",
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/emitter.ts",
+    "src/compiler/executeCommandLine.ts",
+    "src/compiler/expressionToTypeNode.ts",
+    "src/compiler/factory/baseNodeFactory.ts",
+    "src/compiler/factory/emitHelpers.ts",
+    "src/compiler/factory/emitNode.ts",
+    "src/compiler/factory/nodeChildren.ts",
+    "src/compiler/factory/nodeConverters.ts",
+    "src/compiler/factory/nodeFactory.ts",
+    "src/compiler/factory/nodeTests.ts",
+    "src/compiler/factory/parenthesizerRules.ts",
+    "src/compiler/factory/utilities.ts",
+    "src/compiler/factory/utilitiesPublic.ts",
+    "src/compiler/hostErrors.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/moduleSpecifiers.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/path.ts",
+    "src/compiler/performance.ts",
+    "src/compiler/performanceCore.ts",
+    "src/compiler/program.ts",
+    "src/compiler/programDiagnostics.ts",
+    "src/compiler/resolutionCache.ts",
+    "src/compiler/scanner.ts",
+    "src/compiler/semver.ts",
+    "src/compiler/sourcemap.ts",
+    "src/compiler/symbolWalker.ts",
+    "src/compiler/sys.ts",
+    "src/compiler/tracing.ts",
+    "src/compiler/transformer.ts",
+    "src/compiler/transformers/classFields.ts",
+    "src/compiler/transformers/classThis.ts",
+    "src/compiler/transformers/declarations.ts",
+    "src/compiler/transformers/declarations/diagnostics.ts",
+    "src/compiler/transformers/destructuring.ts",
+    "src/compiler/transformers/es2015.ts",
+    "src/compiler/transformers/es2016.ts",
+    "src/compiler/transformers/es2017.ts",
+    "src/compiler/transformers/es2018.ts",
+    "src/compiler/transformers/es2019.ts",
+    "src/compiler/transformers/es2020.ts",
+    "src/compiler/transformers/es2021.ts",
+    "src/compiler/transformers/esDecorators.ts",
+    "src/compiler/transformers/esnext.ts",
+    "src/compiler/transformers/generators.ts",
+    "src/compiler/transformers/jsx.ts",
+    "src/compiler/transformers/legacyDecorators.ts",
+    "src/compiler/transformers/module/esnextAnd2015.ts",
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "src/compiler/transformers/module/module.ts",
+    "src/compiler/transformers/module/system.ts",
+    "src/compiler/transformers/namedEvaluation.ts",
+    "src/compiler/transformers/taggedTemplate.ts",
+    "src/compiler/transformers/ts.ts",
+    "src/compiler/transformers/typeSerializer.ts",
+    "src/compiler/transformers/utilities.ts",
+    "src/compiler/tsbuild.ts",
+    "src/compiler/tsbuildPublic.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/utilitiesPublic.ts",
+    "src/compiler/visitorPublic.ts",
+    "src/compiler/watch.ts",
+    "src/compiler/watchPublic.ts",
+    "src/compiler/watchUtilities.ts",
+    "src/tsc/_namespaces/ts.ts",
+    "src/tsc/tsc.ts"
+  ]
+}

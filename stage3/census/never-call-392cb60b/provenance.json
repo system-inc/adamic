@@ -1,0 +1,25 @@
+{
+  "parent": "bdbc73864f82dbc0c51434decf0ffe96d4782767",
+  "head": "392cb60b7a967a4515f4f0041592359b57746955",
+  "optimizer_tip_before_start": "392cb60b7a967a4515f4f0041592359b57746955",
+  "cohere": "5360753e19e4417675a90e92a1823bea66b13918",
+  "checker": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "typescript_source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "go": "go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "adapted": "/workspace/never-call-adapted",
+  "build_sha256": {
+    "parent": "46c4fb142eae71a80141d883ada8dd112155b3843f42eff91112759502d78b7f",
+    "head": "360c1b89a4408794386f6f31901ef6ae0ccb361f543a743eff622c31f0d566e1"
+  },
+  "child_exit_codes": {
+    "initial_setup": 0,
+    "parent_setup": 0,
+    "npm_ci": 0,
+    "parent_overlay": 0,
+    "parent_build": 0,
+    "head_overlay": 0,
+    "head_build": 0,
+    "apply": 0
+  }
+}
