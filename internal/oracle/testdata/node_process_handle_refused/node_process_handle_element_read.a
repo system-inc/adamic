@@ -1,0 +1,11 @@
+// A program that reads stdout's handle only through an element access, process.stdout['_handle'],
+// which lowering makes the handle too. Its setBlocking called through a computed key off a parameter
+// stops by name, as it does when the handle is read with a dot (Runtime's must B on #0bxc4jh).
+import 'node:process';
+type Handle = { setBlocking?: (value: boolean) => void };
+function block(handle: Handle): void {
+	if (handle.setBlocking) handle['setBlocking'](true);
+}
+const handle = (process.stdout as any)['_handle'] as Handle | undefined;
+if (handle !== undefined) block(handle);
+console.log('blocked');
