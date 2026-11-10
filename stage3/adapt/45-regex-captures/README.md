@@ -316,3 +316,87 @@ getfunctionname-home.json in this directory. Full paired replay and the
 original-home apply outcome are recorded by
 99-correctness-core-getfunctionname-move. This is a replay-recognition
 amendment, with no new emitted JavaScript edit in this earlier adaptation.
+
+## parseRange literal-at-call amendment: stopped at prerequisite
+
+Adamic's Nov 10 05:40Z ruling for #b5w3ycg, row 4. Base:
+`d4207a85833d1bed62ff04dbc8ead1b91a1c47e6`, fetched origin/main tip.
+The source pin remains `050880ce59e30b356b686bd3144efe24f875ebc8`.
+
+The amendment writes `range.split(/\s+/) as string[]`. Stage 0's
+internal/lower/cast_split.go accepts a string receiver, a literal written at
+this call, a string-array target, and a separator with no capturing groups.
+Its proof never follows a RegExp variable. The assertion therefore stays.
+The adapter pins the exact flag-free separator and rejects additional uses.
+
+A search of every source file in the completed baseline adapted tree found
+only the semver.ts declaration at 249 and the split at 287. The declaration
+is removed with its newline retained, avoiding noUnusedLocals while keeping
+source positions stable. The completed source trees differ only in semver.ts;
+source-inventory.json and semver-source.diff.gz record the inventory and both
+source hunks. The ledger records the new per-call allocation and absent state.
+
+Both full applies exit 0. Both upstream builds and harness builds exit 0.
+The seven direct adapted parseRange observations are byte-identical, covering
+single spaces, runs of spaces, tabs, leading/trailing whitespace, alternatives,
+hyphen ranges and the empty string. Their before/after JSONL files are retained.
+The isolated adapter probe uses the existing exact getFunctionName prerequisite
+pin; its replay reports zero edits. It does not claim the historical full suite.
+
+**Stopped:** the real root-semver census of the baseline, amendment, and
+restoring mutant all first refuse at **debug.ts:525:37**, on
+`Object.create(Object.prototype) as FlowNode`, with
+`a cast the runtime can't check`. The restoring mutant's semver.ts is
+byte-identical to the baseline. The required semver split refusal and its
+successor stop cannot be observed behind this earlier imported-module wall.
+No earlier source owner or lowering rule was bypassed or changed.
+
+The historical census overlay generator declines main's current typed-path
+loader API. semver-split-overlay.py produces a census-only overlay for that
+API, using the upstream compiler config and project roots while retaining
+only the requested root as owned. Its Go snapshot is census-load.go.txt.
+The lowerer itself is unchanged. Each census invocation exits 0 and emits
+Refused records; a census-tool exit 0 is not compiler acceptance.
+
+The counter control fires once with zero differences. The counter and
+instrumenter are prepared for a temporary built copy only. **The whole-lane
+oracle was not run after confirming the prerequisite blocker. Its call count
+and difference total are unmeasured.** The task branch has not been committed
+or pushed as a completed amendment; partial work is on the checkpoint branch.
+
+All ten emitted JavaScript files were compared. These are all seven hunks:
+
+| File | Before hunk line | Classification |
+| --- | --- | --- |
+| _tsc.js | 2386 | Shared declaration removal |
+| _tsc.js | 2400 | parseRange split |
+| run.js | 2639 | parseRange split |
+| run.js | 2775 | Shared declaration binding removal |
+| run.js | 2873 | Shared declaration initialization removal |
+| typescript.js | 4963 | Shared declaration removal |
+| typescript.js | 4977 | parseRange split |
+
+semver-split-emitted.py removes only those approved declaration forms and
+substitutes the split in the baseline output, then requires exact equality to
+the amended output. This passes with zero outside changes and zero identifier
+renames; identifier normalization is unnecessary. emitted.diff lists every
+hunk, and emitted.json records their classification and normalized hashes.
+
+Completed commands, each with output retained under semver-split-evidence:
+
+```sh
+source /workspace/adamic-tools/env.sh
+bash cloud/setup.sh > /tmp/semver-split-tip-setup.log 2>&1
+npm ci --prefix stage3/api > /tmp/semver-split-tip-api.log 2>&1
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-6.0.3
+bash stage3/apply.sh /tmp/semver-split-before > /tmp/semver-split-before-apply.log 2>&1
+bash stage3/apply.sh /tmp/semver-split-after > /tmp/semver-split-after-apply.log 2>&1
+# In each completed output tree: npm ci, npm run build, npm exec hereby -- tests.
+python3 stage3/adapt/45-regex-captures/semver-split-overlay.py /tmp/semver-split-overlay/overlay.json
+# The overlay does not change the lowerer.
+go build -buildvcs=false -overlay=/tmp/semver-split-overlay/overlay.json -o /tmp/semver-split-census ./stage3/census/tool
+# For before, after and the temporary restoring mutant, respectively:
+CENSUS_CONFIG=TREE/src/compiler/tsconfig.json /tmp/semver-split-census TREE/src/compiler/semver.ts OUTPUT.jsonl
+NODE_PATH="$PWD/stage3/api/node_modules" node stage3/adapt/45-regex-captures/semver-split-witness.cjs /tmp/semver-split-before /tmp/semver-split-after stage3/adapt/45-regex-captures/semver-split-evidence
+python3 stage3/adapt/45-regex-captures/semver-split-emitted.py /tmp/semver-split-before/built/local /tmp/semver-split-after/built/local stage3/adapt/45-regex-captures/semver-split-evidence
+```

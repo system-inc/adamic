@@ -1,0 +1,51 @@
+{
+  "status": "STOPPED",
+  "base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6",
+  "apply_exit": {
+    "before": 0,
+    "after": 0
+  },
+  "build_exit": {
+    "before": 0,
+    "after": 0
+  },
+  "harness_build_exit": {
+    "before": 0,
+    "after": 0
+  },
+  "census_tool_exit": {
+    "before": 0,
+    "after": 0,
+    "mutant": 0
+  },
+  "first_stop": {
+    "file": "src/compiler/debug.ts",
+    "line": 525,
+    "column": 37,
+    "reason": "a cast the runtime can't check",
+    "expression": "Object.create(Object.prototype) as FlowNode",
+    "same_in": [
+      "before",
+      "after",
+      "mutant"
+    ]
+  },
+  "semver_specific_stop": "unobservable behind the earlier imported debug.ts refusal",
+  "witness": {
+    "cases": 7,
+    "byte_identical": true
+  },
+  "oracle": {
+    "status": "not run after confirming prerequisite blocker",
+    "calls": null,
+    "differences": null
+  },
+  "counter_control": {
+    "calls": 1,
+    "differences": 0
+  },
+  "emitted_hunks": 7,
+  "outside_permitted_edits": 0,
+  "identifier_renames": 0,
+  "final_branch_pushed": false
+}
