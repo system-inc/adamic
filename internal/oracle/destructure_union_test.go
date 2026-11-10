@@ -8,7 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-var destructureUnionFixtures = []string{"semver", "null", "former_stops", "object"}
+var destructureUnionFixtures = []string{"semver", "null", "former_stops", "object", "closure"}
 
 func init() {
 	for _, name := range destructureUnionFixtures {
@@ -22,8 +22,8 @@ func init() {
 }
 
 // A destructured Union reads the boxed field just as a property read does. The
-// null fixture distinguishes a default from ??, and the object fixture exercises
-// ownership of a boxed reference copied into a local.
+// null fixture distinguishes a default from ??, and the object and closure
+// fixtures exercise ownership of boxed references copied into locals.
 func TestDestructureUnionAgrees(t *testing.T) {
 	t.Parallel()
 	for _, name := range destructureUnionFixtures {
