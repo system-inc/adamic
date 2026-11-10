@@ -9,16 +9,16 @@ hidden ranges, closure edges and source hashes. [REASONS.md](REASONS.md) gives
 complete reason tables separately for compiler, outside compiler and total,
 for both the first-error latent census and the full hidden-source census.
 
-| Scope | Files | Latent NotYet | Latent Refused | Source bytes | Hidden bytes |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Full entry closure | 81 | 1,473 | 5,164 | 10,010,532 | 5,430,761 |
-| src/compiler | 79 | 1,468 | 5,162 | 10,009,820 | 5,430,197 |
-| Outside compiler | 2 | 5 | 2 | 712 | 564 |
+| Scope              | Files | Latent NotYet | Latent Refused | Source bytes | Hidden bytes |
+| ------------------ | ----: | ------------: | -------------: | -----------: | -----------: |
+| Full entry closure |    81 |         1,473 |          5,164 |   10,010,532 |    5,430,761 |
+| src/compiler       |    79 |         1,468 |          5,162 |   10,009,820 |    5,430,197 |
+| Outside compiler   |     2 |             5 |              2 |          712 |          564 |
 
-| Outside file | Bytes | Hidden bytes | NotYet | Refused |
-| --- | ---: | ---: | ---: | ---: |
-| src/tsc/tsc.ts | 608 | 564 | 5 | 2 |
-| src/tsc/_namespaces/ts.ts | 104 | 0 | 0 | 0 |
+| Outside file              | Bytes | Hidden bytes | NotYet | Refused |
+| ------------------------- | ----: | -----------: | -----: | ------: |
+| src/tsc/tsc.ts            |   608 |          564 |      5 |       2 |
+| src/tsc/_namespaces/ts.ts |   104 |            0 |      0 |       0 |
 
 These are the only source files outside compiler in this pin. Contrary to the
 prompt's suggested path, executeCommandLine is reached at
@@ -31,11 +31,11 @@ source files. This is a static source closure, not a trace of runtime file reads
 
 The outside reason table is identical in both measurement modes:
 
-| Kind | Exact reason | Sites |
-| --- | --- | ---: |
-| NotYet | reading ts | 5 |
-| Refused | a method read as a value (setBlocking would lose its object, and this with it) | 1 |
-| Refused | a method read as a value (tryEnableSourceMapsForHost would lose its object, and this with it) | 1 |
+| Kind    | Exact reason                                                                                  | Sites |
+| ------- | --------------------------------------------------------------------------------------------- | ----: |
+| NotYet  | reading ts                                                                                    |     5 |
+| Refused | a method read as a value (setBlocking would lose its object, and this with it)                |     1 |
+| Refused | a method read as a value (tryEnableSourceMapsForHost would lose its object, and this with it) |     1 |
 
 There are 324 checker diagnostics, all attributed to compiler files. The latent
 ledger additionally has 3 SkippedDependency and 3 panic sites. Full mode has

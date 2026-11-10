@@ -6,25 +6,25 @@ Known-answer fixture, both root-drop mutants and new-result byte-mask audit pass
 
 ## Before and after
 
-| Metric | Before, 89ac4a8c | After, 5e33a17b |
-| --- | ---: | ---: |
-| Reached source files | 81 | 81 |
-| Source bytes | 10,010,532 | 10,013,332 |
-| Hidden bytes | 5,430,761 | 3,488,582 |
-| Hidden share | 54.250473% | 34.839372% |
-| Blocked union bytes | 7,543,130 | 6,683,211 |
-| Independently examined bytes subtracted | 2,112,369 | 3,194,629 |
-| Latent NotYet | 1,473 | 810 |
-| Latent Refused | 5,164 | 4,070 |
-| Latent SkippedDependency | 3 | 5 |
-| Latent panic | 3 | 2 |
-| Latent error | 0 | 0 |
-| Full NotYet | 15,288 | 7,112 |
-| Full Refused | 12,275 | 7,761 |
-| Full SkippedDependency | 3 | 15 |
-| Full panic | 25 | 60 |
-| Full error | 2 | 2 |
-| Checker diagnostics | 324 | 320 |
+| Metric                                  | Before, 89ac4a8c | After, 5e33a17b |
+| --------------------------------------- | ---------------: | --------------: |
+| Reached source files                    |               81 |              81 |
+| Source bytes                            |       10,010,532 |      10,013,332 |
+| Hidden bytes                            |        5,430,761 |       3,488,582 |
+| Hidden share                            |       54.250473% |      34.839372% |
+| Blocked union bytes                     |        7,543,130 |       6,683,211 |
+| Independently examined bytes subtracted |        2,112,369 |       3,194,629 |
+| Latent NotYet                           |            1,473 |             810 |
+| Latent Refused                          |            5,164 |           4,070 |
+| Latent SkippedDependency                |                3 |               5 |
+| Latent panic                            |                3 |               2 |
+| Latent error                            |                0 |               0 |
+| Full NotYet                             |           15,288 |           7,112 |
+| Full Refused                            |           12,275 |           7,761 |
+| Full SkippedDependency                  |                3 |              15 |
+| Full panic                              |               25 |              60 |
+| Full error                              |                2 |               2 |
+| Checker diagnostics                     |              324 |             320 |
 
 Hidden bytes changed by -1,942,179; share changed by -19.411101 percentage points. Counts retain the original unique `(kind, where, reason, text)` convention, excluding Boundary bookkeeping. Full panic sites increased from 25 to 60: 57 nil-pointer sites and three ComputedPropertyName sites. Dependency skips increased from three to 15. Both ordinary errors remain unattributed; these stops are retained in the report.
 
@@ -36,28 +36,28 @@ Outside compiler: 564/712 hidden bytes before; 0/712 after. Both outside sources
 
 Sorted by absolute hidden-byte change. Negative values credit a decrease; positive values record an increase.
 
-| Reason family | Before hidden bytes | After hidden bytes | Change |
-| --- | ---: | ---: | ---: |
-| NotYet: a BinaryExpression with &lt;payload&gt; | 476,290 | 17,272 | -459,018 |
-| NotYet: a PrefixUnaryExpression on &lt;payload&gt; | 390,437 | 0 | -390,437 |
-| NotYet: a method call through a structural signature in a program with statics; use typeof the declaring class | 329,695 | 0 | -329,695 |
-| Refused: a number as a condition | 308,708 | 0 | -308,708 |
-| NotYet: reading &lt;payload&gt; | 994,631 | 729,732 | -264,899 |
-| NotYet: a value of type &lt;payload&gt; | 545,281 | 806,996 | +261,715 |
-| NotYet: a declaration directly in a case (wrap the case in a block) | 159,168 | 0 | -159,168 |
-| NotYet: a union or optional field read in a program with record storage | 0 | 157,122 | +157,122 |
-| NotYet: a function returning &lt;payload&gt; | 548,359 | 399,151 | -149,208 |
-| NotYet: a NonNullExpression | 119,596 | 0 | -119,596 |
-| Refused: a value as a condition | 116,148 | 0 | -116,148 |
-| Refused: a cast the runtime can&#x27;t check | 199,241 | 88,460 | -110,781 |
-| NotYet: a function without a body | 89,346 | 0 | -89,346 |
-| NotYet: a parameter that isn&#x27;t a plain name | 83,515 | 2,927 | -80,588 |
-| NotYet: a field of type &lt;payload&gt; | 69,307 | 0 | -69,307 |
-| Refused: Object enumeration with getter or accessor descriptors | 0 | 56,663 | +56,663 |
-| Refused: overload 1 of visitNode parameter node cannot be served by implementation parameter node | 0 | 38,191 | +38,191 |
-| Refused: a string as a condition | 32,003 | 0 | -32,003 |
-| NotYet: checked view field modifiers of type NodeArray&lt;Modifier&gt; \| NodeArray&lt;ModifierLike&gt; \| undefined | 0 | 29,667 | +29,667 |
-| NotYet: a ModuleDeclaration | 22,557 | 0 | -22,557 |
+| Reason family                                                                                                        | Before hidden bytes | After hidden bytes |   Change |
+| -------------------------------------------------------------------------------------------------------------------- | ------------------: | -----------------: | -------: |
+| NotYet: a BinaryExpression with &lt;payload&gt;                                                                      |             476,290 |             17,272 | -459,018 |
+| NotYet: a PrefixUnaryExpression on &lt;payload&gt;                                                                   |             390,437 |                  0 | -390,437 |
+| NotYet: a method call through a structural signature in a program with statics; use typeof the declaring class       |             329,695 |                  0 | -329,695 |
+| Refused: a number as a condition                                                                                     |             308,708 |                  0 | -308,708 |
+| NotYet: reading &lt;payload&gt;                                                                                      |             994,631 |            729,732 | -264,899 |
+| NotYet: a value of type &lt;payload&gt;                                                                              |             545,281 |            806,996 | +261,715 |
+| NotYet: a declaration directly in a case (wrap the case in a block)                                                  |             159,168 |                  0 | -159,168 |
+| NotYet: a union or optional field read in a program with record storage                                              |                   0 |            157,122 | +157,122 |
+| NotYet: a function returning &lt;payload&gt;                                                                         |             548,359 |            399,151 | -149,208 |
+| NotYet: a NonNullExpression                                                                                          |             119,596 |                  0 | -119,596 |
+| Refused: a value as a condition                                                                                      |             116,148 |                  0 | -116,148 |
+| Refused: a cast the runtime can&#x27;t check                                                                         |             199,241 |             88,460 | -110,781 |
+| NotYet: a function without a body                                                                                    |              89,346 |                  0 |  -89,346 |
+| NotYet: a parameter that isn&#x27;t a plain name                                                                     |              83,515 |              2,927 |  -80,588 |
+| NotYet: a field of type &lt;payload&gt;                                                                              |              69,307 |                  0 |  -69,307 |
+| Refused: Object enumeration with getter or accessor descriptors                                                      |                   0 |             56,663 |  +56,663 |
+| Refused: overload 1 of visitNode parameter node cannot be served by implementation parameter node                    |                   0 |             38,191 |  +38,191 |
+| Refused: a string as a condition                                                                                     |              32,003 |                  0 |  -32,003 |
+| NotYet: checked view field modifiers of type NodeArray&lt;Modifier&gt; \| NodeArray&lt;ModifierLike&gt; \| undefined |                   0 |             29,667 |  +29,667 |
+| NotYet: a ModuleDeclaration                                                                                          |              22,557 |                  0 |  -22,557 |
 
 The measurement uses the same upstream TypeScript pin `050880ce59e30b356b686bd3144efe24f875ebc8` (6.0.3) and measurement-tool pin `f1502d130bc0b4440f29b93b76b7d18bff3f6a60`. Cohere remains `7945d102a6c18dd36adf9114a758ce646e8b2359`; typescript-go remains `d92d9bfee114c80be2c375d72edae966176e3a4f`. Stock TypeScript independently confirms the same 81-source closure, including two sources outside `src/compiler`.
 
@@ -86,25 +86,25 @@ No partial trial is used as RESULT.json. [merge.py](merge.py) rejects incomplete
 
 All test processes wrote output to log files. No existing measurement file, compiler implementation, fixture or counts file was edited; no fixture was added.
 
-| Check or mutant | Command / observation |
-| --- | --- |
-| Known-answer fixture on compatible main binary | `timeout 90 python3 /tmp/closure-fixture-runner/test_fixture.py /tmp/closure-tools-main/census /tmp/closure-tools-main/tree/stage3/census/hidden /tmp/closure-fixture-compatible`: PASS, two sources, TS2322, 54/183 hidden bytes, exact outside range `[33,87)` |
-| Same fixture on range binary | Same runner with `/tmp/closure-range/census`: PASS, same answer |
-| Real latent root-drop mutant | Outside file remains imported and on disk; omission caught by `closure coverage mismatch: ['src/outside.ts']` |
-| Real full root-drop mutant | Same omission in full roots; caught by the same closure-coverage check |
-| Restore rejecting IR copier | Known-answer assertion fails; full ledger contains the `argumentFacts` snapshot panic |
-| Pinned hidden arithmetic tests | `timeout 90 python3 -m unittest discover -s /tmp/closure-tools-main/tree/stage3/census/hidden -p test_hidden.py`: eight tests, OK, including 500 random byte-set cases |
-| Pinned full continuation audit | `timeout 90 python3 /tmp/closure-tools-main/tree/stage3/census/latent/full_audit.py /tmp/closure-tools-main/census /tmp/closure-full-audit`: PASS, three distinct refusal sites, supported string/number conditions, nested checker exclusion, eligible sibling, rollback and no-output guards |
-| First-error-only mutant | Full audit catches the missing refusal sites |
-| Failed-state-retention mutant | Full audit catches the poison binding left after failure |
-| Byte-mask fixture audit | PASS, 54 hidden bytes across both roots |
-| Audit compiler-root regression | Fails `file hidden bytes: src/outside.ts` |
-| Reason-credit fixture | Exactly 54 bytes credited to the diagnosed-body family; a one-byte headline mutant fails the credit-sum assertion |
-| Baseline reason-credit audit | PASS, exclusive credits sum to 5,430,761 |
-| File-schedule outside omission | Both checker roots remain in the header; join fails `incomplete root coverage` |
-| Corrupted overlap finding | Join fails `overlap mismatch` |
-| Changed checker-root header | Join fails `checker program/header mismatch` |
-| Eight-file scheduling witness | PASS, all eight original records and complete checker header agree |
+| Check or mutant                                | Command / observation                                                                                                                                                                                                                                                                          |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Known-answer fixture on compatible main binary | `timeout 90 python3 /tmp/closure-fixture-runner/test_fixture.py /tmp/closure-tools-main/census /tmp/closure-tools-main/tree/stage3/census/hidden /tmp/closure-fixture-compatible`: PASS, two sources, TS2322, 54/183 hidden bytes, exact outside range `[33,87)`                               |
+| Same fixture on range binary                   | Same runner with `/tmp/closure-range/census`: PASS, same answer                                                                                                                                                                                                                                |
+| Real latent root-drop mutant                   | Outside file remains imported and on disk; omission caught by `closure coverage mismatch: ['src/outside.ts']`                                                                                                                                                                                  |
+| Real full root-drop mutant                     | Same omission in full roots; caught by the same closure-coverage check                                                                                                                                                                                                                         |
+| Restore rejecting IR copier                    | Known-answer assertion fails; full ledger contains the `argumentFacts` snapshot panic                                                                                                                                                                                                          |
+| Pinned hidden arithmetic tests                 | `timeout 90 python3 -m unittest discover -s /tmp/closure-tools-main/tree/stage3/census/hidden -p test_hidden.py`: eight tests, OK, including 500 random byte-set cases                                                                                                                         |
+| Pinned full continuation audit                 | `timeout 90 python3 /tmp/closure-tools-main/tree/stage3/census/latent/full_audit.py /tmp/closure-tools-main/census /tmp/closure-full-audit`: PASS, three distinct refusal sites, supported string/number conditions, nested checker exclusion, eligible sibling, rollback and no-output guards |
+| First-error-only mutant                        | Full audit catches the missing refusal sites                                                                                                                                                                                                                                                   |
+| Failed-state-retention mutant                  | Full audit catches the poison binding left after failure                                                                                                                                                                                                                                       |
+| Byte-mask fixture audit                        | PASS, 54 hidden bytes across both roots                                                                                                                                                                                                                                                        |
+| Audit compiler-root regression                 | Fails `file hidden bytes: src/outside.ts`                                                                                                                                                                                                                                                      |
+| Reason-credit fixture                          | Exactly 54 bytes credited to the diagnosed-body family; a one-byte headline mutant fails the credit-sum assertion                                                                                                                                                                              |
+| Baseline reason-credit audit                   | PASS, exclusive credits sum to 5,430,761                                                                                                                                                                                                                                                       |
+| File-schedule outside omission                 | Both checker roots remain in the header; join fails `incomplete root coverage`                                                                                                                                                                                                                 |
+| Corrupted overlap finding                      | Join fails `overlap mismatch`                                                                                                                                                                                                                                                                  |
+| Changed checker-root header                    | Join fails `checker program/header mismatch`                                                                                                                                                                                                                                                   |
+| Eight-file scheduling witness                  | PASS, all eight original records and complete checker header agree                                                                                                                                                                                                                             |
 
 The new-result byte-mask audit and its one-byte headline mutant are recorded above with the final arithmetic. The audit independently reconstructs every byte range, union, subtraction, share and largest-region ranking without using `hidden.py`'s union implementation.
 
