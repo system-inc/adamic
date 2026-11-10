@@ -112,6 +112,10 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 			lowered.Returns = ir.String
 			lowered.Throws = true
 		case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket":
+			receiverOptional := call.QuestionDotToken == nil && call.Expression.Kind == ast.KindPropertyAccessExpression && call.Expression.AsPropertyAccessExpression().QuestionDotToken != nil
+			if node.Flags&ast.NodeFlagsOptionalChain != 0 && (!receiverOptional || l.optionalReceiverCall != node) {
+				return nil, true, l.notYet(node, "node:fs.Dirent."+member+" through an optional call")
+			}
 			if call.Expression.Kind != ast.KindPropertyAccessExpression {
 				return nil, true, l.notYet(node, "a detached Dirent method")
 			}
