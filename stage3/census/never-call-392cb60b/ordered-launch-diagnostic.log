@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/tmp/never-call-run.py", line 6, in <module>
+    p=subprocess.Popen(cmd,cwd=cwd,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/never-call-tools/head/census-entry-ordered'
+tsc-entry-ordered-first-head wrapper child exit code: 1
+archive child exit code: 0
+post-run child exit code: 0
+child exit code: 0 ['git', 'add']
+child exit code: 0 ['git', 'push']
+{"label": "tsc-entry-ordered-first-head", "sha": "063148fc0c2d1fd17daa40583e60a9002ede175e", "ref": "refs/heads/typescript/never-call-census-checkpoint-tsc-entry-ordered-first-head"}
+post-run child exit code: 0

@@ -1,0 +1,23 @@
+{
+  "root_only": {
+    "prefix": "tsc-first",
+    "excluded": true,
+    "reason": "only one file observed"
+  },
+  "unordered_expansion": {
+    "prefix": "tsc-entry-first",
+    "excluded": true,
+    "parent_first_file": "src/compiler/corePublic.ts",
+    "parent_panics": 2406,
+    "parent_child_exit_code": 0,
+    "head_child_exit_code": -15,
+    "head_stopped_because": "measurement root ordering changes production source identity routes"
+  },
+  "ordered_head_initial_launch": {
+    "compiler_started": false,
+    "compiler_child_exit_code": null,
+    "wrapper_exit_code": 1,
+    "reason": "executable was not built yet; valid retry started after both builds completed"
+  },
+  "valid_comparison_prefix": "tsc-entry-ordered-first"
+}
