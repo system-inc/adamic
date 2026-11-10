@@ -318,6 +318,11 @@ print(json.dumps(list(names(unittest.defaultTestLoader.loadTestsFromModule(test_
 	t.Logf("%d generator tests covered by %d wrappers", len(discovered), len(active))
 }
 
+func TestLaneSanctionedApiFreshnessPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_sanctioned_api_freshness")
+}
+
 func TestLaneTablePython(t *testing.T) {
 	t.Parallel()
 	runPython(t, "stage3/lane", "test_table")
