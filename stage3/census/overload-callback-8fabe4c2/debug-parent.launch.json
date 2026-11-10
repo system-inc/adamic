@@ -1,0 +1,18 @@
+{
+  "runner_pid": 12444,
+  "arguments": [
+    "debug-parent",
+    "env",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "LATENT_FULL=1",
+    "LATENT_ONLY_FILE=/workspace/overload-adapted/src/compiler/debug.ts",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "GOMEMLIMIT=5GiB",
+    "LATENT_TIMES=/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/debug-parent-times.jsonl",
+    "LATENT_PROGRESS_FILE=/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/debug-parent-progress.json",
+    "/workspace/overload-parent-census",
+    "/workspace/overload-adapted/src/tsc/tsc.ts",
+    "/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/debug-parent.jsonl"
+  ]
+}

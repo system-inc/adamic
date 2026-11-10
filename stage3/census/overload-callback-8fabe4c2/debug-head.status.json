@@ -1,0 +1,22 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "LATENT_FULL=1",
+    "LATENT_ONLY_FILE=/workspace/overload-adapted/src/compiler/debug.ts",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "GOMEMLIMIT=5GiB",
+    "LATENT_TIMES=/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/debug-head-times.jsonl",
+    "LATENT_PROGRESS_FILE=/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/debug-head-progress.json",
+    "/workspace/overload-head-census",
+    "/workspace/overload-adapted/src/tsc/tsc.ts",
+    "/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/debug-head.jsonl"
+  ],
+  "child_exit": 0,
+  "stopped": null,
+  "wall_seconds": 58.16240524400018,
+  "peak_rss_kib": 893136,
+  "user_seconds": 61.131579,
+  "system_seconds": 5.996407
+}
