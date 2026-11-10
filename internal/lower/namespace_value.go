@@ -362,12 +362,9 @@ func (l *lowering) namespaceValueArgument(node, outer, call, declaration *ast.No
 	if call.Kind == ast.KindNewExpression {
 		return seen("a constructor argument")
 	}
-	// A value a caller set a slot for (refuseInSlot) is written into that slot, not handed to the call.
+	// A value a caller set a slot for (refuseInSlot) is written into a slot this can't follow, so it stops.
 	if l.slotSet(outer) {
-		if l.namespaceSlotKept(declaration, l.slotType(outer)) {
-			return nil
-		}
-		return seen("a value written into a slot of another type")
+		return seen("a value written into a slot a caller set")
 	}
 	signature := l.checker.GetResolvedSignature(call)
 	if signature == nil {
@@ -383,13 +380,52 @@ func (l *lowering) namespaceValueArgument(node, outer, call, declaration *ast.No
 	if callee := signature.Declaration(); callee != nil && ast.IsFunctionLike(callee) && len(callee.TypeParameters()) > 0 {
 		return seen("a generic argument")
 	}
-	if l.namespaceSlotKept(declaration, l.slotType(outer)) {
+	// The parameter is judged as declared, never as instantiated: a generic class's method, or an interface
+	// method reached through I<typeof N>, has no type parameters of its own, and its parameter's slot is
+	// typeof N here while its body sees a type parameter, where a write through the value would lower
+	// unjudged (Lower's must).
+	declared := l.namespaceDeclaredParameter(call, outer, signature)
+	if declared == nil {
+		return seen("an argument with no declared parameter of its own type")
+	}
+	if l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
+		return seen("an argument to a parameter declared with a type parameter")
+	}
+	if l.namespaceSlotKept(declaration, declared) {
 		return nil
 	}
-	if slot := l.slotType(outer); slot != nil {
-		return seen(l.checker.TypeToString(slot))
+	return seen(l.checker.TypeToString(declared))
+}
+
+// namespaceDeclaredParameter is the type a call's argument's parameter is declared with in the callee's own
+// declaration, uninstantiated, or nil when there's no one plain parameter for it (no declaration, a rest
+// parameter, or more arguments than parameters).
+func (l *lowering) namespaceDeclaredParameter(call, argument *ast.Node, signature *checker.Signature) *checker.Type {
+	callee := signature.Declaration()
+	if callee == nil || !ast.IsFunctionLike(callee) {
+		return nil
 	}
-	return seen("an argument with no parameter of its own type")
+	index := -1
+	for position, written := range call.Arguments() {
+		if written == argument {
+			index = position
+		}
+	}
+	parameters := []*ast.Node{}
+	for _, parameter := range callee.Parameters() {
+		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
+			continue
+		}
+		parameters = append(parameters, parameter)
+	}
+	if index < 0 || index >= len(parameters) || parameters[index].AsParameterDeclaration().DotDotDotToken != nil || !ast.IsIdentifier(parameters[index].Name()) {
+		return nil
+	}
+	symbol := l.symbol(parameters[index].Name())
+	if symbol == nil {
+		return nil
+	}
+	return l.checker.GetTypeOfSymbol(symbol)
 }
 
 // namespaceValueMember judges a read through a namespace value, receiver.name. A write is refused: the
