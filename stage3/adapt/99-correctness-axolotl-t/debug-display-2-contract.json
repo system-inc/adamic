@@ -1,0 +1,45 @@
+{
+  "status": "pass",
+  "rows": [
+    {
+      "case": "move, inverse, zero-edit replay",
+      "status": "pass"
+    },
+    {
+      "case": "missing moved module",
+      "status": "refused before writes"
+    },
+    {
+      "case": "duplicate home",
+      "status": "refused before writes"
+    },
+    {
+      "case": "changed moved body",
+      "status": "refused before writes"
+    },
+    {
+      "case": "half mapper restoration",
+      "status": "refused before writes"
+    },
+    {
+      "case": "changed mapper",
+      "status": "refused before writes"
+    },
+    {
+      "case": "99-correctness-axolotl-n relocated pin replay",
+      "result": {
+        "files": 0,
+        "edits": 0,
+        "javascriptChanging": false
+      }
+    },
+    {
+      "case": "99-correctness-axolotl-t relocated pin replay",
+      "result": {
+        "files": 0,
+        "edits": 0,
+        "javascriptChanging": true
+      }
+    }
+  ]
+}
