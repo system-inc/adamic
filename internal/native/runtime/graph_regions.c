@@ -13,9 +13,14 @@
 // adamic_graph_merge unites every region on such a path, either way round, and un-counts every edge
 // the union brings inside (graph_regions_entries.a: a store joined node and its entries array, and the
 // [key, node] pair between them kept a cycle of counted edges until it was merged too).
+//
+// The regions keep a topological order (#fhcjc66): every counted edge runs from a region to one later
+// in the order, so a store whose two regions are S before T can only close a cycle along a path from S
+// to T, through regions ordered between them. A merge searches only there.
 #include "graph_regions.h"
 #include "count.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -44,6 +49,11 @@ typedef struct graph_region {
 	size_t counted_out;
 #endif
 	bool shared;
+	// before, after and label are the region's place in its thread's topological order, kept while
+	// the region is a root (order_place). A non-root record leaves the order when it's united.
+	struct graph_region *before;
+	struct graph_region *after;
+	uint64_t label;
 	// Scratch for one merge at a time: searched, reaches and search_index for its search, merging
 	// for its union.
 	size_t search_index;
@@ -81,6 +91,75 @@ static graph_region *find(graph_region *region) {
 		region = next;
 	}
 	return root;
+}
+
+// The topological order (#fhcjc66): a list per thread of the root regions, a holder before what it
+// holds, each with a label that increases along the list, so two regions compare in O(1). It's the
+// simplified order-maintenance list (Bender, Cole, Demaine, Farach-Colton and Zito, 2002): a region
+// takes the midpoint of its neighbors' labels, and when they're adjacent, order_relabel spreads the
+// labels of the smallest aligned range around the place that's sparse enough, amortized O(log R).
+// Graph regions never cross threads (share.c refuses them), so each thread keeps its own.
+#define ORDER_END ((uint64_t)1 << 62)
+static _Thread_local graph_region *order_first, *order_last;
+
+static void order_unlink(graph_region *region) {
+	if (region->before != NULL) { region->before->after = region->after; } else if (order_first == region) { order_first = region->after; }
+	if (region->after != NULL) { region->after->before = region->before; } else if (order_last == region) { order_last = region->before; }
+	region->before = region->after = NULL;
+}
+
+// order_relabel spreads the labels around at evenly over the smallest aligned range of 2^level labels
+// holding fewer than 1.6^level regions, so a region more fits beside at with room to spare.
+static void order_relabel(graph_region *at) {
+	graph_region *first = at, *last = at;
+	size_t count = 1;
+	double room = 1.0;
+	for (unsigned level = 1; level <= 62; level++) {
+		room *= 1.6;
+		uint64_t span = (uint64_t)1 << level;
+		uint64_t low = at->label & ~(span - 1);
+		while (first->before != NULL && first->before->label >= low) { first = first->before; count++; }
+		while (last->after != NULL && last->after->label < low + span) { last = last->after; count++; }
+		if ((double)(count + 1) >= room) { continue; }
+		uint64_t gap = span / (count + 1);
+		uint64_t label = low + gap / 2;
+		for (graph_region *each = first;; each = each->after) {
+			each->label = label;
+			label += gap;
+			if (each == last) { break; }
+		}
+		return;
+	}
+	FAIL("graph region count overflow");
+}
+
+// order_link puts region between before and after, adjacent in the order (either may be NULL, an end).
+static void order_link(graph_region *region, graph_region *before, graph_region *after) {
+	for (;;) {
+		uint64_t low = before == NULL ? 0 : before->label + 1;
+		uint64_t high = after == NULL ? ORDER_END : after->label;
+		if (low < high) {
+			region->label = low + (high - low) / 2;
+			break;
+		}
+		order_relabel(before != NULL ? before : after);
+	}
+	region->before = before;
+	region->after = after;
+	if (before != NULL) { before->after = region; } else { order_first = region; }
+	if (after != NULL) { after->before = region; } else { order_last = region; }
+}
+
+// order_take puts region where place is, and takes place out of the order.
+static void order_take(graph_region *region, graph_region *place) {
+	if (region == place) { return; }
+	order_unlink(region);
+	region->label = place->label;
+	region->before = place->before;
+	region->after = place->after;
+	if (region->before != NULL) { region->before->after = region; } else { order_first = region; }
+	if (region->after != NULL) { region->after->before = region; } else { order_last = region; }
+	place->before = place->after = NULL;
 }
 
 // Adoption into a region, graph or Program, moves the allocation and frees the original, so it takes
@@ -183,6 +262,9 @@ static graph_region *new_region(adamic_heap *heap) {
 	*region = (graph_region){.parent = region, .record_tail = region,
 		.size = 1, .references = heap->references, .head = heap, .tail = heap};
 	adamic_graph_header_of(heap)->region = region;
+	// A new region has no counted edge in or out, so any place in the order is right; adoption moves
+	// its own new region before its children.
+	order_link(region, order_last, NULL);
 #ifdef ADAMIC_COUNT
 	adamic_counted.graph_regions++;
 #endif
@@ -216,6 +298,26 @@ static void merge_add(graph_region *region) {
 	merge_list[merge_count++] = region;
 }
 
+// moving is what a merge's search found that doesn't reach the target: regions ordered before the
+// target that the union, taking the target's place, now holds, so they move to just after it.
+static _Thread_local graph_region **moving_list;
+static _Thread_local size_t moving_count, moving_capacity;
+static void moving_add(graph_region *region) {
+	if (moving_count == moving_capacity) {
+		size_t capacity = moving_capacity == 0 ? 8 : moving_capacity * 2;
+		if (capacity < moving_capacity || capacity > SIZE_MAX / sizeof *moving_list) { FAIL("graph region count overflow"); }
+		graph_region **grown = realloc(moving_list, capacity * sizeof *grown);
+		if (grown == NULL) { FAIL("out of memory"); }
+		moving_list = grown;
+		moving_capacity = capacity;
+	}
+	moving_list[moving_count++] = region;
+}
+static int by_label(const void *left, const void *right) {
+	uint64_t one = (*(graph_region *const *)left)->label, two = (*(graph_region *const *)right)->label;
+	return one < two ? -1 : one > two;
+}
+
 // each_edge visits every counted edge out of a region: each member child of its boundary members
 // whose root is another region, or a member with no region.
 static _Thread_local graph_region *edge_from;
@@ -236,16 +338,17 @@ static void each_edge(graph_region *region, void (*visit)(adamic_heap *, graph_r
 	edge_visit = saved_visit;
 }
 
-// between finds the regions on a counted path from from to the target (a root, or a member with no
-// region) and marks them merging. The search visits each region and each counted edge once: a walk
-// from from records every region it reaches and the edges between them, then, since the counted
-// region graph has no cycle, one post-order pass marks the regions with a path to the target.
+// between finds the regions on a counted path from from to the target, a root ordered after it, and
+// marks them merging. The search visits each region and each counted edge once: a walk from from
+// records every region it reaches ordered no later than the target (no later one can lead back to it,
+// #fhcjc66) and the edges between them, then, since the counted region graph has no cycle, one
+// post-order pass marks the regions with a path to the target. What the walk found that doesn't reach
+// the target is moving.
 static _Thread_local graph_region **search_list;
 static _Thread_local size_t search_count, search_capacity;
 static _Thread_local size_t *search_edges, *search_starts, *search_stack, *search_next;
 static _Thread_local size_t search_edge_count, search_edge_capacity, search_node_capacity;
 static _Thread_local graph_region *search_target_root, *search_at;
-static _Thread_local adamic_heap *search_target_lone;
 static void *search_grow(void *array, size_t count, size_t size) {
 	if (count > SIZE_MAX / size) { FAIL("graph region count overflow"); }
 	void *grown = realloc(array, count * size);
@@ -278,20 +381,17 @@ static void search_out(adamic_heap *heap, graph_region *root) {
 #ifdef ADAMIC_COUNT
 	adamic_counted.graph_searched++;
 #endif
-	if ((search_target_root != NULL && root == search_target_root) || (root == NULL && heap == search_target_lone)) {
+	(void)heap;
+	if (root == search_target_root) {
 		search_edge(SEARCH_TARGET);
-	} else if (root != NULL) {
+	} else if (root != NULL && root->label < search_target_root->label) {
+		// A region ordered after the target has no path back to it: the walk never enters one.
 		if (!root->searched) { search_add(root); }
 		search_edge(root->search_index);
 	}
 }
-static void between(graph_region *from, graph_region *target_root, adamic_heap *target_lone) {
-	// Nothing points into a member with no region, nor into a region with no counted edge in, so no
-	// path can reach it. The open bound: a target with edges in that from doesn't reach still costs a
-	// search of everything from reaches (the "open" witness); #fhcjc66's topological order bounds it.
-	if (from == NULL || target_root == NULL || target_root->incoming == 0) { return; }
+static void between(graph_region *from, graph_region *target_root) {
 	search_target_root = target_root;
-	search_target_lone = target_lone;
 	search_count = search_edge_count = 0;
 	search_add(from);
 	// The walk: region i's edges are search_edges[search_starts[i]] up to search_starts[i + 1].
@@ -351,12 +451,13 @@ static void between(graph_region *from, graph_region *target_root, adamic_heap *
 		if (region != from && region->reaches && !region->merging) {
 			region->merging = true;
 			merge_add(region);
+		} else if (region != from && !region->reaches) {
+			moving_add(region);
 		}
 		region->searched = region->reaches = false;
 	}
 	search_count = search_edge_count = 0;
 	search_target_root = search_at = NULL;
-	search_target_lone = NULL;
 }
 
 // uncount takes the count off an edge the union brings inside, from the target and its region.
@@ -451,7 +552,14 @@ static _Thread_local graph_region *acyclic_root;
 static void acyclic_out(adamic_heap *heap, graph_region *root) {
 	(void)heap;
 	if (root == acyclic_root) { FAIL("compiler bug: counted edges between graph regions close a cycle"); }
+	// edge_from is the region whose edges each_edge is walking.
+	if (root != NULL && root->label <= edge_from->label) { FAIL("compiler bug: a counted edge runs against the graph regions' order"); }
 	if (root != NULL && !root->searched) { search_add(root); }
+}
+// adopted_out checks, in the counted build, that a new region's every edge runs forward in the order.
+static void adopted_out(adamic_heap *heap, graph_region *root) {
+	(void)heap;
+	if (root != NULL && root->label <= edge_from->label) { FAIL("compiler bug: a counted edge runs against the graph regions' order"); }
 }
 static void acyclic(graph_region *root) {
 	acyclic_root = root;
@@ -472,13 +580,26 @@ void adamic_graph_merge(void *left, void *right) {
 	if ((a != NULL && a->shared) || (b != NULL && b->shared)) {
 		FAIL("merging shared graph regions is not yet supported");
 	}
-	// Every region on a counted path between the two, either way round, joins them: left out, it would
-	// hold the union and be held by it, a cycle of counted edges no region could see.
+	// Every region on a counted path between the two joins them: left out, it would hold the union and
+	// be held by it, a cycle of counted edges no region could see. Every counted edge runs forward in
+	// the order, so only a path from the earlier region to the later one can exist, through regions
+	// ordered between them (#fhcjc66). A member with no region has no counted edge either way.
 	merge_count = 0;
+	moving_count = 0;
+	graph_region *place = a != NULL ? a : b;
 	if (a != NULL) { a->merging = true; }
 	if (b != NULL) { b->merging = true; }
-	between(b, a, a == NULL ? one : NULL);
-	between(a, b, b == NULL ? two : NULL);
+	if (a != NULL && b != NULL) {
+		graph_region *early = a->label < b->label ? a : b, *late = early == a ? b : a;
+		if (late->incoming == 0) {
+			// Nothing points into the later region, so nothing ordered before it needs to stay before
+			// it: the union takes the earlier region's place, and no path can reach it to search for.
+			place = early;
+		} else {
+			between(early, late);
+			place = late;
+		}
+	}
 	for (size_t i = 0; i < merge_count; i++) {
 		if (merge_list[i]->shared) { FAIL("merging shared graph regions is not yet supported"); }
 	}
@@ -496,7 +617,26 @@ void adamic_graph_merge(void *left, void *right) {
 	for (size_t i = 0; i < merge_count; i++) {
 		if (find(merge_list[i]) != root) { root = unite(root, NULL, merge_list[i], NULL); }
 	}
+	// The order: the union takes place's position, the records it absorbed leave the order, and what
+	// the search found ordered before the later region, now held by the union, moves to just after it,
+	// in its own order. With both sides members with no region, unite's new region is already placed.
+	if (place != NULL) {
+		order_take(root, place);
+		if (a != NULL && a != root) { order_unlink(a); }
+		if (b != NULL && b != root) { order_unlink(b); }
+		for (size_t i = 0; i < merge_count; i++) {
+			if (merge_list[i] != root) { order_unlink(merge_list[i]); }
+		}
+	}
 	merge_count = 0;
+	if (moving_count > 1) { qsort(moving_list, moving_count, sizeof *moving_list, by_label); }
+	graph_region *anchor = root;
+	for (size_t i = 0; i < moving_count; i++) {
+		order_unlink(moving_list[i]);
+		order_link(moving_list[i], anchor, anchor->after);
+		anchor = moving_list[i];
+	}
+	moving_count = 0;
 	prune(root);
 #ifdef ADAMIC_COUNT
 	acyclic(root);
@@ -603,6 +743,8 @@ static void children(void *value, void (*visit)(void *)) {
 // (share.c refuses them), but every task builds its own, so each thread has its own scratch.
 static _Thread_local adamic_heap *joining;
 static _Thread_local size_t joined;
+// earliest is the child region ordered first, which the new region goes just before (#fhcjc66).
+static _Thread_local graph_region *earliest;
 static void count_owned(void *value) {
 	adamic_heap *heap = member(value);
 	if (heap == NULL || heap == joining) { return; }
@@ -613,6 +755,7 @@ static void count_owned(void *value) {
 	if (root->incoming == SIZE_MAX) { FAIL("graph region count overflow"); }
 	root->incoming++;
 	joined++;
+	if (earliest == NULL || root->label < earliest->label) { earliest = root; }
 }
 
 // The new member keeps the count each member child already holds, as a counted edge into that
@@ -625,14 +768,21 @@ void *adamic_graph_adopt_owned(void *value, size_t bytes) {
 	if (adamic_graph_is(value)) { return value; }
 	joining = adamic_graph_adopt(value, bytes);
 	joined = 0;
+	earliest = NULL;
 	children(joining, count_owned);
 	if (joined != 0) {
 		graph_region *region = new_region(joining);
 		boundary_add(region, joining);
+		// Nothing points into the new region yet, so it can go anywhere before its children: just
+		// before the earliest, which keeps the stretch between a later store's two regions short.
+		order_unlink(region);
+		order_link(region, earliest->before, earliest);
 #ifdef ADAMIC_COUNT
 		region->counted_out = joined;
+		each_edge(region, adopted_out);
 #endif
 	}
+	earliest = NULL;
 	void *result = joining;
 	joining = NULL;
 	return result;
@@ -788,6 +938,8 @@ void adamic_graph_free(void *value, void (*release)(void *)) {
 		adamic_heap_free_storage(head, head->slab);
 		head = next;
 	}
+	// Only the root is in the order; the records it absorbed left it when they were united.
+	if (root != NULL) { order_unlink(root); }
 	while (root != NULL) {
 		graph_region *next = root->next_record;
 		free(root->boundary);
