@@ -20,5 +20,6 @@ function run(counter: Counter): void {
 		console.log(String(counter.add?.(argument())));
 	}
 }
-run({ x: 3, add: (amount: number): number => amount + 3 });
+const counter: Counter = { x: 3, add: (amount: number): number => amount + 3 };
+run(counter);
 console.log('done');
