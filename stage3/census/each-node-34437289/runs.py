@@ -14,6 +14,7 @@ if name=='mutant':
  assert check==0 and (adapted/'src/compiler/debug.ts').read_bytes()==before
  subprocess.run(['git','apply',str(patch)],cwd=adapted,check=True)
  (root/'debug-mutant.ts.txt').write_bytes((adapted/'src/compiler/debug.ts').read_bytes())
+ assert (adapted/'src/compiler/debug.ts').read_bytes()==(root/'adapted-parent/src/compiler/debug.ts').read_bytes(), 'restoring patch did not produce exact parent debug.ts bytes'
  checkpoint('apply-mutant')
 else: tree=root/name; adapted=root/('adapted-'+name); binary=root/(name+'-census')
 extra={'LATENT_FULL':'1','LATENT_ASSERT_NO_OUTPUT':'1','LATENT_ONLY_FILE':str(adapted/'src/compiler/debug.ts')}
