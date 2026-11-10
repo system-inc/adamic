@@ -1,0 +1,8 @@
+// Row 12 through a generator: its next() result held in a graph slot, never read by field.
+interface Node { name: string; next: Node[]; steps: IteratorResult<Node, void>[] }
+const a: Node = { name: 'a' + '', next: [], steps: [] };
+const b: Node = { name: 'b' + '', next: [a], steps: [] };
+a.next.push(b); // a cycle: the program is a graph program
+function* walk(node: Node): Generator<Node, void, undefined> { yield node; }
+a.steps.push(walk(b).next());
+console.log(`${a.name} ${a.steps.length}`);

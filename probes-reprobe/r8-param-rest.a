@@ -1,0 +1,12 @@
+// Row 8: a rest element in a parameter's array pattern over a tuple.
+interface Node { name: string; next: Node[]; tails: Node[][] }
+const a: Node = { name: 'a' + '', next: [], tails: [] };
+const b: Node = { name: 'b' + '', next: [a], tails: [] };
+a.next.push(b); // a cycle: the program is a graph program
+function keep(holder: Node, [first, ...rest]: [Node, Node]): string {
+  holder.tails.push(rest);
+  return first.name;
+}
+const name = keep(a, [a, b]);
+const tail = a.tails[0];
+if (tail !== undefined) console.log(`${name} ${a.tails.length} ${tail.length} ${tail[0] === b}`);

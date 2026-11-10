@@ -1,0 +1,9 @@
+// Row 13 control: the iterator replaced by an object literal that holds the map.
+interface Node { name: string; next: Node[]; iterators: { map: Map<string, Node> }[] }
+const a: Node = { name: 'a' + '', next: [], iterators: [] };
+const b: Node = { name: 'b' + '', next: [a], iterators: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const map = new Map<string, Node>([[a.name, a]]);
+a.iterators.push({ map: map });
+const got = map.get('a');
+console.log(`${a.name} ${a.iterators.length} ${map.size} ${got === undefined ? -1 : got.iterators.length}`);

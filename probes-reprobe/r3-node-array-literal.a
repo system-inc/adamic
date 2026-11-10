@@ -1,0 +1,14 @@
+// Row 3, the cast inline with object literal elements, as stage3's node-array fixture makes it.
+interface TextRange { pos: number; end: number }
+interface NodeArray<T> extends Array<T>, TextRange { hasTrailingComma: boolean }
+interface Node { name: string; next: Node[]; lists: NodeArray<Node>[] }
+const a: Node = { name: 'a' + '', next: [], lists: [] };
+const nodes = [{ name: 'b' + '', next: [a], lists: [] }] as NodeArray<Node>;
+nodes.pos = -1;
+nodes.end = 7;
+nodes.hasTrailingComma = false;
+const b = nodes[0];
+if (b !== undefined) a.next.push(b); // a cycle: the program is a graph program
+a.lists.push(nodes); // a holds nodes, nodes holds b, b holds a
+const list = a.lists[0];
+if (list !== undefined) console.log(`${a.lists.length} ${list.length} ${list.end} ${list[0] === b}`);

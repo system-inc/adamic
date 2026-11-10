@@ -1,0 +1,8 @@
+// Row 13 through a Set's values() iterator.
+interface Node { name: string; next: Node[]; iterators: SetIterator<Node>[] }
+const a: Node = { name: 'a' + '', next: [], iterators: [] };
+const b: Node = { name: 'b' + '', next: [a], iterators: [] };
+a.next.push(b); // a cycle: the program is a graph program
+const set = new Set<Node>([a]);
+a.iterators.push(set.values());
+console.log(`${a.name} ${a.iterators.length} ${set.size}`);
