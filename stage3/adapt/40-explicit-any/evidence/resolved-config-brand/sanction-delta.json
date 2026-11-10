@@ -1,0 +1,11 @@
+{
+  "base": "68213b0a62261a4ca40a19f3c1b36e5603640e22",
+  "generatorUnchanged": true,
+  "previousDeclarations": 266,
+  "sanctionedDeclarations": 267,
+  "onlyAdditionalSanction": {
+    "declaration": "TypeAliasDeclaration:[\"ts\",\"ResolvedConfigFileName\"]#0",
+    "before": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ResolvedConfigFileName\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"_isResolvedConfigFileName\"],[\"NeverKeyword\"]]]]]",
+    "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ResolvedConfigFileName\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"_isResolvedConfigFileName\"],[\"UndefinedKeyword\"]]]]]"
+  }
+}

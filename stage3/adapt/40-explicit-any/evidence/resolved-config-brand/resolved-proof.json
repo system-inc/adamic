@@ -1,0 +1,20 @@
+{
+  "class": "resolved-config-phantom-brand",
+  "sourceSites": 1,
+  "publicLines": 1,
+  "compilerSources": 79,
+  "changedSource": "src/compiler/types.ts",
+  "sourceBeforeSha256": "1dc52221c695d3c0beeb9ad926f580fc203eab3b1e68f9871ff3552ec5965146",
+  "sourceAfterSha256": "96e99fe81aabb84c175616336166c9c4ea811c1d4f29be2b9243939f1b27488b",
+  "jsFiles": 10,
+  "emittedJavaScriptByteIdentical": true,
+  "declarationFiles": 716,
+  "changedDeclarations": [
+    "local/compiler/types.d.ts",
+    "local/typescript.d.ts",
+    "local/typescript.internal.d.ts"
+  ],
+  "referenceUnchanged": true,
+  "ownerDriftRejected": true,
+  "idempotent": true
+}
