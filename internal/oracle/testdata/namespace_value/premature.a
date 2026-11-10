@@ -1,0 +1,16 @@
+// The namespace read as a value before its block ran, through a function held in a let, an edge the
+// initialization walk can't follow: Node reads undefined there, and Adamic's readiness check stops the
+// read rather than hand out an object whose block hasn't run (#67jk7wq).
+let hook: () => void = (): void => {};
+function early(): void {
+	const held = Late;
+	console.log(typeof held);
+}
+hook = early;
+hook();
+namespace Late {
+	export function f(): number {
+		return 1;
+	}
+}
+console.log(String(Late.f()));
