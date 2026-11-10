@@ -2,7 +2,7 @@
 
 Full-tree adaptations remain under `stage3/adapt/`: 50 (implicit returns),
 51 (deferred fallthrough plan, no-op), 60 (factory localSymbol), 61 (factory
- typeExpression), 62 (tracing write), 63 (tracing legend), 64 (parser range read).
+typeExpression), 62 (tracing write), 63 (tracing legend), 64 (parser range read).
 These accept the complete upstream tree; 60–64 are the parser worker's edits.
 
 Slice-only adaptations moved here, with names unchanged: 52–59 and 80–86.
