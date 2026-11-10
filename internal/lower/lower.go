@@ -314,6 +314,11 @@ type lowering struct {
 	// constEnumReach is every const enum the program reaches as a value (reachedConstEnums), by its
 	// symbol, found once.
 	constEnumReach map[*ast.Symbol]bool
+	// namespaceValues is every program namespace whose name the program reads as a value, by its
+	// symbol, found once before the refusal pass (noteNamespaceValues), and namespaceContainers the
+	// global holding each one's object (namespace_value.go).
+	namespaceValues     map[*ast.Symbol]bool
+	namespaceContainers map[*ast.Symbol]int
 	// containerFits is every pair container_fit.go's walk judged whole, at no depth bound and leaning on
 	// no pair still in progress, with its stop or "" (containerPairGoes, #zrnkpdz).
 	containerFits map[containerFitPair]string
