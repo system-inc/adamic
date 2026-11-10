@@ -1,0 +1,51 @@
+internal/lower/cast_proof.go
+190: 	}
+191: 	operand, from := l.mintOperand(as)
+192: 	if mint := l.brandMintOf(operand, from, target); mint != nil {
+193: 		return castProof{brandMint: mint}, l.brandMintRefusal(node, target, mint)
+194: 	}
+195: 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
+196: 	inner := ast.SkipParentheses(as.Expression)
+197: 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
+198: 		if l.overloadDefaultPair(node) {
+199: 			return castProof{overloadDefault: true}, nil
+200: 		}
+201: 		return castProof{}, refused
+202: 	}
+203: 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
+204: 		return castProof{}, refused
+205: 	}
+
+internal/lower/namespaces.go
+260: func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+261: 	initialized := map[*ast.Node]bool{}
+262: 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+263: 	checkCall := func(target *ast.Node) error {
+264: 		for declaration, read := range graph.reach(target) {
+265: 			if !initialized[declaration] {
+266: 				if declaration.Kind == ast.KindEnumDeclaration {
+267: 					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
+268: 				}
+269: 				return l.notYet(read, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+270: 			}
+271: 		}
+272: 		return nil
+
+internal/lower/namespaces.go
+310: 			return nil
+311: 		}
+312: 		// The enum object exists while its own member assignments execute.
+313: 		if node.Kind == ast.KindEnumDeclaration {
+314: 			initialized[node] = true
+315: 		}
+316: 		if l.namespaceValueNode(node) {
+317: 			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
+318: 				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
+319: 			}
+320: 			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] {
+321: 				return l.notYet(node, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+322: 			}
+323: 		}
+324: 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {
+325: 			if target := l.namespaceCallable(node.Expression()); target != nil {
+
