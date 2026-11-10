@@ -1,15 +1,28 @@
 {
-  "step": "amended apply and final lane",
+  "step": "complete",
+  "status": "ready to land",
+  "main": "7f2c852dffe31163e9699f0c91a158596757b888",
+  "apply_validated_main": "95afe50a6e94dbff360a399458b5f45f43cfccad",
+  "main_stage3_inputs_identical": true,
   "classification": {
     "a": 3204,
     "b": 2,
     "c": 0
   },
-  "runtime_exports": "pass",
+  "runtime_exports": "pass; sorted keys byte-identical",
   "apply": "pass; child exit 0",
-  "lane": "running; no failures so far",
-  "main": "95afe50a6e94dbff360a399458b5f45f43cfccad",
-  "ready_to_land": false,
-  "source_equivalence": "all 746 files byte-identical",
-  "final_replay": "zero edits"
+  "source_equivalence": "all 746 source files byte-identical",
+  "FlowGraphNode": "unchanged; whole owner byte-identical",
+  "final_replay": "zero files and edits",
+  "lane": {
+    "status": "pass",
+    "units": 398,
+    "totals": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "controller_child_exit": 0
+  },
+  "ready_to_land": true
 }

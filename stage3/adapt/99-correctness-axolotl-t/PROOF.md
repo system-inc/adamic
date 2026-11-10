@@ -1,4 +1,4 @@
-> Candidate status: transitive bundle classification and runtime exports pass; final apply and lane are pending.
+> Candidate status: ready to land. Transitive classification, runtime exports, amended full apply and the complete final lane pass.
 
 > Nov 10 debugger-display amendment: current behavior and evidence are in
 > [debug-display-README.md](debug-display-README.md) and

@@ -19,8 +19,9 @@ static inline adamic_graph_header *adamic_graph_header_of(void *value) {
 
 // Adoption requires a new, unshared allocation with no published aliases.
 // Size is the complete allocation size, including object metadata but excluding
-// separate container buffers. adamic_graph_adopt_owned joins initialized graph
-// slots and transfers their counts; direct self slots are re-aimed after moving.
+// separate container buffers. adamic_graph_adopt_owned keeps the counts its
+// initialized member slots hold, as counted edges out of a region of one, and
+// joins nothing (graph_regions.c); direct self slots are re-aimed after moving.
 // The kind region adoption can't move, named for a refusal, or NULL (graph_regions.c).
 const char *adamic_region_unmovable(const adamic_heap *heap);
 void *adamic_graph_adopt(void *value, size_t size);
@@ -30,7 +31,10 @@ void adamic_graph_merge(void *left, void *right);
 void adamic_graph_retain(void *value);
 bool adamic_graph_release_last(void *value);
 void adamic_graph_free(void *value, void (*release)(void *));
-// A borrowed reference stored internally joins regions, without counting.
+// A borrowed reference stored internally joins regions, without counting. Hold, or take, before the
+// slot is written: a merge reads the holder's slots as they are to take the count off every edge it
+// brings inside, so a slot that already holds the new value would lose that value's count there and
+// again to take's release, an early free (graph_regions.c, #5nrs3q2; adamic_array_sort's write-back).
 void *adamic_graph_hold(void *holder, void *value);
 void adamic_graph_drop(void *holder, void *value);
 // Design-only shared state: merging distinct shared regions must panic.
