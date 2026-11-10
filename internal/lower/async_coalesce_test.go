@@ -58,6 +58,25 @@ async function h(xs: (number | null)[]): Promise<string> {
 }
 console.log(await h([null, 2, null, 0]));
 `, "5,2,5,0,\n"},
+		// A left side held as a plain number is never missing, so the fallback, await and all, never
+		// runs (Compiler's two programs on #wkfwexm). seen counts g's calls, so a fallback run shows.
+		{"a plain number on the left", `let seen = 0;
+async function f(): Promise<number> { return 1; }
+async function g(): Promise<number> { seen += 1; return 5; }
+async function h(x: number): Promise<string> { const r = x ?? await g(); return String(r); }
+const r = (await f()) ?? 0;
+console.log(String(r));
+console.log(await h(3));
+console.log(await h(0));
+console.log(String(seen));
+`, "1\n3\n0\n0\n"},
+		// A present value the program builds, so a count error on the present arm would show (Compiler's
+		// should on #wkfwexm: literals are immortal).
+		{"a built string or null", `async function g(n: number): Promise<string> { return "g" + String(n); }
+async function h(x: string | null, n: number): Promise<string> { const r = x ?? await g(n); return r + "!"; }
+console.log(await h(null, 1));
+console.log(await h("k" + String(2), 3));
+`, "g1!\nk2!\n"},
 		// A nested ??: the outer split's present arm holds the inner one's result.
 		{"a nested coalesce", `async function g(): Promise<number> { return 5; }
 async function h(x: number | null, y: number | null): Promise<string> { const r = x ?? y ?? await g(); return String(r); }
