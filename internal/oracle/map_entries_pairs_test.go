@@ -24,7 +24,7 @@ import (
 // Mutants, each red here by the counted build or by the stop's absence:
 //   - collection_next ignores planned: "e2", "e4" and "for-of" leak.
 //   - pairGraphTypes returns nil for a named pair: "e2", "e4" and "for-of" leak.
-//   - unplannedPair returns nil: "a labeled tuple" lowers, and leaks.
+//   - unplannedPair returns nil: "a wider array" lowers, and leaks.
 const mapEntriesPairsNode = `interface Node { name: string; next: Node[]; pairs: [string, Node][] }
 const a: Node = { name: 'a' + '', next: [], pairs: [] };
 const b: Node = { name: 'b' + '', next: [a], pairs: [] };
@@ -50,8 +50,19 @@ func TestMapEntriesPairs(t *testing.T) {
 		{"literal", mapEntriesPairsNode + "a.pairs = [['b', b]];\n" + mapEntriesPairsPrint, ""},
 		// A for-of over the same map whose pairs no slot holds: they're planned all the same, and free.
 		{"read only", mapEntriesPairsNode + "let names = '';\nfor (const [name, node] of map) names += name + node.name;\nconsole.log(names);\n", ""},
-		// A pair held as a labeled tuple: [string, Node] isn't the slot's type, so its plan can't name the
-		// pair, and it stops.
+		// A pair held as a wider array: [string, Node] is assignable to (string | Node)[], a graph type
+		// here, and isn't one itself, so no plan names the pair, and it stops.
+		{"a wider array", `interface Node { name: string; next: Node[]; items: (string | Node)[][] }
+const a: Node = { name: 'a' + '', next: [], items: [] };
+const b: Node = { name: 'b' + '', next: [a], items: [] };
+a.next.push(b);
+const map = new Map<string, Node>();
+map.set('b', b);
+a.items = [...map.entries()];
+console.log(String(a.items.length));
+`, "a Map's or a Set's [key, value] pair held as another graph type in a graph program"},
+		// A pair held as a labeled tuple. If the checker gives it [string, Node]'s identity, the pair is
+		// planned and must balance; if not, it stops as the wider array does. Either is sound.
 		{"a labeled tuple", `interface Node { name: string; next: Node[]; pairs: [key: string, value: Node][] }
 const a: Node = { name: 'a' + '', next: [], pairs: [] };
 const b: Node = { name: 'b' + '', next: [a], pairs: [] };
@@ -60,7 +71,7 @@ const map = new Map<string, Node>();
 map.set('b', b);
 a.pairs = [...map.entries()];
 console.log(String(a.pairs.length));
-`, "a Map's or a Set's [key, value] pair held as another graph type in a graph program"},
+`, "either"},
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
@@ -70,7 +81,17 @@ console.log(String(a.pairs.length));
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
-			if c.stopped != "" {
+			if c.stopped == "either" {
+				var notYet *lower.NotYet
+				if errors.As(err, &notYet) {
+					if !strings.Contains(notYet.What, "pair held as another graph type") {
+						t.Fatalf("got %v, want the pair's stop or a balanced program", err)
+					}
+					t.Logf("stopped: %s", notYet.What)
+					return
+				}
+				t.Log("lowered: its pairs are planned")
+			} else if c.stopped != "" {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) || !strings.Contains(notYet.What, c.stopped) {
 					t.Fatalf("got %v, want NotYet naming %q", err, c.stopped)
