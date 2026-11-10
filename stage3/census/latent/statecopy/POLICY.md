@@ -35,3 +35,10 @@ All other exported IR fields are individually named in `ir_fields.go`, with
 copied scalar values or deep copies of mutable graphs. Deep traversal uses the
 same private-cache and shared-pointer policies. No mutable private cache is
 retained by a shallow struct assignment.
+
+Deferred caller observations (`latentInstantiationEntries` and the scoped
+`latentConcreteInstantiation`) are run-owned globals in the scratch template,
+outside lowering and both copiers. They intentionally survive statement rollback,
+as the existing `latentInstantiated` ledger does. No lowering field or carried
+program fact is introduced. Raw checker/type pointers are identities; output
+strings are generated after measurement has finished.
