@@ -164,7 +164,10 @@ func TestOverloadCallbackExtraArgumentRefuses(t *testing.T) {
 class Dog extends Animal { bark(): string { return "woof"; } }
 `
 	const refusal = "overload 1 of check parameter test cannot be served by implementation parameter test"
-	for _, probe := range []struct{ name, source string }{
+	for _, probe := range []struct {
+		name, source string
+		typeScriptOnly bool
+	}{
 		{"a number into an optional string", animals + `function check<T extends Animal>(value: T, test: (value: T) => boolean): boolean;
 function check(value: Animal, test: ((value: Animal, extra: number) => boolean) | undefined): boolean {
 	return test === undefined || test(value, 5);
@@ -174,7 +177,7 @@ console.log(String(check(new Dog(), (dog: Dog, label?: string): boolean => {
 	console.log(label.toUpperCase());
 	return false;
 })));
-`},
+`, false},
 		{"an Animal into an optional Dog", animals + `function check<T extends Animal>(value: T, test: (value: T) => boolean): boolean;
 function check(value: Animal, test: ((value: Animal, other: Animal) => boolean) | undefined): boolean {
 	return test === undefined || test(value, new Animal());
@@ -184,9 +187,33 @@ console.log(String(check(new Dog(), (dog: Dog, other?: Dog): boolean => {
 	console.log(other.bark());
 	return false;
 })));
-`},
+`, false},
+		// A rest of any promises nothing past the fixed positions, and tsc lets the same function stand there
+		// (Compiler's road on #8n7eet3). Mutant: the any test dropped, and this row lowers.
+		{"a number into a rest of any", animals + `function check<T extends Animal>(value: T, test: (value: T, ...rest: any[]) => boolean): boolean;
+function check(value: Animal, test: ((value: Animal, extra: number) => boolean) | undefined): boolean {
+	return test === undefined || test(value, 5);
+}
+console.log(String(check(new Dog(), (dog: Dog, label?: string): boolean => {
+	if (label === undefined) { return true; }
+	console.log(label.toUpperCase());
+	return false;
+})));
+`, true},
+		// A fixed parameter written any promises nothing at its own position either.
+		{"an Animal into a parameter of any", animals + `function check<T extends Animal>(value: T, test: (value: any) => boolean): boolean;
+function check(value: Animal, test: ((value: Animal) => boolean) | undefined): boolean {
+	return test === undefined || test(new Animal());
+}
+console.log(String(check(new Dog(), (dog: Dog): boolean => dog.bark() === "woof")));
+`, true},
 	} {
-		for _, extension := range []string{".ts", ".a"} {
+		// .a refuses a written any where it's written, before the census reads it.
+		extensions := []string{".ts", ".a"}
+		if probe.typeScriptOnly {
+			extensions = extensions[:1]
+		}
+		for _, extension := range extensions {
 			t.Run(probe.name+extension, func(t *testing.T) {
 				t.Parallel()
 				_, err := lowerSourceAs(t, probe.source, extension)

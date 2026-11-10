@@ -197,7 +197,11 @@ func (l *lowering) overloadCallbackCall(implementation, overload, reference *ast
 		if position < len(call.Arguments.Nodes) {
 			argument = l.overloadCallbackArgument(implementation, overload, call.Arguments.Nodes[position])
 		}
-		if !l.censusRelated(argument, l.callableParameterTypeAt(promised, position)) {
+		parameter := l.callableParameterTypeAt(promised, position)
+		// A promised parameter that holds any promises nothing: tsc lets `(dog: Dog, label?: string)` stand
+		// where `(value: T, ...rest: any[])` or `(value: any)` is promised, and every argument relates to any,
+		// so the caller's function would get whatever the implementation passes (Compiler's road on #8n7eet3).
+		if l.overloadCallbackHoldsAny(parameter, 0, map[*checker.Type]bool{}) || !l.censusRelated(argument, parameter) {
 			return false
 		}
 	}
@@ -279,4 +283,58 @@ func (l *lowering) overloadCallbackAssigned(implementation *ast.Node, symbol *as
 	}
 	implementation.ForEachChild(writes)
 	return assigned
+}
+
+// overloadCallbackHoldsAny is whether any appears anywhere in t a value can sit: t itself, a union or
+// intersection member, a type argument, a property, an index signature's value, or a signature's
+// parameters or result. It walks as voidAnywhere does, and past its depth bound it fails closed.
+func (l *lowering) overloadCallbackHoldsAny(t *checker.Type, depth int, seen map[*checker.Type]bool) bool {
+	if t == nil || seen[t] {
+		return false
+	}
+	if t.Flags()&checker.TypeFlagsAny != 0 || depth >= 32 {
+		return true
+	}
+	seen[t] = true
+	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range t.Types() {
+			if l.overloadCallbackHoldsAny(member, depth+1, seen) {
+				return true
+			}
+		}
+		return false
+	}
+	if t.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	if t.ObjectFlags()&checker.ObjectFlagsReference != 0 && t.Target() != nil {
+		for _, argument := range l.checker.GetTypeArguments(t) {
+			if l.overloadCallbackHoldsAny(argument, depth+1, seen) {
+				return true
+			}
+		}
+	}
+	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+		for _, signature := range l.checker.GetSignaturesOfType(t, kind) {
+			if l.overloadCallbackHoldsAny(l.checker.GetReturnTypeOfSignature(signature), depth+1, seen) {
+				return true
+			}
+			for _, parameter := range signature.Parameters() {
+				if l.overloadCallbackHoldsAny(l.checker.GetTypeOfSymbol(parameter), depth+1, seen) {
+					return true
+				}
+			}
+		}
+	}
+	for _, property := range l.checker.GetPropertiesOfType(t) {
+		if l.overloadCallbackHoldsAny(l.checker.GetTypeOfSymbol(property), depth+1, seen) {
+			return true
+		}
+	}
+	for _, index := range l.checker.GetIndexInfosOfType(t) {
+		if l.overloadCallbackHoldsAny(index.ValueType(), depth+1, seen) {
+			return true
+		}
+	}
+	return false
 }
