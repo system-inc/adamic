@@ -94,7 +94,9 @@ func TestNodeProcessTerminal(t *testing.T) {
 // backends' closure ignored its receiver and blocked (#0bxc4jh). node_process_handle_method.a calls it
 // off the handle, unguarded, and blocks, and node_process_handle_asserted.ts calls it off a let-held
 // handle through a non-null assertion, handle.setBlocking!(true), which keeps its object and blocks
-// where the plain road reached the throwing closure.
+// where the plain road reached the throwing closure. node_process_handle_optional.a calls it off the
+// handle through ?., which the JavaScript backend's optional call reaches without adamicCallee, and
+// blocks.
 func TestNodeProcessHandleView(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range []struct {
@@ -110,6 +112,7 @@ func TestNodeProcessHandleView(t *testing.T) {
 		{"node_process_handle_detached_key.a", "no handle\n", "TypeError Illegal invocation\n"},
 		{"node_process_handle_detached_copy.a", "no handle\n", "TypeError Illegal invocation\n"},
 		{"node_process_handle_method.a", "no handle\n", "blocked\n"},
+		{"node_process_handle_optional.a", "no handle\n", "blocked\n"},
 		{"node_process_handle_asserted.ts", "no handle\n", "blocked\n"},
 	} {
 		t.Run(fixture.name, func(t *testing.T) {
