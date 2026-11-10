@@ -1,0 +1,182 @@
+
+internal/lower/namespace_value.go
+350: 
+351: // namespaceValueArgument judges a namespace value passed to a call. It's kept only as an argument to a
+352: // direct call of one program FunctionDeclaration, named by the callee identifier, with one declaration, a
+353: // body and no type parameters, whose own parameter at that place is declared typeof N or typeof N |
+354: // undefined with no type parameter in it. That's the body that runs, so every use of the value inside it is
+355: // judged by this pass as its own. Anything else could run a body that sees the value as a wider type, where
+356: // a write through it would lower unjudged: an overload (the chosen signature isn't the body), a function
+357: // value, a method (an override or implementation may widen its parameter), a generic class's method or an
+358: // interface reached through I<typeof N>, and a constructor, whose argument may become a field (Lower's and
+359: // Compiler's musts, the rule for the third shape rather than a fourth case).
+360: func (l *lowering) namespaceValueArgument(node, outer, call, declaration *ast.Node) error {
+361: 	seen := func(what string) error {
+362: 		return l.notYet(node, "a namespace value seen as "+what)
+363: 	}
+364: 	if call.Expression() == outer {
+365: 		return seen("a callee")
+366: 	}
+367: 	if call.Kind == ast.KindNewExpression {
+368: 		return seen("a constructor argument")
+369: 	}
+370: 	// A value a caller set a slot for (refuseInSlot) is written into a slot this can't follow, so it stops.
+371: 	if l.slotSet(outer) {
+372: 		return seen("a value written into a slot a caller set")
+373: 	}
+374: 	callee := ast.SkipParentheses(call.Expression())
+375: 	if callee.Kind == ast.KindPropertyAccessExpression && l.isLibraryGlobal(callee.Expression(), "Object") {
+376: 		return seen("an argument to Object." + callee.Name().Text())
+377: 	}
+378: 	function := l.namespaceDirectCallee(callee)
+379: 	if function == nil {
+380: 		return seen("an argument to a callee whose body can't be named")
+381: 	}
+382: 	declared := l.namespaceDeclaredParameter(call, outer, function)
+383: 	if declared == nil {
+384: 		return seen("an argument with no declared parameter of its own type")
+385: 	}
+
+internal/lower/interface_cast.go
+260: 		}
+261: 		for _, member := range contract.Members {
+262: 			visit(member)
+263: 		}
+264: 		visit(contract.Element)
+265: 	}
+266: 	visit(id)
+267: 	return fields, nil
+268: }
+269: 
+270: func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+271: 	if l.callableViewContract(target) {
+272: 		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
+273: 	}
+274: 	// Diagnose unreifiable contracts before temporary backend limitations.
+275: 	for _, property := range l.checker.GetPropertiesOfType(target) {
+276: 		declared := l.checker.GetTypeOfSymbol(property)
+277: 		if l.callableViewContract(declared) {
+278: 			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+279: 		}
+280: 	}
+
+internal/lower/view_contracts.go
+45: 		return id, nil
+46: 	}
+47: 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
+48: 	// Retain the strict adapter boundary for the array lane on compiler/views-v4.
+49: 	if target.Flags()&checker.TypeFlagsObject != 0 && (l.isArrayType(target) || checker.IsTupleType(target)) {
+50: 		if viewArrayContractHook == nil {
+51: 			return 0, l.notYet(node, "an array checked-view contract")
+52: 		}
+53: 		return viewArrayContractHook(l, node, target, build)
+54: 	}
+55: 	if l.callableViewContract(target) {
+56: 		if viewCallableContractHook == nil {
+57: 			return 0, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
+58: 		}
+59: 		return viewCallableContractHook(l, node, target, build)
+60: 	}
+61: 
+62: 	represented := target
+63: 	if base := l.phantomBase(target); base != nil {
+64: 		represented = base
+65: 	}
+
+internal/lower/namespaces.go
+240: 			}
+241: 			return l.notYet(node, "observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented")
+242: 		}
+243: 		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != node {
+244: 			if err := l.namespaceValueAdmission(node, l.namespaceDeclaration(node)); err != nil {
+245: 				return err
+246: 			}
+247: 		}
+248: 	}
+249: 	if err := l.namespaceValueUse(node); err != nil {
+250: 		return err
+251: 	}
+252: 	if l.isExpression(node) && l.namespaceMember(node) {
+253: 		parent := node.Parent
+254: 		if parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == node && ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind) {
+255: 			if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
+256: 				symbol := l.symbol(node)
+257: 				mutable := false
+258: 				for _, declaration := range symbol.Declarations {
+259: 					if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+260: 						mutable = true
+261: 					}
+262: 				}
+263: 				if !mutable {
+264: 					return l.notYet(node, "replacing a namespace export; exported functions and constants have fixed identity")
+265: 				}
+266: 			}
+267: 		}
+268: 	}
+269: 	return nil
+270: }
+271: 
+272: func init() { refusalRules.register(2100, "namespaceRefusal", (*lowering).namespaceRefusal) }
+273: 
+274: // Follow statically known callees before executing a module statement. An unresolved
+275: // edge keeps namespace reads checked at runtime; it is never proof of no effects.
+276: func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+277: 	l.noteNamespaceValues(modules)
+278: 	initialized := map[*ast.Node]bool{}
+279: 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+280: 	checkCall := func(target *ast.Node) error {
+281: 		for declaration, read := range graph.reach(target) {
+282: 			if !initialized[declaration] {
+283: 				if declaration.Kind == ast.KindEnumDeclaration {
+284: 					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
+285: 				}
+286: 				return l.notYet(read, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+287: 			}
+288: 		}
+289: 		return nil
+290: 	}
+291: 	var visit func(*ast.Node) error
+292: 	visit = func(node *ast.Node) error {
+293: 		if node == nil || ast.IsTypeNode(node) || ast.IsFunctionLike(node) {
+294: 			return nil
+295: 		}
+296: 		if branch := l.literalCallableBranch(node); branch != nil {
+297: 			return visit(branch)
+298: 		}
+299: 		if ast.IsClassLike(node) {
+300: 			for _, clause := range nodesOf(node.ClassLikeData().HeritageClauses) {
+301: 				if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
+302: 					for _, element := range clause.AsHeritageClause().Types.Nodes {
+303: 						if err := visit(element.AsExpressionWithTypeArguments().Expression); err != nil {
+304: 							return err
+305: 						}
+306: 					}
+307: 				}
+308: 			}
+309: 			// Instance fields and constructor bodies execute at new, not at the
+310: 			// declaration. Unknown construction keeps the checks in those bodies.
+311: 			for _, member := range node.ClassLikeData().Members.Nodes {
+312: 				if ast.HasStaticModifier(member) || member.Kind == ast.KindClassStaticBlockDeclaration {
+313: 					if err := visit(member); err != nil {
+314: 						return err
+315: 					}
+316: 				}
+317: 			}
+318: 			return nil
+319: 		}
+320: 		if node.Kind == ast.KindModuleDeclaration {
+321: 			for _, statement := range namespaceStatements(node) {
+322: 				if err := visit(statement); err != nil {
+323: 					return err
+324: 				}
+325: 			}
+326: 			initialized[node] = true
+327: 			return nil
+328: 		}
+329: 		// The enum object exists while its own member assignments execute.
+330: 		if node.Kind == ast.KindEnumDeclaration {
+331: 			initialized[node] = true
+332: 		}
+333: 		if l.namespaceValueNode(node) {
+334: 			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
+335: 				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
