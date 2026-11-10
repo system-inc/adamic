@@ -79,3 +79,44 @@ func TestPrimitiveObjectViewCarriedString(t *testing.T) {
 	}
 	lowersAndAgreesWithNode(t, "function f(flag: boolean): void {\nconst v: string | undefined = flag ? \"abc\" : undefined;\nconsole.log(String(v?.length));\n}\nf(true);\nf(false);\n")
 }
+
+// At 51e6b358 both calls lower and print 3 on Node and native. Binding the
+// primitive to the constraint as an object view would falsely stop these calls.
+// Mutant run and restored: judge primitive generic bindings against constraints;
+// both acceptance rows go red with the primitive object-view NotYet.
+func TestPrimitiveObjectViewGenericPrimitiveCalls(t *testing.T) {
+	t.Parallel()
+	for _, call := range []string{"len(\"abc\")", "len<string>(\"abc\")"} {
+		t.Run(call, func(t *testing.T) {
+			t.Parallel()
+			source := "function len<T extends { length?: number }>(x: T): string { return String(x.length); }\nconsole.log(" + call + ");\n"
+			lowersAndAgreesWithNode(t, source)
+		})
+	}
+}
+
+func TestPrimitiveObjectViewGenericNumberMemberStop(t *testing.T) {
+	t.Parallel()
+	const source = "function fix<T extends { toFixed?: (d: number) => string }>(x: T): string { return String(x.toFixed); }\nfix(1);\n"
+	_, err := lowerSource(t, source)
+	var gap *NotYet
+	want := "main.a:1:91: stage 0 can't lower .toFixed on a number yet"
+	if !errors.As(err, &gap) || !strings.HasSuffix(err.Error(), want) {
+		t.Fatalf("got %v, want NotYet ending %q", err, want)
+	}
+	lowersAndAgreesWithNode(t, "function fix(x: number): string { return x.toFixed(0); }\nconsole.log(fix(1));\n")
+}
+
+// Mutant run and restored: remove the class exemption. P then gets the weaker
+// primitive representation NotYet instead of the nominal ancestry refusal.
+func TestPrimitiveObjectViewNominalClassStop(t *testing.T) {
+	t.Parallel()
+	const source = "class P { length?: number };\nconst p: P = \"abc\";\nconsole.log(String(p.length));\n"
+	_, err := lowerSource(t, source)
+	var refused *Refused
+	want := "main.a:2:14: Adamic 0.1 refuses a value without nominal ancestry seen as P; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"
+	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), want) {
+		t.Fatalf("got %v, want Refused ending %q", err, want)
+	}
+	lowersAndAgreesWithNode(t, "class P { length?: number = 3 };\nconst p: P = new P();\nconsole.log(String(p.length));\n")
+}

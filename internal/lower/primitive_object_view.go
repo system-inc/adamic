@@ -6,9 +6,19 @@ import (
 )
 
 // A primitive seen through a program's structural object view cannot use its own
-// library member dispatch yet (#thrpakr). Keep primitive intersections (brands),
-// unions naming the primitive itself, library-declared targets and empty object
-// types exempt. Those are erased brands or roads owned by library dispatch.
+// library member dispatch yet (#thrpakr). Keep primitive intersections (brands):
+// they retain the primitive representation. Keep unions naming the primitive:
+// it enters its own member. Keep library-declared targets, owned by library
+// dispatch, and empty object types, which have no member to read through a view.
+// Array.from without a callback and object ToPrimitive conversions retain their
+// own existing NotYet stops.
+// Keep class targets so classViewRefusal reports the stronger nominal ancestry
+// refusal, even for a class with only public optional fields.
+// A generic binding is no view of its own: monomorphization keeps len<string>'s
+// string representation and its length read. Unsupported instantiated member
+// reads, such as String(x.toFixed), already stop in member lowering. Index-only
+// targets Record<string, unknown> and { [k: string]: number } reject strings
+// in the checker before this pass.
 func (l *lowering) primitiveObjectViewGap(node *ast.Node) error {
 	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
 		return nil
