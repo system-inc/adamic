@@ -148,6 +148,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	if err := finder.graphTypes(modules); err != nil {
 		return err
 	}
+	if err := finder.jsonReferenceReach(); err != nil {
+		return err
+	}
 	if l.programDiscovery {
 		l.resolveCountTypes(modules)
 		l.programPlan = l.selectProgramMembership(finder, modules)

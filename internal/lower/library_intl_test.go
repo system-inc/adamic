@@ -151,7 +151,7 @@ func TestIntlCollatorOtherRoadsAreNotYet(t *testing.T) {
 		{"for...in over one", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nfor (const key in collator) {\n\tconsole.log(key);\n}\n",
 			"stage 0 can't lower for...in without a proven fixed plain-object origin"},
 		{"JSON.stringify of one", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconsole.log(JSON.stringify(collator) ?? \"undefined\");\n",
-			"stage 0 can't lower JSON.stringify object references"},
+			"a library value whose own fields aren't what Node prints yet"},
 		{"compare off a held collator into a const", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconst compare = collator.compare;\nconsole.log(String(compare(\"a\", \"b\")));\n",
 			"main.a:2:17: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it)"},
 		{"compare off a held collator into a slot of its type", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconst compare: (x: string, y: string) => number = collator.compare;\nconsole.log(typeof compare);\n",
