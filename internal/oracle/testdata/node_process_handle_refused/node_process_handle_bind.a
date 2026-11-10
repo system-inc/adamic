@@ -1,0 +1,11 @@
+// stdout's handle's setBlocking bound to the handle off a parameter and called. Node's bound call has
+// the handle as this and blocks; the bound call would reach the closure without its object, so it
+// stops by name in a program that reads the handle (#0bxc4jh).
+import 'node:process';
+type Handle = { setBlocking?: (value: boolean) => void };
+function block(handle: Handle): void {
+	if (handle.setBlocking) handle.setBlocking.bind(handle)(true);
+}
+const handle = (process.stdout as any)._handle as Handle | undefined;
+if (handle !== undefined) block(handle);
+console.log('blocked');

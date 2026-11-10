@@ -45,6 +45,9 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// stdoutHandleSetBlockingRefusal names setBlocking read off stdout's handle as a value before a
 		// later rule could call that read something else (#5abf5v8).
 		"850 stdoutHandleSetBlockingRefusal",
+		// stdoutHandleUnheldRefusal stops a computed-key call or a bind naming setBlocking in a program
+		// that reads the handle, on every road the origin walk doesn't follow (#0bxc4jh).
+		"851 stdoutHandleUnheldRefusal",
 		"900 detachedOwnRefusal",
 		"1000 recordDivergenceRefusal",
 		"1100 recordLiteralRead",
