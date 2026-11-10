@@ -1,6 +1,6 @@
 {
-  "status": "STOPPED",
-  "base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6",
+  "status": "IN_PROGRESS",
+  "base": "7f2c852dffe31163e9699f0c91a158596757b888",
   "apply_exit": {
     "before": 0,
     "after": 0
@@ -47,5 +47,11 @@
   "emitted_hunks": 7,
   "outside_permitted_edits": 0,
   "identifier_renames": 0,
-  "final_branch_pushed": false
+  "final_branch_pushed": false,
+  "latent": {
+    "main_exit": 0,
+    "main_findings": 60,
+    "main_units": 29
+  },
+  "initial_base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6"
 }

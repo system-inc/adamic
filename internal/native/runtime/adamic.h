@@ -203,7 +203,8 @@ ADAMIC_OWNERSHIP void adamic_release(void *value) {
 }
 
 // Graph allocation and slot ownership (graph_regions.c). Ordinary references use
-// adamic_retain/release, which dispatch to the object's current region root.
+// adamic_retain/release, which dispatch to the object's current region root. Hold or take before
+// the slot is written, never after: graph_regions.h says why.
 void *adamic_graph_adopt(void *value, size_t bytes);
 void *adamic_graph_adopt_owned(void *value, size_t bytes);
 void *adamic_graph_hold(void *holder, void *value);
