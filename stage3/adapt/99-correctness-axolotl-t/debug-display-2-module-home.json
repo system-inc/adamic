@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "module": "src/deprecatedCompat/controlFlowGraph.ts",
+  "compiler_roots": 79,
+  "in_any_compiler_root_import_closure": false,
+  "typechecked_by_normal_node_build": true,
+  "standalone_node_bundle_loads": true,
+  "exports": [
+    "formatControlFlowGraph",
+    "printControlFlowGraph"
+  ],
+  "formatter_fixture_byte_identical": true,
+  "print_fixture_byte_identical": true,
+  "fixture_output": "\nStart  \n"
+}

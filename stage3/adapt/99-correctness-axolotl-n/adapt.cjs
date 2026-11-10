@@ -61,6 +61,14 @@ function plan(text) {
 function adapt(tree) {
     const file = path.join(tree, 'src/compiler/debug.ts');
     const before = fs.readFileSync(file, 'utf8');
+    const relocation = require('../99-correctness-axolotl-t/debug-display-2.cjs');
+    const localFile = path.join(tree, relocation.home);
+    if (fs.existsSync(localFile)) {
+        const local = fs.readFileSync(localFile, 'utf8');
+        const virtual = relocation.restore(before, local);
+        assert.equal(plan(virtual).edits, 0, 'relocated hasNode pin is not fully adapted');
+        return {files: 0, edits: 0, javascriptChanging: false};
+    }
     const result = plan(before);
     assert.equal(fs.readFileSync(file, 'utf8'), before, 'source changed while planning');
     if (result.edits) fs.writeFileSync(file, result.after);

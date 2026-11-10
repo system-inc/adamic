@@ -1,0 +1,775 @@
+{
+  "status": "pass",
+  "ordinary_driver_sha256": "7e87c77162c53db8dc02c0d3102c64d7cfbec43207946c1a6a0e402c8dd44ce8",
+  "latent_overlay_generator_sha256": "32ed3f2080f8a5963a1a6ef6039a1543bb0425ef1da34555fe23e90dbef6f88e",
+  "no_census_tool_changes": true,
+  "mapper_restoring_refusal": {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:859:5",
+    "phase": "lowering",
+    "kind": "Refused",
+    "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:861:20",
+    "reason": "Object.setPrototypeOf",
+    "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:861:20: Adamic 0.1 refuses Object.setPrototypeOf; prototypes expose or replace fields outside the declared shape; use a declared object or class with composition"
+  },
+  "graph_restoring_rows_1_to_3": [
+    {
+      "owner": "buildGraphNode",
+      "upstream_where": "debug.ts:1014:29",
+      "adapted_where": "debug.ts:1021:29",
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1001:9",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1021:29",
+        "reason": "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read",
+        "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1021:29: Adamic 0.1 refuses a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "owner": "renderGraph",
+      "upstream_where": "debug.ts:1133:48",
+      "adapted_where": "debug.ts:1140:48",
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1135:9",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1140:48",
+        "reason": "an unproven value assigned to a numeric literal or enum member slot Connection",
+        "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1140:48: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot Connection; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"
+      }
+    },
+    {
+      "owner": "computeColumnWidths",
+      "upstream_where": "debug.ts:1057:39",
+      "adapted_where": "debug.ts:1064:39",
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1063:9",
+        "phase": "deferred",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1064:39",
+        "reason": "a member typed any ([]) related to number at the initializer site",
+        "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1064:39: stage 0 can't lower a member typed any ([]) related to number at the initializer site yet"
+      }
+    }
+  ],
+  "all_target_findings_absent_on_candidate": true,
+  "ordinary_first_stops": {
+    "binder": {
+      "child_exit": 0,
+      "rows": [
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-2-candidate/src/compiler/binder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/semver.ts:287:34",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 34.522728332
+        },
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-2-candidate/src/compiler/binder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/semver.ts:287:34",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 22.81056226
+        }
+      ]
+    },
+    "core": {
+      "child_exit": 0,
+      "rows": [
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-2-candidate/src/compiler/core.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/semver.ts:287:34",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 36.646844418
+        },
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-2-candidate/src/compiler/core.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/semver.ts:287:34",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 19.71776559
+        }
+      ]
+    }
+  },
+  "latent": {
+    "mapper": {
+      "child_exit": 0,
+      "findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:252:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:252:33",
+          "reason": "a value of type never",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:261:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:257:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:262:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:257:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:274:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:273:82",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:275:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:273:82",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:301:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:299:78",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:302:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:299:78",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:349:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:350:135",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:350:135: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:389:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:400:27",
+          "reason": "a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:400:27: stage 0 can't lower a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:389:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:401:24",
+          "reason": "reading value",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:401:24: stage 0 can't lower reading value yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:389:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/core.ts:1049:82",
+          "reason": "a comparator that isn't a function",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/core.ts:1049:82: stage 0 can't lower a comparator that isn't a function yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:859:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:861:20",
+          "reason": "Object.setPrototypeOf",
+          "text": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/debug.ts:861:20: Adamic 0.1 refuses Object.setPrototypeOf; prototypes expose or replace fields outside the declared shape; use a declared object or class with composition"
+        }
+      ],
+      "raw_sha256": "2297fdd40f9c75c1fa9a8e0048ec547a3e45ba45ab8c0973f0070bad79f459d9"
+    },
+    "graph": {
+      "child_exit": 0,
+      "findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1001:9",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1021:29",
+          "reason": "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1021:29: Adamic 0.1 refuses a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1135:9",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1140:48",
+          "reason": "an unproven value assigned to a numeric literal or enum member slot Connection",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1140:48: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot Connection; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:252:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:252:33",
+          "reason": "a value of type never",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:261:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:257:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:262:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:257:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:274:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:273:82",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:275:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:273:82",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:301:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:299:78",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:302:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:299:78",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:349:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:350:135",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:350:135: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:389:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:400:27",
+          "reason": "a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:400:27: stage 0 can't lower a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:389:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:401:24",
+          "reason": "reading value",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:401:24: stage 0 can't lower reading value yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:389:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/core.ts:1049:82",
+          "reason": "a comparator that isn't a function",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/core.ts:1049:82: stage 0 can't lower a comparator that isn't a function yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:870:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:946:15",
+          "reason": "a value of type Record<number, FlowGraphNode>",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:946:15: stage 0 can't lower a value of type Record<number, FlowGraphNode> yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:964:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:967:39",
+          "reason": "in when a possibly absent spread has no property presence descriptors",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:967:39: stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:964:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:968:32",
+          "reason": "reading hasAntecedentList",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:968:32: stage 0 can't lower reading hasAntecedentList yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:964:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:969:26",
+          "reason": "reading hasAntecedentList",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:969:26: stage 0 can't lower reading hasAntecedentList yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:964:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:970:20",
+          "reason": "reading antecedent",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:970:20: stage 0 can't lower reading antecedent yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1001:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1003:29",
+          "reason": "reading links",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1003:29: stage 0 can't lower reading links yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1001:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1004:17",
+          "reason": "reading graphNode",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1004:17: stage 0 can't lower reading graphNode yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1001:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1020:18",
+          "reason": "reading graphNode",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1020:18: stage 0 can't lower reading graphNode yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1001:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1033:20",
+          "reason": "reading graphNode",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1033:20: stage 0 can't lower reading graphNode yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1044:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1052:20",
+          "reason": "returning a property or element assignment",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1052:20: stage 0 can't lower returning a property or element assignment yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1063:9",
+          "phase": "deferred",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1064:39",
+          "reason": "a member typed any ([]) related to number at the initializer site",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1064:39: stage 0 can't lower a member typed any ([]) related to number at the initializer site yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1108:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:960:9",
+          "reason": "a checked predicate target whose check would read past the depth bound (FlowSwitchClause)",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:960:9: stage 0 can't lower a checked predicate target whose check would read past the depth bound (FlowSwitchClause) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1135:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1206:17",
+          "reason": "assigning to a NonNullExpression",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1206:17: stage 0 can't lower assigning to a NonNullExpression yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1135:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1238:38",
+          "reason": "a value of type T",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1238:38: stage 0 can't lower a value of type T yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1135:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1139:82",
+          "reason": "Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1139:82: stage 0 can't lower Array as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1135:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1152:21",
+          "reason": "assigning to a NonNullExpression",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1152:21: stage 0 can't lower assigning to a NonNullExpression yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1135:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1155:21",
+          "reason": "assigning to a NonNullExpression",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1155:21: stage 0 can't lower assigning to a NonNullExpression yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1135:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1163:21",
+          "reason": "assigning to a NonNullExpression",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1163:21: stage 0 can't lower assigning to a NonNullExpression yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1205:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1206:17",
+          "reason": "assigning to a NonNullExpression",
+          "text": "/workspace/scratch/debug-display-2-graph-mutant/src/compiler/debug.ts:1206:17: stage 0 can't lower assigning to a NonNullExpression yet"
+        }
+      ],
+      "raw_sha256": "bdfa32c77466820ab6de9ba0c5d784c5a63c71e44654e67c77683b4440838e38"
+    },
+    "after": {
+      "child_exit": 0,
+      "findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:252:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:252:33",
+          "reason": "a value of type never",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:252:33: stage 0 can't lower a value of type never yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:261:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:257:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:262:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:257:86",
+          "reason": "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:257:86: Adamic 0.1 refuses overload 1 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:274:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:273:82",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:275:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:273:82",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:301:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:299:78",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:302:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:299:78",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:349:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:350:135",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:350:135: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:389:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:400:27",
+          "reason": "a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:400:27: stage 0 can't lower a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:389:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:401:24",
+          "reason": "reading value",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:401:24: stage 0 can't lower reading value yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/debug-display-2-candidate/src/compiler/debug.ts:389:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/debug-display-2-candidate/src/compiler/core.ts:1049:82",
+          "reason": "a comparator that isn't a function",
+          "text": "/workspace/scratch/debug-display-2-candidate/src/compiler/core.ts:1049:82: stage 0 can't lower a comparator that isn't a function yet"
+        }
+      ],
+      "raw_sha256": "243bd715df31934c644636f84833faed41e0d9cf794da25fa76141039d66155d"
+    }
+  },
+  "mapper_mutant_ordinary_first_stop": {
+    "child_exit": 0,
+    "rows": [
+      {
+        "roots": [
+          "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/binder.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/semver.ts:287:34",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 25.34372478
+      },
+      {
+        "roots": [
+          "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/binder.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/debug-display-2-mapper-mutant/src/compiler/semver.ts:287:34",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 12.996314869
+      }
+    ],
+    "interpretation": "Ordinary lowering stops earlier at semver.ts. The unchanged full latent census independently reaches and restores Object.setPrototypeOf."
+  },
+  "compiler_base": "9d6b1c37cdc08e426b094c9f5e6214771ff95632",
+  "production_lower_tree": "8e02f2ed9b920afb575bcc1392db4cc343e2b9fe",
+  "ordinary_binary_sha256": "9cfbb435f991be51709b2532e320a37e48a792c82af1667f34961f289b7e7191",
+  "latent_binary_sha256": "7b39d8b38b2a62064c5005e07fe7a9372074f1f919322a1a1bd9a5dd655ad9c0"
+}

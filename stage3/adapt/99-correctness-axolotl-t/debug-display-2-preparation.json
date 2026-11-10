@@ -1,0 +1,97 @@
+{
+  "source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "source_path": "/workspace/typescript-6.0.3-pinned",
+  "source_tracked_files": 81500,
+  "sparse_checkout": false,
+  "node": "v24.19.0",
+  "logs": {
+    "setup": {
+      "child_exit": 0,
+      "bytes": 1884,
+      "sha256": "b70ee5319812577bfc6126fb8e68a9f89e5e1adbdd9bde1d930f3938f0219ba5"
+    },
+    "api": {
+      "child_exit": 0,
+      "bytes": 233,
+      "sha256": "7c45ef45e12e5dce83735bfb4a8f3cbb3ab4da4129d737f1267c43be421bc8e6"
+    },
+    "typescript-deps": {
+      "child_exit": 0,
+      "bytes": 823,
+      "sha256": "16f9ff602755958f809eb99be1572596f187ebcecd14a731ae9e692f6f6a1c05"
+    },
+    "before-apply": {
+      "child_exit": 0,
+      "bytes": 842851,
+      "sha256": "c482b6bd8aa18f7d9fc4eee6db40e264da28bf284b9cd97e9c4edd7a1967ec94"
+    },
+    "before-build": {
+      "child_exit": 0,
+      "bytes": 2665,
+      "sha256": "7830cad9112a68b35010ec3ac5f4d6e8df96c60e8ade710e6956bb5fd6bc70a0"
+    },
+    "candidate-build": {
+      "child_exit": 0,
+      "bytes": 2665,
+      "sha256": "46e32b8cb6cd3d0aa3788b9361a30d21a3ea8410a6f65d10a66d607252780bda"
+    },
+    "count-reference-build": {
+      "child_exit": 0,
+      "bytes": 2673,
+      "sha256": "23b2fbde75dffc8a041c587858b88b84581758e988a9d49a6c83f2b33581bf54"
+    },
+    "witness": {
+      "child_exit": 0,
+      "bytes": 15890,
+      "sha256": "be660c57506c0c92bf248688052ca946f47e73eaabdd0e8e4efb0fadc6696b65"
+    },
+    "instrument": {
+      "child_exit": 1,
+      "bytes": 1406,
+      "sha256": "70fb71e0a64e2040455c8a0dda7ab6c86581c854df78afb47adf7b9678215626"
+    },
+    "instrument-retry": {
+      "child_exit": 0,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lane-counts": {
+      "child_exit": 1,
+      "bytes": 34001,
+      "sha256": "73b851e57bbfa9931469a644a8bba31e912cbe5e4289d213c9317aea888d0650"
+    },
+    "export-keys": {
+      "child_exit": 0,
+      "bytes": 970,
+      "sha256": "5924680fec6f4490c83c4b7d246c9b6f4a63ca31fb034a9243c93870d6799422"
+    },
+    "mapper-latent": {
+      "child_exit": 0,
+      "bytes": 116,
+      "sha256": "fa38f85a8dbc406a7995e8f7748894abc193e09362a1479aa17fbf4a03012029"
+    },
+    "graph-latent": {
+      "child_exit": 0,
+      "bytes": 116,
+      "sha256": "eed2b7a62337f2363fa428c5dcb0fb347294835ac886191ec31093356e725379"
+    },
+    "after-latent": {
+      "child_exit": 0,
+      "bytes": 112,
+      "sha256": "e2cd6f305187498f339ba4fdc7d30609286c69e31db12054b2a7683d8d347d4a"
+    },
+    "classification": {
+      "child_exit": 0,
+      "bytes": 357,
+      "sha256": "d1760186aba1eb4d65b936d7b5f0bb8da2fc6f5b5265488a4146153a95ea66da"
+    }
+  },
+  "preliminary_failures": [
+    "Initial full-history clone intentionally terminated with child exit 143; exact-commit full-tree fetch succeeded.",
+    "Initial instrument expected a bare flag; emitted flag is Debug2.isDebugging. Corrected to require that exact namespace property access, reset private copy, and reran successfully.",
+    "Initial count lane failed before execution because a private dependency link collided with the link created by each shard. Removed only that private link; all ordinary guards remain unchanged.",
+    "Initial export comparison used 4-space indentation; actual internal declaration is 8 spaces. Corrected exact declaration lines and passed.",
+    "Initial root-inventory probe was nonrecursive (40); established recursive inventory has 79 and passes.",
+    "Initial hunk inventory script used the CommonJS reserved exports binding. Renamed that evidence-script local and passed."
+  ]
+}

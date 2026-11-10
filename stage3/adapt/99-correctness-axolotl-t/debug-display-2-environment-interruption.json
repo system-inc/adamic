@@ -1,0 +1,16 @@
+{
+  "status": "fully recovered",
+  "environment_id": "ccarenv_b64_Y2NhcmVudl9kNTE2MDE4YTVhZTA4MTkxOWQ1ZTUxMTZhMzUwOGM0NA",
+  "original_apply_child_exit": null,
+  "original_count_controller_child_exit": null,
+  "reason": "Environment refresh terminated both running process groups; tool sessions became unknown. No exit is inferred.",
+  "completed_count_shards": 215,
+  "completed_count_shard_child_exits": "All 0, each validated against its unchanged ordinary report and expected counts before reuse.",
+  "original_apply_completed_adaptations": 88,
+  "original_apply_log_sha256": "0e65b04b2540a9e110a527da38a862ac07463f646d615f69c3138f661e559c86",
+  "pre_refresh_count_log_sha256": "ee17339af9782df709d9d1291e9134a172e6c233846ff175115ccd6223df8b55",
+  "recovery": "Fresh full apply from pinned source; only the 183 unfinished count shards rerun, then all 398 ordinary reports reconciled.",
+  "count_recovery_child_exit": 0,
+  "all_398_ordinary_guards_pass": true,
+  "fresh_apply_child_exit": 0
+}

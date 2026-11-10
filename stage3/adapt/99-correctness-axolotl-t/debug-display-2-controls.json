@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "rows": [
+    {
+      "forced_debug": false,
+      "child_exit": 0,
+      "counts": {
+        "attachFlowNodeDebugInfoWorker": 0,
+        "attachNodeArrayDebugInfoWorker": 0,
+        "attachDebugPrototypeIfDebug": 0,
+        "enableDebugInfo": 0
+      }
+    },
+    {
+      "forced_debug": true,
+      "child_exit": 0,
+      "counts": {
+        "attachFlowNodeDebugInfoWorker": 1,
+        "attachNodeArrayDebugInfoWorker": 1,
+        "attachDebugPrototypeIfDebug": 1,
+        "enableDebugInfo": 1
+      }
+    }
+  ],
+  "forced_control_source_sha256": "aa641bcea3212265336ca2c0ac64f878d727eef4188110eab3b7425b067a4ef0",
+  "preload": "debug-display-2-preload.cjs",
+  "forced_control_script": "debug-display-2-forced-control.cjs"
+}

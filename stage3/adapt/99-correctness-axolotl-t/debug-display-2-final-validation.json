@@ -1,0 +1,73 @@
+{
+  "status": "pass",
+  "ready_to_land": true,
+  "base": "9d6b1c37cdc08e426b094c9f5e6214771ff95632",
+  "source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "pin_audit_before_source_edits": true,
+  "whole_lane_units": 398,
+  "whole_lane_totals": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "counts": {
+    "attachFlowNodeDebugInfoWorker": 0,
+    "attachNodeArrayDebugInfoWorker": 0,
+    "attachDebugPrototypeIfDebug": 0,
+    "enableDebugInfo": 0
+  },
+  "forced_debug_counts": {
+    "attachFlowNodeDebugInfoWorker": 1,
+    "attachNodeArrayDebugInfoWorker": 1,
+    "attachDebugPrototypeIfDebug": 1,
+    "enableDebugInfo": 1
+  },
+  "witness_cases": 200,
+  "witness_byte_identical": true,
+  "witness_matches_change_1": true,
+  "exports": [
+    {
+      "object": "Debug",
+      "before_keys": 54,
+      "after_keys": 52,
+      "removed": [
+        "formatControlFlowGraph",
+        "printControlFlowGraph"
+      ],
+      "added": []
+    },
+    {
+      "object": "module",
+      "before_keys": 2258,
+      "after_keys": 2258,
+      "removed": [],
+      "added": []
+    },
+    {
+      "object": "ts",
+      "before_keys": 2256,
+      "after_keys": 2256,
+      "removed": [],
+      "added": []
+    }
+  ],
+  "public_declarations_byte_identical": true,
+  "internal_declarations_only_two_removed": true,
+  "new_module": "src/deprecatedCompat/controlFlowGraph.ts",
+  "compiler_roots_not_importing_module": 79,
+  "new_module_typechecked_and_node_loadable": true,
+  "mapper_mutant_restores_refusal": true,
+  "graph_mutant_restores_all_three_rows": true,
+  "new_first_stops": {
+    "binder.ts": "semver.ts:287:34",
+    "core.ts": "semver.ts:287:34"
+  },
+  "classification": {
+    "a": 526,
+    "b": 0,
+    "c": 0
+  },
+  "apply_child_exit": 0,
+  "all_747_sources_match_measured_candidate": true,
+  "replay_zero_edits": true
+}

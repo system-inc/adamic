@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "apply_child_exit": 0,
+  "apply_command": "bash stage3/apply.sh /workspace/scratch/debug-display-2-full-apply-retry",
+  "source_files": 747,
+  "all_applied_source_byte_identical_to_measured_candidate": true,
+  "source_inventory_sha256": "12a1838553c018cf9c2c5659965c171099f275acc635cd9dbef661b86dde820b",
+  "matching_build_input_files": 47,
+  "log_sha256": "bd0909dfe2ded896b5cf02c944622d3c741b4b014c28dcda6d0c2775bdb61892",
+  "log_bytes": 842665,
+  "production_adapter_sha256": {
+    "stage3/adapt/99-correctness-axolotl-n/adapt.cjs": "17cbbf4d09c685416109906ede38d3bc3f146b9a58be0dee43c878ae7b8603f2",
+    "stage3/adapt/99-correctness-axolotl-t/adapt.cjs": "77240c81a1bb4b7d44b6266f01234b2b617a0f64e25c50cbb391fd28a1b2f916",
+    "stage3/adapt/99-correctness-axolotl-t/pins.json": "01a66126340697b63f32c660c812f794fc3ee69ee956e986ea0b2a001e42dc4f",
+    "stage3/adapt/99-correctness-axolotl-t/debug-display-2.cjs": "f0f98691d41104693d7da9ba814b0f533a7cb8dd86a39be90f1136a04a176967",
+    "stage3/adapt/99-correctness-axolotl-t/debug-display-2-pins.json": "1e5ef24506926e254668eb85c9c5d87303d385426b59b00f7244d584a9c94797"
+  },
+  "zero_edit_replay": true
+}
