@@ -41,7 +41,6 @@ finished: npm ci succeeded, and npx hereby tsc --no-typecheck completed in 1s.
 This is a runnable Node compiler, not adapted-source typechecking or native
 linking evidence. Artifact hashes are in evidence/provenance.json.
 
-
 ## Expanded coverage and the faithful CLI boundary
 
 The size bound was removed. A complete 6264-case coverage probe reported
@@ -80,20 +79,20 @@ The raw observation that led to this formatting rule is retained in
 `test_verdict.py` runs five focused tests. Every mutation is observed to fail
 its designated assertion or comparison:
 
-| Mutant | Catch |
-|---|---|
-| stdout `error` becomes `Error` | stdout bytes only |
-| empty stderr gains a byte | stderr bytes only |
-| exit 2 becomes 1 | exit bytes only |
-| quoted filename changes one byte | baseline diagnostic bytes after exact root mapping |
-| unrelated root replaces the case root | baseline diagnostic bytes; no broad path stripping |
-| census pin changes | invalid baseline census |
-| selected count changes | invalid baseline census |
-| excluded count changes | invalid baseline census |
-| excluded row duplicates a selected source | invalid baseline census |
-| outside-source regex only recognizes numeric locations | library-placeholder assertion fails |
-| source gains a newline | source SHA256 rejects before compiler execution |
-| baseline gains a newline | reference SHA256 rejects before that compiler execution |
+| Mutant                                                 | Catch                                                   |
+| ------------------------------------------------------ | ------------------------------------------------------- |
+| stdout `error` becomes `Error`                         | stdout bytes only                                       |
+| empty stderr gains a byte                              | stderr bytes only                                       |
+| exit 2 becomes 1                                       | exit bytes only                                         |
+| quoted filename changes one byte                       | baseline diagnostic bytes after exact root mapping      |
+| unrelated root replaces the case root                  | baseline diagnostic bytes; no broad path stripping      |
+| census pin changes                                     | invalid baseline census                                 |
+| selected count changes                                 | invalid baseline census                                 |
+| excluded count changes                                 | invalid baseline census                                 |
+| excluded row duplicates a selected source              | invalid baseline census                                 |
+| outside-source regex only recognizes numeric locations | library-placeholder assertion fails                     |
+| source gains a newline                                 | source SHA256 rejects before compiler execution         |
+| baseline gains a newline                               | reference SHA256 rejects before that compiler execution |
 
 The source and reference mutations ran through `baseline_suite` on the disposable
 cached checkout and were restored in finally blocks. Logs are
@@ -117,11 +116,11 @@ PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/audit_mutants.py /tmp/stage3-ve
 All three proof/check commands exit 0. The verdict commands themselves exit
 0 for A and 1 for B and C. No harness errors occurred.
 
-| Stand-in | Acceptance pass/total | Tiny pass/total | Baselines pass/total |
-|---|---:|---:|---:|
-| A: stock adapted Node CLI | 301/301 | 1/1 | 6262/6262 |
-| B: one diagnostic byte per suite | 300/301 | 0/1 | 6261/6262 |
-| C: exit 1, empty output | 0/301 | 0/1 | 0/6262 |
+| Stand-in                         | Acceptance pass/total | Tiny pass/total | Baselines pass/total |
+| -------------------------------- | --------------------: | --------------: | -------------------: |
+| A: stock adapted Node CLI        |               301/301 |             1/1 |            6262/6262 |
+| B: one diagnostic byte per suite |               300/301 |             0/1 |            6261/6262 |
+| C: exit 1, empty output          |                 0/301 |             0/1 |               0/6262 |
 
 Every baseline run counts 6182 exclusions and zero deferred cases. Acceptance
 includes tiny. Final JSON, markdown and compressed logs are in `evidence/`;

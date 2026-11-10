@@ -25,11 +25,11 @@ against the committed census before each selected baseline case is run.
 
 ## Suites
 
-| Suite | Comparison |
-|---|---|
-| acceptance | All 301 existing driver projects, including tiny; exact stdout, stderr, exit goldens |
-| tiny | The existing three-file tiny project again; the same three independent byte checks |
-| baselines | Selected compiler and conformance cases; upstream diagnostic summary, empty stderr, expected CLI exit |
+| Suite      | Comparison                                                                                            |
+| ---------- | ----------------------------------------------------------------------------------------------------- |
+| acceptance | All 301 existing driver projects, including tiny; exact stdout, stderr, exit goldens                  |
+| tiny       | The existing three-file tiny project again; the same three independent byte checks                    |
+| baselines  | Selected compiler and conformance cases; upstream diagnostic summary, empty stderr, expected CLI exit |
 
 Acceptance calls the existing driver unchanged. `NATIVE_TSC` is removed from its
 child environment so a second compiler cannot accidentally affect the verdict.
