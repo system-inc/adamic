@@ -246,6 +246,11 @@ func (l *lowering) overloadCallbackArgument(implementation, overload, argument *
 			admitted = l.checker.GetUnionType([]*checker.Type{admitted, l.checker.GetUndefinedType()})
 		}
 		admitted = l.concrete(admitted)
+		// An overload parameter that holds any admits whatever its caller passes, so it promises nothing
+		// about what the body hands the callback from it.
+		if l.overloadCallbackHoldsAny(admitted, 0, map[*checker.Type]bool{}) {
+			return flow
+		}
 		own := l.checker.GetTypeAtLocation(parameter.Name())
 		switch flow {
 		case l.concrete(own):

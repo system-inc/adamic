@@ -227,3 +227,25 @@ console.log(String(check(new Dog(), (dog: Dog): boolean => dog.bark() === "woof"
 		}
 	}
 }
+
+// An overload parameter written any admits whatever its caller passes, so an argument typed through it
+// promises the callback nothing: `assertNode(cat, isDog)` type-checks against
+// `(node: any, test: (node: T) => node is U)`, and the body would hand isDog a cat. Rule 1 keeps the flow type
+// there, and the census refuses. The function isn't called, so no argument-site stop comes first. .ts only,
+// since .a refuses a written any where it's written. Mutant: the any test in overloadCallbackArgument
+// dropped, and it lowers.
+func TestOverloadCallbackAnyOverloadParameterRefuses(t *testing.T) {
+	t.Parallel()
+	source := overloadCallbackNodes + `function assertNode<T extends N, U extends T>(node: any, test: (node: T) => node is U): void;
+function assertNode(node: N | undefined, test: ((node: N) => boolean) | undefined): void {
+    check(node !== undefined && (test === undefined || test(node)), "Unexpected node.");
+}
+console.log("declared");
+`
+	const refusal = "overload 1 of assertNode parameter test cannot be served by implementation parameter test"
+	_, err := lowerSourceAs(t, source, ".ts")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, refusal) {
+		t.Fatalf("want %q, got %v", refusal, err)
+	}
+}
