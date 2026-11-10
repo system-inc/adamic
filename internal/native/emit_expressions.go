@@ -558,9 +558,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if e.dynamicProperties() {
 			e.line("adamic_register_shape_types(&%s_metadata);", pair)
 		}
-		// A pair whose tuple type is a graph type is adopted as it's made, by its own plan (#dps0kp6).
+		// A pair whose tuple type is a graph type is adopted as it's made, by its own plan (#dps0kp6),
+		// unless the array goes to the Program region, which holds no graph member as MakeClosure's arm
+		// keeps none.
 		entries := "adamic_map_entries"
-		if e.graphTypes(expression.PairGraphTypes) {
+		if e.graphTypes(expression.PairGraphTypes) && !expression.ProgramRegion {
 			entries = "adamic_map_entries_planned"
 		}
 		return e.programArray(e.graphArray(fmt.Sprintf("%s(%s, &%s)", entries, e.value(expression.Map), pair), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
