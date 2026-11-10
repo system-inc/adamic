@@ -103,12 +103,12 @@ func TestNodeProcessHandleView(t *testing.T) {
 	}{
 		{"node_process_handle_view.a", "set blocking\n", "set blocking\n"},
 		{"node_process_handle_identity.a", "handle false\nsame true\n", "handle true\nsame true\n"},
-		{"node_process_handle_detached_let.a", "no handle\n", "true\nIllegal invocation\n"},
-		{"node_process_handle_detached_parameter.a", "no handle\n", "true\nIllegal invocation\n"},
-		{"node_process_handle_detached_field.a", "no handle\n", "true\nIllegal invocation\n"},
-		{"node_process_handle_detached_result.a", "no handle\n", "true\nIllegal invocation\n"},
-		{"node_process_handle_detached_key.a", "no handle\n", "true\nIllegal invocation\n"},
-		{"node_process_handle_detached_copy.a", "no handle\n", "true\nIllegal invocation\n"},
+		{"node_process_handle_detached_let.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_parameter.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_field.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_result.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_key.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_copy.a", "no handle\n", "TypeError Illegal invocation\n"},
 		{"node_process_handle_method.a", "no handle\n", "blocked\n"},
 		{"node_process_handle_asserted.ts", "no handle\n", "blocked\n"},
 	} {

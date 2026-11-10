@@ -12,7 +12,6 @@ if (handle === undefined) {
 		if (copy.setBlocking) copy.setBlocking(true);
 		console.log('blocked');
 	} catch (error) {
-		console.log(`${error instanceof TypeError}`);
-		if (error instanceof Error) console.log(error.message);
+		if (error instanceof Error) console.log(`${error.name} ${error.message}`);
 	}
 }
