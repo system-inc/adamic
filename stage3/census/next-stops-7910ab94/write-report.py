@@ -17,11 +17,12 @@ for g in groups:
 c=collections.Counter(r['classification'] for r in comparison)
 lines+=['',f'Total: {c["unchanged"]} unchanged, {c["moved"]} moved, {c["new"]} new. Exact before and after reasons are in comparison.json.','','| Root | Classification | Before location / kind | After location / kind |','| --- | --- | --- | --- |']
 for r in comparison:lines.append(f'| {q(r["root"])} | {r["classification"]} | {q(r["before"][0])} {r["before"][1]} | {q(r["after"][0])} {r["after"][1]} |')
-lines+=['','## New stop source and lowering emitters','']
+emitters={"a cast the runtime can't check":'internal/lower/cast_proof.go:195 (castRefusal).', 'reading an enum before its runtime initialization; move the call after the enum declaration':'internal/lower/namespaces.go:267 assigns the reason; :318 emits the NotYet result.', 'a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration':'internal/lower/namespaces.go:269 assigns the reason; :321 emits the NotYet result.'}
+lines+=['','## Stop source and lowering emitters','']
 for g in groups:
- if g['comparison']!='new' or g['where']=='-':continue
+ if g['where']=='-':continue
  e=next(e for e in excerpts if e['where']==g['where'])
- lines += [f'### {g["where"]}','',g['kind']+': '+q(g['reason'])+'. See lowering-emitter-excerpts.txt for the numbered emitting code.','','```ts',e['text'].rstrip(),'```','']
+ lines += [f'### {g["where"]}','',g['kind']+': '+q(g['reason'])+'. '+emitters[g['reason']],'','```ts',e['text'].rstrip(),'```','']
 lines+=['## Root-order evidence','',f'Classification: {art["status"]}. '+(art.get('stopping_reason') or 'The entry per-source ledger completed.'),'','The baseline report.py criteria require attempted-source and readiness-finding evidence from the entry run plus a Node throw. An incomplete entry ledger cannot establish an artifact. Independent stops remain counted.','','| Root | Independent stop | Node exit | First error | Label |','| --- | --- | ---: | --- | --- |']
 for r in art['checks']:lines.append(f'| {q(r["root"])} | {q(r["where"])} | {r["node"]["exit"]} | {r["node"]["first_error"]} | {r["classification"]} |')
 e=totals['guarded_entry'];s=e['child_status'];c=e['finding_totals'];o=totals['ordinary_counted_observations']['first_stop_totals']
