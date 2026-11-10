@@ -13,7 +13,7 @@ function owners(text){
 function inspect(text,localText){
  const found=owners(text); const home=require("./getfunctionname-home.cjs").inspect(ts,text,localText);
  for(const guard of guards){if(guard.owner==='getFunctionName'&&home.moved){assert.equal(home.node.body.getText(home.source).replace(/\r\n/g,'\n'),guard.body.replace(/\r\n/g,'\n'),'relocated helper body drift');assert.equal(hash(guard.body),guard.bodySha256);continue;}const owner=found.get(guard.owner);assert(owner,`missing ${guard.owner}`);assert.equal(owner.text,guard.text,`unchanged helper moved: ${guard.owner}`);assert.equal(hash(owner.text),guard.sha256);}
- return pins.map(pin=>{const owner=found.get(pin.owner);assert(owner,`missing ${pin.owner}`);const state=owner.text===pin.before?'before':owner.text===pin.after?'after':undefined;assert(state,`unreviewed owner: ${pin.owner}`);assert.equal(hash(owner.text),pin[state+'Sha256']);return {pin,owner,state};});
+ return pins.map(pin=>{const owner=found.get(pin.owner);assert(owner,`missing ${pin.owner}`);const finished=pin.finished!==undefined&&owner.text===pin.finished;const state=owner.text===pin.before?'before':owner.text===pin.after||finished?'after':undefined;assert(state,`unreviewed owner: ${pin.owner}`);assert.equal(hash(owner.text),pin[(finished?'finished':state)+'Sha256']);return {pin,owner,state};});
 }
 function javascript(text,removeComments){return ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;}
 function plan(text,localText){

@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "generatedShardFunctionsMatched": true,
+  "acceptedUnitsExactlyOnce": 398,
+  "planSha256": "4f9a04a9fe4d62c01ba0abc3843fd7d5eb7dddb27b5941b146101d8552bab6ea",
+  "nodeProcesses": 797,
+  "oracle": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "totals": {
+    "defined": 1086412,
+    "exposed": 0,
+    "throws": 0
+  },
+  "distinctCallbackSources": 26,
+  "allSourceClassificationsNonSensitive": true
+}

@@ -1,0 +1,10 @@
+{
+  "before": "export function assertEachNode(nodes: readonly Node[] | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertEachNode\")) {\r\n            assert(\r\n                test === undefined || every(nodes, test),\r\n                message || \"Unexpected node.\",\r\n                () => `Node array did not pass test.`,\r\n                stackCrawlMark || assertEachNode,\r\n            );\r\n        }\r\n    }",
+  "after": "export function assertEachNode(nodes: readonly Node[] | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertEachNode\")) {\r\n            let passed = true;\r\n            if (test !== undefined && nodes !== undefined) {\r\n                for (const n of nodes) {\r\n                    if (!test(n)) {\r\n                        passed = false;\r\n                        break;\r\n                    }\r\n                }\r\n            }\r\n            assert(\r\n                passed,\r\n                message || \"Unexpected node.\",\r\n                () => `Node array did not pass test.`,\r\n                stackCrawlMark || assertEachNode,\r\n            );\r\n        }\r\n    }",
+  "beforeSha256": "a37dc66137291cff0b9ab6fa44919a045e03fbcde6f79347dbf925826de64a5f",
+  "afterSha256": "a218137e4f8ca5f8256a72727effd1a7311cbf98406d91b72b5a1bcbfec35bd7",
+  "importBefore": "\r\n    every,",
+  "importAfter": "",
+  "typescriptCommit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "base": "337cf6917f7231422b5e168bc215888752a9f194"
+}

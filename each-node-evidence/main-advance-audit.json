@@ -1,0 +1,27 @@
+{
+  "initialBase": "e24f2600a5d8a8521c5128827cad395d47c81c81",
+  "finalBase": "337cf6917f7231422b5e168bc215888752a9f194",
+  "changedPaths": [
+    "cmd/adamic-admission-delta/inputs.txt",
+    "internal/compilerinputs/compilerinputs.go",
+    "internal/native/graph_region_of_one_test.go",
+    "internal/native/graph_regions_test.go",
+    "internal/native/regexp_compile_test.go",
+    "internal/native/runtime/graph_regions.c",
+    "internal/native/runtime/regexp_compile_tables.h",
+    "internal/native/testdata/runtime-statics/storage.txt",
+    "internal/oracle/graph_held_iterators_test.go",
+    "internal/oracle/graph_regions_gap_probe_test.go",
+    "internal/regexp/testdata/generate-runtime-properties.py",
+    "internal/unicodeproperties/alias_test.go",
+    "internal/unicodeproperties/generate.go",
+    "internal/unicodeproperties/node_test.go",
+    "internal/unicodeproperties/tables.go",
+    "internal/unicodeproperties/unicodeproperties.go",
+    "internal/unicodeproperties/version_test.go",
+    "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "stage1/cohere/tsprinter/compiler_inputs_test.go"
+  ],
+  "stage3Changes": [],
+  "nodeOracleInputsUnchanged": true
+}

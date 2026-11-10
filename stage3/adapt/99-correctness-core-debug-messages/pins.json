@@ -8,7 +8,9 @@
       "beforeSha256": "175e6fe28b193606e3f9ed99071f751ca9aecfdbe507310da276750d3907ff23",
       "afterSha256": "a37dc66137291cff0b9ab6fa44919a045e03fbcde6f79347dbf925826de64a5f",
       "oldMessage": "`Node array did not pass test '${getFunctionName(test!)}'.`",
-      "newMessage": "`Node array did not pass test.`"
+      "newMessage": "`Node array did not pass test.`",
+      "finished": "export function assertEachNode(nodes: readonly Node[] | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertEachNode\")) {\r\n            let passed = true;\r\n            if (test !== undefined && nodes !== undefined) {\r\n                for (const n of nodes) {\r\n                    if (!test(n)) {\r\n                        passed = false;\r\n                        break;\r\n                    }\r\n                }\r\n            }\r\n            assert(\r\n                passed,\r\n                message || \"Unexpected node.\",\r\n                () => `Node array did not pass test.`,\r\n                stackCrawlMark || assertEachNode,\r\n            );\r\n        }\r\n    }",
+      "finishedSha256": "a218137e4f8ca5f8256a72727effd1a7311cbf98406d91b72b5a1bcbfec35bd7"
     },
     {
       "owner": "assertNode",

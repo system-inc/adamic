@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "ownIdempotent": true,
+  "roadFinishedRecognition": true,
+  "exactBeforePin": true,
+  "cases": [
+    {
+      "name": "new adapter: body before, import absent",
+      "refused": true
+    },
+    {
+      "name": "new adapter: body after, import present",
+      "refused": true
+    },
+    {
+      "name": "new adapter: loop drift",
+      "refused": true
+    },
+    {
+      "name": "road (b): finished loop drift",
+      "refused": true
+    },
+    {
+      "name": "road (b): finished loop with restored other message",
+      "refused": true
+    }
+  ]
+}
