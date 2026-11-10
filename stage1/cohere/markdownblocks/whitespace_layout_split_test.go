@@ -630,6 +630,7 @@ func whitespaceLayoutPolicyMutant(t *testing.T, ctx context.Context, cases strin
 // about 5.6 MB used). TestLoweringInputsCoverCompilerDependencies keeps the list complete and every entry needed.
 var loweringCompilerInputs = []string{
 	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
+	"cohere/go.mod", "cohere/go.sum", "cohere/unicodeproperties",
 }
 
 func whitespaceLayoutBuildFiles() []string {
