@@ -54,6 +54,23 @@ class PairTests(unittest.TestCase):
                 self.assertEqual(result[view]['new_findings'][0]['identity'], ('<program>', '', 0))
                 self.assertEqual(result[view]['new_findings'][0]['finding'], finding)
 
+    def test_deferred_caller_metadata_is_not_eligibility_abrq61p(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'input.ts').write_text('function identity<T>(x: T): T { return x; }')
+            unit = dict(where='input.ts:1:1', kind='KindFunctionDeclaration',
+                        status='deferred_generic_instantiation', instantiated=True,
+                        body_start=29, body_end=42)
+            witnessed = dict(unit, instantiated_by=[dict(unit='input.ts:1:1',
+                              call_site='input.ts:1:1', type_arguments=['number'])])
+            rows = lambda value: [HEADER, dict(file='input.ts', units=[value], findings=[])]
+            delta = pair.compare(rows(unit), rows(witnessed), root, TS)
+            for view in ('raw_findings', 'distinct_reads'):
+                self.assertEqual(delta[view]['new_findings'], [])
+                self.assertEqual(delta[view]['unit_first_stop_delta'], [])
+            with self.assertRaisesRegex(ValueError, 'unit eligibility differs'):
+                pair.compare(rows(unit), rows(dict(witnessed, body_end=43)), root, TS)
+
     def test_qeanycw_distinct_reads_cleared_with_no_new(self):
         d = self.witnesses['qeanycw']['distinct_reads']
         self.assertEqual(len(d['new_sites']), 0)
