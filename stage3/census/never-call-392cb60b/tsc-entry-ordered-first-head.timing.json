@@ -1,0 +1,20 @@
+{
+  "name": "tsc-entry-ordered-first-head",
+  "command": [
+    "/workspace/never-call-tools/head/census-entry-ordered",
+    "/workspace/never-call-adapted/src/tsc/tsc.ts",
+    "/workspace/never-call-live/tsc-entry-ordered-first-head.jsonl"
+  ],
+  "cwd": "/workspace/never-call-head",
+  "started_utc": "2026-11-10T19:20:47.474559+00:00",
+  "seconds": 2637.7966710690002,
+  "peak_rss_kib": 4036068,
+  "child_exit_code": 0,
+  "silent_cutoff": false,
+  "measurement_recovered": true,
+  "peak_rss_method": "/proc/PID/status VmHWM at PTRACE_EVENT_EXIT",
+  "peak_rss_exact_exit_observation": true,
+  "raw_wait_status": 0,
+  "ptrace_exit_event_wait_status": 0,
+  "pid": 14121
+}

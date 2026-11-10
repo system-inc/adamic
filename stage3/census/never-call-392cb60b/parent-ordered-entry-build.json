@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/never-call-tools/parent/overlay/overlay.json",
+    "-o",
+    "/workspace/never-call-tools/parent/census-entry-ordered",
+    "./stage3/census/latent/tool"
+  ],
+  "child_exit_code": 0,
+  "sha256": "5acfbe67a3d180bf1e078e57a5bc1cbf99f232f75708dbf29e61203d41a87204"
+}
