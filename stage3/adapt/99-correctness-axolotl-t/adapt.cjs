@@ -13,7 +13,8 @@ function owners(text, file) {
     function visit(node, ancestry) {
         const method = ts.isMethodDeclaration(node) && ts.isClassDeclaration(node.parent);
         const named = (ts.isModuleDeclaration(node) || ts.isClassDeclaration(node) || ts.isFunctionDeclaration(node) || method) && node.name;
-        const chain = named ? [...ancestry, node.name.getText(source)] : ancestry;
+        const namespaceIife = ts.isFunctionExpression(node) && !node.name && node.parameters.length === 1 && ts.isIdentifier(node.parameters[0].name) && ts.isParenthesizedExpression(node.parent) && ts.isCallExpression(node.parent.parent) && node.parent.parent.expression === node.parent;
+        const chain = namespaceIife ? [...ancestry, node.parameters[0].name.getText(source)] : named ? [...ancestry, node.name.getText(source)] : ancestry;
         if ((ts.isFunctionDeclaration(node) || method) && node.body && node.name) {
             const key = chain.join('.');
             assert(!found.has(key), `duplicate owner: ${key}`);
@@ -37,6 +38,26 @@ function inspect(texts) {
         return {pin, owner, state};
     });
 }
+// Verbatim imports make this a body-boundary proof; normal bundles are compared separately.
+function provesEmission(before, after, file, sites) {
+    for (const removeComments of [false, true]) {
+        const emit = text => ts.transpileModule(text, {compilerOptions: {target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, verbatimModuleSyntax: true, removeComments}}).outputText;
+        const original = emit(before), changed = emit(after);
+        const left = owners(original, file), right = owners(changed, file);
+        const replacements = sites.map(({pin}) => {
+            const key = pin.owner;
+            assert(left.has(key) && right.has(key), 'emitted owner missing: ' + key);
+            return {old: left.get(key), replacement: right.get(key).text};
+        });
+        let expected = original;
+        for (const {old, replacement} of replacements.sort((a,b) => b.old.start-a.old.start)) expected = expected.slice(0,old.start) + replacement + expected.slice(old.end);
+        assert.equal(changed, expected, 'JavaScript changed outside pinned owners: ' + file);
+    }
+    for (const stripInternal of [false, true]) {
+        const emit = text => ts.transpileDeclaration(text, {fileName:file, compilerOptions:{stripInternal}}).outputText;
+        assert.equal(emit(after), emit(before), 'declarations changed: ' + file);
+    }
+}
 function plan(texts) {
     assert.equal(ts.version, '6.0.3');
     const sites = inspect(texts);
@@ -45,10 +66,14 @@ function plan(texts) {
     const after = new Map(texts);
     for (const file of texts.keys()) {
         let text = texts.get(file);
+        let boundary = text.length;
         for (const {pin, owner} of sites.filter(site => site.pin.file === file).sort((a,b) => b.owner.start - a.owner.start)) {
+            assert(owner.start >= 0 && owner.start < owner.end && owner.end <= boundary, 'overlapping or out-of-owner edit: ' + pin.owner);
+            boundary = owner.start;
             for (const exact of pin.exactSites) assert.equal(owner.text.split(exact).length - 1, 1, `exact site missing: ${pin.owner}`);
             text = text.slice(0, owner.start) + pin.after + text.slice(owner.end);
         }
+        provesEmission(texts.get(file), text, file, sites.filter(site => site.pin.file === file));
         after.set(file, text);
     }
     assert(inspect(after).every(site => site.state === 'after'), 'incomplete plan');

@@ -1,0 +1,42 @@
+{
+  "status": "pass",
+  "actual_classifier_block_executed": true,
+  "classifier_sha256": "d9afb05d83ef684864139e0e29984a261a4069e693c2df250504882bfe3d3c93",
+  "rows": [
+    {
+      "case": "direct owner",
+      "accepted": [
+        "a"
+      ],
+      "pass": true
+    },
+    {
+      "case": "reverse ordered transitive chain",
+      "accepted": [
+        "a",
+        "b"
+      ],
+      "pass": true
+    },
+    {
+      "case": "external caller",
+      "accepted": [],
+      "pass": true
+    },
+    {
+      "case": "unanchored cycle",
+      "accepted": [],
+      "pass": true
+    },
+    {
+      "case": "mixed owner and external caller",
+      "accepted": [],
+      "pass": true
+    },
+    {
+      "case": "chain ending at external caller",
+      "accepted": [],
+      "pass": true
+    }
+  ]
+}

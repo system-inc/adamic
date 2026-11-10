@@ -1,0 +1,5 @@
+export function size(value: string | undefined) {
+    if (value) return value.length;
+    return 0;
+}
+export const values = [size('x')];

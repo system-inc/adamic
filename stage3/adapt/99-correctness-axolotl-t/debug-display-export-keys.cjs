@@ -1,0 +1,8 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),crypto=require('node:crypto'),{pathToFileURL}=require('node:url');
+const unit='/workspace/adamic/stage3/adapt/99-correctness-axolotl-t';
+(async()=>{
+ const rows=[];for(const side of ['before','candidate']){const file='/workspace/scratch/debug-display-'+side+'/built/local/typescript.js';const cjs=require(file),moduleObject=await import(pathToFileURL(file).href),namespace=moduleObject.ts||moduleObject.default||moduleObject;assert.strictEqual(namespace,cjs,'ESM namespace does not expose the required ts object');rows.push({side,module:Object.keys(moduleObject).sort(),ts:Object.keys(namespace).sort(),cjs:Object.keys(cjs).sort(),ts_separate_from_module:namespace!==moduleObject});}
+ const checks=[];for(const key of ['module','ts','cjs']){const a=Buffer.from(JSON.stringify(rows[0][key])+'\n'),b=Buffer.from(JSON.stringify(rows[1][key])+'\n');checks.push({object:key,byte_identical:a.equals(b),before_keys:rows[0][key].length,after_keys:rows[1][key].length,before_sha256:crypto.createHash('sha256').update(a).digest('hex'),after_sha256:crypto.createHash('sha256').update(b).digest('hex'),removed:rows[0][key].filter(k=>!rows[1][key].includes(k)),added:rows[1][key].filter(k=>!rows[0][key].includes(k))});}
+ const passed=checks.every(c=>c.byte_identical);fs.writeFileSync(unit+'/debug-display-runtime-export-keys.json',JSON.stringify({node:process.version,status:passed?'pass':'stop',checks,rows},null,2)+'\n');console.log(JSON.stringify({status:passed?'pass':'stop',checks}));if(!passed)process.exitCode=1;
+})().catch(error=>{console.error(error);process.exitCode=1;});
