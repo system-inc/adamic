@@ -1,0 +1,16 @@
+// Spec: a generic method's too, on either side
+// Expect: lowers
+class Animal {
+	name = 'a';
+}
+class Cat extends Animal {}
+interface Handler {
+	handle<T>(x: Animal): string;
+}
+class AnyHandler {
+	handle<T>(x: Animal): string {
+		return x.name;
+	}
+}
+const h: Handler = new AnyHandler();
+console.log(h.handle(new Cat()));
