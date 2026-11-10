@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "stage3/lane/prepare_shards.py",
+    "/workspace/scratch/each-node/artifact-cache"
+  ],
+  "exit": 0,
+  "seconds": 1126.25720542
+}
