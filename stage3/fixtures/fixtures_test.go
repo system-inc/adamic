@@ -590,15 +590,24 @@ func fixtureShardIndex(name string, count int) int {
 }
 
 // A child execute runs, as the oracle hook's scripts are, builds cgo with the C compiler toolchain gives every tool:
-// with no CC or CXX of the caller's, clang and clang++, not the gcc Linux's go would default to. The child here is a
-// shell printing both. Mutant: execute without toolchainSettings' CC and CXX, and the child sees neither.
+// with no CC or CXX of the caller's, clang and clang++ naming the build's triple, not the gcc Linux's go would default
+// to. The triple is there so every compiler a fixture's child spawns builds for the build's own target, as every
+// native compile does (#5xsd2ha); cgo and every reader of CC split it into words. The child here is a shell printing
+// both. Mutants: execute without toolchainSettings' CC and CXX, and the child sees neither; toolchain.Compilers
+// without the triple, and the child sees the bare words.
 // Not parallel: clears CC and CXX through t.Setenv.
 func TestExecuteGivesChildrenTheToolchainsCompiler(t *testing.T) {
 	t.Setenv("CC", "")
 	t.Setenv("CXX", "")
+	goos, goarch := toolchain.Platform(os.Environ())
+	triple, err := toolchain.Triple(goos, goarch)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := "clang --target=" + triple + " clang++ --target=" + triple + "\n"
 	result := execute(t, t.TempDir(), nil, "/bin/sh", "-c", `echo "$CC $CXX"`)
-	if result.Exit != 0 || result.Stdout != "clang clang++\n" {
-		t.Fatalf("a child saw %q (exit %d, stderr %q), want toolchain's clang and clang++", result.Stdout, result.Exit, result.Stderr)
+	if result.Exit != 0 || result.Stdout != want {
+		t.Fatalf("a child saw %q (exit %d, stderr %q), want %q, toolchain's clang and clang++ naming the build's triple", result.Stdout, result.Exit, result.Stderr, want)
 	}
 }
 
