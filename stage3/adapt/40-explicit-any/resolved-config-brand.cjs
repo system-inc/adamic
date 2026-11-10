@@ -16,6 +16,7 @@ function plan(text, file = rule.file, reverse = false) {
     visit(source);
     assert.equal(owners.length, 1, 'exactly one resolved-config brand owner');
     const node = owners[0], spelling = node.getText(source).replace(/\r\n/g, '\n');
+    assert.equal(node.parent, source, 'top-level resolved-config brand owner');
     const states = ['before', 'after'].filter(state => spelling === rule[state] && digest(spelling) === rule[state + 'Sha256']);
     assert.equal(states.length, 1, 'resolved-config brand owner text drift');
     const member = node.type.types?.[1]?.members?.[0];

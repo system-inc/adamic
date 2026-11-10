@@ -1,0 +1,52 @@
+{
+  "compilerCommit": "68213b0a62261a4ca40a19f3c1b36e5603640e22",
+  "tool": "stage3/census/tool",
+  "binarySha256": "bddee335add33c9881fc254f6c1d1da442ea751c658badd31c890a2fe14b4445",
+  "oldBrandStopGone": true,
+  "expectedNamespaceStopReached": false,
+  "newFirstStop": "sys.ts:1654:13: a checked view with a callable contract",
+  "control": [
+    {
+      "roots": [
+        "/workspace/scratch/resolved-control/src/compiler/tracing.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/resolved-control/src/compiler/types.ts:4560:38",
+      "reason": "a primitive brand member _isResolvedConfigFileName whose type is not void",
+      "fix": "make _isResolvedConfigFileName undefined (or void) so the brand is phantom",
+      "seconds": 19.11979213
+    },
+    {
+      "roots": [
+        "/workspace/scratch/resolved-control/src/compiler/tracing.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/resolved-control/src/compiler/types.ts:4560:38",
+      "reason": "a primitive brand member _isResolvedConfigFileName whose type is not void",
+      "fix": "make _isResolvedConfigFileName undefined (or void) so the brand is phantom",
+      "seconds": 21.06174934
+    }
+  ],
+  "treatment": [
+    {
+      "roots": [
+        "/workspace/scratch/resolved-treatment/src/compiler/tracing.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/resolved-treatment/src/compiler/sys.ts:1654:13",
+      "reason": "a checked view with a callable contract",
+      "fix": "prove the callable body rather than asserting its signature",
+      "seconds": 23.363763668
+    },
+    {
+      "roots": [
+        "/workspace/scratch/resolved-treatment/src/compiler/tracing.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/resolved-treatment/src/compiler/sys.ts:1654:13",
+      "reason": "a checked view with a callable contract",
+      "fix": "prove the callable body rather than asserting its signature",
+      "seconds": 23.68809247
+    }
+  ]
+}
