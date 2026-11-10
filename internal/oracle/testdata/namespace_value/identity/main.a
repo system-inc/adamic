@@ -1,0 +1,10 @@
+import { Counter, held } from './state.a';
+
+const a = Counter;
+const b = Counter;
+function local(): typeof Counter {
+	return Counter;
+}
+console.log(`same ${String(a === b)} ${String(a === held)} ${String(local() === held)}`);
+console.log(`members ${String(a.next === Counter.next)} ${String(held.read === Counter.read)}`);
+console.log(`calls ${a.next()} ${held.next()} ${Counter.read()}`);
