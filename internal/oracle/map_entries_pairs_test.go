@@ -24,7 +24,7 @@ import (
 // Mutants, each red here by the counted build or by the stop's absence:
 //   - collection_next ignores planned: "e2", "e4" and "for-of" leak.
 //   - pairGraphTypes returns nil for a named pair: "e2", "e4" and "for-of" leak.
-//   - unplannedPair returns nil: "a wider array" lowers, and leaks.
+//   - unplannedPair returns nil: "a readonly tuple" lowers, and leaks.
 const mapEntriesPairsNode = `interface Node { name: string; next: Node[]; pairs: [string, Node][] }
 const a: Node = { name: 'a' + '', next: [], pairs: [] };
 const b: Node = { name: 'b' + '', next: [a], pairs: [] };
@@ -50,20 +50,20 @@ func TestMapEntriesPairs(t *testing.T) {
 		{"literal", mapEntriesPairsNode + "a.pairs = [['b', b]];\n" + mapEntriesPairsPrint, ""},
 		// A for-of over the same map whose pairs no slot holds: they're planned all the same, and free.
 		{"read only", mapEntriesPairsNode + "let names = '';\nfor (const [name, node] of map) names += name + node.name;\nconsole.log(names);\n", ""},
-		// A pair held as a wider readonly array (a mutable one is refused first, adamic/invariant-mutable):
-		// [string, Node] is assignable to readonly (string | Node)[], a graph type here, and isn't one
-		// itself, so no plan names the pair, and it stops.
-		{"a wider array", `interface Node { name: string; next: Node[]; items: (readonly (string | Node)[])[] }
-const a: Node = { name: 'a' + '', next: [], items: [] };
-const b: Node = { name: 'b' + '', next: [a], items: [] };
+		// A pair held as a readonly tuple: [string, Node] is assignable to readonly [string, Node], a graph
+		// type here and a different one, so no plan names the pair, and it stops. A wider array is no
+		// road: a tuple is an object, so an array view of it is refused first.
+		{"a readonly tuple", `interface Node { name: string; next: Node[]; pairs: (readonly [string, Node])[] }
+const a: Node = { name: 'a' + '', next: [], pairs: [] };
+const b: Node = { name: 'b' + '', next: [a], pairs: [] };
 a.next.push(b);
 const map = new Map<string, Node>();
 map.set('b', b);
-a.items = [...map.entries()];
-console.log(String(a.items.length));
+a.pairs = [...map.entries()];
+console.log(String(a.pairs.length));
 `, "a Map's or a Set's [key, value] pair held as another graph type in a graph program"},
 		// A pair held as a labeled tuple. The checker gives it [string, Node]'s identity today, so the pair
-		// is planned and must balance (Codex 01a1c4da); if that changes, it stops as the wider array does.
+		// is planned and must balance (Codex 01a1c4da); if that changes, it stops as the readonly tuple does.
 		// Either is sound.
 		{"a labeled tuple", `interface Node { name: string; next: Node[]; pairs: [key: string, value: Node][] }
 const a: Node = { name: 'a' + '', next: [], pairs: [] };
