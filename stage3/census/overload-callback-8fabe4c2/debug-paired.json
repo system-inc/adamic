@@ -1,0 +1,676 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/debug.ts": "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+    "src/compiler/core.ts": "265f558b9089f9fc51a25b1e5848c12f416fa831a615d754748b22bc6e33e256"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "a comparator that isn't a function": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a template interpolating an object, an array, a map, a function or undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "function signature or prologue failed; continued at next declaration": {
+        "before": 7,
+        "after": 3,
+        "lowered": 4,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "reading value": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10176
+        ],
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:274:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:273:82"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10279
+        ],
+        "base": {
+          "depth": 0,
+          "end": 10429,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "root_kind": "",
+          "start": 10273,
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:274:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:274:5"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10435
+        ],
+        "base": {
+          "depth": 0,
+          "end": 10961,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "root_kind": "",
+          "start": 10578,
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:275:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:275:5"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          11951
+        ],
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:301:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:299:78"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          12254
+        ],
+        "base": {
+          "depth": 0,
+          "end": 12412,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "root_kind": "",
+          "start": 12248,
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:301:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:301:5"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          12418
+        ],
+        "base": {
+          "depth": 0,
+          "end": 12966,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "root_kind": "",
+          "start": 12569,
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:302:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:302:5"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10279
+        ],
+        "unit": {
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "assertNode",
+          "parent": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "status": "attempted",
+          "top": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:274:5"
+        },
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:274:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:273:82"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10435
+        ],
+        "unit": {
+          "body_end": 10961,
+          "body_start": 10578,
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "assertNode",
+          "parent": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "status": "attempted",
+          "top": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:275:5"
+        },
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:275:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:273:82"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          12254
+        ],
+        "unit": {
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "assertOptionalNode",
+          "parent": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "status": "attempted",
+          "top": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:301:5"
+        },
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:301:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:299:78"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          12418
+        ],
+        "unit": {
+          "body_end": 12966,
+          "body_start": 12569,
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "assertOptionalNode",
+          "parent": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "status": "attempted",
+          "top": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:302:5"
+        },
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:302:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:299:78"
+        },
+        "head": null
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 5,
+        "Boundary": 11,
+        "Refused": 3
+      },
+      "after": {
+        "NotYet": 5,
+        "Boundary": 7,
+        "Refused": 1
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "a comparator that isn't a function": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a template interpolating an object, an array, a map, a function or undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "function signature or prologue failed; continued at next declaration": {
+        "before": 7,
+        "after": 3,
+        "lowered": 4,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "reading value": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10176
+        ],
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:274:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:273:82"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10279
+        ],
+        "base": {
+          "depth": 0,
+          "end": 10429,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "root_kind": "",
+          "start": 10273,
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:274:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:274:5"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10435
+        ],
+        "base": {
+          "depth": 0,
+          "end": 10961,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "root_kind": "",
+          "start": 10578,
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:275:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:275:5"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          11951
+        ],
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:301:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:299:78"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          12254
+        ],
+        "base": {
+          "depth": 0,
+          "end": 12412,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "root_kind": "",
+          "start": 12248,
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:301:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:301:5"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          12418
+        ],
+        "base": {
+          "depth": 0,
+          "end": 12966,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "root_kind": "",
+          "start": 12569,
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:302:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:302:5"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10279
+        ],
+        "unit": {
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "assertNode",
+          "parent": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "status": "attempted",
+          "top": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:274:5"
+        },
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:274:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:273:82"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          10435
+        ],
+        "unit": {
+          "body_end": 10961,
+          "body_start": 10578,
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "assertNode",
+          "parent": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "status": "attempted",
+          "top": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:275:5"
+        },
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:273:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:275:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:273:82"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          12254
+        ],
+        "unit": {
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "assertOptionalNode",
+          "parent": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "status": "attempted",
+          "top": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:301:5"
+        },
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:301:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:299:78"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "88857e0934a9902f4c1bcb3160e10d72d95829c1c1edc13422e1aa9ffd97daad",
+          12418
+        ],
+        "unit": {
+          "body_end": 12966,
+          "body_start": 12569,
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "assertOptionalNode",
+          "parent": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "status": "attempted",
+          "top": "/workspace/overload-adapted/src/compiler/debug.ts:111:1",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:302:5"
+        },
+        "base": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test",
+          "root_kind": "",
+          "text": "/workspace/overload-adapted/src/compiler/debug.ts:299:78: Adamic 0.1 refuses overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+          "unit": "/workspace/overload-adapted/src/compiler/debug.ts:302:5",
+          "where": "/workspace/overload-adapted/src/compiler/debug.ts:299:78"
+        },
+        "head": null
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 5,
+        "Boundary": 11,
+        "Refused": 3
+      },
+      "after": {
+        "NotYet": 5,
+        "Boundary": 7,
+        "Refused": 1
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}

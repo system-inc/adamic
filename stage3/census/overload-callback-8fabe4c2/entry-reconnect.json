@@ -1,0 +1,28 @@
+{
+  "observed_utc": "2026-11-10 19:35:35 UTC",
+  "runners_survived": true,
+  "children": [
+    {
+      "pid": 12575,
+      "parent": 12573,
+      "start_ticks": 234513,
+      "state": "S",
+      "command": [
+        "/workspace/overload-parent-census",
+        "/workspace/overload-adapted/src/tsc/tsc.ts",
+        "/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/entry-parent.jsonl"
+      ]
+    },
+    {
+      "pid": 12634,
+      "parent": 12632,
+      "start_ticks": 237335,
+      "state": "S",
+      "command": [
+        "/workspace/overload-head-census",
+        "/workspace/overload-adapted/src/tsc/tsc.ts",
+        "/workspace/overload-census/stage3/census/overload-callback-8fabe4c2/entry-head.jsonl"
+      ]
+    }
+  ]
+}
