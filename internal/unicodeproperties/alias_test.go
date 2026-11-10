@@ -3,16 +3,17 @@ package unicodeproperties
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"sort"
 	"strings"
 	"testing"
+
+	cohere "github.com/system-inc/cohere/unicode_properties"
 )
 
 // specBinary is Table 66 of ECMA-262 (binary Unicode properties) plus WSpace.
 // WSpace is the short name in PropertyAliases.txt. The spec's rendered table
 // omits it (tc39/ecma262#3286) and Node 24 accepts it, so the lookup does too.
 // The canonical name is the map value. This list is the check that an alias
-// cannot quietly disappear from the generated tables.
+// cannot quietly disappear from cohere's tables, which Lookup reads.
 var specBinary = map[string]string{
 	"ASCII":                        "ASCII",
 	"AHex":                         "ASCII_Hex_Digit",
@@ -159,21 +160,42 @@ var specGeneralCategory = map[string]string{
 	"Zs": "Space_Separator", "Space_Separator": "Space_Separator",
 }
 
+// familyNames is every spelling cohere lists for a property of family:
+// "Binary", "General_Category", "Script" or "Script_Extensions".
+func familyNames(family string) []string {
+	var names []string
+	for _, name := range cohere.Names() {
+		if property, _ := cohere.Lookup(name); property.Family == family {
+			names = append(names, name)
+		}
+	}
+	return names
+}
+
+// An alias is its canonical name's property: the same Set, and no other
+// canonical name's.
 func TestBinaryAliases(t *testing.T) {
 	t.Parallel()
-	if len(binaryNames) != len(specBinary) {
-		t.Fatalf("%d binary names, spec lists %d", len(binaryNames), len(specBinary))
+	binary := familyNames("Binary")
+	if len(binary) != len(specBinary) {
+		t.Fatalf("%d binary names, spec lists %d", len(binary), len(specBinary))
 	}
+	canonicalSets := map[*Set]string{}
 	for alias, canonical := range specBinary {
 		property, ok := Lookup(alias, false)
-		if !ok || property.Name != canonical || property.Value != "True" || property.Kind != KindCodePoints || property.Set == nil {
-			t.Errorf("\\p{%s}: got name %q value %q ok %v", alias, property.Name, property.Value, ok)
+		named, _ := Lookup(canonical, false)
+		if !ok || property.Kind != KindCodePoints || property.Set == nil || property.Set != named.Set {
+			t.Errorf("\\p{%s}: ok %v, and not the set of %s", alias, ok, canonical)
 		}
+		if other, taken := canonicalSets[named.Set]; taken && other != canonical {
+			t.Errorf("%s and %s are one set", canonical, other)
+		}
+		canonicalSets[named.Set] = canonical
 		if _, ok := Lookup(alias+"=Yes", false); ok {
 			t.Errorf("\\p{%s=Yes} is accepted; Node rejects a value on a binary property", alias)
 		}
 	}
-	for alias := range binaryNames {
+	for _, alias := range binary {
 		if _, ok := specBinary[alias]; !ok {
 			t.Errorf("table has %s, which the spec list does not", alias)
 		}
@@ -182,21 +204,30 @@ func TestBinaryAliases(t *testing.T) {
 
 func TestGeneralCategoryAliases(t *testing.T) {
 	t.Parallel()
-	if len(generalCategoryNames) != len(specGeneralCategory) {
-		t.Fatalf("%d general category names, spec lists %d", len(generalCategoryNames), len(specGeneralCategory))
+	// Each value is spelled alone, after gc= and after General_Category=.
+	categories := familyNames("General_Category")
+	if len(categories) != 3*len(specGeneralCategory) {
+		t.Fatalf("%d general category names, spec lists %d values, each three ways", len(categories), len(specGeneralCategory))
 	}
+	for _, name := range categories {
+		value := strings.TrimPrefix(strings.TrimPrefix(name, "General_Category="), "gc=")
+		if _, ok := specGeneralCategory[value]; !ok {
+			t.Errorf("table has %s, which the spec list does not", name)
+		}
+	}
+	canonicalSets := map[*Set]string{}
 	for alias, canonical := range specGeneralCategory {
+		named, _ := Lookup("General_Category="+canonical, false)
 		for _, expression := range []string{alias, "gc=" + alias, "General_Category=" + alias} {
 			property, ok := Lookup(expression, false)
-			if !ok || property.Name != "General_Category" || property.Value != canonical || property.Set == nil {
-				t.Errorf("\\p{%s}: got name %q value %q ok %v", expression, property.Name, property.Value, ok)
+			if !ok || property.Kind != KindCodePoints || property.Set == nil || property.Set != named.Set {
+				t.Errorf("\\p{%s}: ok %v, and not the set of %s", expression, ok, canonical)
 			}
 		}
-		lone, _ := Lookup(alias, false)
-		qualified, _ := Lookup("gc="+alias, false)
-		if lone.Set != qualified.Set {
-			t.Errorf("\\p{%s} and \\p{gc=%s} are different sets", alias, alias)
+		if other, taken := canonicalSets[named.Set]; taken && other != canonical {
+			t.Errorf("%s and %s are one set", canonical, other)
 		}
+		canonicalSets[named.Set] = canonical
 	}
 }
 
@@ -210,23 +241,27 @@ func TestScriptAliasSet(t *testing.T) {
 	t.Parallel()
 	const wantCount = 344
 	const wantDigest = "717bd8ab5e94ba064f3187a545e08be10ba1f5bc5da3ba93d419f74ef13126de"
-	names := make([]string, 0, len(scriptNames))
-	for name := range scriptNames {
-		names = append(names, name)
+	// Each value is spelled after sc= and after Script=, sorted, so the sc= ones
+	// are the values in sorted order. Script_Extensions is the same, after scx=
+	// and Script_Extensions=.
+	var names []string
+	for _, name := range familyNames("Script") {
+		if value, short := strings.CutPrefix(name, "sc="); short {
+			names = append(names, value)
+		}
 	}
-	sort.Strings(names)
 	sum := sha256.Sum256([]byte(strings.Join(names, "\n")))
 	got := hex.EncodeToString(sum[:])
 	if len(names) != wantCount || got != wantDigest {
 		t.Fatalf("script aliases: %d names, sha256 %s", len(names), got)
 	}
-	if len(scriptExtensionNames) != len(scriptNames) {
-		t.Fatalf("script extensions names %d, script names %d", len(scriptExtensionNames), len(scriptNames))
+	if scripts, extensions := len(familyNames("Script")), len(familyNames("Script_Extensions")); scripts != 2*wantCount || extensions != scripts {
+		t.Fatalf("script spellings %d, script extensions spellings %d, want %d each", scripts, extensions, 2*wantCount)
 	}
 	for _, required := range []string{"Latin", "Latn", "Unknown", "Zzzz", "Inherited", "Zinh", "Qaai", "Common", "Zyyy", "Coptic", "Copt", "Qaac", "Adlam", "Adlm"} {
 		script, ok := Lookup("sc="+required, false)
 		extensions, extOK := Lookup("scx="+required, false)
-		if !ok || !extOK || script.Value == "" || script.Set == extensions.Set {
+		if !ok || !extOK || script.Set == extensions.Set {
 			t.Errorf("script %s: sc %v scx %v same set %v", required, ok, extOK, ok && extOK && script.Set == extensions.Set)
 		}
 		if _, ok := Lookup("Script="+required, false); !ok {
@@ -301,61 +336,74 @@ func TestStringPropertyCensus(t *testing.T) {
 		t.Fatalf("%d string properties, want %d", len(stringProperties), len(stringPropertyCensus))
 	}
 	for name, want := range stringPropertyCensus {
-		property, ok := stringProperties[name]
+		sequences, ok := stringProperties[name]
 		if !ok {
 			t.Errorf("missing %s", name)
 			continue
 		}
-		sum := sha256.Sum256([]byte(strings.Join(property.sequences, "\n")))
+		sum := sha256.Sum256([]byte(strings.Join(sequences, "\n")))
 		got := hex.EncodeToString(sum[:])
-		if len(property.sequences) != want.count || got != want.digest {
-			t.Errorf("%s: %d sequences, sha256 %s", name, len(property.sequences), got)
+		if len(sequences) != want.count || got != want.digest {
+			t.Errorf("%s: %d sequences, sha256 %s", name, len(sequences), got)
 		}
 		resolved, ok := Lookup(name, true)
-		if !ok || resolved.Kind != KindStrings || len(resolved.Sequences) != len(property.sequences) {
+		if !ok || resolved.Kind != KindStrings || len(resolved.Sequences) != len(sequences) {
 			t.Errorf("Lookup %s: ok %v kind %v len %d", name, ok, resolved.Kind, len(resolved.Sequences))
 		}
-		if len(property.sequences) > 0 && !resolved.ContainsSequence(property.sequences[0]) {
+		if len(sequences) > 0 && !resolved.ContainsSequence(sequences[0]) {
 			t.Errorf("%s does not contain its first sequence", name)
 		}
-		if resolved.ContainsSequence(property.sequences[0] + "\u0000") {
+		if resolved.ContainsSequence(sequences[0] + "\u0000") {
 			t.Errorf("%s contains a sequence with a NUL added", name)
 		}
 	}
 }
 
+// Every set Lookup answers keeps a Set's shape: sorted, and no two ranges
+// overlapping or adjacent, which cohere promises only in part (sorted and
+// disjoint) and does by merging.
 func TestSetBoundaries(t *testing.T) {
 	t.Parallel()
-	for index, set := range sets {
+	checked := map[*Set]bool{}
+	for _, name := range cohere.Names() {
+		property, _ := Lookup(name, false)
+		set := property.Set
+		if checked[set] {
+			continue
+		}
+		checked[set] = true
 		previous := int64(-2)
 		for _, r := range set.Ranges {
 			if int64(r.Start) <= previous || r.Start > r.End || r.End > 0x10FFFF {
-				t.Fatalf("set %d range %#v after end %d", index, r, previous)
+				t.Fatalf("%s range %#v after end %d", name, r, previous)
 			}
 			if !set.Contains(rune(r.Start)) || !set.Contains(rune(r.End)) {
-				t.Fatalf("set %d misses an endpoint of %#v", index, r)
+				t.Fatalf("%s misses an endpoint of %#v", name, r)
 			}
 			if r.Start > 0 && set.Contains(rune(r.Start-1)) {
-				t.Fatalf("set %d contains U+%04X, just before %#v", index, r.Start-1, r)
+				t.Fatalf("%s contains U+%04X, just before %#v", name, r.Start-1, r)
 			}
 			if r.End < 0x10FFFF && set.Contains(rune(r.End+1)) {
-				t.Fatalf("set %d contains U+%04X, just after %#v", index, r.End+1, r)
+				t.Fatalf("%s contains U+%04X, just after %#v", name, r.End+1, r)
 			}
 			previous = int64(r.End)
 		}
 		complement := set.Complement()
 		if set.Contains(0) == complement.Contains(0) || set.Contains(0x10FFFF) == complement.Contains(0x10FFFF) {
-			t.Fatalf("set %d complement agrees at an end", index)
+			t.Fatalf("%s complement agrees at an end", name)
 		}
 		back := complement.Complement()
 		if len(back.Ranges) != len(set.Ranges) {
-			t.Fatalf("set %d complement twice has %d ranges, want %d", index, len(back.Ranges), len(set.Ranges))
+			t.Fatalf("%s complement twice has %d ranges, want %d", name, len(back.Ranges), len(set.Ranges))
 		}
 		for i := range set.Ranges {
 			if back.Ranges[i] != set.Ranges[i] {
-				t.Fatalf("set %d complement twice differs at %d", index, i)
+				t.Fatalf("%s complement twice differs at %d", name, i)
 			}
 		}
+	}
+	if len(checked) != 441 {
+		t.Fatalf("%d sets, want 441: 53 binary, 38 General_Category values, 175 scripts and their extensions", len(checked))
 	}
 }
 

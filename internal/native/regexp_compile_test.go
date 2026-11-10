@@ -15,24 +15,19 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/unicodeproperties"
+	cohere "github.com/system-inc/cohere/unicode_properties"
 )
 
-// Enumeration comes from the Go AST; expected entries come from the public Go
-// provider, independently of the Python generator's source-layout conversion.
+// Enumeration is cohere's Names, the code-point spellings, and the Go AST of
+// the properties of strings; expected entries come from the public Go provider,
+// independently of the Python generator's source-layout conversion.
 func runtimePropertyAliases(t *testing.T) []string {
 	t.Helper()
+	aliases := cohere.Names()
 	file, err := parser.ParseFile(token.NewFileSet(), "../unicodeproperties/tables.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
-	prefixes := map[string][]string{
-		"binaryNames":          {""},
-		"generalCategoryNames": {"", "gc=", "General_Category="},
-		"scriptNames":          {"sc=", "Script="},
-		"scriptExtensionNames": {"scx=", "Script_Extensions="},
-		"stringProperties":     {""},
-	}
-	var aliases []string
 	for _, declaration := range file.Decls {
 		general, ok := declaration.(*ast.GenDecl)
 		if !ok {
@@ -40,11 +35,7 @@ func runtimePropertyAliases(t *testing.T) []string {
 		}
 		for _, specification := range general.Specs {
 			value, ok := specification.(*ast.ValueSpec)
-			if !ok || len(value.Names) != 1 {
-				continue
-			}
-			selected, ok := prefixes[value.Names[0].Name]
-			if !ok {
+			if !ok || len(value.Names) != 1 || value.Names[0].Name != "stringProperties" {
 				continue
 			}
 			table := value.Values[0].(*ast.CompositeLit)
@@ -54,9 +45,7 @@ func runtimePropertyAliases(t *testing.T) []string {
 				if err != nil {
 					t.Fatal(err)
 				}
-				for _, prefix := range selected {
-					aliases = append(aliases, prefix+name)
-				}
+				aliases = append(aliases, name)
 			}
 		}
 	}
@@ -92,14 +81,19 @@ func runtimePropertyHarness(t *testing.T) string {
 	aliases := runtimePropertyAliases(t)
 	var source, rows strings.Builder
 	source.WriteString("#include \"regexp_compile.h\"\n")
-	names := map[string]string{}
+	// Every spelling of one property shares its Set, or for a property of
+	// strings its sequences, so that identity is the property's.
+	names := map[any]string{}
 	rangeEntries, stringEntries := 0, 0
 	for _, alias := range aliases {
 		property, ok := unicodeproperties.Lookup(alias, true)
 		if !ok {
 			t.Fatalf("Go provider rejected %q", alias)
 		}
-		key := property.Name + "=" + property.Value
+		var key any = property.Set
+		if property.Kind == unicodeproperties.KindStrings {
+			key = &property.Sequences[0]
+		}
 		name, exists := names[key]
 		if !exists {
 			name = fmt.Sprintf("expected_%d", len(names))
