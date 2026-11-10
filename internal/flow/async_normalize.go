@@ -219,8 +219,12 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 			absent = ir.IsUndefined{Value: held}
 		case held.Type().IsReference():
 			absent = ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: held}, Right: ir.IsNull{Value: held}}
+		case held.Type() == value.Of:
+			// A plain number or boolean is never missing, so ?? never evaluates its fallback, and the
+			// fallback's await never runs: the left side is what ?? makes.
+			return held
 		default:
-			n.failure = n.errorAt(value, suspending(n.program.Functions[n.function], "await in the fallback of a ?? whose left side is held as a plain scalar is not yet proven"))
+			n.failure = n.errorAt(value, suspending(n.program.Functions[n.function], "await in the fallback of a ?? whose plain left side converts to another type is not yet proven"))
 			return value
 		}
 		local := n.temporary(value.Of)
