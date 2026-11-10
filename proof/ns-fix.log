@@ -1,0 +1,523 @@
+=== STEP gofmt
+exit=0
+=== STEP vet
+exit=0
+=== STEP namespace-neverrest
+=== RUN   TestClassDeclarationHeritageBesideANamespaceLowers
+=== PAUSE TestClassDeclarationHeritageBesideANamespaceLowers
+=== RUN   TestEnumNamespaceSharedCycle
+=== PAUSE TestEnumNamespaceSharedCycle
+=== RUN   TestGenericFunctionValueNamespaceDirectCallsKeepIdentity
+=== PAUSE TestGenericFunctionValueNamespaceDirectCallsKeepIdentity
+=== RUN   TestNodeFSFileNamespaceImport
+=== PAUSE TestNodeFSFileNamespaceImport
+=== RUN   TestModuleNamespaceLimitsStayLoud
+=== PAUSE TestModuleNamespaceLimitsStayLoud
+=== RUN   TestModuleNamespaceInitializedReadProof
+=== PAUSE TestModuleNamespaceInitializedReadProof
+=== RUN   TestCallableNamespaceLimitsStayLoud
+=== PAUSE TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceReceiverStaysLoud
+=== PAUSE TestCallableNamespaceReceiverStaysLoud
+=== RUN   TestNamespaceClassEarlyConstructionStaysLoud
+=== PAUSE TestNamespaceClassEarlyConstructionStaysLoud
+=== RUN   TestNamespaceReceiverArrowInheritsScope
+=== PAUSE TestNamespaceReceiverArrowInheritsScope
+=== RUN   TestNamespaceValueStops
+=== PAUSE TestNamespaceValueStops
+=== RUN   TestNamespaceValueIdentityAgrees
+=== PAUSE TestNamespaceValueIdentityAgrees
+=== RUN   TestNamespaceValueParameterAgrees
+=== PAUSE TestNamespaceValueParameterAgrees
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== RUN   TestNamespaceAmbientContextsDoNotExecute
+=== PAUSE TestNamespaceAmbientContextsDoNotExecute
+=== RUN   TestNamespaceCallGraphLinearWork
+=== PAUSE TestNamespaceCallGraphLinearWork
+=== RUN   TestNamespaceCallGraphCycleUnion
+=== PAUSE TestNamespaceCallGraphCycleUnion
+=== RUN   TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== PAUSE TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== RUN   TestTscNamespaceDeclarationShapes
+=== PAUSE TestTscNamespaceDeclarationShapes
+=== RUN   TestNamespaceLimitsStayLoud
+=== PAUSE TestNamespaceLimitsStayLoud
+=== RUN   TestNamespaceReceiverRefusal
+=== PAUSE TestNamespaceReceiverRefusal
+=== RUN   TestNamespaceTypesErase
+=== PAUSE TestNamespaceTypesErase
+=== RUN   TestTracingNamespaceEscapeLowers
+=== PAUSE TestTracingNamespaceEscapeLowers
+=== RUN   TestDebugNamespaceMergedCapabilities
+=== PAUSE TestDebugNamespaceMergedCapabilities
+=== RUN   TestNamespaceReturnedAssignmentLimits
+=== PAUSE TestNamespaceReturnedAssignmentLimits
+=== RUN   TestNamespaceInitializationReachability
+=== PAUSE TestNamespaceInitializationReachability
+=== RUN   TestNamespaceClosedCallGraphEdges
+=== PAUSE TestNamespaceClosedCallGraphEdges
+=== RUN   TestNeverRestMarkerLowersTscShape
+=== PAUSE TestNeverRestMarkerLowersTscShape
+=== RUN   TestNeverRestMarkerIdentity
+=== PAUSE TestNeverRestMarkerIdentity
+=== RUN   TestNeverRestMarkerCycleProves
+=== PAUSE TestNeverRestMarkerCycleProves
+=== RUN   TestNeverRestMarkerAcrossModules
+=== PAUSE TestNeverRestMarkerAcrossModules
+=== RUN   TestNeverRestMarkerOneSignatureGeneric
+=== PAUSE TestNeverRestMarkerOneSignatureGeneric
+=== RUN   TestNeverRestMarkerOffListKeepsMainsStop
+=== PAUSE TestNeverRestMarkerOffListKeepsMainsStop
+=== RUN   TestNeverRestMarkerShorthandKeepsForwarder
+=== PAUSE TestNeverRestMarkerShorthandKeepsForwarder
+=== RUN   TestNeverRestMarkerBindingReadsNever
+=== PAUSE TestNeverRestMarkerBindingReadsNever
+=== RUN   TestNeverRestMarkerFence
+=== PAUSE TestNeverRestMarkerFence
+=== RUN   TestNeverRestMarkerNamespaceMember
+=== PAUSE TestNeverRestMarkerNamespaceMember
+=== RUN   TestNeverRestMarkerUnseenReadsStop
+=== PAUSE TestNeverRestMarkerUnseenReadsStop
+=== RUN   TestNamespaceFactoryBindingsAgreeWithNode
+=== PAUSE TestNamespaceFactoryBindingsAgreeWithNode
+=== CONT  TestClassDeclarationHeritageBesideANamespaceLowers
+=== RUN   TestClassDeclarationHeritageBesideANamespaceLowers/.ts
+=== CONT  TestNamespaceReceiverRefusal
+=== PAUSE TestClassDeclarationHeritageBesideANamespaceLowers/.ts
+=== RUN   TestClassDeclarationHeritageBesideANamespaceLowers/.a
+=== PAUSE TestClassDeclarationHeritageBesideANamespaceLowers/.a
+=== CONT  TestNeverRestMarkerFence
+=== CONT  TestNamespaceFactoryBindingsAgreeWithNode
+=== CONT  TestNeverRestMarkerUnseenReadsStop
+=== RUN   TestNeverRestMarkerUnseenReadsStop/a_namespace_member_by_a_computed_name
+=== PAUSE TestNeverRestMarkerUnseenReadsStop/a_namespace_member_by_a_computed_name
+=== RUN   TestNeverRestMarkerUnseenReadsStop/a_namespace_object_as_a_value
+=== PAUSE TestNeverRestMarkerUnseenReadsStop/a_namespace_object_as_a_value
+=== RUN   TestNeverRestMarkerUnseenReadsStop/a_module_member_by_a_computed_name
+=== PAUSE TestNeverRestMarkerUnseenReadsStop/a_module_member_by_a_computed_name
+=== RUN   TestNeverRestMarkerUnseenReadsStop/a_module_object_as_a_value
+=== PAUSE TestNeverRestMarkerUnseenReadsStop/a_module_object_as_a_value
+=== CONT  TestNeverRestMarkerNamespaceMember
+=== CONT  TestNeverRestMarkerBindingReadsNever
+--- PASS: TestNeverRestMarkerBindingReadsNever (0.59s)
+=== CONT  TestNeverRestMarkerShorthandKeepsForwarder
+--- PASS: TestNamespaceReceiverRefusal (0.70s)
+=== CONT  TestNeverRestMarkerOffListKeepsMainsStop
+=== RUN   TestNeverRestMarkerOffListKeepsMainsStop/called_through_the_slot
+=== PAUSE TestNeverRestMarkerOffListKeepsMainsStop/called_through_the_slot
+=== RUN   TestNeverRestMarkerOffListKeepsMainsStop/a_variable
+=== PAUSE TestNeverRestMarkerOffListKeepsMainsStop/a_variable
+=== RUN   TestNeverRestMarkerOffListKeepsMainsStop/a_field
+=== PAUSE TestNeverRestMarkerOffListKeepsMainsStop/a_field
+=== RUN   TestNeverRestMarkerOffListKeepsMainsStop/an_ordinary_slot
+=== PAUSE TestNeverRestMarkerOffListKeepsMainsStop/an_ordinary_slot
+=== RUN   TestNeverRestMarkerOffListKeepsMainsStop/typeof_through_the_parameter
+=== PAUSE TestNeverRestMarkerOffListKeepsMainsStop/typeof_through_the_parameter
+=== RUN   TestNeverRestMarkerOffListKeepsMainsStop/the_parameter_captured_by_an_arrow
+=== PAUSE TestNeverRestMarkerOffListKeepsMainsStop/the_parameter_captured_by_an_arrow
+=== RUN   TestNeverRestMarkerOffListKeepsMainsStop/length_through_the_parameter
+=== PAUSE TestNeverRestMarkerOffListKeepsMainsStop/length_through_the_parameter
+=== CONT  TestNeverRestMarkerOneSignatureGeneric
+--- PASS: TestNamespaceFactoryBindingsAgreeWithNode (2.40s)
+=== CONT  TestNeverRestMarkerAcrossModules
+=== RUN   TestNeverRestMarkerAcrossModules/proven
+=== PAUSE TestNeverRestMarkerAcrossModules/proven
+=== RUN   TestNeverRestMarkerAcrossModules/stored
+=== PAUSE TestNeverRestMarkerAcrossModules/stored
+=== CONT  TestNeverRestMarkerCycleProves
+--- PASS: TestNeverRestMarkerFence (36.47s)
+=== CONT  TestNeverRestMarkerIdentity
+--- PASS: TestNeverRestMarkerShorthandKeepsForwarder (35.87s)
+=== CONT  TestNeverRestMarkerLowersTscShape
+=== RUN   TestNeverRestMarkerLowersTscShape/ts
+=== PAUSE TestNeverRestMarkerLowersTscShape/ts
+=== RUN   TestNeverRestMarkerLowersTscShape/ts_asserts
+=== PAUSE TestNeverRestMarkerLowersTscShape/ts_asserts
+=== RUN   TestNeverRestMarkerLowersTscShape/a
+=== PAUSE TestNeverRestMarkerLowersTscShape/a
+=== RUN   TestNeverRestMarkerLowersTscShape/captureStackTrace
+=== PAUSE TestNeverRestMarkerLowersTscShape/captureStackTrace
+=== CONT  TestNamespaceClosedCallGraphEdges
+--- PASS: TestNeverRestMarkerOneSignatureGeneric (35.90s)
+=== CONT  TestNamespaceInitializationReachability
+=== RUN   TestNamespaceInitializationReachability/direct
+=== RUN   TestNamespaceInitializationReachability/helper
+--- PASS: TestNeverRestMarkerCycleProves (34.35s)
+=== CONT  TestNamespaceReturnedAssignmentLimits
+=== RUN   TestNamespaceInitializationReachability/cycle
+--- PASS: TestNeverRestMarkerNamespaceMember (36.86s)
+=== CONT  TestDebugNamespaceMergedCapabilities
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_log.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_log.a
+=== RUN   TestDebugNamespaceMergedCapabilities/class_merge.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/class_merge.a
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_class.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestTracingNamespaceEscapeLowers
+--- PASS: TestNamespaceInitializationReachability (0.30s)
+    --- PASS: TestNamespaceInitializationReachability/direct (0.10s)
+    --- PASS: TestNamespaceInitializationReachability/helper (0.11s)
+    --- PASS: TestNamespaceInitializationReachability/cycle (0.08s)
+=== CONT  TestNamespaceTypesErase
+--- PASS: TestNamespaceReturnedAssignmentLimits (0.27s)
+=== CONT  TestNamespaceValueStops
+=== RUN   TestNamespaceValueStops/merged_blocks
+=== PAUSE TestNamespaceValueStops/merged_blocks
+=== RUN   TestNamespaceValueStops/exported_let
+=== PAUSE TestNamespaceValueStops/exported_let
+=== RUN   TestNamespaceValueStops/Object.keys
+=== PAUSE TestNamespaceValueStops/Object.keys
+=== RUN   TestNamespaceValueStops/spread
+=== PAUSE TestNamespaceValueStops/spread
+=== RUN   TestNamespaceValueStops/computed_name
+=== PAUSE TestNamespaceValueStops/computed_name
+=== RUN   TestNamespaceValueStops/structural_view
+=== PAUSE TestNamespaceValueStops/structural_view
+=== RUN   TestNamespaceValueStops/unknown
+=== PAUSE TestNamespaceValueStops/unknown
+=== RUN   TestNamespaceValueStops/generic_argument
+=== PAUSE TestNamespaceValueStops/generic_argument
+=== RUN   TestNamespaceValueStops/logical_value
+=== PAUSE TestNamespaceValueStops/logical_value
+=== RUN   TestNamespaceValueStops/generic_class_parameter
+=== PAUSE TestNamespaceValueStops/generic_class_parameter
+=== RUN   TestNamespaceValueStops/generic_interface_parameter
+=== PAUSE TestNamespaceValueStops/generic_interface_parameter
+=== RUN   TestNamespaceValueStops/member_write
+=== PAUSE TestNamespaceValueStops/member_write
+=== CONT  TestNamespaceLimitsStayLoud
+=== RUN   TestNamespaceLimitsStayLoud/computed_enum
+--- PASS: TestNamespaceClosedCallGraphEdges (0.56s)
+=== CONT  TestTscNamespaceDeclarationShapes
+=== RUN   TestNamespaceLimitsStayLoud/reopened_enum
+=== RUN   TestTscNamespaceDeclarationShapes/BuilderState
+=== PAUSE TestTscNamespaceDeclarationShapes/BuilderState
+=== RUN   TestTscNamespaceDeclarationShapes/JsxNames
+=== PAUSE TestTscNamespaceDeclarationShapes/JsxNames
+=== RUN   TestTscNamespaceDeclarationShapes/ReactNames
+=== PAUSE TestTscNamespaceDeclarationShapes/ReactNames
+=== RUN   TestTscNamespaceDeclarationShapes/BinaryExpressionState
+=== PAUSE TestTscNamespaceDeclarationShapes/BinaryExpressionState
+=== RUN   TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+=== PAUSE TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+=== RUN   TestTscNamespaceDeclarationShapes/Debug
+=== PAUSE TestTscNamespaceDeclarationShapes/Debug
+=== RUN   TestTscNamespaceDeclarationShapes/Debug.log
+=== PAUSE TestTscNamespaceDeclarationShapes/Debug.log
+=== RUN   TestTscNamespaceDeclarationShapes/Parser
+=== PAUSE TestTscNamespaceDeclarationShapes/Parser
+=== RUN   TestTscNamespaceDeclarationShapes/IncrementalParser
+=== PAUSE TestTscNamespaceDeclarationShapes/IncrementalParser
+=== RUN   TestTscNamespaceDeclarationShapes/tracingEnabled
+=== PAUSE TestTscNamespaceDeclarationShapes/tracingEnabled
+=== CONT  TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== RUN   TestNamespaceLimitsStayLoud/early_enum
+--- PASS: TestNamespaceEnumInitializationIndependentOfModuleAnalysis (0.09s)
+=== CONT  TestNamespaceCallGraphCycleUnion
+=== RUN   TestNamespaceLimitsStayLoud/mutable_object_escape
+--- PASS: TestNamespaceTypesErase (0.42s)
+=== CONT  TestNamespaceCallGraphLinearWork
+=== RUN   TestNamespaceCallGraphLinearWork/12
+--- PASS: TestNamespaceCallGraphCycleUnion (0.08s)
+=== CONT  TestNamespaceAmbientContextsDoNotExecute
+--- PASS: TestTracingNamespaceEscapeLowers (0.51s)
+=== CONT  TestNamespaceAmbientHostInitialization
+=== RUN   TestNamespaceLimitsStayLoud/object_value
+=== RUN   TestNamespaceCallGraphLinearWork/24
+--- PASS: TestNamespaceAmbientContextsDoNotExecute (0.11s)
+=== CONT  TestNamespaceValueParameterAgrees
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+=== RUN   TestNamespaceLimitsStayLoud/reflection
+--- PASS: TestNeverRestMarkerIdentity (1.08s)
+=== CONT  TestNamespaceValueIdentityAgrees
+--- PASS: TestNamespaceCallGraphLinearWork (0.24s)
+    --- PASS: TestNamespaceCallGraphLinearWork/12 (0.10s)
+    --- PASS: TestNamespaceCallGraphLinearWork/24 (0.13s)
+=== CONT  TestModuleNamespaceInitializedReadProof
+=== RUN   TestNamespaceLimitsStayLoud/reopening
+--- PASS: TestModuleNamespaceInitializedReadProof (0.16s)
+=== CONT  TestNamespaceReceiverArrowInheritsScope
+--- PASS: TestNamespaceReceiverArrowInheritsScope (0.14s)
+=== CONT  TestNamespaceClassEarlyConstructionStaysLoud
+=== RUN   TestNamespaceLimitsStayLoud/function_merge_escape
+=== CONT  TestCallableNamespaceReceiverStaysLoud
+--- PASS: TestNamespaceValueParameterAgrees (0.55s)
+--- PASS: TestNamespaceClassEarlyConstructionStaysLoud (0.15s)
+=== CONT  TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceLimitsStayLoud/escape
+=== PAUSE TestCallableNamespaceLimitsStayLoud/escape
+=== RUN   TestCallableNamespaceLimitsStayLoud/reflection
+=== PAUSE TestCallableNamespaceLimitsStayLoud/reflection
+=== RUN   TestCallableNamespaceLimitsStayLoud/replacement
+=== PAUSE TestCallableNamespaceLimitsStayLoud/replacement
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== RUN   TestCallableNamespaceLimitsStayLoud/early
+=== PAUSE TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestNodeFSFileNamespaceImport
+=== RUN   TestNamespaceLimitsStayLoud/class_merge
+--- PASS: TestCallableNamespaceReceiverStaysLoud (0.17s)
+=== CONT  TestModuleNamespaceLimitsStayLoud
+=== RUN   TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;
+=== PAUSE TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;
+=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));
+=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));
+=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);
+=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);
+=== RUN   TestModuleNamespaceLimitsStayLoud/performance.value_=_2;
+=== PAUSE TestModuleNamespaceLimitsStayLoud/performance.value_=_2;
+=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);
+=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);
+=== CONT  TestGenericFunctionValueNamespaceDirectCallsKeepIdentity
+=== RUN   TestNamespaceLimitsStayLoud/destructured_state
+--- PASS: TestGenericFunctionValueNamespaceDirectCallsKeepIdentity (0.08s)
+=== CONT  TestEnumNamespaceSharedCycle
+--- PASS: TestNamespaceValueIdentityAgrees (0.71s)
+=== CONT  TestClassDeclarationHeritageBesideANamespaceLowers/.ts
+=== RUN   TestNamespaceLimitsStayLoud/nested_object_var
+--- PASS: TestEnumNamespaceSharedCycle (0.21s)
+=== CONT  TestClassDeclarationHeritageBesideANamespaceLowers/.a
+=== CONT  TestNeverRestMarkerUnseenReadsStop/a_namespace_member_by_a_computed_name
+=== RUN   TestNamespaceLimitsStayLoud/rest_object_var
+--- PASS: TestClassDeclarationHeritageBesideANamespaceLowers (0.00s)
+    --- PASS: TestClassDeclarationHeritageBesideANamespaceLowers/.ts (0.26s)
+    --- PASS: TestClassDeclarationHeritageBesideANamespaceLowers/.a (0.23s)
+=== CONT  TestNeverRestMarkerUnseenReadsStop/a_module_object_as_a_value
+=== RUN   TestNamespaceLimitsStayLoud/default_object_var
+=== CONT  TestNeverRestMarkerUnseenReadsStop/a_module_member_by_a_computed_name
+=== RUN   TestNamespaceLimitsStayLoud/computed_member
+=== CONT  TestNeverRestMarkerUnseenReadsStop/a_namespace_object_as_a_value
+=== CONT  TestNeverRestMarkerOffListKeepsMainsStop/called_through_the_slot
+=== RUN   TestNamespaceLimitsStayLoud/replace_function
+=== CONT  TestNeverRestMarkerOffListKeepsMainsStop/typeof_through_the_parameter
+=== RUN   TestNamespaceLimitsStayLoud/early_call
+=== RUN   TestNamespaceLimitsStayLoud/early_read
+=== CONT  TestNeverRestMarkerOffListKeepsMainsStop/length_through_the_parameter
+=== CONT  TestNeverRestMarkerOffListKeepsMainsStop/the_parameter_captured_by_an_arrow
+=== RUN   TestNamespaceLimitsStayLoud/block_var
+=== CONT  TestNeverRestMarkerOffListKeepsMainsStop/a_field
+=== RUN   TestNamespaceLimitsStayLoud/nested_early_read
+=== CONT  TestNeverRestMarkerOffListKeepsMainsStop/an_ordinary_slot
+=== RUN   TestNamespaceLimitsStayLoud/explicit_receiver
+=== CONT  TestNeverRestMarkerOffListKeepsMainsStop/a_variable
+--- PASS: TestNamespaceLimitsStayLoud (2.94s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_enum (0.09s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopened_enum (0.09s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_enum (0.11s)
+    --- PASS: TestNamespaceLimitsStayLoud/mutable_object_escape (0.10s)
+    --- PASS: TestNamespaceLimitsStayLoud/object_value (0.11s)
+    --- PASS: TestNamespaceLimitsStayLoud/reflection (0.17s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopening (0.21s)
+    --- PASS: TestNamespaceLimitsStayLoud/function_merge_escape (0.12s)
+    --- PASS: TestNamespaceLimitsStayLoud/class_merge (0.18s)
+    --- PASS: TestNamespaceLimitsStayLoud/destructured_state (0.23s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_object_var (0.08s)
+    --- PASS: TestNamespaceLimitsStayLoud/rest_object_var (0.25s)
+    --- PASS: TestNamespaceLimitsStayLoud/default_object_var (0.14s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_member (0.18s)
+    --- PASS: TestNamespaceLimitsStayLoud/replace_function (0.41s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_call (0.09s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_read (0.11s)
+    --- PASS: TestNamespaceLimitsStayLoud/block_var (0.12s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_early_read (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/explicit_receiver (0.06s)
+=== CONT  TestNeverRestMarkerAcrossModules/proven
+--- PASS: TestNeverRestMarkerOffListKeepsMainsStop (0.01s)
+    --- PASS: TestNeverRestMarkerOffListKeepsMainsStop/called_through_the_slot (0.48s)
+    --- PASS: TestNeverRestMarkerOffListKeepsMainsStop/typeof_through_the_parameter (0.18s)
+    --- PASS: TestNeverRestMarkerOffListKeepsMainsStop/length_through_the_parameter (0.10s)
+    --- PASS: TestNeverRestMarkerOffListKeepsMainsStop/the_parameter_captured_by_an_arrow (0.10s)
+    --- PASS: TestNeverRestMarkerOffListKeepsMainsStop/a_field (0.05s)
+    --- PASS: TestNeverRestMarkerOffListKeepsMainsStop/an_ordinary_slot (0.07s)
+    --- PASS: TestNeverRestMarkerOffListKeepsMainsStop/a_variable (0.08s)
+=== CONT  TestNeverRestMarkerAcrossModules/stored
+=== CONT  TestNeverRestMarkerLowersTscShape/ts
+--- PASS: TestNodeFSFileNamespaceImport (2.23s)
+=== CONT  TestNeverRestMarkerLowersTscShape/a
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+--- PASS: TestNeverRestMarkerUnseenReadsStop (0.00s)
+    --- PASS: TestNeverRestMarkerUnseenReadsStop/a_namespace_member_by_a_computed_name (0.29s)
+    --- PASS: TestNeverRestMarkerUnseenReadsStop/a_module_object_as_a_value (0.25s)
+    --- PASS: TestNeverRestMarkerUnseenReadsStop/a_module_member_by_a_computed_name (0.16s)
+    --- PASS: TestNeverRestMarkerUnseenReadsStop/a_namespace_object_as_a_value (1.52s)
+=== CONT  TestNeverRestMarkerLowersTscShape/captureStackTrace
+=== CONT  TestNeverRestMarkerLowersTscShape/ts_asserts
+--- PASS: TestNeverRestMarkerAcrossModules (0.00s)
+    --- PASS: TestNeverRestMarkerAcrossModules/stored (0.10s)
+    --- PASS: TestNeverRestMarkerAcrossModules/proven (1.68s)
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_log.a
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestDebugNamespaceMergedCapabilities/class_merge.a
+=== CONT  TestNamespaceValueStops/merged_blocks
+=== CONT  TestNamespaceValueStops/unknown
+--- PASS: TestDebugNamespaceMergedCapabilities (0.00s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/class_merge.a (0.07s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_class.a (0.42s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_log.a (0.61s)
+=== CONT  TestNamespaceValueStops/member_write
+=== CONT  TestNamespaceValueStops/generic_interface_parameter
+=== CONT  TestNamespaceValueStops/generic_class_parameter
+=== CONT  TestNamespaceValueStops/logical_value
+=== CONT  TestNamespaceValueStops/generic_argument
+=== CONT  TestNamespaceValueStops/spread
+=== CONT  TestNamespaceValueStops/structural_view
+--- PASS: TestNeverRestMarkerLowersTscShape (0.00s)
+    --- PASS: TestNeverRestMarkerLowersTscShape/ts (1.31s)
+    --- PASS: TestNeverRestMarkerLowersTscShape/ts_asserts (0.27s)
+    --- PASS: TestNeverRestMarkerLowersTscShape/a (1.71s)
+    --- PASS: TestNeverRestMarkerLowersTscShape/captureStackTrace (2.64s)
+=== CONT  TestNamespaceValueStops/computed_name
+=== CONT  TestNamespaceValueStops/Object.keys
+=== CONT  TestNamespaceValueStops/exported_let
+=== CONT  TestTscNamespaceDeclarationShapes/BuilderState
+=== CONT  TestTscNamespaceDeclarationShapes/Debug
+=== NAME  TestTscNamespaceDeclarationShapes/BuilderState
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/tracingEnabled
+=== CONT  TestTscNamespaceDeclarationShapes/IncrementalParser
+--- PASS: TestNamespaceValueStops (0.00s)
+    --- PASS: TestNamespaceValueStops/merged_blocks (0.28s)
+    --- PASS: TestNamespaceValueStops/member_write (0.41s)
+    --- PASS: TestNamespaceValueStops/unknown (0.55s)
+    --- PASS: TestNamespaceValueStops/generic_interface_parameter (0.43s)
+    --- PASS: TestNamespaceValueStops/generic_class_parameter (0.27s)
+    --- PASS: TestNamespaceValueStops/logical_value (0.34s)
+    --- PASS: TestNamespaceValueStops/generic_argument (0.39s)
+    --- PASS: TestNamespaceValueStops/spread (0.27s)
+    --- PASS: TestNamespaceValueStops/Object.keys (0.25s)
+    --- PASS: TestNamespaceValueStops/computed_name (0.32s)
+    --- PASS: TestNamespaceValueStops/structural_view (0.46s)
+    --- PASS: TestNamespaceValueStops/exported_let (0.33s)
+=== CONT  TestTscNamespaceDeclarationShapes/Parser
+=== NAME  TestTscNamespaceDeclarationShapes/Debug
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/Debug.log
+=== NAME  TestTscNamespaceDeclarationShapes/tracingEnabled
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/BinaryExpressionState
+=== NAME  TestTscNamespaceDeclarationShapes/IncrementalParser
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+=== NAME  TestTscNamespaceDeclarationShapes/BinaryExpressionState
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/ReactNames
+=== NAME  TestTscNamespaceDeclarationShapes/Debug.log
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/JsxNames
+=== NAME  TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestCallableNamespaceLimitsStayLoud/escape
+=== NAME  TestTscNamespaceDeclarationShapes/Parser
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic
+=== NAME  TestTscNamespaceDeclarationShapes/ReactNames
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestCallableNamespaceLimitsStayLoud/early
+=== NAME  TestTscNamespaceDeclarationShapes/JsxNames
+    namespaces_shapes_test.go:46: declaration shape lowers
+--- PASS: TestTscNamespaceDeclarationShapes (0.10s)
+    --- PASS: TestTscNamespaceDeclarationShapes/BuilderState (0.09s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Debug (0.13s)
+    --- PASS: TestTscNamespaceDeclarationShapes/tracingEnabled (0.09s)
+    --- PASS: TestTscNamespaceDeclarationShapes/IncrementalParser (0.14s)
+    --- PASS: TestTscNamespaceDeclarationShapes/BinaryExpressionState (0.08s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Debug.log (0.09s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Parser.JSDocParser (0.20s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Parser (0.26s)
+    --- PASS: TestTscNamespaceDeclarationShapes/ReactNames (0.19s)
+    --- PASS: TestTscNamespaceDeclarationShapes/JsxNames (0.18s)
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== CONT  TestCallableNamespaceLimitsStayLoud/replacement
+=== CONT  TestCallableNamespaceLimitsStayLoud/reflection
+=== CONT  TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;
+=== CONT  TestModuleNamespaceLimitsStayLoud/performance.value_=_2;
+=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);
+=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);
+--- PASS: TestCallableNamespaceLimitsStayLoud (0.00s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/escape (0.06s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic (0.07s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/early (0.09s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic_method (0.09s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/reflection (0.17s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/replacement (0.19s)
+=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));
+--- PASS: TestModuleNamespaceLimitsStayLoud (0.00s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/performance.value_=_2; (0.12s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance; (0.17s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`); (0.08s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(',')); (0.08s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`); (0.11s)
+--- PASS: TestNamespaceAmbientHostInitialization (7.08s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (2.84s)
+    --- PASS: TestNamespaceAmbientHostInitialization/cwd (4.15s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	44.604s
+exit=0
+=== STEP mutant-diff
+ internal/lower/namespace_value.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+=== MUTANT
+=== RUN   TestNamespaceValueStops
+=== PAUSE TestNamespaceValueStops
+=== CONT  TestNamespaceValueStops
+=== RUN   TestNamespaceValueStops/merged_blocks
+=== PAUSE TestNamespaceValueStops/merged_blocks
+=== RUN   TestNamespaceValueStops/exported_let
+=== PAUSE TestNamespaceValueStops/exported_let
+=== RUN   TestNamespaceValueStops/Object.keys
+=== PAUSE TestNamespaceValueStops/Object.keys
+=== RUN   TestNamespaceValueStops/spread
+=== PAUSE TestNamespaceValueStops/spread
+=== RUN   TestNamespaceValueStops/computed_name
+=== PAUSE TestNamespaceValueStops/computed_name
+=== RUN   TestNamespaceValueStops/structural_view
+=== PAUSE TestNamespaceValueStops/structural_view
+=== RUN   TestNamespaceValueStops/unknown
+=== PAUSE TestNamespaceValueStops/unknown
+=== RUN   TestNamespaceValueStops/generic_argument
+=== PAUSE TestNamespaceValueStops/generic_argument
+=== RUN   TestNamespaceValueStops/logical_value
+=== PAUSE TestNamespaceValueStops/logical_value
+=== RUN   TestNamespaceValueStops/generic_class_parameter
+=== PAUSE TestNamespaceValueStops/generic_class_parameter
+=== RUN   TestNamespaceValueStops/generic_interface_parameter
+=== PAUSE TestNamespaceValueStops/generic_interface_parameter
+=== RUN   TestNamespaceValueStops/member_write
+=== PAUSE TestNamespaceValueStops/member_write
+=== CONT  TestNamespaceValueStops/merged_blocks
+=== CONT  TestNamespaceValueStops/unknown
+=== CONT  TestNamespaceValueStops/generic_class_parameter
+=== CONT  TestNamespaceValueStops/logical_value
+=== CONT  TestNamespaceValueStops/generic_argument
+=== CONT  TestNamespaceValueStops/structural_view
+=== CONT  TestNamespaceValueStops/computed_name
+=== NAME  TestNamespaceValueStops/generic_class_parameter
+    namespace_value_test.go:53: got <nil>, want NotYet "a namespace value seen as an argument to a parameter declared with a type parameter"
+=== CONT  TestNamespaceValueStops/spread
+=== CONT  TestNamespaceValueStops/Object.keys
+=== CONT  TestNamespaceValueStops/exported_let
+=== CONT  TestNamespaceValueStops/generic_interface_parameter
+=== CONT  TestNamespaceValueStops/member_write
+=== NAME  TestNamespaceValueStops/generic_interface_parameter
+    namespace_value_test.go:53: got <nil>, want NotYet "a namespace value seen as an argument to a parameter declared with a type parameter"
+--- FAIL: TestNamespaceValueStops (0.00s)
+    --- PASS: TestNamespaceValueStops/generic_argument (0.34s)
+    --- PASS: TestNamespaceValueStops/unknown (0.36s)
+    --- FAIL: TestNamespaceValueStops/generic_class_parameter (0.39s)
+    --- PASS: TestNamespaceValueStops/logical_value (0.39s)
+    --- PASS: TestNamespaceValueStops/merged_blocks (0.43s)
+    --- PASS: TestNamespaceValueStops/Object.keys (0.34s)
+    --- PASS: TestNamespaceValueStops/exported_let (0.40s)
+    --- PASS: TestNamespaceValueStops/computed_name (0.55s)
+    --- PASS: TestNamespaceValueStops/structural_view (0.57s)
+    --- PASS: TestNamespaceValueStops/spread (0.53s)
+    --- PASS: TestNamespaceValueStops/member_write (0.29s)
+    --- FAIL: TestNamespaceValueStops/generic_interface_parameter (0.38s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.132s
+FAIL
+exit=1
+=== STEP restored-diff
