@@ -234,9 +234,9 @@ console.log(String(check(new Dog(), (dog: Dog): boolean => dog.bark() === "woof"
 // hasTrailingComma and transformFlags and an element no wider than a number (NodeArrayLayout), and an N is
 // an object; the two over readonly T[] and readonly T[] | undefined stand for them, beside the overload that
 // takes any N. stackCrawlMark is left out as assertNode's twin leaves it: `stackCrawlMark || assertEachNode`
-// reads an overload set as a value, which stage 0 stops. array is "readonly ", or "" for a twin that writes
-// nodes, since tsc stands an overload over readonly T[] only beside an implementation that takes a readonly
-// array too. before runs ahead of the presence tests, and loop inside them.
+// reads an overload set as a value, which stage 0 stops. array is "readonly " for tsc's shape; a mutable
+// array's overload is refused first at nodes itself, by the census's own invariance, so the twins that write
+// keep it readonly and write through a cast. before runs ahead of the presence tests, and loop inside them.
 func overloadCallbackAssertEachNode(array, before, loop string) string {
 	return overloadCallbackNodes + `function shouldAssert(): boolean { return true; }
 function assertEachNode<T extends N, U extends T>(nodes: ` + array + `T[], test: (node: T) => node is U, message?: string): asserts nodes is ` + array + `U[];
@@ -330,13 +330,14 @@ func TestOverloadCallbackEachRefusals(t *testing.T) {
 		// An array the overload's caller never passed holds no T.
 		{"another array", twin("", "readonly ", "", `            const extra: readonly N[] = [{ kind: 2 }];
 `+overloadCallbackEachFor("const n of extra", ""))},
-		// An element written while the loop runs is one the overload's caller never passed.
-		{"an index write in the loop", twin("", "", other, overloadCallbackEachFor("const n of nodes", "                nodes[0] = other;\n"))},
+		// An element written while the loop runs is one the overload's caller never passed. tsc's array is
+		// readonly, so a write goes through a cast, and a mutable overload is refused first at nodes itself.
+		{"an index write in the loop", twin("", "readonly ", other, overloadCallbackEachFor("const n of nodes", "                (nodes as N[])[0] = other;\n"))},
 		// So is one pushed, which the loop then reaches.
-		{"a push in the loop", twin("", "", other, overloadCallbackEachFor("const n of nodes", "                nodes.push(other);\n"))},
+		{"a push in the loop", twin("", "readonly ", other, overloadCallbackEachFor("const n of nodes", "                (nodes as N[]).push(other);\n"))},
 		// A write before the loop is outside it, and still lands in what the loop reads.
-		{"a write before the loop", twin("", "", other+`        if (nodes !== undefined) {
-            nodes[0] = other;
+		{"a write before the loop", twin("", "readonly ", other+`        if (nodes !== undefined) {
+            (nodes as N[])[0] = other;
         }
 `, overloadCallbackEachFor("const n of nodes", ""))},
 		// A call that takes the array could write it, whatever its parameter's type says.
@@ -417,6 +418,23 @@ function assertNode(node: N | undefined, test: ((node: N) => boolean) | undefine
 console.log("declared");
 `, "overload 1 of assertNode parameter test cannot be served by implementation parameter test"},
 		{"a for-of", overloadCallbackNodes + `function assertEachNode<T extends N, U extends T>(nodes: any, test: (node: T) => node is U): void;
+function assertEachNode(nodes: readonly N[] | undefined, test: ((node: N) => boolean) | undefined): void {
+    let passed = true;
+    if (test !== undefined && nodes !== undefined) {
+        for (const n of nodes) {
+            if (!test(n)) {
+                passed = false;
+                break;
+            }
+        }
+    }
+    check(passed, "Unexpected node.");
+}
+console.log("declared");
+`, "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test"},
+		// An array of any holds any in its type argument, which the walk reads though it skips a library
+		// type's members.
+		{"a for-of over an array of any", overloadCallbackNodes + `function assertEachNode<T extends N, U extends T>(nodes: readonly any[], test: (node: T) => node is U): void;
 function assertEachNode(nodes: readonly N[] | undefined, test: ((node: N) => boolean) | undefined): void {
     let passed = true;
     if (test !== undefined && nodes !== undefined) {

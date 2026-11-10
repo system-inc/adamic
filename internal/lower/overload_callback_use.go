@@ -3,6 +3,7 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // An overload can promise its caller a narrower callback than its implementation takes, as tsc's debug.ts
@@ -424,6 +425,21 @@ func (l *lowering) overloadCallbackHoldsAny(t *checker.Type, depth int, seen map
 			if l.overloadCallbackHoldsAny(argument, depth+1, seen) {
 				return true
 			}
+		}
+	}
+	// A library type's members are the library's, not values the type holds: ReadonlyArray's every and
+	// forEach take `thisArg?: any`, so walking them would find any in every array. Its type arguments,
+	// walked above, are what a value of it holds.
+	if symbol := t.Symbol(); symbol != nil && len(symbol.Declarations) > 0 {
+		library := true
+		for _, declaration := range symbol.Declarations {
+			file := ast.GetSourceFileOfNode(declaration)
+			if file == nil || !(load.IsLibrary(file) || load.IsPrelude(file)) {
+				library = false
+			}
+		}
+		if library {
+			return false
 		}
 	}
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
