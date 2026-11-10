@@ -1,3 +1,7 @@
+> Nov 10 Change 2: current behavior and complete evidence are in
+> [debug-display-2-README.md](debug-display-2-README.md). The graph module
+> home also amends 99n; earlier Change 1 records below remain historical.
+
 > Ready to land: zero class (c), unchanged runtime export keys, green amended
 > full apply, and all 398 final lane shards passing their guards.
 

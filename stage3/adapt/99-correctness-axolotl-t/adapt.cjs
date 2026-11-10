@@ -80,18 +80,32 @@ function plan(texts) {
     return {texts: after, edits: pins.reduce((n,p) => n + p.exactSites.length, 0)};
 }
 function adapt(tree) {
+    const relocation = require('./debug-display-2.cjs');
+    const localFile = path.join(tree, relocation.home);
     const files = [...new Set(pins.map(pin => pin.file))];
     const before = new Map(files.map(file => [file, fs.readFileSync(path.join(tree, 'src/compiler', file), 'utf8')]));
+    if (fs.existsSync(localFile)) {
+        const local = fs.readFileSync(localFile, 'utf8');
+        const virtual = new Map(before);
+        virtual.set('debug.ts', relocation.restore(before.get('debug.ts'), local));
+        assert.equal(plan(virtual).edits, 0, 'relocated tree has incomplete earlier owners');
+        return {files: 0, edits: 0, javascriptChanging: true};
+    }
     const result = plan(before);
-    // Validate every owner and reread every input before the first write.
+    const moved = relocation.plan(result.texts.get('debug.ts'), undefined);
+    const output = new Map(result.texts);
+    output.set('debug.ts', moved.debug);
     for (const [file, text] of before) assert.equal(fs.readFileSync(path.join(tree, 'src/compiler', file), 'utf8'), text, `concurrent source change: ${file}`);
+    assert(!fs.existsSync(localFile), 'new graph module appeared while planning');
     let changed = 0;
-    for (const [file, text] of result.texts) if (text !== before.get(file)) {
+    for (const [file, text] of output) if (text !== before.get(file)) {
         fs.writeFileSync(path.join(tree, 'src/compiler', file), text);
         changed++;
     }
-    return {files: changed, edits: result.edits, javascriptChanging: true};
+    fs.writeFileSync(localFile, moved.local, {flag: 'wx'});
+    return {files: changed + 1, edits: result.edits + moved.edits, javascriptChanging: true};
 }
+
 module.exports = {adapt, plan, inspect, owners, hash, pins};
 if (require.main === module) {
     assert.equal(process.argv.length, 3, 'usage: node adapt.cjs TREE');
