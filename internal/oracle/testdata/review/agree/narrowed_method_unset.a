@@ -4,7 +4,7 @@
 // evaluated, as on Node. The Method road's lookup is what the ?. tests, never the narrowing.
 interface Counter {
 	x: number;
-	add?: (amount: number) => number;
+	add?: ((amount: number) => number) | undefined;
 }
 function clear(counter: Counter): void {
 	counter.add = undefined;

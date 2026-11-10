@@ -10,7 +10,6 @@ if (holder.handle === undefined) {
 		if (set) set(true);
 		console.log('blocked');
 	} catch (error) {
-		console.log(`${error instanceof TypeError}`);
-		if (error instanceof Error) console.log(error.message);
+		if (error instanceof Error) console.log(`${error.name} ${error.message}`);
 	}
 }
