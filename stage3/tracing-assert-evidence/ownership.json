@@ -1,0 +1,97 @@
+{
+  "base": "e24f2600a5d8a8521c5128827cad395d47c81c81",
+  "scripts": [
+    {
+      "path": "32-indexed-reads-program/adapt.cjs",
+      "sha256": "78045b6c6cbd733845a3c81d91c233e7b968eb5fce8ca736df0deb434eae83ac",
+      "matches": [
+        {
+          "line": 6,
+          "text": "const files = [\"corePublic.ts\", \"performanceCore.ts\", \"types.ts\", \"expressionToTypeNode.ts\", \"executeCommandLine.ts\", \"builder.ts\", \"builderPublic.ts\", \"builderState.ts\", \"builderStatePublic.ts\", \"watch.ts\", \"watchPublic.ts\", \"watchUtilities.ts\", \"resolutionCache.ts\", \"tsbuild.ts\", \"tsbuildPublic.ts\", \"moduleNameResolver.ts\", \"moduleSpecifiers.ts\", \"sys.ts\", \"program.ts\", \"commandLineParser.ts\", \"binder.ts\", \"semver.ts\", \"programDiagnostics.ts\", \"tracing.ts\", \"symbolWalker.ts\", \"performance.ts\", \"utilities.ts\"];"
+        }
+      ]
+    },
+    {
+      "path": "47-host-errors/adapt.cjs",
+      "sha256": "fc43cfaf46c36f565ed8123411b710c28de3e368d6898115878fe9ab33564a3b",
+      "matches": [
+        {
+          "line": 88,
+          "text": "    const tracing = source(\"tracing.ts\");"
+        }
+      ]
+    },
+    {
+      "path": "47-host-errors/verify.cjs",
+      "sha256": "08e17fe12367b173736ce6b71ccf235b3e72144c427b624f5770ace34ee04000",
+      "matches": [
+        {
+          "line": 37,
+          "text": "const tracingOriginal = one(func(file(before, \"tracing.ts\"), \"startTracing\"), ts.isCatchClause);"
+        },
+        {
+          "line": 38,
+          "text": "const tracingAdapted = one(func(file(after, \"tracing.ts\"), \"startTracing\"), ts.isCatchClause);"
+        },
+        {
+          "line": 148,
+          "text": "const beforeBytes = new Map([\"sys.ts\", \"tracing.ts\", \"hostErrors.ts\"].map(name => [name, fs.readFileSync(path.join(after, \"src/compiler\", name))]));"
+        }
+      ]
+    },
+    {
+      "path": "62-temporary-tracing-write/adapt.cjs",
+      "sha256": "f983bc5d0e4c19a6e90b4ebe490a6b4beb03fd1e778cdcc6b9e42637be5f6b72",
+      "matches": [
+        {
+          "line": 7,
+          "text": "const file = \"src/compiler/tracing.ts\";"
+        }
+      ]
+    },
+    {
+      "path": "63-temporary-tracing-legend/adapt.cjs",
+      "sha256": "b12a6fdb9bfca53a93c84f16de3babba3d9a3f91feed03daa2681fd5f37368b1",
+      "matches": [
+        {
+          "line": 7,
+          "text": "const file = \"src/compiler/tracing.ts\";"
+        }
+      ]
+    },
+    {
+      "path": "65-temporary-node-builtins/adapt.cjs",
+      "sha256": "69a8a54c11bfe388e9ba78af140d994e9239a171635ef1cd048133db7629a1b8",
+      "matches": [
+        {
+          "line": 18,
+          "text": "const plans = ['core.ts', 'performanceCore.ts', 'tracing.ts'].map(name => {"
+        },
+        {
+          "line": 31,
+          "text": "    if (name === 'tracing.ts') {"
+        }
+      ]
+    },
+    {
+      "path": "65-temporary-node-builtins/check.cjs",
+      "sha256": "e2eb81769230532122aca0d56e7346d2567f4721f25b53e48f2c40238839ed94",
+      "matches": [
+        {
+          "line": 4,
+          "text": "const names=['core.ts','performanceCore.ts','tracing.ts'];"
+        }
+      ]
+    }
+  ],
+  "activeOwners": {
+    "32-indexed-reads-program": "indexed expression sites and optional TraceRecord field",
+    "47-host-errors": "startTracing catch",
+    "62-temporary-tracing-write": "dumpTypes call",
+    "63-temporary-tracing-legend": "dumpLegend call",
+    "65-temporary-node-builtins": "Node builtin declarations"
+  },
+  "wholeStopTracingPin": false,
+  "exactAssertExpressionPin": false,
+  "newDirectoryRequired": true
+}
