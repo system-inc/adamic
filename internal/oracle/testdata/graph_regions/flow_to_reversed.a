@@ -1,0 +1,10 @@
+// toReversed's copy is an ArraySlice inside an ArrayReverse, which graphFlows plans through the reverse (#y7wexf5).
+interface Node { name: string; next: Node[] }
+function reversed(nodes: Node[]): Node[] {
+ return nodes.toReversed();
+}
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b); // this cycle makes the program a graph program, so Node values must be in a region
+a.next = reversed(a.next); // a holds the copy, the copy holds b, b holds a
+console.log(`${a.name} ${a.next.length} ${a.next[0]?.name} ${a.next[0]?.next[0] === a}`);
