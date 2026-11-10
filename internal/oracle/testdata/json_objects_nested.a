@@ -16,7 +16,7 @@ console.log(JSON.stringify(outer) ?? '<undefined>');
 const many: readonly Outer[] = [outer, { id: 2, inner: { label: 'd', values: [4] }, list: [], flags: [] }];
 console.log(JSON.stringify(many, null, '\t') ?? '<undefined>');
 function either(flag: boolean): Inner | string {
-	return flag ? { label: 'e', values: [5] } : 'text';
+	return flag ? { label: 'e', values: [5], count: 6 } : 'text';
 }
 console.log(JSON.stringify(either(true)) ?? '<undefined>', JSON.stringify(either(false)) ?? '<undefined>');
 console.log(JSON.stringify({ wrapped: outer.inner, at: 0 }) ?? '<undefined>');
