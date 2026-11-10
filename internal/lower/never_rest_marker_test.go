@@ -451,23 +451,24 @@ func TestNeverRestMarkerNamespaceMember(t *testing.T) {
 }
 
 // Lower's must on 4e89ac5: a read the reference index doesn't see would lower on the ordinary road beside
-// the marker, so === would split from Node's. Every such read is already NotYet, through the namespace
-// object or the module's: a member by a computed name, and the namespace or module object as a value.
-// A member by a computed name, D['f'], reads the object itself, so it stops as the object read as a value
-// does, in the refusal pass (Home, dfc2f63). Each program also reads the function into a never-rest slot,
-// so only that stop stands between it and a marker beside a forwarder.
+// the marker, so === would split from Node's. Every such read is NotYet or seen, through the namespace
+// object or the module's. A member by a computed name, D['f'], reads the object itself, so it stops in the
+// refusal pass (Home, dfc2f63), now as a namespace value read by a computed name (#67jk7wq). The program
+// namespace read as a value has an object since #67jk7wq, and its all.f is a read of f the index sees: not
+// a call, so f is no marker, and the program lowers on the ordinary road with g's mark an ordinary value.
+// The module object as a value stays NotYet. Each program also reads the function into a never-rest slot,
+// so only those stand between it and a marker beside a forwarder.
 func TestNeverRestMarkerUnseenReadsStop(t *testing.T) {
 	t.Parallel()
 	const slot = "function g(mark?: AnyFunction): void {\n\tconsole.log(String(mark === undefined));\n}\n"
 	t.Run("a namespace member by a computed name", func(t *testing.T) {
 		t.Parallel()
 		_, err := lowerSourceAs(t, "type AnyFunction = (...args: never[]) => void;\n"+slot+"namespace D {\n\texport function f(): void {}\n\texport function run(): void {\n\t\tg(f);\n\t}\n}\nD.run();\nconsole.log(String(D['f'] === undefined));\n", ".ts")
-		neverRestStopsSaying(t, err, "main.ts:12:20: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet")
+		neverRestStopsSaying(t, err, "main.ts:12:20: stage 0 can't lower a namespace value seen as a receiver read by a computed name yet")
 	})
 	t.Run("a namespace object as a value", func(t *testing.T) {
 		t.Parallel()
-		_, err := lowerSourceAs(t, "type AnyFunction = (...args: never[]) => void;\n"+slot+"namespace D {\n\texport function f(): void {}\n\texport function run(): void {\n\t\tg(f);\n\t}\n}\nD.run();\nconst all = D;\nconsole.log(String(all.f === undefined));\n", ".ts")
-		neverRestStopsSaying(t, err, "main.ts:12:13: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet")
+		neverRestAgrees(t, "type AnyFunction = (...args: never[]) => void;\n"+slot+"namespace D {\n\texport function f(): void {}\n\texport function run(): void {\n\t\tg(f);\n\t}\n}\nD.run();\nconst all = D;\nconsole.log(String(all.f === undefined));\n", ".ts", "false\nfalse\n")
 	})
 	const library = "export type AnyFunction = (...args: never[]) => void;\nexport function f(): void {}\n"
 	const user = "import * as D from './library.ts';\nimport { f, type AnyFunction } from './library.ts';\n" + slot
