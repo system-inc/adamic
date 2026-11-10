@@ -225,20 +225,27 @@ increment, optional built-string replacement and narrowing, and boolean state.
 Changing an outside write from 3 to 30 is caught by Node stdout. This admits the
 state portion of Debug; its class and callable log merge remain separate limits.
 
-## Stage 3: escaped tracing object remains NotYet
+## Stage 3: a namespace read as a value (#67jk7wq)
 
-`tracing = tracingEnabled` requires a real namespace container. Flattening its
-qualified names does not implement container identity, live exported storage
-through aliases, callable receivers or JavaScript's staged export properties.
-A plain object of current member values would snapshot mutable exports and could
-change receiver behavior. That is not a small sound extension of this lowering,
-so escape, reflection and observation keep an explicit NotYet explaining the
-missing runtime container. `tracing_escape.a` preserves the compiler's alias
-shape, with singleton state and an enum, and checks that exact reason.
+`tracing = tracingEnabled` lowers. A program namespace whose name is read as a
+value, other than as a qualified read's receiver, has one object: a global
+holding a plain object literal with one field per exported function, in
+declaration order, each the function's canonical value. It's made at the start
+of the namespace's block, where the block's functions already exist, and a read
+of the name as a value goes through the namespace's readiness, as a qualified
+read does, so nothing sees it before the block ran. Identity holds across reads
+and imports, and a member read through a value of `typeof N` is a read by name.
+internal/lower/namespace_value.go holds it, and
+internal/oracle/testdata/namespace_value/mutants.md its mutants.
 
-The escape-guard mutant removes only the container observation guard. The
-regression must lose the explicit reason and fail before C emission; the later
-unbound-name NotYet is not mistaken for runtime object support.
+Only the narrow form is built, and everything else stays NotYet in its own words:
+a namespace merged across blocks, any export but non-generic functions with a
+body, types and const enums, reflection, spread and computed access on the
+value, and the value seen as anything but `typeof N` or `typeof N | undefined`.
+A value is passed to a call only as the argument of a direct call of one
+FunctionDeclaration whose own parameter is declared that way, the body that
+runs. A write to a member through the value is refused. Host namespaces keep
+the earlier stop: no runtime container is emitted for them.
 
 ## Stage 3: callable and constructor merges remain NotYet
 
@@ -278,7 +285,7 @@ not adapted original compiler implementations.
 | IncrementalParser | NotYet | Two overload signatures without bodies |
 | Debug | NotYet | Namespace class; overloads and log merge also remain |
 | Debug.log | NotYet | Callable namespace object |
-| tracingEnabled | NotYet | Escaped runtime container |
+| tracingEnabled | Lowers | One object made at its block (#67jk7wq) |
 
 Parser also has a flat destructured var factory binding, now admitted, and 18 bodyless overload
 signatures. The isolation deliberately retains them; normalizing those away
