@@ -191,6 +191,15 @@
     "retiring_task": "#xjdce2d"
   },
   {
+    "path": "internal/lower/void_widening.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-void-widening",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_void_widening.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
     "path": "internal/lower/invariance.go",
     "kind": "rule",
     "rule_id": "@typescript-eslint/method-signature-style",
