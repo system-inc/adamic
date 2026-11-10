@@ -18,6 +18,9 @@ func (l *lowering) functionBody(declaration *ast.Node) error {
 type defaulted struct {
 	local, incoming int
 	initializer     *ast.Node
+	// holdsNull is whether the parameter's type holds null, so a passed null must keep null, not take
+	// the default.
+	holdsNull bool
 }
 
 // signed is what a function whose signature is written still needs to lower its body: the local its
@@ -229,10 +232,21 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if !missing.IsMaybe() && !missing.IsReference() {
 			return l.notYet(parameter, "a default for a "+typeName(missing)+" parameter")
 		}
+		// A default is taken only for undefined, never for a passed null, so the incoming value's
+		// representation must tell the two apart: a maybe pair can't hold null, and a union holds null as a
+		// sentinel of its own, but any other reference holds null and undefined as one null pointer.
+		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
+		// ?? is kept only where the type provably can't hold null. unknown, any and a type still open
+		// after concrete may hold it, so they count as holding null (Compiler's must on #1mw3c4x).
+		concreteType := l.concrete(parameterType)
+		holdsNull := l.includesNull(concreteType) || concreteType.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsInstantiable) != 0
+		if holdsNull && !missing.IsMaybe() && missing != ir.Union {
+			return l.notYet(parameter, "a default for a parameter of type "+l.checker.TypeToString(parameterType)+", whose null and undefined are held alike")
+		}
 		incoming := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: parameter.Name().Text(), Type: missing, Function: index})
 		function.Parameters = append(function.Parameters, incoming)
-		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
+		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer, holdsNull: holdsNull})
 	}
 	if function.Closure && censusCallableSlotless(function.Returns) && !(function.Returns == ir.Union && l.regexReplacementArgument(declaration)) {
 		// A function value's arguments and result must each fit one adamic_value.
@@ -345,8 +359,23 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 			err = l.notYet(parameter.initializer, "a default of another type than its parameter")
 			break
 		}
+		// The default runs only when the argument is undefined. Where the parameter's type can't hold
+		// null, that's ?? (Coalesce); where it can, a passed null keeps null, as JavaScript does, so the
+		// test is for undefined alone.
 		incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
-		prologue = append(prologue, ir.Declare{Local: parameter.local, Value: ir.Coalesce{Value: incoming, Fallback: fallback, Of: of}})
+		if !parameter.holdsNull {
+			prologue = append(prologue, ir.Declare{Local: parameter.local, Value: ir.Coalesce{Value: incoming, Fallback: fallback, Of: of}})
+			continue
+		}
+		present := ir.Expression(incoming)
+		if incoming.Of != of {
+			if !incoming.Of.IsMaybe() || incoming.Of.Present() != of {
+				err = l.notYet(parameter.initializer, "a default whose parameter is held otherwise than its argument")
+				break
+			}
+			present = ir.Unwrap{Value: incoming, Proven: true}
+		}
+		prologue = append(prologue, ir.Declare{Local: parameter.local, Value: ir.Conditional{Condition: ir.IsUndefined{Value: incoming}, WhenTrue: fallback, WhenNot: present, Of: of}})
 	}
 	if err != nil {
 		l.function, l.this, l.functionIndex = outer, outerThis, outerIndex

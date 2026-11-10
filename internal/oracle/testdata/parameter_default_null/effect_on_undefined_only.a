@@ -1,0 +1,13 @@
+// The default runs only for undefined, never for a passed null or a present value.
+let count = 0;
+function next(): number {
+	count += 1;
+	return count * 10;
+}
+function f(x: number | null = next()): string {
+	return x === null ? 'null' : String(x);
+}
+console.log(f(null));
+console.log(f(5));
+console.log(f());
+console.log(String(count));
