@@ -107,7 +107,7 @@ var viewNoField = []viewReadExample{
 	{ir.IsNull{}, "tests a reference"},
 	{ir.IsUndefined{}, "tests a reference"},
 	{ir.JSONDecode{}, "parses a string"},
-	{ir.JSONStringify{}, "a scalar or an array of scalars; an object reference is NotYet before it lowers (pinned by view_widened_held_json.ts)"},
+	{ir.JSONStringify{}, "a scalar or an array of scalars, or an object reference, whose fields json_objects.c reads by the allocation's own representation bytes, never a type's claim (view_widened_held_json.ts agrees with Node in TestViewWidenedRoadsHeld)"},
 	{ir.JoinEnter{}, "compares the array's identity with the arrays being joined"},
 	{ir.Length{}, "an array's length"},
 	{ir.Logical{}, "one of its operands"},
@@ -326,7 +326,6 @@ func irOperandHolders(t *testing.T) map[string]bool {
 // goes red here before a lying layout is read raw natively.
 var viewReadPins = map[string]struct{ at, stops, checked string }{
 	"view_widened_held_join.ts":            {"5:84", "join on an array of objects", ""},
-	"view_widened_held_json.ts":            {"5:121", "JSON.stringify object references", ""},
 	"view_widened_held_values.ts":          {"5:113", "refuses Object.values", ""},
 	"view_widened_held_entries.ts":         {"5:115", "refuses Object.entries", ""},
 	"view_widened_held_values_checked.ts":  {"", "", "values"},

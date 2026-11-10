@@ -94,9 +94,10 @@ func TestViewWidenedReadNotYet(t *testing.T) {
 // The other roads of the lying value already hold, and stay as they are. A read through Lit itself, a closure over
 // the Lit and a generic instantiated at Lit stop with the located field-read failure on every backend. `in`,
 // Object.keys and hasOwnProperty read no field's value, and a read through Node of a field Node already held (the
-// source's own pos) reads what the source guaranteed: each lowers and agrees with Node. The whole-object readers
-// (Object.values and Object.entries, String and a template of the object, JSON.stringify), element access and for-in,
-// and Object.hasOwn stop before they lower, at those rules. A getter in the contract that only an interface declares
+// source's own pos) reads what the source guaranteed: each lowers and agrees with Node, and so does JSON.stringify,
+// which prints the allocation by its own slots' representation bytes (json_objects.c, #d9ep7de). The other
+// whole-object readers (Object.values and Object.entries, String and a template of the object), element access and
+// for-in, and Object.hasOwn stop before they lower, at those rules. A getter in the contract that only an interface declares
 // is on no allocation, so it refuses nothing (#c7w6j0y), and the read through it stops at the widened read's own rule.
 func TestViewWidenedRoadsHeld(t *testing.T) {
 	t.Parallel()
@@ -108,6 +109,7 @@ func TestViewWidenedRoadsHeld(t *testing.T) {
 		{"view_widened_held_upcast.ts", ""},
 		{"view_widened_held_keys.ts", ""},
 		{"view_widened_held_has_own_property.ts", ""},
+		{"view_widened_held_json.ts", ""},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -137,7 +139,6 @@ func TestViewWidenedRoadsHeld(t *testing.T) {
 		{"view_widened_held_entries.ts", "5:115", "refuses Object.entries"},
 		{"view_widened_held_string.ts", "5:91", "String conversion of an object"},
 		{"view_widened_held_template_object.ts", "5:89", "a template interpolating an object"},
-		{"view_widened_held_json.ts", "5:121", "JSON.stringify object references"},
 		{"view_widened_held_element.ts", "5:106", "view member read by element access is not yet checked"},
 		{"view_widened_held_for_in.ts", "5:125", "view member read by element access is not yet checked"},
 		{"view_widened_held_has_own.ts", "5:127", "Object.hasOwn on a shape not proven by a plain literal"},
