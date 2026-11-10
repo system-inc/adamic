@@ -1,0 +1,5 @@
+{
+  "command": "git clone --no-checkout https://github.com/microsoft/TypeScript.git /workspace/scratch/sygfnmc-typescript",
+  "child_exit": 143,
+  "reason": "Stopped the full-history clone during indexing and replaced it with an exact pinned shallow fetch. No census used the partial clone."
+}

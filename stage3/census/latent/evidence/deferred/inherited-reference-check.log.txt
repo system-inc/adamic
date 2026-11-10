@@ -1,0 +1,8 @@
+Inspected 187 changed non-test text files outside allowed documentation/log extensions.
+internal/lower/predicates_function_type.go:70: // in beside it so the check never reads a call target back out of the IR (call_targets_guard_test.go).
+internal/oracle/testdata/node_commonjs_require_computed.a:4: // backend_divergences_test.go). The source on Node runs as an ES module, with no require, so it never
+internal/oracle/testdata/node_commonjs_require_computed_return.a:5: // backend_divergences_test.go). The source on Node, an ES module, has no require.
+internal/oracle/testdata/node_commonjs_require_computed_uncaught.a:3: // backend_divergences_test.go), where the source on Node, an ES module, has no require. A caught one
+internal/oracle/testdata/node_commonjs_require_missing.a:3: // throws that, with the first line of Node's message (installed-layout, backend_divergences_test.go).
+internal/oracle/testdata/node_commonjs_require_missing_cast.a:4: // MODULE_NOT_FOUND where tsc 6.0.3 is installed (installed-layout, backend_divergences_test.go). The
+internal/oracle/testdata/node_commonjs_require_missing_uncaught.a:3: // (installed-layout, backend_divergences_test.go), where the source on Node, an ES module, has no

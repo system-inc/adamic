@@ -60,7 +60,9 @@ subprocess.run(['go', 'run', str(territory / 'statementrewrite'),
                 str(repository / 'internal/lower/statements.go'), str(statement_output)], check=True, cwd=territory)
 replace[str(repository / 'internal/lower/statements.go')] = str(statement_output)
 overlay('internal/lower/latent_relation_overflow.go', (territory / 'relation_overflow.go.txt').read_text())
-overlay('stage3/census/latent/tool/relation_overflow_test.go', (territory / 'relation_overflow_test.go.txt').read_text())
+# Relation stream test templates belong to the tool package in the overlay.
+for template in sorted(territory.glob('relation_*_test.go.txt')):
+    overlay('stage3/census/latent/tool/' + template.name.removesuffix('.txt'), template.read_text())
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
 # Compile the tested recorder into the overlay, including per-ref source snapshots.
@@ -87,7 +89,7 @@ refusal_output.write_text(refusal_source)
 replace[str(repository / 'internal/lower/refusals.go')] = str(refusal_output)
 # Keep all checker diagnostics and populated roots, but expose them only to measurement.
 loader = (repository / 'internal/load/load.go').read_text()
-loader = loader.replace('type Program struct {', 'type Program struct {\n latentSites []*ast.Diagnostic\n latentDiagnostics []string')
+loader = loader.replace('type Program struct {', 'type Program struct {\n latentRoots []*ast.SourceFile\n latentSites []*ast.Diagnostic\n latentDiagnostics []string')
 needle = 'return nil, &CheckError{Diagnostics: diagnostics}'
 assert loader.count(needle) == 1
 loader = loader.replace(needle, 'loaded.latentDiagnostics = diagnostics')
@@ -95,6 +97,7 @@ loader = loader.replace('formatted := make([]string, 0, len(all))', 'p.latentSit
 # Rename the permissive API; ordinary Load and LoadOverlay cannot expose rejected programs.
 loader = loader.replace('func Load(paths []string)', 'func LatentLoad(paths []string)')
 loader = loader.replace('func LoadOverlay(paths []string, overlay map[string]string)', 'func latentLoadOverlay(paths []string, overlay map[string]string)')
+loader = loader.replace('\treturn loaded, nil', '\tloaded.latentRoots = append([]*ast.SourceFile{}, loaded.files...)\n\treturn loaded, nil')
 loader += '\nfunc Load(paths []string) (*Program, error) { return nil, fmt.Errorf("latent census: measurement loader only; no output path") }\nfunc LoadOverlay(paths []string, overlay map[string]string) (*Program, error) { return Load(paths) }\n'
 overlay('internal/load/load.go', loader)
 overlay('internal/load/latent_hook.go', (territory / 'load.go.txt').read_text())
@@ -187,7 +190,7 @@ output = pathlib.Path(replace[str(repository / 'internal/lower/functions.go')])
 source = output.read_text()
 needle = '\tpending := l.signed[index]'
 assert source.count(needle) == 1
-source = source.replace(needle, '\tif latentPieceSkipBody(declaration) { return nil }\n' + needle)
+source = source.replace(needle, '\tif latentPieceSkipBody(declaration) { return nil }\n if latentFindingOwner != l.program.Where(declaration) { if stop := l.latentDeferredStop(declaration); stop != nil { return &latentDeferredFailure{cause: stop} } }\n' + needle)
 output.write_text(source)
 overlay('internal/lower/latent_progress.go', (territory / 'progress.go.txt').read_text())
 overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt').read_text())

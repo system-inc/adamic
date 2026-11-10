@@ -5,7 +5,11 @@ It runs every selected newly accepted program on source Node, the JavaScript
 backend through `oracle/node.mjs`, and a native release build. Stdout bytes and
 exit codes must agree. New refusals are informational. Compiler failures with
 unrecognized diagnostics and crashes fail the gate. Timeouts and a missing native
-toolchain make the run void (below).
+toolchain make the run void (below). A run that hits a runtime timeout, a
+program's or a witness repair's, is retried once alone before the timeout
+counts, so load never reads as a red; every timed-out command is recorded, and
+the summary line says how many runs timed out, were retried, and timed out
+again (#pajbaba).
 
 ```sh
 python3 cloud/admission-corpus/manifest.py --sha HEAD > /tmp/manifest.json

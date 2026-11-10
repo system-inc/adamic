@@ -114,6 +114,7 @@ func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile
 
 func latentFullSelected(ctx context.Context, program *load.Program, emit func(LatentFile), selection *latentReplaySelection) {
 	var facts *latentProgramFacts
+ var modules []*ast.SourceFile
 
 	for _, file := range program.Files() {
 		if !latentFileSelected(program.FileName(file)) {
@@ -136,16 +137,28 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 						latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(file.AsNode()), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
 					}
 				}()
-				latentRecord(fresh().latentRefuse(file))
+				fresh().latentScan(file)
 			}()
 		}
 		// Registration is prepared once per file, then deep-copied per attempted unit.
 		base := fresh()
-		base.noteInheritance(program.Files())
-		base.noteAccessorNames(program.Files())
-		base.latentRegister(program.Files())
-		base.latentRegisterNested(program.Files())
-		base.latentUseProgramFacts(&facts)
+		var orderErr error
+		if modules == nil {
+			modules, orderErr = base.latentPrepassModules()
+		}
+		if orderErr != nil {
+			latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "registration"
+			latentRecord(orderErr)
+		}
+		if orderErr == nil {
+			func() { defer latentPrepassTimer("collectViewedElements")(); base.collectViewedElements(modules) }()
+			func() { defer latentPrepassTimer("noteInheritance")(); base.noteInheritance(modules) }()
+			func() { defer latentPrepassTimer("noteAccessorNames")(); base.noteAccessorNames(modules) }()
+			if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); base.noteOmittedOptionals(modules) }() }
+			base.latentRegister(program.Files())
+			base.latentRegisterNested(program.Files())
+			base.latentUseProgramFacts(&facts)
+		}
 
 		for _, candidate := range latentCandidates(program, file) {
 			node := candidate.node
@@ -190,8 +203,16 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 						latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "Boundary", Where: program.Where(node), Reason: "unit panic; continued at next declaration", Text: fmt.Sprint(failure), Start: node.Pos(), End: node.End()})
 					}
 				}()
+				if orderErr != nil {
+					latentRecord(orderErr)
+					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "Boundary", Where: program.Where(node), Reason: "module ordering failed; unit not lowered", Text: orderErr.Error(), Start: node.Pos(), End: node.End()})
+					return
+				}
 				l := base.latentSnapshot()
 				l.latentAncestors = candidate.ancestors
+				if l.latentDeferredUnit(node) {
+					return
+				}
 				if node.Kind != ast.KindFunctionDeclaration {
 					_, err := l.statement(node)
 					latentRecord(err)

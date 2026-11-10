@@ -35,6 +35,8 @@ if marker in body:
     begin = body.index(marker)
     finish = body.index('\tvar found error', begin)
     body = body[:begin] + body[finish:]
+# The driver selects the module fallback only when no ordinary finding won.
+body = body.replace('if found == nil {\n\t\tfound = l.refusal.deferred\n\t}', '')
 body = body.replace('return found != nil', 'latentRecord(found); found = nil; return false')
 body = body.replace('\t\t\treturn &Refused{Where:', '\t\t\tlatentRecord(&Refused{Where:')
 body = body.replace('Fix: "remove it and fix any type errors"}', 'Fix: "remove it and fix any type errors"})')
@@ -73,6 +75,9 @@ functions = functions.replace(needle, needle + '\n if l.latentReady == nil { l.l
 # Generic dependency instantiations must also obey body skip policy.
 needle = 'func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {'
 functions = functions.replace(needle, needle + '\n if len(l.program.LatentDiagnosticsIn(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
+body_entry = '\tpending := l.signed[index]'
+assert functions.count(body_entry) == 1
+functions = functions.replace(body_entry, 'if latentFindingOwner != l.program.Where(declaration) { if stop := l.latentDeferredStop(declaration); stop != nil { return &latentDeferredFailure{cause: stop} } }\n' + body_entry)
 overlay('internal/lower/functions.go', functions)
 predicates_path = repository / 'internal/lower/predicates.go'
 if predicates_path.exists():

@@ -289,6 +289,8 @@ func (l *lowering) latentSpecChildren(node *ast.Node) {
 
 func latentSpeculative(ctx context.Context, program *load.Program, emit func(LatentFile)) {
 	records := []LatentFile{}
+ var facts *latentProgramFacts
+ var modules []*ast.SourceFile
 	latentSpecProgram = program
 	sites := map[string]*ast.Node{}
 	failed := map[*ast.Node]bool{}
@@ -317,14 +319,27 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 					latentRecord(fmt.Errorf("refusal scan panic: %v", crash))
 				}
 			}()
-			latentRecord(l.latentRefuse(file))
+			l.latentScan(file)
 		}()
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		latentProgressPhase("registration")
-		l.noteInheritance(program.Files())
-		l.noteAccessorNames(program.Files())
-		l.latentRegister(program.Files())
-		l.latentRegisterNested(program.Files())
+		var orderErr error
+		if modules == nil {
+			modules, orderErr = l.latentPrepassModules()
+		}
+		if orderErr != nil {
+			latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "registration"
+			l.latentSpecFailure(file.AsNode(), orderErr)
+		}
+		if orderErr == nil {
+			func() { defer latentPrepassTimer("collectViewedElements")(); l.collectViewedElements(modules) }()
+			func() { defer latentPrepassTimer("noteInheritance")(); l.noteInheritance(modules) }()
+			func() { defer latentPrepassTimer("noteAccessorNames")(); l.noteAccessorNames(modules) }()
+			if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); l.noteOmittedOptionals(modules) }() }
+			l.latentRegister(program.Files())
+			l.latentRegisterNested(program.Files())
+			l.latentUseProgramFacts(&facts)
+		}
 		latentProgressPhase("walk")
 		for _, node := range latentPieceUnits(file) {
 			latentPieceOrigin = latentPieceAtomID(node)
@@ -333,14 +348,19 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			if node.Name() != nil {
 				unit.Name = node.Name().Text()
 			}
-			copy := l.latentSnapshot()
-			copy.latentPiecePrepare(node)
-			copy.latentSpecWalk(node)
+			if orderErr != nil {
+				l.latentSpecFailure(node, orderErr)
+			} else {
+				copy := l.latentSnapshot()
+				copy.latentPiecePrepare(node)
+				copy.latentDeferredUnit(node)
+				copy.latentSpecWalk(node)
+			}
 			latentCheckUnitRelation(program, checker, &unit)
 			record.Units = append(record.Units, unit)
 			latentProgressUnitDone()
 		}
-		if latentPiece == nil { l.latentSpecWalk(file.AsNode()) }
+		if latentPiece == nil && orderErr == nil { l.latentSpecWalk(file.AsNode()) }
         // Traversal does not supply a concrete generic instantiation witness.
         // Catalogue deferred bodies separately, including declarations nested under one.
         for _, candidate := range latentCandidates(program, file) {
@@ -419,6 +439,10 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 				finding.Depth = 0
 			}
 			key := latentSpecFindingKey(finding)
+			// Deferred scan and unit events may name the same site but carry different stops.
+			if finding.Phase == "deferred" || finding.Phase == "deferred_scan" {
+				key += "\x00" + finding.Phase + "\x00" + finding.Unit
+			}
 			if !seen[key] {
 				seen[key] = true
 				record.Findings = append(record.Findings, finding)

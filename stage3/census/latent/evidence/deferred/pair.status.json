@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/adamic/stage3/census/pair/pair.py",
+    "/workspace/adamic/stage3/census/latent/evidence/deferred/base.jsonl.gz",
+    "/workspace/adamic/stage3/census/latent/evidence/deferred/head.jsonl.gz",
+    "/workspace/scratch/zb0q0zd-adapted",
+    "--typescript",
+    "/workspace/adamic/stage3/api/node_modules/typescript",
+    "--json",
+    "/workspace/adamic/stage3/census/latent/evidence/deferred/paired.json",
+    "--report",
+    "/workspace/adamic/stage3/census/latent/evidence/deferred/paired.md"
+  ],
+  "child_exit": 0
+}

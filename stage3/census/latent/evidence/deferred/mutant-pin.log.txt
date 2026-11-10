@@ -1,0 +1,8 @@
+=== RUN   TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+=== PAUSE TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+=== CONT  TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+    deferred_census_test.go:69: written-any unit reads as lowering: unit=&{Measurement:measured on a checker-rejected program Where:/tmp/adamic-gate/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd758225717/001/main.ts:1:1 Kind:KindFunctionDeclaration BodyStart:44 BodyEnd:75 RelationOverflow:<nil> Instantiated:false Status:attempted CheckerDiagnostics:[] Name:writtenAny Parent: Top: Depth:0} findings=[{PieceAtom: SiteWhere: SiteKind: SiteStart:0 SiteEnd:0 RootKind: Depth:0 BoundaryWhere: Measurement:measured on a checker-rejected program Unit:/tmp/adamic-gate/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd758225717/001/main.ts:2:1 Phase:lowering Kind:NotYet Where:/tmp/adamic-gate/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd758225717/001/main.ts:2:31 Reason:a number[] where any[] goes, with no representation Adamic can name for the slot's elements (number stored, read as any) Text:/tmp/adamic-gate/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd758225717/001/main.ts:2:31: stage 0 can't lower a number[] where any[] goes, with no representation Adamic can name for the slot's elements (number stored, read as any) yet Start:0 End:0}]
+--- FAIL: TestLatentWrittenAnyDeferredCensusStopsZb0q0zd (0.28s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent	0.369s
+FAIL
