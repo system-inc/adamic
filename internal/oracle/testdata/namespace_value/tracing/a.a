@@ -1,0 +1,25 @@
+// tsc's tracing shape (src/compiler/tracing.ts): a module let holding the namespace's own object, set
+// by a function of the namespace and cleared by another, read in another module through ?. (#67jk7wq).
+export let tracing: typeof tracingEnabled | undefined;
+
+export namespace tracingEnabled {
+	export const enum Phase {
+		Check = 'check',
+		Emit = 'emit',
+	}
+	const stack: string[] = [];
+	export function startTracing(): void {
+		tracing = tracingEnabled;
+	}
+	export function stopTracing(): void {
+		tracing = undefined;
+	}
+	export function push(phase: Phase, name: string): void {
+		stack.push(`${phase}:${name}`);
+		console.log(`push ${stack.join(' > ')}`);
+	}
+	export function pop(): void {
+		const top = stack.pop();
+		console.log(`pop ${top ?? 'nothing'}`);
+	}
+}

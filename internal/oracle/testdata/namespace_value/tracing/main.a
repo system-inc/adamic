@@ -1,0 +1,38 @@
+import { tracing, tracingEnabled } from './a.a';
+
+function trace(name: string): void {
+	tracing?.push(tracing.Phase.Check, name);
+}
+
+function report(flag: boolean): void {
+	if (flag || tracing) {
+		console.log(`report ${String(flag)} on`);
+	} else {
+		console.log(`report ${String(flag)} off`);
+	}
+}
+
+console.log(`before ${typeof tracing}`);
+trace('skipped');
+report(false);
+tracingEnabled.startTracing();
+console.log(`started ${typeof tracing} ${String(tracing === tracingEnabled)}`);
+trace('a');
+trace('b');
+report(false);
+report(true);
+if (tracing) {
+	tracing.pop();
+}
+if (!tracing) {
+	console.log('not tracing');
+}
+tracing?.push(tracing.Phase.Emit, 'c');
+tracing?.pop();
+tracing?.stopTracing();
+console.log(`stopped ${typeof tracing}`);
+trace('skipped again');
+report(false);
+if (tracing) {
+	tracing.pop();
+}
