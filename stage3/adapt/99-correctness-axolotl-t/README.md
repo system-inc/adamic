@@ -1,3 +1,11 @@
+> Candidate status: stopped at the normal bundle owner-only diff gate; not ready to land.
+
+> Nov 10 debugger-display amendment: current behavior and evidence are in
+> [debug-display-README.md](debug-display-README.md) and
+> [debug-display-PROOF.md](debug-display-PROOF.md). The original measurements
+> below predate this amendment; CW143 and automatic getter installation are
+> withdrawn with enableDebugInfo's body.
+
 # 99t: visible checks for debug formatters and a function-expression claim
 
 Task #b5w3ycg. Original base: `dd57a3c669045b9942d6aa014f955e8d2a483ae7`. After 99n landed, the branch was rebased onto main `a7b6da7f622bd768a99a443706490e80667dd547`, including 99k, 99l and 99m. Upstream is TypeScript 6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`.

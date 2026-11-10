@@ -1,0 +1,83 @@
+{
+  "compiler_base": "d4207a85833d1bed62ff04dbc8ead1b91a1c47e6",
+  "tool": "unchanged ordinary per-file census driver",
+  "tool_sha256": "9cfbb435f991be51709b2532e320a37e48a792c82af1667f34961f289b7e7191",
+  "one_line_mutant": true,
+  "records": {
+    "mutant-binder": {
+      "child_exit": 0,
+      "rows": [
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-mutant/src/compiler/binder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-mutant/src/compiler/debug.ts:525:37",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 25.624112029
+        },
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-mutant/src/compiler/binder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-mutant/src/compiler/debug.ts:525:37",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 22.172161171
+        }
+      ]
+    },
+    "after-binder": {
+      "child_exit": 0,
+      "rows": [
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-candidate/src/compiler/binder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-candidate/src/compiler/debug.ts:1021:29",
+          "reason": "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read",
+          "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "seconds": 28.165145372
+        },
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-candidate/src/compiler/binder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-candidate/src/compiler/debug.ts:1021:29",
+          "reason": "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read",
+          "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "seconds": 15.684912318
+        }
+      ]
+    },
+    "after-core": {
+      "child_exit": 0,
+      "rows": [
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-candidate/src/compiler/core.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-candidate/src/compiler/debug.ts:1021:29",
+          "reason": "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read",
+          "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "seconds": 16.270355093
+        },
+        {
+          "roots": [
+            "/workspace/scratch/debug-display-candidate/src/compiler/core.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/debug-display-candidate/src/compiler/debug.ts:1021:29",
+          "reason": "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read",
+          "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "seconds": 14.491979794
+        }
+      ]
+    }
+  }
+}

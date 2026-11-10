@@ -6,17 +6,19 @@ const source=fs.readFileSync(path.join(root,'src/compiler/debug.ts'),'utf8');
 const text=parser.transpileModule(source,{compilerOptions:{target:parser.ScriptTarget.ES2024,module:parser.ModuleKind.CommonJS}}).outputText;
 const box={exports:{},require:()=>stock,console};vm.runInNewContext(text,box);
 const Debug=box.exports.Debug;
-Debug.enableDebugInfo();Debug.isDebugging=true;
+// Supply formatter fixtures explicitly; enableDebugInfo installs nothing after the amendment.
+Debug.isDebugging=true;
 const sf=stock.createSourceFile('w.ts','const value = 1;',stock.ScriptTarget.Latest,true);
 const host=stock.createCompilerHost({noLib:true});host.getSourceFile=f=>f==='w.ts'?sf:undefined;host.fileExists=f=>f==='w.ts';host.readFile=f=>f==='w.ts'?sf.text:undefined;
 const program=stock.createProgram(['w.ts'],{noLib:true},host),checker=program.getTypeChecker();
 const type=checker.getTypeAtLocation(sf.statements[0].declarationList.declarations[0].initializer);
+Object.defineProperty(type,'__debugTypeToString',{value:function(){return checker.typeToString(this)}});
 const mapper=o=>Debug.attachDebugPrototypeIfDebug(o),simple=()=>mapper({kind:stock.TypeMapKind.Simple,source:type,target:type});
 let deferredCalls=0;
 const mappers={simple:simple(),array:mapper({kind:stock.TypeMapKind.Array,sources:[type],targets:[type]}),any:mapper({kind:stock.TypeMapKind.Array,sources:[type],targets:undefined}),deferred:mapper({kind:stock.TypeMapKind.Deferred,sources:[type],targets:[()=>{deferredCalls++;return type}]}),merged:mapper({kind:stock.TypeMapKind.Merged,mapper1:simple(),mapper2:simple()}),composite:mapper({kind:stock.TypeMapKind.Composite,mapper1:simple(),mapper2:simple()}),function:mapper({kind:stock.TypeMapKind.Function,func:x=>x,debugInfo:()=>'(witness)'})};
 const start={flags:stock.FlowFlags.Start,id:0,node:undefined};
 const label={flags:stock.FlowFlags.BranchLabel,id:0,antecedent:[start]};
-const output={type:type.__debugTypeToString(),mappers:Object.fromEntries(Object.entries(mappers).map(([k,v])=>[k,v.__debugToString()])),deferredCalls,flow:Debug.formatControlFlowGraph(label),source:sf.__debugGetText(),node:sf.statements[0].__debugGetText()};
+const output={type:checker.typeToString(type),mappers:Object.fromEntries(Object.entries(mappers).map(([k,v])=>[k,v.__debugToString()])),deferredCalls,flow:Debug.formatControlFlowGraph(label),source:sf.text,node:sf.statements[0].getText(sf)};
 assert.equal(deferredCalls,1);
 const accessorEvents=[];
 function debugValue(label) { const value=Object.create(type); Object.defineProperty(value,'__debugTypeToString',{value:function(){accessorEvents.push('format '+label);assert.equal(this,value);return label}});return value; }

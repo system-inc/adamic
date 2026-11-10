@@ -1,0 +1,11 @@
+--- candidate/src/compiler/debug.ts
++++ mutant/src/compiler/debug.ts
+@@ -522,7 +522,7 @@
+ 
+ 
+ 
+-
++                    flowNodeProto = Object.create(Object.prototype) as FlowNode;
+ 
+ 
+ 
