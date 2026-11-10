@@ -1,0 +1,19 @@
+// A value of typeof Trace that isn't Trace's object (Language's p1, #67jk7wq): a literal with the same
+// functions in the other order, held as typeof Trace. A read through it is a read by name, so each call
+// reaches the literal's own function, never the one at the namespace object's slot.
+namespace Trace {
+	export function push(name: string): string {
+		return `push ${name}`;
+	}
+	export function pop(): string {
+		return 'pop';
+	}
+}
+function call(trace: typeof Trace, name: string): string {
+	return `${trace.push(name)} ${trace.pop()}`;
+}
+const fake: typeof Trace = { pop: (): string => 'fake pop', push: (name: string): string => `fake push ${name}` };
+console.log(call(fake, 'a'));
+console.log(call(Trace, 'b'));
+const held: typeof Trace | undefined = fake;
+console.log(held?.push('c') ?? 'none');
