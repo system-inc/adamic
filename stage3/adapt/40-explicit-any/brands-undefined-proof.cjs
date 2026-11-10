@@ -8,7 +8,7 @@ const rules = require('./class-rules.json').brands;
 const [mode, tree, proof] = process.argv.slice(2);
 const resolved = require('./resolved-config-brand.cjs');
 assert.equal(ts.version, '6.0.3');
-assert(tree && proof && ['prepare', 'before', 'after', 'audit', 'resolved-before', 'resolved-after'].includes(mode), 'usage: prepare|before|after|audit tree proof');
+assert(tree && proof && ['prepare', 'before', 'after', 'audit', 'resolved-before', 'resolved-after'].includes(mode), 'usage: prepare|before|after|audit|resolved-before|resolved-after tree proof');
 const walk = d => fs.readdirSync(d, {withFileTypes:true}).flatMap(e =>
     e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]).sort();
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
@@ -61,6 +61,8 @@ if (mode === 'resolved-before' || mode === 'resolved-after') {
             assert.equal(state.declarations[file], project(text), 'only resolved-config brand: ' + file);
             if (state.declarations[file] !== text) changedDeclarations.push(file);
         }
+        assert(changedDeclarations.includes('local/typescript.d.ts'), 'the built public API changes');
+        assert.equal(before.declarations['local/typescript.d.ts'].split('_isResolvedConfigFileName: never;').length, 2);
         const source = before.sources[resolved.rule.file];
         assert.throws(() => resolved.plan(source.replace('_isResolvedConfigFileName: never', '_isResolvedConfigFileName: string')));
         assert.equal(resolved.plan(resolved.plan(source).text).files, 0);
