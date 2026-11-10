@@ -7,8 +7,7 @@ function detach(handle: { setBlocking?: (value: boolean) => void }): void {
 		if (set) set(true);
 		console.log('blocked');
 	} catch (error) {
-		console.log(`${error instanceof TypeError}`);
-		if (error instanceof Error) console.log(error.message);
+		if (error instanceof Error) console.log(`${error.name} ${error.message}`);
 	}
 }
 const handle = (process.stdout as any)._handle as { setBlocking?: (value: boolean) => void } | undefined;
