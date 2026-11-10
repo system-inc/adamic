@@ -67,7 +67,7 @@ static const adamic_json_schema *field_schema(const adamic_object *object, size_
 			// An object, an array, a map or a function held as T | null and one held as T | undefined
 			// are both a null pointer, and only a literal null or undefined written there leaves a byte
 			// that tells them apart. A value that was null or undefined in a variable leaves its type's.
-			stop("NotYet: JSON.stringify a field holding a null pointer whose write didn't record null or undefined");
+			stop("NotYet: JSON.stringify a reference field holding null or undefined that the allocation doesn't record which");
 		}
 	}
 	if (object->shape->kinds == NULL) stop("NotYet: JSON.stringify an object whose shape records no storage kinds");

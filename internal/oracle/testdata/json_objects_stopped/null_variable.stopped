@@ -1,1 +1,1 @@
-NotYet: JSON.stringify a field holding a null pointer whose write didn't record null or undefined
+NotYet: JSON.stringify a reference field holding null or undefined that the allocation doesn't record which
