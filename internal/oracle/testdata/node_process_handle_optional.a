@@ -1,0 +1,12 @@
+// stdout's handle's setBlocking called off the handle through ?.: the optional call has its object, so
+// it blocks, as Node's does. The JavaScript backend's optional call doesn't go through adamicCallee,
+// so it threw Illegal invocation here before it took the handle's own test (Runtime's must 1 on
+// #0bxc4jh).
+import 'node:process';
+let handle = (process.stdout as any)._handle as { setBlocking?: (value: boolean) => void } | undefined;
+if (handle === undefined) {
+	console.log('no handle');
+} else {
+	handle.setBlocking?.(true);
+	console.log('blocked');
+}
