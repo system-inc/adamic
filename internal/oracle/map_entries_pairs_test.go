@@ -50,9 +50,10 @@ func TestMapEntriesPairs(t *testing.T) {
 		{"literal", mapEntriesPairsNode + "a.pairs = [['b', b]];\n" + mapEntriesPairsPrint, ""},
 		// A for-of over the same map whose pairs no slot holds: they're planned all the same, and free.
 		{"read only", mapEntriesPairsNode + "let names = '';\nfor (const [name, node] of map) names += name + node.name;\nconsole.log(names);\n", ""},
-		// A pair held as a wider array: [string, Node] is assignable to (string | Node)[], a graph type
-		// here, and isn't one itself, so no plan names the pair, and it stops.
-		{"a wider array", `interface Node { name: string; next: Node[]; items: (string | Node)[][] }
+		// A pair held as a wider readonly array (a mutable one is refused first, adamic/invariant-mutable):
+		// [string, Node] is assignable to readonly (string | Node)[], a graph type here, and isn't one
+		// itself, so no plan names the pair, and it stops.
+		{"a wider array", `interface Node { name: string; next: Node[]; items: (readonly (string | Node)[])[] }
 const a: Node = { name: 'a' + '', next: [], items: [] };
 const b: Node = { name: 'b' + '', next: [a], items: [] };
 a.next.push(b);
@@ -61,8 +62,9 @@ map.set('b', b);
 a.items = [...map.entries()];
 console.log(String(a.items.length));
 `, "a Map's or a Set's [key, value] pair held as another graph type in a graph program"},
-		// A pair held as a labeled tuple. If the checker gives it [string, Node]'s identity, the pair is
-		// planned and must balance; if not, it stops as the wider array does. Either is sound.
+		// A pair held as a labeled tuple. The checker gives it [string, Node]'s identity today, so the pair
+		// is planned and must balance (Codex 01a1c4da); if that changes, it stops as the wider array does.
+		// Either is sound.
 		{"a labeled tuple", `interface Node { name: string; next: Node[]; pairs: [key: string, value: Node][] }
 const a: Node = { name: 'a' + '', next: [], pairs: [] };
 const b: Node = { name: 'b' + '', next: [a], pairs: [] };
