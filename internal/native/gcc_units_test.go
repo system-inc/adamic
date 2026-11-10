@@ -30,6 +30,7 @@ var gccRuntimeUnits = []string{
 	"input.c",
 	"json_decode.c",
 	"json_encode.c",
+	"json_objects.c",
 	"json_stringify.c",
 	"library_array.c",
 	"library_intl.c",
@@ -197,6 +198,15 @@ func TestGCCRuntimeJsonDecode(t *testing.T)         { t.Parallel(); checkGCCRunt
 
 func TestProduct_GCCRuntimeJsonEncode(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "json_encode.c") }
 func TestGCCRuntimeJsonEncode(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "json_encode.c") }
+
+func TestProduct_GCCRuntimeJsonObjects(t *testing.T) {
+	t.Parallel()
+	gccRuntimeUnit(t, "json_objects.c")
+}
+func TestGCCRuntimeJsonObjects(t *testing.T) {
+	t.Parallel()
+	checkGCCRuntimeUnit(t, "json_objects.c")
+}
 
 func TestProduct_GCCRuntimeJsonStringify(t *testing.T) {
 	t.Parallel()
