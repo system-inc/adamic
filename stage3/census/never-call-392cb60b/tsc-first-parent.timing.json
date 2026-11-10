@@ -1,0 +1,14 @@
+{
+  "name": "tsc-first-parent",
+  "command": [
+    "/workspace/never-call-tools/parent/census",
+    "/workspace/never-call-adapted/src/tsc/tsc.ts",
+    "/workspace/never-call-report/stage3/census/never-call-392cb60b/tsc-first-parent.jsonl"
+  ],
+  "cwd": "/workspace/never-call-report",
+  "started_utc": "2026-11-10T18:46:18Z",
+  "seconds": 20.06524929300008,
+  "peak_rss_kib": 801960,
+  "child_exit_code": 0,
+  "silent_cutoff": false
+}
