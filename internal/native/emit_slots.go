@@ -52,7 +52,7 @@ func (e *emitter) mapGetSlot(expression ir.MapGet) string {
 // undefined could otherwise collapse into the same pointer. The classifier remains union_typeof.
 func (e *emitter) typeOfReference(observation ir.TypeOf) (string, string) {
 	if observation.Null {
-		var slot string
+		var slot, popped string
 		var of ir.Type
 		retain := true
 		switch value := observation.Value.(type) {
@@ -62,13 +62,19 @@ func (e *emitter) typeOfReference(observation ir.TypeOf) (string, string) {
 			slot, of = e.mapGetSlot(value), value.ValueType
 		case ir.ArrayPop:
 			array := e.snapshot(ir.Array, e.value(value.Array))
-			slot, of, retain = e.temporary(), value.Element, false
+			slot, of, retain, popped = e.temporary(), value.Element, false, array
 			e.line("adamic_value *%s = %s->length == 0 ? NULL : &%s->elements[--%s->length];", slot, array, array, array)
 		}
 		if slot != "" {
 			reference := slot + "->reference"
 			if retain {
 				reference = "adamic_retain(" + reference + ")"
+			} else if popped != "" && len(e.program.GraphTypes) != 0 {
+				// The array's reference to the element becomes the statement's, as ArrayPop's own arm
+				// hands it over: an edge inside a graph region carries no count, so escape gives the
+				// statement one (#3ejqtwp, the writers audit's raw entry 4). It's NULL-safe for a
+				// popped null.
+				reference = fmt.Sprintf("adamic_graph_escape(%s, %s)", popped, reference)
 			}
 			operand := e.own(of, fmt.Sprintf("%s == NULL ? NULL : (%s)%s", slot, cType(of), reference))
 			return operand, slot + " != NULL"
