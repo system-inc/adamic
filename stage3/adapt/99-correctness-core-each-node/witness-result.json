@@ -1,0 +1,762 @@
+{
+  "passed": true,
+  "pairedCases": 32,
+  "cases": [
+    {
+      "level": 0,
+      "kind": "nodesUndefined",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 0,
+      "kind": "empty",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 0,
+      "kind": "NodeArray",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 0,
+      "kind": "allPass",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 0,
+      "kind": "firstFail",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 0,
+      "kind": "middleFail",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 0,
+      "kind": "testUndefined",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 0,
+      "kind": "throwTest",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 1,
+      "kind": "nodesUndefined",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 1,
+      "kind": "empty",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 1,
+      "kind": "NodeArray",
+      "before": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 1,
+      "kind": "allPass",
+      "before": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 1,
+      "kind": "firstFail",
+      "before": {
+        "calls": [
+          0
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      },
+      "after": {
+        "calls": [
+          0
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      }
+    },
+    {
+      "level": 1,
+      "kind": "middleFail",
+      "before": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      }
+    },
+    {
+      "level": 1,
+      "kind": "testUndefined",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 1,
+      "kind": "throwTest",
+      "before": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "TypeError",
+          "sameErrorClass": true,
+          "message": "inside test",
+          "throwPoint": "test",
+          "everyFrame": true
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "TypeError",
+          "sameErrorClass": true,
+          "message": "inside test",
+          "throwPoint": "test",
+          "everyFrame": false
+        }
+      }
+    },
+    {
+      "level": 2,
+      "kind": "nodesUndefined",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 2,
+      "kind": "empty",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 2,
+      "kind": "NodeArray",
+      "before": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 2,
+      "kind": "allPass",
+      "before": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 2,
+      "kind": "firstFail",
+      "before": {
+        "calls": [
+          0
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      },
+      "after": {
+        "calls": [
+          0
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      }
+    },
+    {
+      "level": 2,
+      "kind": "middleFail",
+      "before": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      }
+    },
+    {
+      "level": 2,
+      "kind": "testUndefined",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 2,
+      "kind": "throwTest",
+      "before": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "TypeError",
+          "sameErrorClass": true,
+          "message": "inside test",
+          "throwPoint": "test",
+          "everyFrame": true
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "TypeError",
+          "sameErrorClass": true,
+          "message": "inside test",
+          "throwPoint": "test",
+          "everyFrame": false
+        }
+      }
+    },
+    {
+      "level": 3,
+      "kind": "nodesUndefined",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 3,
+      "kind": "empty",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 3,
+      "kind": "NodeArray",
+      "before": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 3,
+      "kind": "allPass",
+      "before": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1,
+          2
+        ],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 3,
+      "kind": "firstFail",
+      "before": {
+        "calls": [
+          0
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      },
+      "after": {
+        "calls": [
+          0
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      }
+    },
+    {
+      "level": 3,
+      "kind": "middleFail",
+      "before": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "Error",
+          "sameErrorClass": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test.",
+          "throwPoint": "assert/fail",
+          "everyFrame": false
+        }
+      }
+    },
+    {
+      "level": 3,
+      "kind": "testUndefined",
+      "before": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      },
+      "after": {
+        "calls": [],
+        "result": {
+          "returned": true
+        }
+      }
+    },
+    {
+      "level": 3,
+      "kind": "throwTest",
+      "before": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "TypeError",
+          "sameErrorClass": true,
+          "message": "inside test",
+          "throwPoint": "test",
+          "everyFrame": true
+        }
+      },
+      "after": {
+        "calls": [
+          0,
+          1
+        ],
+        "result": {
+          "constructor": "TypeError",
+          "sameErrorClass": true,
+          "message": "inside test",
+          "throwPoint": "test",
+          "everyFrame": false
+        }
+      }
+    }
+  ],
+  "twoParameter": [
+    {
+      "level": 0,
+      "before": [],
+      "after": []
+    },
+    {
+      "level": 1,
+      "before": [
+        {
+          "node": 0,
+          "index": 0
+        },
+        {
+          "node": 1,
+          "index": 1
+        }
+      ],
+      "after": [
+        {
+          "node": 0,
+          "index": "undefined"
+        },
+        {
+          "node": 1,
+          "index": "undefined"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "before": [
+        {
+          "node": 0,
+          "index": 0
+        },
+        {
+          "node": 1,
+          "index": 1
+        }
+      ],
+      "after": [
+        {
+          "node": 0,
+          "index": "undefined"
+        },
+        {
+          "node": 1,
+          "index": "undefined"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "before": [
+        {
+          "node": 0,
+          "index": 0
+        },
+        {
+          "node": 1,
+          "index": 1
+        }
+      ],
+      "after": [
+        {
+          "node": 0,
+          "index": "undefined"
+        },
+        {
+          "node": 1,
+          "index": "undefined"
+        }
+      ]
+    }
+  ]
+}
