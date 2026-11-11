@@ -4,4 +4,4 @@ interface Event {
 	readonly when: Date;
 }
 const event: Event = { name: 'launch', when: new Date() };
-console.log(JSON.stringify(event) === undefined);
+console.log(JSON.stringify(event) ?? '<undefined>');

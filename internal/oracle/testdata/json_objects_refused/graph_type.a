@@ -7,5 +7,5 @@ const first = new Ring('first');
 const second = new Ring('second');
 first.next = second;
 second.next = first;
-console.log(JSON.stringify(second.name));
+console.log(JSON.stringify(second.name) ?? '<undefined>');
 console.log(JSON.stringify(first) ?? '<undefined>');
