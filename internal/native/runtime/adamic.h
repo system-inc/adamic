@@ -1573,8 +1573,16 @@ void adamic_output_flush(void);
 // buffered, and flushed wherever Node's writing it at once could be told apart (adamic.c).
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string);
 
-// ADAMIC_NUMBER_FORMAT_MAX holds the longest number text, "-1.2345678901234567e-308", with room.
-#define ADAMIC_NUMBER_FORMAT_MAX 32
+// Shortest double digits need at most 17 places. Small fixed notation needs at most a sign,
+// "0.", five zeros and those digits: 25 code units, reached by -0.0000012345678901234567.
+// Other fixed forms need at most 22 units; exponential needs at most a sign, 17 digits, a point,
+// "e", an exponent sign and three exponent digits: 24. Special values are shorter. All are ascii,
+// so bytes and code units agree. A number can never need the string-length check.
+#define ADAMIC_NUMBER_STRING_MAX_UNITS 25
+_Static_assert(ADAMIC_NUMBER_STRING_MAX_UNITS * 1000 < ADAMIC_STRING_MAX_UNITS,
+	"number text must stay far below the string length limit");
+// Leave one extra byte for snprintf's terminator when writing the exponent.
+#define ADAMIC_NUMBER_FORMAT_MAX (ADAMIC_NUMBER_STRING_MAX_UNITS + 1)
 
 // adamic_number_format writes value as JavaScript's String(value) does and returns the length. The
 // buffer is not terminated.
