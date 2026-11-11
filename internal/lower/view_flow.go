@@ -3,6 +3,7 @@ package lower
 import (
 	"fmt"
 	"reflect"
+	"slices"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -196,7 +197,7 @@ func closureCallsOf(program *ir.Program) *closureCalls {
 				}
 			case ir.CallClosure:
 				targets := program.ClosureTargets(value)
-				if (len(value.Spread) != 0 || value.Bound || value.Optional) && !targets.Unknown {
+				if (slices.Contains(value.Spread, true) || value.Bound || value.Optional) && !targets.Unknown {
 					// Its edges feed parameters by position, which a spread doesn't keep.
 					for _, target := range targets.Functions {
 						calls.escapes[target] = true
