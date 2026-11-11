@@ -42,7 +42,7 @@ if __name__=='__main__':
  expected=['checker.ts','emitter.ts','parser.ts','program.ts','scanner.ts','utilities.ts']
  assert all((follow/'baseline/raw'/(n.removesuffix('.ts')+'.status.json')).exists() for n in expected),'finish six baseline attempts before variants'
  assert json.loads((follow/'original/summary.json').read_text())['whole_src_diagnostics']==0
- sites=json.loads((out/'sites.json').read_text());files=sorted({s['file'] for s in sites});(follow/'variant-files.json').write_text(json.dumps(files,indent=2)+'\n')
+ sites=json.loads((out/'sites.json').read_text());files=sorted({s['file'] for s in sites}|{name for s in sites for name in s.get('observed_in',[])});(follow/'variant-files.json').write_text(json.dumps(files,indent=2)+'\n')
  core('original',base)
  prepared={}
  for label,annotation in [('a','{ readonly text: string; lineMap?: readonly number[] }'),('b','{ readonly text: string; lineMap: readonly number[] | undefined }')]:
