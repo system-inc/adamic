@@ -778,3 +778,80 @@ push_child_exit=0 sha=eeb7eb1292fe70ffe9a03db4784a1d0d752843eb
 checkpoint_wrapper_child_exit=0
 {"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 84.32012553599998, "peak_rss_kib": 972532, "user_seconds": 79.134485, "system_seconds": 3.213514, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-parent-records.jsonl"}}
 {"file": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "run": "full-8f10524394-parent-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 144.7565977910017, "peak_rss_kib": 1145328, "user_seconds": 135.96223, "system_seconds": 6.459505, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/esnext.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/esnext.ts", "run": "full-01e6ae4837-head-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 81.8030085850005, "peak_rss_kib": 926276, "user_seconds": 75.349152, "system_seconds": 3.91006, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "run": "full-8f10524394-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=7047582e8803ea52d7608ec5a20d89843549e8bc
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 42
+      },
+      "observed_units": 42,
+      "views_evaluated": 21,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 42
+      },
+      "observed_units": 42,
+      "views_evaluated": 21,
+      "raw_guard_refusals": 21,
+      "units_with_refusals": 5,
+      "probe_errors": 0,
+      "roads": {
+        "index values": 21
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 14,
+      "distinct_reads": 14
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 14,
+      "distinct_reads": 14
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 14,
+      "distinct_reads": 14
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 5,
+      "new_guard_stops_in_normally_finding_free_units": 1,
+      "new_guard_stops_in_already_normally_blocked_units": 4,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 14,
+      "new_sites": 14,
+      "unit_first_stop_delta": 5,
+      "regressions": 5
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 14,
+      "new_sites": 14,
+      "unit_first_stop_delta": 5,
+      "regressions": 5
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-8f10524394", "cases": 14, "categories": {"guard bug: identity/union cross-product": 14}, "needs_reading": 0}
+render_wrapper_child_exit=0
