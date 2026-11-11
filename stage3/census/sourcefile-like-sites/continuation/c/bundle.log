@@ -1,0 +1,25 @@
+Bundling /workspace/scratch/baobab-emit-c/typescript/typescript.d.ts to /workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/typescript.d.ts and /workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/typescript.internal.d.ts
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: No symbol for node at /workspace/scratch/baobab-emit-c/compiler/types.d.ts:2000:40
+    at visit (file:///workspace/scratch/baobab-src-deps/baobab-dtsBundler.mjs:323:17)
+    at visitNode (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:95710:19)
+    at visitEachChildOfExpressionWithTypeArguments (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:96490:26)
+    at Object.visitEachChild (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:95958:33)
+    at visit (file:///workspace/scratch/baobab-src-deps/baobab-dtsBundler.mjs:340:19)
+    at visitArrayWorker (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:95772:49)
+    at visitNodes2 (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:95743:19)
+    at visitEachChildOfHeritageClause (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:96934:7)
+    at Object.visitEachChild (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:95958:33)
+    at visit (file:///workspace/scratch/baobab-src-deps/baobab-dtsBundler.mjs:340:19) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: undefined,
+  operator: 'fail',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

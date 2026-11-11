@@ -1,0 +1,41 @@
+{
+  "command": [
+    "/workspace/scratch/baobab-cohere",
+    "--lint",
+    "--no-format",
+    "--no-cache",
+    "--single-threaded",
+    "--json",
+    "--tsconfig",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/cohere-tsconfig.json",
+    "--lint-config",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/CohereSettings.json",
+    "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts",
+    "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts",
+    "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts",
+    "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts",
+    "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts",
+    "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts",
+    "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts",
+    "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts",
+    "/workspace/scratch/baobab-road2-c/src/compiler/program.ts",
+    "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts"
+  ],
+  "child_exit": 1,
+  "timed_out": false,
+  "wall_seconds": 35.16042324500086,
+  "scope_files": [
+    "scanner.ts",
+    "tracing.ts",
+    "watch.ts",
+    "transformers/jsx.ts",
+    "transformers/declarations.ts",
+    "executeCommandLine.ts",
+    "emitter.ts",
+    "utilities.ts",
+    "program.ts",
+    "parser.ts"
+  ],
+  "rules": "cohere:adamic",
+  "type_graph": "79 compiler roots and transitive imports, exactOptionalPropertyTypes true"
+}
