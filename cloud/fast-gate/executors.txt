@@ -1908,6 +1908,15 @@ reads stage1/cohere/graphql/oracles cohere
 reads stage1/cohere/graphql/oracles stage1/cohere/graphql/testdata/*
 reads stage1/cohere/graphql/printer/oracles cohere
 reads stage1/cohere/graphql/printer/oracles stage1/cohere/graphql/printer/testdata/*
+# graphql/printer's oracles overlay its parent's parent's side test too (oracles.go:40, ../testdata/cohere_side_test.go).
+reads stage1/cohere/graphql/printer/oracles stage1/cohere/graphql/testdata/cohere_side_test.go
+# lint's rule oracles build cohere/adamic_abbreviated_typed_ownership/main.go in cohere, overlaid by their testdata's
+# contextual_key_oracle.go (oracles.go:22-37).
+reads stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/oracles cohere
+reads stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/oracles stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/testdata/*
+# parse's oracle builds in cohere/TypeScript/tsc, a virtual file overlaid by its testdata's go_parse.go.txt
+# (profile_test.go:78-88); its testdata is its own, so only cohere is new.
+reads stage1/cohere/parse cohere
 reads stage1/cohere/json/oracles cohere
 reads stage1/cohere/json/oracles stage1/cohere/json/testdata/*
 reads stage1/cohere/lint/helpers/comments/oracles cohere
