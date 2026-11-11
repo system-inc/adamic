@@ -289,6 +289,29 @@ console.log(current.tag);
 	})
 }
 
+// An entry module's exported function is called by outside code with anything, so its parameter is
+// unknown though the program's own call passes it a literal; the same function not exported is that
+// literal. Mutant 6.
+func TestReachExportedEntryFunctionParameterIsUnknown(t *testing.T) {
+	t.Parallel()
+	const body = `function keep(box: Box): Box {
+	return box;
+}
+const kept = keep({ tag: 'inside' });
+console.log(kept.tag);
+`
+	t.Run("not exported", func(t *testing.T) {
+		t.Parallel()
+		program := reachProgram(t, reachBox+body)
+		wantSites(t, reachOfGlobal(t, program, "kept"), literalSite(t, program, "inside"))
+	})
+	t.Run("exported from the entry module", func(t *testing.T) {
+		t.Parallel()
+		program := reachProgram(t, reachBox+"export "+body)
+		wantUnknown(t, reachOfGlobal(t, program, "kept"), "parameter may receive untracked or omitted arguments")
+	})
+}
+
 // Road 4: x! is x ?? panic, which hands on x or stops, so it reaches what x does. Mutant 4.
 func TestReachNonNullAssertionHandsOnItsValue(t *testing.T) {
 	t.Parallel()

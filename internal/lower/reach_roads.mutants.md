@@ -205,3 +205,28 @@ New:
 
 Expected: TestReachLogicalOrIsEitherOperand reaches only the first literal, a known answer missing the fallback the
 right side gives where the left is undefined: the exact set catches it.
+
+## 6. An exported entry function's parameters left to the program's own calls
+
+File: internal/lower/view_flow.go, the end of newAllocationFlowGraph.
+
+Old:
+
+```go
+			graph.unknownParameters[parameter+1] = true
+		}
+	}
+	return graph
+```
+
+New:
+
+```go
+			_ = parameter
+		}
+	}
+	return graph
+```
+
+Expected: TestReachExportedEntryFunctionParameterIsUnknown/exported_from_the_entry_module is known, the inside literal
+alone, though outside code can pass the exported function anything.
