@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"strings"
 	"testing"
 )
@@ -39,5 +40,25 @@ func TestMethodSeenAsWritableFieldIsRefused(t *testing.T) {
 				}
 			})
 		}
+	}
+}
+
+// A host's own method stays with the host rules (hostDeclaredSymbol), which this rule's exemption rests
+// on: a Hash's digest seen as a writable function field, { digest: (encoding: 'hex') => string }, and written there must still stop, in the host
+// rules' words or this rule's, so if the host rules ever admit that view the exemption can't quietly
+// become the hole (Compiler's should on #9dmh4em).
+func TestHostMethodSeenAsWritableFieldStops(t *testing.T) {
+	t.Parallel()
+	const source = "import { createHash } from 'node:crypto';\nconst hash = createHash('sha256');\nconst view: { digest: (encoding: 'hex') => string } = hash;\nview.digest = (encoding: 'hex'): string => `replaced ${encoding}`;\nconsole.log(view.digest('hex'));\n"
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, source, extension)
+			var notYet *NotYet
+			var refused *Refused
+			if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+				t.Fatalf("a host method written through a writable field view must stop, got %v", err)
+			}
+		})
 	}
 }
