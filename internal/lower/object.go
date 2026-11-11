@@ -1998,6 +1998,11 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	if symbol != nil {
 		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
 	}
+	// A nested declaration's value goes the way its name written alone goes: a nested generator or
+	// generic function stops, and a read from another function takes the group's canonical closure.
+	if value, handled, err := l.nestedReferenceOf(property, symbol); handled {
+		return value, err
+	}
 	local, isLocal := l.locals[symbol]
 	if !isLocal {
 		if target, isFunction := l.functions[symbol]; isFunction {

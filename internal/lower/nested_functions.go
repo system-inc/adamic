@@ -212,7 +212,14 @@ func (l *lowering) nestedSibling(node *ast.Node) int {
 // References use the canonical value cached weakly in the declaring frame.
 // Only its cells travel between functions, never a strong sibling closure binding.
 func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) {
-	local, ok := l.locals[l.symbol(node)]
+	return l.nestedReferenceOf(node, l.symbol(node))
+}
+
+// nestedReferenceOf is nestedReference for a symbol the node refers to other than the one it names: a
+// shorthand property `{ g }` names its property, and the value it reads is the declaration's, so it
+// meets the same stops and the same canonical value as `g` written alone (#qk8rztp).
+func (l *lowering) nestedReferenceOf(node *ast.Node, symbol *ast.Symbol) (ir.Expression, bool, error) {
+	local, ok := l.locals[symbol]
 	if !ok || l.result.Locals[local].NestedFunction == 0 {
 		return nil, false, nil
 	}
