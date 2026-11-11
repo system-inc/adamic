@@ -5,7 +5,10 @@ class Box {
         return 42;
     }
 }
-const pairs: [Box, number][] = [[new Box(), 0]];
+interface HasWeight {
+    readonly weight: number;
+}
+const pairs: [HasWeight, number][] = [[new Box(), 0]];
 for(let [item, index] of pairs) {
     console.log(String(item.weight + index));
     item = { weight: 1 };

@@ -22,6 +22,9 @@ const forOfWritesBox = `class Box {
 		return 42;
 	}
 }
+interface HasWeight {
+	readonly weight: number;
+}
 `
 
 // forOfWritesLower lowers source as main.ts and fails unless it lowers.
@@ -81,7 +84,7 @@ func forOfWritesDispatched(t *testing.T, program *ir.Program) {
 // getter. Mutant 1.
 func TestForOfReassignedBindingIsUnknown(t *testing.T) {
 	t.Parallel()
-	program := forOfWritesLower(t, forOfWritesBox+`const items: Box[] = [new Box()];
+	program := forOfWritesLower(t, forOfWritesBox+`const items: HasWeight[] = [new Box()];
 for (let item of items) {
 	console.log(String(item.weight));
 	item = { weight: 1 };
@@ -98,7 +101,7 @@ for (let item of items) {
 // r2: the same through a pattern, each of whose locals the step writes. Mutant 1.
 func TestForOfReassignedPatternBindingIsUnknown(t *testing.T) {
 	t.Parallel()
-	program := forOfWritesLower(t, forOfWritesBox+`const pairs: [Box, number][] = [[new Box(), 0]];
+	program := forOfWritesLower(t, forOfWritesBox+`const pairs: [HasWeight, number][] = [[new Box(), 0]];
 for (let [item, index] of pairs) {
 	console.log(String(item.weight + index));
 	item = { weight: 1 };
