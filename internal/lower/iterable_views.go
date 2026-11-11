@@ -508,7 +508,7 @@ func iterableCallTarget(program *ir.Program, call ir.Expression) (int, bool) {
 		}
 		return targets[0], true
 	case ir.CallClosure:
-		if call.Bound || call.Optional || len(call.Spread) != 0 {
+		if call.Bound || call.Optional || slices.Contains(call.Spread, true) {
 			return 0, false
 		}
 		targets := program.ClosureTargets(call)
