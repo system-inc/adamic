@@ -5,3 +5,11 @@ checkpoint-parent child_exit=0
 start head-measure
 head-measure child_exit=0
 start checkpoint-head
+checkpoint-head child_exit=0
+start pair
+pair child_exit=0
+start analyze
+analyze child_exit=0
+start report
+report child_exit=0
+all measurements and report complete
