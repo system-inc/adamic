@@ -10,7 +10,8 @@ import (
 	"testing"
 )
 
-const regionRSSProbe = `#include "adamic.h"
+const regionRSSProbe = `#define _GNU_SOURCE 1
+#include "adamic.h"
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
