@@ -19,6 +19,7 @@ entry=json.loads((out/'entry-census-status.json').read_text());assert entry['pro
 import hashlib
 manifest=json.loads((out/'apply-source-manifest.json').read_text())
 adapted=Path('/workspace/scratch/next-stops-adapted')
+assert manifest==json.loads((out/'adapted-source-manifest-at-apply.json').read_text())
 assert manifest=={str(p.relative_to(adapted)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((adapted/'src/compiler').rglob('*')) if p.is_file()}
 for binary in json.loads((out/'binaries.json').read_text()).values():
  assert hashlib.sha256(Path(binary['path']).read_bytes()).hexdigest()==binary['sha256']
