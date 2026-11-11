@@ -1,0 +1,46 @@
+{
+  "file": "transformers/declarations.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-road2-a/src/compiler",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/a/raw/transformers__declarations.jsonl"
+  ],
+  "child_exit": 0,
+  "wall_seconds": 138.75989630599906,
+  "timed_out": false,
+  "bound_seconds": 1500,
+  "max_concurrent_files": 2,
+  "completed_timing_units": 68,
+  "last_timing_units": [
+    {
+      "file": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts",
+      "where": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts:1893:1",
+      "wall_seconds": 0.696502763,
+      "cpu_seconds": 0.7005430000000104
+    },
+    {
+      "file": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts",
+      "where": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts:1905:1",
+      "wall_seconds": 0.116088873,
+      "cpu_seconds": 0.11611600000000522
+    },
+    {
+      "file": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts",
+      "where": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts:1918:1",
+      "wall_seconds": 0.3974733,
+      "cpu_seconds": 0.39782299999998827
+    },
+    {
+      "file": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts",
+      "where": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts:1936:1",
+      "wall_seconds": 0.064944874,
+      "cpu_seconds": 0.0650009999999952
+    },
+    {
+      "file": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts",
+      "where": "/workspace/scratch/baobab-road2-a/src/compiler/transformers/declarations.ts:1956:1",
+      "wall_seconds": 0.561208101,
+      "cpu_seconds": 1.208724999999987
+    }
+  ]
+}
