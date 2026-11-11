@@ -7,7 +7,7 @@ Measured 2026-11-11 (UTC). HEAD `b7fbcd0abebad8c985aee9ebacfdb99a308641eb`; base
 - **Proof is not wholly green.** The requested uncached oracle pin fails only `tracing_write_stack_event.ts`: five TS2339 diagnostics at its array-element destructuring prevent loading, before the record spread is lowered. Main has the same loader diagnostics. The six other fixtures pass on native release, ASan/UBSan, and JavaScript.
 - The fixed-object stop pin passes for both `.a` and `.ts` at HEAD and main, with exactly the same stop text.
 - The sole specified mutant is killed by both `null_args` variants (native and sanitized C compile failures) and both `undefined_args` variants (native signal termination, UBSan failure). Both `overwritten_key` variants pass. Tracing is already red without the mutant and is not evidence of killing it.
-- Full lower suite: **PASS**, exit 0; wall 1467.69s. Full oracle suite: **FAIL**, exit 1; wall 3776.67s; all failing names and first errors are listed below.
+- Full lower suite: **PASS**, exit 0; wall 1467.69s. Step 4b full IR suite: **PASS**, exit 0; wall 140.75s; no failing tests. Full oracle suite: **FAIL**, exit 1; wall 3776.67s; all failing names and first errors are listed below.
 - Full admission delta: **void**, `diff_count=7`, `admitted=6`, newly refused **0**. Six classification stderr texts change from main’s refusal to empty HEAD stderr. Three native-build timeouts were retried by the gate; one persisted. All three affected programs were then rerun alone at **both SHAs**, with no timeout under the same 10-second bound. These isolated results do not rewrite the original full gate’s void verdict.
 
 ## Setup and step 1
@@ -554,18 +554,39 @@ Old text occurrence count: 1
 Restored records.go and diagnostic logging; git diff --exit-code: 0
 ```
 
-## Steps 4 and 5: complete suites
+## Step 4: complete lowering suite
 
 ```sh
 go test ./internal/lower -count=1 -timeout 90m > /tmp/lower.log 2>&1
-go test ./internal/oracle -count=1 -timeout 120m > /tmp/oracle.log 2>&1
 ```
 
-These commands ran sequentially, not concurrently. Timings include go build/link overhead and are from an external wall-clock wrapper.
+All suite commands ran without another heavy command alongside them. Timings include go build/link overhead and are from an external wall-clock wrapper.
 Lower: **PASS**, exit 0; wall 1467.69s. No failing tests, environmental or otherwise. Whole log:
 
 ```text
 ok  	github.com/system-inc/adamic/internal/lower	1459.631s
+```
+
+## Step 4b: complete IR suite
+
+```sh
+go test ./internal/ir -count=1 -timeout 30m > /tmp/ir.log 2>&1
+```
+
+**PASS**, exit code **0**; wall time **140.75 seconds** (2m 20.75s). **No failing tests**, so there are no first error lines to list. The package-reported test time was 106.884s; the wall time includes Go build/link overhead.
+
+This additional step was requested after the original proof had completed and is placed here after step 4 as requested. It ran alone on report commit `a1913c7d4ec221a167cd59f5380cc800186bca6e`, whose sole difference from the pinned compiler HEAD `b7fbcd0abebad8c985aee9ebacfdb99a308641eb` is this report. The compiler and IR sources were unchanged. Loaded `/workspace/adamic-tools/env.sh` first and reused the external proof environment and `/tmp/adamic-gate` work directory.
+
+Whole `/tmp/ir.log`:
+
+```text
+ok  	github.com/system-inc/adamic/internal/ir	106.884s
+```
+
+## Step 5: complete oracle suite
+
+```sh
+go test ./internal/oracle -count=1 -timeout 120m > /tmp/oracle.log 2>&1
 ```
 
 Oracle: **FAIL**, exit 1; wall 3776.67s. 16 failing top-level tests; 19 failing names when failed parent/subtest rows are all counted. No package-level 120-minute timeout occurred.
@@ -940,6 +961,7 @@ Raw evidence remained outside the repository. SHA-256 digests for the principal 
 | `/tmp/bzrdem0-proof/mutant-streams.log` | `200e8669e6b990b431a73fdd29973b26914596d8e7c744885540c6b9c4ee4943` |
 | `/tmp/bzrdem0-proof/mutant-all-backends.log` | `095600b860d59b7cd865af942783dbe18882da77754ce68dc22ef2ee5fe2e0b5` |
 | `/tmp/lower.log` | `f49c023aa6d239f61bbb76c09fd80e3ecdcd67743a70ec80ed1a9ef66db88de3` |
+| `/tmp/ir.log` | `e932c3b4d6e450a2bcefc1ff160101621360d11cdb72cc1a54301b874af515b1` |
 | `/tmp/oracle.log` | `799be632ea68445875c533d72368c1f96ba431f647f4131c5dcd34f06eff31f8` |
 | `/tmp/bzrdem0-proof/admission.json` | `679b18ee6cfa739d6c6b72910b5c4fa71027cf3ee07559080abb9006c9e5d0fd` |
 | `/tmp/bzrdem0-proof/admission.stderr` | `a6dea952c8386c73f43a6c78e8795c00b784c1ef58512c8f3626f1ade1a0f973` |
