@@ -1,0 +1,72 @@
+{
+  "idempotent": true,
+  "changed_files": 2,
+  "mutants": [
+    {
+      "name": "missing interface",
+      "rejected": true,
+      "reason": "line map drift or half-adapted files: before, after, after, after",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "missing import",
+      "rejected": true,
+      "reason": "line map drift or half-adapted files: after, after, after, before",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "old getLineStarts",
+      "rejected": true,
+      "reason": "line map drift or half-adapted files: after, after, before, after",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "old overload set",
+      "rejected": true,
+      "reason": "line map drift or half-adapted files: after, before, after, after",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "public overload first",
+      "rejected": true,
+      "reason": "Cannot read properties of undefined (reading '0')",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "missing internal overload",
+      "rejected": true,
+      "reason": "line map drift or half-adapted files: after, drift, after, after",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "changed cache body",
+      "rejected": true,
+      "reason": "line map drift or half-adapted files: after, after, drift, after",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "changed position body",
+      "rejected": true,
+      "reason": "line map drift or half-adapted files: after, drift, after, after",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "changed SourceFileLike documentation",
+      "rejected": true,
+      "reason": "documented SourceFileLike drift\n+ actual - expected\n\n  '/**\\r\\n' +\n+   ' * Changed documentation\\r\\n' +\n-   ' * Subset of properties from SourceFile that are used in multiple utility functions\\r\\n' +\n    ' */\\r\\n' +\n    'export interface SourceFileLike {\\r\\n' +\n    '    readonly text: string;\\r\\n' +\n    '    /** @internal */\\r\\n' +\n    '    lineMap?: readonly number[] | undefined;\\r\\n' +\n",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "changed LineMapSource",
+      "rejected": true,
+      "reason": "line map drift or half-adapted files: drift, after, after, after",
+      "pure_plan_no_writes": true
+    },
+    {
+      "name": "displaced SourceFileLike documentation",
+      "rejected": true,
+      "reason": "documented SourceFileLike drift\n+ actual - expected\n\n+ 'export interface SourceFileLike {\\r\\n' +\n- '/**\\r\\n' +\n-   ' * Subset of properties from SourceFile that are used in multiple utility functions\\r\\n' +\n-   ' */\\r\\n' +\n-   'export interface SourceFileLike {\\r\\n' +\n    '    readonly text: string;\\r\\n' +\n    '    /** @internal */\\r\\n' +\n    '    lineMap?: readonly number[] | undefined;\\r\\n' +\n    '    /** @internal */\\r\\n' +\n    '    getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\\r\\n' +\n",
+      "pure_plan_no_writes": true
+    }
+  ]
+}
