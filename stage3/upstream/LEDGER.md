@@ -731,3 +731,6 @@ Adamic, task 8n7eet3, Nov 10 22:01Z, site 2: 99-correctness-core-each-node is Ja
   its identity and becomes empty; the returned removed-elements array is unused.
   The newly visible JSON.stringify object references stop at 104:46 belongs
   to Compiler's #d9ep7de head 1; this amendment does not remove it.
+  The complete combined 398-shard lane observes 0 startTracing runs; the
+  positive control observes catalog length 3 before reset and 0 after, and
+  meta own keys cat,ph,ts,pid,tid in that order.
