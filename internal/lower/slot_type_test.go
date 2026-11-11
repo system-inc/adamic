@@ -149,6 +149,8 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 var signatureReaders = map[string]string{
 	"boundKeyedLength":                  "the callee's declaration, parameter count and symbols, to recognize a keyed bound-length helper; no argument is judged against a parameter's slot",
 	"brandedCall":                       "the callee's type predicate, to judge a call that narrows its argument to a branded supertype",
+	"narrowOverloadCall":                "the declaration a call resolves to, to ask whether its result is checked at the call; no argument is judged against a parameter's slot",
+	"overloadResultCheck":               "the declaration a call resolves to and its result type, to check the call's result; no argument is judged against a parameter's slot",
 	"brandedChainUse":                   "the callee's type predicate and the claimed parameter's type, to judge whether a rule-1 binding is only passed on",
 	"carrier":                           "the callee's declaration, to follow a predicate's false side into it",
 	"censusCallReturnsUndefined":        "the callee's declaration, to read what it returns",
