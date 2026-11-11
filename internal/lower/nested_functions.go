@@ -226,6 +226,11 @@ func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) 
 		// its call by name (Lower's words on #qk8rztp S3c).
 		return nil, true, l.generatorNotYet(node, "declared inside a function, used other than by a call to it by name")
 	}
+	if node != l.nestedCallee {
+		if err := l.overloadSetValueStop(node, l.symbol(node)); err != nil {
+			return nil, true, err
+		}
+	}
 	return l.nestedValue(local), true, nil
 }
 

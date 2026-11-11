@@ -1580,6 +1580,22 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 	return ir.MakeClosure{Function: index}, nil
 }
 
+// overloadSetValueStop stops an overload set read as a value. A call through the value resolves to
+// the slot's own signature, never to an overload, so a narrow overload's result check would never
+// run there (#z5d0jye, Compiler's must on 19ab1c58). functionValue asks it of a module-level set and
+// nestedReference of a nested one, so both say the same words.
+func (l *lowering) overloadSetValueStop(node *ast.Node, symbol *ast.Symbol) error {
+	if symbol == nil {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
+			return l.notYet(node, "an overloaded function as a value")
+		}
+	}
+	return nil
+}
+
 // functionValue makes one stable adapter per named function. It binds optional
 // and rest parameters and forwards the original count, even though its ordinary
 // parameters have been padded or collected before reaching the target.
@@ -1592,12 +1608,8 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		}
 		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
 	}
-	if symbol != nil {
-		for _, declaration := range symbol.Declarations {
-			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
-				return nil, l.notYet(node, "an overloaded function as a value")
-			}
-		}
+	if err := l.overloadSetValueStop(node, symbol); err != nil {
+		return nil, err
 	}
 	if l.result.Functions[target].Generator {
 		return nil, l.generatorNotYet(node, "used as a value")
@@ -1696,7 +1708,12 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if hand {
 		l.handNext = node.AsCallExpression().Expression
 	}
+	// A nested overload set called by name resolves to its overload here and is checked, so its
+	// callee alone passes nestedReference's value stop.
+	enclosingCallee := l.nestedCallee
+	l.nestedCallee = ast.SkipOuterExpressions(node.AsCallExpression().Expression, ast.OEKParentheses)
 	closure, err := l.expression(node.AsCallExpression().Expression)
+	l.nestedCallee = enclosingCallee
 	l.handNext = nil
 	if err != nil {
 		return nil, err

@@ -373,6 +373,10 @@ type lowering struct {
 	// handNext is the callee of the hand-driven `x.next()` callClosure is lowering, which property
 	// lets past its library-member guard (handDrivenNext); nil otherwise.
 	handNext *ast.Node
+	// nestedCallee is the bare callee of the call callClosure is lowering, which nestedReference lets
+	// past its overload-set stop, since that call resolves to the overload and is checked; nil
+	// otherwise (#z5d0jye).
+	nestedCallee *ast.Node
 
 	// optionalReceiverCall identifies the call whose receiver optionalIntrinsic guards.
 	optionalReceiverCall *ast.Node
