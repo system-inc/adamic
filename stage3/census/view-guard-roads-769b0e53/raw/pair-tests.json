@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python3",
+    "-E",
+    "-S",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "stage3/census/pair",
+    "-p",
+    "test_*.py"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 52.41853327299998,
+  "peak_rss_kib": 82492,
+  "user_seconds": 11.348739,
+  "system_seconds": 5.307508,
+  "environment": {}
+}

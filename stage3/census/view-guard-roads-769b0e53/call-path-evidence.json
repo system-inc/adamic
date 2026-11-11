@@ -1,0 +1,118 @@
+{
+  "parent": {
+    "production_call_path": [
+      {
+        "file": "internal/lower/lower.go",
+        "call": "lowering.findCycles(modules)",
+        "line": 205
+      },
+      {
+        "file": "internal/lower/cycles.go",
+        "call": "finder.graphTypes(modules)",
+        "line": 148
+      },
+      {
+        "file": "internal/lower/cycles.go",
+        "call": "l.selectProgramMembership(finder, modules)",
+        "line": 153
+      },
+      {
+        "file": "internal/lower/graph_types.go",
+        "call": "f.viewPairGuard()",
+        "line": 366
+      },
+      {
+        "file": "internal/lower/program_region.go",
+        "call": "f.viewPairGuard()",
+        "line": 140
+      }
+    ],
+    "generated_lower_pipeline_removed": true,
+    "guard_or_cycle_calls_in_generated_overlay": 0,
+    "overlay_go_files_checked": [
+      "internal_load_latent_hook.go",
+      "internal_load_load.go",
+      "internal_lower_entries_records.go",
+      "internal_lower_expression.go",
+      "internal_lower_functions.go",
+      "internal_lower_generic.go",
+      "internal_lower_latent_full.go",
+      "internal_lower_latent_hook.go",
+      "internal_lower_latent_piece.go",
+      "internal_lower_latent_progress.go",
+      "internal_lower_latent_relation_overflow.go",
+      "internal_lower_latent_replay.go",
+      "internal_lower_latent_speculative.go",
+      "internal_lower_latent_state.go",
+      "internal_lower_latent_timing.go",
+      "internal_lower_latent_units.go",
+      "internal_lower_locals.go",
+      "internal_lower_lower.go",
+      "internal_lower_refusals.go",
+      "internal_lower_statements.go",
+      "stage3_census_latent_replay_worker_main.go",
+      "stage3_census_latent_tool_main.go",
+      "stage3_census_latent_tool_relation_overflow_test.go"
+    ]
+  },
+  "head": {
+    "production_call_path": [
+      {
+        "file": "internal/lower/lower.go",
+        "call": "lowering.findCycles(modules)",
+        "line": 205
+      },
+      {
+        "file": "internal/lower/cycles.go",
+        "call": "finder.graphTypes(modules)",
+        "line": 148
+      },
+      {
+        "file": "internal/lower/cycles.go",
+        "call": "l.selectProgramMembership(finder, modules)",
+        "line": 153
+      },
+      {
+        "file": "internal/lower/graph_types.go",
+        "call": "f.viewPairGuard()",
+        "line": 366
+      },
+      {
+        "file": "internal/lower/program_region.go",
+        "call": "f.viewPairGuard()",
+        "line": 140
+      }
+    ],
+    "generated_lower_pipeline_removed": true,
+    "guard_or_cycle_calls_in_generated_overlay": 0,
+    "overlay_go_files_checked": [
+      "internal_load_latent_hook.go",
+      "internal_load_load.go",
+      "internal_lower_entries_records.go",
+      "internal_lower_expression.go",
+      "internal_lower_functions.go",
+      "internal_lower_generic.go",
+      "internal_lower_latent_full.go",
+      "internal_lower_latent_hook.go",
+      "internal_lower_latent_piece.go",
+      "internal_lower_latent_progress.go",
+      "internal_lower_latent_relation_overflow.go",
+      "internal_lower_latent_replay.go",
+      "internal_lower_latent_speculative.go",
+      "internal_lower_latent_state.go",
+      "internal_lower_latent_timing.go",
+      "internal_lower_latent_units.go",
+      "internal_lower_locals.go",
+      "internal_lower_lower.go",
+      "internal_lower_refusals.go",
+      "internal_lower_statements.go",
+      "stage3_census_latent_replay_worker_main.go",
+      "stage3_census_latent_tool_main.go",
+      "stage3_census_latent_tool_relation_overflow_test.go"
+    ]
+  },
+  "changed_files": [
+    "internal/lower/graph_types.go",
+    "internal/lower/graph_view_guard_test.go"
+  ]
+}

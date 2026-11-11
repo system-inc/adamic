@@ -1,0 +1,14 @@
+{
+  "command": [
+    "bash",
+    "-c",
+    "set -e; python3 stage3/census/latent/make_overlay.py /workspace/roads-head /workspace/roads-head-overlay; gofmt -w /workspace/roads-head-overlay/*.go; python3 stage3/meter/entry_overlay.py /workspace/roads-head-overlay /workspace/roads-head-entry; gofmt -w /workspace/roads-head-entry/*.go; go build -buildvcs=false -overlay=/workspace/roads-head-entry/overlay.json -o /workspace/roads-head-census ./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 675.1838586629999,
+  "peak_rss_kib": 2283552,
+  "user_seconds": 698.558504,
+  "system_seconds": 86.537562,
+  "environment": {}
+}

@@ -1,0 +1,14 @@
+....................
+----------------------------------------------------------------------
+Ran 20 tests in 51.094s
+
+OK
+pair metadata mutant: unchanged positive test is red
+Traceback (most recent call last):
+  File "/workspace/roads-head/stage3/census/pair/test_pair.py", line 68, in test_deferred_caller_metadata_is_not_eligibility_abrq61p
+    delta = pair.compare(rows(unit), rows(witnessed), root, TS)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/roads-head/stage3/census/pair/pair.py", line 92, in compare
+    raise ValueError(f'unit eligibility differs: {u}')
+ValueError: unit eligibility differs: ('input.ts', '22c13d17b19031a14f096c26a961c3fe889820b6242c62cae366d9e6c8bcaa71', 0)
+
