@@ -1,0 +1,28 @@
+// Node runs every due timer of one duration's list before the next list (lib/internal/timers.js,
+// processTimers and listOnTimeout), so T2, in the 30 ms list, runs before T3, in the 10 ms list,
+// though T3's deadline comes first (#a6yb7d1). Times from T1's arming:
+// T1: 30 ms at 0, due 30, in the 30 ms list, expiry 30.
+// T2: 30 ms at 25 or later, due 55 or later, in the same list.
+// T3: 10 ms at 26 or later, due 36 or later, in a new list, expiry 36 or later.
+// Then a 60 ms wait, so all three are due when the loop first runs timers.
+// Load only lengthens the waits, so the 30 ms list (30) always runs before the 10 ms list (36 or
+// later), and Node prints T1 T2 T3. By deadline alone, as native once chose, T3 (36) runs before
+// T2 (55) unless load holds T3's arming more than 19 ms past T2's, so that mutant goes red.
+import { performance } from 'node:perf_hooks';
+import 'node:timers';
+
+function wait(milliseconds: number): void {
+	const end = performance.now() + milliseconds;
+	while (performance.now() < end) {
+		// Holds the loop, as a slow synchronous step does.
+	}
+}
+
+const order: string[] = [];
+setTimeout(() => { order.push('T1'); }, 30);
+wait(25);
+setTimeout(() => { order.push('T2'); }, 30);
+wait(1);
+setTimeout(() => { order.push('T3'); }, 10);
+wait(60);
+setTimeout(() => { console.log(order.join(' ')); }, 40);

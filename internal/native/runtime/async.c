@@ -202,14 +202,8 @@ void adamic_async_run(void) {
         /* A timer phase takes the deadlines ready at this turn. An interval
          * rearmed during a slow callback waits for another turn, so ready host
          * completions cannot starve behind that same interval. */
-        double turn_time = timers == NULL ? 0 : timer_now();
-        for (;;) {
-            bool due = false;
-            for (timer_entry *entry = timers; entry != NULL; entry = entry->next)
-                if (entry->deadline <= turn_time) { due = true; break; }
-            if (!due || !timer_dispatch()) break;
-            drain_jobs();
-        }
+        double turn_time = timer_lists == NULL ? 0 : timer_now();
+        while (timer_lists != NULL && timer_dispatch(turn_time)) drain_jobs();
         /* A source phase dispatches what the last wait recorded, each source at
          * most once, so one its dispatch leaves readable cannot starve the rest. */
         while (source_dispatch()) drain_jobs();

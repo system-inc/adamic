@@ -1,0 +1,20 @@
+// Node reads the clock at every setTimeout (getLibuvNow, in lib/internal/timers.js's insert), never a
+// value cached for the turn, so A, armed at 2 ms before a 10 ms wait, fires before B, armed at 1 ms
+// after it: A is due at 2, B at 11 or later (#a6yb7d1). A start cached once a turn would give B the
+// same start as A and fire it first; this pins that bug, which #a6yb7d1's first title would have built.
+// Load only lengthens the wait, so B's deadline only moves later.
+import { performance } from 'node:perf_hooks';
+import 'node:timers';
+
+function wait(milliseconds: number): void {
+	const end = performance.now() + milliseconds;
+	while (performance.now() < end) {
+		// Holds the loop, as a slow synchronous step does.
+	}
+}
+
+const order: string[] = [];
+setTimeout(() => { order.push('A'); }, 2);
+wait(10);
+setTimeout(() => { order.push('B'); }, 1);
+setTimeout(() => { console.log(order.join(' ')); }, 40);
