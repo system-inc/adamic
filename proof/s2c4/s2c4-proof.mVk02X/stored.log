@@ -1,0 +1,44 @@
+=== RUN   TestGeneratorsAgreeWithNode
+=== PAUSE TestGeneratorsAgreeWithNode
+=== CONT  TestGeneratorsAgreeWithNode
+=== RUN   TestGeneratorsAgreeWithNode/stored_exits.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_exits.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_exits_finally.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_exits_finally.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_for_of.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_for_of.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_jsx_children.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_jsx_children.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_later_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_later_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_untaken.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_untaken.a
+=== CONT  TestGeneratorsAgreeWithNode/stored_exits.a
+=== CONT  TestGeneratorsAgreeWithNode/stored_for_of.a
+=== CONT  TestGeneratorsAgreeWithNode/stored_jsx_children.a
+=== CONT  TestGeneratorsAgreeWithNode/stored_exits_finally.a
+=== CONT  TestGeneratorsAgreeWithNode/stored_later_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/stored_exits.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.70
+=== NAME  TestGeneratorsAgreeWithNode/stored_exits_finally.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.71
+=== NAME  TestGeneratorsAgreeWithNode/stored_for_of.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.75
+=== NAME  TestGeneratorsAgreeWithNode/stored_later_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.79
+=== NAME  TestGeneratorsAgreeWithNode/stored_jsx_children.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.86
+=== CONT  TestGeneratorsAgreeWithNode/stored_untaken.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+--- PASS: TestGeneratorsAgreeWithNode (0.00s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_for_of.a (12.25s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_exits.a (12.25s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_exits_finally.a (12.30s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_later_throw.a (12.30s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_jsx_children.a (12.34s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_untaken.a (1.02s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	13.329s

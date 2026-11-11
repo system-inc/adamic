@@ -1,0 +1,12 @@
+=== RUN   TestStoredGeneratorRoadsAreNotYet
+=== PAUSE TestStoredGeneratorRoadsAreNotYet
+=== CONT  TestStoredGeneratorRoadsAreNotYet
+=== RUN   TestStoredGeneratorRoadsAreNotYet/two_reads
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/two_reads
+=== CONT  TestStoredGeneratorRoadsAreNotYet/two_reads
+    generators_stored_test.go:156: got /tmp/adamic-gate/TestStoredGeneratorRoadsAreNotYettwo_reads3630173217/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet, want a NotYet saying "a generator stored in a local, used other than once by a consumer that steps it (#qk8rztp)"
+--- FAIL: TestStoredGeneratorRoadsAreNotYet (0.00s)
+    --- FAIL: TestStoredGeneratorRoadsAreNotYet/two_reads (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.067s
+FAIL

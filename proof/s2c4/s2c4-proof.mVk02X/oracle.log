@@ -1,0 +1,1011 @@
+=== RUN   TestAsyncLiveIterableStringAsciiFunction
+=== PAUSE TestAsyncLiveIterableStringAsciiFunction
+=== RUN   TestAsyncLiveIterableStringAsciiModule
+=== PAUSE TestAsyncLiveIterableStringAsciiModule
+=== RUN   TestAsyncLiveIterableStringEmojiFunction
+=== PAUSE TestAsyncLiveIterableStringEmojiFunction
+=== RUN   TestAsyncLiveIterableStringEmojiModule
+=== PAUSE TestAsyncLiveIterableStringEmojiModule
+=== RUN   TestAsyncLiveIterableStringSurrogatesFunction
+=== PAUSE TestAsyncLiveIterableStringSurrogatesFunction
+=== RUN   TestAsyncLiveIterableStringSurrogatesModule
+=== PAUSE TestAsyncLiveIterableStringSurrogatesModule
+=== RUN   TestAsyncLiveIterableMapEntriesFunction
+=== PAUSE TestAsyncLiveIterableMapEntriesFunction
+=== RUN   TestAsyncLiveIterableMapEntriesModule
+=== PAUSE TestAsyncLiveIterableMapEntriesModule
+=== RUN   TestAsyncLiveIterableMapKeysFunction
+=== PAUSE TestAsyncLiveIterableMapKeysFunction
+=== RUN   TestAsyncLiveIterableMapKeysModule
+=== PAUSE TestAsyncLiveIterableMapKeysModule
+=== RUN   TestAsyncLiveIterableMapValuesFunction
+=== PAUSE TestAsyncLiveIterableMapValuesFunction
+=== RUN   TestAsyncLiveIterableMapValuesModule
+=== PAUSE TestAsyncLiveIterableMapValuesModule
+=== RUN   TestAsyncLiveIterableSetValuesFunction
+=== PAUSE TestAsyncLiveIterableSetValuesFunction
+=== RUN   TestAsyncLiveIterableSetValuesModule
+=== PAUSE TestAsyncLiveIterableSetValuesModule
+=== RUN   TestAsyncLiveIterableSetEntriesFunction
+=== PAUSE TestAsyncLiveIterableSetEntriesFunction
+=== RUN   TestAsyncLiveIterableSetEntriesModule
+=== PAUSE TestAsyncLiveIterableSetEntriesModule
+=== RUN   TestAsyncLiveIterableMapClearFunction
+=== PAUSE TestAsyncLiveIterableMapClearFunction
+=== RUN   TestAsyncLiveIterableMapClearModule
+=== PAUSE TestAsyncLiveIterableMapClearModule
+=== RUN   TestAsyncLiveIterableMapReaddFunction
+=== PAUSE TestAsyncLiveIterableMapReaddFunction
+=== RUN   TestAsyncLiveIterableMapReaddModule
+=== PAUSE TestAsyncLiveIterableMapReaddModule
+=== RUN   TestAsyncLiveIterableMapRehashFunction
+=== PAUSE TestAsyncLiveIterableMapRehashFunction
+=== RUN   TestAsyncLiveIterableMapRehashModule
+=== PAUSE TestAsyncLiveIterableMapRehashModule
+=== RUN   TestAsyncLiveIterableNestedMapsFunction
+=== PAUSE TestAsyncLiveIterableNestedMapsFunction
+=== RUN   TestAsyncLiveIterableNestedMapsModule
+=== PAUSE TestAsyncLiveIterableNestedMapsModule
+=== RUN   TestAsyncLiveIterableMapBreakFunction
+=== PAUSE TestAsyncLiveIterableMapBreakFunction
+=== RUN   TestAsyncLiveIterableMapBreakModule
+=== PAUSE TestAsyncLiveIterableMapBreakModule
+=== RUN   TestAsyncLiveIterableMapReturnFunction
+=== PAUSE TestAsyncLiveIterableMapReturnFunction
+=== RUN   TestAsyncLiveIterableMapReturnModule
+=== PAUSE TestAsyncLiveIterableMapReturnModule
+=== RUN   TestAsyncLiveIterableStringBreakFunction
+=== PAUSE TestAsyncLiveIterableStringBreakFunction
+=== RUN   TestAsyncLiveIterableStringBreakModule
+=== PAUSE TestAsyncLiveIterableStringBreakModule
+=== RUN   TestAsyncLiveIterableSetReturnFunction
+=== PAUSE TestAsyncLiveIterableSetReturnFunction
+=== RUN   TestAsyncLiveIterableSetReturnModule
+=== PAUSE TestAsyncLiveIterableSetReturnModule
+=== RUN   TestAsyncLiveMutantIterableMapBreakFunction
+=== PAUSE TestAsyncLiveMutantIterableMapBreakFunction
+=== RUN   TestAsyncLiveMutantIterableMapBreakModule
+=== PAUSE TestAsyncLiveMutantIterableMapBreakModule
+=== RUN   TestAsyncLiveMutantIterableMapClearFunction
+=== PAUSE TestAsyncLiveMutantIterableMapClearFunction
+=== RUN   TestAsyncLiveMutantIterableMapClearModule
+=== PAUSE TestAsyncLiveMutantIterableMapClearModule
+=== RUN   TestAsyncLiveMutantIterableMapEntriesFunction
+=== PAUSE TestAsyncLiveMutantIterableMapEntriesFunction
+=== RUN   TestAsyncLiveMutantIterableMapEntriesModule
+=== PAUSE TestAsyncLiveMutantIterableMapEntriesModule
+=== RUN   TestAsyncLiveMutantIterableMapKeysFunction
+=== PAUSE TestAsyncLiveMutantIterableMapKeysFunction
+=== RUN   TestAsyncLiveMutantIterableMapKeysModule
+=== PAUSE TestAsyncLiveMutantIterableMapKeysModule
+=== RUN   TestAsyncLiveMutantIterableMapReaddFunction
+=== PAUSE TestAsyncLiveMutantIterableMapReaddFunction
+=== RUN   TestAsyncLiveMutantIterableMapReaddModule
+=== PAUSE TestAsyncLiveMutantIterableMapReaddModule
+=== RUN   TestAsyncLiveMutantIterableMapRehashFunction
+=== PAUSE TestAsyncLiveMutantIterableMapRehashFunction
+=== RUN   TestAsyncLiveMutantIterableMapRehashModule
+=== PAUSE TestAsyncLiveMutantIterableMapRehashModule
+=== RUN   TestAsyncLiveMutantIterableMapReturnFunction
+=== PAUSE TestAsyncLiveMutantIterableMapReturnFunction
+=== RUN   TestAsyncLiveMutantIterableMapReturnModule
+=== PAUSE TestAsyncLiveMutantIterableMapReturnModule
+=== RUN   TestAsyncLiveMutantIterableMapValuesFunction
+=== PAUSE TestAsyncLiveMutantIterableMapValuesFunction
+=== RUN   TestAsyncLiveMutantIterableMapValuesModule
+=== PAUSE TestAsyncLiveMutantIterableMapValuesModule
+=== RUN   TestAsyncLiveMutantIterableNestedMapsFunction
+=== PAUSE TestAsyncLiveMutantIterableNestedMapsFunction
+=== RUN   TestAsyncLiveMutantIterableNestedMapsModule
+=== PAUSE TestAsyncLiveMutantIterableNestedMapsModule
+=== RUN   TestAsyncLiveMutantIterableSetEntriesFunction
+=== PAUSE TestAsyncLiveMutantIterableSetEntriesFunction
+=== RUN   TestAsyncLiveMutantIterableSetEntriesModule
+=== PAUSE TestAsyncLiveMutantIterableSetEntriesModule
+=== RUN   TestAsyncLiveMutantIterableSetReturnFunction
+=== PAUSE TestAsyncLiveMutantIterableSetReturnFunction
+=== RUN   TestAsyncLiveMutantIterableSetReturnModule
+=== PAUSE TestAsyncLiveMutantIterableSetReturnModule
+=== RUN   TestAsyncLiveMutantIterableSetValuesFunction
+=== PAUSE TestAsyncLiveMutantIterableSetValuesFunction
+=== RUN   TestAsyncLiveMutantIterableSetValuesModule
+=== PAUSE TestAsyncLiveMutantIterableSetValuesModule
+=== RUN   TestAsyncLiveMutantIterableStringAsciiFunction
+=== PAUSE TestAsyncLiveMutantIterableStringAsciiFunction
+=== RUN   TestAsyncLiveMutantIterableStringAsciiModule
+=== PAUSE TestAsyncLiveMutantIterableStringAsciiModule
+=== RUN   TestAsyncLiveMutantIterableStringBreakFunction
+=== PAUSE TestAsyncLiveMutantIterableStringBreakFunction
+=== RUN   TestAsyncLiveMutantIterableStringBreakModule
+=== PAUSE TestAsyncLiveMutantIterableStringBreakModule
+=== RUN   TestAsyncLiveMutantIterableStringEmojiFunction
+=== PAUSE TestAsyncLiveMutantIterableStringEmojiFunction
+=== RUN   TestAsyncLiveMutantIterableStringEmojiModule
+=== PAUSE TestAsyncLiveMutantIterableStringEmojiModule
+=== RUN   TestAsyncLiveMutantIterableStringSurrogatesFunction
+=== PAUSE TestAsyncLiveMutantIterableStringSurrogatesFunction
+=== RUN   TestAsyncLiveMutantIterableStringSurrogatesModule
+=== PAUSE TestAsyncLiveMutantIterableStringSurrogatesModule
+=== RUN   TestAsyncLiveIterableMapBooleanFunction
+=== PAUSE TestAsyncLiveIterableMapBooleanFunction
+=== RUN   TestAsyncLiveIterableSetBooleanFunction
+=== PAUSE TestAsyncLiveIterableSetBooleanFunction
+=== RUN   TestAsyncLabelsAsyncIterablesCellsLabels
+=== PAUSE TestAsyncLabelsAsyncIterablesCellsLabels
+=== RUN   TestGeneratorsAgreeWithNode
+=== PAUSE TestGeneratorsAgreeWithNode
+=== RUN   TestIterableViewsAgreeWithNode
+=== PAUSE TestIterableViewsAgreeWithNode
+=== RUN   TestProgramRegionGeneratorsNotAdopted
+=== PAUSE TestProgramRegionGeneratorsNotAdopted
+=== RUN   TestProgramRegionGeneratorInPlaceNotAdopted
+=== PAUSE TestProgramRegionGeneratorInPlaceNotAdopted
+=== CONT  TestAsyncLiveIterableStringAsciiFunction
+=== CONT  TestAsyncLiveIterableMapReaddModule
+=== CONT  TestAsyncLiveMutantIterableMapEntriesModule
+=== CONT  TestAsyncLiveIterableStringBreakFunction
+=== CONT  TestAsyncLiveIterableMapValuesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.86
+=== NAME  TestAsyncLiveIterableStringBreakFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.95
+=== NAME  TestAsyncLiveIterableStringAsciiFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.96
+=== NAME  TestAsyncLiveIterableMapReaddModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.99
+=== NAME  TestAsyncLiveMutantIterableMapEntriesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+    async_iterables_test.go:411: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapEntriesModule (52.22s)
+=== CONT  TestAsyncLiveIterableMapKeysModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableStringBreakFunction
+    async_iterables_test.go:290: Node/native/JS/split counted: "😀\ndone\n"
+--- PASS: TestAsyncLiveIterableStringBreakFunction (63.05s)
+=== CONT  TestAsyncLiveIterableMapKeysFunction
+=== NAME  TestAsyncLiveIterableMapKeysModule
+    async_iterables_test.go:214: Node/native/JS/split counted: "a\nb\n"
+--- PASS: TestAsyncLiveIterableMapKeysModule (10.87s)
+=== CONT  TestAsyncLiveIterableMapEntriesModule
+=== NAME  TestAsyncLiveIterableMapValuesFunction
+    async_iterables_test.go:218: Node/native/JS/split counted: "1\n2\n"
+--- PASS: TestAsyncLiveIterableMapValuesFunction (63.12s)
+=== CONT  TestProgramRegionGeneratorInPlaceNotAdopted
+=== NAME  TestAsyncLiveIterableMapReaddModule
+    async_iterables_test.go:254: Node/native/JS/split counted: "a:1\nc:3\nb:20\n"
+--- PASS: TestAsyncLiveIterableMapReaddModule (63.16s)
+=== CONT  TestAsyncLiveIterableMapEntriesFunction
+=== NAME  TestAsyncLiveIterableStringAsciiFunction
+    async_iterables_test.go:178: Node/native/JS/split counted: "a\nb\nc\n"
+--- PASS: TestAsyncLiveIterableStringAsciiFunction (63.16s)
+=== CONT  TestProgramRegionGeneratorsNotAdopted
+=== NAME  TestAsyncLiveIterableMapEntriesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.04
+=== NAME  TestAsyncLiveIterableMapKeysFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveIterableMapEntriesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestProgramRegionGeneratorInPlaceNotAdopted
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestProgramRegionGeneratorsNotAdopted
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveIterableMapEntriesModule
+    async_iterables_test.go:206: Node/native/JS/split counted: "a:1\nb:2\n"
+--- PASS: TestAsyncLiveIterableMapEntriesModule (1.29s)
+=== CONT  TestAsyncLiveMutantIterableMapEntriesFunction
+=== NAME  TestAsyncLiveIterableMapKeysFunction
+    async_iterables_test.go:210: Node/native/JS/split counted: "a\nb\n"
+--- PASS: TestAsyncLiveIterableMapKeysFunction (1.40s)
+=== CONT  TestAsyncLiveIterableStringSurrogatesModule
+=== NAME  TestAsyncLiveIterableMapEntriesFunction
+    async_iterables_test.go:202: Node/native/JS/split counted: "a:1\nb:2\n"
+--- PASS: TestAsyncLiveIterableMapEntriesFunction (1.43s)
+=== CONT  TestIterableViewsAgreeWithNode
+=== RUN   TestIterableViewsAgreeWithNode/hand_next.a
+=== PAUSE TestIterableViewsAgreeWithNode/hand_next.a
+=== RUN   TestIterableViewsAgreeWithNode/hand_next_generator.a
+=== PAUSE TestIterableViewsAgreeWithNode/hand_next_generator.a
+=== RUN   TestIterableViewsAgreeWithNode/hand_next_generator_throw.a
+=== PAUSE TestIterableViewsAgreeWithNode/hand_next_generator_throw.a
+=== RUN   TestIterableViewsAgreeWithNode/hand_next_maybe_string.a
+=== PAUSE TestIterableViewsAgreeWithNode/hand_next_maybe_string.a
+=== RUN   TestIterableViewsAgreeWithNode/hand_next_mixed.a
+=== PAUSE TestIterableViewsAgreeWithNode/hand_next_mixed.a
+=== RUN   TestIterableViewsAgreeWithNode/nullable_string_keys.a
+=== PAUSE TestIterableViewsAgreeWithNode/nullable_string_keys.a
+=== RUN   TestIterableViewsAgreeWithNode/nullable_values.a
+=== PAUSE TestIterableViewsAgreeWithNode/nullable_values.a
+=== RUN   TestIterableViewsAgreeWithNode/view_delete.a
+=== PAUSE TestIterableViewsAgreeWithNode/view_delete.a
+=== RUN   TestIterableViewsAgreeWithNode/view_entries.a
+=== PAUSE TestIterableViewsAgreeWithNode/view_entries.a
+=== RUN   TestIterableViewsAgreeWithNode/view_live.a
+=== PAUSE TestIterableViewsAgreeWithNode/view_live.a
+=== RUN   TestIterableViewsAgreeWithNode/view_partial.a
+=== PAUSE TestIterableViewsAgreeWithNode/view_partial.a
+=== RUN   TestIterableViewsAgreeWithNode/view_union.a
+=== PAUSE TestIterableViewsAgreeWithNode/view_union.a
+=== RUN   TestIterableViewsAgreeWithNode/view_values.a
+=== PAUSE TestIterableViewsAgreeWithNode/view_values.a
+=== CONT  TestAsyncLiveIterableStringSurrogatesFunction
+=== NAME  TestAsyncLiveIterableStringSurrogatesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableStringSurrogatesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableMapEntriesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+    async_iterables_test.go:406: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapEntriesFunction (0.87s)
+=== CONT  TestGeneratorsAgreeWithNode
+=== RUN   TestGeneratorsAgreeWithNode/array_from.a
+=== PAUSE TestGeneratorsAgreeWithNode/array_from.a
+=== RUN   TestGeneratorsAgreeWithNode/array_from_view.a
+=== PAUSE TestGeneratorsAgreeWithNode/array_from_view.a
+=== RUN   TestGeneratorsAgreeWithNode/body_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/body_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/break_map.a
+=== PAUSE TestGeneratorsAgreeWithNode/break_map.a
+=== RUN   TestGeneratorsAgreeWithNode/builder_state_strings.a
+=== PAUSE TestGeneratorsAgreeWithNode/builder_state_strings.a
+=== RUN   TestGeneratorsAgreeWithNode/complete.a
+=== PAUSE TestGeneratorsAgreeWithNode/complete.a
+=== RUN   TestGeneratorsAgreeWithNode/consumer_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/consumer_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/declared_iterators.a
+=== PAUSE TestGeneratorsAgreeWithNode/declared_iterators.a
+=== RUN   TestGeneratorsAgreeWithNode/drop_start.a
+=== PAUSE TestGeneratorsAgreeWithNode/drop_start.a
+=== RUN   TestGeneratorsAgreeWithNode/early_return.a
+=== PAUSE TestGeneratorsAgreeWithNode/early_return.a
+=== RUN   TestGeneratorsAgreeWithNode/elementwise_view.a
+=== PAUSE TestGeneratorsAgreeWithNode/elementwise_view.a
+=== RUN   TestGeneratorsAgreeWithNode/first_or_undefined.a
+=== PAUSE TestGeneratorsAgreeWithNode/first_or_undefined.a
+=== RUN   TestGeneratorsAgreeWithNode/first_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/first_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/generic.a
+=== PAUSE TestGeneratorsAgreeWithNode/generic.a
+=== RUN   TestGeneratorsAgreeWithNode/generic_map.a
+=== PAUSE TestGeneratorsAgreeWithNode/generic_map.a
+=== RUN   TestGeneratorsAgreeWithNode/generic_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/generic_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/in_place_capture.a
+=== PAUSE TestGeneratorsAgreeWithNode/in_place_capture.a
+=== RUN   TestGeneratorsAgreeWithNode/in_place_environment.a
+=== PAUSE TestGeneratorsAgreeWithNode/in_place_environment.a
+=== RUN   TestGeneratorsAgreeWithNode/in_place_forms.a
+=== PAUSE TestGeneratorsAgreeWithNode/in_place_forms.a
+=== RUN   TestGeneratorsAgreeWithNode/in_place_loop.a
+=== PAUSE TestGeneratorsAgreeWithNode/in_place_loop.a
+=== RUN   TestGeneratorsAgreeWithNode/labeled_exit.a
+=== PAUSE TestGeneratorsAgreeWithNode/labeled_exit.a
+=== RUN   TestGeneratorsAgreeWithNode/map_defined_iterator.a
+=== PAUSE TestGeneratorsAgreeWithNode/map_defined_iterator.a
+=== RUN   TestGeneratorsAgreeWithNode/map_iterator.a
+=== PAUSE TestGeneratorsAgreeWithNode/map_iterator.a
+=== RUN   TestGeneratorsAgreeWithNode/map_iterator_entries.a
+=== PAUSE TestGeneratorsAgreeWithNode/map_iterator_entries.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_generic.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_generic.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_view.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_view.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_carrier_temporary.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_carrier_temporary.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_checker_shapes.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_checker_shapes.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_dead_zone.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_dead_zone.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_early_break.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_early_break.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_hoisted.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_hoisted.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_iterable.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_iterable.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_live_capture.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_live_capture.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_stack_parent.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_stack_parent.a
+=== RUN   TestGeneratorsAgreeWithNode/new_map.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_map.a
+=== RUN   TestGeneratorsAgreeWithNode/new_map_entries.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_map_entries.a
+=== RUN   TestGeneratorsAgreeWithNode/new_map_plain.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_map_plain.a
+=== RUN   TestGeneratorsAgreeWithNode/new_map_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_map_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/new_set.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_set.a
+=== RUN   TestGeneratorsAgreeWithNode/new_set_plain.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_set_plain.a
+=== RUN   TestGeneratorsAgreeWithNode/nullish_view_tests.a
+=== PAUSE TestGeneratorsAgreeWithNode/nullish_view_tests.a
+=== RUN   TestGeneratorsAgreeWithNode/retained_param.a
+=== PAUSE TestGeneratorsAgreeWithNode/retained_param.a
+=== RUN   TestGeneratorsAgreeWithNode/return_from_loop.a
+=== PAUSE TestGeneratorsAgreeWithNode/return_from_loop.a
+=== RUN   TestGeneratorsAgreeWithNode/split.a
+=== PAUSE TestGeneratorsAgreeWithNode/split.a
+=== RUN   TestGeneratorsAgreeWithNode/spread.a
+=== PAUSE TestGeneratorsAgreeWithNode/spread.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_exits.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_exits.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_exits_finally.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_exits_finally.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_for_of.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_for_of.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_jsx_children.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_jsx_children.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_later_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_later_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/stored_untaken.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_untaken.a
+=== RUN   TestGeneratorsAgreeWithNode/uncaught.a
+=== PAUSE TestGeneratorsAgreeWithNode/uncaught.a
+=== RUN   TestGeneratorsAgreeWithNode/uncaught_from.a
+=== PAUSE TestGeneratorsAgreeWithNode/uncaught_from.a
+=== RUN   TestGeneratorsAgreeWithNode/uncaught_spread.a
+=== PAUSE TestGeneratorsAgreeWithNode/uncaught_spread.a
+=== RUN   TestGeneratorsAgreeWithNode/unused_class.a
+=== PAUSE TestGeneratorsAgreeWithNode/unused_class.a
+=== RUN   TestGeneratorsAgreeWithNode/view_body_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_body_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/view_counted_items.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_counted_items.a
+=== RUN   TestGeneratorsAgreeWithNode/view_early_return.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_early_return.a
+=== RUN   TestGeneratorsAgreeWithNode/view_mixed.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_mixed.a
+=== RUN   TestGeneratorsAgreeWithNode/view_outer_loop.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_outer_loop.a
+=== RUN   TestGeneratorsAgreeWithNode/view_string_items.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_string_items.a
+=== RUN   TestGeneratorsAgreeWithNode/view_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_throw.a
+=== CONT  TestAsyncLiveMutantIterableMapClearModule
+=== NAME  TestAsyncLiveIterableStringSurrogatesModule
+    async_iterables_test.go:198: Node/native/JS/split counted: "1:55296\n1:120\n1:56320\n2:55357\n"
+--- PASS: TestAsyncLiveIterableStringSurrogatesModule (1.20s)
+=== CONT  TestAsyncLabelsAsyncIterablesCellsLabels
+=== NAME  TestAsyncLiveIterableStringSurrogatesFunction
+    async_iterables_test.go:194: Node/native/JS/split counted: "1:55296\n1:120\n1:56320\n2:55357\n"
+--- PASS: TestAsyncLiveIterableStringSurrogatesFunction (1.19s)
+=== CONT  TestAsyncLiveMutantIterableMapClearFunction
+=== NAME  TestAsyncLabelsAsyncIterablesCellsLabels
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableMapClearModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+    async_iterables_test.go:401: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapClearModule (0.87s)
+=== CONT  TestAsyncLiveIterableStringEmojiModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableMapClearFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+    async_iterables_test.go:396: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapClearFunction (1.07s)
+=== CONT  TestAsyncLiveMutantIterableMapBreakModule
+=== NAME  TestAsyncLabelsAsyncIterablesCellsLabels
+    async_labels_test.go:129: Node/native/JS/split counted: "a:1\nb:2\nx\n💡\n"
+--- PASS: TestAsyncLabelsAsyncIterablesCellsLabels (1.76s)
+=== CONT  TestAsyncLiveIterableStringEmojiFunction
+=== NAME  TestAsyncLiveIterableStringEmojiModule
+    async_iterables_test.go:190: Node/native/JS/split counted: "a:1\n😀:2\n𝄞:2\nb:1\n"
+--- PASS: TestAsyncLiveIterableStringEmojiModule (1.34s)
+=== CONT  TestAsyncLiveMutantIterableMapBreakFunction
+=== NAME  TestAsyncLiveMutantIterableMapBreakModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveIterableStringEmojiFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableMapBreakModule
+    async_iterables_test.go:391: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapBreakModule (0.90s)
+=== CONT  TestAsyncLiveIterableStringAsciiModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableMapBreakFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+    async_iterables_test.go:386: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapBreakFunction (1.46s)
+=== CONT  TestAsyncLiveIterableSetReturnModule
+=== NAME  TestAsyncLiveIterableStringEmojiFunction
+    async_iterables_test.go:186: Node/native/JS/split counted: "a:1\n😀:2\n𝄞:2\nb:1\n"
+--- PASS: TestAsyncLiveIterableStringEmojiFunction (1.59s)
+=== CONT  TestAsyncLiveIterableSetReturnFunction
+=== NAME  TestAsyncLiveIterableSetReturnModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableSetReturnFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableStringAsciiModule
+    async_iterables_test.go:182: Node/native/JS/split counted: "a\nb\nc\n"
+--- PASS: TestAsyncLiveIterableStringAsciiModule (1.54s)
+=== CONT  TestAsyncLiveIterableStringBreakModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableSetReturnFunction
+    async_iterables_test.go:298: Node/native/JS/split counted: "a\n"
+--- PASS: TestAsyncLiveIterableSetReturnFunction (1.24s)
+=== CONT  TestAsyncLiveIterableSetBooleanFunction
+=== NAME  TestAsyncLiveIterableSetReturnModule
+    async_iterables_test.go:302: Node/native/JS/split counted: "a\n"
+--- PASS: TestAsyncLiveIterableSetReturnModule (1.32s)
+=== CONT  TestAsyncLiveIterableMapBreakFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableStringBreakModule
+    async_iterables_test.go:294: Node/native/JS/split counted: "😀\ndone\n"
+--- PASS: TestAsyncLiveIterableStringBreakModule (1.19s)
+=== CONT  TestAsyncLiveIterableSetEntriesModule
+=== NAME  TestAsyncLiveIterableSetBooleanFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableSetEntriesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableSetBooleanFunction
+    async_iterables_test.go:703: Node/native/JS/split counted: "false\n"
+--- PASS: TestAsyncLiveIterableSetBooleanFunction (1.20s)
+=== CONT  TestAsyncLiveIterableMapReturnModule
+=== NAME  TestAsyncLiveIterableMapBreakFunction
+    async_iterables_test.go:274: Node/native/JS/split counted: "a:1\ndone\n"
+--- PASS: TestAsyncLiveIterableMapBreakFunction (1.28s)
+=== CONT  TestAsyncLiveIterableMapBooleanFunction
+=== NAME  TestAsyncLiveIterableMapReturnModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableSetEntriesModule
+    async_iterables_test.go:238: Node/native/JS/split counted: "a:a\nb:b\n"
+--- PASS: TestAsyncLiveIterableSetEntriesModule (1.19s)
+=== CONT  TestAsyncLiveIterableMapReturnFunction
+=== NAME  TestAsyncLiveIterableMapBooleanFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableMapReturnFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableMapReturnModule
+    async_iterables_test.go:286: Node/native/JS/split counted: "a:1\n"
+--- PASS: TestAsyncLiveIterableMapReturnModule (1.10s)
+=== CONT  TestAsyncLiveIterableMapReaddFunction
+=== NAME  TestAsyncLiveIterableMapBooleanFunction
+    async_iterables_test.go:698: Node/native/JS/split counted: "false\n"
+--- PASS: TestAsyncLiveIterableMapBooleanFunction (1.40s)
+=== CONT  TestAsyncLiveMutantIterableStringSurrogatesModule
+=== NAME  TestAsyncLiveIterableMapReaddFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableMapReturnFunction
+    async_iterables_test.go:282: Node/native/JS/split counted: "a:1\n"
+--- PASS: TestAsyncLiveIterableMapReturnFunction (1.31s)
+=== CONT  TestAsyncLiveIterableMapBreakModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableStringSurrogatesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+    async_iterables_test.go:541: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableStringSurrogatesModule (0.78s)
+=== CONT  TestAsyncLiveIterableMapClearModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableMapReaddFunction
+    async_iterables_test.go:250: Node/native/JS/split counted: "a:1\nc:3\nb:20\n"
+--- PASS: TestAsyncLiveIterableMapReaddFunction (1.35s)
+=== CONT  TestAsyncLiveIterableMapClearFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableMapBreakModule
+    async_iterables_test.go:278: Node/native/JS/split counted: "a:1\ndone\n"
+--- PASS: TestAsyncLiveIterableMapBreakModule (1.12s)
+=== CONT  TestAsyncLiveIterableSetValuesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableMapClearModule
+    async_iterables_test.go:246: Node/native/JS/split counted: "a:1\n"
+--- PASS: TestAsyncLiveIterableMapClearModule (1.29s)
+=== CONT  TestAsyncLiveIterableSetEntriesFunction
+=== NAME  TestAsyncLiveIterableMapClearFunction
+    async_iterables_test.go:242: Node/native/JS/split counted: "a:1\n"
+=== NAME  TestAsyncLiveIterableSetEntriesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+--- PASS: TestAsyncLiveIterableMapClearFunction (1.54s)
+=== CONT  TestAsyncLiveMutantIterableSetEntriesFunction
+=== NAME  TestAsyncLiveIterableSetValuesModule
+    async_iterables_test.go:230: Node/native/JS/split counted: "2\n4\n6\n"
+--- PASS: TestAsyncLiveIterableSetValuesModule (1.44s)
+=== CONT  TestAsyncLiveMutantIterableStringEmojiModule
+=== NAME  TestAsyncLiveMutantIterableSetEntriesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableStringEmojiModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableSetEntriesFunction
+    async_iterables_test.go:476: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableSetEntriesFunction (0.89s)
+=== CONT  TestAsyncLiveMutantIterableStringEmojiFunction
+=== NAME  TestAsyncLiveMutantIterableStringEmojiModule
+    async_iterables_test.go:531: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableStringEmojiModule (0.81s)
+=== CONT  TestAsyncLiveMutantIterableStringBreakModule
+=== NAME  TestAsyncLiveIterableSetEntriesFunction
+    async_iterables_test.go:234: Node/native/JS/split counted: "a:a\nb:b\n"
+--- PASS: TestAsyncLiveIterableSetEntriesFunction (1.45s)
+=== CONT  TestAsyncLiveMutantIterableStringBreakFunction
+=== NAME  TestAsyncLiveMutantIterableStringBreakModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableStringEmojiFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableStringBreakFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableStringEmojiFunction
+    async_iterables_test.go:526: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableStringEmojiFunction (0.84s)
+=== CONT  TestAsyncLiveMutantIterableStringAsciiModule
+=== NAME  TestAsyncLiveMutantIterableStringBreakFunction
+    async_iterables_test.go:516: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableStringBreakFunction (0.74s)
+=== CONT  TestAsyncLiveMutantIterableStringAsciiFunction
+=== NAME  TestAsyncLiveMutantIterableStringBreakModule
+    async_iterables_test.go:521: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableStringBreakModule (0.82s)
+=== CONT  TestAsyncLiveMutantIterableSetValuesModule
+=== NAME  TestAsyncLiveMutantIterableStringAsciiFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableStringAsciiModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableStringAsciiFunction
+    async_iterables_test.go:506: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableStringAsciiFunction (0.69s)
+=== CONT  TestAsyncLiveMutantIterableSetValuesFunction
+=== NAME  TestAsyncLiveMutantIterableSetValuesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableStringAsciiModule
+    async_iterables_test.go:511: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableStringAsciiModule (0.80s)
+=== CONT  TestAsyncLiveMutantIterableSetReturnModule
+=== NAME  TestAsyncLiveMutantIterableSetValuesModule
+    async_iterables_test.go:501: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableSetValuesModule (0.82s)
+=== CONT  TestAsyncLiveMutantIterableSetReturnFunction
+=== NAME  TestAsyncLiveMutantIterableSetValuesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableSetReturnModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== NAME  TestAsyncLiveMutantIterableSetValuesFunction
+    async_iterables_test.go:496: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableSetValuesFunction (0.87s)
+=== CONT  TestAsyncLiveMutantIterableSetEntriesModule
+=== NAME  TestAsyncLiveMutantIterableSetReturnModule
+    async_iterables_test.go:491: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableSetReturnModule (0.79s)
+=== CONT  TestAsyncLiveIterableSetValuesFunction
+=== NAME  TestAsyncLiveMutantIterableSetReturnFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+    async_iterables_test.go:486: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableSetReturnFunction (0.83s)
+=== CONT  TestAsyncLiveIterableNestedMapsFunction
+=== NAME  TestAsyncLiveIterableSetValuesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableNestedMapsFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableSetEntriesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+    async_iterables_test.go:481: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableSetEntriesModule (0.73s)
+=== CONT  TestAsyncLiveIterableNestedMapsModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableSetValuesFunction
+    async_iterables_test.go:226: Node/native/JS/split counted: "2\n4\n6\n"
+--- PASS: TestAsyncLiveIterableSetValuesFunction (1.15s)
+=== CONT  TestAsyncLiveIterableMapValuesModule
+=== NAME  TestAsyncLiveIterableNestedMapsFunction
+    async_iterables_test.go:266: Node/native/JS/split counted: "outer:x:1\nouter:y:2\n"
+--- PASS: TestAsyncLiveIterableNestedMapsFunction (1.31s)
+=== CONT  TestAsyncLiveIterableMapRehashModule
+=== NAME  TestAsyncLiveIterableMapValuesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableMapRehashModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveIterableNestedMapsModule
+    async_iterables_test.go:270: Node/native/JS/split counted: "outer:x:1\nouter:y:2\n"
+--- PASS: TestAsyncLiveIterableNestedMapsModule (1.25s)
+=== CONT  TestAsyncLiveMutantIterableMapReturnFunction
+=== NAME  TestAsyncLiveIterableMapValuesModule
+    async_iterables_test.go:222: Node/native/JS/split counted: "1\n2\n"
+--- PASS: TestAsyncLiveIterableMapValuesModule (1.30s)
+=== CONT  TestAsyncLiveIterableMapRehashFunction
+=== NAME  TestAsyncLiveMutantIterableMapReturnFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveIterableMapRehashModule
+    async_iterables_test.go:262: Node/native/JS/split counted: "0:0\n1:1\n2:2\n3:3\n4:4\n5:5\n6:6\n7:7\n8:8\n9:9\n10:10\n11:11\n12:12\n13:13\n14:14\n15:15\n16:16\n17:17\n18:18\n19:19\n20:20\n21:21\n22:22\n23:23\n24:24\n25:25\n26:26\n27:27\n28:28\n29:29\n30:30\n31:31\n32:32\n33:33\n34:34\n35:35\n36:36\n37:37\n38:38\n39:39\n"
+--- PASS: TestAsyncLiveIterableMapRehashModule (1.50s)
+=== CONT  TestAsyncLiveMutantIterableNestedMapsModule
+=== NAME  TestAsyncLiveMutantIterableMapReturnFunction
+    async_iterables_test.go:446: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapReturnFunction (0.99s)
+=== CONT  TestAsyncLiveMutantIterableMapValuesFunction
+=== NAME  TestAsyncLiveIterableMapRehashFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableNestedMapsModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+    async_iterables_test.go:471: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableNestedMapsModule (1.23s)
+=== CONT  TestAsyncLiveMutantIterableMapValuesModule
+=== NAME  TestAsyncLiveMutantIterableMapValuesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveIterableMapRehashFunction
+    async_iterables_test.go:258: Node/native/JS/split counted: "0:0\n1:1\n2:2\n3:3\n4:4\n5:5\n6:6\n7:7\n8:8\n9:9\n10:10\n11:11\n12:12\n13:13\n14:14\n15:15\n16:16\n17:17\n18:18\n19:19\n20:20\n21:21\n22:22\n23:23\n24:24\n25:25\n26:26\n27:27\n28:28\n29:29\n30:30\n31:31\n32:32\n33:33\n34:34\n35:35\n36:36\n37:37\n38:38\n39:39\n"
+--- PASS: TestAsyncLiveIterableMapRehashFunction (2.16s)
+=== CONT  TestAsyncLiveMutantIterableMapReturnModule
+=== NAME  TestAsyncLiveMutantIterableMapValuesFunction
+    async_iterables_test.go:456: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapValuesFunction (1.71s)
+=== CONT  TestAsyncLiveMutantIterableNestedMapsFunction
+=== NAME  TestAsyncLiveMutantIterableMapValuesModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+    async_iterables_test.go:461: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapValuesModule (0.93s)
+=== CONT  TestAsyncLiveMutantIterableMapReaddModule
+=== NAME  TestAsyncLiveMutantIterableMapReturnModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+    async_iterables_test.go:451: Node stdout caught an extra iterator advance in native and JavaScript
+=== CONT  TestAsyncLiveMutantIterableMapKeysModule
+--- PASS: TestAsyncLiveMutantIterableMapReturnModule (0.80s)
+=== NAME  TestAsyncLiveMutantIterableNestedMapsFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableMapReaddModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableNestedMapsFunction
+    async_iterables_test.go:466: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableNestedMapsFunction (1.23s)
+=== CONT  TestAsyncLiveMutantIterableMapRehashModule
+=== NAME  TestAsyncLiveMutantIterableMapReaddModule
+    async_iterables_test.go:431: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapReaddModule (0.86s)
+=== CONT  TestAsyncLiveMutantIterableMapReaddFunction
+=== NAME  TestAsyncLiveMutantIterableMapKeysModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+    async_iterables_test.go:421: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapKeysModule (1.16s)
+=== CONT  TestAsyncLiveMutantIterableMapRehashFunction
+=== NAME  TestAsyncLiveMutantIterableMapReaddFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableMapRehashModule
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestAsyncLiveMutantIterableMapReaddFunction
+    async_iterables_test.go:426: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapReaddFunction (1.00s)
+=== CONT  TestAsyncLiveMutantIterableMapKeysFunction
+=== NAME  TestAsyncLiveMutantIterableMapRehashModule
+    async_iterables_test.go:441: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapRehashModule (1.06s)
+=== CONT  TestAsyncLiveMutantIterableStringSurrogatesFunction
+=== NAME  TestAsyncLiveMutantIterableMapRehashFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+    async_iterables_test.go:436: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableMapRehashFunction (0.74s)
+=== CONT  TestIterableViewsAgreeWithNode/hand_next.a
+=== NAME  TestAsyncLiveMutantIterableMapKeysFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableStringSurrogatesFunction
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestAsyncLiveMutantIterableMapKeysFunction
+    async_iterables_test.go:416: Node stdout caught an extra iterator advance in native and JavaScript
+=== CONT  TestIterableViewsAgreeWithNode/view_delete.a
+--- PASS: TestAsyncLiveMutantIterableMapKeysFunction (0.90s)
+=== NAME  TestAsyncLiveMutantIterableStringSurrogatesFunction
+    async_iterables_test.go:536: Node stdout caught an extra iterator advance in native and JavaScript
+--- PASS: TestAsyncLiveMutantIterableStringSurrogatesFunction (0.95s)
+=== CONT  TestIterableViewsAgreeWithNode/view_values.a
+=== NAME  TestIterableViewsAgreeWithNode/hand_next.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestIterableViewsAgreeWithNode/view_delete.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestIterableViewsAgreeWithNode/view_union.a
+=== CONT  TestIterableViewsAgreeWithNode/view_partial.a
+=== NAME  TestIterableViewsAgreeWithNode/view_values.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestIterableViewsAgreeWithNode/view_live.a
+=== NAME  TestProgramRegionGeneratorsNotAdopted
+    program_region_generators_test.go:64: build native-runtime 6ada758857d6 hit 22.36
+=== NAME  TestProgramRegionGeneratorInPlaceNotAdopted
+    program_region_generators_test.go:174: build native-runtime 6ada758857d6 miss 22.38
+=== NAME  TestIterableViewsAgreeWithNode/view_union.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestIterableViewsAgreeWithNode/view_entries.a
+=== NAME  TestIterableViewsAgreeWithNode/view_partial.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestIterableViewsAgreeWithNode/hand_next_mixed.a
+=== NAME  TestIterableViewsAgreeWithNode/view_live.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestIterableViewsAgreeWithNode/nullable_values.a
+=== NAME  TestIterableViewsAgreeWithNode/view_entries.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestIterableViewsAgreeWithNode/nullable_string_keys.a
+=== NAME  TestIterableViewsAgreeWithNode/nullable_values.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestIterableViewsAgreeWithNode/hand_next_generator_throw.a
+=== NAME  TestIterableViewsAgreeWithNode/nullable_string_keys.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestIterableViewsAgreeWithNode/hand_next_maybe_string.a
+=== NAME  TestProgramRegionGeneratorsNotAdopted
+    program_region_generators_test.go:64: build native-runtime 5ec13b18d39d hit 9.29
+=== NAME  TestProgramRegionGeneratorInPlaceNotAdopted
+    program_region_generators_test.go:174: build native-runtime 5ec13b18d39d miss 9.30
+=== NAME  TestProgramRegionGeneratorsNotAdopted
+    program_region_generators_test.go:64: generators over Program members agree with Node under ASan/UBSan and the leak check: adamic: counts: allocations 12 frees 10 retains 34 releases 48 peak 8 regions 2
+--- PASS: TestProgramRegionGeneratorsNotAdopted (37.85s)
+=== CONT  TestIterableViewsAgreeWithNode/hand_next_generator.a
+=== NAME  TestProgramRegionGeneratorInPlaceNotAdopted
+    program_region_generators_test.go:174: generators over Program members agree with Node under ASan/UBSan and the leak check: adamic: counts: allocations 16 frees 14 retains 34 releases 48 peak 11 regions 2
+--- PASS: TestProgramRegionGeneratorInPlaceNotAdopted (37.89s)
+=== CONT  TestGeneratorsAgreeWithNode/array_from.a
+=== NAME  TestIterableViewsAgreeWithNode/hand_next_generator_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestIterableViewsAgreeWithNode/hand_next_maybe_string.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestIterableViewsAgreeWithNode/hand_next_mixed.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/new_map_plain.a
+=== CONT  TestGeneratorsAgreeWithNode/new_map_entries.a
+=== CONT  TestGeneratorsAgreeWithNode/new_map.a
+=== NAME  TestGeneratorsAgreeWithNode/array_from.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== CONT  TestGeneratorsAgreeWithNode/nested_stack_parent.a
+=== NAME  TestIterableViewsAgreeWithNode/hand_next_generator.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+--- PASS: TestIterableViewsAgreeWithNode (0.00s)
+    --- PASS: TestIterableViewsAgreeWithNode/hand_next.a (1.56s)
+    --- PASS: TestIterableViewsAgreeWithNode/view_delete.a (1.09s)
+    --- PASS: TestIterableViewsAgreeWithNode/view_values.a (1.25s)
+    --- PASS: TestIterableViewsAgreeWithNode/view_union.a (1.35s)
+    --- PASS: TestIterableViewsAgreeWithNode/view_partial.a (1.45s)
+    --- PASS: TestIterableViewsAgreeWithNode/view_live.a (1.39s)
+    --- PASS: TestIterableViewsAgreeWithNode/view_entries.a (1.34s)
+    --- PASS: TestIterableViewsAgreeWithNode/nullable_values.a (1.15s)
+    --- PASS: TestIterableViewsAgreeWithNode/nullable_string_keys.a (1.12s)
+    --- PASS: TestIterableViewsAgreeWithNode/hand_next_generator_throw.a (11.29s)
+    --- PASS: TestIterableViewsAgreeWithNode/hand_next_mixed.a (12.68s)
+    --- PASS: TestIterableViewsAgreeWithNode/hand_next_maybe_string.a (10.36s)
+    --- PASS: TestIterableViewsAgreeWithNode/hand_next_generator.a (1.81s)
+=== CONT  TestGeneratorsAgreeWithNode/nested_live_capture.a
+=== NAME  TestGeneratorsAgreeWithNode/new_map_plain.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/nested_iterable.a
+=== NAME  TestGeneratorsAgreeWithNode/new_map_entries.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/new_map.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/nested_stack_parent.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/new_map_throw.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_hoisted.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_early_break.a
+=== NAME  TestGeneratorsAgreeWithNode/new_map_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/nested_hoisted.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/nested_dead_zone.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_checker_shapes.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_early_break.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== NAME  TestGeneratorsAgreeWithNode/nested_iterable.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/nested_carrier_temporary.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_view.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_dead_zone.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_carrier_temporary.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/nested_checker_shapes.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_generic.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_view.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.04
+=== CONT  TestGeneratorsAgreeWithNode/map_iterator_entries.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/map_iterator.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/map_defined_iterator.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_generic.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/labeled_exit.a
+=== NAME  TestGeneratorsAgreeWithNode/map_iterator_entries.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/in_place_loop.a
+=== NAME  TestGeneratorsAgreeWithNode/map_iterator.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/in_place_forms.a
+=== NAME  TestGeneratorsAgreeWithNode/labeled_exit.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/in_place_environment.a
+=== NAME  TestGeneratorsAgreeWithNode/map_defined_iterator.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/in_place_capture.a
+=== NAME  TestGeneratorsAgreeWithNode/in_place_loop.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/generic_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/in_place_forms.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/generic_map.a
+=== NAME  TestGeneratorsAgreeWithNode/in_place_environment.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/generic.a
+=== NAME  TestGeneratorsAgreeWithNode/in_place_capture.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/first_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/generic_map.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/generic_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/first_or_undefined.a
+=== CONT  TestGeneratorsAgreeWithNode/elementwise_view.a
+=== NAME  TestGeneratorsAgreeWithNode/generic.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/early_return.a
+=== NAME  TestGeneratorsAgreeWithNode/first_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/drop_start.a
+=== NAME  TestGeneratorsAgreeWithNode/first_or_undefined.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== CONT  TestGeneratorsAgreeWithNode/declared_iterators.a
+=== NAME  TestGeneratorsAgreeWithNode/elementwise_view.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/consumer_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/early_return.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== CONT  TestGeneratorsAgreeWithNode/complete.a
+=== NAME  TestGeneratorsAgreeWithNode/drop_start.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/builder_state_strings.a
+=== NAME  TestGeneratorsAgreeWithNode/consumer_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/break_map.a
+=== NAME  TestGeneratorsAgreeWithNode/declared_iterators.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== CONT  TestGeneratorsAgreeWithNode/body_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/complete.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.04
+=== CONT  TestGeneratorsAgreeWithNode/array_from_view.a
+=== NAME  TestGeneratorsAgreeWithNode/builder_state_strings.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/stored_untaken.a
+=== NAME  TestGeneratorsAgreeWithNode/break_map.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/view_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/body_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/view_string_items.a
+=== NAME  TestGeneratorsAgreeWithNode/array_from_view.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/view_outer_loop.a
+=== NAME  TestGeneratorsAgreeWithNode/stored_untaken.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/view_mixed.a
+=== NAME  TestGeneratorsAgreeWithNode/view_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/view_early_return.a
+=== NAME  TestGeneratorsAgreeWithNode/view_string_items.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/view_counted_items.a
+=== NAME  TestGeneratorsAgreeWithNode/view_outer_loop.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/view_body_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/view_early_return.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/unused_class.a
+=== NAME  TestGeneratorsAgreeWithNode/view_mixed.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.04
+=== CONT  TestGeneratorsAgreeWithNode/uncaught_spread.a
+=== NAME  TestGeneratorsAgreeWithNode/view_counted_items.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/view_body_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== CONT  TestGeneratorsAgreeWithNode/uncaught_from.a
+=== CONT  TestGeneratorsAgreeWithNode/uncaught.a
+=== NAME  TestGeneratorsAgreeWithNode/unused_class.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/spread.a
+=== NAME  TestGeneratorsAgreeWithNode/uncaught_spread.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/stored_later_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/uncaught.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/stored_jsx_children.a
+=== NAME  TestGeneratorsAgreeWithNode/uncaught_from.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/stored_for_of.a
+=== NAME  TestGeneratorsAgreeWithNode/spread.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/stored_later_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/stored_exits_finally.a
+=== CONT  TestGeneratorsAgreeWithNode/stored_exits.a
+=== NAME  TestGeneratorsAgreeWithNode/stored_jsx_children.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== NAME  TestGeneratorsAgreeWithNode/stored_for_of.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/retained_param.a
+=== CONT  TestGeneratorsAgreeWithNode/split.a
+=== NAME  TestGeneratorsAgreeWithNode/stored_exits_finally.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/return_from_loop.a
+=== NAME  TestGeneratorsAgreeWithNode/stored_exits.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.07
+=== CONT  TestGeneratorsAgreeWithNode/new_set_plain.a
+=== NAME  TestGeneratorsAgreeWithNode/retained_param.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== NAME  TestGeneratorsAgreeWithNode/split.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.03
+=== CONT  TestGeneratorsAgreeWithNode/nullish_view_tests.a
+=== CONT  TestGeneratorsAgreeWithNode/new_set.a
+=== NAME  TestGeneratorsAgreeWithNode/return_from_loop.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/new_set_plain.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/new_set.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/nullish_view_tests.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/nested_live_capture.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+--- PASS: TestGeneratorsAgreeWithNode (0.00s)
+    --- PASS: TestGeneratorsAgreeWithNode/array_from.a (1.37s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_map_plain.a (1.46s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_map_entries.a (1.81s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_map.a (1.80s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_stack_parent.a (1.29s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_map_throw.a (1.35s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_hoisted.a (1.42s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_early_break.a (1.69s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_iterable.a (2.24s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_dead_zone.a (1.32s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_carrier_temporary.a (1.50s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_checker_shapes.a (1.95s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_view.a (2.03s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_overloads.a (1.58s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_grandchild.a (1.61s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_generic.a (1.90s)
+    --- PASS: TestGeneratorsAgreeWithNode/map_iterator_entries.a (1.79s)
+    --- PASS: TestGeneratorsAgreeWithNode/map_iterator.a (1.64s)
+    --- PASS: TestGeneratorsAgreeWithNode/labeled_exit.a (1.16s)
+    --- PASS: TestGeneratorsAgreeWithNode/map_defined_iterator.a (1.76s)
+    --- PASS: TestGeneratorsAgreeWithNode/in_place_loop.a (1.58s)
+    --- PASS: TestGeneratorsAgreeWithNode/in_place_forms.a (1.53s)
+    --- PASS: TestGeneratorsAgreeWithNode/in_place_environment.a (1.32s)
+    --- PASS: TestGeneratorsAgreeWithNode/in_place_capture.a (1.95s)
+    --- PASS: TestGeneratorsAgreeWithNode/generic_throw.a (1.57s)
+    --- PASS: TestGeneratorsAgreeWithNode/generic_map.a (1.40s)
+    --- PASS: TestGeneratorsAgreeWithNode/generic.a (1.62s)
+    --- PASS: TestGeneratorsAgreeWithNode/first_throw.a (1.30s)
+    --- PASS: TestGeneratorsAgreeWithNode/first_or_undefined.a (1.35s)
+    --- PASS: TestGeneratorsAgreeWithNode/elementwise_view.a (1.50s)
+    --- PASS: TestGeneratorsAgreeWithNode/early_return.a (1.26s)
+    --- PASS: TestGeneratorsAgreeWithNode/drop_start.a (1.18s)
+    --- PASS: TestGeneratorsAgreeWithNode/consumer_throw.a (1.21s)
+    --- PASS: TestGeneratorsAgreeWithNode/declared_iterators.a (1.63s)
+    --- PASS: TestGeneratorsAgreeWithNode/complete.a (1.41s)
+    --- PASS: TestGeneratorsAgreeWithNode/builder_state_strings.a (1.33s)
+    --- PASS: TestGeneratorsAgreeWithNode/break_map.a (1.53s)
+    --- PASS: TestGeneratorsAgreeWithNode/body_throw.a (1.40s)
+    --- PASS: TestGeneratorsAgreeWithNode/array_from_view.a (1.63s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_untaken.a (1.57s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_throw.a (1.24s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_string_items.a (1.52s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_outer_loop.a (1.35s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_early_return.a (1.17s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_mixed.a (1.89s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_counted_items.a (1.76s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_body_throw.a (1.44s)
+    --- PASS: TestGeneratorsAgreeWithNode/unused_class.a (1.52s)
+    --- PASS: TestGeneratorsAgreeWithNode/uncaught_spread.a (1.31s)
+    --- PASS: TestGeneratorsAgreeWithNode/uncaught.a (1.22s)
+    --- PASS: TestGeneratorsAgreeWithNode/uncaught_from.a (1.35s)
+    --- PASS: TestGeneratorsAgreeWithNode/spread.a (1.57s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_later_throw.a (1.44s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_jsx_children.a (1.70s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_for_of.a (1.63s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_exits_finally.a (1.58s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_exits.a (2.07s)
+    --- PASS: TestGeneratorsAgreeWithNode/retained_param.a (1.81s)
+    --- PASS: TestGeneratorsAgreeWithNode/split.a (1.86s)
+    --- PASS: TestGeneratorsAgreeWithNode/return_from_loop.a (1.90s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_set_plain.a (1.73s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_set.a (1.23s)
+    --- PASS: TestGeneratorsAgreeWithNode/nullish_view_tests.a (1.56s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_live_capture.a (36.95s)
+PASS
+gate cache: native hits=0 misses=298
+gate cache: node hits=0 misses=292
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	139.833s

@@ -1,0 +1,22 @@
+--- FAIL: TestProgramRegionCensusMembership (0.02s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_ProgramRegionCensusPairwise (0.01s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_ProgramRegionCensusIndexed (0.01s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestCycleFinderCensusEquality (0.03s)
+    cycles_census_equality_test.go:280: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_CycleScanningCensus (0.04s)
+    cycles_census_equality_test.go:280: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestStoredGeneratorsLower (0.00s)
+    --- FAIL: TestStoredGeneratorsLower/a_read_in_parentheses (0.07s)
+        generators_stored_test.go:80: want it to lower, got /tmp/adamic-gate/TestStoredGeneratorsLowera_read_in_parentheses3313605017/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet
+    --- FAIL: TestStoredGeneratorsLower/a_for-of_over_it (0.10s)
+        generators_stored_test.go:80: want it to lower, got /tmp/adamic-gate/TestStoredGeneratorsLowera_for-of_over_it4288252592/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet
+    --- FAIL: TestStoredGeneratorsLower/an_IterableIterator<T>_parameter_stepped_by_hand (0.05s)
+        generators_stored_test.go:80: want it to lower, got /tmp/adamic-gate/TestStoredGeneratorsLoweran_IterableIteratorT_parameter_stepp183675528/001/main.a:3:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet
+    --- FAIL: TestStoredGeneratorsLower/an_Iterable<T>_|_undefined_parameter (0.14s)
+        generators_stored_test.go:80: want it to lower, got /tmp/adamic-gate/TestStoredGeneratorsLoweran_IterableT__undefined_parameter3827235681/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1526.600s
+FAIL

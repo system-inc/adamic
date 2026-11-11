@@ -1,0 +1,75 @@
+=== RUN   TestStoredGeneratorRoadsAreNotYet
+=== PAUSE TestStoredGeneratorRoadsAreNotYet
+=== CONT  TestStoredGeneratorRoadsAreNotYet
+=== RUN   TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it
+=== RUN   TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in
+=== RUN   TestStoredGeneratorRoadsAreNotYet/two_reads
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/two_reads
+=== RUN   TestStoredGeneratorRoadsAreNotYet/typeof
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/typeof
+=== RUN   TestStoredGeneratorRoadsAreNotYet/===
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/===
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_let
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_let
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_type_written_for_it
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_type_written_for_it
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_capture,_called
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_capture,_called
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_capture,_never_called
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_capture,_never_called
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_function_beside_it
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_function_beside_it
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_field
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_field
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_return
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_return
+=== RUN   TestStoredGeneratorRoadsAreNotYet/destructuring
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/destructuring
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_spread
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_spread
+=== RUN   TestStoredGeneratorRoadsAreNotYet/at_a_module's_top_level
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/at_a_module's_top_level
+=== RUN   TestStoredGeneratorRoadsAreNotYet/in_an_async_function
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/in_an_async_function
+=== CONT  TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_capture,_never_called
+=== CONT  TestStoredGeneratorRoadsAreNotYet/===
+=== CONT  TestStoredGeneratorRoadsAreNotYet/destructuring
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_field
+=== CONT  TestStoredGeneratorRoadsAreNotYet/typeof
+=== CONT  TestStoredGeneratorRoadsAreNotYet/two_reads
+=== NAME  TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it
+    generators_stored_test.go:156: got /tmp/adamic-gate/TestStoredGeneratorRoadsAreNotYetCompilers_two_passes_over_it1068450331/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet, want a NotYet saying "a generator stored in a local, used other than once by a consumer that steps it (#qk8rztp)"
+=== CONT  TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_capture,_called
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_type_written_for_it
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_return
+=== NAME  TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in
+    generators_stored_test.go:156: got <nil>, want a NotYet saying "a generator stored in a local, used other than once by a consumer that steps it (#qk8rztp)"
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_let
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_function_beside_it
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_spread
+=== CONT  TestStoredGeneratorRoadsAreNotYet/at_a_module's_top_level
+=== CONT  TestStoredGeneratorRoadsAreNotYet/in_an_async_function
+--- FAIL: TestStoredGeneratorRoadsAreNotYet (0.00s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/=== (0.17s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_field (0.17s)
+    --- FAIL: TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it (0.18s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_capture,_never_called (0.19s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/destructuring (0.24s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/two_reads (0.12s)
+    --- FAIL: TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in (0.17s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_capture,_called (0.16s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/typeof (0.19s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_type_written_for_it (0.13s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_return (0.12s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_spread (0.10s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_let (0.14s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_function_beside_it (0.13s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/at_a_module's_top_level (0.12s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/in_an_async_function (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.522s
+FAIL

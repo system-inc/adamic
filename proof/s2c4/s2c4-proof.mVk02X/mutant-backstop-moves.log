@@ -1,0 +1,8 @@
+=== RUN   TestStoredGeneratorLocalIsReadOnlyByItsMoves
+=== PAUSE TestStoredGeneratorLocalIsReadOnlyByItsMoves
+=== CONT  TestStoredGeneratorLocalIsReadOnlyByItsMoves
+    generators_stored_test.go:205: a stored generator's local stepped directly: got <nil>, want the backstop's compiler bug
+--- FAIL: TestStoredGeneratorLocalIsReadOnlyByItsMoves (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.079s
+FAIL

@@ -1,0 +1,42 @@
+=== RUN   TestGeneratorsAgreeWithNode
+=== PAUSE TestGeneratorsAgreeWithNode
+=== CONT  TestGeneratorsAgreeWithNode
+=== RUN   TestGeneratorsAgreeWithNode/stored_untaken.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_untaken.a
+=== CONT  TestGeneratorsAgreeWithNode/stored_untaken.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.57
+    generators_test.go:51: leaked: exit 1
+        
+        =================================================================
+        ==70981==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 256 byte(s) in 1 object(s) allocated from:
+            #0 0x562ef5e483a4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x562ef5eb7faf in allocate_storage /adamic-runtime/heap.c:253:10
+            #2 0x562ef5eb7faf in adamic_allocate /adamic-runtime/heap.c:267:9
+            #3 0x562ef5e8c0e3 in adamic_function_stored_untaken_a_underIf_9174ab128994896b98851b2cc0d69109 /adamic-build/main.c:216:81
+            #4 0x562ef5e8bb9d in adamic_initialize_stored_untaken_a_c27643807587e19fe63311f9e254147f /adamic-build/main.c:323:96
+            #5 0x562ef5e8ba6d in adamic_initialize_stored_untaken_a_c20de342c1eec02f13f0945ec12d4a3f /adamic-build/main.c:394:2
+        
+        Direct leak of 256 byte(s) in 1 object(s) allocated from:
+            #0 0x562ef5e483a4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x562ef5eb7faf in allocate_storage /adamic-runtime/heap.c:253:10
+            #2 0x562ef5eb7faf in adamic_allocate /adamic-runtime/heap.c:267:9
+            #3 0x562ef5e8c56e in adamic_function_stored_untaken_a_underAnd_4fa56a2eaea827219ca967f63485a63e /adamic-build/main.c:282:81
+            #4 0x562ef5e8bcfe in adamic_initialize_stored_untaken_a_c27643807587e19fe63311f9e254147f /adamic-build/main.c:357:97
+            #5 0x562ef5e8ba6d in adamic_initialize_stored_untaken_a_c20de342c1eec02f13f0945ec12d4a3f /adamic-build/main.c:394:2
+        
+        Indirect leak of 134 byte(s) in 2 object(s) allocated from:
+            #0 0x562ef5e483a4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x562ef5eb7faf in allocate_storage /adamic-runtime/heap.c:253:10
+            #2 0x562ef5eb7faf in adamic_allocate /adamic-runtime/heap.c:267:9
+        
+        SUMMARY: AddressSanitizer: 646 byte(s) leaked in 4 allocation(s).
+--- FAIL: TestGeneratorsAgreeWithNode (0.00s)
+    --- FAIL: TestGeneratorsAgreeWithNode/stored_untaken.a (11.73s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	11.758s
+FAIL

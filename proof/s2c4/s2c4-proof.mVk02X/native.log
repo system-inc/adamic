@@ -1,0 +1,238 @@
+=== RUN   TestEnvironmentPlacementNestedGenerator
+=== PAUSE TestEnvironmentPlacementNestedGenerator
+=== RUN   TestProduct_GCCRuntimeGenerator
+=== PAUSE TestProduct_GCCRuntimeGenerator
+=== RUN   TestGCCRuntimeGenerator
+=== PAUSE TestGCCRuntimeGenerator
+=== RUN   TestGeneratorRuntimeComplete
+=== PAUSE TestGeneratorRuntimeComplete
+=== RUN   TestGeneratorRuntimeDropStart
+=== PAUSE TestGeneratorRuntimeDropStart
+=== RUN   TestGeneratorRuntimeDropSuspended
+=== PAUSE TestGeneratorRuntimeDropSuspended
+=== RUN   TestGeneratorRuntimeReturn
+=== PAUSE TestGeneratorRuntimeReturn
+=== RUN   TestGeneratorRuntimeKill
+=== PAUSE TestGeneratorRuntimeKill
+=== RUN   TestGeneratorRuntimeBorrowed
+=== PAUSE TestGeneratorRuntimeBorrowed
+=== RUN   TestGeneratorRuntimeThrow
+=== PAUSE TestGeneratorRuntimeThrow
+=== RUN   TestGeneratorRuntimeFinishError
+=== PAUSE TestGeneratorRuntimeFinishError
+=== RUN   TestGeneratorRuntimeDropError
+=== PAUSE TestGeneratorRuntimeDropError
+=== RUN   TestGeneratorRuntimeFinishSelf
+=== PAUSE TestGeneratorRuntimeFinishSelf
+=== RUN   TestGeneratorRuntimeDropSelf
+=== PAUSE TestGeneratorRuntimeDropSelf
+=== RUN   TestGeneratorRuntimeReentrant
+=== PAUSE TestGeneratorRuntimeReentrant
+=== RUN   TestGeneratorRuntimeReturnWhileRunning
+=== PAUSE TestGeneratorRuntimeReturnWhileRunning
+=== RUN   TestGeneratorRuntimeIsNull
+=== PAUSE TestGeneratorRuntimeIsNull
+=== RUN   TestGeneratorRuntimeInitialize
+=== PAUSE TestGeneratorRuntimeInitialize
+=== RUN   TestGeneratorRuntimeNextStrings
+=== PAUSE TestGeneratorRuntimeNextStrings
+=== RUN   TestGeneratorRuntimeNextDrop
+=== PAUSE TestGeneratorRuntimeNextDrop
+=== RUN   TestGeneratorRuntimeNextThrow
+=== PAUSE TestGeneratorRuntimeNextThrow
+=== RUN   TestGeneratorRuntimeNextDone
+=== PAUSE TestGeneratorRuntimeNextDone
+=== RUN   TestGeneratorRuntimeNextDoneBoolean
+=== PAUSE TestGeneratorRuntimeNextDoneBoolean
+=== RUN   TestGeneratorRuntimeNextCollection
+=== PAUSE TestGeneratorRuntimeNextCollection
+=== RUN   TestGeneratorRuntimeNextLoudDefault
+=== PAUSE TestGeneratorRuntimeNextLoudDefault
+=== RUN   TestDebugGeneratorSourceLines
+=== PAUSE TestDebugGeneratorSourceLines
+=== RUN   TestIterableOfIsNeverFresh
+=== PAUSE TestIterableOfIsNeverFresh
+=== RUN   TestARewrittenHeaderMovesAHeldScan
+--- PASS: TestARewrittenHeaderMovesAHeldScan (0.05s)
+=== RUN   TestObjectKeyMovesWithEachInput
+=== PAUSE TestObjectKeyMovesWithEachInput
+=== RUN   TestReuseTakesAnOperationNoReviewNamesAsTouchingTheGlobal
+=== PAUSE TestReuseTakesAnOperationNoReviewNamesAsTouchingTheGlobal
+=== RUN   TestReuseFollowsAGeneratorStepIntoItsBody
+=== PAUSE TestReuseFollowsAGeneratorStepIntoItsBody
+=== RUN   TestReuseTakesASpreadsGettersAsWhatItRuns
+=== PAUSE TestReuseTakesASpreadsGettersAsWhatItRuns
+=== RUN   TestSlabQuarantineCatchesAStaleReadOfAReusedSlot
+=== PAUSE TestSlabQuarantineCatchesAStaleReadOfAReusedSlot
+=== RUN   TestArrayElementKindReuse
+=== PAUSE TestArrayElementKindReuse
+=== RUN   TestArrayElementKindReuseWriteMutant
+=== PAUSE TestArrayElementKindReuseWriteMutant
+=== RUN   TestArrayElementKindScalarOverReferenceIsNotReused
+=== PAUSE TestArrayElementKindScalarOverReferenceIsNotReused
+=== RUN   TestGeneratorKillSetReleasesOnlyDeadCells
+=== PAUSE TestGeneratorKillSetReleasesOnlyDeadCells
+=== CONT  TestEnvironmentPlacementNestedGenerator
+=== CONT  TestGeneratorRuntimeNextStrings
+=== CONT  TestObjectKeyMovesWithEachInput
+=== CONT  TestGeneratorRuntimeThrow
+=== CONT  TestGeneratorRuntimeDropSuspended
+=== CONT  TestIterableOfIsNeverFresh
+--- PASS: TestIterableOfIsNeverFresh (0.00s)
+=== CONT  TestGeneratorKillSetReleasesOnlyDeadCells
+--- PASS: TestEnvironmentPlacementNestedGenerator (0.21s)
+--- PASS: TestGeneratorKillSetReleasesOnlyDeadCells (0.05s)
+=== CONT  TestArrayElementKindScalarOverReferenceIsNotReused
+=== RUN   TestObjectKeyMovesWithEachInput/a_build_directory_of_its_own
+=== RUN   TestObjectKeyMovesWithEachInput/the_runtime_archive's_directory_copied
+=== RUN   TestObjectKeyMovesWithEachInput/-O1_for_-O2
+=== RUN   TestObjectKeyMovesWithEachInput/a_-D_added
+=== RUN   TestObjectKeyMovesWithEachInput/one_byte_of_adamic.h
+=== RUN   TestObjectKeyMovesWithEachInput/clang_configured
+=== RUN   TestObjectKeyMovesWithEachInput/SOURCE_DATE_EPOCH_set
+--- PASS: TestObjectKeyMovesWithEachInput (12.35s)
+    --- PASS: TestObjectKeyMovesWithEachInput/a_build_directory_of_its_own (0.90s)
+    --- PASS: TestObjectKeyMovesWithEachInput/the_runtime_archive's_directory_copied (1.14s)
+    --- PASS: TestObjectKeyMovesWithEachInput/-O1_for_-O2 (1.71s)
+    --- PASS: TestObjectKeyMovesWithEachInput/a_-D_added (0.97s)
+    --- PASS: TestObjectKeyMovesWithEachInput/one_byte_of_adamic.h (0.32s)
+    --- PASS: TestObjectKeyMovesWithEachInput/clang_configured (0.67s)
+    --- PASS: TestObjectKeyMovesWithEachInput/SOURCE_DATE_EPOCH_set (0.63s)
+=== CONT  TestArrayElementKindReuseWriteMutant
+=== NAME  TestArrayElementKindScalarOverReferenceIsNotReused
+    array_element_test.go:361: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 miss 15.96
+=== NAME  TestArrayElementKindReuseWriteMutant
+    array_element_test.go:336: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 4.13
+    array_element_test.go:342: mutant caught: ["reused=1" "0"]
+--- PASS: TestArrayElementKindReuseWriteMutant (6.97s)
+=== CONT  TestArrayElementKindReuse
+=== RUN   TestArrayElementKindReuse/objects_mapped_to_strings
+=== PAUSE TestArrayElementKindReuse/objects_mapped_to_strings
+=== RUN   TestArrayElementKindReuse/numbers_mapped_to_numbers
+=== PAUSE TestArrayElementKindReuse/numbers_mapped_to_numbers
+=== RUN   TestArrayElementKindReuse/strings_spread_first
+=== PAUSE TestArrayElementKindReuse/strings_spread_first
+=== CONT  TestSlabQuarantineCatchesAStaleReadOfAReusedSlot
+--- PASS: TestArrayElementKindScalarOverReferenceIsNotReused (19.06s)
+=== CONT  TestReuseTakesASpreadsGettersAsWhatItRuns
+--- PASS: TestReuseTakesASpreadsGettersAsWhatItRuns (0.00s)
+=== CONT  TestReuseFollowsAGeneratorStepIntoItsBody
+--- PASS: TestReuseFollowsAGeneratorStepIntoItsBody (0.00s)
+=== CONT  TestReuseTakesAnOperationNoReviewNamesAsTouchingTheGlobal
+--- PASS: TestReuseTakesAnOperationNoReviewNamesAsTouchingTheGlobal (0.00s)
+=== CONT  TestGeneratorRuntimeKill
+--- PASS: TestGeneratorRuntimeThrow (23.22s)
+=== CONT  TestGeneratorRuntimeBorrowed
+=== NAME  TestSlabQuarantineCatchesAStaleReadOfAReusedSlot
+    slab_quarantine_test.go:43: shared slab runtime archive: 27.02007492s
+    slab_quarantine_test.go:57: without quarantine build: 1.413097951s
+    slab_quarantine_test.go:63: without quarantine process: 24.609914ms
+    slab_quarantine_test.go:72: without quarantine: exit <nil>, stdout "slot reused\nstale length 40\n", first sanitizer line ""
+    slab_quarantine_test.go:57: with quarantine build: 601.744638ms
+    slab_quarantine_test.go:63: with quarantine process: 44.60759ms
+    slab_quarantine_test.go:72: with quarantine: exit exit status 1, stdout "slot quarantined\n", first sanitizer line "==59100==ERROR: AddressSanitizer: use-after-poison on address 0x7f0b903e0870 at pc 0x560f05c22b0d bp 0x7ffdc1422e70 sp 0x7ffdc1422e68"
+--- PASS: TestSlabQuarantineCatchesAStaleReadOfAReusedSlot (29.11s)
+=== CONT  TestGeneratorRuntimeComplete
+=== NAME  TestGeneratorRuntimeDropSuspended
+    generator_runtime_test.go:122: drop_suspended mutant caught by heap values leaked: 
+--- PASS: TestGeneratorRuntimeDropSuspended (53.89s)
+=== CONT  TestGeneratorRuntimeDropStart
+=== NAME  TestGeneratorRuntimeBorrowed
+    generator_runtime_test.go:140: borrowed mutant caught by heap-use-after-free: ==59290==ERROR: AddressSanitizer: heap-use-after-free on address 0x7b9167de0030 at pc 0x55c235d988ea bp 0x7ffd3eddbf00 sp 0x7ffd3eddbef8
+--- PASS: TestGeneratorRuntimeBorrowed (31.22s)
+=== CONT  TestGCCRuntimeGenerator
+=== NAME  TestGeneratorRuntimeKill
+    generator_runtime_test.go:134: kill mutant caught by heap-use-after-free: ==59301==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c39ebbe0028 at pc 0x560f6fbbf282 bp 0x7ffd5e981790 sp 0x7ffd5e981788
+--- PASS: TestGeneratorRuntimeKill (35.33s)
+=== CONT  TestGeneratorRuntimeReentrant
+=== NAME  TestGeneratorRuntimeNextStrings
+    generator_runtime_test.go:227: next_strings mutant caught by heap values leaked: 
+=== CONT  TestGeneratorRuntimeInitialize
+--- PASS: TestGeneratorRuntimeNextStrings (54.72s)
+--- PASS: TestGeneratorRuntimeReentrant (0.77s)
+=== CONT  TestProduct_GCCRuntimeGenerator
+=== NAME  TestGeneratorRuntimeDropStart
+    generator_runtime_test.go:116: drop_start mutant caught by heap values leaked: 
+--- PASS: TestGeneratorRuntimeDropStart (1.70s)
+=== CONT  TestGeneratorRuntimeIsNull
+=== NAME  TestGCCRuntimeGenerator
+    gcc_runtime_test.go:21: build gcc-runtime-generator.c 13edf3097c9d miss 0.26
+--- PASS: TestGCCRuntimeGenerator (1.94s)
+=== CONT  TestGeneratorRuntimeReturnWhileRunning
+=== NAME  TestProduct_GCCRuntimeGenerator
+    gcc_runtime_test.go:21: build gcc-runtime-generator.c 13edf3097c9d hit 0.26
+--- PASS: TestProduct_GCCRuntimeGenerator (0.94s)
+=== CONT  TestGeneratorRuntimeFinishSelf
+--- PASS: TestGeneratorRuntimeReturnWhileRunning (0.46s)
+=== CONT  TestGeneratorRuntimeDropSelf
+=== NAME  TestGeneratorRuntimeComplete
+    generator_runtime_test.go:110: complete mutant caught by heap-use-after-free: ==60027==ERROR: AddressSanitizer: heap-use-after-free on address 0x7b7674fe0028 at pc 0x564f53668282 bp 0x7fffc7952730 sp 0x7fffc7952728
+--- PASS: TestGeneratorRuntimeComplete (31.41s)
+=== CONT  TestDebugGeneratorSourceLines
+--- PASS: TestDebugGeneratorSourceLines (0.11s)
+=== CONT  TestGeneratorRuntimeNextLoudDefault
+=== RUN   TestGeneratorRuntimeNextLoudDefault/next_other
+=== PAUSE TestGeneratorRuntimeNextLoudDefault/next_other
+=== RUN   TestGeneratorRuntimeNextLoudDefault/next_null
+=== PAUSE TestGeneratorRuntimeNextLoudDefault/next_null
+=== RUN   TestGeneratorRuntimeNextLoudDefault/next_kind
+=== PAUSE TestGeneratorRuntimeNextLoudDefault/next_kind
+=== CONT  TestGeneratorRuntimeNextDoneBoolean
+--- PASS: TestGeneratorRuntimeNextDoneBoolean (0.65s)
+=== CONT  TestGeneratorRuntimeNextCollection
+--- PASS: TestGeneratorRuntimeNextCollection (0.54s)
+=== CONT  TestGeneratorRuntimeNextDone
+=== NAME  TestGeneratorRuntimeInitialize
+    generator_runtime_test.go:216: drop_start mutant caught by Assertion: 
+--- PASS: TestGeneratorRuntimeInitialize (28.10s)
+=== CONT  TestGeneratorRuntimeNextThrow
+=== NAME  TestGeneratorRuntimeIsNull
+    generator_runtime_test.go:209: is mutant caught by member access within null pointer: generator.c:50:42: runtime error: member access within null pointer of type 'const adamic_heap' (aka 'const struct adamic_heap')
+--- PASS: TestGeneratorRuntimeIsNull (30.76s)
+=== CONT  TestGeneratorRuntimeDropError
+=== NAME  TestGeneratorRuntimeFinishSelf
+    generator_runtime_test.go:168: self_finish mutant caught by heap values leaked: 
+--- PASS: TestGeneratorRuntimeFinishSelf (31.35s)
+=== CONT  TestGeneratorRuntimeNextDrop
+=== NAME  TestGeneratorRuntimeDropSelf
+    generator_runtime_test.go:175: self_drop_start mutant caught by heap values leaked: 
+--- PASS: TestGeneratorRuntimeDropSelf (31.46s)
+=== CONT  TestGeneratorRuntimeReturn
+=== NAME  TestGeneratorRuntimeNextThrow
+    generator_runtime_test.go:241: next_throw mutant caught by heap values leaked: 
+=== CONT  TestGeneratorRuntimeFinishError
+--- PASS: TestGeneratorRuntimeNextThrow (26.94s)
+=== NAME  TestGeneratorRuntimeNextDone
+    generator_runtime_test.go:249: next_done mutant caught by Assertion: 
+--- PASS: TestGeneratorRuntimeNextDone (32.16s)
+=== CONT  TestArrayElementKindReuse/objects_mapped_to_strings
+    array_element_test.go:326: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.04
+=== CONT  TestArrayElementKindReuse/strings_spread_first
+    array_element_test.go:326: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.02
+=== CONT  TestArrayElementKindReuse/numbers_mapped_to_numbers
+    array_element_test.go:326: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.01
+=== NAME  TestGeneratorRuntimeReturn
+    generator_runtime_test.go:128: return mutant caught by Assertion: 
+=== CONT  TestGeneratorRuntimeNextLoudDefault/next_other
+--- PASS: TestGeneratorRuntimeReturn (27.83s)
+--- PASS: TestArrayElementKindReuse (0.00s)
+    --- PASS: TestArrayElementKindReuse/objects_mapped_to_strings (1.20s)
+    --- PASS: TestArrayElementKindReuse/strings_spread_first (0.71s)
+    --- PASS: TestArrayElementKindReuse/numbers_mapped_to_numbers (1.38s)
+=== CONT  TestGeneratorRuntimeNextLoudDefault/next_kind
+=== CONT  TestGeneratorRuntimeNextLoudDefault/next_null
+--- PASS: TestGeneratorRuntimeNextLoudDefault (0.00s)
+    --- PASS: TestGeneratorRuntimeNextLoudDefault/next_other (1.61s)
+    --- PASS: TestGeneratorRuntimeNextLoudDefault/next_kind (1.34s)
+    --- PASS: TestGeneratorRuntimeNextLoudDefault/next_null (0.99s)
+=== NAME  TestGeneratorRuntimeDropError
+    generator_runtime_test.go:157: drop_error mutant caught by heap values leaked: 
+--- PASS: TestGeneratorRuntimeDropError (32.97s)
+=== NAME  TestGeneratorRuntimeNextDrop
+    generator_runtime_test.go:234: next_drop mutant caught by heap-use-after-free: ==61122==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c44e75e0030 at pc 0x561c0773ecef bp 0x7ffc0db09640 sp 0x7ffc0db09638
+--- PASS: TestGeneratorRuntimeNextDrop (32.83s)
+=== NAME  TestGeneratorRuntimeFinishError
+    generator_runtime_test.go:151: finish_error mutant caught by heap values leaked: 
+--- PASS: TestGeneratorRuntimeFinishError (22.18s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	132.071s

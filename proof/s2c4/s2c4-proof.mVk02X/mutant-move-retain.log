@@ -1,0 +1,54 @@
+=== RUN   TestGeneratorsAgreeWithNode
+=== PAUSE TestGeneratorsAgreeWithNode
+=== CONT  TestGeneratorsAgreeWithNode
+=== RUN   TestGeneratorsAgreeWithNode/stored_for_of.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_for_of.a
+=== CONT  TestGeneratorsAgreeWithNode/stored_for_of.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types c6c68d9f8a10 hit 0.40
+    generators_test.go:51: leaked: exit 1
+        
+        =================================================================
+        ==68873==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 256 byte(s) in 1 object(s) allocated from:
+            #0 0x55e6145d73a4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55e6146487ff in allocate_storage /adamic-runtime/heap.c:253:10
+            #2 0x55e6146487ff in adamic_allocate /adamic-runtime/heap.c:267:9
+            #3 0x55e61461aa6d in adamic_initialize_stored_for_of_a_9c115cf0b0e1520d5f1fab436e634ace /adamic-build/main.c:600:2
+        
+        Direct leak of 216 byte(s) in 1 object(s) allocated from:
+            #0 0x55e6145d73a4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55e6146487ff in allocate_storage /adamic-runtime/heap.c:253:10
+            #2 0x55e6146487ff in adamic_allocate /adamic-runtime/heap.c:267:9
+            #3 0x55e61461b3cb in adamic_function_stored_for_of_a_nested_21c6dcbaf71740175386f6423e971059 /adamic-build/main.c:189:75
+            #4 0x55e61461b3cb in adamic_initialize_stored_for_of_a_788eef43b43cfdcc587dd58a75d83e21 /adamic-build/main.c:563:95
+            #5 0x55e61461aa6d in adamic_initialize_stored_for_of_a_9c115cf0b0e1520d5f1fab436e634ace /adamic-build/main.c:600:2
+        
+        Direct leak of 136 byte(s) in 1 object(s) allocated from:
+            #0 0x55e6145d73a4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55e6146487ff in allocate_storage /adamic-runtime/heap.c:253:10
+            #2 0x55e6146487ff in adamic_allocate /adamic-runtime/heap.c:267:9
+            #3 0x55e61461b892 in adamic_function_stored_for_of_a_inPlace_0c9cc2be71ba831418cedcb2974d1970 /adamic-build/main.c:299:75
+            #4 0x55e61461b892 in adamic_initialize_stored_for_of_a_788eef43b43cfdcc587dd58a75d83e21 /adamic-build/main.c:580:96
+            #5 0x55e61461aa6d in adamic_initialize_stored_for_of_a_9c115cf0b0e1520d5f1fab436e634ace /adamic-build/main.c:600:2
+        
+        Indirect leak of 224 byte(s) in 2 object(s) allocated from:
+            #0 0x55e6145d73a4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55e6146487ff in allocate_storage /adamic-runtime/heap.c:253:10
+            #2 0x55e6146487ff in adamic_allocate /adamic-runtime/heap.c:267:9
+            #3 0x55e61461aa6d in adamic_initialize_stored_for_of_a_9c115cf0b0e1520d5f1fab436e634ace /adamic-build/main.c:600:2
+        
+        Indirect leak of 66 byte(s) in 1 object(s) allocated from:
+            #0 0x55e6145d73a4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55e6146487ff in allocate_storage /adamic-runtime/heap.c:253:10
+            #2 0x55e6146487ff in adamic_allocate /adamic-runtime/heap.c:267:9
+        
+        SUMMARY: AddressSanitizer: 898 byte(s) leaked in 6 allocation(s).
+--- FAIL: TestGeneratorsAgreeWithNode (0.00s)
+    --- FAIL: TestGeneratorsAgreeWithNode/stored_for_of.a (12.10s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	12.122s
+FAIL

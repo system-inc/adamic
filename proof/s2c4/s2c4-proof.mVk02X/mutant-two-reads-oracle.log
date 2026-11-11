@@ -1,0 +1,22 @@
+=== RUN   TestGeneratorsAgreeWithNode
+=== PAUSE TestGeneratorsAgreeWithNode
+=== CONT  TestGeneratorsAgreeWithNode
+=== RUN   TestGeneratorsAgreeWithNode/stored_two_reads_probe.a
+=== PAUSE TestGeneratorsAgreeWithNode/stored_two_reads_probe.a
+=== NAME  TestGeneratorsAgreeWithNode
+    generators_test.go:55: 65 programs in internal/oracle/testdata/generators, want 64: a program added or removed needs this count changed with it
+=== CONT  TestGeneratorsAgreeWithNode/stored_two_reads_probe.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types f39baf7a3602 miss 33.06
+    generators_test.go:51: native: exit codes differ, stdout "", stderr ""
+    generators_test.go:51: sanitized: exit codes differ, stdout "", stderr "generator.c:27:24: runtime error: member access within null pointer of type 'adamic_generator' (aka 'struct adamic_generator')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior generator.c:27:24 \n"
+    generators_test.go:51: leaked: exit 1
+        generator.c:27:24: runtime error: member access within null pointer of type 'adamic_generator' (aka 'struct adamic_generator')
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior generator.c:27:24 
+--- FAIL: TestGeneratorsAgreeWithNode (0.00s)
+    --- FAIL: TestGeneratorsAgreeWithNode/stored_two_reads_probe.a (46.99s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	47.019s
+FAIL

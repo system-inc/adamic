@@ -1,0 +1,615 @@
+=== RUN   TestNoSlotTheIteratorArmWalksHoldsAGenerator
+=== PAUSE TestNoSlotTheIteratorArmWalksHoldsAGenerator
+=== RUN   TestGenericGeneratorRoadsAreNotYet
+=== PAUSE TestGenericGeneratorRoadsAreNotYet
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet
+=== RUN   TestNestedGeneratorRoadsAreNotYet
+=== PAUSE TestNestedGeneratorRoadsAreNotYet
+=== RUN   TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== PAUSE TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== RUN   TestStoredGeneratorsLower
+=== PAUSE TestStoredGeneratorsLower
+=== RUN   TestStoredGeneratorRoadsAreNotYet
+=== PAUSE TestStoredGeneratorRoadsAreNotYet
+=== RUN   TestStoredGeneratorLocalIsReadOnlyByItsMoves
+=== PAUSE TestStoredGeneratorLocalIsReadOnlyByItsMoves
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad
+=== RUN   TestProgramRegionGeneratorHeldInLocalStops
+=== PAUSE TestProgramRegionGeneratorHeldInLocalStops
+=== CONT  TestNoSlotTheIteratorArmWalksHoldsAGenerator
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/stored_in_a_variable
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/stored_in_a_variable
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/passed_as_an_argument
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/passed_as_an_argument
+=== CONT  TestStoredGeneratorRoadsAreNotYet
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returned
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returned
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/put_in_an_array
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/put_in_an_array
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/Array.from_with_a_mapper
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/Array.from_with_a_mapper
+=== CONT  TestProgramRegionGeneratorHeldInLocalStops
+=== RUN   TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it
+=== RUN   TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in
+=== RUN   TestStoredGeneratorRoadsAreNotYet/two_reads
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/two_reads
+=== RUN   TestStoredGeneratorRoadsAreNotYet/typeof
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/typeof
+=== RUN   TestStoredGeneratorRoadsAreNotYet/===
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/===
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_let
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_let
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_type_written_for_it
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_type_written_for_it
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_capture,_called
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_capture,_called
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_capture,_never_called
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_capture,_never_called
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_function_beside_it
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_function_beside_it
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_field
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_field
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_return
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_return
+=== RUN   TestStoredGeneratorRoadsAreNotYet/destructuring
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/destructuring
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/typeof_it
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/typeof_it
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/destructured
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/destructured
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_read_after_a_labeled_break
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_read_after_a_labeled_break
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_other
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_other
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_default_naming_it
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_default_naming_it
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_closure_capturing_it,_never_called
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_closure_capturing_it,_never_called
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/passing_it_on
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/passing_it_on
+=== RUN   TestStoredGeneratorRoadsAreNotYet/a_spread
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/a_spread
+=== RUN   TestStoredGeneratorRoadsAreNotYet/at_a_module's_top_level
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/at_a_module's_top_level
+=== RUN   TestStoredGeneratorRoadsAreNotYet/in_an_async_function
+=== PAUSE TestStoredGeneratorRoadsAreNotYet/in_an_async_function
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/spread_inside_a_generator
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/spread_inside_a_generator
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/reassigning_it
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/reassigning_it
+=== CONT  TestStoredGeneratorLocalIsReadOnlyByItsMoves
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/read_through_a_view
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/read_through_a_view
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/arguments
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/arguments
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/the_function_as_a_value
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/the_function_as_a_value
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_expression
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_expression
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_method
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_method
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/an_async_callee
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/an_async_callee
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_nested_generator_stored
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_nested_generator_stored
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generic_generator's_union_instance
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generic_generator's_union_instance
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/yield*
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/yield*
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield_inside_try
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield_inside_try
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield's_result
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield's_result
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_call_through_a_function_value
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_call_through_a_function_value
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_method
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_method
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_stored_generator_passed_in
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_stored_generator_passed_in
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_g2()
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_g2()
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_body_local
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_body_local
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_parameter
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_parameter
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returning_a_value
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returning_a_value
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_=_g2()_before_the_loop
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_defaulted_parameter
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_defaulted_parameter
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_=_g2()_before_the_loop
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_declared_ArrayIterator
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_declared_ArrayIterator
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/two_generator_functions
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/two_generator_functions
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_string_beside_a_generator_into_Iterable<string>
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_string_beside_a_generator_into_Iterable<string>
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_union_yield
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_union_yield
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_a_generator
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_a_generator
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_an_async_function
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_an_async_function
+=== RUN   TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_try_reaching_a_failing_library_call
+=== PAUSE TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_try_reaching_a_failing_library_call
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/yields_held_otherwise
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/yields_held_otherwise
+=== CONT  TestNestedGeneratorRoadsAreNotYet
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_through_the_parameter
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_through_the_parameter
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_inside_the_loop
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_inside_the_loop
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/spreading_it
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/spreading_it
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/destructuring_it
+=== RUN   TestNestedGeneratorRoadsAreNotYet/spread
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/destructuring_it
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/spread
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_for-of_head_rebinding_it
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_for-of_head_rebinding_it
+=== RUN   TestNestedGeneratorRoadsAreNotYet/Array.from
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/Array.from
+=== RUN   TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_destructuring_assignment_rebinding_it
+=== PAUSE TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_destructuring_assignment_rebinding_it
+=== CONT  TestStoredGeneratorsLower
+=== RUN   TestNestedGeneratorRoadsAreNotYet/new_Set
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/new_Set
+=== RUN   TestNestedGeneratorRoadsAreNotYet/new_Map
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/new_Map
+=== RUN   TestStoredGeneratorsLower/stored_jsx_children.a
+=== PAUSE TestStoredGeneratorsLower/stored_jsx_children.a
+=== RUN   TestStoredGeneratorsLower/stored_for_of.a
+=== RUN   TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local
+=== PAUSE TestStoredGeneratorsLower/stored_for_of.a
+=== RUN   TestStoredGeneratorsLower/stored_exits.a
+=== PAUSE TestStoredGeneratorsLower/stored_exits.a
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_compound_assignment
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_compound_assignment
+=== RUN   TestStoredGeneratorsLower/stored_exits_finally.a
+=== PAUSE TestStoredGeneratorsLower/stored_exits_finally.a
+=== RUN   TestNestedGeneratorRoadsAreNotYet/an_increment
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/an_increment
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_destructuring_target
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_destructuring_target
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_logical_assignment
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_logical_assignment
+=== RUN   TestStoredGeneratorsLower/stored_untaken.a
+=== PAUSE TestStoredGeneratorsLower/stored_untaken.a
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator
+=== RUN   TestStoredGeneratorsLower/stored_later_throw.a
+=== PAUSE TestStoredGeneratorsLower/stored_later_throw.a
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper
+=== RUN   TestStoredGeneratorsLower/handed_to_a_module_callee
+=== PAUSE TestStoredGeneratorsLower/handed_to_a_module_callee
+=== RUN   TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator
+=== RUN   TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function
+=== RUN   TestNestedGeneratorRoadsAreNotYet/inside_an_async_function
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/inside_an_async_function
+=== RUN   TestNestedGeneratorRoadsAreNotYet/inside_a_generator
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/inside_a_generator
+=== RUN   TestStoredGeneratorsLower/a_for-of_over_it
+=== PAUSE TestStoredGeneratorsLower/a_for-of_over_it
+=== RUN   TestStoredGeneratorsLower/a_read_in_parentheses
+=== PAUSE TestStoredGeneratorsLower/a_read_in_parentheses
+=== RUN   TestStoredGeneratorsLower/declared_in_a_block,_read_in_a_deeper_one
+=== PAUSE TestStoredGeneratorsLower/declared_in_a_block,_read_in_a_deeper_one
+=== RUN   TestStoredGeneratorsLower/declared_and_read_in_one_loop_body
+=== PAUSE TestStoredGeneratorsLower/declared_and_read_in_one_loop_body
+=== RUN   TestStoredGeneratorsLower/a_nested_generator_into_a_nested_callee
+=== PAUSE TestStoredGeneratorsLower/a_nested_generator_into_a_nested_callee
+=== RUN   TestStoredGeneratorsLower/written_in_place
+=== PAUSE TestStoredGeneratorsLower/written_in_place
+=== RUN   TestStoredGeneratorsLower/an_Iterable<T>_|_undefined_parameter
+=== PAUSE TestStoredGeneratorsLower/an_Iterable<T>_|_undefined_parameter
+=== RUN   TestStoredGeneratorsLower/an_IterableIterator<T>_parameter_stepped_by_hand
+=== PAUSE TestStoredGeneratorsLower/an_IterableIterator<T>_parameter_stepped_by_hand
+=== RUN   TestNestedGeneratorRoadsAreNotYet/in_a_block
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/in_a_block
+=== CONT  TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== RUN   TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value
+=== RUN   TestNestedGeneratorRoadsAreNotYet/stored
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/stored
+=== RUN   TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument
+=== RUN   TestNestedGeneratorRoadsAreNotYet/returned
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/returned
+=== RUN   TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator
+=== RUN   TestNestedGeneratorRoadsAreNotYet/destructured
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/destructured
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local
+=== RUN   TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function
+--- PASS: TestStoredGeneratorLocalIsReadOnlyByItsMoves (0.15s)
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/a_comma's_right_as_the_callee
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/a_comma's_right_as_the_callee
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/a_conditional's_arm,_both_arms_generators
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/a_conditional's_arm,_both_arms_generators
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/held_in_a_variable_first
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/held_in_a_variable_first
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/an_optional_call
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/an_optional_call
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/a_name_of_its_own
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/a_name_of_its_own
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/type_parameters_of_its_own
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/type_parameters_of_its_own
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_for-of
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_for-of
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_dropped
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_dropped
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/at_a_module's_top_level
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/at_a_module's_top_level
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/inside_an_async_function
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/inside_an_async_function
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/inside_a_generator
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/inside_a_generator
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/inside_another_written_in_place
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/inside_another_written_in_place
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/stored
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/stored
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/passed_as_an_object
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/passed_as_an_object
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/returned
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/returned
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/destructured
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/destructured
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/spread
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/spread
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/Array.from
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/Array.from
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/new_Set
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/new_Set
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/new_Map
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/new_Map
+=== RUN   TestInPlaceGeneratorRoadsAreNotYet/arguments_in_its_body
+=== PAUSE TestInPlaceGeneratorRoadsAreNotYet/arguments_in_its_body
+=== CONT  TestGenericGeneratorRoadsAreNotYet
+=== RUN   TestGenericGeneratorRoadsAreNotYet/stored_in_a_variable
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/stored_in_a_variable
+=== RUN   TestGenericGeneratorRoadsAreNotYet/passed_as_an_argument
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/passed_as_an_argument
+=== RUN   TestGenericGeneratorRoadsAreNotYet/returned
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/returned
+--- PASS: TestProgramRegionGeneratorHeldInLocalStops (0.21s)
+=== CONT  TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it
+=== RUN   TestGenericGeneratorRoadsAreNotYet/put_in_an_array
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/put_in_an_array
+=== RUN   TestGenericGeneratorRoadsAreNotYet/read_through_a_view
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/read_through_a_view
+=== RUN   TestGenericGeneratorRoadsAreNotYet/the_function_as_a_value
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/the_function_as_a_value
+=== RUN   TestGenericGeneratorRoadsAreNotYet/Array.from_with_a_mapper
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/Array.from_with_a_mapper
+=== RUN   TestGenericGeneratorRoadsAreNotYet/destructured
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/destructured
+=== RUN   TestGenericGeneratorRoadsAreNotYet/called_optionally
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/called_optionally
+=== RUN   TestGenericGeneratorRoadsAreNotYet/called_with_a_spread_argument
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/called_with_a_spread_argument
+=== RUN   TestGenericGeneratorRoadsAreNotYet/consumed_inside_a_generator
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/consumed_inside_a_generator
+=== RUN   TestGenericGeneratorRoadsAreNotYet/a_union_instance
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/a_union_instance
+=== RUN   TestGenericGeneratorRoadsAreNotYet/an_unread_instance
+=== PAUSE TestGenericGeneratorRoadsAreNotYet/an_unread_instance
+=== CONT  TestStoredGeneratorRoadsAreNotYet/in_an_async_function
+=== CONT  TestStoredGeneratorRoadsAreNotYet/at_a_module's_top_level
+--- PASS: TestNoSlotTheIteratorArmWalksHoldsAGenerator (0.38s)
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_spread
+=== CONT  TestStoredGeneratorRoadsAreNotYet/destructuring
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_return
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_field
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_function_beside_it
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_capture,_never_called
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_capture,_called
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_type_written_for_it
+=== CONT  TestStoredGeneratorRoadsAreNotYet/a_let
+=== CONT  TestStoredGeneratorRoadsAreNotYet/===
+=== CONT  TestStoredGeneratorRoadsAreNotYet/typeof
+=== CONT  TestStoredGeneratorRoadsAreNotYet/two_reads
+=== CONT  TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/stored_in_a_variable
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_try_reaching_a_failing_library_call
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_an_async_function
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_a_generator
+--- PASS: TestStoredGeneratorRoadsAreNotYet (0.00s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it (0.19s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/in_an_async_function (0.19s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_spread (0.14s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/at_a_module's_top_level (0.19s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/destructuring (0.15s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_return (0.16s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_function_beside_it (0.09s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_capture,_never_called (0.10s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_capture,_called (0.09s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_field (0.16s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/typeof (0.06s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_type_written_for_it (0.12s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/=== (0.09s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_let (0.10s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in (0.07s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/two_reads (0.09s)
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_union_yield
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_declared_ArrayIterator
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_defaulted_parameter
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returning_a_value
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_expression
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_parameter
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_body_local
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield's_result
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield_inside_try
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/yield*
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generic_generator's_union_instance
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_nested_generator_stored
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_method
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/Array.from_with_a_mapper
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/the_function_as_a_value
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/read_through_a_view
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/spread_inside_a_generator
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/destructured
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returned
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/put_in_an_array
+=== CONT  TestGeneratorFormsThisSliceDoesntLowerAreNotYet/passed_as_an_argument
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/typeof_it
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_destructuring_assignment_rebinding_it
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_for-of_head_rebinding_it
+--- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet (0.02s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/stored_in_a_variable (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_try_reaching_a_failing_library_call (0.10s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_an_async_function (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_a_generator (0.09s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_union_yield (0.09s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_declared_ArrayIterator (0.11s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returning_a_value (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_defaulted_parameter (0.09s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_expression (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_body_local (0.07s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield_inside_try (0.06s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_parameter (0.12s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield's_result (0.11s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/yield* (0.07s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generic_generator's_union_instance (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_nested_generator_stored (0.10s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/Array.from_with_a_mapper (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_method (0.10s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/the_function_as_a_value (0.17s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/read_through_a_view (0.13s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/spread_inside_a_generator (0.12s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/destructured (0.13s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returned (0.06s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/passed_as_an_argument (0.07s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/put_in_an_array (0.07s)
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/destructuring_it
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/spreading_it
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_inside_the_loop
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_through_the_parameter
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/yields_held_otherwise
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_string_beside_a_generator_into_Iterable<string>
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/two_generator_functions
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_=_g2()_before_the_loop
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_g2()
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_stored_generator_passed_in
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_method
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_call_through_a_function_value
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/an_async_callee
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/arguments
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/reassigning_it
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/passing_it_on
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_closure_capturing_it,_never_called
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_default_naming_it
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_other
+=== CONT  TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_read_after_a_labeled_break
+=== CONT  TestStoredGeneratorsLower/stored_jsx_children.a
+=== CONT  TestStoredGeneratorsLower/an_IterableIterator<T>_parameter_stepped_by_hand
+=== CONT  TestStoredGeneratorsLower/an_Iterable<T>_|_undefined_parameter
+--- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad (0.02s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/typeof_it (0.08s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_for-of_head_rebinding_it (0.10s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/spreading_it (0.08s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_destructuring_assignment_rebinding_it (0.14s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/destructuring_it (0.12s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_through_the_parameter (0.07s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_inside_the_loop (0.09s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_string_beside_a_generator_into_Iterable<string> (0.09s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/yields_held_otherwise (0.11s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/two_generator_functions (0.06s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_=_g2()_before_the_loop (0.07s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_stored_generator_passed_in (0.11s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_g2() (0.12s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_call_through_a_function_value (0.12s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_method (0.16s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/an_async_callee (0.07s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/reassigning_it (0.08s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/arguments (0.13s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_closure_capturing_it,_never_called (0.23s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_other (0.24s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/passing_it_on (0.32s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_default_naming_it (0.29s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_read_after_a_labeled_break (0.16s)
+=== CONT  TestStoredGeneratorsLower/written_in_place
+=== NAME  TestStoredGeneratorsLower/an_IterableIterator<T>_parameter_stepped_by_hand
+    generators_stored_test.go:80: want it to lower, got /tmp/adamic-gate/TestStoredGeneratorsLoweran_IterableIteratorT_parameter_stepp2579041086/001/main.a:3:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet
+=== CONT  TestStoredGeneratorsLower/a_nested_generator_into_a_nested_callee
+=== CONT  TestStoredGeneratorsLower/declared_and_read_in_one_loop_body
+=== CONT  TestStoredGeneratorsLower/declared_in_a_block,_read_in_a_deeper_one
+=== CONT  TestStoredGeneratorsLower/a_read_in_parentheses
+=== CONT  TestStoredGeneratorsLower/a_for-of_over_it
+=== NAME  TestStoredGeneratorsLower/an_Iterable<T>_|_undefined_parameter
+    generators_stored_test.go:80: want it to lower, got /tmp/adamic-gate/TestStoredGeneratorsLoweran_IterableT__undefined_parameter605541267/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet
+=== CONT  TestStoredGeneratorsLower/handed_to_a_module_callee
+=== NAME  TestStoredGeneratorsLower/a_read_in_parentheses
+    generators_stored_test.go:80: want it to lower, got /tmp/adamic-gate/TestStoredGeneratorsLowera_read_in_parentheses2010153572/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet
+=== CONT  TestStoredGeneratorsLower/stored_later_throw.a
+=== CONT  TestStoredGeneratorsLower/stored_untaken.a
+=== NAME  TestStoredGeneratorsLower/a_for-of_over_it
+    generators_stored_test.go:80: want it to lower, got /tmp/adamic-gate/TestStoredGeneratorsLowera_for-of_over_it2572269062/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet
+=== CONT  TestStoredGeneratorsLower/stored_exits_finally.a
+=== CONT  TestStoredGeneratorsLower/stored_exits.a
+=== CONT  TestStoredGeneratorsLower/stored_for_of.a
+=== CONT  TestNestedGeneratorRoadsAreNotYet/spread
+=== CONT  TestGenericGeneratorRoadsAreNotYet/stored_in_a_variable
+=== CONT  TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function
+--- FAIL: TestStoredGeneratorsLower (0.01s)
+    --- FAIL: TestStoredGeneratorsLower/an_IterableIterator<T>_parameter_stepped_by_hand (0.09s)
+    --- PASS: TestStoredGeneratorsLower/stored_jsx_children.a (0.11s)
+    --- PASS: TestStoredGeneratorsLower/a_nested_generator_into_a_nested_callee (0.09s)
+    --- PASS: TestStoredGeneratorsLower/declared_and_read_in_one_loop_body (0.10s)
+    --- PASS: TestStoredGeneratorsLower/written_in_place (0.12s)
+    --- FAIL: TestStoredGeneratorsLower/an_Iterable<T>_|_undefined_parameter (0.20s)
+    --- FAIL: TestStoredGeneratorsLower/a_read_in_parentheses (0.08s)
+    --- PASS: TestStoredGeneratorsLower/handed_to_a_module_callee (0.09s)
+    --- FAIL: TestStoredGeneratorsLower/a_for-of_over_it (0.14s)
+    --- PASS: TestStoredGeneratorsLower/declared_in_a_block,_read_in_a_deeper_one (0.20s)
+    --- PASS: TestStoredGeneratorsLower/stored_later_throw.a (0.17s)
+    --- PASS: TestStoredGeneratorsLower/stored_exits.a (0.10s)
+    --- PASS: TestStoredGeneratorsLower/stored_untaken.a (0.16s)
+    --- PASS: TestStoredGeneratorsLower/stored_exits_finally.a (0.16s)
+    --- PASS: TestStoredGeneratorsLower/stored_for_of.a (0.14s)
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local
+=== CONT  TestNestedGeneratorRoadsAreNotYet/destructured
+=== CONT  TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator
+=== CONT  TestNestedGeneratorRoadsAreNotYet/returned
+=== CONT  TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument
+=== CONT  TestNestedGeneratorRoadsAreNotYet/stored
+=== CONT  TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value
+=== CONT  TestNestedGeneratorRoadsAreNotYet/in_a_block
+=== CONT  TestNestedGeneratorRoadsAreNotYet/inside_a_generator
+=== CONT  TestNestedGeneratorRoadsAreNotYet/inside_an_async_function
+=== CONT  TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local
+=== CONT  TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_logical_assignment
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_destructuring_target
+=== CONT  TestNestedGeneratorRoadsAreNotYet/an_increment
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_compound_assignment
+=== CONT  TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local
+=== CONT  TestNestedGeneratorRoadsAreNotYet/new_Map
+=== CONT  TestNestedGeneratorRoadsAreNotYet/new_Set
+=== CONT  TestNestedGeneratorRoadsAreNotYet/Array.from
+=== CONT  TestGenericGeneratorRoadsAreNotYet/an_unread_instance
+=== CONT  TestGenericGeneratorRoadsAreNotYet/a_union_instance
+=== CONT  TestGenericGeneratorRoadsAreNotYet/consumed_inside_a_generator
+--- PASS: TestNestedGeneratorRoadsAreNotYet (0.19s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/spread (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/destructured (0.05s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/returned (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator (0.13s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/stored (0.06s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument (0.10s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_a_generator (0.13s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/in_a_block (0.14s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_an_async_function (0.15s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator (0.13s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local (0.16s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body (0.15s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_logical_assignment (0.19s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_destructuring_target (0.20s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_compound_assignment (0.24s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_increment (0.29s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/new_Map (0.14s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/new_Set (0.07s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/Array.from (0.07s)
+=== CONT  TestGenericGeneratorRoadsAreNotYet/called_with_a_spread_argument
+=== CONT  TestGenericGeneratorRoadsAreNotYet/called_optionally
+=== CONT  TestGenericGeneratorRoadsAreNotYet/destructured
+=== CONT  TestGenericGeneratorRoadsAreNotYet/Array.from_with_a_mapper
+=== CONT  TestGenericGeneratorRoadsAreNotYet/the_function_as_a_value
+=== CONT  TestGenericGeneratorRoadsAreNotYet/read_through_a_view
+=== CONT  TestGenericGeneratorRoadsAreNotYet/put_in_an_array
+=== CONT  TestGenericGeneratorRoadsAreNotYet/returned
+=== CONT  TestGenericGeneratorRoadsAreNotYet/passed_as_an_argument
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/a_comma's_right_as_the_callee
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/arguments_in_its_body
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/new_Map
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/new_Set
+--- PASS: TestGenericGeneratorRoadsAreNotYet (0.01s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/stored_in_a_variable (0.16s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/an_unread_instance (0.14s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/a_union_instance (0.16s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/called_with_a_spread_argument (0.16s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/called_optionally (0.09s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/consumed_inside_a_generator (0.18s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/destructured (0.21s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/the_function_as_a_value (0.20s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/Array.from_with_a_mapper (0.22s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/read_through_a_view (0.21s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/passed_as_an_argument (0.09s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/returned (0.14s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/put_in_an_array (0.16s)
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/Array.from
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/spread
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/destructured
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/returned
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/passed_as_an_object
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/stored
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/inside_another_written_in_place
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/inside_a_generator
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/inside_an_async_function
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/at_a_module's_top_level
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_dropped
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_for-of
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/type_parameters_of_its_own
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/a_name_of_its_own
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/an_optional_call
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/held_in_a_variable_first
+=== CONT  TestInPlaceGeneratorRoadsAreNotYet/a_conditional's_arm,_both_arms_generators
+--- PASS: TestInPlaceGeneratorRoadsAreNotYet (0.19s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/a_comma's_right_as_the_callee (0.14s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/arguments_in_its_body (0.10s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/new_Map (0.16s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/new_Set (0.17s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/Array.from (0.18s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/returned (0.09s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/spread (0.21s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/passed_as_an_object (0.09s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/destructured (0.11s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_another_written_in_place (0.08s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_a_generator (0.08s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_an_async_function (0.08s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/stored (0.10s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/at_a_module's_top_level (0.09s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_dropped (0.09s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_for-of (0.10s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/type_parameters_of_its_own (0.14s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/an_optional_call (0.06s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/a_name_of_its_own (0.08s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/held_in_a_variable_first (0.08s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/a_conditional's_arm,_both_arms_generators (0.03s)
+--- PASS: TestNoCapturedOrEnvironmentLocalCanHoldAGenerator (6.85s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	7.165s
+FAIL
