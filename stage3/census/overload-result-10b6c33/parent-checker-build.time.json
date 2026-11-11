@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/overload-build-parent/census",
+    "./stage3/census/tool"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 103.02542996199998,
+  "user_seconds": 89.812813,
+  "system_seconds": 15.368955,
+  "peak_rss_kib": 1520552
+}
