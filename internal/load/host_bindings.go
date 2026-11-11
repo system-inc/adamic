@@ -108,15 +108,19 @@ func parseHostBindings(data []byte) ([]HostBinding, error) {
 	if decoder.Decode(new(any)) != io.EOF {
 		return nil, fmt.Errorf("load: host_bindings.json: trailing data")
 	}
-	seen := map[string]bool{}
+	// A row is its name and its declaration's file together: a name may have a row in each file that
+	// declares it, as process has in core.ts and tracing.ts, and lowering matches a declarator only to its
+	// own file's row (internal/lower/host_bindings.go, hostBindingNamed).
+	seen := map[[2]string]bool{}
 	for index, row := range rows {
 		if reason := hostBindingProblem(row); reason != "" {
 			return nil, fmt.Errorf("load: host binding row %d (%s): %s", index+1, row.Name, reason)
 		}
-		if seen[row.Name] {
-			return nil, fmt.Errorf("load: host binding row %d (%s): a second row for the name", index+1, row.Name)
+		key := [2]string{row.Name, row.Declaration.File}
+		if seen[key] {
+			return nil, fmt.Errorf("load: host binding row %d (%s): a second row for the name in %s", index+1, row.Name, row.Declaration.File)
 		}
-		seen[row.Name] = true
+		seen[key] = true
 	}
 	return rows, nil
 }

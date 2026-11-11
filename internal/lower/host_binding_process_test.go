@@ -182,7 +182,7 @@ func TestHostBindingProcessModel(t *testing.T) {
 			defer release()
 			l := &lowering{program: program, checker: checked}
 			declaration := core.Statements.Nodes[1].AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes[0]
-			row := hostBindingNamed("process")
+			row := hostBindingNamed("process", "core.ts")
 			if row == nil {
 				t.Fatal("no process row")
 			}
