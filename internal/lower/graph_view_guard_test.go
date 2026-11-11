@@ -47,7 +47,8 @@ interface PartlyWide { readonly kind: 'a' | 'b'; readonly inner: MakesDerived; r
 type PartlyBase = { readonly kind: 'a'; readonly inner: MakesBase } | { readonly kind: 'a' | 'b'; readonly z: Link }
 interface CrossA { readonly kind: 'a'; inner: MakesDerived }
 interface CrossB { readonly kind: 'b'; inner: MakesBase }
-type Cross = CrossA | CrossB
+interface CrossBare { readonly kind: 'a' }
+type Cross = CrossBare | CrossB
 interface HasInner { readonly tag: string; inner: MakesDerived }
 interface NoInner { readonly tag: string }
 type EitherInner = HasInner | NoInner
@@ -255,9 +256,11 @@ func TestGraphViewGuardIdentityAndArms(t *testing.T) {
 	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
 		{"one union type on both sides", "HoldsChoice", "AlsoChoice", ""},
 		{"the union itself", "Choice", "Choice", ""},
-		// CrossA relates to Cross through its own arm, and its kind 'a' shares no value with CrossB's 'b',
-		// so it's never split against CrossB. Mutant: viewPairDisjoint returning false pairs CrossA's inner
-		// with CrossB's, MakesDerived as MakesBase, and refuses this.
+		// CrossA relates to Cross through CrossBare, and its kind 'a' shares no value with CrossB's 'b',
+		// so it's never split against CrossB. Only CrossB declares inner, so the union's own fields don't
+		// reach it (an inner on both arms would be one field of both types, which a write through the
+		// union can widen, and the guard rightly refuses). Mutant: viewPairDisjoint returning false pairs
+		// CrossA's inner with CrossB's, MakesDerived as MakesBase, and refuses this.
 		{"an arm against a disjoint arm", "CrossA", "Cross", ""},
 	})
 }
