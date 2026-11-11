@@ -749,3 +749,13 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   The complete combined 398-shard lane observes 0 startTracing runs; the
   positive control observes catalog length 3 before reset and 0 after, and
   meta own keys cat,ph,ts,pid,tid in that order.
+
+- #baobab, Nov 11 2026 23:29Z, Adamic: retire 62 and 63's widened fs views
+  using `fs.writeSync(typesFd, JSON.stringify(descriptor)!)` and
+  `fs.writeFileSync(legendPath, JSON.stringify(legend)!)`. This applies the
+  established postfix non-null check ruling (docs/rulings.md:50): evaluate once,
+  reject only null and undefined, exit 70, counted. Whole-owner pins and literal
+  guards require the const descriptor object and namespace-level const legend
+  array, with no declared toJSON and no binding reassignment. Amend 99's
+  dumpTypes pins to the new spelling; its subtype read changes are preserved.
+  Evidence is on typescript/tracing-fs-views-evidence, outside stage3/adapt.

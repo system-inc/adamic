@@ -1,0 +1,13 @@
+{
+  "version": "6.0.3",
+  "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "owner": "dumpLegend",
+  "binding": "legend",
+  "literal": "legend: TraceRecord[] = []",
+  "callBefore": "fs.writeFileSync(legendPath, JSON.stringify(legend))",
+  "callAfter": "fs.writeFileSync(legendPath, JSON.stringify(legend)!)",
+  "before": "export function dumpLegend(): void {\r\n        if (!legendPath) {\r\n            return;\r\n        }\r\n\r\n        fs.writeFileSync(legendPath, JSON.stringify(legend));\r\n    }",
+  "after": "export function dumpLegend(): void {\r\n        if (!legendPath) {\r\n            return;\r\n        }\r\n\r\n        fs.writeFileSync(legendPath, JSON.stringify(legend)!);\r\n    }",
+  "beforeSha256": "cc741c81899e294d8c362f10d2ae297694adca53872638352c51752304dc4779",
+  "afterSha256": "e04003d8881117529394965b1792226b710a7479fc4b7af697e945936029d569"
+}
