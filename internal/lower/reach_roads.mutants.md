@@ -260,3 +260,43 @@ New:
 Expected: TestReachLateReferenceIsACompilerBug gets no error after Main calls the function the graph took to never
 run. Deleting the call to checkFlowLiveness at the end of lower.go's lowerWithElementKey instead has no witness: no
 program reaches a late reference today, which is what the check holds, so only a run that hit one would show it.
+
+## 8. A one-based field read as an index
+
+File: internal/lower/view_flow.go, functionReferenceFields.
+
+Old:
+
+```go
+	"Local.NestedFunction":           1,
+```
+
+New:
+
+```go
+	"Local.NestedFunction":           0,
+```
+
+Expected: TestReachWriterNamedOnlyByAOneBasedField reaches only current's own literal: the local's NestedFunction, the
+writer's index plus one, names the function after it, so the writer is taken for one that never runs and its write is
+dropped.
+
+## 9. An index read as one-based
+
+File: internal/lower/view_flow.go, functionReferenceFields.
+
+Old:
+
+```go
+	"Method.Function":                0,
+```
+
+New:
+
+```go
+	"Method.Function":                1,
+```
+
+Expected: TestReachWriterNamedOnlyByAMethod reaches only current's own literal, the method's writer taken for one that
+never runs. TestFunctionFieldTablesAgree goes red too: localFields says Method.Function is a function's index, offset
+zero.

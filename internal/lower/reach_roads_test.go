@@ -249,6 +249,48 @@ console.log(current.tag);
 	wantSites(t, reachOfGlobal(t, program, "current"), literalSite(t, program, "first"))
 }
 
+// Road 3 reads a field that holds a function's index plus one as that, and one that holds the index
+// as that. Each pin is a writer into a module-level let that one field alone names, and wants the
+// literal it writes reached. Lowering itself never leaves a const arrow or a nested declaration named
+// only by its local's one-based field (its binding is declared with a MakeClosure too), nor a method
+// only by its literal's table (a class's Methods name it as well), so each program is built as IR.
+// writerProgram is current, declared with literal -1, and function 0, which writes literal -2 into
+// it; main is what Main does after the declaration, and locals the locals past current.
+func writerProgram(locals []ir.Local, main ...ir.Statement) *ir.Program {
+	return &ir.Program{
+		Locals: append([]ir.Local{{Name: "current", Type: ir.Object, Global: true, Function: -1}}, locals...),
+		Functions: []ir.Function{{
+			Name:    "replace",
+			Closure: true,
+			Body:    []ir.Statement{ir.Assign{Local: 0, Value: ir.ObjectLiteral{GraphTypes: []int{-2}}}},
+		}},
+		Main: append([]ir.Statement{ir.Declare{Local: 0, Value: ir.ObjectLiteral{GraphTypes: []int{-1}}}}, main...),
+	}
+}
+
+// A writer named only by its local's NestedFunction, one-based, and called through the local, as a
+// nested declaration is. Mutant 8.
+func TestReachWriterNamedOnlyByAOneBasedField(t *testing.T) {
+	t.Parallel()
+	program := writerProgram(
+		[]ir.Local{{Name: "replace", Type: ir.Closure, Global: true, Function: -1, NestedFunction: 1}},
+		ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: 1, Of: ir.Closure}}},
+	)
+	wantSites(t, newAllocationFlowGraph(program).ReachingAllocations(ir.Read{Local: 0, Of: ir.Object}), -2, -1)
+}
+
+// A writer named only by an object literal's method table, Method.Function, and called through the
+// object, as a call through an interface finds a class's method. Mutant 9.
+func TestReachWriterNamedOnlyByAMethod(t *testing.T) {
+	t.Parallel()
+	program := writerProgram(
+		[]ir.Local{{Name: "holder", Type: ir.Object, Global: true, Function: -1}},
+		ir.Declare{Local: 1, Value: ir.ObjectLiteral{GraphTypes: []int{-3}, Methods: []ir.Method{{Name: "replace", Function: 0}}}},
+		ir.Evaluate{Value: ir.CallClosure{Closure: ir.Property{Object: ir.Read{Local: 1, Of: ir.Object}, Name: "replace", Method: true, Of: ir.Closure}}},
+	)
+	wantSites(t, newAllocationFlowGraph(program).ReachingAllocations(ir.Read{Local: 0, Of: ir.Object}), -2, -1)
+}
+
 // Road 3's guard: liveness is read when a graph is built, so a reference a later pass adds to a
 // function the graph took to never run is a writer the graph's consumers missed. checkFlowLiveness,
 // run once lowering is done, makes that a compiler bug. Here replace is named by nothing when the
