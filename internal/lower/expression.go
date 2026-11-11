@@ -275,6 +275,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
+	l.noteOverloadCall(node)
 	value, err := l.value(node)
 	if err == nil {
 		value = l.graphAllocation(value, node)
@@ -1386,6 +1387,7 @@ func boxedSlot(valueType ir.Type) bool {
 
 // call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+	l.noteOverloadCall(node)
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if function, isNested := l.nestedGeneratorCallee(callee); isNested {
@@ -1430,7 +1432,9 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 			// for the target layout; do not capture a sibling's canonical function value.
 			carrier = ir.MakeClosure{Function: direct}
 		}
-		return ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+		// A nested overload set is called through its closure, so a narrow overload's result is checked
+		// here, as a direct call's is in censusOverloadResult.
+		return l.overloadResultCheck(node, ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns})
 	}
 	qualified := l.namespaceMember(callee)
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
@@ -1459,7 +1463,10 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 				}
 				arguments = append(arguments, value)
 			}
-			value := ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns}
+			value, err := l.overloadResultCheck(node, ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns})
+			if err != nil {
+				return nil, err
+			}
 			return l.namespaceReadyCall(callee, value), nil
 		}
 		value, err := l.callFunction(call, instance)
@@ -1493,6 +1500,7 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 
 // callFunction lowers a call's arguments, in order, and the call to function.
 func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
+	l.noteOverloadCall(call.AsNode())
 	arguments, spread, err := l.callArguments(call.Arguments.Nodes)
 	if err != nil {
 		return nil, err
@@ -1672,6 +1680,7 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	l.noteOverloadCall(node)
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
 		// never[] admits a zero-argument call in TypeScript. The erased slot does
@@ -1800,7 +1809,13 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	// A call through a checked function-type claim checks it (predicates_function_type.go).
-	return l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns})
+	value, err := l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns})
+	if err != nil {
+		return nil, err
+	}
+	// A nested overload set that captures is called through its closure value, so a narrow overload's
+	// result is checked here too.
+	return l.overloadResultCheck(node, value)
 }
 
 // Optional booleans have a three-state byte in the function-call ABI.
