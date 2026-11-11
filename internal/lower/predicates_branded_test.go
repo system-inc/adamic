@@ -379,7 +379,8 @@ show(i);`, walk, false},
 // array isn't run: `some` answering false of one is a lie its checked false side stops, which B doesn't
 // touch for an unbranded T. Mutant: that identity test dropped, and the program is NotYet as a generic
 // claim S may instantiate. At T = TypeElement the instance's claim is an array of S, whose false side the
-// false side's guard keeps NotYet.
+// false side's guard keeps NotYet where the false side reads the array (#39wtqdj: unread, it isn't
+// checked, so firstPosShown's false side logs it).
 func TestBrandedSupertypeIdentityNarrowingLowers(t *testing.T) {
 	t.Parallel()
 	const some = `function some<T>(array: readonly T[] | undefined): array is readonly T[] { return array !== undefined && array.length > 0; }
@@ -393,8 +394,9 @@ const nodes: Node[] = [{ kind: 80, pos: 6 }];
 console.log(String(firstPos(nodes)));
 console.log(String(firstOf([7])));
 `, ".ts")
-	_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+some+`const elements: TypeElement[] = [element];
-console.log(String(firstPos(elements)));
+	_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+some+`function firstPosShown<T extends Node>(array: readonly T[]): number { if (!some(array)) { console.log(typeof array); return -1; } const first = array[0]; return first === undefined ? -1 : first.pos; }
+const elements: TypeElement[] = [element];
+console.log(String(firstPosShown(elements)));
 `)
 	var pending *NotYet
 	if !errors.As(err, &pending) || !strings.Contains(err.Error(), "checked predicate membership of a branded supertype on its false branch") {
@@ -784,12 +786,12 @@ console.log(pickName(i, isTypeElementLie));
 		// Read from them, the body is lowered per instance and its claims resolve, so a branded instance is
 		// judged where its returned predicate is called. PropertySignature | Identifier claimed as Identifier |
 		// TypeElement drops nothing, so rule 2(b) admits the call (#fx9waqy), and it stops next at R-T80's
-		// false side over Node's open kind. Measured on Home at 37ef68b7.
+		// false side over Node's open kind, which its else reads (#39wtqdj). Measured on Home at 37ef68b7.
 		{"orPredicate2's lying instance", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
 function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 const either = orPredicate2(isIdentifier, isTypeElementLie);
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
-function show(x: PropertySignature | Identifier): void { if (either(x)) { console.log(String(x.pos)); } }
+function show(x: PropertySignature | Identifier): void { if (either(x)) { console.log(String(x.pos)); } else { console.log(typeof x); } }
 show(i);
 `, "checked predicate membership over an open tag domain"},
 		{"orPredicate2's honest instance", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
@@ -799,14 +801,15 @@ const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 console.log(element(i) ? "element" : "other");
 `, "which isn't its supertype"},
 		// Over unbranded claims the body lowers, its arrow returned under orPredicate2's written claim
-		// (#fx9waqy), and the caller stops on R-T80's union check: Node's kind is a number, an open tag domain.
+		// (#fx9waqy), and the caller stops on R-T80's union check, on the false side its conditional reads
+		// (#39wtqdj): Node's kind is a number, an open tag domain.
 		{"orPredicate2 over unbranded claims", `interface Literal extends Node { readonly kind: 9; readonly text: string; }
 function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
 function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 function isLiteral(n: Node): n is Literal { return kindOf(n) === 9; }
 const named = orPredicate2(isIdentifier, isLiteral);
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
-console.log(named(i) ? "i named" : "i other");
+console.log(named(i) ? "i named" : "i other " + typeof i);
 `, "checked predicate membership over an open tag domain"},
 		{"generic arrow", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 const pickArrow = <T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string => test(x) ? "yes" : "no";
