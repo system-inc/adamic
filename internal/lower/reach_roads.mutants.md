@@ -18,8 +18,11 @@ Old:
 New:
 
 ```go
-			case false:
+			case false && !slices.Contains(spread, true):
 ```
+
+The plain `case false:` doesn't compile: this case is view_flow.go's only use of `slices`, and the import
+would be left unused.
 
 Expected: TestReachOmittedArgumentTakesTheDefault and TestReachOmittedOptionalArgumentIsUndefined go Unknown,
 "parameter may receive untracked or omitted arguments", and so does
@@ -57,8 +60,11 @@ Old:
 New:
 
 ```go
-			case function.OptionalParameters[param]:
+			case function.OptionalParameters[param] && !slices.Contains(spread[:0], true):
 ```
+
+`spread[:0]` is empty, so the test is never true. The plain `case function.OptionalParameters[param]:`
+doesn't compile, since it leaves the `slices` import unused.
 
 Expected: TestReachOmittedArgumentStaysUnknownUnlessOptional/optional_under_a_spread is known, the literal alone,
 where the spread may put anything at that position.
@@ -134,8 +140,10 @@ Old:
 New:
 
 ```go
-		if false {
+		if false && !running[i] {
 ```
+
+The plain `if false {` doesn't compile: `running` would be declared and never used.
 
 Expected: TestReachUncalledWriterMakesNoWrite, TestReachSystemIsItsLiteral and
 TestReachSystemThroughANamespaceBarrelIsItsLiteral go Unknown, "local or result has no tracked producer": the uncalled
