@@ -1,0 +1,11 @@
+{
+  "functions": [
+    {
+      "name": "getLineAndCharacterOfPosition",
+      "text": "function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;"
+    }
+  ],
+  "publicSha256": "f87315fbe4913ca7aad52237ad39a9227b815d60a73270fc2303b6fd580b925b",
+  "bundlerOriginalSha256": "a577d8e16bcee8c005a6a0adac0dbb8e3a56dd5e06a49045d08760e0c0ee00cd",
+  "bundlerRuntime": "6.0.3"
+}
