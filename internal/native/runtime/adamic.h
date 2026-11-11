@@ -660,6 +660,9 @@ static inline void adamic_region_hold(adamic_region *region, const void *value) 
 	}
 }
 bool adamic_region_contains(const adamic_region *region, const void *value);
+// adamic_region_capacity is what a region's blocks hold for objects, all of them, the doubling a test
+// can read (region.c).
+size_t adamic_region_capacity(const adamic_region *region);
 #ifdef ADAMIC_CANONICAL_CLOSURES
 adamic_environment *adamic_environment_new_in(adamic_region *, size_t);
 #endif
