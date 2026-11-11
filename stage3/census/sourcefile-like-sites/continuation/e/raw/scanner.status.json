@@ -1,0 +1,46 @@
+{
+  "file": "scanner.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-road2-e/src/compiler",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/e/raw/scanner.jsonl"
+  ],
+  "child_exit": 0,
+  "wall_seconds": 266.4443521150024,
+  "timed_out": false,
+  "bound_seconds": 1500,
+  "max_concurrent_files": 2,
+  "completed_timing_units": 152,
+  "last_timing_units": [
+    {
+      "file": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts",
+      "where": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts:4078:1",
+      "wall_seconds": 0.119983608,
+      "cpu_seconds": 0.11968600000000151
+    },
+    {
+      "file": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts",
+      "where": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts:4090:1",
+      "wall_seconds": 0.096293534,
+      "cpu_seconds": 0.09627499999999145
+    },
+    {
+      "file": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts",
+      "where": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts:4095:1",
+      "wall_seconds": 0.124799302,
+      "cpu_seconds": 0.12513500000000022
+    },
+    {
+      "file": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts",
+      "where": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts:4099:1",
+      "wall_seconds": 0.210996775,
+      "cpu_seconds": 0.21106699999995726
+    },
+    {
+      "file": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts",
+      "where": "/workspace/scratch/baobab-road2-e/src/compiler/scanner.ts:4106:1",
+      "wall_seconds": 0.278384921,
+      "cpu_seconds": 0.7938350000000014
+    }
+  ]
+}
