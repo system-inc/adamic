@@ -1,0 +1,14 @@
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/api-c.cjs", "original", "original"], "child_exit": 0, "wall_seconds": 5.226467692000369, "timed_out": false}
+{"command": ["python3", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/lane-api-c.py", "original"], "child_exit": 0, "wall_seconds": 2.1600594330011518, "timed_out": false}
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/api-c.cjs", "original-unstripped", "original-unstripped"], "child_exit": 0, "wall_seconds": 4.947553703999802, "timed_out": false}
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/api-c.cjs", "c-unstripped", "original-unstripped"], "child_exit": 0, "wall_seconds": 4.839207252000051, "timed_out": false}
+{"command": ["python3", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/lane-api-c.py", "c-unstripped"], "child_exit": 0, "wall_seconds": 2.039693081000223, "timed_out": false}
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/emit-public-c.cjs", "/workspace/scratch/baobab-road2-c-public", "c-public", "on"], "child_exit": 0, "wall_seconds": 34.233592990000034, "timed_out": false}
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/api-c.cjs", "c-public", "original"], "child_exit": 0, "wall_seconds": 4.460821593000219, "timed_out": false}
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/emit-public-c.cjs", "/workspace/scratch/baobab-road2-c-public", "c-public-unstripped", "off"], "child_exit": 0, "wall_seconds": 35.491967838001074, "timed_out": false}
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/api-c.cjs", "c-public-unstripped", "original-unstripped"], "child_exit": 0, "wall_seconds": 4.912560308001048, "timed_out": false}
+{"command": ["python3", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/lane-api-c.py", "c-public"], "child_exit": 0, "wall_seconds": 1.9448793419996946, "timed_out": false}
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/source-audit-c.cjs", "/workspace/scratch/baobab-road2-c-public", "c-public-exact", "exact"], "child_exit": 0, "wall_seconds": 65.19034149099934, "timed_out": false}
+{"command": ["/workspace/scratch/baobab-first-stop", "/workspace/scratch/baobab-road2-c-public/src/compiler/core.ts", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/core-first-stop.jsonl"], "child_exit": 0, "wall_seconds": 71.35055928499969, "timed_out": false}
+{"command": ["python3", "/workspace/adamic/stage3/census/sourcefile-like-sites/checkpoint.py", "road2-c-public-api"], "child_exit": 0, "wall_seconds": 3.972111582999787, "timed_out": false}
+c public workflow child exit=0

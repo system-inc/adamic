@@ -29,5 +29,36 @@
       "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
       "seconds": 21.274722228999998
     }
+  },
+  {
+    "label": "c-public",
+    "whole_src_roots": 604,
+    "whole_src_diagnostics": 0,
+    "calls": 93,
+    "excluded_or_unresolved": 61,
+    "services_files": 253,
+    "services_diagnostics": 0,
+    "services_TS2386": 0,
+    "call_diagnostics": 0,
+    "census_files": 10,
+    "complete_streams": 10,
+    "baseline_locations": 34,
+    "site_verdicts": {
+      "no finding at original call; unit attempted": 22,
+      "finding at original call": 12
+    },
+    "matched_finding_kinds": {
+      "Refused": 12
+    },
+    "first_stop": {
+      "roots": [
+        "/workspace/scratch/baobab-road2-c-public/src/compiler/core.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts:232:34",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 44.793428969
+    }
   }
 ]

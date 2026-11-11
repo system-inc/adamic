@@ -1,0 +1,42 @@
+{
+  "findings": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:503:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:504:35",
+      "reason": "an assignment value to a member",
+      "text": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:504:35: stage 0 can't lower an assignment value to a member yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:503:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:504:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:504:35: stage 0 can't lower an assignment value to a member yet",
+      "start": 49077,
+      "end": 49170
+    }
+  ],
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:503:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 49075,
+      "body_end": 49173,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getLineStarts",
+      "top": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:503:1"
+    }
+  ]
+}

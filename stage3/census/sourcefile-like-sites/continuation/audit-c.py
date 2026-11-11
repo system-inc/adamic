@@ -55,6 +55,11 @@ for label in ['c-public','c-public-unstripped']:
  api=load(p/label/'api-analysis.json');assert api['diagnostics']==[]
  selected=api['selected_declarations'];assert any(d['name']=='LineMapSource' for d in selected) and not any(d['name']=='getLineStarts' for d in selected)
  assert next(d['text'] for d in selected if d['name']=='getLineAndCharacterOfPosition')=='function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;'
+matrix=load(p/'c-declaration-matrix.json')
+assert matrix['public_bundles_equal_with_strip_on_and_off']=={'baseline':True,'public_c':True}
+for mode in matrix['variants']:
+ assert sum(d['name']=='getLineStarts' for d in mode['raw_scanner'])==(0 if mode['stripInternal'] else 1)
+ if mode['public_bundle'] is not None:assert not any(d['name']=='getLineStarts' for d in mode['public_bundle'])
 assert load(p/'original/lane-api-check.json')['errors']==[]
 assert len(load(p/'c-unstripped/lane-api-check.json')['errors'])==4
 assert len(load(p/'c-public/lane-api-check.json')['errors'])==7
