@@ -91,7 +91,7 @@ func (e *emitter) jsonStringify(expression ir.JSONStringify) string {
 	if jsonStringifiesReferences(expression) {
 		call = "adamic_json_stringify_objects"
 	}
-	result := e.own(ir.String, fmt.Sprintf("%s(%s, %s, %s, %s, %s, %s, %s)", call, first, schema, replacer, replacerSchema, space, spaceSchema))
+	result := e.own(ir.String, fmt.Sprintf("%s(%s, %s, %s, %s, %s, %s)", call, first, schema, replacer, replacerSchema, space, spaceSchema))
 	// Past V8's longest, a RangeError is pending and the result empty, let go with the rest.
 	e.checkThrown()
 	return result
