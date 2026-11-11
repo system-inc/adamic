@@ -41,6 +41,8 @@ class Speaks { speak(): void {} }
 interface SpeaksField { speak: () => void }
 type BagSpeaks = Record<string, Speaks>
 interface NamedSpeaks { readonly a?: SpeaksField }
+interface DiscriminantWide { readonly kind: 'a' | 'b'; readonly inner: MakesDerived; readonly other: MakesDerived }
+type DiscriminatedBase = { readonly kind: 'a'; readonly inner: MakesBase } | { readonly kind: 'b'; readonly other: MakesBase }
 interface HasInner { readonly tag: string; inner: MakesDerived }
 interface NoInner { readonly tag: string }
 type EitherInner = HasInner | NoInner
@@ -215,6 +217,7 @@ func TestGraphViewGuardRoads(t *testing.T) {
 		{"a method", "Speaks", "SpeaksField", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it"},
 		{"a source arm", "EitherInner", "ViewsInner", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a source arm (HasInner as ViewsInner) through its field inner"},
 		{"a method through an index source", "BagSpeaks", "NamedSpeaks", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it through its field a (Speaks as "},
+		{"a union discriminant related to a discriminated union target as a whole", "DiscriminantWide", "DiscriminatedBase", "whose field make takes a function"},
 	} {
 		if types[row.source] == nil || types[row.target] == nil {
 			t.Fatalf("%s: a type isn't declared", row.name)
