@@ -42,6 +42,8 @@ addition=out/'continuation/REPORT-ADDITION.md'
 if addition.exists():text+='\n'+addition.read_text()
 addition=out/'continuation/REPORT-C-ADDITION.md'
 if addition.exists():text+='\n'+addition.read_text()
+addition=out/'continuation/REPORT-E-ADDITION.md'
+if addition.exists():text+='\n'+addition.read_text()
 assert '\u2013' not in text and '\u2014' not in text
 (out/'REPORT.md').write_text(text)
 print('\n'.join(lines[8:8+len(counts)+4]))
