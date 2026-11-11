@@ -17,3 +17,5 @@ Full-mode controls also passed on both compilers: one recorded view, one forced-
 Original head baseline completed: child exit 0; 4058 timed non-generic unit attempts; 4869.733 seconds; peak RSS 5123252 KiB. The first-error guard pair and corpus noninterference checks remain in progress.
 
 Original parent baseline completed: child exit 0; 4966.145 seconds; peak RSS 5101784 KiB. Both original baseline finding arrays and all non-telemetry census bytes agree exactly. The common original-parent full-mode baseline is therefore backed by both the source call-path proof and this complete first-error comparison.
+
+Parent seam first-error census completed: child exit 0; 4058 observed units; 635 views; zero guard refusals and zero probe errors; 4888.397 seconds; peak RSS 4624656 KiB. All ordinary headers, file inventories, unit records and findings are byte-identical to its original no-seam baseline; only checker-cache telemetry may differ. parent-noninterference.json preserves the proof hashes.
