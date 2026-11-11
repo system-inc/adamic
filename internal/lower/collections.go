@@ -21,6 +21,37 @@ func keyable(valueType ir.Type) bool {
 	return false
 }
 
+// keyableType is keyable for a Map's key or a Set's element whose checker type is proven, and one more
+// case: a key held as a Union (the object type, a union of object types) is keyed by identity when no
+// primitive can stand where it does, so every value it holds is a reference whose address is itself.
+// A Union reference is the object's own pointer, its kind named by its heap header, never a box, so
+// native's identity map (newMap, emit_maps.go) and JavaScript's Map both find it by identity, as
+// SameValueZero does for objects. A key type a primitive fits, `{}`, unknown or a type parameter, stays
+// NotYet, since a Union holding a string or a number would be keyed by its box (#ff5eddz, tsc's
+// tracing.ts recursionIdentityMap, a Map<object, number>).
+func (l *lowering) keyableType(proven *checker.Type, valueType ir.Type) bool {
+	if keyable(valueType) {
+		return true
+	}
+	return valueType == ir.Union && l.noPrimitiveFits(proven)
+}
+
+// noPrimitiveFits is whether no primitive value is assignable to proven: not a string, number, boolean,
+// bigint, symbol, null or undefined. A type parameter or unknown answers no, since its bound could
+// admit one.
+func (l *lowering) noPrimitiveFits(proven *checker.Type) bool {
+	proven = l.concrete(proven)
+	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsNever) != 0 {
+		return false
+	}
+	for _, primitive := range []*checker.Type{l.checker.GetStringType(), l.checker.GetNumberType(), l.checker.GetBooleanType(), l.checker.GetBigIntType(), l.checker.GetESSymbolType(), l.checker.GetNullType(), l.checker.GetUndefinedType()} {
+		if l.checker.IsTypeAssignableTo(primitive, proven) {
+			return false
+		}
+	}
+	return true
+}
+
 // iterated lowers something a for...of or a spread walks as the array of what it gives, with that
 // array's element type: an array, a string's code points, a Set's elements, a Map's [key, value]
 // entries, and map.keys(), map.values(), map.entries(), set.keys() and set.values().
