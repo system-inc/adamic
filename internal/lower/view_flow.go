@@ -3,6 +3,7 @@ package lower
 import (
 	"fmt"
 	"reflect"
+	"slices"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -30,6 +31,26 @@ func (graph *allocationFlowGraph) resultNode(function int) int {
 
 func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 	graph := &allocationFlowGraph{program: program, sources: map[int][]ir.Expression{}, unknownParameters: map[int]bool{}}
+	// pass hands a call's arguments to its target's parameters, by position. An omitted argument is
+	// undefined where the parameter is optional or has a default: OptionalParameters is keyed by the
+	// local the argument arrives in, a default's incoming local among them (functions.go's
+	// signature), and the default itself is the Coalesce or Conditional the body declares over it.
+	// Undefined reaches no allocation, and a parameter that only ever gets it still reaches none. A
+	// required or rest parameter's omitted argument stays unknown, and so does any omitted argument
+	// where a spread may move what lands at that position.
+	pass := func(target int, arguments []ir.Expression, spread []bool) {
+		function := &program.Functions[target]
+		for i, param := range function.Parameters {
+			switch {
+			case i < len(arguments):
+				graph.sources[param+1] = append(graph.sources[param+1], arguments[i])
+			case function.OptionalParameters[param] && !slices.Contains(spread, true):
+				graph.sources[param+1] = append(graph.sources[param+1], ir.Undefined{Of: program.Locals[param].Type})
+			default:
+				graph.unknownParameters[param+1] = true
+			}
+		}
+	}
 	collect := func(body []ir.Statement, function int) {
 		walk(body, func(node any) bool {
 			switch value := node.(type) {
@@ -55,13 +76,7 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 					if target < 0 || target >= len(program.Functions) {
 						continue
 					}
-					for i, param := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							graph.sources[param+1] = append(graph.sources[param+1], value.Arguments[i])
-						} else {
-							graph.unknownParameters[param+1] = true
-						}
-					}
+					pass(target, value.Arguments, value.Spread)
 				}
 			case ir.CallClosure:
 				targets := program.ClosureTargets(value)
@@ -70,13 +85,7 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 					break
 				}
 				for _, target := range targets.Functions {
-					for i, param := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							graph.sources[param+1] = append(graph.sources[param+1], value.Arguments[i])
-						} else {
-							graph.unknownParameters[param+1] = true
-						}
-					}
+					pass(target, value.Arguments, value.Spread)
 				}
 
 			}
@@ -84,10 +93,170 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 		})
 	}
 	collect(program.Main, -1)
+	running := runningFunctions(program)
 	for i, function := range program.Functions {
+		// A function that never runs makes none of its writes, returns or calls.
+		if !running[i] {
+			continue
+		}
 		collect(function.Body, i)
 	}
 	return graph
+}
+
+// functionReferenceFields are the IR fields that name a function, as type and field, each with what
+// its value is offset by: one for a field that holds an index plus one, zero for one that holds the
+// index. A count or a slice of them, or a map whose keys or values are, names every function in it.
+// TestFunctionReferenceFieldsAreEveryFunctionField holds every IR field whose name says it may hold
+// a function to this table or to its own list of fields that don't.
+var functionReferenceFields = map[string]int{
+	// Calls: a direct or virtual call's function (a virtual call's targets are MethodTargets'),
+	// a sibling call's code, a sort's named comparator, a generator's step.
+	"Call.Function":          0,
+	"CallClosure.Direct":     1,
+	"ArraySort.Comparator":   0,
+	"GeneratorNext.Function": 0,
+	"IteratorNext.Function":  0,
+	// Function values and method tables: each is a road an opaque call can run it by.
+	"MakeClosure.Function":           0,
+	"BoundClosure.Function":          0,
+	"BoundMethod.Factory":            0,
+	"Method.Function":                0,
+	"ObjectLiteral.SpreadGetters":    0,
+	"Class.Constructor":              0,
+	"Class.Methods":                  0,
+	"Accessor.Getter":                0,
+	"Accessor.Setter":                0,
+	"Local.NestedFunction":           1,
+	"Local.ConstantClosure":          1,
+	"ViewContract.Functions":         0,
+	"Program.MethodTargets":          0,
+	"Program.StructuralMethodThunks": 0,
+	// Entries outside code calls: the entry module's exports (the JavaScript backend's
+	// ModuleExports, wasm32's handleRequest), and the async module body Main moves into.
+	"Export.Function":    0,
+	"Program.AsyncEntry": 1,
+	// Lowering's own links between functions, kept though none of them is a call, since a field
+	// that may name a function counts.
+	"Function.ForwardsArguments":     1,
+	"Function.NestedParent":          1,
+	"Function.ForwardedNestedParent": 1,
+	"Function.ReferenceParents":      1,
+}
+
+// runningFunctions is whether each function can run: whether any field functionReferenceFields
+// names, anywhere in the program (Main, every function's body and its own fields, the classes,
+// locals, exports, view contracts and the program's tables), names it. One that nothing names is
+// no call's target, no function value, no method and no entry, so nothing runs it. An opaque call
+// (a CallClosure whose targets are Unknown) runs only a function value that exists, and a function
+// value is only ever made by MakeClosure or BoundClosure, or found in a method table, all of them
+// counted here, so no opaque call reaches one either. FunctionTypeTargets isn't counted: it is every
+// function a checker function type could be by assignability alone, and a function becomes a value
+// only through those nodes. A function named only from the body of one that never runs is still
+// kept, since the names are read from every body: that keeps more than it must, and is the cheaper
+// of the two, with no fixed point to reach.
+func runningFunctions(program *ir.Program) []bool {
+	running := make([]bool, len(program.Functions))
+	var record func(reflect.Value, int)
+	record = func(value reflect.Value, offset int) {
+		switch value.Kind() {
+		case reflect.Int:
+			if function := int(value.Int()) - offset; function >= 0 && function < len(running) {
+				running[function] = true
+			}
+		case reflect.Slice, reflect.Array:
+			for i := 0; i < value.Len(); i++ {
+				record(value.Index(i), offset)
+			}
+		case reflect.Map:
+			entries := value.MapRange()
+			for entries.Next() {
+				record(entries.Key(), offset)
+				record(entries.Value(), offset)
+			}
+		}
+	}
+	// plan is, for each struct type met, its fields that name a function and its fields that can hold
+	// more of the program, so each field's name is looked up once per type, not once per node.
+	type reference struct{ field, offset int }
+	type plan struct {
+		references []reference
+		nested     []int
+	}
+	plans := map[reflect.Type]*plan{}
+	planOf := func(structure reflect.Type) *plan {
+		if known, ok := plans[structure]; ok {
+			return known
+		}
+		made := &plan{}
+		for i := 0; i < structure.NumField(); i++ {
+			if offset, names := functionReferenceFields[structure.Name()+"."+structure.Field(i).Name]; names {
+				made.references = append(made.references, reference{field: i, offset: offset})
+			}
+			if holdsProgram(structure.Field(i).Type) {
+				made.nested = append(made.nested, i)
+			}
+		}
+		plans[structure] = made
+		return made
+	}
+	type pointer struct {
+		of      reflect.Type
+		address uintptr
+	}
+	seen := map[pointer]bool{}
+	var visit func(reflect.Value)
+	visit = func(value reflect.Value) {
+		switch value.Kind() {
+		case reflect.Interface:
+			if !value.IsNil() {
+				visit(value.Elem())
+			}
+		case reflect.Pointer:
+			if value.IsNil() || seen[pointer{value.Type(), value.Pointer()}] {
+				return
+			}
+			seen[pointer{value.Type(), value.Pointer()}] = true
+			visit(value.Elem())
+		case reflect.Slice, reflect.Array:
+			if holdsProgram(value.Type().Elem()) {
+				for i := 0; i < value.Len(); i++ {
+					visit(value.Index(i))
+				}
+			}
+		case reflect.Map:
+			if holdsProgram(value.Type().Key()) || holdsProgram(value.Type().Elem()) {
+				entries := value.MapRange()
+				for entries.Next() {
+					visit(entries.Key())
+					visit(entries.Value())
+				}
+			}
+		case reflect.Struct:
+			fields := planOf(value.Type())
+			for _, named := range fields.references {
+				record(value.Field(named.field), named.offset)
+			}
+			for _, i := range fields.nested {
+				visit(value.Field(i))
+			}
+		}
+	}
+	visit(reflect.ValueOf(program).Elem())
+	return running
+}
+
+// holdsProgram is whether a value of the type can hold a struct, and so a field that names a function.
+func holdsProgram(of reflect.Type) bool {
+	switch of.Kind() {
+	case reflect.Interface, reflect.Pointer, reflect.Struct:
+		return true
+	case reflect.Slice, reflect.Array:
+		return holdsProgram(of.Elem())
+	case reflect.Map:
+		return holdsProgram(of.Key()) || holdsProgram(of.Elem())
+	}
+	return false
 }
 
 func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation func(int), demand func(int), unknown func(string)) {
@@ -145,6 +314,18 @@ func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation fu
 		follow(value.Value)
 	case ir.CheckedCast:
 		follow(value.Value)
+	case ir.Undefined, ir.Null:
+		// Neither is an allocation, so neither adds a site. A value that's only ever one of them
+		// reaches no site, which ReachingAllocations reports as Unknown, never as a proof.
+	case ir.Coalesce:
+		// Value ?? Fallback is Value when it's present and Fallback otherwise: a default's
+		// declaration over its incoming argument (functions.go's lowerBody) is one. A non-null
+		// assertion lowers to Value ?? panic (non_null.go), which hands on Value itself or stops,
+		// so its Fallback is no value and isn't followed.
+		follow(value.Value)
+		if value.Panic == nil {
+			follow(value.Fallback)
+		}
 	default:
 		unknown(fmt.Sprintf("untracked source %T", expression))
 	}
