@@ -29,12 +29,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-// size is what the block holds for objects and used how much of it is taken. mapping is the whole
-// mapping a standard block is, header included, or 0 for a block malloc made.
+// size is what the block holds for objects and used how much of it is taken. turn is the standard
+// size, 4 KB doubling to 1 MB, of the turn the block was made in, header included, which the next
+// turn doubles whether the block was mapped or malloc's. mapping is the whole mapping a mapped block
+// is, its turn, or 0 for a block malloc made.
 struct adamic_region_block {
 	struct adamic_region_block *next;
 	size_t size;
 	size_t used;
+	size_t turn;
 	size_t mapping;
 	_Alignas(16) unsigned char bytes[];
 };
@@ -109,17 +112,21 @@ static adamic_region_block *block_take(size_t total, size_t size) {
 			return block;
 		}
 		void *mapped = mmap(NULL, total, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-		if (mapped == MAP_FAILED) { return NULL; }
-		block = mapped;
-		block->mapping = total;
-		block->size = total - sizeof *block;
-		count_block(true);
-		return block;
+		// A process can run out of mappings (Linux's vm.max_map_count) before memory: then this block is
+		// malloc's, uncached, as on a target with no mmap.
+		if (mapped != MAP_FAILED) {
+			block = mapped;
+			block->turn = block->mapping = total;
+			block->size = total - sizeof *block;
+			count_block(true);
+			return block;
+		}
 	}
 #endif
 	size_t capacity = total - sizeof *block < size ? size : total - sizeof *block;
 	block = malloc(sizeof *block + capacity);
 	if (block == NULL) { return NULL; }
+	block->turn = total;
 	block->mapping = 0;
 	block->size = capacity;
 	count_block(true);
@@ -168,9 +175,9 @@ void adamic_region_thread_end(void) {
 static inline void *allocate_in(adamic_region *region, size_t size) {
 	adamic_region_block *block = region->blocks;
 	if (block == NULL || block->size - block->used < size) {
-		// Each turn twice the last, a mapping of 4 KB up to 1 MB, holding at least the object. A turn
-		// after a malloc'd block, one made for a big object, is the largest.
-		size_t total = block == NULL ? 4096 : block->mapping == 0 ? BLOCK_LARGEST : block->mapping * 2;
+		// Each turn twice the last, 4 KB up to 1 MB, header included, and a block holds at least the
+		// object: one bigger than its turn is malloc's, made to fit.
+		size_t total = block == NULL ? 4096 : block->turn * 2;
 		if (total > BLOCK_LARGEST) {
 			total = BLOCK_LARGEST;
 		}
@@ -236,6 +243,12 @@ adamic_environment *adamic_environment_new_in(adamic_region *region, size_t coun
  return environment;
 }
 #endif
+
+size_t adamic_region_capacity(const adamic_region *region) {
+	size_t total = 0;
+	for (const adamic_region_block *block = region->blocks; block != NULL; block = block->next) { total += block->size; }
+	return total;
+}
 
 bool adamic_region_contains(const adamic_region *region, const void *value) {
 	// Integer ranges, not relational comparisons of pointers into unrelated allocations.
