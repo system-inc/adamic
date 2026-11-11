@@ -201,10 +201,13 @@ func (l *lowering) localOf(identifier *ast.Node, symbol *ast.Symbol) (int, bool)
 		if declared := l.result.Locals[local]; declared.Placeholder != "" && declared.Captured && declared.Preallocated && declared.Ready == 0 && l.unlowerable == nil {
 			l.unlowerable = l.notYet(identifier, "an unset-capable capture before its declaration without a separate declaration-readiness cell")
 		}
-		if declared := l.result.Locals[local]; declared.Captured && slotless(declared.Type) && !(declared.Placeholder != "" && declared.Type == ir.Union) && l.unlowerable == nil {
-			// A placeholder union is one counted heap reference, which a cell already holds.
-			// Other slotless shapes retain their existing capture refusal. Lower says so once
-			// it's done, since the capture is found here, where nothing can return an error.
+		if declared := l.result.Locals[local]; declared.Captured && !boxedSlot(declared.Type) && l.unlowerable == nil {
+			// A Union is one counted heap reference whatever initializes it, a placeholder or a
+			// value (#n7sx9gz), and a cell holds one: each write fits its member into the Union, the
+			// cell releases what it held, and a read is the Union every closure shares. boolean |
+			// undefined has no word of its own in a cell yet, so its capture still stops. Lower
+			// says so once it's done, since the capture is found here, where nothing can return
+			// an error.
 			l.unlowerable = l.notYet(identifier, "a "+typeName(declared.Type)+" variable a function value captures")
 		}
 	}
