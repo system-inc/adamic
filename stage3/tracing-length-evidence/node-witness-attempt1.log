@@ -1,0 +1,28 @@
+{"level":1,"byteIdentical":true,"rows":[{"label":"push A","class":null,"message":null,"array":[{"phase":"parse","name":"A","args":{"path":"a.ts"},"time":123000,"separateBeginAndEnd":false}]},{"label":"push B","class":null,"message":null,"array":[{"phase":"parse","name":"A","args":{"path":"a.ts"},"time":123000,"separateBeginAndEnd":false},{"phase":"bind","name":"B","args":{"path":"b.ts"},"time":123000,"separateBeginAndEnd":false}]},{"label":"push C","class":null,"message":null,"array":[{"phase":"parse","name":"A","args":{"path":"a.ts"},"time":123000,"separateBeginAndEnd":false},{"phase":"bind","name":"B","args":{"path":"b.ts"},"time":123000,"separateBeginAndEnd":false},{"phase":"emit","name":"C","time":123000,"separateBeginAndEnd":true}]},{"label":"pop C","class":null,"message":null,"array":[{"phase":"parse","name":"A","args":{"path":"a.ts"},"time":123000,"separateBeginAndEnd":false},{"phase":"bind","name":"B","args":{"path":"b.ts"},"time":123000,"separateBeginAndEnd":false}]},{"label":"pop B","class":null,"message":null,"array":[{"phase":"parse","name":"A","args":{"path":"a.ts"},"time":123000,"separateBeginAndEnd":false}]},{"label":"popAll nonempty","class":null,"message":null,"array":[]},{"label":"popAll empty","class":null,"message":null,"array":[]},{"label":"pop empty","class":"Error","message":"Debug Failure. False expression.","array":[]},{"label":"push after failure","class":null,"message":null,"array":[{"phase":"parse","name":"D","time":123000,"separateBeginAndEnd":false}]},{"label":"pop D","class":null,"message":null,"array":[]},{"label":"popAll empty again","class":null,"message":null,"array":[]}]}
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'Error'
+- 'TypeError'
+
+    at Object.<anonymous> (/workspace/scratch/tracing-length-evidence/witness.cjs:26:204)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'Error',
+  expected: 'TypeError',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
