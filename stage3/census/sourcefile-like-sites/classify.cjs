@@ -15,7 +15,7 @@ for(const f of findings){
  let call=deepest,index=-1;while(call){if(ts.isCallExpression(call)||ts.isNewExpression(call)){index=call.arguments?.findIndex(a=>a.getFullStart()<=pos&&pos<a.end)??-1;if(index>=0)break;}call=call.parent;}
  if(call){
  f.callee=call.expression.getText(sf);f.argument_index=index;f.expression=call.getText(sf);f.view=index>=0?'call argument':'call expression (review)';}
- else{let n=deepest;while(n&&!ts.isReturnStatement(n)&&!ts.isVariableDeclaration(n)&&!ts.isBinaryExpression(n))n=n.parent;f.callee='<non-call>';f.view=n?ts.SyntaxKind[n.kind]:'other';f.expression=(n||deepest).getText(sf);}
+ else{let n=deepest;while(n&&!ts.isReturnStatement(n)&&!ts.isVariableDeclaration(n)&&!ts.isBinaryExpression(n))n=n.parent;f.callee='<non-call>';f.view=n?(ts.isReturnStatement(n)?'return':ts.isVariableDeclaration(n)?'variable initialization':ts.isBinaryExpression(n)?'assignment or binary expression':'other'):'other';f.expression=(n||deepest).getText(sf);}
  f.location=name+':'+m[2]+':'+m[3];
 }
 fs.writeFileSync(path.join(out,'sites.json'),JSON.stringify(findings,null,2)+'\n');

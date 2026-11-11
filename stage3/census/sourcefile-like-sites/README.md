@@ -11,7 +11,7 @@ Preparation commands used from the recorded main checkout:
 ```sh
 source /workspace/adamic-tools/env.sh
 bash cloud/setup.sh > /tmp/baobab-setup-main.log 2>&1
-npm ci --prefix stage3/api > /tmp/baobab-npm-main.log 2>&1
+npm ci --prefix stage3/api > stage3/census/sourcefile-like-sites/preparation/npm-main.log 2>&1
 export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/baobab-typescript
 # This checkout is v6.0.3, verified at 050880ce59e30b356b686bd3144efe24f875ebc8.
 bash stage3/apply.sh /workspace/scratch/baobab-adapted > /tmp/baobab-apply.log 2>&1

@@ -2,15 +2,15 @@
 
 Measured main: `d690f276749f91e6b36fe3a9726a5a453fcd7d39`. Upstream TypeScript 6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Report only; no compiler or adaptation changes.
 
-Attempted 30 of 79 compiler files; 28 completed full-mode streams. Physical sites: 1; distinct finding/phase/unit observations: 1.
+Attempted 40 of 79 compiler files; 35 completed full-mode streams. Physical sites: 1; distinct finding/phase/unit observations: 1.
 
 ## By callee
 
-| Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Cleared by the two proposed signatures |
+| Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Sites whose identified reason road 2 clears |
 | --- | ---: | ---: | ---: | --- | --- |
-| `getLineAndCharacterOfPosition` | 0 | 0 | 0 | no | yes |
-| `getLineStarts` | 1 | 1 | 0 | no | yes |
-| `getPositionOfLineAndCharacter` | 0 | 0 | 0 | yes | no |
+| `getLineAndCharacterOfPosition` | 0 | 0 | 0 | no | 0 |
+| `getLineStarts` | 1 | 1 | 0 | no | 1 |
+| `getPositionOfLineAndCharacter` | 0 | 0 | 0 | yes | 0 |
 
 First-stop attribution comes from `typescript/next-stops-c504dd8f` at `fe08a0d47a3d28f646db181ac9e8456e5c60885f`, file `stage3/census/next-stops-c504dd8f/grouped-first-stops.json`, copied as prior-first-stops.json. It names tracing.ts:206:67 for 73 roots. Its other six roots have unrelated outcomes. First-stop roots count only sites explicitly named in that evidence; it does not predict their next blocker.
 
@@ -20,15 +20,15 @@ The exact proposal changes only getLineAndCharacterOfPosition and getLineStarts.
 
 getPositionOfLineAndCharacter tests and conditionally calls sourceFile.getPositionOfLineAndCharacter; its fallback uses getLineStarts and text. Widening the two proposed signatures does not remove its optional-method contract. Other safe callees in the inventory would require their own parameter changes if findings are at those call boundaries. WeakMap users read no SourceFileLike members at all, and are called out separately.
 
-SourceFileLike declares optional lineMap and getPositionOfLineAndCharacter. The proposed minimal type retains optional lineMap; SourceFile already supplies lineMap. Each collected reason is preserved below and in findings.json.
+SourceFileLike declares optional lineMap and getPositionOfLineAndCharacter. The proposed minimal type retains optional lineMap; SourceFile already supplies lineMap. Counts include every reason naming SourceFileLike. The by-callee JSON separately records how many sites name structural source SourceFile. Clearance counts refer only to the identified optional-method refusal at a changed signature; a reason concerning retained lineMap or another contract is not marked cleared. Each collected reason is preserved below and in findings.json.
 
 ## Every observed site
 
 Locations are in the adapted compiler. Body-inventory line numbers in the next table refer to pinned upstream. A physical site is (location, reason), deduplicated across phases and units. sites.json preserves every distinct finding/phase/unit observation and the complete call expression.
 
-| Location | Phase(s) | Enclosing function | Receiving callee / view | Value use | Reason |
-| --- | --- | --- | --- | --- | --- |
-| executeCommandLine.ts:109:41 | refusal_scan | countLines / <anonymous@107> | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -> computeLineStarts | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| Location | Phase(s) | Enclosing function | Receiving callee / view | Value use | Road 2 clears reason | Reason |
+| --- | --- | --- | --- | --- | --- | --- |
+| executeCommandLine.ts:109:41 | refusal_scan | countLines / <anonymous@107> | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -> computeLineStarts | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 
 ## All exported compiler functions with a SourceFileLike parameter
 
@@ -91,6 +91,16 @@ This is a latent observational census, not an exhaustive proof of all runtime pa
 | hostErrors.ts | 0 | 22.47 | yes | no |
 | moduleNameResolver.ts | 0 | 198.43 | yes | no |
 | moduleSpecifiers.ts | 0 | 65.49 | yes | no |
+| parser.ts | -15 | 300.12 | no | yes |
+| path.ts | 0 | 54.93 | yes | no |
+| performance.ts | 0 | 32.63 | yes | no |
+| performanceCore.ts | 0 | 25.52 | yes | no |
+| program.ts | -15 | 300.42 | no | yes |
+| programDiagnostics.ts | 0 | 47.93 | yes | no |
+| resolutionCache.ts | 0 | 65.13 | yes | no |
+| scanner.ts | -15 | 300.12 | no | yes |
+| semver.ts | 0 | 60.31 | yes | no |
+| sourcemap.ts | 0 | 67.29 | yes | no |
 
 **Incomplete census.** Counts are observed lower bounds. Missing or timed-out file results must not be treated as zero sites. See coverage.json and raw per-file logs/status files.
 
