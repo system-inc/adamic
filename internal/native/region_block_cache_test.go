@@ -27,8 +27,10 @@ import (
 // Mutants, each red here: block_give lets every block go (reuse grows with the rounds); the cap test
 // removed from block_give (cap keeps more than 1 MB); adamic_heap_thread_end not calling
 // adamic_region_thread_end (threads leaves blocks unfreed); the AddressSanitizer guard removed
-// (sanitized keeps blocks, and the late read lands in a kept block, which ASan doesn't see); standard
-// blocks from malloc instead of their own mappings (idle holds about 50 MB a thread).
+// (sanitized keeps blocks, and the late read lands in a kept block, which ASan doesn't see). Two read
+// on Codex 6af450b5: the cap test removed reds cap and idle (43,868 KB above at 1 thread); every block
+// from malloc with no cache reds reuse and cap. The cache over malloc's blocks, 02d8feaf, held 50,304
+// KB above at 1 thread, which is why the blocks are mappings.
 const regionBlockCacheHarness = `#define _GNU_SOURCE 1
 #include "adamic.h"
 #include "count.h"
