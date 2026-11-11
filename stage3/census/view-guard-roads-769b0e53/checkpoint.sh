@@ -2,7 +2,7 @@
 set -euo pipefail
 cd /workspace/roads-head
 folder=stage3/census/view-guard-roads-769b0e53
-git add -- "$folder"
+git add -f -- "$folder"
 tree=$(git write-tree)
 parent=769b0e534aa9106cec787a670d0243cd3734c9c0
 if [[ -f /tmp/roads-checkpoint-sha ]]; then parent=$(cat /tmp/roads-checkpoint-sha); fi

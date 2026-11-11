@@ -73,4 +73,4 @@ Box CPU quota: 4 CPUs; memory limit: 16 GiB. Measurement ran alone after setup a
 
 ## Publication
 
-The post-apply checkpoint was pushed to `typescript/view-guard-roads-census-checkpoint` at `0793e330595777c8ff08818d50afb95b45337ab7`. A second checkpoint preserves the stopped run and this coverage diagnosis. The final branch `typescript/view-guard-roads-census` has one report-only commit directly on `769b0e53`, touching only this directory. Neither main nor either source branch is pushed. No force push is used.
+The post-apply checkpoint was pushed to `typescript/view-guard-roads-census-checkpoint` at `0793e330595777c8ff08818d50afb95b45337ab7`. The stopped-run checkpoint at `a890553a448c0febc50efce538fdb6437f3097c8` preserves the coverage diagnosis. The final branch `typescript/view-guard-roads-census` has one report-only commit directly on `769b0e53`, touching only this directory. Neither main nor either source branch is pushed. No force push is used.
