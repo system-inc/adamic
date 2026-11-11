@@ -1,0 +1,90 @@
+{
+  "exact_measured_e": {
+    "changed_source_files": [
+      "src/compiler/scanner.ts",
+      "src/compiler/types.ts"
+    ],
+    "source_file_like_and_documentation_unchanged": true,
+    "bodies_unchanged": true,
+    "exact_bytes": true
+  },
+  "javascript.json": {
+    "identical": true,
+    "before_sha256": "599af477163d25be59838333b5cfeb09e9ca37ba668102d5d81a4cb7edd5afaf",
+    "after_sha256": "599af477163d25be59838333b5cfeb09e9ca37ba668102d5d81a4cb7edd5afaf"
+  },
+  "runtime-exports.json": {
+    "identical": true,
+    "before_sha256": "47e9e8670150b807b127aacab20ec7c03dc85f1afd4a15074d3f3a0f9a0550d0",
+    "after_sha256": "47e9e8670150b807b127aacab20ec7c03dc85f1afd4a15074d3f3a0f9a0550d0"
+  },
+  "witness.json": {
+    "identical": true,
+    "before_sha256": "d7c20fdaeaa9b339d35ece53e43768603fceed43b3d598f4dc11f16d6701de9f",
+    "after_sha256": "d7c20fdaeaa9b339d35ece53e43768603fceed43b3d598f4dc11f16d6701de9f"
+  },
+  "public_api": {
+    "byte_identical": true,
+    "normalized_changes": 0
+  },
+  "lane_api": {
+    "errors": [],
+    "facts": {
+      "reference_declarations": 0,
+      "composed_declarations": 267,
+      "sanctioned_declarations": 267,
+      "added_lines": 349,
+      "removed_lines": 267
+    },
+    "setup_commands": [
+      {
+        "command": [
+          "git",
+          "init",
+          "-q",
+          "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/lane/adapted-tree"
+        ],
+        "child_exit": 0,
+        "stderr": ""
+      },
+      {
+        "command": [
+          "git",
+          "-C",
+          "/workspace/scratch/line-map-typescript",
+          "rev-parse",
+          "--path-format=absolute",
+          "--git-path",
+          "objects"
+        ],
+        "child_exit": 0,
+        "stderr": ""
+      },
+      {
+        "command": [
+          "git",
+          "-C",
+          "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/lane/adapted-tree",
+          "update-ref",
+          "HEAD",
+          "050880ce59e30b356b686bd3144efe24f875ebc8"
+        ],
+        "child_exit": 0,
+        "stderr": ""
+      },
+      {
+        "command": [
+          "git",
+          "-C",
+          "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/lane/adapted-tree",
+          "show",
+          "050880ce59e30b356b686bd3144efe24f875ebc8:tests/baselines/reference/api/typescript.d.ts"
+        ],
+        "child_exit": 0,
+        "stderr": ""
+      }
+    ],
+    "sanctioned_api_sha256": "b6951aa5cfaccfc6a328ed009e8b30c44ae06dd756c58845d169c2e797e646a4",
+    "sanctioned_api_unchanged": true
+  }
+}

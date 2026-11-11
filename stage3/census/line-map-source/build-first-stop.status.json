@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/line-map-first-stop",
+    "./stage3/census/tool"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 117.67963251699996
+}

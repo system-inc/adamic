@@ -1,0 +1,351 @@
+{
+  "status": "pass",
+  "required_statuses": {
+    "before-apply": {
+      "child_exit": 0,
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/line-map-before"
+      ],
+      "source": "original shell wrapper waited and reported child exit"
+    },
+    "final-apply": {
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/line-map-final"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 873.040398825
+    },
+    "guards": {
+      "command": [
+        "node",
+        "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/guard.cjs"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 5.247777644999928
+    },
+    "before-proofs": {
+      "command": [
+        "node",
+        "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/prove.cjs",
+        "/workspace/scratch/line-map-before",
+        "before"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 107.63180918300009
+    },
+    "after-proofs": {
+      "command": [
+        "node",
+        "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/prove.cjs",
+        "/workspace/scratch/line-map-final",
+        "after"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 75.34262038299994
+    },
+    "types": {
+      "command": [
+        "/workspace/scratch/line-map-adamic",
+        "types",
+        "/workspace/scratch/line-map-final/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/line-map-final/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/line-map-final/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/line-map-final/src/compiler/binder.ts",
+        "/workspace/scratch/line-map-final/src/compiler/builder.ts",
+        "/workspace/scratch/line-map-final/src/compiler/builderPublic.ts",
+        "/workspace/scratch/line-map-final/src/compiler/builderState.ts",
+        "/workspace/scratch/line-map-final/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/line-map-final/src/compiler/checker.ts",
+        "/workspace/scratch/line-map-final/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/line-map-final/src/compiler/core.ts",
+        "/workspace/scratch/line-map-final/src/compiler/corePublic.ts",
+        "/workspace/scratch/line-map-final/src/compiler/debug.ts",
+        "/workspace/scratch/line-map-final/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/line-map-final/src/compiler/emitter.ts",
+        "/workspace/scratch/line-map-final/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/line-map-final/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/line-map-final/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/line-map-final/src/compiler/hostErrors.ts",
+        "/workspace/scratch/line-map-final/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/line-map-final/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/line-map-final/src/compiler/parser.ts",
+        "/workspace/scratch/line-map-final/src/compiler/path.ts",
+        "/workspace/scratch/line-map-final/src/compiler/performance.ts",
+        "/workspace/scratch/line-map-final/src/compiler/performanceCore.ts",
+        "/workspace/scratch/line-map-final/src/compiler/program.ts",
+        "/workspace/scratch/line-map-final/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/line-map-final/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/line-map-final/src/compiler/scanner.ts",
+        "/workspace/scratch/line-map-final/src/compiler/semver.ts",
+        "/workspace/scratch/line-map-final/src/compiler/sourcemap.ts",
+        "/workspace/scratch/line-map-final/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/line-map-final/src/compiler/sys.ts",
+        "/workspace/scratch/line-map-final/src/compiler/tracing.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformer.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/module/system.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/line-map-final/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/line-map-final/src/compiler/tsbuild.ts",
+        "/workspace/scratch/line-map-final/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/line-map-final/src/compiler/types.ts",
+        "/workspace/scratch/line-map-final/src/compiler/utilities.ts",
+        "/workspace/scratch/line-map-final/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/line-map-final/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/line-map-final/src/compiler/watch.ts",
+        "/workspace/scratch/line-map-final/src/compiler/watchPublic.ts",
+        "/workspace/scratch/line-map-final/src/compiler/watchUtilities.ts"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 17.960949235000044
+    },
+    "comparison": {
+      "command": [
+        "python3",
+        "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/compare.py"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 12.335076302000061
+    },
+    "before-first-stop": {
+      "command": [
+        "/workspace/scratch/line-map-first-stop",
+        "/workspace/scratch/line-map-before/src/compiler/core.ts",
+        "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/before-first-stop.jsonl"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 44.46670953000012
+    },
+    "after-first-stop": {
+      "command": [
+        "/workspace/scratch/line-map-first-stop",
+        "/workspace/scratch/line-map-final/src/compiler/core.ts",
+        "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/after-first-stop.jsonl"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 56.09949146000008
+    },
+    "mutant-first-stop": {
+      "command": [
+        "/workspace/scratch/line-map-first-stop",
+        "/workspace/scratch/line-map-mutant/src/compiler/core.ts",
+        "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/mutant-first-stop.jsonl"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 50.55398087799995
+    },
+    "stage71-idempotence": {
+      "command": [
+        "node",
+        "stage3/adapt/71-writable-views/adapt.cjs",
+        "/workspace/scratch/line-map-stage71"
+      ],
+      "child_exit": 0,
+      "timed_out": false,
+      "seconds": 17.088286027000095
+    }
+  },
+  "roots": 79,
+  "stops": {
+    "before": [
+      {
+        "roots": [
+          "/workspace/scratch/line-map-before/src/compiler/core.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/line-map-before/src/compiler/tracing.ts:206:67",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "seconds": 22.964982383
+      },
+      {
+        "roots": [
+          "/workspace/scratch/line-map-before/src/compiler/core.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/line-map-before/src/compiler/tracing.ts:206:67",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "seconds": 21.401934713
+      }
+    ],
+    "after": [
+      {
+        "roots": [
+          "/workspace/scratch/line-map-final/src/compiler/core.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/line-map-final/src/compiler/tracing.ts:232:34",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 34.229736106
+      },
+      {
+        "roots": [
+          "/workspace/scratch/line-map-final/src/compiler/core.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/line-map-final/src/compiler/tracing.ts:232:34",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 21.554300654
+      }
+    ],
+    "mutant": [
+      {
+        "roots": [
+          "/workspace/scratch/line-map-mutant/src/compiler/core.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/line-map-mutant/src/compiler/tracing.ts:206:67",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "seconds": 21.744238334
+      },
+      {
+        "roots": [
+          "/workspace/scratch/line-map-mutant/src/compiler/core.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/line-map-mutant/src/compiler/tracing.ts:206:67",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "seconds": 28.602200414
+      }
+    ]
+  },
+  "comparison": {
+    "exact_measured_e": {
+      "changed_source_files": [
+        "src/compiler/scanner.ts",
+        "src/compiler/types.ts"
+      ],
+      "source_file_like_and_documentation_unchanged": true,
+      "bodies_unchanged": true,
+      "exact_bytes": true
+    },
+    "javascript.json": {
+      "identical": true,
+      "before_sha256": "599af477163d25be59838333b5cfeb09e9ca37ba668102d5d81a4cb7edd5afaf",
+      "after_sha256": "599af477163d25be59838333b5cfeb09e9ca37ba668102d5d81a4cb7edd5afaf"
+    },
+    "runtime-exports.json": {
+      "identical": true,
+      "before_sha256": "47e9e8670150b807b127aacab20ec7c03dc85f1afd4a15074d3f3a0f9a0550d0",
+      "after_sha256": "47e9e8670150b807b127aacab20ec7c03dc85f1afd4a15074d3f3a0f9a0550d0"
+    },
+    "witness.json": {
+      "identical": true,
+      "before_sha256": "d7c20fdaeaa9b339d35ece53e43768603fceed43b3d598f4dc11f16d6701de9f",
+      "after_sha256": "d7c20fdaeaa9b339d35ece53e43768603fceed43b3d598f4dc11f16d6701de9f"
+    },
+    "public_api": {
+      "byte_identical": true,
+      "normalized_changes": 0
+    },
+    "lane_api": {
+      "errors": [],
+      "facts": {
+        "reference_declarations": 0,
+        "composed_declarations": 267,
+        "sanctioned_declarations": 267,
+        "added_lines": 349,
+        "removed_lines": 267
+      },
+      "setup_commands": [
+        {
+          "command": [
+            "git",
+            "init",
+            "-q",
+            "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/lane/adapted-tree"
+          ],
+          "child_exit": 0,
+          "stderr": ""
+        },
+        {
+          "command": [
+            "git",
+            "-C",
+            "/workspace/scratch/line-map-typescript",
+            "rev-parse",
+            "--path-format=absolute",
+            "--git-path",
+            "objects"
+          ],
+          "child_exit": 0,
+          "stderr": ""
+        },
+        {
+          "command": [
+            "git",
+            "-C",
+            "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/lane/adapted-tree",
+            "update-ref",
+            "HEAD",
+            "050880ce59e30b356b686bd3144efe24f875ebc8"
+          ],
+          "child_exit": 0,
+          "stderr": ""
+        },
+        {
+          "command": [
+            "git",
+            "-C",
+            "/workspace/scratch/line-map-evidence/stage3/census/line-map-source/lane/adapted-tree",
+            "show",
+            "050880ce59e30b356b686bd3144efe24f875ebc8:tests/baselines/reference/api/typescript.d.ts"
+          ],
+          "child_exit": 0,
+          "stderr": ""
+        }
+      ],
+      "sanctioned_api_sha256": "b6951aa5cfaccfc6a328ed009e8b30c44ae06dd756c58845d169c2e797e646a4",
+      "sanctioned_api_unchanged": true
+    }
+  }
+}

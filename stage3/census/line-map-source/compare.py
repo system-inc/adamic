@@ -1,9 +1,25 @@
-import difflib, hashlib, importlib.util, json, pathlib, subprocess, sys
+import difflib, hashlib, importlib.util, json, pathlib, shutil, subprocess, sys
 sys.dont_write_bytecode = True
 out = pathlib.Path(__file__).resolve().parent
 repo = pathlib.Path('/workspace/adamic')
 before, after = out/'before', out/'after'
 result = {}
+base_tree = pathlib.Path('/workspace/scratch/line-map-before')
+final_tree = pathlib.Path('/workspace/scratch/line-map-final')
+base_files = {p.relative_to(base_tree): p for p in (base_tree/'src').rglob('*') if p.is_file()}
+final_files = {p.relative_to(final_tree): p for p in (final_tree/'src').rglob('*') if p.is_file()}
+assert base_files.keys() == final_files.keys()
+changed = [str(name) for name in sorted(base_files) if base_files[name].read_bytes() != final_files[name].read_bytes()]
+assert changed == ['src/compiler/scanner.ts','src/compiler/types.ts'], changed
+pins = json.loads((repo/'stage3/adapt/71-writable-views/line-map-source.json').read_text())
+old = (base_tree/'src/compiler/types.ts').read_bytes().decode()
+expected = old.replace(pins['sourceFileLike'], pins['lineMapSource']+'\r\n\r\n'+pins['sourceFileLike'])
+assert (final_tree/'src/compiler/types.ts').read_bytes().decode() == expected
+old = (base_tree/'src/compiler/scanner.ts').read_bytes().decode()
+expected = old.replace('    type LineAndCharacter,','    type LineAndCharacter, type LineMapSource,').replace(pins['starts']['before'],pins['starts']['after']).replace(pins['position']['before'],pins['position']['after'])
+assert (final_tree/'src/compiler/scanner.ts').read_bytes().decode() == expected
+result['exact_measured_e'] = dict(changed_source_files=changed,source_file_like_and_documentation_unchanged=True,bodies_unchanged=True,exact_bytes=True)
+
 for name in ['javascript.json','runtime-exports.json','witness.json']:
     a, b = (before/name).read_bytes(), (after/name).read_bytes()
     result[name] = dict(identical=a==b, before_sha256=hashlib.sha256(a).hexdigest(), after_sha256=hashlib.sha256(b).hexdigest())
@@ -49,4 +65,5 @@ result['lane_api']=dict(errors=errors,facts=facts,setup_commands=commands,sancti
 (out/'comparison.json').write_text(json.dumps(result,indent=2)+'\n')
 assert not errors, errors
 assert result['lane_api']['sanctioned_api_unchanged']
+shutil.rmtree(tree/'.git')
 print(json.dumps(result,indent=2))

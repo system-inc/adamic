@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/line-map-adamic",
+    "./cmd/adamic"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 116.66602930299996
+}

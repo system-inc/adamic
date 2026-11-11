@@ -1,0 +1,9 @@
+{
+  "child_exit": 0,
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "/workspace/scratch/line-map-before"
+  ],
+  "source": "original shell wrapper waited and reported child exit"
+}

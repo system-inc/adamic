@@ -5,6 +5,7 @@ const ts = require(repo + '/stage3/api/node_modules/typescript');
 const esbuild = require(deps + '/esbuild');
 const root = process.argv[2], label = process.argv[3], out = path.join(__dirname, label);
 fs.mkdirSync(out, {recursive:true});
+if (!fs.existsSync(path.join(out,'node_modules'))) fs.symlinkSync(deps,path.join(out,'node_modules'),'dir');
 const write = (name, obj) => fs.writeFileSync(path.join(out,name), JSON.stringify(obj,null,2)+'\n');
 const hash = text => crypto.createHash('sha256').update(text).digest('hex');
 const names = ['scanner.ts','tracing.ts','watch.ts','transformers/jsx.ts','transformers/declarations.ts','executeCommandLine.ts','emitter.ts','utilities.ts','program.ts','parser.ts'];
@@ -14,7 +15,7 @@ const emitted = names.map(name => {
  const dest = path.join(out,'javascript',name.replace(/\.ts$/,'.js'));fs.mkdirSync(path.dirname(dest),{recursive:true});fs.writeFileSync(dest,javascript);
  return {name,bytes:Buffer.byteLength(javascript),sha256:hash(javascript)};
 }); write('javascript.json',emitted);
-const built = esbuild.buildSync({entryPoints:[path.join(root,'src/typescript/typescript.ts')],bundle:true,platform:'node',format:'cjs',write:false,logLevel:'silent'}).outputFiles[0].contents;
+const built = esbuild.buildSync({entryPoints:[path.join(root,'src/typescript/typescript.ts')],bundle:true,nodePaths:[deps],platform:'node',format:'cjs',write:false,logLevel:'silent'}).outputFiles[0].contents;
 fs.writeFileSync(path.join(out,'typescript.cjs'),built);
 const runtime = require(path.join(out,'typescript.cjs'));
 write('runtime-exports.json',Object.keys(runtime).sort());

@@ -1,0 +1,12 @@
+{
+  "source_tree": "/workspace/scratch/line-map-final",
+  "mutant_tree": "/workspace/scratch/line-map-mutant",
+  "changed_files": [
+    "src/compiler/scanner.ts"
+  ],
+  "removed": "/** @internal */\r\nexport function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;\r\n",
+  "before_sha256": "ce1353745d5c22c89aac2d1fe4b2f3f73e4717d933064cede79b866aa1546df2",
+  "after_sha256": "dbe17deb0cc7de749d8cb97bfca2e16accc76cb01c2bf6a452df601b6c5ccdf7",
+  "public_overload_first": true,
+  "implementation_and_getLineStarts_still_LineMapSource": true
+}
