@@ -12,10 +12,13 @@ import (
 // (NaN and a negative warn once a process, an overflow every time), every kind with the hint line
 // once, the warning's place from main, a timer's callback and a promise job, and delays inside the
 // range that don't warn. Their warning lines differ only in the process id, which disagreement's
-// timeoutWarningLine rule alone makes a token.
+// timeoutWarningLine rule alone makes a token. list_order and fresh_start hold Node's timer order under
+// a busy loop: one duration's due timers before the next list's, and a start read at every setTimeout
+// (#a6yb7d1).
 var timerSourceFixtures = []string{"forwarded", "fewer_parameters", "clear_then_set", "order", "callback_throw", "clear_kinds",
 	"delay_nan", "delay_negative", "delay_overflow", "delay_nan_twice", "delay_negative_twice", "delay_overflow_twice", "delay_kinds",
-	"delay_order_main", "delay_order_callback", "delay_order_job", "delay_computed"}
+	"delay_order_main", "delay_order_callback", "delay_order_job", "delay_computed",
+	"list_order", "fresh_start"}
 
 func init() {
 	for _, name := range timerSourceFixtures {
