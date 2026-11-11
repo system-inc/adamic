@@ -29,7 +29,7 @@ lines=['# Paired object-key Map census (ff5eddz)','',
 'Required setup: `source /workspace/adamic-tools/env.sh`, `bash cloud/setup.sh`, `npm ci --prefix stage3/api`, and `ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/ff5eddz-typescript`. See pins.json, source-names.json.gz (or .json), binary hashes, build.sh, run.sh and the logs beside this report. The head source worktree shares the exact pinned cohere dependency checkout. The source ledger records hashes and stock TypeScript declaration names.','',
 'Tracing loads the entire adapted compiler directory with `LATENT_FULL=1`, exact `LATENT_ONLY_FILE` and `LATENT_ASSERT_NO_OUTPUT=1`. Entry uses the meter entry overlay rooted at `src/tsc/tsc.ts`, `LATENT_FULL=0`, and the same output guard. These are observation ledgers, not successful compilations or exhaustive blocker lists. Full-mode rollback can expose context-sensitive findings after a failed initializer. No backend runs.','',
 'Both tracing headers report `checker_rejected: false` with zero diagnostics. The ordinary latent overlay retains its historical `measured on a checker-rejected program` text label; the explicit checker result is clean. The entry headers likewise report checker-clean, with 81 implementation sources.','',
-'Pairing uses the unchanged `stage3/census/pair` tool with stock TypeScript 6.0.3 on identical adapted bytes. Raw findings deduplicate kind, source identity, exact reason and text; distinct reads normalize contiguous access chains. Changed first stops in previously blocked units are listed separately from regressions. Full raw streams retain duplicate attempt contexts.','',
+'Pairing uses the unchanged `stage3/census/pair` tool with stock TypeScript 6.0.3 on identical adapted bytes. Raw findings deduplicate kind, source identity, exact reason and text; distinct reads normalize contiguous access chains. Changed first stops in previously blocked units are listed separately from regressions. Full raw streams retain duplicate attempt contexts. A later lowering stop in an already-blocked unit is newly exposed coverage, classified separately as requested; its site was not previously examined successfully.','',
 '## Resources','',
 'Peak RSS is the child process maximum from Linux wait4, in KiB. Elapsed time is monotonic wall time around that child. Measurements run sequentially after setup and builds.','',
 '| Run | Child exit | Seconds | Peak RSS KiB |','| --- | ---: | ---: | ---: |']
@@ -75,7 +75,16 @@ for mode in ('tracing','entry'):
   lines.append('- '+esc(finding(r['finding']))+'; attempt '+esc(short(r['finding'].get('unit',''))))
  if not delta['distinct_reads']['new_sites']:lines.append('None.')
  lines+=['',f'Complete cleared/new/changed reasons and sites: `{mode}-delta.json` (or `.gz`) and `{mode}-pair.md`.']
+lines+=['','## Raw streams and pair ledgers','']
+for mode in ('tracing','entry'):
+ for side in ('parent','head'):
+  name=f'{mode}-{side}.jsonl'
+  if not (out/name).exists():name+='.gz'
+  lines.append(f'- [{name}]({name})')
+ name=f'{mode}-delta.json'
+ if not (out/name).exists():name+='.gz'
+ lines.append(f'- [{name}]({name})')
 lines+=['','## Operational notes','',
-'The first apply launch did not start its child because `/usr/bin/time` was absent (wrapper exit 127); apply was rerun once with measure.py. All census logs go directly to files. Files over 1 MB are gzip-compressed. Checkpoints were pushed after apply and each measurement, without force pushes. The final report commit has only the requested evidence directory and one parent at 73c04748.']
+'Resource measurements use Linux wait4 because `/usr/bin/time` is absent. All census logs go directly to files. Files over 1 MB are gzip-compressed. Checkpoints were pushed after apply and each measurement, without force pushes. The final report commit has only the requested evidence directory and one parent at 73c04748.']
 (out/'REPORT.md').write_text('\n'.join(lines)+'\n')
 print(out/'REPORT.md')

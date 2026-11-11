@@ -2,7 +2,7 @@
 set -euo pipefail
 cd /workspace/adamic
 out=stage3/census/map-object-keys-63979123
-find "$out" -type f -size +1M ! -name '*.gz' -exec gzip {} \;
+find "$out" -type f -size +1000000c ! -name '*.gz' -exec gzip {} \;
 git add -f "$out"
 tree=$(git write-tree)
 sha=$(printf '%s\n' "Paired object-key Map census: $1" | git commit-tree "$tree" -p 73c047484f82f6f6546ff589214f3a0b7c8db9fb)
