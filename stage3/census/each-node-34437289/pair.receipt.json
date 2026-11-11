@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/pair/pair.py",
+    "/workspace/scratch/each-node-8n7eet3/entry-parent-mapped.jsonl",
+    "/workspace/scratch/each-node-8n7eet3/entry-head.jsonl",
+    "/workspace/scratch/each-node-8n7eet3/adapted-head",
+    "--typescript",
+    "/workspace/scratch/each-node-8n7eet3/head/stage3/api/node_modules/typescript",
+    "--json",
+    "/workspace/scratch/each-node-8n7eet3/pair-delta.json",
+    "--report",
+    "/workspace/scratch/each-node-8n7eet3/pair-report.md"
+  ],
+  "cwd": "/workspace/scratch/each-node-8n7eet3/head",
+  "exit": 0,
+  "wall_seconds": 8.311875581741333
+}
