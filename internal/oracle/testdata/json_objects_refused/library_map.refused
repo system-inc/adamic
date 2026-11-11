@@ -1,0 +1,1 @@
+internal/oracle/testdata/json_objects_refused/library_map.a:7:28: stage 0 can't lower JSON.stringify a value that can reach Map<string, number>, a library value whose own fields aren't what Node prints yet
