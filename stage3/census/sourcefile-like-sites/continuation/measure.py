@@ -1,6 +1,6 @@
 import os,sys,json,pathlib,subprocess,time,signal,gzip,shutil
 out=pathlib.Path(__file__).resolve().parents[1]
-def run(label,root,names,bound=1500,checkpoint=False):
+def run(label,root,names,bound=1500,checkpoint=False,concurrency=1):
  dest=out/'continuation'/label/'raw';dest.mkdir(parents=True,exist_ok=True)
  for name in names:
   stem=name.replace('/','__').removesuffix('.ts');artifact=lambda suffix:dest/(stem+suffix)
@@ -22,7 +22,7 @@ def run(label,root,names,bound=1500,checkpoint=False):
    for line in times.read_text().splitlines():
     try:progress.append(json.loads(line))
     except ValueError:pass
-  record=dict(file=name,command=command,child_exit=child.returncode,wall_seconds=time.monotonic()-start,timed_out=timed_out,bound_seconds=bound,max_concurrent_files=1,completed_timing_units=len(progress),last_timing_units=progress[-5:])
+  record=dict(file=name,command=command,child_exit=child.returncode,wall_seconds=time.monotonic()-start,timed_out=timed_out,bound_seconds=bound,max_concurrent_files=concurrency,completed_timing_units=len(progress),last_timing_units=progress[-5:])
   status.write_text(json.dumps(record,indent=2)+'\n')
   for suffix in ['.jsonl','.times.jsonl','.log']:
    p=artifact(suffix)

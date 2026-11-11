@@ -1,0 +1,90 @@
+[
+  {
+    "where": "emitter.ts:1444:66",
+    "phase": "refusal_scan",
+    "callee": "getLineStarts",
+    "arg": 0,
+    "fn": "getCurrentLineMap",
+    "expression": "getLineStarts(Debug.checkDefined(currentSourceFile))"
+  },
+  {
+    "where": "emitter.ts:3961:112",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "emitJsxExpression",
+    "expression": "getLineAndCharacterOfPosition(currentSourceFile, node.pos)"
+  },
+  {
+    "where": "emitter.ts:3961:180",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "emitJsxExpression",
+    "expression": "getLineAndCharacterOfPosition(currentSourceFile, node.end)"
+  },
+  {
+    "where": "emitter.ts:6233:96",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "emitPos",
+    "expression": "getLineAndCharacterOfPosition(sourceMapSource, pos)"
+  },
+  {
+    "where": "executeCommandLine.ts:109:41",
+    "phase": "refusal_scan",
+    "callee": "getLineStarts",
+    "arg": 0,
+    "fn": "<anonymous@107>",
+    "expression": "getLineStarts(file)"
+  },
+  {
+    "where": "tracing.ts:206:67",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "getLocation",
+    "expression": "getLineAndCharacterOfPosition(file, node!.pos)"
+  },
+  {
+    "where": "tracing.ts:207:65",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "getLocation",
+    "expression": "getLineAndCharacterOfPosition(file, node!.end)"
+  },
+  {
+    "where": "transformers/declarations.ts:1264:70",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "visitDeclarationSubtree",
+    "expression": "getLineAndCharacterOfPosition(currentSourceFile, input.pos)"
+  },
+  {
+    "where": "transformers/declarations.ts:1264:139",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "visitDeclarationSubtree",
+    "expression": "getLineAndCharacterOfPosition(currentSourceFile, input.end)"
+  },
+  {
+    "where": "transformers/jsx.ts:359:63",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "visitJsxOpeningLikeElementOrFragmentJSX",
+    "expression": "getLineAndCharacterOfPosition(originalFile, location.pos)"
+  },
+  {
+    "where": "watch.ts:249:60",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "<anonymous@241>",
+    "expression": "getLineAndCharacterOfPosition(diagnosticForFileName.file!, diagnosticForFileName.start!)"
+  }
+]

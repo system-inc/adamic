@@ -2,25 +2,25 @@
 
 Measured main: `d690f276749f91e6b36fe3a9726a5a453fcd7d39`. Upstream TypeScript 6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Report only; no compiler or adaptation changes.
 
-Attempted 79 of 79 compiler files; 73 completed full-mode streams. Physical sites: 7; distinct finding/phase/unit observations: 7.
+Attempted 79 of 79 compiler files; 74 completed full-mode streams. Physical sites: 11; distinct finding/phase/unit observations: 11.
 
-**Counts are lower bounds.** Incomplete streams: `checker.ts`, `emitter.ts`, `parser.ts`, `program.ts`, `scanner.ts`, `utilities.ts`.
+**Counts are lower bounds.** Incomplete streams: `checker.ts`, `parser.ts`, `program.ts`, `scanner.ts`, `utilities.ts`.
 
 ## By callee
 
 | Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Method-only candidate sites for road 2 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `getLineAndCharacterOfPosition` | 6 | 4 | 73 | no | 6 |
-| `getLineStarts` | 1 | 1 | 0 | no | 1 |
+| `getLineAndCharacterOfPosition` | 9 | 5 | 73 | no | 9 |
+| `getLineStarts` | 2 | 2 | 0 | no | 2 |
 | `getPositionOfLineAndCharacter` | 0 | 0 | 0 | yes | 0 |
 
-Reason census: 7 site(s): optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields.
+Reason census: 10 site(s): optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; 1 site(s): optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceMapSource, which can hide fields.
 
 First-stop attribution comes from `typescript/next-stops-c504dd8f` at `fe08a0d47a3d28f646db181ac9e8456e5c60885f`, file `stage3/census/next-stops-c504dd8f/grouped-first-stops.json`, copied as prior-first-stops.json. It names tracing.ts:206:67 for 73 roots. Its other six roots have unrelated outcomes. First-stop roots count only sites explicitly named in that evidence; it does not predict their next blocker.
 
 ## Initial body-only road 2 hypothesis
 
-Body inspection identifies 7 of 7 observed sites whose optional-method requirement would be removed by the two parameter changes. This was the original report hypothesis, not a measured clearance result. It does not establish that the replacement lineMap view is legal. The follow-up measurements below, when present, take precedence.
+Body inspection identifies 11 of 11 observed sites whose optional-method requirement would be removed by the two parameter changes. This was the original report hypothesis, not a measured clearance result. It does not establish that the replacement lineMap view is legal. The follow-up measurements below, when present, take precedence.
 
 The exact proposal changes only getLineAndCharacterOfPosition and getLineStarts. Their bodies and the functions receiving their source-file value use only text and lineMap. getLineStarts reads lineMap, writes the cache when absent, and passes only text to computeLineStarts. getLineAndCharacterOfPosition passes the value only to getLineStarts, then passes a number array to computeLineAndCharacterOfPosition and computeLineOfPosition. These paths never inspect the optional method.
 
@@ -36,6 +36,10 @@ Locations are in the adapted compiler. Body-inventory line numbers in the next t
 
 | Location | Phase(s) | Enclosing function | Receiving callee / view | Value use | Method-only candidate | Reason |
 | --- | --- | --- | --- | --- | --- | --- |
+| emitter.ts:1444:66 | refusal_scan | createPrinter / getCurrentLineMap | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -&gt; computeLineStarts | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| emitter.ts:3961:112 | refusal_scan | createPrinter / emitJsxExpression | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| emitter.ts:3961:180 | refusal_scan | createPrinter / emitJsxExpression | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| emitter.ts:6233:96 | refusal_scan | createPrinter / emitPos | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceMapSource, which can hide fields |
 | executeCommandLine.ts:109:41 | refusal_scan | countLines / &lt;anonymous@107&gt; | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -&gt; computeLineStarts | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 | tracing.ts:206:67 | refusal_scan | getLocation | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 | tracing.ts:207:65 | refusal_scan | getLocation | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
@@ -89,7 +93,7 @@ This is a latent observational census, not an exhaustive proof of all runtime pa
 | corePublic.ts | 0 | 25.18 | yes | no |
 | debug.ts | 0 | 50.04 | yes | no |
 | diagnosticInformationMap.generated.ts | 0 | 28.94 | yes | no |
-| emitter.ts | -15 | 300.12 | no | yes |
+| emitter.ts | 0 | 479.19 | yes | yes |
 | executeCommandLine.ts | 0 | 133.88 | yes | no |
 | expressionToTypeNode.ts | 0 | 109.09 | yes | no |
 | factory/baseNodeFactory.ts | 0 | 23.66 | yes | no |

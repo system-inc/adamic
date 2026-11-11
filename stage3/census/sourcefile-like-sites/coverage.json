@@ -321,19 +321,55 @@
     "command": [
       "/workspace/scratch/baobab-latent",
       "/workspace/scratch/baobab-adapted/src/compiler",
-      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/emitter.jsonl"
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/baseline/raw/emitter.jsonl"
     ],
-    "child_exit": -15,
-    "wall_seconds": 300.1164479160002,
+    "child_exit": 0,
+    "wall_seconds": 479.1904887510009,
+    "timed_out": false,
+    "bound_seconds": 1500,
+    "max_concurrent_files": 1,
+    "completed_timing_units": 423,
+    "last_timing_units": [
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts:6359:1",
+        "wall_seconds": 0.111531929,
+        "cpu_seconds": 0.11199400000009518
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts:6360:1",
+        "wall_seconds": 0.102364932,
+        "cpu_seconds": 0.10267099999998663
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts:6362:1",
+        "wall_seconds": 0.19013465,
+        "cpu_seconds": 0.19074999999998
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts:6366:1",
+        "wall_seconds": 0.20105717,
+        "cpu_seconds": 0.20193099999994502
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts:6370:1",
+        "wall_seconds": 0.105291422,
+        "cpu_seconds": 0.10578899999995883
+      }
+    ],
+    "stream": "continuation/baseline/raw/emitter.jsonl.gz",
     "over_five_minutes": true,
-    "piece": 2,
-    "max_concurrent_files": 2,
-    "stream": "raw/emitter.jsonl",
-    "recorded_files": [],
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/emitter.ts"
+    ],
     "checker_rejected": false,
     "diagnostic_count": 0,
     "full_header": true,
-    "relation_trailer": false
+    "relation_trailer": true
   },
   {
     "file": "executeCommandLine.ts",
