@@ -12,6 +12,11 @@
             "pattern": "stage3/performance/evidence/**",
             "reason": "Recorded performance evidence, including third-party project configs; an input.",
             "kind": "input"
+        },
+        {
+            "pattern": "stage3/fixtures/records/input-fixtures/**",
+            "reason": "Recorded CLI input fixtures, tsc's inputs as given.",
+            "kind": "input"
         }
     ],
     "go": {
@@ -20,6 +25,12 @@
                 "error",
                 {
                     "readsFile": "cloud/fast-gate/executors.txt"
+                }
+            ],
+            "cohere-go/concurrency-no-buffered-wait-delay": [
+                "error",
+                {
+                    "cure": "github.com/system-inc/adamic/internal/childguard"
                 }
             ]
         }
