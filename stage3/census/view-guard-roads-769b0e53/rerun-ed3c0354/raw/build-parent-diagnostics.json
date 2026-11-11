@@ -1,0 +1,23 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-C",
+    "/workspace/roads-parent",
+    "-buildvcs=false",
+    "-overlay=/workspace/roads-parent-diag-overlay/overlay.json",
+    "-o",
+    "/workspace/roads-parent-diag-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace",
+  "child_exit": 0,
+  "elapsed_seconds": 56.4642899340015,
+  "peak_rss_kib": 1467404,
+  "user_seconds": 70.813582,
+  "system_seconds": 13.063998,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "GOMAXPROCS": "2"
+  }
+}

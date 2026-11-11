@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/workspace/roads-parent-diag-census",
+    "/workspace/roads-guard-control/identity.ts",
+    "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/rerun-ed3c0354/raw/parent-identity-mutant-normal.jsonl"
+  ],
+  "cwd": "/workspace",
+  "child_exit": 0,
+  "elapsed_seconds": 0.1629226650002238,
+  "peak_rss_kib": 32372,
+  "user_seconds": 0.121599,
+  "system_seconds": 0.054565999999999996,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMAXPROCS": "2",
+    "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/rerun-ed3c0354/raw/parent-identity-mutant-records.jsonl",
+    "LATENT_FULL": "0",
+    "ROADS_GUARD_MUTANT": "1"
+  }
+}
