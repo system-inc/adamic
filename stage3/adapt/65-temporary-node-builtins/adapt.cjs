@@ -30,7 +30,7 @@ const plans = ['core.ts', 'performanceCore.ts', 'tracing.ts'].map(name => {
     }
     if (name === 'tracing.ts') {
         after = once(after, 'let fs: typeof import("fs");', 'let fs: { existsSync(path: string): boolean; mkdirSync(path: string, options: { recursive: boolean }): string | undefined; openSync(path: string, flags: string): number; writeSync(fd: number, data: string): number; closeSync(fd: number): void; writeFileSync(path: string, data: string): void; };');
-        if (!after.includes('declare const require:')) after += '\ndeclare const require: (specifier: "fs") => any;\ndeclare const process: { pid: number };\n';
+        if (!after.includes('declare const require:')) after += '\ndeclare const require: (specifier: "fs") => any;\ndeclare const process: { readonly pid: number };\n';
     }
     unchanged(before, after);
     return {file, before, after};

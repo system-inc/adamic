@@ -3,11 +3,13 @@ Temporary: comes out when Adamic accepts require with a literal specifier and No
 This replaces the previous 65 process-only adaptation. All edits erase: runtime
 require calls, their lazy evaluation, exceptions and process tests stay intact.
 The local process view names only nextTick and browser, as adaptation 30 already
-did; tracing adds pid:number. fs names the six synchronous operations tsc uses.
-The perf_hooks assertion names only its optional Performance member. Local
-ambient require declarations return explicit any, admitted by current main,
-without inventing a runtime loader. This clears checker dependencies, not native
-builtin lowering. No tracing or performance fallback is added.
+did; tracing adds pid as a read only number, as Node's type declares it, so the
+tracing.ts host-binding row (internal/load/host_bindings.json) matches it. fs
+names the six synchronous operations tsc uses. The perf_hooks assertion names
+only its optional Performance member. Local ambient require declarations return
+explicit any, admitted by current main, without inventing a runtime loader. This
+clears checker dependencies, not native builtin lowering. No tracing or
+performance fallback is added.
 
 The adapter checks TypeScript 6.0.3, exact source sites, and byte-identical
 emitted JavaScript (with and without comments) before writing any file.
