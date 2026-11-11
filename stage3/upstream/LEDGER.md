@@ -720,3 +720,11 @@ call; leaving it would violate upstream's noUnusedLocals.
   differences, with positive Node controls. See the adaptation PROOF.md.
 
 Adamic, task 8n7eet3, Nov 10 22:01Z, site 2: 99-correctness-core-each-node is JavaScript-changing. assertEachNode's test no longer receives every's index, and a throw from test has no every frame. The exact ruled direct const for-of loop stays inside the existing Normal gate; message, lazy callback and stack mark stay byte for byte. Whole-lane second-argument exposure count 0 over 1,086,412 calls with test defined, 398 units and 797 processes; throws from test 0; two-parameter control 1 before and 1 after. Road (b) recognizes only the exact finished owner and still refuses drift. Main still meets the overload-1 callback contract in both forms; the Optimizer pairing remains required. No upstream issue filed.
+
+- ff5eddz, adaptation 47 amendment: startTracing's three metadata literals build
+  from explicit reads of the fresh local meta where upstream spread it after a
+  field. They retain the same keys, in the same order, with the same values;
+  the browser record's timeline category retains the position of meta's cat.
+  The meta declaration and its single timestamp() call remain unchanged.
+  The newly visible JSON.stringify object references stop at 104:46 belongs
+  to Compiler's #d9ep7de head 1; this amendment does not remove it.

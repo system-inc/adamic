@@ -1,0 +1,24 @@
+interface Holder { f: string | (() => string); }
+interface OptionalHolder { f?: string | (() => string); }
+
+function callable(value: string): () => string {
+    return () => value;
+}
+
+function show(o: Holder): void {
+    const { f } = o;
+    if (typeof f === 'function') console.log(f());
+    else console.log(f);
+}
+
+function showOptional(o: OptionalHolder): void {
+    const { f = () => 'd' } = o;
+    if (typeof f === 'function') console.log(f());
+    else console.log(f);
+}
+
+show({ f: 'string' });
+show({ f: callable('function') });
+showOptional({});
+showOptional({ f: 'optional-string' });
+showOptional({ f: callable('optional-function') });

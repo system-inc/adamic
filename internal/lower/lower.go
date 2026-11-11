@@ -299,6 +299,11 @@ type lowering struct {
 	// graphPairs are the Map entries sites, each with its pair's tuple type, which graphAdoptionBoundary
 	// reads when a graph program holds a pair as some other type its plan can't name (#dps0kp6).
 	graphPairs []graphPairSite
+	// graphNodeArrays are the NodeArray literals, each with its NodeArray type, which
+	// graphAdoptionBoundary reads: native construction never adopts one (#djwd1t2, row 3). A site is
+	// recorded before its literal lowers, so one whose literal then fails, or that a rolled-back
+	// speculative lowering made, stays listed; that can only over-stop, which fails closed.
+	graphNodeArrays []graphNodeArraySite
 	// dynamicKeyedSite is the first run-time key read (reflectGet or viewKeyedRead), where
 	// checkDynamicKeyedGetters says why a class getter keeps the program from reading by a run-time key.
 	dynamicKeyedSite *ast.Node

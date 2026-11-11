@@ -259,8 +259,9 @@ console.log(host());
 // Memory's rows on #qk8rztp S3b), and lowering reaches none of them as one written in place: a
 // callee the call can't place by its body (a comma, a conditional's arm, a variable, an optional
 // call), a named one, a generic one, one where no closure can be its carrier (a module's top level, a
-// function that suspends, another written in place), its call used as a value, destructured or handed
-// to a nested function, a collect helper that would be handed its carrier, and arguments in its body.
+// function that suspends, another written in place), its call used as a value or destructured, a
+// collect helper that would be handed its carrier, and arguments in its body. Handed to a nested
+// function's one-read Iterable parameter, it lowers since S3c-1 (generators_nested_callee_test.go).
 // Each row's words are a part of its stop, so a row that stops for another reason goes red too.
 // Mutants: calledInPlace taking an optional call, and the optional call's row stops as a generator
 // called optionally; calledInPlace climbing a comma, and the comma's row stops in the written-in-place
@@ -297,7 +298,6 @@ func TestInPlaceGeneratorRoadsAreNotYet(t *testing.T) {
 		{"stored", host("const held = (function* (): " + kept + " { yield 1; })();\nconsole.log(String(held.next().value));"), inPlace},
 		{"passed as an object", "function take(source: object): number { return source === undefined ? 0 : 1; }\n" + host("console.log(String(take((function* (): "+kept+" { yield 1; })())));"), inPlace},
 		{"returned", "function outer(): " + kept + " {\nreturn (function* (): " + kept + " { yield 1; })();\n}\n" + over("outer()") + "\n", inPlace},
-		{"into a nested function's Iterable parameter (S3c)", host("function inner(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(inner((function* (): " + kept + " { yield 1; })())));"), inPlace},
 		{"destructured", host("const [first] = (function* (): " + kept + " { yield 1; })();\nconsole.log(String(first));"), "a generator function consumed by destructuring"},
 		// A plain function* infers a void TReturn, which a stepping consumer never reads, so the void
 		// rules let these through to lowering's stop (Adamic on #qk8rztp S3b): NotYet, never Refused.

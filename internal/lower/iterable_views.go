@@ -269,7 +269,9 @@ func (l *lowering) checkIterableViews() error {
 	// A parameter's hand views share its origins, since each proves the parameter's read, so the
 	// first a generator feeds rewrites every next on it, and the rest find it done.
 	handed := map[int]bool{}
-	graph := newAllocationFlowGraph(l.result)
+	// The proof's own graph, which lets a nested function only ever called directly take its
+	// parameters from its calls, as a module function does (onlyCalledDirectly, #qk8rztp S3c-1).
+	graph := newIterableViewFlowGraph(l.result)
 	graph.entry = func(value ir.Expression) int {
 		switch value := value.(type) {
 		case ir.CollectionIterator:
@@ -348,10 +350,12 @@ func (l *lowering) checkIterableViews() error {
 
 // checkGeneratorArguments holds every generator's call a call hands into an Iterable<T> parameter
 // to the one-read rule, the rest of Adamic's ruling on #qk8rztp S2c-1 (condition 3) and Lower's (a):
-// the parameter belongs to the one body the call calls, which doesn't suspend or read arguments, no
-// closure captures it, nothing assigns it, and it is read exactly once in the lowered program, as a
-// view's for-of over it. The reads are counted in the IR, so a default that names the parameter, a
-// capture or a second for-of counts as surely as a read written out; a type position reads nothing.
+// the parameter belongs to the one body the call calls (iterableCallTarget: a module function's
+// ir.Call, or since S3c-1 a nested callee's ir.CallClosure), which doesn't suspend or read
+// arguments, no closure captures it, nothing assigns it, and it is read exactly once in the lowered
+// program, as a view's for-of over it. The reads are counted in the IR, so a default that names the
+// parameter, a capture or a second for-of counts as surely as a read written out; a type position
+// reads nothing.
 // A parameter typed `Iterable<T> | undefined` is admitted too, held as a nullable object, and its
 // undefined tests (undefinedTestOf) are tests, not reads, since they never step or hand on what the
 // slot holds (#qk8rztp S2c-3, tsc's firstOrUndefinedIterator). With one read and a direct call,
@@ -369,12 +373,20 @@ func (l *lowering) checkGeneratorArguments() error {
 		if failed != nil {
 			return false
 		}
-		if call, isCall := node.(ir.Call); isCall {
-			for position, argument := range call.Arguments {
-				if of, isIterable := argument.(ir.IterableOf); isIterable {
-					if failed = l.generatorParameter(call, position, of, views); failed != nil {
-						return false
-					}
+		var call ir.Expression
+		var arguments []ir.Expression
+		switch made := node.(type) {
+		case ir.Call:
+			call, arguments = made, made.Arguments
+		case ir.CallClosure:
+			// A nested callee's call, a sibling's, the parent's or one from a closure in its scope
+			// (#qk8rztp S3c-1).
+			call, arguments = made, made.Arguments
+		}
+		for position, argument := range arguments {
+			if of, isIterable := argument.(ir.IterableOf); isIterable {
+				if failed = l.generatorParameter(call, position, of, views); failed != nil {
+					return false
 				}
 			}
 		}
@@ -410,19 +422,15 @@ func iterableViewRead(iterated ir.Expression) (ir.Read, bool) {
 // never by a for-of, which checkIterableViews has stopped beside a next already. The count runs on
 // S2c-2a's CallClosure, before handView rewrites it, and every other rule here holds unchanged: with
 // no read but its steps and its tests, nothing but the function's own nexts can name the generator.
-func (l *lowering) generatorParameter(call ir.Call, position int, of ir.IterableOf, views map[int]int) error {
+func (l *lowering) generatorParameter(call ir.Expression, position int, of ir.IterableOf, views map[int]int) error {
 	if of.Site < 1 || of.Site > len(l.generatorArguments) {
 		return fmt.Errorf("lower: compiler bug: a generator seen as an object with no site")
 	}
 	where := l.generatorArguments[of.Site-1].node
-	if call.Virtual != 0 || len(call.Spread) != 0 {
+	target, isOne := iterableCallTarget(l.result, call)
+	if !isOne || position >= len(l.result.Functions[target].Parameters) {
 		return l.generatorNotYet(where, "passed into a parameter of no one body")
 	}
-	targets := l.result.CallTargets(call)
-	if len(targets) != 1 || position >= len(l.result.Functions[targets[0]].Parameters) {
-		return l.generatorNotYet(where, "passed into a parameter of no one body")
-	}
-	target := targets[0]
 	callee := l.result.Functions[target]
 	parameter := callee.Parameters[position]
 	name := l.result.Locals[parameter].Name
@@ -478,6 +486,38 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 		return l.generatorNotYet(where, fmt.Sprintf("passed into the parameter %s, read %d times where one for-of over it is its only use", name, uses.reads))
 	}
 	return nil
+}
+
+// iterableCallTarget is the one body a call handing a generator into an Iterable<T> parameter runs:
+// a module function's direct ir.Call with no spread, one target by CallTargets; or since S3c-1 a
+// nested callee's ir.CallClosure (iterableCallee's nested arm), with no spread, not a bound
+// closure's kept call and not optional, only where its ClosureTargets is exactly one function and
+// never Unknown, the same "exactly one body" read through the closure graph (Adamic's ruling 2 on
+// #qk8rztp S3c, and the void rules' one-read exemption with it). ClosureTargets bounds no
+// CallClosure to two functions today; if it ever does, this still answers no. Anything else is no
+// one body.
+func iterableCallTarget(program *ir.Program, call ir.Expression) (int, bool) {
+	switch call := call.(type) {
+	case ir.Call:
+		if call.Virtual != 0 || len(call.Spread) != 0 {
+			return 0, false
+		}
+		targets := program.CallTargets(call)
+		if len(targets) != 1 {
+			return 0, false
+		}
+		return targets[0], true
+	case ir.CallClosure:
+		if call.Bound || call.Optional || slices.Contains(call.Spread, true) {
+			return 0, false
+		}
+		targets := program.ClosureTargets(call)
+		if targets.Unknown || len(targets.Functions) != 1 {
+			return 0, false
+		}
+		return targets.Functions[0], true
+	}
+	return 0, false
 }
 
 // handNextReceiver is the receiver of a hand-driven next() over parameter, as callClosure lowers one

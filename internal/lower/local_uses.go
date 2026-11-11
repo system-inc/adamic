@@ -176,6 +176,42 @@ func (count *localUseCount) fields(value reflect.Value, local int, pattern bool)
 	}
 }
 
+// localWrites calls written with every local node writes, by the fields localFields says write one,
+// as localUseCount counts a write: a Declare's, an Assign's, a for-of head's (unless it binds a
+// pattern, whose Bindings write instead), a pattern Binding's and a catch's. It reads every local a
+// node writes in one look, where localUseCount asks after one local (closureCallsOf).
+func localWrites(node any, written func(local int)) {
+	value := reflect.ValueOf(node)
+	if value.Kind() != reflect.Struct {
+		return
+	}
+	pattern := false
+	if loop, isForOf := node.(ir.ForOf); isForOf {
+		pattern = len(loop.Pattern) != 0
+	}
+	localWriteFields(value, pattern, written)
+}
+
+func localWriteFields(value reflect.Value, pattern bool, written func(local int)) {
+	typeName := value.Type().Name()
+	for index := 0; index < value.NumField(); index++ {
+		field := value.Field(index)
+		name := value.Type().Field(index).Name
+		switch {
+		case field.Type() == reflect.TypeOf(0):
+			if localFields[typeName+"."+name].role == localWrite && (typeName != "ForOf" || name != "Local" || !pattern) {
+				written(int(field.Int()))
+			}
+		case field.Kind() == reflect.Struct && !irNode(field.Type()):
+			localWriteFields(field, false, written)
+		case field.Kind() == reflect.Slice && field.Type().Elem().Kind() == reflect.Struct && !irNode(field.Type().Elem()):
+			for element := 0; element < field.Len(); element++ {
+				localWriteFields(field.Index(element), false, written)
+			}
+		}
+	}
+}
+
 func (count *localUseCount) add(role localRole) {
 	switch role {
 	case localRead:

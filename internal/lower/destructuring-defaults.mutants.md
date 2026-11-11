@@ -64,5 +64,6 @@ New:
 There is no destructuring witness for this narrower guard: unknown is held as
 Union and deliberately bypasses mayHoldNull because its null sentinel is distinct.
 The former unknown refusal is now an agreement in
-internal/oracle/testdata/destructure_union_former_stops.a. The parameter-default
-witness remains #1mw3c4x's unknown_param.a.
+internal/oracle/testdata/destructure_union_former_stops.a. Its live witness is
+#1mw3c4x's unknown_param.a, since functions.go's parameter default calls mayHoldNull too
+(parameter-default-null.mutants.md's mutant (b) is this same edit).

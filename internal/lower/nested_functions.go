@@ -222,8 +222,9 @@ func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) 
 	if l.result.Functions[l.result.Locals[local].NestedFunction-1].Generator {
 		// A call through the value would make a frame no consumer keeps to itself, as a module
 		// generator's functionValue stops (#qk8rztp S3a). Its own calls take their carrier from
-		// nestedGeneratorCall, never through here.
-		return nil, true, l.generatorNotYet(node, "used as a value")
+		// nestedGeneratorCall, never through here, so the words say what reaches here: anything but
+		// its call by name (Lower's words on #qk8rztp S3c).
+		return nil, true, l.generatorNotYet(node, "declared inside a function, used other than by a call to it by name")
 	}
 	return l.nestedValue(local), true, nil
 }

@@ -18,7 +18,10 @@ import (
 // consumed by a for-of over its call, the parameter or a call as a statement (the nested_ fixtures,
 // tsc's checker.ts shapes among them); and S3b's anonymous function* written in place and called, a
 // closure of its own made for the call, consumed the same three ways (the in_place_ fixtures, tsc's
-// elaborateJsxComponents shape among them). Each fixture in testdata/generators agrees with Node natively,
+// elaborateJsxComponents shape among them); and S3c-1's generator handed into the one-read parameter
+// of a function declared in the same parent, a nested callee, called by name from the parent, a
+// sibling, an arrow, a grandchild and its own recursion, as an overload set and generic (the
+// nested_callee_ fixtures). Each fixture in testdata/generators agrees with Node natively,
 // sanitized and on the JavaScript backend, and one that finishes leaks nothing: every way out of the
 // consuming loop (exhaustion, break, return, a throw from the body or the loop, a labeled jump to an
 // outer loop) and of the body (completion, an early return, a throw) lets go of the generator once
@@ -44,8 +47,8 @@ func TestGeneratorsAgreeWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 54 {
-		t.Fatalf("%d programs in %s, want 54: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 58 {
+		t.Fatalf("%d programs in %s, want 58: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 

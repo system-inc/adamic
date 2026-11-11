@@ -91,11 +91,9 @@ function adapt(tree, ts) {
     // explicit-read finished form as well; mixed literals and other drift refuse.
     const metadata = require("./meta-spread-pins.json");
     const normal = text => text.replace(/\r\n/g, "\n");
-    const explicit = text => metadata.literals.reduce((value, literal) => value.replace(literal.before, literal.after), text);
     const startText = normal(start.getText(tracing));
-    const spreadStates = [metadata.before, metadata.after];
-    if (![...spreadStates, ...spreadStates.map(explicit)].includes(startText)) throw new Error("unreviewed loader producer: startTracing drift");
-    if (spreadStates.includes(startText)) {
+    if (startText !== metadata.before && startText !== metadata.after) throw new Error("unreviewed loader producer: startTracing drift");
+    if (startText === metadata.before) {
         for (const literal of metadata.literals) {
             const object = one(start, node => ts.isObjectLiteralExpression(node) && node.getText(tracing) === literal.before, "tracing metadata literal");
             edit(tracing, object, literal.after);

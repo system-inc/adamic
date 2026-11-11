@@ -46,9 +46,11 @@ func (IteratorNext) Type() Type { return Object }
 
 // IterableOf is a generator held where a slot typed Iterable<T> or IterableIterator<T> is, an
 // object: the only door from a Generator value to an Object-typed slot (Compiler, on #qk8rztp S2c-1).
-// It is a direct call's argument and nothing else (checkGeneratorRoads), and it adds no retain or
-// release of its own: the call's result is the caller's temporary, the callee borrows it, and the
-// caller lets go of it after the call. Natively it is a pointer cast; on JavaScript, the value.
+// It is a direct call's argument and nothing else (checkGeneratorRoads): a module function's Call,
+// or since S3c-1 a nested callee's CallClosure bounded to one function (#qk8rztp S3c-1). It adds no
+// retain or release of its own: the call's result is the caller's temporary, the callee borrows it,
+// and the caller lets go of it after the call. Natively it is a pointer cast; on JavaScript, the
+// value.
 type IterableOf struct {
 	Value Expression
 	Site  int // one-based site, resolved by lowering only for diagnostics

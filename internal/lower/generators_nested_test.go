@@ -182,7 +182,7 @@ func TestNestedGeneratorRoadsAreNotYet(t *testing.T) {
 		{"inside an async function", "async function host(): Promise<void> {\nfunction* inner(): Generator<number, undefined, undefined> { yield 1; }\nfor (const value of inner()) console.log(String(value));\n}\nawait host();\n", "declared inside an async function or a generator"},
 		{"inside a generator", "function* outer(): Generator<number, undefined, undefined> {\nfunction* inner(): Generator<number, undefined, undefined> { yield 1; }\nyield 2;\n}\nfor (const value of outer()) console.log(String(value));\n", "declared inside an async function or a generator"},
 		{"in a block", host("if (String(1).length > 0) {\nfunction* inner(): Generator<number, undefined, undefined> { yield 1; }\nfor (const value of inner()) console.log(String(value));\n}"), "declared inside a function or a block"},
-		{"the function as a value", host(numbers + "const make = numbers;\nfor (const value of make()) console.log(String(value));"), "used as a value"},
+		{"the function as a value", host(numbers + "const make = numbers;\nfor (const value of make()) console.log(String(value));"), "a generator function declared inside a function, used other than by a call to it by name (#qk8rztp)"},
 		{"stored", host(numbers + "const held = numbers();\nconsole.log(String(held.next().value));"), "used other than by a for-of"},
 		{"passed as an argument", "function take(source: object): number { return source === undefined ? 0 : 1; }\n" + host(numbers+"console.log(String(take(numbers())));"), "used other than by a for-of"},
 		{"returned", "function outer(): Generator<number, undefined, undefined> {\n" + numbers + "return numbers();\n}\nfor (const value of outer()) console.log(String(value));\n", "used other than by a for-of"},
@@ -217,8 +217,10 @@ func TestNestedGeneratorRoadsAreNotYet(t *testing.T) {
 // parameter a generator is handed into through IterableOf is captured or an environment cell.
 // S2c-4, which makes generators values, has to meet it, or first extend cycles.go's reachLinks
 // with the edge from a generator to its carrier's cells (docs/generators.md, the frame's rule 4).
-// The controls are a captured Generator local and a captured view parameter put into a lowered
-// program by hand, each of which the guard must see.
+// The controls are a captured Generator local, a captured view parameter and, since S3c-1, a
+// captured view parameter of a nested callee, handed its generator by a CallClosure, each put into a
+// lowered program by hand, each of which the guard must see. Mutant: the guard's CallClosure case
+// dropped, and the nested callee's control goes unseen.
 func TestNoCapturedOrEnvironmentLocalCanHoldAGenerator(t *testing.T) {
 	t.Parallel()
 	var paths []string
@@ -232,7 +234,7 @@ func TestNoCapturedOrEnvironmentLocalCanHoldAGenerator(t *testing.T) {
 	if len(paths) < 50 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
 	}
-	var nested *ir.Program
+	var nested, callee *ir.Program
 	for _, path := range paths {
 		loaded, err := load.Load([]string{path})
 		if err != nil {
@@ -245,8 +247,11 @@ func TestNoCapturedOrEnvironmentLocalCanHoldAGenerator(t *testing.T) {
 		for _, offense := range capturedGenerators(program) {
 			t.Errorf("%s: %s", path, offense)
 		}
-		if filepath.Base(path) == "nested_iterable.a" {
+		switch filepath.Base(path) {
+		case "nested_iterable.a":
 			nested = program
+		case "nested_callee_view.a":
+			callee = program
 		}
 	}
 	if nested == nil {
@@ -278,12 +283,39 @@ func TestNoCapturedOrEnvironmentLocalCanHoldAGenerator(t *testing.T) {
 	if parameters == 0 || len(capturedGenerators(nested)) == 0 {
 		t.Errorf("the control's %d captured view parameters went unseen: the guard can't fail", parameters)
 	}
+	// The same control through a nested callee (#qk8rztp S3c-1): every parameter a CallClosure hands
+	// a generator into, made captured by hand, which the guard must see.
+	if callee == nil {
+		t.Fatal("no nested_callee_view.a among the fixtures")
+	}
+	closureParameters := 0
+	for _, function := range callee.Functions {
+		walk(function.Body, func(node any) bool {
+			if call, isCall := node.(ir.CallClosure); isCall {
+				for position, argument := range call.Arguments {
+					if _, isIterable := argument.(ir.IterableOf); !isIterable {
+						continue
+					}
+					for _, target := range callee.ClosureTargets(call).Functions {
+						callee.Locals[callee.Functions[target].Parameters[position]].Captured = true
+						closureParameters++
+					}
+				}
+			}
+			return true
+		})
+	}
+	if closureParameters == 0 || len(capturedGenerators(callee)) == 0 {
+		t.Errorf("the control's %d captured nested callee parameters went unseen: the guard can't fail", closureParameters)
+	}
 }
 
 // capturedGenerators is every local of program that a closure's cell or a frame's environment holds
 // and that can hold a generator, said for the guard: one whose representation is a Generator, and a
 // parameter a generator's call is handed into through IterableOf, the one door from a generator to a
-// slot of another representation (checkGeneratorRoads).
+// slot of another representation (checkGeneratorRoads), by a module function's ir.Call or, since
+// S3c-1, a nested callee's ir.CallClosure, whose targets are read through ClosureTargets as every
+// reader of a closure call's targets must (internal/ir's call_targets_guard_test.go).
 func capturedGenerators(program *ir.Program) []string {
 	var offenses []string
 	for _, declared := range program.Locals {
@@ -292,15 +324,19 @@ func capturedGenerators(program *ir.Program) []string {
 		}
 	}
 	visit := func(node any) bool {
-		call, isCall := node.(ir.Call)
-		if !isCall {
-			return true
+		var arguments []ir.Expression
+		var targets []int
+		switch call := node.(type) {
+		case ir.Call:
+			arguments, targets = call.Arguments, program.CallTargets(call)
+		case ir.CallClosure:
+			arguments, targets = call.Arguments, program.ClosureTargets(call).Functions
 		}
-		for position, argument := range call.Arguments {
+		for position, argument := range arguments {
 			if _, isIterable := argument.(ir.IterableOf); !isIterable {
 				continue
 			}
-			for _, target := range program.CallTargets(call) {
+			for _, target := range targets {
 				parameter := program.Locals[program.Functions[target].Parameters[position]]
 				if parameter.Captured || parameter.EnvironmentCell {
 					offenses = append(offenses, "the captured parameter "+parameter.Name+" is handed a generator")

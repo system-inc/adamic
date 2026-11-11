@@ -236,10 +236,10 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// representation must tell the two apart: a maybe pair can't hold null, and a union holds null as a
 		// sentinel of its own, but any other reference holds null and undefined as one null pointer.
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
-		// ?? is kept only where the type provably can't hold null. unknown, any and a type still open
-		// after concrete may hold it, so they count as holding null (Compiler's must on #1mw3c4x).
-		concreteType := l.concrete(parameterType)
-		holdsNull := l.includesNull(concreteType) || concreteType.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsInstantiable) != 0
+		// ?? is kept only where the type provably can't hold null: mayHoldNull, the one condition this and
+		// a destructured default share, counts unknown, any and a type still open as holding it (Compiler's
+		// must on #1mw3c4x and #smqr4vn).
+		holdsNull := l.mayHoldNull(parameterType)
 		if holdsNull && !missing.IsMaybe() && missing != ir.Union {
 			return l.notYet(parameter, "a default for a parameter of type "+l.checker.TypeToString(parameterType)+", whose null and undefined are held alike")
 		}

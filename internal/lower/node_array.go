@@ -80,8 +80,16 @@ func (l *lowering) nodeArrayCast(node *ast.Node) bool {
 	return actual != nil && l.castAssignable(actual, element) && l.castAssignable(element, l.checker.GetWidenedType(actual)) && l.sameKeeping(actual, element, map[[2]*checker.Type]bool{})
 }
 
+// graphNodeArraySite is one NodeArray literal: where, and its NodeArray type.
+type graphNodeArraySite struct {
+	node  *ast.Node
+	array *checker.Type
+}
+
 func (l *lowering) constructNodeArray(node *ast.Node) (ir.Expression, error) {
-	layout, element, _ := l.nodeArrayLayoutOf(l.concrete(l.checker.GetTypeAtLocation(node)))
+	arrayType := l.concrete(l.checker.GetTypeAtLocation(node))
+	layout, element, _ := l.nodeArrayLayoutOf(arrayType)
+	l.graphNodeArrays = append(l.graphNodeArrays, graphNodeArraySite{node: node, array: arrayType})
 	value, err := l.arrayLiteral(ast.SkipParentheses(node.AsAsExpression().Expression))
 	if err != nil {
 		return nil, err
