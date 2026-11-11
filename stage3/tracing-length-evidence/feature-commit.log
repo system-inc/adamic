@@ -1,0 +1,5 @@
+[typescript/tracing-length 3889c946b] Adapt tracing stack truncations and preserve reentrant RangeError
+ 4 files changed, 84 insertions(+)
+ create mode 100644 stage3/adapt/99-correctness-tracing-length/README.md
+ create mode 100644 stage3/adapt/99-correctness-tracing-length/adapt.cjs
+ create mode 100644 stage3/adapt/99-correctness-tracing-length/pins.json
