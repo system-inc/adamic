@@ -1,6 +1,8 @@
-import pathlib,json,gzip,collections,re,hashlib,difflib
+import pathlib,json,gzip,collections,re,hashlib,difflib,sys
 out=pathlib.Path(__file__).resolve().parents[1];follow=out/'continuation'
-def load(path):return json.loads(path.read_text())
+def load(path):
+ if not path.exists():return json.loads(gzip.decompress(pathlib.Path(str(path)+'.gz').read_bytes()))
+ return json.loads(path.read_text())
 def stream(path):
  if not path.exists():path=pathlib.Path(str(path)+'.gz')
  if not path.exists():return []
@@ -42,7 +44,7 @@ for name in names:
   for f in row.get('findings') or []:
    base_findings.append(dict(root=name,**normalize({k:f.get(k) for k in ['unit','phase','kind','where','reason','text']},'original')))
 site_comparison=load(follow/'c-site-comparison.json')
-for label in ['c','c-public']:
+for label in (sys.argv[1:] or ['c','c-public']):
  own=load(follow/label/'whole-src-adamic-checker.json')
  checker=delta(normalize(base['diagnostics'],'original'),normalize(own['diagnostics'],label))
  exact_label='c-exact' if label=='c' else 'c-public-exact'
@@ -71,7 +73,7 @@ for label in ['c','c-public']:
  (follow/label/'getLineStarts-unit.json').write_text(json.dumps({'findings':own_scanner,'units':own_units},indent=2)+'\n')
 # Verify every src file, including the public-marker-only rerun, against the frozen input.
 base_root=pathlib.Path(roots['original'])
-for label in ['c','c-public']:
+for label in (sys.argv[1:] or ['c','c-public']):
  root=pathlib.Path(roots[label]);diff={}
  for p in sorted((base_root/'src').rglob('*')):
   if not p.is_file():continue

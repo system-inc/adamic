@@ -1,6 +1,8 @@
 import pathlib,json,gzip,hashlib,collections
 out=pathlib.Path(__file__).resolve().parents[1];p=out/'continuation'
-def load(path):return json.loads(path.read_text())
+def load(path):
+ if not path.exists():return json.loads(gzip.decompress(pathlib.Path(str(path)+'.gz').read_bytes()))
+ return json.loads(path.read_text())
 def stream(path):
  if not path.exists():path=pathlib.Path(str(path)+'.gz')
  with (gzip.open(path,'rt') if path.suffix=='.gz' else path.open()) as src:return [json.loads(line) for line in src]
