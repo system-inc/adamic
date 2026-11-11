@@ -21,7 +21,7 @@ type allocationFlowGraph struct {
 	sources           map[int][]ir.Expression
 	unknownParameters map[int]bool
 	// unknownWrites are the locals a node writes with a value the walk can't name, by local plus one,
-	// each with why (localWrites): a for-of's binding takes each element, and a catch's what was
+	// each with why (flowLocalWrites): a for-of's binding takes each element, and a catch's what was
 	// thrown. A local that is also assigned keeps this, so a query reaching it is Unknown rather than
 	// only what the assignments write.
 	unknownWrites map[int]string
@@ -32,7 +32,7 @@ type allocationFlowGraph struct {
 
 // unknownAt is why a node's value may come from somewhere the graph doesn't name, if it may: a
 // parameter some call the graph can't see may pass anything, and a local a node writes with a value
-// the walk can't name (localWrites) holds that too. Every reader of the graph's sources asks this
+// the walk can't name (flowLocalWrites) holds that too. Every reader of the graph's sources asks this
 // before it trusts them, rather than reading either map.
 func (graph *allocationFlowGraph) unknownAt(node int) (string, bool) {
 	if graph.unknownParameters[node] {
@@ -111,12 +111,12 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 	return graph
 }
 
-// localWrites is how collect takes every IR field that writes a local, by type and field: empty for
+// flowLocalWrites is how collect takes every IR field that writes a local, by type and field: empty for
 // one whose node's Value is the local's source (Declare and Assign, collect's own cases), and
 // otherwise why the local is an unknown write. Its rows are exactly local_uses.go's localFields'
 // write rows (TestLocalWritesAreLocalFieldsWrites), so an IR node that comes to write a local is
 // classified here before it can leave a local with only some of its writers.
-var localWrites = map[string]string{
+var flowLocalWrites = map[string]string{
 	"Declare.Local": "",
 	"Assign.Local":  "",
 	// Each step writes the element into Local, or destructures it into Pattern's locals, a Binding
@@ -127,7 +127,7 @@ var localWrites = map[string]string{
 }
 
 // writeFields is, for each struct type noteWrites has met, which of its fields write a local by a
-// row of localWrites with a reason, and which hold plain structs to look into, worked out once a type.
+// row of flowLocalWrites with a reason, and which hold plain structs to look into, worked out once a type.
 var writeFields sync.Map // reflect.Type to writeFieldsOf
 
 type writeFieldsOf struct {
@@ -150,8 +150,8 @@ func writeFieldsFor(of reflect.Type) writeFieldsOf {
 		field := of.Field(index)
 		name := of.Name() + "." + field.Name
 		switch {
-		case field.Type.Kind() == reflect.Int && localWrites[name] != "":
-			fields.writes = append(fields.writes, writeField{index: index, name: name, why: localWrites[name]})
+		case field.Type.Kind() == reflect.Int && flowLocalWrites[name] != "":
+			fields.writes = append(fields.writes, writeField{index: index, name: name, why: flowLocalWrites[name]})
 		case field.Type.Kind() == reflect.Struct && !irNode(field.Type),
 			field.Type.Kind() == reflect.Slice && field.Type.Elem().Kind() == reflect.Struct && !irNode(field.Type.Elem()):
 			fields.inner = append(fields.inner, index)
@@ -161,7 +161,7 @@ func writeFieldsFor(of reflect.Type) writeFieldsOf {
 	return fields
 }
 
-// noteWrites records each local the fields of value write by a row of localWrites with a reason,
+// noteWrites records each local the fields of value write by a row of flowLocalWrites with a reason,
 // looking into the plain structs it holds (a ForOf's Bindings) and leaving the statements and
 // expressions it holds to walk. A ForOf with a pattern leaves Local unused, and a Try's CatchLocal is
 // -1 when the catch binds nothing, as localUseCount reads them.

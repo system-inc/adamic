@@ -5,14 +5,14 @@ Each mutant is one edit, applied alone, then reverted. Run
 Not run yet: written on a machine that doesn't build Go, so "goes red" below is what the code says, not what a run
 printed.
 
-collect takes every local-writing field by view_flow.go's localWrites table, so each mutant drops one row. Each also
+collect takes every local-writing field by view_flow.go's flowLocalWrites table, so each mutant drops one row. Each also
 turns TestLocalWritesAreLocalFieldsWrites red, since the table no longer has every write row localFields lists; the
 pins below are what show the hole it would reopen. A for-of over a pattern writes its locals through Binding.Local,
 and one without through ForOf.Local, so one row can't turn both r1 and r2 red: 1a is r1's and 1b is r2's.
 
 ## 1a. The for-of's binding dropped
 
-File: internal/lower/view_flow.go, localWrites. Delete:
+File: internal/lower/view_flow.go, flowLocalWrites. Delete:
 
 ```go
 	"ForOf.Local":    "a for-of binding takes each element",
@@ -25,7 +25,7 @@ producer, Unknown either way.
 
 ## 1b. The for-of pattern's bindings dropped
 
-File: internal/lower/view_flow.go, localWrites. Delete:
+File: internal/lower/view_flow.go, flowLocalWrites. Delete:
 
 ```go
 	"Binding.Local":  "a for-of binding takes each element",
@@ -36,7 +36,7 @@ Expected: TestForOfReassignedPatternBindingIsUnknown is known, the reassigned li
 
 ## 2. The catch's write dropped
 
-File: internal/lower/view_flow.go, localWrites. Delete:
+File: internal/lower/view_flow.go, flowLocalWrites. Delete:
 
 ```go
 	"Try.CatchLocal": "a catch binding takes what was thrown",
