@@ -1,0 +1,28 @@
+{
+  "popBefore": [
+    {
+      "unit": "src/compiler/tracing.ts:161:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/tracing.ts:164:9",
+      "reason": "assigning a field of a value",
+      "text": "src/compiler/tracing.ts:164:9: stage 0 can't lower assigning a field of a value yet",
+      "owner": "pop"
+    }
+  ],
+  "popAfter": [],
+  "popAllBefore": [
+    {
+      "unit": "src/compiler/tracing.ts:166:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/tracing.ts:171:9",
+      "reason": "assigning a field of a value",
+      "text": "src/compiler/tracing.ts:171:9: stage 0 can't lower assigning a field of a value yet",
+      "owner": "popAll"
+    }
+  ],
+  "popAllAfter": [],
+  "bothIndependentRestoringMutantsReproduceOriginal": true,
+  "newlyVisibleFindingsInTracing": []
+}

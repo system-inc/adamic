@@ -7,8 +7,9 @@ for side in ['before','after']:
 run('source-comparison',['python3',raw/'source-compare.py'])
 run('built-comparison',['node',raw/'compare.cjs','/workspace/scratch/tracing-length-before','/workspace/scratch/tracing-length-after',raw/'built-comparison-report.json'])
 run('node-witness',['node',raw/'witness.cjs','/workspace/scratch/tracing-length-before','/workspace/scratch/tracing-length-after'])
+run('reentrant-witness',['node',raw/'reentrant-witness.cjs','/workspace/scratch/tracing-length-before','/workspace/scratch/tracing-length-after'])
 run('prepare-count',['python3',raw/'prepare-count.py'])
-base=raw/'before-counted';(base/'built/local').mkdir(parents=True)
+base=raw/'before-counted';(base/'built/local').mkdir(parents=True,exist_ok=True)
 for p in Path('/workspace/scratch/tracing-length-before/built/local').glob('*.js'):shutil.copy2(p,base/'built/local'/p.name)
 run('before-count-instrument',['node',raw/'instrument.cjs',base])
 for side,tree in [('before',base),('after',raw/'counted-product/tree')]:

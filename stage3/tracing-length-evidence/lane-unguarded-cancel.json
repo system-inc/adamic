@@ -1,0 +1,14 @@
+{
+  "reason": "Unguarded splice loses reachable RangeError under reentrant args getter; replace implementation and repeat full lane",
+  "goPid": 26689,
+  "terminatedPids": [
+    26689,
+    26733,
+    28037,
+    28038,
+    28045,
+    28052,
+    28053,
+    28060
+  ]
+}

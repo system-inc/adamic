@@ -21953,3 +21953,698 @@ adapted src/compiler/core.ts:addRange (runtime JavaScript identical)
   "helperAdded": true,
   "callSites": 0
 }
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "assertions": 13,
+  "javascriptIdentical": true
+}
+{
+  "files": 1,
+  "assertions": 8,
+  "owners": 6,
+  "javascriptIdentical": true
+}
+{
+  "files": 2,
+  "declarations": 3,
+  "javascriptIdentical": true,
+  "evidence": [
+    {
+      "owner": "getMergedSymbol",
+      "name": "merged",
+      "edited": true
+    },
+    {
+      "owner": "getTupleElementLabel",
+      "name": "elementFlags",
+      "edited": true
+    },
+    {
+      "owner": "SymbolLinks",
+      "name": "tupleLabelDeclaration",
+      "edited": true
+    }
+  ]
+}
+{
+  "files": 1,
+  "assertions": 1,
+  "ownerBeforeSha256": "57faba456412535bb02760aad9cdbcf7569cc83624729da3f6ddf40b6ac5a80c",
+  "javascriptIdentical": true
+}
+{
+  "files": 1,
+  "declarations": 2,
+  "javascriptIdentical": true,
+  "declaredPublicApiChanges": 1
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": true,
+  "scope": "third parent-selection arm only"
+}
+{
+  "files": 3,
+  "declarations": 4,
+  "rewrites": 6,
+  "importsRemoved": 1,
+  "literals": 5,
+  "ownedSlots": [
+    "getSymlinkCache",
+    "readFile",
+    "getModuleSpecifierCache",
+    "getNearestAncestorDirectoryWithPackageJson"
+  ],
+  "externalSlots": [
+    "getGlobalTypingsCacheLocation",
+    "directoryExists",
+    "realpath",
+    "trace"
+  ],
+  "javascriptIdentical": {
+    "src/compiler/types.ts": true,
+    "src/compiler/checker.ts": false,
+    "src/compiler/program.ts": false
+  },
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 14,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 2,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "assertions": 19,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": true,
+  "behaviorChanging": false
+}
+{
+  "files": 3,
+  "edits": 11,
+  "perFile": {
+    "types.ts": {
+      "declarations": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7",
+        "I8"
+      ],
+      "javascriptBytes": 143226
+    },
+    "tsbuildPublic.ts": {
+      "declarations": [
+        "I9",
+        "I15"
+      ],
+      "javascriptBytes": 87806
+    },
+    "program.ts": {
+      "declarations": [
+        "I11"
+      ],
+      "javascriptBytes": 240329
+    }
+  },
+  "javascriptChanging": false,
+  "publicApiChanging": false
+}
+{
+  "files": 1,
+  "edits": 2,
+  "javascriptChanging": true,
+  "behaviorChanging": false
+}
+{
+  "files": 4,
+  "edits": 22,
+  "perFile": {
+    "types.ts": {
+      "declarations": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10",
+        "P11",
+        "P12",
+        "P13"
+      ],
+      "javascriptBytes": 143226
+    },
+    "watchPublic.ts": {
+      "declarations": [
+        "P14",
+        "P15",
+        "P16",
+        "P17",
+        "I13",
+        "I14"
+      ],
+      "javascriptBytes": 41637
+    },
+    "tsbuildPublic.ts": {
+      "declarations": [
+        "P18",
+        "P19"
+      ],
+      "javascriptBytes": 87806
+    },
+    "program.ts": {
+      "declarations": [
+        "I12"
+      ],
+      "javascriptBytes": 240329
+    }
+  },
+  "javascriptChanging": false,
+  "publicApiChanging": true
+}
+{
+  "files": 1,
+  "javascriptChanging": true,
+  "evidence": [
+    {
+      "function": "createGetSourceFile",
+      "file": "src/compiler/program.ts",
+      "line": 407,
+      "before": "e.message",
+      "after": "String(propertyOf(e, \"message\"))"
+    },
+    {
+      "function": "createWriteFileMeasuringIO",
+      "file": "src/compiler/program.ts",
+      "line": 442,
+      "before": "e.message",
+      "after": "String(propertyOf(e, \"message\"))"
+    },
+    {
+      "import": true,
+      "file": "src/compiler/program.ts",
+      "line": 328,
+      "after": "import { propertyOf } from \"./hostErrors.js\";"
+    }
+  ]
+}
+[
+  {
+    "file": "transformers/es2017.ts",
+    "assertions": 3
+  },
+  {
+    "file": "transformers/classFields.ts",
+    "assertions": 5
+  }
+]
+[
+  {
+    "file": "transformers/es2015.ts",
+    "assertions": 5
+  }
+]
+{
+  "files": 1,
+  "javascriptChanging": true,
+  "evidence": [
+    {
+      "row": 1,
+      "file": "src/compiler/sys.ts",
+      "line": 1708,
+      "before": "JSON.stringify(cleanupPaths(profile))",
+      "after": "JSON.stringify(cleanupPaths(profile))!"
+    },
+    {
+      "row": 2,
+      "file": "src/compiler/sys.ts",
+      "line": 1598,
+      "before": "(require(\"source-map-support\") as typeof import(\"source-map-support\"))",
+      "after": "require(\"source-map-support\")"
+    },
+    {
+      "row": 3,
+      "file": "src/compiler/sys.ts",
+      "line": 1284,
+      "before": "e.code",
+      "after": "propertyOf(e, \"code\")"
+    },
+    {
+      "row": 3,
+      "file": "src/compiler/sys.ts",
+      "line": 49,
+      "before": "errorCode",
+      "after": "errorCode, propertyOf"
+    }
+  ]
+}
+{
+  "state": "before",
+  "files": [
+    "src/compiler/types.ts",
+    "src/compiler/program.ts",
+    "src/compiler/resolutionCache.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/sourcemap.ts"
+  ],
+  "edits": 9,
+  "callers": 4,
+  "javascriptChanging": true,
+  "sites": [
+    {
+      "kind": "declaration",
+      "file": "src/compiler/types.ts",
+      "owner": "ResolvedModuleFull",
+      "member": "originalPath"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/types.ts",
+      "owner": "ResolvedModuleFull",
+      "member": "packageId"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/types.ts",
+      "owner": "ResolvedTypeReferenceDirective",
+      "member": "originalPath"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/types.ts",
+      "owner": "ResolvedTypeReferenceDirective",
+      "member": "packageId"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/program.ts",
+      "owner": "ResolutionWithResolvedFileName",
+      "member": "packageId"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/resolutionCache.ts",
+      "owner": "ResolutionWithFailedLookupLocations",
+      "member": "files"
+    },
+    {
+      "kind": "required-read",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "function": "getPackageJsonTypesVersionsPaths",
+      "expression": "typesVersions[key]"
+    },
+    {
+      "kind": "required-value",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "function": "createResolvedModuleWithFailedLookupLocations",
+      "expression": "isExternalLibraryImport"
+    },
+    {
+      "kind": "single-read",
+      "file": "src/compiler/sourcemap.ts",
+      "function": "appendSourceMap",
+      "expression": "map.sourcesContent[raw.sourceIndex]"
+    }
+  ]
+}
+{
+  "files": 5,
+  "javascriptChanging": true,
+  "evidence": [
+    {
+      "row": 4,
+      "file": "src/compiler/types.ts",
+      "line": 7750,
+      "before": "{ stack?: string; message?: string; }",
+      "after": "unknown"
+    },
+    {
+      "row": 4,
+      "file": "src/server/types.ts",
+      "line": 24,
+      "before": "{ stack?: string; message?: string; }",
+      "after": "unknown"
+    },
+    {
+      "row": 4,
+      "file": "src/compiler/_namespaces/ts.ts",
+      "line": 10,
+      "before": "",
+      "after": "\r\nexport * from \"../hostErrors.js\";"
+    },
+    {
+      "row": 4,
+      "file": "src/server/project.ts",
+      "line": 106,
+      "before": "",
+      "after": "\n    propertyOf,"
+    },
+    {
+      "row": 4,
+      "file": "src/server/project.ts",
+      "line": 507,
+      "before": "result.error.stack || result.error.message || JSON.stringify(result.error)",
+      "after": "propertyOf(result.error, \"stack\") || propertyOf(result.error, \"message\") || JSON.stringify(result.error)"
+    },
+    {
+      "row": 4,
+      "file": "src/server/project.ts",
+      "line": 537,
+      "before": "result.error.stack || result.error.message || JSON.stringify(result.error)",
+      "after": "propertyOf(result.error, \"stack\") || propertyOf(result.error, \"message\") || JSON.stringify(result.error)"
+    },
+    {
+      "row": 5,
+      "file": "src/compiler/sys.ts",
+      "line": 1433,
+      "before": "createSHA256Hash?(data: string): string;",
+      "after": "createSHA256Hash?: { createSHA256Hash(data: string): string; }[\"createSHA256Hash\"] | undefined;"
+    }
+  ]
+}
+{
+  "files": 1,
+  "javascriptChanging": true,
+  "evidence": [
+    {
+      "site": "assertionCache",
+      "file": "src/compiler/debug.ts",
+      "line": 155,
+      "before": "const assertionCache: Partial<Record<AssertionKeys, { level: AssertionLevel; assertion: AnyFunction; } | undefined>> = {};",
+      "after": ""
+    },
+    {
+      "site": "setAssertionLevel",
+      "file": "src/compiler/debug.ts",
+      "line": 161,
+      "before": "{\r\n        const prevAssertionLevel = currentAssertionLevel;\r\n        currentAssertionLevel = level;\r\n\r\n        if (level > prevAssertionLevel) {\r\n            // restore assertion functions for the current assertion level (see `shouldAssertFunction`).\r\n            for (const key of getOwnKeys(assertionCache) as AssertionKeys[]) {\r\n                const cachedFunc = assertionCache[key];\r\n                if (cachedFunc !== undefined && Debug[key] !== cachedFunc.assertion && level >= cachedFunc.level) {\r\n                    (Debug as any)[key] = cachedFunc;\r\n                    assertionCache[key] = undefined;\r\n                }\r\n            }\r\n        }\r\n    }",
+      "after": "{\r\n        currentAssertionLevel = level;\r\n    }"
+    },
+    {
+      "site": "shouldAssertFunction",
+      "file": "src/compiler/debug.ts",
+      "line": 187,
+      "before": "{\r\n        if (!shouldAssert(level)) {\r\n            assertionCache[name] = { level, assertion: Debug[name] };\r\n            (Debug as any)[name] = noop;\r\n            return false;\r\n        }\r\n        return true;\r\n    }",
+      "after": "{\r\n        return shouldAssert(level);\r\n    }"
+    },
+    {
+      "site": "shouldAssertFunction doc comment",
+      "file": "src/compiler/debug.ts",
+      "line": 181,
+      "before": "/**\r\n     * Tests whether an assertion function should be executed. If it shouldn't, it is cached and replaced with `ts.noop`.\r\n     * Replaced assertion functions are restored when `Debug.setAssertionLevel` is set to a high enough level.\r\n     * @param level The minimum assertion level required.\r\n     * @param name The name of the current assertion function.\r\n     */",
+      "after": "/**\r\n     * Tests whether an assertion function should be executed at the current assertion level.\r\n     * The level is read on every call, so `Debug.setAssertionLevel` applies to every later assertion.\r\n     * @param level The minimum assertion level required.\r\n     * @param name The name of the current assertion function.\r\n     */"
+    },
+    {
+      "site": "getOwnKeys import",
+      "file": "src/compiler/debug.ts",
+      "line": 16,
+      "before": "getOwnKeys,",
+      "after": ""
+    },
+    {
+      "site": "noop import",
+      "file": "src/compiler/debug.ts",
+      "line": 71,
+      "before": "noop,",
+      "after": ""
+    }
+  ]
+}
+{
+  "files": 1,
+  "javascriptChanging": true,
+  "evidence": [
+    {
+      "site": "perf_hooks import",
+      "file": "src/compiler/performanceCore.ts",
+      "line": 2,
+      "before": "",
+      "after": "import * as perfHooks from \"node:perf_hooks\";"
+    },
+    {
+      "site": "tryGetPerformance binding",
+      "file": "src/compiler/performanceCore.ts",
+      "line": 35,
+      "before": "const { performance } = require(\"perf_hooks\") as { performance?: Performance | undefined };",
+      "after": "const { performance } = perfHooks;"
+    },
+    {
+      "site": "require declaration",
+      "file": "src/compiler/performanceCore.ts",
+      "line": 104,
+      "before": "declare const require: (specifier: \"perf_hooks\") => any;",
+      "after": ""
+    },
+    {
+      "site": "tryGetPerformance return type",
+      "file": "src/compiler/performanceCore.ts",
+      "line": 30,
+      "before": "function tryGetPerformance() ",
+      "after": "function tryGetPerformance(): { shouldWriteNativeEvents: boolean; performance: Performance; } | undefined "
+    },
+    {
+      "site": "PerformanceTime timeOrigin",
+      "file": "src/compiler/performanceCore.ts",
+      "line": 16,
+      "before": "timeOrigin: number;",
+      "after": "readonly timeOrigin: number;"
+    },
+    {
+      "site": "47's program",
+      "file": "src/compiler/performanceCore.ts",
+      "before": [],
+      "after": [
+        "TS2591 Cannot find name 'node:perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      ]
+    }
+  ]
+}
+{
+  "files": 4,
+  "assertions": 13,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": true,
+  "behaviorChanging": false
+}
+{
+  "files": 2,
+  "declarations": 12,
+  "javascriptChanging": false
+}
+{"files":1,"javascriptChanging":true}
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 5,
+  "edits": 13,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 3,
+  "javascriptChanging": true,
+  "behaviorChanging": true
+}
+{
+  "files": 1,
+  "edits": 5,
+  "javascriptChanging": true,
+  "behaviorChanging": false
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false,
+  "behaviorChanging": false
+}
+{
+  "files": 6,
+  "edits": 12,
+  "javascriptChanging": true,
+  "behaviorChanging": false
+}
+{
+  "files": 2,
+  "edits": 3,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 4,
+  "javascriptChanging": false
+}
+{
+  "files": 2,
+  "edits": 9,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 4,
+  "javascriptChanging": true
+}
+{
+  "files": 3,
+  "edits": 18,
+  "javascriptChanging": true
+}
+{
+  "files": 2,
+  "edits": 15,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{
+  "files": 5,
+  "rewrites": 28,
+  "left": 0,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 2,
+  "javascriptChanging": false
+}
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 1,
+  "edits": 4,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 2,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 2,
+  "javascriptChanging": false
+}
+{
+  "files": 2,
+  "edits": 4,
+  "javascriptChanging": true
+}
+{"files":2,"edits":4,"javascriptChanging":true}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 17,
+  "edits": 40,
+  "javascriptChanging": true
+}
+{
+  "files": 11,
+  "owners": 25,
+  "calls": 19,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": true
+}
+{"edits":1,"javascriptChanging":true}
+{
+  "files": 1,
+  "javascriptChanging": true,
+  "before": {
+    "binding": "local let",
+    "references": 5,
+    "roles": [
+      "assignment",
+      "assignment",
+      "checked qualified receiver",
+      "condition",
+      "condition"
+    ],
+    "allUsesResolveToBinding": true,
+    "otherDeclarations": 0,
+    "qualifiedUses": 0,
+    "bareNamespaceUses": 0
+  },
+  "after": {
+    "binding": "namespace import",
+    "references": 1,
+    "roles": [
+      "qualified receiver"
+    ],
+    "allUsesResolveToBinding": true,
+    "otherDeclarations": 0,
+    "qualifiedUses": 1,
+    "bareNamespaceUses": 0
+  }
+}
+/workspace/scratch/tracing-length-before-clean

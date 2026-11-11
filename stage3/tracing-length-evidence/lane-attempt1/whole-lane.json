@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/scratch/tracing-length-evidence/lane-overlay.json",
+    "./stage3/lane",
+    "-run",
+    "^TestShard_",
+    "-count=1",
+    "-parallel=2",
+    "-json",
+    "-timeout=90m"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": -15,
+  "seconds": 421.95589653
+}

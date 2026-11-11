@@ -1,7 +1,10 @@
 from pathlib import Path
 from run import raw,root
 import shutil,json,hashlib
-out=Path('/workspace/scratch/tracing-length-evidence-branch/stage3/tracing-length-evidence');out.mkdir(exist_ok=True)
+out=Path('/workspace/scratch/tracing-length-evidence-branch/stage3/tracing-length-evidence')
+assert out.resolve()!=raw.resolve() and out.name=='tracing-length-evidence'
+if out.exists():shutil.rmtree(out)
+out.mkdir(exist_ok=True)
 excluded={'adamic','latent','counted-product','before-counted','mutant-pop','mutant-popAll','__pycache__','checkpoint.index'}
 files=[]
 for p in sorted(raw.rglob('*')):

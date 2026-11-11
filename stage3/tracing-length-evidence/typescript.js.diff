@@ -1,15 +1,16 @@
 --- /workspace/scratch/tracing-length-before/built/local/typescript.js	2026-11-11 09:13:56.182429109 +0000
-+++ /workspace/scratch/tracing-length-after/built/local/typescript.js	2026-11-11 09:18:15.775457835 +0000
-@@ -4871,7 +4871,7 @@
++++ /workspace/scratch/tracing-length-after/built/local/typescript.js	2026-11-11 09:38:45.905601088 +0000
+@@ -4871,7 +4871,8 @@
    function pop(results) {
      Debug.assert(eventStack.length > 0);
      writeStackEvent(eventStack.length - 1, 1e3 * timestamp(), results);
 -    eventStack.length--;
++    if (eventStack.length === 0) throw new RangeError("Invalid array length");
 +    eventStack.splice(eventStack.length - 1);
    }
    tracingEnabled2.pop = pop;
    function popAll() {
-@@ -4879,7 +4879,7 @@
+@@ -4879,7 +4880,7 @@
      for (let i = eventStack.length - 1; i >= 0; i--) {
        writeStackEvent(i, endTime);
      }

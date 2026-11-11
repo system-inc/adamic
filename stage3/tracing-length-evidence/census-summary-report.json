@@ -1,0 +1,1297 @@
+{
+  "mode": "LATENT_FULL=1; LATENT_ONLY_FILE=adapted tracing.ts; LATENT_ASSERT_NO_OUTPUT=1",
+  "reports": {
+    "before": {
+      "findings": [
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:96:19",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "text": "src/compiler/tracing.ts:96:19: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:200:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:206:67",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/tracing.ts:206:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+          "owner": "getLocation"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:200:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:207:65",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/tracing.ts:207:65: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+          "owner": "getLocation"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:232:34",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:232:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:318:33",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:318:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:338:14",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:338:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:352:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:357:10",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:357:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpLegend"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:378:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:378:1",
+          "reason": "an ambient value declaration",
+          "text": "src/compiler/tracing.ts:378:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+          "owner": null
+        },
+        {
+          "unit": "src/compiler/tracing.ts:379:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:379:1",
+          "reason": "an ambient value declaration",
+          "text": "src/compiler/tracing.ts:379:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+          "owner": null
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:64:22",
+          "reason": "a call returning any",
+          "text": "src/compiler/tracing.ts:64:22: stage 0 can't lower a call returning any yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:72:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:72:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:96:19",
+          "reason": "reading tracingEnabled",
+          "text": "src/compiler/tracing.ts:96:19: stage 0 can't lower reading tracingEnabled yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:103:67",
+          "reason": "a spread after the first field",
+          "text": "src/compiler/tracing.ts:103:67: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:161:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:164:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:164:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "pop"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:166:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:171:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:171:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "popAll"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:175:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:183:44",
+          "reason": "a spread into record storage from a fixed object",
+          "text": "src/compiler/tracing.ts:183:44: stage 0 can't lower a spread into record storage from a fixed object yet",
+          "owner": "writeStackEvent"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:187:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:194:67",
+          "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+          "text": "src/compiler/tracing.ts:194:67: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet",
+          "owner": "writeEvent"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:224:38",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:224:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:232:19",
+          "reason": "a value of type any",
+          "text": "src/compiler/tracing.ts:232:19: stage 0 can't lower a value of type any yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:237:18",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:237:18: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:19176:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:19176:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:250:46",
+          "reason": "reading indexedAccessType",
+          "text": "src/compiler/tracing.ts:250:46: stage 0 can't lower reading indexedAccessType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:256:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:256:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:15216:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:15216:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:269:43",
+          "reason": "reading conditionalType",
+          "text": "src/compiler/tracing.ts:269:43: stage 0 can't lower reading conditionalType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:17250:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:17250:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:280:43",
+          "reason": "reading substitutionType",
+          "text": "src/compiler/tracing.ts:280:43: stage 0 can't lower reading substitutionType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:286:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:286:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:296:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:296:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:309:34",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:309:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:311:38",
+          "reason": "reading recursionIdentityMap",
+          "text": "src/compiler/tracing.ts:311:38: stage 0 can't lower reading recursionIdentityMap yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:312:21",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:312:21: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:318:33",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:318:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:338:14",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:338:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:352:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:357:10",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:357:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpLegend"
+        }
+      ],
+      "pop": [
+        {
+          "unit": "src/compiler/tracing.ts:161:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:164:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:164:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "pop"
+        }
+      ],
+      "popAll": [
+        {
+          "unit": "src/compiler/tracing.ts:166:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:171:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:171:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "popAll"
+        }
+      ]
+    },
+    "after": {
+      "findings": [
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:96:19",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "text": "src/compiler/tracing.ts:96:19: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:201:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:207:67",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/tracing.ts:207:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+          "owner": "getLocation"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:201:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:208:65",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/tracing.ts:208:65: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+          "owner": "getLocation"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:233:34",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:233:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:319:33",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:319:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:339:14",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:339:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:353:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:358:10",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:358:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpLegend"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:379:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:379:1",
+          "reason": "an ambient value declaration",
+          "text": "src/compiler/tracing.ts:379:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+          "owner": null
+        },
+        {
+          "unit": "src/compiler/tracing.ts:380:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:380:1",
+          "reason": "an ambient value declaration",
+          "text": "src/compiler/tracing.ts:380:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+          "owner": null
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:64:22",
+          "reason": "a call returning any",
+          "text": "src/compiler/tracing.ts:64:22: stage 0 can't lower a call returning any yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:72:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:72:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:96:19",
+          "reason": "reading tracingEnabled",
+          "text": "src/compiler/tracing.ts:96:19: stage 0 can't lower reading tracingEnabled yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:103:67",
+          "reason": "a spread after the first field",
+          "text": "src/compiler/tracing.ts:103:67: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:176:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:184:44",
+          "reason": "a spread into record storage from a fixed object",
+          "text": "src/compiler/tracing.ts:184:44: stage 0 can't lower a spread into record storage from a fixed object yet",
+          "owner": "writeStackEvent"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:188:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:195:67",
+          "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+          "text": "src/compiler/tracing.ts:195:67: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet",
+          "owner": "writeEvent"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:225:38",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:225:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:233:19",
+          "reason": "a value of type any",
+          "text": "src/compiler/tracing.ts:233:19: stage 0 can't lower a value of type any yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:238:18",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:238:18: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:19176:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:19176:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:251:46",
+          "reason": "reading indexedAccessType",
+          "text": "src/compiler/tracing.ts:251:46: stage 0 can't lower reading indexedAccessType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:257:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:257:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:15216:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:15216:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:270:43",
+          "reason": "reading conditionalType",
+          "text": "src/compiler/tracing.ts:270:43: stage 0 can't lower reading conditionalType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:17250:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:17250:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:281:43",
+          "reason": "reading substitutionType",
+          "text": "src/compiler/tracing.ts:281:43: stage 0 can't lower reading substitutionType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:287:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:287:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:297:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:297:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:310:34",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:310:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:312:38",
+          "reason": "reading recursionIdentityMap",
+          "text": "src/compiler/tracing.ts:312:38: stage 0 can't lower reading recursionIdentityMap yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:313:21",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:313:21: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:319:33",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:319:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:339:14",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:339:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:353:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:358:10",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:358:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpLegend"
+        }
+      ],
+      "pop": [],
+      "popAll": []
+    },
+    "mutant-pop": {
+      "findings": [
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:96:19",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "text": "src/compiler/tracing.ts:96:19: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:200:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:206:67",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/tracing.ts:206:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+          "owner": "getLocation"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:200:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:207:65",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/tracing.ts:207:65: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+          "owner": "getLocation"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:232:34",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:232:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:318:33",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:318:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:338:14",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:338:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:352:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:357:10",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:357:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpLegend"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:378:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:378:1",
+          "reason": "an ambient value declaration",
+          "text": "src/compiler/tracing.ts:378:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+          "owner": null
+        },
+        {
+          "unit": "src/compiler/tracing.ts:379:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:379:1",
+          "reason": "an ambient value declaration",
+          "text": "src/compiler/tracing.ts:379:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+          "owner": null
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:64:22",
+          "reason": "a call returning any",
+          "text": "src/compiler/tracing.ts:64:22: stage 0 can't lower a call returning any yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:72:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:72:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:96:19",
+          "reason": "reading tracingEnabled",
+          "text": "src/compiler/tracing.ts:96:19: stage 0 can't lower reading tracingEnabled yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:103:67",
+          "reason": "a spread after the first field",
+          "text": "src/compiler/tracing.ts:103:67: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:161:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:164:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:164:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "pop"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:175:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:183:44",
+          "reason": "a spread into record storage from a fixed object",
+          "text": "src/compiler/tracing.ts:183:44: stage 0 can't lower a spread into record storage from a fixed object yet",
+          "owner": "writeStackEvent"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:187:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:194:67",
+          "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+          "text": "src/compiler/tracing.ts:194:67: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet",
+          "owner": "writeEvent"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:224:38",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:224:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:232:19",
+          "reason": "a value of type any",
+          "text": "src/compiler/tracing.ts:232:19: stage 0 can't lower a value of type any yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:237:18",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:237:18: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:19176:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:19176:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:250:46",
+          "reason": "reading indexedAccessType",
+          "text": "src/compiler/tracing.ts:250:46: stage 0 can't lower reading indexedAccessType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:256:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:256:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:15216:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:15216:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:269:43",
+          "reason": "reading conditionalType",
+          "text": "src/compiler/tracing.ts:269:43: stage 0 can't lower reading conditionalType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:17250:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:17250:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:280:43",
+          "reason": "reading substitutionType",
+          "text": "src/compiler/tracing.ts:280:43: stage 0 can't lower reading substitutionType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:286:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:286:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:296:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:296:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:309:34",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:309:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:311:38",
+          "reason": "reading recursionIdentityMap",
+          "text": "src/compiler/tracing.ts:311:38: stage 0 can't lower reading recursionIdentityMap yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:312:21",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:312:21: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:318:33",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:318:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:338:14",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:338:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:352:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:357:10",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:357:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpLegend"
+        }
+      ],
+      "pop": [
+        {
+          "unit": "src/compiler/tracing.ts:161:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:164:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:164:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "pop"
+        }
+      ],
+      "popAll": []
+    },
+    "mutant-popAll": {
+      "findings": [
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:96:19",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "text": "src/compiler/tracing.ts:96:19: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:201:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:207:67",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/tracing.ts:207:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+          "owner": "getLocation"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:201:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:208:65",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/tracing.ts:208:65: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+          "owner": "getLocation"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:233:34",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:233:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:319:33",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:319:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:339:14",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:339:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:353:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:358:10",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:358:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpLegend"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:379:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:379:1",
+          "reason": "an ambient value declaration",
+          "text": "src/compiler/tracing.ts:379:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+          "owner": null
+        },
+        {
+          "unit": "src/compiler/tracing.ts:380:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:380:1",
+          "reason": "an ambient value declaration",
+          "text": "src/compiler/tracing.ts:380:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+          "owner": null
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:64:22",
+          "reason": "a call returning any",
+          "text": "src/compiler/tracing.ts:64:22: stage 0 can't lower a call returning any yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:72:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:72:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:96:19",
+          "reason": "reading tracingEnabled",
+          "text": "src/compiler/tracing.ts:96:19: stage 0 can't lower reading tracingEnabled yet",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:59:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:103:67",
+          "reason": "a spread after the first field",
+          "text": "src/compiler/tracing.ts:103:67: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)",
+          "owner": "startTracing"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:167:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:172:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:172:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "popAll"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:176:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:184:44",
+          "reason": "a spread into record storage from a fixed object",
+          "text": "src/compiler/tracing.ts:184:44: stage 0 can't lower a spread into record storage from a fixed object yet",
+          "owner": "writeStackEvent"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:188:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:195:67",
+          "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+          "text": "src/compiler/tracing.ts:195:67: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet",
+          "owner": "writeEvent"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:225:38",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:225:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:233:19",
+          "reason": "a value of type any",
+          "text": "src/compiler/tracing.ts:233:19: stage 0 can't lower a value of type any yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:238:18",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:238:18: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:19176:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:19176:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:251:46",
+          "reason": "reading indexedAccessType",
+          "text": "src/compiler/tracing.ts:251:46: stage 0 can't lower reading indexedAccessType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:257:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:257:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:15216:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:15216:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:270:43",
+          "reason": "reading conditionalType",
+          "text": "src/compiler/tracing.ts:270:43: stage 0 can't lower reading conditionalType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:17250:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/checker.ts:17250:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:281:43",
+          "reason": "reading substitutionType",
+          "text": "src/compiler/tracing.ts:281:43: stage 0 can't lower reading substitutionType yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:287:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:287:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:297:17",
+          "reason": "reading objectFlags",
+          "text": "src/compiler/tracing.ts:297:17: stage 0 can't lower reading objectFlags yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:310:34",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:310:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:312:38",
+          "reason": "reading recursionIdentityMap",
+          "text": "src/compiler/tracing.ts:312:38: stage 0 can't lower reading recursionIdentityMap yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:313:21",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/tracing.ts:313:21: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:319:33",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/tracing.ts:319:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:219:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:339:14",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:339:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpTypes"
+        },
+        {
+          "unit": "src/compiler/tracing.ts:353:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/tracing.ts:358:10",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "src/compiler/tracing.ts:358:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "owner": "dumpLegend"
+        }
+      ],
+      "pop": [],
+      "popAll": [
+        {
+          "unit": "src/compiler/tracing.ts:167:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/tracing.ts:172:9",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/tracing.ts:172:9: stage 0 can't lower assigning a field of a value yet",
+          "owner": "popAll"
+        }
+      ]
+    }
+  },
+  "newlyVisibleFindingsInTracing": [],
+  "newlyVisibleStopsInPopOrPopAll": [],
+  "startTracing72Retained": true,
+  "deltaCoordinateNormalization": "The added guard inserts one line; after positions at line 165 or later map back one line for delta comparison only. Raw and owner findings retain actual positions."
+}

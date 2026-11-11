@@ -5,7 +5,7 @@ const names=fs.readdirSync(beforeDir).filter(x=>x.endsWith('.js')).sort();assert
 const report=[];
 for(const name of names){const before=fs.readFileSync(path.join(beforeDir,name),'utf8'),after=fs.readFileSync(path.join(afterDir,name),'utf8');
  if(before===after){report.push({name,classification:'byte-identical'});continue;}
- let pops=0,alls=0;const expected=before.replace(/(eventStack\d*)\.length--;/g,(_,s)=>{pops++;return s+'.splice('+s+'.length - 1);';}).replace(/(eventStack\d*)\.length = 0;/g,(_,s)=>{alls++;return s+'.splice(0);';});
+ let pops=0,alls=0;const expected=before.replace(/^([ \t]*)(eventStack\d*)\.length--;/gm,(_,indent,s)=>{pops++;return indent+'if ('+s+'.length === 0) throw new RangeError("Invalid array length");\n'+indent+s+'.splice('+s+'.length - 1);';}).replace(/(eventStack\d*)\.length = 0;/g,(_,s)=>{alls++;return s+'.splice(0);';});
  assert.equal(pops,1,name);assert.equal(alls,1,name);assert.equal(after,expected,'unreviewed emitted bytes: '+name);
  const diff=cp.spawnSync('diff',['-u',path.join(beforeDir,name),path.join(afterDir,name)],{encoding:'utf8'});assert.equal(diff.status,1);fs.writeFileSync(path.join(path.dirname(out),name+'.diff'),diff.stdout);
  report.push({name,popEdits:pops,popAllEdits:alls,hunks:diff.stdout.split('\n').filter(x=>x.startsWith('@@')),classification:'exact two owner edits; no esbuild rename'});

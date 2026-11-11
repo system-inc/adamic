@@ -3,7 +3,11 @@ from run import raw,root,run
 import json,shutil
 source=Path('/workspace/scratch/tracing-length-after');product=raw/'counted-product';tree=product/'tree'
 assert (source/'built/local/run.js').is_file()
-if not tree.exists():shutil.copytree(source,tree,symlinks=True,ignore=shutil.ignore_patterns('node_modules'))
+shutil.copytree(source,tree,symlinks=True,ignore=lambda directory,names: {'node_modules'} if Path(directory)==source else set())
+# The full payload, including every nested node_modules fixture, must match before counters.
+allFiles=sorted(str(p.relative_to(source)) for p in source.rglob('*') if p.is_file() and p.relative_to(source).parts[0]!='node_modules')
+assert allFiles==sorted(str(p.relative_to(tree)) for p in tree.rglob('*') if p.is_file())
+assert all((source/n).read_bytes()==(tree/n).read_bytes() for n in allFiles)
 files=sorted(str(p.relative_to(source)) for p in (source/'src').rglob('*') if p.is_file())
 assert all((source/n).read_bytes()==(tree/n).read_bytes() for n in files)
 js=sorted(p.name for p in (source/'built/local').glob('*.js'))
@@ -17,5 +21,5 @@ needle='return append(environment, extra...)';assert body.count(needle)==1
 body=body.replace(needle,'environment = append(environment, '+json.dumps('NODE_OPTIONS=--require='+str(raw/'preload.cjs'))+', '+json.dumps('TRACING_LENGTH_COUNTER_DIR='+str(raw/'lane-counts'))+')\n\t'+needle)
 overlay=raw/'lane-environment.go.txt';overlay.write_text(text[:start]+body+text[end:]);replace[str(p)]=str(overlay)
 (raw/'lane-overlay.json').write_text(json.dumps({'Replace':replace},indent=2)+'\n');(raw/'lane-counts').mkdir()
-(raw/'counted-source.json').write_text(json.dumps({'sourceFilesIdentical':len(files),'normalJavaScriptFilesIdenticalBeforeInstrumentation':len(js),'privateProduct':str(product)},indent=2)+'\n')
+(raw/'counted-source.json').write_text(json.dumps({'allPayloadFilesIdenticalBeforeInstrumentation':len(allFiles),'nestedNodeModulesFixturesPreserved':True,'sourceFilesIdentical':len(files),'normalJavaScriptFilesIdenticalBeforeInstrumentation':len(js),'privateProduct':str(product)},indent=2)+'\n')
 print(tree)

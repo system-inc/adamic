@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "commit-tree",
+    "49d74f087096fcc5d5d15f2884759a145392e0bc",
+    "-p",
+    "6a77a7b644bd8a4ae77a35371f4d01b6edb997b7",
+    "-m",
+    "Checkpoint guarded tracing truncations and reentrant RangeError finding"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "seconds": 0.018962875999932294
+}

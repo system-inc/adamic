@@ -1,0 +1,46 @@
+{
+  "before": {
+    "result": {
+      "tree": "/workspace/scratch/tracing-length-evidence/before-counted",
+      "class": "RangeError",
+      "message": "Invalid array length",
+      "reentries": 1,
+      "array": []
+    },
+    "histograms": {
+      "popCall": {
+        "1": 1
+      },
+      "popWrite": {
+        "0": 1
+      },
+      "popAllCall": {
+        "1": 1
+      },
+      "popAllWrite": {
+        "1": 1
+      }
+    }
+  },
+  "after": {
+    "result": {
+      "tree": "/workspace/scratch/tracing-length-evidence/counted-product/tree",
+      "class": "RangeError",
+      "message": "Invalid array length",
+      "reentries": 1,
+      "array": []
+    },
+    "histograms": {
+      "popCall": {
+        "1": 1
+      },
+      "popWrite": {},
+      "popAllCall": {
+        "1": 1
+      },
+      "popAllWrite": {
+        "1": 1
+      }
+    }
+  }
+}

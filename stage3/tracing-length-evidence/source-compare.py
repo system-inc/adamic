@@ -7,5 +7,5 @@ pins=json.loads(Path('/workspace/adamic/stage3/adapt/99-correctness-tracing-leng
 for p in pins:assert text.count(p['before'])==1;text=text.replace(p['before'],p['after'])
 assert text.encode()==(a/changed[0]).read_bytes()
 roots=sorted((a/'src/compiler').rglob('*.ts'));assert len(roots)==79
-(raw/'source-comparison.json').write_text(json.dumps({'files':len(files),'changed':changed,'exactOwnerEdits':True,'allOtherBytesIdentical':True,'compilerRoots':len(roots)},indent=2)+'\n')
+(raw/'source-comparison-report.json').write_text(json.dumps({'files':len(files),'changed':changed,'exactOwnerEdits':True,'allOtherBytesIdentical':True,'compilerRoots':len(roots)},indent=2)+'\n')
 print('exact source comparison passed')
