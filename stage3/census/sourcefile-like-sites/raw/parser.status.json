@@ -1,0 +1,13 @@
+{
+  "file": "parser.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-adapted/src/compiler",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/parser.jsonl"
+  ],
+  "child_exit": -15,
+  "wall_seconds": 300.11861807900004,
+  "over_five_minutes": true,
+  "piece": 4,
+  "max_concurrent_files": 2
+}

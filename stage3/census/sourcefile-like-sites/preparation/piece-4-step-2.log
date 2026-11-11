@@ -1,0 +1,10 @@
+[
+  {
+    "where": "executeCommandLine.ts:109:41",
+    "phase": "refusal_scan",
+    "callee": "getLineStarts",
+    "arg": 0,
+    "fn": "<anonymous@107>",
+    "expression": "getLineStarts(file)"
+  }
+]

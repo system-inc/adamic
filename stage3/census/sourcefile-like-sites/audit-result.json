@@ -1,0 +1,21 @@
+{
+  "attempted": 79,
+  "completed": 73,
+  "timeouts": [
+    "checker.ts",
+    "emitter.ts",
+    "parser.ts",
+    "program.ts",
+    "scanner.ts",
+    "utilities.ts"
+  ],
+  "raw_observations": 7,
+  "physical_sites": 7,
+  "diagnostic_states": [
+    [
+      false,
+      0
+    ]
+  ],
+  "audit": "passed"
+}

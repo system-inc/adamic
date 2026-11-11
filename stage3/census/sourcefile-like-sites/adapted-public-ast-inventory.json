@@ -1,0 +1,143 @@
+[
+  {
+    "file": "factory/nodeChildren.ts",
+    "line": 14,
+    "name": "getNodeChildren",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getNodeChildren(node: Node, sourceFile: SourceFileLike): readonly Node[] | undefined"
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "line": 27,
+    "name": "setNodeChildren",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function setNodeChildren(node: Node, sourceFile: SourceFileLike, children: readonly Node[]): readonly Node[]"
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "line": 44,
+    "name": "unsetNodeChildren",
+    "implementation": true,
+    "parameters": [
+      "origSourceFile"
+    ],
+    "signature": "export function unsetNodeChildren(node: Node, origSourceFile: SourceFileLike): void"
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "line": 55,
+    "name": "transferSourceFileChildren",
+    "implementation": true,
+    "parameters": [
+      "sourceFile",
+      "targetSourceFile"
+    ],
+    "signature": "export function transferSourceFileChildren(sourceFile: SourceFileLike, targetSourceFile: SourceFileLike): void"
+  },
+  {
+    "file": "scanner.ts",
+    "line": 465,
+    "name": "getPositionOfLineAndCharacter",
+    "implementation": false,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number): number;"
+  },
+  {
+    "file": "scanner.ts",
+    "line": 467,
+    "name": "getPositionOfLineAndCharacter",
+    "implementation": false,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number, allowEdits?: true): number;"
+  },
+  {
+    "file": "scanner.ts",
+    "line": 468,
+    "name": "getPositionOfLineAndCharacter",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number, allowEdits?: true): number"
+  },
+  {
+    "file": "scanner.ts",
+    "line": 503,
+    "name": "getLineStarts",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getLineStarts(sourceFile: SourceFileLike): readonly number[]"
+  },
+  {
+    "file": "scanner.ts",
+    "line": 537,
+    "name": "getLinesBetweenPositions",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getLinesBetweenPositions(sourceFile: SourceFileLike, pos1: number, pos2: number): number"
+  },
+  {
+    "file": "scanner.ts",
+    "line": 548,
+    "name": "getLineAndCharacterOfPosition",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter"
+  },
+  {
+    "file": "utilities.ts",
+    "line": 1016,
+    "name": "getStartPositionOfLine",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getStartPositionOfLine(line: number, sourceFile: SourceFileLike): number"
+  },
+  {
+    "file": "utilities.ts",
+    "line": 1030,
+    "name": "getEndLinePosition",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getEndLinePosition(line: number, sourceFile: SourceFileLike): number"
+  },
+  {
+    "file": "utilities.ts",
+    "line": 1239,
+    "name": "getTokenPosOfNode",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getTokenPosOfNode(node: Node, sourceFile?: SourceFileLike, includeJsDoc?: boolean): number"
+  },
+  {
+    "file": "utilities.ts",
+    "line": 1277,
+    "name": "getNonDecoratorTokenPosOfNode",
+    "implementation": true,
+    "parameters": [
+      "sourceFile"
+    ],
+    "signature": "export function getNonDecoratorTokenPosOfNode(node: Node, sourceFile?: SourceFileLike): number"
+  }
+]

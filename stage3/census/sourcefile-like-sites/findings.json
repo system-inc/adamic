@@ -1,0 +1,100 @@
+[
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/executeCommandLine.ts:105:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/executeCommandLine.ts:109:41",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/executeCommandLine.ts:109:41: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "executeCommandLine.ts"
+    ]
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/tracing.ts:200:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/tracing.ts:206:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "tracing.ts"
+    ]
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/tracing.ts:200:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/tracing.ts:207:65",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/tracing.ts:207:65: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "tracing.ts"
+    ]
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/transformers/declarations.ts:1006:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/transformers/declarations.ts:1264:70",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/transformers/declarations.ts:1264:70: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "transformers/declarations.ts"
+    ]
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/transformers/declarations.ts:1006:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/transformers/declarations.ts:1264:139",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/transformers/declarations.ts:1264:139: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "transformers/declarations.ts"
+    ]
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/transformers/jsx.ts:333:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/transformers/jsx.ts:359:63",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/transformers/jsx.ts:359:63: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "transformers/jsx.ts"
+    ]
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/watch.ts:233:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/watch.ts:249:60",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/watch.ts:249:60: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "watch.ts"
+    ]
+  }
+]

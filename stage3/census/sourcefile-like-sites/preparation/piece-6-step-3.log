@@ -1,0 +1,7 @@
+| Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Sites whose identified reason road 2 clears |
+| --- | ---: | ---: | ---: | --- | --- |
+| `getLineAndCharacterOfPosition` | 5 | 3 | 73 | no | 5 |
+| `getLineStarts` | 1 | 1 | 0 | no | 1 |
+| `getPositionOfLineAndCharacter` | 0 | 0 | 0 | yes | 0 |
+
+Reason census: 6 site(s): optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields.

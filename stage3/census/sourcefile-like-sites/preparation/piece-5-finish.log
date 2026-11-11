@@ -1,0 +1,5 @@
+child exit=0 ['python3', '/workspace/adamic/stage3/census/sourcefile-like-sites/seal-inputs.py']
+child exit=0 ['python3', '/workspace/adamic/stage3/census/sourcefile-like-sites/collect.py']
+child exit=0 ['node', '/workspace/adamic/stage3/census/sourcefile-like-sites/classify.cjs']
+child exit=0 ['python3', '/workspace/adamic/stage3/census/sourcefile-like-sites/report.py']
+child exit=0 ['python3', '/workspace/adamic/stage3/census/sourcefile-like-sites/checkpoint.py', '5']

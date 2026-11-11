@@ -1,0 +1,13 @@
+{
+  "file": "program.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-adapted/src/compiler",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/program.jsonl"
+  ],
+  "child_exit": -15,
+  "wall_seconds": 300.41823194100016,
+  "over_five_minutes": true,
+  "piece": 4,
+  "max_concurrent_files": 2
+}

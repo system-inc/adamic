@@ -1,0 +1,19 @@
+submodule cache: off
+v24.19.0
+setup: node ready (0.067s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.075s)
+setup: submodules ready (0.402s)
+setup: tsc ready (TypeScript 6.0.3) (0.604s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.022s
+setup: markdown dependencies ready (0.725s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.741s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (0.744s)
+setup: go build ready (167.680s)
+setup: test binaries deferred (use --warm-tests) (167.843s)
+setup: build cache warm (167.845s)
+setup: build-flags commit=d690f276749f91e6b36fe3a9726a5a453fcd7d39 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=off load-before=4.61 6.88 3.85 5/165 7375 load-after=11.89 9.48 5.35 5/166 8607
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (167.948s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.3LOiRx

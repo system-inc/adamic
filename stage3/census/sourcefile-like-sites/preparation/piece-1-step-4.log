@@ -1,0 +1,24 @@
+child exit=0 ['git', 'add', 'stage3/census/sourcefile-like-sites']
+
+child exit=0 ['git', 'rev-parse', 'HEAD']
+d690f276749f91e6b36fe3a9726a5a453fcd7d39
+
+child exit=0 ['git', 'write-tree']
+b863b23d041a2bb85d8aca56d94f9de27807d695
+
+child exit=0 ['git', 'commit-tree', 'b863b23d041a2bb85d8aca56d94f9de27807d695', '-p', 'd690f276749f91e6b36fe3a9726a5a453fcd7d39', '-m', 'baobab census checkpoint piece 1']
+c5119ddc879873f070ac7e233c2ef252c0bce1a3
+
+child exit=0 ['git', 'update-ref', 'refs/heads/typescript/sourcefile-like-sites-checkpoint', 'c5119ddc879873f070ac7e233c2ef252c0bce1a3']
+
+child exit=0 ['git', 'push', 'origin', 'refs/heads/typescript/sourcefile-like-sites-checkpoint:refs/heads/typescript/sourcefile-like-sites-checkpoint']
+remote: 
+remote: Create a pull request for 'typescript/sourcefile-like-sites-checkpoint' on GitHub by visiting:        
+remote:      https://github.com/system-inc/adamic/pull/new/typescript/sourcefile-like-sites-checkpoint        
+remote: 
+remote: GitHub found 22 vulnerabilities on system-inc/adamic's default branch (10 high, 11 moderate, 1 low). To find out more, visit:        
+remote:      https://github.com/system-inc/adamic/security/dependabot        
+remote: 
+To https://github.com/system-inc/adamic.git
+ * [new branch]          typescript/sourcefile-like-sites-checkpoint -> typescript/sourcefile-like-sites-checkpoint
+

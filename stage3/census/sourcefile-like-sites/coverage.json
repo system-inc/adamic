@@ -1,0 +1,1560 @@
+[
+  {
+    "file": "_namespaces/ts.moduleSpecifiers.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/_namespaces__ts.moduleSpecifiers.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 20.821653651999895,
+    "over_five_minutes": false,
+    "piece": 1,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "_namespaces/ts.performance.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/_namespaces__ts.performance.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 19.30807879000008,
+    "over_five_minutes": false,
+    "piece": 1,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "_namespaces/ts.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/_namespaces__ts.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 38.79349587299998,
+    "over_five_minutes": false,
+    "piece": 1,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "binder.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/binder.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 205.83991077899987,
+    "over_five_minutes": false,
+    "piece": 1,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/binder.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "builder.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/builder.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 96.45904782599996,
+    "over_five_minutes": false,
+    "piece": 1,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/builder.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "builderPublic.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/builderPublic.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 25.11436020500014,
+    "over_five_minutes": false,
+    "piece": 1,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/builderPublic.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "builderState.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/builderState.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 63.299235326999906,
+    "over_five_minutes": false,
+    "piece": 1,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/builderState.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "builderStatePublic.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/builderStatePublic.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 22.209491298000103,
+    "over_five_minutes": false,
+    "piece": 1,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "checker.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/checker.jsonl"
+    ],
+    "child_exit": -15,
+    "wall_seconds": 300.11739656199984,
+    "over_five_minutes": true,
+    "piece": 1,
+    "recorded_files": [],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": false
+  },
+  {
+    "file": "commandLineParser.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/commandLineParser.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 131.8367582919998,
+    "over_five_minutes": false,
+    "piece": 1,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "core.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/core.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 39.19774103700024,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/core.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "corePublic.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/corePublic.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 25.184023424000088,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/corePublic.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "debug.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/debug.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 50.03598223200015,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/debug.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "diagnosticInformationMap.generated.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/diagnosticInformationMap.generated.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 28.943477945999803,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "emitter.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/emitter.jsonl"
+    ],
+    "child_exit": -15,
+    "wall_seconds": 300.1164479160002,
+    "over_five_minutes": true,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": false
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/executeCommandLine.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 133.87529990700023,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/expressionToTypeNode.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 109.0885495450002,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/baseNodeFactory.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__baseNodeFactory.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 23.65724019900017,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/emitHelpers.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__emitHelpers.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 60.0438567289998,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/emitNode.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__emitNode.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 30.663334131999818,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__nodeChildren.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 30.257111647999864,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/nodeChildren.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/nodeConverters.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__nodeConverters.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 50.4294953829999,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/nodeConverters.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/nodeFactory.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__nodeFactory.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 292.40865296599986,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/nodeFactory.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__nodeTests.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 110.42806160499958,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/nodeTests.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/parenthesizerRules.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__parenthesizerRules.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 57.95677715199963,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/parenthesizerRules.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/utilities.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__utilities.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 97.5906758430001,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/utilities.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/utilitiesPublic.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__utilitiesPublic.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 23.454774984000323,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/utilitiesPublic.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "hostErrors.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/hostErrors.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 22.467930871000135,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/hostErrors.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/moduleNameResolver.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 198.42537872100002,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/moduleNameResolver.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/moduleSpecifiers.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 65.49058271599961,
+    "over_five_minutes": false,
+    "piece": 3,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/moduleSpecifiers.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "parser.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/parser.jsonl"
+    ],
+    "child_exit": -15,
+    "wall_seconds": 300.11861807900004,
+    "over_five_minutes": true,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": false
+  },
+  {
+    "file": "path.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/path.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 54.931350976999965,
+    "over_five_minutes": false,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/path.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "performance.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/performance.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 32.62501531599992,
+    "over_five_minutes": false,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/performance.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "performanceCore.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/performanceCore.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 25.516511919000095,
+    "over_five_minutes": false,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/performanceCore.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "program.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/program.jsonl"
+    ],
+    "child_exit": -15,
+    "wall_seconds": 300.41823194100016,
+    "over_five_minutes": true,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": false
+  },
+  {
+    "file": "programDiagnostics.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/programDiagnostics.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 47.93019912699992,
+    "over_five_minutes": false,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/programDiagnostics.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "resolutionCache.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/resolutionCache.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 65.12875528199993,
+    "over_five_minutes": false,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/resolutionCache.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "scanner.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/scanner.jsonl"
+    ],
+    "child_exit": -15,
+    "wall_seconds": 300.11927463799975,
+    "over_five_minutes": true,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": false
+  },
+  {
+    "file": "semver.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/semver.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 60.31298378400015,
+    "over_five_minutes": false,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/semver.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "sourcemap.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/sourcemap.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 67.28714519899995,
+    "over_five_minutes": false,
+    "piece": 4,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/sourcemap.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "symbolWalker.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/symbolWalker.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 47.17875014299989,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/symbolWalker.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "sys.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/sys.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 122.7417612840004,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/sys.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "tracing.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/tracing.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 37.33934662299998,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/tracing.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformer.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformer.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 33.97094317000028,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformer.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/classFields.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__classFields.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 178.11867855299988,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/classFields.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/classThis.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__classThis.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 23.177688479999688,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/classThis.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/declarations.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__declarations.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 130.5250803519998,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/declarations.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/declarations/diagnostics.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__declarations__diagnostics.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 71.27394784099988,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/destructuring.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__destructuring.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 55.354960265000045,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/destructuring.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2015.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2015.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 211.99476622599968,
+    "over_five_minutes": false,
+    "piece": 5,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2015.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2016.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2016.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 38.0649353609997,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2017.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2017.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 72.32550863600045,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2018.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2018.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 93.46021770900006,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2019.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2019.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 32.653016166999805,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2020.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2020.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 68.69180784199943,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2021.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2021.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 30.085092156999963,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/esDecorators.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__esDecorators.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 153.10049159699975,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/esnext.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__esnext.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 87.89319197900022,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/generators.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__generators.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 169.9662812050001,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/generators.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/jsx.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__jsx.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 107.95077192100052,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/legacyDecorators.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__legacyDecorators.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 117.00519086500026,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/legacyDecorators.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/module/esnextAnd2015.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__module__esnextAnd2015.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 83.96220933600034,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/module/esnextAnd2015.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/module/impliedNodeFormatDependent.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__module__impliedNodeFormatDependent.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 31.52414552999926,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/module/module.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__module__module.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 131.97285802100032,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/module/module.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/module/system.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__module__system.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 168.17051247400013,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/module/system.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/namedEvaluation.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__namedEvaluation.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 30.90256072699958,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/namedEvaluation.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/taggedTemplate.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__taggedTemplate.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 25.054419056999905,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/taggedTemplate.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/ts.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__ts.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 183.42262151700015,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/ts.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/typeSerializer.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__typeSerializer.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 65.9768646880002,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/typeSerializer.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/utilities.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__utilities.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 103.86930641300023,
+    "over_five_minutes": false,
+    "piece": 7,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/utilities.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "tsbuild.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/tsbuild.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 32.974207707999994,
+    "over_five_minutes": false,
+    "piece": 8,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/tsbuild.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/tsbuildPublic.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 72.01397227100006,
+    "over_five_minutes": false,
+    "piece": 8,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/tsbuildPublic.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "types.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/types.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 94.50639688400042,
+    "over_five_minutes": false,
+    "piece": 8,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/types.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "utilities.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/utilities.jsonl"
+    ],
+    "child_exit": -15,
+    "wall_seconds": 300.11922185799995,
+    "over_five_minutes": true,
+    "piece": 8,
+    "max_concurrent_files": 2,
+    "recorded_files": [],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": false
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/utilitiesPublic.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 207.53863656500016,
+    "over_five_minutes": false,
+    "piece": 8,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/utilitiesPublic.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "visitorPublic.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/visitorPublic.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 37.85444843999994,
+    "over_five_minutes": false,
+    "piece": 8,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/visitorPublic.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "watch.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/watch.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 52.456179228999645,
+    "over_five_minutes": false,
+    "piece": 8,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/watch.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "watchPublic.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/watchPublic.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 23.934404341000118,
+    "over_five_minutes": false,
+    "piece": 8,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/watchPublic.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "watchUtilities.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/watchUtilities.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 67.7180026039996,
+    "over_five_minutes": false,
+    "piece": 8,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/watchUtilities.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  }
+]

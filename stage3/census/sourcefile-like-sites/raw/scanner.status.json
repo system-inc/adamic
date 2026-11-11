@@ -1,0 +1,13 @@
+{
+  "file": "scanner.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-adapted/src/compiler",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/scanner.jsonl"
+  ],
+  "child_exit": -15,
+  "wall_seconds": 300.11927463799975,
+  "over_five_minutes": true,
+  "piece": 4,
+  "max_concurrent_files": 2
+}
