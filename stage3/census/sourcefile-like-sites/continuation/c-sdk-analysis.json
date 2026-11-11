@@ -1,0 +1,592 @@
+{
+  "scope": "Independent emitted-public-SDK caller, separate from the 34 original compiler views",
+  "conclusion": "No tested exact (c) public API meets no-new-refusal-anywhere: optional cache lineMap is visible in LineMapSource but stripped from public SourceFile. A readonly slot alone does not repair hiding.",
+  "variants": {
+    "original": {
+      "checker": {
+        "accepted": true,
+        "diagnostics": [],
+        "driver": "production load.Load, no lowering or output IR",
+        "roots": 1,
+        "seconds": 0.251802112
+      },
+      "cohere_findings": [],
+      "cohere_summary": {
+        "kind": "summary",
+        "schemaVersion": 1,
+        "verdict": "pass",
+        "seconds": 0.199169186,
+        "graphSeconds": 0.10223893,
+        "rules": 40,
+        "phases": [
+          {
+            "name": "fix",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "types",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "lint",
+            "outcome": "ran",
+            "seconds": 0.09032761
+          },
+          {
+            "name": "unused",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested \u2014 this is a report, ask for it with --unused"
+          }
+        ],
+        "cache": {
+          "replayed": false,
+          "filesReplayed": 0,
+          "off": true
+        },
+        "typeErrors": 0,
+        "findings": 0,
+        "filesFixed": 0,
+        "filesFormatted": 0,
+        "wouldChange": 0,
+        "cohered": 0,
+        "filesInScope": 1,
+        "checked": 1,
+        "cached": 0,
+        "nodes": 28,
+        "gaps": {
+          "programFiles": 0,
+          "crashedFiles": 0,
+          "ruleCrashes": 0,
+          "rulesSkippingEverything": 0,
+          "formattingNotChecked": true,
+          "nothingToCheck": false,
+          "modifiedBuild": false
+        }
+      },
+      "guarded_header": {
+        "checker_rejected": false,
+        "diagnostic_sites": [],
+        "diagnostics": [],
+        "latent_mode": "full",
+        "measurement": "measured on a checker-rejected program",
+        "status": "measurement"
+      },
+      "guarded_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-original/consumer.ts:2:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/baobab-sdk-original/typescript.d.ts:8557:5",
+          "reason": "a function without a body",
+          "text": "/workspace/scratch/baobab-sdk-original/typescript.d.ts:8557:5: stage 0 can't lower a function without a body yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-original/consumer.ts:2:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/baobab-sdk-original/consumer.ts:3:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/baobab-sdk-original/typescript.d.ts:8557:5: stage 0 can't lower a function without a body yet",
+          "start": 104,
+          "end": 158
+        }
+      ],
+      "guarded_status": {
+        "file": "consumer.ts",
+        "command": [
+          "/workspace/scratch/baobab-latent",
+          "/workspace/scratch/baobab-sdk-original",
+          "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/sdk-original/raw/consumer.jsonl"
+        ],
+        "child_exit": 0,
+        "wall_seconds": 0.36809445900144055,
+        "timed_out": false,
+        "bound_seconds": 300,
+        "max_concurrent_files": 1,
+        "completed_timing_units": 2,
+        "last_timing_units": [
+          {
+            "file": "/workspace/scratch/baobab-sdk-original/consumer.ts",
+            "where": "/workspace/scratch/baobab-sdk-original/consumer.ts:1:1",
+            "wall_seconds": 0.003024161,
+            "cpu_seconds": 0.003022999999999998
+          },
+          {
+            "file": "/workspace/scratch/baobab-sdk-original/consumer.ts",
+            "where": "/workspace/scratch/baobab-sdk-original/consumer.ts:2:1",
+            "wall_seconds": 0.005541067,
+            "cpu_seconds": 0.00562600000000002
+          }
+        ]
+      },
+      "source": "import * as ts from \"./typescript.js\";\nexport function probe(file: ts.SourceFile): ts.LineAndCharacter {\n    return ts.getLineAndCharacterOfPosition(file, 0);\n}\n"
+    },
+    "c-public": {
+      "checker": {
+        "accepted": true,
+        "diagnostics": [],
+        "driver": "production load.Load, no lowering or output IR",
+        "roots": 1,
+        "seconds": 0.171637924
+      },
+      "cohere_findings": [
+        {
+          "kind": "finding",
+          "path": "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/public-adamic-consumer.ts",
+          "line": 3,
+          "column": 45,
+          "severity": "error",
+          "rule": "adamic/no-optional-widening",
+          "messageId": "optionalWidening",
+          "message": "`file` is a 'SourceFile', seen here as 'LineMapSource', which adds the optional property `lineMap` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `lineMap` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a 'readonly number[] | undefined' and holds something else. Declare `lineMap` in the source's type, or build the value with the property named."
+        }
+      ],
+      "cohere_summary": {
+        "kind": "summary",
+        "schemaVersion": 1,
+        "verdict": "fail",
+        "seconds": 0.189011328,
+        "graphSeconds": 0.128100871,
+        "rules": 40,
+        "phases": [
+          {
+            "name": "fix",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "types",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "lint",
+            "outcome": "ran",
+            "seconds": 0.0569108
+          },
+          {
+            "name": "unused",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested \u2014 this is a report, ask for it with --unused"
+          }
+        ],
+        "cache": {
+          "replayed": false,
+          "filesReplayed": 0,
+          "off": true
+        },
+        "typeErrors": 0,
+        "findings": 1,
+        "filesFixed": 0,
+        "filesFormatted": 0,
+        "wouldChange": 0,
+        "cohered": 0,
+        "filesInScope": 1,
+        "checked": 1,
+        "cached": 0,
+        "nodes": 28,
+        "gaps": {
+          "programFiles": 0,
+          "crashedFiles": 0,
+          "ruleCrashes": 0,
+          "rulesSkippingEverything": 0,
+          "formattingNotChecked": true,
+          "nothingToCheck": false,
+          "modifiedBuild": false
+        }
+      },
+      "guarded_header": {
+        "checker_rejected": false,
+        "diagnostic_sites": [],
+        "diagnostics": [],
+        "latent_mode": "full",
+        "measurement": "measured on a checker-rejected program",
+        "status": "measurement"
+      },
+      "guarded_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-c-public/consumer.ts:2:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/baobab-sdk-c-public/consumer.ts:3:45",
+          "reason": "optional property lineMap in LineMapSource absent from structural source SourceFile, which can hide fields",
+          "text": "/workspace/scratch/baobab-sdk-c-public/consumer.ts:3:45: Adamic 0.1 refuses optional property lineMap in LineMapSource absent from structural source SourceFile, which can hide fields; declare lineMap on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-c-public/consumer.ts:2:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/baobab-sdk-c-public/typescript.d.ts:8561:5",
+          "reason": "a function without a body",
+          "text": "/workspace/scratch/baobab-sdk-c-public/typescript.d.ts:8561:5: stage 0 can't lower a function without a body yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-c-public/consumer.ts:2:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/baobab-sdk-c-public/consumer.ts:3:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/baobab-sdk-c-public/typescript.d.ts:8561:5: stage 0 can't lower a function without a body yet",
+          "start": 104,
+          "end": 158
+        }
+      ],
+      "guarded_status": {
+        "file": "consumer.ts",
+        "command": [
+          "/workspace/scratch/baobab-latent",
+          "/workspace/scratch/baobab-sdk-c-public",
+          "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/sdk-c-public/raw/consumer.jsonl"
+        ],
+        "child_exit": 0,
+        "wall_seconds": 0.3209075810009381,
+        "timed_out": false,
+        "bound_seconds": 300,
+        "max_concurrent_files": 1,
+        "completed_timing_units": 2,
+        "last_timing_units": [
+          {
+            "file": "/workspace/scratch/baobab-sdk-c-public/consumer.ts",
+            "where": "/workspace/scratch/baobab-sdk-c-public/consumer.ts:1:1",
+            "wall_seconds": 0.012876454,
+            "cpu_seconds": 0.027871000000000035
+          },
+          {
+            "file": "/workspace/scratch/baobab-sdk-c-public/consumer.ts",
+            "where": "/workspace/scratch/baobab-sdk-c-public/consumer.ts:2:1",
+            "wall_seconds": 0.014244033,
+            "cpu_seconds": 0.041845999999999994
+          }
+        ]
+      },
+      "source": "import * as ts from \"./typescript.js\";\nexport function probe(file: ts.SourceFile): ts.LineAndCharacter {\n    return ts.getLineAndCharacterOfPosition(file, 0);\n}\n"
+    },
+    "c-public-unstripped": {
+      "checker": {
+        "accepted": true,
+        "diagnostics": [],
+        "driver": "production load.Load, no lowering or output IR",
+        "roots": 1,
+        "seconds": 0.181255141
+      },
+      "cohere_findings": [
+        {
+          "kind": "finding",
+          "path": "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public-unstripped/public-adamic-consumer.ts",
+          "line": 3,
+          "column": 45,
+          "severity": "error",
+          "rule": "adamic/no-optional-widening",
+          "messageId": "optionalWidening",
+          "message": "`file` is a 'SourceFile', seen here as 'LineMapSource', which adds the optional property `lineMap` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `lineMap` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a 'readonly number[] | undefined' and holds something else. Declare `lineMap` in the source's type, or build the value with the property named."
+        }
+      ],
+      "cohere_summary": {
+        "kind": "summary",
+        "schemaVersion": 1,
+        "verdict": "fail",
+        "seconds": 0.125276557,
+        "graphSeconds": 0.059417497,
+        "rules": 40,
+        "phases": [
+          {
+            "name": "fix",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "types",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "lint",
+            "outcome": "ran",
+            "seconds": 0.056649922
+          },
+          {
+            "name": "unused",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested \u2014 this is a report, ask for it with --unused"
+          }
+        ],
+        "cache": {
+          "replayed": false,
+          "filesReplayed": 0,
+          "off": true
+        },
+        "typeErrors": 0,
+        "findings": 1,
+        "filesFixed": 0,
+        "filesFormatted": 0,
+        "wouldChange": 0,
+        "cohered": 0,
+        "filesInScope": 1,
+        "checked": 1,
+        "cached": 0,
+        "nodes": 28,
+        "gaps": {
+          "programFiles": 0,
+          "crashedFiles": 0,
+          "ruleCrashes": 0,
+          "rulesSkippingEverything": 0,
+          "formattingNotChecked": true,
+          "nothingToCheck": false,
+          "modifiedBuild": false
+        }
+      },
+      "guarded_header": {
+        "checker_rejected": false,
+        "diagnostic_sites": [],
+        "diagnostics": [],
+        "latent_mode": "full",
+        "measurement": "measured on a checker-rejected program",
+        "status": "measurement"
+      },
+      "guarded_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts:2:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts:3:45",
+          "reason": "optional property lineMap in LineMapSource absent from structural source SourceFile, which can hide fields",
+          "text": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts:3:45: Adamic 0.1 refuses optional property lineMap in LineMapSource absent from structural source SourceFile, which can hide fields; declare lineMap on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts:2:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/baobab-sdk-c-public-unstripped/typescript.d.ts:8561:5",
+          "reason": "a function without a body",
+          "text": "/workspace/scratch/baobab-sdk-c-public-unstripped/typescript.d.ts:8561:5: stage 0 can't lower a function without a body yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts:2:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts:3:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/baobab-sdk-c-public-unstripped/typescript.d.ts:8561:5: stage 0 can't lower a function without a body yet",
+          "start": 104,
+          "end": 158
+        }
+      ],
+      "guarded_status": {
+        "file": "consumer.ts",
+        "command": [
+          "/workspace/scratch/baobab-latent",
+          "/workspace/scratch/baobab-sdk-c-public-unstripped",
+          "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/sdk-c-public-unstripped/raw/consumer.jsonl"
+        ],
+        "child_exit": 0,
+        "wall_seconds": 0.31996160299968324,
+        "timed_out": false,
+        "bound_seconds": 300,
+        "max_concurrent_files": 1,
+        "completed_timing_units": 2,
+        "last_timing_units": [
+          {
+            "file": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts",
+            "where": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts:1:1",
+            "wall_seconds": 0.005408033,
+            "cpu_seconds": 0.005406999999999995
+          },
+          {
+            "file": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts",
+            "where": "/workspace/scratch/baobab-sdk-c-public-unstripped/consumer.ts:2:1",
+            "wall_seconds": 0.006077917,
+            "cpu_seconds": 0.005962999999999996
+          }
+        ]
+      },
+      "source": "import * as ts from \"./typescript.js\";\nexport function probe(file: ts.SourceFile): ts.LineAndCharacter {\n    return ts.getLineAndCharacterOfPosition(file, 0);\n}\n"
+    },
+    "c-public-readonly-sdk-control": {
+      "checker": {
+        "accepted": true,
+        "diagnostics": [],
+        "driver": "production load.Load, no lowering or output IR",
+        "roots": 1,
+        "seconds": 0.161772996
+      },
+      "cohere_findings": [
+        {
+          "kind": "finding",
+          "path": "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public-readonly-sdk-control/public-adamic-consumer.ts",
+          "line": 3,
+          "column": 45,
+          "severity": "error",
+          "rule": "adamic/no-optional-widening",
+          "messageId": "optionalWidening",
+          "message": "`file` is a 'SourceFile', seen here as 'LineMapSource', which adds the optional property `lineMap` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `lineMap` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a 'readonly number[] | undefined' and holds something else. Declare `lineMap` in the source's type, or build the value with the property named."
+        }
+      ],
+      "cohere_summary": {
+        "kind": "summary",
+        "schemaVersion": 1,
+        "verdict": "fail",
+        "seconds": 0.227036869,
+        "graphSeconds": 0.120919295,
+        "rules": 40,
+        "phases": [
+          {
+            "name": "fix",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "types",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "lint",
+            "outcome": "ran",
+            "seconds": 0.099063131
+          },
+          {
+            "name": "unused",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested \u2014 this is a report, ask for it with --unused"
+          }
+        ],
+        "cache": {
+          "replayed": false,
+          "filesReplayed": 0,
+          "off": true
+        },
+        "typeErrors": 0,
+        "findings": 1,
+        "filesFixed": 0,
+        "filesFormatted": 0,
+        "wouldChange": 0,
+        "cohered": 0,
+        "filesInScope": 1,
+        "checked": 1,
+        "cached": 0,
+        "nodes": 28,
+        "gaps": {
+          "programFiles": 0,
+          "crashedFiles": 0,
+          "ruleCrashes": 0,
+          "rulesSkippingEverything": 0,
+          "formattingNotChecked": true,
+          "nothingToCheck": false,
+          "modifiedBuild": false
+        }
+      },
+      "guarded_header": {
+        "checker_rejected": false,
+        "diagnostic_sites": [],
+        "diagnostics": [],
+        "latent_mode": "full",
+        "measurement": "measured on a checker-rejected program",
+        "status": "measurement"
+      },
+      "guarded_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts:2:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts:3:45",
+          "reason": "optional property lineMap in LineMapSource absent from structural source SourceFile, which can hide fields",
+          "text": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts:3:45: Adamic 0.1 refuses optional property lineMap in LineMapSource absent from structural source SourceFile, which can hide fields; declare lineMap on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts:2:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/typescript.d.ts:8561:5",
+          "reason": "a function without a body",
+          "text": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/typescript.d.ts:8561:5: stage 0 can't lower a function without a body yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts:2:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts:3:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/typescript.d.ts:8561:5: stage 0 can't lower a function without a body yet",
+          "start": 104,
+          "end": 158
+        }
+      ],
+      "guarded_status": {
+        "file": "consumer.ts",
+        "command": [
+          "/workspace/scratch/baobab-latent",
+          "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control",
+          "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/sdk-c-public-readonly-sdk-control/raw/consumer.jsonl"
+        ],
+        "child_exit": 0,
+        "wall_seconds": 0.3199810219994106,
+        "timed_out": false,
+        "bound_seconds": 300,
+        "max_concurrent_files": 1,
+        "completed_timing_units": 2,
+        "last_timing_units": [
+          {
+            "file": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts",
+            "where": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts:1:1",
+            "wall_seconds": 0.00463908,
+            "cpu_seconds": 0.004711999999999994
+          },
+          {
+            "file": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts",
+            "where": "/workspace/scratch/baobab-sdk-c-public-readonly-sdk-control/consumer.ts:2:1",
+            "wall_seconds": 0.00961511,
+            "cpu_seconds": 0.005570999999999993
+          }
+        ]
+      },
+      "source": "import * as ts from \"./typescript.js\";\nexport function probe(file: ts.SourceFile): ts.LineAndCharacter {\n    return ts.getLineAndCharacterOfPosition(file, 0);\n}\n"
+    }
+  }
+}

@@ -11,7 +11,7 @@ const result=program.emit(undefined,(name,text)=>{fs.mkdirSync(path.dirname(name
 const diagnostics=result.diagnostics.map(d=>({code:d.code,file:d.file?path.relative(root,d.file.fileName):null,start:d.start,message:ts.flattenDiagnosticMessageText(d.messageText,'\n')}));
 fs.writeFileSync(path.join(out,'declaration-emit.json'),JSON.stringify({typescript:ts.version,options,emitSkipped:result.emitSkipped,diagnostics,emitted},null,2)+'\n');
 if(result.emitSkipped)throw Error('declaration emit skipped');
-fs.copyFileSync(path.join(dest,'compiler/scanner.d.ts'),path.join(out,'scanner.stripInternal.d.ts'));
+fs.copyFileSync(path.join(dest,'compiler/scanner.d.ts'),path.join(out,process.argv[4]!=="off"?'scanner.stripInternal.d.ts':'scanner.noStripInternal.d.ts'));
 const original=fs.readFileSync(path.join(root,'scripts/dtsBundler.mjs'),'utf8');const bundledScript=original.replace('import ts from "typescript";','import ts from "/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js";');if(bundledScript===original)throw Error('bundler import shape changed');
 fs.copyFileSync(path.join(root,'scripts/CopyrightNotice.txt'),path.join(deps,'CopyrightNotice.txt'));
 const script=path.join(deps,'baobab-dtsBundler.mjs');fs.writeFileSync(script,bundledScript);

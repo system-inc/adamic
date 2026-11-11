@@ -1,0 +1,358 @@
+{
+  "variants": [
+    {
+      "label": "original",
+      "stripInternal": true,
+      "raw_types": [
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "export interface SourceFileLike {\n    readonly text: string;\n}"
+        }
+      ],
+      "raw_scanner": [
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "export declare function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;"
+        }
+      ],
+      "public_bundle": [
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        readonly text: string;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;"
+        }
+      ],
+      "internal_bundle": [
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        readonly text: string;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;"
+        }
+      ]
+    },
+    {
+      "label": "original-unstripped",
+      "stripInternal": false,
+      "raw_types": [
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "export interface SourceFileLike {\n    readonly text: string;\n    /** @internal */\n    lineMap?: readonly number[] | undefined;\n    /** @internal */\n    getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\n}"
+        }
+      ],
+      "raw_scanner": [
+        {
+          "name": "getLineStarts",
+          "kind": "FunctionDeclaration",
+          "text": "export declare function getLineStarts(sourceFile: SourceFileLike): readonly number[];"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "export declare function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;"
+        }
+      ],
+      "public_bundle": [
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        readonly text: string;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;"
+        }
+      ],
+      "internal_bundle": [
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        readonly text: string;\n        /** @internal */\n        lineMap?: readonly number[] | undefined;\n        /** @internal */\n        getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineStarts",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineStarts(sourceFile: SourceFileLike): readonly number[];"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;"
+        }
+      ]
+    },
+    {
+      "label": "c",
+      "stripInternal": true,
+      "raw_types": [
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "export interface SourceFileLike extends LineMapSource {\n}"
+        }
+      ],
+      "raw_scanner": [
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "export declare function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ],
+      "public_bundle": null,
+      "internal_bundle": null
+    },
+    {
+      "label": "c-unstripped",
+      "stripInternal": false,
+      "raw_types": [
+        {
+          "name": "LineMapSource",
+          "kind": "InterfaceDeclaration",
+          "text": "export interface LineMapSource {\n    readonly text: string;\n    lineMap?: readonly number[] | undefined;\n}"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "export interface SourceFileLike extends LineMapSource {\n    /** @internal */\n    getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\n}"
+        }
+      ],
+      "raw_scanner": [
+        {
+          "name": "getLineStarts",
+          "kind": "FunctionDeclaration",
+          "text": "export declare function getLineStarts(sourceFile: LineMapSource): readonly number[];"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "export declare function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ],
+      "public_bundle": [
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike extends LineMapSource {\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ],
+      "internal_bundle": [
+        {
+          "name": "LineMapSource",
+          "kind": "InterfaceDeclaration",
+          "text": "interface LineMapSource {\n        readonly text: string;\n        lineMap?: readonly number[] | undefined;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike extends LineMapSource {\n        /** @internal */\n        getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineStarts",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineStarts(sourceFile: LineMapSource): readonly number[];"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ]
+    },
+    {
+      "label": "c-public",
+      "stripInternal": true,
+      "raw_types": [
+        {
+          "name": "LineMapSource",
+          "kind": "InterfaceDeclaration",
+          "text": "export interface LineMapSource {\n    readonly text: string;\n    lineMap?: readonly number[] | undefined;\n}"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "export interface SourceFileLike extends LineMapSource {\n}"
+        }
+      ],
+      "raw_scanner": [
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "export declare function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ],
+      "public_bundle": [
+        {
+          "name": "LineMapSource",
+          "kind": "InterfaceDeclaration",
+          "text": "interface LineMapSource {\n        readonly text: string;\n        lineMap?: readonly number[] | undefined;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike extends LineMapSource {\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ],
+      "internal_bundle": [
+        {
+          "name": "LineMapSource",
+          "kind": "InterfaceDeclaration",
+          "text": "interface LineMapSource {\n        readonly text: string;\n        lineMap?: readonly number[] | undefined;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike extends LineMapSource {\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ]
+    },
+    {
+      "label": "c-public-unstripped",
+      "stripInternal": false,
+      "raw_types": [
+        {
+          "name": "LineMapSource",
+          "kind": "InterfaceDeclaration",
+          "text": "export interface LineMapSource {\n    readonly text: string;\n    lineMap?: readonly number[] | undefined;\n}"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "export interface SourceFileLike extends LineMapSource {\n    /** @internal */\n    getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\n}"
+        }
+      ],
+      "raw_scanner": [
+        {
+          "name": "getLineStarts",
+          "kind": "FunctionDeclaration",
+          "text": "export declare function getLineStarts(sourceFile: LineMapSource): readonly number[];"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "export declare function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ],
+      "public_bundle": [
+        {
+          "name": "LineMapSource",
+          "kind": "InterfaceDeclaration",
+          "text": "interface LineMapSource {\n        readonly text: string;\n        lineMap?: readonly number[] | undefined;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike extends LineMapSource {\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ],
+      "internal_bundle": [
+        {
+          "name": "LineMapSource",
+          "kind": "InterfaceDeclaration",
+          "text": "interface LineMapSource {\n        readonly text: string;\n        lineMap?: readonly number[] | undefined;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike extends LineMapSource {\n        /** @internal */\n        getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\n    }"
+        },
+        {
+          "name": "SourceFileLike",
+          "kind": "InterfaceDeclaration",
+          "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+        },
+        {
+          "name": "getLineStarts",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineStarts(sourceFile: LineMapSource): readonly number[];"
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "kind": "FunctionDeclaration",
+          "text": "function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+        }
+      ]
+    }
+  ],
+  "public_bundles_equal_with_strip_on_and_off": {
+    "baseline": true,
+    "public_c": true
+  }
+}
