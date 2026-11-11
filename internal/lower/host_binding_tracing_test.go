@@ -1,9 +1,14 @@
 package lower
 
 import (
+	"errors"
+	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // tracingProcessDeclaration is the last statement adaptation 65 leaves in tsc's src/compiler/tracing.ts
@@ -75,6 +80,54 @@ func TestHostBindingTracingProcessIsItsOwnRow(t *testing.T) {
 		}
 		if !pidRouted(program) {
 			t.Error("tracing.ts's process.pid didn't lower to the host's pid")
+		}
+	})
+}
+
+// The text adaptation 65 wrote before Nov 11, `{ pid: number }`, isn't the row's: @types/node declares pid
+// read only, and a writable pid over the model's read only one is a view that can write the host's pid.
+// In tracing.ts it's refused at the declaration, since the row holds the read only text. Judged against
+// the model directly, as TestHostBindingProcessModel judges core.ts's, it stops on that field, the stop
+// performanceCore.ts's writable timeOrigin met (host_binding_route_test.go's a2 and b2). Mutant (m2) of
+// host_binding_route_test.go, hostBindingModelRefusal's widened check dropped, admits it there.
+func TestHostBindingTracingWritablePidStops(t *testing.T) {
+	t.Parallel()
+	const writable = "declare const process: { pid: number };\n"
+	t.Run("the row's text", func(t *testing.T) {
+		t.Parallel()
+		modules := tracingModules("tracing.ts")
+		modules["tracing.ts"] = tracingPid + writable
+		_, err := lowerModules(t, modules)
+		const want = "tracing.ts:4:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values"
+		var refused *Refused
+		if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), want) {
+			t.Errorf("got %v, want %s", err, want)
+		}
+	})
+	t.Run("the model's read only pid", func(t *testing.T) {
+		t.Parallel()
+		directory := t.TempDir()
+		file := filepath.Join(directory, "tracing.ts")
+		if err := os.WriteFile(file, []byte("import 'node:process';\n"+writable+"console.log(typeof process);\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		program, err := load.Load([]string{file})
+		if err != nil {
+			t.Fatal(err)
+		}
+		tracing := program.Files()[0]
+		checked, release := program.Checker(t.Context(), tracing)
+		defer release()
+		l := &lowering{program: program, checker: checked}
+		declaration := tracing.Statements.Nodes[1].AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes[0]
+		row := hostBindingNamed("process", "tracing.ts")
+		if row == nil {
+			t.Fatal("no tracing.ts process row")
+		}
+		const want = "whose field pid is writable where its model export node:process.process's is read only,"
+		var notYet *NotYet
+		if err := l.hostBindingModelRefusal(declaration, *row); !errors.As(err, &notYet) || !strings.Contains(notYet.What, want) {
+			t.Errorf("got %v, want a stop containing %q", err, want)
 		}
 	})
 }
