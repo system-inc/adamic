@@ -1,3 +1,6 @@
+import fcntl
+_checkpoint_lock=open("/tmp/baobab-checkpoint.lock","a")
+fcntl.flock(_checkpoint_lock,fcntl.LOCK_EX)
 import pathlib,subprocess,sys
 out=pathlib.Path(__file__).resolve().parent
 repo=out.parents[2]

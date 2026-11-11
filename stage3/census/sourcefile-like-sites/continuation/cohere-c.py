@@ -7,10 +7,10 @@ while not binary.exists():
  assert time.monotonic()-start<900,'cohere build did not finish'
  time.sleep(2)
 label=sys.argv[1] if len(sys.argv)>1 else 'c'
-root=pathlib.Path('/workspace/scratch/baobab-road2-'+label)
+root=pathlib.Path(sys.argv[2]) if len(sys.argv)>2 else pathlib.Path('/workspace/scratch/baobab-road2-'+label)
 target=follow/label;target.mkdir(exist_ok=True)
 for name in ['cohere-tsconfig.json','CohereSettings.json']:
- if label!='c':(target/name).write_text((follow/'c'/name).read_text().replace('/baobab-road2-c/','/baobab-road2-'+label+'/'))
+ if label!='c':(target/name).write_text((follow/'c'/name).read_text().replace('/workspace/scratch/baobab-road2-c',str(root)))
 names=['scanner.ts']+json.loads((follow/'variant-files.json').read_text())
 cmd=[str(binary),'--lint','--no-format','--no-cache','--single-threaded','--json','--tsconfig',str(target/'cohere-tsconfig.json'),'--lint-config',str(target/'CohereSettings.json')]+[str(root/'src/compiler'/n) for n in names]
 with (target/'cohere-rules.jsonl').open('wb') as log:
