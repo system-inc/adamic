@@ -222,12 +222,17 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 	return false
 }
 
+// includesUndefined is whether a value of type proven may be undefined at run time. A void member of a
+// union counts (#7yt238q): B | null | void is B | null | undefined spelled another way, and tsc folds
+// void | undefined to void, so the void is the only undefined it shows. Held as one pointer, its null and
+// its undefined were the same NULL, and x === undefined folded to false. Void alone isn't asked here: a
+// value typed exactly void is a discarded result, whose reads H2 refuses (void_reads.go).
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(proven)
 	}
 	for _, member := range proven.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(member) {
+		if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 || l.phantomUndefined(member) {
 			return true
 		}
 	}
