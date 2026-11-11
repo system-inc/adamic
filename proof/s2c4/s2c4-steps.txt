@@ -1,0 +1,324 @@
+logs: /tmp/adamic-gate/s2c4-proof.mVk02X
+f1de878a6 lo
+go version go1.27.1 linux/amd64
+v24.19.0
+=== STEP gofmt exit=0
+=== STEP vet exit=0
+go: downloading golang.org/x/tools v0.50.0
+go: downloading golang.org/x/mod v0.41.0
+=== STEP ir-flow-census exit=0
+ok  	github.com/system-inc/adamic/internal/ir	512.657s
+ok  	github.com/system-inc/adamic/internal/flow	432.370s
+ok  	github.com/system-inc/adamic/internal/compilercensus	5.131s
+=== STEP lower exit=1
+--- FAIL: TestProgramRegionCensusMembership (0.02s)
+--- FAIL: TestProduct_ProgramRegionCensusPairwise (0.01s)
+--- FAIL: TestProduct_ProgramRegionCensusIndexed (0.01s)
+--- FAIL: TestCycleFinderCensusEquality (0.03s)
+--- FAIL: TestProduct_CycleScanningCensus (0.04s)
+--- FAIL: TestStoredGeneratorsLower (0.00s)
+    --- FAIL: TestStoredGeneratorsLower/a_read_in_parentheses (0.07s)
+    --- FAIL: TestStoredGeneratorsLower/a_for-of_over_it (0.10s)
+    --- FAIL: TestStoredGeneratorsLower/an_IterableIterator<T>_parameter_stepped_by_hand (0.05s)
+    --- FAIL: TestStoredGeneratorsLower/an_Iterable<T>_|_undefined_parameter (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1526.600s
+FAIL
+=== STEP lower-pins exit=1
+--- PASS: TestStoredGeneratorLocalIsReadOnlyByItsMoves (0.15s)
+--- PASS: TestProgramRegionGeneratorHeldInLocalStops (0.21s)
+--- PASS: TestNoSlotTheIteratorArmWalksHoldsAGenerator (0.38s)
+--- PASS: TestStoredGeneratorRoadsAreNotYet (0.00s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it (0.19s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/in_an_async_function (0.19s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_spread (0.14s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/at_a_module's_top_level (0.19s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/destructuring (0.15s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_return (0.16s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_function_beside_it (0.09s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_capture,_never_called (0.10s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_capture,_called (0.09s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_field (0.16s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/typeof (0.06s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_type_written_for_it (0.12s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/=== (0.09s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/a_let (0.10s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in (0.07s)
+    --- PASS: TestStoredGeneratorRoadsAreNotYet/two_reads (0.09s)
+--- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet (0.02s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/stored_in_a_variable (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_try_reaching_a_failing_library_call (0.10s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_an_async_function (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/consumed_inside_a_generator (0.09s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_union_yield (0.09s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_declared_ArrayIterator (0.11s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returning_a_value (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_defaulted_parameter (0.09s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_expression (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_body_local (0.07s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield_inside_try (0.06s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_closure_over_a_parameter (0.12s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_yield's_result (0.11s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/yield* (0.07s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generic_generator's_union_instance (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_nested_generator_stored (0.10s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/Array.from_with_a_mapper (0.08s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/a_generator_method (0.10s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/the_function_as_a_value (0.17s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/read_through_a_view (0.13s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/spread_inside_a_generator (0.12s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/destructured (0.13s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/returned (0.06s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/passed_as_an_argument (0.07s)
+    --- PASS: TestGeneratorFormsThisSliceDoesntLowerAreNotYet/put_in_an_array (0.07s)
+--- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad (0.02s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/typeof_it (0.08s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_for-of_head_rebinding_it (0.10s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/spreading_it (0.08s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_destructuring_assignment_rebinding_it (0.14s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/destructuring_it (0.12s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_through_the_parameter (0.07s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/next_inside_the_loop (0.09s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_string_beside_a_generator_into_Iterable<string> (0.09s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/yields_held_otherwise (0.11s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/two_generator_functions (0.06s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_=_g2()_before_the_loop (0.07s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_stored_generator_passed_in (0.11s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_g2() (0.12s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_call_through_a_function_value (0.12s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_method (0.16s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/an_async_callee (0.07s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/reassigning_it (0.08s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/arguments (0.13s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_closure_capturing_it,_never_called (0.23s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/it_===_other (0.24s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/passing_it_on (0.32s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_default_naming_it (0.29s)
+    --- PASS: TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad/a_read_after_a_labeled_break (0.16s)
+--- FAIL: TestStoredGeneratorsLower (0.01s)
+    --- FAIL: TestStoredGeneratorsLower/an_IterableIterator<T>_parameter_stepped_by_hand (0.09s)
+    --- PASS: TestStoredGeneratorsLower/stored_jsx_children.a (0.11s)
+    --- PASS: TestStoredGeneratorsLower/a_nested_generator_into_a_nested_callee (0.09s)
+    --- PASS: TestStoredGeneratorsLower/declared_and_read_in_one_loop_body (0.10s)
+    --- PASS: TestStoredGeneratorsLower/written_in_place (0.12s)
+    --- FAIL: TestStoredGeneratorsLower/an_Iterable<T>_|_undefined_parameter (0.20s)
+    --- FAIL: TestStoredGeneratorsLower/a_read_in_parentheses (0.08s)
+    --- PASS: TestStoredGeneratorsLower/handed_to_a_module_callee (0.09s)
+    --- FAIL: TestStoredGeneratorsLower/a_for-of_over_it (0.14s)
+    --- PASS: TestStoredGeneratorsLower/declared_in_a_block,_read_in_a_deeper_one (0.20s)
+    --- PASS: TestStoredGeneratorsLower/stored_later_throw.a (0.17s)
+    --- PASS: TestStoredGeneratorsLower/stored_exits.a (0.10s)
+    --- PASS: TestStoredGeneratorsLower/stored_untaken.a (0.16s)
+    --- PASS: TestStoredGeneratorsLower/stored_exits_finally.a (0.16s)
+    --- PASS: TestStoredGeneratorsLower/stored_for_of.a (0.14s)
+--- PASS: TestNestedGeneratorRoadsAreNotYet (0.19s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/spread (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/destructured (0.05s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/returned (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator (0.13s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/stored (0.06s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument (0.10s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_a_generator (0.13s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/in_a_block (0.14s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_an_async_function (0.15s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator (0.13s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local (0.16s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body (0.15s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_logical_assignment (0.19s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_destructuring_target (0.20s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_compound_assignment (0.24s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_increment (0.29s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/new_Map (0.14s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/new_Set (0.07s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/Array.from (0.07s)
+--- PASS: TestGenericGeneratorRoadsAreNotYet (0.01s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/stored_in_a_variable (0.16s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/an_unread_instance (0.14s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/a_union_instance (0.16s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/called_with_a_spread_argument (0.16s)
+    --- PASS: TestGenericGeneratorRoadsAreNotYet/called_optionally (0.09s)
+=== STEP native exit=0
+--- PASS: TestARewrittenHeaderMovesAHeldScan (0.05s)
+--- PASS: TestIterableOfIsNeverFresh (0.00s)
+--- PASS: TestEnvironmentPlacementNestedGenerator (0.21s)
+--- PASS: TestGeneratorKillSetReleasesOnlyDeadCells (0.05s)
+--- PASS: TestObjectKeyMovesWithEachInput (12.35s)
+    --- PASS: TestObjectKeyMovesWithEachInput/a_build_directory_of_its_own (0.90s)
+    --- PASS: TestObjectKeyMovesWithEachInput/the_runtime_archive's_directory_copied (1.14s)
+    --- PASS: TestObjectKeyMovesWithEachInput/-O1_for_-O2 (1.71s)
+    --- PASS: TestObjectKeyMovesWithEachInput/a_-D_added (0.97s)
+    --- PASS: TestObjectKeyMovesWithEachInput/one_byte_of_adamic.h (0.32s)
+    --- PASS: TestObjectKeyMovesWithEachInput/clang_configured (0.67s)
+    --- PASS: TestObjectKeyMovesWithEachInput/SOURCE_DATE_EPOCH_set (0.63s)
+--- PASS: TestArrayElementKindReuseWriteMutant (6.97s)
+--- PASS: TestArrayElementKindScalarOverReferenceIsNotReused (19.06s)
+--- PASS: TestReuseTakesASpreadsGettersAsWhatItRuns (0.00s)
+--- PASS: TestReuseFollowsAGeneratorStepIntoItsBody (0.00s)
+--- PASS: TestReuseTakesAnOperationNoReviewNamesAsTouchingTheGlobal (0.00s)
+--- PASS: TestGeneratorRuntimeThrow (23.22s)
+--- PASS: TestSlabQuarantineCatchesAStaleReadOfAReusedSlot (29.11s)
+--- PASS: TestGeneratorRuntimeDropSuspended (53.89s)
+--- PASS: TestGeneratorRuntimeBorrowed (31.22s)
+--- PASS: TestGeneratorRuntimeKill (35.33s)
+--- PASS: TestGeneratorRuntimeNextStrings (54.72s)
+--- PASS: TestGeneratorRuntimeReentrant (0.77s)
+--- PASS: TestGeneratorRuntimeDropStart (1.70s)
+--- PASS: TestGCCRuntimeGenerator (1.94s)
+--- PASS: TestProduct_GCCRuntimeGenerator (0.94s)
+--- PASS: TestGeneratorRuntimeReturnWhileRunning (0.46s)
+--- PASS: TestGeneratorRuntimeComplete (31.41s)
+--- PASS: TestDebugGeneratorSourceLines (0.11s)
+--- PASS: TestGeneratorRuntimeNextDoneBoolean (0.65s)
+--- PASS: TestGeneratorRuntimeNextCollection (0.54s)
+--- PASS: TestGeneratorRuntimeInitialize (28.10s)
+--- PASS: TestGeneratorRuntimeIsNull (30.76s)
+--- PASS: TestGeneratorRuntimeFinishSelf (31.35s)
+--- PASS: TestGeneratorRuntimeDropSelf (31.46s)
+--- PASS: TestGeneratorRuntimeNextThrow (26.94s)
+--- PASS: TestGeneratorRuntimeNextDone (32.16s)
+--- PASS: TestGeneratorRuntimeReturn (27.83s)
+--- PASS: TestArrayElementKindReuse (0.00s)
+    --- PASS: TestArrayElementKindReuse/objects_mapped_to_strings (1.20s)
+    --- PASS: TestArrayElementKindReuse/strings_spread_first (0.71s)
+    --- PASS: TestArrayElementKindReuse/numbers_mapped_to_numbers (1.38s)
+--- PASS: TestGeneratorRuntimeNextLoudDefault (0.00s)
+    --- PASS: TestGeneratorRuntimeNextLoudDefault/next_other (1.61s)
+    --- PASS: TestGeneratorRuntimeNextLoudDefault/next_kind (1.34s)
+    --- PASS: TestGeneratorRuntimeNextLoudDefault/next_null (0.99s)
+--- PASS: TestGeneratorRuntimeDropError (32.97s)
+--- PASS: TestGeneratorRuntimeNextDrop (32.83s)
+--- PASS: TestGeneratorRuntimeFinishError (22.18s)
+ok  	github.com/system-inc/adamic/internal/native	132.071s
+=== STEP javascript exit=0
+ok  	github.com/system-inc/adamic/internal/javascript	0.506s
+=== STEP oracle-generators-iterables exit=0
+--- PASS: TestAsyncLiveMutantIterableMapEntriesModule (52.22s)
+--- PASS: TestAsyncLiveIterableStringBreakFunction (63.05s)
+--- PASS: TestAsyncLiveIterableMapKeysModule (10.87s)
+--- PASS: TestAsyncLiveIterableMapValuesFunction (63.12s)
+--- PASS: TestAsyncLiveIterableMapReaddModule (63.16s)
+--- PASS: TestAsyncLiveIterableStringAsciiFunction (63.16s)
+--- PASS: TestAsyncLiveIterableMapEntriesModule (1.29s)
+--- PASS: TestAsyncLiveIterableMapKeysFunction (1.40s)
+--- PASS: TestAsyncLiveIterableMapEntriesFunction (1.43s)
+--- PASS: TestAsyncLiveMutantIterableMapEntriesFunction (0.87s)
+--- PASS: TestAsyncLiveIterableStringSurrogatesModule (1.20s)
+--- PASS: TestAsyncLiveIterableStringSurrogatesFunction (1.19s)
+--- PASS: TestAsyncLiveMutantIterableMapClearModule (0.87s)
+--- PASS: TestAsyncLiveMutantIterableMapClearFunction (1.07s)
+--- PASS: TestAsyncLabelsAsyncIterablesCellsLabels (1.76s)
+--- PASS: TestAsyncLiveIterableStringEmojiModule (1.34s)
+--- PASS: TestAsyncLiveMutantIterableMapBreakModule (0.90s)
+--- PASS: TestAsyncLiveMutantIterableMapBreakFunction (1.46s)
+--- PASS: TestAsyncLiveIterableStringEmojiFunction (1.59s)
+--- PASS: TestAsyncLiveIterableStringAsciiModule (1.54s)
+--- PASS: TestAsyncLiveIterableSetReturnFunction (1.24s)
+--- PASS: TestAsyncLiveIterableSetReturnModule (1.32s)
+--- PASS: TestAsyncLiveIterableStringBreakModule (1.19s)
+--- PASS: TestAsyncLiveIterableSetBooleanFunction (1.20s)
+--- PASS: TestAsyncLiveIterableMapBreakFunction (1.28s)
+--- PASS: TestAsyncLiveIterableSetEntriesModule (1.19s)
+--- PASS: TestAsyncLiveIterableMapReturnModule (1.10s)
+--- PASS: TestAsyncLiveIterableMapBooleanFunction (1.40s)
+--- PASS: TestAsyncLiveIterableMapReturnFunction (1.31s)
+--- PASS: TestAsyncLiveMutantIterableStringSurrogatesModule (0.78s)
+--- PASS: TestAsyncLiveIterableMapReaddFunction (1.35s)
+--- PASS: TestAsyncLiveIterableMapBreakModule (1.12s)
+--- PASS: TestAsyncLiveIterableMapClearModule (1.29s)
+--- PASS: TestAsyncLiveIterableMapClearFunction (1.54s)
+--- PASS: TestAsyncLiveIterableSetValuesModule (1.44s)
+--- PASS: TestAsyncLiveMutantIterableSetEntriesFunction (0.89s)
+--- PASS: TestAsyncLiveMutantIterableStringEmojiModule (0.81s)
+--- PASS: TestAsyncLiveIterableSetEntriesFunction (1.45s)
+--- PASS: TestAsyncLiveMutantIterableStringEmojiFunction (0.84s)
+--- PASS: TestAsyncLiveMutantIterableStringBreakFunction (0.74s)
+--- PASS: TestAsyncLiveMutantIterableStringBreakModule (0.82s)
+--- PASS: TestAsyncLiveMutantIterableStringAsciiFunction (0.69s)
+--- PASS: TestAsyncLiveMutantIterableStringAsciiModule (0.80s)
+--- PASS: TestAsyncLiveMutantIterableSetValuesModule (0.82s)
+--- PASS: TestAsyncLiveMutantIterableSetValuesFunction (0.87s)
+--- PASS: TestAsyncLiveMutantIterableSetReturnModule (0.79s)
+--- PASS: TestAsyncLiveMutantIterableSetReturnFunction (0.83s)
+--- PASS: TestAsyncLiveMutantIterableSetEntriesModule (0.73s)
+--- PASS: TestAsyncLiveIterableSetValuesFunction (1.15s)
+--- PASS: TestAsyncLiveIterableNestedMapsFunction (1.31s)
+--- PASS: TestAsyncLiveIterableNestedMapsModule (1.25s)
+--- PASS: TestAsyncLiveIterableMapValuesModule (1.30s)
+--- PASS: TestAsyncLiveIterableMapRehashModule (1.50s)
+--- PASS: TestAsyncLiveMutantIterableMapReturnFunction (0.99s)
+--- PASS: TestAsyncLiveMutantIterableNestedMapsModule (1.23s)
+--- PASS: TestAsyncLiveIterableMapRehashFunction (2.16s)
+--- PASS: TestAsyncLiveMutantIterableMapValuesFunction (1.71s)
+--- PASS: TestAsyncLiveMutantIterableMapValuesModule (0.93s)
+--- PASS: TestAsyncLiveMutantIterableMapReturnModule (0.80s)
+--- PASS: TestAsyncLiveMutantIterableNestedMapsFunction (1.23s)
+148
+=== STEP stored-fixtures exit=0
+    --- PASS: TestGeneratorsAgreeWithNode/stored_for_of.a (12.25s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_exits.a (12.25s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_exits_finally.a (12.30s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_later_throw.a (12.30s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_jsx_children.a (12.34s)
+    --- PASS: TestGeneratorsAgreeWithNode/stored_untaken.a (1.02s)
+=== STEP mutant-move-retain red=yes restored=yes exit=1
+    generators_test.go:51: leaked: exit 1
+        SUMMARY: AddressSanitizer: 898 byte(s) leaked in 6 allocation(s).
+--- FAIL: TestGeneratorsAgreeWithNode (0.00s)
+    --- FAIL: TestGeneratorsAgreeWithNode/stored_for_of.a (12.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	12.122s
+FAIL
+=== STEP mutant-two-reads red=yes restored=yes exit=1
+    generators_stored_test.go:156: got /tmp/adamic-gate/TestStoredGeneratorRoadsAreNotYettwo_reads3630173217/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet, want a NotYet saying "a gene
+--- FAIL: TestStoredGeneratorRoadsAreNotYet (0.00s)
+    --- FAIL: TestStoredGeneratorRoadsAreNotYet/two_reads (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.067s
+FAIL
+=== STEP mutant-two-reads-oracle exit=1
+    generators_test.go:51: native: exit codes differ, stdout "", stderr ""
+    generators_test.go:51: sanitized: exit codes differ, stdout "", stderr "generator.c:27:24: runtime error: member access within null pointer of type 'adamic_generator' (aka 'struct adamic_generator')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior generator.c:27:24 \n"
+    --- FAIL: TestGeneratorsAgreeWithNode/stored_two_reads_probe.a (46.99s)
+=== STEP mutant-two-reads-oracle restored exit=0
+=== STEP mutant-released-after-move red=yes restored=yes exit=1
+    generators_test.go:51: sanitized: exit codes differ, stdout "", stderr "=================================================================\n==70121==ERROR: AddressSanitizer: heap-use-after-free on address 0x7cd254fe018c at pc 0x55b8d8cbdf26 bp 0x7ffc876049e0 sp 0x7ffc876049d8\nREAD of size 4 at 0
+    generators_test.go:51: leaked: exit 1
+        ==70316==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c67d39e018c at pc 0x556625893f26 bp 0x7fff71c44e20 sp 0x7fff71c44e18
+        SUMMARY: AddressSanitizer: heap-use-after-free /adamic-build/runtime/adamic.h:198:13 in adamic_release
+--- FAIL: TestGeneratorsAgreeWithNode (0.00s)
+    --- FAIL: TestGeneratorsAgreeWithNode/stored_for_of.a (11.75s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	11.771s
+FAIL
+=== STEP mutant-static-move red=yes restored=yes exit=1
+    generators_test.go:51: leaked: exit 1
+        SUMMARY: AddressSanitizer: 646 byte(s) leaked in 4 allocation(s).
+--- FAIL: TestGeneratorsAgreeWithNode (0.00s)
+    --- FAIL: TestGeneratorsAgreeWithNode/stored_untaken.a (11.73s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	11.758s
+FAIL
+=== STEP mutant-loop-containment red=yes restored=yes exit=1
+    generators_stored_test.go:156: got /tmp/adamic-gate/TestStoredGeneratorRoadsAreNotYetCompilers_two_passes_over_it1068450331/001/main.a:2:84: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet, want a No
+    generators_stored_test.go:156: got <nil>, want a NotYet saying "a generator stored in a local, used other than once by a consumer that steps it (#qk8rztp)"
+--- FAIL: TestStoredGeneratorRoadsAreNotYet (0.00s)
+    --- FAIL: TestStoredGeneratorRoadsAreNotYet/Compiler's_two_passes_over_it (0.18s)
+    --- FAIL: TestStoredGeneratorRoadsAreNotYet/an_argument_in_a_loop_it_isn't_declared_in (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.522s
+FAIL
+=== STEP mutant-backstop-moves red=yes restored=yes exit=1
+    generators_stored_test.go:205: a stored generator's local stepped directly: got <nil>, want the backstop's compiler bug
+--- FAIL: TestStoredGeneratorLocalIsReadOnlyByItsMoves (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.079s
+FAIL
+== end

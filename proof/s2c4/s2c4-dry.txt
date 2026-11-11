@@ -1,0 +1,13 @@
+move-retain
+anchor in internal/native/reuse.go: 1 ok
+two-reads
+anchor in internal/lower/generators_stored.go: 1 ok
+released-after-move
+anchor in internal/native/reuse.go: 1 ok
+static-move
+anchor in internal/native/reuse.go: 1 ok
+loop-containment
+anchor in internal/lower/generators_stored.go: 1 ok
+backstop-moves
+anchor in internal/lower/generators.go: 1 ok
+=== STEP dry exit=0
