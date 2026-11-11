@@ -173,7 +173,9 @@ func TestHostBindingWritesAreRefused(t *testing.T) {
 }
 
 // A declaration the table doesn't name, exactly, stays refused as an ambient value declaration: another
-// type, another file, another keyword, an exported one, and one beside a declarator the table names.
+// type, another file, another keyword, an exported one, and one beside a declarator the table names. A
+// row is its name in its file, so tracing.ts's process declaration is judged in core.ts by core.ts's row,
+// whose type text it isn't, and in a file no row names by no row at all.
 func TestHostBindingUnmatchedDeclarationIsRefused(t *testing.T) {
 	t.Parallel()
 	const refusal = "Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values"
@@ -186,6 +188,8 @@ func TestHostBindingUnmatchedDeclarationIsRefused(t *testing.T) {
 		{"exported", "performance.ts", "export " + profilerDeclaration + "console.log(typeof onProfilerEvent);\n"},
 		{"beside an unnamed declarator", "performance.ts", "declare let onProfilerEvent: ((eventName: string) => void) | undefined, other: number;\nconsole.log(typeof onProfilerEvent);\n"},
 		{"require of another type than core.ts's", "core.ts", "declare const require: (specifier: string) => unknown;\nconsole.log(typeof require);\n"},
+		{"tracing.ts's process in core.ts", "core.ts", tracingProcessDeclaration + "console.log(typeof process);\n"},
+		{"tracing.ts's process in a file no row names", "tracer.ts", tracingProcessDeclaration + "console.log(typeof process);\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

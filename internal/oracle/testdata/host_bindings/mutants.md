@@ -239,3 +239,25 @@ These belong to #00qn5az's require row, after the letters above.
 |---|---|---|
 | (k) The require row removed | internal/load/host_bindings.json, the require row deleted, and its row in docs/axioms/host-bindings.md with it | Codex task_e_6af0dc38807483218f6a101feb682943 (Linux x86_64, at b78087a1, Nov 8 2026): core.ts's declaration is refused again as an ambient value declaration. TestHostBindingRequireIsAbsent ("want core.ts's require to lower by its row, got .../core.ts:1:1: Adamic 0.1 refuses an ambient value declaration") and TestHostBindingRowsStopInACommonJSBundle/core.ts's_require (its ES build), in lower; TestHostBindingsAgreeWithNode/node_like (node_like/core.ts:5:1, the same refusal) and TestHostBindingsHeldToNode (typeof holds a program for require, which no row names), in the oracle. TestHostBindingsAudit stays green, since the audit's row went with the JSON's |
 | (l) A bundle build folding a row measured in ES module mode | lower/host_bindings.go, `hostBindingStopIn`: `if l.moduleFormat == ModuleFormatCommonJSBundle && row.Node.Module == "ES" {` made `if false {` | Codex task_e_6af0dc38807483218f6a101feb682943 (at b78087a1): TestHostBindingRowsStopInACommonJSBundle, both rows: the bundle build lowers core.ts's require and performance.ts's onProfilerEvent as Absent ("the bundle build: got <nil>") where each should stop by name, the fold Node's CommonJS answer for require ("function") would contradict |
+
+## The tracing.ts process row (#00qn5az, Nov 11 2026)
+
+These belong to the second process row, tracing.ts's, after the letters above. A row is its name and its declaration's file together, and these two mutants each put the name back alone. (m) was measured on Nov 11, 2026, on a copy of internal/load's host_bindings.go, host_bindings.json and host_bindings_test.go with docs/axioms/host-bindings.md, run alone with Go 1.27.1, since that package's other files need the TypeScript shim; its output is below. (n) is not measured yet: lower and the oracle need the shim, and wait on a Linux run of the commands below.
+
+| Mutant | Edit | Red |
+|---|---|---|
+| (m) Rows keyed on the name alone | load/host_bindings.go, `parseHostBindings`: `key := [2]string{row.Name, row.Declaration.File}` made `key := [2]string{row.Name, ""}` | TestHostBindingsKeyANameByItsFile: the same name in another file is refused as a second row. The real table stops parsing with it, so TestHostBindingsAudit fails at its first line and every reader of the table fails closed, as under (b) |
+| (n) A declarator's row taken by name alone | lower/host_bindings.go, `hostBindingNamed`: `if rows[index].Name == name && rows[index].Declaration.File == file {` made `if rows[index].Name == name {` | TestHostBindingTracingProcessIsItsOwnRow, both rows: tracing.ts's declaration meets core.ts's row, the first process row, whose type text it isn't, and is refused as an ambient value declaration at tracing.ts:4:1. TestHostBindingUnmatchedDeclarationIsRefused/another_file goes red with them: main.ts's onProfilerEvent declaration meets performance.ts's row, whose keyword and type text it has, and lowers. In the oracle, TestHostBindingsHeldToNode/process/tracing.ts: a row cleared on every target stops |
+
+```sh
+go test ./internal/load -count=1 -run '^TestHostBindingsKeyANameByItsFile$'
+go test ./internal/lower -count=1 -run '^(TestHostBindingTracingProcessIsItsOwnRow|TestHostBindingUnmatchedDeclarationIsRefused)$'
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -run '^TestHostBindingsHeldToNode$/^process$/^tracing.ts$'
+```
+
+(m), exit 1, the failing assertion lines verbatim:
+
+```text
+    host_bindings_test.go:184: the same name in another file: got load: host binding row 2 (process): a second row for the name in tracing.ts, want two rows
+    host_bindings_test.go:19: load: host binding row 3 (process): a second row for the name in tracing.ts
+```
