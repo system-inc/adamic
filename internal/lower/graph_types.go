@@ -639,29 +639,29 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 			if viewPairScalar(sourceArm) || f.viewPairFunction(sourceArm) {
 				continue
 			}
-			paired := false
-			for _, targetArm := range targetArms {
-				if viewPairScalar(targetArm) || f.viewPairFunction(targetArm) || !f.deriveRelated(sourceArm, targetArm) {
-					continue
-				}
-				paired = true
-				if failure := follow(name, sourceArm, targetArm); failure != nil {
-					return failure
-				}
-			}
-			// A source arm related to a union target as a whole and to none of its arms is one the
-			// checker relates by splitting its discriminant across the arms ('a' | 'b' against an arm of
-			// 'a' and an arm of 'b'), so a value of it is seen through every arm its discriminant reaches
-			// (Language's must on #3zex15c). Skipping it would leave every field only some arms declare
-			// unwalked, so its members pair with each arm's, never failing on the arm not relating whole.
-			if paired || viewed.Flags()&checker.TypeFlagsUnion == 0 || !f.deriveRelated(sourceArm, viewed) {
-				continue
-			}
+			// A source arm related to a union target as a whole can be seen through an arm it doesn't
+			// relate to alone: the checker relates { kind: 'a' | 'b' } to an arm of 'a' and an arm of 'b' by
+			// splitting the discriminant (Language's must on #3zex15c), and a check of kind === 'a' narrows
+			// it to the 'a' arm even when it relates whole to another (her should). Skipping such an arm
+			// would leave a field only it declares unwalked, so its members pair with the source arm's,
+			// never failing on the arm not relating whole. Only a literal discriminant that shares no value
+			// rules an arm out (viewPairDisjoint), which is Correctness's crossing.
+			whole := viewed.Flags()&checker.TypeFlagsUnion != 0 && f.deriveRelated(sourceArm, viewed)
 			for _, targetArm := range targetArms {
 				if viewPairScalar(targetArm) || f.viewPairFunction(targetArm) {
 					continue
 				}
-				if failure := f.viewPairMembers(f.l.checker.GetNonNullableType(sourceArm), f.l.checker.GetNonNullableType(targetArm), follow); failure != nil {
+				if f.deriveRelated(sourceArm, targetArm) {
+					if failure := follow(name, sourceArm, targetArm); failure != nil {
+						return failure
+					}
+					continue
+				}
+				armSource, armTarget := f.l.checker.GetNonNullableType(sourceArm), f.l.checker.GetNonNullableType(targetArm)
+				if !whole || f.viewPairDisjoint(armSource, armTarget) {
+					continue
+				}
+				if failure := f.viewPairMembers(armSource, armTarget, follow); failure != nil {
 					failure.through = append([]viewPairStep{{name: "a split arm", source: sourceArm, target: targetArm}}, failure.through...)
 					return failure
 				}
@@ -759,6 +759,49 @@ func (f *cycleFinder) viewPairElements(source, target *checker.Type, follow func
 		}
 	}
 	return nil
+}
+
+// viewPairDisjoint is whether no value of source can be one of target: a field both declare holds
+// only literals on each side, and no literal is on both (ChoiceA's kind 'a' against ChoiceB's 'b', or
+// one keyword node's kind against another's). A literal type is one checker type per value, so the
+// sides share a value only by sharing a type.
+func (f *cycleFinder) viewPairDisjoint(source, target *checker.Type) bool {
+	for _, field := range f.fields(target) {
+		held := f.l.checker.GetPropertyOfType(source, field.Name)
+		if held == nil {
+			continue
+		}
+		sourceValues, sourceLiteral := viewPairLiterals(f.l.checker.GetTypeOfSymbol(held))
+		targetValues, targetLiteral := viewPairLiterals(f.l.checker.GetTypeOfSymbol(field))
+		if !sourceLiteral || !targetLiteral {
+			continue
+		}
+		shared := false
+		for _, sourceValue := range sourceValues {
+			for _, targetValue := range targetValues {
+				shared = shared || sourceValue == targetValue
+			}
+		}
+		if !shared {
+			return true
+		}
+	}
+	return false
+}
+
+// viewPairLiterals is the values of a type made only of unit types (literals, undefined and null),
+// one type each, and whether it is one.
+func viewPairLiterals(proven *checker.Type) ([]*checker.Type, bool) {
+	values := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		values = proven.Types()
+	}
+	for _, value := range values {
+		if value.Flags()&checker.TypeFlagsUnit == 0 {
+			return nil, false
+		}
+	}
+	return values, true
 }
 
 // viewPairFunction is whether a type, undefined and null aside, is a function's.
