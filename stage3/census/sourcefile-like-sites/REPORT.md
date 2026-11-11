@@ -2,7 +2,9 @@
 
 Measured main: `d690f276749f91e6b36fe3a9726a5a453fcd7d39`. Upstream TypeScript 6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Report only; no compiler or adaptation changes.
 
-Attempted 60 of 79 compiler files; 55 completed full-mode streams. Physical sites: 6; distinct finding/phase/unit observations: 6.
+Attempted 70 of 79 compiler files; 65 completed full-mode streams. Physical sites: 6; distinct finding/phase/unit observations: 6.
+
+**Counts are lower bounds.** Incomplete streams: `checker.ts`, `emitter.ts`, `parser.ts`, `program.ts`, `scanner.ts`. Files not yet attempted are also unknown.
 
 ## By callee
 
@@ -28,16 +30,18 @@ SourceFileLike declares optional lineMap and getPositionOfLineAndCharacter. The 
 
 ## Every observed site
 
+All observed views are call arguments; no assignment or return view was observed.
+
 Locations are in the adapted compiler. Body-inventory line numbers in the next table refer to pinned upstream. A physical site is (location, reason), deduplicated across phases and units. sites.json preserves every distinct finding/phase/unit observation and the complete call expression.
 
 | Location | Phase(s) | Enclosing function | Receiving callee / view | Value use | Road 2 clears reason | Reason |
 | --- | --- | --- | --- | --- | --- | --- |
-| executeCommandLine.ts:109:41 | refusal_scan | countLines / <anonymous@107> | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -> computeLineStarts | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
-| tracing.ts:206:67 | refusal_scan | getLocation | getLineAndCharacterOfPosition (call argument) | sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
-| tracing.ts:207:65 | refusal_scan | getLocation | getLineAndCharacterOfPosition (call argument) | sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
-| transformers/declarations.ts:1264:70 | refusal_scan | transformDeclarations / visitDeclarationSubtree | getLineAndCharacterOfPosition (call argument) | sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
-| transformers/declarations.ts:1264:139 | refusal_scan | transformDeclarations / visitDeclarationSubtree | getLineAndCharacterOfPosition (call argument) | sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
-| transformers/jsx.ts:359:63 | refusal_scan | transformJsx / visitJsxOpeningLikeElementOrFragmentJSX | getLineAndCharacterOfPosition (call argument) | sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| executeCommandLine.ts:109:41 | refusal_scan | countLines / &lt;anonymous@107&gt; | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -&gt; computeLineStarts | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| tracing.ts:206:67 | refusal_scan | getLocation | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| tracing.ts:207:65 | refusal_scan | getLocation | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| transformers/declarations.ts:1264:70 | refusal_scan | transformDeclarations / visitDeclarationSubtree | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| transformers/declarations.ts:1264:139 | refusal_scan | transformDeclarations / visitDeclarationSubtree | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| transformers/jsx.ts:359:63 | refusal_scan | transformJsx / visitJsxOpeningLikeElementOrFragmentJSX | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 
 ## All exported compiler functions with a SourceFileLike parameter
 
@@ -130,6 +134,16 @@ This is a latent observational census, not an exhaustive proof of all runtime pa
 | transformers/esnext.ts | 0 | 87.89 | yes | no |
 | transformers/generators.ts | 0 | 169.97 | yes | no |
 | transformers/jsx.ts | 0 | 107.95 | yes | no |
+| transformers/legacyDecorators.ts | 0 | 117.01 | yes | no |
+| transformers/module/esnextAnd2015.ts | 0 | 83.96 | yes | no |
+| transformers/module/impliedNodeFormatDependent.ts | 0 | 31.52 | yes | no |
+| transformers/module/module.ts | 0 | 131.97 | yes | no |
+| transformers/module/system.ts | 0 | 168.17 | yes | no |
+| transformers/namedEvaluation.ts | 0 | 30.90 | yes | no |
+| transformers/taggedTemplate.ts | 0 | 25.05 | yes | no |
+| transformers/ts.ts | 0 | 183.42 | yes | no |
+| transformers/typeSerializer.ts | 0 | 65.98 | yes | no |
+| transformers/utilities.ts | 0 | 103.87 | yes | no |
 
 **Incomplete census.** Counts are observed lower bounds. Missing or timed-out file results must not be treated as zero sites. See coverage.json and raw per-file logs/status files.
 

@@ -21,3 +21,5 @@ go build -buildvcs=false -overlay=/workspace/scratch/baobab-overlay/overlay.json
 ```
 
 Each real shell wrapper captured and reported its child's exit code. See preparation/child-exits.json and the per-piece status and log files. The initial setup began on the environment's older checkout and failed during dependency warming; setup was repeated successfully on the aligned main tree before the census. The API install was also repeated successfully on main. The recorded adapted hashes were verified after every piece.
+
+Use a fresh evidence directory for a new run. Existing per-file status files cause the runner to refuse replacement.
