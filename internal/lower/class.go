@@ -457,8 +457,14 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
+	hostMember := false
 	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
-		return nil, l.notYet(target, "replacing a represented method at runtime")
+		if !l.hostMemberWritable(target) {
+			return nil, l.notYet(target, "replacing a represented method at runtime")
+		}
+		// A method a program's interface or type literal declares, written as tsc writes its host's
+		// members: a field store, judged once lowering is done (checkHostMemberWrites, #fj0vqtf).
+		hostMember = true
 	}
 	if err := l.absentOptionalWrite(target); err != nil {
 		return nil, err
@@ -491,7 +497,11 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, DeclaredType: l.checker.TypeToString(declared), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression), ViewReceiverTypeID: l.viewWriteReceiverTypeID(target, target.AsPropertyAccessExpression().Expression, l.fieldName(target.Name()))}}, nil
+	store := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, DeclaredType: l.checker.TypeToString(declared), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression), ViewReceiverTypeID: l.viewWriteReceiverTypeID(target, target.AsPropertyAccessExpression().Expression, l.fieldName(target.Name()))}
+	if hostMember {
+		l.hostMemberWrites = append(l.hostMemberWrites, hostMemberWrite{target: target, value: valueNode, site: store.Site})
+	}
+	return []ir.Statement{store}, nil
 }
 
 // absentOptionalWrite refuses a write to an optional own field of a plain object when some producer left

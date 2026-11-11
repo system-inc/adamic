@@ -1,0 +1,1 @@
+internal/oracle/testdata/host_member_write/s1_narrow_wide.ts:5:1: stage 0 can't lower a write to method read of wide of a value of type () => string | undefined, which the object, also held as Narrow, can't hold: its read there is () => string yet

@@ -1,0 +1,1 @@
+internal/oracle/testdata/host_member_write/s2_narrow_wide_object.a:21:1: stage 0 can't lower a write to method read of wide of a value of type () => Animal, which the object, also held as Narrow, can't hold: its read there is () => Dog yet

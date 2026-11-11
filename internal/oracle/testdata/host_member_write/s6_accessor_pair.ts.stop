@@ -1,0 +1,1 @@
+internal/oracle/testdata/host_member_write/s6_accessor_pair.ts:15:1: stage 0 can't lower a write to method read of host, which may hold an object literal with an accessor, whose setter a write may run yet
