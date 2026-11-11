@@ -25,8 +25,10 @@ var checkedPredicateFixtures = []struct {
 }{
 	{"true", "claimed\n", "", "true", "string | number", "number", "", 2, 0},
 	{"true_unused", "continued\n", "", "true", "\"text\"", "number", "", 1, 1},
-	{"false", "continued\n", "", "false", "string | number", "number", "", 2, 0},
-	{"false_alias", "continued\n", "", "false", "string | number", "number", "", 2, 0},
+	// isNumber lies on its false side, and nothing reads value there, so the false check is dropped and
+	// counted unobservable, and the program prints as Node does (#39wtqdj, Adamic's ruling of Nov 11).
+	{"false", "continued\n", "", "", "", "", "", 1, 1},
+	{"false_alias", "continued\n", "", "", "", "", "", 1, 1},
 	{"false_compound_unchanged", "continued\n", "", "", "", "", "", 1, 1},
 	{"asserts", "called\nasserted\n", "called\n", "asserts", "string | number", "number", "", 1, 0},
 	{"valid", "argument\ncalled\nnumber\nargument\ncalled\nstring\n", "", "", "", "", "", 1, 1},
