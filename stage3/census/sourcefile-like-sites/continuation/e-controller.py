@@ -12,7 +12,9 @@ f=root/'src/compiler/scanner.ts';old=f.read_bytes();new=old.replace(b'    type L
 needle=b'export function getLineStarts(sourceFile: SourceFileLike)';assert new.count(needle)==1;new=new.replace(needle,needle.replace(b'SourceFileLike',b'LineMapSource'),1)
 needle=b'export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter {'
 replacement=b'/** @internal */\r\nexport function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;\r\nexport function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;\r\nexport function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter {'
-assert new.count(needle)==1;new=new.replace(needle,replacement,1);f.write_bytes(new)
+assert new.count(needle)==1;new=new.replace(needle,replacement,1)
+new=new.replace(b'export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;',b'export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter; // eslint-disable-line @typescript-eslint/unified-signatures',1)
+f.write_bytes(new)
 changes={}
 for source in sorted((base/'src').rglob('*')):
  if not source.is_file():continue
@@ -21,7 +23,7 @@ for source in sorted((base/'src').rglob('*')):
   changes[str(rel)]={'before':hashlib.sha256(a).hexdigest(),'after':hashlib.sha256(b).hexdigest()}
   (target/(source.name+'.patch')).write_text(''.join(difflib.unified_diff(a.decode().splitlines(True),b.decode().splitlines(True),fromfile='baseline/'+str(rel),tofile='e/'+str(rel))))
 assert set(changes)=={'src/compiler/types.ts','src/compiler/scanner.ts'}
-(target/'source-diff.json').write_text(json.dumps({'changed_files':changes,'SourceFileLike_unchanged':True,'scanner_added_lines':3,'types_added_lines':6,'eslint_suppression_added':False,'function_bodies_unchanged':True},indent=2)+'\n')
+(target/'source-diff.json').write_text(json.dumps({'changed_files':changes,'SourceFileLike_unchanged':True,'scanner_added_lines':3,'types_added_lines':6,'eslint_suppression_added':True,'function_bodies_unchanged':True},indent=2)+'\n')
 core('e',root);checkpoint('road2-e-prepared')
 names=['scanner.ts']+json.loads((p/'variant-files.json').read_text())
 with ThreadPoolExecutor(max_workers=2) as pool:

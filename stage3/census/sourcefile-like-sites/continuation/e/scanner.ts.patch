@@ -25,7 +25,7 @@
 -export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter {
 +/** @internal */
 +export function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;
-+export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;
++export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter; // eslint-disable-line @typescript-eslint/unified-signatures
 +export function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter {
      return computeLineAndCharacterOfPosition(getLineStarts(sourceFile), position);
  }

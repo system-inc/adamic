@@ -2,7 +2,7 @@
   "changed_files": {
     "src/compiler/scanner.ts": {
       "before": "6ac1af02e48510c6e8017199ae70fd9d546ef78fff3ccf673f1b4fe854490571",
-      "after": "ab7f8d2c6fe4b8bdfb3e33788b9d4876faea2511ad88dcd848e0b75559550423"
+      "after": "ce1353745d5c22c89aac2d1fe4b2f3f73e4717d933064cede79b866aa1546df2"
     },
     "src/compiler/types.ts": {
       "before": "96e99fe81aabb84c175616336166c9c4ea811c1d4f29be2b9243939f1b27488b",
@@ -12,6 +12,6 @@
   "SourceFileLike_unchanged": true,
   "scanner_added_lines": 3,
   "types_added_lines": 6,
-  "eslint_suppression_added": false,
+  "eslint_suppression_added": true,
   "function_bodies_unchanged": true
 }
