@@ -60,7 +60,13 @@ if ! build "$root" "$work/head"; then
 	exit 2
 fi
 if [ -n "$against" ]; then
-	git worktree add --detach -q "$work/against-tree" "$against" || exit 2
+	# A Codex checkout may have no origin remote, so a ref that doesn't resolve is fetched from GitHub.
+	commit=$(git rev-parse --verify -q "$against^{commit}")
+	if [ -z "$commit" ]; then
+		git fetch -q https://github.com/system-inc/adamic.git "${against#origin/}" || exit 2
+		commit=$(git rev-parse FETCH_HEAD)
+	fi
+	git worktree add --detach -q "$work/against-tree" "$commit" || exit 2
 	if ! build "$work/against-tree" "$work/against"; then
 		echo "run.sh: $against didn't build; see $logs/build-against.log" >&2
 		exit 2
@@ -111,6 +117,8 @@ for file in "$probes"/*.a "$probes"/*.ts; do
 				js="agrees"
 			else
 				js="differs: $(cell "$out/$build_name.js.stdout") (exit $js_exit)"
+				said=$(head -1 "$out/$build_name.js.stderr" | sed -e 's/|/\\|/g' | cut -c1-80)
+				[ -n "$said" ] && js="$js, $said"
 			fi
 		else
 			js="stops: $(head -1 "$out/$build_name.js-compile.stderr" | sed -e "s|$probes/||" -e 's/|/\\|/g' | cut -c1-120)"
@@ -123,8 +131,11 @@ for file in "$probes"/*.a "$probes"/*.ts; do
 				native="agrees"
 			else
 				native="differs: $(cell "$out/$build_name.native.stdout") (exit $native_exit)"
-				sanitizer=$(grep -m1 -E 'ERROR: (Address|Undefined|Leak)Sanitizer|runtime error:' "$out/$build_name.native.stderr" | cut -c1-80)
-				[ -n "$sanitizer" ] && native="$native, $sanitizer"
+				# The sanitizer's report when there is one, else the first thing the binary said.
+				said=$(grep -m1 -E 'ERROR: (Address|Undefined|Leak)Sanitizer|runtime error:' "$out/$build_name.native.stderr")
+				[ -z "$said" ] && said=$(head -1 "$out/$build_name.native.stderr")
+				said=$(printf '%s' "$said" | sed -e 's/|/\\|/g' | cut -c1-80)
+				[ -n "$said" ] && native="$native, $said"
 			fi
 		else
 			native="stops: $(head -1 "$out/$build_name.native-compile.stderr" | sed -e "s|$probes/||" -e 's/|/\\|/g' | cut -c1-120)"
