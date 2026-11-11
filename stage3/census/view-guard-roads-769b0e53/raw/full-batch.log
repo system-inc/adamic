@@ -4,3 +4,78 @@ push_child_exit=0 sha=aa1cd80b1b68bddc7b10c834bd0659afd8ffa48e
 checkpoint_wrapper_child_exit=0
 {"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 36.193397963999814, "peak_rss_kib": 889316, "user_seconds": 30.921548, "system_seconds": 5.44778, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-parent-records.jsonl"}}
 {"file": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "run": "full-dbf13ff563-parent-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 36.47614117300145, "peak_rss_kib": 871208, "user_seconds": 30.222714, "system_seconds": 5.13931, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "run": "full-dbf13ff563-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=2f4c9c4d9bd1ee8f781d2b4bf9b985e4ff013013
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 3,
+        "deferred_generic_instantiation": 1
+      },
+      "observed_units": 3,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 3,
+        "deferred_generic_instantiation": 1
+      },
+      "observed_units": 3,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 0,
+      "new_guard_stops_in_normally_finding_free_units": 0,
+      "new_guard_stops_in_already_normally_blocked_units": 0,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-dbf13ff563", "cases": 0, "categories": {}, "needs_reading": 0}
+render_wrapper_child_exit=0

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/factory/utilitiesPublic.ts": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352"
+  },
+  "raw_findings": {
+    "per_reason": {},
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {},
+      "after": {}
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {},
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {},
+      "after": {}
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}
