@@ -760,3 +760,5 @@ checkpoint_wrapper_child_exit=0
 pair_wrapper_child_exit=0
 {"prefix": "full-5dc3fc14d8", "cases": 12, "categories": {"guard bug: identity/union cross-product": 5, "needs reading": 1, "guard bug: checked pattern alternatives": 3, "guard bug: excluded discriminator arm": 3}, "needs_reading": 1}
 render_wrapper_child_exit=0
+push_child_exit=0 sha=ab3805cbc2e4edeafb2a73fef16dc460538c3810
+checkpoint_wrapper_child_exit=0
