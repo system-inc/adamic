@@ -1,0 +1,11 @@
+{
+  "annotation": "{ readonly text: string; lineMap: readonly number[] | undefined }",
+  "changed_files": {
+    "src/compiler/scanner.ts": {
+      "before": "6ac1af02e48510c6e8017199ae70fd9d546ef78fff3ccf673f1b4fe854490571",
+      "after": "7d96ca629572308c0bb3e7ab5fccbc338a208fbe79dda63578aaed5e03ebbbf2"
+    }
+  },
+  "only_two_parameter_types": true,
+  "baseline_main_sha": "d690f276749f91e6b36fe3a9726a5a453fcd7d39"
+}

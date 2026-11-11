@@ -1,0 +1,191 @@
+[
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 6233,
+    "column": 96,
+    "start": 268874,
+    "length": 15,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceMapSource' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceMapSource' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/compiler/scanner.ts",
+    "line": 471,
+    "column": 57,
+    "start": 47328,
+    "length": 10,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/compiler/scanner.ts",
+    "line": 539,
+    "column": 38,
+    "start": 50647,
+    "length": 10,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 1018,
+    "column": 26,
+    "start": 33322,
+    "length": 10,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 1032,
+    "column": 38,
+    "start": 33844,
+    "length": 10,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 2462,
+    "column": 54,
+    "start": 97738,
+    "length": 4,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type '{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is missing in type '{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": [
+      {
+        "file": "src/compiler/scanner.ts",
+        "line": 548,
+        "column": 84,
+        "start": 51088,
+        "length": 7,
+        "code": 2728,
+        "category": "Message",
+        "message": "'lineMap' is declared here.",
+        "related": []
+      }
+    ]
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 2511,
+    "column": 54,
+    "start": 99585,
+    "length": 4,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type '{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is missing in type '{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": [
+      {
+        "file": "src/compiler/scanner.ts",
+        "line": 548,
+        "column": 84,
+        "start": 51088,
+        "length": 7,
+        "code": 2728,
+        "category": "Message",
+        "message": "'lineMap' is declared here.",
+        "related": []
+      }
+    ]
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 402,
+    "column": 81,
+    "start": 19913,
+    "length": 10,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 441,
+    "column": 68,
+    "start": 21974,
+    "length": 10,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 454,
+    "column": 67,
+    "start": 22839,
+    "length": 10,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 471,
+    "column": 70,
+    "start": 23802,
+    "length": 10,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/services/sourcemaps.ts",
+    "line": 85,
+    "column": 54,
+    "start": 3217,
+    "length": 4,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/services/sourcemaps.ts",
+    "line": 236,
+    "column": 68,
+    "start": 9564,
+    "length": 4,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/services/textChanges.ts",
+    "line": 1343,
+    "column": 54,
+    "start": 66040,
+    "length": 4,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "line": 913,
+    "column": 38,
+    "start": 31468,
+    "length": 10,
+    "code": 2345,
+    "category": "Error",
+    "message": "Argument of type 'SourceFileLike' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is optional in type 'SourceFileLike' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.",
+    "related": []
+  }
+]

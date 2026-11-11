@@ -1,0 +1,21 @@
+{
+  "audit": "passed",
+  "baseline_observed_findings": 34,
+  "baseline_unique_locations": 34,
+  "caller_count": 93,
+  "variant_site_rows": 68,
+  "variants": {
+    "a": {
+      "completed": 9,
+      "attempted": 9,
+      "stock_errors": 0,
+      "services_TS2386": 0
+    },
+    "b": {
+      "completed": 9,
+      "attempted": 9,
+      "stock_errors": 15,
+      "services_TS2386": 0
+    }
+  }
+}

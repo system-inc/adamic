@@ -1,0 +1,46 @@
+{
+  "file": "checker.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-adapted/src/compiler",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/baseline/raw/checker.jsonl"
+  ],
+  "child_exit": -15,
+  "wall_seconds": 1500.2347989399996,
+  "timed_out": true,
+  "bound_seconds": 1500,
+  "max_concurrent_files": 1,
+  "completed_timing_units": 1293,
+  "last_timing_units": [
+    {
+      "file": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts",
+      "where": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts:27567:5",
+      "wall_seconds": 0.151924256,
+      "cpu_seconds": 0.15265599999975166
+    },
+    {
+      "file": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts",
+      "where": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts:27571:5",
+      "wall_seconds": 0.434818589,
+      "cpu_seconds": 1.6796290000002045
+    },
+    {
+      "file": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts",
+      "where": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts:27575:5",
+      "wall_seconds": 0.964232545,
+      "cpu_seconds": 3.792065999999977
+    },
+    {
+      "file": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts",
+      "where": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts:27586:5",
+      "wall_seconds": 0.31902504,
+      "cpu_seconds": 0.46290499999986423
+    },
+    {
+      "file": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts",
+      "where": "/workspace/scratch/baobab-adapted/src/compiler/checker.ts:27590:5",
+      "wall_seconds": 0.569441879,
+      "cpu_seconds": 0.5696450000000368
+    }
+  ]
+}

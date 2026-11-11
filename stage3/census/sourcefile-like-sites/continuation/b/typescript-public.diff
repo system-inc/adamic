@@ -1,0 +1,14 @@
+--- /workspace/adamic/stage3/census/sourcefile-like-sites/continuation/original/typescript.d.ts	2026-11-11 07:01:57.170504830 +0000
++++ /workspace/adamic/stage3/census/sourcefile-like-sites/continuation/b/typescript.d.ts	2026-11-11 08:03:24.206971859 +0000
+@@ -8554,7 +8554,10 @@
+     let sys: System;
+     function tokenToString(t: SyntaxKind): string | undefined;
+     function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number): number;
+-    function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;
++    function getLineAndCharacterOfPosition(sourceFile: {
++        readonly text: string;
++        lineMap: readonly number[] | undefined;
++    }, position: number): LineAndCharacter;
+     function isWhiteSpaceLike(ch: number): boolean;
+     /** Does not include line breaks. For that, see isWhiteSpaceLike. */
+     function isWhiteSpaceSingleLine(ch: number): boolean;

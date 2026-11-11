@@ -12,10 +12,10 @@ for(const f of findings){
  let deepest=sf;function walk(n){if(n.getFullStart()<=pos&&pos<n.end){deepest=n;n.forEachChild(walk);}}walk(sf);
  let enclosing=deepest;while(enclosing&&!ts.isFunctionLike(enclosing))enclosing=enclosing.parent;
  f.file=name;f.enclosing_function=enclosing?fname(enclosing,sf):'<top level>';f.function_chain=[];for(let owner=enclosing;owner;owner=owner.parent){if(ts.isFunctionLike(owner))f.function_chain.unshift(fname(owner,sf));}
- let call=deepest,index=-1;while(call){if(ts.isCallExpression(call)||ts.isNewExpression(call)){index=call.arguments?.findIndex(a=>a.getFullStart()<=pos&&pos<a.end)??-1;if(index>=0)break;}call=call.parent;}
+ let call=deepest,index=-1;while(call){if(ts.isFunctionLike(call)){call=null;break;}if(ts.isCallExpression(call)||ts.isNewExpression(call)){index=call.arguments?.findIndex(a=>a.getFullStart()<=pos&&pos<a.end)??-1;if(index>=0)break;}call=call.parent;}
  if(call){
- f.callee=call.expression.getText(sf);f.argument_index=index;f.expression=call.getText(sf);f.view=index>=0?'call argument':'call expression (review)';}
- else{let n=deepest;while(n&&!ts.isReturnStatement(n)&&!ts.isVariableDeclaration(n)&&!ts.isBinaryExpression(n))n=n.parent;f.callee='<non-call>';f.view=n?(ts.isReturnStatement(n)?'return':ts.isVariableDeclaration(n)?'variable initialization':ts.isBinaryExpression(n)?'assignment or binary expression':'other'):'other';f.expression=(n||deepest).getText(sf);}
+ f.callee=call.expression.getText(sf);f.argument_index=index;f.expression=call.getText(sf);f.view=index>=0?'call argument':'call expression (review)';f.call_span={start:sf.getLineAndCharacterOfPosition(call.getStart(sf)),end:sf.getLineAndCharacterOfPosition(call.end)};f.argument_span={start:sf.getLineAndCharacterOfPosition(call.arguments[index].getStart(sf)),end:sf.getLineAndCharacterOfPosition(call.arguments[index].end)};}
+ else{let n=deepest;const assignment=n=>ts.isBinaryExpression(n)&&n.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&n.operatorToken.kind<=ts.SyntaxKind.LastAssignment;while(n&&!ts.isReturnStatement(n)&&!ts.isVariableDeclaration(n)&&!assignment(n)&&!(ts.isArrowFunction(n)&&!ts.isBlock(n.body)))n=n.parent;f.callee='<non-call>';f.view=n?(ts.isReturnStatement(n)||ts.isArrowFunction(n)?'return':ts.isVariableDeclaration(n)?'variable initialization':assignment(n)?'assignment':'other'):'other';f.expression=(n||deepest).getText(sf);}
  f.location=name+':'+m[2]+':'+m[3];
 }
 fs.writeFileSync(path.join(out,'sites.json'),JSON.stringify(findings,null,2)+'\n');

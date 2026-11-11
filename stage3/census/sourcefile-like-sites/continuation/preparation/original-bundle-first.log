@@ -1,0 +1,18 @@
+Bundling /workspace/scratch/baobab-emit-original/typescript/typescript.d.ts to /workspace/adamic/stage3/census/sourcefile-like-sites/continuation/original/typescript.d.ts and /workspace/adamic/stage3/census/sourcefile-like-sites/continuation/original/typescript.internal.d.ts
+node:fs:484
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: ENOENT: no such file or directory, open '/workspace/scratch/baobab-src-deps/CopyrightNotice.txt'
+    at Object.readFileSync (node:fs:484:20)
+    at file:///workspace/scratch/baobab-src-deps/baobab-dtsBundler.mjs:487:28
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/workspace/scratch/baobab-src-deps/CopyrightNotice.txt'
+}
+
+Node.js v24.19.0

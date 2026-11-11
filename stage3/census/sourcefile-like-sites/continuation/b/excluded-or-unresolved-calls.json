@@ -1,0 +1,551 @@
+[
+  {
+    "file": "src/services/utilities.ts",
+    "line": 914,
+    "column": 18,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(position)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "line": 3437,
+    "column": 23,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(node.getEnd())",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "line": 3438,
+    "column": 21,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(nextToken.getStart(sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/sourcemaps.ts",
+    "line": 163,
+    "column": 16,
+    "expression": "file.getLineAndCharacterOfPosition(position)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 1138,
+    "column": 26,
+    "expression": "this.getLineAndCharacterOfPosition(pos)",
+    "signature_file": "src/services/services.ts",
+    "signature": "public getLineAndCharacterOfPosition(position: number): LineAndCharacter {\r\n        return getLineAndCharacterOfPosition(this, position);\r\n    }",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 1139,
+    "column": 28,
+    "expression": "this.getLineStarts()",
+    "signature_file": "src/services/services.ts",
+    "signature": "public getLineStarts(): readonly number[] {\r\n        return getLineStarts(this);\r\n    }",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 2879,
+    "column": 25,
+    "expression": "sourceFile.getLineStarts()",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineStarts(): readonly number[];",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 2880,
+    "column": 24,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(textRange.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 2881,
+    "column": 23,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(textRange.end)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/breakpoints.ts",
+    "line": 87,
+    "column": 28,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(position)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/breakpoints.ts",
+    "line": 88,
+    "column": 9,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(tokenAtLocation.getStart(sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/breakpoints.ts",
+    "line": 97,
+    "column": 27,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(preceding.getEnd())",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/breakpoints.ts",
+    "line": 124,
+    "column": 40,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 5595,
+    "column": 27,
+    "expression": "file.getLineAndCharacterOfPosition(contextToken.end)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 5596,
+    "column": 29,
+    "expression": "file.getLineAndCharacterOfPosition(position)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/textChanges.ts",
+    "line": 1632,
+    "column": 33,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(range.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/textChanges.ts",
+    "line": 1633,
+    "column": 40,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(lastComment.range.end)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/textChanges.ts",
+    "line": 1638,
+    "column": 62,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(sourceFile.statements[0].getStart())",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/textChanges.ts",
+    "line": 1639,
+    "column": 36,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(range.end)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/outliningElementsCollector.ts",
+    "line": 140,
+    "column": 24,
+    "expression": "sourceFile.getLineStarts()",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineStarts(): readonly number[];",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formattingContext.ts",
+    "line": 71,
+    "column": 31,
+    "expression": "this.sourceFile.getLineAndCharacterOfPosition(this.currentTokenSpan.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formattingContext.ts",
+    "line": 72,
+    "column": 29,
+    "expression": "this.sourceFile.getLineAndCharacterOfPosition(this.nextTokenSpan.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formattingContext.ts",
+    "line": 96,
+    "column": 27,
+    "expression": "this.sourceFile.getLineAndCharacterOfPosition(node.getStart(this.sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formattingContext.ts",
+    "line": 97,
+    "column": 25,
+    "expression": "this.sourceFile.getLineAndCharacterOfPosition(node.getEnd())",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formattingContext.ts",
+    "line": 105,
+    "column": 31,
+    "expression": "this.sourceFile.getLineAndCharacterOfPosition(openBrace.getEnd())",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formattingContext.ts",
+    "line": 106,
+    "column": 29,
+    "expression": "this.sourceFile.getLineAndCharacterOfPosition(closeBrace.getStart(this.sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/rules.ts",
+    "line": 929,
+    "column": 23,
+    "expression": "context.sourceFile.getLineAndCharacterOfPosition(context.currentTokenSpan.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/rules.ts",
+    "line": 930,
+    "column": 21,
+    "expression": "context.sourceFile.getLineAndCharacterOfPosition(nextTokenStart)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 161,
+    "column": 18,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(position)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 420,
+    "column": 22,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(n.getStart(sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 515,
+    "column": 27,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(enclosingNode.getStart(sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 518,
+    "column": 36,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(getNonDecoratorTokenPosOfNode(enclosingNode, sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 533,
+    "column": 32,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(item.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 570,
+    "column": 17,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(tokenInfo.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 602,
+    "column": 31,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(startPos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 825,
+    "column": 36,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(childStartPos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 829,
+    "column": 45,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(getNonDecoratorTokenPosOfNode(child, sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 926,
+    "column": 37,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(tokenInfo.token.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 991,
+    "column": 32,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(currentTokenInfo.token.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 1001,
+    "column": 66,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(savePreviousRange.end)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 1073,
+    "column": 41,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(triviaItem.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 1085,
+    "column": 39,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(originalRange.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 1159,
+    "column": 32,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 1186,
+    "column": 25,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(commentRange.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 1187,
+    "column": 25,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(commentRange.end)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 1293,
+    "column": 27,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(startPos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/formatting.ts",
+    "line": 1294,
+    "column": 25,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(endPos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 111,
+    "column": 32,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(position)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 232,
+    "column": 23,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(n.getStart(sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 315,
+    "column": 43,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(current.getStart(sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 324,
+    "column": 16,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(startPos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 393,
+    "column": 16,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(n.getStart(sourceFile))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 549,
+    "column": 63,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(list.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 583,
+    "column": 33,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(list[i].end)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 690,
+    "column": 45,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(skipTrivia(sourceFile.text, parent.pos))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 691,
+    "column": 44,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(skipTrivia(sourceFile.text, child.pos))",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 765,
+    "column": 27,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(rangeStart)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 766,
+    "column": 25,
+    "expression": "sourceFile.getLineAndCharacterOfPosition(range.end)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/server/session.ts",
+    "line": 4005,
+    "column": 62,
+    "expression": "info.getLineAndCharacterOfPosition(position)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/harness/typeWriter.ts",
+    "line": 238,
+    "column": 34,
+    "expression": "this.currentSourceFile.getLineAndCharacterOfPosition(actualPos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  },
+  {
+    "file": "src/harness/typeWriter.ts",
+    "line": 326,
+    "column": 46,
+    "expression": "declSourceFile.getLineAndCharacterOfPosition(declaration.pos)",
+    "signature_file": "src/services/types.ts",
+    "signature": "getLineAndCharacterOfPosition(pos: number): LineAndCharacter;",
+    "reason": "different resolved signature (often SourceFile method taking a position alone)"
+  }
+]

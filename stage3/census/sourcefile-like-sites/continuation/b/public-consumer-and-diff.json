@@ -1,0 +1,15 @@
+{
+  "label": "b",
+  "only_getLineAndCharacterOfPosition_parameter_differs": true,
+  "free_getLineStarts_declarations": 0,
+  "public_SourceFile_has_lineMap": false,
+  "public_SourceFile_consumer_diagnostics": [
+    {
+      "code": 2345,
+      "file": "public-sourcefile-consumer.ts",
+      "line": 3,
+      "column": 34,
+      "message": "Argument of type 'SourceFile' is not assignable to parameter of type '{ readonly text: string; lineMap: readonly number[] | undefined; }'.\n  Property 'lineMap' is missing in type 'SourceFile' but required in type '{ readonly text: string; lineMap: readonly number[] | undefined; }'."
+    }
+  ]
+}

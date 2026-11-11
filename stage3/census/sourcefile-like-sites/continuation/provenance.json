@@ -1,0 +1,31 @@
+{
+  "first_report_sha": "5a9cf385c47a257a1c8c6fcef353ef80a9420b42",
+  "main_sha": "d690f276749f91e6b36fe3a9726a5a453fcd7d39",
+  "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "baseline_bound_seconds": 1500,
+  "baseline_max_concurrency": 1,
+  "variants_max_concurrency": 2,
+  "stock_exactOptionalPropertyTypes": false,
+  "adamic_exactOptionalPropertyTypes": true,
+  "followup_audit": {
+    "audit": "passed",
+    "baseline_observed_findings": 34,
+    "baseline_unique_locations": 34,
+    "caller_count": 93,
+    "variant_site_rows": 68,
+    "variants": {
+      "a": {
+        "completed": 9,
+        "attempted": 9,
+        "stock_errors": 0,
+        "services_TS2386": 0
+      },
+      "b": {
+        "completed": 9,
+        "attempted": 9,
+        "stock_errors": 15,
+        "services_TS2386": 0
+      }
+    }
+  }
+}

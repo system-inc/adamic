@@ -1,16 +1,11 @@
 {
   "attempted": 79,
-  "completed": 73,
+  "completed": 78,
   "timeouts": [
-    "checker.ts",
-    "emitter.ts",
-    "parser.ts",
-    "program.ts",
-    "scanner.ts",
-    "utilities.ts"
+    "checker.ts"
   ],
-  "raw_observations": 7,
-  "physical_sites": 7,
+  "raw_observations": 34,
+  "physical_sites": 34,
   "diagnostic_states": [
     [
       false,

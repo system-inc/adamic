@@ -1,0 +1,9 @@
+baobab-typescript / src/compiler/types.ts
+4289:     lineMap?: readonly number[];
+4436:     /** @internal */ lineMap: readonly number[];
+8305:     /** @internal */ lineMap: readonly number[];
+
+baobab-adapted / src/compiler/types.ts
+4289:     lineMap?: readonly number[] | undefined;
+4436:     /** @internal */ lineMap: readonly number[] | undefined;
+8316:     /** @internal */ lineMap?: readonly number[] | undefined;

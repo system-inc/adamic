@@ -1,0 +1,2 @@
+declaration bundler child exit=0
+{"label":"b","emitted":278,"emitDiagnostics":0,"publicFunctions":[{"name":"getLineAndCharacterOfPosition","text":"function getLineAndCharacterOfPosition(sourceFile: {\n        readonly text: string;\n        lineMap: readonly number[] | undefined;\n    }, position: number): LineAndCharacter;"}]}
