@@ -1,40 +1,45 @@
 # A for-of's and a catch's writes to their bindings: mutants
 
 Each mutant is one edit, applied alone, then reverted. Run
-`go test ./internal/lower -run '^(TestForOfReassignedBindingIsUnknown|TestForOfReassignedPatternBindingIsUnknown|TestForOfConstBindingStillDispatches|TestCatchBindingAssignedIsUnknown)$' -count=1 -v`.
+`go test ./internal/lower -run '^(TestForOfReassignedBindingIsUnknown|TestForOfReassignedPatternBindingIsUnknown|TestForOfConstBindingStillDispatches|TestCatchBindingAssignedIsUnknown|TestLocalWritesAreLocalFieldsWrites)$' -count=1 -v`.
 Not run yet: written on a machine that doesn't build Go, so "goes red" below is what the code says, not what a run
 printed.
 
-## 1. The for-of's writes dropped
+collect takes every local-writing field by view_flow.go's localWrites table, so each mutant drops one row. Each also
+turns TestLocalWritesAreLocalFieldsWrites red, since the table no longer has every write row localFields lists; the
+pins below are what show the hole it would reopen. A for-of over a pattern writes its locals through Binding.Local,
+and one without through ForOf.Local, so one row can't turn both r1 and r2 red: 1a is r1's and 1b is r2's.
 
-File: internal/lower/view_flow.go, newAllocationFlowGraph's collect. Delete the ForOf case whole:
+## 1a. The for-of's binding dropped
+
+File: internal/lower/view_flow.go, localWrites. Delete:
 
 ```go
-			case ir.ForOf:
-				// Each step writes the element into Local, or destructures it into Pattern's locals,
-				// Local unused then (a for-in is one too, over its object's keys).
-				if len(value.Pattern) == 0 {
-					graph.unknownWrites[value.Local+1] = "a for-of binding takes each element"
-				}
-				for _, binding := range value.Pattern {
-					graph.unknownWrites[binding.Local+1] = "a for-of binding takes each element"
-				}
+	"ForOf.Local":    "a for-of binding takes each element",
 ```
 
-Expected: TestForOfReassignedBindingIsUnknown and TestForOfReassignedPatternBindingIsUnknown are known, the
-reassigned literal alone, and Main reads weight as a plain field, as on main. TestForOfConstBindingStillDispatches
-stays green: a binding nothing assigns has no producer, Unknown either way. The oracle's forof_writes fixtures go red
-on the JavaScript backend (undefined then 1, NaN for r2) and native (the missing-field panic).
+Expected: TestForOfReassignedBindingIsUnknown is known, the reassigned literal alone, and Main reads weight as a plain
+field, as on main. The oracle's forof_writes r1 fixtures go red on the JavaScript backend (undefined then 1) and native
+(the missing-field panic). TestForOfConstBindingStillDispatches stays green: a binding nothing assigns has no
+producer, Unknown either way.
+
+## 1b. The for-of pattern's bindings dropped
+
+File: internal/lower/view_flow.go, localWrites. Delete:
+
+```go
+	"Binding.Local":  "a for-of binding takes each element",
+```
+
+Expected: TestForOfReassignedPatternBindingIsUnknown is known, the reassigned literal alone, and the r2 fixtures go red
+(NaN on the JavaScript backend).
 
 ## 2. The catch's write dropped
 
-File: internal/lower/view_flow.go, newAllocationFlowGraph's collect. Delete the Try case whole:
+File: internal/lower/view_flow.go, localWrites. Delete:
 
 ```go
-			case ir.Try:
-				if value.CatchLocal >= 0 {
-					graph.unknownWrites[value.CatchLocal+1] = "a catch binding takes what was thrown"
-				}
+	"Try.CatchLocal": "a catch binding takes what was thrown",
 ```
 
 Expected: TestCatchBindingAssignedIsUnknown is known, the literal its catch assigns alone.

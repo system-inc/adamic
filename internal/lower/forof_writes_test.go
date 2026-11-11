@@ -143,3 +143,25 @@ func TestCatchBindingAssignedIsUnknown(t *testing.T) {
 		t.Fatalf("reach is %+v, want Unknown for a catch binding", reach)
 	}
 }
+
+// collect's table of local-writing fields, localWrites, has exactly the rows local_uses.go's
+// localFields classes as writes, and TestLocalFieldsClassifyEveryIntField holds that to internal/ir,
+// so an IR node that comes to write a local reds here until collect says how it takes it. Only
+// Declare and Assign are sources, read by collect's own cases; every other write is unknown, with why.
+func TestLocalWritesAreLocalFieldsWrites(t *testing.T) {
+	t.Parallel()
+	for field, classed := range localFields {
+		if _, listed := localWrites[field]; classed.role == localWrite && !listed {
+			t.Errorf("localFields says %s writes a local, and localWrites doesn't say how collect takes it", field)
+		}
+	}
+	for field, why := range localWrites {
+		if localFields[field].role != localWrite {
+			t.Errorf("localWrites lists %s, which localFields doesn't class as a write", field)
+		}
+		source := field == "Declare.Local" || field == "Assign.Local"
+		if source != (why == "") {
+			t.Errorf("localWrites takes %s as %q: only Declare and Assign are sources, every other write needs its reason", field, why)
+		}
+	}
+}
