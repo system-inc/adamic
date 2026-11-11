@@ -51,6 +51,6 @@ Each wrapper records the child's own exit code and wait4 peak RSS. Times include
 | Reused parent first-error guard census | 0 | 4888.397 | 4624656 |
 | Reused parent seam-free baseline | 0 | 4966.145 | 5101784 |
 
-The superseded 8e57a877 first-error run was stopped on the target change after 273.022 seconds and 1168 timed units (child exit -15, peak RSS 1328768 KiB); there is no completed pair for it. No d4e6f92c or d3757b95 census ran. No superseded or current census process is left running after completion.
+The superseded 8e57a877 first-error run was stopped on the target change after 273.022 seconds and 1170 timed units (child exit -15, peak RSS 1328768 KiB); there is no completed pair for it. No d4e6f92c or d3757b95 census ran. No superseded or current census process is left running after completion.
 
 Raw streams and per-unit timings are beside this report in raw/; files over 1 MB are gzipped. Exact overlay sources use .go.txt names. analyze.py, write-report.py, provenance.json and the archived parent evidence make the comparison reproducible. The earlier completed census remains [REPORT-769b0e53.md](REPORT-769b0e53.md).
