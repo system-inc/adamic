@@ -1,0 +1,2045 @@
+{
+  "task": "z5d0jye",
+  "status": "static compiler census complete; runtime measurement in progress",
+  "base": "efe887763f26e96653546fae904d57539139f7ae",
+  "production_compiler_roots": 79,
+  "production_core_filter_calls": 113,
+  "production_narrowing_sites": 27,
+  "source_classes": {
+    "compiler": {
+      "unknown": 15,
+      "safe": 12
+    },
+    "services": {
+      "unknown": 10
+    }
+  },
+  "production_loads": [
+    {
+      "scope": "compiler",
+      "roots": 79,
+      "production_load": "accepted",
+      "diagnostics": 0
+    },
+    {
+      "scope": "services",
+      "roots": 168,
+      "production_load": "rejected",
+      "diagnostics": 2774
+    },
+    {
+      "scope": "server",
+      "roots": 15,
+      "production_load": "rejected",
+      "diagnostics": 3222
+    },
+    {
+      "scope": "harness",
+      "roots": 38,
+      "production_load": "rejected",
+      "diagnostics": 3647
+    }
+  ],
+  "runtime": {
+    "status": "running",
+    "calls": null,
+    "identity_equal": null,
+    "returned_argument_array": null,
+    "mutation_detection": false
+  },
+  "sites": [
+    {
+      "where": "src/compiler/checker.ts:3138:58",
+      "enclosing_function": "isUsedInFunctionOrInstancePropertyWorker::<findAncestor callback>",
+      "function_where": "src/compiler/checker.ts:3115:42",
+      "call": "filter(declaration.parent.members, isClassStaticBlockDeclaration)",
+      "argument": "declaration.parent.members",
+      "argument_type": "NodeArray<ClassElement>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:3548:5",
+          "text": "readonly members: NodeArray<ClassElement>;",
+          "type_annotation": "NodeArray<ClassElement>"
+        }
+      ],
+      "predicate": "isClassStaticBlockDeclaration",
+      "parent": "staticBlocks = filter(declaration.parent.members, isClassStaticBlockDeclaration)",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly ClassStaticBlockDeclaration[]",
+      "start": 138482,
+      "end": 138547,
+      "classification": "unknown",
+      "data_flow": "declaration.parent.members -> filter -> staticBlocks -> length and getFlowTypeInStaticBlocks. The owning class node remains reachable. No local comparison/write is present, but all checker flow-query aliases and callbacks during that call were not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C01",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 3138,
+      "column": 58,
+      "declared_type_annotations": [
+        "NodeArray<ClassElement>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ClassElement>",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3548:5 readonly members: NodeArray<ClassElement>;"
+      ],
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "declaration.parent.members -> filter -> staticBlocks -> length and getFlowTypeInStaticBlocks"
+    },
+    {
+      "where": "src/compiler/checker.ts:6586:39",
+      "enclosing_function": "simplifyClassDeclaration",
+      "function_where": "src/compiler/checker.ts:6585:9",
+      "call": "filter(symbol.declarations, isClassLike)",
+      "argument": "symbol.declarations",
+      "argument_type": "Declaration[] | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:6045:5",
+          "text": "declarations?: Declaration[] | undefined;",
+          "type_annotation": "Declaration[] | undefined"
+        }
+      ],
+      "predicate": "isClassLike",
+      "parent": "classDeclarations = filter(symbol.declarations, isClassLike)",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "ClassLikeDeclaration[] | undefined",
+      "start": 349149,
+      "end": 349189,
+      "classification": "safe",
+      "data_flow": "symbol.declarations -> filter -> classDeclarations -> first element only (originalClassDecl). After that indexed read, the array is never read again; modifier queries and factory updates receive nodes, not this array. No array identity test or intervening write. The symbol owns the argument, but later symbol writes occur after the result last use.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C02",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 6586,
+      "column": 39,
+      "declared_type_annotations": [
+        "Declaration[] | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "Declaration[] | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:6045:5 // Name of symbol\r\n    declarations?: Declaration[] | undefined;"
+      ],
+      "overload_number": 5,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "symbol.declarations -> filter -> classDeclarations -> first element only (originalClassDecl)"
+    },
+    {
+      "where": "src/compiler/checker.ts:9417:28",
+      "enclosing_function": "getNamesOfDeclaration",
+      "function_where": "src/compiler/checker.ts:9415:13",
+      "call": "filter(map(statement.declarationList.declarations, getNameOfDeclaration), isIdentifierAndNotUndefined)",
+      "argument": "map(statement.declarationList.declarations, getNameOfDeclaration)",
+      "argument_type": "(DeclarationName | undefined)[]",
+      "predicate": "isIdentifierAndNotUndefined",
+      "parent": "return filter(map(statement.declarationList.declarations, getNameOfDeclaration), isIdentifierAndNotUndefined);",
+      "declaration_where": "src/compiler/core.ts:261:1",
+      "declaration": "/**\r\n * Filters an array by a predicate function. Returns the same array instance if the predicate is\r\n * true for all elements, otherwise returns a new array instance containing the filtered subset.\r\n *\r\n * @internal\r\n */\r\nexport function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];",
+      "result_type": "Identifier[]",
+      "start": 531662,
+      "end": 531764,
+      "classification": "safe",
+      "data_flow": "map(declarationList.declarations, getNameOfDeclaration) allocates a fresh array -> filter -> getNamesOfDeclaration return -> flatMap(excessExports) -> addRange copies -> map into ExportSpecifier nodes. No original wider array handle survives; flatMap reads and copies the result before later factory calls.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C03",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 9417,
+      "column": 28,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "(DeclarationName | undefined)[]",
+      "production_argument_declarations": [],
+      "overload_number": 1,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "map(declarationList.declarations, getNameOfDeclaration) allocates a fresh array -> filter -> getNamesOfDeclaration return -> flatMap(excessExports) -> addRange copies -> map into ExportSpecifier nodes"
+    },
+    {
+      "where": "src/compiler/checker.ts:9419:24",
+      "enclosing_function": "getNamesOfDeclaration",
+      "function_where": "src/compiler/checker.ts:9415:13",
+      "call": "filter([getNameOfDeclaration(statement as DeclarationStatement)], isIdentifierAndNotUndefined)",
+      "argument": "[getNameOfDeclaration(statement as DeclarationStatement)]",
+      "argument_type": "(DeclarationName | undefined)[]",
+      "predicate": "isIdentifierAndNotUndefined",
+      "parent": "return filter([getNameOfDeclaration(statement as DeclarationStatement)], isIdentifierAndNotUndefined);",
+      "declaration_where": "src/compiler/core.ts:261:1",
+      "declaration": "/**\r\n * Filters an array by a predicate function. Returns the same array instance if the predicate is\r\n * true for all elements, otherwise returns a new array instance containing the filtered subset.\r\n *\r\n * @internal\r\n */\r\nexport function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];",
+      "result_type": "Identifier[]",
+      "start": 531809,
+      "end": 531903,
+      "classification": "safe",
+      "data_flow": "fresh one-element array literal -> filter -> getNamesOfDeclaration return -> flatMap(excessExports) -> addRange copy -> map into ExportSpecifier nodes. No other owner of the argument exists, and the caller copies rather than mutates or identity-compares the returned array.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C04",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 9419,
+      "column": 24,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "(DeclarationName | undefined)[]",
+      "production_argument_declarations": [],
+      "overload_number": 1,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "fresh one-element array literal -> filter -> getNamesOfDeclaration return -> flatMap(excessExports) -> addRange copy -> map into ExportSpecifier nodes"
+    },
+    {
+      "where": "src/compiler/checker.ts:10370:48",
+      "enclosing_function": "serializeAsClass",
+      "function_where": "src/compiler/checker.ts:10298:13",
+      "call": "filter(symbol.declarations, d => isClassDeclaration(d) || isClassExpression(d))",
+      "argument": "symbol.declarations",
+      "argument_type": "Declaration[]",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:6045:5",
+          "text": "declarations?: Declaration[] | undefined;",
+          "type_annotation": "Declaration[] | undefined"
+        }
+      ],
+      "predicate": "d => isClassDeclaration(d) || isClassExpression(d)",
+      "parent": "filter(symbol.declarations, d => isClassDeclaration(d) || isClassExpression(d))[0]",
+      "declaration_where": "src/compiler/core.ts:261:1",
+      "declaration": "/**\r\n * Filters an array by a predicate function. Returns the same array instance if the predicate is\r\n * true for all elements, otherwise returns a new array instance containing the filtered subset.\r\n *\r\n * @internal\r\n */\r\nexport function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];",
+      "result_type": "(ClassExpression | ClassDeclaration)[]",
+      "start": 599924,
+      "end": 600003,
+      "classification": "safe",
+      "data_flow": "symbol.declarations -> filter -> immediate [0] -> setTextRange location node. Only the first node escapes; the filtered array dies at the index read, before setTextRange/addResult. No array identity comparison, key use or later array write while live.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C05",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 10370,
+      "column": 48,
+      "declared_type_annotations": [
+        "Declaration[] | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "Declaration[]",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:6045:5 // Name of symbol\r\n    declarations?: Declaration[] | undefined;"
+      ],
+      "overload_number": 1,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "symbol.declarations -> filter -> immediate [0] -> setTextRange location node"
+    },
+    {
+      "where": "src/compiler/checker.ts:11961:38",
+      "enclosing_function": "getTypeForVariableLikeDeclaration",
+      "function_where": "src/compiler/checker.ts:11847:5",
+      "call": "filter(declaration.parent.members, isClassStaticBlockDeclaration)",
+      "argument": "declaration.parent.members",
+      "argument_type": "NodeArray<ClassElement>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:3548:5",
+          "text": "readonly members: NodeArray<ClassElement>;",
+          "type_annotation": "NodeArray<ClassElement>"
+        }
+      ],
+      "predicate": "isClassStaticBlockDeclaration",
+      "parent": "staticBlocks = filter(declaration.parent.members, isClassStaticBlockDeclaration)",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly ClassStaticBlockDeclaration[]",
+      "start": 698088,
+      "end": 698153,
+      "classification": "unknown",
+      "data_flow": "declaration.parent.members -> filter -> staticBlocks -> length and getFlowTypeInStaticBlocks. The owning class node remains reachable. No local comparison/write is present, but all checker flow-query aliases and callbacks during that call were not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C06",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 11961,
+      "column": 38,
+      "declared_type_annotations": [
+        "NodeArray<ClassElement>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ClassElement>",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3548:5 readonly members: NodeArray<ClassElement>;"
+      ],
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "declaration.parent.members -> filter -> staticBlocks -> length and getFlowTypeInStaticBlocks"
+    },
+    {
+      "where": "src/compiler/checker.ts:16764:27",
+      "enclosing_function": "getConstraintDeclaration",
+      "function_where": "src/compiler/checker.ts:16763:5",
+      "call": "filter(type.symbol && type.symbol.declarations, isTypeParameterDeclaration)",
+      "argument": "type.symbol && type.symbol.declarations",
+      "argument_type": "Declaration[] | undefined",
+      "predicate": "isTypeParameterDeclaration",
+      "parent": "mapDefined(filter(type.symbol && type.symbol.declarations, isTypeParameterDeclaration), getEffectiveConstraintOfTypeParameter)",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "TypeParameterDeclaration[] | undefined",
+      "start": 976996,
+      "end": 977071,
+      "classification": "safe",
+      "data_flow": "type.symbol.declarations -> filter -> mapDefined(getEffectiveConstraintOfTypeParameter) -> [0]. mapDefined allocates its result and only invokes the constraint accessor on each element; the array itself is not passed to that accessor. Only a constraint node escapes. No identity/key use or array writer on this path.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C07",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 16764,
+      "column": 27,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "Declaration[] | undefined",
+      "production_argument_declarations": [],
+      "overload_number": 5,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "type.symbol.declarations -> filter -> mapDefined(getEffectiveConstraintOfTypeParameter) -> [0]"
+    },
+    {
+      "where": "src/compiler/checker.ts:32639:25",
+      "enclosing_function": "discriminateContextualTypeByObjectMembers",
+      "function_where": "src/compiler/checker.ts:32631:5",
+      "call": "filter(node.properties, (p): p is PropertyAssignment | ShorthandPropertyAssignment => {\r\n                            if (!p.symbol) {\r\n                                return false;\r\n                            }\r\n                            if (p.kind === SyntaxKind.PropertyAssignment) {\r\n                                return isPossiblyDiscriminantValue(p.initializer) && isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            if (p.kind === SyntaxKind.ShorthandPropertyAssignment) {\r\n                                return isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            return false;\r\n                        })",
+      "argument": "node.properties",
+      "argument_type": "NodeArray<ObjectLiteralElementLike>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:2955:5",
+          "text": "readonly properties: NodeArray<T>;",
+          "type_annotation": "NodeArray<T>"
+        }
+      ],
+      "predicate": "(p): p is PropertyAssignment | ShorthandPropertyAssignment => {\r\n                            if (!p.symbol) {\r\n                                return false;\r\n                            }\r\n                            if (p.kind === SyntaxKind.PropertyAssignment) {\r\n                                return isPossiblyDiscriminantValue(p.initializer) && isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            if (p.kind === SyntaxKind.ShorthandPropertyAssignment) {\r\n                                return isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            return false;\r\n                        }",
+      "parent": "map(\r\n                        filter(node.properties, (p): p is PropertyAssignment | ShorthandPropertyAssignment => {\r\n                            if (!p.symbol) {\r\n                                return false;\r\n                            }\r\n                            if (p.kind === SyntaxKind.PropertyAssignment) {\r\n                                return isPossiblyDiscriminantValue(p.initializer) && isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            if (p.kind === SyntaxKind.ShorthandPropertyAssignment) {\r\n                                return isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            return false;\r\n                        }),\r\n                        prop => ([() => getContextFreeTypeOfExpression(prop.kind === SyntaxKind.PropertyAssignment ? prop.initializer : prop.name), prop.symbol.escapedName] as const),\r\n                    )",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly (PropertyAssignment | ShorthandPropertyAssignment)[]",
+      "start": 1944242,
+      "end": 1944999,
+      "classification": "safe",
+      "data_flow": "node.properties -> filter -> map into pairs containing a type-query closure and escapedName -> concatenate -> discriminateTypeByDiscriminableItems. The map callback constructs pairs without querying types; the later closures capture individual properties, not the array. The filtered array is dead before those queries run. No identity/key use or array write before that copy boundary.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C08",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 32639,
+      "column": 25,
+      "declared_type_annotations": [
+        "NodeArray<T>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ObjectLiteralElementLike>",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2955:5 readonly properties: NodeArray<T>;"
+      ],
+      "overload_number": 3,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "node.properties -> filter -> map into pairs containing a type-query closure and escapedName -> concatenate -> discriminateTypeByDiscriminableItems"
+    },
+    {
+      "where": "src/compiler/checker.ts:46866:33",
+      "enclosing_function": "checkUnmatchedJSDocParameters",
+      "function_where": "src/compiler/checker.ts:46865:5",
+      "call": "filter(getJSDocTags(node), isJSDocParameterTag)",
+      "argument": "getJSDocTags(node)",
+      "argument_type": "readonly import(\"./types.js\").JSDocTag[]",
+      "predicate": "isJSDocParameterTag",
+      "parent": "jsdocParameters = filter(getJSDocTags(node), isJSDocParameterTag)",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly JSDocParameterTag[]",
+      "start": 2743006,
+      "end": 2743053,
+      "classification": "unknown",
+      "data_flow": "getJSDocTags(node), a reachable node-associated JSDoc tag cache -> filter -> jsdocParameters. The result is retained across containsArgumentsReference, type lookup and error production, then traversed. No local identity test or write; the complete cache/reentrant checker write graph was not followed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C09",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 46866,
+      "column": 33,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "readonly JSDocTag[]",
+      "production_argument_declarations": [],
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "getJSDocTags(node), a reachable node-associated JSDoc tag cache -> filter -> jsdocParameters"
+    },
+    {
+      "where": "src/compiler/checker.ts:47509:16",
+      "enclosing_function": "getClassOrInterfaceDeclarationsOfSymbol",
+      "function_where": "src/compiler/checker.ts:47508:5",
+      "call": "filter(symbol.declarations, (d: Declaration): d is ClassDeclaration | InterfaceDeclaration => d.kind === SyntaxKind.ClassDeclaration || d.kind === SyntaxKind.InterfaceDeclaration)",
+      "argument": "symbol.declarations",
+      "argument_type": "Declaration[] | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:6045:5",
+          "text": "declarations?: Declaration[] | undefined;",
+          "type_annotation": "Declaration[] | undefined"
+        }
+      ],
+      "predicate": "(d: Declaration): d is ClassDeclaration | InterfaceDeclaration => d.kind === SyntaxKind.ClassDeclaration || d.kind === SyntaxKind.InterfaceDeclaration",
+      "parent": "return filter(symbol.declarations, (d: Declaration): d is ClassDeclaration | InterfaceDeclaration => d.kind === SyntaxKind.ClassDeclaration || d.kind === SyntaxKind.InterfaceDeclaration);",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "(ClassDeclaration | InterfaceDeclaration)[] | undefined",
+      "start": 2776766,
+      "end": 2776945,
+      "classification": "unknown",
+      "data_flow": "symbol.declarations -> filter -> getClassOrInterfaceDeclarationsOfSymbol return -> areTypeParametersIdentical loops declarations and performs type/constraint queries. Symbol ownership permits aliases outside this helper. Local reads show no comparison/write, but all transitive writes while this returned array is live were not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C10",
+      "scope": "compiler",
+      "file": "src/compiler/checker.ts",
+      "line": 47509,
+      "column": 16,
+      "declared_type_annotations": [
+        "Declaration[] | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "Declaration[] | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:6045:5 // Name of symbol\r\n    declarations?: Declaration[] | undefined;"
+      ],
+      "overload_number": 5,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "symbol.declarations -> filter -> getClassOrInterfaceDeclarationsOfSymbol return -> areTypeParametersIdentical loops declarations and performs type/constraint queries"
+    },
+    {
+      "where": "src/compiler/commandLineParser.ts:2550:16",
+      "enclosing_function": "convertArrayLiteralExpressionToJson",
+      "function_where": "src/compiler/commandLineParser.ts:2540:5",
+      "call": "filter(elements.map(element => convertPropertyValueToJson(element, elementOption)), v => v !== undefined)",
+      "argument": "elements.map(element => convertPropertyValueToJson(element, elementOption))",
+      "argument_type": "(AdamicJsonRecoveryValue | undefined)[]",
+      "predicate": "v => v !== undefined",
+      "parent": "return filter(elements.map(element => convertPropertyValueToJson(element, elementOption)), v => v !== undefined);",
+      "declaration_where": "src/compiler/core.ts:261:1",
+      "declaration": "/**\r\n * Filters an array by a predicate function. Returns the same array instance if the predicate is\r\n * true for all elements, otherwise returns a new array instance containing the filtered subset.\r\n *\r\n * @internal\r\n */\r\nexport function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];",
+      "result_type": "AdamicJsonRecoveryValue[]",
+      "start": 100686,
+      "end": 100791,
+      "classification": "unknown",
+      "data_flow": "elements.map allocates a fresh (AdamicJsonRecoveryValue | undefined)[] -> filter -> convertArrayLiteralExpressionToJson return -> recursive JSON object/array fields -> convertToJson/convertToObject return. convertObjectLiteralExpressionToJson stores value in its result and passes that value to jsonConversionNotifier.onPropertySet. The wider temporary is not retained separately, but the result escapes through JSON values and notifier callbacks. Under the requested rule covering returned aliases, later writes or identity uses through those holders were not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C11",
+      "scope": "compiler",
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2550,
+      "column": 16,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "(AdamicJsonRecoveryValue | undefined)[]",
+      "production_argument_declarations": [],
+      "overload_number": 1,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "elements.map allocates a fresh (AdamicJsonRecoveryValue | undefined)[] -> filter -> convertArrayLiteralExpressionToJson return -> recursive JSON object/array fields -> convertToJson/convertToObject return"
+    },
+    {
+      "where": "src/compiler/commandLineParser.ts:3157:32",
+      "enclosing_function": "getConfigFileSpecs",
+      "function_where": "src/compiler/commandLineParser.ts:3127:5",
+      "call": "filter([outDir, declarationDir], (d): d is string => !!d)",
+      "argument": "[outDir, declarationDir]",
+      "argument_type": "(string | undefined)[]",
+      "predicate": "(d): d is string => !!d",
+      "parent": "excludeSpecs = filter([outDir, declarationDir], (d): d is string => !!d)",
+      "declaration_where": "src/compiler/core.ts:261:1",
+      "declaration": "/**\r\n * Filters an array by a predicate function. Returns the same array instance if the predicate is\r\n * true for all elements, otherwise returns a new array instance containing the filtered subset.\r\n *\r\n * @internal\r\n */\r\nexport function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];",
+      "result_type": "string[]",
+      "start": 129960,
+      "end": 130017,
+      "classification": "unknown",
+      "data_flow": "fresh [outDir, declarationDir] literal -> filter -> excludeSpecs -> validateSpecs and config-dir substitution -> excludeSpecs/validatedExcludeSpecs fields of ConfigFileSpecs -> sourceFile.configFileSpecs. The literal has no separate surviving wider handle, but the result can stay live through the config fields while getFileNames invokes host callbacks and subsequent watchers retain the source file. Later writes and identity/key uses through returned/stored aliases were not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C12",
+      "scope": "compiler",
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3157,
+      "column": 32,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "(string | undefined)[]",
+      "production_argument_declarations": [],
+      "overload_number": 1,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "fresh [outDir, declarationDir] literal -> filter -> excludeSpecs -> validateSpecs and config-dir substitution -> excludeSpecs/validatedExcludeSpecs fields of ConfigFileSpecs -> sourceFile.configFileSpecs"
+    },
+    {
+      "where": "src/compiler/commandLineParser.ts:3188:54",
+      "enclosing_function": "getConfigFileSpecs",
+      "function_where": "src/compiler/commandLineParser.ts:3127:5",
+      "call": "filter(filesSpecs, isString)",
+      "argument": "filesSpecs",
+      "argument_type": "readonly string[] | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/commandLineParser.ts:3129:15",
+          "text": "filesSpecs = toPropValue(getSpecsFromRaw(\"files\"))"
+        }
+      ],
+      "predicate": "isString",
+      "parent": "validatedFilesSpecBeforeSubstitution = filter(filesSpecs, isString)",
+      "declaration_where": "src/compiler/core.ts:273:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;",
+      "result_type": "readonly string[] | undefined",
+      "start": 131650,
+      "end": 131678,
+      "classification": "unknown",
+      "data_flow": "raw files property -> getSpecsFromRaw/toPropValue -> filesSpecs -> filter -> validatedFilesSpecBeforeSubstitution. Both original and narrowed arrays are stored on returned ConfigFileSpecs; substitution may also return an alias. raw belongs to the config caller and remains reachable. Later config consumers and caller mutations while the returned config lives were not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C13",
+      "scope": "compiler",
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3188,
+      "column": 54,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "readonly string[] | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/commandLineParser.ts:3129:15 filesSpecs = toPropValue(getSpecsFromRaw(\"files\"))"
+      ],
+      "overload_number": 7,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "raw files property -> getSpecsFromRaw/toPropValue -> filesSpecs -> filter -> validatedFilesSpecBeforeSubstitution"
+    },
+    {
+      "where": "src/compiler/factory/utilities.ts:761:12",
+      "enclosing_function": "getImportedHelpers",
+      "function_where": "src/compiler/factory/utilities.ts:760:1",
+      "call": "filter(getEmitHelpers(sourceFile), helper => !helper.scoped)",
+      "argument": "getEmitHelpers(sourceFile)",
+      "argument_type": "import(\"../types.js\").EmitHelper[] | undefined",
+      "predicate": "helper => !helper.scoped",
+      "parent": "return filter(getEmitHelpers(sourceFile), helper => !helper.scoped);",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "UnscopedEmitHelper[] | undefined",
+      "start": 30499,
+      "end": 30559,
+      "classification": "safe",
+      "data_flow": "sourceFile emitNode.helpers via getEmitHelpers -> filter -> helpers in createExternalHelpersImportDeclarationIfNeeded. ESM path iterates helper.importName into fresh helperNames, then sorts only helperNames. Other path passes helpers to getOrCreateExternalHelpersModuleNameIfNeeded, which only tests some(helpers). No array identity test or write to the helpers array during these reads. Other emit-helper writers can reach sourceFile.emitNode.helpers, but no such write is called during this local lifetime.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C14",
+      "scope": "compiler",
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 761,
+      "column": 12,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "EmitHelper[] | undefined",
+      "production_argument_declarations": [],
+      "overload_number": 5,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "sourceFile emitNode.helpers via getEmitHelpers -> filter -> helpers in createExternalHelpersImportDeclarationIfNeeded"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:853:25",
+      "enclosing_function": "visitMethodOrAccessorDeclaration",
+      "function_where": "src/compiler/transformers/classFields.ts:833:5",
+      "call": "filter(node.modifiers, (m): m is Modifier => isModifier(m) && !isStaticModifier(m) && !isAccessorModifier(m))",
+      "argument": "node.modifiers",
+      "argument_type": "NodeArray<ModifierLike> | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:2111:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2141:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2154:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        }
+      ],
+      "predicate": "(m): m is Modifier => isModifier(m) && !isStaticModifier(m) && !isAccessorModifier(m)",
+      "parent": "factory.createFunctionExpression(\r\n                        filter(node.modifiers, (m): m is Modifier => isModifier(m) && !isStaticModifier(m) && !isAccessorModifier(m)),\r\n                        node.asteriskToken,\r\n                        functionName,\r\n                        /*typeParameters*/ undefined,\r\n                        visitParameterList(node.parameters, visitor, context),\r\n                        /*type*/ undefined,\r\n                        visitFunctionBody(node.body!, visitor, context),\r\n                    )",
+      "declaration_where": "src/compiler/core.ts:273:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;",
+      "result_type": "readonly Modifier[] | undefined",
+      "start": 32991,
+      "end": 33100,
+      "classification": "unknown",
+      "data_flow": "node.modifiers -> filter -> factory.createFunctionExpression -> synthetic node modifiers -> lexicalEnvironment.declarations. The filtered array can be retained by factory.createNodeArray when already a NodeArray. The original node still owns it. Lifetime through the transformed tree and subsequent visitors was not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C15",
+      "scope": "compiler",
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 853,
+      "column": 25,
+      "declared_type_annotations": [
+        "NodeArray<ModifierLike> | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ModifierLike> | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2141:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2111:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2154:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;"
+      ],
+      "overload_number": 7,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "node.modifiers -> filter -> factory.createFunctionExpression -> synthetic node modifiers -> lexicalEnvironment.declarations"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1708:16",
+      "enclosing_function": "getPrivateInstanceMethodsAndAccessors",
+      "function_where": "src/compiler/transformers/classFields.ts:1707:5",
+      "call": "filter(node.members, isNonStaticMethodOrAccessorWithPrivateName)",
+      "argument": "node.members",
+      "argument_type": "NodeArray<ClassElement>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:3548:5",
+          "text": "readonly members: NodeArray<ClassElement>;",
+          "type_annotation": "NodeArray<ClassElement>"
+        }
+      ],
+      "predicate": "isNonStaticMethodOrAccessorWithPrivateName",
+      "parent": "return filter(node.members, isNonStaticMethodOrAccessorWithPrivateName);",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly (import(\"../types.js\").PrivateIdentifierAutoAccessorPropertyDeclaration | PrivateIdentifierMethodDeclaration | PrivateIdentifierAccessorDeclaration)[]",
+      "start": 75451,
+      "end": 75515,
+      "classification": "unknown",
+      "data_flow": "node.members -> filter -> getPrivateInstanceMethodsAndAccessors return -> classFields some/index reads and transformConstructorBody/initializer generation. Several uses cross visitor calls. The original class still owns members; transitive writes while the returned view is live were not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C16",
+      "scope": "compiler",
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1708,
+      "column": 16,
+      "declared_type_annotations": [
+        "NodeArray<ClassElement>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ClassElement>",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3548:5 readonly members: NodeArray<ClassElement>;"
+      ],
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "node.members -> filter -> getPrivateInstanceMethodsAndAccessors return -> classFields some/index reads and transformConstructorBody/initializer generation"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1054:13",
+      "enclosing_function": "transformClassMembers",
+      "function_where": "src/compiler/transformers/ts.ts:1048:5",
+      "call": "filter(constructor.parameters, (p): p is ParameterPropertyDeclaration => isParameterPropertyDeclaration(p, constructor))",
+      "argument": "constructor.parameters",
+      "argument_type": "NodeArray<ParameterDeclaration>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:1844:5",
+          "text": "readonly parameters: NodeArray<ParameterDeclaration>;",
+          "type_annotation": "NodeArray<ParameterDeclaration>"
+        }
+      ],
+      "predicate": "(p): p is ParameterPropertyDeclaration => isParameterPropertyDeclaration(p, constructor)",
+      "parent": "constructor &&\r\n            filter(constructor.parameters, (p): p is ParameterPropertyDeclaration => isParameterPropertyDeclaration(p, constructor))",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly ParameterPropertyDeclaration[]",
+      "start": 41945,
+      "end": 42065,
+      "classification": "unknown",
+      "data_flow": "constructor.parameters -> filter -> parametersWithPropertyAssignments -> for-of creating synthetic properties -> newMembers. No local write to parameters or identity test. Factory/setOriginalNode calls occur before later iterations, so the full transitive callback/alias write graph of this shared constructor array remains unclosed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C17",
+      "scope": "compiler",
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 1054,
+      "column": 13,
+      "declared_type_annotations": [
+        "NodeArray<ParameterDeclaration>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ParameterDeclaration>",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:1844:5 readonly parameters: NodeArray<ParameterDeclaration>;"
+      ],
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "constructor.parameters -> filter -> parametersWithPropertyAssignments -> for-of creating synthetic properties -> newMembers"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1087:38",
+      "enclosing_function": "injectClassTypeMetadata",
+      "function_where": "src/compiler/transformers/ts.ts:1082:5",
+      "call": "filter(modifiers, isDecorator)",
+      "argument": "modifiers",
+      "argument_type": "NodeArray<ModifierLike> | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/transformers/ts.ts:1082:38",
+          "text": "modifiers: NodeArray<ModifierLike> | undefined",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        }
+      ],
+      "predicate": "isDecorator",
+      "parent": "addRange(modifiersArray, filter(modifiers, isDecorator))",
+      "declaration_where": "src/compiler/core.ts:273:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;",
+      "result_type": "readonly Decorator[] | undefined",
+      "start": 43515,
+      "end": 43545,
+      "classification": "safe",
+      "data_flow": "modifiers parameter -> filter(isDecorator) -> addRange into fresh modifiersArray. Input is node-associated and shared, but addRange copies elements and does not call an input writer. The result is dead before subsequent addRange metadata insertion. No identity/key use.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C18",
+      "scope": "compiler",
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 1087,
+      "column": 38,
+      "declared_type_annotations": [
+        "NodeArray<ModifierLike> | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ModifierLike> | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/transformers/ts.ts:1082:38 modifiers: NodeArray<ModifierLike> | undefined"
+      ],
+      "overload_number": 7,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "modifiers parameter -> filter(isDecorator) -> addRange into fresh modifiersArray"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1089:38",
+      "enclosing_function": "injectClassTypeMetadata",
+      "function_where": "src/compiler/transformers/ts.ts:1082:5",
+      "call": "filter(skipWhile(modifiers, isExportOrDefaultModifier), isModifier)",
+      "argument": "skipWhile(modifiers, isExportOrDefaultModifier)",
+      "argument_type": "(Decorator | import(\"../types.js\").AbstractKeyword | import(\"../types.js\").AccessorKeyword | import(\"../types.js\").AsyncKeyword | import(\"../types.js\").ConstKeyword | import(\"../types.js\").DeclareKeyword | import(\"../types.js\").DefaultKeyword | import(\"../types.js\").ExportKeyword | import(\"../types.js\").InKeyword | import(\"../types.js\").PrivateKeyword | import(\"../types.js\").ProtectedKeyword | import(\"../types.js\").PublicKeyword | import(\"../types.js\").OutKeyword | import(\"../types.js\").OverrideKeyword | import(\"../types.js\").ReadonlyKeyword | import(\"../types.js\").StaticKeyword)[] | undefined",
+      "predicate": "isModifier",
+      "parent": "addRange(modifiersArray, filter(skipWhile(modifiers, isExportOrDefaultModifier), isModifier))",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "import(\"../types.js\").Modifier[] | undefined",
+      "start": 43635,
+      "end": 43702,
+      "classification": "safe",
+      "data_flow": "modifiers -> skipWhile -> filter -> addRange into fresh modifiersArray. skipWhile may return modifiers itself when its prefix is empty, so the argument may be node-owned. addRange only reads it and copies elements; later operations use the separate destination. No identity/key use or input-array write while live.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C19",
+      "scope": "compiler",
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 1089,
+      "column": 38,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "(AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword)[] | undefined",
+      "production_argument_declarations": [],
+      "overload_number": 5,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "modifiers -> skipWhile -> filter -> addRange into fresh modifiersArray"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1101:42",
+      "enclosing_function": "injectClassElementTypeMetadata",
+      "function_where": "src/compiler/transformers/ts.ts:1096:5",
+      "call": "filter(modifiers, isDecorator)",
+      "argument": "modifiers",
+      "argument_type": "NodeArray<ModifierLike> | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/transformers/ts.ts:1096:45",
+          "text": "modifiers: NodeArray<ModifierLike> | undefined",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        }
+      ],
+      "predicate": "isDecorator",
+      "parent": "addRange(modifiersArray, filter(modifiers, isDecorator))",
+      "declaration_where": "src/compiler/core.ts:273:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;",
+      "result_type": "readonly Decorator[] | undefined",
+      "start": 44344,
+      "end": 44374,
+      "classification": "safe",
+      "data_flow": "modifiers parameter -> filter(isDecorator) -> addRange into fresh modifiersArray. Input is node-associated and shared, but addRange copies elements and does not call an input writer. The result is dead before subsequent addRange metadata insertion. No identity/key use.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C20",
+      "scope": "compiler",
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 1101,
+      "column": 42,
+      "declared_type_annotations": [
+        "NodeArray<ModifierLike> | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ModifierLike> | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/transformers/ts.ts:1096:45 modifiers: NodeArray<ModifierLike> | undefined"
+      ],
+      "overload_number": 7,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "modifiers parameter -> filter(isDecorator) -> addRange into fresh modifiersArray"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1103:42",
+      "enclosing_function": "injectClassElementTypeMetadata",
+      "function_where": "src/compiler/transformers/ts.ts:1096:5",
+      "call": "filter(modifiers, isModifier)",
+      "argument": "modifiers",
+      "argument_type": "NodeArray<ModifierLike> | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/transformers/ts.ts:1096:45",
+          "text": "modifiers: NodeArray<ModifierLike> | undefined",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        }
+      ],
+      "predicate": "isModifier",
+      "parent": "addRange(modifiersArray, filter(modifiers, isModifier))",
+      "declaration_where": "src/compiler/core.ts:273:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;",
+      "result_type": "readonly import(\"../types.js\").Modifier[] | undefined",
+      "start": 44472,
+      "end": 44501,
+      "classification": "safe",
+      "data_flow": "modifiers parameter -> filter(isModifier) -> addRange into fresh modifiersArray. The only destination write is to modifiersArray. The result dies before factory.createNodeArray and modifiers reassignment. No array identity comparison or input writer while live.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C21",
+      "scope": "compiler",
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 1103,
+      "column": 42,
+      "declared_type_annotations": [
+        "NodeArray<ModifierLike> | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ModifierLike> | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/transformers/ts.ts:1096:45 modifiers: NodeArray<ModifierLike> | undefined"
+      ],
+      "overload_number": 7,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "modifiers parameter -> filter(isModifier) -> addRange into fresh modifiersArray"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:1384:13",
+      "enclosing_function": "transformConstructorBody",
+      "function_where": "src/compiler/transformers/ts.ts:1382:5",
+      "call": "filter(constructor.parameters, p => isParameterPropertyDeclaration(p, constructor))",
+      "argument": "constructor.parameters",
+      "argument_type": "NodeArray<ParameterDeclaration>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:1844:5",
+          "text": "readonly parameters: NodeArray<ParameterDeclaration>;",
+          "type_annotation": "NodeArray<ParameterDeclaration>"
+        }
+      ],
+      "predicate": "p => isParameterPropertyDeclaration(p, constructor)",
+      "parent": "filter(constructor.parameters, p => isParameterPropertyDeclaration(p, constructor)) as readonly ParameterPropertyDeclaration[] | undefined",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly ParameterPropertyDeclaration[]",
+      "start": 58577,
+      "end": 58660,
+      "classification": "unknown",
+      "data_flow": "constructor.parameters -> filter -> parametersWithPropertyAssignments -> some -> copyPrologue(visitor) -> mapDefined(transformParameterWithPropertyAssignment). The same constructor parameter array is node-owned and remains live across visitor execution. No direct local identity/write was found; arbitrary visitor alias writes were not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C22",
+      "scope": "compiler",
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 1384,
+      "column": 13,
+      "declared_type_annotations": [
+        "NodeArray<ParameterDeclaration>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ParameterDeclaration>",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:1844:5 readonly parameters: NodeArray<ParameterDeclaration>;"
+      ],
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "constructor.parameters -> filter -> parametersWithPropertyAssignments -> some -> copyPrologue(visitor) -> mapDefined(transformParameterWithPropertyAssignment)"
+    },
+    {
+      "where": "src/compiler/transformers/utilities.ts:603:12",
+      "enclosing_function": "getStaticPropertiesAndClassStaticBlock",
+      "function_where": "src/compiler/transformers/utilities.ts:602:1",
+      "call": "filter(node.members, isStaticPropertyDeclarationOrClassStaticBlockDeclaration)",
+      "argument": "node.members",
+      "argument_type": "NodeArray<ClassElement>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:3548:5",
+          "text": "readonly members: NodeArray<ClassElement>;",
+          "type_annotation": "NodeArray<ClassElement>"
+        }
+      ],
+      "predicate": "isStaticPropertyDeclarationOrClassStaticBlockDeclaration",
+      "parent": "return filter(node.members, isStaticPropertyDeclarationOrClassStaticBlockDeclaration);",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly (PropertyDeclaration | ClassStaticBlockDeclaration)[]",
+      "start": 25163,
+      "end": 25241,
+      "classification": "unknown",
+      "data_flow": "node.members -> filter -> getStaticPropertiesAndClassStaticBlock return -> several classFields transformer paths, including transforms of initializers/static blocks. The class node retains members; the result can span visitor calls. All visitor and factory alias writes were not exhaustively closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C23",
+      "scope": "compiler",
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 603,
+      "column": 12,
+      "declared_type_annotations": [
+        "NodeArray<ClassElement>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ClassElement>",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3548:5 readonly members: NodeArray<ClassElement>;"
+      ],
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "node.members -> filter -> getStaticPropertiesAndClassStaticBlock return -> several classFields transformer paths, including transforms of initializers/static blocks"
+    },
+    {
+      "where": "src/compiler/utilities.ts:4690:20",
+      "enclosing_function": "filterOwnedJSDocTags::<flatMap callback>",
+      "function_where": "src/compiler/utilities.ts:4684:55",
+      "call": "filter(jsDoc.tags, isJSDocOverloadTag)",
+      "argument": "jsDoc.tags",
+      "argument_type": "NodeArray<JSDocTag> | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:3954:5",
+          "text": "readonly tags?: NodeArray<JSDocTag> | undefined;",
+          "type_annotation": "NodeArray<JSDocTag> | undefined"
+        }
+      ],
+      "predicate": "isJSDocOverloadTag",
+      "parent": "return filter(jsDoc.tags, isJSDocOverloadTag);",
+      "declaration_where": "src/compiler/core.ts:273:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;",
+      "result_type": "readonly JSDocOverloadTag[] | undefined",
+      "start": 184567,
+      "end": 184605,
+      "classification": "safe",
+      "data_flow": "jsDoc.tags -> filter -> flatMap mapper return -> addRange into flatMap result -> getJSDocCommentsAndTags. addRange(undefined, from) slices and later calls push into its separate destination. The filtered array does not escape this copy boundary. The adjacent ownedTags identity comparison is in the other branch and uses the boolean overload, not this site.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C24",
+      "scope": "compiler",
+      "file": "src/compiler/utilities.ts",
+      "line": 4690,
+      "column": 20,
+      "declared_type_annotations": [
+        "NodeArray<JSDocTag> | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<JSDocTag> | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3954:5 readonly tags?: NodeArray<JSDocTag> | undefined;"
+      ],
+      "overload_number": 7,
+      "identity_compared": false,
+      "written_while_live": false,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "jsDoc.tags -> filter -> flatMap mapper return -> addRange into flatMap result -> getJSDocCommentsAndTags"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8018:12",
+      "enclosing_function": "getInitializedVariables",
+      "function_where": "src/compiler/utilities.ts:8017:1",
+      "call": "filter(node.declarations, isInitializedVariable)",
+      "argument": "node.declarations",
+      "argument_type": "NodeArray<VariableDeclaration>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:1890:5",
+          "text": "readonly declarations: NodeArray<VariableDeclaration>;",
+          "type_annotation": "NodeArray<VariableDeclaration>"
+        }
+      ],
+      "predicate": "isInitializedVariable",
+      "parent": "return filter(node.declarations, isInitializedVariable);",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly InitializedVariableDeclaration[]",
+      "start": 316684,
+      "end": 316732,
+      "classification": "unknown",
+      "data_flow": "node.declarations -> filter -> getInitializedVariables return -> es2017, generators and ts transformers. The declaration list remains reachable from the input node. Its returned view crosses several transform calls; all downstream aliases and callbacks have not been closed. The function is exported.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C25",
+      "scope": "compiler",
+      "file": "src/compiler/utilities.ts",
+      "line": 8018,
+      "column": 12,
+      "declared_type_annotations": [
+        "NodeArray<VariableDeclaration>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<VariableDeclaration>",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:1890:5 readonly declarations: NodeArray<VariableDeclaration>;"
+      ],
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "node.declarations -> filter -> getInitializedVariables return -> es2017, generators and ts transformers"
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1026:16",
+      "enclosing_function": "getDecorators",
+      "function_where": "src/compiler/utilitiesPublic.ts:1024:1",
+      "call": "filter(node.modifiers, isDecorator)",
+      "argument": "node.modifiers",
+      "argument_type": "NodeArray<ModifierLike> | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:1897:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:1935:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2111:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2141:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2154:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3560:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3553:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        }
+      ],
+      "predicate": "isDecorator",
+      "parent": "return filter(node.modifiers, isDecorator);",
+      "declaration_where": "src/compiler/core.ts:273:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;",
+      "result_type": "readonly Decorator[] | undefined",
+      "start": 40811,
+      "end": 40846,
+      "classification": "unknown",
+      "data_flow": "node.modifiers -> filter -> getDecorators return -> public callers can retain the same NodeArray. No comparison or write in this getter. The node owns the argument and callers can also reach node.modifiers; the escaped result lifetime and all external callers were not closed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C26",
+      "scope": "compiler",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1026,
+      "column": 16,
+      "declared_type_annotations": [
+        "NodeArray<ModifierLike> | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<ModifierLike> | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3553:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3560:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2141:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2111:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:1897:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:1935:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2154:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;"
+      ],
+      "overload_number": 7,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "node.modifiers -> filter -> getDecorators return -> public callers can retain the same NodeArray"
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1032:16",
+      "enclosing_function": "getModifiers",
+      "function_where": "src/compiler/utilitiesPublic.ts:1030:1",
+      "call": "filter(node.modifiers, isModifier)",
+      "argument": "node.modifiers",
+      "argument_type": "NodeArray<ModifierLike> | NodeArray<Modifier> | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:1897:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:1935:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2111:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2141:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2154:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3560:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3553:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:1830:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2237:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:1922:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2095:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2122:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2168:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2753:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2760:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3380:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2087:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3580:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3596:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3613:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3634:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3675:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3697:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3855:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3780:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        }
+      ],
+      "predicate": "isModifier",
+      "parent": "return filter(node.modifiers, isModifier);",
+      "declaration_where": "src/compiler/core.ts:273:1",
+      "declaration": "/** @internal */\r\nexport function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;",
+      "result_type": "readonly Modifier[] | undefined",
+      "start": 41024,
+      "end": 41058,
+      "classification": "unknown",
+      "data_flow": "node.modifiers -> filter -> getModifiers return -> public callers. The getter only reads. The node retains the same modifier array; public caller identity tests and writes while the returned view is retained were not exhaustively followed.",
+      "production_confirmed": true,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "C27",
+      "scope": "compiler",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1032,
+      "column": 16,
+      "declared_type_annotations": [
+        "NodeArray<Modifier> | undefined",
+        "NodeArray<ModifierLike> | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "production load.Load, then production Checker.GetResolvedSignature",
+      "production_argument_type": "NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+      "production_argument_declarations": [
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2760:5 readonly modifiers?: NodeArray<Modifier> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3553:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3560:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2122:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2237:5 readonly modifiers?: NodeArray<Modifier> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3613:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3855:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3780:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2087:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2753:5 readonly modifiers?: NodeArray<Modifier> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2141:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3697:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3675:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2168:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3580:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2111:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2095:5 readonly modifiers?: NodeArray<Modifier> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3634:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:1897:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:1935:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:1922:5 readonly modifiers?: NodeArray<Modifier> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:2154:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3596:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:1830:5 readonly modifiers?: NodeArray<Modifier> | undefined;",
+        "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3380:5 readonly modifiers?: NodeArray<ModifierLike> | undefined;"
+      ],
+      "overload_number": 7,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "node.modifiers -> filter -> getModifiers return -> public callers"
+    },
+    {
+      "where": "src/services/callHierarchy.ts:482:19",
+      "enclosing_function": "getIncomingCalls",
+      "function_where": "src/services/callHierarchy.ts:476:1",
+      "call": "filter(FindAllReferences.findReferenceOrRenameEntries(program, cancellationToken, program.getSourceFiles(), location, /*position*/ 0, { use: FindAllReferences.FindReferencesUse.References }, convertEntryToCallSite), isDefined)",
+      "argument": "FindAllReferences.findReferenceOrRenameEntries(program, cancellationToken, program.getSourceFiles(), location, /*position*/ 0, { use: FindAllReferences.FindReferencesUse.References }, convertEntryToCallSite)",
+      "argument_type": "(CallSite | undefined)[] | undefined",
+      "predicate": "isDefined",
+      "parent": "calls = filter(FindAllReferences.findReferenceOrRenameEntries(program, cancellationToken, program.getSourceFiles(), location, /*position*/ 0, { use: FindAllReferences.FindReferencesUse.References }, convertEntryToCallSite), isDefined)",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "CallSite[] | undefined",
+      "start": 19665,
+      "end": 19891,
+      "classification": "unknown",
+      "data_flow": "findReferenceOrRenameEntries returns a search result array -> filter(isDefined) -> calls -> group -> convertCallSiteGroupToIncomingCall. The original search array is not named locally. Producer retention/aliasing and all group conversion calls were not proved free of writes to the original, so this remains unknown.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S01",
+      "scope": "services",
+      "file": "src/services/callHierarchy.ts",
+      "line": 482,
+      "column": 19,
+      "declared_type_annotations": [],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 5,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "findReferenceOrRenameEntries returns a search result array -> filter(isDefined) -> calls -> group -> convertCallSiteGroupToIncomingCall"
+    },
+    {
+      "where": "src/services/codefixes/convertFunctionToEs6Class.ts:314:39",
+      "enclosing_function": "getModifierKindFromSource",
+      "function_where": "src/services/codefixes/convertFunctionToEs6Class.ts:313:1",
+      "call": "filter(source.modifiers, (modifier): modifier is Modifier => modifier.kind === kind)",
+      "argument": "source.modifiers",
+      "argument_type": "import(\"../_namespaces/ts.js\").NodeArray<import(\"../_namespaces/ts.js\").ModifierLike> | import(\"../_namespaces/ts.js\").NodeArray<Modifier> | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:1897:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:1935:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2111:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2141:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2154:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3560:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3553:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:1830:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2237:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:1922:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2095:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2122:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2168:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2753:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2760:5",
+          "text": "readonly modifiers?: NodeArray<Modifier> | undefined;",
+          "type_annotation": "NodeArray<Modifier> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3380:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:2087:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3580:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3596:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3613:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3634:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3675:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3697:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3855:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        },
+        {
+          "where": "src/compiler/types.ts:3780:5",
+          "text": "readonly modifiers?: NodeArray<ModifierLike> | undefined;",
+          "type_annotation": "NodeArray<ModifierLike> | undefined"
+        }
+      ],
+      "predicate": "(modifier): modifier is Modifier => modifier.kind === kind",
+      "parent": "canHaveModifiers(source) ? filter(source.modifiers, (modifier): modifier is Modifier => modifier.kind === kind) : undefined",
+      "declaration_where": "src/compiler/core.ts:273:1",
+      "declaration": "export function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;",
+      "result_type": "readonly Modifier[] | undefined",
+      "start": 15591,
+      "end": 15675,
+      "classification": "unknown",
+      "data_flow": "source.modifiers -> filter -> getModifierKindFromSource return -> concatenate/factory modifier construction in function-to-class conversion. The source node keeps its NodeArray. concatenate can preserve an input when the other side is empty; the result can reach synthetic node fields. Later transformed-node lifetime and aliases were not closed.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S02",
+      "scope": "services",
+      "file": "src/services/codefixes/convertFunctionToEs6Class.ts",
+      "line": 314,
+      "column": 39,
+      "declared_type_annotations": [
+        "NodeArray<Modifier> | undefined",
+        "NodeArray<ModifierLike> | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 7,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "source.modifiers -> filter -> getModifierKindFromSource return -> concatenate/factory modifier construction in function-to-class conversion"
+    },
+    {
+      "where": "src/services/codefixes/convertToEsModule.ts:137:29",
+      "enclosing_function": "convertFileToEsModule",
+      "function_where": "src/services/codefixes/convertToEsModule.ts:130:1",
+      "call": "filter(sourceFile.statements, isVariableStatement)",
+      "argument": "sourceFile.statements",
+      "argument_type": "NodeArray<Statement>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:4322:5",
+          "text": "readonly statements: NodeArray<Statement>;",
+          "type_annotation": "NodeArray<Statement>"
+        }
+      ],
+      "predicate": "isVariableStatement",
+      "parent": "for (const statement of filter(sourceFile.statements, isVariableStatement)) {\r\n        const newUseSites = convertVariableStatement(sourceFile, statement, changes, checker, identifiers, target, quotePreference);\r\n        if (newUseSites) {\r\n            copyEntries(newUseSites, useSitesToUnqualify ??= new Map());\r\n        }\r\n    }",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "export function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly VariableStatement[]",
+      "start": 4881,
+      "end": 4931,
+      "classification": "unknown",
+      "data_flow": "sourceFile.statements -> filter(isVariableStatement) -> for-of -> convertVariableStatement -> ChangeTracker. The input node remains reachable. No local array identity/write, but the transitive conversion/checker/change-tracker aliases while the iterator is live were not exhaustively closed.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S03",
+      "scope": "services",
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "line": 137,
+      "column": 29,
+      "declared_type_annotations": [
+        "NodeArray<Statement>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "sourceFile.statements -> filter(isVariableStatement) -> for-of -> convertVariableStatement -> ChangeTracker"
+    },
+    {
+      "where": "src/services/codefixes/fixAddMissingParam.ts:143:46",
+      "enclosing_function": "getInfo",
+      "function_where": "src/services/codefixes/fixAddMissingParam.ts:134:1",
+      "call": "filter(type.symbol.declarations, isConvertibleSignatureDeclaration)",
+      "argument": "type.symbol.declarations",
+      "argument_type": "import(\"../_namespaces/ts.js\").Declaration[] | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:6045:5",
+          "text": "declarations?: Declaration[] | undefined;",
+          "type_annotation": "Declaration[] | undefined"
+        }
+      ],
+      "predicate": "isConvertibleSignatureDeclaration",
+      "parent": "convertibleSignatureDeclarations = filter(type.symbol.declarations, isConvertibleSignatureDeclaration)",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "ConvertibleSignatureDeclaration[] | undefined",
+      "start": 4806,
+      "end": 4873,
+      "classification": "unknown",
+      "data_flow": "type.symbol.declarations -> filter -> convertibleSignatureDeclarations -> lastOrUndefined and getOverloads -> new declarations array spread -> SignatureInfo return. Only individual declarations escape after the spread, but checker/typeToTypeNode calls run while the filtered array remains available. Complete reentrant shared-symbol writes were not closed.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S04",
+      "scope": "services",
+      "file": "src/services/codefixes/fixAddMissingParam.ts",
+      "line": 143,
+      "column": 46,
+      "declared_type_annotations": [
+        "Declaration[] | undefined"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 5,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "type.symbol.declarations -> filter -> convertibleSignatureDeclarations -> lastOrUndefined and getOverloads -> new declarations array spread -> SignatureInfo return"
+    },
+    {
+      "where": "src/services/goToDefinition.ts:180:30",
+      "enclosing_function": "getDefinitionAtPosition",
+      "function_where": "src/services/goToDefinition.ts:121:1",
+      "call": "filter(classDecl.members, isClassStaticBlockDeclaration)",
+      "argument": "classDecl.members",
+      "argument_type": "import(\"./_namespaces/ts.js\").NodeArray<import(\"./_namespaces/ts.js\").ClassElement>",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:3548:5",
+          "text": "readonly members: NodeArray<ClassElement>;",
+          "type_annotation": "NodeArray<ClassElement>"
+        }
+      ],
+      "predicate": "isClassStaticBlockDeclaration",
+      "parent": "staticBlocks = filter(classDecl.members, isClassStaticBlockDeclaration)",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "export function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly import(\"./_namespaces/ts.js\").ClassStaticBlockDeclaration[]",
+      "start": 5736,
+      "end": 5792,
+      "classification": "unknown",
+      "data_flow": "classDecl.members -> filter -> staticBlocks -> symbolToString -> map into DefinitionInfo records. The class node retains the argument. The result crosses symbolToString before its final read; all reentrant checker writes during that call were not closed. Only DefinitionInfo records escape.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S05",
+      "scope": "services",
+      "file": "src/services/goToDefinition.ts",
+      "line": 180,
+      "column": 30,
+      "declared_type_annotations": [
+        "NodeArray<ClassElement>"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "classDecl.members -> filter -> staticBlocks -> symbolToString -> map into DefinitionInfo records"
+    },
+    {
+      "where": "src/services/services.ts:745:94",
+      "enclosing_function": "getContextualDocumentationComment",
+      "function_where": "src/services/services.ts:739:5",
+      "call": "filter(this.declarations, isGetAccessor)",
+      "argument": "this.declarations",
+      "argument_type": "Declaration[] | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/services/services.ts:662:5",
+          "text": "declarations?: Declaration[];",
+          "type_annotation": "Declaration[]"
+        }
+      ],
+      "predicate": "isGetAccessor",
+      "parent": "getDocumentationComment(filter(this.declarations, isGetAccessor), checker)",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "import(\"./_namespaces/ts.js\").GetAccessorDeclaration[] | undefined",
+      "start": 22272,
+      "end": 22312,
+      "classification": "unknown",
+      "data_flow": "this.declarations -> filter(isGetAccessor) -> getJsDocTagsOfDeclarations -> JsDoc extraction and inherited checker/symbol calls. Only JSDocTagInfo elements are cached. The input remains symbol-owned. No local identity/write, but transitive checker/reentrant alias writes were not closed.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S06",
+      "scope": "services",
+      "file": "src/services/services.ts",
+      "line": 745,
+      "column": 94,
+      "declared_type_annotations": [
+        "Declaration[]"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 5,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "this.declarations -> filter(isGetAccessor) -> getJsDocTagsOfDeclarations -> JsDoc extraction and inherited checker/symbol calls"
+    },
+    {
+      "where": "src/services/services.ts:755:94",
+      "enclosing_function": "getContextualDocumentationComment",
+      "function_where": "src/services/services.ts:739:5",
+      "call": "filter(this.declarations, isSetAccessor)",
+      "argument": "this.declarations",
+      "argument_type": "Declaration[] | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/services/services.ts:662:5",
+          "text": "declarations?: Declaration[];",
+          "type_annotation": "Declaration[]"
+        }
+      ],
+      "predicate": "isSetAccessor",
+      "parent": "getDocumentationComment(filter(this.declarations, isSetAccessor), checker)",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "import(\"./_namespaces/ts.js\").SetAccessorDeclaration[] | undefined",
+      "start": 22893,
+      "end": 22933,
+      "classification": "unknown",
+      "data_flow": "this.declarations -> filter(isSetAccessor) -> getJsDocTagsOfDeclarations -> JsDoc extraction and inherited checker/symbol calls. Only JSDocTagInfo results escape. Symbol declaration aliases and reentrant checker writes during consumption were not closed.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S07",
+      "scope": "services",
+      "file": "src/services/services.ts",
+      "line": 755,
+      "column": 94,
+      "declared_type_annotations": [
+        "Declaration[]"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 5,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "this.declarations -> filter(isSetAccessor) -> getJsDocTagsOfDeclarations -> JsDoc extraction and inherited checker/symbol calls"
+    },
+    {
+      "where": "src/services/services.ts:780:81",
+      "enclosing_function": "getContextualJsDocTags",
+      "function_where": "src/services/services.ts:774:5",
+      "call": "filter(this.declarations, isGetAccessor)",
+      "argument": "this.declarations",
+      "argument_type": "Declaration[] | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/services/services.ts:662:5",
+          "text": "declarations?: Declaration[];",
+          "type_annotation": "Declaration[]"
+        }
+      ],
+      "predicate": "isGetAccessor",
+      "parent": "getJsDocTagsOfDeclarations(filter(this.declarations, isGetAccessor), checker)",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "import(\"./_namespaces/ts.js\").GetAccessorDeclaration[] | undefined",
+      "start": 24009,
+      "end": 24049,
+      "classification": "unknown",
+      "data_flow": "this.declarations -> filter(isGetAccessor) -> getJsDocTagsOfDeclarations -> JsDoc extraction and inherited checker/symbol calls. Only JSDocTagInfo elements are cached. The input remains symbol-owned. No local identity/write, but transitive checker/reentrant alias writes were not closed.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S08",
+      "scope": "services",
+      "file": "src/services/services.ts",
+      "line": 780,
+      "column": 81,
+      "declared_type_annotations": [
+        "Declaration[]"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 5,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "this.declarations -> filter(isGetAccessor) -> getJsDocTagsOfDeclarations -> JsDoc extraction and inherited checker/symbol calls"
+    },
+    {
+      "where": "src/services/services.ts:790:81",
+      "enclosing_function": "getContextualJsDocTags",
+      "function_where": "src/services/services.ts:774:5",
+      "call": "filter(this.declarations, isSetAccessor)",
+      "argument": "this.declarations",
+      "argument_type": "Declaration[] | undefined",
+      "argument_declarations": [
+        {
+          "where": "src/services/services.ts:662:5",
+          "text": "declarations?: Declaration[];",
+          "type_annotation": "Declaration[]"
+        }
+      ],
+      "predicate": "isSetAccessor",
+      "parent": "getJsDocTagsOfDeclarations(filter(this.declarations, isSetAccessor), checker)",
+      "declaration_where": "src/compiler/core.ts:269:1",
+      "declaration": "export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;",
+      "result_type": "import(\"./_namespaces/ts.js\").SetAccessorDeclaration[] | undefined",
+      "start": 24553,
+      "end": 24593,
+      "classification": "unknown",
+      "data_flow": "this.declarations -> filter(isSetAccessor) -> getJsDocTagsOfDeclarations -> JsDoc extraction and inherited checker/symbol calls. Only JSDocTagInfo results escape. Symbol declaration aliases and reentrant checker writes during consumption were not closed.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S09",
+      "scope": "services",
+      "file": "src/services/services.ts",
+      "line": 790,
+      "column": 81,
+      "declared_type_annotations": [
+        "Declaration[]"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 5,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "this.declarations -> filter(isSetAccessor) -> getJsDocTagsOfDeclarations -> JsDoc extraction and inherited checker/symbol calls"
+    },
+    {
+      "where": "src/services/utilities.ts:2616:38",
+      "enclosing_function": "insertImports",
+      "function_where": "src/services/utilities.ts:2613:1",
+      "call": "filter(sourceFile.statements, importKindPredicate)",
+      "argument": "sourceFile.statements",
+      "argument_type": "NodeArray<import(\"./_namespaces/ts.js\").Statement> | readonly never[]",
+      "argument_declarations": [
+        {
+          "where": "src/compiler/types.ts:4322:5",
+          "text": "readonly statements: NodeArray<Statement>;",
+          "type_annotation": "NodeArray<Statement>"
+        },
+        {
+          "where": "src/compiler/types.ts:4302:5",
+          "text": "readonly statements: readonly never[];",
+          "type_annotation": "readonly never[]"
+        }
+      ],
+      "predicate": "importKindPredicate",
+      "parent": "existingImportStatements = filter(sourceFile.statements, importKindPredicate)",
+      "declaration_where": "src/compiler/core.ts:265:1",
+      "declaration": "export function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];",
+      "result_type": "readonly AnyImportOrRequireStatement[]",
+      "start": 104606,
+      "end": 104656,
+      "classification": "unknown",
+      "data_flow": "sourceFile.statements -> filter -> existingImportStatements -> comparer detection and insertion-index helpers -> ChangeTracker calls. The argument is shared through sourceFile. ChangeTracker queues text edits rather than mutating statements locally, but comparer and change-tracker transitive alias behavior was not exhaustively closed.",
+      "production_confirmed": false,
+      "runtime": null,
+      "later_mutation": null,
+      "id": "S10",
+      "scope": "services",
+      "file": "src/services/utilities.ts",
+      "line": 2616,
+      "column": 38,
+      "declared_type_annotations": [
+        "NodeArray<Statement>",
+        "readonly never[]"
+      ],
+      "type_note": "Declared annotations above; argument_type is the instantiated/flow type at the call. No annotation means an inferred expression or local.",
+      "signature_source": "supplementary stock TypeScript 6.0.3; production Load rejected this region",
+      "overload_number": 3,
+      "identity_compared": null,
+      "written_while_live": null,
+      "later_mutation_detection": {
+        "measured": false,
+        "reason": "No function-exit or escaped-lifetime mutation observer was installed; runtime identity counts are not mutation evidence."
+      },
+      "result_destination": "sourceFile.statements -> filter -> existingImportStatements -> comparer detection and insertion-index helpers -> ChangeTracker calls"
+    }
+  ]
+}

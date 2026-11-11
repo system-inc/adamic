@@ -1,0 +1,344 @@
+--- control/src/compiler/checker.ts
++++ counting/src/compiler/checker.ts
+@@ -3135,7 +3135,7 @@
+                                 const propName = declaration.name;
+                                 if (isIdentifier(propName) || isPrivateIdentifier(propName)) {
+                                     const type = getTypeOfSymbol(getSymbolOfDeclaration(declaration));
+-                                    const staticBlocks = filter(declaration.parent.members, isClassStaticBlockDeclaration);
++                                    const staticBlocks = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:3138:58", filter))(declaration.parent.members, isClassStaticBlockDeclaration);
+                                     if (isPropertyInitializedInStaticBlocks(propName, type, staticBlocks, declaration.parent.pos, current.pos)) {
+                                         return true;
+                                     }
+@@ -6583,7 +6583,7 @@
+         }
+ 
+         function simplifyClassDeclaration(classDecl: ClassDeclaration, symbol: Symbol): Declaration {
+-            const classDeclarations = filter(symbol.declarations, isClassLike);
++            const classDeclarations = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:6586:39", filter))(symbol.declarations, isClassLike);
+             const originalClassDecl = classDeclarations && classDeclarations.length > 0 ? classDeclarations[0]! : classDecl;
+             const modifiers = getEffectiveModifierFlags(originalClassDecl) & ~(ModifierFlags.Export | ModifierFlags.Ambient);
+             const isAnonymous = isClassExpression(originalClassDecl);
+@@ -9414,9 +9414,9 @@
+ 
+             function getNamesOfDeclaration(statement: Statement): Identifier[] {
+                 if (isVariableStatement(statement)) {
+-                    return filter(map(statement.declarationList.declarations, getNameOfDeclaration), isIdentifierAndNotUndefined);
+-                }
+-                return filter([getNameOfDeclaration(statement as DeclarationStatement)], isIdentifierAndNotUndefined);
++                    return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:9417:28", filter))(map(statement.declarationList.declarations, getNameOfDeclaration), isIdentifierAndNotUndefined);
++                }
++                return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:9419:24", filter))([getNameOfDeclaration(statement as DeclarationStatement)], isIdentifierAndNotUndefined);
+             }
+ 
+             function flattenExportAssignedNamespace(statements: Statement[]) {
+@@ -10367,7 +10367,7 @@
+                             heritageClauses,
+                             [...indexSignatures, ...staticMembers, ...constructors, ...publicProperties, ...privateProperties],
+                         ),
+-                        symbol.declarations && filter(symbol.declarations, d => isClassDeclaration(d) || isClassExpression(d))[0],
++                        symbol.declarations && ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:10370:48", filter))(symbol.declarations, d => isClassDeclaration(d) || isClassExpression(d))[0],
+                     ),
+                     modifierFlags,
+                 );
+@@ -11958,7 +11958,7 @@
+                 return type && addOptionality(type, /*isProperty*/ true, isOptional);
+             }
+             else {
+-                const staticBlocks = filter(declaration.parent.members, isClassStaticBlockDeclaration);
++                const staticBlocks = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:11961:38", filter))(declaration.parent.members, isClassStaticBlockDeclaration);
+                 const type = staticBlocks.length ? getFlowTypeInStaticBlocks(declaration.symbol, staticBlocks) :
+                     getEffectiveModifierFlags(declaration) & ModifierFlags.Ambient ? getTypeOfPropertyInBaseClass(declaration.symbol) :
+                     undefined;
+@@ -16761,7 +16761,7 @@
+     }
+ 
+     function getConstraintDeclaration(type: TypeParameter): TypeNode | undefined {
+-        return mapDefined(filter(type.symbol && type.symbol.declarations, isTypeParameterDeclaration), getEffectiveConstraintOfTypeParameter)[0];
++        return mapDefined(((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:16764:27", filter))(type.symbol && type.symbol.declarations, isTypeParameterDeclaration), getEffectiveConstraintOfTypeParameter)[0];
+     }
+ 
+     function getInferredTypeParameterConstraint(typeParameter: TypeParameter, omitTypeReferences?: boolean) {
+@@ -32636,7 +32636,7 @@
+                 contextualType,
+                 concatenate(
+                     map(
+-                        filter(node.properties, (p): p is PropertyAssignment | ShorthandPropertyAssignment => {
++                        ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:32639:25", filter))(node.properties, (p): p is PropertyAssignment | ShorthandPropertyAssignment => {
+                             if (!p.symbol) {
+                                 return false;
+                             }
+@@ -46863,7 +46863,7 @@
+     }
+ 
+     function checkUnmatchedJSDocParameters(node: SignatureDeclaration) {
+-        const jsdocParameters = filter(getJSDocTags(node), isJSDocParameterTag);
++        const jsdocParameters = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:46866:33", filter))(getJSDocTags(node), isJSDocParameterTag);
+         if (!length(jsdocParameters)) return;
+ 
+         const isJs = isInJSFile(node);
+@@ -47506,7 +47506,7 @@
+     }
+ 
+     function getClassOrInterfaceDeclarationsOfSymbol(symbol: Symbol) {
+-        return filter(symbol.declarations, (d: Declaration): d is ClassDeclaration | InterfaceDeclaration => d.kind === SyntaxKind.ClassDeclaration || d.kind === SyntaxKind.InterfaceDeclaration);
++        return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/checker.ts:47509:16", filter))(symbol.declarations, (d: Declaration): d is ClassDeclaration | InterfaceDeclaration => d.kind === SyntaxKind.ClassDeclaration || d.kind === SyntaxKind.InterfaceDeclaration);
+     }
+ 
+     function checkKindsOfPropertyMemberOverrides(type: InterfaceType, baseType: BaseType): void {
+--- control/src/compiler/commandLineParser.ts
++++ counting/src/compiler/commandLineParser.ts
+@@ -2547,7 +2547,7 @@
+         }
+ 
+         // Filter out invalid values
+-        return filter(elements.map(element => convertPropertyValueToJson(element, elementOption)), v => v !== undefined);
++        return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/commandLineParser.ts:2550:16", filter))(elements.map(element => convertPropertyValueToJson(element, elementOption)), v => v !== undefined);
+     }
+ 
+     function convertPropertyValueToJson(valueExpression: Expression, option: CommandLineOption | undefined): AdamicJsonRecoveryValue | undefined {
+@@ -3154,7 +3154,7 @@
+             const declarationDir = options.declarationDir;
+ 
+             if (outDir || declarationDir) {
+-                excludeSpecs = filter([outDir, declarationDir], (d): d is string => !!d);
++                excludeSpecs = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/commandLineParser.ts:3157:32", filter))([outDir, declarationDir], (d): d is string => !!d);
+             }
+         }
+ 
+@@ -3185,7 +3185,7 @@
+             ) || validatedExcludeSpecsBeforeSubstitution;
+         }
+ 
+-        const validatedFilesSpecBeforeSubstitution = filter(filesSpecs, isString);
++        const validatedFilesSpecBeforeSubstitution = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/commandLineParser.ts:3188:54", filter))(filesSpecs, isString);
+         const validatedFilesSpec = getSubstitutedStringArrayWithConfigDirTemplate(
+             validatedFilesSpecBeforeSubstitution,
+             basePathForFileNames,
+--- control/src/compiler/factory/utilities.ts
++++ counting/src/compiler/factory/utilities.ts
+@@ -758,7 +758,7 @@
+ }
+ 
+ function getImportedHelpers(sourceFile: SourceFile) {
+-    return filter(getEmitHelpers(sourceFile), helper => !helper.scoped);
++    return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/factory/utilities.ts:761:12", filter))(getEmitHelpers(sourceFile), helper => !helper.scoped);
+ }
+ 
+ function getOrCreateExternalHelpersModuleNameIfNeeded(factory: NodeFactory, node: SourceFile, compilerOptions: CompilerOptions, helpers: UnscopedEmitHelper[] | undefined, hasExportStarsToExportValues?: boolean, hasImportStarOrImportDefault?: boolean) {
+--- control/src/compiler/transformers/classFields.ts
++++ counting/src/compiler/transformers/classFields.ts
+@@ -850,7 +850,7 @@
+                 factory.createAssignment(
+                     functionName,
+                     factory.createFunctionExpression(
+-                        filter(node.modifiers, (m): m is Modifier => isModifier(m) && !isStaticModifier(m) && !isAccessorModifier(m)),
++                        ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/transformers/classFields.ts:853:25", filter))(node.modifiers, (m): m is Modifier => isModifier(m) && !isStaticModifier(m) && !isAccessorModifier(m)),
+                         node.asteriskToken,
+                         functionName,
+                         /*typeParameters*/ undefined,
+@@ -1705,7 +1705,7 @@
+     }
+ 
+     function getPrivateInstanceMethodsAndAccessors(node: ClassLikeDeclaration) {
+-        return filter(node.members, isNonStaticMethodOrAccessorWithPrivateName);
++        return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/transformers/classFields.ts:1708:16", filter))(node.members, isNonStaticMethodOrAccessorWithPrivateName);
+     }
+ 
+     function getClassFacts(node: ClassLikeDeclaration) {
+--- control/src/compiler/transformers/ts.ts
++++ counting/src/compiler/transformers/ts.ts
+@@ -1051,7 +1051,7 @@
+         let newMembers: ClassElement[] | undefined;
+         const constructor = getFirstConstructorWithBody(node);
+         const parametersWithPropertyAssignments = constructor &&
+-            filter(constructor.parameters, (p): p is ParameterPropertyDeclaration => isParameterPropertyDeclaration(p, constructor));
++            ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/transformers/ts.ts:1054:13", filter))(constructor.parameters, (p): p is ParameterPropertyDeclaration => isParameterPropertyDeclaration(p, constructor));
+ 
+         if (parametersWithPropertyAssignments) {
+             for (const parameter of parametersWithPropertyAssignments) {
+@@ -1084,9 +1084,9 @@
+         if (some(metadata)) {
+             const modifiersArray: ModifierLike[] = [];
+             addRange(modifiersArray, takeWhile(modifiers, isExportOrDefaultModifier));
+-            addRange(modifiersArray, filter(modifiers, isDecorator));
++            addRange(modifiersArray, ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/transformers/ts.ts:1087:38", filter))(modifiers, isDecorator));
+             addRange(modifiersArray, metadata);
+-            addRange(modifiersArray, filter(skipWhile(modifiers, isExportOrDefaultModifier), isModifier));
++            addRange(modifiersArray, ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/transformers/ts.ts:1089:38", filter))(skipWhile(modifiers, isExportOrDefaultModifier), isModifier));
+             modifiers = setTextRange(factory.createNodeArray(modifiersArray), modifiers);
+         }
+ 
+@@ -1098,9 +1098,9 @@
+             const metadata = getTypeMetadata(node, container);
+             if (some(metadata)) {
+                 const modifiersArray: ModifierLike[] = [];
+-                addRange(modifiersArray, filter(modifiers, isDecorator));
++                addRange(modifiersArray, ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/transformers/ts.ts:1101:42", filter))(modifiers, isDecorator));
+                 addRange(modifiersArray, metadata);
+-                addRange(modifiersArray, filter(modifiers, isModifier));
++                addRange(modifiersArray, ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/transformers/ts.ts:1103:42", filter))(modifiers, isModifier));
+                 modifiers = setTextRange(factory.createNodeArray(modifiersArray), modifiers);
+             }
+         }
+@@ -1381,7 +1381,7 @@
+ 
+     function transformConstructorBody(body: Block, constructor: ConstructorDeclaration) {
+         const parametersWithPropertyAssignments = constructor &&
+-            filter(constructor.parameters, p => isParameterPropertyDeclaration(p, constructor)) as readonly ParameterPropertyDeclaration[] | undefined;
++            ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/transformers/ts.ts:1384:13", filter))(constructor.parameters, p => isParameterPropertyDeclaration(p, constructor)) as readonly ParameterPropertyDeclaration[] | undefined;
+         if (!some(parametersWithPropertyAssignments)) {
+             return visitFunctionBody(body, visitor, context);
+         }
+--- control/src/compiler/transformers/utilities.ts
++++ counting/src/compiler/transformers/utilities.ts
+@@ -600,7 +600,7 @@
+ export function getStaticPropertiesAndClassStaticBlock(node: ClassExpression | ClassDeclaration): readonly (PropertyDeclaration | ClassStaticBlockDeclaration)[];
+ /** @internal */
+ export function getStaticPropertiesAndClassStaticBlock(node: ClassExpression | ClassDeclaration): readonly (PropertyDeclaration | ClassStaticBlockDeclaration)[] {
+-    return filter(node.members, isStaticPropertyDeclarationOrClassStaticBlockDeclaration);
++    return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/transformers/utilities.ts:603:12", filter))(node.members, isStaticPropertyDeclarationOrClassStaticBlockDeclaration);
+ }
+ 
+ /**
+--- control/src/compiler/utilities.ts
++++ counting/src/compiler/utilities.ts
+@@ -4687,7 +4687,7 @@
+             return jsDoc.tags === ownedTags ? [jsDoc] : ownedTags;
+         }
+         else {
+-            return filter(jsDoc.tags, isJSDocOverloadTag);
++            return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/utilities.ts:4690:20", filter))(jsDoc.tags, isJSDocOverloadTag);
+         }
+     });
+ }
+@@ -8015,7 +8015,7 @@
+ 
+ /** @internal */
+ export function getInitializedVariables(node: VariableDeclarationList): readonly InitializedVariableDeclaration[] {
+-    return filter(node.declarations, isInitializedVariable);
++    return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/utilities.ts:8018:12", filter))(node.declarations, isInitializedVariable);
+ }
+ 
+ /** @internal */
+--- control/src/compiler/utilitiesPublic.ts
++++ counting/src/compiler/utilitiesPublic.ts
+@@ -1023,13 +1023,13 @@
+ 
+ export function getDecorators(node: HasDecorators): readonly Decorator[] | undefined {
+     if (hasDecorators(node)) {
+-        return filter(node.modifiers, isDecorator);
++        return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/utilitiesPublic.ts:1026:16", filter))(node.modifiers, isDecorator);
+     }
+ }
+ 
+ export function getModifiers(node: HasModifiers): readonly Modifier[] | undefined {
+     if (hasSyntacticModifier(node, ModifierFlags.Modifier)) {
+-        return filter(node.modifiers, isModifier);
++        return ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/compiler/utilitiesPublic.ts:1032:16", filter))(node.modifiers, isModifier);
+     }
+ }
+ 
+--- control/src/services/callHierarchy.ts
++++ counting/src/services/callHierarchy.ts
+@@ -479,7 +479,7 @@
+         return [];
+     }
+     const location = getCallHierarchyDeclarationReferenceNode(declaration);
+-    const calls = filter(FindAllReferences.findReferenceOrRenameEntries(program, cancellationToken, program.getSourceFiles(), location, /*position*/ 0, { use: FindAllReferences.FindReferencesUse.References }, convertEntryToCallSite), isDefined);
++    const calls = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/callHierarchy.ts:482:19", filter))(FindAllReferences.findReferenceOrRenameEntries(program, cancellationToken, program.getSourceFiles(), location, /*position*/ 0, { use: FindAllReferences.FindReferencesUse.References }, convertEntryToCallSite), isDefined);
+     return calls ? group(calls, getCallSiteGroupKey, entries => convertCallSiteGroupToIncomingCall(program, entries)) : [];
+ }
+ 
+--- control/src/services/codefixes/convertFunctionToEs6Class.ts
++++ counting/src/services/codefixes/convertFunctionToEs6Class.ts
+@@ -311,7 +311,7 @@
+ }
+ 
+ function getModifierKindFromSource(source: Node, kind: Modifier["kind"]): readonly Modifier[] | undefined {
+-    return canHaveModifiers(source) ? filter(source.modifiers, (modifier): modifier is Modifier => modifier.kind === kind) : undefined;
++    return canHaveModifiers(source) ? ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/codefixes/convertFunctionToEs6Class.ts:314:39", filter))(source.modifiers, (modifier): modifier is Modifier => modifier.kind === kind) : undefined;
+ }
+ 
+ function isConstructorAssignment(x: ObjectLiteralElementLike | PropertyAccessExpression) {
+--- control/src/services/codefixes/convertToEsModule.ts
++++ counting/src/services/codefixes/convertToEsModule.ts
+@@ -134,7 +134,7 @@
+     let moduleExportsChangedToDefault = false;
+     let useSitesToUnqualify: Map<Node, Node> | undefined;
+     // Process variable statements first to collect use sites that need to be updated inside other transformations
+-    for (const statement of filter(sourceFile.statements, isVariableStatement)) {
++    for (const statement of ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/codefixes/convertToEsModule.ts:137:29", filter))(sourceFile.statements, isVariableStatement)) {
+         const newUseSites = convertVariableStatement(sourceFile, statement, changes, checker, identifiers, target, quotePreference);
+         if (newUseSites) {
+             copyEntries(newUseSites, useSitesToUnqualify ??= new Map());
+--- control/src/services/codefixes/fixAddMissingParam.ts
++++ counting/src/services/codefixes/fixAddMissingParam.ts
+@@ -140,7 +140,7 @@
+ 
+     const checker = program.getTypeChecker();
+     const type = checker.getTypeAtLocation(callExpression.expression);
+-    const convertibleSignatureDeclarations = filter(type.symbol.declarations, isConvertibleSignatureDeclaration);
++    const convertibleSignatureDeclarations = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/codefixes/fixAddMissingParam.ts:143:46", filter))(type.symbol.declarations, isConvertibleSignatureDeclaration);
+     if (convertibleSignatureDeclarations === undefined) {
+         return undefined;
+     }
+--- control/src/services/goToDefinition.ts
++++ counting/src/services/goToDefinition.ts
+@@ -177,7 +177,7 @@
+         const classDecl = node.parent.parent;
+         const { symbol, failedAliasResolution } = getSymbol(classDecl, typeChecker, stopAtAlias);
+ 
+-        const staticBlocks = filter(classDecl.members, isClassStaticBlockDeclaration);
++        const staticBlocks = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/goToDefinition.ts:180:30", filter))(classDecl.members, isClassStaticBlockDeclaration);
+         const containerName = symbol ? typeChecker.symbolToString(symbol, classDecl) : "";
+         const sourceFile = node.getSourceFile();
+         return map(staticBlocks, staticBlock => {
+--- control/src/services/services.ts
++++ counting/src/services/services.ts
+@@ -742,7 +742,7 @@
+                 if (!this.contextualGetAccessorDocumentationComment) {
+                     this.contextualGetAccessorDocumentationComment = emptyArray; // Set temporarily to avoid an infinite loop finding inherited tags
+ 
+-                    this.contextualGetAccessorDocumentationComment = getDocumentationComment(filter(this.declarations, isGetAccessor), checker);
++                    this.contextualGetAccessorDocumentationComment = getDocumentationComment(((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/services.ts:745:94", filter))(this.declarations, isGetAccessor), checker);
+                 }
+                 if (length(this.contextualGetAccessorDocumentationComment)) {
+                     return this.contextualGetAccessorDocumentationComment;
+@@ -752,7 +752,7 @@
+                 if (!this.contextualSetAccessorDocumentationComment) {
+                     this.contextualSetAccessorDocumentationComment = emptyArray; // Set temporarily to avoid an infinite loop finding inherited tags
+ 
+-                    this.contextualSetAccessorDocumentationComment = getDocumentationComment(filter(this.declarations, isSetAccessor), checker);
++                    this.contextualSetAccessorDocumentationComment = getDocumentationComment(((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/services.ts:755:94", filter))(this.declarations, isSetAccessor), checker);
+                 }
+                 if (length(this.contextualSetAccessorDocumentationComment)) {
+                     return this.contextualSetAccessorDocumentationComment;
+@@ -777,7 +777,7 @@
+                 if (!this.contextualGetAccessorTags) {
+                     this.contextualGetAccessorTags = emptyArray; // Set temporarily to avoid an infinite loop finding inherited tags
+ 
+-                    this.contextualGetAccessorTags = getJsDocTagsOfDeclarations(filter(this.declarations, isGetAccessor), checker);
++                    this.contextualGetAccessorTags = getJsDocTagsOfDeclarations(((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/services.ts:780:81", filter))(this.declarations, isGetAccessor), checker);
+                 }
+                 if (length(this.contextualGetAccessorTags)) {
+                     return this.contextualGetAccessorTags;
+@@ -787,7 +787,7 @@
+                 if (!this.contextualSetAccessorTags) {
+                     this.contextualSetAccessorTags = emptyArray; // Set temporarily to avoid an infinite loop finding inherited tags
+ 
+-                    this.contextualSetAccessorTags = getJsDocTagsOfDeclarations(filter(this.declarations, isSetAccessor), checker);
++                    this.contextualSetAccessorTags = getJsDocTagsOfDeclarations(((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/services.ts:790:81", filter))(this.declarations, isSetAccessor), checker);
+                 }
+                 if (length(this.contextualSetAccessorTags)) {
+                     return this.contextualSetAccessorTags;
+--- control/src/services/utilities.ts
++++ counting/src/services/utilities.ts
+@@ -2613,7 +2613,7 @@
+ export function insertImports(changes: textChanges.ChangeTracker, sourceFile: SourceFile | FutureSourceFile, imports: AnyImportOrRequireStatement | readonly AnyImportOrRequireStatement[], blankLineBetween: boolean, preferences: UserPreferences): void {
+     const decl = isArray(imports) ? imports[0] : imports;
+     const importKindPredicate: (node: Node) => node is AnyImportOrRequireStatement = decl.kind === SyntaxKind.VariableStatement ? isRequireVariableStatement : isAnyImportSyntax;
+-    const existingImportStatements = filter(sourceFile.statements, importKindPredicate);
++    const existingImportStatements = ((globalThis as typeof globalThis & { __adamicFilterSite: (id: string, original: typeof filter) => typeof filter }).__adamicFilterSite("src/services/utilities.ts:2616:38", filter))(sourceFile.statements, importKindPredicate);
+     const { comparer, isSorted } = OrganizeImports.getOrganizeImportsStringComparerWithDetection(existingImportStatements, preferences);
+     const sortedNewImports = isArray(imports) ? toSorted(imports, (a, b) => OrganizeImports.compareImportsOrRequireStatements(a, b, comparer)) : [imports];
+     if (!existingImportStatements?.length) {
