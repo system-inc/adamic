@@ -712,6 +712,9 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 		}
 		return f.l.notYet(site.node, what)
 	}
+	if site := f.unplannedNodeArray(); site != nil {
+		return f.l.notYet(site.node, "a NodeArray on a cycle in a graph program, whose literal native construction makes outside the program's graph regions")
+	}
 	if decodes {
 		what := "decodeJson<" + f.l.graphDecodeType + "> in a graph program, whose decoded values the runtime makes outside the program's graph regions"
 		if f.l.graphDecodeSite == nil {
@@ -748,6 +751,31 @@ func (f *cycleFinder) unplannedPair() *graphPairSite {
 		judged[site.pair] = true
 		for _, held := range f.selected {
 			if f.l.checker.IsTypeAssignableTo(site.pair, held) {
+				return site
+			}
+		}
+	}
+	return nil
+}
+
+// unplannedNodeArray is the first NodeArray literal a graph program could hold on a cycle, or nil.
+// Native construction (construction.go) makes a NodeArray with its interior metadata and never adopts
+// it, and adoption would truncate that metadata (#enawrc9), so a NodeArray on a cycle would stay
+// counted and leak with the cycle (#djwd1t2, row 3). It's unreached today: tsc's own shape, a node's
+// children a NodeArray of nodes each naming its parent, is refused first as an unchecked cast. This
+// stop keeps it from leaking in silence when that cast is admitted. A NodeArray is on a cycle when its
+// type is a graph type, or it can be held as one.
+func (f *cycleFinder) unplannedNodeArray() *graphNodeArraySite {
+	if len(f.selected) == 0 {
+		return nil
+	}
+	for index := range f.l.graphNodeArrays {
+		site := &f.l.graphNodeArrays[index]
+		if f.l.result.GraphTypes[f.l.cycleTypeID(site.array)] {
+			return site
+		}
+		for _, held := range f.selected {
+			if f.l.checker.IsTypeAssignableTo(site.array, held) {
 				return site
 			}
 		}
