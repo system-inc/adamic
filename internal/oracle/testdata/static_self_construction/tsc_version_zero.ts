@@ -151,7 +151,8 @@ console.log(Version.zero.toString());
 console.log(new Version("1.2.3-beta.1+build.5").toString());
 console.log(new Version(2).toString());
 try {
-	new Version(-1);
+	const invalid = new Version(-1);
+	console.log(invalid.toString());
 }
 catch (error) {
 	if (error instanceof Error) {

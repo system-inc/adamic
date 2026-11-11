@@ -10,9 +10,9 @@ import (
 // A class constructing itself in its own static initializer lowers when the construction, its
 // parameter defaults, instance field initializers, constructor body and everything they reach,
 // reads no static of that class initialized later in source order (#1451npc, Adamic's ruling, the
-// future-read entry of docs/rulings.md). Each agrees with Node natively, sanitized and on JavaScript.
-// tsc's real Version.zero passes the walk and stops at a later wall, pinned in internal/lower's
-// TestTscVersionZeroPassesTheStaticWalk, and comes here when that wall falls. The stops are pinned in
+// future-read entry of docs/rulings.md). Each agrees with Node natively, sanitized and on JavaScript,
+// tsc's real Version.zero (tsc_version_zero.ts) among them: 0.0.0-0, 1.2.3-beta.1+build.5, 2.0.0,
+// then the Debug Failure its constructor throws for a negative major. The stops are pinned in
 // internal/lower's TestStaticSelfConstructionStops, TestStaticWalkReachAdmissions and
 // TestPrepareStackTraceStaysStopped. Mutants: internal/lower/static-self-construction.mutants.md.
 func TestStaticSelfConstructionAgreesWithNode(t *testing.T) {
@@ -33,7 +33,7 @@ func TestStaticSelfConstructionAgreesWithNode(t *testing.T) {
 			loomViewsDAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 1 {
-		t.Fatalf("%d programs in %s, want 1: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 2 {
+		t.Fatalf("%d programs in %s, want 2:a program added or removed needs this count changed with it", programs, directory)
 	}
 }
