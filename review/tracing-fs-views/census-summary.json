@@ -1,0 +1,151 @@
+{
+  "census-before": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-before/src/compiler/tracing.ts:220:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/tracing-before/src/compiler/tracing.ts:340:14",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/tracing-before/src/compiler/tracing.ts:340:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-before/src/compiler/tracing.ts:354:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/tracing-before/src/compiler/tracing.ts:359:10",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/tracing-before/src/compiler/tracing.ts:359:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-before/src/compiler/tracing.ts:220:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/tracing-before/src/compiler/tracing.ts:340:14",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/tracing-before/src/compiler/tracing.ts:340:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-before/src/compiler/tracing.ts:354:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/tracing-before/src/compiler/tracing.ts:359:10",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/tracing-before/src/compiler/tracing.ts:359:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  ],
+  "census-after": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-measured-after/src/compiler/tracing.ts:220:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/tracing-measured-after/src/compiler/tracing.ts:340:50",
+      "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+      "text": "/workspace/tracing-measured-after/src/compiler/tracing.ts:340:50: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-measured-after/src/compiler/tracing.ts:354:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/tracing-measured-after/src/compiler/tracing.ts:359:53",
+      "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+      "text": "/workspace/tracing-measured-after/src/compiler/tracing.ts:359:53: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"
+    }
+  ],
+  "mutant62": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-mutant62/src/compiler/tracing.ts:220:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/tracing-mutant62/src/compiler/tracing.ts:340:14",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/tracing-mutant62/src/compiler/tracing.ts:340:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-mutant62/src/compiler/tracing.ts:220:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/tracing-mutant62/src/compiler/tracing.ts:340:14",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/tracing-mutant62/src/compiler/tracing.ts:340:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-mutant62/src/compiler/tracing.ts:354:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/tracing-mutant62/src/compiler/tracing.ts:359:53",
+      "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+      "text": "/workspace/tracing-mutant62/src/compiler/tracing.ts:359:53: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"
+    }
+  ],
+  "mutant63": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-mutant63/src/compiler/tracing.ts:354:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/tracing-mutant63/src/compiler/tracing.ts:359:10",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/tracing-mutant63/src/compiler/tracing.ts:359:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-mutant63/src/compiler/tracing.ts:220:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/tracing-mutant63/src/compiler/tracing.ts:340:50",
+      "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+      "text": "/workspace/tracing-mutant63/src/compiler/tracing.ts:340:50: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/tracing-mutant63/src/compiler/tracing.ts:354:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/tracing-mutant63/src/compiler/tracing.ts:359:10",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/tracing-mutant63/src/compiler/tracing.ts:359:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  ],
+  "core-first-stop": {
+    "checker_diagnostics": 0,
+    "error": "/workspace/tracing-measured-after/src/compiler/tracing.ts:380:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "kind": "Refused",
+    "output": false,
+    "reason": "an ambient value declaration",
+    "root": "/workspace/tracing-measured-after/src/compiler/core.ts",
+    "where": "/workspace/tracing-measured-after/src/compiler/tracing.ts:380:1"
+  }
+}

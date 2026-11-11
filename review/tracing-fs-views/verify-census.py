@@ -10,10 +10,11 @@ for name in ['census-before','census-after','mutant62','mutant63']:
   assert {f['where'].split('tracing.ts:')[1] for f in findings}=={'340:50','359:53'}
   assert all(f['kind']=='NotYet' and f['reason']=='JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)' for f in findings)
  summary[name]=findings
-records=[json.loads(l) for l in (out/'core-first-stop.jsonl').read_text().splitlines()]
-assert not records[0]['diagnostics']
-tracing=[r for r in records if r.get('file','').endswith('/tracing.ts')]
-assert len(tracing)==1
-summary['core-tracing']=tracing[0]
+record=json.loads((out/'core-production-first-stop.json').read_text())
+assert record['checker_diagnostics']==0 and not record['output']
+assert record['kind']=='Refused' and record['where'].endswith('/tracing.ts:380:1'),record
+assert record['reason']=='an ambient value declaration',record
+assert pathlib.Path('/workspace/tracing-measured-after/src/compiler/tracing.ts').read_text().splitlines()[379].startswith('declare const require:')
+summary['core-first-stop']=record
 (out/'census-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
-print(json.dumps(summary['core-tracing'],indent=2))
+print(json.dumps(record,indent=2))

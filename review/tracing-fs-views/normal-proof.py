@@ -28,7 +28,7 @@ trace=project/'trace'
 for label,tree in [('before',before),('after',after)]:
  if trace.exists():shutil.rmtree(trace)
  with (out/('witness-'+label+'.log')).open('w') as log:
-  r=subprocess.run(['node',str(tree/'built/local/tsc/tsc.js' if (tree/'built/local/tsc/tsc.js').exists() else tree/'built/local/tsc.js'),'--project',str(project/'tsconfig.json'),'--generateTrace',str(trace)],stdout=log,stderr=subprocess.STDOUT,cwd=project)
+  r=subprocess.run(['node','-e',"const ts=require(process.argv[1]); ts.sys.getExecutingFilePath=()=>'/workspace/tracing-before/built/local/tsc.js'; ts.sys.exit=code=>{ts.dumpTracingLegend();process.exitCode=code;}; ts.executeCommandLine(ts.sys,ts.noop,process.argv.slice(2));",str(tree/'built/local/typescript.js'),'--project',str(project/'tsconfig.json'),'--generateTrace',str(trace)],stdout=log,stderr=subprocess.STDOUT,cwd=project)
  (out/('witness-'+label+'.exit.json')).write_text(json.dumps({'exit':r.returncode})+'\n')
  assert r.returncode==0,r.returncode
  for file in ['types.json','legend.json']:shutil.copyfile(trace/file,out/(label+'-'+file))

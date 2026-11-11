@@ -10,7 +10,8 @@ while not (out/'candidate-prepare-pinned.exit.json').exists():time.sleep(5)
 assert json.loads((out/'candidate-prepare-pinned.exit.json').read_text())['exit']==0
 p=json.loads((out/'candidate-prepare-pinned.log').read_text())
 artifact=pathlib.Path(p['artifact']);tree=artifact/'tree'
-after=pathlib.Path('/workspace/tracing-after');after.symlink_to(tree,target_is_directory=True)
+after=pathlib.Path('/workspace/tracing-after')
+if not after.exists():after.symlink_to(tree,target_is_directory=True)
 measured=pathlib.Path('/workspace/tracing-measured-after/src')
 expected={p.relative_to(measured):p.read_bytes() for p in measured.rglob('*') if p.is_file()}
 actual={p.relative_to(tree/'src'):p.read_bytes() for p in (tree/'src').rglob('*') if p.is_file()}
@@ -19,7 +20,7 @@ assert actual==expected,'fresh apply differs from measured source'
 (out/'artifact-ready.json').write_bytes((artifact/'ready.json').read_bytes())
 for phase in ['apply','install','build','harness']:(out/('candidate-'+phase+'.log')).write_bytes((artifact/(phase+'.log')).read_bytes())
 run('normal-proof',['python3',str(out/'normal-proof.py')])
-while not (out/'core-first-stop.exit.json').exists():time.sleep(5)
+while not (out/'core-production-first-stop.exit.json').exists():time.sleep(5)
 run('verify-census',['python3',str(out/'verify-census.py')])
 env=dict(os.environ,STAGE3_ARTIFACT=str(artifact),ADAMIC_TYPESCRIPT_SOURCE='/workspace/typescript-6.0.3')
 run('lane',['python3','-B','stage3/lane/measure_shards.py','/workspace/tracing-lane-run','--concurrency','2'],env)

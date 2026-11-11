@@ -1,0 +1,20 @@
+package main
+import (
+ "context"
+ "encoding/json"
+ "errors"
+ "os"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+)
+func main() {
+ if len(os.Args)!=3 { panic("usage: firststop root output.json") }
+ program,err:=load.Load([]string{os.Args[1]});if err!=nil { panic(err) }
+ output,err:=lower.Lower(context.Background(),program)
+ if output!=nil || err==nil { panic("first-stop census unexpectedly produced usable IR") }
+ var refused *lower.Refused
+ if !errors.As(err,&refused) { panic(err) }
+ record:=map[string]any{"root":os.Args[1],"checker_diagnostics":0,"output":false,"kind":"Refused","where":refused.Where,"reason":refused.What,"error":err.Error()}
+ file,failure:=os.Create(os.Args[2]);if failure!=nil { panic(failure) };defer file.Close()
+ if failure=json.NewEncoder(file).Encode(record);failure!=nil {panic(failure)}
+}

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "stage3/lane/prepare_shards.py",
+    "/workspace/tracing-artifacts"
+  ],
+  "exit": 0,
+  "seconds": 456.15551487000005
+}
