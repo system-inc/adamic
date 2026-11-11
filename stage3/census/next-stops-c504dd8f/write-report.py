@@ -31,7 +31,7 @@ for name in ['tracing','sys']:
  for f in findings:
   lines.append('| '+f.get('phase','')+' | '+f.get('kind','')+' | '+q(f.get('where','').split('/src/compiler/')[-1])+' | '+f.get('reason','').replace('|','\\|').replace('\n','<br>')+' |')
  if any(f.get('phase') not in ('refusal_scan','lowering') for f in findings):
-  lines += ['', 'Additional raw phases are retained exactly. The sys deferred finding is emitted after the ordinary refusal-scan and lowering records; it is included here at its source location.']
+  lines += ['', 'Additional raw phases are retained exactly. The sys finding with phase deferred is included at its source location with the raw phase unchanged.']
  lines += ['']
 lines+=['## Root-order evidence','',f'Classification: {art["status"]}. '+(art.get('stopping_reason') or 'The entry per-source ledger completed.'),'','The baseline report.py criteria require attempted-source and readiness-finding evidence from the entry run plus a Node throw. An incomplete entry ledger cannot establish an artifact. Independent stops remain counted. Node probes retain the existing 60-second TypeScript emit bound. Their actual exits and first errors are listed below; tool errors and timeouts do not establish Node throws.','','| Root | Independent stop | Node exit | First error | Label |','| --- | --- | ---: | --- | --- |']
 for r in art['checks']:lines.append(f'| {q(r["root"])} | {q(r["where"])} | {r["node"]["exit"]} | {r["node"]["first_error"]} | {r["classification"]} |')
