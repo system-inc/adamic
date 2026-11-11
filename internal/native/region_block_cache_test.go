@@ -248,8 +248,9 @@ func TestRegionBlockCache(t *testing.T) {
 		}
 	})
 	// Runtime's question on #yecmp1d: each live standard block is a mapping, and Linux caps a process's
-	// mappings, so 100,000 live regions would fail mmap. The block is malloc's then. Mutant: a failed
-	// mapping returns NULL again, and this panics out of memory.
+	// mappings (vm.max_map_count, 65,530 on Codex 6af450b5). 100,000 live regions run, since the kernel
+	// merges adjacent anonymous mappings, so the fallback to malloc when a mapping fails has no live road
+	// here: a mutant returning NULL on a failed mapping survives this. It stays as the fail-safe.
 	t.Run("deep", func(t *testing.T) {
 		stdout, stderr, exit := run(counted, "deep", "100000")
 		if exit != 0 || number(`deep (\d+)`, stdout) != 100000 {
