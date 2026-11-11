@@ -19,6 +19,7 @@ Elapsed values are monotonic seconds. Peak RSS is wait4 ru_maxrss in KiB. Census
 | [control-parent-real](raw/control-parent-real.json) | 0 | 0.141 | 31848 |  |
 | [control-parent](raw/control-parent.json) | 0 | 0.143 | 31944 |  |
 | [first-parent](raw/first-parent.json) | -15 | 571.018 | 1330972 |  |
+| [full-01e6ae4837-parent-base](raw/full-01e6ae4837-parent-base.json) | 0 | 146.783 | 1107384 | src/compiler/transformers/esnext.ts |
 | [full-01e6ae4837-parent-guard](raw/full-01e6ae4837-parent-guard.json) | 0 | 143.572 | 1136568 | src/compiler/transformers/esnext.ts |
 | [full-0854c1cf41-head-guard](raw/full-0854c1cf41-head-guard.json) | 0 | 74.474 | 1000052 | src/compiler/symbolWalker.ts |
 | [full-0854c1cf41-parent-base](raw/full-0854c1cf41-parent-base.json) | 0 | 68.144 | 1000272 | src/compiler/symbolWalker.ts |
@@ -35,6 +36,7 @@ Elapsed values are monotonic seconds. Peak RSS is wait4 ru_maxrss in KiB. Census
 | [full-7f2a045a69-head-guard](raw/full-7f2a045a69-head-guard.json) | 0 | 54.414 | 966836 | src/compiler/transformers/module/impliedNodeFormatDependent.ts |
 | [full-7f2a045a69-parent-base](raw/full-7f2a045a69-parent-base.json) | 0 | 48.300 | 931080 | src/compiler/transformers/module/impliedNodeFormatDependent.ts |
 | [full-7f2a045a69-parent-guard](raw/full-7f2a045a69-parent-guard.json) | 0 | 50.528 | 963416 | src/compiler/transformers/module/impliedNodeFormatDependent.ts |
+| [full-8f10524394-parent-base](raw/full-8f10524394-parent-base.json) | 0 | 94.473 | 916584 | src/compiler/factory/parenthesizerRules.ts |
 | [full-91560bd618-head-guard](raw/full-91560bd618-head-guard.json) | 0 | 103.929 | 1051488 | src/compiler/transformers/typeSerializer.ts |
 | [full-91560bd618-parent-base](raw/full-91560bd618-parent-base.json) | 0 | 103.060 | 1038416 | src/compiler/transformers/typeSerializer.ts |
 | [full-91560bd618-parent-guard](raw/full-91560bd618-parent-guard.json) | 0 | 104.451 | 1073548 | src/compiler/transformers/typeSerializer.ts |

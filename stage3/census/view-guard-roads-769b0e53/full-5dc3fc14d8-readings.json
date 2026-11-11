@@ -57,8 +57,8 @@
     "source": "BindingOrAssignmentElement",
     "target": "OmittedExpression",
     "new": true,
-    "reading_category": "needs reading",
-    "reading": "No automatic judgment. This case must be read before the report is final.",
+    "reading_category": "guard bug: checked every predicate",
+    "reading": "Guard bug. flattenArrayBindingOrAssignmentPattern calls every(elements, isOmittedExpression). every returns true only after that predicate succeeds for every element; isOmittedExpression checks kind === SyntaxKind.OmittedExpression. Its resulting array view is readonly. ArrayLiteralExpression is not admitted to the OmittedExpression element alternative, and this readonly view cannot store an incompatible replacement element into the source. The leaf kinds are disjoint, but the unconditional source-arm check has ignored the checked element refinement.",
     "units": [
       "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts:446:1"
     ],

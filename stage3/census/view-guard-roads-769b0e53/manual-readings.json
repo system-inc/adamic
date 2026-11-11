@@ -14,5 +14,9 @@
   "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:1884:1 | BindingOrAssignmentElementTarget | ObjectLiteralExpression | a view of BindingOrAssignmentElementTarget as ObjectLiteralExpression in a graph program, which the cycle finder doesn't relate yet through a source arm (ArrayBindingPattern as ObjectLiteralExpression)": {
     "category": "guard bug: checked pattern alternatives",
     "reading": "Guard bug. isBindingOrAssignmentPattern delegates to the object-pattern and array-pattern kind switches. bindingOrAssignmentElementAssignsToName uses the checked result as a discriminated pattern union. An ArrayBindingPattern remains the array-binding alternative; it is not reinterpreted as this ObjectLiteralExpression alternative. The readonly kind and readonly elements declaration preserve that distinction. The guard has crossed source and target alternatives; the disjoint leaf pair is not a write the admitted alternative introduces."
+  },
+  "/workspace/roads-adapted/src/compiler/core.ts:140:1 | BindingOrAssignmentElement | OmittedExpression | a view of BindingOrAssignmentElement as OmittedExpression in a graph program, which the cycle finder doesn't relate yet through a source arm (ArrayLiteralExpression as OmittedExpression)": {
+    "category": "guard bug: checked every predicate",
+    "reading": "Guard bug. flattenArrayBindingOrAssignmentPattern calls every(elements, isOmittedExpression). every returns true only after that predicate succeeds for every element; isOmittedExpression checks kind === SyntaxKind.OmittedExpression. Its resulting array view is readonly. ArrayLiteralExpression is not admitted to the OmittedExpression element alternative, and this readonly view cannot store an incompatible replacement element into the source. The leaf kinds are disjoint, but the unconditional source-arm check has ignored the checked element refinement."
   }
 }

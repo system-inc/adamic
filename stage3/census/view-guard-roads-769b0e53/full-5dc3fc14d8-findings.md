@@ -129,7 +129,7 @@ Source text:
 export function every<T, U extends T>(array: readonly T[], callback: (element: T, index: number) => element is U): array is readonly U[];
 ~~~~
 
-Reading: **needs reading.** No automatic judgment. This case must be read before the report is final.
+Reading: **guard bug: checked every predicate.** Guard bug. flattenArrayBindingOrAssignmentPattern calls every(elements, isOmittedExpression). every returns true only after that predicate succeeds for every element; isOmittedExpression checks kind === SyntaxKind.OmittedExpression. Its resulting array view is readonly. ArrayLiteralExpression is not admitted to the OmittedExpression element alternative, and this readonly view cannot store an incompatible replacement element into the source. The leaf kinds are disjoint, but the unconditional source-arm check has ignored the checked element refinement.
 
 Owner units:
 
