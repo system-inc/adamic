@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "route": "STAGE3_ADAPTED_TREE with private counting bundles; unchanged measure_shards.py and shard.py",
+  "shards": 398,
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "observations": 106367,
+  "startTracingRuns": 0,
+  "actualMetaObservations": 0,
+  "actualMetaKeysAndOrder": [],
+  "expectedMetaKeys": [
+    "cat",
+    "ph",
+    "ts",
+    "pid",
+    "tid"
+  ],
+  "otherKeySets": 0,
+  "catalogLengthsBeforeReset": [],
+  "catalogLengthsAfterReset": [],
+  "controlCatalogLengthBefore": 3,
+  "controlCatalogLengthAfter": 0,
+  "bundleLoads": 398,
+  "instrumentedProcesses": 398,
+  "all398HarnessCopiesHashIdentical": true,
+  "all398ShardsLoadedCounter": true,
+  "counterHarnessSha256": "1e01468570afb7dc00c516587e197d3ae95409d030337eb82970c23b4f7cad1c",
+  "controlStarts": 1,
+  "controlMetaObservations": 1,
+  "controlActualKeys": [
+    "cat",
+    "ph",
+    "ts",
+    "pid",
+    "tid"
+  ],
+  "seconds": 931.5358629739985,
+  "maximumShardSeconds": 9.647331522000968,
+  "concurrency": 2
+}
