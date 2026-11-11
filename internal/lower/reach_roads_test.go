@@ -363,13 +363,67 @@ export function setSys(s: System): void {
 }
 `
 
+// reachOfTagRead is what the flow graph says the object Main's one read of a tag field reads from can
+// be, asked of the expression lowering made for that object, as a consumer would ask it.
+func reachOfTagRead(t *testing.T, program *ir.Program) ir.AllocationSet {
+	t.Helper()
+	objects := []ir.Expression{}
+	walk(program.Main, func(node any) bool {
+		if property, isProperty := node.(ir.Property); isProperty && property.Name == "tag" {
+			objects = append(objects, property.Object)
+		}
+		return true
+	})
+	if len(objects) != 1 {
+		t.Fatalf("Main reads a tag field %d times, want once", len(objects))
+	}
+	return newAllocationFlowGraph(program).ReachingAllocations(objects[0])
+}
+
+// wantKnownClosureCalls fails unless Main calls a function value and every such call's targets are
+// known: the arrow sys's initializer calls where it's written is one, and its result is demanded only
+// if ClosureTargets names it.
+func wantKnownClosureCalls(t *testing.T, program *ir.Program) {
+	t.Helper()
+	calls := 0
+	walk(program.Main, func(node any) bool {
+		if call, isCall := node.(ir.CallClosure); isCall {
+			calls++
+			if program.ClosureTargets(call).Unknown {
+				t.Errorf("a call through a function value in Main has Unknown targets: %#v", call.Closure)
+			}
+		}
+		return true
+	})
+	if calls == 0 {
+		t.Errorf("Main calls no function value: the arrow called where it's written lowered some other way")
+	}
+}
+
 func TestReachSystemIsItsLiteral(t *testing.T) {
 	t.Parallel()
 	program := reachModules(t, map[string]string{
 		"sys.ts":  reachSystem,
 		"main.ts": "import { sys } from './sys';\nconsole.log(sys.tag);\n",
 	})
+	wantKnownClosureCalls(t, program)
 	wantSites(t, reachOfGlobal(t, program, "sys"), literalSite(t, program, "node"))
+	wantSites(t, reachOfTagRead(t, program), literalSite(t, program, "node"))
+}
+
+// tsc reads it as ts.sys, through a namespace import of a barrel that re-exports sys.ts with export *
+// (src/compiler/_namespaces/ts.ts). That read is the module's global, not a field of a namespace
+// object, so it's no projection, which a program with any call through a function value would leave
+// Unknown (shape_flow.go's projectedSources).
+func TestReachSystemThroughANamespaceBarrelIsItsLiteral(t *testing.T) {
+	t.Parallel()
+	program := reachModules(t, map[string]string{
+		"sys.ts":  reachSystem,
+		"ts.ts":   "export * from './sys';\n",
+		"main.ts": "import * as ts from './ts';\nconsole.log(ts.sys.tag);\n",
+	})
+	wantKnownClosureCalls(t, program)
+	wantSites(t, reachOfTagRead(t, program), literalSite(t, program, "node"))
 }
 
 // Its twin: setSys called once with another literal is a write that runs, so the read is both.
@@ -380,6 +434,7 @@ func TestReachSystemSetOnceIsBothLiterals(t *testing.T) {
 		"main.ts": "import { setSys, sys } from './sys';\nsetSys({ tag: 'other' });\nconsole.log(sys.tag);\n",
 	})
 	wantSites(t, reachOfGlobal(t, program, "sys"), literalSite(t, program, "node"), literalSite(t, program, "other"))
+	wantSites(t, reachOfTagRead(t, program), literalSite(t, program, "node"), literalSite(t, program, "other"))
 }
 
 // functionReferenceFields must name every IR field that can hold a function, or a function some node

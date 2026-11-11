@@ -97,7 +97,8 @@ New:
 	case ir.Null:
 ```
 
-Expected: TestReachUndefinedAddsNoSite and TestReachSystemIsItsLiteral go Unknown, "untracked source ir.Undefined".
+Expected: TestReachUndefinedAddsNoSite, TestReachSystemIsItsLiteral and TestReachSystemThroughANamespaceBarrelIsItsLiteral
+go Unknown, "untracked source ir.Undefined".
 Road 1's TS pins go red too, since an omitted argument arrives as undefined.
 
 ## 2n. A value that reaches no allocation taken as known
@@ -136,8 +137,9 @@ New:
 		if false {
 ```
 
-Expected: TestReachUncalledWriterMakesNoWrite and TestReachSystemIsItsLiteral go Unknown, "local or result has no
-tracked producer": the uncalled writer's parameter has no caller.
+Expected: TestReachUncalledWriterMakesNoWrite, TestReachSystemIsItsLiteral and
+TestReachSystemThroughANamespaceBarrelIsItsLiteral go Unknown, "local or result has no tracked producer": the uncalled
+writer's parameter has no caller.
 
 ## 3a. A call not counted as naming its function
 
@@ -182,5 +184,5 @@ New:
 		if true {
 ```
 
-Expected: TestReachNonNullAssertionHandsOnItsValue and TestReachSystemIsItsLiteral go Unknown, "missing expression":
-the assertion's Fallback is nil.
+Expected: TestReachNonNullAssertionHandsOnItsValue, TestReachSystemIsItsLiteral and
+TestReachSystemThroughANamespaceBarrelIsItsLiteral go Unknown, "missing expression": the assertion's Fallback is nil.
