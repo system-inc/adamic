@@ -126,6 +126,9 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 		if graph.unknownParameters[node] {
 			unknown("parameter may receive untracked or omitted arguments")
 		}
+		if why, written := graph.unknownWrites[node]; written {
+			unknown(why)
+		}
 		sources := graph.sources[node]
 		if len(sources) == 0 {
 			unknown("local or result has no tracked producer")

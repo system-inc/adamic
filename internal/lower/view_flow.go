@@ -19,6 +19,11 @@ type allocationFlowGraph struct {
 	program           *ir.Program
 	sources           map[int][]ir.Expression
 	unknownParameters map[int]bool
+	// unknownWrites are the locals a statement writes with a value the walk can't name, by local plus
+	// one, each with why: a for-of's binding takes each element, and a catch's what was thrown, with no
+	// Declare or Assign. A local that is also assigned keeps this, so a query reaching it is Unknown
+	// rather than only what the assignments write.
+	unknownWrites map[int]string
 	// entry, when set, names a value an expression is where it enters a view: the flow stops there
 	// and reaches the site entry gives, which no allocation has (view_widened.go).
 	entry func(ir.Expression) int
@@ -29,7 +34,7 @@ func (graph *allocationFlowGraph) resultNode(function int) int {
 }
 
 func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
-	graph := &allocationFlowGraph{program: program, sources: map[int][]ir.Expression{}, unknownParameters: map[int]bool{}}
+	graph := &allocationFlowGraph{program: program, sources: map[int][]ir.Expression{}, unknownParameters: map[int]bool{}, unknownWrites: map[int]string{}}
 	collect := func(body []ir.Statement, function int) {
 		walk(body, func(node any) bool {
 			switch value := node.(type) {
@@ -46,6 +51,19 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 				graph.sources[value.Local+1] = append(graph.sources[value.Local+1], value.Value)
 			case ir.Assign:
 				graph.sources[value.Local+1] = append(graph.sources[value.Local+1], value.Value)
+			case ir.ForOf:
+				// Each step writes the element into Local, or destructures it into Pattern's locals,
+				// Local unused then (a for-in is one too, over its object's keys).
+				if len(value.Pattern) == 0 {
+					graph.unknownWrites[value.Local+1] = "a for-of binding takes each element"
+				}
+				for _, binding := range value.Pattern {
+					graph.unknownWrites[binding.Local+1] = "a for-of binding takes each element"
+				}
+			case ir.Try:
+				if value.CatchLocal >= 0 {
+					graph.unknownWrites[value.CatchLocal+1] = "a catch binding takes what was thrown"
+				}
 			case ir.Return:
 				if function >= 0 {
 					graph.sources[graph.resultNode(function)] = append(graph.sources[graph.resultNode(function)], value.Value)
