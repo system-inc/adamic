@@ -1,0 +1,6 @@
+{
+  "reason": "Insertion displaced the original SourceFileLike documentation. All final measurements will restart with the documented SourceFileLike declaration preserved exactly.",
+  "child_status_files_preserve_own_exits": true,
+  "controller_exit": 1,
+  "controller_failure": "HTTP 503 during a checkpoint push, after all native measurement children exited or were terminated and reaped by their own wrappers."
+}

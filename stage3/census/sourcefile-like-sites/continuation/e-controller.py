@@ -5,7 +5,7 @@ from measure import run
 from concurrent.futures import ThreadPoolExecutor,as_completed
 p=pathlib.Path(__file__).resolve().parent;base=pathlib.Path('/workspace/scratch/baobab-adapted');root=pathlib.Path('/workspace/scratch/baobab-road2-e');target=p/'e';target.mkdir(exist_ok=True)
 assert not root.exists();shutil.copytree(base,root)
-f=root/'src/compiler/types.ts';old=f.read_bytes();needle=b'export interface SourceFileLike {'
+f=root/'src/compiler/types.ts';old=f.read_bytes();needle=b'/**\r\n * Subset of properties from SourceFile that are used in multiple utility functions\r\n */\r\nexport interface SourceFileLike {'
 added=b'/** @internal */\r\nexport interface LineMapSource {\r\n    readonly text: string;\r\n    lineMap?: readonly number[] | undefined;\r\n}\r\n\r\n'
 assert old.count(needle)==1;f.write_bytes(old.replace(needle,added+needle,1))
 f=root/'src/compiler/scanner.ts';old=f.read_bytes();new=old.replace(b'    type LineAndCharacter,',b'    type LineAndCharacter, type LineMapSource,',1)
@@ -23,7 +23,7 @@ for source in sorted((base/'src').rglob('*')):
   changes[str(rel)]={'before':hashlib.sha256(a).hexdigest(),'after':hashlib.sha256(b).hexdigest()}
   (target/(source.name+'.patch')).write_text(''.join(difflib.unified_diff(a.decode().splitlines(True),b.decode().splitlines(True),fromfile='baseline/'+str(rel),tofile='e/'+str(rel))))
 assert set(changes)=={'src/compiler/types.ts','src/compiler/scanner.ts'}
-(target/'source-diff.json').write_text(json.dumps({'changed_files':changes,'SourceFileLike_unchanged':True,'scanner_added_lines':3,'types_added_lines':6,'eslint_suppression_added':True,'function_bodies_unchanged':True},indent=2)+'\n')
+(target/'source-diff.json').write_text(json.dumps({'changed_files':changes,'SourceFileLike_unchanged':True,'SourceFileLike_documentation_preserved':True,'scanner_added_lines':3,'types_added_lines':6,'eslint_suppression_added':True,'function_bodies_unchanged':True},indent=2)+'\n')
 core('e',root);checkpoint('road2-e-prepared')
 names=['scanner.ts']+json.loads((p/'variant-files.json').read_text())
 with ThreadPoolExecutor(max_workers=2) as pool:

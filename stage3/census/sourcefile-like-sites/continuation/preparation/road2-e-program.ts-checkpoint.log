@@ -1,0 +1,16 @@
+child exit=0 ['git', 'add', '-f', 'stage3/census/sourcefile-like-sites']
+
+child exit=0 ['git', 'write-tree']
+230b9a00c7e3ac3cd12955374932c92848ee6c14
+
+child exit=0 ['git', 'commit-tree', '230b9a00c7e3ac3cd12955374932c92848ee6c14', '-p', '76fa96e62591a1189ef534c85bfbdc7cecdcc279', '-m', 'baobab census checkpoint piece road2-e-program.ts']
+e277fec07ab6d6b46ec7e05c975c5001e6da9f5e
+
+child exit=0 ['git', 'update-ref', 'refs/heads/typescript/sourcefile-like-sites-checkpoint', 'e277fec07ab6d6b46ec7e05c975c5001e6da9f5e']
+
+child exit=1 ['git', 'push', 'origin', 'refs/heads/typescript/sourcefile-like-sites-checkpoint:refs/heads/typescript/sourcefile-like-sites-checkpoint']
+error: RPC failed; HTTP 503 curl 22 The requested URL returned error: 503
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+Everything up-to-date
+
