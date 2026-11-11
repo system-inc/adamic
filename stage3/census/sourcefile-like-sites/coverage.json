@@ -691,19 +691,55 @@
     "command": [
       "/workspace/scratch/baobab-latent",
       "/workspace/scratch/baobab-adapted/src/compiler",
-      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/parser.jsonl"
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/baseline/raw/parser.jsonl"
     ],
-    "child_exit": -15,
-    "wall_seconds": 300.11861807900004,
+    "child_exit": 0,
+    "wall_seconds": 722.0228980129996,
+    "timed_out": false,
+    "bound_seconds": 1500,
+    "max_concurrent_files": 1,
+    "completed_timing_units": 545,
+    "last_timing_units": [
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10713:1",
+        "wall_seconds": 0.064261243,
+        "cpu_seconds": 0.06430599999998776
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10714:1",
+        "wall_seconds": 0.902161871,
+        "cpu_seconds": 2.3688159999999243
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10767:1",
+        "wall_seconds": 0.308935598,
+        "cpu_seconds": 0.3580220000001191
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10781:1",
+        "wall_seconds": 0.402036961,
+        "cpu_seconds": 0.4025730000000749
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10800:1",
+        "wall_seconds": 1.031702433,
+        "cpu_seconds": 1.033815999999888
+      }
+    ],
+    "stream": "continuation/baseline/raw/parser.jsonl.gz",
     "over_five_minutes": true,
-    "piece": 4,
-    "max_concurrent_files": 2,
-    "stream": "raw/parser.jsonl",
-    "recorded_files": [],
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/parser.ts"
+    ],
     "checker_rejected": false,
     "diagnostic_count": 0,
     "full_header": true,
-    "relation_trailer": false
+    "relation_trailer": true
   },
   {
     "file": "path.ts",

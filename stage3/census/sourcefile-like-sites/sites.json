@@ -22,6 +22,26 @@
     "argument_index": 0,
     "expression": "getLineStarts(Debug.checkDefined(currentSourceFile))",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 1443,
+        "character": 51
+      },
+      "end": {
+        "line": 1443,
+        "character": 103
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 1443,
+        "character": 65
+      },
+      "end": {
+        "line": 1443,
+        "character": 102
+      }
+    },
     "location": "emitter.ts:1444:66"
   },
   {
@@ -47,6 +67,26 @@
     "argument_index": 0,
     "expression": "getLineAndCharacterOfPosition(currentSourceFile, node.pos)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 3960,
+        "character": 81
+      },
+      "end": {
+        "line": 3960,
+        "character": 139
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 3960,
+        "character": 111
+      },
+      "end": {
+        "line": 3960,
+        "character": 128
+      }
+    },
     "location": "emitter.ts:3961:112"
   },
   {
@@ -72,6 +112,26 @@
     "argument_index": 0,
     "expression": "getLineAndCharacterOfPosition(currentSourceFile, node.end)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 3960,
+        "character": 149
+      },
+      "end": {
+        "line": 3960,
+        "character": 207
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 3960,
+        "character": 179
+      },
+      "end": {
+        "line": 3960,
+        "character": 196
+      }
+    },
     "location": "emitter.ts:3961:180"
   },
   {
@@ -97,6 +157,26 @@
     "argument_index": 0,
     "expression": "getLineAndCharacterOfPosition(sourceMapSource, pos)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 6232,
+        "character": 65
+      },
+      "end": {
+        "line": 6232,
+        "character": 116
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 6232,
+        "character": 95
+      },
+      "end": {
+        "line": 6232,
+        "character": 110
+      }
+    },
     "location": "emitter.ts:6233:96"
   },
   {
@@ -122,7 +202,205 @@
     "argument_index": 0,
     "expression": "getLineStarts(file)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 108,
+        "character": 26
+      },
+      "end": {
+        "line": 108,
+        "character": 45
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 108,
+        "character": 40
+      },
+      "end": {
+        "line": 108,
+        "character": 44
+      }
+    },
     "location": "executeCommandLine.ts:109:41"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:9947:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10032:36",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10032:36: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "parser.ts"
+    ],
+    "file": "parser.ts",
+    "enclosing_function": "updateSourceFile",
+    "function_chain": [
+      "updateSourceFile"
+    ],
+    "callee": "transferSourceFileChildren",
+    "argument_index": 0,
+    "expression": "transferSourceFileChildren(sourceFile, result)",
+    "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 10031,
+        "character": 8
+      },
+      "end": {
+        "line": 10031,
+        "character": 54
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 10031,
+        "character": 35
+      },
+      "end": {
+        "line": 10031,
+        "character": 45
+      }
+    },
+    "location": "parser.ts:10032:36"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:9947:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10032:48",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10032:48: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "parser.ts"
+    ],
+    "file": "parser.ts",
+    "enclosing_function": "updateSourceFile",
+    "function_chain": [
+      "updateSourceFile"
+    ],
+    "callee": "transferSourceFileChildren",
+    "argument_index": 1,
+    "expression": "transferSourceFileChildren(sourceFile, result)",
+    "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 10031,
+        "character": 8
+      },
+      "end": {
+        "line": 10031,
+        "character": 54
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 10031,
+        "character": 47
+      },
+      "end": {
+        "line": 10031,
+        "character": 53
+      }
+    },
+    "location": "parser.ts:10032:48"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10096:9",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10104:37",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10104:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "parser.ts"
+    ],
+    "file": "parser.ts",
+    "enclosing_function": "visitNode",
+    "function_chain": [
+      "moveElementEntirelyPastChangeRange",
+      "visitNode"
+    ],
+    "callee": "unsetNodeChildren",
+    "argument_index": 1,
+    "expression": "unsetNodeChildren(node, origSourceFile)",
+    "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 10103,
+        "character": 12
+      },
+      "end": {
+        "line": 10103,
+        "character": 51
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 10103,
+        "character": 36
+      },
+      "end": {
+        "line": 10103,
+        "character": 50
+      }
+    },
+    "location": "parser.ts:10104:37"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10246:9",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10261:42",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/parser.ts:10261:42: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "parser.ts"
+    ],
+    "file": "parser.ts",
+    "enclosing_function": "visitNode",
+    "function_chain": [
+      "updateTokenPositionsAndMarkElements",
+      "visitNode"
+    ],
+    "callee": "unsetNodeChildren",
+    "argument_index": 1,
+    "expression": "unsetNodeChildren(child, sourceFile)",
+    "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 10260,
+        "character": 16
+      },
+      "end": {
+        "line": 10260,
+        "character": 52
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 10260,
+        "character": 41
+      },
+      "end": {
+        "line": 10260,
+        "character": 51
+      }
+    },
+    "location": "parser.ts:10261:42"
   },
   {
     "root_kind": "",
@@ -146,6 +424,26 @@
     "argument_index": 0,
     "expression": "getLineAndCharacterOfPosition(file, node!.pos)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 205,
+        "character": 36
+      },
+      "end": {
+        "line": 205,
+        "character": 82
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 205,
+        "character": 66
+      },
+      "end": {
+        "line": 205,
+        "character": 70
+      }
+    },
     "location": "tracing.ts:206:67"
   },
   {
@@ -170,6 +468,26 @@
     "argument_index": 0,
     "expression": "getLineAndCharacterOfPosition(file, node!.end)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 206,
+        "character": 34
+      },
+      "end": {
+        "line": 206,
+        "character": 80
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 206,
+        "character": 64
+      },
+      "end": {
+        "line": 206,
+        "character": 68
+      }
+    },
     "location": "tracing.ts:207:65"
   },
   {
@@ -195,6 +513,26 @@
     "argument_index": 0,
     "expression": "getLineAndCharacterOfPosition(currentSourceFile, input.pos)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 1263,
+        "character": 39
+      },
+      "end": {
+        "line": 1263,
+        "character": 98
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 1263,
+        "character": 69
+      },
+      "end": {
+        "line": 1263,
+        "character": 86
+      }
+    },
     "location": "transformers/declarations.ts:1264:70"
   },
   {
@@ -220,6 +558,26 @@
     "argument_index": 0,
     "expression": "getLineAndCharacterOfPosition(currentSourceFile, input.end)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 1263,
+        "character": 108
+      },
+      "end": {
+        "line": 1263,
+        "character": 167
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 1263,
+        "character": 138
+      },
+      "end": {
+        "line": 1263,
+        "character": 155
+      }
+    },
     "location": "transformers/declarations.ts:1264:139"
   },
   {
@@ -245,6 +603,26 @@
     "argument_index": 0,
     "expression": "getLineAndCharacterOfPosition(originalFile, location.pos)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 358,
+        "character": 32
+      },
+      "end": {
+        "line": 358,
+        "character": 89
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 358,
+        "character": 62
+      },
+      "end": {
+        "line": 358,
+        "character": 74
+      }
+    },
     "location": "transformers/jsx.ts:359:63"
   },
   {
@@ -270,6 +648,26 @@
     "argument_index": 0,
     "expression": "getLineAndCharacterOfPosition(diagnosticForFileName.file!, diagnosticForFileName.start!)",
     "view": "call argument",
+    "call_span": {
+      "start": {
+        "line": 248,
+        "character": 29
+      },
+      "end": {
+        "line": 248,
+        "character": 117
+      }
+    },
+    "argument_span": {
+      "start": {
+        "line": 248,
+        "character": 59
+      },
+      "end": {
+        "line": 248,
+        "character": 86
+      }
+    },
     "location": "watch.ts:249:60"
   }
 ]

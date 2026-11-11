@@ -1,0 +1,9 @@
+## By callee
+
+| Callee | Sites | SourceFile sites | Other source types | Files | First-stop roots on c504dd8f | Reads optional method | Method-only candidate sites for road 2 |
+| --- | ---: | ---: | ---: | ---: | ---: | --- | --- |
+| `getLineAndCharacterOfPosition` | 9 | 8 | 1 | 5 | 73 | no | 9 |
+| `getLineStarts` | 2 | 2 | 0 | 2 | 0 | no | 2 |
+| `getPositionOfLineAndCharacter` | 0 | 0 | 0 | 0 | 0 | yes | 0 |
+| `transferSourceFileChildren` | 2 | 2 | 0 | 1 | 0 | no | 0 |
+| `unsetNodeChildren` | 2 | 2 | 0 | 1 | 0 | no | 0 |
