@@ -17,9 +17,15 @@
           "line": 2228
         }
       ],
-      "outsideLiteralsByteIdentical": true,
+      "catalogReset": {
+        "beforeLine": 2208,
+        "afterLine": 2208,
+        "before": "typeCatalog.length = 0;",
+        "after": "typeCatalog.splice(0);"
+      },
+      "outsideAuthorizedEditsByteIdentical": true,
       "beforeSha256": "0b88e7cd37c865269684d0b5f64f70784b7d24f9c8f24d36323d58dcc73cf3fa",
-      "afterSha256": "ab1a77bd4da378045d95472a6b7e15314ece7351073124f2928440115d774fda"
+      "afterSha256": "98d64487f014b0aa977553824bffd98fba172d4cd811a4846585e67ad58281d3"
     },
     {
       "file": "built/local/run.js",
@@ -37,9 +43,15 @@
           "line": 2618
         }
       ],
-      "outsideLiteralsByteIdentical": true,
+      "catalogReset": {
+        "beforeLine": 2598,
+        "afterLine": 2598,
+        "before": "typeCatalog.length = 0;",
+        "after": "typeCatalog.splice(0);"
+      },
+      "outsideAuthorizedEditsByteIdentical": true,
       "beforeSha256": "0ecbbab8f3696c156c66d8ea2f237c0f8b9f8385a07c78ae97b425a366e520d3",
-      "afterSha256": "e25b93a588f54e102d00ad272ee6a76ffc920c0d4cbdaa481b277eb2e14ed39c"
+      "afterSha256": "0c3722b1be59d6337be30f12ba25a547fd3541a93764b7ee7ceb6a99d74de2da"
     },
     {
       "file": "built/local/typescript.js",
@@ -57,9 +69,15 @@
           "line": 4824
         }
       ],
-      "outsideLiteralsByteIdentical": true,
+      "catalogReset": {
+        "beforeLine": 4804,
+        "afterLine": 4804,
+        "before": "typeCatalog.length = 0;",
+        "after": "typeCatalog.splice(0);"
+      },
+      "outsideAuthorizedEditsByteIdentical": true,
       "beforeSha256": "af5028a1b108ce537d1dc46363063314f6b01b91b3791f8af4902c8534f136a3",
-      "afterSha256": "33bd0bdc9f676424e576e2d8fded2ca204ae4b99ce8b73a0872be663907cf04c"
+      "afterSha256": "84a6559a05a93a959c4252e414ea9a66a167280dca371559ca286a9a8a31b372"
     }
   ],
   "pureEsbuildRenameHunks": 0,

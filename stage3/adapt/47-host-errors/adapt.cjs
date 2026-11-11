@@ -94,6 +94,8 @@ function adapt(tree, ts) {
     const startText = normal(start.getText(tracing));
     if (startText !== metadata.before && startText !== metadata.after) throw new Error("unreviewed loader producer: startTracing drift");
     if (startText === metadata.before) {
+        const reset = one(start, node => ts.isExpressionStatement(node) && node.getText(tracing) === "typeCatalog.length = 0;", "tracing catalog reset");
+        edit(tracing, reset, "typeCatalog.splice(0);");
         for (const literal of metadata.literals) {
             const object = one(start, node => ts.isObjectLiteralExpression(node) && node.getText(tracing) === literal.before, "tracing metadata literal");
             edit(tracing, object, literal.after);

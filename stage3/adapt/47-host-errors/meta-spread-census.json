@@ -1,8 +1,6 @@
 {
   "passed": true,
   "scope": "all findings anywhere in tracing.ts",
-  "beforeFindings": 61,
-  "afterFindings": 61,
   "before": [
     {
       "unit": "tracing.ts:59:5",
@@ -59,6 +57,36 @@
       "unit": "tracing.ts:59:5",
       "phase": "lowering",
       "kind": "NotYet",
+      "where": "tracing.ts:96:19",
+      "reason": "reading tracingEnabled"
+    },
+    {
+      "unit": "tracing.ts:59:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "tracing.ts:104:46",
+      "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)"
+    }
+  ],
+  "lengthOnlyMutant": [
+    {
+      "unit": "tracing.ts:59:5",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "tracing.ts:96:19",
+      "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    },
+    {
+      "unit": "tracing.ts:59:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "tracing.ts:64:22",
+      "reason": "a call returning any"
+    },
+    {
+      "unit": "tracing.ts:59:5",
+      "phase": "lowering",
+      "kind": "NotYet",
       "where": "tracing.ts:72:9",
       "reason": "assigning a field of a value"
     },
@@ -77,7 +105,7 @@
       "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)"
     }
   ],
-  "mutant": [
+  "allRestoringMutant": [
     {
       "unit": "tracing.ts:59:5",
       "phase": "refusal_scan",
@@ -127,19 +155,25 @@
     {
       "unit": "tracing.ts:59:5",
       "phase": "lowering",
+      "kind": "NotYet",
+      "where": "tracing.ts:72:9",
+      "reason": "assigning a field of a value"
+    },
+    {
+      "unit": "tracing.ts:59:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "tracing.ts:72:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration"
+    },
+    {
+      "unit": "tracing.ts:59:5",
+      "phase": "lowering",
       "kind": "Refused",
       "where": "tracing.ts:103:67",
       "reason": "a spread after the first field"
     }
   ],
-  "restoringMutantMatchesBefore": true,
-  "existingSameStop": {
-    "unit": "tracing.ts:187:5",
-    "phase": "lowering",
-    "kind": "NotYet",
-    "where": "tracing.ts:194:67",
-    "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)"
-  },
   "allowedNewlyVisibleStop": {
     "unit": "tracing.ts:59:5",
     "phase": "lowering",
@@ -147,5 +181,14 @@
     "where": "tracing.ts:104:46",
     "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)"
   },
-  "otherNewFindings": 0
+  "existingSameStop": {
+    "unit": "tracing.ts:187:5",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "tracing.ts:194:67",
+    "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)"
+  },
+  "otherNewFindings": 0,
+  "lengthOnlyMutantRestores72": true,
+  "allRestoringMutantMatchesBefore": true
 }
