@@ -2,13 +2,15 @@
 
 Measured main: `d690f276749f91e6b36fe3a9726a5a453fcd7d39`. Upstream TypeScript 6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Report only; no compiler or adaptation changes.
 
-Attempted 20 of 79 compiler files; 18 completed full-mode streams. Physical sites: 1; distinct finding/phase/unit observations: 1.
+Attempted 30 of 79 compiler files; 28 completed full-mode streams. Physical sites: 1; distinct finding/phase/unit observations: 1.
 
 ## By callee
 
 | Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Cleared by the two proposed signatures |
 | --- | ---: | ---: | ---: | --- | --- |
+| `getLineAndCharacterOfPosition` | 0 | 0 | 0 | no | yes |
 | `getLineStarts` | 1 | 1 | 0 | no | yes |
+| `getPositionOfLineAndCharacter` | 0 | 0 | 0 | yes | no |
 
 First-stop attribution comes from `typescript/next-stops-c504dd8f` at `fe08a0d47a3d28f646db181ac9e8456e5c60885f`, file `stage3/census/next-stops-c504dd8f/grouped-first-stops.json`, copied as prior-first-stops.json. It names tracing.ts:206:67 for 73 roots. Its other six roots have unrelated outcomes. First-stop roots count only sites explicitly named in that evidence; it does not predict their next blocker.
 
@@ -26,7 +28,7 @@ Locations are in the adapted compiler. Body-inventory line numbers in the next t
 
 | Location | Phase(s) | Enclosing function | Receiving callee / view | Value use | Reason |
 | --- | --- | --- | --- | --- | --- |
-| executeCommandLine.ts:109:41 | refusal_scan | <anonymous@107> | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -> computeLineStarts | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| executeCommandLine.ts:109:41 | refusal_scan | countLines / <anonymous@107> | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -> computeLineStarts | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 
 ## All exported compiler functions with a SourceFileLike parameter
 
@@ -79,6 +81,16 @@ This is a latent observational census, not an exhaustive proof of all runtime pa
 | factory/baseNodeFactory.ts | 0 | 23.66 | yes | no |
 | factory/emitHelpers.ts | 0 | 60.04 | yes | no |
 | factory/emitNode.ts | 0 | 30.66 | yes | no |
+| factory/nodeChildren.ts | 0 | 30.26 | yes | no |
+| factory/nodeConverters.ts | 0 | 50.43 | yes | no |
+| factory/nodeFactory.ts | 0 | 292.41 | yes | no |
+| factory/nodeTests.ts | 0 | 110.43 | yes | no |
+| factory/parenthesizerRules.ts | 0 | 57.96 | yes | no |
+| factory/utilities.ts | 0 | 97.59 | yes | no |
+| factory/utilitiesPublic.ts | 0 | 23.45 | yes | no |
+| hostErrors.ts | 0 | 22.47 | yes | no |
+| moduleNameResolver.ts | 0 | 198.43 | yes | no |
+| moduleSpecifiers.ts | 0 | 65.49 | yes | no |
 
 **Incomplete census.** Counts are observed lower bounds. Missing or timed-out file results must not be treated as zero sites. See coverage.json and raw per-file logs/status files.
 

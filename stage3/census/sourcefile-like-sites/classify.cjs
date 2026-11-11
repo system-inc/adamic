@@ -4,7 +4,7 @@ const out=__dirname, root='/workspace/scratch/baobab-adapted/src/compiler';
 const findings=JSON.parse(fs.readFileSync(path.join(out,'findings.json'),'utf8'));
 const cache=new Map();
 function source(name){if(!cache.has(name))cache.set(name,ts.createSourceFile(name,fs.readFileSync(path.join(root,name),'utf8'),ts.ScriptTarget.Latest,true));return cache.get(name);}
-function fname(n,sf){if(n.name)return n.name.getText(sf);if(n.parent&&ts.isVariableDeclaration(n.parent))return n.parent.name.getText(sf);return '<anonymous@'+(sf.getLineAndCharacterOfPosition(n.getStart(sf)).line+1)+'>';}
+function fname(n,sf){if(n.name)return n.name.getText(sf);if(n.parent&&(ts.isVariableDeclaration(n.parent)||ts.isPropertyAssignment(n.parent)))return n.parent.name.getText(sf);return '<anonymous@'+(sf.getLineAndCharacterOfPosition(n.getStart(sf)).line+1)+'>';}
 for(const f of findings){
  const m=f.where.match(/(?:src\/compiler\/)?([^:]+):(\d+):(\d+)$/);if(!m)throw Error(f.where);
  let name=m[1];if(name.includes('/src/compiler/'))name=name.split('/src/compiler/')[1];

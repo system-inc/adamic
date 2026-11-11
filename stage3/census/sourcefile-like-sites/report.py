@@ -8,6 +8,7 @@ for f in sites:
  physical[key]['phases'].add(f['phase']);physical[key]['units'].add(f['unit'])
 by=collections.defaultdict(list)
 for f in physical.values():by[f['callee']].append(f)
+for name in ['getLineAndCharacterOfPosition','getLineStarts','getPositionOfLineAndCharacter']:by.setdefault(name,[])
 first={g['where']:g['count'] for g in prior if 'SourceFileLike' in g['reason']}
 counts=[]
 for callee,rows in sorted(by.items()):
@@ -24,7 +25,7 @@ lines+=['','First-stop attribution comes from `typescript/next-stops-c504dd8f` a
 for f in sorted(physical.values(),key=lambda f:(f['file'],tuple(int(x) for x in f['location'].rsplit(':',2)[1:]),f['reason'])):
  callee=f['callee']; info=next((i for i in funcs if i['function']==callee),None)
  use=info['path'] if info else 'See sites.json; requires manual review'
- vals=[f['location'],', '.join(sorted(f['phases'])),f['enclosing_function'],callee+' ('+f['view']+')',use,f['reason']]
+ vals=[f['location'],', '.join(sorted(f['phases'])),' / '.join(f.get('function_chain') or [f['enclosing_function']]),callee+' ('+f['view']+')',use,f['reason']]
  lines.append('| '+' | '.join(v.replace('|','\\|').replace('\n',' ') for v in vals)+' |')
 lines+=['','## All exported compiler functions with a SourceFileLike parameter','', 'This includes @internal exports as well as the published API. Only getPositionOfLineAndCharacter and getLineAndCharacterOfPosition lack @internal. Overload declarations of getPositionOfLineAndCharacter (scanner.ts:465 and :467) share the implementation at :468. SourceFileLike-returning host methods and WeakMap type arguments are not additional functions with such a parameter.','', '| Upstream location | Function | Internal | Reads optional method, directly or transitively | Body / onward use |','| --- | --- | --- | --- | --- |']
 for f in funcs:lines.append(f'| {f["file"]}:{f["line"]} | `{f["function"]}` | {"yes" if f["internal"] else "no"} | {f["optional_method"]} | {f["path"]} |')
