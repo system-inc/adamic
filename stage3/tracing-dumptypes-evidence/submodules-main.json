@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "submodule",
+    "update",
+    "--init",
+    "--recursive",
+    "--depth",
+    "1",
+    "--filter=blob:none"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "seconds": 14.808040812999991
+}

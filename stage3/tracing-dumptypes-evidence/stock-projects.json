@@ -1,0 +1,47 @@
+[
+  {
+    "project": "jsFileCompilation/DifferentNamesNotSpecified",
+    "command": [
+      "node",
+      "/workspace/scratch/dp24r5m-evidence/stock/tsc.js",
+      "--project",
+      "/workspace/scratch/dp24r5m-typescript/tests/cases/projects/jsFileCompilation/DifferentNamesNotSpecified",
+      "--noEmit",
+      "--ignoreDeprecations",
+      "6.0",
+      "--generateTrace",
+      "/workspace/scratch/dp24r5m-evidence/stock-trace-0"
+    ],
+    "exit": 0
+  },
+  {
+    "project": "projectOption/DefaultExcludeOnlyNodeModules",
+    "command": [
+      "node",
+      "/workspace/scratch/dp24r5m-evidence/stock/tsc.js",
+      "--project",
+      "/workspace/scratch/dp24r5m-typescript/tests/cases/projects/projectOption/DefaultExcludeOnlyNodeModules",
+      "--noEmit",
+      "--ignoreDeprecations",
+      "6.0",
+      "--generateTrace",
+      "/workspace/scratch/dp24r5m-evidence/stock-trace-1"
+    ],
+    "exit": 0
+  },
+  {
+    "project": "decoratorMetadata/emitDecoratorMetadataCommonJSIsolatedModule",
+    "command": [
+      "node",
+      "/workspace/scratch/dp24r5m-evidence/stock/tsc.js",
+      "--project",
+      "/workspace/scratch/dp24r5m-typescript/tests/cases/projects/decoratorMetadata/emitDecoratorMetadataCommonJSIsolatedModule",
+      "--noEmit",
+      "--ignoreDeprecations",
+      "6.0",
+      "--generateTrace",
+      "/workspace/scratch/dp24r5m-evidence/stock-trace-2"
+    ],
+    "exit": 2
+  }
+]

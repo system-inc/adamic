@@ -1,0 +1,29 @@
+[
+  {
+    "project": "jsFileCompilation/DifferentNamesNotSpecified",
+    "exit": 0,
+    "beforeExit": 0,
+    "equal": true,
+    "bytes": 7153496,
+    "beforeSha256": "a4e6c9af0af22475fafc743bfd8039e8067898175212c88c348cc737b5454c5e",
+    "afterSha256": "a4e6c9af0af22475fafc743bfd8039e8067898175212c88c348cc737b5454c5e"
+  },
+  {
+    "project": "projectOption/DefaultExcludeOnlyNodeModules",
+    "exit": 0,
+    "beforeExit": 0,
+    "equal": true,
+    "bytes": 6227528,
+    "beforeSha256": "b98640f129fae2b2820bfe03c9981acf84b511e4845228014a6e01be224f5dda",
+    "afterSha256": "b98640f129fae2b2820bfe03c9981acf84b511e4845228014a6e01be224f5dda"
+  },
+  {
+    "project": "decoratorMetadata/emitDecoratorMetadataCommonJSIsolatedModule",
+    "exit": 2,
+    "beforeExit": 2,
+    "equal": true,
+    "bytes": 6229391,
+    "beforeSha256": "96112e57200161788dc735f35862a788b0f072d93fa3c9f2dc6735253b1ad54c",
+    "afterSha256": "96112e57200161788dc735f35862a788b0f072d93fa3c9f2dc6735253b1ad54c"
+  }
+]

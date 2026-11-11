@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-c",
+    "from pathlib import Path; import json; p=Path(\"/workspace/scratch/dp24r5m-evidence/overlay\"); f=p/\"overlay.json\"; d=json.loads(f.read_text()); [(Path(v).rename(v+\".txt\"),d[\"Replace\"].__setitem__(k,v+\".txt\")) for k,v in list(d[\"Replace\"].items()) if v.endswith(\".go\")]; f.write_text(json.dumps(d,indent=2)+\"\\n\")"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "seconds": 0.2225438519999443
+}
