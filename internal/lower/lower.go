@@ -287,7 +287,7 @@ type lowering struct {
 	moduleFormat ModuleFormat
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
-	graphViewSite, graphDynamicSite *ast.Node
+	graphDynamicSite *ast.Node
 	// graphDecodeSite is the first decodeJson whose value can hold a container, and graphDecodeType
 	// the type it decodes, where graphAdoptionBoundary names a decode a graph program can't hold yet.
 	graphDecodeSite *ast.Node

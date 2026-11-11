@@ -759,17 +759,24 @@ func viewPairScalarField(of ir.Type, known bool) bool {
 	return false
 }
 
-// Graph adoption moves a fixed allocation. Checked-view adapters and dynamic
-// shapes have additional owners outside that proof. Until their provenance is
-// tracked separately, keep mixed programs outside graph ownership.
+// Graph adoption moves a fixed allocation, so what it can't move stays outside graph ownership: a
+// record literal and a checked ObjectCall, whose shapes are dynamic, and a view of a host object,
+// whose provenance the host binding holds. A checked view owns nothing (slice 3 of #ztpcwrr, ruled on
+// #jawqwv7): it's the same pointer checked in place, a read retains it as any read does and a write
+// takes writeProperty's graph hold, so a graph program holds checked views once the finder sees every
+// view (viewPairGuard). A dynamic read (DynamicProperty, DynamicKeyedProperty) is a read and owns
+// nothing either.
 func (f *cycleFinder) graphAdoptionBoundary() error {
 	reason := ""
 	var site *ast.Node
 	decodes := false
-	// Legacy tagged-union views record checked fields without a ViewOrigin.
-	if len(f.l.result.ViewOrigins) != 0 || len(f.l.result.CheckedFields) != 0 {
-		reason = "a checked-view adapter in a graph program"
-		site = f.l.graphViewSite
+	for _, view := range f.l.viewSources {
+		if hosted := f.viewHosted(view.source, map[*checker.Type]bool{}); hosted != nil {
+			return f.l.notYet(view.node, "a view of "+f.l.checker.TypeToString(hosted)+", a host object's type, in a graph program, whose provenance the host binding holds")
+		}
+		if hosted := f.viewHosted(view.target, map[*checker.Type]bool{}); hosted != nil {
+			return f.l.notYet(view.node, "a view as "+f.l.checker.TypeToString(hosted)+", a host object's type, in a graph program, whose provenance the host binding holds")
+		}
 	}
 	inspect := func(node any) bool {
 		switch value := node.(type) {
@@ -778,9 +785,6 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 				reason = "a dynamic-shape object in a graph program"
 				site = f.l.graphDynamicSite
 			}
-		case ir.DynamicProperty, ir.DynamicKeyedProperty:
-			reason = "a dynamic-shape object in a graph program"
-			site = f.l.graphDynamicSite
 		case ir.ObjectCall:
 			if value.Checked {
 				reason = "a dynamic-shape object in a graph program"
@@ -858,6 +862,40 @@ func (f *cycleFinder) unplannedPair() *graphPairSite {
 			if f.l.checker.IsTypeAssignableTo(site.pair, held) {
 				return site
 			}
+		}
+	}
+	return nil
+}
+
+// viewHosted is the host object's type a view's side holds, or nil: the type itself, its arms, a type
+// parameter's constraint, or an array's or a tuple's elements, as far as they go. A type a view can't
+// see through still reads as host when any part of it is one.
+func (f *cycleFinder) viewHosted(proven *checker.Type, seen map[*checker.Type]bool) *checker.Type {
+	if proven == nil || seen[proven] {
+		return nil
+	}
+	seen[proven] = true
+	proven = f.l.checker.GetNonNullableType(proven)
+	// A type parameter declared in a Node file carries a library name of its own, so it's judged by its
+	// constraint, which is what it can hold (library_node_callbacks_test.go's walk does the same).
+	if proven.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 {
+		if constraint := f.l.checker.GetBaseConstraintOfType(proven); constraint != nil && constraint != proven {
+			return f.viewHosted(constraint, seen)
+		}
+		return nil
+	}
+	if _, host := f.l.nodeHostObject(proven); host {
+		return proven
+	}
+	members := []*checker.Type{}
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		members = proven.Types()
+	} else if f.l.isArrayType(proven) || checker.IsTupleType(proven) {
+		members = f.l.checker.GetTypeArguments(proven)
+	}
+	for _, member := range members {
+		if hosted := f.viewHosted(member, seen); hosted != nil {
+			return hosted
 		}
 	}
 	return nil
