@@ -75,6 +75,18 @@ static void *peak_then_idle(void *unused) {
  return NULL;
 }
 
+// deep holds one live region per call, depth of them at once, each with its block.
+static size_t deep(size_t depth) {
+ if (depth == 0) { return 0; }
+ adamic_region region = ADAMIC_REGION;
+ adamic_object *object = adamic_object_new_filled_in(&region, &shape);
+ object->slots[0].number = (double)depth;
+ size_t below = deep(depth - 1);
+ size_t here = (size_t)object->slots[0].number;
+ adamic_region_end(&region);
+ return below + (here == depth ? 1 : 0);
+}
+
 static void *worker(void *unused) {
  (void)unused;
  for (int round = 0; round < 50; round++) { fill(2000); }
@@ -115,6 +127,16 @@ int main(int count, char **arguments) {
   pthread_barrier_wait(&idle);
   for (long index = 0; index < threads; index++) { pthread_join(ids[index], NULL); }
   printf("above %ld\n", idle_kb - baseline);
+ } else if (strcmp(mode, "doubling") == 0) {
+  // A region's second block is twice its first, whether blocks are mapped or malloc's.
+  adamic_region region = ADAMIC_REGION;
+  for (int index = 0; index < 100; index++) { adamic_object_new_filled_in(&region, &shape); }
+  printf("capacity %zu\n", adamic_region_capacity(&region));
+  adamic_region_end(&region);
+ } else if (strcmp(mode, "deep") == 0) {
+  // More live regions than Linux lets a process hold mappings (vm.max_map_count, 65,530 by default):
+  // a block whose mapping fails is malloc's.
+  printf("deep %zu\n", deep((size_t)rounds));
  } else if (strcmp(mode, "sanitized") == 0) {
   adamic_region region = ADAMIC_REGION;
   adamic_object *object = adamic_object_new_filled_in(&region, &shape);
@@ -208,6 +230,30 @@ func TestRegionBlockCache(t *testing.T) {
 			} else {
 				t.Logf("%d threads: %d KB above baseline while idle", threads, above)
 			}
+		}
+	})
+	// Runtime's must on #yecmp1d: the next turn doubled only a mapped block, so with no cache (ASan, wasi,
+	// Windows) every block after a region's first was 1 MB. 100 objects outgrow the first 4 KB turn, and
+	// its turns stay far under 64 KB. Mutant: the next turn from mapping alone again, and the
+	// sanitized build reads about 1 MB.
+	t.Run("doubling", func(t *testing.T) {
+		for _, binary := range []string{counted, sanitized} {
+			stdout, stderr, exit := run(binary, "doubling", "1")
+			if exit != 0 {
+				t.Fatalf("%s: exit %d: %s%s", filepath.Base(binary), exit, stdout, stderr)
+			}
+			if capacity := number(`capacity (\d+)`, stdout); capacity > 65536 {
+				t.Errorf("%s: a region of a few turns holds %d bytes, want at most 65536", filepath.Base(binary), capacity)
+			}
+		}
+	})
+	// Runtime's question on #yecmp1d: each live standard block is a mapping, and Linux caps a process's
+	// mappings, so 100,000 live regions would fail mmap. The block is malloc's then. Mutant: a failed
+	// mapping returns NULL again, and this panics out of memory.
+	t.Run("deep", func(t *testing.T) {
+		stdout, stderr, exit := run(counted, "deep", "100000")
+		if exit != 0 || number(`deep (\d+)`, stdout) != 100000 {
+			t.Fatalf("exit %d: %s%s", exit, stdout, stderr)
 		}
 	})
 	t.Run("sanitized", func(t *testing.T) {
