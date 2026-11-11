@@ -2,15 +2,17 @@
 
 Measured main: `d690f276749f91e6b36fe3a9726a5a453fcd7d39`. Upstream TypeScript 6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Report only; no compiler or adaptation changes.
 
-Attempted 40 of 79 compiler files; 35 completed full-mode streams. Physical sites: 1; distinct finding/phase/unit observations: 1.
+Attempted 50 of 79 compiler files; 45 completed full-mode streams. Physical sites: 5; distinct finding/phase/unit observations: 5.
 
 ## By callee
 
 | Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Sites whose identified reason road 2 clears |
 | --- | ---: | ---: | ---: | --- | --- |
-| `getLineAndCharacterOfPosition` | 0 | 0 | 0 | no | 0 |
+| `getLineAndCharacterOfPosition` | 4 | 2 | 73 | no | 4 |
 | `getLineStarts` | 1 | 1 | 0 | no | 1 |
 | `getPositionOfLineAndCharacter` | 0 | 0 | 0 | yes | 0 |
+
+Reason census: 5 site(s): optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields.
 
 First-stop attribution comes from `typescript/next-stops-c504dd8f` at `fe08a0d47a3d28f646db181ac9e8456e5c60885f`, file `stage3/census/next-stops-c504dd8f/grouped-first-stops.json`, copied as prior-first-stops.json. It names tracing.ts:206:67 for 73 roots. Its other six roots have unrelated outcomes. First-stop roots count only sites explicitly named in that evidence; it does not predict their next blocker.
 
@@ -29,6 +31,10 @@ Locations are in the adapted compiler. Body-inventory line numbers in the next t
 | Location | Phase(s) | Enclosing function | Receiving callee / view | Value use | Road 2 clears reason | Reason |
 | --- | --- | --- | --- | --- | --- | --- |
 | executeCommandLine.ts:109:41 | refusal_scan | countLines / <anonymous@107> | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -> computeLineStarts | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| tracing.ts:206:67 | refusal_scan | getLocation | getLineAndCharacterOfPosition (call argument) | sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| tracing.ts:207:65 | refusal_scan | getLocation | getLineAndCharacterOfPosition (call argument) | sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| transformers/declarations.ts:1264:70 | refusal_scan | transformDeclarations / visitDeclarationSubtree | getLineAndCharacterOfPosition (call argument) | sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| transformers/declarations.ts:1264:139 | refusal_scan | transformDeclarations / visitDeclarationSubtree | getLineAndCharacterOfPosition (call argument) | sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 
 ## All exported compiler functions with a SourceFileLike parameter
 
@@ -101,6 +107,16 @@ This is a latent observational census, not an exhaustive proof of all runtime pa
 | scanner.ts | -15 | 300.12 | no | yes |
 | semver.ts | 0 | 60.31 | yes | no |
 | sourcemap.ts | 0 | 67.29 | yes | no |
+| symbolWalker.ts | 0 | 47.18 | yes | no |
+| sys.ts | 0 | 122.74 | yes | no |
+| tracing.ts | 0 | 37.34 | yes | no |
+| transformer.ts | 0 | 33.97 | yes | no |
+| transformers/classFields.ts | 0 | 178.12 | yes | no |
+| transformers/classThis.ts | 0 | 23.18 | yes | no |
+| transformers/declarations.ts | 0 | 130.53 | yes | no |
+| transformers/declarations/diagnostics.ts | 0 | 71.27 | yes | no |
+| transformers/destructuring.ts | 0 | 55.35 | yes | no |
+| transformers/es2015.ts | 0 | 211.99 | yes | no |
 
 **Incomplete census.** Counts are observed lower bounds. Missing or timed-out file results must not be treated as zero sites. See coverage.json and raw per-file logs/status files.
 

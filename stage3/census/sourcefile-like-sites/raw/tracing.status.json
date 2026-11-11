@@ -1,0 +1,13 @@
+{
+  "file": "tracing.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-adapted/src/compiler",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/tracing.jsonl"
+  ],
+  "child_exit": 0,
+  "wall_seconds": 37.33934662299998,
+  "over_five_minutes": false,
+  "piece": 5,
+  "max_concurrent_files": 2
+}
