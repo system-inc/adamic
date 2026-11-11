@@ -14,12 +14,13 @@ import (
 )
 
 // Every host-binding row's columns are held to Node's real typeof, whether or not the row lowers today
-// (#00qn5az, Adamic's ruling; internal/load/host_bindings.json). Each row has a program in
-// testdata/host_bindings/typeof/<name>, its declaration as the row names it, in a file of the row's name,
-// and console.log(typeof <name>). Node, running it as oracle/node.mjs runs every program, an ES module,
-// must print the row's recorded answer; a column saying Absent where Node prints anything else fails,
-// and so does a column saying Provided where Node prints "undefined", unless the row names a ruled
-// divergence (ruledBackendDivergences). A row whose columns are cleared lowers, and each backend
+// (#00qn5az, Adamic's ruling; internal/load/host_bindings.json). Each row has a program at
+// testdata/host_bindings/typeof/<name>/<file>, its declaration as the row names it, in a file named as
+// the row's declaration is, and console.log(typeof <name>); a name with a row in two files, as process
+// has in core.ts and tracing.ts, has a program for each. Node, running it as oracle/node.mjs runs every
+// program, an ES module, must print the row's recorded answer; a column saying Absent where Node prints
+// anything else fails, and so does a column saying Provided where Node prints "undefined", unless the
+// row names a ruled divergence (ruledBackendDivergences). A row whose columns are cleared lowers, and each backend
 // must print Node's answer; a Pending row stops as not yet, naming itself, and never prints. Mutant (d),
 // testdata/host_bindings/mutants.md: process folded Absent goes red here.
 func TestHostBindingsHeldToNode(t *testing.T) {
@@ -35,19 +36,29 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 	}
 	var programs []string
 	for _, entry := range entries {
-		programs = append(programs, entry.Name())
+		if !entry.IsDir() {
+			programs = append(programs, entry.Name())
+			continue
+		}
+		files, err := os.ReadDir(filepath.Join(repository, directory, entry.Name()))
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, file := range files {
+			programs = append(programs, entry.Name()+"/"+file.Name())
+		}
 	}
-	var names []string
+	var declared []string
 	for _, row := range rows {
-		names = append(names, row.Name)
+		declared = append(declared, row.Name+"/"+row.Declaration.File)
 	}
 	slices.Sort(programs)
-	slices.Sort(names)
-	if !slices.Equal(programs, names) {
-		t.Fatalf("%s holds programs for %q, want one for each row, %q", directory, programs, names)
+	slices.Sort(declared)
+	if !slices.Equal(programs, declared) {
+		t.Fatalf("%s holds programs %q, want one for each row, %q", directory, programs, declared)
 	}
 	for _, row := range rows {
-		t.Run(row.Name, func(t *testing.T) {
+		t.Run(row.Name+"/"+row.Declaration.File, func(t *testing.T) {
 			t.Parallel()
 			relative := directory + "/" + row.Name + "/" + row.Declaration.File
 			path, err := filepath.Abs(filepath.Join(repository, relative))

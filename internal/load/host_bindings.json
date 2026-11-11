@@ -56,6 +56,34 @@
     "ruling": "Adamic and Lower on #zqz01vh, Nov 8 2026: native and wasm32 cleared, Provided through node:process's process export= value; browser is absent on Node and reads undefined in the IR, with every mutation and later view naming it stopped"
   },
   {
+    "name": "process",
+    "declaration": {
+      "file": "tracing.ts",
+      "keyword": "const",
+      "type": "{ readonly pid: number }"
+    },
+    "node": {
+      "version": "v24.21.0",
+      "module": "ES",
+      "typeof": "object"
+    },
+    "native": {
+      "answer": "Provided"
+    },
+    "javascript": {
+      "answer": "Provided"
+    },
+    "wasm32": {
+      "answer": "Provided"
+    },
+    "model": {
+      "path": "node:process",
+      "task": ""
+    },
+    "divergence": "",
+    "ruling": "Adamic on #00qn5az, Nov 11 2026: tracing.ts's process keyed as core.ts's is, Provided through node:process's process export= value on every target, so no JavaScript changes; pid is lowered natively, and wasm32-wasi refuses process.pid by name at the build boundary"
+  },
+  {
     "name": "require",
     "declaration": {
       "file": "core.ts",
