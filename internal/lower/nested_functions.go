@@ -212,7 +212,8 @@ func (l *lowering) nestedSibling(node *ast.Node) int {
 // References use the canonical value cached weakly in the declaring frame.
 // Only its cells travel between functions, never a strong sibling closure binding.
 func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) {
-	local, ok := l.locals[l.symbol(node)]
+	symbol := l.symbol(node)
+	local, ok := l.locals[symbol]
 	if !ok || l.result.Locals[local].NestedFunction == 0 {
 		return nil, false, nil
 	}
@@ -227,7 +228,7 @@ func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) 
 		return nil, true, l.generatorNotYet(node, "declared inside a function, used other than by a call to it by name")
 	}
 	if node != l.nestedCallee {
-		if err := l.overloadSetValueStop(node, l.symbol(node)); err != nil {
+		if err := l.overloadSetValueStop(node, symbol); err != nil {
 			return nil, true, err
 		}
 	}

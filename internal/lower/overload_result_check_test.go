@@ -274,6 +274,7 @@ func TestOverloadNarrowAsAValueStops(t *testing.T) {
 		// the overload, so nothing would check the 2 that lands in a slot typed 1 (Compiler's must on
 		// 19ab1c58). Mutant: nestedReference without overloadSetValueStop, and this lowers.
 		{"nested into a narrower slot", "function apply(h: (x: number) => 1): 1 { return h(0); }\nfunction host(): void {\n    function f(x: number): 1;\n    function f(x: number): number;\n    function f(x: number): number { return x + 2; }\n    const one: 1 = apply(f);\n    console.log(String(one));\n}\nhost();\n", "an overloaded function as a value"},
+		{"nested in a shorthand", "function apply(h: (x: number) => 1): 1 { return h(0); }\nfunction host(): void {\n    function f(x: number): 1;\n    function f(x: number): number;\n    function f(x: number): number { return x + 2; }\n    const o = { f };\n    const one: 1 = apply(o.f);\n    console.log(String(one));\n}\nhost();\n", "an overloaded function as a value"},
 		{"nested in a const", "function host(): void {\n    function f(x: number): 1;\n    function f(x: string): number;\n    function f(x: number | string): number { return 1; }\n    const g = f;\n    console.log(String(g(0)));\n}\nhost();\n", "an overloaded function as a value"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
