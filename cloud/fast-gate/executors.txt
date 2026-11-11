@@ -1858,3 +1858,92 @@ reads stage3/fixtures oracle/json_decode.mjs
 reads stage3/fixtures oracle/json_encode.mjs
 reads internal/worker oracle/json_decode.mjs
 reads internal/worker oracle/json_encode.mjs
+
+# Go binaries tests build or run past their closure (the planner's sweep of build sites, Nov 9). Packages a test
+# builds are declared in compiler-dependencies.json, so their closures come in whole with their tests: internal/oracle
+# for internal/split (oracle_fixtures_test.go:16-21 takes the fixture registry oracle.test writes, its test init()s
+# included), bridge/tsgo/archive for internal/native (units_tsgo_test.go:26), archive and oracle for bridge/tsgo
+# (products_test.go:302, :311-313), archive, checker (a test binary, volume_profile_Overlays_test.go:90) and cost for
+# stage1/cohere/typeaware (typeaware_test.go:142, :144, checker_mutants_test.go:70, :82, build_products_test.go:53), and
+# internal/leakcheck for internal/ir, whose guard reads leakcheck's export data with its tests (call_targets_guard_test.go:196).
+# The lines below take what a declaration can't.
+#
+# oracle/json_types.go is a single file built as a program (GoBuild ./oracle/json_types.go): internal/native's
+# json_types_test.go:15, internal/oracle's json_types_test.go:16, internal/split's main_test.go:15 and internal/worker's
+# main_test.go:17 and :25. Its imports, load and lower, are declared.
+reads internal/native oracle/json_types.go
+reads internal/oracle oracle/json_types.go
+reads internal/split oracle/json_types.go
+reads internal/worker oracle/json_types.go
+# The archive is cgo, built -buildmode=c-archive: boundary.c and tsgo.h are its C, read whole here in case a closure keys
+# only its Go files.
+reads internal/native bridge/tsgo/archive/*
+reads bridge/tsgo bridge/tsgo/archive/*
+reads stage1/cohere/typeaware bridge/tsgo/archive/*
+# markdownblocks' oracles build tools/generate_classes (oracles.go:358, run at text_independent_shards_test.go:392) and
+# generate_entities and generate_width (oracles.go:1121, :1128, :754, via grain30_products_test.go:324). Each is its own
+# package main importing only std, so it is neither markdownblocks' own files nor in its closure.
+reads stage1/cohere/markdownblocks stage1/cohere/markdownblocks/tools/*
+# lint's oracle builds overlay each rule's oracle.go (//go:build lintoracle, package main) and .generated/registry.go
+# (package main) into cohere's build (lint/oracles/oracles.go:433-434, :489-492). Both directories hold .go files of their
+# own package, so neither is lint's own.
+reads stage1/cohere/lint stage1/cohere/lint/rules/*
+reads stage1/cohere/lint stage1/cohere/lint/.generated/*
+# The 24 */oracles units: each one's TestMain changes directory to its parent and builds cohere's packages there, overlaid
+# with the parent's testdata, and its answer products run them over the parent's testdata and cohere's own files.
+# Neither is the unit's own, and none had a line.
+reads stage1/cohere/css/oracles cohere
+reads stage1/cohere/css/oracles stage1/cohere/css/testdata/*
+reads stage1/cohere/cssnumbers/oracles cohere
+reads stage1/cohere/cssnumbers/oracles stage1/cohere/cssnumbers/testdata/*
+reads stage1/cohere/cssstrings/oracles cohere
+reads stage1/cohere/cssstrings/oracles stage1/cohere/cssstrings/testdata/*
+reads stage1/cohere/estree/oracles cohere
+reads stage1/cohere/estree/oracles stage1/cohere/estree/testdata/*
+reads stage1/cohere/formatfiles/oracles cohere
+reads stage1/cohere/formatfiles/oracles stage1/cohere/formatfiles/testdata/*
+reads stage1/cohere/gitignore/oracles cohere
+reads stage1/cohere/gitignore/oracles stage1/cohere/gitignore/testdata/*
+reads stage1/cohere/graphql/oracles cohere
+reads stage1/cohere/graphql/oracles stage1/cohere/graphql/testdata/*
+reads stage1/cohere/graphql/printer/oracles cohere
+reads stage1/cohere/graphql/printer/oracles stage1/cohere/graphql/printer/testdata/*
+reads stage1/cohere/json/oracles cohere
+reads stage1/cohere/json/oracles stage1/cohere/json/testdata/*
+reads stage1/cohere/lint/helpers/comments/oracles cohere
+reads stage1/cohere/lint/helpers/comments/oracles stage1/cohere/lint/helpers/comments/testdata/*
+reads stage1/cohere/lint/helpers/oracles cohere
+reads stage1/cohere/lint/helpers/oracles stage1/cohere/lint/helpers/testdata/*
+reads stage1/cohere/lint/oracles cohere
+reads stage1/cohere/lint/oracles stage1/cohere/lint/testdata/*
+reads stage1/cohere/lint/regex/oracles cohere
+reads stage1/cohere/lint/regex/oracles stage1/cohere/lint/regex/testdata/*
+reads stage1/cohere/markdownblocks/oracles cohere
+reads stage1/cohere/markdownblocks/oracles stage1/cohere/markdownblocks/testdata/*
+reads stage1/cohere/markdowninline/oracles cohere
+reads stage1/cohere/markdowninline/oracles stage1/cohere/markdowninline/testdata/*
+reads stage1/cohere/mediaquery/oracles cohere
+reads stage1/cohere/mediaquery/oracles stage1/cohere/mediaquery/testdata/*
+reads stage1/cohere/selector/oracles cohere
+reads stage1/cohere/selector/oracles stage1/cohere/selector/testdata/*
+reads stage1/cohere/static_single_assignment/oracles cohere
+reads stage1/cohere/static_single_assignment/oracles stage1/cohere/static_single_assignment/testdata/*
+reads stage1/cohere/suppression/oracles cohere
+reads stage1/cohere/suppression/oracles stage1/cohere/suppression/testdata/*
+reads stage1/cohere/tsprinter/oracles cohere
+reads stage1/cohere/tsprinter/oracles stage1/cohere/tsprinter/testdata/*
+reads stage1/cohere/values/oracles cohere
+reads stage1/cohere/values/oracles stage1/cohere/values/testdata/*
+reads stage1/cohere/yaml/oracles cohere
+reads stage1/cohere/yaml/oracles stage1/cohere/yaml/testdata/*
+reads stage1/typescript/parser/oracles cohere
+reads stage1/typescript/parser/oracles stage1/typescript/parser/testdata/*
+reads stage1/typescript/scanner/oracles cohere
+reads stage1/typescript/scanner/oracles stage1/typescript/scanner/testdata/*
+# lint/oracles also builds the parser's testdata/oracle.go and the rule and registry overlays (oracles.go:168, :374, :434,
+# :492), and markdownblocks/oracles builds the generators (oracles.go:358, :754, :756). The parser and scanner oracles'
+# testdata/oracle.go is their parent's testdata, taken above.
+reads stage1/cohere/lint/oracles stage1/typescript/parser/testdata/oracle.go
+reads stage1/cohere/lint/oracles stage1/cohere/lint/rules/*
+reads stage1/cohere/lint/oracles stage1/cohere/lint/.generated/*
+reads stage1/cohere/markdownblocks/oracles stage1/cohere/markdownblocks/tools/*
