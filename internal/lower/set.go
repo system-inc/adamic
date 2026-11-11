@@ -23,7 +23,7 @@ func (l *lowering) setElement(node *ast.Node) (ir.Type, error) {
 		return 0, l.notYet(node, "a Set whose element type isn't known")
 	}
 	element, isKnown := l.representation(arguments[0])
-	if !isKnown || !keyable(element) {
+	if !isKnown || !l.keyableType(arguments[0], element) {
 		return 0, l.notYet(node, "a Set of "+l.checker.TypeToString(arguments[0])+" (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)")
 	}
 	return element, nil
