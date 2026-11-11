@@ -619,7 +619,7 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 	// it relates to it: discriminant narrowing, checked predicates, instanceof and checked casts all
 	// keep that. Two roads that wouldn't are stopped elsewhere, and this rule leans on both: `in` that
 	// narrows a union of object types is refused (unknown.go), and a write to a property only an `in`
-	// test added is NotYet (#yqbg9vz). If either lifts, this pairing has to be looked at again.
+	// test added is NotYet (#yqbg9vz, in_narrowed_write.go). If either lifts, this pairing has to be looked at again.
 	// fields() of a union gives only the properties every arm shares, so without the arms a field only
 	// one arm declares would go unwalked (Lower's second road), and GetPropertyOfType on a union source
 	// drops one only one arm has (Lower's should).

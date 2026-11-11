@@ -267,8 +267,8 @@ func TestGraphViewGuardIdentityAndArms(t *testing.T) {
 
 // The pairwise rule leans on two stops (Language's condition on #3zex15c): a source arm reaches a view's
 // arm only where it relates to it, and `in` narrowing over a union of object types would break that, so
-// it stays refused. The second, a write to a property only an `in` test added, is #yqbg9vz's NotYet,
-// pinned there when it lands.
+// it stays refused. The second, a write to a property only an `in` test added, is #yqbg9vz's NotYet
+// (in_narrowed_write.go), pinned by internal/oracle's TestInNarrowedWritesArePinned.
 func TestGraphViewGuardLeansOnInRefusal(t *testing.T) {
 	t.Parallel()
 	_, err := lowerSourceAs(t, `interface A { readonly a: number } interface B { readonly b: number }
