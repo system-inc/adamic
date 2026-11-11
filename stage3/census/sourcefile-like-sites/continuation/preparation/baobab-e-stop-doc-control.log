@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/e-stop-prelint.py", line 12, in <module>
+    assert time.monotonic()-start<180,'prelint controller did not finish'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: prelint controller did not finish
