@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/adamic",
+    "/workspace/scratch/meta-spread-overlay"
+  ],
+  "child_exit": 0,
+  "seconds": 1.4632314809999798
+}

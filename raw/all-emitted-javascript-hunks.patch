@@ -1,0 +1,33 @@
+--- before/built/local/_tsc.js
++++ after/built/local/_tsc.js
+@@ -2225,7 +2225,7 @@
+     const meta = { cat: "__metadata", ph: "M", ts: 1e3 * timestamp(), pid: 1, tid: 1 };
+     fs.writeSync(
+       traceFd,
+-      "[\n" + [{ name: "process_name", args: { name: "tsc" }, ...meta }, { name: "thread_name", args: { name: "Main" }, ...meta }, { name: "TracingStartedInBrowser", ...meta, cat: "disabled-by-default-devtools.timeline" }].map((v) => JSON.stringify(v)).join(",\n")
++      "[\n" + [{ name: "process_name", args: { name: "tsc" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "thread_name", args: { name: "Main" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "TracingStartedInBrowser", cat: "disabled-by-default-devtools.timeline", ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }].map((v) => JSON.stringify(v)).join(",\n")
+     );
+   }
+   tracingEnabled2.startTracing = startTracing2;
+--- before/built/local/run.js
++++ after/built/local/run.js
+@@ -2615,7 +2615,7 @@
+         const meta = { cat: "__metadata", ph: "M", ts: 1e3 * timestamp(), pid: 1, tid: 1 };
+         fs3.writeSync(
+           traceFd,
+-          "[\n" + [{ name: "process_name", args: { name: "tsc" }, ...meta }, { name: "thread_name", args: { name: "Main" }, ...meta }, { name: "TracingStartedInBrowser", ...meta, cat: "disabled-by-default-devtools.timeline" }].map((v) => JSON.stringify(v)).join(",\n")
++          "[\n" + [{ name: "process_name", args: { name: "tsc" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "thread_name", args: { name: "Main" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "TracingStartedInBrowser", cat: "disabled-by-default-devtools.timeline", ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }].map((v) => JSON.stringify(v)).join(",\n")
+         );
+       }
+       tracingEnabled2.startTracing = startTracing2;
+--- before/built/local/typescript.js
++++ after/built/local/typescript.js
+@@ -4821,7 +4821,7 @@
+     const meta = { cat: "__metadata", ph: "M", ts: 1e3 * timestamp(), pid: 1, tid: 1 };
+     fs.writeSync(
+       traceFd,
+-      "[\n" + [{ name: "process_name", args: { name: "tsc" }, ...meta }, { name: "thread_name", args: { name: "Main" }, ...meta }, { name: "TracingStartedInBrowser", ...meta, cat: "disabled-by-default-devtools.timeline" }].map((v) => JSON.stringify(v)).join(",\n")
++      "[\n" + [{ name: "process_name", args: { name: "tsc" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "thread_name", args: { name: "Main" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "TracingStartedInBrowser", cat: "disabled-by-default-devtools.timeline", ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }].map((v) => JSON.stringify(v)).join(",\n")
+     );
+   }
+   tracingEnabled2.startTracing = startTracing2;

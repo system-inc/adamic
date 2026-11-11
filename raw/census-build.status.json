@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-overlay",
+    "/workspace/scratch/meta-spread-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/meta-spread-census",
+    "./stage3/census/latent/tool"
+  ],
+  "child_exit": 0,
+  "seconds": 45.40317546000006
+}
