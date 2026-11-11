@@ -186,3 +186,74 @@ push_child_exit=0 sha=3b65d6f38d5fe7828874c0e8f8e421a744c98662
 checkpoint_wrapper_child_exit=0
 {"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 54.413546600999325, "peak_rss_kib": 966836, "user_seconds": 48.802016, "system_seconds": 2.939596, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-head-records.jsonl"}}
 {"file": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "run": "full-7f2a045a69-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=47fb1c6a6be5bf471bf1a47e556da467ff13cfdf
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 8
+      },
+      "observed_units": 8,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 8
+      },
+      "observed_units": 8,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 0,
+      "new_guard_stops_in_normally_finding_free_units": 0,
+      "new_guard_stops_in_already_normally_blocked_units": 0,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-7f2a045a69", "cases": 0, "categories": {}, "needs_reading": 0}
+render_wrapper_child_exit=0
