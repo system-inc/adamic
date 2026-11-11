@@ -9,13 +9,19 @@
 // compiler missed) is a use after free to AddressSanitizer.
 //
 // A thread keeps the blocks its regions free, up to ADAMIC_REGION_BLOCK_CACHE bytes, and the next
-// region it opens takes them back before asking malloc (#yecmp1d, Adamic's ruling): malloc handed out
-// pages the kernel faulted in again for every region, a third of bench/trees' time in the kernel. A
+// region it opens takes them back before mapping new ones (#yecmp1d, Adamic's ruling): malloc handed
+// out pages the kernel faulted in again for every region, a third of bench/trees' time in the kernel.
+// A standard block is a mapping of its own, and one the cache doesn't keep is unmapped, so what a
+// thread holds after its last region is the cache and nothing more. Kept in malloc's arena instead,
+// the cached blocks held glibc's top from trimming and the process kept about 50 MB a thread while
+// idle (Codex 6af450b5, memory/probe-region-rss), against the ruling's at most the cap. A
 // block is taken and given on one thread, since a region is a stack value its own function opens and
 // ends, and a parallelMap task, a closure, is never handed its caller's region (only a direct call's
 // region version takes one). The cache is off under AddressSanitizer, so a use after a region ends is
 // still a use after free there.
 
+// mmap's MAP_ANONYMOUS under -std=c11 on glibc (the block cache below).
+#define _DEFAULT_SOURCE
 #include "adamic.h"
 #include "count.h"
 
@@ -23,10 +29,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+// size is what the block holds for objects and used how much of it is taken. mapping is the whole
+// mapping a standard block is, header included, or 0 for a block malloc made.
 struct adamic_region_block {
 	struct adamic_region_block *next;
 	size_t size;
 	size_t used;
+	size_t mapping;
 	_Alignas(16) unsigned char bytes[];
 };
 
@@ -54,53 +63,87 @@ static size_t object_size(size_t count) {
 #if defined(__SANITIZE_ADDRESS__)
 #define REGION_BLOCK_CACHE_OFF 1
 #endif
+// A target with no mmap keeps malloc's blocks and no cache.
+#if defined(ADAMIC_TARGET_WASI) || defined(_WIN32)
+#define REGION_BLOCK_CACHE_OFF 1
+#endif
+#ifndef REGION_BLOCK_CACHE_OFF
+#include <sys/mman.h>
+#endif
 
-// One list per standard block size, 4 KB doubling to 1 MB. A block of another size, one made for an
-// object bigger than its turn's size, goes back to malloc.
+// One list per standard block size, a mapping of 4 KB doubling to 1 MB. A block made for an object
+// bigger than its turn's size is malloc's, and goes back to it.
 #define BLOCK_SIZES 9
+#define BLOCK_LARGEST ((size_t)1048576)
 static _Thread_local adamic_region_block *cached[BLOCK_SIZES];
 static _Thread_local size_t cached_bytes;
 
+static void count_block(bool made) {
+#ifdef ADAMIC_COUNT
+	atomic_fetch_add_explicit(made ? &adamic_counted.region_blocks : &adamic_counted.region_blocks_freed, 1, memory_order_relaxed);
+#else
+	(void)made;
+#endif
+}
+
 #ifndef REGION_BLOCK_CACHE_OFF
-static int size_index(size_t capacity) {
+static int size_index(size_t mapping) {
 	for (int index = 0; index < BLOCK_SIZES; index++) {
-		if (capacity == ((size_t)4096 << index)) { return index; }
+		if (mapping == ((size_t)4096 << index)) { return index; }
 	}
 	return -1;
 }
 #endif
 
-static adamic_region_block *block_take(size_t capacity) {
+// block_take is a block for at least size bytes of objects, whose turn is a mapping of total bytes:
+// the cache's, a new mapping, or, for an object bigger than the turn holds, malloc's.
+static adamic_region_block *block_take(size_t total, size_t size) {
+	adamic_region_block *block;
 #ifndef REGION_BLOCK_CACHE_OFF
-	int index = size_index(capacity);
-	if (index >= 0 && cached[index] != NULL) {
-		adamic_region_block *block = cached[index];
-		cached[index] = block->next;
-		cached_bytes -= capacity;
+	int index = size_index(total);
+	if (index >= 0 && total - sizeof *block >= size) {
+		if (cached[index] != NULL) {
+			block = cached[index];
+			cached[index] = block->next;
+			cached_bytes -= total;
+			return block;
+		}
+		void *mapped = mmap(NULL, total, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+		if (mapped == MAP_FAILED) { return NULL; }
+		block = mapped;
+		block->mapping = total;
+		block->size = total - sizeof *block;
+		count_block(true);
 		return block;
 	}
 #endif
-	adamic_region_block *block = malloc(sizeof *block + capacity);
-#ifdef ADAMIC_COUNT
-	if (block != NULL) { atomic_fetch_add_explicit(&adamic_counted.region_blocks, 1, memory_order_relaxed); }
-#endif
+	size_t capacity = total - sizeof *block < size ? size : total - sizeof *block;
+	block = malloc(sizeof *block + capacity);
+	if (block == NULL) { return NULL; }
+	block->mapping = 0;
+	block->size = capacity;
+	count_block(true);
 	return block;
 }
 
 static void block_free(adamic_region_block *block) {
-#ifdef ADAMIC_COUNT
-	atomic_fetch_add_explicit(&adamic_counted.region_blocks_freed, 1, memory_order_relaxed);
+	count_block(false);
+#ifndef REGION_BLOCK_CACHE_OFF
+	if (block->mapping != 0) {
+		munmap(block, block->mapping);
+		return;
+	}
 #endif
 	free(block);
 }
 
 static void block_give(adamic_region_block *block) {
 #ifndef REGION_BLOCK_CACHE_OFF
-	int index = size_index(block->size);
-	if (index >= 0 && cached_bytes + block->size <= ADAMIC_REGION_BLOCK_CACHE) {
+	if (block->mapping != 0 && cached_bytes + block->mapping <= ADAMIC_REGION_BLOCK_CACHE) {
+		int index = size_index(block->mapping);
 		block->next = cached[index];
 		cached[index] = block;
-		cached_bytes += block->size;
+		cached_bytes += block->mapping;
 		return;
 	}
 #endif
@@ -125,21 +168,18 @@ void adamic_region_thread_end(void) {
 static inline void *allocate_in(adamic_region *region, size_t size) {
 	adamic_region_block *block = region->blocks;
 	if (block == NULL || block->size - block->used < size) {
-		// Each block twice the last, from 4 KB up to 1 MB, and at least as big as the object.
-		size_t capacity = block == NULL ? 4096 : block->size * 2;
-		if (capacity > 1048576) {
-			capacity = 1048576;
+		// Each turn twice the last, a mapping of 4 KB up to 1 MB, holding at least the object. A turn
+		// after a malloc'd block, one made for a big object, is the largest.
+		size_t total = block == NULL ? 4096 : block->mapping == 0 ? BLOCK_LARGEST : block->mapping * 2;
+		if (total > BLOCK_LARGEST) {
+			total = BLOCK_LARGEST;
 		}
-		if (capacity < size) {
-			capacity = size;
-		}
-		adamic_region_block *fresh = block_take(capacity);
+		adamic_region_block *fresh = block_take(total, size);
 		if (fresh == NULL) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
 		fresh->next = block;
-		fresh->size = capacity;
 		fresh->used = 0;
 		region->blocks = fresh;
 		block = fresh;
