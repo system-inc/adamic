@@ -433,3 +433,79 @@ push_child_exit=0 sha=859c77119358316fa314c2f8168c3c1a3cb4e36d
 checkpoint_wrapper_child_exit=0
 {"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 128.99372849300016, "peak_rss_kib": 1099408, "user_seconds": 120.319432, "system_seconds": 5.057892, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-parent-records.jsonl"}}
 {"file": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "run": "full-d082b22d0d-parent-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 127.07062569799928, "peak_rss_kib": 1126208, "user_seconds": 120.905745, "system_seconds": 5.901917, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "run": "full-d082b22d0d-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=7ff8d2077c850b82bdbbb760f4cf36a6fa59be76
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 15
+      },
+      "observed_units": 15,
+      "views_evaluated": 32,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 15
+      },
+      "observed_units": 15,
+      "views_evaluated": 32,
+      "raw_guard_refusals": 32,
+      "units_with_refusals": 4,
+      "probe_errors": 0,
+      "roads": {
+        "index values": 8,
+        "union arms": 24
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 8,
+      "distinct_reads": 8
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 4,
+      "new_guard_stops_in_normally_finding_free_units": 1,
+      "new_guard_stops_in_already_normally_blocked_units": 3,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 8,
+      "new_sites": 8,
+      "unit_first_stop_delta": 4,
+      "regressions": 4
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 8,
+      "new_sites": 8,
+      "unit_first_stop_delta": 4,
+      "regressions": 4
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-d082b22d0d", "cases": 8, "categories": {"guard bug: identity/union cross-product": 6, "guard bug: excluded discriminator arm": 2}, "needs_reading": 0}
+render_wrapper_child_exit=0

@@ -1,0 +1,33 @@
+[
+  {
+    "identity": [
+      "src/compiler/transformers/module/esnextAnd2015.ts",
+      "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+      7751
+    ],
+    "unit": {
+      "body_end": 8297,
+      "body_start": 7831,
+      "checker_diagnostics": [],
+      "depth": 1,
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "visitImportOrRequireCall",
+      "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+      "status": "attempted",
+      "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+      "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5"
+    },
+    "base": null,
+    "head": {
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5",
+      "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+      "reason": "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)",
+      "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+    }
+  }
+]
