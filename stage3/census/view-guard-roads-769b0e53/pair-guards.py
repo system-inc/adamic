@@ -32,7 +32,8 @@ def main():
  observations={};normal={};summary={};converted={};verification={}
  for side in ['parent','head']:
   observations[side]=load(path(f'{run}-{side}-records.jsonl'))
-  normal[side]=load(path(f'{run}-{side}-normal.jsonl'))
+  normal_name=f'{run}-{side}-normal.jsonl' if run=='guard' else f'{run}-{side}-guard-normal.jsonl'
+  normal[side]=load(path(normal_name))
   data=observations[side];errors=[r for r in data if r['kind']=='GuardError'];assert not errors,errors
   units=[r for r in data if r['kind']=='GuardUnit'];findings=[r for r in data if r['kind']=='GuardRefusal']
   assert sum(r['refusals'] for r in units)==len(findings)

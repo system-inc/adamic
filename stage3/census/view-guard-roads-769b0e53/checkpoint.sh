@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd /workspace/roads-head
+exec 9>/tmp/roads-checkpoint.lock
+flock 9
 folder=stage3/census/view-guard-roads-769b0e53
 git add -f -- "$folder"
 tree=$(git write-tree)
