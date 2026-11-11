@@ -326,6 +326,11 @@ func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation fu
 		if value.Panic == nil {
 			follow(value.Fallback)
 		}
+	case ir.Logical:
+		// Left || Right and Left && Right give one operand or the other (ir/taste.go): Left where it
+		// decides, held as the result's type, which keeps an object as itself, and Right otherwise.
+		follow(value.Left)
+		follow(value.Right)
 	default:
 		unknown(fmt.Sprintf("untracked source %T", expression))
 	}
