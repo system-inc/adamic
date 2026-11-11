@@ -1,0 +1,17 @@
+{
+  "command": [
+    "bash",
+    "-c",
+    "set -e; cd /workspace/roads-2; python3 stage3/census/latent/make_overlay.py /workspace/roads-2 /workspace/roads-2-overlay; python3 stage3/meter/entry_overlay.py /workspace/roads-2-overlay /workspace/roads-2-entry; python3 /workspace/roads-head/stage3/census/view-guard-roads-769b0e53/instrument-guard.py /workspace/roads-2 /workspace/roads-2-entry /workspace/roads-2-guard-overlay; go build -buildvcs=false -overlay=/workspace/roads-2-guard-overlay/overlay.json -o /workspace/roads-2-guard-census ./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 45.22652825700061,
+  "peak_rss_kib": 1470888,
+  "user_seconds": 56.619628,
+  "system_seconds": 13.407764,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "GOMAXPROCS": "2"
+  }
+}

@@ -1,0 +1,119 @@
+diff --git a/internal/lower/graph_types.go b/internal/lower/graph_types.go
+index 9aa15d197..4838871dd 100644
+--- a/internal/lower/graph_types.go
++++ b/internal/lower/graph_types.go
+@@ -605,29 +605,45 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
+ 		}
+ 		return failure
+ 	}
+-	// Each arm of a union source against the view (Lower's should on #3zex15c): GetPropertyOfType on
+-	// a union drops a property only one arm has, so that arm's field under a view's optional one would
+-	// go unpaired.
++	// The checker's identity is nothing to pair: a write through the view stores only what the source's
++	// slot already holds, which the finder walks (Correctness's crossing on #3zex15c, Language's word:
++	// identity, never assignability, since a wider view is the case this guard exists for).
++	if checker.Checker_isTypeIdenticalTo(f.l.checker, present, viewed) {
++		return nil
++	}
++	// Arms pair one by one, each source arm with each target arm it relates to, never the cross product
++	// of whole sides: Modifier as Modifier crossed into AccessorKeyword as AbstractKeyword, a pair no
++	// program forms (289 refusals over tsc at 769b0e53). A source arm reaches the view's arm only where
++	// it relates to it: discriminant narrowing, checked predicates, instanceof and checked casts all
++	// keep that. Two roads that wouldn't are stopped elsewhere, and this rule leans on both: `in` that
++	// narrows a union of object types is refused (unknown.go), and a write to a property only an `in`
++	// test added is NotYet (#yqbg9vz). If either lifts, this pairing has to be looked at again.
++	// fields() of a union gives only the properties every arm shares, so without the arms a field only
++	// one arm declares would go unwalked (Lower's second road), and GetPropertyOfType on a union source
++	// drops one only one arm has (Lower's should).
++	sourceArms, targetArms := []*checker.Type{present}, []*checker.Type{viewed}
+ 	if present.Flags()&checker.TypeFlagsUnion != 0 {
+-		for _, arm := range present.Types() {
+-			if viewPairScalar(arm) || f.viewPairFunction(arm) {
+-				continue
+-			}
+-			if failure := follow("a source arm", arm, viewed); failure != nil {
+-				return failure
+-			}
+-		}
++		sourceArms = present.Types()
+ 	}
+-	// Each union or intersection arm of the target that the source relates to: fields() of a union
+-	// gives only the properties every arm shares, so a field only one arm declares would go unwalked
+-	// (#3zex15c, Lower's second road).
+ 	if viewed.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+-		for _, arm := range viewed.Types() {
+-			if viewPairScalar(arm) || f.viewPairFunction(arm) || !f.deriveRelated(present, arm) {
++		targetArms = viewed.Types()
++	}
++	if len(sourceArms) > 1 || len(targetArms) > 1 {
++		name := "an arm"
++		if len(sourceArms) > 1 {
++			name = "a source arm"
++		}
++		for _, sourceArm := range sourceArms {
++			if viewPairScalar(sourceArm) || f.viewPairFunction(sourceArm) {
+ 				continue
+ 			}
+-			if failure := follow("an arm", present, arm); failure != nil {
+-				return failure
++			for _, targetArm := range targetArms {
++				if viewPairScalar(targetArm) || f.viewPairFunction(targetArm) || !f.deriveRelated(sourceArm, targetArm) {
++					continue
++				}
++				if failure := follow(name, sourceArm, targetArm); failure != nil {
++					return failure
++				}
+ 			}
+ 		}
+ 	}
+diff --git a/internal/lower/graph_view_guard_test.go b/internal/lower/graph_view_guard_test.go
+index 0b8f64b75..c04805853 100644
+--- a/internal/lower/graph_view_guard_test.go
++++ b/internal/lower/graph_view_guard_test.go
+@@ -45,6 +45,11 @@ interface HasInner { readonly tag: string; inner: MakesDerived }
+ interface NoInner { readonly tag: string }
+ type EitherInner = HasInner | NoInner
+ interface ViewsInner { readonly tag: string; readonly inner?: MakesBase }
++interface ChoiceA { readonly kind: 'a'; link: Link }
++interface ChoiceB { readonly kind: 'b'; other: Link }
++type Choice = ChoiceA | ChoiceB
++interface HoldsChoice { value: Choice }
++interface AlsoChoice { value: Choice }
+ `
+ 
+ // graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
+@@ -222,3 +227,34 @@ func TestGraphViewGuardRoads(t *testing.T) {
+ 		}
+ 	}
+ }
++
++// Correctness's crossing on #3zex15c: at 769b0e53 the arm roads paired whole sides, so a slot of one
++// union type on both sides crossed into a pair of disjoint arms no program forms (Choice as Choice
++// into ChoiceB as ChoiceA), 289 refusals over tsc. Identity pairs nothing, and arms pair one by one,
++// so the view passes. Mutants: the cross product again (a source arm judged against the whole target)
++// refuses this; identity replaced by assignability lets MakesDerived as MakesBase through, which
++// TestGraphViewGuardFunctionFields reds.
++func TestGraphViewGuardIdentityAndArms(t *testing.T) {
++	t.Parallel()
++	lowered, types, nodes := graphViewGuardLowering(t)
++	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
++		{"one union type on both sides", "HoldsChoice", "AlsoChoice", ""},
++		{"the union itself", "Choice", "Choice", ""},
++	})
++}
++
++// The pairwise rule leans on two stops (Language's condition on #3zex15c): a source arm reaches a view's
++// arm only where it relates to it, and `in` narrowing over a union of object types would break that, so
++// it stays refused. The second, a write to a property only an `in` test added, is #yqbg9vz's NotYet,
++// pinned there when it lands.
++func TestGraphViewGuardLeansOnInRefusal(t *testing.T) {
++	t.Parallel()
++	_, err := lowerSourceAs(t, `interface A { readonly a: number } interface B { readonly b: number }
++function read(value: A | B): number { return 'a' in value ? value.a : value.b; }
++console.log(String(read({ a: 1 })));
++`, ".ts")
++	var refused *Refused
++	if !errors.As(err, &refused) || !strings.Contains(refused.What, "in that narrows a union of object types") {
++		t.Fatalf("got %v, want the refusal of in over a union of object types", err)
++	}
++}
