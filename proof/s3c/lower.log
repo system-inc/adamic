@@ -1,0 +1,13 @@
+--- FAIL: TestCycleFinderCensusEquality (0.02s)
+    cycles_census_equality_test.go:280: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_CycleScanningCensus (0.04s)
+    cycles_census_equality_test.go:280: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionCensusMembership (0.02s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_ProgramRegionCensusPairwise (0.10s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_ProgramRegionCensusIndexed (0.01s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1332.373s
+FAIL

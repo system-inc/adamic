@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/s3c-mutants.py", line 16, in <module>
+    assert text.count(old)==1,(row,text.count(old))
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: (5, 2)

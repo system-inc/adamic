@@ -1,0 +1,33 @@
+=== RUN   TestGeneratorsAgreeWithNode
+=== PAUSE TestGeneratorsAgreeWithNode
+=== CONT  TestGeneratorsAgreeWithNode
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_generic.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_generic.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_view.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_view.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_generic.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_view.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_view.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 0af87d5150c3 hit 0.84
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 0af87d5150c3 hit 0.84
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_generic.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 0af87d5150c3 hit 0.86
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 0af87d5150c3 hit 0.88
+--- PASS: TestGeneratorsAgreeWithNode (0.01s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_generic.a (11.23s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_view.a (11.23s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_grandchild.a (11.24s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_overloads.a (11.25s)
+PASS
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.298s

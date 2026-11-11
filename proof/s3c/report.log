@@ -1,0 +1,178 @@
+=== STEP gofmt exit=0
+=== STEP vet exit=0
+=== STEP ir-flow-census exit=0
+=== STEP lower exit=1
+=== STEP lower-s3c exit=0
+=== STEP oracle-generators-iterables exit=0
+=== STEP oracle-nested-callee exit=0
+logs in /tmp/s3c-logs
+
+=== NONZERO STEP lower
+--- FAIL: TestCycleFinderCensusEquality (0.02s)
+    cycles_census_equality_test.go:280: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_CycleScanningCensus (0.04s)
+    cycles_census_equality_test.go:280: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionCensusMembership (0.02s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_ProgramRegionCensusPairwise (0.10s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_ProgramRegionCensusIndexed (0.01s)
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1332.373s
+FAIL
+
+=== PASS/FAIL lower-s3c
+--- PASS: TestOnlyCalledDirectlyIsTheViewProofsAlone (0.22s)
+--- PASS: TestHandDrivenNextStopsOnEveryOtherRoad (0.00s)
+    --- PASS: TestHandDrivenNextStopsOnEveryOtherRoad/next(x) (0.23s)
+    --- PASS: TestHandDrivenNextStopsOnEveryOtherRoad/a_for-of_beside_a_next_in_.a (0.18s)
+    --- PASS: TestHandDrivenNextStopsOnEveryOtherRoad/a_for-of_beside_a_next_in_.ts (0.19s)
+    --- PASS: TestHandDrivenNextStopsOnEveryOtherRoad/return() (0.17s)
+    --- PASS: TestHandDrivenNextStopsOnEveryOtherRoad/an_optional_call_of_next (0.21s)
+    --- PASS: TestHandDrivenNextStopsOnEveryOtherRoad/value_unnarrowed (0.10s)
+    --- PASS: TestHandDrivenNextStopsOnEveryOtherRoad/an_arrow's_parameter,_its_callers_unseen (0.12s)
+    --- PASS: TestHandDrivenNextStopsOnEveryOtherRoad/a_detached_next (0.14s)
+    --- PASS: TestHandDrivenNextStopsOnEveryOtherRoad/value_in_the_done_arm (0.19s)
+--- PASS: TestNestedIterableCalleeIsExactlyOneBody (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/an_optional_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_spread (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding (0.00s)
+--- PASS: TestIterableViewsOfOtherOriginsAreNotYet (0.01s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/an_array_at_a_second_call_site (0.28s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/a_string_where_Iterable<string>_is_held (0.23s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/entries_whose_value_is_read_as_a_union (0.44s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/values_held_as_a_number_and_a_boolean,_read_as_a_union (0.36s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/a_Map's_value (0.19s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/a_record's_value (0.14s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/a_host_callback's_parameter (0.13s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/an_object_literal's_method (0.13s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/a_field (0.17s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/a_program_arrow_called_through_its_local (0.23s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/the_function_as_a_value (0.13s)
+    --- PASS: TestIterableViewsOfOtherOriginsAreNotYet/a_program's_own_iterable_object (0.11s)
+--- PASS: TestNestedIterableCalleeRoadsAreNotYet (0.00s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback (0.23s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee (0.17s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter (0.18s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2) (0.23s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name (0.11s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter (0.11s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local (0.10s)
+--- PASS: TestNestedIterableCalleeLowers (0.00s)
+    --- PASS: TestNestedIterableCalleeLowers/an_IterableIterator_parameter (0.24s)
+    --- PASS: TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter (0.26s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_view.a (0.32s)
+    --- PASS: TestNestedIterableCalleeLowers/a_sibling_calling_the_callee (0.32s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee (0.10s)
+    --- PASS: TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row) (0.19s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee (0.23s)
+    --- PASS: TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee (0.17s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_grandchild.a (0.11s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_generic.a (0.24s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_overloads.a (0.13s)
+--- PASS: TestInPlaceGeneratorRoadsAreNotYet (0.19s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/a_comma's_right_as_the_callee (0.17s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/new_Set (0.16s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/arguments_in_its_body (0.18s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/new_Map (0.22s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/spread (0.09s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/destructured (0.08s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/Array.from (0.10s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/stored (0.06s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/returned (0.12s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_another_written_in_place (0.09s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/passed_as_an_object (0.11s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/at_a_module's_top_level (0.04s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_an_async_function (0.07s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_a_generator (0.09s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_dropped (0.06s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/type_parameters_of_its_own (0.07s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/inside_a_generic_function,_for-of (0.12s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/an_optional_call (0.10s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/a_name_of_its_own (0.11s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/a_conditional's_arm,_both_arms_generators (0.07s)
+    --- PASS: TestInPlaceGeneratorRoadsAreNotYet/held_in_a_variable_first (0.12s)
+--- PASS: TestNestedGeneratorRoadsAreNotYet (0.19s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/spread (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local (0.10s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/destructured (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator (0.10s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/stored (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/returned (0.15s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/in_a_block (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value (0.28s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_a_generator (0.26s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function (0.28s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_an_async_function (0.32s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator (0.17s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local (0.08s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body (0.08s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper (0.07s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_logical_assignment (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_increment (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_destructuring_target (0.14s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/new_Map (0.07s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local (0.10s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_compound_assignment (0.13s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/new_Set (0.10s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/Array.from (0.07s)
+--- PASS: TestNoCapturedOrEnvironmentLocalCanHoldAGenerator (6.38s)
+
+=== PASS/FAIL oracle-nested-callee
+--- PASS: TestGeneratorsAgreeWithNode (0.01s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_generic.a (11.23s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_view.a (11.23s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_grandchild.a (11.24s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_overloads.a (11.25s)
+
+=== MUTANT FAILURES AND ERROR LINES
+=== MUTANT 1
+    generators_nested_callee_test.go:243: passed: onlyCalledDirectly true, want false
+    generators_nested_callee_test.go:249: passed: the view proof's parameter unknown false, want true
+--- FAIL: TestOnlyCalledDirectlyIsTheViewProofsAlone (0.21s)
+    generators_nested_callee_test.go:142: got <nil>, want a NotYet saying "a view over an iterable of unproven origin"
+    generators_nested_callee_test.go:142: got <nil>, want a NotYet saying "a view over an iterable of unproven origin"
+--- FAIL: TestNestedIterableCalleeRoadsAreNotYet (0.02s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback (0.21s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local (0.06s)
+=== MUTANT 1 exit=1
+RESTORED: git diff --stat empty
+=== MUTANT 3
+    generators_nested_test.go:309: the control's 5 captured nested callee parameters went unseen: the guard can't fail
+--- FAIL: TestNoCapturedOrEnvironmentLocalCanHoldAGenerator (3.73s)
+=== MUTANT 3 exit=1
+RESTORED: git diff --stat empty
+=== MUTANT 4
+    generators_nested_callee_test.go:246: inc: the shared graph's parameter is known, where a MakeClosure leaves it unknown
+    generators_nested_callee_test.go:246: twice: the shared graph's parameter is known, where a MakeClosure leaves it unknown
+    generators_nested_callee_test.go:246: down: the shared graph's parameter is known, where a MakeClosure leaves it unknown
+--- FAIL: TestOnlyCalledDirectlyIsTheViewProofsAlone (0.21s)
+=== MUTANT 4 exit=1
+RESTORED: git diff --stat empty
+=== MUTANT 5
+    generators_nested_callee_test.go:142: got <nil>, want a NotYet saying "read 2 times"
+    generators_nested_callee_test.go:142: got <nil>, want a NotYet saying "which a closure captures"
+--- FAIL: TestNestedIterableCalleeRoadsAreNotYet (0.00s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter (0.15s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter (0.16s)
+=== MUTANT 5 exit=1
+RESTORED: git diff --stat empty
+=== MUTANT 6
+internal/lower/generators.go:642:3: declared and not used: nested
+=== MUTANT 6 exit=1
+RESTORED: git diff --stat empty
+
+Environment: lower census failures require ADAMIC_TYPESCRIPT_SOURCE naming the pinned upstream TypeScript source.
+Mutant 6 did not compile; it is not a successful test kill. Mutants 1, 3, 4 and 5 compiled and failed tests. No mutant stayed green.
+Runner note: before mutant 5, the uniqueness assertion stopped without editing because the line occurs in Call and CallClosure. The remaining runner selected the specified CallClosure occurrence.

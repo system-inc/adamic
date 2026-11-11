@@ -1,0 +1,629 @@
+=== MUTANT 1
+diff --git a/internal/lower/view_flow.go b/internal/lower/view_flow.go
+index 2e9865999..86c10fabd 100644
+--- a/internal/lower/view_flow.go
++++ b/internal/lower/view_flow.go
+@@ -146,7 +146,7 @@ type closureCalls struct {
+ // closed. An arrow or a function expression keeps today's answer too: a program arrow kept in a
+ // local stays a function value whose callers the proof doesn't see (iterable_views_test.go).
+ func (calls *closureCalls) onlyCalledDirectly(function int) bool {
+-	return calls.candidates[function] && !calls.escapes[function] && calls.uses[function] == calls.accounted[function]
++	return calls.candidates[function] && !calls.escapes[function]
+ }
+ 
+ // closureCallsOf walks program once for onlyCalledDirectly. A nested declaration's binding is the
+CONFIRMED: git diff contains exactly one line edit
+=== RUN   TestNestedIterableCalleeLowers
+=== PAUSE TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody
+=== RUN   TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== PAUSE TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== RUN   TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== PAUSE TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== CONT  TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_view.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_view.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== CONT  TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== CONT  TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== RUN   TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== PAUSE TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== RUN   TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== RUN   TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== RUN   TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_view.a
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== CONT  TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== CONT  TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== CONT  TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== NAME  TestOnlyCalledDirectlyIsTheViewProofsAlone
+    generators_nested_callee_test.go:243: passed: onlyCalledDirectly true, want false
+    generators_nested_callee_test.go:249: passed: the view proof's parameter unknown false, want true
+--- FAIL: TestOnlyCalledDirectlyIsTheViewProofsAlone (0.21s)
+=== CONT  TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== CONT  TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== CONT  TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+--- PASS: TestNestedIterableCalleeIsExactlyOneBody (0.02s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/an_optional_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_spread (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding (0.00s)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+--- PASS: TestNestedIterableCalleeLowers (0.00s)
+    --- PASS: TestNestedIterableCalleeLowers/a_sibling_calling_the_callee (0.18s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee (0.21s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_view.a (0.24s)
+    --- PASS: TestNestedIterableCalleeLowers/an_IterableIterator_parameter (0.19s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee (0.17s)
+    --- PASS: TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter (0.26s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_generic.a (0.23s)
+    --- PASS: TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee (0.11s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_overloads.a (0.11s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_grandchild.a (0.20s)
+    --- PASS: TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row) (0.28s)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== NAME  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+    generators_nested_callee_test.go:142: got <nil>, want a NotYet saying "a view over an iterable of unproven origin"
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+    generators_nested_callee_test.go:142: got <nil>, want a NotYet saying "a view over an iterable of unproven origin"
+--- FAIL: TestNestedIterableCalleeRoadsAreNotYet (0.02s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback (0.21s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter (0.16s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name (0.09s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2) (0.11s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter (0.09s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee (0.10s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local (0.06s)
+--- PASS: TestNoCapturedOrEnvironmentLocalCanHoldAGenerator (6.52s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	6.676s
+FAIL
+=== MUTANT 1 exit=1
+RESTORED: git diff --stat empty
+=== MUTANT 3
+diff --git a/internal/lower/generators_nested_test.go b/internal/lower/generators_nested_test.go
+index 7698bb691..754f7c2e3 100644
+--- a/internal/lower/generators_nested_test.go
++++ b/internal/lower/generators_nested_test.go
+@@ -330,7 +330,7 @@ func capturedGenerators(program *ir.Program) []string {
+ 		case ir.Call:
+ 			arguments, targets = call.Arguments, program.CallTargets(call)
+ 		case ir.CallClosure:
+-			arguments, targets = call.Arguments, program.ClosureTargets(call).Functions
++			_ = call
+ 		}
+ 		for position, argument := range arguments {
+ 			if _, isIterable := argument.(ir.IterableOf); !isIterable {
+CONFIRMED: git diff contains exactly one line edit
+=== RUN   TestNestedIterableCalleeLowers
+=== PAUSE TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody
+=== RUN   TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== PAUSE TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== RUN   TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== PAUSE TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== CONT  TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_view.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_view.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== RUN   TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== PAUSE TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== RUN   TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== RUN   TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== RUN   TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_view.a
+=== CONT  TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== CONT  TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== CONT  TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== CONT  TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== CONT  TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+--- PASS: TestOnlyCalledDirectlyIsTheViewProofsAlone (0.19s)
+=== CONT  TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+--- PASS: TestNestedIterableCalleeIsExactlyOneBody (0.01s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/an_optional_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_spread (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding (0.00s)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+--- PASS: TestNestedIterableCalleeLowers (0.00s)
+    --- PASS: TestNestedIterableCalleeLowers/a_sibling_calling_the_callee (0.18s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_view.a (0.21s)
+    --- PASS: TestNestedIterableCalleeLowers/an_IterableIterator_parameter (0.21s)
+    --- PASS: TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee (0.11s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee (0.14s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee (0.14s)
+    --- PASS: TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter (0.17s)
+    --- PASS: TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row) (0.14s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_generic.a (0.12s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_grandchild.a (0.15s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_overloads.a (0.16s)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+--- PASS: TestNestedIterableCalleeRoadsAreNotYet (0.00s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee (0.08s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback (0.16s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2) (0.12s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter (0.09s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter (0.08s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local (0.08s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name (0.09s)
+=== NAME  TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+    generators_nested_test.go:309: the control's 5 captured nested callee parameters went unseen: the guard can't fail
+--- FAIL: TestNoCapturedOrEnvironmentLocalCanHoldAGenerator (3.73s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	3.741s
+FAIL
+=== MUTANT 3 exit=1
+RESTORED: git diff --stat empty
+=== MUTANT 4
+diff --git a/internal/lower/view_flow.go b/internal/lower/view_flow.go
+index 2e9865999..0e212cc88 100644
+--- a/internal/lower/view_flow.go
++++ b/internal/lower/view_flow.go
+@@ -29,7 +29,7 @@ func (graph *allocationFlowGraph) resultNode(function int) int {
+ }
+ 
+ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
+-	return collectAllocationFlowGraph(program, nil)
++	return collectAllocationFlowGraph(program, closureCallsOf(program))
+ }
+ 
+ // newIterableViewFlowGraph is the graph the iterable view proof reads (checkIterableViews): the
+CONFIRMED: git diff contains exactly one line edit
+=== RUN   TestNestedIterableCalleeLowers
+=== PAUSE TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody
+=== RUN   TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== PAUSE TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== RUN   TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== PAUSE TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== CONT  TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_view.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_view.a
+=== CONT  TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== CONT  TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== RUN   TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== RUN   TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== PAUSE TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== RUN   TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== RUN   TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== RUN   TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_view.a
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== CONT  TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== NAME  TestOnlyCalledDirectlyIsTheViewProofsAlone
+    generators_nested_callee_test.go:246: inc: the shared graph's parameter is known, where a MakeClosure leaves it unknown
+    generators_nested_callee_test.go:246: twice: the shared graph's parameter is known, where a MakeClosure leaves it unknown
+    generators_nested_callee_test.go:246: down: the shared graph's parameter is known, where a MakeClosure leaves it unknown
+--- FAIL: TestOnlyCalledDirectlyIsTheViewProofsAlone (0.21s)
+=== CONT  TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== CONT  TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== CONT  TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== CONT  TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+--- PASS: TestNestedIterableCalleeLowers (0.00s)
+    --- PASS: TestNestedIterableCalleeLowers/a_sibling_calling_the_callee (0.21s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_view.a (0.26s)
+    --- PASS: TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter (0.16s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee (0.18s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee (0.13s)
+    --- PASS: TestNestedIterableCalleeLowers/an_IterableIterator_parameter (0.20s)
+    --- PASS: TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row) (0.05s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_generic.a (0.11s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_grandchild.a (0.07s)
+    --- PASS: TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee (0.12s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_overloads.a (0.13s)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+--- PASS: TestNestedIterableCalleeIsExactlyOneBody (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/an_optional_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_spread (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding (0.00s)
+--- PASS: TestNestedIterableCalleeRoadsAreNotYet (0.00s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback (0.20s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee (0.08s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter (0.07s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name (0.11s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local (0.10s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter (0.06s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2) (0.08s)
+--- PASS: TestNoCapturedOrEnvironmentLocalCanHoldAGenerator (3.76s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	3.792s
+FAIL
+=== MUTANT 4 exit=1
+RESTORED: git diff --stat empty
+=== MUTANT 5
+diff --git a/internal/lower/iterable_views.go b/internal/lower/iterable_views.go
+index 28e92894b..66befd63a 100644
+--- a/internal/lower/iterable_views.go
++++ b/internal/lower/iterable_views.go
+@@ -381,7 +381,7 @@ func (l *lowering) checkGeneratorArguments() error {
+ 		case ir.CallClosure:
+ 			// A nested callee's call, a sibling's, the parent's or one from a closure in its scope
+ 			// (#qk8rztp S3c-1).
+-			call, arguments = made, made.Arguments
++			_ = made
+ 		}
+ 		for position, argument := range arguments {
+ 			if of, isIterable := argument.(ir.IterableOf); isIterable {
+CONFIRMED: git diff contains exactly one line edit
+=== RUN   TestNestedIterableCalleeLowers
+=== PAUSE TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody
+=== RUN   TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== PAUSE TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== RUN   TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== PAUSE TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== CONT  TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_view.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_view.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== CONT  TestOnlyCalledDirectlyIsTheViewProofsAlone
+=== CONT  TestNoCapturedOrEnvironmentLocalCanHoldAGenerator
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+--- PASS: TestNestedIterableCalleeIsExactlyOneBody (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/an_optional_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_spread (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding (0.00s)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== RUN   TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== PAUSE TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== PAUSE TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== RUN   TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== RUN   TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== RUN   TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== NAME  TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+    generators_nested_callee_test.go:142: got <nil>, want a NotYet saying "read 2 times"
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+--- PASS: TestOnlyCalledDirectlyIsTheViewProofsAlone (0.20s)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_view.a
+=== CONT  TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== CONT  TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== NAME  TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+    generators_nested_callee_test.go:142: got <nil>, want a NotYet saying "which a closure captures"
+--- FAIL: TestNestedIterableCalleeRoadsAreNotYet (0.00s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback (0.16s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter (0.15s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee (0.21s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name (0.18s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2) (0.19s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local (0.15s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter (0.16s)
+=== CONT  TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== CONT  TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== CONT  TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== CONT  TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+--- PASS: TestNestedIterableCalleeLowers (0.01s)
+    --- PASS: TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row) (0.09s)
+    --- PASS: TestNestedIterableCalleeLowers/a_sibling_calling_the_callee (0.12s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_view.a (0.14s)
+    --- PASS: TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter (0.11s)
+    --- PASS: TestNestedIterableCalleeLowers/an_IterableIterator_parameter (0.12s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee (0.09s)
+    --- PASS: TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee (0.08s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_overloads.a (0.09s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_grandchild.a (0.08s)
+    --- PASS: TestNestedIterableCalleeLowers/nested_callee_generic.a (0.09s)
+    --- PASS: TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee (0.10s)
+--- PASS: TestNoCapturedOrEnvironmentLocalCanHoldAGenerator (3.78s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	3.794s
+FAIL
+=== MUTANT 5 exit=1
+RESTORED: git diff --stat empty
+=== MUTANT 6
+diff --git a/internal/lower/generators.go b/internal/lower/generators.go
+index 67028fee3..53f0308a8 100644
+--- a/internal/lower/generators.go
++++ b/internal/lower/generators.go
+@@ -640,7 +640,7 @@ func (l *lowering) iterableCallee(symbol *ast.Symbol) *ast.Node {
+ 			return nil
+ 		}
+ 		nested := declaration.Parent.Kind == ast.KindBlock && ast.IsFunctionLike(declaration.Parent.Parent)
+-		if declaration.Parent.Kind != ast.KindSourceFile && !nested {
++		if declaration.Parent.Kind != ast.KindSourceFile {
+ 			return nil
+ 		}
+ 		if declaration.Body() == nil {
+CONFIRMED: git diff contains exactly one line edit
+# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]
+internal/lower/generators.go:642:3: declared and not used: nested
+FAIL	github.com/system-inc/adamic/internal/lower [build failed]
+FAIL
+=== MUTANT 6 exit=1
+RESTORED: git diff --stat empty
