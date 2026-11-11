@@ -93,8 +93,8 @@ func TestHostBindingReadsOutsideTheirGuardAreNotYet(t *testing.T) {
 
 // A guard is matched to the table's declaration by symbol, never by name: a local that shadows a host
 // binding's name is judged as the local (Language's condition 2 on #00qn5az). Mutant (c), restated on
-// cli/tracing-process-row-1: hostBindingOf takes the row by the read's name and its declaration's file,
-// and the parameter's guarded call becomes the placeholder.
+// cli/tracing-process-row-1: hostBindingOf takes the first row of the read's name, never the row of the
+// declaration its symbol is, and the parameter's guarded call becomes the placeholder.
 func TestHostBindingShadowingLocalIsTheLocal(t *testing.T) {
 	t.Parallel()
 	t.Run("a parameter named onProfilerEvent beside the declaration", func(t *testing.T) {
