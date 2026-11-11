@@ -252,6 +252,9 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			// predicateArguments demands a named function or arrow whose body proves both branches.
 			return nil
 		}
+		if l.narrowOverload(overload) {
+			return nil // In .ts each call resolving to it checks its result (overloadResultCheck, rulings.md:127).
+		}
 		what := label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced)
 		if failed != nil {
 			what += " (return at " + l.program.Where(failed) + " isn't the value its predicate checked)"
@@ -309,6 +312,13 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 			if overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
 				return l.checkedPredicateResult(call, value, implementation, overload)
 			}
+			if l.narrowOverload(overload) {
+				checked, err := l.overloadResultCheck(call.AsNode(), value)
+				if err != nil {
+					return nil, err
+				}
+				return l.censusOverloadFit(call, checked)
+			}
 			ordinal := 0
 			for _, declaration := range symbol.Declarations {
 				if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
@@ -332,6 +342,12 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 			}
 		}
 	}
+	return l.censusOverloadFit(call, value)
+}
+
+// censusOverloadFit fits an overloaded call's result to the representation the resolved overload's
+// result has.
+func (l *lowering) censusOverloadFit(call *ast.CallExpression, value ir.Expression) (ir.Expression, error) {
 	if value.Type() == 0 {
 		return value, nil
 	}

@@ -275,8 +275,14 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
+	// A call to an overload accepted narrow leaves lowering only through overloadResultCheck.
+	narrow := l.narrowOverloadCall(node)
+	if narrow {
+		l.overloadChecked = nil
+	}
 	value, err := l.value(node)
 	if err == nil {
+		l.checkedOverloadCall(node, narrow)
 		value = l.graphAllocation(value, node)
 		if err := l.noteViewArrayStorage(node, value); err != nil {
 			return nil, err
@@ -1421,7 +1427,9 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 			// for the target layout; do not capture a sibling's canonical function value.
 			carrier = ir.MakeClosure{Function: direct}
 		}
-		return ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+		// A nested overload set is called through its closure, so a narrow overload's result is checked
+		// here, as a direct call's is in censusOverloadResult.
+		return l.overloadResultCheck(node, ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns})
 	}
 	qualified := l.namespaceMember(callee)
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
@@ -1450,7 +1458,10 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 				}
 				arguments = append(arguments, value)
 			}
-			value := ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns}
+			value, err := l.overloadResultCheck(node, ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns})
+			if err != nil {
+				return nil, err
+			}
 			return l.namespaceReadyCall(callee, value), nil
 		}
 		value, err := l.callFunction(call, instance)

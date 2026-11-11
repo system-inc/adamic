@@ -352,6 +352,10 @@ type lowering struct {
 	// (view_widened.go).
 	viewSources []viewSource
 	viewTypes   map[int]*checker.Type
+	// narrowOverloads memoizes narrowOverload, and overloadChecked is the last call overloadResultCheck
+	// checked, which expression's guard reads (overload_result_check.go, #z5d0jye).
+	narrowOverloads map[*ast.Node]bool
+	overloadChecked *ast.Node
 	// viewOptionalWrites are the writes to a field their receiver declares optional, judged once every
 	// view is in (view_optional_writes.go).
 	viewOptionalWrites []viewOptionalWrite
