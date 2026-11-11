@@ -75,3 +75,25 @@ Batch 5b repeats the full apply and all nine composition mutants on the
 45487a80 base, without either hidden-source branch. All mutants are rejected
 before source writes. [evidence/batch5b-composition.json](evidence/batch5b-composition.json)
 records this fresh run.
+
+## LineMapSource amendment, baobab (Nov 11)
+
+Adamic ruled variant (e), accepted by Compiler on Nov 11 at 11:28Z. This
+amends 71 because its cache-owner guard already pins SourceFileLike.lineMap.
+The measured precedent is getPositionOfLineAndCharacter's existing internal
+overload. The full fourth measurement at typescript/sourcefile-like-sites
+commit ddbfff50 supplies the exact edit.
+
+An internal LineMapSource immediately precedes the whole documented
+SourceFileLike declaration, which is preserved byte for byte. The internal
+getLineAndCharacterOfPosition overload comes first, followed by the original
+public SourceFileLike overload with its local unified-signatures suppression.
+Its implementation and the internal getLineStarts accept LineMapSource. Both
+bodies are unchanged. The scanner import is type-only.
+
+line-map-source.json pins the whole documented SourceFileLike, the new view,
+and both helpers before and after. line-map-source.cjs audits the complete
+proposed 71 state before any writes, rejects drift and half-adapted states,
+and is idempotent. Stock JavaScript bytes must be identical, including comments.
+The public API sanction remains unchanged. Raw proof artifacts are on
+typescript/line-map-source-evidence under stage3/census/line-map-source.

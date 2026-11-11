@@ -353,6 +353,9 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		if stop := l.stdoutHandleView(node); stop != "" {
 			return nil, true, l.notYet(node, stop)
 		}
+		// Its setBlocking throws Illegal invocation called detached, a host closure no function of
+		// the program's stands for (#0bxc4jh).
+		l.result.ClosuresMayThrow = true
 		call.Operation, call.Of = "handle", ir.Object
 	case "os.EOL":
 		call.Operation, call.Of = "eol", ir.String
@@ -684,11 +687,13 @@ func (l *lowering) stdoutHandleOrigin(node *ast.Node, depth int) bool {
 }
 
 // stdoutHandleSetBlockingRefusal stops a read of setBlocking off stdout's handle anywhere but a
-// call's callee, a truthiness test or a typeof (#5abf5v8). Node's handle is a Pipe or a TTY whose
+// call's callee (a non-null asserted one, handle.setBlocking!(true), among them: it keeps its object,
+// assertedCallee), a truthiness test or a typeof (#5abf5v8). Node's handle is a Pipe or a TTY whose
 // setBlocking is its prototype's and needs the handle as its receiver, so a detached call throws
-// TypeError: Illegal invocation. Both backends' handle holds a closure that ignores its receiver
-// and would block silently. A typeof reads the value without calling it, as node_process_terminal.a
-// does. A write or a delete isn't a read and stays as it was.
+// TypeError: Illegal invocation. Both backends' handle now holds a closure that throws the same
+// whatever road reaches it (#0bxc4jh), so this is the early, named answer on the roads the origin
+// walk follows. A typeof reads the value without calling it, as node_process_terminal.a does. A
+// write or a delete isn't a read and stays as it was.
 func (l *lowering) stdoutHandleSetBlockingRefusal(node *ast.Node) error {
 	switch node.Kind {
 	case ast.KindPropertyAccessExpression:
@@ -716,7 +721,7 @@ func (l *lowering) stdoutHandleSetBlockingRefusal(node *ast.Node) error {
 		return nil
 	}
 	outer := realpathParent(node)
-	if called(node) || truthinessOperand(node) || ast.IsAssignmentTarget(outer) {
+	if called(node) || node.Kind == ast.KindPropertyAccessExpression && assertedCallee(node) || truthinessOperand(node) || ast.IsAssignmentTarget(outer) {
 		return nil
 	}
 	if outer.Parent != nil && (outer.Parent.Kind == ast.KindTypeOfExpression || outer.Parent.Kind == ast.KindDeleteExpression) {
@@ -725,6 +730,124 @@ func (l *lowering) stdoutHandleSetBlockingRefusal(node *ast.Node) error {
 	return l.notYet(node, stdoutHandleSetBlockingValue)
 }
 
+// stdoutHandleComputedCall and stdoutHandleBind are stdoutHandleUnheldRefusal's words. The first names
+// a computed-key call, so #17pfbkk, which lowers o['m']() as o.m(), finds and lifts it.
+const (
+	stdoutHandleComputedCall = "a call through a computed key naming setBlocking in a program that reads process.stdout._handle (Node calls the handle's with it as the receiver, and this call would reach it without one)"
+	stdoutHandleBind         = "a bind of a field named setBlocking in a program that reads process.stdout._handle (Node's bound call has the handle as its receiver, and this one would reach it without one)"
+)
+
+// stdoutHandleUnheldRefusal stops the two call roads on which a call of the handle's setBlocking would
+// reach its closure without its object, wherever that object came from, so on roads
+// stdoutHandleOrigin doesn't follow too (a parameter, a field, a call's result): a call through a
+// computed key whose type is the string literal setBlocking, o['setBlocking']() or o[key](), which
+// callClosure keeps on the plain road; and o.setBlocking.bind(...), whose bound call carries no
+// receiver to the handle's test. Node calls both with the object as this, and blocks off the handle,
+// where this head's closure would throw Illegal invocation (Runtime's must 2 on #0bxc4jh, Lower's
+// ruling (b)). Only a program that reads the handle is asked, since only there can the closure be
+// the one reached; the name test comes first, so the scan runs only on a call that names it.
+func (l *lowering) stdoutHandleUnheldRefusal(node *ast.Node) error {
+	if node.Kind != ast.KindCallExpression {
+		return nil
+	}
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if callee.Kind == ast.KindNonNullExpression {
+		callee = ast.SkipParentheses(callee.AsNonNullExpression().Expression)
+	}
+	words := ""
+	switch callee.Kind {
+	case ast.KindElementAccessExpression:
+		if !keyMayNameSetBlocking(l.checker, l.checker.GetTypeAtLocation(callee.AsElementAccessExpression().ArgumentExpression), 0) {
+			return nil
+		}
+		words = stdoutHandleComputedCall
+	case ast.KindPropertyAccessExpression:
+		if callee.Name().Text() != "bind" || !l.namesSetBlocking(callee.AsPropertyAccessExpression().Expression) {
+			return nil
+		}
+		words = stdoutHandleBind
+	default:
+		return nil
+	}
+	if !l.readsStdoutHandle() {
+		return nil
+	}
+	return l.notYet(callee, words)
+}
+
+// namesSetBlocking says whether node, through parentheses and assertions, reads a field that may be
+// named setBlocking: o.setBlocking, or o[k] with a key keyMayNameSetBlocking admits.
+func (l *lowering) namesSetBlocking(node *ast.Node) bool {
+	node = ast.SkipOuterExpressions(node, ast.OEKParentheses|ast.OEKAssertions)
+	switch node.Kind {
+	case ast.KindPropertyAccessExpression:
+		return node.Name().Text() == "setBlocking"
+	case ast.KindElementAccessExpression:
+		return keyMayNameSetBlocking(l.checker, l.checker.GetTypeAtLocation(node.AsElementAccessExpression().ArgumentExpression), 0)
+	}
+	return false
+}
+
+// keyMayNameSetBlocking says whether a key of type key may be the name setBlocking: the string
+// literal itself, a union with it among its members, which element_access_fields.go lowers as one read
+// per name (Runtime's must A on #0bxc4jh), or a type parameter or other generic whose base constraint
+// may be. A key it can't read that way isn't setBlocking by type, and lowering reads it by its own rules;
+// one nested past eight levels is taken to name it.
+func keyMayNameSetBlocking(checks *checker.Checker, key *checker.Type, depth int) bool {
+	if key == nil {
+		return false
+	}
+	if depth > 8 {
+		// A key this deep may still name it, so it fails closed (Runtime's should on #0bxc4jh).
+		return true
+	}
+	switch {
+	case key.Flags()&checker.TypeFlagsStringLiteral != 0:
+		name, isText := key.AsLiteralType().Value().(string)
+		return isText && name == "setBlocking"
+	case key.Flags()&checker.TypeFlagsUnion != 0:
+		for _, member := range key.Types() {
+			if keyMayNameSetBlocking(checks, member, depth+1) {
+				return true
+			}
+		}
+		return false
+	case key.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsConditional|checker.TypeFlagsIntersection) != 0:
+		constraint := checks.GetBaseConstraintOfType(key)
+		return constraint != nil && constraint != key && keyMayNameSetBlocking(checks, constraint, depth+1)
+	}
+	return false
+}
+
+// readsStdoutHandle says whether any module the program lowers reads process.stdout._handle: every one
+// in moduleOrder's order, the list the refusal walk and namespaceInitialization are handed, never
+// load's Files(), which holds only the roots, since tsc reads the handle in sys.ts, which isn't one
+// (Lower's must on #0bxc4jh). moduleOrder holds its answer per entry, so asking it here makes no new
+// side effect; where it refused, the program never reaches this walk, and the answer fails closed.
+func (l *lowering) readsStdoutHandle() bool {
+	modules, err := l.moduleOrder(l.entry)
+	if err != nil {
+		return true
+	}
+	found := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		// processPath reads process.stdout['_handle'] as the handle too (process.go), and lowering makes it
+		// one (Runtime's must B on #0bxc4jh).
+		if (node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "_handle" || node.Kind == ast.KindElementAccessExpression) && l.processPath(node) == "process.stdout._handle" {
+			found = true
+		}
+		return found || node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		if module.AsNode().ForEachChild(visit) {
+			return true
+		}
+	}
+	return found
+}
+
 func init() {
 	refusalRules.register(850, "stdoutHandleSetBlockingRefusal", (*lowering).stdoutHandleSetBlockingRefusal)
+	refusalRules.register(851, "stdoutHandleUnheldRefusal", (*lowering).stdoutHandleUnheldRefusal)
 }

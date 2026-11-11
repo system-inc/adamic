@@ -260,7 +260,9 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		})
 	}
 	probe := h.write("probe.ts", "-1;\n")
-	releasedEntry := h.write("released-inspect.ts", "import {panic,programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic';const a=programArguments();const p=tsgoProgram(a[0]??panic('config'),[a[1]??panic('file')]);tsgoRelease(p);console.log(tsgoInspect(p,a[1]??panic('file'),0,2,'PrefixUnaryExpression','type'));\n")
+	// A testdata program, so the control's native and the retained-handle mutant's are keyed products built ahead
+	// (TestProduct_released_inspect_native, TestProduct_six_retained_handle_native), never linked in a check (#5gf3w8q).
+	releasedEntry := filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/released_inspect.ts")
 	add("control/released-handle", []string{"control/released-handle"}, func(h *harness) {
 		t := h.t
 		released := typeAwareBuild(h, stage0, "released-inspect", releasedEntry, normal(h), false)
@@ -273,7 +275,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	add("mutant/retained-handle", []string{"mutant/retained-handle"}, func(h *harness) {
 		t := h.t
 		staleArchive := typeAwareMutantArchive(h, "retained-handle")
-		stale := typeAwareBuild(h, stage0, "retained-handle", releasedEntry, staleArchive, false)
+		stale := typeAwareMutantNative(h, "retained-handle", releasedEntry, staleArchive, false)
 		h.must("retained-handle-run", exec.Command(stale, config, probe))
 		t.Log("released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation")
 	})

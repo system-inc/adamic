@@ -104,6 +104,11 @@ for (const [file, positions] of edits) {
         throw new Error(`adaptation adds any or unknown: ${file.fileName}`);
     prepared.set(file, text);
 }
-for (const [file, text] of prepared) fs.writeFileSync(file.fileName, text);
+// Audit the baobab amendment against the complete proposed 71 state before
+// writing any file, so a partial overload or interface cannot leave 71 half applied.
+const pending = new Map([...prepared].map(([file, text]) => [file.fileName, text]));
+const lineMap = require('./line-map-source.cjs').plan(tree, ts, pending);
+for (const [name, text] of lineMap) pending.set(name, text);
+for (const [name, text] of pending) fs.writeFileSync(name, text);
 console.log(JSON.stringify({ typescript: ts.version, files: edits.size,
-    families, caches: cacheRecords, parameters: records.map(({ node, ...record }) => record) }, null, 2));
+    lineMapSourceFiles: lineMap.size, families, caches: cacheRecords, parameters: records.map(({ node, ...record }) => record) }, null, 2));

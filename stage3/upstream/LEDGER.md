@@ -721,6 +721,21 @@ call; leaving it would violate upstream's noUnusedLocals.
 
 Adamic, task 8n7eet3, Nov 10 22:01Z, site 2: 99-correctness-core-each-node is JavaScript-changing. assertEachNode's test no longer receives every's index, and a throw from test has no every frame. The exact ruled direct const for-of loop stays inside the existing Normal gate; message, lazy callback and stack mark stay byte for byte. Whole-lane second-argument exposure count 0 over 1,086,412 calls with test defined, 398 units and 797 processes; throws from test 0; two-parameter control 1 before and 1 after. Road (b) recognizes only the exact finished owner and still refuses drift. Main still meets the overload-1 callback contract in both forms; the Optimizer pairing remains required. No upstream issue filed.
 
+LineMapSource (Adamic, baobab, Nov 11, 11:28Z; accepted by Compiler): amend
+adaptation 71 with measured variant (e), an internal first overload for
+getLineAndCharacterOfPosition and the internal getLineStarts view. Precedent:
+getPositionOfLineAndCharacter's internal overload. SourceFileLike and the public
+signature stay unchanged; JavaScript bytes and public API require no sanction.
+
+Task dp24r5m: 99-correctness-tracing-dumptypes replaces two explicit-any reads
+with getObjectFlags and an Intrinsic flag guard plus checked IntrinsicType read.
+The whole lane records 0 calls across 398 shards and 797 Node processes; three
+generateTrace projects visit 84,642 types, including 46 real objectFlags values
+outside ObjectFlagsType, with 0 differences at all five masks or intrinsicName.
+Written types are byte-identical, 79 roots have 0 diagnostics, both restoring
+mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
+2,256 runtime export keys are identical. See its PROOF.md. No upstream issue filed.
+
 - ff5eddz, adaptation 47 amendment: startTracing's three metadata literals build
   from explicit reads of the fresh local meta where upstream spread it after a
   field. They retain the same keys, in the same order, with the same values;

@@ -1,0 +1,16 @@
+// stdout's handle's setBlocking read off a let and called detached. Node's checks its receiver, so it
+// throws TypeError: Illegal invocation, and so does both backends' (#0bxc4jh). Node has no handle on a
+// file.
+import 'node:process';
+let handle = (process.stdout as any)._handle as { setBlocking?: (value: boolean) => void } | undefined;
+if (handle === undefined) {
+	console.log('no handle');
+} else {
+	let set = handle.setBlocking;
+	try {
+		if (set) set(true);
+		console.log('blocked');
+	} catch (error) {
+		if (error instanceof Error) console.log(`${error.name} ${error.message}`);
+	}
+}

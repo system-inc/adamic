@@ -1,0 +1,10 @@
+// stdout's handle's setBlocking called off the handle, unguarded, through a view whose field is
+// required: the call has its object, so it blocks, as Node's does (#0bxc4jh).
+import 'node:process';
+let handle = (process.stdout as any)._handle as { setBlocking: (value: boolean) => void } | undefined;
+if (handle === undefined) {
+	console.log('no handle');
+} else {
+	handle.setBlocking(true);
+	console.log('blocked');
+}

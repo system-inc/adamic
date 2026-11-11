@@ -11,13 +11,28 @@ import "github.com/system-inc/adamic/internal/ir"
 const hostMemoryUsageRuntime = "class AdamicHostObject {}\nconst adamicHostMemoryUsage = usage => Object.setPrototypeOf(usage, AdamicHostObject.prototype);\n"
 
 // process.stdout._handle is native's adamic_node_stdout_handle: absent where Node has no handle, and
-// otherwise a host object whose one member, setBlocking, is a closure. Node's Pipe or TTY handle holds
-// setBlocking as a bare host function, and every call road here calls a closure's code: the method
-// call's adamicCallee, and tsc's sys.ts guard, which reads the function-typed field and hands it to
-// adamicCall. Each reads the member from this value, so it's made a closure here, once (#qa1g5f3).
+// otherwise a host object whose one member, setBlocking, is a closure, since every call road here
+// calls a closure's code (#qa1g5f3). Node's Pipe or TTY handle holds setBlocking on its prototype,
+// which checks its receiver when called, so the closure is native's: its code throws Node's
+// TypeError: Illegal invocation, which every detached call reaches (#0bxc4jh). adamicCallee, the call
+// off an object, knows it by its code (stdoutHandleCallee) and calls Node's with the handle as this
+// when the object is the handle; off any other object it's called as the field's value, and throws.
 // It stays a host value for a key read, as Node's Pipe is, and it's made on the first read and kept,
 // since Node's handle is one object for the process, so two reads are ===, as native's are.
-const hostStdoutHandleRuntime = "let adamicStdoutHandleValue;\nconst adamicHostStdoutHandle = handle => handle === undefined ? undefined : adamicStdoutHandleValue ??= Object.setPrototypeOf({ setBlocking: new AdamicClosure((closure, values) => handle.setBlocking(...values), []) }, AdamicHostObject.prototype);\n"
+const hostStdoutHandleRuntime = "let adamicStdoutHandleValue, adamicStdoutHandleNode;\nconst adamicIllegalInvocation = () => { throw new TypeError('Illegal invocation'); };\nconst adamicHostStdoutHandle = handle => handle === undefined ? undefined : adamicStdoutHandleValue ??= (adamicStdoutHandleNode = handle, Object.setPrototypeOf({ setBlocking: new AdamicClosure(adamicIllegalInvocation, []) }, AdamicHostObject.prototype));\n"
+
+// stdoutHandleCallee is adamicCallee's splice in a program that reads the handle: the handle's own
+// setBlocking, called off the handle, is Node's with the handle as its receiver.
+const stdoutHandleCallee = "if (object === adamicStdoutHandleValue && object !== undefined && object[name] instanceof AdamicClosure && object[name].code === adamicIllegalInvocation) return { code: (closure, values) => adamicStdoutHandleNode.setBlocking(...values) }; "
+
+// stdoutHandleOptionalCall is adamicOptionalMethodCall's splice, the same test on what its lookup found:
+// handle.setBlocking?.(true) doesn't go through adamicCallee, so without it the handle's own call reached
+// the closure detached and threw where Node blocks (Runtime's must 1 on #0bxc4jh).
+const stdoutHandleOptionalCall = "if (object === adamicStdoutHandleValue && object !== undefined && fn instanceof AdamicClosure && fn.code === adamicIllegalInvocation) return adamicStdoutHandleNode.setBlocking(...values()); "
+
+// stdoutHandleOptionalAnchor is where stdoutHandleOptionalCall goes in adamicOptionalMethodCall: after
+// the lookup's undefined test, before the call.
+const stdoutHandleOptionalAnchor = "if (fn == null) return undefined; "
 
 func (e *emitter) nodeProcessCall(call ir.ProcessCall) (string, bool) {
 	if call.Operation == "tmpdir" {

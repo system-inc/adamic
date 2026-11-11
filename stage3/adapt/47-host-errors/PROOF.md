@@ -25,7 +25,7 @@ four-edit restoring mutant exactly recovers before.
 
 ## Pins and source scope
 
-The final validation base is origin/main at
+The runtime and census validation base before this restack was
 `ddeadda2427332d88918ff5a53258c8eb5cd8a34`. Main advanced from 16429a304 only
 by an unrelated Node-host lowerer rule. Its adaptation, harness and lane inputs
 are unchanged; the census and actual CLI were rebuilt from the new tip and
@@ -65,14 +65,14 @@ catalog reset.
 | --- | --- |
 | Current-main setup and pinned API install | child exits 0 |
 | Unchanged and amended full applies | child exits 0 |
-| Final two-state-pin full apply | child exit 0; all 747 src files byte-identical to the audited build inputs |
+| Prior combined full apply | child exit 0; all 747 src files byte-identical to the audited build inputs |
 | Both compiler and harness builds | all four child exits 0 |
 | Actual current-main adamic types, all 79 compiler roots | exit 0, zero diagnostics |
 | Node trace bytes and runtime ts export keys | identical |
 | Every emitted JavaScript hunk | only the three literals and reset, zero renames |
 | Before, after and mutant full censuses | all child exits 0 |
 | Whole-file census comparison | only the accepted next stop is newly visible |
-| Combined sharded lane and catalog-length counts | 398 shards pass, 0 starts; control lengths 3 before and 0 after |
+| Combined sharded lane and catalog-length counts (prior validation base) | 398 shards pass, 0 starts; control lengths 3 before and 0 after |
 
 The initial setup attempt selected the old checkout's cohere pin and failed
 after the branch changed. Setup was rerun with current main's proper submodule
@@ -193,11 +193,29 @@ The original stopped attempt is retained there as historical evidence. Only
 the user's specified next JSON.stringify stop is now allowed. Checkpoints go
 to typescript/meta-spread-checkpoint; main is never pushed or force-pushed.
 
-## Publication status
+## Stacked publication
 
-The metadata-only commit 80d0a726 finished pushing before the catalog addition
-arrived. The complete combined amendment is validated and saved on the
-checkpoint branch. Its final publication awaits the user choice between a
-second fast-forward commit on the existing branch and one combined commit on
-a new branch, because the original one-commit and no-force-push rules cannot
-both be preserved by replacing that already published commit.
+The combined commit is cut directly on
+`9dbddc5360e529f70fbcab44f528e3580bac471b`, typescript/tracing-dumptypes-3,
+which sits on chg_j4ccjy93 (LineMapSource). It is published as one commit on
+typescript/meta-spread-2, without a force-push. The original metadata-only
+branch remains unchanged.
+
+Every path under adaptation 47 is byte-identical between the previous
+validation base ddeadda24 and the requested parent; the Git subtree IDs are
+equal. This checks all of 47's other paths before copying the reviewed
+combined amendment. The parent's entire LEDGER.md blob is retained as an
+exact byte prefix, including its LineMapSource and final dumpTypes paragraphs;
+only our paragraph is appended after dumpTypes.
+
+A fresh complete `bash stage3/apply.sh` on this stack passed with child exit 0
+(326.855 seconds). The fully applied startTracing also matches its exact after
+pin, confirming the later parent adaptations leave it unchanged. The child
+exit and logs are recorded on the evidence branch as
+raw/stack-apply.status.json and raw/stack-apply.log. Earlier runtime, emission,
+census and lane measurements above retain their stated validation bases;
+the inherited LineMapSource and dumpTypes changes belong to the parent.
+
+The first setup-only apply attempt lacked the new worktree's API parser and
+failed before adaptations ran. After linking the identical pinned install,
+the fresh complete apply above passed; no lockfile or checker option changed.

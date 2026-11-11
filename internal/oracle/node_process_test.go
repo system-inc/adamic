@@ -82,11 +82,21 @@ func TestNodeProcessTerminal(t *testing.T) {
 
 // Each fixture is held to Node on a file, where Node has no handle, a pipe and a terminal, natively
 // sanitized and released and on the JavaScript backend (#qa1g5f3). node_process_handle_view.a is tsc's
-// sys.ts guard with a plain dot where sys.ts has ?.: setBlocking is a function-typed field, read and
-// then called, so it reaches adamicCall without the method call's adamicCallee, where the JavaScript
-// backend's handle once held Node's bare function and panicked with closure.code is not a function.
+// sys.ts guard with a plain dot where sys.ts has ?.: setBlocking is a function-typed field, narrowed
+// and then called. It reached adamicCall without the method call's adamicCallee, where the JavaScript
+// backend's handle once held Node's bare function and panicked with closure.code is not a function;
+// since #0bxc4jh the narrowed call keeps its object, so it pins the call off the handle that blocks.
 // node_process_handle_identity.a reads the handle twice: Node's is one object for the process, where
-// both backends once made a new one on each read and printed same false.
+// both backends once made a new one on each read and printed same false. The detached fixtures read
+// setBlocking off the handle through a let, a parameter, another object's field, a call's result and
+// a computed key, roads #5abf5v8's origin walk doesn't follow, and call it bare, and the copy calls it
+// off another object: Node's checks its receiver and throws TypeError: Illegal invocation, where both
+// backends' closure ignored its receiver and blocked (#0bxc4jh). node_process_handle_method.a calls it
+// off the handle, unguarded, and blocks, and node_process_handle_asserted.ts calls it off a let-held
+// handle through a non-null assertion, handle.setBlocking!(true), which keeps its object and blocks
+// where the plain road reached the throwing closure. node_process_handle_optional.a calls it off the
+// handle through ?., which the JavaScript backend's optional call reaches without adamicCallee, and
+// blocks.
 func TestNodeProcessHandleView(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range []struct {
@@ -95,6 +105,15 @@ func TestNodeProcessHandleView(t *testing.T) {
 	}{
 		{"node_process_handle_view.a", "set blocking\n", "set blocking\n"},
 		{"node_process_handle_identity.a", "handle false\nsame true\n", "handle true\nsame true\n"},
+		{"node_process_handle_detached_let.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_parameter.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_field.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_result.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_key.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_detached_copy.a", "no handle\n", "TypeError Illegal invocation\n"},
+		{"node_process_handle_method.a", "no handle\n", "blocked\n"},
+		{"node_process_handle_optional.a", "no handle\n", "blocked\n"},
+		{"node_process_handle_asserted.ts", "no handle\n", "blocked\n"},
 	} {
 		t.Run(fixture.name, func(t *testing.T) {
 			t.Parallel()
@@ -130,10 +149,10 @@ func TestNodeProcessHandleView(t *testing.T) {
 
 // node_process_handle_detached.a reads setBlocking off stdout's handle into a const and calls it bare.
 // Node's is Pipe.prototype's, which needs the handle as its receiver, so on a pipe it throws
-// TypeError: Illegal invocation. Both backends' handle holds a closure that ignores its receiver, and
-// printed after (#5abf5v8). The read stops before either backend, by name, where it's made. The
-// fixture keeps a directory of its own, since flow's and fresh's corpora lower every program at the
-// top of testdata.
+// TypeError: Illegal invocation. Both backends' handle held a closure that ignored its receiver, and
+// printed after (#5abf5v8); it throws now, as Node's does (#0bxc4jh), and the read still stops
+// before either backend, by name, where it's made. The fixture keeps a directory of its own, since
+// flow's and fresh's corpora lower every program at the top of testdata.
 func TestNodeProcessHandleDetachedStops(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_handle_refused/node_process_handle_detached.a"))
@@ -150,6 +169,63 @@ func TestNodeProcessHandleDetachedStops(t *testing.T) {
 		t.Fatalf("want a stop at the read of setBlocking, got %v", err)
 	}
 	t.Logf("Node on a pipe exits %d with %q; stop: %v", truth.exitCode, truth.stderr, err)
+}
+
+// The calls that would reach the handle's setBlocking without its object, through a computed key or a
+// bind, stop by name in a program that reads the handle, wherever the object came from: off a
+// parameter and off a call's result, roads stdoutHandleOrigin doesn't follow. Node calls each with the
+// handle as this and blocks, where the closure would throw Illegal invocation (Runtime's must 2 on
+// #0bxc4jh, Lower's ruling (b); #17pfbkk lifts the computed key's stop). A program that doesn't read
+// the handle keeps o['setBlocking']() as it was. A key whose type is a union naming setBlocking, or a
+// type parameter constrained to it, stops too (Runtime's must A), and so does a program that reads the
+// handle only as process.stdout['_handle'] (must B), or one whose handle read sits in a module it
+// imports, never in its root (Lower's must). Mutants: the computed key's arm dropped, and the
+// computed fixtures lower; the bind's arm dropped, and the bind fixture lowers; readsStdoutHandle
+// answering false, and every fixture lowers; the union arm dropped, and only the union fixture lowers;
+// the constraint arm dropped, and only the generic one stops elsewhere; readsStdoutHandle's element arm
+// dropped, and only the element-read fixture lowers; load's Files() scanned in moduleOrder's place, and
+// only the two-module fixture lowers.
+func TestNodeProcessHandleUnheldCallsStop(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []struct{ name, where, what string }{
+		{"node_process_handle_computed_literal.a", ":7:", "a call through a computed key naming setBlocking"},
+		{"node_process_handle_computed_key.a", ":10:", "a call through a computed key naming setBlocking"},
+		{"node_process_handle_bind.a", ":7:", "a bind of a field named setBlocking"},
+		{"node_process_handle_computed_union.a", ":11:", "a call through a computed key naming setBlocking"},
+		{"node_process_handle_computed_generic.a", ":7:", "a call through a computed key naming setBlocking"},
+		{"node_process_handle_element_read.a", ":7:", "a call through a computed key naming setBlocking"},
+		{"node_process_handle_module.a", ":7:", "a call through a computed key naming setBlocking"},
+	} {
+		t.Run(fixture.name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_handle_refused", fixture.name))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := nodeProcessTerminal(t, "pipe", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+			if truth.exitCode != 0 || string(truth.stdout) != "blocked\n" {
+				t.Fatalf("unexpected Node result %d %q %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			_, err = lowered(t, path)
+			var missing *lower.NotYet
+			if !errors.As(err, &missing) || !strings.Contains(missing.Where, fixture.name+fixture.where) || !strings.Contains(missing.What, fixture.what) {
+				t.Fatalf("want a stop at the call, got %v", err)
+			}
+		})
+	}
+	t.Run("no handle", func(t *testing.T) {
+		t.Parallel()
+		path := filepath.Join(t.TempDir(), "no_handle.a")
+		source := "const o = { setBlocking: (value: boolean): void => { console.log(String(value)); } };\no['setBlocking'](true);\n"
+		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		_, err := lowered(t, path)
+		var missing *lower.NotYet
+		if errors.As(err, &missing) && strings.Contains(missing.What, "naming setBlocking") {
+			t.Fatalf("a program that doesn't read the handle stopped: %v", err)
+		}
+	})
 }
 
 func TestNodeProcessMissingMark(t *testing.T) {
@@ -336,6 +412,11 @@ int main(void) {
  adamic_closure *method = handle->slots[0].reference;
  adamic_value arguments[] = {{.boolean = true}};
  (void)method->code(method, arguments);
+ if (adamic_thrown == NULL) return 5;
+ adamic_release(adamic_thrown);
+ adamic_thrown = NULL;
+ if ((fcntl(1, F_GETFL) & O_NONBLOCK) == 0) return 6;
+ (void)adamic_node_stdout_handle_call(method, handle, arguments);
  int flags = fcntl(1, F_GETFL);
  adamic_release(handle);
  if (flags < 0) return 4;
@@ -373,7 +454,7 @@ int main(void) {
 			t.Fatalf("Node alone must catch unchanged descriptor flags: %q", difference)
 		}
 	}
-	t.Log("setBlocking no-op ran cleanly under ASan/UBSan; only Node's descriptor flags caught it; the 200 KB controls still drain completely")
+	t.Log("setBlocking no-op ran cleanly under ASan/UBSan; only Node's descriptor flags caught it; the slot's closure called bare threw and left the flags; the 200 KB controls still drain completely")
 
 }
 

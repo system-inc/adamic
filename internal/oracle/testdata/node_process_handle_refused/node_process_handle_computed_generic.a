@@ -1,0 +1,11 @@
+// stdout's handle's setBlocking called through a key whose type is a type parameter constrained to the
+// name. Node calls it with the handle as this and blocks; it stops by name through the constraint
+// (#0bxc4jh).
+import 'node:process';
+type Handle = { setBlocking?: (value: boolean) => void };
+function block<Key extends 'setBlocking'>(handle: Handle, key: Key): void {
+	if (handle[key]) handle[key]!(true);
+}
+const handle = (process.stdout as any)._handle as Handle | undefined;
+if (handle !== undefined) block(handle, 'setBlocking');
+console.log('blocked');

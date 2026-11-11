@@ -46,7 +46,9 @@ func TestInspectRequestRefusals(t *testing.T) {
 	add("request-valid", func(h *harness) {
 		h.must("request-valid", exec.Command(binary, config, probe, "0", "2", "PrefixUnaryExpression", "raw-type", "2"))
 	})
-	releasedEntry := h.write("released-name.ts", "import {panic,programArguments,tsgoProgram,tsgoInspect,tsgoRelease} from 'adamic'; const a=programArguments(); const config=a[0]??panic('config');const file=a[1]??panic('file');const p=tsgoProgram(config,[file]); console.log(tsgoInspect(p,file,0,2,'PrefixUnaryExpression','raw-shape')); tsgoRelease(p); console.log(tsgoInspect(p,file,0,2,'PrefixUnaryExpression','name\\n1'));\n")
+	// A testdata program, so its native is keyed and built ahead (TestProduct_released_name_native), where a scratch
+	// copy was linked inside this check every run (#5gf3w8q).
+	releasedEntry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/released_name.ts")
 	released := h.build(stage0, "released-name", releasedEntry, normal, false)
 	add("released-name", func(h *harness) {
 		stale := h.run("released-name-run", exec.Command(released, config, probe))
@@ -66,8 +68,9 @@ func TestInspectRequestRefusals(t *testing.T) {
 				h.t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
 			}
 		})
-		archive := checkerMutantArchive(t, change.name)
-		mutant := h.build(stage0, change.name, entry, archive, false)
+		// The guard mutant's native is a product over its checker mutant archive (TestProduct_inspect_<name>_native),
+		// where h.build linked it here, keyed by nothing, since its archive isn't the unchanged checker.
+		mutant := h.mutantNative("inspect-"+change.name, entry, checkerMutantArchive(t, change.name), false)
 		add(change.name+"/mutant", func(h *harness) {
 			h.must(change.name+"-mutant-run", exec.Command(mutant, args...))
 			h.t.Logf("%s guard mutant exits 0", change.name)
