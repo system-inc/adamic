@@ -1,1 +1,1 @@
-internal/oracle/testdata/json_objects_refused/to_json_view.a:10:1: stage 0 can't lower writing a possibly absent optional own field yet
+internal/oracle/testdata/json_objects_refused/to_json_view.a:12:28: stage 0 can't lower JSON.stringify a value that can reach Hooked, which has a toJSON member yet

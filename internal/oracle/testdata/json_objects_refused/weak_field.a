@@ -2,13 +2,11 @@
 import type { Weak } from 'adamic';
 interface Child {
 	readonly name: string;
-	parent: Weak<Parent> | undefined;
+	parent: Weak<Parent>;
 }
 interface Parent {
-	readonly children: Child[];
+	readonly name: string;
 }
-const parent: Parent = { children: [] };
-const child: Child = { name: 'child', parent: undefined };
-child.parent = parent;
-parent.children.push(child);
+const parent: Parent = { name: 'parent' };
+const child: Child = { name: 'child', parent };
 console.log(JSON.stringify(child) ?? '<undefined>');

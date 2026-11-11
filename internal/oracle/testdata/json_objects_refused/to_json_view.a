@@ -4,9 +4,9 @@ interface Plain {
 }
 interface Hooked {
 	value: number;
-	toJSON?: () => string;
+	toJSON: () => string;
 }
-const hooked: Hooked = { value: 1 };
+const hooked: Hooked = { value: 1, toJSON: (): string => 'initial' };
 hooked.toJSON = (): string => 'view';
 const plain: Plain = hooked;
 console.log(JSON.stringify(plain) ?? '<undefined>');
