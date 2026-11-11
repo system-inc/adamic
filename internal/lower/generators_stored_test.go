@@ -23,14 +23,23 @@ import (
 var storedGeneratorFixtures = []string{"stored_jsx_children.a", "stored_for_of.a", "stored_exits.a", "stored_exits_finally.a", "stored_untaken.a", "stored_later_throw.a"}
 
 // storedGeneratorNumbers is a module generator of numbers whose TReturn is undefined, so a road this
-// head stops reaches lowering's stop rather than the void rules', and a module callee whose one use of
-// its parameter is one for-of over it.
-const storedGeneratorNumbers = "function* numbers(count: number): Generator<number, undefined, undefined> { for (let index = 0; index < count; index++) { yield index; } }\n" +
-	"function total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\n"
+// head stops reaches lowering's stop rather than the void rules'.
+const storedGeneratorNumbers = "function* numbers(count: number): Generator<number, undefined, undefined> { for (let index = 0; index < count; index++) { yield index; } }\n"
 
-// storedGeneratorHost wraps body in a function beside storedGeneratorNumbers.
+// storedGeneratorTotal is a module callee whose one use of its parameter is one for-of over it. A row
+// that lowers carries it only when it calls it: a view nothing calls has no origin the proof can
+// name, so it stops as a view over an iterable of unproven origin, whatever the row holds.
+const storedGeneratorTotal = "function total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\n"
+
+// storedGeneratorHost wraps body in a function beside storedGeneratorNumbers and storedGeneratorTotal.
 func storedGeneratorHost(body string) string {
-	return storedGeneratorNumbers + "function host(flag: boolean): void {\n" + body + "\n}\nhost(String(1).length > 0);\n"
+	return storedGeneratorNumbers + storedGeneratorTotal + "function host(flag: boolean): void {\n" + body + "\n}\nhost(String(1).length > 0);\n"
+}
+
+// storedGeneratorLoopHost is storedGeneratorHost without storedGeneratorTotal, for a row whose one
+// read is a for-of.
+func storedGeneratorLoopHost(body string) string {
+	return storedGeneratorNumbers + "function host(): void {\n" + body + "\n}\nhost();\n"
 }
 
 // storedGeneratorWords are the words every S2c-4-1 stop says (Lower's, on #qk8rztp S2c-4).
@@ -64,8 +73,8 @@ func TestStoredGeneratorsLower(t *testing.T) {
 	}
 	for _, probe := range []struct{ name, source string }{
 		{"handed to a module callee", storedGeneratorHost("const stored = numbers(3);\nconsole.log(String(total(stored)));")},
-		{"a for-of over it", storedGeneratorHost("const stored = numbers(3);\nfor (const value of stored) { console.log(String(value)); }")},
-		{"a read in parentheses", storedGeneratorHost("const stored = numbers(2);\nfor (const value of (stored)) { console.log(String(value)); }")},
+		{"a for-of over it", storedGeneratorLoopHost("const stored = numbers(3);\nfor (const value of stored) { console.log(String(value)); }")},
+		{"a read in parentheses", storedGeneratorLoopHost("const stored = numbers(2);\nfor (const value of (stored)) { console.log(String(value)); }")},
 		{"declared in a block, read in a deeper one", storedGeneratorHost("if (flag) {\nconst stored = numbers(2);\nif (flag) {\nconsole.log(String(total(stored)));\n}\n}")},
 		{"declared and read in one loop body", storedGeneratorHost("for (let pass = 1; pass < 3; pass++) {\nconst stored = numbers(pass);\nconsole.log(String(total(stored)));\n}")},
 		{"a nested generator into a nested callee", "function host(): void {\nfunction* inner(): Generator<number, undefined, undefined> { yield 1; yield 2; }\nfunction sum(items: Iterable<number>): number { let all = 0; for (const value of items) { all += value; } return all; }\nconst stored = inner();\nconsole.log(String(sum(stored)));\n}\nhost();\n"},
