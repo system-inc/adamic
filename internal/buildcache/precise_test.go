@@ -2788,6 +2788,117 @@ func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(t *testing.T)
 	}
 }
 
+// A recipe keys a linked package's directory by its non-test names (packageListingKind): a dependency's test file is
+// compiled into no binary but its own package's tests (#c2chyab), so one added to a moves no key of cmd/b's, where
+// internal/flow's new test file moved all 200 runtime archive keys on main 9ac2dc52, while a non-test name added
+// there, Go or not, still moves it. The package under test keeps every name, and so does a package with an embed
+// pattern, which a new _test.go can match (Compiler's and Node's rulings). Mutants, each caught: the recipe's listing
+// left whole for every package; the package listing valued as a whole one; the narrowing applied to every listing kind
+// (the package under test's and the embedding package's listings then hold still); a package with an embed pattern
+// narrowed; the package under test narrowed; a non-test name dropped by the narrowing too.
+// Not parallel: go list runs in the module, and t.Setenv takes the trace and read modes away.
+func TestARecipeListsADependencysDirectoryWithoutItsTestFiles(t *testing.T) {
+	root, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for name, content := range map[string]string{
+		"go.mod":        "module example.com/listed\n\ngo 1.22\n",
+		"a/a.go":        "package a\n\nfunc A() int { return 1 }\n",
+		"a/a_test.go":   "package a\n",
+		"e/e.go":        "package e\n\nimport \"embed\"\n\n//go:embed *.txt\nvar Data embed.FS\n",
+		"e/data.txt":    "data\n",
+		"cmd/b/main.go": "package main\n\nimport (\n\t\"example.com/listed/a\"\n\t\"example.com/listed/e\"\n)\n\nfunc main() { _, _ = a.A(), e.Data }\n",
+	} {
+		write(t, root, name, content)
+	}
+	gitIn(t, root, "init", "-q")
+	gitIn(t, root, "add", ".")
+	gitIn(t, root, "commit", "-q", "-m", "module")
+	forgetTracked()
+	t.Setenv("GOWORK", "off")
+	// Each value read afresh: a trace or read mode holds what it values for the process's life (heldForLife).
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	t.Setenv("ADAMIC_BUILD_CACHE", "")
+	binary := recipeOf(root, journalEntry{Package: "example.com/listed/cmd/b"})
+	tests := recipeOf(root, journalEntry{Package: "example.com/listed/a.test"})
+	if binary.reason != "" || tests.reason != "" {
+		t.Fatalf("cmd/b's recipe: %s; a's tests' recipe: %s", binary.reason, tests.reason)
+	}
+	dependency, embedding, under := readEntry{Kind: packageListingKind, Path: "a"}, readEntry{Kind: "listing", Path: "e"}, readEntry{Kind: "listing", Path: "a"}
+	if !slices.Contains(binary.entries, dependency) || slices.Contains(binary.entries, under) {
+		t.Errorf("cmd/b's recipe keys its dependency a's directory as %+v, want %+v alone", binary.entries, dependency)
+	}
+	if !slices.Contains(binary.entries, embedding) || slices.Contains(binary.entries, readEntry{Kind: packageListingKind, Path: "e"}) {
+		t.Errorf("cmd/b's recipe keys e, whose go:embed can match a new file, as %+v, want %+v alone", binary.entries, embedding)
+	}
+	if !slices.Contains(tests.entries, under) || slices.Contains(tests.entries, dependency) {
+		t.Errorf("a's tests' recipe keys a's own directory as %+v, want %+v alone", tests.entries, under)
+	}
+	valued := func(entry readEntry) string {
+		t.Helper()
+		forgetTracked()
+		value, err := treeEntryValue(root, "", entry)
+		if err != nil {
+			t.Fatalf("%s %s: %v", entry.Kind, entry.Path, err)
+		}
+		return value
+	}
+	committed := func(name, content string) {
+		t.Helper()
+		write(t, root, name, content)
+		gitIn(t, root, "add", name)
+	}
+	before := map[readEntry]string{dependency: valued(dependency), embedding: valued(embedding), under: valued(under)}
+	committed("a/b_test.go", "package a\n")
+	if now := valued(dependency); now != before[dependency] {
+		t.Errorf("a test file added to cmd/b's dependency a moved its package listing from %s to %s", before[dependency], now)
+	}
+	if now := valued(under); now == before[under] {
+		t.Errorf("a test file added to a left the listing a's own tests key at %s", now)
+	}
+	committed("e/e_test.go", "package e\n")
+	if now := valued(embedding); now == before[embedding] {
+		t.Errorf("a test file added to e, whose go:embed pattern can match one, left its listing at %s", now)
+	}
+	// Every name but a _test.go one still counts: a non-test .go file, one a build constraint leaves out, a file that
+	// isn't Go, a testdata directory.
+	for name, content := range map[string]string{"a/b.go": "package a\n", "a/b_never.go": "//go:build never\n\npackage a\n", "a/notes.txt": "a note\n", "a/testdata/input.txt": "input\n"} {
+		previous := valued(dependency)
+		committed(name, content)
+		if now := valued(dependency); now == previous {
+			t.Errorf("%s added to cmd/b's dependency a left its package listing at %s", name, now)
+		}
+	}
+}
+
+// A directory a build's own code listed, read by a traced readdir, is keyed by every name it holds, its test files
+// included: only the recipe's package listing leaves them out (packageListingKind). Mutant: the narrowing applied to
+// every listing kind, so a test file added where the build listed is a hit.
+// Not parallel: newRig.
+func TestATracedListingCountsTestFiles(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() { r.list(r.pid, "source") })
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	if entries := r.entries(t, build.NameKey); !slices.Contains(entries, "listing source") {
+		t.Fatalf("the read set %q doesn't list source", entries)
+	}
+	product, err := reading(t, port)
+	if err != nil {
+		t.Fatalf("the tree it settled on missed: %v", err)
+	}
+	write(t, r.root, "source/c_test.go", "package source\n")
+	gitIn(t, r.root, "add", "source/c_test.go")
+	forgetTracked()
+	if found, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "listing source") {
+		t.Fatalf("a test file added where the build listed found %q (settled %s), %v; want a miss naming listing source", found, product, err)
+	}
+}
+
 // TypeScript's JavaScript sys asks whether the file system is case-sensitive by looking for its own __filename with
 // every letter's case swapped: a file node read, not a program it ran (#4gp2ytz, Compiler's find in stage3/api's
 // typescript.js). That lookup is the file system's case, never an absolute path naming the checkout, so one tree at two
@@ -3530,8 +3641,8 @@ func TestALeanRecipeIsTheCodeThatMakesTheBuild(t *testing.T) {
 	has := func(listed []string, prefix string) bool {
 		return slices.ContainsFunc(listed, func(entry string) bool { return strings.HasPrefix(entry, prefix) })
 	}
-	for _, want := range []string{"content internal/buildcache/make_go.go", "content internal/buildcache/gobuild.go", "content internal/buildcache/settle.go", "content internal/toolchain/", "content internal/native/runtimeproducts/runtimeproducts.go", "listing internal/native/runtimeproducts", "content go.mod",
-		"content internal/native/library.go", "content internal/native/emit_expressions.go", "content internal/ccjobserver/", "content internal/ir/", "content internal/flow/", "listing internal/ir"} {
+	for _, want := range []string{"content internal/buildcache/make_go.go", "content internal/buildcache/gobuild.go", "content internal/buildcache/settle.go", "content internal/toolchain/", "content internal/native/runtimeproducts/runtimeproducts.go", "package listing internal/native/runtimeproducts", "content go.mod",
+		"content internal/native/library.go", "content internal/native/emit_expressions.go", "content internal/ccjobserver/", "content internal/ir/", "content internal/flow/", "package listing internal/ir"} {
 		if !has(lean, want) {
 			t.Errorf("a runtime archive's lean recipe lacks %q: %q", want, lean)
 		}

@@ -80,7 +80,8 @@ type readSet struct {
 	Pinned string `json:"pinned,omitempty"`
 }
 
-// A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
+// A readEntry is one thing the build read, by kind: content, listing, package listing (a recipe's linked package's
+// directory, its _test.go names left out), exists or link (paths in the tree), above (paths
 // above the tree, relative to it), above cache (paths beside the build cache's parents, relative to it), home (paths in the home directory, ~-relative), absolute (any other path only looked
 // for, by whether and as what it exists), product (a name key), tool (a path
 // under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), system (a
@@ -501,7 +502,7 @@ func productEntryValue(kind string, product found) (string, error) {
 // treeEntryValue is the value of an entry that isn't a product's.
 func treeEntryValue(root, cache string, entry readEntry) (string, error) {
 	switch entry.Kind {
-	case "content", "listing", "exists":
+	case "content", "listing", packageListingKind, "exists":
 		if !local(entry.Path) {
 			return "", fmt.Errorf("a tree entry %q isn't inside the tree", entry.Path)
 		}
@@ -746,7 +747,8 @@ func readTreeValue(root, kind, name string) string {
 	}
 	switch {
 	case info.IsDir() && kind != "exists":
-		return "directory " + listing(root, path)
+		// A recipe's package listing leaves its _test.go names out (packageListingKind); every other listing keeps them.
+		return "directory " + listing(root, path, kind != packageListingKind)
 	case info.IsDir():
 		return "directory"
 	case kind == "content" && info.Mode().IsRegular():
@@ -886,8 +888,10 @@ func blobID(content []byte, length int) string {
 	return hex.EncodeToString(sum[:])
 }
 
-// listing is a directory's tracked entries, by name and kind, sorted; .git never counts.
-func listing(root, directory string) string {
+// listing is a directory's tracked entries, by name and kind, sorted; .git never counts, and a file whose name ends
+// _test.go counts only with tests. A directory so named, and every other name (testdata/, a file that isn't Go, an
+// ignored non-test .go), always counts.
+func listing(root, directory string, tests bool) string {
 	entries, err := os.ReadDir(directory)
 	if err != nil {
 		return "unreadable: " + err.Error()
@@ -897,7 +901,7 @@ func listing(root, directory string) string {
 		path := filepath.Join(directory, entry.Name())
 		info, err := os.Stat(path)
 		isDirectory := err == nil && info.IsDir()
-		if entry.Name() == ".git" || !Tracked(root, path, isDirectory) {
+		if entry.Name() == ".git" || !tests && !isDirectory && strings.HasSuffix(entry.Name(), "_test.go") || !Tracked(root, path, isDirectory) {
 			continue
 		}
 		suffix := ""

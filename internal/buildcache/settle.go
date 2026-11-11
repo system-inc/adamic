@@ -413,6 +413,15 @@ func (facts *traceFacts) throughLink(name string, kinds int) ([]classed, bool) {
 // (#qx8fkaf, Node's ruling). Any read under it, a lookup that missed included, is a read of the install.
 const nodeInstallKind = "node install"
 
+// packageListingKind is a recipe's entry for a linked package's directory, the listing go list's load makes: valued as
+// a listing is, with every _test.go name left out (listing's tests). A dependency's test file is never compiled into
+// another package's binary (#c2chyab), yet a new one still moved its directory's listing: on main 9ac2dc52, adding
+// internal/flow/optional_receiver_units_test.go moved all 200 runtime archive keys, their bytes equal. A directory a
+// build's own code listed (a traced readdir, classifyPath) stays a "listing" of every name, and so does the recipe's own
+// entry for the package under test and for a package with an embed pattern, which can match a new _test.go
+// (recipeEntries; Compiler's and Node's rulings).
+const packageListingKind = "package listing"
+
 // nodeInstallOf is the project whose installed node_modules relative is in, or is: the directory above relative's first
 // node_modules, when git tracks that directory's package-lock.json and not its node_modules. Its first, never a nested
 // one: node_modules/a/node_modules is the same install, made by the same npm ci.
@@ -2085,8 +2094,9 @@ var recipeFor = recipeOf
 // every product's key at every change to how products are keyed, traced, settled or stored, which never changes a
 // product's bytes (54% of the rekeys over main's 200 landings of Oct 11 to 13, Adam's seed 48a9e045). The make files are
 // what decides a product's bytes, and TestTheMakeFilesUseNothingFromTheMachinery holds them to using nothing the
-// machinery defines, so a change outside them can't move a product's bytes. The listing still names every file, so a
-// file added or removed moves every key. Off is decision 1 for every package.
+// machinery defines, so a change outside them can't move a product's bytes. The listing still names every file but a
+// test file (packageListingKind), so a non-test file added or removed moves every key. Off is decision 1 for every
+// package.
 const makeFilesOnly = true
 
 // buildcachePackage is this package's import path, as go list names it.
@@ -2238,7 +2248,7 @@ func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(k
 			Standard                                                                   bool
 			Module                                                                     *struct{ GoMod string }
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
-			IgnoredGoFiles, TestGoFiles, XTestGoFiles                                  []string
+			IgnoredGoFiles, TestGoFiles, XTestGoFiles, EmbedPatterns                   []string
 		}
 		if err := decoder.Decode(&listed); err == io.EOF {
 			break
@@ -2248,7 +2258,6 @@ func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(k
 		if listed.Standard || !inside(root, listed.Dir) {
 			continue
 		}
-		add("listing", listed.Dir)
 		// Only the package under test's test files are compiled into its binary (its own and its external test
 		// package's): a dependency's _test.go never is, and keying it moved every product whose binary linked that
 		// package at every test edit there (#c2chyab: internal/buildcache/precise_test.go was in all 808 product
@@ -2256,6 +2265,16 @@ func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(k
 		// never its ignored test files, another platform's, which no edit compiles into a binary that isn't its own.
 		name, _, _ := strings.Cut(listed.ImportPath, " ")
 		under := test && (name == pkg || name == pkg+"_test")
+		// The directory, by its non-test names (packageListingKind), so a dependency's test file added, removed or renamed
+		// moves no key. The package under test's directory keeps every name, its test main's too (go list -test names it
+		// pkg.test, in pkg's directory), and so does a package with an embed pattern: a pattern can name .go files, and a
+		// read set isn't recomputed on a later tree, so a new _test.go it would match is caught by the listing alone. An
+		// embed directive added later is an edit of a non-test .go file, which moves the key by content.
+		kind := packageListingKind
+		if under || test && name == pkg+".test" || len(listed.EmbedPatterns) > 0 {
+			kind = "listing"
+		}
+		add(kind, listed.Dir)
 		ignored := listed.IgnoredGoFiles
 		if !under {
 			ignored = slices.DeleteFunc(slices.Clone(ignored), func(file string) bool { return strings.HasSuffix(file, "_test.go") })
