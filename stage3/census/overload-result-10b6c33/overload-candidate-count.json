@@ -1,0 +1,412 @@
+{
+  "total": 4562,
+  "attempted": 4058,
+  "deferred": 504,
+  "files": [
+    {
+      "file": "/workspace/overload-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "units": 1,
+      "attempted": 1
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/_namespaces/ts.performance.ts",
+      "units": 1,
+      "attempted": 1
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/_namespaces/ts.ts",
+      "units": 78,
+      "attempted": 78
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/binder.ts",
+      "units": 16,
+      "attempted": 16
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/builder.ts",
+      "units": 86,
+      "attempted": 84
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/builderPublic.ts",
+      "units": 16,
+      "attempted": 16
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/builderState.ts",
+      "units": 5,
+      "attempted": 5
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/builderStatePublic.ts",
+      "units": 3,
+      "attempted": 3
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/checker.ts",
+      "units": 51,
+      "attempted": 51
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/commandLineParser.ts",
+      "units": 171,
+      "attempted": 159
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/core.ts",
+      "units": 264,
+      "attempted": 57
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/corePublic.ts",
+      "units": 9,
+      "attempted": 9
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/debug.ts",
+      "units": 5,
+      "attempted": 5
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+      "units": 3,
+      "attempted": 3
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/emitter.ts",
+      "units": 50,
+      "attempted": 48
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/executeCommandLine.ts",
+      "units": 50,
+      "attempted": 49
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/expressionToTypeNode.ts",
+      "units": 9,
+      "attempted": 9
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/baseNodeFactory.ts",
+      "units": 3,
+      "attempted": 3
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/emitHelpers.ts",
+      "units": 45,
+      "attempted": 45
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/emitNode.ts",
+      "units": 41,
+      "attempted": 18
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/nodeChildren.ts",
+      "units": 6,
+      "attempted": 6
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/nodeConverters.ts",
+      "units": 3,
+      "attempted": 3
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/nodeFactory.ts",
+      "units": 26,
+      "attempted": 25
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/nodeTests.ts",
+      "units": 228,
+      "attempted": 228
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/parenthesizerRules.ts",
+      "units": 3,
+      "attempted": 3
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/utilities.ts",
+      "units": 108,
+      "attempted": 100
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/factory/utilitiesPublic.ts",
+      "units": 4,
+      "attempted": 3
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/hostErrors.ts",
+      "units": 3,
+      "attempted": 3
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/moduleNameResolver.ts",
+      "units": 163,
+      "attempted": 148
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/moduleSpecifiers.ts",
+      "units": 49,
+      "attempted": 48
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/parser.ts",
+      "units": 75,
+      "attempted": 53
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/path.ts",
+      "units": 81,
+      "attempted": 77
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/performance.ts",
+      "units": 24,
+      "attempted": 24
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/performanceCore.ts",
+      "units": 12,
+      "attempted": 12
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/program.ts",
+      "units": 85,
+      "attempted": 80
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/programDiagnostics.ts",
+      "units": 5,
+      "attempted": 5
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/resolutionCache.ts",
+      "units": 31,
+      "attempted": 31
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/scanner.ts",
+      "units": 84,
+      "attempted": 74
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/semver.ts",
+      "units": 28,
+      "attempted": 28
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/sourcemap.ts",
+      "units": 31,
+      "attempted": 30
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/symbolWalker.ts",
+      "units": 2,
+      "attempted": 2
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/sys.ts",
+      "units": 62,
+      "attempted": 60
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/tracing.ts",
+      "units": 10,
+      "attempted": 10
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformer.ts",
+      "units": 17,
+      "attempted": 15
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/classFields.ts",
+      "units": 23,
+      "attempted": 23
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/classThis.ts",
+      "units": 7,
+      "attempted": 5
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/declarations.ts",
+      "units": 14,
+      "attempted": 14
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+      "units": 8,
+      "attempted": 8
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/destructuring.ts",
+      "units": 22,
+      "attempted": 22
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/es2015.ts",
+      "units": 13,
+      "attempted": 13
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/es2016.ts",
+      "units": 2,
+      "attempted": 2
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/es2017.ts",
+      "units": 6,
+      "attempted": 6
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/es2018.ts",
+      "units": 4,
+      "attempted": 4
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/es2019.ts",
+      "units": 2,
+      "attempted": 2
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/es2020.ts",
+      "units": 2,
+      "attempted": 2
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/es2021.ts",
+      "units": 2,
+      "attempted": 2
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/esDecorators.ts",
+      "units": 9,
+      "attempted": 9
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/esnext.ts",
+      "units": 9,
+      "attempted": 9
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/generators.ts",
+      "units": 16,
+      "attempted": 16
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/jsx.ts",
+      "units": 3,
+      "attempted": 3
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/legacyDecorators.ts",
+      "units": 2,
+      "attempted": 2
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+      "units": 2,
+      "attempted": 2
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "units": 2,
+      "attempted": 2
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/module/module.ts",
+      "units": 3,
+      "attempted": 3
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/module/system.ts",
+      "units": 2,
+      "attempted": 2
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/namedEvaluation.ts",
+      "units": 21,
+      "attempted": 19
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/taggedTemplate.ts",
+      "units": 5,
+      "attempted": 5
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/ts.ts",
+      "units": 5,
+      "attempted": 5
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/typeSerializer.ts",
+      "units": 6,
+      "attempted": 6
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/transformers/utilities.ts",
+      "units": 50,
+      "attempted": 44
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/tsbuild.ts",
+      "units": 5,
+      "attempted": 5
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/tsbuildPublic.ts",
+      "units": 106,
+      "attempted": 34
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/types.ts",
+      "units": 875,
+      "attempted": 875
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/utilities.ts",
+      "units": 893,
+      "attempted": 834
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts",
+      "units": 251,
+      "attempted": 242
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/visitorPublic.ts",
+      "units": 41,
+      "attempted": 28
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/watch.ts",
+      "units": 46,
+      "attempted": 36
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/watchPublic.ts",
+      "units": 25,
+      "attempted": 18
+    },
+    {
+      "file": "/workspace/overload-adapted/src/compiler/watchUtilities.ts",
+      "units": 26,
+      "attempted": 21
+    },
+    {
+      "file": "/workspace/overload-adapted/src/tsc/_namespaces/ts.ts",
+      "units": 1,
+      "attempted": 1
+    },
+    {
+      "file": "/workspace/overload-adapted/src/tsc/tsc.ts",
+      "units": 6,
+      "attempted": 6
+    }
+  ]
+}

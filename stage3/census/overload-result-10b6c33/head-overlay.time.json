@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "/workspace/overload-parent/stage3/census/latent/make_overlay.py",
+    "/workspace/overload-head",
+    "/workspace/overload-build-head/latent-overlay"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 3.8061344750000217,
+  "user_seconds": 1.103163,
+  "system_seconds": 0.545787,
+  "peak_rss_kib": 20720
+}

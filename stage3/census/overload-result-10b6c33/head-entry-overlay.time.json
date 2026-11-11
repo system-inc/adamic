@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "/workspace/overload-parent/stage3/meter/entry_overlay.py",
+    "/workspace/overload-build-head/latent-overlay",
+    "/workspace/overload-build-head/entry-overlay"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 0.13232635899998968,
+  "user_seconds": 0.049679999999999995,
+  "system_seconds": 0.008503,
+  "peak_rss_kib": 8704
+}

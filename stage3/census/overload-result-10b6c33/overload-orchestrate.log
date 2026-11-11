@@ -1,0 +1,13 @@
+waiting for apply
+start checkpoint-apply
+checkpoint-apply child_exit=0
+waiting for both builds and setup
+start parent-measure
+parent-measure child_exit=2
+Traceback (most recent call last):
+  File "/workspace/overload-orchestrate.py", line 29, in <module>
+    run('parent-measure',['bash','/workspace/overload-measure.sh','parent'])
+  File "/workspace/overload-orchestrate.py", line 13, in run
+    if r.returncode:raise RuntimeError(name+' failed; see log')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: parent-measure failed; see log

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "gofmt",
+    "-w",
+    "/workspace/overload-build-head/entry-overlay/entry_load_hook.go",
+    "/workspace/overload-build-head/entry-overlay/entry_main.go"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 0.014206949000026725,
+  "user_seconds": 0.006835,
+  "system_seconds": 0.0,
+  "peak_rss_kib": 8448
+}
