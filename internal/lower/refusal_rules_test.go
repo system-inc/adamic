@@ -94,6 +94,9 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// the site itself, and before the walk reaches its arguments.
 		"3350 constraintRelationRefusal",
 		"3400 classViewRefusal",
+		// inNarrowedWriteGap stops a write the in test's Record member alone takes (#yqbg9vz), last, so
+		// a rule that meets the same node first keeps its words.
+		"3450 inNarrowedWriteGap",
 	}
 	var registered []string
 	for _, rule := range refusalRules.rules {
