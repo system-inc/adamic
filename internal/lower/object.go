@@ -1137,7 +1137,11 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	// is declared to return (#qk8rztp, Compiler's risk 2).
 	if function, isGenerator, err := l.generatorCallee(statement.Expression); err != nil {
 		return nil, err
-	} else if isGenerator {
+	} else if _, stored, isStored := l.storedGeneratorLocal(statement.Expression); isGenerator || isStored {
+		if isStored {
+			// A for-of over a stored generator's local, its one read (#qk8rztp S2c-4-1).
+			function = stored
+		}
 		initializer := statement.Initializer
 		if initializer.Kind != ast.KindVariableDeclarationList || initializer.Flags&ast.NodeFlagsBlockScoped == 0 || len(initializer.AsVariableDeclarationList().Declarations.Nodes) != 1 {
 			return nil, l.generatorNotYet(initializer, "consumed by a for-of that doesn't declare one variable with const or let")

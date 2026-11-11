@@ -147,7 +147,8 @@ func (l *lowering) handNextView(node *ast.Node, closure ir.Expression) error {
 // its function yields, and for a [key, value] tuple, how the tuple holds each half
 // (generatorPairTypes, read from what the call yields, never the declared iterator type).
 func (l *lowering) generatorOrigin(of ir.IterableOf) iterableOrigin {
-	if !makesGenerator(of.Value) || of.Site < 1 || of.Site > len(l.generatorArguments) {
+	_, stored := storedGeneratorMove(of.Value)
+	if (!makesGenerator(of.Value) && !stored) || of.Site < 1 || of.Site > len(l.generatorArguments) {
 		return iterableOrigin{name: "a generator seen as an object other than by its own call"}
 	}
 	// A direct call has the one target it names: a module generator's, or a nested one's through
@@ -160,6 +161,10 @@ func (l *lowering) generatorOrigin(of ir.IterableOf) iterableOrigin {
 		}
 	case ir.CallClosure:
 		targets = []int{call.Direct - 1}
+	case ir.Read:
+		// A stored generator's one read (#qk8rztp S2c-4-1): its local's one Declare is the call of
+		// the generator its site recorded (storedGenerator).
+		targets = []int{l.generatorArguments[of.Site-1].generator}
 	}
 	if len(targets) != 1 {
 		return iterableOrigin{name: "a generator seen as an object other than by its own call"}

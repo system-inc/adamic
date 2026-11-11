@@ -1,0 +1,41 @@
+// tsc's shape at checker.ts:21755-21759 (#qk8rztp S2c-4-1), nested as createTypeChecker nests it:
+// elaborateJsxComponents stores generateJsxChildren's generator in a const in one statement and hands
+// it, in the next, to elaborateIterableOrArrayLikeTargetElementwise, each a sibling declared in the
+// same parent, whose one-read Iterable<T> parameter steps it. The const's one read moves the frame out
+// of it, so the callee's for-of is what lets go of it, and the const's release at its block's end lets
+// go of nothing. With one child the block never runs, and the generator is never made. Strings are
+// built, so a frame let go of twice is a sanitizer report, and one never let go of a leak.
+interface Elaboration {
+    readonly errorNode: string;
+    readonly innerExpression: string;
+}
+function createChecker(seed: string): string {
+    function* generateJsxChildren(node: readonly string[], label: string): Generator<Elaboration, undefined, undefined> {
+        for (let index = 0; index < node.length; index++) {
+            const child = node[index];
+            if (child === undefined || child.length === 0) {
+                continue;
+            }
+            yield { errorNode: `${seed}${label}${String(index)}`, innerExpression: `${child}!` };
+        }
+    }
+    function elaborateIterableOrArrayLikeTargetElementwise(iterator: Iterable<Elaboration>, source: string): string {
+        let reported = '';
+        for (const value of iterator) {
+            reported += `<${source}|${value.errorNode}=${value.innerExpression}>`;
+        }
+        return reported;
+    }
+    function elaborateJsxComponents(children: readonly string[], target: string): string {
+        let result = `${target}:`;
+        if (children.length > 1) {
+            const realSource = `tuple(${children.join(',')})`;
+            const generated = generateJsxChildren(children, `${target}#`);
+            result = elaborateIterableOrArrayLikeTargetElementwise(generated, realSource) + result;
+        }
+        return result;
+    }
+    return `${elaborateJsxComponents(['a', '', 'bc'], `t${String(1)}`)} ${elaborateJsxComponents(['solo'], `u${String(2)}`)}`;
+}
+console.log(createChecker(`c${String(0)}.`));
+console.log(createChecker('d.'));

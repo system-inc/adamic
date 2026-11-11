@@ -55,6 +55,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_generator_done(%s)", generatorPointer(expression.Generator, e.value(expression.Generator))))
 	case ir.IterableOf:
 		// The generator itself, seen as the object an Iterable<T> slot holds: no retain, no release.
+		// A stored generator's one read moves the frame out of its local into the statement's
+		// temporary, let go of after the call, or by a later argument's throw before it (#qk8rztp
+		// S2c-4-1).
+		if read, isMove := generatorMove(expression.Value); isMove {
+			return fmt.Sprintf("((adamic_object *)%s)", e.moveOut(expression.Value, read))
+		}
 		return fmt.Sprintf("((adamic_object *)%s)", e.value(expression.Value))
 	case ir.IsGenerator:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_generator_is(%s)", e.value(expression.Value)))

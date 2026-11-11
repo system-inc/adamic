@@ -659,12 +659,14 @@ func (l *lowering) iterableCallee(symbol *ast.Symbol) *ast.Node {
 
 // iterableOfGenerator lowers a generator's call passed into an Iterable<T> parameter
 // (iterableArgument): the call makes the frame, IterableOf hands it over as the object the slot
-// holds, and the site is kept for checkIterableViews to prove and to name.
+// holds, and the site is kept for checkIterableViews to prove and to name. Since S2c-4-1 the argument
+// may be a stored generator's one read instead, which moves the frame out of its local
+// (generatorMade).
 func (l *lowering) iterableOfGenerator(node *ast.Node, function int) (ir.Expression, error) {
 	if l.function != nil && l.function.Suspends() {
 		return nil, l.generatorNotYet(node, "passed into an Iterable<T> parameter inside an async function or a generator")
 	}
-	made, err := l.generatorCall(node, function)
+	made, err := l.generatorMade(node, function)
 	if err != nil {
 		return nil, err
 	}
@@ -691,7 +693,8 @@ type generatorArgument struct {
 // binding is the step's value, a fresh one each pass. g is the block's local, so every way out of
 // the loop, a break, a return, a throw or a jump to an outer loop, lets go of it once, and with it
 // the frame and whatever the frame still holds (Memory, 04:42: no finally exists yet, so releasing
-// g is the whole of IteratorClose).
+// g is the whole of IteratorClose). Since S2c-4-1 the for-of may be over a stored generator's local,
+// its one read, and g is declared from the frame moved out of it (generatorMade).
 func (l *lowering) forOfGenerator(node *ast.Node, function int, name *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsForInOrOfStatement()
 	if l.function != nil && l.function.Suspends() {
@@ -713,7 +716,7 @@ func (l *lowering) forOfGenerator(node *ast.Node, function int, name *ast.Node) 
 	if !ast.IsIdentifier(name) {
 		return nil, l.generatorNotYet(name, "consumed by a for-of that destructures")
 	}
-	made, err := l.generatorCall(statement.Expression, function)
+	made, err := l.generatorMade(statement.Expression, function)
 	if err != nil {
 		return nil, err
 	}
@@ -747,10 +750,15 @@ func (l *lowering) forOfGenerator(node *ast.Node, function int, name *ast.Node) 
 // checkGeneratorRoads holds the lowered program to this slice's one rule for generator objects: a
 // generator's call is the value of its consuming loop's local or a statement's whole expression, and
 // that local is read only by a step or a done test. A road a lowering missed would compile a frame
-// into a slot no analysis knows holds one, so it is a compiler bug, said out loud.
+// into a slot no analysis knows holds one, so it is a compiler bug, said out loud. Since S2c-4-1 a
+// call may be a stored generator's local's value too, and that local is read only by moves into a
+// consumer (storedGeneratorMove): a for-of's own local declared from it, or IterableOf. How many
+// times per run is lowering's to prove, which only the source's nesting can say (storedGeneratorRead).
 func checkGeneratorRoads(program *ir.Program) error {
 	counted, allowed := 0, 0
 	held := map[int]bool{}
+	// moves are, per stored generator's local, its reads that move the frame out (#qk8rztp S2c-4-1).
+	moves := map[int]int{}
 	// IterableOf is the one door from a generator to an object's slot, and only a call's own argument
 	// goes through it; what a view's dispatch holds, no runtime call or field read takes, only its
 	// kind test and its steps (Compiler's and Memory's conditions on #qk8rztp S2c-1). Since S3c-1 the
@@ -763,6 +771,9 @@ func checkGeneratorRoads(program *ir.Program) error {
 				handed++
 				if makesGenerator(of.Value) {
 					allowed++
+				} else if read, isMove := storedGeneratorMove(of.Value); isMove {
+					allowed++
+					moves[read.Local]++
 				}
 			}
 		}
@@ -798,6 +809,11 @@ func checkGeneratorRoads(program *ir.Program) error {
 			if makesGenerator(node.Value) && program.Locals[node.Local].Type == ir.Generator {
 				allowed++
 				held[node.Local] = true
+			} else if read, isMove := storedGeneratorMove(node.Value); isMove && program.Locals[node.Local].Type == ir.Generator {
+				// A for-of's own local, declared from a stored generator's one read.
+				allowed++
+				held[node.Local] = true
+				moves[read.Local]++
 			}
 		case ir.Evaluate:
 			if makesGenerator(node.Value) {
@@ -877,6 +893,11 @@ func checkGeneratorRoads(program *ir.Program) error {
 		// her option (b)): any other next of the local isn't the dispatch's.
 		if nexts[local] != collectionTests[local] || reads[local] != stepped[local]+nexts[local] {
 			return fmt.Errorf("lower: compiler bug: the iterable view's local %s is read %d times where only its dispatch's %d kind tests and steps may read it", program.Locals[local].Name, reads[local], stepped[local]+nexts[local])
+		}
+	}
+	for local, count := range moves {
+		if reads[local] != count {
+			return fmt.Errorf("lower: compiler bug: the stored generator's local %s is read %d times where only its %d moves into a consumer may read it", program.Locals[local].Name, reads[local], count)
 		}
 	}
 	for local, count := range handNexts {
