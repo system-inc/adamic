@@ -1,0 +1,21 @@
+// A shorthand property of a nested function reads its value as the name written alone does: the
+// group's canonical closure, so it's the same function wherever it's read (#qk8rztp, the shorthand
+// road through nestedReferenceOf). Inside the declaring function, from a sibling, and from an arrow,
+// held to Node.
+function host(seed: number): string {
+	function add(value: number): number {
+		return value + seed;
+	}
+	function sibling(): boolean {
+		const held = { add };
+		return held.add === add;
+	}
+	const inside = { add };
+	const fromArrow = (): boolean => {
+		const held = { add };
+		return held.add === inside.add;
+	};
+	return `${String(inside.add === add)} ${String(sibling())} ${String(fromArrow())} ${String(inside.add(2))}`;
+}
+console.log(host(10));
+console.log(host(20));
