@@ -146,25 +146,32 @@ func (f *cycleFinder) graphFlows() error {
 	// quietly is every argument passed to a function value whose targets are Unknown: no parameter it
 	// reaches has it as a source, so it's demanded at the call, whatever its type (#41vb71c).
 	quietly := []ir.Expression{}
-	// Site retains the checker view of the actual slot being written.
-	slot := func(site int, name string, argument int) bool {
+	// Site retains the checker view of the actual slot being written. slotType is that slot's type,
+	// or nil, and slot says whether it's a graph type.
+	slotType := func(site int, name string, argument int) *checker.Type {
 		if site <= 0 || site > len(f.l.writeSites) {
-			return false
+			return nil
 		}
 		holder := f.l.writeSites[site-1].holder
 		if holder == nil {
-			return false
+			return nil
 		}
 		if name != "" {
 			for _, field := range f.fields(holder) {
 				if f.l.cycleFieldMatches(holder, field.Name, name) {
-					return graphType(f.l.checker.GetTypeOfSymbol(field))
+					return f.l.checker.GetTypeOfSymbol(field)
 				}
 			}
-			return false
+			return nil
 		}
 		args := f.graphArguments(holder)
-		return argument < len(args) && graphType(args[argument])
+		if argument < len(args) {
+			return args[argument]
+		}
+		return nil
+	}
+	slot := func(site int, name string, argument int) bool {
+		return graphType(slotType(site, name, argument))
 	}
 	// A counted aggregate can have graph-typed fields/elements. Seed those
 	// initializer slots individually, rather than promoting its whole payload.
@@ -203,6 +210,15 @@ func (f *cycleFinder) graphFlows() error {
 			if len(arguments) > 0 {
 				for _, element := range value.Elements {
 					members(element, arguments[0], at)
+				}
+			}
+		case ir.MapNew:
+			// A new Map's entries are written into it as it's made (#dnb0yhj, s1).
+			arguments := f.graphArguments(proven)
+			if len(arguments) == 2 {
+				for _, entry := range value.Entries {
+					members(entry[0], arguments[0], at)
+					members(entry[1], arguments[1], at)
 				}
 			}
 		case ir.Conditional:
@@ -262,17 +278,30 @@ func (f *cycleFinder) graphFlows() error {
 				if program.ClosureTargets(value).Unknown {
 					quietly = append(quietly, value.Initial, value.Array)
 				}
+			// A slot write is seeded through members, as a declaration's value is, so a literal written
+			// there seeds its own graph-typed parts too: new Map's entries among them (#dnb0yhj, s1).
 			case ir.SetProperty:
-				if slot(value.Site, value.Name, 0) {
-					pending = append(pending, graphPending{value.Value, graphDemand{site: value.Site}})
-				}
+				members(value.Value, slotType(value.Site, value.Name, 0), graphDemand{site: value.Site})
 			case ir.SetIndex:
-				if slot(value.Site, "", 0) {
-					pending = append(pending, graphPending{value.Value, graphDemand{site: value.Site}})
-				}
+				members(value.Value, slotType(value.Site, "", 0), graphDemand{site: value.Site})
 			case ir.ArrayPush:
-				if slot(value.Site, "", 0) {
-					pending = append(pending, graphPending{value.Value, graphDemand{site: value.Site}})
+				members(value.Value, slotType(value.Site, "", 0), graphDemand{site: value.Site})
+			// fill in place and splice's inserted items write into the array as a push does (#dnb0yhj,
+			// s2 and s3). A new array's fill is the array, which follow enters when it's demanded.
+			case ir.ArrayFill:
+				if value.Array != nil {
+					members(value.Value, slotType(value.Site, "", 0), graphDemand{site: value.Site})
+				}
+			case ir.ArraySplice:
+				for _, item := range value.Items {
+					members(item, slotType(value.Site, "", 0), graphDemand{site: value.Site})
+				}
+			// A for-of binding over an array literal is each of its elements, the binding's sources as
+			// an assignment's value would be (#dnb0yhj, s5). Over anything else, an element was stored
+			// by a write this seeds where it was made.
+			case ir.ForOf:
+				if literal, isLiteral := value.Iterable.(ir.ArrayLiteral); isLiteral && value.Pattern == nil {
+					sources[value.Local+1] = append(sources[value.Local+1], literal.Elements...)
 				}
 			case ir.MapSet:
 				if slot(value.Site, "", 0) {
