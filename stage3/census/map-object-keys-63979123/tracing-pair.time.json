@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/pair/pair.py",
+    "/workspace/adamic/stage3/census/map-object-keys-63979123/tracing-parent.jsonl",
+    "/workspace/adamic/stage3/census/map-object-keys-63979123/tracing-head.jsonl",
+    "/workspace/scratch/ff5eddz-adapted",
+    "--typescript",
+    "stage3/api/node_modules/typescript",
+    "--json",
+    "/workspace/adamic/stage3/census/map-object-keys-63979123/tracing-delta.json",
+    "--report",
+    "/workspace/adamic/stage3/census/map-object-keys-63979123/tracing-pair.md"
+  ],
+  "exit": 0,
+  "wall_seconds": 1.190015748000178,
+  "peak_rss_kib": 250280,
+  "user_seconds": 1.700659,
+  "system_seconds": 0.390993
+}

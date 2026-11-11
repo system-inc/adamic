@@ -1,0 +1,708 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/tracing.ts": "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+    "src/compiler/checker.ts": "a3c87ee5a2dd3f55fae2ced5a4c6c22bcde071db2b901af710faea85959bd9fa"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions": {
+        "before": 3,
+        "after": 0,
+        "lowered": 3,
+        "moved_by_reason": {}
+      },
+      "a call returning any": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a spread after the first field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a spread into record storage from a fixed object": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type any": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an ambient value declaration": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning a field of a value": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 26,
+        "after": 22,
+        "lowered": 4,
+        "moved_by_reason": {}
+      },
+      "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading conditionalType": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading indexedAccessType": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading objectFlags": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading recursionIdentityMap": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "reading substitutionType": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading tracingEnabled": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12804
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:309:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:309:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "start": 12786,
+          "end": 12865
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12821
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:309:34",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:309:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12927
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:311:21",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:311:38: stage 0 can't lower reading recursionIdentityMap yet",
+          "start": 12905,
+          "end": 12970
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12944
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:311:38",
+          "reason": "reading recursionIdentityMap",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:311:38: stage 0 can't lower reading recursionIdentityMap yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12992
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:312:21",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:312:21: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "start": 12970,
+          "end": 13052
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12992
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:312:21",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:312:21: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          8734
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "start": 8722,
+          "end": 8789
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          8763
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          8511
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 8553,
+          "body_end": 14834,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "dumpTypes",
+          "parent": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:38:1",
+          "top": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:38:1"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:232:19",
+          "reason": "a value of type any",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:232:19: stage 0 can't lower a value of type any yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 23,
+        "Refused": 9,
+        "Boundary": 26
+      },
+      "after": {
+        "NotYet": 19,
+        "Refused": 9,
+        "Boundary": 22
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions": {
+        "before": 3,
+        "after": 0,
+        "lowered": 3,
+        "moved_by_reason": {}
+      },
+      "a call returning any": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a spread after the first field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a spread into record storage from a fixed object": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type any": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an ambient value declaration": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning a field of a value": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 26,
+        "after": 22,
+        "lowered": 4,
+        "moved_by_reason": {}
+      },
+      "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading conditionalType": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading indexedAccessType": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading objectFlags": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading recursionIdentityMap": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "reading substitutionType": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading tracingEnabled": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12804
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:309:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:309:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "start": 12786,
+          "end": 12865
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12821
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:309:34",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:309:34: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12927
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:311:21",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:311:38: stage 0 can't lower reading recursionIdentityMap yet",
+          "start": 12905,
+          "end": 12970
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12944
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:311:38",
+          "reason": "reading recursionIdentityMap",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:311:38: stage 0 can't lower reading recursionIdentityMap yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12992
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:312:21",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:312:21: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          12992
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:312:21",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:312:21: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "start": 12970,
+          "end": 13052
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          8734
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+          "start": 8722,
+          "end": 8789
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          8763
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/tracing.ts",
+          "0ee524cf2df76674fa85b89460ac04f32906a1137c611f163e7c5813d03c5d90",
+          8511
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 8553,
+          "body_end": 14834,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "dumpTypes",
+          "parent": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:38:1",
+          "top": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:38:1"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:224:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:218:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:232:19",
+          "reason": "a value of type any",
+          "text": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts:232:19: stage 0 can't lower a value of type any yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 23,
+        "Refused": 9,
+        "Boundary": 26
+      },
+      "after": {
+        "NotYet": 19,
+        "Refused": 9,
+        "Boundary": 22
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}
