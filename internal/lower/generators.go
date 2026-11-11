@@ -546,12 +546,13 @@ func (l *lowering) lowerInPlaceGenerator(expression *ast.Node) (int, error) {
 // straight into a parameter typed the library's Iterable<T> or IterableIterator<T>, or either
 // `| undefined` (iterableParameter), of a callee resolved by its symbol to exactly one body: a
 // module's own function declaration, an overload set judged at its implementation, or a generic
-// one, judged per instance where it's lowered. Never a method, a function value, a closure, a
-// library function, a generator or an async function, and never through a spread or an optional
-// call (Adamic's ruling on #qk8rztp S2c-1, conditions 1 and 2). It is syntactic, so the refusal walk
-// and lowering agree on it; that the parameter's one use is one for-of is proven after lowering
-// (checkIterableViews), and a program this admits that the proof refuses stops there, not yet, which
-// fails closed.
+// one, judged per instance where it's lowered, and since S3c-1 any of those declared by name
+// directly in a function's body (iterableCallee). Never a method, a function value, a closure
+// written as an expression, a library function, a generator or an async function, and never through
+// a spread or an optional call (Adamic's ruling on #qk8rztp S2c-1, conditions 1 and 2). It is
+// syntactic, so the refusal walk and lowering agree on it; that the parameter's one use is one for-of
+// is proven after lowering (checkIterableViews), and a program this admits that the proof refuses
+// stops there, not yet, which fails closed.
 func (l *lowering) iterableArgument(node *ast.Node) bool {
 	admitted, _ := l.iterableParameter(node)
 	return admitted
@@ -621,16 +622,25 @@ func (l *lowering) iterableParameter(node *ast.Node) (bool, bool) {
 	return nullable, nullable
 }
 
-// iterableCallee is the one body a symbol names, when it is a module-level function declaration
-// that is neither a generator nor async: its only declaration, or the implementation of an overload
-// set whose other declarations are its signatures.
+// iterableCallee is the one body a symbol names, when it is a function declaration that is neither a
+// generator nor async: its only declaration, or the implementation of an overload set whose other
+// declarations are its signatures. It is declared at a module's top level, or since S3c-1 directly
+// in a function's body, where nestedDeclarations binds it with its siblings, generic or not, its
+// signatures beside it (#qk8rztp S3c-1). A nested one's call is an ir.CallClosure, whose one body
+// checkGeneratorArguments reads through ClosureTargets after lowering (iterableCallTarget): a call
+// the closure graph can't bound to exactly that function stops there, not yet, so this arm, and the
+// void rules' one-read exemption that reads it (steppedSite), fail closed.
 func (l *lowering) iterableCallee(symbol *ast.Symbol) *ast.Node {
 	if symbol == nil || symbol.Flags&ast.SymbolFlagsAlias != 0 {
 		return nil
 	}
 	var implementation *ast.Node
 	for _, declaration := range symbol.Declarations {
-		if declaration.Kind != ast.KindFunctionDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindSourceFile {
+		if declaration.Kind != ast.KindFunctionDeclaration || declaration.Parent == nil || declaration.Parent != symbol.Declarations[0].Parent {
+			return nil
+		}
+		nested := declaration.Parent.Kind == ast.KindBlock && ast.IsFunctionLike(declaration.Parent.Parent)
+		if declaration.Parent.Kind != ast.KindSourceFile && !nested {
 			return nil
 		}
 		if declaration.Body() == nil {
@@ -743,8 +753,20 @@ func checkGeneratorRoads(program *ir.Program) error {
 	held := map[int]bool{}
 	// IterableOf is the one door from a generator to an object's slot, and only a call's own argument
 	// goes through it; what a view's dispatch holds, no runtime call or field read takes, only its
-	// kind test and its steps (Compiler's and Memory's conditions on #qk8rztp S2c-1).
+	// kind test and its steps (Compiler's and Memory's conditions on #qk8rztp S2c-1). Since S3c-1 the
+	// call may be a nested callee's CallClosure, counted only where its ClosureTargets names one body
+	// (iterableCallTarget), so an IterableOf in any other closure call is said below.
 	iterables, handed := 0, 0
+	hand := func(arguments []ir.Expression) {
+		for _, argument := range arguments {
+			if of, ok := argument.(ir.IterableOf); ok {
+				handed++
+				if makesGenerator(of.Value) {
+					allowed++
+				}
+			}
+		}
+	}
 	dispatched, stepped, nexts, reads := map[int]bool{}, map[int]int{}, map[int]int{}, map[int]int{}
 	collectionTests := map[int]int{}
 	// A hand-driven next a generator feeds steps its parameter by IteratorNext alone, beside the
@@ -783,13 +805,11 @@ func checkGeneratorRoads(program *ir.Program) error {
 			}
 		case ir.Call:
 			// A generator handed into an Iterable<T> parameter, as the call's own argument.
-			for _, argument := range node.Arguments {
-				if of, ok := argument.(ir.IterableOf); ok {
-					handed++
-					if makesGenerator(of.Value) {
-						allowed++
-					}
-				}
+			hand(node.Arguments)
+		case ir.CallClosure:
+			// The same, into a nested callee's parameter (#qk8rztp S3c-1).
+			if _, isOne := iterableCallTarget(program, node); isOne {
+				hand(node.Arguments)
 			}
 		case ir.IterableOf:
 			iterables++
@@ -1047,7 +1067,10 @@ func (l *lowering) generatorStepped(node *ast.Node) bool {
 // only use besides its undefined tests is one for-of, which never reads the completion value either
 // (Adamic's ruling on #qk8rztp, rulings.md:294 one call deeper). That use is proven after lowering; a
 // program this lets past the void rules that the proof then refuses stops there, not yet, so the arm
-// fails closed.
+// fails closed. Since S3c-1 the one body may be a nested callee's, only where its call's
+// ClosureTargets is exactly that function and never Unknown (Adamic's ruling 2 on #qk8rztp S3c),
+// which iterableCallTarget proves after lowering, so a callee also passed as a callback, whose
+// parameter the view proof then can't bound, stops not yet there too.
 func (l *lowering) steppedSite(node *ast.Node) bool {
 	if l.iterableArgument(node) {
 		return true
