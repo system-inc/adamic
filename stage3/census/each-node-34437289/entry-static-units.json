@@ -1,0 +1,329 @@
+{
+  "files": [
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "top_level_statements": 1
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/_namespaces/ts.performance.ts",
+      "top_level_statements": 1
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/_namespaces/ts.ts",
+      "top_level_statements": 78
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/binder.ts",
+      "top_level_statements": 16
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/builder.ts",
+      "top_level_statements": 86
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/builderPublic.ts",
+      "top_level_statements": 16
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/builderState.ts",
+      "top_level_statements": 5
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/builderStatePublic.ts",
+      "top_level_statements": 3
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/checker.ts",
+      "top_level_statements": 51
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/commandLineParser.ts",
+      "top_level_statements": 171
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/core.ts",
+      "top_level_statements": 264
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/corePublic.ts",
+      "top_level_statements": 9
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/debug.ts",
+      "top_level_statements": 5
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/diagnosticInformationMap.generated.ts",
+      "top_level_statements": 3
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/emitter.ts",
+      "top_level_statements": 50
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/executeCommandLine.ts",
+      "top_level_statements": 50
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/expressionToTypeNode.ts",
+      "top_level_statements": 9
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/baseNodeFactory.ts",
+      "top_level_statements": 3
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/emitHelpers.ts",
+      "top_level_statements": 45
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/emitNode.ts",
+      "top_level_statements": 41
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/nodeChildren.ts",
+      "top_level_statements": 6
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/nodeConverters.ts",
+      "top_level_statements": 3
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/nodeFactory.ts",
+      "top_level_statements": 26
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/nodeTests.ts",
+      "top_level_statements": 228
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/parenthesizerRules.ts",
+      "top_level_statements": 3
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/utilities.ts",
+      "top_level_statements": 108
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/factory/utilitiesPublic.ts",
+      "top_level_statements": 4
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/hostErrors.ts",
+      "top_level_statements": 3
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/moduleNameResolver.ts",
+      "top_level_statements": 163
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/moduleSpecifiers.ts",
+      "top_level_statements": 49
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/parser.ts",
+      "top_level_statements": 75
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/path.ts",
+      "top_level_statements": 81
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/performance.ts",
+      "top_level_statements": 24
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/performanceCore.ts",
+      "top_level_statements": 12
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/program.ts",
+      "top_level_statements": 85
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/programDiagnostics.ts",
+      "top_level_statements": 5
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/resolutionCache.ts",
+      "top_level_statements": 31
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/scanner.ts",
+      "top_level_statements": 84
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/semver.ts",
+      "top_level_statements": 28
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/sourcemap.ts",
+      "top_level_statements": 31
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/symbolWalker.ts",
+      "top_level_statements": 2
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/sys.ts",
+      "top_level_statements": 62
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/tracing.ts",
+      "top_level_statements": 10
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformer.ts",
+      "top_level_statements": 17
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/classFields.ts",
+      "top_level_statements": 23
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/classThis.ts",
+      "top_level_statements": 7
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/declarations.ts",
+      "top_level_statements": 14
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/declarations/diagnostics.ts",
+      "top_level_statements": 8
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/destructuring.ts",
+      "top_level_statements": 22
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/es2015.ts",
+      "top_level_statements": 13
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/es2016.ts",
+      "top_level_statements": 2
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/es2017.ts",
+      "top_level_statements": 6
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/es2018.ts",
+      "top_level_statements": 4
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/es2019.ts",
+      "top_level_statements": 2
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/es2020.ts",
+      "top_level_statements": 2
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/es2021.ts",
+      "top_level_statements": 2
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/esDecorators.ts",
+      "top_level_statements": 9
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/esnext.ts",
+      "top_level_statements": 9
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/generators.ts",
+      "top_level_statements": 16
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/jsx.ts",
+      "top_level_statements": 3
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/legacyDecorators.ts",
+      "top_level_statements": 2
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/module/esnextAnd2015.ts",
+      "top_level_statements": 2
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "top_level_statements": 2
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/module/module.ts",
+      "top_level_statements": 3
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/module/system.ts",
+      "top_level_statements": 2
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/namedEvaluation.ts",
+      "top_level_statements": 21
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/taggedTemplate.ts",
+      "top_level_statements": 5
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/ts.ts",
+      "top_level_statements": 5
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/typeSerializer.ts",
+      "top_level_statements": 6
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/transformers/utilities.ts",
+      "top_level_statements": 50
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/tsbuild.ts",
+      "top_level_statements": 5
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/tsbuildPublic.ts",
+      "top_level_statements": 106
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/types.ts",
+      "top_level_statements": 875
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/utilities.ts",
+      "top_level_statements": 893
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/utilitiesPublic.ts",
+      "top_level_statements": 251
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/visitorPublic.ts",
+      "top_level_statements": 41
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/watch.ts",
+      "top_level_statements": 46
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/watchPublic.ts",
+      "top_level_statements": 25
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/compiler/watchUtilities.ts",
+      "top_level_statements": 26
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/tsc/_namespaces/ts.ts",
+      "top_level_statements": 1
+    },
+    {
+      "file": "/workspace/scratch/each-node-8n7eet3/adapted-head/src/tsc/tsc.ts",
+      "top_level_statements": 6
+    }
+  ],
+  "total": 4562
+}

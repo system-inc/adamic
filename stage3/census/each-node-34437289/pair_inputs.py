@@ -1,6 +1,8 @@
 from control import *
 import difflib,re
 parent=root/'adapted-parent'; head=root/'adapted-head'
+assert json.loads((root/'source-differences.json').read_text())==['src/compiler/debug.ts']
+assert {str(p.relative_to(parent)) for p in (parent/'src').rglob('*') if p.is_file()}=={str(p.relative_to(head)) for p in (head/'src').rglob('*') if p.is_file()}
 a=(parent/'src/compiler/debug.ts').read_bytes().decode().splitlines(True)
 b=(head/'src/compiler/debug.ts').read_bytes().decode().splitlines(True)
 line_map={i+x+1:j+x+1 for tag,i,k,j,l in difflib.SequenceMatcher(None,a,b,autojunk=False).get_opcodes() if tag=='equal' for x in range(k-i)}
