@@ -158,7 +158,7 @@ func TestABinaryLinkingBuildcacheKeysItsMakeFilesAlone(t *testing.T) {
 		t.Fatal(linking.reason)
 	}
 	for _, want := range []readEntry{{Kind: "content", Path: "internal/buildcache/make_go.go"}, {Kind: "content", Path: "internal/buildcache/make_relative.go"},
-		{Kind: "listing", Path: "internal/buildcache"}, {Kind: "content", Path: "internal/buildcache/cmd/find/main.go"}} {
+		{Kind: packageListingKind, Path: "internal/buildcache"}, {Kind: "content", Path: "internal/buildcache/cmd/find/main.go"}} {
 		if !slices.Contains(linking.entries, want) {
 			t.Errorf("cmd/find's recipe lacks %+v", want)
 		}
