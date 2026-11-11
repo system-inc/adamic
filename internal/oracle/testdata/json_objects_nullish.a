@@ -1,0 +1,46 @@
+// A null field prints null and an undefined one is left out (#d9ep7de), whether a literal or a variable
+// wrote it, where the field is held so that the two differ: a string, a number, or a union holding both. A
+// null or undefined reference prints as Node prints it at the top and in an array. A field held as a bare
+// pointer that admits null or undefined is refused until #ckxcnr6 (json_objects_refused/null_variable.a).
+interface Box {
+	readonly v: number;
+}
+interface Holder {
+	readonly a: Box | null | undefined;
+	readonly b: Box | null | undefined;
+	readonly c: string | null;
+	readonly d: number | undefined;
+	readonly e: string | undefined;
+}
+// Construct through declared boxed slots; literal-only null/undefined shapes are bare pointers.
+function makeHolder(a: Box | null | undefined, b: Box | null | undefined, c: string | null, d: number | undefined, e: string | undefined): Holder {
+	return { a, b, c, d, e };
+}
+const holder = makeHolder(null, undefined, null, undefined, undefined);
+console.log(JSON.stringify(holder) ?? '<undefined>');
+const filled = makeHolder({ v: 1 }, { v: 2 }, 'c', 4, 'e');
+console.log(JSON.stringify(filled) ?? '<undefined>');
+function text(flag: boolean): string | undefined {
+	return flag ? 'x'.repeat(2) : undefined;
+}
+function box(kind: number): Box | null | undefined {
+	if (kind === 0) {
+		return null;
+	}
+	return kind === 1 ? undefined : { v: kind };
+}
+const written = makeHolder(box(0), box(1), null, undefined, text(false));
+console.log(JSON.stringify(written) ?? '<undefined>');
+function maybe(flag: boolean): Box | null {
+	return flag ? { v: 1 } : null;
+}
+function optional(flag: boolean): Box | undefined {
+	return flag ? { v: 1 } : undefined;
+}
+console.log(`${JSON.stringify(maybe(false)) ?? '<undefined>'} ${JSON.stringify(maybe(true)) ?? '<undefined>'}`);
+console.log(JSON.stringify(optional(false)) ?? '<undefined>');
+console.log(JSON.stringify([maybe(false), optional(false), maybe(true)]) ?? '<undefined>');
+const maybeName = text(false);
+console.log(JSON.stringify({ name: maybeName }) ?? '<undefined>');
+const named: { readonly name: string | undefined } = { name: maybeName };
+console.log(JSON.stringify(named) ?? '<undefined>');

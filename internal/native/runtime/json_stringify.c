@@ -132,7 +132,9 @@ static json_scalar scalar(adamic_value value, const adamic_json_schema *schema, 
                 break;
             }
 			default: {
-				static const char message[] = "JSON union lacks proven container metadata";
+				// Lowering refuses every kind that reaches here (jsonReach: typed arrays, promises and the
+				// library's values), so this is a backstop, worded as the gap it is.
+				static const char message[] = "NotYet: JSON.stringify a union holding a value of a kind it can't print yet";
 				adamic_panic(message, sizeof message - 1);
 			}
 			}

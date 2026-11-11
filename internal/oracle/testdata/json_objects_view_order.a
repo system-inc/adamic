@@ -1,0 +1,16 @@
+// Node prints an allocation's own order, never a type's (#d9ep7de): a literal { y, x } seen as { x, y }, and
+// an index key, which comes first whatever its place.
+interface Pair {
+	readonly x: number;
+	readonly y: number;
+}
+const literal = { y: 2, x: 1 };
+const pair: Pair = literal;
+console.log(JSON.stringify(pair) ?? '<undefined>');
+interface Keyed {
+	readonly a: number;
+	readonly b: number;
+	readonly '1': number;
+}
+const keyed: Keyed = { b: 2, a: 1, '1': 0 };
+console.log(JSON.stringify(keyed) ?? '<undefined>');

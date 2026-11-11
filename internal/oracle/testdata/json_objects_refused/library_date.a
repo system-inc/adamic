@@ -1,0 +1,7 @@
+// Node prints a Date by its toJSON, an ISO string, never by the fields Adamic holds it in.
+interface Event {
+	readonly name: string;
+	readonly when: Date;
+}
+const event: Event = { name: 'launch', when: new Date() };
+console.log(JSON.stringify(event) ?? '<undefined>');

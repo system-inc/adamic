@@ -1,0 +1,12 @@
+// Node calls a toJSON method and prints what it returns.
+class Stamp {
+	constructor(readonly at: number) {}
+	toJSON(): string {
+		return 'stamp';
+	}
+}
+interface Holder {
+	readonly stamp: Stamp;
+}
+const holder: Holder = { stamp: new Stamp(1) };
+console.log(JSON.stringify(holder) ?? '<undefined>');

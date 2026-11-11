@@ -1,0 +1,7 @@
+// A Map held by an object reference is a library value: refused with the other library storage.
+interface Index {
+	readonly name: string;
+	readonly entries: Map<string, number>;
+}
+const index: Index = { name: 'index', entries: new Map<string, number>([['a', 1]]) };
+console.log(JSON.stringify(index) ?? '<undefined>');
