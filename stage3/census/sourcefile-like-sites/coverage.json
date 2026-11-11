@@ -978,5 +978,205 @@
     "diagnostic_count": 0,
     "full_header": true,
     "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2016.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2016.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 38.0649353609997,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2017.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2017.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 72.32550863600045,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2018.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2018.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 93.46021770900006,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2019.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2019.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 32.653016166999805,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2020.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2020.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 68.69180784199943,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/es2021.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2021.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 30.085092156999963,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/esDecorators.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__esDecorators.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 153.10049159699975,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/esnext.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__esnext.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 87.89319197900022,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/generators.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__generators.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 169.9662812050001,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/generators.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "transformers/jsx.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__jsx.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 107.95077192100052,
+    "over_five_minutes": false,
+    "piece": 6,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
   }
 ]

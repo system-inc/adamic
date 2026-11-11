@@ -1,0 +1,13 @@
+{
+  "file": "transformers/es2019.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-adapted/src/compiler",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/transformers__es2019.jsonl"
+  ],
+  "child_exit": 0,
+  "wall_seconds": 32.653016166999805,
+  "over_five_minutes": false,
+  "piece": 6,
+  "max_concurrent_files": 2
+}

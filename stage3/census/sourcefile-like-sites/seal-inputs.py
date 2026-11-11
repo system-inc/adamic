@@ -3,6 +3,7 @@ out=pathlib.Path(__file__).resolve().parent
 root=pathlib.Path('/workspace/scratch/baobab-adapted/src/compiler')
 files={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.rglob('*.ts'))}
 assert len(files)==79,len(files)
+assert sorted(files)==json.loads((out/'roots.json').read_text()),'compiler root inventory changed'
 manifest=out/'adapted-source-sha256.json'
 if manifest.exists():
  assert json.loads(manifest.read_text())==files,'adapted source changed'
