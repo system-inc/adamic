@@ -3,6 +3,7 @@ package lower
 import (
 	"context"
 	"errors"
+	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -30,6 +31,16 @@ interface HoldsBase { readonly inner: MakesBase }
 interface Scalars { readonly count: number; readonly name: string; readonly flag: boolean; readonly missing?: number }
 interface Holding { readonly link: Link }
 interface Opaque { readonly value: unknown }
+type DerivedMakers = MakesDerived[]
+type BaseMakers = MakesBase[]
+type EitherBase = MakesBase | Scalars
+type BagMakesDerived = Record<string, MakesDerived>
+type BagMakesBase = Record<string, MakesBase>
+interface NamedMakes { readonly a?: MakesBase }
+class Speaks { speak(): void {} }
+interface SpeaksField { speak: () => void }
+type BagSpeaks = Record<string, Speaks>
+interface NamedSpeaks { readonly a?: SpeaksField }
 `
 
 // graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
@@ -173,4 +184,35 @@ func TestGraphViewGuardNoSource(t *testing.T) {
 		{"reference field", "", "Holding", "a view with no source type of Holding in a graph program, which holds a reference field the cycle finder can't follow yet"},
 		{"unknown field", "", "Opaque", "a view with no source type of Opaque in a graph program, which holds a reference field the cycle finder can't follow yet"},
 	})
+}
+
+// The guard's three roads before slice 3 (#3zex15c): a container's elements and a dictionary's index
+// values are paired as fields are (Lower's first road; Runtime's index-signature source against a
+// named field), each arm of a union target the source relates to (Lower's second), and a writable view
+// field over its source's method (Language's third, ruled by Lower on #vqzty8t). Each row passed before
+// its road. Mutants, each red on its own rows: viewPairElements returning nil (elements); the index
+// loop removed (index values); the held == nil index pairing removed (an index source as a named
+// field, both rows); the arm loop removed (an arm); the method or accessor stop removed (a method,
+// and the method through an index source).
+func TestGraphViewGuardRoads(t *testing.T) {
+	t.Parallel()
+	lowered, types, nodes := graphViewGuardLowering(t)
+	for _, row := range []struct{ name, source, target, want string }{
+		{"elements", "DerivedMakers", "BaseMakers", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its elements (MakesDerived as MakesBase)"},
+		{"index values", "BagMakesDerived", "BagMakesBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its index values (MakesDerived as MakesBase)"},
+		{"an index source as a named field", "BagMakesDerived", "NamedMakes", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its field a (MakesDerived as "},
+		{"an arm", "MakesDerived", "EitherBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through an arm (MakesDerived as MakesBase)"},
+		{"a method", "Speaks", "SpeaksField", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it"},
+		{"a method through an index source", "BagSpeaks", "NamedSpeaks", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it through its field a (Speaks as "},
+	} {
+		if types[row.source] == nil || types[row.target] == nil {
+			t.Fatalf("%s: a type isn't declared", row.name)
+		}
+		lowered.viewSources = []viewSource{{source: types[row.source], target: types[row.target], node: nodes[row.target]}}
+		err := (&cycleFinder{l: lowered, where: map[*checker.Type]*ast.Node{}}).viewPairGuard()
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, row.want) {
+			t.Errorf("%s: got %v, want NotYet holding %q", row.name, err, row.want)
+		}
+	}
 }

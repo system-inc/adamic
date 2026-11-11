@@ -529,10 +529,14 @@ func (f *cycleFinder) restType(index int) *checker.Type {
 type viewPairFailure struct {
 	through  []viewPairStep
 	function string
+	// member is a writable view field whose source member is a method or an accessor, which the
+	// cycle finder's fields leave out (deriveFields), so a value written through it lands where the
+	// finder doesn't walk.
+	member string
 }
 
-// viewPairStep is one field a view's pair was followed through, with the source's and the view's
-// types for it.
+// viewPairStep is one step a view's pair was followed through ("its field inner", "its elements",
+// "its index values", "an arm"), with the source's and the view's types for it.
 type viewPairStep struct {
 	name           string
 	source, target *checker.Type
@@ -564,11 +568,13 @@ func (f *cycleFinder) viewPairGuard() error {
 		what := "a view of " + f.l.checker.TypeToString(source) + " as " + f.l.checker.TypeToString(target) + " in a graph program"
 		if failure.function != "" {
 			what += ", whose field " + failure.function + " takes a function its source's " + failure.function + " can't hold, so a closure written through the view escapes the cycle finder"
+		} else if failure.member != "" {
+			what += ", whose writable field " + failure.member + " is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it"
 		} else {
 			what += ", which the cycle finder doesn't relate yet"
 		}
 		for _, step := range failure.through {
-			what += " through its field " + step.name + " (" + f.l.checker.TypeToString(step.source) + " as " + f.l.checker.TypeToString(step.target) + ")"
+			what += " through " + step.name + " (" + f.l.checker.TypeToString(step.source) + " as " + f.l.checker.TypeToString(step.target) + ")"
 		}
 		return f.l.notYet(view.node, what)
 	}
@@ -589,11 +595,60 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 	if !f.deriveRelated(source, target) {
 		return &viewPairFailure{}
 	}
-	present := f.l.checker.GetNonNullableType(source)
-	for _, field := range f.fields(f.l.checker.GetNonNullableType(target)) {
+	present, viewed := f.l.checker.GetNonNullableType(source), f.l.checker.GetNonNullableType(target)
+	// follow judges one nested pair, named for the step it was followed through.
+	follow := func(name string, nestedSource, nestedTarget *checker.Type) *viewPairFailure {
+		nestedSource, nestedTarget = f.l.concrete(nestedSource), f.l.concrete(nestedTarget)
+		failure := f.viewPairFailure(nestedSource, nestedTarget, seen)
+		if failure != nil {
+			failure.through = append([]viewPairStep{{name: name, source: nestedSource, target: nestedTarget}}, failure.through...)
+		}
+		return failure
+	}
+	// Each union or intersection arm of the target that the source relates to: fields() of a union
+	// gives only the properties every arm shares, so a field only one arm declares would go unwalked
+	// (#3zex15c, Lower's second road).
+	if viewed.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, arm := range viewed.Types() {
+			if viewPairScalar(arm) || f.viewPairFunction(arm) || !f.deriveRelated(present, arm) {
+				continue
+			}
+			if failure := follow("an arm", present, arm); failure != nil {
+				return failure
+			}
+		}
+	}
+	// Element and index values (#3zex15c, Lower's first road): a container's elements are what
+	// reachLinks follows by its type arguments, and a dictionary's values by its index signatures, so
+	// the view pairs them as it pairs fields.
+	if failure := f.viewPairElements(present, viewed, follow); failure != nil {
+		return failure
+	}
+	for _, info := range f.l.checker.GetIndexInfosOfType(viewed) {
+		for _, own := range f.l.checker.GetIndexInfosOfType(present) {
+			if own.KeyType() == info.KeyType() {
+				if failure := follow("its index values", own.ValueType(), info.ValueType()); failure != nil {
+					return failure
+				}
+			}
+		}
+	}
+	for _, field := range f.fields(viewed) {
 		held := f.l.checker.GetPropertyOfType(present, field.Name)
 		if held == nil {
+			// A source with an index signature holds the field among its values, and a view reads it
+			// from there (Runtime's pair on #vqzty8t): pair the values with the field.
+			for _, own := range f.l.checker.GetIndexInfosOfType(present) {
+				if failure := follow("its field "+field.Name, own.ValueType(), f.l.checker.GetTypeOfSymbol(field)); failure != nil {
+					return failure
+				}
+			}
 			continue
+		}
+		// A writable view field over a source method or accessor writes where the finder doesn't walk
+		// (Language's third road, Lower's ruling on #vqzty8t).
+		if !f.l.checker.IsReadonlySymbol(field) && field.Flags&ast.SymbolFlagsMethod == 0 && ((held.Flags&ast.SymbolFlagsMethod != 0 && !literalMethod(held)) || accessorSymbol(held)) {
+			return &viewPairFailure{member: field.Name}
 		}
 		nestedSource, nestedTarget := f.l.concrete(f.l.checker.GetTypeOfSymbol(held)), f.l.concrete(f.l.checker.GetTypeOfSymbol(field))
 		// A function-typed field is judged by the closures that can flow into it (rulings.md's
@@ -606,9 +661,44 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 			}
 			continue
 		}
-		if failure := f.viewPairFailure(nestedSource, nestedTarget, seen); failure != nil {
-			failure.through = append([]viewPairStep{{name: field.Name, source: nestedSource, target: nestedTarget}}, failure.through...)
+		if failure := follow("its field "+field.Name, nestedSource, nestedTarget); failure != nil {
 			return failure
+		}
+	}
+	return nil
+}
+
+// viewPairElements pairs a container's elements with its view's: an array's or a readonly array's
+// element with each of a tuple's or the view array's, a tuple's position by position, and a Map's or a
+// Set's type arguments position by position.
+func (f *cycleFinder) viewPairElements(source, target *checker.Type, follow func(string, *checker.Type, *checker.Type) *viewPairFailure) *viewPairFailure {
+	container := func(proven *checker.Type) bool {
+		return f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
+	}
+	if !container(source) || !container(target) {
+		return nil
+	}
+	sourceArguments, targetArguments := f.l.checker.GetTypeArguments(source), f.l.checker.GetTypeArguments(target)
+	for index, targetArgument := range targetArguments {
+		sourceArgument := (*checker.Type)(nil)
+		switch {
+		case index < len(sourceArguments) && (checker.IsTupleType(source) == checker.IsTupleType(target) || checker.IsTupleType(target)):
+			sourceArgument = sourceArguments[index]
+		case len(sourceArguments) == 1 && f.l.isArrayType(source):
+			sourceArgument = sourceArguments[0]
+		}
+		if sourceArgument != nil {
+			if failure := follow("its elements", sourceArgument, targetArgument); failure != nil {
+				return failure
+			}
+		}
+	}
+	// A tuple seen as an array: every position against the array's one element.
+	if checker.IsTupleType(source) && f.l.isArrayType(target) && len(targetArguments) == 1 {
+		for _, sourceArgument := range sourceArguments {
+			if failure := follow("its elements", sourceArgument, targetArguments[0]); failure != nil {
+				return failure
+			}
 		}
 	}
 	return nil
