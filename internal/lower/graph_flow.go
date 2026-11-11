@@ -60,6 +60,14 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 				result.Index(i).Set(sites(value.Index(i)))
 			}
 			return result
+		case reflect.Array:
+			// A fixed array of expressions, as MapNew's [key, value] entries are, holds allocations too:
+			// left uncopied, they had no site and follow stopped on them (#dnb0yhj, s1).
+			result := reflect.New(value.Type()).Elem()
+			for i := 0; i < value.Len(); i++ {
+				result.Index(i).Set(sites(value.Index(i)))
+			}
+			return result
 		default:
 			return value
 		}
