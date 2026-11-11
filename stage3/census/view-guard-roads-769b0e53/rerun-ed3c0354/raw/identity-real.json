@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/workspace/roads-latest-guard-census",
+    "/workspace/roads-guard-control/identity.ts",
+    "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/rerun-ed3c0354/raw/identity-real-normal.jsonl"
+  ],
+  "cwd": "/workspace",
+  "child_exit": 0,
+  "elapsed_seconds": 0.08654569900136266,
+  "peak_rss_kib": 31996,
+  "user_seconds": 0.054584999999999995,
+  "system_seconds": 0.034291999999999996,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMAXPROCS": "2",
+    "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/rerun-ed3c0354/raw/identity-real-records.jsonl",
+    "LATENT_FULL": "0"
+  }
+}

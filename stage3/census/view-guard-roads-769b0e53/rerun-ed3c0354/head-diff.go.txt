@@ -1,0 +1,386 @@
+diff --git a/internal/lower/graph_types.go b/internal/lower/graph_types.go
+index 40a8c050e..34635210e 100644
+--- a/internal/lower/graph_types.go
++++ b/internal/lower/graph_types.go
+@@ -529,10 +529,14 @@ func (f *cycleFinder) restType(index int) *checker.Type {
+ type viewPairFailure struct {
+ 	through  []viewPairStep
+ 	function string
++	// member is a writable view field whose source member is a method or an accessor, which the
++	// cycle finder's fields leave out (deriveFields), so a value written through it lands where the
++	// finder doesn't walk.
++	member string
+ }
+ 
+-// viewPairStep is one field a view's pair was followed through, with the source's and the view's
+-// types for it.
++// viewPairStep is one step a view's pair was followed through ("its field inner", "its elements",
++// "its index values", "an arm"), with the source's and the view's types for it.
+ type viewPairStep struct {
+ 	name           string
+ 	source, target *checker.Type
+@@ -564,11 +568,13 @@ func (f *cycleFinder) viewPairGuard() error {
+ 		what := "a view of " + f.l.checker.TypeToString(source) + " as " + f.l.checker.TypeToString(target) + " in a graph program"
+ 		if failure.function != "" {
+ 			what += ", whose field " + failure.function + " takes a function its source's " + failure.function + " can't hold, so a closure written through the view escapes the cycle finder"
++		} else if failure.member != "" {
++			what += ", whose writable field " + failure.member + " is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it"
+ 		} else {
+ 			what += ", which the cycle finder doesn't relate yet"
+ 		}
+ 		for _, step := range failure.through {
+-			what += " through its field " + step.name + " (" + f.l.checker.TypeToString(step.source) + " as " + f.l.checker.TypeToString(step.target) + ")"
++			what += " through " + step.name + " (" + f.l.checker.TypeToString(step.source) + " as " + f.l.checker.TypeToString(step.target) + ")"
+ 		}
+ 		return f.l.notYet(view.node, what)
+ 	}
+@@ -589,12 +595,118 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
+ 	if !f.deriveRelated(source, target) {
+ 		return &viewPairFailure{}
+ 	}
+-	present := f.l.checker.GetNonNullableType(source)
+-	for _, field := range f.fields(f.l.checker.GetNonNullableType(target)) {
++	present, viewed := f.l.checker.GetNonNullableType(source), f.l.checker.GetNonNullableType(target)
++	// follow judges one nested pair, named for the step it was followed through.
++	follow := func(name string, nestedSource, nestedTarget *checker.Type) *viewPairFailure {
++		nestedSource, nestedTarget = f.l.concrete(nestedSource), f.l.concrete(nestedTarget)
++		failure := f.viewPairFailure(nestedSource, nestedTarget, seen)
++		if failure != nil {
++			failure.through = append([]viewPairStep{{name: name, source: nestedSource, target: nestedTarget}}, failure.through...)
++		}
++		return failure
++	}
++	// One type on both sides is nothing to pair: a write through the view stores only what the source's
++	// slot already holds, which the finder walks (Correctness's crossing on #3zex15c, Language's word:
++	// identity, never assignability, since a wider view is the case this guard exists for). It's the
++	// same type, not the checker's identity, which doesn't ask whether a member is a method or a field:
++	// class Speaks's speak() is identical to SpeaksField's writable speak, the third road below.
++	if present == viewed {
++		return nil
++	}
++	// Arms pair one by one, each source arm with each target arm it relates to, never the cross product
++	// of whole sides: Modifier as Modifier crossed into AccessorKeyword as AbstractKeyword, a pair no
++	// program forms (289 refusals over tsc at 769b0e53). A source arm reaches the view's arm only where
++	// it relates to it: discriminant narrowing, checked predicates, instanceof and checked casts all
++	// keep that. Two roads that wouldn't are stopped elsewhere, and this rule leans on both: `in` that
++	// narrows a union of object types is refused (unknown.go), and a write to a property only an `in`
++	// test added is NotYet (#yqbg9vz). If either lifts, this pairing has to be looked at again.
++	// fields() of a union gives only the properties every arm shares, so without the arms a field only
++	// one arm declares would go unwalked (Lower's second road), and GetPropertyOfType on a union source
++	// drops one only one arm has (Lower's should).
++	sourceArms, targetArms := []*checker.Type{present}, []*checker.Type{viewed}
++	if present.Flags()&checker.TypeFlagsUnion != 0 {
++		sourceArms = present.Types()
++	}
++	if viewed.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
++		targetArms = viewed.Types()
++	}
++	if len(sourceArms) > 1 || len(targetArms) > 1 {
++		name := "an arm"
++		if len(sourceArms) > 1 {
++			name = "a source arm"
++		}
++		for _, sourceArm := range sourceArms {
++			if viewPairScalar(sourceArm) || f.viewPairFunction(sourceArm) {
++				continue
++			}
++			// A source arm related to a union target as a whole can be seen through an arm it doesn't
++			// relate to alone: the checker relates { kind: 'a' | 'b' } to an arm of 'a' and an arm of 'b' by
++			// splitting the discriminant (Language's must on #3zex15c), and a check of kind === 'a' narrows
++			// it to the 'a' arm even when it relates whole to another (her should). Skipping such an arm
++			// would leave a field only it declares unwalked, so its members pair with the source arm's,
++			// never failing on the arm not relating whole. Only a literal discriminant that shares no value
++			// rules an arm out (viewPairDisjoint), which is Correctness's crossing.
++			whole := viewed.Flags()&checker.TypeFlagsUnion != 0 && f.deriveRelated(sourceArm, viewed)
++			for _, targetArm := range targetArms {
++				if viewPairScalar(targetArm) || f.viewPairFunction(targetArm) {
++					continue
++				}
++				if f.deriveRelated(sourceArm, targetArm) {
++					if failure := follow(name, sourceArm, targetArm); failure != nil {
++						return failure
++					}
++					continue
++				}
++				armSource, armTarget := f.l.checker.GetNonNullableType(sourceArm), f.l.checker.GetNonNullableType(targetArm)
++				if !whole || f.viewPairDisjoint(armSource, armTarget) {
++					continue
++				}
++				if failure := f.viewPairMembers(armSource, armTarget, follow); failure != nil {
++					failure.through = append([]viewPairStep{{name: "a split arm", source: sourceArm, target: targetArm}}, failure.through...)
++					return failure
++				}
++			}
++		}
++	}
++	return f.viewPairMembers(present, viewed, follow)
++}
++
++// viewPairMembers pairs what a view of present as viewed reads of its source beneath the top pair: its
++// elements, its index values and its fields, each through follow, and stops a writable view field over
++// a source method or accessor.
++func (f *cycleFinder) viewPairMembers(present, viewed *checker.Type, follow func(string, *checker.Type, *checker.Type) *viewPairFailure) *viewPairFailure {
++	// Element and index values (#3zex15c, Lower's first road): a container's elements are what
++	// reachLinks follows by its type arguments, and a dictionary's values by its index signatures, so
++	// the view pairs them as it pairs fields.
++	if failure := f.viewPairElements(present, viewed, follow); failure != nil {
++		return failure
++	}
++	for _, info := range f.l.checker.GetIndexInfosOfType(viewed) {
++		for _, own := range f.l.checker.GetIndexInfosOfType(present) {
++			if own.KeyType() == info.KeyType() {
++				if failure := follow("its index values", own.ValueType(), info.ValueType()); failure != nil {
++					return failure
++				}
++			}
++		}
++	}
++	for _, field := range f.fields(viewed) {
+ 		held := f.l.checker.GetPropertyOfType(present, field.Name)
+ 		if held == nil {
++			// A source with an index signature holds the field among its values, and a view reads it
++			// from there (Runtime's pair on #vqzty8t): pair the values with the field.
++			for _, own := range f.l.checker.GetIndexInfosOfType(present) {
++				if failure := follow("its field "+field.Name, own.ValueType(), f.l.checker.GetTypeOfSymbol(field)); failure != nil {
++					return failure
++				}
++			}
+ 			continue
+ 		}
++		// A writable view field over a source method or accessor writes where the finder doesn't walk
++		// (Language's third road, Lower's ruling on #vqzty8t).
++		if !f.l.checker.IsReadonlySymbol(field) && field.Flags&ast.SymbolFlagsMethod == 0 && ((held.Flags&ast.SymbolFlagsMethod != 0 && !literalMethod(held)) || accessorSymbol(held)) {
++			return &viewPairFailure{member: field.Name}
++		}
+ 		nestedSource, nestedTarget := f.l.concrete(f.l.checker.GetTypeOfSymbol(held)), f.l.concrete(f.l.checker.GetTypeOfSymbol(field))
+ 		// A function-typed field is judged by the closures that can flow into it (rulings.md's
+ 		// ClosureTargets entry), not by this guard, so a view with a method or callback field doesn't
+@@ -606,14 +718,92 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
+ 			}
+ 			continue
+ 		}
+-		if failure := f.viewPairFailure(nestedSource, nestedTarget, seen); failure != nil {
+-			failure.through = append([]viewPairStep{{name: field.Name, source: nestedSource, target: nestedTarget}}, failure.through...)
++		if failure := follow("its field "+field.Name, nestedSource, nestedTarget); failure != nil {
+ 			return failure
+ 		}
+ 	}
+ 	return nil
+ }
+ 
++// viewPairElements pairs a container's elements with its view's: an array's or a readonly array's
++// element with each of a tuple's or the view array's, a tuple's position by position, and a Map's or a
++// Set's type arguments position by position.
++func (f *cycleFinder) viewPairElements(source, target *checker.Type, follow func(string, *checker.Type, *checker.Type) *viewPairFailure) *viewPairFailure {
++	container := func(proven *checker.Type) bool {
++		return f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
++	}
++	if !container(source) || !container(target) {
++		return nil
++	}
++	sourceArguments, targetArguments := f.l.checker.GetTypeArguments(source), f.l.checker.GetTypeArguments(target)
++	for index, targetArgument := range targetArguments {
++		sourceArgument := (*checker.Type)(nil)
++		switch {
++		case index < len(sourceArguments) && (checker.IsTupleType(source) == checker.IsTupleType(target) || checker.IsTupleType(target)):
++			sourceArgument = sourceArguments[index]
++		case len(sourceArguments) == 1 && f.l.isArrayType(source):
++			sourceArgument = sourceArguments[0]
++		}
++		if sourceArgument != nil {
++			if failure := follow("its elements", sourceArgument, targetArgument); failure != nil {
++				return failure
++			}
++		}
++	}
++	// A tuple seen as an array: every position against the array's one element.
++	if checker.IsTupleType(source) && f.l.isArrayType(target) && len(targetArguments) == 1 {
++		for _, sourceArgument := range sourceArguments {
++			if failure := follow("its elements", sourceArgument, targetArguments[0]); failure != nil {
++				return failure
++			}
++		}
++	}
++	return nil
++}
++
++// viewPairDisjoint is whether no value of source can be one of target: a field both declare holds
++// only literals on each side, and no literal is on both (ChoiceA's kind 'a' against ChoiceB's 'b', or
++// one keyword node's kind against another's). A literal type is one checker type per value, so the
++// sides share a value only by sharing a type.
++func (f *cycleFinder) viewPairDisjoint(source, target *checker.Type) bool {
++	for _, field := range f.fields(target) {
++		held := f.l.checker.GetPropertyOfType(source, field.Name)
++		if held == nil {
++			continue
++		}
++		sourceValues, sourceLiteral := viewPairLiterals(f.l.checker.GetTypeOfSymbol(held))
++		targetValues, targetLiteral := viewPairLiterals(f.l.checker.GetTypeOfSymbol(field))
++		if !sourceLiteral || !targetLiteral {
++			continue
++		}
++		shared := false
++		for _, sourceValue := range sourceValues {
++			for _, targetValue := range targetValues {
++				shared = shared || sourceValue == targetValue
++			}
++		}
++		if !shared {
++			return true
++		}
++	}
++	return false
++}
++
++// viewPairLiterals is the values of a type made only of unit types (literals, undefined and null),
++// one type each, and whether it is one.
++func viewPairLiterals(proven *checker.Type) ([]*checker.Type, bool) {
++	values := []*checker.Type{proven}
++	if proven.Flags()&checker.TypeFlagsUnion != 0 {
++		values = proven.Types()
++	}
++	for _, value := range values {
++		if value.Flags()&checker.TypeFlagsUnit == 0 {
++			return nil, false
++		}
++	}
++	return values, true
++}
++
+ // viewPairFunction is whether a type, undefined and null aside, is a function's.
+ func (f *cycleFinder) viewPairFunction(proven *checker.Type) bool {
+ 	return f.isFunction(f.l.checker.GetNonNullableType(proven))
+diff --git a/internal/lower/graph_view_guard_test.go b/internal/lower/graph_view_guard_test.go
+index 03861632d..9b8ec6e16 100644
+--- a/internal/lower/graph_view_guard_test.go
++++ b/internal/lower/graph_view_guard_test.go
+@@ -3,6 +3,7 @@ package lower
+ import (
+ 	"context"
+ 	"errors"
++	"strings"
+ 	"testing"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+@@ -30,6 +31,32 @@ interface HoldsBase { readonly inner: MakesBase }
+ interface Scalars { readonly count: number; readonly name: string; readonly flag: boolean; readonly missing?: number }
+ interface Holding { readonly link: Link }
+ interface Opaque { readonly value: unknown }
++type DerivedMakers = Map<string, MakesDerived>
++type BaseMakers = Map<string, MakesBase>
++type EitherBase = MakesBase | Scalars
++type BagMakesDerived = Record<string, MakesDerived>
++type BagMakesBase = Record<string, MakesBase>
++interface NamedMakes { readonly a?: MakesBase }
++class Speaks { speak(): void {} }
++interface SpeaksField { speak: () => void }
++type BagSpeaks = Record<string, Speaks>
++interface NamedSpeaks { readonly a?: SpeaksField }
++interface DiscriminantWide { readonly kind: 'a' | 'b'; readonly inner: MakesDerived; readonly other: MakesDerived }
++type DiscriminatedBase = { readonly kind: 'a'; readonly inner: MakesBase } | { readonly kind: 'b'; readonly other: MakesBase }
++interface PartlyWide { readonly kind: 'a' | 'b'; readonly inner: MakesDerived; readonly z: Link }
++type PartlyBase = { readonly kind: 'a'; readonly inner: MakesBase } | { readonly kind: 'a' | 'b'; readonly z: Link }
++interface CrossA { readonly kind: 'a'; inner: MakesDerived }
++interface CrossB { readonly kind: 'b'; inner: MakesBase }
++type Cross = CrossA | CrossB
++interface HasInner { readonly tag: string; inner: MakesDerived }
++interface NoInner { readonly tag: string }
++type EitherInner = HasInner | NoInner
++interface ViewsInner { readonly tag: string; readonly inner?: MakesBase }
++interface ChoiceA { readonly kind: 'a'; link: Link }
++interface ChoiceB { readonly kind: 'b'; other: Link }
++type Choice = ChoiceA | ChoiceB
++interface HoldsChoice { value: Choice }
++interface AlsoChoice { value: Choice }
+ `
+ 
+ // graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
+@@ -56,7 +83,7 @@ func graphViewGuardLowering(t *testing.T) (*lowering, map[string]*checker.Type,
+ 	var visit ast.Visitor
+ 	visit = func(node *ast.Node) bool {
+ 		switch node.Kind {
+-		case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindTypeParameter:
++		case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindTypeParameter, ast.KindClassDeclaration:
+ 			types[node.Name().Text()] = check.GetTypeAtLocation(node.Name())
+ 			nodes[node.Name().Text()] = node
+ 		}
+@@ -174,3 +201,79 @@ func TestGraphViewGuardNoSource(t *testing.T) {
+ 		{"unknown field", "", "Opaque", "a view with no source type of Opaque in a graph program, which holds a reference field the cycle finder can't follow yet"},
+ 	})
+ }
++
++// The guard's three roads before slice 3 (#3zex15c): a container's elements and a dictionary's index
++// values are paired as fields are (Lower's first road; Runtime's index-signature source against a
++// named field), each arm of a union target the source relates to (Lower's second), and a writable view
++// field over its source's method (Language's third, ruled by Lower on #vqzty8t). Each row passed before
++// its road. Mutants, each red on its own rows: viewPairElements returning nil (elements); the index
++// loop removed (index values); the held == nil index pairing removed (an index source as a named
++// field, both rows); the arm loop removed (an arm); the method or accessor stop removed (a method,
++// and the method through an index source); the source arm loop removed (a source arm, Lower's should);
++// a split arm skipped, its members never paired (a split arm, Language's must: DiscriminantWide relates
++// to DiscriminatedBase by its discriminant and to neither arm alone, and only the arms declare inner);
++// a split only where the source arm relates to no arm alone (a split arm beside a related one,
++// Language's should: PartlyWide relates whole to PartlyBase's second arm, and kind === 'a' can still
++// narrow it to the first).
++func TestGraphViewGuardRoads(t *testing.T) {
++	t.Parallel()
++	lowered, types, nodes := graphViewGuardLowering(t)
++	for _, row := range []struct{ name, source, target, want string }{
++		// A Map: an array's number index signature would pair its elements through the index road too.
++		{"elements", "DerivedMakers", "BaseMakers", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its elements (MakesDerived as MakesBase)"},
++		{"index values", "BagMakesDerived", "BagMakesBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its index values (MakesDerived as MakesBase)"},
++		{"an index source as a named field", "BagMakesDerived", "NamedMakes", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its field a (MakesDerived as "},
++		{"an arm", "MakesDerived", "EitherBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through an arm (MakesDerived as MakesBase)"},
++		{"a method", "Speaks", "SpeaksField", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it"},
++		{"a source arm", "EitherInner", "ViewsInner", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a source arm (HasInner as ViewsInner) through its field inner"},
++		{"a method through an index source", "BagSpeaks", "NamedSpeaks", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it through its field a (Speaks as "},
++		{"a split arm", "DiscriminantWide", "DiscriminatedBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a split arm (DiscriminantWide as "},
++		{"a split arm beside a related one", "PartlyWide", "PartlyBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a split arm (PartlyWide as "},
++	} {
++		if types[row.source] == nil || types[row.target] == nil {
++			t.Fatalf("%s: a type isn't declared", row.name)
++		}
++		lowered.viewSources = []viewSource{{source: types[row.source], target: types[row.target], node: nodes[row.target]}}
++		err := (&cycleFinder{l: lowered, where: map[*checker.Type]*ast.Node{}}).viewPairGuard()
++		var notYet *NotYet
++		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, row.want) {
++			t.Errorf("%s: got %v, want NotYet holding %q", row.name, err, row.want)
++		}
++	}
++}
++
++// Correctness's crossing on #3zex15c: at 769b0e53 the arm roads paired whole sides, so a slot of one
++// union type on both sides crossed into a pair of disjoint arms no program forms (Choice as Choice
++// into ChoiceB as ChoiceA), 289 refusals over tsc. Identity pairs nothing, and arms pair one by one,
++// so the view passes. Mutants: the cross product again (a source arm judged against the whole target)
++// refuses this; identity replaced by assignability lets MakesDerived as MakesBase through, which
++// TestGraphViewGuardFunctionFields reds; the checker's identity in place of one type lets Speaks as
++// SpeaksField through, which TestGraphViewGuardRoads's two method rows red (Language's must).
++func TestGraphViewGuardIdentityAndArms(t *testing.T) {
++	t.Parallel()
++	lowered, types, nodes := graphViewGuardLowering(t)
++	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
++		{"one union type on both sides", "HoldsChoice", "AlsoChoice", ""},
++		{"the union itself", "Choice", "Choice", ""},
++		// CrossA relates to Cross through its own arm, and its kind 'a' shares no value with CrossB's 'b',
++		// so it's never split against CrossB. Mutant: viewPairDisjoint returning false pairs CrossA's inner
++		// with CrossB's, MakesDerived as MakesBase, and refuses this.
++		{"an arm against a disjoint arm", "CrossA", "Cross", ""},
++	})
++}
++
++// The pairwise rule leans on two stops (Language's condition on #3zex15c): a source arm reaches a view's
++// arm only where it relates to it, and `in` narrowing over a union of object types would break that, so
++// it stays refused. The second, a write to a property only an `in` test added, is #yqbg9vz's NotYet,
++// pinned there when it lands.
++func TestGraphViewGuardLeansOnInRefusal(t *testing.T) {
++	t.Parallel()
++	_, err := lowerSourceAs(t, `interface A { readonly a: number } interface B { readonly b: number }
++function read(value: A | B): number { return 'a' in value ? value.a : value.b; }
++console.log(String(read({ a: 1 })));
++`, ".ts")
++	var refused *Refused
++	if !errors.As(err, &refused) || !strings.Contains(refused.What, "in that narrows a union of object types") {
++		t.Fatalf("got %v, want the refusal of in over a union of object types", err)
++	}
++}

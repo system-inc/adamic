@@ -1,0 +1,20 @@
+{
+  "target": "ed3c0354e2d3f97663778e91aac7f100a47b4e18",
+  "parent": "16429a30",
+  "adapted_tree": "/workspace/roads-adapted",
+  "typescript_source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cached_evidence_sha256": {
+    "raw/guard-parent-records.jsonl.gz": "13660b11673b390df9d6456d33b864c200a28636e9ad7c4ad1743075c695e31a",
+    "raw/guard-parent-normal.jsonl.gz": "dbb43d74c45467dfd936b25e6bc673e8f43aef34515dfa8e7e750dead9d21a58",
+    "raw/baseline-parent.jsonl.gz": "2bd31acd26d281c6c87f0823e2bd6fc438accd07e001bd411edf8073add870ff",
+    "guard-delta.json.gz": "e0c76661862d320ab77148a5e1a9b2a06842018d55d021b50d446cb6731a0e24",
+    "guard-new-unit-stops.json": "06d9acf3101c6864d7188018e8b1b7cd2e74a12ed251a4ad1fa25e5c1ebbb914",
+    "source-manifest.json": "bc8a84caa8564089f35255b735fa601b6275d664a24cf8480ea40975982f17de",
+    "guard-hook.go.txt": "11e15c52dc50002325ddbbc8f916d2298c9bc0cdeacd53007ff02218f765006f"
+  },
+  "diagnostics": "post-refusal only, root and every real failure-path step",
+  "cohere": "5360753e19e4417675a90e92a1823bea66b13918",
+  "extended_observer_identical_on_both_sides": true,
+  "extended_observer_sha256": "f856409f7bc5af49e7fd07d1ad7cfc73ad3e2b626694b66957b7d0f2f6d5986f",
+  "supplemental_helper_sha256": "7ac9f10e4221ff2aa748805a201aaa453a9f60b26353d8f32143c4e0ed791c71"
+}

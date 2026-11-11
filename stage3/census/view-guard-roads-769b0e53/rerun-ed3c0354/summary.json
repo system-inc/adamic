@@ -1,0 +1,44 @@
+{
+  "target": "ed3c0354",
+  "parent": "16429a30",
+  "observed_units": 4058,
+  "views": 635,
+  "refusal_observations": 0,
+  "roads_observations": {},
+  "roads_findings": {
+    "raw_findings": {},
+    "distinct_reads": {}
+  },
+  "guard_stopped_units": 0,
+  "ordinary_finding_free_guard_stopped_units": 0,
+  "prior_114_still_guard_stopped": 0,
+  "prior_114_cleared": 114,
+  "prior_289_exact_findings_remain": 0,
+  "prior_289_exact_findings_gone": 289,
+  "new_exact_findings_not_in_289": 0,
+  "prior_view_sites_still_refuse": 0,
+  "new_view_sites_not_in_prior": 0,
+  "checker_identical_distinct_object_refusal_observations": 0,
+  "split_crossing_refusal_observations": 0,
+  "probe_errors": 0,
+  "diagnostic_errors": 0,
+  "parent_refusals": 0,
+  "pair_counts": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  }
+}

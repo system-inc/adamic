@@ -1,0 +1,23 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-C",
+    "/workspace/roads-latest",
+    "-buildvcs=false",
+    "-overlay=/workspace/roads-latest-guard-overlay/overlay.json",
+    "-o",
+    "/workspace/roads-latest-guard-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 35.49879433699971,
+  "peak_rss_kib": 1455640,
+  "user_seconds": 45.401278,
+  "system_seconds": 9.369803,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "GOMAXPROCS": "2"
+  }
+}

@@ -1,0 +1,53 @@
+// Post-refusal measurement only. Does not decide guard acceptance or change the unit outcome.
+package lower
+
+import "github.com/microsoft/TypeScript/tsc/shim/checker"
+
+func roadsDiagnosticLiterals(proven *checker.Type) ([]*checker.Type, bool) {
+ values:=[]*checker.Type{proven}
+ if proven.Flags()&checker.TypeFlagsUnion!=0 {values=proven.Types()}
+ for _,value:=range values {if value.Flags()&checker.TypeFlagsUnit==0{return nil,false}}
+ return values,true
+}
+
+func (f *cycleFinder) roadsPairDiagnostic(source,target *checker.Type,label string) map[string]any {
+ result:=map[string]any{"label":label,"applicable":source!=nil&&target!=nil}
+ if source==nil||target==nil{return result}
+ // Exactly the guard's present/viewed normalization, before its pointer equality check.
+ present,viewed:=f.l.checker.GetNonNullableType(f.l.concrete(source)),f.l.checker.GetNonNullableType(f.l.concrete(target))
+ identical:=checker.Checker_isTypeIdenticalTo(f.l.checker,present,viewed)
+ result["source"],result["target"]=f.l.checker.TypeToString(present),f.l.checker.TypeToString(viewed)
+ result["same_type_object"],result["checker_identical"]=present==viewed,identical
+ result["checker_identical_distinct_objects"]=identical&&present!=viewed
+ result["related"]=f.deriveRelated(present,viewed)
+ // Diagnostic equivalent of ed3c0354's literal-field rule, shared-compatible with the parent.
+ // This is evaluated only after the real guard has already refused.
+ disjoint:=false;fields:=[]map[string]any{}
+ for _,field:=range f.fields(viewed){
+  held:=f.l.checker.GetPropertyOfType(present,field.Name);if held==nil{continue}
+  sv,sl:=roadsDiagnosticLiterals(f.l.checker.GetTypeOfSymbol(held));tv,tl:=roadsDiagnosticLiterals(f.l.checker.GetTypeOfSymbol(field));if !sl||!tl{continue}
+  shared:=[]string{}
+  for _,s:=range sv{for _,t:=range tv{if s==t{shared=append(shared,f.l.checker.TypeToString(s))}}}
+  fields=append(fields,map[string]any{"field":field.Name,"source_literal_count":len(sv),"target_literal_count":len(tv),"shared_literals":shared,"disjoint":len(shared)==0})
+  disjoint=disjoint||len(shared)==0
+ }
+ result["literal_disjoint"],result["common_literal_fields"]=disjoint,fields
+ return result
+}
+
+func (f *cycleFinder) roadsGuardDiagnostics(source,target *checker.Type,trace []viewPairStep) map[string]any {
+ root:=f.roadsPairDiagnostic(source,target,"root view")
+ result:=map[string]any{"normalization":"concrete then GetNonNullableType, matching present/viewed","root":root}
+ path:=[]map[string]any{};identityCost:=[]map[string]any{};unscreened:=[]map[string]any{}
+ if root["checker_identical_distinct_objects"]==true {identityCost=append(identityCost,root)}
+ for index,step:=range trace{
+  row:=f.roadsPairDiagnostic(step.source,step.target,step.name);row["path_index"]=index
+  crossing:=step.name=="a split arm"
+  row["actual_split_arm"]=crossing
+  if row["checker_identical_distinct_objects"]==true {identityCost=append(identityCost,row)}
+  if crossing&&row["literal_disjoint"]==false {unscreened=append(unscreened,row)}
+  path=append(path,row)
+ }
+ result["path"],result["checker_identical_distinct_object_pairs"],result["split_crossings_without_literal_separation"]=path,identityCost,unscreened
+ return result
+}
