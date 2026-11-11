@@ -529,12 +529,13 @@ func readDirectory(directory string) (product, error) {
 		if err != nil {
 			return err
 		}
-		// The kind and, for a file, whether it's executable: what the store keeps (store.go writes 0755 or 0644). The rest
-		// of a mode is the building user's umask (a gate box's 002 made 0775 where a fetch makes 0755, Oct 9 17:35Z).
+		// The kind and, for a file, whether it's executable: what the store keeps (store.go writes 0755 or 0644, by the
+		// owner's bit alone, as git records it: buildcache's executableAsGit). The rest of a mode is the building user's
+		// umask (a gate box's 002 made 0775 where a fetch makes 0755, Oct 9 17:35Z).
 		kind := info.Mode().Type().String()
 		if info.Mode().IsRegular() {
 			kind = "-rw-r--r--"
-			if info.Mode()&0o111 != 0 {
+			if info.Mode().Perm()&0o100 != 0 {
 				kind = "-rwxr-xr-x"
 			}
 		}
@@ -549,7 +550,7 @@ func readDirectory(directory string) (product, error) {
 		sum := sha256.Sum256(content)
 		// The mode as a manifest stores it, so the content digest of a directory and of a manifest compare.
 		mode := uint32(0o644)
-		if info.Mode()&0o111 != 0 {
+		if info.Mode().Perm()&0o100 != 0 {
 			mode = 0o755
 		}
 		found.files = append(found.files, productFile{path: relative, sha256: hex.EncodeToString(sum[:]), mode: mode})

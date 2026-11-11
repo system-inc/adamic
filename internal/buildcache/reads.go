@@ -686,7 +686,7 @@ func productDigest(directory string) (string, error) {
 				return err
 			}
 			sum := sha256.Sum256(content)
-			fmt.Fprintf(hash, "file %q %t %x\n", relative, info.Mode()&0o111 != 0, sum)
+			fmt.Fprintf(hash, "file %q %t %x\n", relative, executableAsGit(info), sum)
 		default:
 			fmt.Fprintf(hash, "other %q %s\n", relative, info.Mode().Type())
 		}
@@ -752,7 +752,7 @@ func readTreeValue(root, kind, name string) string {
 	case kind == "content" && info.Mode().IsRegular():
 		return fileValue(root, path, info)
 	case info.Mode().IsRegular():
-		return fmt.Sprintf("file %t", info.Mode()&0o111 != 0)
+		return fmt.Sprintf("file %t", executableAsGit(info))
 	}
 	return "other " + info.Mode().Type().String()
 }
@@ -788,7 +788,7 @@ func nodeInstallValue(top string) string {
 			if err != nil {
 				return err
 			}
-			lines = append(lines, fmt.Sprintf("file %s %x %t", relative, sha256.Sum256(content), info.Mode()&0o111 != 0))
+			lines = append(lines, fmt.Sprintf("file %s %x %t", relative, sha256.Sum256(content), executableAsGit(info)))
 		}
 		return nil
 	})
@@ -826,7 +826,15 @@ func gitValue(root, path string, info fs.FileInfo) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return fmt.Sprintf("%t %s", info.Mode()&0o111 != 0, blobID(content, length)), nil
+	return fmt.Sprintf("%t %s", executableAsGit(info), blobID(content, length)), nil
+}
+
+// executableAsGit is whether a file is executable as git records it: by its owner's bit alone. git's index holds
+// 100755 when the owner may execute a file, whatever its group and others may (cohere's git_tree holds the same
+// rule, and internal/tracked's checkout check), so a clean file valued by its index entry and the same file hashed,
+// in gitValue, agree, as every other value buildcache gives a file's executable bit does (#kp7mx3z).
+func executableAsGit(info fs.FileInfo) bool {
+	return info.Mode().Perm()&0o100 != 0
 }
 
 // cleanObject is the index's object for a file whose working copy git found clean, unchanged since: modified, or its
@@ -916,7 +924,7 @@ func existence(path string) string {
 	case info.IsDir():
 		return "directory"
 	case info.Mode().IsRegular():
-		return fmt.Sprintf("file %t", info.Mode()&0o111 != 0)
+		return fmt.Sprintf("file %t", executableAsGit(info))
 	}
 	return "other " + info.Mode().Type().String()
 }

@@ -104,7 +104,7 @@ func differenceEntries(directory string) (map[string]differenceEntry, error) {
 			}
 		case info.Mode().IsRegular():
 			found.kind = "file"
-			found.executable = info.Mode()&0o111 != 0
+			found.executable = executableAsGit(info)
 		}
 		entries[filepath.ToSlash(relative)] = found
 		return nil
