@@ -1,0 +1,59 @@
+// A way out between a stored generator's declaration and its one read (#qk8rztp S2c-4-1, Memory's
+// rows): a throw, a return, and a break where the const is declared in a loop's body, a frame per
+// pass. Each is a release path of its own, and on each the const still owns the frame, so its release
+// drops it unstepped, running none of the body, as Node collects it, and lets go of the arguments it
+// kept. The same functions read it on the other path, where the body runs. Every way out is caught,
+// so the program finishes and the leak check holds it.
+function* lines(label: string, count: number): Generator<string, undefined, undefined> {
+    console.log(`body ${label}`);
+    for (let index = 0; index < count; index++) {
+        yield `${label}${String(index)}`;
+    }
+}
+function total(items: Iterable<string>): string {
+    let all = '';
+    for (const item of items) {
+        all += item;
+    }
+    return all;
+}
+function throwsBetween(label: string, fail: boolean): string {
+    const stored = lines(`${label}!`, 2);
+    if (fail) {
+        throw new Error(`failed ${label}`);
+    }
+    return total(stored);
+}
+function returnsBetween(label: string, early: boolean): string {
+    const stored = lines(`${label}?`, 2);
+    if (early) {
+        return `early ${label}`;
+    }
+    let joined = '';
+    for (const line of stored) {
+        joined += line;
+    }
+    return joined;
+}
+function breaksBetween(labels: readonly string[]): string {
+    let out = '';
+    for (const label of labels) {
+        const stored = lines(`${label}.`, 1);
+        if (label.length > 1) {
+            break;
+        }
+        out += total(stored);
+    }
+    return out;
+}
+try {
+    console.log(throwsBetween(`t${String(1)}`, true));
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(`caught ${error.message}`);
+    }
+}
+console.log(throwsBetween(`t${String(2)}`, false));
+console.log(returnsBetween(`r${String(1)}`, true));
+console.log(returnsBetween(`r${String(2)}`, false));
+console.log(breaksBetween(['a', 'b', `c${String(4)}`, 'e']));

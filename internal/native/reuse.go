@@ -693,18 +693,29 @@ func (e *emitter) take(property ir.Property) (string, bool) {
 // is never made.
 func (e *emitter) handOver(argument ir.Expression) string {
 	if read, ok := variableRead(argument); ok && e.reuse.moves[e.at][read.Local] {
-		variable := e.variable(argument, read)
-		moved := e.temporary()
-		e.line("%s %s = %s;", cType(read.Of), moved, variable)
-		e.line("%s = NULL;", variable)
-		e.owned = append(e.owned, moved)
-		return moved
+		return e.moveOut(argument, read)
 	}
 	value := e.value(argument)
 	if slices.Contains(e.owned, value) {
 		return value
 	}
 	return retained(value)
+}
+
+// moveOut moves a variable's value out where it's read: into a temporary the statement owns, with
+// the variable left `NULL` right there, so a release of the variable afterward, its scope's end or a
+// way out of it, lets go of nothing, and the temporary is let go of with the statement's own, at its
+// end or on a throw out of it, unless something takes it first. It is the move handOver makes into a
+// consumed parameter, and the one a stored generator's one read makes into its consumer (#qk8rztp
+// S2c-4-1, generatorMove): made at the read, so a path that never reaches the read still finds the
+// value in the variable.
+func (e *emitter) moveOut(expression ir.Expression, read ir.Read) string {
+	variable := e.variable(expression, read)
+	moved := e.temporary()
+	e.line("%s %s = %s;", cType(read.Of), moved, variable)
+	e.line("%s = NULL;", variable)
+	e.owned = append(e.owned, moved)
+	return moved
 }
 
 // handedOver gives up the statement's temporaries a call's consumed parameters take, once every

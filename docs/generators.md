@@ -51,6 +51,18 @@ the carrier, and as an ordinary function its parameters don't count as escaping 
 proof, which could put the parent's cells in its C frame while the generator held a closure into
 them (Memory, #s6tt5xt).
 
+A generator's direct call, top-level, nested or written in place, may also be stored first, in a
+`const` of a function that doesn't suspend, declared as a statement of a block with no type written,
+when it is read once (#qk8rztp S2c-4-1), as tsc's checker.ts:21757 stores generateJsxChildren's
+generator and hands it on in the next statement. The checker must find exactly one other reference to
+the name, and that read must be a for-of over the local or the one-read `Iterable<T>` argument below,
+outside any loop, function or class that doesn't also hold the declaration, so it runs at most once
+per run of the declaration. Any other use of such a local, a second read, `typeof`, a test, `===`, a
+capture (an unused one too), a field, a return, destructuring or a spread, and a `let`, stops as not
+yet built, in Lower's words: "a generator stored in a local, used other than once by a consumer that
+steps it". At a module's top level, or in a function that suspends, the call stops where it's
+lowered, as it did before.
+
 Each consumer decides by the call's origin, never by the iterator type it is declared to return, so
 a generator declared `SetIterator<T>` is stepped as a generator and never read as a Set's iterator.
 
@@ -155,6 +167,13 @@ of two functions into one hand-driven parameter stay not yet built.
   owned. A yield first hands over its value, then kills every counted cell its resume never reads
   again (flow.LiveIn), and suspends. A return or the body's end finishes the frame. A throw moves
   the error out of the frame into the pending exception and finishes it.
+- **A stored generator.** Its `const` owns the frame from its declaration, and its one read is a
+  move, never a retain (Memory's ruling on #qk8rztp S2c-4-1): the frame goes into the for-of's own
+  local, or into the call's argument temporary, and the local is left `NULL` right there (native's
+  `moveOut`, the move reuse makes into a consumed parameter). So the local's release at its scope's
+  end lets go of the frame only on a path that never reached the read, a throw, a return, a break or
+  an untaken branch, and drops it unstepped, as Node collects it; and a throw from a later argument,
+  after the read, releases the temporary unstepped with the statement's own.
 - **The consumer.** It tests the pending exception after each step, when the body can throw, before
   it reads done: a throw out of the body finishes the frame, so done would read true. The for-of's
   block holds the generator, so every way out of the loop (exhaustion, `break`, `continue` or a
@@ -184,8 +203,15 @@ machine over a counted heap frame"), with how each is kept.
    `self`, at its parent's cells; that edge closes no cycle while nothing those cells reach can hold
    a generator, which TestNoCapturedOrEnvironmentLocalCanHoldAGenerator reads off every generator
    and view fixture: no captured or environment local is a Generator, and no parameter one is handed
-   into is captured. Owed at S2c-4, when generators become values, beside q5 on #qk8rztp (reachLinks
-   linking a generator type to its frame's cells): reachLinks must also link a generator to its
+   into is captured. S2c-4-1's stored `const` doesn't make the reachLinks edge due (Memory's
+   ruling): it can't be captured, and its one read hands the frame to a consumer that steps it, so
+   nothing the frame holds can come to hold the frame. That rests on the callee road refusing a
+   callee that keeps its parameter, which generatorParameter does: the parameter's one read is the
+   for-of over it (or, by hand, only its nexts and undefined tests), no closure captures it and
+   nothing writes it, so it reaches no field, captured cell or returned object. And the frame never
+   outlives the call of the function that declares the `const`, as with a call in place. Owed at
+   S2c-4, when generators become values, beside q5 on #qk8rztp (reachLinks linking a generator type
+   to its frame's cells): reachLinks must also link a generator to its
    carrier's cells, the edge `self` makes, before that guard can be relaxed. The same day,
    region.go's environment proof must count every way a generator can outlive its call as keeping
    its carrier. Today a nested generator's carrier is safe because every consumer finishes with the
@@ -211,7 +237,8 @@ nothing, and so is a generator method of a class nothing in the whole program co
 static parts still run; the refusal walk still reads both, and refuses what is refused for good (an
 async generator, rule 2400, among them).
 
-- **A generator anywhere but its consumer:** stored in a variable, passed as an argument other
+- **A generator anywhere but its consumer:** stored in a variable other than S2c-4-1's `const` read
+  once, passed as an argument other
   than straight into a one-read `Iterable<T>` parameter or an `IterableIterator<T>` one stepped only
   by hand, returned, put in an array or a field, or the generator function used as a value. A
   generator object as a value needs `next`, `return` and `throw` as methods, a result object, a

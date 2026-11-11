@@ -110,7 +110,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		local := e.program.Locals[statement.Local]
 		value := zero(local.Type)
-		if statement.Value != nil {
+		if read, isMove := generatorMove(statement.Value); isMove {
+			// A for-of's own local declared from a stored generator's one read, which moves the frame
+			// out of the local it waited in (#qk8rztp S2c-4-1).
+			value = e.moveOut(statement.Value, read)
+		} else if statement.Value != nil {
 			value = e.value(statement.Value)
 		}
 		// The declaration is the statement's last write: what it owns, the variable can take.

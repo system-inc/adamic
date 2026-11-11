@@ -377,6 +377,9 @@ type lowering struct {
 	// and the function it's written in (inPlaceGenerator). It is this lowering's, never global: the
 	// latent census and a relower each build a fresh lowering.
 	inPlaceGenerators map[inPlaceGeneratorKey]int
+	// storedGenerators is the generator function whose call each stored generator's local holds, by
+	// the local (storedGenerator, #qk8rztp S2c-4-1), so its one read is lowered as a move.
+	storedGenerators map[int]int
 
 	programPlan          *programMembership
 	programDiscovery     bool
