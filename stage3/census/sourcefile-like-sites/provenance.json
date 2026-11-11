@@ -1,0 +1,19 @@
+{
+  "main_sha": "d690f276749f91e6b36fe3a9726a5a453fcd7d39",
+  "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "prior_evidence_sha": "fe08a0d47a3d28f646db181ac9e8456e5c60885f",
+  "prior_path": "stage3/census/next-stops-c504dd8f",
+  "prior_grouped_sha256": "6507ce5dd026018b465d9692319f92034c9223d37deefaf68f18549b9b9ff275",
+  "mode": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "exact adapted file per invocation"
+  },
+  "submodules": {
+    "cohere": "5360753e19e4417675a90e92a1823bea66b13918",
+    "cohere/TypeScript": "d92d9bfee114c80be2c375d72edae966176e3a4f"
+  },
+  "binary_sha256": "654d276c12a9a33f64c0b75495c4e8582cc929031333a06ff127272b183f620e",
+  "adapted_root": "/workspace/scratch/baobab-adapted/src/compiler",
+  "compiler_files": 79
+}

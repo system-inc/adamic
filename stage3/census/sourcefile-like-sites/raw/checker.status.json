@@ -1,0 +1,12 @@
+{
+  "file": "checker.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-adapted/src/compiler",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/checker.jsonl"
+  ],
+  "child_exit": -15,
+  "wall_seconds": 300.11739656199984,
+  "over_five_minutes": true,
+  "piece": 1
+}

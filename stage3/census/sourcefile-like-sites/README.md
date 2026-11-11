@@ -1,0 +1,7 @@
+Baobab measurement evidence. See REPORT.md for results and limits.
+
+`run-piece.py N` measures roots (N-1)*10 through N*10 with the guarded meter overlay. Piece 1 ran sequentially; later pieces run at most two independent single-file processes concurrently. Every invocation retains all compiler roots in the loaded program, selecting only the attempted file through LATENT_ONLY_FILE. stdout and stderr go to the per-file log. A file exceeding 300 seconds is terminated as a process group and its actual child exit is recorded before continuing. Streams and logs larger than 1,000,000 bytes are gzip compressed.
+
+`collect.py` harvests every finding whose reason contains SourceFileLike, retaining distinct phases and unit observations. `classify.cjs` uses the adapted AST to identify the call and enclosing function. `checkpoint.py N` creates a snapshot commit on the separate checkpoint branch without moving the report branch. Final reporting deduplicates physical sites by location and reason; phases and unit observations remain available in sites.json and findings.json.
+
+SourceFileLike optional members are lineMap and getPositionOfLineAndCharacter. The proposed road 2 type retains lineMap. Body evidence uses the pinned upstream source; site locations use the adapted source. The public-functions inventory includes every exported function, including @internal exports, and distinguishes these from the two functions exposed by the published API. Overload signatures are counted with their implementation.

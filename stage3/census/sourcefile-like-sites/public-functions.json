@@ -1,0 +1,14 @@
+[
+ {"file":"scanner.ts","line":468,"function":"getPositionOfLineAndCharacter","exported":true,"internal":false,"optional_method":"reads and conditionally calls getPositionOfLineAndCharacter","path":"sourceFile.getPositionOfLineAndCharacter; otherwise getLineStarts(sourceFile), sourceFile.text -> computePositionOfLineAndCharacter"},
+ {"file":"scanner.ts","line":503,"function":"getLineStarts","exported":true,"internal":true,"optional_method":"no","path":"reads lineMap, writes computed lineMap; text -> computeLineStarts"},
+ {"file":"scanner.ts","line":537,"function":"getLinesBetweenPositions","exported":true,"internal":true,"optional_method":"no","path":"sourceFile -> getLineStarts; line-start array -> computeLineOfPosition"},
+ {"file":"scanner.ts","line":548,"function":"getLineAndCharacterOfPosition","exported":true,"internal":false,"optional_method":"no","path":"sourceFile -> getLineStarts; line-start array -> computeLineAndCharacterOfPosition -> computeLineOfPosition"},
+ {"file":"utilities.ts","line":1015,"function":"getStartPositionOfLine","exported":true,"internal":true,"optional_method":"no","path":"sourceFile -> getLineStarts"},
+ {"file":"utilities.ts","line":1029,"function":"getEndLinePosition","exported":true,"internal":true,"optional_method":"no","path":"sourceFile -> getLineStarts; sourceFile.text; only numbers and strings passed onward"},
+ {"file":"utilities.ts","line":1238,"function":"getTokenPosOfNode","exported":true,"internal":true,"optional_method":"no","path":"reads text -> skipTrivia; recursive getTokenPosOfNode; sourceFile -> getNodeChildren (WeakMap key only)"},
+ {"file":"utilities.ts","line":1276,"function":"getNonDecoratorTokenPosOfNode","exported":true,"internal":true,"optional_method":"no","path":"sourceFile -> getTokenPosOfNode; otherwise sourceFile.text -> skipTrivia"},
+ {"file":"factory/nodeChildren.ts","line":14,"function":"getNodeChildren","exported":true,"internal":true,"optional_method":"no","path":"sourceFile is a WeakMap key; reads no SourceFileLike member"},
+ {"file":"factory/nodeChildren.ts","line":27,"function":"setNodeChildren","exported":true,"internal":true,"optional_method":"no","path":"sourceFile is a WeakMap key; reads no SourceFileLike member"},
+ {"file":"factory/nodeChildren.ts","line":44,"function":"unsetNodeChildren","exported":true,"internal":true,"optional_method":"no","path":"origSourceFile is a WeakMap key; reads no SourceFileLike member"},
+ {"file":"factory/nodeChildren.ts","line":55,"function":"transferSourceFileChildren","exported":true,"internal":true,"optional_method":"no","path":"sourceFile and targetSourceFile are WeakMap keys; reads no SourceFileLike member"}
+]
