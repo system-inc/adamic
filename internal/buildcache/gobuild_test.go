@@ -783,3 +783,29 @@ func TestEveryVerbButBuildKeysItsTests(t *testing.T) {
 		}
 	}
 }
+
+// A file a build constraint leaves out is keyed, since editing the constraint compiles it in and moves no file the build
+// lists (#kp7mx3z): a build of testdata/ignored keys ignored_never.go, and never ignored_never_test.go, which no build
+// compiles. go test -c of the package keys that test file too, though go lists no test variant of a package whose every
+// test file is left out. Mutants, each caught: IgnoredGoFiles left out of the key; a build keying an ignored _test.go;
+// a test verb keeping an ignored _test.go only in a package whose import path names a test variant, as first written.
+func TestGoBuildKeysTheFilesABuildConstraintLeavesOut(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	directory := "internal/buildcache/testdata/ignored"
+	built, err := GoInputs("ignored", "./"+directory, nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ignoredFile, ignoredTest := slices.Contains(built.Files, directory+"/ignored_never.go"), slices.Contains(built.Files, directory+"/ignored_never_test.go")
+	if !ignoredFile || ignoredTest {
+		t.Fatalf("a build's key holds ignored_never.go %v, ignored_never_test.go %v, want the first alone: %v", ignoredFile, ignoredTest, built.Files)
+	}
+	tested, err := goRequest{verb: "test -c", output: "ignored.test", pkg: "./" + directory}.keyInputs(root, overlayKey{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !slices.Contains(tested.Files, directory+"/ignored_never_test.go") {
+		t.Fatalf("go test -c of the package doesn't key its ignored test file: %v", tested.Files)
+	}
+}

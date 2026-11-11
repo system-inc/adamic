@@ -580,9 +580,10 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 	for {
 		var listed struct {
 			Dir                                                                        string
-			Standard                                                                   bool
+			Standard, DepOnly                                                          bool
 			Module                                                                     *struct{ GoMod string }
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
+			IgnoredGoFiles                                                             []string
 			CgoCFLAGS, CgoCPPFLAGS, CgoCXXFLAGS                                        []string
 		}
 		if err := decoder.Decode(&listed); err == io.EOF {
@@ -594,7 +595,17 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		if listed.Standard || !inside(root, listed.Dir) {
 			continue
 		}
-		for _, names := range [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles, listed.EmbedFiles} {
+		// A file a build constraint leaves out is keyed too, since editing the constraint compiles it in without moving
+		// any file the build lists (#kp7mx3z, Cohere's go_listing survey #e4zqn5e). An ignored _test.go counts only in a
+		// package a test verb names (recipeEntries' under): go list -test marks it, its test variants and its test main
+		// DepOnly false, and its binary is the one that could compile it. Asked of the import path instead ("p [p.test]",
+		// p_test), it fell out of a named package go lists no variant of, one whose test files a constraint leaves all
+		// out or whose only compiled tests are external, and a constraint edit there kept the old test binary's key.
+		ignored := listed.IgnoredGoFiles
+		if request.verb == "build" || listed.DepOnly {
+			ignored = slices.DeleteFunc(slices.Clone(ignored), func(file string) bool { return strings.HasSuffix(file, "_test.go") })
+		}
+		for _, names := range [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles, listed.EmbedFiles, ignored} {
 			if err := add(listed.Dir, names); err != nil {
 				return Inputs{}, err
 			}
