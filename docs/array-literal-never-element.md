@@ -101,5 +101,5 @@ cloud/reports/array-literal-never-element.
 Final complete touched-package gate exits 0: lowering 24.851s and uncached
 oracle 198.044s. The formatted-fixture oracle passes in 0.607s. The repeated
 runtime mutant fails in 0.497s with the same 74-byte LeakSanitizer report.
-The complete oracle includes its recorded-count comparison. No native emitter,
+The complete oracle carries its recorded-count comparison. No native emitter,
 runtime, compiler orchestration or shared oracle harness file was changed.
