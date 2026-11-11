@@ -209,7 +209,7 @@ func TestOverloadBrandedResultIsChecked(t *testing.T) {
 	lowersAndAgreesWithNodeAs(t, overloadBrandedShape, ".ts")
 }
 
-// A nested overload set is called through its closure (ir.CallClosure's Direct), a road beside
+// A nested overload set that captures is called through its closure value (callClosure), a road beside
 // censusOverloadResult, so its result is checked there too. Mutant: that road returning its call
 // unchecked, and expression's guard panics as a compiler bug.
 func TestOverloadNestedResultLieStopsAtTheCall(t *testing.T) {
@@ -229,6 +229,28 @@ outer(false);
 	overloadCheckStops(t, source, "1\n", "overload 1 of pick result at ", ": expected 1")
 }
 
+// A nested overload set that captures nothing, called from a sibling nested function: the sibling
+// road (nestedSibling's ir.CallClosure with its Direct target) checks the result as the others do.
+func TestOverloadNestedSiblingResultLieStopsAtTheCall(t *testing.T) {
+	t.Parallel()
+	source := `function outer(): void {
+    function pick(x: number): 1;
+    function pick(x: string): number;
+    function pick(x: number | string): number {
+        return x === 0 ? 1 : 2;
+    }
+    function use(x: number): void {
+        const one: 1 = pick(x);
+        console.log(String(one));
+    }
+    use(0);
+    use(1);
+}
+outer();
+`
+	overloadCheckStops(t, source, "1\n", "overload 1 of pick result at ", ": expected 1")
+}
+
 // An overload set read as a value has no call to wrap, so it stops where it's read, as main does
 // (expression.go's "an overloaded function as a value"): through a const, a conditional of two sets,
 // .call and .bind. If that stop ever lifts, the value's calls need the same check.
@@ -237,8 +259,8 @@ func TestOverloadNarrowAsAValueStops(t *testing.T) {
 	const set = "function one(x: number): 1;\nfunction one(x: string): number;\nfunction one(x: number | string): number { return 1; }\nfunction two(x: number): 1;\nfunction two(x: string): number;\nfunction two(x: number | string): number { return 1; }\n"
 	for _, probe := range []struct{ name, use string }{
 		{"const", "const f = one;\nconsole.log(String(f(0)));\n"},
-		{"union of two sets", "const flag = Math.random() < 2;\nconst f = flag ? one : two;\nconsole.log(String(f(0)));\n"},
-		{"call", "console.log(String(one.call(undefined, 0)));\n"},
+		{"union of two sets", "function choose(flag: boolean): void {\n    const f = flag ? one : two;\n    console.log(String(f(0)));\n}\nchoose(true);\n"},
+		{"call", "console.log(String(one.call(undefined, \"a\")));\n"},
 		{"bind", "const bound = one.bind(undefined);\nconsole.log(String(bound(0)));\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -268,7 +290,7 @@ func TestOverloadNarrowResultStaysRefusedInA(t *testing.T) {
 func TestOverloadUncheckableResultStaysRefused(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, what string }{
-		{"array elements", "interface A { readonly kind: 1 }\ninterface B { readonly kind: 2 }\nfunction keep(xs: A[]): A[];\nfunction keep(xs: (A | B)[]): (A | B)[];\nfunction keep(xs: (A | B)[]): (A | B)[] { return xs; }\nconsole.log(String(keep([{ kind: 1 }]).length));\n", "overload 1 of keep result A[] cannot be served"},
+		{"array elements", "interface A { readonly kind: 1 }\ninterface B { readonly kind: 2 }\nfunction keep(xs: readonly A[]): A[];\nfunction keep(xs: readonly (A | B)[]): (A | B)[];\nfunction keep(xs: readonly (A | B)[]): (A | B)[] { return [...xs]; }\nconsole.log(String(keep([{ kind: 1 }]).length));\n", "overload 1 of keep result A[] cannot be served"},
 		{"untagged subtype", "interface P { run(): number }\ninterface Q extends P { more(): number }\nfunction make(full: true): Q;\nfunction make(full: boolean): P;\nfunction make(full: boolean): P { return { run: () => 1 }; }\nconsole.log(String(make(true).run()));\n", "overload 1 of make result Q cannot be served"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

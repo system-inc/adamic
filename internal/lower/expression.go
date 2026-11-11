@@ -1802,7 +1802,13 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	// A call through a checked function-type claim checks it (predicates_function_type.go).
-	return l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns})
+	value, err := l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns})
+	if err != nil {
+		return nil, err
+	}
+	// A nested overload set that captures is called through its closure value, so a narrow overload's
+	// result is checked here too.
+	return l.overloadResultCheck(node, value)
 }
 
 // Optional booleans have a three-state byte in the function-call ABI.
