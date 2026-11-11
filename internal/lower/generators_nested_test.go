@@ -183,6 +183,11 @@ func TestNestedGeneratorRoadsAreNotYet(t *testing.T) {
 		{"inside a generator", "function* outer(): Generator<number, undefined, undefined> {\nfunction* inner(): Generator<number, undefined, undefined> { yield 1; }\nyield 2;\n}\nfor (const value of outer()) console.log(String(value));\n", "declared inside an async function or a generator"},
 		{"in a block", host("if (String(1).length > 0) {\nfunction* inner(): Generator<number, undefined, undefined> { yield 1; }\nfor (const value of inner()) console.log(String(value));\n}"), "declared inside a function or a block"},
 		{"the function as a value", host(numbers + "const make = numbers;\nfor (const value of make()) console.log(String(value));"), "a generator function declared inside a function, used other than by a call to it by name (#qk8rztp)"},
+		// A shorthand property reads the declaration's value as the name written alone does (object.go's
+		// shorthand through nestedReferenceOf). Mutant: shorthand reading its local directly, and the
+		// typeof row lowers, an object holding a generator function no consumer keeps to itself.
+		{"a shorthand property, only typeof read", host(numbers + "const held = { numbers };\nconsole.log(typeof held.numbers);"), "a generator function declared inside a function, used other than by a call to it by name (#qk8rztp)"},
+		{"a shorthand property, called through", host(numbers + "const held = { numbers };\nfor (const value of held.numbers()) console.log(String(value));"), "a generator function declared inside a function, used other than by a call to it by name (#qk8rztp)"},
 		{"stored", host(numbers + "const held = numbers();\nconsole.log(String(held.next().value));"), "used other than by a for-of"},
 		{"passed as an argument", "function take(source: object): number { return source === undefined ? 0 : 1; }\n" + host(numbers+"console.log(String(take(numbers())));"), "used other than by a for-of"},
 		{"returned", "function outer(): Generator<number, undefined, undefined> {\n" + numbers + "return numbers();\n}\nfor (const value of outer()) console.log(String(value));\n", "used other than by a for-of"},
