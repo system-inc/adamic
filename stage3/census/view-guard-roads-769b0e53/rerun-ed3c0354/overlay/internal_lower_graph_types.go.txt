@@ -1,0 +1,985 @@
+package lower
+
+import (
+	"errors"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// graphAllocation preserves both the allocation's concrete type and its contextual
+// view. Ownership is selected only after the whole program's cycle proof runs.
+func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expression {
+	ids := []int{l.cycleTypeID(l.concrete(l.checker.GetTypeAtLocation(node)))}
+	// Fresh literal identities may change across checker queries. The variable's
+	// widened allocation view is stable and is the type the cycle finder visits.
+	if node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Name() != nil {
+		ids = append(ids, l.cycleTypeID(l.concrete(l.checker.GetTypeAtLocation(node.Parent.Name()))))
+	}
+	if contextual := l.slotType(node); contextual != nil {
+		ids = append(ids, l.cycleTypeID(l.concrete(contextual)))
+	}
+	switch value := value.(type) {
+	case ir.BoundClosure:
+		value.GraphTypes = ids
+		return value
+	case ir.ObjectLiteral:
+		if value.Record {
+			l.graphDynamicSite = node
+		}
+		value.GraphTypes = ids
+		return value
+	case ir.ArrayLiteral:
+		value.GraphTypes = ids
+		return value
+	case ir.MapNew:
+		value.GraphTypes = ids
+		return value
+	case ir.SetNew:
+		value.GraphTypes = ids
+		return value
+	case ir.ArrayMap:
+		value.GraphTypes = ids
+		return value
+	case ir.ArrayFrom:
+		value.GraphTypes = ids
+		return value
+	case ir.ArrayFill:
+		value.GraphTypes = ids
+		return value
+	case ir.ArraySplice:
+		value.GraphTypes = ids
+		return value
+	case ir.ArrayConcat:
+		value.GraphTypes = ids
+		return value
+	case ir.MapEntries:
+		value.GraphTypes = ids
+		return value
+	case ir.ArraySlice:
+		value.GraphTypes = ids
+		return value
+	case ir.MapKeys:
+		value.GraphTypes = ids
+		return value
+	case ir.MapValues:
+		value.GraphTypes = ids
+		return value
+	case ir.SetValues:
+		value.GraphTypes = ids
+		return value
+	case ir.ArrayVisit:
+		value.GraphTypes = ids
+		return value
+	}
+	return value
+}
+
+// graphSeed accepts only the slot-cycle proof; unrelated errors keep their identity.
+func graphSeed(err error) (bool, error) {
+	var refused *Refused
+	if errors.As(err, &refused) && refused != nil && refused.cycle {
+		return true, nil
+	}
+	return false, err
+}
+
+// The old refusal sites still determine the seeds. The ownership SCC includes
+// all strong connecting paths, including readonly and proven-fresh slots.
+func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
+	// Graph regions don't follow record values, so a cycle through a record stays refused rather than seeded.
+	for _, proven := range f.seen {
+		if f.l.recordElement(proven) != nil {
+			if err := f.slotsOf(proven); err != nil {
+				return err
+			}
+		}
+	}
+	seeds := map[cycleNode]bool{}
+	for _, proven := range f.seen {
+		seed, err := graphSeed(f.slotsOf(proven))
+		if err != nil {
+			return err
+		}
+		if seed {
+			seeds[cycleNode{proven: proven}] = true
+		}
+	}
+	for local, declared := range f.l.result.Locals {
+		proven := f.l.localTypes[local]
+		// A closed frame input (closed_frame_inputs.go) is proven not to close a cycle, so its cell
+		// stays counted rather than seeding a graph region.
+		if declared.Captured && !declared.Global && proven != nil && !f.weak(proven) && f.reaches(proven, cycleNode{cell: local + 1}) && !f.l.closedFrameInput(local) {
+			// An async frame owns its captured cells and is never a graph member, so a cycle through
+			// one stays refused, as it was before graph regions.
+			if declared.Function >= 0 && f.l.result.Functions[declared.Function].Suspends() {
+				return &Refused{
+					Where: f.l.program.Where(f.l.localNodes[local]),
+					What:  "async frame capture cycle: '" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+					Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
+				}
+			}
+			// A captured cell reassigned with a value that can be a record seeds a cycle through a record
+			// no graph region holds: stopped, as a record written into a graph slot is (noteRecordSlot).
+			if f.recordStop == nil && f.holdsRecord(proven) && f.reassigned(local) {
+				f.recordStop = f.l.notYet(f.l.localNodes[local], "a record held by '"+declared.Name+"', a variable a function value captures and the program assigns again, on a cycle, in a graph program: a record can't join a graph region")
+			}
+			seeds[cycleNode{cell: local + 1}] = true
+		}
+	}
+	if len(seeds) == 0 {
+		return nil
+	}
+	// Literals may have narrower types than the mutable view through which they
+	// are later written. Include those allocation identities without creating seeds.
+	for _, module := range modules {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if ast.IsPartOfTypeNode(node) {
+				return false
+			}
+			if ast.IsExpressionNode(node) {
+				f.use(f.l.checker.GetTypeAtLocation(node), node)
+				if contextual := f.l.slotType(node); contextual != nil {
+					f.use(contextual, node)
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		module.AsNode().ForEachChild(visit)
+	}
+	for _, closure := range f.l.closureRecords {
+		f.use(closure.proven, closure.node)
+	}
+	candidates := []cycleNode{}
+	for proven := range f.where {
+		candidates = append(candidates, cycleNode{proven: proven})
+	}
+	for _, shape := range f.shapes {
+		candidates = append(candidates, cycleNode{proven: shape})
+	}
+	for local, declared := range f.l.result.Locals {
+		if declared.Captured && !declared.Global {
+			candidates = append(candidates, cycleNode{cell: local + 1})
+		}
+	}
+	edges := map[cycleNode][]cycleNode{}
+	queue := append([]cycleNode{}, candidates...)
+	for len(queue) != 0 {
+		node := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
+		if _, seen := edges[node]; seen {
+			continue
+		}
+		links := f.graphLinks(node)
+		// The finder's related relation treats compatible structural views as the
+		// same possible allocation. Weak views never become strong edges.
+		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(node.proven) && !f.template(node.proven) && !f.isFunction(node.proven) {
+			for _, view := range candidates {
+				if view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && f.related(node.proven, view.proven) {
+					links = append(links, view)
+				}
+			}
+		}
+		edges[node] = links
+		queue = append(queue, links...)
+	}
+	// Tarjan's components, with a component selected iff it contains a seed.
+	next := 0
+	index, low := map[cycleNode]int{}, map[cycleNode]int{}
+	active := map[cycleNode]bool{}
+	stack := []cycleNode{}
+	graph := map[cycleNode]bool{}
+	var throughPromise []cycleNode
+	var visit func(cycleNode)
+	visit = func(node cycleNode) {
+		next++
+		index[node], low[node] = next, next
+		stack = append(stack, node)
+		active[node] = true
+		for _, link := range edges[node] {
+			if index[link] == 0 {
+				visit(link)
+				if low[link] < low[node] {
+					low[node] = low[link]
+				}
+			} else if active[link] && index[link] < low[node] {
+				low[node] = index[link]
+			}
+		}
+		if low[node] != index[node] {
+			return
+		}
+		component := []cycleNode{}
+		selected := false
+		for {
+			last := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			active[last] = false
+			component = append(component, last)
+			selected = selected || seeds[last]
+			if last == node {
+				break
+			}
+		}
+		if selected {
+			for _, each := range component {
+				graph[each] = true
+				if each.proven != nil && f.l.isLibraryType(each.proven, "Promise") && throughPromise == nil {
+					throughPromise = component
+				}
+			}
+		}
+	}
+	for node := range edges {
+		if index[node] == 0 {
+			visit(node)
+		}
+	}
+	// A region frees a cycle only when every value on it is a member. A Promise never is (its
+	// payload is a counted value outside any region), so a cycle through one would keep its region
+	// alive forever: refuse it, as before graph regions.
+	if throughPromise != nil {
+		var where *ast.Node
+		for _, each := range throughPromise {
+			if each.proven != nil && f.where[each.proven] != nil {
+				where = f.where[each.proven]
+				break
+			}
+		}
+		if where == nil {
+			where = modules[0].AsNode()
+		}
+		return &Refused{
+			Where: f.l.program.Where(where),
+			What:  "a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region",
+			Fix:   "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)",
+		}
+	}
+	// An otherwise acyclic cache of graph elements belongs inside their graph too.
+	for changed := true; changed; {
+		changed = false
+		for node := range edges {
+			if graph[node] || node.proven == nil || f.weak(node.proven) {
+				continue
+			}
+			proven := node.proven
+			if f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+				for _, argument := range f.graphArguments(proven) {
+					if graph[cycleNode{proven: argument}] {
+						graph[node] = true
+						changed = true
+					}
+					if argument.Flags()&checker.TypeFlagsUnion != 0 {
+						for _, member := range argument.Types() {
+							if graph[cycleNode{proven: member}] {
+								graph[node] = true
+								changed = true
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	f.l.result.GraphTypes = map[int]bool{}
+	for node := range graph {
+		if node.proven != nil && !f.weak(node.proven) {
+			if id := f.l.cycleTypeID(node.proven); !f.l.result.GraphTypes[id] {
+				f.l.result.GraphTypes[id] = true
+				f.selected = append(f.selected, node.proven)
+			}
+		}
+		if node.cell != 0 {
+			f.l.result.Locals[node.cell-1].GraphCell = true
+		}
+	}
+	f.restGraphTypes()
+	for _, closure := range f.l.closureRecords {
+		if f.l.result.GraphTypes[int(closure.proven.Id())] {
+			f.l.result.Functions[closure.function].GraphClosure = true
+		}
+	}
+	// One frame allocation is indivisible, even if siblings capture disjoint slots.
+	for changed := true; changed; {
+		changed = false
+		for index := range f.l.result.Functions {
+			function := &f.l.result.Functions[index]
+			for _, local := range function.Environment {
+				if f.l.result.Locals[local].GraphCell && !function.GraphClosure {
+					function.GraphClosure = true
+					changed = true
+				}
+			}
+			if function.GraphClosure {
+				for _, local := range function.Environment {
+					if !f.l.result.Locals[local].GraphCell {
+						f.l.result.Locals[local].GraphCell = true
+						changed = true
+					}
+				}
+			}
+			frame := false
+			for _, local := range function.FrameEnvironment {
+				frame = frame || f.l.result.Locals[local].GraphCell
+			}
+			if frame {
+				for _, local := range function.FrameEnvironment {
+					if !f.l.result.Locals[local].GraphCell {
+						f.l.result.Locals[local].GraphCell = true
+						changed = true
+					}
+				}
+			}
+		}
+	}
+	// Forwarded nested callbacks retain their parent frame through a path outside
+	// the direct environment ownership proof. Keep that capture cycle refused.
+	for _, closure := range f.l.closureRecords {
+		function := f.l.result.Functions[closure.function]
+		if function.GraphClosure && function.ForwardedNestedParent != 0 {
+			return &Refused{
+				Where: f.l.program.Where(closure.node),
+				What:  "a nested callback retains a cyclic parent environment through a forwarded frame",
+				Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> (adamic/cycle-capable)",
+			}
+		}
+	}
+	for _, instance := range f.l.instances {
+		for _, local := range instance.thisLocals {
+			types := append([]*checker.Type{f.l.localTypes[local]}, f.l.localAlso[local]...)
+			for _, proven := range types {
+				if proven != nil && f.l.result.GraphTypes[int(proven.Id())] {
+					f.l.result.Classes[instance.class-1].Graph = true
+				}
+			}
+		}
+	}
+	for symbol, instance := range f.l.statics {
+		if f.l.result.GraphTypes[int(f.l.checker.GetTypeOfSymbol(symbol).Id())] {
+			f.l.result.Classes[instance.class-1].Graph = true
+		}
+	}
+	// The view pair guard and the boundary's refusal come before a plan's stop, so a program either
+	// refuses reads the stop it always has.
+	flows := f.graphFlows()
+	if err := f.viewPairGuard(); err != nil {
+		return err
+	}
+	// The boundary's refusals come first, so the older record form, ObjectLiteral{Record}, keeps its own
+	// words; then a record written into a graph slot on a cycle (#a9e21hc); then a graph value through an
+	// expression the plan doesn't follow (#y7wexf5).
+	if err := f.graphAdoptionBoundary(); err != nil {
+		return err
+	}
+	if f.recordStop != nil {
+		return f.recordStop
+	}
+	return flows
+}
+
+func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
+	if node.cell != 0 {
+		links := []cycleNode{}
+		if proven := f.l.localTypes[node.cell-1]; proven != nil {
+			links = append(links, cycleNode{proven: proven})
+		}
+		for _, proven := range f.l.localAlso[node.cell-1] {
+			links = append(links, cycleNode{proven: proven})
+		}
+		if f.l.result.Locals[node.cell-1].IterationCell {
+			return links
+		}
+		// A capture into one interior slot owns the entire environment allocation.
+		for _, function := range f.l.result.Functions {
+			found := false
+			for _, local := range function.FrameEnvironment {
+				found = found || local == node.cell-1
+			}
+			if found {
+				for _, local := range function.FrameEnvironment {
+					if local != node.cell-1 {
+						links = append(links, cycleNode{cell: local + 1})
+					}
+				}
+			}
+		}
+		return links
+	}
+	proven := node.proven
+	if proven == nil || f.weak(proven) || f.template(proven) {
+		return nil
+	}
+	links := []cycleNode{}
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range proven.Types() {
+			links = append(links, cycleNode{proven: member})
+		}
+		return links
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 {
+		return nil
+	}
+	switch {
+	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+		links = append(links, f.libraryIteratorCaptures(proven)...)
+	case f.isFunction(proven):
+		if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+			for symbol := range f.l.statics {
+				actual := f.l.checker.GetTypeOfSymbol(symbol)
+				if f.l.checker.IsTypeAssignableTo(actual, proven) {
+					links = append(links, cycleNode{proven: actual})
+				}
+			}
+		}
+		for _, closure := range f.l.closureRecords {
+			if f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
+				for _, local := range f.l.closureLinks(closure) {
+					links = append(links, cycleNode{cell: local + 1})
+				}
+			}
+		}
+	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+		for _, argument := range f.graphArguments(proven) {
+			links = append(links, cycleNode{proven: argument})
+		}
+	default:
+		if f.l.isStaticType(proven) {
+			if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
+				links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+			}
+		}
+		for _, field := range f.fields(proven) {
+			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+		}
+		for _, shape := range f.shapes {
+			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
+				links = append(links, cycleNode{proven: shape})
+			}
+		}
+		for _, accessor := range f.l.accessorCaptures {
+			if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
+				for _, local := range f.l.result.Functions[accessor.function].Environment {
+					links = append(links, cycleNode{cell: local + 1})
+				}
+			}
+		}
+	}
+	return links
+}
+
+// graphArguments only queries the checker on reference objects. A contextual
+// union may describe an array initializer without itself being a TypeReference.
+func (f *cycleFinder) graphArguments(proven *checker.Type) []*checker.Type {
+	if proven == nil || proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+		return nil
+	}
+	return f.l.checker.GetTypeArguments(proven)
+}
+
+// restGraphTypes gives each rest layout the identity of the array its callers pack, so the pack
+// is a graph allocation exactly where an array literal of that type would be. A forwarder, a
+// class's ready-new and an inherited initializer pack for the function they forward to, so the
+// type is read through that chain; a merged constructor keeps its body's own parameter locals.
+// Every function sharing a layout adds its identity, since a closure call packs for all of them.
+func (f *cycleFinder) restGraphTypes() {
+	f.l.result.RestGraphTypes = ir.SortedMap[ir.RestArguments, []int]{}
+	for index, function := range f.l.result.Functions {
+		if function.RestElement == 0 {
+			continue
+		}
+		proven := f.restType(index)
+		if proven == nil {
+			continue
+		}
+		key := ir.FunctionRestArguments(function)
+		id := f.l.cycleTypeID(proven)
+		known := false
+		for _, existing := range f.l.result.RestGraphTypes[key] {
+			known = known || existing == id
+		}
+		if !known {
+			f.l.result.RestGraphTypes[key] = append(f.l.result.RestGraphTypes[key], id)
+		}
+	}
+}
+
+// restType is the checker type of the rest parameter a function's callers pack for, or nil when
+// no declared parameter stands behind it. The walk is bounded by the function count, so a
+// forwarding loop, which lowering never makes, can't hang it.
+func (f *cycleFinder) restType(index int) *checker.Type {
+	for range f.l.result.Functions {
+		function := f.l.result.Functions[index]
+		if parameters := function.Parameters; len(parameters) != 0 {
+			if proven := f.l.localTypes[parameters[len(parameters)-1]]; proven != nil {
+				return proven
+			}
+		}
+		if function.ForwardsArguments == 0 {
+			return nil
+		}
+		index = function.ForwardsArguments - 1
+	}
+	return nil
+}
+
+// viewPairFailure is how a view's pair fails viewPairGuard: the fields it went through to the pair
+// that failed, outermost first, and function, the function-typed field the view writes what its
+// source's field can't hold, or empty when that pair is one the cycle finder doesn't relate.
+type viewPairFailure struct {
+	through  []viewPairStep
+	function string
+	// member is a writable view field whose source member is a method or an accessor, which the
+	// cycle finder's fields leave out (deriveFields), so a value written through it lands where the
+	// finder doesn't walk.
+	member string
+}
+
+// viewPairStep is one step a view's pair was followed through ("its field inner", "its elements",
+// "its index values", "an arm"), with the source's and the view's types for it.
+type viewPairStep struct {
+	name           string
+	source, target *checker.Type
+}
+
+// A checked view lets the program see a value of its source type through its target, and the cycle
+// finder takes two types for one possible allocation only when one is assignable to the other
+// (deriveRelated). A view between types it doesn't relate is an edge the program uses that the
+// finder never walks, so a cycle through it could go unnoticed: in a graph program it's NotYet,
+// failing closed (Adamic's ruling, Nov 8). A view reads its source's fields as its own, so the pair
+// is followed through same-named fields too. A view with no source names nothing to relate, and
+// fails only when its target holds a field that isn't a plain scalar.
+func (f *cycleFinder) viewPairGuard() error {
+ if roadsGuardForceAll() && len(f.l.viewSources)>0 { return f.l.notYet(f.l.viewSources[0].node, "scratch mutant: every view pair refuses") }
+	for _, view := range f.l.viewSources {
+		target := f.l.concrete(view.target)
+		if view.source == nil {
+			for _, field := range f.fields(f.l.checker.GetNonNullableType(target)) {
+				if !viewPairScalarField(f.l.representation(f.l.checker.GetTypeOfSymbol(field))) {
+					return f.l.notYet(view.node, "a view with no source type of "+f.l.checker.TypeToString(target)+" in a graph program, which holds a reference field the cycle finder can't follow yet")
+				}
+			}
+			continue
+		}
+		source := f.l.concrete(view.source)
+		failure := f.viewPairFailure(source, target, map[[2]*checker.Type]bool{})
+		if failure == nil {
+			continue
+		}
+		what := "a view of " + f.l.checker.TypeToString(source) + " as " + f.l.checker.TypeToString(target) + " in a graph program"
+		if failure.function != "" {
+			what += ", whose field " + failure.function + " takes a function its source's " + failure.function + " can't hold, so a closure written through the view escapes the cycle finder"
+		} else if failure.member != "" {
+			what += ", whose writable field " + failure.member + " is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it"
+		} else {
+			what += ", which the cycle finder doesn't relate yet"
+		}
+		for _, step := range failure.through {
+			what += " through " + step.name + " (" + f.l.checker.TypeToString(step.source) + " as " + f.l.checker.TypeToString(step.target) + ")"
+		}
+		return f.l.notYet(view.node, what)
+	}
+	return nil
+}
+
+// viewPairFailure is how a view of source as target fails viewPairGuard, or nil. A pair already
+// met is judged where it was first met, which bounds the walk by the pairs there are, so it follows
+// every field to the end rather than stopping at a depth and letting the rest through. A type
+// parameter or any is judged like any other type: a declared generic pair the finder doesn't relate
+// fails closed, where skipping it would let it through.
+func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]*checker.Type]bool) *viewPairFailure {
+	pair := [2]*checker.Type{source, target}
+	if seen[pair] || viewPairScalar(source) || viewPairScalar(target) || f.viewPairFunction(source) || f.viewPairFunction(target) {
+		return nil
+	}
+	seen[pair] = true
+	if !f.deriveRelated(source, target) {
+		return &viewPairFailure{}
+	}
+	present, viewed := f.l.checker.GetNonNullableType(source), f.l.checker.GetNonNullableType(target)
+	// follow judges one nested pair, named for the step it was followed through.
+	follow := func(name string, nestedSource, nestedTarget *checker.Type) *viewPairFailure {
+		nestedSource, nestedTarget = f.l.concrete(nestedSource), f.l.concrete(nestedTarget)
+		failure := f.viewPairFailure(nestedSource, nestedTarget, seen)
+		if failure != nil {
+			failure.through = append([]viewPairStep{{name: name, source: nestedSource, target: nestedTarget}}, failure.through...)
+		}
+		return failure
+	}
+	// One type on both sides is nothing to pair: a write through the view stores only what the source's
+	// slot already holds, which the finder walks (Correctness's crossing on #3zex15c, Language's word:
+	// identity, never assignability, since a wider view is the case this guard exists for). It's the
+	// same type, not the checker's identity, which doesn't ask whether a member is a method or a field:
+	// class Speaks's speak() is identical to SpeaksField's writable speak, the third road below.
+	if present == viewed {
+		return nil
+	}
+	// Arms pair one by one, each source arm with each target arm it relates to, never the cross product
+	// of whole sides: Modifier as Modifier crossed into AccessorKeyword as AbstractKeyword, a pair no
+	// program forms (289 refusals over tsc at 769b0e53). A source arm reaches the view's arm only where
+	// it relates to it: discriminant narrowing, checked predicates, instanceof and checked casts all
+	// keep that. Two roads that wouldn't are stopped elsewhere, and this rule leans on both: `in` that
+	// narrows a union of object types is refused (unknown.go), and a write to a property only an `in`
+	// test added is NotYet (#yqbg9vz). If either lifts, this pairing has to be looked at again.
+	// fields() of a union gives only the properties every arm shares, so without the arms a field only
+	// one arm declares would go unwalked (Lower's second road), and GetPropertyOfType on a union source
+	// drops one only one arm has (Lower's should).
+	sourceArms, targetArms := []*checker.Type{present}, []*checker.Type{viewed}
+	if present.Flags()&checker.TypeFlagsUnion != 0 {
+		sourceArms = present.Types()
+	}
+	if viewed.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		targetArms = viewed.Types()
+	}
+	if len(sourceArms) > 1 || len(targetArms) > 1 {
+		name := "an arm"
+		if len(sourceArms) > 1 {
+			name = "a source arm"
+		}
+		for _, sourceArm := range sourceArms {
+			if viewPairScalar(sourceArm) || f.viewPairFunction(sourceArm) {
+				continue
+			}
+			// A source arm related to a union target as a whole can be seen through an arm it doesn't
+			// relate to alone: the checker relates { kind: 'a' | 'b' } to an arm of 'a' and an arm of 'b' by
+			// splitting the discriminant (Language's must on #3zex15c), and a check of kind === 'a' narrows
+			// it to the 'a' arm even when it relates whole to another (her should). Skipping such an arm
+			// would leave a field only it declares unwalked, so its members pair with the source arm's,
+			// never failing on the arm not relating whole. Only a literal discriminant that shares no value
+			// rules an arm out (viewPairDisjoint), which is Correctness's crossing.
+			whole := viewed.Flags()&checker.TypeFlagsUnion != 0 && f.deriveRelated(sourceArm, viewed)
+			for _, targetArm := range targetArms {
+				if viewPairScalar(targetArm) || f.viewPairFunction(targetArm) {
+					continue
+				}
+				if f.deriveRelated(sourceArm, targetArm) {
+					if failure := follow(name, sourceArm, targetArm); failure != nil {
+						return failure
+					}
+					continue
+				}
+				armSource, armTarget := f.l.checker.GetNonNullableType(sourceArm), f.l.checker.GetNonNullableType(targetArm)
+				if !whole || f.viewPairDisjoint(armSource, armTarget) {
+					continue
+				}
+				if failure := f.viewPairMembers(armSource, armTarget, follow); failure != nil {
+					failure.through = append([]viewPairStep{{name: "a split arm", source: sourceArm, target: targetArm}}, failure.through...)
+					return failure
+				}
+			}
+		}
+	}
+	return f.viewPairMembers(present, viewed, follow)
+}
+
+// viewPairMembers pairs what a view of present as viewed reads of its source beneath the top pair: its
+// elements, its index values and its fields, each through follow, and stops a writable view field over
+// a source method or accessor.
+func (f *cycleFinder) viewPairMembers(present, viewed *checker.Type, follow func(string, *checker.Type, *checker.Type) *viewPairFailure) *viewPairFailure {
+	// Element and index values (#3zex15c, Lower's first road): a container's elements are what
+	// reachLinks follows by its type arguments, and a dictionary's values by its index signatures, so
+	// the view pairs them as it pairs fields.
+	if failure := f.viewPairElements(present, viewed, follow); failure != nil {
+		return failure
+	}
+	for _, info := range f.l.checker.GetIndexInfosOfType(viewed) {
+		for _, own := range f.l.checker.GetIndexInfosOfType(present) {
+			if own.KeyType() == info.KeyType() {
+				if failure := follow("its index values", own.ValueType(), info.ValueType()); failure != nil {
+					return failure
+				}
+			}
+		}
+	}
+	for _, field := range f.fields(viewed) {
+		held := f.l.checker.GetPropertyOfType(present, field.Name)
+		if held == nil {
+			// A source with an index signature holds the field among its values, and a view reads it
+			// from there (Runtime's pair on #vqzty8t): pair the values with the field.
+			for _, own := range f.l.checker.GetIndexInfosOfType(present) {
+				if failure := follow("its field "+field.Name, own.ValueType(), f.l.checker.GetTypeOfSymbol(field)); failure != nil {
+					return failure
+				}
+			}
+			continue
+		}
+		// A writable view field over a source method or accessor writes where the finder doesn't walk
+		// (Language's third road, Lower's ruling on #vqzty8t).
+		if !f.l.checker.IsReadonlySymbol(field) && field.Flags&ast.SymbolFlagsMethod == 0 && ((held.Flags&ast.SymbolFlagsMethod != 0 && !literalMethod(held)) || accessorSymbol(held)) {
+			return &viewPairFailure{member: field.Name}
+		}
+		nestedSource, nestedTarget := f.l.concrete(f.l.checker.GetTypeOfSymbol(held)), f.l.concrete(f.l.checker.GetTypeOfSymbol(field))
+		// A function-typed field is judged by the closures that can flow into it (rulings.md's
+		// ClosureTargets entry), not by this guard, so a view with a method or callback field doesn't
+		// stop a graph program. Lower's exception: a field the view can write, typed so its source's
+		// field can't hold what the view writes, takes a closure no flow into the source's slot names.
+		if f.viewPairFunction(nestedSource) || f.viewPairFunction(nestedTarget) {
+			if !f.l.checker.IsReadonlySymbol(field) && field.Flags&ast.SymbolFlagsMethod == 0 && !f.l.checker.IsTypeAssignableTo(nestedTarget, nestedSource) {
+				return &viewPairFailure{function: field.Name}
+			}
+			continue
+		}
+		if failure := follow("its field "+field.Name, nestedSource, nestedTarget); failure != nil {
+			return failure
+		}
+	}
+	return nil
+}
+
+// viewPairElements pairs a container's elements with its view's: an array's or a readonly array's
+// element with each of a tuple's or the view array's, a tuple's position by position, and a Map's or a
+// Set's type arguments position by position.
+func (f *cycleFinder) viewPairElements(source, target *checker.Type, follow func(string, *checker.Type, *checker.Type) *viewPairFailure) *viewPairFailure {
+	container := func(proven *checker.Type) bool {
+		return f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
+	}
+	if !container(source) || !container(target) {
+		return nil
+	}
+	sourceArguments, targetArguments := f.l.checker.GetTypeArguments(source), f.l.checker.GetTypeArguments(target)
+	for index, targetArgument := range targetArguments {
+		sourceArgument := (*checker.Type)(nil)
+		switch {
+		case index < len(sourceArguments) && (checker.IsTupleType(source) == checker.IsTupleType(target) || checker.IsTupleType(target)):
+			sourceArgument = sourceArguments[index]
+		case len(sourceArguments) == 1 && f.l.isArrayType(source):
+			sourceArgument = sourceArguments[0]
+		}
+		if sourceArgument != nil {
+			if failure := follow("its elements", sourceArgument, targetArgument); failure != nil {
+				return failure
+			}
+		}
+	}
+	// A tuple seen as an array: every position against the array's one element.
+	if checker.IsTupleType(source) && f.l.isArrayType(target) && len(targetArguments) == 1 {
+		for _, sourceArgument := range sourceArguments {
+			if failure := follow("its elements", sourceArgument, targetArguments[0]); failure != nil {
+				return failure
+			}
+		}
+	}
+	return nil
+}
+
+// viewPairDisjoint is whether no value of source can be one of target: a field both declare holds
+// only literals on each side, and no literal is on both (ChoiceA's kind 'a' against ChoiceB's 'b', or
+// one keyword node's kind against another's). A literal type is one checker type per value, so the
+// sides share a value only by sharing a type.
+func (f *cycleFinder) viewPairDisjoint(source, target *checker.Type) bool {
+	for _, field := range f.fields(target) {
+		held := f.l.checker.GetPropertyOfType(source, field.Name)
+		if held == nil {
+			continue
+		}
+		sourceValues, sourceLiteral := viewPairLiterals(f.l.checker.GetTypeOfSymbol(held))
+		targetValues, targetLiteral := viewPairLiterals(f.l.checker.GetTypeOfSymbol(field))
+		if !sourceLiteral || !targetLiteral {
+			continue
+		}
+		shared := false
+		for _, sourceValue := range sourceValues {
+			for _, targetValue := range targetValues {
+				shared = shared || sourceValue == targetValue
+			}
+		}
+		if !shared {
+			return true
+		}
+	}
+	return false
+}
+
+// viewPairLiterals is the values of a type made only of unit types (literals, undefined and null),
+// one type each, and whether it is one.
+func viewPairLiterals(proven *checker.Type) ([]*checker.Type, bool) {
+	values := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		values = proven.Types()
+	}
+	for _, value := range values {
+		if value.Flags()&checker.TypeFlagsUnit == 0 {
+			return nil, false
+		}
+	}
+	return values, true
+}
+
+// viewPairFunction is whether a type, undefined and null aside, is a function's.
+func (f *cycleFinder) viewPairFunction(proven *checker.Type) bool {
+	return f.isFunction(f.l.checker.GetNonNullableType(proven))
+}
+
+// viewPairScalar is whether every value of a type is a primitive, undefined and null included,
+// which holds nothing a cycle could close through. An intersection holding one, a branded
+// primitive, is one too.
+func viewPairScalar(proven *checker.Type) bool {
+	switch {
+	case proven.Flags()&checker.TypeFlagsUnion != 0:
+		for _, member := range proven.Types() {
+			if !viewPairScalar(member) {
+				return false
+			}
+		}
+		return true
+	case proven.Flags()&checker.TypeFlagsIntersection != 0:
+		for _, member := range proven.Types() {
+			if viewPairScalar(member) {
+				return true
+			}
+		}
+		return false
+	}
+	return proven.Flags()&(checker.TypeFlagsPrimitive|checker.TypeFlagsNever) != 0
+}
+
+// viewPairScalarField is whether a field held as of is safe in a view with no source: a number, a
+// boolean or a string, or a number or boolean that may be missing. Anything else, a union, unknown,
+// an object, an array, a map or a closure, is a reference the cycle finder can't follow from here,
+// and so is a representation lowering doesn't know.
+func viewPairScalarField(of ir.Type, known bool) bool {
+	switch of {
+	case ir.Number, ir.Boolean, ir.String, ir.MaybeNumber, ir.MaybeBoolean:
+		return known
+	}
+	return false
+}
+
+// Graph adoption moves a fixed allocation. Checked-view adapters and dynamic
+// shapes have additional owners outside that proof. Until their provenance is
+// tracked separately, keep mixed programs outside graph ownership.
+func (f *cycleFinder) graphAdoptionBoundary() error {
+	reason := ""
+	var site *ast.Node
+	decodes := false
+	// Legacy tagged-union views record checked fields without a ViewOrigin.
+	if len(f.l.result.ViewOrigins) != 0 || len(f.l.result.CheckedFields) != 0 {
+		reason = "a checked-view adapter in a graph program"
+		site = f.l.graphViewSite
+	}
+	inspect := func(node any) bool {
+		switch value := node.(type) {
+		case ir.ObjectLiteral:
+			if value.Record {
+				reason = "a dynamic-shape object in a graph program"
+				site = f.l.graphDynamicSite
+			}
+		case ir.DynamicProperty, ir.DynamicKeyedProperty:
+			reason = "a dynamic-shape object in a graph program"
+			site = f.l.graphDynamicSite
+		case ir.ObjectCall:
+			if value.Checked {
+				reason = "a dynamic-shape object in a graph program"
+				site = f.l.graphDynamicSite
+			}
+		case ir.JSONDecode:
+			decodes = decodes || jsonSchemaNests(value.Schema)
+		}
+		return true
+	}
+	walk(f.l.result.Main, inspect)
+	for _, function := range f.l.result.Functions {
+		walk(function.Body, inspect)
+	}
+	if reason != "" {
+		return &Refused{Where: f.l.program.Where(site), What: reason, Fix: "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
+	}
+	// The decoder makes its objects and arrays in the runtime with no graph plan, so in a graph program
+	// a decoded value that holds a container can be closed into a cycle outside every region and leak
+	// (#bvsjdte, 2a; 2b gives the decoder the plan and lifts this). It's our analysis that can't hold
+	// it yet, not the program that's wrong.
+	// A record's entries over elements a cycle could run through stops too: the plan adopts each pair
+	// only through the entries array, so a pair stored alone stays counted, measured freeing 7 of 16
+	// (Memory's e3 on #y7wexf5). What else lowering makes, toSorted, toReversed, Map.groupBy and a
+	// record's values among it, graphFlows plans where it's made.
+	if len(f.l.graphUnplanned) != 0 {
+		first := f.l.graphUnplanned[0]
+		return f.l.notYet(first.node, first.what+" in a graph program, whose result lowering makes outside the program's graph regions")
+	}
+	if site := f.unplannedPair(); site != nil {
+		what := "a Map's or a Set's [key, value] pair in a graph program, whose type the checker didn't name"
+		if site.pair != nil {
+			what = "a Map's or a Set's [key, value] pair held as another graph type in a graph program, so no plan names the pair"
+		}
+		return f.l.notYet(site.node, what)
+	}
+	if site := f.unplannedNodeArray(); site != nil {
+		return f.l.notYet(site.node, "a NodeArray on a cycle in a graph program, whose literal native construction makes outside the program's graph regions")
+	}
+	if decodes {
+		what := "decodeJson<" + f.l.graphDecodeType + "> in a graph program, whose decoded values the runtime makes outside the program's graph regions"
+		if f.l.graphDecodeSite == nil {
+			// The IR holds a decode whose site lowering didn't keep: still stopped, at the program.
+			return &NotYet{Where: f.l.result.Source, What: what}
+		}
+		return f.l.notYet(f.l.graphDecodeSite, what)
+	}
+	return nil
+}
+
+// unplannedPair is the first Map entries site whose pairs a graph program could hold on a cycle with
+// no plan for them, or nil. A pair is planned by its own tuple type (mapEntries); when that type isn't
+// a graph type but the pair can still be held as one, a labeled or readonly tuple, a wider array or a
+// union, map.c makes the pair counted and a cycle through it leaks (#dps0kp6). Assignability is the
+// test, failing closed on a pair whose type the checker didn't name. An exhausted relation budget
+// reads as not assignable (#apyq5ve), which this can't tell apart.
+func (f *cycleFinder) unplannedPair() *graphPairSite {
+	// With no graph type selected there's no graph slot to hold a pair (selectProgramMembership reads
+	// this boundary too).
+	if len(f.selected) == 0 {
+		return nil
+	}
+	judged := map[*checker.Type]bool{}
+	for index := range f.l.graphPairs {
+		site := &f.l.graphPairs[index]
+		if site.pair == nil {
+			return site
+		}
+		// The plan's own key (pairGraphTypes), so the two can't drift.
+		if f.l.result.GraphTypes[f.l.cycleTypeID(site.pair)] || judged[site.pair] {
+			continue
+		}
+		judged[site.pair] = true
+		for _, held := range f.selected {
+			if f.l.checker.IsTypeAssignableTo(site.pair, held) {
+				return site
+			}
+		}
+	}
+	return nil
+}
+
+// unplannedNodeArray is the first NodeArray literal a graph program could hold on a cycle, or nil.
+// Native construction (construction.go) makes a NodeArray with its interior metadata and never adopts
+// it, and adoption would truncate that metadata (#enawrc9), so a NodeArray on a cycle would stay
+// counted and leak with the cycle (#djwd1t2, row 3). It's unreached today: tsc's own shape, a node's
+// children a NodeArray of nodes each naming its parent, is refused first as an unchecked cast. This
+// stop keeps it from leaking in silence when that cast is admitted. A NodeArray is on a cycle when its
+// type is a graph type, or it can be held as one.
+func (f *cycleFinder) unplannedNodeArray() *graphNodeArraySite {
+	if len(f.selected) == 0 {
+		return nil
+	}
+	for index := range f.l.graphNodeArrays {
+		site := &f.l.graphNodeArrays[index]
+		if f.l.result.GraphTypes[f.l.cycleTypeID(site.array)] {
+			return site
+		}
+		for _, held := range f.selected {
+			if f.l.checker.IsTypeAssignableTo(site.array, held) {
+				return site
+			}
+		}
+	}
+	return nil
+}
+
+// cycleTypeID keeps the checker's allocation identity unchanged. The optional
+// capture lets differential tests resolve even transient allocation types.
+func (l *lowering) cycleTypeID(proven *checker.Type) int {
+	id := int(proven.Id())
+	if l.cycleTypes != nil {
+		l.cycleTypes[id] = proven
+	}
+	return id
+}

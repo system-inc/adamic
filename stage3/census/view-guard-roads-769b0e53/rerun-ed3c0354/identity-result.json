@@ -1,0 +1,14 @@
+{
+  "real": {
+    "views": 1,
+    "refusals": 0,
+    "ordinary_non_telemetry_bytes_equal_parent": true,
+    "only_cache_telemetry_may_differ": true
+  },
+  "mutant": {
+    "views": 1,
+    "refusals": 1,
+    "ordinary_non_telemetry_bytes_equal_parent": true,
+    "only_cache_telemetry_may_differ": true
+  }
+}
