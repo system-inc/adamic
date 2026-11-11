@@ -1,0 +1,6 @@
+73 tracing.ts:340:14 Refused new a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take
+2 - accepted unchanged -
+1 commandLineParser.ts:293:35 NotYet unchanged reading an enum before its runtime initialization; move the call after the enum declaration
+1 diagnosticInformationMap.generated.ts:13:45 NotYet unchanged reading an enum before its runtime initialization; move the call after the enum declaration
+1 semver.ts:71:9 NotYet unchanged a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration
+1 sys.ts:1654:13 NotYet new node:inspector.Session.post

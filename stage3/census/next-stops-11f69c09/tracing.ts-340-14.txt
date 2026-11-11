@@ -1,0 +1,7 @@
+                display,
+            };
+
+            (fs as { writeSync(fd: number, data: string | undefined): number }).writeSync(typesFd, JSON.stringify(descriptor));
+            if (i < numTypes - 1) {
+                fs.writeSync(typesFd, ",\n");
+            }

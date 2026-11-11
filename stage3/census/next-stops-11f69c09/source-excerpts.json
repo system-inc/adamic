@@ -1,0 +1,37 @@
+[
+  {
+    "where": "tracing.ts:340:14",
+    "start_line": 337,
+    "end_line": 343,
+    "text": "                display,\n            };\n\n            (fs as { writeSync(fd: number, data: string | undefined): number }).writeSync(typesFd, JSON.stringify(descriptor));\n            if (i < numTypes - 1) {\n                fs.writeSync(typesFd, \",\\n\");\n            }\n",
+    "file": "tracing.ts-340-14.txt"
+  },
+  {
+    "where": "commandLineParser.ts:293:35",
+    "start_line": 290,
+    "end_line": 296,
+    "text": "    {\n        name: \"watchFile\",\n        type: new Map(Object.entries({\n            fixedpollinginterval: WatchFileKind.FixedPollingInterval,\n            prioritypollinginterval: WatchFileKind.PriorityPollingInterval,\n            dynamicprioritypolling: WatchFileKind.DynamicPriorityPolling,\n            fixedchunksizepolling: WatchFileKind.FixedChunkSizePolling,\n",
+    "file": "commandLineParser.ts-293-35.txt"
+  },
+  {
+    "where": "diagnosticInformationMap.generated.ts:13:45",
+    "start_line": 10,
+    "end_line": 16,
+    "text": "/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/\n/** @internal */\nexport const Diagnostics = {\n    Unterminated_string_literal: diag(1002, DiagnosticCategory.Error, \"Unterminated_string_literal_1002\", \"Unterminated string literal.\") as DiagnosticMessage,\n    Identifier_expected: diag(1003, DiagnosticCategory.Error, \"Identifier_expected_1003\", \"Identifier expected.\") as DiagnosticMessage,\n    _0_expected: diag(1005, DiagnosticCategory.Error, \"_0_expected_1005\", \"'{0}' expected.\") as DiagnosticMessage,\n    A_file_cannot_have_a_reference_to_itself: diag(1006, DiagnosticCategory.Error, \"A_file_cannot_have_a_reference_to_itself_1006\", \"A file cannot have a reference to itself.\") as DiagnosticMessage,\n",
+    "file": "diagnosticInformationMap.generated.ts-13-45.txt"
+  },
+  {
+    "where": "semver.ts:71:9",
+    "start_line": 68,
+    "end_line": 74,
+    "text": "        const buildArray = build ? isArray(build) ? build : build.split(\".\") : emptyArray;\n\n        Debug.assert(every(prereleaseArray, s => prereleasePartRegExp.test(s)), \"Invalid argument: prerelease\");\n        Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), \"Invalid argument: build\");\n\n        this.major = major;\n        this.minor = minor;\n",
+    "file": "semver.ts-71-9.txt"
+  },
+  {
+    "where": "sys.ts:1654:13",
+    "start_line": 1651,
+    "end_line": 1657,
+    "text": "            const session = new inspector.Session();\n            session.connect();\n\n            session.post(\"Profiler.enable\", () => {\n                session.post(\"Profiler.start\", () => {\n                    activeSession = session;\n                    profilePath = path;\n",
+    "file": "sys.ts-1654-13.txt"
+  }
+]

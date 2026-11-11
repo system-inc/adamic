@@ -1,0 +1,89 @@
+internal/lower/invariance.go
+1154: 		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
+1155: 	}
+1156: 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
+1157: 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+1158: 	if found.parameter {
+1159: 		what = "a function taking " + l.checker.TypeToString(found.source) + " seen as one taking " + l.checker.TypeToString(found.target) + " (tsc relates a method's parameters both ways), so it can be handed what it can't take"
+1160: 		fix = "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+1161: 	}
+1162: 	if found.methodField != "" {
+1163: 		what = "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", whose method " + found.methodField + " becomes a writable field: a write of " + l.checker.TypeToString(found.target) + " would replace a method of type " + l.checker.TypeToString(found.source)
+1164: 		fix = "make " + found.methodField + " readonly in the type it's seen as (readonly " + found.methodField + ": ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+1165: 	}
+1166: 	if found.readonlyField != "" {
+1167: 		what = "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", whose readonly field " + found.readonlyField + " becomes writable: a readonly field may hold something narrower than " + l.checker.TypeToString(found.source) + ", which a write of " + l.checker.TypeToString(found.target) + " would replace"
+1168: 		fix = "keep " + found.readonlyField + " readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+1169: 	}
+1170: 	if found.target.Flags()&checker.TypeFlagsTypeParameter != 0 {
+1171: 		what = "a value of type " + l.checker.TypeToString(found.source) + " seen as " + l.checker.TypeToString(found.target) + ", a type parameter whose constraint " + l.checker.TypeToString(l.checker.GetBaseConstraintOfType(found.target)) + " can be written, so it can write what " + l.checker.TypeToString(found.source) + " can't hold"
+1172: 		fix = "take it as " + l.checker.TypeToString(found.source) + ", or constrain " + l.checker.TypeToString(found.target) + " to something readonly, which can't write (adamic/invariant-mutable)"
+1173: 	}
+1174: 	return &Refused{Where: l.program.Where(node), What: what, Fix: fix}
+1175: }
+
+internal/lower/library_node.go
+600: func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
+601: 	if err := l.nodeFSDirectorySignature(node); err != nil {
+602: 		return err
+603: 	}
+604: 	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) {
+605: 		return nil
+606: 	}
+607: 	if err := l.nodeHostCallbackArgument(node); err != nil {
+608: 		return err
+609: 	}
+610: 	if found, err := l.nodeStdoutUseRefusal(node); found {
+611: 		return err
+612: 	}
+613: 	if found, err := l.nodeEnvironmentUseRefusal(node); found {
+614: 		return err
+615: 	}
+616: 	if found, err := l.nodeRealpathUseRefusal(node); found {
+617: 		return err
+618: 	}
+619: 	if found, err := l.nodePlatformUseRefusal(node); found {
+620: 		return err
+621: 	}
+622: 	if found, err := l.nodeStackTraceLimitUseRefusal(node); found {
+623: 		return err
+624: 	}
+625: 	if found, err := l.nodeGlobalsUseRefusal(node); found {
+626: 		return err
+627: 	}
+628: 	if err := l.nodeProcessSignature(node); err != nil {
+629: 		return err
+630: 	}
+631: 	if found, err := l.nodeCommonJSUseRefusal(node); found {
+632: 		return err
+633: 	}
+634: 	if found, err := l.nodeWatchUseRefusal(node); found {
+635: 		return err
+636: 	}
+637: 	name := l.nodeLibraryMember(node)
+638: 	if name != "" && !nodeLibraryMemberImplemented(l.nodeLibrarySymbol(node)) {
+639: 		return l.notYet(node, name)
+640: 	}
+641: 	return nil
+642: }
+643: 
+644: func init() { refusalRules.register(800, "nodeLibraryRefusal", (*lowering).nodeLibraryRefusal) }
+
+internal/lower/merged_fields.go
+124: 		if declaration.Parent != nil && declaration.Parent.Kind == ast.KindInterfaceDeclaration && l.mergedClass(declaration.Parent) != nil {
+125: 			merged = true
+126: 		}
+127: 	}
+128: 	if !merged {
+129: 		return nil
+130: 	}
+131: 	// This module scan precedes rule 800. An unbuilt Node host member needs its
+132: 	// own NotYet, not a checked-view contract for storage we do not build. A nil
+133: 	// answer keeps the contract proof for implemented host and program members.
+134: 	if err := l.nodeLibraryRefusal(node); err != nil {
+135: 		return err
+136: 	}
+137: 	if _, err := l.strictViewContract(node, l.checker.GetTypeOfSymbol(field)); err != nil {
+138: 		return err
+139: 	}
+140: 	if l.result.CheckedFields == nil {
