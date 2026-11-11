@@ -1,0 +1,15 @@
+internal/lower/optional_widening.go
+362: // optionalWideningRefusal is the hiding rule's refusal of found at node.
+363: func (l *lowering) optionalWideningRefusal(node *ast.Node, found *optionalWidening) error {
+364: 	if found.unstored != "" {
+365: 		// Diagnostics' words on #sn788gx, one template for every runtime shape the census adds.
+366: 		return l.notYet(node, "a view naming "+found.property+", which lib declares on "+found.unstored+" but the runtime's "+found.unstored+" doesn't hold (leave "+found.property+" out of the view's type)")
+367: 	}
+368: 	return &Refused{Where: l.program.Where(node),
+369: 		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
+370: 		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+371: }
+372: 
+373: func init() {
+374: 	refusalRules.register(3300, "refuseOptionalWidening", (*lowering).refuseOptionalWidening)
+375: }
