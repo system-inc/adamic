@@ -605,6 +605,19 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 		}
 		return failure
 	}
+	// Each arm of a union source against the view (Lower's should on #3zex15c): GetPropertyOfType on
+	// a union drops a property only one arm has, so that arm's field under a view's optional one would
+	// go unpaired.
+	if present.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, arm := range present.Types() {
+			if viewPairScalar(arm) || f.viewPairFunction(arm) {
+				continue
+			}
+			if failure := follow("a source arm", arm, viewed); failure != nil {
+				return failure
+			}
+		}
+	}
 	// Each union or intersection arm of the target that the source relates to: fields() of a union
 	// gives only the properties every arm shares, so a field only one arm declares would go unwalked
 	// (#3zex15c, Lower's second road).

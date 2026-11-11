@@ -41,6 +41,10 @@ class Speaks { speak(): void {} }
 interface SpeaksField { speak: () => void }
 type BagSpeaks = Record<string, Speaks>
 interface NamedSpeaks { readonly a?: SpeaksField }
+interface HasInner { readonly tag: string; inner: MakesDerived }
+interface NoInner { readonly tag: string }
+type EitherInner = HasInner | NoInner
+interface ViewsInner { readonly tag: string; readonly inner?: MakesBase }
 `
 
 // graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
@@ -193,7 +197,7 @@ func TestGraphViewGuardNoSource(t *testing.T) {
 // its road. Mutants, each red on its own rows: viewPairElements returning nil (elements); the index
 // loop removed (index values); the held == nil index pairing removed (an index source as a named
 // field, both rows); the arm loop removed (an arm); the method or accessor stop removed (a method,
-// and the method through an index source).
+// and the method through an index source); the source arm loop removed (a source arm, Lower's should).
 func TestGraphViewGuardRoads(t *testing.T) {
 	t.Parallel()
 	lowered, types, nodes := graphViewGuardLowering(t)
@@ -204,6 +208,7 @@ func TestGraphViewGuardRoads(t *testing.T) {
 		{"an index source as a named field", "BagMakesDerived", "NamedMakes", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its field a (MakesDerived as "},
 		{"an arm", "MakesDerived", "EitherBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through an arm (MakesDerived as MakesBase)"},
 		{"a method", "Speaks", "SpeaksField", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it"},
+		{"a source arm", "EitherInner", "ViewsInner", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a source arm (HasInner as ViewsInner) through its field inner"},
 		{"a method through an index source", "BagSpeaks", "NamedSpeaks", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it through its field a (Speaks as "},
 	} {
 		if types[row.source] == nil || types[row.target] == nil {
