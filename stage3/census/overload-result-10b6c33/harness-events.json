@@ -1,0 +1,5 @@
+{
+  "parent_census_child_exit": 0,
+  "parent_outer_shell_exit": 2,
+  "event": "The running parent measurement shell read the modified measure.sh after the census returned, causing a shell syntax error. The census binary and timing wrapper had already completed successfully. The full stream has the relation trailer and all 81 file records. Resume validates and reuses this completed measurement without rerunning the compiler."
+}

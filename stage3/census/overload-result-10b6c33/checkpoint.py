@@ -5,8 +5,11 @@ def copy(src,dst):
  p=pathlib.Path(src)
  if p.exists():
   if p.stat().st_size>1000000:
+   (out/dst).unlink(missing_ok=True)
    with p.open('rb') as i,gzip.open(out/(dst+'.gz'),'wb') as o: shutil.copyfileobj(i,o)
-  else: shutil.copyfile(p,out/dst)
+  else:
+   (out/(dst+'.gz')).unlink(missing_ok=True)
+   shutil.copyfile(p,out/dst)
 for p in pathlib.Path('/tmp').glob('overload-*'):
  if p.is_file(): copy(p,p.name)
 for label in ['parent','head']:
