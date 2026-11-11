@@ -636,7 +636,7 @@ func machineValue(path string, packaged bool) string {
 			}
 		}
 	}
-	return fmt.Sprintf("file %t %s", info.Mode()&0o111 != 0, hashed("sha256"))
+	return fmt.Sprintf("file %t %s", executableAsGit(info), hashed("sha256"))
 }
 
 // settingsOverride, while Settle keys a build, is the build settings of the binary that built it; otherwise a key is

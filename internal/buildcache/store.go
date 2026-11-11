@@ -294,7 +294,7 @@ func describeProduct(key, name, directory string) (manifest, error) {
 		}
 		sum := sha256.Sum256(content)
 		mode := uint32(0o644)
-		if info.Mode()&0o111 != 0 {
+		if executableAsGit(info) {
 			mode = 0o755
 		}
 		product.Files = append(product.Files, manifestFile{Path: filepath.ToSlash(relative), SHA256: hex.EncodeToString(sum[:]), Size: int64(len(content)), Mode: mode})
