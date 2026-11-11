@@ -1806,7 +1806,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if arguments[1].Flags()&checker.TypeFlagsNever != 0 {
 		value, valueKnown = ir.Object, true
 	}
-	if !keyKnown || !keyable(key) {
+	if !keyKnown || !l.keyableType(arguments[0], key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
