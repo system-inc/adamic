@@ -1,0 +1,67 @@
+{
+  "emittedJavaScriptFiles": 10,
+  "changed": [
+    {
+      "file": "built/local/_tsc.js",
+      "literals": [
+        {
+          "name": "process_name",
+          "line": 2228
+        },
+        {
+          "name": "thread_name",
+          "line": 2228
+        },
+        {
+          "name": "TracingStartedInBrowser",
+          "line": 2228
+        }
+      ],
+      "outsideLiteralsByteIdentical": true,
+      "beforeSha256": "0b88e7cd37c865269684d0b5f64f70784b7d24f9c8f24d36323d58dcc73cf3fa",
+      "afterSha256": "ab1a77bd4da378045d95472a6b7e15314ece7351073124f2928440115d774fda"
+    },
+    {
+      "file": "built/local/run.js",
+      "literals": [
+        {
+          "name": "process_name",
+          "line": 2618
+        },
+        {
+          "name": "thread_name",
+          "line": 2618
+        },
+        {
+          "name": "TracingStartedInBrowser",
+          "line": 2618
+        }
+      ],
+      "outsideLiteralsByteIdentical": true,
+      "beforeSha256": "0ecbbab8f3696c156c66d8ea2f237c0f8b9f8385a07c78ae97b425a366e520d3",
+      "afterSha256": "e25b93a588f54e102d00ad272ee6a76ffc920c0d4cbdaa481b277eb2e14ed39c"
+    },
+    {
+      "file": "built/local/typescript.js",
+      "literals": [
+        {
+          "name": "process_name",
+          "line": 4824
+        },
+        {
+          "name": "thread_name",
+          "line": 4824
+        },
+        {
+          "name": "TracingStartedInBrowser",
+          "line": 4824
+        }
+      ],
+      "outsideLiteralsByteIdentical": true,
+      "beforeSha256": "af5028a1b108ce537d1dc46363063314f6b01b91b3791f8af4902c8534f136a3",
+      "afterSha256": "33bd0bdc9f676424e576e2d8fded2ca204ae4b99ce8b73a0872be663907cf04c"
+    }
+  ],
+  "pureEsbuildRenameHunks": 0,
+  "otherJavaScriptChanges": 0
+}

@@ -255,7 +255,10 @@ No other adaptation identifies these metadata literals.
 contexts with the same fixed performance clock. It writes real trace files in
 fresh temporary directories, stops server-mode tracing, compares their bytes,
 and checks the runtime namespace export keys. No timestamp normalization is
-needed. `meta-spread-contracts.cjs` checks finished replay, restoring the spreads,
-and drift refusal. `meta-spread-emission.cjs` audits every emitted JavaScript
+needed. `meta-spread-emission.cjs` audits every emitted JavaScript
 file and stops on any change outside the three literal nodes. See `PROOF.md`
 for measured results and the separate evidence branch for raw logs and streams.
+
+This candidate is **stopped**, not landed: the full census exposes a new
+`JSON.stringify object references` finding at tracing.ts:104:46. The requested
+no-new-findings condition fails. The sharded lane was not run. See `PROOF.md`.
