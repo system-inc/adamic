@@ -8,7 +8,7 @@ Attempted 79 of 79 compiler files; 73 completed full-mode streams. Physical site
 
 ## By callee
 
-| Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Sites whose identified reason road 2 clears |
+| Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Method-only candidate sites for road 2 |
 | --- | ---: | ---: | ---: | --- | --- |
 | `getLineAndCharacterOfPosition` | 6 | 4 | 73 | no | 6 |
 | `getLineStarts` | 1 | 1 | 0 | no | 1 |
@@ -18,9 +18,9 @@ Reason census: 7 site(s): optional property getPositionOfLineAndCharacter in Sou
 
 First-stop attribution comes from `typescript/next-stops-c504dd8f` at `fe08a0d47a3d28f646db181ac9e8456e5c60885f`, file `stage3/census/next-stops-c504dd8f/grouped-first-stops.json`, copied as prior-first-stops.json. It names tracing.ts:206:67 for 73 roots. Its other six roots have unrelated outcomes. First-stop roots count only sites explicitly named in that evidence; it does not predict their next blocker.
 
-## What road 2 clears
+## Initial body-only road 2 hypothesis
 
-Road 2 removes the identified refusal at 7 of 7 observed sites. It leaves 0 observed site(s) outside that clearance. Cut-off files and other unmeasured boundaries remain unknown.
+Body inspection identifies 7 of 7 observed sites whose optional-method requirement would be removed by the two parameter changes. This was the original report hypothesis, not a measured clearance result. It does not establish that the replacement lineMap view is legal. The follow-up measurements below, when present, take precedence.
 
 The exact proposal changes only getLineAndCharacterOfPosition and getLineStarts. Their bodies and the functions receiving their source-file value use only text and lineMap. getLineStarts reads lineMap, writes the cache when absent, and passes only text to computeLineStarts. getLineAndCharacterOfPosition passes the value only to getLineStarts, then passes a number array to computeLineAndCharacterOfPosition and computeLineOfPosition. These paths never inspect the optional method.
 
@@ -34,7 +34,7 @@ All observed views are call arguments; no assignment or return view was observed
 
 Locations are in the adapted compiler. Body-inventory line numbers in the next table refer to pinned upstream. A physical site is (location, reason), deduplicated across phases and units. sites.json preserves every distinct finding/phase/unit observation and the complete call expression.
 
-| Location | Phase(s) | Enclosing function | Receiving callee / view | Value use | Road 2 clears reason | Reason |
+| Location | Phase(s) | Enclosing function | Receiving callee / view | Value use | Method-only candidate | Reason |
 | --- | --- | --- | --- | --- | --- | --- |
 | executeCommandLine.ts:109:41 | refusal_scan | countLines / &lt;anonymous@107&gt; | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -&gt; computeLineStarts | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 | tracing.ts:206:67 | refusal_scan | getLocation | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
@@ -67,11 +67,11 @@ The transitive read audit includes getNodeChildren for the token-position utilit
 
 ## Coverage and reproducibility
 
-Piece 1 runs sequentially; subsequent pieces use at most two concurrent independent single-file processes. Each process retains its own selection, stream, timing, and five-minute limit. All file invocations use LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1, and LATENT_ONLY_FILE equal to one exact adapted file. The meter scratch overlay disables ordinary Lower and exposes no usable IR. All 79 compiler files remain roots of each loaded program; selection restricts attempted units, not program loading. The same binary and adapted tree serve every invocation. No backend is invoked.
+The first pass used one process for piece 1 and at most two for subsequent pieces. The follow-up six-file baseline runs sequentially with a 1500-second bound; completed follow-up streams supersede the corresponding five-minute streams in these counts. Original streams remain under raw/. Each process retains its own selection, stream, timing, and five-minute limit. All file invocations use LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1, and LATENT_ONLY_FILE equal to one exact adapted file. The meter scratch overlay disables ordinary Lower and exposes no usable IR. All 79 compiler files remain roots of each loaded program; selection restricts attempted units, not program loading. The same binary and adapted tree serve every invocation. No backend is invoked.
 
 The overlay retains its historical measurement label even when checker_rejected is false. Use the header flag and diagnostics, copied into coverage.json, for the actual checker status. A successful guarded Load test here proves the overlay disables output; it does not imply the source program has checker errors.
 
-This is a latent observational census, not an exhaustive proof of all runtime paths or a compilation result. Checker-diagnosed bodies, failed signatures, boundaries, and relation-overflow effects are retained in the raw streams. Sites hidden behind these remain unknown. A zero exit plus a full header and relation trailer establishes stream completion, not body completeness. The report predicts removal of the identified parameter-view contract only; it does not claim those calls or roots will lower afterward.
+This is a latent observational census, not an exhaustive proof of all runtime paths or a compilation result. Checker-diagnosed bodies, failed signatures, boundaries, and relation-overflow effects are retained in the raw streams. Sites hidden behind these remain unknown. A zero exit plus a full header and relation trailer establishes stream completion, not body completeness. The initial table identifies removal of the optional-method requirement only; it does not claim those calls or roots will lower afterward.
 
 | File | Child exit | Seconds | Complete stream | Over five minutes |
 | --- | ---: | ---: | --- | --- |
@@ -83,7 +83,7 @@ This is a latent observational census, not an exhaustive proof of all runtime pa
 | builderPublic.ts | 0 | 25.11 | yes | no |
 | builderState.ts | 0 | 63.30 | yes | no |
 | builderStatePublic.ts | 0 | 22.21 | yes | no |
-| checker.ts | -15 | 300.12 | no | yes |
+| checker.ts | -15 | 1500.23 | no | yes |
 | commandLineParser.ts | 0 | 131.84 | yes | no |
 | core.ts | 0 | 39.20 | yes | no |
 | corePublic.ts | 0 | 25.18 | yes | no |

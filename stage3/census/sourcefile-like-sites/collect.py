@@ -1,7 +1,8 @@
 import pathlib,json,gzip,collections
 out=pathlib.Path(__file__).resolve().parent
 seen={}; coverage=[]
-for status in sorted((out/'raw').glob('*.status.json')):
+selected={json.loads(p.read_text())['file']:p for folder in [out/'raw',out/'continuation/baseline/raw'] for p in sorted(folder.glob('*.status.json'))}
+for status in [selected[k] for k in sorted(selected)]:
  s=json.loads(status.read_text()); stem=str(status).removesuffix('.status.json'); p=pathlib.Path(stem+'.jsonl'); p=p if p.exists() else pathlib.Path(str(p)+'.gz')
  records=[]
  if p.exists():
@@ -9,6 +10,8 @@ for status in sorted((out/'raw').glob('*.status.json')):
    for line in src:
     try: records.append(json.loads(line))
     except json.JSONDecodeError: s['truncated_line']=True
+ s['stream']=str(p.relative_to(out))
+ s.setdefault('over_five_minutes',s['wall_seconds']>300)
  s['recorded_files']=[r['file'] for r in records if 'file' in r]
  s['checker_rejected']=records[0].get('checker_rejected') if records else None
  s['diagnostic_count']=len(records[0].get('diagnostics',[])) if records else None

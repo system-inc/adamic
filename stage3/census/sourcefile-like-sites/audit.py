@@ -7,7 +7,7 @@ assert hashlib.sha256(pathlib.Path('/workspace/scratch/baobab-latent').read_byte
 assert sorted(s['file'] for s in coverage)==roots
 raw_observations=set();diagnostics=set()
 for s in coverage:
- stem=s['file'].replace('/','__').removesuffix('.ts');p=out/'raw'/(stem+'.jsonl');p=p if p.exists() else pathlib.Path(str(p)+'.gz')
+ stem=s['file'].replace('/','__').removesuffix('.ts');p=out/s.get('stream','raw/'+stem+'.jsonl');p=p if p.exists() else pathlib.Path(str(p)+'.gz')
  assert p.exists(),s['file']
  rows=[]
  with (gzip.open(p,'rt') if p.suffix=='.gz' else p.open()) as stream:
@@ -32,6 +32,6 @@ assert not any(p.stat().st_size>1000000 for p in (out/'raw').iterdir() if p.is_f
 for p in out.rglob('*.go'):raise AssertionError('Go evidence must be .go.txt: '+str(p))
 for name in ['REPORT.md','README.md']:
  text=(out/name).read_text();assert '\u2013' not in text and '\u2014' not in text
-result=dict(attempted=len(coverage),completed=sum(s['child_exit']==0 and s['relation_trailer'] for s in coverage),timeouts=[s['file'] for s in coverage if s['over_five_minutes']],raw_observations=len(raw_observations),physical_sites=len(physical),diagnostic_states=[list(x) for x in sorted(diagnostics)],audit='passed')
+result=dict(attempted=len(coverage),completed=sum(s['child_exit']==0 and s['relation_trailer'] for s in coverage),timeouts=[s['file'] for s in coverage if s.get('timed_out',s['child_exit']!=0)],raw_observations=len(raw_observations),physical_sites=len(physical),diagnostic_states=[list(x) for x in sorted(diagnostics)],audit='passed')
 (out/'audit-result.json').write_text(json.dumps(result,indent=2)+'\n')
 print(json.dumps(result,indent=2))
