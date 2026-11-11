@@ -95,8 +95,12 @@ console.log(String(seen.size) + " " + String(seen.has(first)) + " " + String(see
 }
 
 // A key type a primitive fits stays NotYet, since a Union holding a string or a number would be keyed by
-// its box, not its value: {}, unknown and object | string. A type parameter is judged at each instance, as what it's instantiated to. Mutant: keyableType
-// admitting any Union, and these lower.
+// its box, not its value. That's the wide primitives (object | string, unknown, {}, and { length: number },
+// which a string satisfies) and every narrower one the wide primitive isn't assignable to: a literal, a
+// boolean literal, an enum member, a template literal and a branded string, such as tsc's Path (Compiler's,
+// Lower's and Library's must on 63979123). A type parameter is judged at each instance, as what it's
+// instantiated to. Mutants: keyableType admitting any Union reddens every row; onlyObjects dropped, today's
+// assignability test alone, reddens the narrow rows.
 func TestMapKeysAPrimitiveFitsStayNotYet(t *testing.T) {
 	t.Parallel()
 	const stop = "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
@@ -104,6 +108,13 @@ func TestMapKeysAPrimitiveFitsStayNotYet(t *testing.T) {
 		{"empty object type", "const keys = new Map<{}, number>();\nkeys.set(5, 1);\nconsole.log(String(keys.size));\n"},
 		{"unknown", "const keys = new Map<unknown, number>();\nkeys.set(5, 1);\nconsole.log(String(keys.size));\n"},
 		{"object or string", "const keys = new Map<object | string, number>();\nkeys.set(\"k\", 1);\nconsole.log(String(keys.size));\n"},
+		{"a structural interface a string fits", "const keys = new Map<{ length: number }, number>();\nkeys.set(\"k\", 1);\nconsole.log(String(keys.size));\n"},
+		{"object or a string literal", "const keys = new Map<object | \"a\", number>();\nkeys.set(\"a\", 1);\nconsole.log(String(keys.size));\n"},
+		{"object or a number literal", "const keys = new Map<object | 1, number>();\nkeys.set(1, 1);\nconsole.log(String(keys.size));\n"},
+		{"object or true", "const keys = new Map<object | true, number>();\nkeys.set(true, 1);\nconsole.log(String(keys.size));\n"},
+		{"object or an enum member", "enum Kind { A = 1, B = 2 }\nconst keys = new Map<object | Kind, number>();\nkeys.set(Kind.A, 1);\nconsole.log(String(keys.size));\n"},
+		{"object or a template literal", "const keys = new Map<object | `a${string}`, number>();\nkeys.set(\"ab\", 1);\nconsole.log(String(keys.size));\n"},
+		{"object or a branded string", "type Path = string & { __brand: \"Path\" };\nconst keys = new Map<object | Path, number>();\nkeys.set(\"p\" as Path, 1);\nconsole.log(String(keys.size));\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -114,4 +125,24 @@ func TestMapKeysAPrimitiveFitsStayNotYet(t *testing.T) {
 			}
 		})
 	}
+}
+
+// A union of two interfaces holds only objects, so it's keyed by identity and agrees with Node: the check
+// for primitive members must not over-refuse.
+func TestMapUnionOfInterfacesKeysByIdentity(t *testing.T) {
+	t.Parallel()
+	mapObjectKeysAgree(t, `interface Left {
+	readonly left: number;
+}
+interface Right {
+	readonly right: string;
+}
+const left: Left = { left: 1 };
+const right: Right = { right: "r" };
+const keys = new Map<Left | Right, number>();
+keys.set(left, 1);
+keys.set(right, 2);
+keys.set({ left: 1 }, 3);
+console.log(String(keys.get(left)) + " " + String(keys.get(right)) + " " + String(keys.size));
+`, "1 2 3\n")
 }

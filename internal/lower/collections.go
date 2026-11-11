@@ -36,12 +36,16 @@ func (l *lowering) keyableType(proven *checker.Type, valueType ir.Type) bool {
 	return valueType == ir.Union && l.noPrimitiveFits(proven)
 }
 
-// noPrimitiveFits is whether no primitive value is assignable to proven: not a string, number, boolean,
-// bigint, symbol, null or undefined. A type parameter or unknown answers no, since its bound could
-// admit one.
+// noPrimitiveFits is whether no primitive value can stand where proven does. Every member, after a union
+// is split, must be an object type or the object keyword, and an intersection only when every part is
+// (onlyObjects): a literal, an enum member, a template literal, a unique symbol, a branded `string & {
+// __brand }`, null, undefined or void each holds a primitive though the wide primitive isn't assignable
+// to it (Compiler's, Lower's and Library's must on 63979123). Then no wide primitive may be assignable
+// either, which catches `{}` and an interface a primitive fits structurally. A type parameter, unknown,
+// any or never answers no, since its bound could admit one.
 func (l *lowering) noPrimitiveFits(proven *checker.Type) bool {
 	proven = l.concrete(proven)
-	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsNever) != 0 {
+	if !l.onlyObjects(proven, 0) {
 		return false
 	}
 	for _, primitive := range []*checker.Type{l.checker.GetStringType(), l.checker.GetNumberType(), l.checker.GetBooleanType(), l.checker.GetBigIntType(), l.checker.GetESSymbolType(), l.checker.GetNullType(), l.checker.GetUndefinedType()} {
@@ -50,6 +54,25 @@ func (l *lowering) noPrimitiveFits(proven *checker.Type) bool {
 		}
 	}
 	return true
+}
+
+// onlyObjects is whether every value of proven is a reference to an object: proven is an object type or
+// the object keyword, or a union whose every member is, or an intersection whose every part is. Anything
+// else, a primitive, a literal, an enum, a template literal, a unique symbol, null, undefined, void, any,
+// unknown, never or a type parameter, answers no. Past its depth bound it fails closed.
+func (l *lowering) onlyObjects(proven *checker.Type, depth int) bool {
+	if proven == nil || depth >= 16 {
+		return false
+	}
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range proven.Types() {
+			if !l.onlyObjects(member, depth+1) {
+				return false
+			}
+		}
+		return len(proven.Types()) > 0
+	}
+	return proven.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsNonPrimitive) != 0
 }
 
 // iterated lowers something a for...of or a spread walks as the array of what it gives, with that
