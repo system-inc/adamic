@@ -1998,18 +1998,18 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	if symbol != nil {
 		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
 	}
+	// A nested declaration's value goes the way its name written alone goes: a nested generator, a
+	// generic function or an overload set stops (#z5d0jye), and a read from another function takes
+	// the group's canonical closure.
+	if value, handled, err := l.nestedReferenceOf(property, symbol); handled {
+		return value, err
+	}
 	local, isLocal := l.locals[symbol]
 	if !isLocal {
 		if target, isFunction := l.functions[symbol]; isFunction {
 			return l.functionValue(property, target)
 		}
 		return nil, l.notYet(property, "reading "+property.Name().Text())
-	}
-	if l.result.Locals[local].NestedFunction != 0 {
-		// A nested overload set held as `{ f }` is a value as `f` written alone is (#z5d0jye).
-		if err := l.overloadSetValueStop(property, symbol); err != nil {
-			return nil, err
-		}
 	}
 	l.touch(local)
 	of := l.result.Locals[local].Type
