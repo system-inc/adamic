@@ -1,0 +1,2 @@
+{"typescript":"6.0.3","adapted":false,"member":"getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;","diagnostics":[]}
+{"typescript":"6.0.3","adapted":true,"member":"getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;","diagnostics":[{"code":2386,"file":"src/services/types.ts","line":171,"column":9,"message":"Overload signatures must all be optional or required."}]}

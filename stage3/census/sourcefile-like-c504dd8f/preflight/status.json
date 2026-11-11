@@ -1,0 +1,19 @@
+{
+  "task": "baobab",
+  "requested_census_base": "c504dd8f2d85b9e63b591f5d65baad44315f2ed2",
+  "evidence_base": "78f4b23f469e11e026dc874b1f1048be8f2b1c50",
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "source_sha256": {
+    "src/compiler/types.ts": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "src/services/types.ts": "7b9f919240901802291cf15f8eede8de9a6b9194e24676fd4bd45102e78ca431",
+    "src/services/services.ts": "0abf6e21f776e6a9bba697db6824bc35605a07b74a09f8c70f4e41cee1db2b61"
+  },
+  "observed_child_exits": {
+    "pinned_source_merge_probe": 0,
+    "setup_cancelled": 1,
+    "latent_build_cancelled": 143,
+    "baseline_apply_cancelled": 143
+  },
+  "census_files_completed": 0,
+  "adaptation_written": false
+}

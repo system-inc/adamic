@@ -1,0 +1,39 @@
+[
+  {
+    "label": "baseline adaptation",
+    "signal": "SIGTERM",
+    "pids": [
+      4106
+    ],
+    "reason": "confirmed SourceFile optional/required merge conflict"
+  },
+  {
+    "label": "latent build",
+    "signal": "SIGTERM",
+    "pids": [
+      5401,
+      5402,
+      3952
+    ],
+    "reason": "confirmed SourceFile optional/required merge conflict"
+  },
+  {
+    "label": "setup warming",
+    "signal": "SIGTERM",
+    "pids": [
+      5412,
+      5413,
+      1426
+    ],
+    "reason": "confirmed SourceFile optional/required merge conflict"
+  },
+  {
+    "label": "apply coordinator and active child",
+    "pids": [
+      6156,
+      1192
+    ],
+    "signal": "SIGTERM",
+    "reason": "coordinator had advanced after earlier child completed"
+  }
+]
