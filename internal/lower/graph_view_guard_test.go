@@ -41,6 +41,8 @@ class Speaks { speak(): void {} }
 interface SpeaksField { speak: () => void }
 type BagSpeaks = Record<string, Speaks>
 interface NamedSpeaks { readonly a?: SpeaksField }
+interface DiscriminantWide { readonly kind: 'a' | 'b'; readonly inner: MakesDerived; readonly other: MakesDerived }
+type DiscriminatedBase = { readonly kind: 'a'; readonly inner: MakesBase } | { readonly kind: 'b'; readonly other: MakesBase }
 interface HasInner { readonly tag: string; inner: MakesDerived }
 interface NoInner { readonly tag: string }
 type EitherInner = HasInner | NoInner
@@ -202,7 +204,9 @@ func TestGraphViewGuardNoSource(t *testing.T) {
 // its road. Mutants, each red on its own rows: viewPairElements returning nil (elements); the index
 // loop removed (index values); the held == nil index pairing removed (an index source as a named
 // field, both rows); the arm loop removed (an arm); the method or accessor stop removed (a method,
-// and the method through an index source); the source arm loop removed (a source arm, Lower's should).
+// and the method through an index source); the source arm loop removed (a source arm, Lower's should);
+// a split arm skipped, its members never paired (a split arm, Language's must: DiscriminantWide relates
+// to DiscriminatedBase by its discriminant and to neither arm alone, and only the arms declare inner).
 func TestGraphViewGuardRoads(t *testing.T) {
 	t.Parallel()
 	lowered, types, nodes := graphViewGuardLowering(t)
@@ -215,6 +219,7 @@ func TestGraphViewGuardRoads(t *testing.T) {
 		{"a method", "Speaks", "SpeaksField", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it"},
 		{"a source arm", "EitherInner", "ViewsInner", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a source arm (HasInner as ViewsInner) through its field inner"},
 		{"a method through an index source", "BagSpeaks", "NamedSpeaks", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it through its field a (Speaks as "},
+		{"a split arm", "DiscriminantWide", "DiscriminatedBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a split arm (DiscriminantWide as "},
 	} {
 		if types[row.source] == nil || types[row.target] == nil {
 			t.Fatalf("%s: a type isn't declared", row.name)
@@ -233,7 +238,8 @@ func TestGraphViewGuardRoads(t *testing.T) {
 // into ChoiceB as ChoiceA), 289 refusals over tsc. Identity pairs nothing, and arms pair one by one,
 // so the view passes. Mutants: the cross product again (a source arm judged against the whole target)
 // refuses this; identity replaced by assignability lets MakesDerived as MakesBase through, which
-// TestGraphViewGuardFunctionFields reds.
+// TestGraphViewGuardFunctionFields reds; the checker's identity in place of one type lets Speaks as
+// SpeaksField through, which TestGraphViewGuardRoads's two method rows red (Language's must).
 func TestGraphViewGuardIdentityAndArms(t *testing.T) {
 	t.Parallel()
 	lowered, types, nodes := graphViewGuardLowering(t)
