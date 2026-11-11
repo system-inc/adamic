@@ -158,7 +158,7 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
-	lowering.checkOverloadResults()
+	lowering.checkOverloadResults(modules)
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
 	if err := lowering.finishAccessors(); err != nil {
