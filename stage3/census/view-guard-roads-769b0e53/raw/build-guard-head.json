@@ -1,0 +1,20 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/roads-head-guard-overlay/overlay.json",
+    "-o",
+    "/workspace/roads-head-guard-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 115.76862825699936,
+  "peak_rss_kib": 1455932,
+  "user_seconds": 127.523969,
+  "system_seconds": 16.847895,
+  "environment": {
+    "GOMAXPROCS": "2"
+  }
+}

@@ -1,0 +1,47 @@
+// Measurement only. Identical source is installed in both scratch overlays.
+package lower
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "strings"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+func roadsGuardForceAll() bool { return os.Getenv("ROADS_GUARD_MUTANT") == "1" }
+func (l *lowering) roadsGuardObserve(unit, file string) {
+ path:=os.Getenv("ROADS_GUARD_STREAM"); if path=="" { return }
+ out,err:=os.OpenFile(path,os.O_CREATE|os.O_WRONLY|os.O_APPEND,0600);if err!=nil {panic(err)};defer out.Close()
+ emit:=func(row map[string]any){if err:=json.NewEncoder(out).Encode(row);err!=nil{panic(err)}}
+ count,refused,errors:=len(l.viewSources),0,0
+ // Clone lowering-owned maps and IR, preserving checker/AST identities. Never write into l.
+ var probe *lowering
+ func(){defer func(){if p:=recover();p!=nil{errors++;emit(map[string]any{"kind":"GuardError","unit":unit,"file":file,"error":fmt.Sprint(p),"stage":"snapshot"})}}();if count!=0{probe=l.latentSnapshot()}}()
+ if probe!=nil {
+  views:=probe.viewSources
+  for index,view:=range views {func(){
+   row:=map[string]any{"kind":"GuardRefusal","unit":unit,"file":file,"view_index":index,"where":probe.program.Where(view.node),"cast":view.cast,"narrows":view.narrows,"source_nil":view.source==nil,"full_mode":latentFullEnabled(),"mutant":roadsGuardForceAll()}
+   defer func(){if p:=recover();p!=nil{errors++;row["kind"]="GuardError";row["error"]=fmt.Sprint(p);emit(row)}}()
+   probe.viewSources=[]viewSource{view}
+   f:=&cycleFinder{l:probe,where:map[*checker.Type]*ast.Node{}}
+   failure:=f.viewPairGuard();if failure==nil{return};refused++
+   source,target:=probe.concrete(view.source),probe.concrete(view.target)
+   row["source"]="";row["target"]="";if source!=nil{row["source"]=probe.checker.TypeToString(source)};if target!=nil{row["target"]=probe.checker.TypeToString(target)}
+   row["reason"]=failure.Error();if n,ok:=failure.(*NotYet);ok{row["reason"]=n.What;row["where"]=n.Where}
+   row["start"],row["end"]=view.node.Pos(),view.node.End();text:=ast.GetSourceFileOfNode(view.node).AsSourceFile().Text();row["text"]=strings.TrimSpace(text[view.node.Pos():view.node.End()])
+   road:="base pair check";roads:=[]string{};steps:=[]map[string]string{}
+   // Extract the real failure's path. Do not reimplement its acceptance decision.
+   if source!=nil&&!roadsGuardForceAll(){
+    pairFailure:=f.viewPairFailure(source,target,map[[2]*checker.Type]bool{});if pairFailure==nil{panic("guard refused but real pair failure has no path")};current:=source
+    for _,step:=range pairFailure.through{
+     r:="base pair check"
+     switch step.name{case "its elements":r="elements";case "its index values":r="index values";case "an arm","a source arm":r="union arms";default:name:=strings.TrimPrefix(step.name,"its field ");present:=probe.checker.GetNonNullableType(current);if probe.checker.GetPropertyOfType(present,name)==nil&&len(probe.checker.GetIndexInfosOfType(present))>0{r="index values"}}
+     if r!="base pair check"{if len(roads)==0{road=r};roads=append(roads,r)}
+     steps=append(steps,map[string]string{"step":step.name,"source":probe.checker.TypeToString(step.source),"target":probe.checker.TypeToString(step.target),"road":r});current=step.source
+    }
+   }
+   row["road"],row["roads"],row["steps"]=road,roads,steps;emit(row)
+  }()}
+ }
+ emit(map[string]any{"kind":"GuardUnit","unit":unit,"file":file,"views":count,"refusals":refused,"errors":errors,"full_mode":latentFullEnabled(),"mutant":roadsGuardForceAll(),"graph_types_count":len(l.result.GraphTypes),"static_globals_count":len(l.staticGlobals)})
+}

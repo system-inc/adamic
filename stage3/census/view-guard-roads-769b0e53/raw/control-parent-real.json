@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/workspace/roads-parent-guard-census",
+    "/workspace/roads-guard-control/control.ts",
+    "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/control-parent-real-normal.jsonl"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 0.1409438169994246,
+  "peak_rss_kib": 31848,
+  "user_seconds": 0.07373199999999999,
+  "system_seconds": 0.0851,
+  "environment": {
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMAXPROCS": "2",
+    "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/control-parent-real-guard.jsonl",
+    "LATENT_FULL": "0"
+  }
+}
