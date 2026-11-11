@@ -1,0 +1,95 @@
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 4058,
+        "deferred_generic_instantiation": 504
+      },
+      "observed_units": 4058,
+      "views_evaluated": 635,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 4058,
+        "deferred_generic_instantiation": 504
+      },
+      "observed_units": 4058,
+      "views_evaluated": 635,
+      "raw_guard_refusals": 627,
+      "units_with_refusals": 340,
+      "probe_errors": 0,
+      "roads": {
+        "index values": 462,
+        "union arms": 163,
+        "elements": 2
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 285,
+      "distinct_reads": 285
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 229,
+      "distinct_reads": 229
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 233,
+      "distinct_reads": 233
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 340,
+      "new_guard_stops_in_normally_finding_free_units": 114,
+      "new_guard_stops_in_already_normally_blocked_units": 226,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {
+    "parent": {
+      "all_header_file_unit_and_finding_bytes_identical": true,
+      "only_cache_telemetry_may_differ": true,
+      "normal_bytes_sha256": "9a0fb2a329003b458ee59f4962d4dbdb16013a3382017a247ffbe15fa188e4d9",
+      "findings_byte_identical": true,
+      "findings_count": 5767,
+      "baseline_findings_sha256": "da230b61cdc7d4e729e15cb6a0e71d78dc80eb895f734b00900f30cd9ea84463",
+      "seam_findings_sha256": "da230b61cdc7d4e729e15cb6a0e71d78dc80eb895f734b00900f30cd9ea84463",
+      "entire_normal_stream_byte_identical": false,
+      "baseline_unit_inventory_equal": true
+    },
+    "head": {
+      "all_header_file_unit_and_finding_bytes_identical": true,
+      "only_cache_telemetry_may_differ": true,
+      "normal_bytes_sha256": "9a0fb2a329003b458ee59f4962d4dbdb16013a3382017a247ffbe15fa188e4d9",
+      "findings_byte_identical": true,
+      "findings_count": 5767,
+      "baseline_findings_sha256": "da230b61cdc7d4e729e15cb6a0e71d78dc80eb895f734b00900f30cd9ea84463",
+      "seam_findings_sha256": "da230b61cdc7d4e729e15cb6a0e71d78dc80eb895f734b00900f30cd9ea84463",
+      "entire_normal_stream_byte_identical": false,
+      "baseline_unit_inventory_equal": true
+    }
+  },
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 289,
+      "new_sites": 289,
+      "unit_first_stop_delta": 340,
+      "regressions": 340
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 289,
+      "new_sites": 289,
+      "unit_first_stop_delta": 340,
+      "regressions": 340
+    }
+  }
+}
