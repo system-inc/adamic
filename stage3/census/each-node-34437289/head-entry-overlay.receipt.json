@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "stage3/meter/entry_overlay.py",
+    "/workspace/scratch/each-node-8n7eet3/head-overlay",
+    "/workspace/scratch/each-node-8n7eet3/head-entry-overlay"
+  ],
+  "cwd": "/workspace/scratch/each-node-8n7eet3/head",
+  "exit": 0,
+  "wall_seconds": 0.35912108421325684
+}

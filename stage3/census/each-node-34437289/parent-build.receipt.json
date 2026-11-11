@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/each-node-8n7eet3/parent-entry-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/each-node-8n7eet3/parent-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/scratch/each-node-8n7eet3/parent",
+  "exit": 0,
+  "wall_seconds": 355.5238711833954
+}
