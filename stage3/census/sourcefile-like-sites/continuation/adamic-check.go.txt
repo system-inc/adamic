@@ -1,0 +1,36 @@
+// Measurement only: run the production loader over the stock census's exact 604 roots.
+// This driver never calls lowering or either emitter.
+package main
+
+import (
+    "encoding/json"
+    "errors"
+    "fmt"
+    "os"
+    "path/filepath"
+    "time"
+    "github.com/system-inc/adamic/internal/load"
+)
+
+func main() {
+    if len(os.Args) != 4 { panic("usage: checker program.json source-root output.json") }
+    start := time.Now()
+    bytes, err := os.ReadFile(os.Args[1]); if err != nil { panic(err) }
+    var manifest struct { Roots []string `json:"roots"` }
+    if err = json.Unmarshal(bytes, &manifest); err != nil { panic(err) }
+    paths := make([]string, len(manifest.Roots))
+    for i, name := range manifest.Roots { paths[i] = filepath.Join(os.Args[2], name) }
+    program, failure := load.Load(paths)
+    diagnostics := []string{}
+    accepted := failure == nil
+    if failure != nil {
+        var checked *load.CheckError
+        if !errors.As(failure, &checked) { panic(failure) }
+        if program != nil { panic("loader exposed a checker-rejected program") }
+        diagnostics = checked.Diagnostics
+    }
+    output, err := os.Create(os.Args[3]); if err != nil { panic(err) }; defer output.Close()
+    result := map[string]any{"driver":"production load.Load, no lowering or output IR", "roots":len(paths), "accepted":accepted,"diagnostics":diagnostics,"seconds":time.Since(start).Seconds()}
+    if err = json.NewEncoder(output).Encode(result); err != nil { panic(err) }
+    fmt.Printf("production checker: %d roots, %d diagnostics\n",len(paths),len(diagnostics))
+}

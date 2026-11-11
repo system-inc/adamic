@@ -1,0 +1,29 @@
+{
+  "audit": "passed",
+  "variants": 2,
+  "complete_full_streams": 20,
+  "original_views_per_variant": 34,
+  "helper_views_cleared_per_variant": 22,
+  "unchanged_other_views_per_variant": 12,
+  "cohere_new_findings_per_variant": 0,
+  "cohere_removed_optional_widening_per_variant": 24,
+  "production_whole_src_diagnostics_per_variant": 6851,
+  "new_production_checker_diagnostics_per_variant": 0,
+  "services_TS2386": 0,
+  "internal_strip_bundle_child_exit": 1,
+  "public_variant_closure_diagnostics": 0,
+  "public_variant_lane_api_errors": 7,
+  "public_sdk_new_optional_widening_refusals": 1,
+  "readonly_sdk_control_refused": true,
+  "no_new_refusal_anywhere_outcome": "not met",
+  "lowering_deltas": {
+    "c": {
+      "added": 0,
+      "removed": 22
+    },
+    "c-public": {
+      "added": 0,
+      "removed": 22
+    }
+  }
+}

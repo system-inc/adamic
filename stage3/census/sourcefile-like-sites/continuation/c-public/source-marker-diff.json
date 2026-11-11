@@ -1,0 +1,6 @@
+{
+  "only_change_from_c": "remove LineMapSource @internal tag, retaining a blank comment to preserve source coordinates",
+  "runtime_and_relation_types_identical": true,
+  "before": "668fd6257dc5c343b163a096c3e5126383e1e8eaf9790f5e4ad6a6fcd18d8f7c",
+  "after": "9456c5021fc313ee9f443b69718a3053be7061c1f6bdd6bdcd20434f58c07cf8"
+}

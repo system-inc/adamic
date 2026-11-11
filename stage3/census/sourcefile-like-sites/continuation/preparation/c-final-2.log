@@ -1,0 +1,4 @@
+{"label": "original", "checker_errors": 0, "cohere_findings": 0, "guarded_refusals": []}
+{"label": "c-public", "checker_errors": 0, "cohere_findings": 1, "guarded_refusals": ["optional property lineMap in LineMapSource absent from structural source SourceFile, which can hide fields"]}
+{"label": "c-public-unstripped", "checker_errors": 0, "cohere_findings": 1, "guarded_refusals": ["optional property lineMap in LineMapSource absent from structural source SourceFile, which can hide fields"]}
+{"label": "c-public-readonly-sdk-control", "checker_errors": 0, "cohere_findings": 1, "guarded_refusals": ["optional property lineMap in LineMapSource absent from structural source SourceFile, which can hide fields"]}

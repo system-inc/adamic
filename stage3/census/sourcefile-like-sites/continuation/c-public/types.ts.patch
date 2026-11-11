@@ -1,0 +1,11 @@
+--- c/types.ts
++++ c-public/types.ts
+@@ -4283,7 +4283,7 @@
+ /**
+  * Subset of properties from SourceFile that are used in multiple utility functions
+  */
+-/** @internal */
++/**              */
+ export interface LineMapSource {
+     readonly text: string;
+     lineMap?: readonly number[] | undefined;

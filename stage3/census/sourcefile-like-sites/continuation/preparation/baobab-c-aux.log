@@ -1,0 +1,3 @@
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/source-audit-c.cjs", "/workspace/scratch/baobab-road2-c", "c", "stock"], "child_exit": 0, "wall_seconds": 314.2629266799995, "timed_out": false}
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/source-audit-c.cjs", "/workspace/scratch/baobab-road2-c", "c-exact", "exact"], "child_exit": 0, "wall_seconds": 99.49124180699982, "timed_out": false}
+{"command": ["node", "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/emit-public-c.cjs", "/workspace/scratch/baobab-road2-c", "c", "on"], "child_exit": 1, "wall_seconds": 43.58774776300015, "timed_out": false}

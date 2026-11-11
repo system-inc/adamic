@@ -1,0 +1,1153 @@
+{
+  "typescript": "6.0.3",
+  "options": {
+    "rootDir": "/workspace/scratch/baobab-road2-c-public/src",
+    "outDir": "/workspace/scratch/baobab-emit-c-public",
+    "pretty": true,
+    "lib": [
+      "lib.es2020.d.ts"
+    ],
+    "target": 7,
+    "module": 199,
+    "moduleResolution": 99,
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    "composite": false,
+    "emitDeclarationOnly": true,
+    "isolatedDeclarations": false,
+    "strict": true,
+    "strictBindCallApply": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "preserveConstEnums": true,
+    "newLine": 1,
+    "types": [
+      "node"
+    ],
+    "noEmit": false,
+    "noEmitOnError": false,
+    "stripInternal": true,
+    "typeRoots": [
+      "/workspace/scratch/baobab-src-deps/node_modules/@types"
+    ]
+  },
+  "emitSkipped": false,
+  "diagnostics": [],
+  "emitted": [
+    {
+      "file": "compiler/corePublic.d.ts",
+      "sha256": "2c272c85a2c359df78a0a89677b96756c0d0d3428b64f5fbcd58ad1c9fc62eb4"
+    },
+    {
+      "file": "compiler/core.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/debug.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/semver.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/performanceCore.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/performance.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/_namespaces/ts.performance.d.ts",
+      "sha256": "e714342c159b2cc46275ad4a43252b2763d75a0631f760518bd0217620100ae8"
+    },
+    {
+      "file": "compiler/hostErrors.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/tracing.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/types.d.ts",
+      "sha256": "5af0055f62e72b844971962fc9453e871bd13d07ec7da503ad41787c8080c9ed"
+    },
+    {
+      "file": "compiler/sys.d.ts",
+      "sha256": "432655b03ba5c133fd5681a3853ca40c3296f099258396ced1181360e73f503d"
+    },
+    {
+      "file": "compiler/path.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/diagnosticInformationMap.generated.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/scanner.d.ts",
+      "sha256": "aef47356a6268efbed49bb18750d1d7e739b7b0edbc992d549c3c0994b71b2b1"
+    },
+    {
+      "file": "compiler/utilitiesPublic.d.ts",
+      "sha256": "1eabe6284fe29377497b3fe7ab59368c3070e3c25de39424c5935234f07e1635"
+    },
+    {
+      "file": "compiler/utilities.d.ts",
+      "sha256": "9d4aba30343c941bcd2bc8e9c0df708491aaad8da4e975dc676e10fee06ef9bb"
+    },
+    {
+      "file": "compiler/factory/baseNodeFactory.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/factory/parenthesizerRules.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/factory/nodeConverters.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/factory/nodeFactory.d.ts",
+      "sha256": "059b5a3245df5ee5b65e7aef3c363c0d86ef9dfdc39bc4094e9ba74c57eb657d"
+    },
+    {
+      "file": "compiler/factory/emitNode.d.ts",
+      "sha256": "7552b65eb969e0b1466ffe0f4695b536bc4607cc5e5a7ec942482a422b7524bc"
+    },
+    {
+      "file": "compiler/factory/emitHelpers.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/factory/nodeTests.d.ts",
+      "sha256": "1b783403b88679517732824d6060fb70c5e12d0ac0d2af312f4825d54c3d0d9a"
+    },
+    {
+      "file": "compiler/factory/nodeChildren.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/factory/utilities.d.ts",
+      "sha256": "5e5021f1406db920e7c232c7ce5e4eff9814e1e84dc5cc16ea3689ecf4e4fb1f"
+    },
+    {
+      "file": "compiler/factory/utilitiesPublic.d.ts",
+      "sha256": "8ee249b8df157b690f02428aca02379f6b2da0f091dc94c53a3fa8215306484f"
+    },
+    {
+      "file": "compiler/parser.d.ts",
+      "sha256": "a9595791bc6d4ac8f4885c2a5ca6ff72f99f336a53067a9fdab79b4f52bf020f"
+    },
+    {
+      "file": "compiler/commandLineParser.d.ts",
+      "sha256": "d9d7b53f3bd4e96f1f2b6e41c132b13cbca43a1b5fe33f023fefc4afcc470990"
+    },
+    {
+      "file": "compiler/moduleNameResolver.d.ts",
+      "sha256": "35837c34fc67678a3c25b91c1a334a2a3cda48d3d58eff824cc3b0805be90087"
+    },
+    {
+      "file": "compiler/binder.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/symbolWalker.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/moduleSpecifiers.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/_namespaces/ts.moduleSpecifiers.d.ts",
+      "sha256": "c5765c8c02a73c3a765615853ac803974cc1dff5fbabe68f8fc08fb59e5bc123"
+    },
+    {
+      "file": "compiler/checker.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/visitorPublic.d.ts",
+      "sha256": "38de1e74a11f9be0c32860b60948c12b60186a562efccbdbf0c9b5c043e45e59"
+    },
+    {
+      "file": "compiler/sourcemap.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/utilities.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/destructuring.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/classThis.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/namedEvaluation.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/taggedTemplate.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/ts.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/classFields.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/typeSerializer.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/legacyDecorators.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/esDecorators.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/es2017.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/es2018.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/es2019.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/es2020.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/es2021.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/esnext.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/jsx.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/es2016.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/es2015.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/generators.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/module/module.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/module/system.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/module/esnextAnd2015.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/module/impliedNodeFormatDependent.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/declarations/diagnostics.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformers/declarations.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/transformer.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/emitter.d.ts",
+      "sha256": "7f87d8740726433fa07039f6f6ae132d013a82873edfbe7ac60aa64f3e40d09e"
+    },
+    {
+      "file": "compiler/watchUtilities.d.ts",
+      "sha256": "80710a3b84ade5b4914d7a80a687b9f7056f1596d1b17b908b8a313de19792cd"
+    },
+    {
+      "file": "compiler/program.d.ts",
+      "sha256": "264236c6e2283723142d55f55edb11c874c4b2836af0b407f6b8adef27cafc76"
+    },
+    {
+      "file": "compiler/programDiagnostics.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/builderStatePublic.d.ts",
+      "sha256": "ca144cf2e79870cd1ed8c90e9b6f11d11078e7a177a30e647b0ef30078ff1f20"
+    },
+    {
+      "file": "compiler/builderState.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/builder.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/builderPublic.d.ts",
+      "sha256": "6415093e5446c91bc795e7c4be72a05f1f3addb8b1573dc2016700342f398966"
+    },
+    {
+      "file": "compiler/resolutionCache.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/watch.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/watchPublic.d.ts",
+      "sha256": "2b077c925b46082d146a8ce192e0ad8574439a65f0a5372bf85ed1b89967ad94"
+    },
+    {
+      "file": "compiler/tsbuild.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/tsbuildPublic.d.ts",
+      "sha256": "6bd6ee37ef50ba199a3ed7c097ea614c77515c5251c86a2e654bafdbbbd2c157"
+    },
+    {
+      "file": "compiler/executeCommandLine.d.ts",
+      "sha256": "c00fe24cc2dffccbc233204856aa060ec207cf578119890915096efe946228f6"
+    },
+    {
+      "file": "compiler/expressionToTypeNode.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "compiler/_namespaces/ts.d.ts",
+      "sha256": "c9d2517a4353fed99c676a60a5c5d7c1f7c8acee2f7c67b6882a96eb87b7acc8"
+    },
+    {
+      "file": "jsTyping/shared.d.ts",
+      "sha256": "03a3475e8e3a676dc46088de3147494deb3e50790c4884ad0a64aa22b431f4c6"
+    },
+    {
+      "file": "jsTyping/types.d.ts",
+      "sha256": "397d3d115d808a2fd555d814ebdd8daa755e5614bba230bc77f927a6060562be"
+    },
+    {
+      "file": "jsTyping/_namespaces/ts.server.d.ts",
+      "sha256": "c7b32eabd7882e294e324055332cb6666e25c833a18cce2c16ac0a7d75f0a7e3"
+    },
+    {
+      "file": "jsTyping/jsTyping.d.ts",
+      "sha256": "bad03cc73f473310897c6889c8466d5228f656bac1705b35054dd8253fb97d01"
+    },
+    {
+      "file": "jsTyping/_namespaces/ts.JsTyping.d.ts",
+      "sha256": "4c2f1073586a6f6b85fe79caae1b87bb565d186d2630c557c5164ae8197678c0"
+    },
+    {
+      "file": "jsTyping/_namespaces/ts.d.ts",
+      "sha256": "3af0404dc9387bbbb32cd97d60d8bc72054ddb5db79af27e0d3f078bf2815614"
+    },
+    {
+      "file": "services/types.d.ts",
+      "sha256": "6ea2bb35f884969f73b799a498c0f4ad0371eaf877328fd27e65e0044ffa3910"
+    },
+    {
+      "file": "services/utilities.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/exportInfoMap.d.ts",
+      "sha256": "e52a1661d4a0cba4f92ac72543424af80b9a290e0b34e01e089c0aa4bc1dbd69"
+    },
+    {
+      "file": "services/classifier.d.ts",
+      "sha256": "bfa229fdfb8542ebe4a6793f891032737e9324688dab3244bf91931cc394c206"
+    },
+    {
+      "file": "services/documentHighlights.d.ts",
+      "sha256": "dda2496ab93894382f3a1ab20b6da52526c31f3c06d18936b9863908205a6e7f"
+    },
+    {
+      "file": "services/documentRegistry.d.ts",
+      "sha256": "c82d77e5583b2856f3c25a9d6b06ca49837b8f783a39c54d087c65d839be4858"
+    },
+    {
+      "file": "services/getEditsForFileRename.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/patternMatcher.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/preProcess.d.ts",
+      "sha256": "e74d6ee7151123682d6750bc9a25010dd6b52fd058d0434e2bfd72d2280a7950"
+    },
+    {
+      "file": "services/sourcemaps.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/suggestionDiagnostics.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/transpile.d.ts",
+      "sha256": "e3b7eaa3348a2c9779fb2d19fe565aa12b79741f5d382442c296a8956a0908f3"
+    },
+    {
+      "file": "services/navigateTo.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.NavigateTo.d.ts",
+      "sha256": "249546a0ffb17e6c7263dec0f35cd1aa79d7d9c7ad15c7e624e9f028bbeac63a"
+    },
+    {
+      "file": "services/navigationBar.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.NavigationBar.d.ts",
+      "sha256": "24b7701cba82536942d75c6486889dbec9afc455b44197e1b4fd638c734acb78"
+    },
+    {
+      "file": "services/refactorProvider.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/refactors/convertExport.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/refactors/convertImport.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/refactors/extractType.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/refactors/moveToFile.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/refactors/helpers.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/refactors/inlineVariable.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/refactors/moveToNewFile.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/refactors/convertOverloadListToSingleSignature.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/refactors/addOrRemoveBracesToArrowFunction.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.refactor.addOrRemoveBracesToArrowFunction.d.ts",
+      "sha256": "9def3574f4c24b8db726a198c4bdeca659e18c812ccf273fa87e27d1e93c6931"
+    },
+    {
+      "file": "services/refactors/convertArrowFunctionOrFunctionExpression.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.refactor.convertArrowFunctionOrFunctionExpression.d.ts",
+      "sha256": "b0f8ebe25eb3bc82f6477c264ced4f289f369dc10daa66ac62b2b3876cd85aec"
+    },
+    {
+      "file": "services/refactors/convertParamsToDestructuredObject.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.refactor.convertParamsToDestructuredObject.d.ts",
+      "sha256": "f5cafaaa19908aec5ad0a20a9cdde8ba622506c77841d7e954d8bdc5251ceb6a"
+    },
+    {
+      "file": "services/refactors/convertStringOrTemplateLiteral.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.refactor.convertStringOrTemplateLiteral.d.ts",
+      "sha256": "7444bf2bbc5284c1d12d18cc644df0a690a02ae0f81a6a2549e9c0ef16874b5b"
+    },
+    {
+      "file": "services/refactors/convertToOptionalChainExpression.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.refactor.convertToOptionalChainExpression.d.ts",
+      "sha256": "4522b3e722f00059e4f653001f07f7711ecbf1e29c1f9eac1bd658e21cdf96ec"
+    },
+    {
+      "file": "services/refactors/extractSymbol.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.refactor.extractSymbol.d.ts",
+      "sha256": "1306495868e8c00febb281958fbc95004d331a1aa83ccf3cc80fb75b48ec55cf"
+    },
+    {
+      "file": "services/refactors/generateGetAccessorAndSetAccessor.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.refactor.generateGetAccessorAndSetAccessor.d.ts",
+      "sha256": "a41e86bdbcffa3d1c5808a45868c6616381bfffe7b28897c11baf3c96467a5d3"
+    },
+    {
+      "file": "services/refactors/inferFunctionReturnType.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.refactor.inferFunctionReturnType.d.ts",
+      "sha256": "da6bdd6b71821efca5d1aa7efa2fb566d8dbd98438b4033d28639deaf3780902"
+    },
+    {
+      "file": "services/_namespaces/ts.refactor.d.ts",
+      "sha256": "b0b4ee9c7dcbd5cc2f9bd45bdc366990096170f481592a0dad18b4297b6815fe"
+    },
+    {
+      "file": "services/classifier2020.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/services.d.ts",
+      "sha256": "07936b600bfa91ca3c3542b5da10a706c186d57fd0f9492b087a4a4590cbc6a7"
+    },
+    {
+      "file": "services/transform.d.ts",
+      "sha256": "3786ed99a3045d32a674153e16de2bf3b64c0ebdb53af0ca4e312299ad4fb64e"
+    },
+    {
+      "file": "services/breakpoints.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.BreakpointResolver.d.ts",
+      "sha256": "33cb9939f0085baf8416914d87d287fed47180797963a8985f08e9bf9ef2a948"
+    },
+    {
+      "file": "services/callHierarchy.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.CallHierarchy.d.ts",
+      "sha256": "8a5d8db7c0fbaaf7041152861de6cfbd67a0e58753dbde0b06507f15bc8c06cb"
+    },
+    {
+      "file": "services/_namespaces/ts.classifier.v2020.d.ts",
+      "sha256": "fdaa0f753e6e2eb6fc4e07afd5576eecf6e9fac0858c14efe6845edad9fd6496"
+    },
+    {
+      "file": "services/_namespaces/ts.classifier.d.ts",
+      "sha256": "86033c0a1f5f6340e211ef8614db891743f8c88caf4d99e96377a41ce9f2f639"
+    },
+    {
+      "file": "services/codeFixProvider.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addConvertToUnknownForNonOverlappingTypes.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addEmptyExportDeclaration.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addMissingAsync.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addMissingAwait.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addMissingConst.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addMissingDeclareProperty.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addMissingInvocationForDecorator.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addMissingResolutionModeImportAttribute.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addNameToNamelessParameter.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/addOptionalPropertyUndefined.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/annotateWithTypeFromJSDoc.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/convertFunctionToEs6Class.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/convertToAsyncFunction.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/convertToEsModule.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/correctQualifiedNameToIndexedAccessType.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/convertToTypeOnlyExport.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/convertToTypeOnlyImport.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/convertTypedefToType.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/convertLiteralTypeToMappedType.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixClassIncorrectlyImplementsInterface.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/importFixes.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixAddMissingConstraint.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixOverrideModifier.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixNoPropertyAccessFromIndexSignature.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixImplicitThis.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixImportNonExportedMember.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixIncorrectNamedTupleSyntax.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixSpelling.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/returnValueCorrect.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixAddMissingMember.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixAddMissingNewOperator.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixAddMissingParam.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixCannotFindModule.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixClassDoesntImplementInheritedAbstractMember.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixClassSuperMustPrecedeThisAccess.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixConstructorForDerivedNeedSuperCall.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixEnableJsxFlag.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixNaNEquality.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixModuleAndTargetOptions.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixPropertyAssignment.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixExtendsInterfaceBecomesImplements.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixForgottenThisPropertyAccess.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixInvalidJsxCharacters.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixUnmatchedParameter.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixUnreferenceableDecoratorMetadata.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixUnusedIdentifier.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixUnreachableCode.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixUnusedLabel.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixJSDocTypes.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixMissingCallParentheses.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixMissingTypeAnnotationOnExports.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixAwaitInSyncFunction.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixPropertyOverrideAccessor.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/inferFromUsage.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixReturnTypeInAsyncFunction.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/disableJsDiagnostics.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/helpers.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/generateAccessors.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixInvalidImportSyntax.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixStrictClassInitialization.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/requireInTs.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/useDefaultImport.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/useBigintLiteral.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixAddModuleReferTypeMissingTypeof.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/wrapJsxInFragment.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/wrapDecoratorInParentheses.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/convertToMappedObjectType.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/removeAccidentalCallParentheses.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/removeUnnecessaryAwait.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/splitTypeOnlyImport.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/convertConstToLet.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixExpectedComma.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/codefixes/fixAddVoidToPromise.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.codefix.d.ts",
+      "sha256": "a56cea29bf20102ad3f063bf432bbe7e2d4ddd50ce429e89c4735cc5ef75947b"
+    },
+    {
+      "file": "services/completions.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/stringCompletions.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.Completions.StringCompletions.d.ts",
+      "sha256": "e6d870b25de531488b92de8a136fc410ef422d2841a4e8669037fc2895e93ab7"
+    },
+    {
+      "file": "services/_namespaces/ts.Completions.d.ts",
+      "sha256": "0c139f9e76c53bdf7e2fac4fa386969c98fdc5eddf42cbd1cc41b46130898200"
+    },
+    {
+      "file": "services/importTracker.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/findAllReferences.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.FindAllReferences.d.ts",
+      "sha256": "71a7873fb2482e615e157195ad0469426c06e55fb9b822ac063136f17bc93c9f"
+    },
+    {
+      "file": "services/goToDefinition.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.GoToDefinition.d.ts",
+      "sha256": "2723df6459e3dcbbe2a3a1156f288b9ec431c86fd8267884fdf8e3119845af33"
+    },
+    {
+      "file": "services/inlayHints.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.InlayHints.d.ts",
+      "sha256": "060456b8aa42a0642bc86d7931ddfa8eddfba7af01e3ffd4478cb43359c63d7a"
+    },
+    {
+      "file": "services/jsDoc.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.JsDoc.d.ts",
+      "sha256": "b547bc0e7cc3f968066665aaba8c26fcbc6f770b6546c19a8c58e69f469cfcde"
+    },
+    {
+      "file": "services/textChanges.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/mapCode.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.MapCode.d.ts",
+      "sha256": "1d7263f0a0130731709e9cf9610448295a5592008ec63ae846ad018e21d91200"
+    },
+    {
+      "file": "services/organizeImports.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.OrganizeImports.d.ts",
+      "sha256": "b179087870f8767012c821751849aadb1ca69ac64a3360bbb98927fbfcd04e09"
+    },
+    {
+      "file": "services/outliningElementsCollector.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.OutliningElementsCollector.d.ts",
+      "sha256": "d266b6bab82fbb164298e14697a70ca016d8c4dc997e5e3da05ea820f46006ea"
+    },
+    {
+      "file": "services/rename.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.Rename.d.ts",
+      "sha256": "80587f5da8c2b269bc19e1a708d76cf3d7af337cfd9928ffe59110a402997ca3"
+    },
+    {
+      "file": "services/signatureHelp.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.SignatureHelp.d.ts",
+      "sha256": "a5507c50e202e47855fa2af4bad5a0310cc7a1b469d91c8f5e1b4cd49303e133"
+    },
+    {
+      "file": "services/smartSelection.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.SmartSelectionRange.d.ts",
+      "sha256": "fd5295a69dc8901e89625a517a82fb0a2ba115b5f296eaef833906b38b71d4c7"
+    },
+    {
+      "file": "services/symbolDisplay.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.SymbolDisplay.d.ts",
+      "sha256": "1cb539ceea61c51203b50fe92c7485da81a600687b3a4107adddc938859345e1"
+    },
+    {
+      "file": "services/_namespaces/ts.textChanges.d.ts",
+      "sha256": "edc9b6aa67c41f4bec15f2f8784cd76f030468428b821302a01525956523fcac"
+    },
+    {
+      "file": "services/formatting/formattingContext.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/formatting/formattingScanner.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/formatting/rule.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/formatting/rules.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/formatting/rulesMap.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/formatting/formatting.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/formatting/smartIndenter.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.formatting.d.ts",
+      "sha256": "e0c29c46bd6cafeaee8fa9c752dfce28dd9af13ea141f386239c6955458a825e"
+    },
+    {
+      "file": "services/preparePasteEdits.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.preparePasteEdits.d.ts",
+      "sha256": "12f5b1a271db69a79225c7b6819ca48b035de9c2237a1e6ffd6a60f858c04672"
+    },
+    {
+      "file": "services/pasteEdits.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "services/_namespaces/ts.PasteEdits.d.ts",
+      "sha256": "0c9123376faab5ed3ade80b2e37a29f08a1118f17b355fa2ef8921f5a4734d4b"
+    },
+    {
+      "file": "services/_namespaces/ts.d.ts",
+      "sha256": "28968132617844a1311208065e6518d8717e6617f13e5e6e3a89fe47524188b2"
+    },
+    {
+      "file": "deprecatedCompat/deprecate.d.ts",
+      "sha256": "bfa9a76e58767d444c103bd736a71b72a6d03366c082a06d8f395f6f48241eed"
+    },
+    {
+      "file": "deprecatedCompat/deprecations.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "deprecatedCompat/_namespaces/ts.d.ts",
+      "sha256": "cf27cbd3706ce2a2f2fd9110c8a57e6305da54b831ad1a304c65cc19763a89d5"
+    },
+    {
+      "file": "typingsInstallerCore/_namespaces/ts.d.ts",
+      "sha256": "00aaf7bcf5482939e930adb1598777cf3bc6c43552c59478105f69cf274903ef"
+    },
+    {
+      "file": "typingsInstallerCore/typingsInstaller.d.ts",
+      "sha256": "3cd82c4734228fd877fd4c3bcdd2a10c15bcf15cdcc7d9270b8f6489702a614f"
+    },
+    {
+      "file": "typingsInstallerCore/_namespaces/ts.server.typingsInstaller.d.ts",
+      "sha256": "5b363cfd472ef47a02c7bef8640cfaa24cd200fb6a7746db26b750b2bfcc5ce9"
+    },
+    {
+      "file": "typingsInstallerCore/_namespaces/ts.server.d.ts",
+      "sha256": "95c958d56018160124359f6f34b7119ce7eb79c3b072ae036022ea0b49ea7731"
+    },
+    {
+      "file": "server/types.d.ts",
+      "sha256": "acd0ed2656d0e0bd2843603f84a87bca3c5de6f84786bbc010fa926f6c0ce83d"
+    },
+    {
+      "file": "server/utilitiesPublic.d.ts",
+      "sha256": "9047faa06afbf456ea58f25aaa5cab052c3391f65c615d07b0c600f778a4c227"
+    },
+    {
+      "file": "server/utilities.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "server/protocol.d.ts",
+      "sha256": "7ac31a73ee3d3f4ab289f91d3d890cb7c25e327cad9845535bac94e7c240391e"
+    },
+    {
+      "file": "server/_namespaces/ts.server.protocol.d.ts",
+      "sha256": "af37ef44e11e365e0d2866a125204990eefb22985fa594d80c648326a22bbc38"
+    },
+    {
+      "file": "server/scriptInfo.d.ts",
+      "sha256": "816f6d311367f67f19d479a9dd44611c05150df80165500a5ca4031ed1db36b3"
+    },
+    {
+      "file": "server/project.d.ts",
+      "sha256": "bb54754a3e1338468aaa20909a95f838736185eaa77410b4cb4954b1a1176eaa"
+    },
+    {
+      "file": "server/editorServices.d.ts",
+      "sha256": "43fe663d3dd91db42259d82a882feb4f445fd62f9b2dda47783927929d752eb6"
+    },
+    {
+      "file": "server/moduleSpecifierCache.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "server/packageJsonCache.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "server/session.d.ts",
+      "sha256": "f0de7adf99f94922e2efcae19ab5f931fa84e7d10a185f3d199bb28e3b626766"
+    },
+    {
+      "file": "server/scriptVersionCache.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "server/typingInstallerAdapter.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "server/_namespaces/ts.server.d.ts",
+      "sha256": "f7966efa67eabf3227fd3705f457836f78129989570a2051c26e34e879db17e9"
+    },
+    {
+      "file": "server/_namespaces/ts.d.ts",
+      "sha256": "d5dfa75be45a5abb729884e62fc7618b884fb7654e5a95be0e2997ea4e458d91"
+    },
+    {
+      "file": "typescript/_namespaces/ts.server.d.ts",
+      "sha256": "d5bc2466ee67183f1edd7de716962f26fa28f3332f3f6e7b7b82e7e719305d81"
+    },
+    {
+      "file": "typescript/_namespaces/ts.d.ts",
+      "sha256": "bcadd626885227b9232331ef05057686141c96c9b7c6e84890ce576959c75ff6"
+    },
+    {
+      "file": "typescript/typescript.d.ts",
+      "sha256": "afd1143a346a518f6751142f2c2f92715e1442ff9aca12610a3aa0b62998f27b"
+    }
+  ]
+}

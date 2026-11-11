@@ -1,0 +1,49 @@
+{
+  "label": "c-unstripped",
+  "baseline": "original-unstripped",
+  "typescript": "6.0.3",
+  "selected_declarations": [
+    {
+      "name": "SourceFileLike",
+      "kind": "InterfaceDeclaration",
+      "text": "interface SourceFileLike extends LineMapSource {\n    }"
+    },
+    {
+      "name": "SourceFileLike",
+      "kind": "InterfaceDeclaration",
+      "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+    },
+    {
+      "name": "getLineAndCharacterOfPosition",
+      "kind": "FunctionDeclaration",
+      "text": "function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;"
+    }
+  ],
+  "options": {
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "target": 11,
+    "module": 1,
+    "types": [],
+    "skipLibCheck": false
+  },
+  "diagnostics": [
+    {
+      "code": 2304,
+      "file": "typescript.d.ts",
+      "line": 5906,
+      "column": 38,
+      "message": "Cannot find name 'LineMapSource'."
+    },
+    {
+      "code": 2304,
+      "file": "typescript.d.ts",
+      "line": 8553,
+      "column": 56,
+      "message": "Cannot find name 'LineMapSource'."
+    }
+  ],
+  "normalized_changes": 4
+}

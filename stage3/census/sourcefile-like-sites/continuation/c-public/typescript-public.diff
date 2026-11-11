@@ -1,0 +1,25 @@
+--- original/typescript.d.ts
++++ c-public/typescript.d.ts
+@@ -5906,8 +5906,12 @@
+     /**
+      * Subset of properties from SourceFile that are used in multiple utility functions
+      */
+-    interface SourceFileLike {
++    /**              */
++    interface LineMapSource {
+         readonly text: string;
++        lineMap?: readonly number[] | undefined;
++    }
++    interface SourceFileLike extends LineMapSource {
+     }
+     interface SourceFileLike {
+         getLineAndCharacterOfPosition(pos: number): LineAndCharacter;
+@@ -8554,7 +8558,7 @@
+     let sys: System;
+     function tokenToString(t: SyntaxKind): string | undefined;
+     function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number): number;
+-    function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;
++    function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;
+     function isWhiteSpaceLike(ch: number): boolean;
+     /** Does not include line breaks. For that, see isWhiteSpaceLike. */
+     function isWhiteSpaceSingleLine(ch: number): boolean;

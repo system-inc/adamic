@@ -1,0 +1,5 @@
+{
+  "scope": "Public declaration caller control only, not a full source implementation of (d)",
+  "only_change": "LineMapSource.lineMap becomes readonly",
+  "purpose": "Check whether readonly alone repairs the new public SDK optional-widening refusal"
+}

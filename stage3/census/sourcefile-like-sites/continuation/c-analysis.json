@@ -1,0 +1,2184 @@
+{
+  "variants": {
+    "c": {
+      "stock": {
+        "label": "c",
+        "whole_src_roots": 604,
+        "whole_src_diagnostics": 0,
+        "calls": 93,
+        "excluded_or_unresolved": 61,
+        "services_files": 253,
+        "services_diagnostics": 0,
+        "services_TS2386": 0,
+        "call_diagnostics": 0
+      },
+      "stock_exact": {
+        "label": "c-exact",
+        "whole_src_roots": 604,
+        "whole_src_diagnostics": 416,
+        "calls": 93,
+        "excluded_or_unresolved": 61,
+        "services_files": 253,
+        "services_diagnostics": 142,
+        "services_TS2386": 0,
+        "call_diagnostics": 2
+      },
+      "adamic_whole_src_diagnostics": 6851,
+      "adamic_whole_src_delta": {
+        "baseline_unique": 6840,
+        "variant_unique": 6840,
+        "added": [],
+        "removed": []
+      },
+      "stock_exact_delta": {
+        "baseline_unique": 416,
+        "variant_unique": 416,
+        "added": [],
+        "removed": []
+      },
+      "cohere_summary": {
+        "kind": "summary",
+        "schemaVersion": 1,
+        "verdict": "fail",
+        "seconds": 34.933614534,
+        "graphSeconds": 1.9673435129999999,
+        "rules": 40,
+        "phases": [
+          {
+            "name": "fix",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "types",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "lint",
+            "outcome": "ran",
+            "seconds": 32.520638721
+          },
+          {
+            "name": "unused",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested \u2014 this is a report, ask for it with --unused"
+          }
+        ],
+        "cache": {
+          "replayed": false,
+          "filesReplayed": 0,
+          "off": true
+        },
+        "typeErrors": 0,
+        "findings": 9774,
+        "filesFixed": 0,
+        "filesFormatted": 0,
+        "wouldChange": 0,
+        "cohered": 0,
+        "filesInScope": 77,
+        "checked": 77,
+        "cached": 0,
+        "nodes": 916323,
+        "gaps": {
+          "programFiles": 79,
+          "crashedFiles": 0,
+          "ruleCrashes": 0,
+          "rulesSkippingEverything": 0,
+          "formattingNotChecked": true,
+          "nothingToCheck": false,
+          "modifiedBuild": false
+        }
+      },
+      "cohere_delta": {
+        "baseline_unique": 9728,
+        "variant_unique": 9704,
+        "added": [],
+        "removed": [
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/emitter.ts",
+            "line": 3961,
+            "column": 112,
+            "severity": "error",
+            "message": "`currentSourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/transformers/declarations.ts",
+            "line": 1264,
+            "column": 139,
+            "severity": "error",
+            "message": "`currentSourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/emitter.ts",
+            "line": 3961,
+            "column": 180,
+            "severity": "error",
+            "message": "`currentSourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 6748,
+            "column": 38,
+            "severity": "error",
+            "message": "`sourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/executeCommandLine.ts",
+            "line": 109,
+            "column": 41,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 2973,
+            "column": 42,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 1213,
+            "column": 46,
+            "severity": "error",
+            "message": "`sourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 1025,
+            "column": 47,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/checker.ts",
+            "line": 52425,
+            "column": 55,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/checker.ts",
+            "line": 52424,
+            "column": 57,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 715,
+            "column": 58,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/watch.ts",
+            "line": 249,
+            "column": 60,
+            "severity": "error",
+            "message": "`diagnosticForFileName.file!` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/transformers/jsx.ts",
+            "line": 359,
+            "column": 63,
+            "severity": "error",
+            "message": "`originalFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/tracing.ts",
+            "line": 207,
+            "column": 65,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 2527,
+            "column": 65,
+            "severity": "error",
+            "message": "`sourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/emitter.ts",
+            "line": 1444,
+            "column": 66,
+            "severity": "error",
+            "message": "`Debug.checkDefined(currentSourceFile)` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/tracing.ts",
+            "line": 206,
+            "column": 67,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 2526,
+            "column": 67,
+            "severity": "error",
+            "message": "`sourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 671,
+            "column": 67,
+            "severity": "error",
+            "message": "`diagnostic.file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/transformers/declarations.ts",
+            "line": 1264,
+            "column": 70,
+            "severity": "error",
+            "message": "`currentSourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 714,
+            "column": 87,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 713,
+            "column": 89,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 768,
+            "column": 89,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/emitter.ts",
+            "line": 6233,
+            "column": 96,
+            "severity": "error",
+            "message": "`sourceMapSource` is a 'SourceMapSource', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceMapSource' does not declare. A 'SourceMapSource' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          }
+        ]
+      },
+      "lowering_delta": {
+        "baseline_unique": 8584,
+        "variant_unique": 8562,
+        "added": [],
+        "removed": [
+          {
+            "root": "emitter.ts",
+            "unit": "<tree>/src/compiler/emitter.ts:1443:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/emitter.ts:1444:66",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/emitter.ts:1444:66: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "emitter.ts",
+            "unit": "<tree>/src/compiler/emitter.ts:3959:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/emitter.ts:3961:112",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/emitter.ts:3961:112: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "emitter.ts",
+            "unit": "<tree>/src/compiler/emitter.ts:3959:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/emitter.ts:3961:180",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/emitter.ts:3961:180: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "executeCommandLine.ts",
+            "unit": "<tree>/src/compiler/executeCommandLine.ts:105:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/executeCommandLine.ts:109:41",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/executeCommandLine.ts:109:41: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:2966:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:2973:42",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:2973:42: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:667:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:671:67",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:671:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:712:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:713:89",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:713:89: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:712:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:714:87",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:714:87: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:712:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:715:58",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:715:58: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:767:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:768:89",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:768:89: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "tracing.ts",
+            "unit": "<tree>/src/compiler/tracing.ts:200:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/tracing.ts:206:67",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/tracing.ts:206:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "tracing.ts",
+            "unit": "<tree>/src/compiler/tracing.ts:200:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/tracing.ts:207:65",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/tracing.ts:207:65: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "transformers/declarations.ts",
+            "unit": "<tree>/src/compiler/transformers/declarations.ts:1006:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/transformers/declarations.ts:1264:139",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/transformers/declarations.ts:1264:139: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "transformers/declarations.ts",
+            "unit": "<tree>/src/compiler/transformers/declarations.ts:1006:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/transformers/declarations.ts:1264:70",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/transformers/declarations.ts:1264:70: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "transformers/jsx.ts",
+            "unit": "<tree>/src/compiler/transformers/jsx.ts:333:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/transformers/jsx.ts:359:63",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/transformers/jsx.ts:359:63: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:1023:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:1025:47",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:1025:47: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:1210:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:1213:46",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:1213:46: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:2523:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:2526:67",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:2526:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:2523:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:2527:65",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:2527:65: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:6747:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:6748:38",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:6748:38: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "watch.ts",
+            "unit": "<tree>/src/compiler/watch.ts:233:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/watch.ts:249:60",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/watch.ts:249:60: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "emitter.ts",
+            "unit": "<tree>/src/compiler/emitter.ts:6228:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/emitter.ts:6233:96",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceMapSource, which can hide fields",
+            "text": "<tree>/src/compiler/emitter.ts:6233:96: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceMapSource, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          }
+        ]
+      },
+      "files": [
+        {
+          "file": "scanner.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/scanner.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 613.4197047029993,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 150,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:4075:1",
+              "wall_seconds": 0.232255368,
+              "cpu_seconds": 0.18515299999995705
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:4087:1",
+              "wall_seconds": 0.110936348,
+              "cpu_seconds": 0.10229799999996203
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:4092:1",
+              "wall_seconds": 0.360434632,
+              "cpu_seconds": 0.7707280000000196
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:4096:1",
+              "wall_seconds": 0.359650498,
+              "cpu_seconds": 0.418721000000005
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:4103:1",
+              "wall_seconds": 0.248611775,
+              "cpu_seconds": 0.23803900000001477
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "tracing.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/tracing.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 214.84907638599907,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 23,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts:369:1",
+              "wall_seconds": 0.1585672,
+              "cpu_seconds": 0.05509000000000697
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts:371:1",
+              "wall_seconds": 0.19283535,
+              "cpu_seconds": 0.05791399999999669
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts:374:1",
+              "wall_seconds": 0.227636268,
+              "cpu_seconds": 0.0635610000000213
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts:378:1",
+              "wall_seconds": 0.196983553,
+              "cpu_seconds": 0.05681800000000692
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts:379:1",
+              "wall_seconds": 0.219947633,
+              "cpu_seconds": 0.06082599999999161
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "watch.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/watch.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 117.76036325399946,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 36,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts:903:1",
+              "wall_seconds": 0.058270518,
+              "cpu_seconds": 0.05830500000001848
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts:911:1",
+              "wall_seconds": 0.176186333,
+              "cpu_seconds": 0.3184660000000008
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts:943:1",
+              "wall_seconds": 0.573699863,
+              "cpu_seconds": 0.8109309999999965
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts:973:1",
+              "wall_seconds": 0.104055456,
+              "cpu_seconds": 0.08232300000000237
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/watch.ts:986:1",
+              "wall_seconds": 6.265396318,
+              "cpu_seconds": 6.432024000000013
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "transformers/jsx.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/transformers__jsx.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 151.3890151179985,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 40,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts:640:5",
+              "wall_seconds": 0.483482468,
+              "cpu_seconds": 1.1293810000000235
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts:645:5",
+              "wall_seconds": 1.131139104,
+              "cpu_seconds": 1.0249659999999778
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts:668:5",
+              "wall_seconds": 1.286386031,
+              "cpu_seconds": 1.1894149999999968
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts:677:5",
+              "wall_seconds": 0.409610807,
+              "cpu_seconds": 0.38977400000001694
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/jsx.ts:683:1",
+              "wall_seconds": 0.267140644,
+              "cpu_seconds": 0.2673460000000034
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "transformers/declarations.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/transformers__declarations.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 184.41088370299985,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 69,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts:1893:1",
+              "wall_seconds": 0.400948062,
+              "cpu_seconds": 0.40150900000000433
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts:1905:1",
+              "wall_seconds": 0.055546876,
+              "cpu_seconds": 0.05561199999999644
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts:1918:1",
+              "wall_seconds": 1.025247184,
+              "cpu_seconds": 1.7351539999999943
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts:1936:1",
+              "wall_seconds": 0.382983732,
+              "cpu_seconds": 1.2170439999999871
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/transformers/declarations.ts:1956:1",
+              "wall_seconds": 0.39434837,
+              "cpu_seconds": 0.531594000000041
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "executeCommandLine.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/executeCommandLine.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 191.79680315599944,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 68,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts:1248:5",
+              "wall_seconds": 0.16425726,
+              "cpu_seconds": 0.13799099999999953
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts:1252:5",
+              "wall_seconds": 0.154805441,
+              "cpu_seconds": 0.14048199999999156
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts:1257:1",
+              "wall_seconds": 1.024433606,
+              "cpu_seconds": 1.9033879999999783
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts:1276:1",
+              "wall_seconds": 0.974045077,
+              "cpu_seconds": 0.6297150000000045
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/executeCommandLine.ts:1289:1",
+              "wall_seconds": 1.033885342,
+              "cpu_seconds": 0.9107329999999934
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "emitter.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/emitter.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 673.4309272910014,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 423,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts:6359:1",
+              "wall_seconds": 0.142453074,
+              "cpu_seconds": 0.5043130000000247
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts:6360:1",
+              "wall_seconds": 0.156444135,
+              "cpu_seconds": 0.3926850000000286
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts:6362:1",
+              "wall_seconds": 0.104032947,
+              "cpu_seconds": 0.1351760000000013
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts:6366:1",
+              "wall_seconds": 0.224744106,
+              "cpu_seconds": 0.2243230000000267
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/emitter.ts:6370:1",
+              "wall_seconds": 0.213333386,
+              "cpu_seconds": 0.2130329999999958
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "utilities.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/utilities.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 746.0205241239983,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 867,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts:12416:1",
+              "wall_seconds": 0.361835671,
+              "cpu_seconds": 0.36297800000011193
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts:12420:1",
+              "wall_seconds": 0.620478512,
+              "cpu_seconds": 0.6296010000000933
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts:12426:1",
+              "wall_seconds": 0.361081054,
+              "cpu_seconds": 0.6560429999999542
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts:12431:1",
+              "wall_seconds": 0.838374855,
+              "cpu_seconds": 2.4591159999999945
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/utilities.ts:12436:1",
+              "wall_seconds": 1.922259998,
+              "cpu_seconds": 1.8876610000000937
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "program.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/program.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 904.8409077140004,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 235,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts:5167:5",
+              "wall_seconds": 0.142203614,
+              "cpu_seconds": 0.14253600000006372
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts:5170:5",
+              "wall_seconds": 0.153425346,
+              "cpu_seconds": 0.15418399999998655
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts:5173:5",
+              "wall_seconds": 0.142410159,
+              "cpu_seconds": 0.14278399999989233
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts:5179:1",
+              "wall_seconds": 0.873114401,
+              "cpu_seconds": 0.7841869999999744
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/program.ts:5191:1",
+              "wall_seconds": 0.678217992,
+              "cpu_seconds": 0.6781479999997373
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "parser.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c/raw/parser.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 871.2589368710014,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 545,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts:10713:1",
+              "wall_seconds": 0.094952345,
+              "cpu_seconds": 0.09535400000004302
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts:10714:1",
+              "wall_seconds": 1.7641203810000001,
+              "cpu_seconds": 5.161807000000181
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts:10767:1",
+              "wall_seconds": 0.334313381,
+              "cpu_seconds": 0.3354709999998704
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts:10781:1",
+              "wall_seconds": 0.499127742,
+              "cpu_seconds": 0.49774699999989025
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c/src/compiler/parser.ts:10800:1",
+              "wall_seconds": 1.273764235,
+              "cpu_seconds": 1.2815299999999752
+            }
+          ],
+          "complete_stream": true
+        }
+      ],
+      "headers": [
+        {
+          "file": "scanner.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "tracing.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "watch.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "transformers/jsx.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "transformers/declarations.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "executeCommandLine.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "emitter.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "utilities.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "program.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "parser.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        }
+      ],
+      "view_verdicts": {
+        "no finding at original call; unit attempted": 22,
+        "finding at original call": 12
+      },
+      "helper_view_verdicts": {
+        "no finding at original call; unit attempted": 22
+      },
+      "core_first_stop": {
+        "roots": [
+          "/workspace/scratch/baobab-road2-c/src/compiler/core.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/baobab-road2-c/src/compiler/tracing.ts:232:34",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 21.274722228999998
+      },
+      "getLineStarts_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:503:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:504:35",
+          "reason": "an assignment value to a member",
+          "text": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:504:35: stage 0 can't lower an assignment value to a member yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:503:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:504:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:504:35: stage 0 can't lower an assignment value to a member yet",
+          "start": 49077,
+          "end": 49170
+        }
+      ],
+      "getLineStarts_units": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:503:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 49075,
+          "body_end": 49173,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getLineStarts",
+          "top": "/workspace/scratch/baobab-road2-c/src/compiler/scanner.ts:503:1"
+        }
+      ],
+      "source_diff": {
+        "src/compiler/scanner.ts": {
+          "before": "6ac1af02e48510c6e8017199ae70fd9d546ef78fff3ccf673f1b4fe854490571",
+          "after": "daaa1a98fd03efff0bdc650fe4c95127a84253669e17c99e2faad9483269af22"
+        },
+        "src/compiler/types.ts": {
+          "before": "96e99fe81aabb84c175616336166c9c4ea811c1d4f29be2b9243939f1b27488b",
+          "after": "668fd6257dc5c343b163a096c3e5126383e1e8eaf9790f5e4ad6a6fcd18d8f7c"
+        }
+      }
+    },
+    "c-public": {
+      "stock": {
+        "label": "c-public",
+        "whole_src_roots": 604,
+        "whole_src_diagnostics": 0,
+        "calls": 93,
+        "excluded_or_unresolved": 61,
+        "services_files": 253,
+        "services_diagnostics": 0,
+        "services_TS2386": 0,
+        "call_diagnostics": 0
+      },
+      "stock_exact": {
+        "label": "c-public-exact",
+        "whole_src_roots": 604,
+        "whole_src_diagnostics": 416,
+        "calls": 93,
+        "excluded_or_unresolved": 61,
+        "services_files": 253,
+        "services_diagnostics": 142,
+        "services_TS2386": 0,
+        "call_diagnostics": 2
+      },
+      "adamic_whole_src_diagnostics": 6851,
+      "adamic_whole_src_delta": {
+        "baseline_unique": 6840,
+        "variant_unique": 6840,
+        "added": [],
+        "removed": []
+      },
+      "stock_exact_delta": {
+        "baseline_unique": 416,
+        "variant_unique": 416,
+        "added": [],
+        "removed": []
+      },
+      "cohere_summary": {
+        "kind": "summary",
+        "schemaVersion": 1,
+        "verdict": "fail",
+        "seconds": 15.613129237999999,
+        "graphSeconds": 0.207951965,
+        "rules": 40,
+        "phases": [
+          {
+            "name": "fix",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "types",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested"
+          },
+          {
+            "name": "lint",
+            "outcome": "ran",
+            "seconds": 15.288309066
+          },
+          {
+            "name": "unused",
+            "outcome": "skipped",
+            "seconds": 0,
+            "detail": "not requested \u2014 this is a report, ask for it with --unused"
+          }
+        ],
+        "cache": {
+          "replayed": false,
+          "filesReplayed": 0,
+          "off": true
+        },
+        "typeErrors": 0,
+        "findings": 9774,
+        "filesFixed": 0,
+        "filesFormatted": 0,
+        "wouldChange": 0,
+        "cohered": 0,
+        "filesInScope": 77,
+        "checked": 77,
+        "cached": 0,
+        "nodes": 916323,
+        "gaps": {
+          "programFiles": 79,
+          "crashedFiles": 0,
+          "ruleCrashes": 0,
+          "rulesSkippingEverything": 0,
+          "formattingNotChecked": true,
+          "nothingToCheck": false,
+          "modifiedBuild": false
+        }
+      },
+      "cohere_delta": {
+        "baseline_unique": 9728,
+        "variant_unique": 9704,
+        "added": [],
+        "removed": [
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/emitter.ts",
+            "line": 3961,
+            "column": 112,
+            "severity": "error",
+            "message": "`currentSourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/transformers/declarations.ts",
+            "line": 1264,
+            "column": 139,
+            "severity": "error",
+            "message": "`currentSourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/emitter.ts",
+            "line": 3961,
+            "column": 180,
+            "severity": "error",
+            "message": "`currentSourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 6748,
+            "column": 38,
+            "severity": "error",
+            "message": "`sourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/executeCommandLine.ts",
+            "line": 109,
+            "column": 41,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 2973,
+            "column": 42,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 1213,
+            "column": 46,
+            "severity": "error",
+            "message": "`sourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 1025,
+            "column": 47,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/checker.ts",
+            "line": 52425,
+            "column": 55,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/checker.ts",
+            "line": 52424,
+            "column": 57,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 715,
+            "column": 58,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/watch.ts",
+            "line": 249,
+            "column": 60,
+            "severity": "error",
+            "message": "`diagnosticForFileName.file!` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/transformers/jsx.ts",
+            "line": 359,
+            "column": 63,
+            "severity": "error",
+            "message": "`originalFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/tracing.ts",
+            "line": 207,
+            "column": 65,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 2527,
+            "column": 65,
+            "severity": "error",
+            "message": "`sourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/emitter.ts",
+            "line": 1444,
+            "column": 66,
+            "severity": "error",
+            "message": "`Debug.checkDefined(currentSourceFile)` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/tracing.ts",
+            "line": 206,
+            "column": 67,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/utilities.ts",
+            "line": 2526,
+            "column": 67,
+            "severity": "error",
+            "message": "`sourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 671,
+            "column": 67,
+            "severity": "error",
+            "message": "`diagnostic.file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/transformers/declarations.ts",
+            "line": 1264,
+            "column": 70,
+            "severity": "error",
+            "message": "`currentSourceFile` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 714,
+            "column": 87,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 713,
+            "column": 89,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/program.ts",
+            "line": 768,
+            "column": 89,
+            "severity": "error",
+            "message": "`file` is a 'SourceFile', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceFile' does not declare. A 'SourceFile' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          },
+          {
+            "rule": "adamic/no-optional-widening",
+            "path": "<tree>/src/compiler/emitter.ts",
+            "line": 6233,
+            "column": 96,
+            "severity": "error",
+            "message": "`sourceMapSource` is a 'SourceMapSource', seen here as 'SourceFileLike', which adds the optional property `getPositionOfLineAndCharacter` that 'SourceMapSource' does not declare. A 'SourceMapSource' can still carry a `getPositionOfLineAndCharacter` of any type, since an earlier, wider value may have been seen as it, and tsc now gives that property the optional one's type: the value reads as a '(line: number, character: number, allowEdits?: true | undefined) => number | undefined' and holds something else. Declare `getPositionOfLineAndCharacter` in the source's type, or build the value with the property named."
+          }
+        ]
+      },
+      "lowering_delta": {
+        "baseline_unique": 8584,
+        "variant_unique": 8562,
+        "added": [],
+        "removed": [
+          {
+            "root": "emitter.ts",
+            "unit": "<tree>/src/compiler/emitter.ts:1443:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/emitter.ts:1444:66",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/emitter.ts:1444:66: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "emitter.ts",
+            "unit": "<tree>/src/compiler/emitter.ts:3959:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/emitter.ts:3961:112",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/emitter.ts:3961:112: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "emitter.ts",
+            "unit": "<tree>/src/compiler/emitter.ts:3959:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/emitter.ts:3961:180",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/emitter.ts:3961:180: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "executeCommandLine.ts",
+            "unit": "<tree>/src/compiler/executeCommandLine.ts:105:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/executeCommandLine.ts:109:41",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/executeCommandLine.ts:109:41: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:2966:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:2973:42",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:2973:42: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:667:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:671:67",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:671:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:712:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:713:89",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:713:89: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:712:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:714:87",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:714:87: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:712:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:715:58",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:715:58: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "program.ts",
+            "unit": "<tree>/src/compiler/program.ts:767:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/program.ts:768:89",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/program.ts:768:89: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "tracing.ts",
+            "unit": "<tree>/src/compiler/tracing.ts:200:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/tracing.ts:206:67",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/tracing.ts:206:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "tracing.ts",
+            "unit": "<tree>/src/compiler/tracing.ts:200:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/tracing.ts:207:65",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/tracing.ts:207:65: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "transformers/declarations.ts",
+            "unit": "<tree>/src/compiler/transformers/declarations.ts:1006:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/transformers/declarations.ts:1264:139",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/transformers/declarations.ts:1264:139: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "transformers/declarations.ts",
+            "unit": "<tree>/src/compiler/transformers/declarations.ts:1006:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/transformers/declarations.ts:1264:70",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/transformers/declarations.ts:1264:70: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "transformers/jsx.ts",
+            "unit": "<tree>/src/compiler/transformers/jsx.ts:333:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/transformers/jsx.ts:359:63",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/transformers/jsx.ts:359:63: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:1023:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:1025:47",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:1025:47: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:1210:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:1213:46",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:1213:46: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:2523:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:2526:67",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:2526:67: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:2523:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:2527:65",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:2527:65: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "utilities.ts",
+            "unit": "<tree>/src/compiler/utilities.ts:6747:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/utilities.ts:6748:38",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/utilities.ts:6748:38: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "watch.ts",
+            "unit": "<tree>/src/compiler/watch.ts:233:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/watch.ts:249:60",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+            "text": "<tree>/src/compiler/watch.ts:249:60: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          },
+          {
+            "root": "emitter.ts",
+            "unit": "<tree>/src/compiler/emitter.ts:6228:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/emitter.ts:6233:96",
+            "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceMapSource, which can hide fields",
+            "text": "<tree>/src/compiler/emitter.ts:6233:96: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceMapSource, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          }
+        ]
+      },
+      "files": [
+        {
+          "file": "scanner.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/scanner.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 361.56056917800015,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 150,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:4075:1",
+              "wall_seconds": 0.132260482,
+              "cpu_seconds": 0.13211899999998877
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:4087:1",
+              "wall_seconds": 0.110806888,
+              "cpu_seconds": 0.11088499999999613
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:4092:1",
+              "wall_seconds": 0.094671473,
+              "cpu_seconds": 0.09487699999999677
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:4096:1",
+              "wall_seconds": 0.141544892,
+              "cpu_seconds": 0.14132399999999734
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:4103:1",
+              "wall_seconds": 0.128694556,
+              "cpu_seconds": 0.1291659999999979
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "tracing.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/tracing.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 48.95269651499984,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 23,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts:369:1",
+              "wall_seconds": 0.084002714,
+              "cpu_seconds": 0.08427900000000221
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts:371:1",
+              "wall_seconds": 0.114723738,
+              "cpu_seconds": 0.11534599999999529
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts:374:1",
+              "wall_seconds": 0.102733485,
+              "cpu_seconds": 0.10274000000000427
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts:378:1",
+              "wall_seconds": 0.101838661,
+              "cpu_seconds": 0.10251200000000438
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts:379:1",
+              "wall_seconds": 0.11807309,
+              "cpu_seconds": 0.11852000000000373
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "watch.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/watch.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 78.65661616800207,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 36,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts:903:1",
+              "wall_seconds": 0.058933318,
+              "cpu_seconds": 0.058976999999998725
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts:911:1",
+              "wall_seconds": 0.080089378,
+              "cpu_seconds": 0.06254899999998997
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts:943:1",
+              "wall_seconds": 0.102849478,
+              "cpu_seconds": 0.07740200000000641
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts:973:1",
+              "wall_seconds": 0.058568172,
+              "cpu_seconds": 0.05862199999999973
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/watch.ts:986:1",
+              "wall_seconds": 12.06215114,
+              "cpu_seconds": 14.538216999999989
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "transformers/jsx.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/transformers__jsx.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 121.01135156899909,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 40,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts:640:5",
+              "wall_seconds": 0.407519781,
+              "cpu_seconds": 0.41132500000000505
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts:645:5",
+              "wall_seconds": 0.966951836,
+              "cpu_seconds": 0.8850020000000143
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts:668:5",
+              "wall_seconds": 0.875082425,
+              "cpu_seconds": 0.7765319999999747
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts:677:5",
+              "wall_seconds": 0.360474407,
+              "cpu_seconds": 0.3539130000000057
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/jsx.ts:683:1",
+              "wall_seconds": 0.163841585,
+              "cpu_seconds": 0.16406699999998864
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "transformers/declarations.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/transformers__declarations.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 153.92146300699824,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 69,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts:1893:1",
+              "wall_seconds": 0.559210839,
+              "cpu_seconds": 0.5165460000000053
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts:1905:1",
+              "wall_seconds": 0.062859351,
+              "cpu_seconds": 0.0630869999999959
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts:1918:1",
+              "wall_seconds": 0.42937422,
+              "cpu_seconds": 0.4301580000000058
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts:1936:1",
+              "wall_seconds": 0.052023013,
+              "cpu_seconds": 0.051437999999990325
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/transformers/declarations.ts:1956:1",
+              "wall_seconds": 0.444370605,
+              "cpu_seconds": 0.4457749999999976
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "executeCommandLine.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/executeCommandLine.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 155.27385634299935,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 68,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts:1248:5",
+              "wall_seconds": 0.265881283,
+              "cpu_seconds": 0.2670929999999885
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts:1252:5",
+              "wall_seconds": 0.190841474,
+              "cpu_seconds": 0.19161300000001802
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts:1257:1",
+              "wall_seconds": 0.704418195,
+              "cpu_seconds": 0.7037830000000156
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts:1276:1",
+              "wall_seconds": 0.340603305,
+              "cpu_seconds": 0.3356119999999976
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/executeCommandLine.ts:1289:1",
+              "wall_seconds": 1.231496083,
+              "cpu_seconds": 2.196571000000006
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "emitter.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/emitter.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 612.6059624020018,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 423,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts:6359:1",
+              "wall_seconds": 0.089368624,
+              "cpu_seconds": 0.07954799999993156
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts:6360:1",
+              "wall_seconds": 0.264284848,
+              "cpu_seconds": 0.12159199999996417
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts:6362:1",
+              "wall_seconds": 0.355739865,
+              "cpu_seconds": 0.15990599999997812
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts:6366:1",
+              "wall_seconds": 0.306696874,
+              "cpu_seconds": 0.2749179999999569
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/emitter.ts:6370:1",
+              "wall_seconds": 0.233625046,
+              "cpu_seconds": 0.2518929999999955
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "utilities.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/utilities.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 712.3196222749975,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 867,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts:12416:1",
+              "wall_seconds": 0.54157569,
+              "cpu_seconds": 0.39759700000001885
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts:12420:1",
+              "wall_seconds": 0.449612606,
+              "cpu_seconds": 0.45128700000009303
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts:12426:1",
+              "wall_seconds": 0.20232231,
+              "cpu_seconds": 0.20283000000006268
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts:12431:1",
+              "wall_seconds": 0.553139272,
+              "cpu_seconds": 0.554079999999999
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/utilities.ts:12436:1",
+              "wall_seconds": 2.176402108,
+              "cpu_seconds": 4.131112999999914
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "program.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/program.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 839.3743256800008,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 235,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts:5167:5",
+              "wall_seconds": 0.121564555,
+              "cpu_seconds": 0.12156200000003992
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts:5170:5",
+              "wall_seconds": 0.125306759,
+              "cpu_seconds": 0.12547999999992498
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts:5173:5",
+              "wall_seconds": 0.117553438,
+              "cpu_seconds": 0.11769400000002861
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts:5179:1",
+              "wall_seconds": 0.557651672,
+              "cpu_seconds": 0.5621189999999388
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/program.ts:5191:1",
+              "wall_seconds": 0.703437172,
+              "cpu_seconds": 1.043726000000106
+            }
+          ],
+          "complete_stream": true
+        },
+        {
+          "file": "parser.ts",
+          "command": [
+            "/workspace/scratch/baobab-latent",
+            "/workspace/scratch/baobab-road2-c-public/src/compiler",
+            "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/c-public/raw/parser.jsonl"
+          ],
+          "child_exit": 0,
+          "wall_seconds": 797.6835511719983,
+          "timed_out": false,
+          "bound_seconds": 1500,
+          "max_concurrent_files": 2,
+          "completed_timing_units": 545,
+          "last_timing_units": [
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts:10713:1",
+              "wall_seconds": 0.058848201,
+              "cpu_seconds": 0.059066999999913605
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts:10714:1",
+              "wall_seconds": 0.573432348,
+              "cpu_seconds": 0.5756940000001123
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts:10767:1",
+              "wall_seconds": 0.298877595,
+              "cpu_seconds": 0.3002839999999196
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts:10781:1",
+              "wall_seconds": 0.39346621,
+              "cpu_seconds": 0.3875020000000404
+            },
+            {
+              "file": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts",
+              "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/parser.ts:10800:1",
+              "wall_seconds": 0.981049169,
+              "cpu_seconds": 0.983981999999969
+            }
+          ],
+          "complete_stream": true
+        }
+      ],
+      "headers": [
+        {
+          "file": "scanner.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "tracing.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "watch.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "transformers/jsx.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "transformers/declarations.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "executeCommandLine.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "emitter.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "utilities.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "program.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        },
+        {
+          "file": "parser.ts",
+          "checker_rejected": false,
+          "diagnostics": []
+        }
+      ],
+      "view_verdicts": {
+        "no finding at original call; unit attempted": 22,
+        "finding at original call": 12
+      },
+      "helper_view_verdicts": {
+        "no finding at original call; unit attempted": 22
+      },
+      "core_first_stop": {
+        "roots": [
+          "/workspace/scratch/baobab-road2-c-public/src/compiler/core.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/tracing.ts:232:34",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 44.793428969
+      },
+      "getLineStarts_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:503:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:504:35",
+          "reason": "an assignment value to a member",
+          "text": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:504:35: stage 0 can't lower an assignment value to a member yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:503:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:504:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:504:35: stage 0 can't lower an assignment value to a member yet",
+          "start": 49077,
+          "end": 49170
+        }
+      ],
+      "getLineStarts_units": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:503:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 49075,
+          "body_end": 49173,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getLineStarts",
+          "top": "/workspace/scratch/baobab-road2-c-public/src/compiler/scanner.ts:503:1"
+        }
+      ],
+      "source_diff": {
+        "src/compiler/scanner.ts": {
+          "before": "6ac1af02e48510c6e8017199ae70fd9d546ef78fff3ccf673f1b4fe854490571",
+          "after": "daaa1a98fd03efff0bdc650fe4c95127a84253669e17c99e2faad9483269af22"
+        },
+        "src/compiler/types.ts": {
+          "before": "96e99fe81aabb84c175616336166c9c4ea811c1d4f29be2b9243939f1b27488b",
+          "after": "9456c5021fc313ee9f443b69718a3053be7061c1f6bdd6bdcd20434f58c07cf8"
+        }
+      }
+    }
+  },
+  "relation_scope": "Full cohere:adamic set. Actual CLI summary determines the walked scope. No rule disable or source rewrite.",
+  "comparison_normalization": "Replace scratch-root paths and map unchanged types.ts lines after the three-line interface insertion back to baseline. Ignore raw byte offsets and timing fields."
+}
