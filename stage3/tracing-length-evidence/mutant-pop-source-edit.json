@@ -1,0 +1,8 @@
+{
+  "owner": "pop",
+  "onlyLiteralRestored": {
+    "from": "eventStack.splice(eventStack.length - 1);",
+    "to": "eventStack.length--;"
+  },
+  "explicitRangeErrorGuardRetained": true
+}

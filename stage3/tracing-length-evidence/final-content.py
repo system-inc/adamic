@@ -4,7 +4,7 @@ import json,hashlib
 lane=json.loads((raw/'lane-summary.json').read_text());census=json.loads((raw/'census-summary-report.json').read_text());built=json.loads((raw/'built-comparison-report.json').read_text());source=json.loads((raw/'source-comparison-report.json').read_text())
 assert lane['wholeLaneExit']==0 and lane['emptyPopWrites']==0
 assert lane['oracleCountsCheckedByEachGoUnit']=={'pass':106366,'fail':1,'skip':0}
-for n in ['baseline-clean-apply','guarded-full-apply','before-build','after-build','before-types','after-types','before-census','after-census','mutant-pop-census','mutant-popAll-census','node-witness','reentrant-witness','reentrant-controls','adapter-guards-guarded','baseline-clean-comparison']:
+for n in ['baseline-clean-apply','guarded-full-apply','before-build','after-build','before-types','after-types','before-census','after-census','mutant-pop-census','mutant-popAll-census','node-witness','reentrant-witness','reentrant-controls','adapter-guards-guarded','mutant-source-comparison','baseline-clean-comparison']:
  assert json.loads((raw/(n+'.json')).read_text())['exit']==0,n
 assert not census['newlyVisibleFindingsInTracing']
 assert census['reports']['after']['pop']==[] and census['reports']['after']['popAll']==[]
@@ -100,15 +100,17 @@ only; its no-output guards remain enabled. Both named bodies are attempted.
 
 | Owner | Before | After | Independent restoring mutant |
 |---|---|---|---|
-| pop | 164:9 NotYet: assigning a field of a value | No finding | Original 164:9 finding returns |
+| pop | 164:9 NotYet: assigning a field of a value | No finding | Same refusal returns at 165:9, shifted by the added guard line |
 | popAll | 171:9 NotYet: assigning a field of a value | No finding | Same refusal returns at 172:9, shifted by the added guard line |
 
-Any newly visible guard stop is retained in census-summary.json. The exact original finding texts are:
+Any newly visible guard stop is retained in census-summary-report.json. The exact original finding texts are:
 
     src/compiler/tracing.ts:164:9: stage 0 can't lower assigning a field of a value yet
     src/compiler/tracing.ts:171:9: stage 0 can't lower assigning a field of a value yet
 
-Each mutant restores only its own write and retains the other adapted owner.
+Each final mutant restores only its own length-write literal, retaining the
+explicit RangeError guard and the other adapted owner. The extra guard line
+shifts the restored pop and popAll sites to 165:9 and 172:9 respectively.
 There is no newly visible stop in either owner. For the file-wide delta only,
 locations after the added guard are mapped back one line; there is no new stop
 elsewhere either. Raw streams and owner reports retain their actual locations. The startTracing finding at 72:9 remains in every run and is not claimed
@@ -124,7 +126,8 @@ match byte for byte.
 
 All ten normal JavaScript files are compared. Seven are byte-identical; exactly
 six hunks in three bundles change. Each full changed file equals its baseline
-after only the literal pop and popAll write replacements. There are no esbuild
+after only the pinned pop replacement (including the guard) and popAll write
+replacement. There are no esbuild
 rename hunks and no unexplained bytes.
 
 | Bundle | Hunks |
@@ -160,9 +163,9 @@ run uses the guarded candidate, starts from a fresh copy, verifies the entire
 payload, preserves all fixtures, and runs every shard anew. Failed logs
 and the invalid lane's counts are retained separately.
 '''
-directory=root/'stage3/adapt/99-correctness-tracing-length';(directory/'PROOF.md').write_text(proof)
-p=directory/'README.md';s=p.read_text();s=s.replace('Validation is in progress. No completed lane or census result is claimed yet.\nEvidence is kept outside stage3/adapt and will be published separately.',f'Both full applies, both normal builds, both 79-root type checks, the paired\nNode witness, and all {lane["units"]} sharded lane units pass. The lane counts pop\nand popAll calls and reached writes explicitly; empty pop reaches no write.\nBoth independent restoring mutants reproduce their original full-census\nfindings. See [PROOF.md](PROOF.md) for counts, error messages, every emitted\nhunk, export keys, and retained failed attempts. Raw evidence is on the separate\n[typescript/tracing-length-evidence](https://github.com/system-inc/adamic/tree/typescript/tracing-length-evidence/stage3/tracing-length-evidence) branch.');p.write_text(s)
-for p in [directory/'README.md',directory/'PROOF.md']:
+directory=root/'stage3/adapt/99-correctness-tracing-length';(raw/'PROOF.md').write_text(proof)
+p=directory/'README.md';s=p.read_text();s=s.replace('Validation is in progress. No completed lane or census result is claimed yet.\nEvidence is kept outside stage3/adapt and will be published separately.', 'Validation and replay instructions, including whole-lane counts, before/after\ncensus quotations, Node outcomes, restoring mutants and all emitted hunks, are\nin the [proof](https://github.com/system-inc/adamic/blob/typescript/tracing-length-evidence/stage3/tracing-length-evidence/PROOF.md) on\n[typescript/tracing-length-evidence](https://github.com/system-inc/adamic/tree/typescript/tracing-length-evidence/stage3/tracing-length-evidence).');p.write_text(s)
+for p in [directory/'README.md',raw/'PROOF.md']:
  assert '\u2013' not in p.read_text() and '\u2014' not in p.read_text(),p
 hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in directory.iterdir() if p.is_file()}
 (raw/'final-content.json').write_text(json.dumps({'files':hashes,'laneUnits':lane['units'],'sourceFiles':source['files']},indent=2)+'\n')

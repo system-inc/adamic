@@ -1,0 +1,62 @@
+{
+  "wholeLaneExit": 0,
+  "units": 398,
+  "oracleCountsCheckedByEachGoUnit": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "processRecords": 797,
+  "histograms": {
+    "popCall": {},
+    "popWrite": {},
+    "popAllCall": {},
+    "popAllWrite": {}
+  },
+  "emptyPopWrites": 0,
+  "controls": {
+    "before-control-counts": {
+      "popCall": {
+        "0": 4,
+        "1": 4,
+        "2": 4,
+        "3": 4
+      },
+      "popWrite": {
+        "1": 4,
+        "2": 4,
+        "3": 4
+      },
+      "popAllCall": {
+        "0": 8,
+        "1": 4
+      },
+      "popAllWrite": {
+        "0": 8,
+        "1": 4
+      }
+    },
+    "after-control-counts": {
+      "popCall": {
+        "0": 4,
+        "1": 4,
+        "2": 4,
+        "3": 4
+      },
+      "popWrite": {
+        "1": 4,
+        "2": 4,
+        "3": 4
+      },
+      "popAllCall": {
+        "0": 8,
+        "1": 4
+      },
+      "popAllWrite": {
+        "0": 8,
+        "1": 4
+      }
+    }
+  },
+  "instrumentation": "Private emitted bundle copies with VM-aware preload. Measurement-only Go overlay selects a private product and carries preload through toolchain.Env. Production source and normal built trees contain no counters."
+}

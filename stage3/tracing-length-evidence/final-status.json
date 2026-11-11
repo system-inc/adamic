@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "status",
+    "--porcelain",
+    "--untracked-files=all",
+    "--ignore-submodules"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "seconds": 1.1393380110002909
+}

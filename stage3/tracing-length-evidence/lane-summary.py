@@ -3,7 +3,8 @@ from run import raw,root
 import json,re,collections
 assert json.loads((raw/'whole-lane.json').read_text())['exit']==0
 rows=[json.loads(s) for s in (raw/'whole-lane.log').read_text().splitlines() if s.startswith('{')]
-expected=set(re.findall(r'func (TestShard_\w+)\(', (root/'stage3/lane/shards_generated_test.go').read_text()))
+expected=set()
+for p in (root/'stage3/lane').glob('*.go'):expected.update(re.findall(r'func (TestShard_\w+)\(',p.read_text()))
 passed=[x['Test'] for x in rows if x.get('Action')=='pass' and x.get('Test','').startswith('TestShard_')]
 assert len(passed)==len(set(passed))==len(expected);assert set(passed)==expected;assert not any(x.get('Action')=='fail' for x in rows)
 units=json.loads((root/'stage3/lane/shards.json').read_text())['units'];assert len(units)==len(expected)

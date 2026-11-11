@@ -1,0 +1,20 @@
+{
+  "pop": {
+    "sourceFiles": 747,
+    "onlyChangedFile": "compiler/tracing.ts",
+    "onlyLiteralRestored": {
+      "from": "eventStack.splice(eventStack.length - 1);",
+      "to": "eventStack.length--;"
+    },
+    "rangeErrorGuardRetained": true
+  },
+  "popAll": {
+    "sourceFiles": 747,
+    "onlyChangedFile": "compiler/tracing.ts",
+    "onlyLiteralRestored": {
+      "from": "eventStack.splice(0);",
+      "to": "eventStack.length = 0;"
+    },
+    "rangeErrorGuardRetained": true
+  }
+}

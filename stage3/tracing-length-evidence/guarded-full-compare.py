@@ -8,7 +8,9 @@ assert files==sorted(str(p.relative_to(a)) for p in (a/'src').rglob('*') if p.is
 for n in ['typescript.d.ts','typescript.internal.d.ts']:
  assert (b/'built/local'/n).read_bytes()==(Path('/workspace/scratch/tracing-length-before/built/local')/n).read_bytes()
 checkpoint=json.loads((raw/'guarded-checkpoint.json').read_text())['commit']
-run('guarded-implementation-diff',['git','diff',checkpoint,'--','stage3/adapt/99-correctness-tracing-length/adapt.cjs','stage3/adapt/99-correctness-tracing-length/pins.json'])
-assert not (raw/'guarded-implementation-diff.log').read_text()
+for name in ['adapt.cjs','pins.json']:
+ relative='stage3/adapt/99-correctness-tracing-length/'+name
+ run('checkpoint-blob-'+name,['git','show',checkpoint+':'+relative])
+ assert (raw/('checkpoint-blob-'+name+'.log')).read_bytes()==(root/relative).read_bytes()
 (raw/'guarded-full-source-report.json').write_text(json.dumps({'fullApplyExit':0,'allSourceFilesIdenticalToBuiltAndCountedCandidate':len(files),'normalDeclarationBundlesByteIdentical':['typescript.d.ts','typescript.internal.d.ts'],'implementationAndPinsUnchangedSinceCheckpoint':checkpoint},indent=2)+'\n')
 print('full apply source matches the built and counted guarded candidate exactly')

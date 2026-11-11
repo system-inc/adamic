@@ -1,0 +1,16 @@
+[
+  {
+    "owner": "pop",
+    "before": "export function pop(results?: Args): void {\r\n        Debug.assert(eventStack.length > 0);\r\n        writeStackEvent(eventStack.length - 1, 1000 * timestamp(), results);\r\n        eventStack.length--;\r\n    }",
+    "after": "export function pop(results?: Args): void {\r\n        Debug.assert(eventStack.length > 0);\r\n        writeStackEvent(eventStack.length - 1, 1000 * timestamp(), results);\r\n        if (eventStack.length === 0) throw new RangeError(\"Invalid array length\");\r\n        eventStack.splice(eventStack.length - 1);\r\n    }",
+    "beforeSha256": "53d5f5598ae01da05cd3367243407e7cdb1bf33a55ad3fb4309a1cc7e5dc0401",
+    "afterSha256": "c6036b392b512c884a191fcd01f456301abff6407cd064e3c1455ee19d26ee66"
+  },
+  {
+    "owner": "popAll",
+    "before": "export function popAll(): void {\r\n        const endTime = 1000 * timestamp();\r\n        for (let i = eventStack.length - 1; i >= 0; i--) {\r\n            writeStackEvent(i, endTime);\r\n        }\r\n        eventStack.length = 0;\r\n    }",
+    "after": "export function popAll(): void {\r\n        const endTime = 1000 * timestamp();\r\n        for (let i = eventStack.length - 1; i >= 0; i--) {\r\n            writeStackEvent(i, endTime);\r\n        }\r\n        eventStack.splice(0);\r\n    }",
+    "beforeSha256": "63a264e4136d97bfd0a408e474996790f11457c36d63b0d25aa9dd07fed11d4a",
+    "afterSha256": "618ff8d604d3f9b2700adae2c92d8055cb12ff9203dad2a90a5f6c5a42fbc848"
+  }
+]
