@@ -1,0 +1,31 @@
+48: // CheckError is a program the checker rejected, with every diagnostic it gave.
+49: type CheckError struct {
+50: 	Diagnostics []string
+51: }
+52: 
+53: func (e *CheckError) Error() string {
+54: 	return strings.Join(e.Diagnostics, "\n")
+55: }
+56: 
+57: // compilerOptions is the one configuration every Adamic 0.1 program is checked under, set here
+58: // rather than read from a tsconfig.json, which could leave any of them out (docs/0.1.md).
+59: func compilerOptions() *core.CompilerOptions {
+60: 	return &core.CompilerOptions{
+61: 		Strict:                     core.TSTrue,
+62: 		NoUncheckedIndexedAccess:   core.TSTrue,
+63: 		ExactOptionalPropertyTypes: core.TSTrue,
+64: 		ErasableSyntaxOnly:         core.TSFalse,
+65: 		VerbatimModuleSyntax:       core.TSTrue,
+66: 		AllowImportingTsExtensions: core.TSTrue,
+67: 		NoEmit:                     core.TSTrue,
+68: 		Module:                     core.ModuleKindESNext,
+69: 		// Every Adamic file is a module, imports or not, as the oracle runs it. Without this, a file with
+70: 		// no import is a script to the checker, and its top-level names collide with the prelude's.
+71: 		ModuleDetection:  core.ModuleDetectionKindForce,
+72: 		ModuleResolution: core.ModuleResolutionKindBundler,
+73: 		Target:           core.ScriptTargetES2024,
+74: 		Lib:              []string{"lib.es2024.d.ts"},
+75: 		Types:            []string{},
+76: 	}
+77: }
+78: 
