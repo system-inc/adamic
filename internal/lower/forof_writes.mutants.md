@@ -1,7 +1,7 @@
 # A for-of's and a catch's writes to their bindings: mutants
 
 Each mutant is one edit, applied alone, then reverted. Run
-`go test ./internal/lower -run '^(TestForOfReassignedBindingIsUnknown|TestForOfReassignedPatternBindingIsUnknown|TestForOfConstBindingStillDispatches|TestCatchBindingAssignedIsUnknown|TestLocalWritesAreLocalFieldsWrites)$' -count=1 -v`.
+`go test ./internal/lower -run '^(TestForOfReassignedBindingIsUnknown|TestForOfReassignedPatternBindingIsUnknown|TestForOfConstBindingStillDispatches|TestCatchBindingAssignedIsUnknown|TestLocalWritesAreLocalFieldsWrites|TestForOfReassignedSpreadSourceIsNotPlain)$' -count=1 -v`.
 Not run yet: written on a machine that doesn't build Go, so "goes red" below is what the code says, not what a run
 printed.
 
@@ -43,3 +43,25 @@ File: internal/lower/view_flow.go, localWrites. Delete:
 ```
 
 Expected: TestCatchBindingAssignedIsUnknown is known, the literal its catch assigns alone.
+
+## 3. library_spread's reader back on the parameter map alone
+
+File: internal/lower/library_spread.go, plainSpreadSources.
+
+Old:
+
+```go
+		if _, unknownSource := graph.unknownAt(node); active[node] || unknownSource || len(graph.sources[node]) == 0 {
+```
+
+New:
+
+```go
+		if _, unknownSource := graph.unknownAt(node); active[node] || unknownSource && graph.unknownParameters[node] || len(graph.sources[node]) == 0 {
+```
+
+That is main's reader, `graph.unknownParameters[node]`, kept in a spelling that compiles: dropping `unknownSource`
+outright would leave it declared and not used.
+
+Expected: TestForOfReassignedSpreadSourceIsNotPlain lowers with no refusal: the for-of binding's sources are the
+literal alone, proven plain, as on main.

@@ -1,7 +1,9 @@
 package lower
 
 import (
+	"errors"
 	"slices"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -141,6 +143,26 @@ func TestCatchBindingAssignedIsUnknown(t *testing.T) {
 	reach := newAllocationFlowGraph(program).ReachingAllocations(ir.Read{Local: 0, Of: ir.Object})
 	if !reach.Unknown || !slices.Contains(reach.Reasons, "a catch binding takes what was thrown") {
 		t.Fatalf("reach is %+v, want Unknown for a catch binding", reach)
+	}
+}
+
+// library_spread's plainSpreadSources asks the graph's one unknown check too. A spread of a for-of
+// binding reassigned with a literal was proven plain by the literal alone, so a RegExp the loop hands
+// it, through a view that may hold one, was copied as if its storage were own fields. It stops as
+// coverage_regexp_view.a's spread through a parameter does. Mutant 3.
+func TestForOfReassignedSpreadSourceIsNotPlain(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `interface Cursor { readonly lastIndex: number; }
+const cursors: Cursor[] = [/a/g];
+for(let cursor of cursors) {
+    const result = { ...cursor };
+    console.log(Object.keys(result).join(','));
+    cursor = { lastIndex: 0 };
+}
+`)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "an object spread through a view that may hold library class RegExp") {
+		t.Fatalf("got %v, want the library spread refusal", err)
 	}
 }
 

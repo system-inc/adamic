@@ -30,6 +30,20 @@ type allocationFlowGraph struct {
 	entry func(ir.Expression) int
 }
 
+// unknownAt is why a node's value may come from somewhere the graph doesn't name, if it may: a
+// parameter some call the graph can't see may pass anything, and a local a node writes with a value
+// the walk can't name (localWrites) holds that too. Every reader of the graph's sources asks this
+// before it trusts them, rather than reading either map.
+func (graph *allocationFlowGraph) unknownAt(node int) (string, bool) {
+	if graph.unknownParameters[node] {
+		return "parameter may receive untracked or omitted arguments", true
+	}
+	if why, written := graph.unknownWrites[node]; written {
+		return why, true
+	}
+	return "", false
+}
+
 func (graph *allocationFlowGraph) resultNode(function int) int {
 	return len(graph.program.Locals) + function + 1
 }

@@ -123,10 +123,7 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 	for len(queue) != 0 {
 		node := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
-		if graph.unknownParameters[node] {
-			unknown("parameter may receive untracked or omitted arguments")
-		}
-		if why, written := graph.unknownWrites[node]; written {
+		if why, unknownSource := graph.unknownAt(node); unknownSource {
 			unknown(why)
 		}
 		sources := graph.sources[node]
