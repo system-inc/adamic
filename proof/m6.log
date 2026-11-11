@@ -1,0 +1,154 @@
+=== RUN   TestNestedIterableCalleeLowers
+=== PAUSE TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody
+=== CONT  TestNestedIterableCalleeLowers
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_view.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_view.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== RUN   TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== PAUSE TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet
+=== RUN   TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== RUN   TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== PAUSE TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== RUN   TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== PAUSE TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call
+=== RUN   TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call
+=== PAUSE TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== RUN   TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== RUN   TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== PAUSE TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+=== RUN   TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/an_optional_call
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_spread
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it
+=== PAUSE TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_view.a
+=== CONT  TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== RUN   TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== PAUSE TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_generic.a
+=== CONT  TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding
+--- PASS: TestNestedIterableCalleeIsExactlyOneBody (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_sibling's_direct_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_bound_closure's_kept_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_virtual_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_module_function's_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/an_optional_call (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_function_value (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_spread (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/a_call_through_a_closure_made_for_it (0.00s)
+    --- PASS: TestNestedIterableCalleeIsExactlyOneBody/the_parent's_call_through_its_binding (0.00s)
+=== CONT  TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter
+    generators_nested_callee_test.go:78: want it to lower, got /tmp/adamic-gate/TestNestedIterableCalleeLowersan_IterableT__undefined_parame298855072/001/main.a:4:26: stage 0 can't lower a generator function whose generator is used other than by a for-of over its call or a call as a statement (#qk8rztp) yet
+=== CONT  TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+=== NAME  TestNestedIterableCalleeLowers/nested_callee_generic.a
+    generators_nested_callee_test.go:55: /workspace/adamic/internal/oracle/testdata/generators/nested_callee_generic.a:29:23: Adamic 0.1 refuses a void value at the argument site through [Symbol.iterator]().next()<TReturn> seen as any; declare the function's real return type (adamic/no-void-widening)
+=== CONT  TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+=== NAME  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback
+    generators_nested_callee_test.go:142: got /tmp/adamic-gate/TestNestedIterableCalleeRoadsAreNotYetroad_1_the_callee_also_p3211717242/001/main.a:6:26: stage 0 can't lower a generator function whose generator is used other than by a for-of over its call or a call as a statement (#qk8rztp) yet, want a NotYet saying "a view over an iterable of unproven origin"
+=== CONT  TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+=== NAME  TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee
+    generators_nested_callee_test.go:78: want it to lower, got /tmp/adamic-gate/TestNestedIterableCalleeLowersa_plain_nested_function_into_a_n2923646722/001/main.a:4:26: Adamic 0.1 refuses a void value at the argument site through [Symbol.iterator]().next()<TReturn> seen as any; declare the function's real return type (adamic/no-void-widening)
+=== CONT  TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+=== NAME  TestNestedIterableCalleeLowers/nested_callee_view.a
+    generators_nested_callee_test.go:55: /workspace/adamic/internal/oracle/testdata/generators/nested_callee_view.a:50:47: Adamic 0.1 refuses a void value at the argument site through [Symbol.iterator]().next()<TReturn> seen as any; declare the function's real return type (adamic/no-void-widening)
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_overloads.a
+=== NAME  TestNestedIterableCalleeLowers/an_IterableIterator_parameter
+    generators_nested_callee_test.go:78: want it to lower, got /tmp/adamic-gate/TestNestedIterableCalleeLowersan_IterableIterator_parameter3249054195/001/main.a:4:26: stage 0 can't lower a generator function whose generator is used other than by a for-of over its call or a call as a statement (#qk8rztp) yet
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee
+=== NAME  TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee
+    generators_nested_callee_test.go:78: want it to lower, got /tmp/adamic-gate/TestNestedIterableCalleeLowersa_module_generator_into_a_nested_3271654097/001/main.a:4:26: stage 0 can't lower a generator function whose generator is used other than by a for-of over its call or a call as a statement (#qk8rztp) yet
+=== CONT  TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+=== NAME  TestNestedIterableCalleeLowers/a_sibling_calling_the_callee
+    generators_nested_callee_test.go:78: want it to lower, got /tmp/adamic-gate/TestNestedIterableCalleeLowersa_sibling_calling_the_callee1152539578/001/main.a:4:39: stage 0 can't lower a generator function whose generator is used other than by a for-of over its call or a call as a statement (#qk8rztp) yet
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name
+=== NAME  TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row)
+    generators_nested_callee_test.go:78: want it to lower, got /tmp/adamic-gate/TestNestedIterableCalleeLowerswritten_in_place_into_a_nested_ca665128768/001/main.a:3:26: stage 0 can't lower a generator written in place and called, used other than by a for-of over its call, a call as a statement or a one-read Iterable parameter (#qk8rztp) yet
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+=== NAME  TestNestedIterableCalleeLowers/nested_callee_overloads.a
+    generators_nested_callee_test.go:55: /workspace/adamic/internal/oracle/testdata/generators/nested_callee_overloads.a:21:21: Adamic 0.1 refuses a void value at the argument site through [Symbol.iterator]().next()<TReturn> seen as any; declare the function's real return type (adamic/no-void-widening)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+=== NAME  TestNestedIterableCalleeLowers/nested_callee_grandchild.a
+    generators_nested_callee_test.go:55: /workspace/adamic/internal/oracle/testdata/generators/nested_callee_grandchild.a:21:24: Adamic 0.1 refuses a void value at the argument site through [Symbol.iterator]().next()<TReturn> seen as any; declare the function's real return type (adamic/no-void-widening)
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+=== CONT  TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+=== CONT  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+=== NAME  TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter
+    generators_nested_callee_test.go:142: got /tmp/adamic-gate/TestNestedIterableCalleeRoadsAreNotYetroad_2_the_callee_recurs129173221/001/main.a:4:26: stage 0 can't lower a generator function whose generator is used other than by a for-of over its call or a call as a statement (#qk8rztp) yet, want a NotYet saying "read 2 times"
+=== NAME  TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter
+    generators_nested_callee_test.go:142: got /tmp/adamic-gate/TestNestedIterableCalleeRoadsAreNotYeta_closure_capturing_the_p4081234597/001/main.a:4:26: stage 0 can't lower a generator function whose generator is used other than by a for-of over its call or a call as a statement (#qk8rztp) yet, want a NotYet saying "which a closure captures"
+=== NAME  TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2)
+    generators_nested_callee_test.go:142: got /tmp/adamic-gate/TestNestedIterableCalleeRoadsAreNotYettwo_generator_functions_i3601466602/001/main.a:5:26: stage 0 can't lower a generator function whose generator is used other than by a for-of over its call or a call as a statement (#qk8rztp) yet, want a NotYet saying "generators of more than one function"
+=== NAME  TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee
+    generators_nested_callee_test.go:78: want it to lower, got /tmp/adamic-gate/TestNestedIterableCalleeLowersa_plain_function_written_in_plac2825598489/001/main.a:3:26: Adamic 0.1 refuses a void value at the argument site through [Symbol.iterator]().next()<TReturn> seen as any; declare the function's real return type (adamic/no-void-widening)
+--- FAIL: TestNestedIterableCalleeLowers (0.00s)
+    --- FAIL: TestNestedIterableCalleeLowers/an_Iterable<T>_|_undefined_parameter (0.17s)
+    --- FAIL: TestNestedIterableCalleeLowers/nested_callee_generic.a (0.17s)
+    --- FAIL: TestNestedIterableCalleeLowers/a_plain_nested_function*_into_a_nested_callee (0.22s)
+    --- FAIL: TestNestedIterableCalleeLowers/nested_callee_view.a (0.23s)
+    --- FAIL: TestNestedIterableCalleeLowers/an_IterableIterator_parameter (0.13s)
+    --- FAIL: TestNestedIterableCalleeLowers/a_module_generator_into_a_nested_callee (0.16s)
+    --- FAIL: TestNestedIterableCalleeLowers/a_sibling_calling_the_callee (0.26s)
+    --- FAIL: TestNestedIterableCalleeLowers/written_in_place_into_a_nested_callee_(S3b's_row) (0.37s)
+    --- FAIL: TestNestedIterableCalleeLowers/nested_callee_overloads.a (0.32s)
+    --- FAIL: TestNestedIterableCalleeLowers/nested_callee_grandchild.a (0.24s)
+    --- FAIL: TestNestedIterableCalleeLowers/a_plain_function*_written_in_place_into_a_nested_callee (0.06s)
+=== NAME  TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local
+    generators_nested_callee_test.go:142: got /tmp/adamic-gate/TestNestedIterableCalleeRoadsAreNotYetroad_1_the_callee_also_h920497045/001/main.a:5:26: stage 0 can't lower a generator function whose generator is used other than by a for-of over its call or a call as a statement (#qk8rztp) yet, want a NotYet saying "a view over an iterable of unproven origin"
+--- FAIL: TestNestedIterableCalleeRoadsAreNotYet (0.00s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_passed_as_a_callback (0.21s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/a_call_through_a_local_holding_the_callee (0.29s)
+    --- PASS: TestNestedIterableCalleeRoadsAreNotYet/road_3:_a_local_of_the_callee's_name (0.23s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/road_2:_the_callee_recursing_with_its_parameter (0.12s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/a_closure_capturing_the_parameter (0.07s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/two_generator_functions_into_one_parameter_(S3c-2) (0.14s)
+    --- FAIL: TestNestedIterableCalleeRoadsAreNotYet/road_1:_the_callee_also_held_in_a_local (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.796s
+FAIL
