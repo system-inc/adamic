@@ -262,3 +262,33 @@ func TestProduct_type_symbol_truth(t *testing.T) {
 
 // volume_config_guard_shards_test.go belongs to sf-volumeguard. Its declarations
 // must be supplied there; this file deliberately does not duplicate them.
+
+// The released-handle controls' programs and the guard mutants over them, built ahead so no check links a native
+// (#5gf3w8q): TestInspectRequestRefusals' released-name control and its wrong-kind and unknown-question guard mutants,
+// and six's released-handle control and its retained-handle mutant.
+func TestProduct_released_name_native(t *testing.T) {
+	t.Parallel()
+	typeAwareNativeProduct(typeAwareProductHarness(t), "released-name", "testdata/released_name.ts", false)
+}
+func TestProduct_released_inspect_native(t *testing.T) {
+	t.Parallel()
+	typeAwareNativeProduct(typeAwareProductHarness(t), "released-inspect", "testdata/released_inspect.ts", false)
+}
+func TestProduct_inspect_wrong_kind_native(t *testing.T) {
+	t.Parallel()
+	typeAwareInspectMutantProduct(t, "wrong-kind")
+}
+func TestProduct_inspect_unknown_question_native(t *testing.T) {
+	t.Parallel()
+	typeAwareInspectMutantProduct(t, "unknown-question")
+}
+func typeAwareInspectMutantProduct(t *testing.T, name string) {
+	t.Helper()
+	h := typeAwareProductHarness(t)
+	h.mutantNative("inspect-"+name, filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"), checkerMutantArchive(t, name), false)
+}
+func TestProduct_six_retained_handle_native(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	h.mutantNative("retained-handle", filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/released_inspect.ts"), checkerMutantArchive(t, "retained-handle"), false)
+}
