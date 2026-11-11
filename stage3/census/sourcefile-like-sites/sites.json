@@ -146,5 +146,30 @@
     "expression": "getLineAndCharacterOfPosition(originalFile, location.pos)",
     "view": "call argument",
     "location": "transformers/jsx.ts:359:63"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/watch.ts:233:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/watch.ts:249:60",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/watch.ts:249:60: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "watch.ts"
+    ],
+    "file": "watch.ts",
+    "enclosing_function": "<anonymous@241>",
+    "function_chain": [
+      "getFilesInErrorForSummary",
+      "<anonymous@241>"
+    ],
+    "callee": "getLineAndCharacterOfPosition",
+    "argument_index": 0,
+    "expression": "getLineAndCharacterOfPosition(diagnosticForFileName.file!, diagnosticForFileName.start!)",
+    "view": "call argument",
+    "location": "watch.ts:249:60"
   }
 ]
