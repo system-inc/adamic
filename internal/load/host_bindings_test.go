@@ -9,8 +9,9 @@ import (
 
 // The host-binding table is an axiom under Language's audit (#00qn5az): docs/axioms/host-bindings.md's
 // Rows section and host_bindings.json say the same rows, cell for cell, both ways, and every row names
-// the ruling or task that made it. Mutant (b), internal/oracle/testdata/host_bindings/mutants.md: a row's
-// ruling dropped from the JSON goes red here.
+// the ruling or task that made it. A row is its name in its declaration's file, so core.ts's process and
+// tracing.ts's are two rows of the audit. Mutant (b), internal/oracle/testdata/host_bindings/mutants.md:
+// a row's ruling dropped from the JSON goes red here.
 func TestHostBindingsAudit(t *testing.T) {
 	t.Parallel()
 	rows, err := HostBindings()
@@ -23,31 +24,37 @@ func TestHostBindingsAudit(t *testing.T) {
 	}
 	table := map[string]bool{}
 	for _, row := range rows {
-		table[row.Name] = true
-		cells, found := audited[row.Name]
+		key := hostBindingKey(row.Name, row.Declaration.File)
+		table[key] = true
+		cells, found := audited[key]
 		if !found {
-			t.Errorf("%s: a row in host_bindings.json the audit doesn't list", row.Name)
+			t.Errorf("%s: a row in host_bindings.json the audit doesn't list", key)
 			continue
 		}
 		want := hostBindingCells(row)
 		for index, heading := range hostBindingHeadings {
 			if cells[index] != want[index] {
-				t.Errorf("%s: the audit's %s is %q, the table's %q", row.Name, heading, cells[index], want[index])
+				t.Errorf("%s: the audit's %s is %q, the table's %q", key, heading, cells[index], want[index])
 			}
 		}
 	}
-	for name, cells := range audited {
-		if !table[name] {
-			t.Errorf("%s: a row the audit lists that host_bindings.json doesn't hold", name)
+	for key, cells := range audited {
+		if !table[key] {
+			t.Errorf("%s: a row the audit lists that host_bindings.json doesn't hold", key)
 		}
 		if strings.TrimSpace(cells[len(cells)-1]) == "" {
-			t.Errorf("%s: the audit's row names no ruling", name)
+			t.Errorf("%s: the audit's row names no ruling", key)
 		}
 	}
 }
 
 // hostBindingHeadings are the audit table's columns, in order.
 var hostBindingHeadings = []string{"Name", "Declaration", "Node", "native", "javascript", "wasm32", "Model", "Divergence", "Ruling"}
+
+// hostBindingKey names a row as the table keys it, its name in its declaration's file.
+func hostBindingKey(name, file string) string {
+	return name + " in " + file
+}
 
 // hostBindingCells is a row as the audit writes it, unescaped.
 func hostBindingCells(row HostBinding) []string {
@@ -77,7 +84,8 @@ func hostBindingCells(row HostBinding) []string {
 	}
 }
 
-// hostBindingsAudited reads the audit's Rows table: each row's cells by its name, with `\|` unescaped.
+// hostBindingsAudited reads the audit's Rows table: each row's cells by its name in its declaration's file
+// (hostBindingKey), the file read from the front of the Declaration cell, with `\|` unescaped.
 func hostBindingsAudited(file string) (map[string][]string, error) {
 	data, err := os.ReadFile(file)
 	if err != nil {
@@ -111,10 +119,12 @@ func hostBindingsAudited(file string) (map[string][]string, error) {
 		if len(cells) != len(hostBindingHeadings) {
 			return nil, fmt.Errorf("%s: a row of %d cells, want %d: %s", file, len(cells), len(hostBindingHeadings), line)
 		}
-		if _, twice := rows[cells[0]]; twice {
-			return nil, fmt.Errorf("%s: %s is listed twice", file, cells[0])
+		declared, _, _ := strings.Cut(cells[1], ", ")
+		key := hostBindingKey(cells[0], declared)
+		if _, twice := rows[key]; twice {
+			return nil, fmt.Errorf("%s: %s is listed twice", file, key)
 		}
-		rows[cells[0]] = cells
+		rows[key] = cells
 	}
 	if !found || !heading {
 		return nil, fmt.Errorf("%s has no Rows table", file)
@@ -153,7 +163,30 @@ func TestHostBindingsRefuseAnUntrustedRow(t *testing.T) {
 			}
 		})
 	}
-	if _, err := parseHostBindings([]byte("[" + row + ", " + row + "]")); err == nil || !strings.Contains(err.Error(), "a second row for the name") {
-		t.Errorf("two rows for one name: got %v", err)
+	if _, err := parseHostBindings([]byte("[" + row + ", " + row + "]")); err == nil || !strings.Contains(err.Error(), "load: host binding row 2 (onProfilerEvent): a second row for the name in performance.ts") {
+		t.Errorf("two rows for one name in one file: got %v", err)
+	}
+}
+
+// A row is its name and its declaration's file together, so a name declared in two files has a row for
+// each, as process has in core.ts and tracing.ts, and only the same name in the same file is a second
+// row. Mutant (m), internal/oracle/testdata/host_bindings/mutants.md: parseHostBindings keyed on the name
+// alone again, and the row in another file is refused.
+func TestHostBindingsKeyANameByItsFile(t *testing.T) {
+	t.Parallel()
+	const row = `{"name": "process", "declaration": {"file": "core.ts", "keyword": "const", "type": "unknown"}, "node": {"version": "v24.21.0", "module": "ES", "typeof": "object"}, "native": {"answer": "Provided"}, "javascript": {"answer": "Provided"}, "wasm32": {"answer": "Provided"}, "model": {"path": "node:process", "task": ""}, "divergence": "", "ruling": "#00qn5az"}`
+	elsewhere := strings.Replace(row, `"file": "core.ts"`, `"file": "tracing.ts"`, 1)
+	if elsewhere == row {
+		t.Fatal("the control row names no file to move")
+	}
+	rows, err := parseHostBindings([]byte("[" + row + ", " + elsewhere + "]"))
+	if err != nil {
+		t.Fatalf("the same name in another file: got %v, want two rows", err)
+	}
+	if len(rows) != 2 || rows[0].Declaration.File != "core.ts" || rows[1].Declaration.File != "tracing.ts" {
+		t.Errorf("the same name in another file: got %+v, want core.ts's row and tracing.ts's", rows)
+	}
+	if _, err := parseHostBindings([]byte("[" + row + ", " + elsewhere + ", " + elsewhere + "]")); err == nil || !strings.Contains(err.Error(), "load: host binding row 3 (process): a second row for the name in tracing.ts") {
+		t.Errorf("the same name in the same file: got %v, want the third row refused", err)
 	}
 }

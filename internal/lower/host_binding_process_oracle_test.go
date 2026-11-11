@@ -65,7 +65,7 @@ func TestHostBindingProcessOracleIR(t *testing.T) {
 		t.Fatal(err)
 	}
 	for index := range rows {
-		if rows[index].Name == "process" {
+		if rows[index].Name == "process" && rows[index].Declaration.File == "core.ts" {
 			rows[index].Declaration.Type = "{ nextTick?: unknown; browser?: " + of + "; } | undefined"
 		}
 	}

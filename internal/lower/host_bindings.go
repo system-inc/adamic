@@ -51,19 +51,39 @@ import (
 // doesn't hold yet; production never assigns it.
 var hostBindingRows = load.HostBindings
 
-// hostBindingNamed is the row for a name, or nil; a table that doesn't parse names nothing here, and
-// ambientRefusal reports its error at the first ambient value declaration.
-func hostBindingNamed(name string) *load.HostBinding {
+// hostBindingNamed is the row for a name declared in a file, by the file's basename, or nil. A row is its
+// name and its file together (internal/load/host_bindings.go): process has one in core.ts and one in
+// tracing.ts, each with its own type text, and a declarator is judged only by its own file's row. A table
+// that doesn't parse names nothing here, and ambientRefusal reports its error at the first ambient value
+// declaration.
+func hostBindingNamed(name, file string) *load.HostBinding {
 	rows, err := hostBindingRows()
 	if err != nil {
 		return nil
 	}
 	for index := range rows {
-		if rows[index].Name == name {
+		if rows[index].Name == name && rows[index].Declaration.File == file {
 			return &rows[index]
 		}
 	}
 	return nil
+}
+
+// hostBindingNameKnown reports whether a row in any file names a name. It answers for what has no
+// declaring file of its own: an identifier before its symbol is resolved to the declaration
+// (hostBindingOf, which then takes the row by the declaration's file), and a key written through the
+// global object, where every row's name is the host's whichever file declares it.
+func hostBindingNameKnown(name string) bool {
+	rows, err := hostBindingRows()
+	if err != nil {
+		return false
+	}
+	for index := range rows {
+		if rows[index].Name == name {
+			return true
+		}
+	}
+	return false
 }
 
 // hostBindingRow is the row a declarator is the declaration of, or nil.
@@ -84,8 +104,8 @@ func (l *lowering) hostBindingRow(declaration *ast.Node) *load.HostBinding {
 	if path.Ext(name) != ".ts" || strings.HasSuffix(name, ".d.ts") {
 		return nil
 	}
-	row := hostBindingNamed(declaration.Name().Text())
-	if row == nil || row.Declaration.File != path.Base(name) {
+	row := hostBindingNamed(declaration.Name().Text(), path.Base(name))
+	if row == nil {
 		return nil
 	}
 	keyword := ""
@@ -387,8 +407,7 @@ func (l *lowering) hostBindingOf(node *ast.Node) (*load.HostBinding, *ast.Symbol
 	if !ast.IsIdentifier(node) {
 		return nil, nil
 	}
-	named := hostBindingNamed(node.Text())
-	if named == nil {
+	if !hostBindingNameKnown(node.Text()) {
 		return nil, nil
 	}
 	var symbol *ast.Symbol
@@ -558,7 +577,7 @@ func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 	if !l.globalObject(receiver) && !l.globalObjectOperand(receiver) {
 		return nil
 	}
-	if known && hostBindingNamed(name) == nil {
+	if known && !hostBindingNameKnown(name) {
 		return nil
 	}
 	what := "a write through globalThis to the host binding " + name
