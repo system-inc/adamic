@@ -1,0 +1,26 @@
+// Row 3 in tsc's shape: a node's children are a NodeArray a factory makes from an array literal of
+// nodes, and each child's parent is the node: parent holds children, children hold the child, the
+// child holds parent.
+interface TextRange { pos: number; end: number }
+interface Node { kind: number; parent: Node | undefined; children: NodeArray<Node> | undefined }
+interface NodeArray<T extends Node> extends Array<T>, TextRange { hasTrailingComma: boolean }
+function createNodeArray(elements: Node[]): NodeArray<Node> {
+  const nodes = elements as NodeArray<Node>;
+  nodes.pos = -1;
+  nodes.end = -1;
+  nodes.hasTrailingComma = false;
+  return nodes;
+}
+function createChildren(child: Node): NodeArray<Node> {
+  const nodes = [child] as NodeArray<Node>;
+  nodes.pos = -1;
+  nodes.end = -1;
+  nodes.hasTrailingComma = false;
+  return nodes;
+}
+const parent: Node = { kind: 1, parent: undefined, children: undefined };
+const child: Node = { kind: 2, parent: undefined, children: undefined };
+parent.children = createChildren(child);
+child.parent = parent;
+const first = parent.children[0];
+console.log(`${parent.children.length} ${first === undefined ? -1 : first.kind} ${child.parent === parent} ${createNodeArray([]).length}`);

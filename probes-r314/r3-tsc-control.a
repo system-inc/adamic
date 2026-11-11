@@ -1,0 +1,12 @@
+// Row 3 control: the same cycle through a plain array.
+interface Node { kind: number; parent: Node | undefined; children: Node[] | undefined }
+function createChildren(child: Node): Node[] {
+  const nodes: Node[] = [child];
+  return nodes;
+}
+const parent: Node = { kind: 1, parent: undefined, children: undefined };
+const child: Node = { kind: 2, parent: undefined, children: undefined };
+parent.children = createChildren(child);
+child.parent = parent;
+const first = parent.children[0];
+console.log(`${parent.children.length} ${first === undefined ? -1 : first.kind} ${child.parent === parent} 0`);
