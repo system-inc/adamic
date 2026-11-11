@@ -31,8 +31,8 @@ interface HoldsBase { readonly inner: MakesBase }
 interface Scalars { readonly count: number; readonly name: string; readonly flag: boolean; readonly missing?: number }
 interface Holding { readonly link: Link }
 interface Opaque { readonly value: unknown }
-type DerivedMakers = MakesDerived[]
-type BaseMakers = MakesBase[]
+type DerivedMakers = Map<string, MakesDerived>
+type BaseMakers = Map<string, MakesBase>
 type EitherBase = MakesBase | Scalars
 type BagMakesDerived = Record<string, MakesDerived>
 type BagMakesBase = Record<string, MakesBase>
@@ -67,7 +67,7 @@ func graphViewGuardLowering(t *testing.T) (*lowering, map[string]*checker.Type, 
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		switch node.Kind {
-		case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindTypeParameter:
+		case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindTypeParameter, ast.KindClassDeclaration:
 			types[node.Name().Text()] = check.GetTypeAtLocation(node.Name())
 			nodes[node.Name().Text()] = node
 		}
@@ -198,6 +198,7 @@ func TestGraphViewGuardRoads(t *testing.T) {
 	t.Parallel()
 	lowered, types, nodes := graphViewGuardLowering(t)
 	for _, row := range []struct{ name, source, target, want string }{
+		// A Map: an array's number index signature would pair its elements through the index road too.
 		{"elements", "DerivedMakers", "BaseMakers", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its elements (MakesDerived as MakesBase)"},
 		{"index values", "BagMakesDerived", "BagMakesBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its index values (MakesDerived as MakesBase)"},
 		{"an index source as a named field", "BagMakesDerived", "NamedMakes", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through its field a (MakesDerived as "},
