@@ -21,6 +21,60 @@ func keyable(valueType ir.Type) bool {
 	return false
 }
 
+// keyableType is keyable for a Map's key or a Set's element whose checker type is proven, and one more
+// case: a key held as a Union (the object type, a union of object types) is keyed by identity when no
+// primitive can stand where it does, so every value it holds is a reference whose address is itself.
+// A Union reference is the object's own pointer, its kind named by its heap header, never a box, so
+// native's identity map (newMap, emit_maps.go) and JavaScript's Map both find it by identity, as
+// SameValueZero does for objects. A key type a primitive fits, `{}`, unknown or a type parameter, stays
+// NotYet, since a Union holding a string or a number would be keyed by its box (#ff5eddz, tsc's
+// tracing.ts recursionIdentityMap, a Map<object, number>).
+func (l *lowering) keyableType(proven *checker.Type, valueType ir.Type) bool {
+	if keyable(valueType) {
+		return true
+	}
+	return valueType == ir.Union && l.noPrimitiveFits(proven)
+}
+
+// noPrimitiveFits is whether no primitive value can stand where proven does. Every member, after a union
+// is split, must be an object type or the object keyword, and an intersection only when every part is
+// (onlyObjects): a literal, an enum member, a template literal, a unique symbol, a branded `string & {
+// __brand }`, null, undefined or void each holds a primitive though the wide primitive isn't assignable
+// to it (Compiler's, Lower's and Library's must on 63979123). Then no wide primitive may be assignable
+// either, which catches `{}` and an interface a primitive fits structurally. A type parameter, unknown,
+// any or never answers no, since its bound could admit one.
+func (l *lowering) noPrimitiveFits(proven *checker.Type) bool {
+	proven = l.concrete(proven)
+	if !l.onlyObjects(proven, 0) {
+		return false
+	}
+	for _, primitive := range []*checker.Type{l.checker.GetStringType(), l.checker.GetNumberType(), l.checker.GetBooleanType(), l.checker.GetBigIntType(), l.checker.GetESSymbolType(), l.checker.GetNullType(), l.checker.GetUndefinedType()} {
+		if l.checker.IsTypeAssignableTo(primitive, proven) {
+			return false
+		}
+	}
+	return true
+}
+
+// onlyObjects is whether every value of proven is a reference to an object: proven is an object type or
+// the object keyword, or a union whose every member is, or an intersection whose every part is. Anything
+// else, a primitive, a literal, an enum, a template literal, a unique symbol, null, undefined, void, any,
+// unknown, never or a type parameter, answers no. Past its depth bound it fails closed.
+func (l *lowering) onlyObjects(proven *checker.Type, depth int) bool {
+	if proven == nil || depth >= 16 {
+		return false
+	}
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range proven.Types() {
+			if !l.onlyObjects(member, depth+1) {
+				return false
+			}
+		}
+		return len(proven.Types()) > 0
+	}
+	return proven.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsNonPrimitive) != 0
+}
+
 // iterated lowers something a for...of or a spread walks as the array of what it gives, with that
 // array's element type: an array, a string's code points, a Set's elements, a Map's [key, value]
 // entries, and map.keys(), map.values(), map.entries(), set.keys() and set.values().
