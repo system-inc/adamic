@@ -1,0 +1,40 @@
+// A stored generator's one read on a branch that may not run (#qk8rztp S2c-4-1, Language's first
+// exit): a for-of under an if, and an argument on the right of &&. With the flag false the read never
+// runs, so the const still owns the frame at its scope's end, and its release drops it unstepped: the
+// move is made at the read, never decided ahead of it. With the flag true the read moves the frame out
+// and the const's release lets go of nothing.
+function* lines(label: string, count: number): Generator<string, undefined, undefined> {
+    console.log(`body ${label}`);
+    for (let index = 0; index < count; index++) {
+        yield `${label}${String(index)}`;
+    }
+}
+function counted(items: Iterable<string>): number {
+    let count = 0;
+    for (const item of items) {
+        console.log(`counted ${item}`);
+        count++;
+    }
+    return count;
+}
+function underIf(label: string, flag: boolean): string {
+    const stored = lines(`${label}~`, 2);
+    let out = `${label}:`;
+    if (flag) {
+        for (const line of stored) {
+            out += line;
+        }
+    }
+    return out;
+}
+function underAnd(label: string, flag: boolean): string {
+    const stored = lines(`${label}&`, 3);
+    if (flag && counted(stored) > 2) {
+        return `${label} three`;
+    }
+    return `${label} skipped`;
+}
+console.log(underIf(`f${String(1)}`, false));
+console.log(underIf(`f${String(2)}`, true));
+console.log(underAnd(`a${String(3)}`, false));
+console.log(underAnd(`a${String(4)}`, true));

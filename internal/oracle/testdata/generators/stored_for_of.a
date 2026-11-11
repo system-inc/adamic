@@ -1,0 +1,54 @@
+// A for-of over a generator stored in a const (#qk8rztp S2c-4-1): the const's one read moves the frame
+// out of it into the loop's own local, so the loop's ways out let go of it once, and the const's
+// release at its scope's end lets go of nothing. A module generator stored in a plain function; a
+// nested one stored at the top of a body with nested functions, whose const the parent preallocates
+// for its hoisted closures, left by a break, so the line after its second yield never prints; and one
+// written in place and stored. Strings are built, so a frame let go of twice is a sanitizer report,
+// and one never let go of a leak.
+function* words(prefix: string, count: number): Generator<string, undefined, undefined> {
+    for (let index = 0; index < count; index++) {
+        yield `${prefix}${String(index)}`;
+    }
+}
+function plain(prefix: string): string {
+    const stored = words(prefix, 3);
+    let joined = '';
+    for (const word of stored) {
+        joined += `${word};`;
+    }
+    return joined;
+}
+function nested(base: number, tag: string): string {
+    function* scaled(count: number): Generator<string, undefined, undefined> {
+        for (let index = 1; index <= count; index++) {
+            yield `${tag}${String(base * index)}`;
+            console.log(`${tag} after ${String(index)}`);
+        }
+    }
+    function heading(): string {
+        return `${tag}/${String(base)}`;
+    }
+    const stored = scaled(4);
+    let seen = heading();
+    for (const value of stored) {
+        seen += ` ${value}`;
+        if (value === `${tag}${String(base * 2)}`) {
+            break;
+        }
+    }
+    return seen;
+}
+function inPlace(text: string): string {
+    const stored = (function* (): Generator<string, undefined, undefined> {
+        yield `${text}<`;
+        yield `>${text}`;
+    })();
+    let out = '';
+    for (const part of stored) {
+        out += part;
+    }
+    return out;
+}
+console.log(plain(`w${String(1)}`));
+console.log(nested(3, `n${String(2)}`));
+console.log(inPlace(`i${String(3)}`));

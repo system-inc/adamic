@@ -79,12 +79,12 @@ func TestProgramRegionGeneratorPushedIntoArrayStops(t *testing.T) {
 	programRegionGeneratorStops(t, source, "whose generator is used other than by a for-of over its call or a call as a statement")
 }
 
-// A generator held in a local stops there, at the call that would fill the local, before any closure could
-// capture it.
+// A generator held in a local a closure captures stops at that read, before the closure could hold it:
+// since #qk8rztp S2c-4-1 a const's one read may be a consumer's, never a closure's.
 func TestProgramRegionGeneratorHeldInLocalStops(t *testing.T) {
 	t.Parallel()
 	source := programRegionGeneratorTree + programRegionGeneratorRun(" const steps = walk(branch);\n const read = (): Generator<Tree, undefined, undefined> => steps;\n for (const tree of read()) { console.log(tree.name); }")
-	programRegionGeneratorStops(t, source, "whose generator is used other than by a for-of over its call or a call as a statement")
+	programRegionGeneratorStops(t, source, "a generator stored in a local, used other than once by a consumer that steps it")
 }
 
 // The callee side of the one road S2c-1 opened: a generator passed into an Iterable<T> parameter, which

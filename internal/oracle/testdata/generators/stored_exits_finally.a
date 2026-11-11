@@ -1,0 +1,35 @@
+// stored_exits.a's throw between a stored generator's declaration and its one read, where the
+// generator's body has a finally that prints (#qk8rztp S2c-4-1, Adamic's twin): the frame is dropped
+// unstepped, so none of its body runs and neither its try nor its finally prints, on Node or here. On
+// the path that reads it, the first step runs both.
+function* guarded(label: string): Generator<string, undefined, undefined> {
+    try {
+        console.log(`body ${label}`);
+    } finally {
+        console.log(`finally ${label}`);
+    }
+    yield `${label}<`;
+    yield `>${label}`;
+}
+function total(items: Iterable<string>): string {
+    let all = '';
+    for (const item of items) {
+        all += item;
+    }
+    return all;
+}
+function throwsBetween(label: string, fail: boolean): string {
+    const stored = guarded(`${label}!`);
+    if (fail) {
+        throw new Error(`failed ${label}`);
+    }
+    return total(stored);
+}
+try {
+    console.log(throwsBetween(`t${String(1)}`, true));
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(`caught ${error.message}`);
+    }
+}
+console.log(throwsBetween(`t${String(2)}`, false));

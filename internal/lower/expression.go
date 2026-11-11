@@ -637,6 +637,15 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
 	case ast.KindIdentifier:
+		if _, function, isStored := l.storedGeneratorLocal(node); isStored {
+			// A stored generator's one read (#qk8rztp S2c-4-1). A for-of over it is lowered before
+			// this (forOf), so the one-read Iterable<T> argument is the only read that reaches here,
+			// which storedGeneratorRead proved before it admitted the local; anything else stops.
+			if !l.iterableArgument(node) {
+				return nil, l.storedGeneratorNotYet(node)
+			}
+			return l.iterableOfGenerator(node, function)
+		}
 		if row, _ := l.hostBindingOf(node); row != nil {
 			// hostBindingRefusal admits only a typeof or a read its guard proves dead, and neither reaches here;
 			// a Provided row's read is processValue's, through its model (nodeProcessPath).

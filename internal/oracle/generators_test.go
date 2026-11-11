@@ -21,7 +21,11 @@ import (
 // elaborateJsxComponents shape among them); and S3c-1's generator handed into the one-read parameter
 // of a function declared in the same parent, a nested callee, called by name from the parent, a
 // sibling, an arrow, a grandchild and its own recursion, as an overload set and generic (the
-// nested_callee_ fixtures). Each fixture in testdata/generators agrees with Node natively,
+// nested_callee_ fixtures); and S2c-4-1's generator stored in a const and read once, by a for-of over
+// it or as a one-read Iterable<T> argument, tsc's generateJsxChildren shape among them, whose read
+// moves the frame out of the const, and whose ways out before the read, a throw, a return, a break,
+// an untaken branch or a later argument's throw, drop it unstepped (the stored_ fixtures). Each
+// fixture in testdata/generators agrees with Node natively,
 // sanitized and on the JavaScript backend, and one that finishes leaks nothing: every way out of the
 // consuming loop (exhaustion, break, return, a throw from the body or the loop, a labeled jump to an
 // outer loop) and of the body (completion, an early return, a throw) lets go of the generator once
@@ -47,8 +51,8 @@ func TestGeneratorsAgreeWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 58 {
-		t.Fatalf("%d programs in %s, want 58: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 64 {
+		t.Fatalf("%d programs in %s, want 64: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 

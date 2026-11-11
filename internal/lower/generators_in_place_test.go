@@ -295,7 +295,9 @@ func TestInPlaceGeneratorRoadsAreNotYet(t *testing.T) {
 		{"inside an async function", "async function host(): Promise<void> {\n" + over("(function* (): "+generator+" { yield 1; })()") + "\n}\nawait host();\n", suspends},
 		{"inside a generator", "function* outer(): " + kept + " {\nfor (const value of (function* (): " + generator + " { yield 1; })()) { yield value; }\n}\n" + over("outer()") + "\n", suspends},
 		{"inside another written in place", host(over("(function* (): " + generator + " { for (const inner of (function* (): " + generator + " { yield 1; })()) { yield inner; } })()")), suspends},
-		{"stored", host("const held = (function* (): " + kept + " { yield 1; })();\nconsole.log(String(held.next().value));"), inPlace},
+		// Stored in a const, it is S2c-4-1's road, which stops a read other than a consumer's in its own
+		// words (generators_stored_test.go).
+		{"stored", host("const held = (function* (): " + kept + " { yield 1; })();\nconsole.log(String(held.next().value));"), "a generator stored in a local, used other than once by a consumer that steps it"},
 		{"passed as an object", "function take(source: object): number { return source === undefined ? 0 : 1; }\n" + host("console.log(String(take((function* (): "+kept+" { yield 1; })())));"), inPlace},
 		{"returned", "function outer(): " + kept + " {\nreturn (function* (): " + kept + " { yield 1; })();\n}\n" + over("outer()") + "\n", inPlace},
 		{"destructured", host("const [first] = (function* (): " + kept + " { yield 1; })();\nconsole.log(String(first));"), "a generator function consumed by destructuring"},

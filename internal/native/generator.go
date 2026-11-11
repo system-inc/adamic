@@ -212,6 +212,17 @@ func irTypeName(of ir.Type) string {
 	panic(fmt.Sprintf("native: a representation with no ir type tag (%d)", of))
 }
 
+// generatorMove is a stored generator's one read (#qk8rztp S2c-4-1): a read of a Generator local
+// where a consumer takes the frame, as the value a for-of's own local is declared from or as
+// IterableOf's value. Lowering reads a Generator local nowhere else but as a step's or a done test's
+// operand (lower's checkGeneratorRoads), so the read's place says it is a move, with no IR of its
+// own, and moveOut makes it at the read: the local is left `NULL` there, so its scope's release lets
+// go of the frame only on a path that never reached the read.
+func generatorMove(value ir.Expression) (ir.Read, bool) {
+	read, isRead := value.(ir.Read)
+	return read, isRead && read.Of == ir.Generator
+}
+
 // generatorPointer is a step's generator as the runtime takes it. An iterable view's dispatch steps
 // the object it holds, which IsGenerator has just said is a generator (lower/iterable_views.go).
 func generatorPointer(generator ir.Expression, value string) string {
