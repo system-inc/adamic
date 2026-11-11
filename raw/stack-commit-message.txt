@@ -1,0 +1,20 @@
+never cut alone: lands with chg_j4ccjy93 and typescript/tracing-dumptypes-3, because all three append stage3/upstream/LEDGER.md
+
+stage3/adapt 47: explicit tracing metadata reads and catalog splice reset (#ff5eddz)
+
+Pin exactly the incoming and completed startTracing functions. Replace its
+three metadata spreads with explicit reads and typeCatalog.length = 0 with
+typeCatalog.splice(0), preserving the single timestamp call and fs producer.
+
+Cut directly on 9dbddc5360e529f70fbcab44f528e3580bac471b. Every other path
+under 47 is unchanged between the prior base and this parent. Preserve the
+parent ledger byte for byte and append our paragraph after dumpTypes.
+A fresh complete apply on the stack passes; finished startTracing matches
+its exact after pin. PROOF records the new parent and prior validation bases.
+
+Prior combined validation: trace bytes and export keys identical, populated
+catalogs empty after starts, every emitted hunk confined to the four edits,
+both restoring mutants pass, 79 roots at zero diagnostics, and all 398 lane
+shards pass. Lane starts 0; positive control catalog lengths 3 before and 0
+after reset. The only newly visible stop is the authorized JSON.stringify
+boundary at 104:46. Raw evidence stays on typescript/meta-spread-evidence.

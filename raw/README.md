@@ -38,3 +38,11 @@ of one space. A blanket whitespace check reports those preserved patch bytes;
 they are not source whitespace defects. The actual adaptation/ledger diff
 passes its whitespace check. Handwritten raw tooling and JSON are checked
 separately, without rewriting the raw patch or logs.
+
+Final publication is authorized as one combined commit on typescript/meta-spread-2,
+parent 9dbddc5360e529f70fbcab44f528e3580bac471b (the dumpTypes/LineMapSource stack).
+Every path under 47 is identical between the previous base and that parent.
+The full parent ledger is an exact byte prefix of the final ledger. A fresh
+full apply on the stack passes with exit 0, and finished startTracing matches
+the exact after pin. stack-apply-initial records the fresh-worktree parser setup
+failure before adaptations; the parser was linked and the complete run repeated.
