@@ -791,10 +791,15 @@ func (l *lowering) namesSetBlocking(node *ast.Node) bool {
 // keyMayNameSetBlocking says whether a key of type key may be the name setBlocking: the string
 // literal itself, a union with it among its members, which element_access_fields.go lowers as one read
 // per name (Runtime's must A on #0bxc4jh), or a type parameter or other generic whose base constraint
-// may be. A key it can't read that way isn't setBlocking by type, and lowering reads it by its own rules.
+// may be. A key it can't read that way isn't setBlocking by type, and lowering reads it by its own rules;
+// one nested past eight levels is taken to name it.
 func keyMayNameSetBlocking(checks *checker.Checker, key *checker.Type, depth int) bool {
-	if key == nil || depth > 8 {
+	if key == nil {
 		return false
+	}
+	if depth > 8 {
+		// A key this deep may still name it, so it fails closed (Runtime's should on #0bxc4jh).
+		return true
 	}
 	switch {
 	case key.Flags()&checker.TypeFlagsStringLiteral != 0:
