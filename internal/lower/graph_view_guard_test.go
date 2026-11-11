@@ -43,6 +43,11 @@ type BagSpeaks = Record<string, Speaks>
 interface NamedSpeaks { readonly a?: SpeaksField }
 interface DiscriminantWide { readonly kind: 'a' | 'b'; readonly inner: MakesDerived; readonly other: MakesDerived }
 type DiscriminatedBase = { readonly kind: 'a'; readonly inner: MakesBase } | { readonly kind: 'b'; readonly other: MakesBase }
+interface PartlyWide { readonly kind: 'a' | 'b'; readonly inner: MakesDerived; readonly z: Link }
+type PartlyBase = { readonly kind: 'a'; readonly inner: MakesBase } | { readonly kind: 'a' | 'b'; readonly z: Link }
+interface CrossA { readonly kind: 'a'; inner: MakesDerived }
+interface CrossB { readonly kind: 'b'; inner: MakesBase }
+type Cross = CrossA | CrossB
 interface HasInner { readonly tag: string; inner: MakesDerived }
 interface NoInner { readonly tag: string }
 type EitherInner = HasInner | NoInner
@@ -206,7 +211,10 @@ func TestGraphViewGuardNoSource(t *testing.T) {
 // field, both rows); the arm loop removed (an arm); the method or accessor stop removed (a method,
 // and the method through an index source); the source arm loop removed (a source arm, Lower's should);
 // a split arm skipped, its members never paired (a split arm, Language's must: DiscriminantWide relates
-// to DiscriminatedBase by its discriminant and to neither arm alone, and only the arms declare inner).
+// to DiscriminatedBase by its discriminant and to neither arm alone, and only the arms declare inner);
+// a split only where the source arm relates to no arm alone (a split arm beside a related one,
+// Language's should: PartlyWide relates whole to PartlyBase's second arm, and kind === 'a' can still
+// narrow it to the first).
 func TestGraphViewGuardRoads(t *testing.T) {
 	t.Parallel()
 	lowered, types, nodes := graphViewGuardLowering(t)
@@ -220,6 +228,7 @@ func TestGraphViewGuardRoads(t *testing.T) {
 		{"a source arm", "EitherInner", "ViewsInner", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a source arm (HasInner as ViewsInner) through its field inner"},
 		{"a method through an index source", "BagSpeaks", "NamedSpeaks", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it through its field a (Speaks as "},
 		{"a split arm", "DiscriminantWide", "DiscriminatedBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a split arm (DiscriminantWide as "},
+		{"a split arm beside a related one", "PartlyWide", "PartlyBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through a split arm (PartlyWide as "},
 	} {
 		if types[row.source] == nil || types[row.target] == nil {
 			t.Fatalf("%s: a type isn't declared", row.name)
@@ -246,6 +255,10 @@ func TestGraphViewGuardIdentityAndArms(t *testing.T) {
 	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
 		{"one union type on both sides", "HoldsChoice", "AlsoChoice", ""},
 		{"the union itself", "Choice", "Choice", ""},
+		// CrossA relates to Cross through its own arm, and its kind 'a' shares no value with CrossB's 'b',
+		// so it's never split against CrossB. Mutant: viewPairDisjoint returning false pairs CrossA's inner
+		// with CrossB's, MakesDerived as MakesBase, and refuses this.
+		{"an arm against a disjoint arm", "CrossA", "Cross", ""},
 	})
 }
 
