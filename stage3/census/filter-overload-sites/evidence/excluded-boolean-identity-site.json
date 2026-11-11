@@ -1,0 +1,18 @@
+{
+  "argument": "jsDoc.tags",
+  "argument_declarations": [
+    "/workspace/scratch/filter-sites-tree/src/compiler/types.ts:3954:5 readonly tags?: NodeArray<JSDocTag> | undefined;"
+  ],
+  "argument_type": "NodeArray<JSDocTag> | undefined",
+  "call": "filter(jsDoc.tags, tag => ownsJSDocTag(hostNode, tag))",
+  "declaration": "/** @internal */\r\nexport function filter<T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined;",
+  "declaration_where": "/workspace/scratch/filter-sites-tree/src/compiler/core.ts:275:1",
+  "enclosing_function": "<anonymous>",
+  "end": 184450,
+  "function_where": "/workspace/scratch/filter-sites-tree/src/compiler/utilities.ts:4684:55",
+  "narrowing": false,
+  "parent": "ownedTags = filter(jsDoc.tags, tag => ownsJSDocTag(hostNode, tag))",
+  "predicate": "tag => ownsJSDocTag(hostNode, tag)",
+  "start": 184395,
+  "where": "/workspace/scratch/filter-sites-tree/src/compiler/utilities.ts:4686:31"
+}

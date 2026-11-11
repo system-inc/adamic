@@ -1,0 +1,46 @@
+[
+  {
+    "scope": "compiler",
+    "exit": 0,
+    "seconds": 6.88734668699999,
+    "command": [
+      "/workspace/scratch/filter-sites/sites-scopes",
+      "/workspace/scratch/filter-sites-tree",
+      "/workspace/scratch/filter-sites/production-compiler.json",
+      "compiler"
+    ]
+  },
+  {
+    "scope": "services",
+    "exit": 1,
+    "seconds": 9.461984087000019,
+    "command": [
+      "/workspace/scratch/filter-sites/sites-scopes",
+      "/workspace/scratch/filter-sites-tree",
+      "/workspace/scratch/filter-sites/production-services.json",
+      "services"
+    ]
+  },
+  {
+    "scope": "server",
+    "exit": 1,
+    "seconds": 7.821528166999997,
+    "command": [
+      "/workspace/scratch/filter-sites/sites-scopes",
+      "/workspace/scratch/filter-sites-tree",
+      "/workspace/scratch/filter-sites/production-server.json",
+      "server"
+    ]
+  },
+  {
+    "scope": "harness",
+    "exit": 1,
+    "seconds": 10.112076231000174,
+    "command": [
+      "/workspace/scratch/filter-sites/sites-scopes",
+      "/workspace/scratch/filter-sites-tree",
+      "/workspace/scratch/filter-sites/production-harness.json",
+      "harness"
+    ]
+  }
+]

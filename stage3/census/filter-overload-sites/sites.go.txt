@@ -1,0 +1,132 @@
+// Measurement driver. Build with Go's overlay over stage3/census/tool/main.go.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+)
+
+func text(n *ast.Node) string {
+	if n == nil {
+		return ""
+	}
+	f := ast.GetSourceFileOfNode(n)
+	return strings.TrimSpace(f.Text()[n.Pos():n.End()])
+}
+func main() {
+	if len(os.Args) < 3 || len(os.Args) > 4 {
+		panic("usage: sites adapted-tree output.json [compiler|services|server|harness]")
+	}
+	root, err := filepath.Abs(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	out := os.Args[2]
+	scope := "compiler"
+	if len(os.Args) == 4 {
+		scope = os.Args[3]
+	}
+	if scope != "compiler" && scope != "services" && scope != "server" && scope != "harness" {
+		panic("unknown scope")
+	}
+	var roots []string
+	err = filepath.WalkDir(filepath.Join(root, "src", scope), func(p string, d os.DirEntry, e error) error {
+		if e != nil {
+			return e
+		}
+		if !d.IsDir() && strings.HasSuffix(p, ".ts") {
+			roots = append(roots, p)
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+	sort.Strings(roots)
+	fmt.Fprintf(os.Stderr, "loading %d %s roots through production load.Load\n", len(roots), scope)
+	p, e := load.Load(roots)
+	if e != nil {
+		b, _ := json.MarshalIndent(map[string]any{"scope": scope, "root_count": len(roots), "roots": roots, "status": "production_load_rejected", "error": e.Error()}, "", "  ")
+		os.WriteFile(out+".load.json", append(b, '\n'), 0644)
+		fmt.Fprintln(os.Stderr, e)
+		os.Exit(1)
+	}
+	rows := []map[string]any{}
+	all := []map[string]any{}
+	for _, f := range p.Files() {
+		c, release := p.Checker(context.Background(), f)
+		var visit ast.Visitor
+		visit = func(n *ast.Node) bool {
+			if n.Kind == ast.KindCallExpression {
+				sig := c.GetResolvedSignature(n)
+				if sig != nil && sig.Declaration() != nil {
+					d := sig.Declaration()
+					df := ast.GetSourceFileOfNode(d)
+					if strings.HasSuffix(df.FileName().AsString(), "/src/compiler/core.ts") && d.Name() != nil && d.Name().Text() == "filter" {
+						narrow := false
+						var pred ast.Visitor
+						pred = func(x *ast.Node) bool {
+							if x.Kind == ast.KindTypePredicate {
+								narrow = true
+							}
+							x.ForEachChild(pred)
+							return false
+						}
+						d.ForEachChild(pred)
+						call := n.AsCallExpression()
+						args := call.Arguments.Nodes
+						fn := "<module>"
+						fnWhere := ""
+						for a := n.Parent; a != nil; a = a.Parent {
+							if ast.IsFunctionLike(a) && a.Body() != nil {
+								fnWhere = p.Where(a)
+								if a.Name() != nil {
+									fn = text(a.Name())
+								} else {
+									fn = "<anonymous>"
+								}
+								break
+							}
+						}
+						r := map[string]any{"where": p.Where(n), "enclosing_function": fn, "function_where": fnWhere, "call": text(n), "declaration_where": p.Where(d), "declaration": text(d), "narrowing": narrow, "parent": text(n.Parent), "start": n.Pos(), "end": n.End()}
+						if len(args) > 0 {
+							r["argument"] = text(args[0])
+							r["argument_type"] = c.TypeToString(c.GetTypeAtLocation(args[0]))
+							s := c.GetSymbolAtLocation(args[0])
+							if s != nil {
+								ds := []string{}
+								for _, decl := range s.Declarations {
+									ds = append(ds, p.Where(decl)+" "+text(decl))
+								}
+								r["argument_declarations"] = ds
+							}
+						}
+						if len(args) > 1 {
+							r["predicate"] = text(args[1])
+						}
+						all = append(all, r)
+						if narrow {
+							rows = append(rows, r)
+						}
+					}
+				}
+			}
+			n.ForEachChild(visit)
+			return false
+		}
+		visit(f.AsNode())
+		release()
+	}
+	b, _ := json.MarshalIndent(map[string]any{"scope": scope, "roots": roots, "all_filter_calls": all, "sites": rows}, "", "  ")
+	if e := os.WriteFile(out, append(b, '\n'), 0644); e != nil {
+		panic(e)
+	}
+	fmt.Printf("roots=%d calls=%d narrowing=%d\n", len(roots), len(all), len(rows))
+}

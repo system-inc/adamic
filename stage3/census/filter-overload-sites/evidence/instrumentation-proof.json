@@ -1,0 +1,32 @@
+{
+  "sites": 37,
+  "changed_files": [
+    "src/compiler/checker.ts",
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/factory/utilities.ts",
+    "src/compiler/transformers/classFields.ts",
+    "src/compiler/transformers/ts.ts",
+    "src/compiler/transformers/utilities.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/utilitiesPublic.ts",
+    "src/services/callHierarchy.ts",
+    "src/services/codefixes/convertFunctionToEs6Class.ts",
+    "src/services/codefixes/convertToEsModule.ts",
+    "src/services/codefixes/fixAddMissingParam.ts",
+    "src/services/goToDefinition.ts",
+    "src/services/services.ts",
+    "src/services/utilities.ts"
+  ],
+  "public_and_internal_declarations": {
+    "typescript.d.ts": {
+      "equal": true,
+      "bytes": 593506,
+      "sha256": "e14a3c25a0ec4f42f05974fe029a3de87c13cdb9b92e823385a5e9ac321c31bd"
+    },
+    "typescript.internal.d.ts": {
+      "equal": true,
+      "bytes": 1544935,
+      "sha256": "e6a550590d4ad559108a968eaf78eb4a454e0e5d75a20a2590b8a1f0ea79deed"
+    }
+  }
+}
