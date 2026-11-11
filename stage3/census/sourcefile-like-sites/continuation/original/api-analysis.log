@@ -1,15 +1,1 @@
-/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/api-c.cjs:15
-fs.writeFileSync(path.join(out,'typescript-public.diff'),diff.stdout||'');fs.writeFileSync(path.join(out,'public-diff.status.json'),JSON.stringify({child_exit:diff.status,stderr:diff.stderr},null,2)+'\n');if(![0,1].includes(diff.status))throw Error('diff failed');
-                                                                                                                                                                                                                                             ^
-
-Error: diff failed
-    at Object.<anonymous> (/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/api-c.cjs:15:244)
-    at Module._compile (node:internal/modules/cjs/loader:1872:14)
-    at Object..js (node:internal/modules/cjs/loader:2003:10)
-    at Module.load (node:internal/modules/cjs/loader:1594:32)
-    at Module._load (node:internal/modules/cjs/loader:1396:12)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
-    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
-    at node:internal/main/run_main_module:33:47
-
-Node.js v24.19.0
+{"label":"original","diagnostics":0,"selected":[{"name":"SourceFileLike","kind":"InterfaceDeclaration","text":"interface SourceFileLike {\n        readonly text: string;\n    }"},{"name":"SourceFileLike","kind":"InterfaceDeclaration","text":"interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"},{"name":"getLineAndCharacterOfPosition","kind":"FunctionDeclaration","text":"function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;"}],"normalized_changes":0}

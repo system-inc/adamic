@@ -3,7 +3,7 @@ sys.dont_write_bytecode=True
 from variants import invoke,core,checkpoint
 p=pathlib.Path(__file__).resolve().parent
 for label,root in [('c-unstripped','/workspace/scratch/baobab-road2-c'),('original-unstripped','/workspace/scratch/baobab-adapted')]:
- invoke(['node',str(p/'emit-public-c.cjs'),root,label,'off'],p/label/'public-emit.log',600)
+ if not (p/label/'public-signatures.json').exists():invoke(['node',str(p/'emit-public-c.cjs'),root,label,'off'],p/label/'public-emit.log',600)
 for label,base in [('original','original'),('original-unstripped','original-unstripped'),('c-unstripped','original-unstripped')]:
  invoke(['node',str(p/'api-c.cjs'),label,base],p/label/'api-analysis.log',600)
  if label in ['original','c-unstripped']:invoke(['python3',str(p/'lane-api-c.py'),label],p/label/'lane-api-check.log',600)

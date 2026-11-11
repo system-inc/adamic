@@ -1,0 +1,61 @@
+{
+  "label": "original",
+  "actual_lane_api_check": true,
+  "errors": [],
+  "facts": {
+    "reference_declarations": 0,
+    "composed_declarations": 267,
+    "sanctioned_declarations": 267,
+    "added_lines": 349,
+    "removed_lines": 267
+  },
+  "setup_commands": [
+    {
+      "command": [
+        "git",
+        "init",
+        "-q",
+        "/workspace/scratch/baobab-lane-api-original/adapted-tree"
+      ],
+      "child_exit": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/baobab-typescript",
+        "rev-parse",
+        "--path-format=absolute",
+        "--git-path",
+        "objects"
+      ],
+      "child_exit": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/baobab-lane-api-original/adapted-tree",
+        "update-ref",
+        "HEAD",
+        "050880ce59e30b356b686bd3144efe24f875ebc8"
+      ],
+      "child_exit": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/baobab-lane-api-original/adapted-tree",
+        "show",
+        "050880ce59e30b356b686bd3144efe24f875ebc8:tests/baselines/reference/api/typescript.d.ts"
+      ],
+      "child_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "source_pin": "050880ce59e30b356b686bd3144efe24f875ebc8"
+}

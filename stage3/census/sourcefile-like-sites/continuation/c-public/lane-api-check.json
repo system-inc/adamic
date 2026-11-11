@@ -1,0 +1,69 @@
+{
+  "label": "c-public",
+  "actual_lane_api_check": true,
+  "errors": [
+    "unsanctioned API declaration: FunctionDeclaration:[\"ts\",\"getLineAndCharacterOfPosition\"]#0",
+    "unsanctioned API declaration: InterfaceDeclaration:[\"ts\",\"LineMapSource\"]#0",
+    "unsanctioned API declaration: InterfaceDeclaration:[\"ts\",\"SourceFileLike\"]#0",
+    "unsanctioned API declaration: comments#0",
+    "unsanctioned API declaration: member:[\"ts\",\"LineMapSource\",\"lineMap\"]#0",
+    "unsanctioned API declaration: member:[\"ts\",\"LineMapSource\",\"text\"]#0",
+    "unsanctioned API declaration: member:[\"ts\",\"SourceFileLike\",\"text\"]#0"
+  ],
+  "facts": {
+    "reference_declarations": 0,
+    "composed_declarations": 274,
+    "sanctioned_declarations": 267,
+    "added_lines": 355,
+    "removed_lines": 269
+  },
+  "setup_commands": [
+    {
+      "command": [
+        "git",
+        "init",
+        "-q",
+        "/workspace/scratch/baobab-lane-api-c-public/adapted-tree"
+      ],
+      "child_exit": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/baobab-typescript",
+        "rev-parse",
+        "--path-format=absolute",
+        "--git-path",
+        "objects"
+      ],
+      "child_exit": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/baobab-lane-api-c-public/adapted-tree",
+        "update-ref",
+        "HEAD",
+        "050880ce59e30b356b686bd3144efe24f875ebc8"
+      ],
+      "child_exit": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/baobab-lane-api-c-public/adapted-tree",
+        "show",
+        "050880ce59e30b356b686bd3144efe24f875ebc8:tests/baselines/reference/api/typescript.d.ts"
+      ],
+      "child_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "source_pin": "050880ce59e30b356b686bd3144efe24f875ebc8"
+}
