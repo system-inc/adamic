@@ -123,15 +123,18 @@ func TestPrepareStackTraceStaysStopped(t *testing.T) {
 // assert's verboseDebugInfo() is judged by the calls reaching assert, none of which passes one. It then
 // stops at a later wall, debug.ts's assertIsDefined, an asserts predicate over a generic, which isn't
 // this walk's (Node prints 0.0.0-0 first). Main stops it at 92:38, the constructor escape this change
-// lifts; mutant "Parameter calls never known" stops it at 67:111, the indirect call. When the predicate
-// wall falls, it moves to internal/oracle's TestStaticSelfConstructionAgreesWithNode.
+// lifts; mutant "Parameter calls never known" stops it at 67:111, the indirect call. The predicate wall
+// fell with #8n7eet3 (assertIsDefined proven by its body), so the next stop is the fixture's own driver,
+// `new Version(-1);` at 154:2, a NewExpression as a statement, not tsc's code. Moving it to
+// internal/oracle's TestStaticSelfConstructionAgreesWithNode is Lower's, once that statement lowers or the
+// driver binds the value.
 func TestTscVersionZeroPassesTheStaticWalk(t *testing.T) {
 	t.Parallel()
 	source, err := os.ReadFile("testdata/static_self_construction/tsc_version_zero.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	const want = "/main.ts:73:2: stage 0 can't lower checked predicate overload target { major: number; minor: number; patch: number; prerelease: string; build: string; } yet"
+	const want = "/main.ts:154:2: stage 0 can't lower a NewExpression as a statement yet"
 	_, err = lowerSourceAs(t, string(source), ".ts")
 	if err == nil || !strings.HasSuffix(err.Error(), want) {
 		t.Fatalf("got %v, want ...%s", err, want)
