@@ -186,5 +186,203 @@
     "diagnostic_count": 0,
     "full_header": true,
     "relation_trailer": true
+  },
+  {
+    "file": "core.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/core.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 39.19774103700024,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/core.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "corePublic.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/corePublic.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 25.184023424000088,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/corePublic.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "debug.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/debug.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 50.03598223200015,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/debug.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "diagnosticInformationMap.generated.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/diagnosticInformationMap.generated.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 28.943477945999803,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "emitter.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/emitter.jsonl"
+    ],
+    "child_exit": -15,
+    "wall_seconds": 300.1164479160002,
+    "over_five_minutes": true,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": false
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/executeCommandLine.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 133.87529990700023,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/expressionToTypeNode.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 109.0885495450002,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/baseNodeFactory.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__baseNodeFactory.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 23.65724019900017,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/emitHelpers.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__emitHelpers.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 60.0438567289998,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
+  },
+  {
+    "file": "factory/emitNode.ts",
+    "command": [
+      "/workspace/scratch/baobab-latent",
+      "/workspace/scratch/baobab-adapted/src/compiler",
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/factory__emitNode.jsonl"
+    ],
+    "child_exit": 0,
+    "wall_seconds": 30.663334131999818,
+    "over_five_minutes": false,
+    "piece": 2,
+    "max_concurrent_files": 2,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "full_header": true,
+    "relation_trailer": true
   }
 ]

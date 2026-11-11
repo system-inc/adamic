@@ -2,12 +2,13 @@
 
 Measured main: `d690f276749f91e6b36fe3a9726a5a453fcd7d39`. Upstream TypeScript 6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Report only; no compiler or adaptation changes.
 
-Attempted 10 of 79 compiler files; 9 completed full-mode streams. Physical sites: 0; distinct finding/phase/unit observations: 0.
+Attempted 20 of 79 compiler files; 18 completed full-mode streams. Physical sites: 1; distinct finding/phase/unit observations: 1.
 
 ## By callee
 
 | Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Cleared by the two proposed signatures |
 | --- | ---: | ---: | ---: | --- | --- |
+| `getLineStarts` | 1 | 1 | 0 | no | yes |
 
 First-stop attribution comes from `typescript/next-stops-c504dd8f` at `fe08a0d47a3d28f646db181ac9e8456e5c60885f`, file `stage3/census/next-stops-c504dd8f/grouped-first-stops.json`, copied as prior-first-stops.json. It names tracing.ts:206:67 for 73 roots. Its other six roots have unrelated outcomes. First-stop roots count only sites explicitly named in that evidence; it does not predict their next blocker.
 
@@ -25,6 +26,7 @@ Locations are in the adapted compiler. Body-inventory line numbers in the next t
 
 | Location | Phase(s) | Enclosing function | Receiving callee / view | Value use | Reason |
 | --- | --- | --- | --- | --- | --- |
+| executeCommandLine.ts:109:41 | refusal_scan | <anonymous@107> | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -> computeLineStarts | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 
 ## All exported compiler functions with a SourceFileLike parameter
 
@@ -67,6 +69,16 @@ This is a latent observational census, not an exhaustive proof of all runtime pa
 | builderStatePublic.ts | 0 | 22.21 | yes | no |
 | checker.ts | -15 | 300.12 | no | yes |
 | commandLineParser.ts | 0 | 131.84 | yes | no |
+| core.ts | 0 | 39.20 | yes | no |
+| corePublic.ts | 0 | 25.18 | yes | no |
+| debug.ts | 0 | 50.04 | yes | no |
+| diagnosticInformationMap.generated.ts | 0 | 28.94 | yes | no |
+| emitter.ts | -15 | 300.12 | no | yes |
+| executeCommandLine.ts | 0 | 133.88 | yes | no |
+| expressionToTypeNode.ts | 0 | 109.09 | yes | no |
+| factory/baseNodeFactory.ts | 0 | 23.66 | yes | no |
+| factory/emitHelpers.ts | 0 | 60.04 | yes | no |
+| factory/emitNode.ts | 0 | 30.66 | yes | no |
 
 **Incomplete census.** Counts are observed lower bounds. Missing or timed-out file results must not be treated as zero sites. See coverage.json and raw per-file logs/status files.
 

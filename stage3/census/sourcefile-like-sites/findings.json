@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/baobab-adapted/src/compiler/executeCommandLine.ts:105:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/baobab-adapted/src/compiler/executeCommandLine.ts:109:41",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "text": "/workspace/scratch/baobab-adapted/src/compiler/executeCommandLine.ts:109:41: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "observed_in": [
+      "executeCommandLine.ts"
+    ]
+  }
+]
