@@ -1,0 +1,1 @@
+{"label":"e-prelint","errorCount":11,"messages":[{"ruleId":"@typescript-eslint/unified-signatures","severity":2,"message":"These overloads can be combined into one signature taking `LineMapSource | SourceFileLike`.","line":550,"column":47,"messageId":"singleParameterDifference","endLine":550,"endColumn":73}]}

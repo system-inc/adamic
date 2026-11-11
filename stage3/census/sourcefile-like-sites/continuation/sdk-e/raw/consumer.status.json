@@ -1,0 +1,28 @@
+{
+  "file": "consumer.ts",
+  "command": [
+    "/workspace/scratch/baobab-latent",
+    "/workspace/scratch/baobab-sdk-e",
+    "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/sdk-e/raw/consumer.jsonl"
+  ],
+  "child_exit": 0,
+  "wall_seconds": 0.34054286900209263,
+  "timed_out": false,
+  "bound_seconds": 300,
+  "max_concurrent_files": 1,
+  "completed_timing_units": 2,
+  "last_timing_units": [
+    {
+      "file": "/workspace/scratch/baobab-sdk-e/consumer.ts",
+      "where": "/workspace/scratch/baobab-sdk-e/consumer.ts:1:1",
+      "wall_seconds": 0.005268219,
+      "cpu_seconds": 0.005232999999999988
+    },
+    {
+      "file": "/workspace/scratch/baobab-sdk-e/consumer.ts",
+      "where": "/workspace/scratch/baobab-sdk-e/consumer.ts:2:1",
+      "wall_seconds": 0.015639311,
+      "cpu_seconds": 0.030061000000000004
+    }
+  ]
+}

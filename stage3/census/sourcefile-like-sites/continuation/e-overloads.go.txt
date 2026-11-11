@@ -1,0 +1,47 @@
+// Measurement only: ask the production checker which overload it resolves at each compiler call.
+package main
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/checker"
+ "github.com/system-inc/adamic/internal/load"
+)
+func main() {
+ if len(os.Args)!=4 {panic("usage: overloads compiler-directory roots.json output.json")}
+ bytes,err:=os.ReadFile(os.Args[2]);if err!=nil {panic(err)}
+ var names []string;if err=json.Unmarshal(bytes,&names);err!=nil {panic(err)}
+ paths:=make([]string,len(names));for i,name:=range names {paths[i]=filepath.Join(os.Args[1],name)}
+ program,err:=load.Load(paths);if err!=nil {panic(err)}
+ rows:=[]map[string]any{}
+ for _,file:=range program.Files() {
+  ch,release:=program.Checker(context.Background(),file)
+  var visit ast.Visitor
+  visit=func(node *ast.Node) bool {
+   if node.Kind==ast.KindCallExpression {
+    sig:=ch.GetResolvedSignature(node)
+    if sig!=nil && sig.Declaration()!=nil {
+     decl:=sig.Declaration()
+     if decl.Kind==ast.KindFunctionDeclaration && decl.Name()!=nil && decl.Name().Text()=="getLineAndCharacterOfPosition" && filepath.Base(string(ast.GetSourceFileOfNode(decl).FileName()))=="scanner.ts" {
+      call:=node.AsCallExpression();ss:=ch.GetSignaturesOfType(ch.GetTypeAtLocation(call.Expression),checker.SignatureKindCall)
+      ordinal:=0;signatures:=[]map[string]any{}
+      for i,s:=range ss {
+       d:=s.Declaration();if d==decl {ordinal=i+1}
+       signatures=append(signatures,map[string]any{"where":program.Where(d),"first_parameter":ch.TypeToString(ch.GetTypeAtLocation(d.Parameters()[0]))})
+      }
+      argument:=call.Arguments.Nodes[0]
+      rows=append(rows,map[string]any{"call":program.Where(node),"argument":program.Where(argument),"argument_flow_type":ch.TypeToString(ch.GetTypeAtLocation(argument)),"chosen_overload":ordinal,"chosen_declaration":program.Where(decl),"chosen_first_parameter":ch.TypeToString(ch.GetTypeAtLocation(decl.Parameters()[0])),"signatures":signatures})
+     }
+    }
+   }
+   node.ForEachChild(visit);return false
+  }
+  file.AsNode().ForEachChild(visit);release()
+ }
+ output,err:=os.Create(os.Args[3]);if err!=nil {panic(err)};defer output.Close()
+ if err=json.NewEncoder(output).Encode(map[string]any{"driver":"production load.Load and Checker.GetResolvedSignature, no lowering","compiler_roots":len(paths),"calls":rows});err!=nil {panic(err)}
+ fmt.Printf("resolved %d compiler calls under production options\n",len(rows))
+}

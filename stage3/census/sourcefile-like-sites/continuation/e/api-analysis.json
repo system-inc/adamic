@@ -1,0 +1,34 @@
+{
+  "label": "e",
+  "baseline": "original",
+  "typescript": "6.0.3",
+  "selected_declarations": [
+    {
+      "name": "SourceFileLike",
+      "kind": "InterfaceDeclaration",
+      "text": "interface SourceFileLike {\n        readonly text: string;\n    }"
+    },
+    {
+      "name": "SourceFileLike",
+      "kind": "InterfaceDeclaration",
+      "text": "interface SourceFileLike {\n        getLineAndCharacterOfPosition(pos: number): LineAndCharacter;\n    }"
+    },
+    {
+      "name": "getLineAndCharacterOfPosition",
+      "kind": "FunctionDeclaration",
+      "text": "function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter;"
+    }
+  ],
+  "options": {
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "target": 11,
+    "module": 1,
+    "types": [],
+    "skipLibCheck": false
+  },
+  "diagnostics": [],
+  "normalized_changes": 0
+}

@@ -1,0 +1,15 @@
+--- baseline/src/compiler/types.ts
++++ e/src/compiler/types.ts
+@@ -4280,6 +4280,12 @@
+     name?: string | undefined;
+ }
+ 
++/** @internal */
++export interface LineMapSource {
++    readonly text: string;
++    lineMap?: readonly number[] | undefined;
++}
++
+ /**
+  * Subset of properties from SourceFile that are used in multiple utility functions
+  */

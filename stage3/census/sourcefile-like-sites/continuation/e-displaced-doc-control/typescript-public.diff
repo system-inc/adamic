@@ -1,0 +1,12 @@
+--- original/typescript.d.ts
++++ e/typescript.d.ts
+@@ -5903,9 +5903,6 @@
+         path: string;
+         name?: string | undefined;
+     }
+-    /**
+-     * Subset of properties from SourceFile that are used in multiple utility functions
+-     */
+     interface SourceFileLike {
+         readonly text: string;
+     }
