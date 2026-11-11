@@ -21,7 +21,6 @@ import (
 var rawStoreAllowed = map[string]string{
 	"class_errors.go:emitter.makeError:1":              "a fresh error object's name, a string; the error is never adopted",
 	"constant_tables.go:emitter.emitConstantRecords:1": "a fresh constant-table object and its fresh number array; constant tables exclude graph literals",
-	"emit_expressions.go:emitter.evaluate:1":           "a maybe pop, a number or a boolean, so no reference leaves the array",
 	"emit_locals.go:emitter.replaceIterationCell:1":    "an async or generator frame cell, never a graph member (frames are unmovable)",
 	"emit_locals.go:emitter.store:1":                   "an async frame cell borrowing its source's value, never a graph member (async frames are unmovable)",
 	"emit_locals.go:emitter.store:2":                   "a counted cell, not a GraphCell, so never adopted (GraphCell spreads to every cell of an adopted environment)",
@@ -250,7 +249,9 @@ func rawStoreMentions(call *ast.CallExpr, text string) bool {
 
 // rawStoreEscapesPops says a function hands its pops over through an escape: some branch of it that
 // tests GraphTypes builds a literal naming adamic_graph_escape. ArrayPop's arm wraps the popped value
-// that way, and typeOfReference wraps the popped slot's reference.
+// that way, and typeOfReference wraps the popped slot's reference. It judges by function, not by pop,
+// so evaluate's maybe pop, a number or a boolean that needs no escape, is covered by ArrayPop's branch
+// beside it.
 func rawStoreEscapesPops(declaration ast.Decl) bool {
 	found := false
 	ast.Inspect(declaration, func(node ast.Node) bool {
