@@ -2,6 +2,8 @@ import pathlib,json,gzip,collections,hashlib
 out=pathlib.Path(__file__).resolve().parent
 roots=json.loads((out/'roots.json').read_text());coverage=json.loads((out/'coverage.json').read_text());sites=json.loads((out/'sites.json').read_text());counts=json.loads((out/'by-callee.json').read_text());funcs=json.loads((out/'public-functions.json').read_text())
 assert len(roots)==79 and len(set(roots))==79
+prov=json.loads((out/'provenance.json').read_text())
+assert hashlib.sha256(pathlib.Path('/workspace/scratch/baobab-latent').read_bytes()).hexdigest()==prov['binary_sha256'],'measurement binary changed'
 assert sorted(s['file'] for s in coverage)==roots
 raw_observations=set();diagnostics=set()
 for s in coverage:

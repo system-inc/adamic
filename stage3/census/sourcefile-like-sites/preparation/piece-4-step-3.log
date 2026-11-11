@@ -1,0 +1,7 @@
+| Callee | Sites | Files | First-stop roots on c504dd8f | Reads optional method | Sites whose identified reason road 2 clears |
+| --- | ---: | ---: | ---: | --- | --- |
+| `getLineAndCharacterOfPosition` | 0 | 0 | 0 | no | 0 |
+| `getLineStarts` | 1 | 1 | 0 | no | 1 |
+| `getPositionOfLineAndCharacter` | 0 | 0 | 0 | yes | 0 |
+
+First-stop attribution comes from `typescript/next-stops-c504dd8f` at `fe08a0d47a3d28f646db181ac9e8456e5c60885f`, file `stage3/census/next-stops-c504dd8f/grouped-first-stops.json`, copied as prior-first-stops.json. It names tracing.ts:206:67 for 73 roots. Its other six roots have unrelated outcomes. First-stop roots count only sites explicitly named in that evidence; it does not predict their next blocker.

@@ -6,7 +6,7 @@ def run(args):
  print('child exit='+str(p.returncode)+' '+repr(args)+'\n'+p.stdout,flush=True)
  if p.returncode:sys.exit(p.returncode)
  return p.stdout.strip()
-run(['git','add','stage3/census/sourcefile-like-sites'])
+run(['git','add','-f','stage3/census/sourcefile-like-sites'])
 branch='refs/heads/typescript/sourcefile-like-sites-checkpoint'
 p=subprocess.run(['git','rev-parse','--verify',branch],cwd=repo,capture_output=True,text=True)
 parent=p.stdout.strip() if p.returncode==0 else run(['git','rev-parse','HEAD'])

@@ -1,0 +1,42 @@
+[
+  {
+    "where": "executeCommandLine.ts:109:41",
+    "phase": "refusal_scan",
+    "callee": "getLineStarts",
+    "arg": 0,
+    "fn": "<anonymous@107>",
+    "expression": "getLineStarts(file)"
+  },
+  {
+    "where": "tracing.ts:206:67",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "getLocation",
+    "expression": "getLineAndCharacterOfPosition(file, node!.pos)"
+  },
+  {
+    "where": "tracing.ts:207:65",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "getLocation",
+    "expression": "getLineAndCharacterOfPosition(file, node!.end)"
+  },
+  {
+    "where": "transformers/declarations.ts:1264:70",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "visitDeclarationSubtree",
+    "expression": "getLineAndCharacterOfPosition(currentSourceFile, input.pos)"
+  },
+  {
+    "where": "transformers/declarations.ts:1264:139",
+    "phase": "refusal_scan",
+    "callee": "getLineAndCharacterOfPosition",
+    "arg": 0,
+    "fn": "visitDeclarationSubtree",
+    "expression": "getLineAndCharacterOfPosition(currentSourceFile, input.end)"
+  }
+]

@@ -46,7 +46,7 @@ Locations are in the adapted compiler. Body-inventory line numbers in the next t
 
 ## All exported compiler functions with a SourceFileLike parameter
 
-This includes @internal exports as well as the published API. Only getPositionOfLineAndCharacter and getLineAndCharacterOfPosition lack @internal. Overload declarations of getPositionOfLineAndCharacter (scanner.ts:465 and :467) share the implementation at :468. SourceFileLike-returning host methods and WeakMap type arguments are not additional functions with such a parameter.
+The AST inventory was checked against both pinned upstream and the fully adapted compiler: 12 implementations and 14 declarations including overloads. This function inventory and body audit is complete even though the site census has cut-off streams. This includes @internal exports as well as the published API. Only getPositionOfLineAndCharacter and getLineAndCharacterOfPosition lack @internal. Overload declarations of getPositionOfLineAndCharacter (scanner.ts:465 and :467) share the implementation at :468. SourceFileLike-returning host methods and WeakMap type arguments are not additional functions with such a parameter.
 
 | Upstream location | Function | Internal | Reads optional method, directly or transitively | Body / onward use |
 | --- | --- | --- | --- | --- |
