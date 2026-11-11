@@ -1,0 +1,35 @@
+[
+  {
+    "cast": false,
+    "end": 4319,
+    "file": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts",
+    "full_mode": true,
+    "kind": "GuardRefusal",
+    "mutant": false,
+    "narrows": true,
+    "reason": "a view of BindingOrAssignmentElement as OmittedExpression in a graph program, which the cycle finder doesn't relate yet through a source arm (ArrayLiteralExpression as OmittedExpression)",
+    "road": "union arms",
+    "roads": [
+      "union arms"
+    ],
+    "source": "BindingOrAssignmentElement",
+    "source_nil": false,
+    "start": 3890,
+    "steps": [
+      {
+        "road": "union arms",
+        "source": "ArrayLiteralExpression",
+        "step": "a source arm",
+        "target": "OmittedExpression"
+      }
+    ],
+    "target": "OmittedExpression",
+    "text": "/**\r\n * Iterates through `array` by index and performs the callback on each element of array until the callback\r\n * returns a falsey value, then returns false.\r\n * If no such value is found, the callback is applied to each element of array and `true` is returned.\r\n *\r\n * @internal\r\n */\r\nexport function every<T, U extends T>(array: readonly T[], callback: (element: T, index: number) => element is U): array is readonly U[];",
+    "unit": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts:446:1",
+    "view_index": 1,
+    "where": "/workspace/roads-adapted/src/compiler/core.ts:140:1",
+    "side": "head",
+    "case": "full-5dc3fc14d8-0004",
+    "manual_key": "/workspace/roads-adapted/src/compiler/core.ts:140:1 | BindingOrAssignmentElement | OmittedExpression | a view of BindingOrAssignmentElement as OmittedExpression in a graph program, which the cycle finder doesn't relate yet through a source arm (ArrayLiteralExpression as OmittedExpression)"
+  }
+]
