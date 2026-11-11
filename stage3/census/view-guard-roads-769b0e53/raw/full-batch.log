@@ -182,3 +182,7 @@ checkpoint_wrapper_child_exit=0
 {"file": "/workspace/roads-adapted/src/compiler/transformers/classThis.ts", "run": "full-4dd6a78338-parent-guard", "wrapper_child_exit": 0}
 push_child_exit=0 sha=eb9ef0820514cc0381c94b9d6a993e9744849490
 checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=3b65d6f38d5fe7828874c0e8f8e421a744c98662
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 54.413546600999325, "peak_rss_kib": 966836, "user_seconds": 48.802016, "system_seconds": 2.939596, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "run": "full-7f2a045a69-head-guard", "wrapper_child_exit": 0}
