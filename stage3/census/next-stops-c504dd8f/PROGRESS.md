@@ -1,3 +1,3 @@
 # Measurement in progress
 
-Pinned compiler and adapter: c504dd8f2d85b9e63b591f5d65baad44315f2ed2. Pinned TypeScript source: 050880ce59e30b356b686bd3144efe24f875ebc8. The first checkpoint follows the single apply, then each sequential root group. The guarded entry pass remains bounded to 1800 seconds.
+Compiler and apply SHA: c504dd8f2d85b9e63b591f5d65baad44315f2ed2. All 79 ordinary roots and both requested single-file full-mode censuses are complete. The guarded entry pass remains in progress under its unchanged 1800-second bound. See entry-in-progress.json for an observed timing snapshot; it does not establish latent totals.
