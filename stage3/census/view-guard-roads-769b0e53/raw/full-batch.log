@@ -509,3 +509,7 @@ checkpoint_wrapper_child_exit=0
 pair_wrapper_child_exit=0
 {"prefix": "full-d082b22d0d", "cases": 8, "categories": {"guard bug: identity/union cross-product": 6, "guard bug: excluded discriminator arm": 2}, "needs_reading": 0}
 render_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 58.40176369800065, "peak_rss_kib": 896356, "user_seconds": 51.425917, "system_seconds": 3.036435, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts", "run": "full-a48963c320-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=5d2eec5bb8423f6c287aa8593a56d1d8a6a9e4f7
+checkpoint_wrapper_child_exit=0
