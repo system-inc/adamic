@@ -1,0 +1,16 @@
+stage3/adapt 47: read tracing metadata fields explicitly (#ff5eddz)
+
+Replace only startTracing's three metadata spreads with explicit reads of its
+fresh local meta, preserving keys, insertion order, values and one timestamp
+call. Pin exactly the incoming and completed whole functions, retaining the
+existing require("fs") producer check.
+
+Node trace bytes and all 2,256 runtime export keys match. Every emitted
+JavaScript hunk is confined to the three literals. The restoring mutant brings
+back 103:67. The only newly visible finding is the authorized JSON.stringify
+next stop at 104:46, the same reason already present at 194:67.
+
+Full apply and actual adamic types on all 79 roots pass. All 398 lane shards
+pass their unchanged expectations; startTracing runs 0 times. The positive
+control records one start and meta's own keys cat,ph,ts,pid,tid in order.
+Raw evidence is on typescript/meta-spread-evidence.

@@ -1,0 +1,17 @@
+'use strict';
+const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),assert=require('node:assert/strict');
+const [tree,counter,output]=process.argv.slice(2);
+process.env.META_SPREAD_COUNTER=counter;
+fs.writeFileSync(counter,'');
+const ts=require(path.join(tree,'built/local/typescript.js'));
+const directory=fs.mkdtempSync(path.join(os.tmpdir(),'meta-spread-control-'));
+ts.tracingEnabled.startTracing('server',directory);
+ts.tracingEnabled.stopTracing();
+const all=fs.readFileSync(counter,'utf8').trim().split('\n').map(JSON.parse);
+assert.equal(all.filter(row=>row.event==='load').length,1);
+const rows=all.filter(row=>row.event!=='load');
+assert.equal(rows.length,2);assert.equal(rows[0].event,'start');assert.equal(rows[1].event,'meta');assert.equal(rows[0].run,rows[1].run);
+const keys=['cat','ph','ts','pid','tid'];
+for(const k of ['keys','ownKeys','enumerableKeys'])assert.deepEqual(rows[1][k],keys);
+assert.equal(rows[1].values.cat,'__metadata');assert.equal(rows[1].values.ph,'M');assert.equal(rows[1].values.pid,1);assert.equal(rows[1].values.tid,1);assert(Number.isFinite(rows[1].values.ts));
+fs.writeFileSync(output,JSON.stringify({starts:1,metaObservations:1,keys,actual:rows,passed:true},null,2)+'\n');console.log('counter and actual meta key observer fired once');

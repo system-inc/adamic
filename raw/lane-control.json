@@ -1,0 +1,54 @@
+{
+  "starts": 1,
+  "metaObservations": 1,
+  "keys": [
+    "cat",
+    "ph",
+    "ts",
+    "pid",
+    "tid"
+  ],
+  "actual": [
+    {
+      "event": "start",
+      "run": "20140:1",
+      "file": "/workspace/scratch/meta-spread-counting/built/local/typescript.js",
+      "pid": 20140
+    },
+    {
+      "event": "meta",
+      "run": "20140:1",
+      "file": "/workspace/scratch/meta-spread-counting/built/local/typescript.js",
+      "pid": 20140,
+      "keys": [
+        "cat",
+        "ph",
+        "ts",
+        "pid",
+        "tid"
+      ],
+      "ownKeys": [
+        "cat",
+        "ph",
+        "ts",
+        "pid",
+        "tid"
+      ],
+      "enumerableKeys": [
+        "cat",
+        "ph",
+        "ts",
+        "pid",
+        "tid"
+      ],
+      "values": {
+        "cat": "__metadata",
+        "ph": "M",
+        "ts": 203272.059,
+        "pid": 1,
+        "tid": 1
+      }
+    }
+  ],
+  "passed": true
+}

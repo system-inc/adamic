@@ -1,15 +1,23 @@
 {
-  "base": "1bb9663d4a9cbf1466a758c41c2293c9c869e6ab",
-  "typescriptSource": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "base": "16429a30452d027809f0ea85bc395479423e493e",
+  "sourceCommit": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "node": "v24.19.0",
-  "censusEnvironment": {
+  "censusBinarySha256": "b86a9ea80d87d7b706eae84be937adc9474c7d8ea5b110b23b07207eb995c29c",
+  "adamicBinarySha256": "4871902e79bec0313733976181ed5b8255d34a42f944aabafe0b3bef03d6fa15",
+  "censusSettings": {
     "LATENT_FULL": "1",
     "LATENT_ASSERT_NO_OUTPUT": "1",
-    "LATENT_ONLY_FILE": "each side /workspace/scratch/meta-spread-{before,after,mutant}/src/compiler/tracing.ts"
+    "LATENT_ONLY_FILE": "each before/after/mutant absolute adapted tracing.ts"
   },
-  "rootCount": 79,
-  "censusBinarySha256": "2f419cf3475401c004abfb077f4b3ece04cf97777b3d66a8fbf22b53bbf2b477",
-  "adamicBinarySha256": "4b92798b91f85f0c7dd5a289bde272ce521fc3f387b9a35296b62695c4932575",
-  "laneExecuted": false,
-  "disposition": "STOP: new startTracing finding at 104:46"
+  "permittedNextStop": "tracing.ts:104:46 JSON.stringify object references",
+  "otherNewFindings": 0,
+  "roots": 79,
+  "allTypesExit": 0,
+  "finalApplyExit": 0,
+  "laneShards": 398,
+  "laneExit": 0,
+  "startTracingRuns": 0,
+  "positiveControlStarts": 1,
+  "disposition": "validated; landing commit created",
+  "landingCommit": "80d0a726a649f0831528fecea20556a765e4c7dd"
 }

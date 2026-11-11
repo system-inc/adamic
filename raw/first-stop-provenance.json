@@ -1,0 +1,15 @@
+{
+  "base": "1bb9663d4a9cbf1466a758c41c2293c9c869e6ab",
+  "typescriptSource": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "node": "v24.19.0",
+  "censusEnvironment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "each side /workspace/scratch/meta-spread-{before,after,mutant}/src/compiler/tracing.ts"
+  },
+  "rootCount": 79,
+  "censusBinarySha256": "2f419cf3475401c004abfb077f4b3ece04cf97777b3d66a8fbf22b53bbf2b477",
+  "adamicBinarySha256": "4b92798b91f85f0c7dd5a289bde272ce521fc3f387b9a35296b62695c4932575",
+  "laneExecuted": false,
+  "disposition": "STOP: new startTracing finding at 104:46"
+}
