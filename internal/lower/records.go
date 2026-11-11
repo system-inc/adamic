@@ -323,20 +323,35 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 				return nil, &Refused{Where: l.program.Where(p), What: "a spread after the first field", Fix: "spread once, first (adamic/single-spread)"}
 			}
 			source := p.AsSpreadAssignment().Expression
-			element := l.recordElement(l.checker.GetTypeAtLocation(source))
+			// A source that may be undefined or null (tracing.ts's args: Args | undefined) is judged as
+			// the record it holds when present, since JavaScript's { ...undefined } and { ...null } copy
+			// nothing. Only this site strips them: recordElement's other callers read, write, delete or
+			// walk the record itself, where undefined throws or isn't a record.
+			own := l.checker.GetTypeAtLocation(source)
+			present := own
+			if own.Flags()&checker.TypeFlagsUnion != 0 {
+				present = l.checker.GetNonNullableType(own)
+			}
+			mayBeMissing := present != own
+			element := l.recordElement(present)
 			if element == nil {
 				return nil, l.notYet(p, "a spread into record storage from a fixed object")
 			}
-			if element != nil {
-				if !l.sameRecordStorage(element, t, map[[2]*checker.Type]bool{}) || !l.sameKeeping(element, t, map[[2]*checker.Type]bool{}) {
-					return nil, l.notYet(p, "record spread values seen through different storage")
-				}
-				if widened := l.widened(element, t, map[[2]*checker.Type]bool{}); widened != nil {
-					return nil, &Refused{Where: l.program.Where(p), What: "record spread shares values with an invariant-mutable slot that the target can widen", Fix: "keep the value's mutable fields invariant or copy the values too (adamic/invariant-mutable)"}
-				}
+			if !l.sameRecordStorage(element, t, map[[2]*checker.Type]bool{}) || !l.sameKeeping(element, t, map[[2]*checker.Type]bool{}) {
+				return nil, l.notYet(p, "record spread values seen through different storage")
 			}
-			e, err := l.recordSlot(source)
-			if err != nil {
+			if widened := l.widened(element, t, map[[2]*checker.Type]bool{}); widened != nil {
+				return nil, &Refused{Where: l.program.Where(p), What: "record spread shares values with an invariant-mutable slot that the target can widen", Fix: "keep the value's mutable fields invariant or copy the values too (adamic/invariant-mutable)"}
+			}
+			var e ir.Type
+			var err error
+			if mayBeMissing {
+				// recordSlot asks the source's own type, which the missing arm keeps from being a record.
+				var known bool
+				if e, known = l.recordStorageType(element); !known {
+					return nil, l.notYet(source, "a record value of type "+l.checker.TypeToString(element))
+				}
+			} else if e, err = l.recordSlot(source); err != nil {
 				return nil, err
 			}
 			if e != of {
@@ -345,6 +360,16 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 			result.Spread, err = l.expression(source)
 			if err != nil {
 				return nil, err
+			}
+			if mayBeMissing {
+				// A missing record is a null pointer natively (or, where null may be held, the boxed
+				// union's null), which the spread's walk can't read, so the source is tested as it runs:
+				// present, it's spread as the record pointer the union holds bare; missing, an empty record
+				// is, and nothing is copied. The source is evaluated once, as Coalesce's Value.
+				if result.Spread.Type() != ir.Record && result.Spread.Type() != ir.Union {
+					return nil, l.notYet(p, "a spread into record storage from a record that may be missing, held as other than a record or a union")
+				}
+				result.Spread = ir.Coalesce{Value: result.Spread, Fallback: ir.RecordLiteral{Element: of}, Of: ir.Record}
 			}
 			continue
 		}
