@@ -18,5 +18,5 @@ console.log(JSON.stringify(many, null, '\t') ?? '<undefined>');
 function either(flag: boolean): Inner | string {
 	return flag ? { label: 'e', values: [5], count: 6 } : 'text';
 }
-console.log(JSON.stringify(either(true)) ?? '<undefined>', JSON.stringify(either(false)) ?? '<undefined>');
+console.log(`${JSON.stringify(either(true)) ?? '<undefined>'} ${JSON.stringify(either(false)) ?? '<undefined>'}`);
 console.log(JSON.stringify({ wrapped: outer.inner, at: 0 }) ?? '<undefined>');

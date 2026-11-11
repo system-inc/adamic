@@ -35,7 +35,7 @@ class Derived extends First {
 	}
 }
 const first = new First(10);
-console.log(JSON.stringify(first) ?? '<undefined>', first.twice(), first.doubled);
+console.log(`${JSON.stringify(first) ?? '<undefined>'} ${first.twice()} ${first.doubled}`);
 console.log(JSON.stringify(new Second(20)) ?? '<undefined>');
 console.log(JSON.stringify(new Third(30)) ?? '<undefined>');
 console.log(JSON.stringify(new Derived(40, true)) ?? '<undefined>');

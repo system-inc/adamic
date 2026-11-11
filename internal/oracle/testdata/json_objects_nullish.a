@@ -33,7 +33,7 @@ function maybe(flag: boolean): Box | null {
 function optional(flag: boolean): Box | undefined {
 	return flag ? { v: 1 } : undefined;
 }
-console.log(JSON.stringify(maybe(false)) ?? '<undefined>', JSON.stringify(maybe(true)) ?? '<undefined>');
+console.log(`${JSON.stringify(maybe(false)) ?? '<undefined>'} ${JSON.stringify(maybe(true)) ?? '<undefined>'}`);
 console.log(JSON.stringify(optional(false)) ?? '<undefined>');
 console.log(JSON.stringify([maybe(false), optional(false), maybe(true)]) ?? '<undefined>');
 const maybeName = text(false);
