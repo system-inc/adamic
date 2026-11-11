@@ -1,4 +1,27 @@
 {
-    "extends": ["cohere:typescript"],
-    "ignorePatterns": ["internal/load/testdata/0.1/refuse/**", "stage1/**/gaps/**", "review/**", "internal/oracle/testdata/records_buckets/**", "internal/lower/testdata/input-spread/*_array.a"]
+    "extends": [
+        "cohere:typescript"
+    ],
+    "ignorePatterns": [
+        "internal/load/testdata/0.1/refuse/**",
+        "stage1/**/gaps/**",
+        "review/**",
+        "internal/oracle/testdata/records_buckets/**",
+        "internal/lower/testdata/input-spread/*_array.a",
+        {
+            "pattern": "stage3/performance/evidence/**",
+            "reason": "Recorded performance evidence, including third-party project configs; an input.",
+            "kind": "input"
+        }
+    ],
+    "go": {
+        "rules": {
+            "cohere-go/correctness-require-declared-walk": [
+                "error",
+                {
+                    "readsFile": "cloud/fast-gate/executors.txt"
+                }
+            ]
+        }
+    }
 }
