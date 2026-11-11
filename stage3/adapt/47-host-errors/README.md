@@ -232,3 +232,30 @@ Measured scratch paths and logs use /tmp/host-errors-*; the default oracle's
 phase logs are /tmp/host-errors-oracle/{install,build,tests}.log. Source stays
 outside Adamic. Evidence includes counts, fixture observations, actual mutants,
 the API comparison, oracle report/diff, and the incremental scoreboard.
+
+## Metadata spread amendment, ff5eddz
+
+The three metadata records in `startTracing` now read `meta`'s fields explicitly.
+The local `meta` declaration and its single `timestamp()` call are unchanged.
+The process and thread records retain `name,args,cat,ph,ts,pid,tid` key order.
+The browser record retains `name,cat,ph,ts,pid,tid`; its explicit timeline category
+occupies the position first introduced by upstream's spread category.
+
+This amends 47 rather than adding a later adaptation. At base
+`1bb9663d4a9cbf1466a758c41c2293c9c869e6ab`, 47 checked the fixed builtin loader
+producer but did not pin the whole function. `meta-spread-pins.json` adds exact
+incoming and completed function pins, captured from the unchanged 47's Git
+snapshots. The adapter recognizes those forms with either all three original
+spreads or all three explicit-read literals. Mixed states and other function
+drift refuse before writes. Only line-ending normalization is allowed. The
+`require("fs")` producer is unchanged; its planned node:fs amendment is separate.
+No other adaptation identifies these metadata literals.
+
+`meta-spread-witness.cjs` loads both complete built compiler bundles in Node VM
+contexts with the same fixed performance clock. It writes real trace files in
+fresh temporary directories, stops server-mode tracing, compares their bytes,
+and checks the runtime namespace export keys. No timestamp normalization is
+needed. `meta-spread-contracts.cjs` checks finished replay, restoring the spreads,
+and drift refusal. `meta-spread-emission.cjs` audits every emitted JavaScript
+file and stops on any change outside the three literal nodes. See `PROOF.md`
+for measured results and the separate evidence branch for raw logs and streams.
