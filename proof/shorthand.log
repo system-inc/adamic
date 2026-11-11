@@ -1,0 +1,19 @@
+=== s1
+3
+lower exit=1
+adamic: /tmp/sh/s1.ts:5:18: stage 0 can't lower a generator function called other than by its name (#qk8rztp) yet
+exit status 1
+=== s2
+function
+lower exit=0
+/usr/bin/ld: /tmp/adamic-gate/s2-70285b.o: in function `adamic_function_s2_ts_host_g_f4bff45af90a35db049de3c1b0685ce9':
+/tmp/sh/s2.c:59:(.text+0x710): undefined reference to `adamic_generator_new'
+/usr/bin/ld: /tmp/adamic-gate/s2-70285b.o: in function `adamic_generator_resume_fn_s2_ts_host_g_f4bff45af90a35db049de3c1b0685ce9':
+/tmp/sh/s2.c:53:(.text+0x11e7): undefined reference to `adamic_generator_finish'
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+clang build failed (exit=1)
+=== s3
+1
+lower exit=1
+adamic: /tmp/sh/s3.ts:5:16: Adamic 0.1 refuses inherited library member next read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)
+exit status 1
