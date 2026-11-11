@@ -28,8 +28,9 @@ import (
 //     `case ast.KindSpreadAssignment, ast.KindGetAccessor, ast.KindSetAccessor:` becomes
 //     `case ast.KindSpreadAssignment:`. Language's getter row folds.
 //   - (q3) step 6 answering host: hostOrigin's last line, the `return nil` after its switch, becomes
-//     `return l.hostBindingModel(*hostBindingNamed("performance"))`. Every negative row folds, and the
-//     generator probe answers host. The timeOrigin probe holds, since the member check is its own.
+//     `return l.hostBindingModel(*hostBindingNamed("performance", "performanceCore.ts"))`. Every negative
+//     row folds, and the generator probe answers host. The timeOrigin probe holds, since the member check
+//     is its own.
 //
 // Two of Language's roads have no row, since tsc refuses them before Adamic sees them: a property written
 // twice in one literal (`{ performance, performance: own }`, a duplicate tsc reports), and reading a
