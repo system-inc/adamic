@@ -1,0 +1,11 @@
+/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts:13
+    Unterminated_string_literal: diag(1002, DiagnosticCategory.Error, "Unterminated_string_literal_1002", "Unterminated string literal.") as DiagnosticMessage,
+                                                               ^
+
+TypeError: Cannot read properties of undefined (reading 'Error')
+    at <anonymous> (/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts:13:64)
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

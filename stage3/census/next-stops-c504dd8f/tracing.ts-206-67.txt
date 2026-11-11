@@ -1,0 +1,7 @@
+            ? undefined
+            : {
+                path: file.path,
+                start: indexFromOne(getLineAndCharacterOfPosition(file, node!.pos)),
+                end: indexFromOne(getLineAndCharacterOfPosition(file, node!.end)),
+            };
+

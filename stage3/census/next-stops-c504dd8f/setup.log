@@ -1,0 +1,33 @@
+submodule cache: off
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.056s)
+setup: node ready (0.058s)
+Cloning into '/workspace/adamic/cohere'...
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.372s)
+setup: tsc ready (TypeScript 6.0.3) (1.037s)
+
+added 3 packages in 896ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.537s
+setup: markdown dependencies ready (2.646s)
+From https://github.com/system-inc/cohere
+ * [new tag]           v0.1.0     -> v0.1.0
+ * [new tag]           v0.1.1     -> v0.1.1
+From https://github.com/system-inc/cohere
+ * branch              5360753e19e4417675a90e92a1823bea66b13918 -> FETCH_HEAD
+Submodule path 'cohere': checked out '5360753e19e4417675a90e92a1823bea66b13918'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/adamic/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (225.094s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (225.100s)
+setup: go build ready (584.451s)
+setup: test binaries deferred (use --warm-tests) (584.607s)
+setup: build cache warm (584.609s)
+setup: build-flags commit=c504dd8f2d85b9e63b591f5d65baad44315f2ed2 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=off load-before=0.17 0.05 0.01 1/140 804 load-after=9.84 7.21 3.32 2/163 6727
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (584.745s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.gCwiCD

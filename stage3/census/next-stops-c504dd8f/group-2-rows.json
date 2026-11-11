@@ -1,0 +1,199 @@
+[
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/nodeChildren.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.915936677
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/nodeConverters.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.089023503
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/nodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 14.202824932
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/nodeTests.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.7207044
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/parenthesizerRules.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.003307762
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/utilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 16.971651281
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/utilitiesPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.04601374
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/hostErrors.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.071484436
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/moduleNameResolver.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 16.487114229
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.235629179
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/parser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.656680318
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/path.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.94049408
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 17.223548015
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/performanceCore.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 16.054698193
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/program.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.575100664
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/programDiagnostics.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.152399782
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/resolutionCache.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 16.80173568
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/scanner.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.291402623
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/semver.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 14.568866354
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/sourcemap.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:206:67",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "fix": "declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 14.698184058
+  }
+]

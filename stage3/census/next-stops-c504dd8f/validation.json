@@ -1,0 +1,43 @@
+{
+  "single_file_full_mode": {
+    "tracing": {
+      "records": 61,
+      "complete": true,
+      "selected_file": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts",
+      "child_exit": 0
+    },
+    "sys": {
+      "records": 401,
+      "complete": true,
+      "selected_file": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts",
+      "child_exit": 0
+    }
+  },
+  "roots": 79,
+  "groups": [
+    20,
+    20,
+    20,
+    19
+  ],
+  "raw_observations": 158,
+  "duplicate_non_timing_agreement": true,
+  "adapted_source_hashes_unchanged": true,
+  "binary_hashes_verified": true,
+  "ordinary_overlay": false,
+  "typescript_pin_verified": true,
+  "ordinary_child_exits": 0,
+  "entry_child_exit": -15,
+  "all_census_process_groups_cleaned": true,
+  "surviving_census_processes": [],
+  "compiler_adapter_source_diff_exit": 0,
+  "base_sha": "c504dd8f2d85b9e63b591f5d65baad44315f2ed2",
+  "checkpoint_commits": {
+    "apply": "32d816085656b7528f13e0b65f278287910f7113",
+    "group-1": "0360c9a0364370cc4514a83b39ea6db432afa078",
+    "group-2": "c4bec6ec5a43d3eb85a84c831cdee515e14716f7",
+    "group-3": "761a5f4ae4fb22d0bdcfd6387c589866750c5e99",
+    "group-4": "65ffef822a1434940b88fa548248cba3a8a4debe"
+  },
+  "report_uses_no_em_or_en_dashes": true
+}
