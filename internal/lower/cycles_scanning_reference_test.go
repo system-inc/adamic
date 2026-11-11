@@ -98,6 +98,12 @@ func (l *lowering) scanFindCycles(modules []*ast.SourceFile) error {
 	if err := finder.graphTypes(modules); err != nil {
 		return err
 	}
+	// JSON admission is a post-check added after the frozen cycle algorithm. Use its
+	// independently collected shapes and graph result without replacing that algorithm.
+	json := &cycleFinder{l: l, shapes: finder.shapes, shaped: finder.shaped}
+	if err := json.jsonReferenceReach(); err != nil {
+		return err
+	}
 	if l.programDiscovery {
 		l.resolveCountTypes(modules)
 		l.programPlan = l.scanSelectProgramMembership(finder, modules)

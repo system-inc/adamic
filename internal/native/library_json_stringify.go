@@ -16,7 +16,13 @@ func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
 		child := e.jsonSchema(f.Schema)
 		fields = append(fields, fmt.Sprintf("{&%s, %d, %s}", stringName(e.program.Strings[f.Name]), f.Slot, child))
 	}
-	name, exists := e.sharedDeclaration("adamic_json_schema", schema.Kind+"/"+element+"/"+strings.Join(fields, ","))
+	// An object reference is read as a union is, by its heap header, and then described from its
+	// allocation by json_objects.c.
+	kind := schema.Kind
+	if kind == "reference" {
+		kind = "union"
+	}
+	name, exists := e.sharedDeclaration("adamic_json_schema", kind+"/"+element+"/"+strings.Join(fields, ","))
 	if exists {
 		return "&" + name
 	}
@@ -25,8 +31,31 @@ func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
 		list = name + "_fields"
 		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_field %s[] = {%s};", list, strings.Join(fields, ", ")))
 	}
-	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_schema %s = {adamic_json_%s, %s, %d, %s};", name, schema.Kind, element, len(fields), list))
+	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_schema %s = {adamic_json_%s, %s, %d, %s};", name, kind, element, len(fields), list))
 	return "&" + name
+}
+
+// jsonReferences reports whether a schema reaches an object reference, which only json_objects.c's
+// provider can describe.
+func jsonReferences(schema *ir.JSONSchema) bool {
+	if schema == nil {
+		return false
+	}
+	if schema.Kind == "reference" || jsonReferences(schema.Element) {
+		return true
+	}
+	for _, field := range schema.Fields {
+		if jsonReferences(field.Schema) {
+			return true
+		}
+	}
+	return false
+}
+
+// jsonStringifiesReferences reports whether a call may print an object reference, so that the call
+// takes the provider and every object in the program records its slots' representation bytes.
+func jsonStringifiesReferences(expression ir.JSONStringify) bool {
+	return jsonReferences(expression.Schema) || jsonReferences(expression.ReplacerSchema) || jsonReferences(expression.SpaceSchema)
 }
 func (e *emitter) jsonSlot(expression ir.Expression) string {
 	value := e.value(expression)
@@ -58,7 +87,11 @@ func (e *emitter) jsonStringify(expression ir.JSONStringify) string {
 	}
 	replacerSchema := e.jsonSchema(expression.ReplacerSchema)
 	spaceSchema := e.jsonSchema(expression.SpaceSchema)
-	result := e.own(ir.String, fmt.Sprintf("adamic_json_stringify(%s, %s, %s, %s, %s, %s)", first, schema, replacer, replacerSchema, space, spaceSchema))
+	call := "adamic_json_stringify"
+	if jsonStringifiesReferences(expression) {
+		call = "adamic_json_stringify_objects"
+	}
+	result := e.own(ir.String, fmt.Sprintf("%s(%s, %s, %s, %s, %s, %s)", call, first, schema, replacer, replacerSchema, space, spaceSchema))
 	// Past V8's longest, a RangeError is pending and the result empty, let go with the rest.
 	e.checkThrown()
 	return result

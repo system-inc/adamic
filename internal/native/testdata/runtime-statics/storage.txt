@@ -425,6 +425,11 @@
 # compare-and-swap, or a pointer published once), as decode_shapes needs its lock.
 `runtime-file:json_encode.c`
 `runtime-file:json_encode.h`
+# The descriptors one JSON.stringify of an object reference made (#d9ep7de): thread-local, so each
+# thread's stringify sees only its own, freed when that stringify returns. A stringify runs no
+# program code, so none starts inside another on a thread.
+`json_objects.c:described:1`
+`runtime-file:json_objects.c`
 # Directory-host strings are immortal literals; slot caches use the atomic cache protocol.
 # Lexical path adapters own no mutable static storage.
 `node_fs_directory.c:arrow:1`

@@ -1,0 +1,43 @@
+// A class instance prints its own fields in the order Node creates them (#d9ep7de): a parameter property,
+// a field initializer and a field the constructor assigns, declared in three orders, and a subclass's
+// fields after its base's. Methods and getters are the prototype's, which Node leaves.
+class First {
+	readonly initialized = 1;
+	readonly assigned: number;
+	constructor(readonly parameter: number) {
+		this.assigned = parameter + 2;
+	}
+	twice(): number {
+		return this.parameter * 2;
+	}
+	get doubled(): number {
+		return this.initialized * 2;
+	}
+}
+class Second {
+	readonly assigned: number;
+	constructor(readonly parameter: number) {
+		this.assigned = parameter + 2;
+	}
+	readonly initialized = 1;
+}
+class Third {
+	constructor(readonly parameter: number) {
+		this.assigned = parameter + 2;
+	}
+	readonly initialized = 1;
+	readonly assigned: number;
+}
+class Derived extends First {
+	readonly extra = 'x';
+	constructor(parameter: number, readonly more: boolean) {
+		super(parameter);
+	}
+}
+const first = new First(10);
+console.log(`${JSON.stringify(first) ?? '<undefined>'} ${first.twice()} ${first.doubled}`);
+console.log(JSON.stringify(new Second(20)) ?? '<undefined>');
+console.log(JSON.stringify(new Third(30)) ?? '<undefined>');
+console.log(JSON.stringify(new Derived(40, true)) ?? '<undefined>');
+const all: readonly (First | Second | Third)[] = [new First(1), new Second(2), new Third(3)];
+console.log(JSON.stringify(all) ?? '<undefined>');

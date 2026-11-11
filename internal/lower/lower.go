@@ -343,6 +343,7 @@ type lowering struct {
 
 	librarySpreads      []librarySpread
 	wholeObjectCopies   []wholeObjectCopy
+	jsonReferenceReads  []jsonReferenceRead
 	parallelMoveDemand  map[parallelMoveSite]bool
 	hasMovedParallelMap bool
 	moveSites           []*ast.Node

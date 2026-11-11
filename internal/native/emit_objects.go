@@ -499,6 +499,9 @@ func (e *emitter) prepareObjectMetadata() {
 			needs.dynamic, needs.keyed = true, true
 		case ir.Property:
 			needs.fieldTypes = needs.fieldTypes || expression.View != ""
+		case ir.JSONStringify:
+			// json_objects.c reads every slot of what it prints by the byte its last write left.
+			needs.fieldTypes = needs.fieldTypes || jsonStringifiesReferences(expression)
 		}
 	})
 	needs.fieldTypes = needs.fieldTypes || needs.dynamic

@@ -80,10 +80,12 @@ var inertExpressions = func() map[string]bool {
 		// dynamic_property); a getter by a run-time key is DynamicKeyedProperty's keyed_getter, off
 		// this list.
 		"DynamicProperty",
-		// JSONStringify: toJSON and getters. Lowering stops an object reference, "JSON.stringify
-		// object references (structural types can hide fields and toJSON; runtime shapes need complete
-		// value metadata)" (lower/library_json_stringify.go:226), a literal with a method or a toJSON
-		// key (:104, :134), a record that may hold a toJSON (:210) and a replacer function (:33).
+		// JSONStringify: toJSON and getters. Natively an object reference's fields are its slots, read
+		// by runtime/json_objects.c, which calls no accessor and stops at a class's toJSON method or an
+		// own toJSON field; a class's getters are its prototype's, which Node leaves too. Lowering
+		// stops a reference that can reach a toJSON member or an object literal's own getter
+		// (lower/library_json_stringify.go's jsonReach), a literal with a method or a toJSON key
+		// (:105, :136), a record that may hold a toJSON (:219) and a replacer function (:33).
 		"JSONStringify",
 		// ObjectCall: assign's setters and getters, and entries' getters. Natively every method reads or
 		// writes slots and calls no accessor (runtime/library_object.c: adamic_object_values at :123,
