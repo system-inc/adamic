@@ -728,3 +728,5 @@ Adamic, task 8n7eet3, Nov 10 22:01Z, site 2: 99-correctness-core-each-node is Ja
   The meta declaration and its single timestamp() call remain unchanged.
   The newly visible JSON.stringify object references stop at 104:46 belongs
   to Compiler's #d9ep7de head 1; this amendment does not remove it.
+  The complete 398-shard lane observes 0 startTracing runs; the positive
+  control observes one meta with own keys cat,ph,ts,pid,tid in that order.

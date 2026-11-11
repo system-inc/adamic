@@ -60,7 +60,7 @@ The completed source's only function diff is those three literal nodes.
 | Every emitted JavaScript hunk | only the three literals, zero renames |
 | Before, after and mutant full censuses | all child exits 0 |
 | Whole-file census comparison | only the accepted next stop is newly visible |
-| Complete sharded lane and start/meta counts | running; result recorded before landing |
+| Complete sharded lane and start/meta counts | 398 shards pass; 0 starts, 0 meta builds; positive control 1 start and 1 meta build |
 
 The initial setup attempt selected the old checkout's cohere pin and failed
 after the branch changed. Setup was rerun with current main's proper submodule
@@ -132,8 +132,43 @@ the sole permitted addition, the removed refusal, and the matching 194:67 stop.
 
 ## Lane runtime count
 
-The complete lane measurement is running. Final counts, per-run actual meta
-keys, control observations and all 398 shard verdicts are required before landing.
+The unchanged measure_shards.py runs all 398 manifest shards with concurrency 2
+through STAGE3_ADAPTED_TREE, the gate's product path. Only private counting
+copies of built/local/_tsc.js, run.js and typescript.js are instrumented.
+Each start records entry, then records Object.keys(meta), Reflect.ownKeys(meta),
+the enumerable own-key order, and actual field values immediately after the
+original meta declaration. Each bundle also records its load.
+
+The complete lane passes: 106,366 passing observations, the one unchanged
+sanctioned Public APIs failure, and zero pending, for 106,367 observations.
+Every shard has its expected count, names digest and verdict. Wall time is
+909.660 seconds; the maximum shard wall is 9.083 seconds, below 30 seconds.
+All 398 private harness copies hash identically, and all 398 shards produce
+counter-load records from 398 instrumented processes.
+
+**startTracing entries: 0. Actual in-lane meta builds: 0.** Consequently there
+are no in-lane meta key sets to enumerate and no differing key sets. The
+positive control loads the same instrumented compiler, starts and stops a real
+trace, and records exactly one entry and one meta build. Its actual Object.keys,
+Reflect.ownKeys and enumerable own-key lists are all exactly:
+
+```text
+cat, ph, ts, pid, tid
+```
+
+Its values have cat="__metadata", ph="M", finite ts, pid=1 and tid=1. The
+separate fixed-clock Node witness proves the single timestamp call and exact
+trace bytes. meta-spread-lane.json preserves the reconciled lane result and
+positive control. Raw per-shard reports, observations, logs and diffs are in
+raw/lane-evidence.tar.gz; raw/lane-events.jsonl retains every bundle-load event.
+
+The first private copy mistakenly excluded nested node_modules fixtures and
+was stopped with child exit -15 after a project-fixture failure. It is archived
+separately, never counted as the final lane. The corrected copy was compared
+against all 85,763 inventory entries: all 70 nested module-fixture entries are
+retained, and only the three instrumented bundles differ. The entire final
+lane restarted from scratch. No production lane code, fixture or expectation
+was changed.
 
 ## Evidence
 
