@@ -29,7 +29,7 @@ def one(job):
  file,side,mode,name=job;p=prefix(file)
  if stopping:return job,False
  if completed(name):return job,False
- env=dict(os.environ,LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',LATENT_ONLY_FILE=file,GOMAXPROCS='2',GOMEMLIMIT='3GiB',ADAMIC_TYPESCRIPT_SOURCE='/workspace/roads-typescript',LATENT_TIMES=str(root/'raw'/(name+'-times.jsonl')))
+ env=dict(os.environ,LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',LATENT_ONLY_FILE=file,GOMAXPROCS='2',GOMEMLIMIT='2560MiB',ADAMIC_TYPESCRIPT_SOURCE='/workspace/roads-typescript',LATENT_TIMES=str(root/'raw'/(name+'-times.jsonl')))
  env.pop('ROADS_GUARD_MUTANT',None);env.pop('ROADS_GUARD_STREAM',None)
  binary=f'/workspace/roads-{side}-census'
  if mode=='guard':
@@ -62,8 +62,8 @@ def verify(file):
  (root/(p+'-file.json')).write_text(json.dumps({'file':file,'prefix':p,'common_original_parent_baseline':True,'proof':proof},indent=2)+'\n')
  verified.add(file);checkpoint(p+'-verified')
 
-# Start larger files early; all three children are independent.
-ordered=sorted(files,key=lambda x:(-Path(x).stat().st_size,x))
+# Complete smaller independent file checks first; each child is resumable.
+ordered=sorted(files,key=lambda x:(Path(x).stat().st_size,x))
 with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
  future_jobs={pool.submit(one,j):j for file in ordered for j in jobs(file)}
  for future in concurrent.futures.as_completed(future_jobs):
