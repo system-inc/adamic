@@ -45,6 +45,10 @@ type Program struct {
 	Generated     []*GeneratedType
 	AsyncEntry    int // one-based ordinary function for module suspension, zero when synchronous
 
+	// OverloadResultChecks counts the calls to an overload whose result narrows its implementation's
+	// (rulings.md:127): proven by the body, checked at the call, or erased where no read reaches the result.
+	OverloadResultChecks OverloadResultCheckCounts
+
 	// PlainReceivers are the receiver types, by the id CheckedFieldKey takes, lowering proved never hold a record or an
 	// instance of a class merged with an interface, which a bare-name CheckedFields entry stands for, so CheckedField
 	// doesn't check a read or write through them by a bare name (lower's plainReceiver, #9jnjwrw).
@@ -153,6 +157,10 @@ type PredicateDirectionCheck struct {
 type NonNullCheckCounts struct {
 	Proven, Checked int
 	Sites           []NonNullCheck
+}
+
+type OverloadResultCheckCounts struct {
+	Proven, Checked, Erased int
 }
 
 type NonNullCheck struct {
