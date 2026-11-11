@@ -393,6 +393,10 @@
 `graph_regions.c:moving_list:1`
 `graph_regions.c:moving_count:1`
 `graph_regions.c:moving_capacity:1`
+# region.c's block cache (#yecmp1d): each thread's free list per block size and the bytes it holds,
+# at most ADAMIC_REGION_BLOCK_CACHE, freed by adamic_region_thread_end as the thread ends.
+`region.c:cached:1`
+`region.c:cached_bytes:1`
 `runtime-file:graph_regions.c`
 `runtime-file:graph_regions.h`
 

@@ -664,6 +664,11 @@ bool adamic_region_contains(const adamic_region *region, const void *value);
 adamic_environment *adamic_environment_new_in(adamic_region *, size_t);
 #endif
 void adamic_region_end(adamic_region *region);
+// adamic_region_cached is how many bytes of region blocks this thread keeps for its next region, at
+// most ADAMIC_REGION_BLOCK_CACHE, and adamic_region_thread_end frees them, as a thread ends
+// (adamic_heap_thread_end calls it, region.c).
+size_t adamic_region_cached(void);
+void adamic_region_thread_end(void);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);

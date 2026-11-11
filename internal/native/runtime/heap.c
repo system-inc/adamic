@@ -539,6 +539,8 @@ void adamic_heap_thread_end(void) {
 	adamic_slab_quarantine_drain(give);
 #endif
 	for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
+	// The region blocks this thread kept for its next region (region.c, #yecmp1d).
+	adamic_region_thread_end();
 	free(freeing);
 	freeing = NULL;
 	freeing_capacity = 0;
