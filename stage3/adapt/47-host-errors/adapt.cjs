@@ -87,6 +87,20 @@ function adapt(tree, ts) {
     catchRead(sys, mkdir, "code", "errorCode");
     const tracing = source("tracing.ts");
     const start = one(tracing, node => ts.isFunctionDeclaration(node) && node.name?.text === "startTracing", "startTracing");
+    // Only the pinned incoming or completed function is reviewed. Recognize the
+    // explicit-read finished form as well; mixed literals and other drift refuse.
+    const metadata = require("./meta-spread-pins.json");
+    const normal = text => text.replace(/\r\n/g, "\n");
+    const explicit = text => metadata.literals.reduce((value, literal) => value.replace(literal.before, literal.after), text);
+    const startText = normal(start.getText(tracing));
+    const spreadStates = [metadata.before, metadata.after];
+    if (![...spreadStates, ...spreadStates.map(explicit)].includes(startText)) throw new Error("unreviewed loader producer: startTracing drift");
+    if (spreadStates.includes(startText)) {
+        for (const literal of metadata.literals) {
+            const object = one(start, node => ts.isObjectLiteralExpression(node) && node.getText(tracing) === literal.before, "tracing metadata literal");
+            edit(tracing, object, literal.after);
+        }
+    }
     const loadTry = one(start, ts.isTryStatement, "builtin load try");
     const load = one(loadTry.tryBlock, ts.isCallExpression, "builtin require");
     if (load.expression.getText(tracing) !== "require" || load.arguments.length !== 1 || !ts.isStringLiteral(load.arguments[0]) || load.arguments[0].text !== "fs") throw new Error("unreviewed loader producer");
