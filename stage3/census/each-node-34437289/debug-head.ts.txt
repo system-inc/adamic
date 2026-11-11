@@ -1,0 +1,1269 @@
+import * as ts from "./_namespaces/ts.js";
+import {
+    type AnyFunction,
+    AssertionLevel,
+    type BigIntLiteralType,
+    CheckMode,
+    compareValues,
+    EmitFlags,
+    FlowFlags,
+    type FlowLabel,
+    type FlowNode,
+    type FlowSwitchClause,
+    getEffectiveModifierFlagsNoCache,
+    getEmitFlags,
+    getParseTreeNode,
+    getSourceFileOfNode,
+    getSourceTextOfNodeFromSourceFile,
+    hasProperty,
+    idText,
+    type IntrinsicType,
+    isArrayTypeNode,
+    isBigIntLiteral,
+    isCallSignatureDeclaration,
+    isConditionalTypeNode,
+    isConstructorDeclaration,
+    isConstructorTypeNode,
+    isConstructSignatureDeclaration,
+    isDefaultClause,
+    isFunctionTypeNode,
+    isGeneratedIdentifier,
+    isGetAccessorDeclaration,
+    isIdentifier,
+    isImportTypeNode,
+    isIndexedAccessTypeNode,
+    isIndexSignatureDeclaration,
+    isInferTypeNode,
+    isIntersectionTypeNode,
+    isLiteralTypeNode,
+    isMappedTypeNode,
+    isNamedTupleMember,
+    isNumericLiteral,
+    isOptionalTypeNode,
+    isParameter,
+    isParenthesizedTypeNode,
+    isParseTreeNode,
+    isPrivateIdentifier,
+    isRestTypeNode,
+    isSetAccessorDeclaration,
+    isStringLiteral,
+    isThisTypeNode,
+    isTupleTypeNode,
+    isTypeLiteralNode,
+    isTypeOperatorNode,
+    isTypeParameterDeclaration,
+    isTypePredicateNode,
+    isTypeQueryNode,
+    isTypeReferenceNode,
+    isUnionTypeNode,
+    type LiteralType,
+    map,
+    type MatchingKeys,
+    maxBy,
+    ModifierFlags,
+    type Node,
+    type NodeArray,
+    NodeCheckFlags,
+    NodeFlags,
+    nodeIsSynthesized,
+    objectAllocator,
+    ObjectFlags,
+    type ObjectType,
+    RelationComparisonResult,
+    ScriptKind,
+    type Signature,
+    SignatureCheckMode,
+    SignatureFlags,
+    SnippetKind,
+    type SortedReadonlyArray,
+    type Symbol,
+    SymbolFlags,
+    symbolName,
+    SyntaxKind,
+    toSorted,
+    TransformFlags,
+    type Type,
+    TypeFacts,
+    TypeFlags,
+    TypeMapKind,
+    type TypeMapper,
+    unescapeLeadingUnderscores,
+    VarianceFlags,
+    zipWith,
+} from "./_namespaces/ts.js";
+
+/** @internal */
+export enum LogLevel {
+    Off,
+    Error,
+    Warning,
+    Info,
+    Verbose,
+}
+
+/** @internal */
+export interface LoggingHost {
+    log(level: LogLevel, s: string): void;
+}
+
+/** @internal */
+export namespace Debug {
+    /* eslint-disable prefer-const */
+    let currentAssertionLevel = AssertionLevel.None;
+    export let currentLogLevel: LogLevel = LogLevel.Warning;
+    export let isDebugging = false;
+    export let loggingHost: LoggingHost | undefined;
+    /* eslint-enable prefer-const */
+
+    type AssertionKeys = "assertEachNode" | "assertNode" | "assertNotNode" | "assertOptionalNode" | "assertOptionalToken" | "assertMissingNode";
+
+    export function shouldLog(level: LogLevel): boolean {
+        return currentLogLevel <= level;
+    }
+
+    function logMessage(level: LogLevel, s: string): void {
+        if (loggingHost && shouldLog(level)) {
+            loggingHost.log(level, s);
+        }
+    }
+
+    export function log(s: string): void {
+        logMessage(LogLevel.Info, s);
+    }
+
+    export namespace log {
+        export function error(s: string): void {
+            logMessage(LogLevel.Error, s);
+        }
+
+        export function warn(s: string): void {
+            logMessage(LogLevel.Warning, s);
+        }
+
+        export function log(s: string): void {
+            logMessage(LogLevel.Info, s);
+        }
+
+        export function trace(s: string): void {
+            logMessage(LogLevel.Verbose, s);
+        }
+    }
+
+    export function getAssertionLevel(): AssertionLevel {
+        return currentAssertionLevel;
+    }
+
+    export function setAssertionLevel(level: AssertionLevel): void {
+        currentAssertionLevel = level;
+    }
+
+    export function shouldAssert(level: AssertionLevel): boolean {
+        return currentAssertionLevel >= level;
+    }
+
+    /**
+     * Tests whether an assertion function should be executed at the current assertion level.
+     * The level is read on every call, so `Debug.setAssertionLevel` applies to every later assertion.
+     * @param level The minimum assertion level required.
+     * @param name The name of the current assertion function.
+     */
+    function shouldAssertFunction<K extends AssertionKeys>(level: AssertionLevel, name: K): boolean {
+        return shouldAssert(level);
+    }
+
+    export function fail(message?: string, stackCrawlMark?: AnyFunction): never {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        const e = new Error(message ? `Debug Failure. ${message}` : "Debug Failure.");
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(e, stackCrawlMark || fail);
+        }
+        throw e;
+    }
+
+    export function failBadSyntaxKind(node: Node, message?: string, stackCrawlMark?: AnyFunction): never {
+        return fail(
+            `${message || "Unexpected node."}\r\nNode ${formatSyntaxKind(node.kind)} was unexpected.`,
+            stackCrawlMark || failBadSyntaxKind,
+        );
+    }
+
+    export function assert(expression: unknown, message?: string, verboseDebugInfo?: string | (() => string), stackCrawlMark?: AnyFunction): asserts expression {
+        if (!expression) {
+            message = message ? `False expression: ${message}` : "False expression.";
+            if (verboseDebugInfo) {
+                message += "\r\nVerbose Debug Information: " + (typeof verboseDebugInfo === "string" ? verboseDebugInfo : verboseDebugInfo());
+            }
+            fail(message, stackCrawlMark || assert);
+        }
+    }
+
+    export function assertEqual<T>(a: T, b: T, msg?: string, msg2?: string, stackCrawlMark?: AnyFunction): void {
+        if (a !== b) {
+            const message = msg ? msg2 ? `${msg} ${msg2}` : msg : "";
+            fail(`Expected ${a} === ${b}. ${message}`, stackCrawlMark || assertEqual);
+        }
+    }
+
+    export function assertLessThan(a: number, b: number, msg?: string, stackCrawlMark?: AnyFunction): void {
+        if (a >= b) {
+            fail(`Expected ${a} < ${b}. ${msg || ""}`, stackCrawlMark || assertLessThan);
+        }
+    }
+
+    export function assertLessThanOrEqual(a: number, b: number, stackCrawlMark?: AnyFunction): void {
+        if (a > b) {
+            fail(`Expected ${a} <= ${b}`, stackCrawlMark || assertLessThanOrEqual);
+        }
+    }
+
+    export function assertGreaterThanOrEqual(a: number, b: number, stackCrawlMark?: AnyFunction): void {
+        if (a < b) {
+            fail(`Expected ${a} >= ${b}`, stackCrawlMark || assertGreaterThanOrEqual);
+        }
+    }
+
+    export function assertIsDefined<T>(value: T, message?: string, stackCrawlMark?: AnyFunction): asserts value is NonNullable<T> {
+        // eslint-disable-next-line no-restricted-syntax
+        if (value === undefined || value === null) {
+            fail(message, stackCrawlMark || assertIsDefined);
+        }
+    }
+
+    export function checkDefined<T>(value: T | null | undefined, message?: string, stackCrawlMark?: AnyFunction): T { // eslint-disable-line no-restricted-syntax
+        assertIsDefined(value, message, stackCrawlMark || checkDefined);
+        return value;
+    }
+
+    export function assertEachIsDefined<T extends Node>(value: NodeArray<T>, message?: string, stackCrawlMark?: AnyFunction): asserts value is NodeArray<T>;
+    export function assertEachIsDefined<T>(value: readonly T[], message?: string, stackCrawlMark?: AnyFunction): asserts value is readonly NonNullable<T>[];
+    export function assertEachIsDefined<T>(value: readonly T[], message?: string, stackCrawlMark?: AnyFunction) {
+        for (const v of value) {
+            assertIsDefined(v, message, stackCrawlMark || assertEachIsDefined);
+        }
+    }
+
+    export function checkEachDefined<T, A extends readonly T[]>(value: A, message?: string, stackCrawlMark?: AnyFunction): A {
+        assertEachIsDefined(value, message, stackCrawlMark || checkEachDefined);
+        return value;
+    }
+
+    export function assertNever(member: never, message = "Illegal value:", stackCrawlMark?: AnyFunction): never {
+        const detail = typeof member === "object" && hasProperty(member, "kind") && hasProperty(member, "pos") ? "SyntaxKind: " + formatSyntaxKind((member as Node).kind) : JSON.stringify(member);
+        return fail(`${message} ${detail}`, stackCrawlMark || assertNever);
+    }
+
+    export function assertEachNode<T extends Node, U extends T>(nodes: NodeArray<T>, test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts nodes is NodeArray<U>;
+    export function assertEachNode<T extends Node, U extends T>(nodes: readonly T[], test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts nodes is readonly U[];
+    export function assertEachNode<T extends Node, U extends T>(nodes: NodeArray<T> | undefined, test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts nodes is NodeArray<U> | undefined;
+    export function assertEachNode<T extends Node, U extends T>(nodes: readonly T[] | undefined, test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts nodes is readonly U[] | undefined;
+    export function assertEachNode(nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction): void;
+    export function assertEachNode(nodes: readonly Node[] | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {
+        if (shouldAssertFunction(AssertionLevel.Normal, "assertEachNode")) {
+            let passed = true;
+            if (test !== undefined && nodes !== undefined) {
+                for (const n of nodes) {
+                    if (!test(n)) {
+                        passed = false;
+                        break;
+                    }
+                }
+            }
+            assert(
+                passed,
+                message || "Unexpected node.",
+                () => `Node array did not pass test.`,
+                stackCrawlMark || assertEachNode,
+            );
+        }
+    }
+
+    export function assertNode<T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts node is U;
+    export function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction): void;
+    export function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {
+        if (shouldAssertFunction(AssertionLevel.Normal, "assertNode")) {
+            assert(
+                node !== undefined && (test === undefined || test(node)),
+                message || "Unexpected node.",
+                () => `Node ${formatSyntaxKind(node?.kind)} did not pass test.`,
+                stackCrawlMark || assertNode,
+            );
+        }
+    }
+
+    export function assertNotNode<T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts node is Exclude<T, U>;
+    export function assertNotNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction): void;
+    export function assertNotNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {
+        if (shouldAssertFunction(AssertionLevel.Normal, "assertNotNode")) {
+            assert(
+                node === undefined || test === undefined || !test(node),
+                message || "Unexpected node.",
+                () => `Node ${formatSyntaxKind(node!.kind)} should not have passed test.`,
+                stackCrawlMark || assertNotNode,
+            );
+        }
+    }
+
+    export function assertOptionalNode<T extends Node, U extends T>(node: T, test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts node is U;
+    export function assertOptionalNode<T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts node is U | undefined;
+    export function assertOptionalNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction): void;
+    export function assertOptionalNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {
+        if (shouldAssertFunction(AssertionLevel.Normal, "assertOptionalNode")) {
+            assert(
+                test === undefined || node === undefined || test(node),
+                message || "Unexpected node.",
+                () => `Node ${formatSyntaxKind(node?.kind)} did not pass test.`,
+                stackCrawlMark || assertOptionalNode,
+            );
+        }
+    }
+
+    export function assertOptionalToken<T extends Node, K extends SyntaxKind>(node: T, kind: K, message?: string, stackCrawlMark?: AnyFunction): asserts node is Extract<T, { readonly kind: K; }>;
+    export function assertOptionalToken<T extends Node, K extends SyntaxKind>(node: T | undefined, kind: K, message?: string, stackCrawlMark?: AnyFunction): asserts node is Extract<T, { readonly kind: K; }> | undefined;
+    export function assertOptionalToken(node: Node | undefined, kind: SyntaxKind | undefined, message?: string, stackCrawlMark?: AnyFunction): void;
+    export function assertOptionalToken(node: Node | undefined, kind: SyntaxKind | undefined, message?: string, stackCrawlMark?: AnyFunction) {
+        if (shouldAssertFunction(AssertionLevel.Normal, "assertOptionalToken")) {
+            assert(
+                kind === undefined || node === undefined || node.kind === kind,
+                message || "Unexpected node.",
+                () => `Node ${formatSyntaxKind(node?.kind)} was not a '${formatSyntaxKind(kind)}' token.`,
+                stackCrawlMark || assertOptionalToken,
+            );
+        }
+    }
+
+    export function assertMissingNode(node: Node | undefined, message?: string, stackCrawlMark?: AnyFunction): asserts node is undefined;
+    export function assertMissingNode(node: Node | undefined, message?: string, stackCrawlMark?: AnyFunction) {
+        if (shouldAssertFunction(AssertionLevel.Normal, "assertMissingNode")) {
+            assert(
+                node === undefined,
+                message || "Unexpected node.",
+                () => `Node ${formatSyntaxKind(node!.kind)} was unexpected'.`,
+                stackCrawlMark || assertMissingNode,
+            );
+        }
+    }
+
+    /**
+     * Asserts a value has the specified type in typespace only (does not perform a runtime assertion).
+     * This is useful in cases where we switch on `node.kind` and can be reasonably sure the type is accurate, and
+     * as a result can reduce the number of unnecessary casts.
+     */
+    export function type<T>(value: unknown): asserts value is T;
+    export function type(_value: unknown) {}
+
+    
+
+    export function formatSymbol(symbol: Symbol): string {
+        return `{ name: ${unescapeLeadingUnderscores(symbol.escapedName)}; flags: ${formatSymbolFlags(symbol.flags)}; declarations: ${map(symbol.declarations, node => formatSyntaxKind(node.kind))} }`;
+    }
+
+    /**
+     * Formats an enum value as a string for debugging and debug assertions.
+     */
+    export function formatEnum(value = 0, enumObject: Readonly<Record<string, string | number>>, isFlags?: boolean): string {
+        const members = getEnumMembers(enumObject);
+        if (value === 0) {
+            return members.length > 0 && members[0]![0] === 0 ? members[0]![1] : "0";
+        }
+        if (isFlags) {
+            const result: string[] = [];
+            let remainingFlags = value;
+            for (const [enumValue, enumName] of members) {
+                if (enumValue > value) {
+                    break;
+                }
+                if (enumValue !== 0 && enumValue & value) {
+                    result.push(enumName);
+                    remainingFlags &= ~enumValue;
+                }
+            }
+            if (remainingFlags === 0) {
+                return result.join("|");
+            }
+        }
+        else {
+            for (const [enumValue, enumName] of members) {
+                if (enumValue === value) {
+                    return enumName;
+                }
+            }
+        }
+        return value.toString();
+    }
+
+    const enumMemberCache = new Map<Readonly<Record<string, string | number>>, SortedReadonlyArray<[number, string]>>();
+
+    function getEnumMembers(enumObject: Readonly<Record<string, string | number>>) {
+        // Assuming enum objects do not change at runtime, we can cache the enum members list
+        // to reuse later. This saves us from reconstructing this each and every time we call
+        // a formatting function (which can be expensive for large enums like SyntaxKind).
+        const existing = enumMemberCache.get(enumObject);
+        if (existing) {
+            return existing;
+        }
+
+        const result: [number, string][] = [];
+        for (const name in enumObject) {
+            const value = enumObject[name];
+            if (typeof value === "number") {
+                result.push([value, name]);
+            }
+        }
+
+        const sorted = toSorted<[number, string]>(result, (x, y) => compareValues(x[0], y[0]));
+        enumMemberCache.set(enumObject, sorted);
+        return sorted;
+    }
+
+    export function formatSyntaxKind(kind: SyntaxKind | undefined): string {
+        return formatEnum(kind, (ts as Readonly<Record<"SyntaxKind", Readonly<Record<string, string | number>>>>).SyntaxKind, /*isFlags*/ false);
+    }
+
+    export function formatSnippetKind(kind: SnippetKind | undefined): string {
+        return formatEnum(kind, (ts as Readonly<Record<"SnippetKind", Readonly<Record<string, string | number>>>>).SnippetKind, /*isFlags*/ false);
+    }
+
+    export function formatScriptKind(kind: ScriptKind | undefined): string {
+        return formatEnum(kind, (ts as Readonly<Record<"ScriptKind", Readonly<Record<string, string | number>>>>).ScriptKind, /*isFlags*/ false);
+    }
+
+    export function formatNodeFlags(flags: NodeFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"NodeFlags", Readonly<Record<string, string | number>>>>).NodeFlags, /*isFlags*/ true);
+    }
+
+    export function formatNodeCheckFlags(flags: NodeCheckFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"NodeCheckFlags", Readonly<Record<string, string | number>>>>).NodeCheckFlags, /*isFlags*/ true);
+    }
+
+    export function formatModifierFlags(flags: ModifierFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"ModifierFlags", Readonly<Record<string, string | number>>>>).ModifierFlags, /*isFlags*/ true);
+    }
+
+    export function formatTransformFlags(flags: TransformFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"TransformFlags", Readonly<Record<string, string | number>>>>).TransformFlags, /*isFlags*/ true);
+    }
+
+    export function formatEmitFlags(flags: EmitFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"EmitFlags", Readonly<Record<string, string | number>>>>).EmitFlags, /*isFlags*/ true);
+    }
+
+    export function formatSymbolFlags(flags: SymbolFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"SymbolFlags", Readonly<Record<string, string | number>>>>).SymbolFlags, /*isFlags*/ true);
+    }
+
+    export function formatTypeFlags(flags: TypeFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"TypeFlags", Readonly<Record<string, string | number>>>>).TypeFlags, /*isFlags*/ true);
+    }
+
+    export function formatSignatureFlags(flags: SignatureFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"SignatureFlags", Readonly<Record<string, string | number>>>>).SignatureFlags, /*isFlags*/ true);
+    }
+
+    export function formatObjectFlags(flags: ObjectFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"ObjectFlags", Readonly<Record<string, string | number>>>>).ObjectFlags, /*isFlags*/ true);
+    }
+
+    export function formatFlowFlags(flags: FlowFlags | undefined): string {
+        return formatEnum(flags, (ts as Readonly<Record<"FlowFlags", Readonly<Record<string, string | number>>>>).FlowFlags, /*isFlags*/ true);
+    }
+
+    export function formatRelationComparisonResult(result: RelationComparisonResult | undefined): string {
+        return formatEnum(result, (ts as Readonly<Record<"RelationComparisonResult", Readonly<Record<string, string | number>>>>).RelationComparisonResult, /*isFlags*/ true);
+    }
+
+    export function formatCheckMode(mode: CheckMode | undefined): string {
+        return formatEnum(mode, (ts as Readonly<Record<"CheckMode", Readonly<Record<string, string | number>>>>).CheckMode, /*isFlags*/ true);
+    }
+
+    export function formatSignatureCheckMode(mode: SignatureCheckMode | undefined): string {
+        return formatEnum(mode, (ts as Readonly<Record<"SignatureCheckMode", Readonly<Record<string, string | number>>>>).SignatureCheckMode, /*isFlags*/ true);
+    }
+
+    export function formatTypeFacts(facts: TypeFacts | undefined): string {
+        return formatEnum(facts, (ts as Readonly<Record<"TypeFacts", Readonly<Record<string, string | number>>>>).TypeFacts, /*isFlags*/ true);
+    }
+
+    let isDebugInfoEnabled = false;
+
+    let flowNodeProto: FlowNode | undefined;
+
+    function attachFlowNodeDebugInfoWorker(flowNode: FlowNode) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    export function attachFlowNodeDebugInfo(flowNode: FlowNode): FlowNode {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return flowNode;
+    }
+
+    let nodeArrayProto: NodeArray<Node> | undefined;
+
+    function attachNodeArrayDebugInfoWorker(array: NodeArray<Node>) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    export function attachNodeArrayDebugInfo(array: NodeArray<Node>): void {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    /**
+     * Injects debug information into frequently used types.
+     */
+    export function enableDebugInfo(): void {
+        if (isDebugInfoEnabled) return;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    export function formatVariance(varianceFlags: VarianceFlags): string {
+        const variance = varianceFlags & VarianceFlags.VarianceMask;
+        let result = variance === VarianceFlags.Invariant ? "in out" :
+            variance === VarianceFlags.Bivariant ? "[bivariant]" :
+            variance === VarianceFlags.Contravariant ? "in" :
+            variance === VarianceFlags.Covariant ? "out" :
+            variance === VarianceFlags.Independent ? "[independent]" : "";
+        if (varianceFlags & VarianceFlags.Unmeasurable) {
+            result += " (unmeasurable)";
+        }
+        else if (varianceFlags & VarianceFlags.Unreliable) {
+            result += " (unreliable)";
+        }
+        return result;
+    }
+
+    export type DebugType = Type & { __debugTypeToString(): string; }; // eslint-disable-line @typescript-eslint/naming-convention
+    export class DebugTypeMapper {
+        declare kind: TypeMapKind;
+        __debugToString(): string { // eslint-disable-line @typescript-eslint/naming-convention
+            type<TypeMapper>(this);
+            switch (this.kind) {
+                case TypeMapKind.Function:
+                    return this.debugInfo?.() || "(function mapper)";
+                case TypeMapKind.Simple: {
+                    const source = this.source;
+                    const sourceFormatter = typeof source === "object" && source !== null && "__debugTypeToString" in source ? source.__debugTypeToString : undefined;
+                    Debug.assert(typeof sourceFormatter === "function", "Expected a debug type formatter.");
+                    const sourceText = `${Reflect.apply(sourceFormatter, source, [])}`;
+                    const target = this.target;
+                    const targetFormatter = typeof target === "object" && target !== null && "__debugTypeToString" in target ? target.__debugTypeToString : undefined;
+                    Debug.assert(typeof targetFormatter === "function", "Expected a debug type formatter.");
+                    return `${sourceText} -> ${Reflect.apply(targetFormatter, target, [])}`;
+                }
+                case TypeMapKind.Array: {
+                    const sources = this.sources;
+                    const targets = this.targets;
+                    return zipWith<Type, Type | string, unknown>(
+                        sources,
+                        targets || map(this.sources, () => "any"),
+                        (s, t) => {
+                            const sFormatter = typeof s === "object" && s !== null && "__debugTypeToString" in s ? s.__debugTypeToString : undefined;
+                            Debug.assert(typeof sFormatter === "function", "Expected a debug type formatter.");
+                            const sourceText = `${Reflect.apply(sFormatter, s, [])}`;
+                            if (targets === undefined && typeof t === "string") return `${sourceText} -> ${t}`;
+                            const tFormatter = typeof t === "object" && t !== null && "__debugTypeToString" in t ? t.__debugTypeToString : undefined;
+                            Debug.assert(typeof tFormatter === "function", "Expected a debug type formatter.");
+                            return `${sourceText} -> ${Reflect.apply(tFormatter, t, [])}`;
+                        },
+                    ).join(", ");
+                }
+                case TypeMapKind.Deferred:
+                    return zipWith(
+                        this.sources,
+                        this.targets,
+                        (s, t) => {
+                            const sFormatter = typeof s === "object" && s !== null && "__debugTypeToString" in s ? s.__debugTypeToString : undefined;
+                            Debug.assert(typeof sFormatter === "function", "Expected a debug type formatter.");
+                            const sourceText = `${Reflect.apply(sFormatter, s, [])}`;
+                            const target = t();
+                            const targetFormatter = typeof target === "object" && target !== null && "__debugTypeToString" in target ? target.__debugTypeToString : undefined;
+                            Debug.assert(typeof targetFormatter === "function", "Expected a debug type formatter.");
+                            return `${sourceText} -> ${Reflect.apply(targetFormatter, target, [])}`;
+                        },
+                    ).join(", ");
+                case TypeMapKind.Merged:
+                case TypeMapKind.Composite: {
+                    const mapper1: object = this.mapper1;
+                    const mapper1Formatter = typeof mapper1 === "object" && mapper1 !== null && "__debugToString" in mapper1 ? mapper1.__debugToString : undefined;
+                    Debug.assert(typeof mapper1Formatter === "function", "Expected a debug mapper formatter.");
+                    const text1 = `${Reflect.apply(mapper1Formatter, mapper1, []).split("\n").join("\n    ")}`;
+                    const mapper2: object = this.mapper2;
+                    const mapper2Formatter = typeof mapper2 === "object" && mapper2 !== null && "__debugToString" in mapper2 ? mapper2.__debugToString : undefined;
+                    Debug.assert(typeof mapper2Formatter === "function", "Expected a debug mapper formatter.");
+                    return `m1: ${text1}
+m2: ${Reflect.apply(mapper2Formatter, mapper2, []).split("\n").join("\n    ")}`;
+                }
+                default:
+                    return assertNever(this);
+            }
+        }
+    }
+
+    export function attachDebugPrototypeIfDebug(mapper: TypeMapper): TypeMapper {
+
+
+
+        return mapper;
+    }
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

@@ -1,7 +1,10 @@
 from control import *
 name=sys.argv[1]
 if name=='mutant':
- tree=root/'head'; adapted=root/'adapted-head'; binary=root/'head-census'
+ tree=root/'head'; adapted=root/'adapted-mutant'; binary=root/'head-census'
+ subprocess.run(['cp','-a','--reflink=auto',str(root/'adapted-head'),str(adapted)],check=True)
+ for p in (root/'adapted-head/src').rglob('*'):
+  if p.is_file(): assert p.read_bytes()==(adapted/p.relative_to(root/'adapted-head')).read_bytes()
  patch=tree/'stage3/adapt/99-correctness-core-each-node/restoring-mutant.patch'
  before=(adapted/'src/compiler/debug.ts').read_bytes()
  (root/'debug-head.ts.txt').write_bytes(before)
