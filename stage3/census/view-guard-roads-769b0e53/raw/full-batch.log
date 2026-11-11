@@ -945,3 +945,79 @@ push_child_exit=0 sha=b6d7d0367a28e0b9cd19763d07111803645a01f2
 checkpoint_wrapper_child_exit=0
 {"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 144.7885168239991, "peak_rss_kib": 1066352, "user_seconds": 136.725979, "system_seconds": 5.858197, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-head-records.jsonl"}}
 {"file": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "run": "full-e082ecd054-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=a89e8a841962bf159b3fec2d018ca6defe1b9bb6
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 48,
+        "deferred_generic_instantiation": 6
+      },
+      "observed_units": 48,
+      "views_evaluated": 52,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 48,
+        "deferred_generic_instantiation": 6
+      },
+      "observed_units": 48,
+      "views_evaluated": 52,
+      "raw_guard_refusals": 52,
+      "units_with_refusals": 11,
+      "probe_errors": 0,
+      "roads": {
+        "union arms": 41,
+        "index values": 11
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 25,
+      "distinct_reads": 25
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 25,
+      "distinct_reads": 25
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 25,
+      "distinct_reads": 25
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 11,
+      "new_guard_stops_in_normally_finding_free_units": 3,
+      "new_guard_stops_in_already_normally_blocked_units": 8,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 25,
+      "new_sites": 25,
+      "unit_first_stop_delta": 11,
+      "regressions": 11
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 25,
+      "new_sites": 25,
+      "unit_first_stop_delta": 11,
+      "regressions": 11
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-e082ecd054", "cases": 25, "categories": {"guard bug: identity/union cross-product": 25}, "needs_reading": 0}
+render_wrapper_child_exit=0

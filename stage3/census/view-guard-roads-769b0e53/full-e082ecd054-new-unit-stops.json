@@ -1,0 +1,89 @@
+[
+  {
+    "identity": [
+      "src/compiler/transformers/utilities.ts",
+      "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+      25498
+    ],
+    "unit": {
+      "body_end": 25763,
+      "body_start": 25606,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "isInitializedOrStaticProperty",
+      "status": "attempted",
+      "top": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:612:1",
+      "where": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:612:1"
+    },
+    "base": null,
+    "head": {
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "unit": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:612:1",
+      "where": "/workspace/roads-adapted/src/compiler/factory/nodeTests.ts:422:1",
+      "reason": "a view of Node as PropertyDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ClassLikeDeclaration) through an arm (Node as ClassDeclaration) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+      "text": "export function isPropertyDeclaration(node: Node): node is PropertyDeclaration {\r\n    return node.kind === SyntaxKind.PropertyDeclaration;\r\n}"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/utilities.ts",
+      "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+      25767
+    ],
+    "unit": {
+      "body_end": 25902,
+      "body_start": 25825,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "isStaticPropertyDeclaration",
+      "status": "attempted",
+      "top": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:618:1",
+      "where": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:618:1"
+    },
+    "base": null,
+    "head": {
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "unit": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:618:1",
+      "where": "/workspace/roads-adapted/src/compiler/factory/nodeTests.ts:422:1",
+      "reason": "a view of Node as PropertyDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ClassLikeDeclaration) through an arm (Node as ClassDeclaration) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+      "text": "export function isPropertyDeclaration(node: Node): node is PropertyDeclaration {\r\n    return node.kind === SyntaxKind.PropertyDeclaration;\r\n}"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/utilities.ts",
+      "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+      26205
+    ],
+    "unit": {
+      "body_end": 26461,
+      "body_start": 26326,
+      "checker_diagnostics": [],
+      "instantiated": false,
+      "kind": "KindFunctionDeclaration",
+      "measurement": "measured on a checker-clean entry-root program",
+      "name": "isInitializedProperty",
+      "status": "attempted",
+      "top": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:630:1",
+      "where": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:630:1"
+    },
+    "base": null,
+    "head": {
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "unit": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:630:1",
+      "where": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts:632:13",
+      "reason": "a view of ClassElement as PropertyDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ClassLikeDeclaration) through an arm (Node as ClassDeclaration) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+      "text": "member as PropertyDeclaration"
+    }
+  }
+]
