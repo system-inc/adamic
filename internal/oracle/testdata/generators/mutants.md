@@ -192,8 +192,10 @@ run on a box: the Red column says what each must do.
 S3c-1 (a generator's call handed into the one-read Iterable<T> parameter of a nested callee, whose
 call is a CallClosure), each one exact line, run by `s3c-proof.sh` with the one test it must turn
 red. Rows 1, 3, 4 and 5 went red on Codex 6af3fa67-a4e8-8191-abed-203b433f002b at 6a0cd7c2 (log at
-emit/generators-s3c1-proof deb179c3, proof/s3c/mutants.log); row 2 is unit-only, and row 6 is respelled below
-to compile and still owes its run.
+emit/generators-s3c1-proof deb179c3, proof/s3c/mutants.log); row 2 is unit-only. Row 6, respelled below to compile, went red on Codex
+6af40706-c860-8191-a7f3-df9339711020 at 8d4f1131 (log at emit/generators-s3c1-m6 17aa75cc): all eleven of
+TestNestedIterableCalleeLowers' rows stop, the plain function* rows at the void rules and the rest at the generator's
+own stop.
 
 | Mutant | Edit | Red |
 |---|---|---|
