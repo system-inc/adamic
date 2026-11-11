@@ -1,0 +1,53 @@
+stage3 product cache miss: 3e482044003a9e3dc9ef4f421de235cbd6675584499cda0ff6819d6f0394c9cc; building adapted tree locally
+Traceback (most recent call last):
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 70, in restore_product
+    fetch(store, key + '.manifest', manifest_path)
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 55, in fetch
+    shutil.copyfile(Path(store) / name, destination)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 260, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/agent/.cache/adamic-stage3/products/3e482044003a9e3dc9ef4f421de235cbd6675584499cda0ff6819d6f0394c9cc.manifest'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 386, in main
+    restore_product(store, key, out)
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 72, in restore_product
+    raise ProductMissing(f'product {key} missing from {store}') from error
+ProductMissing: product 3e482044003a9e3dc9ef4f421de235cbd6675584499cda0ff6819d6f0394c9cc missing from /home/agent/.cache/adamic-stage3/products
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 194, in installed_packages
+    installed = json.loads((modules / '.package-lock.json').read_text())['packages']
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/meta-spread-stack/stage3/api/node_modules/.package-lock.json'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 398, in <module>
+    main()
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 389, in main
+    build_product(out)
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 260, in build_product
+    adaptations, adaptation_env = adaptation_inputs()
+                                  ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 275, in adaptation_inputs
+    adaptation_env['NODE_PATH'] = str(pinned_packages(stage / 'api'))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 246, in pinned_packages
+    modules = installed_packages(project)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/meta-spread-stack/stage3/apply.py", line 205, in installed_packages
+    raise RuntimeError(f'{modules} is not an install of {lockfile} ({error}); stage3 never runs npm, '
+RuntimeError: /workspace/scratch/meta-spread-stack/stage3/api/node_modules is not an install of /workspace/scratch/meta-spread-stack/stage3/api/package-lock.json ([Errno 2] No such file or directory: '/workspace/scratch/meta-spread-stack/stage3/api/node_modules/.package-lock.json'); stage3 never runs npm, so the tree must provide them
