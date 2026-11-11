@@ -1,0 +1,29 @@
+--- before/src/compiler/debug.ts
++++ after/src/compiler/debug.ts
+@@ -6,7 +6,6 @@
+     CheckMode,
+     compareValues,
+     EmitFlags,
+-    every,
+     FlowFlags,
+     type FlowLabel,
+     type FlowNode,
+@@ -261,8 +260,17 @@
+     export function assertEachNode(nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction): void;
+     export function assertEachNode(nodes: readonly Node[] | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {
+         if (shouldAssertFunction(AssertionLevel.Normal, "assertEachNode")) {
++            let passed = true;
++            if (test !== undefined && nodes !== undefined) {
++                for (const n of nodes) {
++                    if (!test(n)) {
++                        passed = false;
++                        break;
++                    }
++                }
++            }
+             assert(
+-                test === undefined || every(nodes, test),
++                passed,
+                 message || "Unexpected node.",
+                 () => `Node array did not pass test.`,
+                 stackCrawlMark || assertEachNode,
