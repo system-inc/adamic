@@ -25,7 +25,7 @@ func main() {
     sig:=ch.GetResolvedSignature(node)
     if sig!=nil && sig.Declaration()!=nil {
      decl:=sig.Declaration()
-     if decl.Kind==ast.KindFunctionDeclaration && decl.Name()!=nil && decl.Name().Text()=="getLineAndCharacterOfPosition" && filepath.Base(ast.GetSourceFileOfNode(decl).FileName())=="scanner.ts" {
+     if decl.Kind==ast.KindFunctionDeclaration && decl.Name()!=nil && decl.Name().Text()=="getLineAndCharacterOfPosition" && filepath.Base(string(ast.GetSourceFileOfNode(decl).FileName()))=="scanner.ts" {
       call:=node.AsCallExpression();ss:=ch.GetSignaturesOfType(ch.GetTypeAtLocation(call.Expression),checker.SignatureKindCall)
       ordinal:=0;signatures:=[]map[string]any{}
       for i,s:=range ss {
