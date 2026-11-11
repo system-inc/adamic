@@ -2751,6 +2751,22 @@ FAIL
 
 Restoration check: exit 0, no diff output.
 
+## 4b. Full IR suite
+
+Ran alone at detached HEAD `5eeac42cf8c0037c627f32b975dd254cbfd20c6b`, with all step-4 mutants restored and no other test or build running. This is a supplemental measurement requested after the original steps 5–7 had completed; it is placed here in the requested report order, rather than represented as having run before the original step 5.
+
+Command: `go test ./internal/ir -count=1 -timeout 30m > /tmp/ir.log 2>&1`
+
+Exit **0**; wall **127.97 seconds**.
+
+Failing tests and first error lines: **none**. No main reruns were needed because the suite passed.
+
+Complete `/tmp/ir.log`, verbatim:
+
+```text
+ok  	github.com/system-inc/adamic/internal/ir	88.819s
+```
+
 ## 5. Full lowerer suite
 
 Command: `go test ./internal/lower -count=1 -timeout 90m > /tmp/lower.log 2>&1`
