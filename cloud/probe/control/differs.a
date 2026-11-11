@@ -1,0 +1,6 @@
+// The runner's control that must differ on every backend: Kirk's Oct 5 difference, a write past an
+// array's end panics (exit 70) where Node grows the array and prints it.
+const values: number[] = [1, 2, 3];
+const at: number[] = [3];
+values[at[0] ?? 0] = 9;
+console.log(values.join(','));
