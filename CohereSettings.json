@@ -1,4 +1,15 @@
 {
     "extends": ["cohere:typescript"],
-    "ignorePatterns": ["internal/load/testdata/0.1/refuse/**", "stage1/**/gaps/**", "review/**", "internal/oracle/testdata/records_buckets/**", "internal/lower/testdata/input-spread/*_array.a"]
+    "ignorePatterns": [
+        "internal/load/testdata/0.1/refuse/**",
+        "stage1/**/gaps/**",
+        "review/**",
+        "internal/oracle/testdata/records_buckets/**",
+        "internal/lower/testdata/input-spread/*_array.a",
+        {
+            "pattern": "stage1/cohere/lint/rules/*/oracle.go",
+            "reason": "Lint-oracle adapters behind the lintoracle build tag: they import cohere's internal packages, so they compile and are checked only inside cohere's module with an overlay, by adamic's oracle tests (docs/lint-registration.md:80). No build of adamic's module can compile them.",
+            "kind": "input"
+        }
+    ]
 }
