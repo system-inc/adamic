@@ -1,0 +1,197 @@
+[
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 23.975028668
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 21.390223808000002
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 23.269320771
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/binder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 34.286390978
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 20.808589741
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 22.940336564
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 32.701510645
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.726350242
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.848910716
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 17.453148691
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 17.397020914
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.06883758
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 4.807754627
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 5.621480523
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.710814735
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 22.089619545
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 18.801248189
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 21.203458727
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 21.177848472
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:340:14",
+    "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 18.837638653
+  }
+]
