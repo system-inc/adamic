@@ -1,0 +1,331 @@
+{
+  "top_level_units": 4562,
+  "standalone_generic_functions": 504,
+  "non_generic_units": 4058,
+  "files": {
+    "/workspace/roads-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts": {
+      "units": 1,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/_namespaces/ts.performance.ts": {
+      "units": 1,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/_namespaces/ts.ts": {
+      "units": 78,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/binder.ts": {
+      "units": 16,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/builder.ts": {
+      "units": 86,
+      "standalone_generic_functions": 2
+    },
+    "/workspace/roads-adapted/src/compiler/builderPublic.ts": {
+      "units": 16,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/builderState.ts": {
+      "units": 5,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/builderStatePublic.ts": {
+      "units": 3,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/checker.ts": {
+      "units": 51,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/commandLineParser.ts": {
+      "units": 171,
+      "standalone_generic_functions": 12
+    },
+    "/workspace/roads-adapted/src/compiler/core.ts": {
+      "units": 264,
+      "standalone_generic_functions": 207
+    },
+    "/workspace/roads-adapted/src/compiler/corePublic.ts": {
+      "units": 9,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/debug.ts": {
+      "units": 5,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/diagnosticInformationMap.generated.ts": {
+      "units": 3,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/emitter.ts": {
+      "units": 50,
+      "standalone_generic_functions": 2
+    },
+    "/workspace/roads-adapted/src/compiler/executeCommandLine.ts": {
+      "units": 50,
+      "standalone_generic_functions": 1
+    },
+    "/workspace/roads-adapted/src/compiler/expressionToTypeNode.ts": {
+      "units": 9,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/factory/baseNodeFactory.ts": {
+      "units": 3,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/factory/emitHelpers.ts": {
+      "units": 45,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/factory/emitNode.ts": {
+      "units": 41,
+      "standalone_generic_functions": 23
+    },
+    "/workspace/roads-adapted/src/compiler/factory/nodeChildren.ts": {
+      "units": 6,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/factory/nodeConverters.ts": {
+      "units": 3,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/factory/nodeFactory.ts": {
+      "units": 26,
+      "standalone_generic_functions": 1
+    },
+    "/workspace/roads-adapted/src/compiler/factory/nodeTests.ts": {
+      "units": 228,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts": {
+      "units": 3,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/factory/utilities.ts": {
+      "units": 108,
+      "standalone_generic_functions": 8
+    },
+    "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts": {
+      "units": 4,
+      "standalone_generic_functions": 1
+    },
+    "/workspace/roads-adapted/src/compiler/hostErrors.ts": {
+      "units": 3,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/moduleNameResolver.ts": {
+      "units": 163,
+      "standalone_generic_functions": 15
+    },
+    "/workspace/roads-adapted/src/compiler/moduleSpecifiers.ts": {
+      "units": 49,
+      "standalone_generic_functions": 1
+    },
+    "/workspace/roads-adapted/src/compiler/parser.ts": {
+      "units": 75,
+      "standalone_generic_functions": 22
+    },
+    "/workspace/roads-adapted/src/compiler/path.ts": {
+      "units": 81,
+      "standalone_generic_functions": 4
+    },
+    "/workspace/roads-adapted/src/compiler/performance.ts": {
+      "units": 24,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/performanceCore.ts": {
+      "units": 12,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/program.ts": {
+      "units": 85,
+      "standalone_generic_functions": 5
+    },
+    "/workspace/roads-adapted/src/compiler/programDiagnostics.ts": {
+      "units": 5,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/resolutionCache.ts": {
+      "units": 31,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/scanner.ts": {
+      "units": 84,
+      "standalone_generic_functions": 10
+    },
+    "/workspace/roads-adapted/src/compiler/semver.ts": {
+      "units": 28,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/sourcemap.ts": {
+      "units": 31,
+      "standalone_generic_functions": 1
+    },
+    "/workspace/roads-adapted/src/compiler/symbolWalker.ts": {
+      "units": 2,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/sys.ts": {
+      "units": 62,
+      "standalone_generic_functions": 2
+    },
+    "/workspace/roads-adapted/src/compiler/tracing.ts": {
+      "units": 10,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformer.ts": {
+      "units": 17,
+      "standalone_generic_functions": 2
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/classFields.ts": {
+      "units": 23,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/classThis.ts": {
+      "units": 7,
+      "standalone_generic_functions": 2
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/declarations.ts": {
+      "units": 14,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/declarations/diagnostics.ts": {
+      "units": 8,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts": {
+      "units": 22,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/es2015.ts": {
+      "units": 13,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/es2016.ts": {
+      "units": 2,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/es2017.ts": {
+      "units": 6,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/es2018.ts": {
+      "units": 4,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/es2019.ts": {
+      "units": 2,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/es2020.ts": {
+      "units": 2,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/es2021.ts": {
+      "units": 2,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/esDecorators.ts": {
+      "units": 9,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/esnext.ts": {
+      "units": 9,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/generators.ts": {
+      "units": 16,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/jsx.ts": {
+      "units": 3,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/legacyDecorators.ts": {
+      "units": 2,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts": {
+      "units": 2,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts": {
+      "units": 2,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/module/module.ts": {
+      "units": 3,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/module/system.ts": {
+      "units": 2,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts": {
+      "units": 21,
+      "standalone_generic_functions": 2
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/taggedTemplate.ts": {
+      "units": 5,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/ts.ts": {
+      "units": 5,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts": {
+      "units": 6,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/transformers/utilities.ts": {
+      "units": 50,
+      "standalone_generic_functions": 6
+    },
+    "/workspace/roads-adapted/src/compiler/tsbuild.ts": {
+      "units": 5,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/tsbuildPublic.ts": {
+      "units": 106,
+      "standalone_generic_functions": 72
+    },
+    "/workspace/roads-adapted/src/compiler/types.ts": {
+      "units": 875,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/compiler/utilities.ts": {
+      "units": 893,
+      "standalone_generic_functions": 59
+    },
+    "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts": {
+      "units": 251,
+      "standalone_generic_functions": 9
+    },
+    "/workspace/roads-adapted/src/compiler/visitorPublic.ts": {
+      "units": 41,
+      "standalone_generic_functions": 13
+    },
+    "/workspace/roads-adapted/src/compiler/watch.ts": {
+      "units": 46,
+      "standalone_generic_functions": 10
+    },
+    "/workspace/roads-adapted/src/compiler/watchPublic.ts": {
+      "units": 25,
+      "standalone_generic_functions": 7
+    },
+    "/workspace/roads-adapted/src/compiler/watchUtilities.ts": {
+      "units": 26,
+      "standalone_generic_functions": 5
+    },
+    "/workspace/roads-adapted/src/tsc/_namespaces/ts.ts": {
+      "units": 1,
+      "standalone_generic_functions": 0
+    },
+    "/workspace/roads-adapted/src/tsc/tsc.ts": {
+      "units": 6,
+      "standalone_generic_functions": 0
+    }
+  }
+}

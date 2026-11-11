@@ -1,0 +1,122 @@
+[
+  {
+    "cast": false,
+    "end": 74058,
+    "file": "/workspace/roads-adapted/src/compiler/factory/utilities.ts",
+    "full_mode": false,
+    "kind": "GuardRefusal",
+    "mutant": false,
+    "narrows": false,
+    "reason": "a view of BindingOrAssignmentElement as BindingElement in a graph program, which the cycle finder doesn't relate yet through a source arm (ArrayLiteralExpression as BindingElement)",
+    "road": "union arms",
+    "roads": [
+      "union arms"
+    ],
+    "source": "BindingOrAssignmentElement",
+    "source_nil": false,
+    "start": 73551,
+    "steps": [
+      {
+        "road": "union arms",
+        "source": "ArrayLiteralExpression",
+        "step": "a source arm",
+        "target": "BindingElement"
+      }
+    ],
+    "target": "BindingElement",
+    "text": "/**\r\n * Determines whether the BindingOrAssignmentElement is a BindingElement-like declaration\r\n *\r\n * @internal\r\n */\r\nexport function isDeclarationBindingElement(bindingElement: BindingOrAssignmentElement): bindingElement is VariableDeclaration | ParameterDeclaration | BindingElement {\r\n    switch (bindingElement.kind) {\r\n        case SyntaxKind.VariableDeclaration:\r\n        case SyntaxKind.Parameter:\r\n        case SyntaxKind.BindingElement:\r\n            return true;\r\n    }\r\n\r\n    return false;\r\n}",
+    "unit": "/workspace/roads-adapted/src/compiler/factory/utilities.ts:865:1",
+    "view_index": 0,
+    "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:1860:1"
+  },
+  {
+    "cast": false,
+    "end": 74678,
+    "file": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts",
+    "full_mode": false,
+    "kind": "GuardRefusal",
+    "mutant": false,
+    "narrows": true,
+    "reason": "a view of BindingOrAssignmentElementTarget as ArrayLiteralExpression in a graph program, which the cycle finder doesn't relate yet through a source arm (ArrayBindingPattern as ArrayLiteralExpression)",
+    "road": "union arms",
+    "roads": [
+      "union arms"
+    ],
+    "source": "BindingOrAssignmentElementTarget",
+    "source_nil": false,
+    "start": 74353,
+    "steps": [
+      {
+        "road": "union arms",
+        "source": "ArrayBindingPattern",
+        "step": "a source arm",
+        "target": "ArrayLiteralExpression"
+      }
+    ],
+    "target": "ArrayLiteralExpression",
+    "text": "/**\r\n * Determines whether a node is a BindingOrAssignmentPattern\r\n *\r\n * @internal\r\n */\r\nexport function isBindingOrAssignmentPattern(node: BindingOrAssignmentElementTarget): node is BindingOrAssignmentPattern {\r\n    return isObjectBindingOrAssignmentPattern(node)\r\n        || isArrayBindingOrAssignmentPattern(node);\r\n}",
+    "unit": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts:197:1",
+    "view_index": 1,
+    "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:1884:1"
+  },
+  {
+    "cast": false,
+    "end": 74678,
+    "file": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts",
+    "full_mode": false,
+    "kind": "GuardRefusal",
+    "mutant": false,
+    "narrows": true,
+    "reason": "a view of BindingOrAssignmentElementTarget as ObjectBindingPattern in a graph program, which the cycle finder doesn't relate yet through a source arm (ArrayBindingPattern as ObjectBindingPattern)",
+    "road": "union arms",
+    "roads": [
+      "union arms"
+    ],
+    "source": "BindingOrAssignmentElementTarget",
+    "source_nil": false,
+    "start": 74353,
+    "steps": [
+      {
+        "road": "union arms",
+        "source": "ArrayBindingPattern",
+        "step": "a source arm",
+        "target": "ObjectBindingPattern"
+      }
+    ],
+    "target": "ObjectBindingPattern",
+    "text": "/**\r\n * Determines whether a node is a BindingOrAssignmentPattern\r\n *\r\n * @internal\r\n */\r\nexport function isBindingOrAssignmentPattern(node: BindingOrAssignmentElementTarget): node is BindingOrAssignmentPattern {\r\n    return isObjectBindingOrAssignmentPattern(node)\r\n        || isArrayBindingOrAssignmentPattern(node);\r\n}",
+    "unit": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts:197:1",
+    "view_index": 2,
+    "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:1884:1"
+  },
+  {
+    "cast": false,
+    "end": 74678,
+    "file": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts",
+    "full_mode": false,
+    "kind": "GuardRefusal",
+    "mutant": false,
+    "narrows": true,
+    "reason": "a view of BindingOrAssignmentElementTarget as ObjectLiteralExpression in a graph program, which the cycle finder doesn't relate yet through a source arm (ArrayBindingPattern as ObjectLiteralExpression)",
+    "road": "union arms",
+    "roads": [
+      "union arms"
+    ],
+    "source": "BindingOrAssignmentElementTarget",
+    "source_nil": false,
+    "start": 74353,
+    "steps": [
+      {
+        "road": "union arms",
+        "source": "ArrayBindingPattern",
+        "step": "a source arm",
+        "target": "ObjectLiteralExpression"
+      }
+    ],
+    "target": "ObjectLiteralExpression",
+    "text": "/**\r\n * Determines whether a node is a BindingOrAssignmentPattern\r\n *\r\n * @internal\r\n */\r\nexport function isBindingOrAssignmentPattern(node: BindingOrAssignmentElementTarget): node is BindingOrAssignmentPattern {\r\n    return isObjectBindingOrAssignmentPattern(node)\r\n        || isArrayBindingOrAssignmentPattern(node);\r\n}",
+    "unit": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts:197:1",
+    "view_index": 3,
+    "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:1884:1"
+  }
+]
