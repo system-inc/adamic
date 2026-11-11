@@ -42,12 +42,12 @@ def main():
  if not pending:full_lines+=['None.']
  (root/'FULL.md').write_text('\n'.join(full_lines)+'\n')
  runs=[]
- for p in (root/'raw').glob('*.json'):
+ for p in (root/'raw').rglob('*.json'):
   try:r=read(p)
   except Exception:continue
   if isinstance(r,dict) and 'command' in r and 'child_exit' in r:runs.append((p,r))
  run_lines=['# Child exits, elapsed time and peak memory','', 'Elapsed values are monotonic seconds. Peak RSS is wait4 ru_maxrss in KiB. Census binaries are single processes; preparation/batch wrappers report the wait4 high-water value, not simultaneous descendant memory summed together. Runs overlap, so these are not isolated compiler performance comparisons. first-parent is the historical intentionally stopped run from the preceding blocked report and is excluded from this census.','', '| Run | Child exit | Seconds | Peak RSS KiB | LATENT_ONLY_FILE |','| --- | ---: | ---: | ---: | --- |']
- for p,r in sorted(runs,key=lambda x:x[0].name):run_lines.append(f'| [{p.stem}](raw/{p.name}) | {r["child_exit"]} | {r["elapsed_seconds"]:.3f} | {r["peak_rss_kib"]} | {short(r.get("environment",{}).get("LATENT_ONLY_FILE",""))} |')
+ for p,r in sorted(runs,key=lambda x:x[0].name):run_lines.append(f'| [{p.stem}](raw/{p.relative_to(root/'raw').as_posix()}) | {r["child_exit"]} | {r["elapsed_seconds"]:.3f} | {r["peak_rss_kib"]} | {short(r.get("environment",{}).get("LATENT_ONLY_FILE",""))} |')
  (root/'RUNS.md').write_text('\n'.join(run_lines)+'\n')
  raw=delta['raw_findings'];distinct=delta['distinct_reads'];classes=collections.Counter(c['reading_category'] for c in cases)
  firstroad={}

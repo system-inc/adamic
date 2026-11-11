@@ -19,11 +19,13 @@ Elapsed values are monotonic seconds. Peak RSS is wait4 ru_maxrss in KiB. Census
 | [control-parent-real](raw/control-parent-real.json) | 0 | 0.141 | 31848 |  |
 | [control-parent](raw/control-parent.json) | 0 | 0.143 | 31944 |  |
 | [first-parent](raw/first-parent.json) | -15 | 571.018 | 1330972 |  |
+| [full-01e6ae4837-head-guard](raw/full-01e6ae4837-head-guard.json) | 0 | 144.757 | 1145328 | src/compiler/transformers/esnext.ts |
 | [full-01e6ae4837-parent-base](raw/full-01e6ae4837-parent-base.json) | 0 | 146.783 | 1107384 | src/compiler/transformers/esnext.ts |
 | [full-01e6ae4837-parent-guard](raw/full-01e6ae4837-parent-guard.json) | 0 | 143.572 | 1136568 | src/compiler/transformers/esnext.ts |
 | [full-0854c1cf41-head-guard](raw/full-0854c1cf41-head-guard.json) | 0 | 74.474 | 1000052 | src/compiler/symbolWalker.ts |
 | [full-0854c1cf41-parent-base](raw/full-0854c1cf41-parent-base.json) | 0 | 68.144 | 1000272 | src/compiler/symbolWalker.ts |
 | [full-0854c1cf41-parent-guard](raw/full-0854c1cf41-parent-guard.json) | 0 | 69.213 | 976872 | src/compiler/symbolWalker.ts |
+| [full-12c82900a1-parent-base](raw/full-12c82900a1-parent-base.json) | 0 | 161.596 | 1133144 | src/compiler/factory/nodeTests.ts |
 | [full-4dd6a78338-head-guard](raw/full-4dd6a78338-head-guard.json) | 0 | 44.833 | 889900 | src/compiler/transformers/classThis.ts |
 | [full-4dd6a78338-parent-base](raw/full-4dd6a78338-parent-base.json) | 0 | 45.861 | 903412 | src/compiler/transformers/classThis.ts |
 | [full-4dd6a78338-parent-guard](raw/full-4dd6a78338-parent-guard.json) | 0 | 43.319 | 868732 | src/compiler/transformers/classThis.ts |
@@ -36,7 +38,9 @@ Elapsed values are monotonic seconds. Peak RSS is wait4 ru_maxrss in KiB. Census
 | [full-7f2a045a69-head-guard](raw/full-7f2a045a69-head-guard.json) | 0 | 54.414 | 966836 | src/compiler/transformers/module/impliedNodeFormatDependent.ts |
 | [full-7f2a045a69-parent-base](raw/full-7f2a045a69-parent-base.json) | 0 | 48.300 | 931080 | src/compiler/transformers/module/impliedNodeFormatDependent.ts |
 | [full-7f2a045a69-parent-guard](raw/full-7f2a045a69-parent-guard.json) | 0 | 50.528 | 963416 | src/compiler/transformers/module/impliedNodeFormatDependent.ts |
+| [full-8f10524394-head-guard](raw/full-8f10524394-head-guard.json) | 0 | 81.803 | 926276 | src/compiler/factory/parenthesizerRules.ts |
 | [full-8f10524394-parent-base](raw/full-8f10524394-parent-base.json) | 0 | 94.473 | 916584 | src/compiler/factory/parenthesizerRules.ts |
+| [full-8f10524394-parent-guard](raw/full-8f10524394-parent-guard.json) | 0 | 84.320 | 972532 | src/compiler/factory/parenthesizerRules.ts |
 | [full-91560bd618-head-guard](raw/full-91560bd618-head-guard.json) | 0 | 103.929 | 1051488 | src/compiler/transformers/typeSerializer.ts |
 | [full-91560bd618-parent-base](raw/full-91560bd618-parent-base.json) | 0 | 103.060 | 1038416 | src/compiler/transformers/typeSerializer.ts |
 | [full-91560bd618-parent-guard](raw/full-91560bd618-parent-guard.json) | 0 | 104.451 | 1073548 | src/compiler/transformers/typeSerializer.ts |
@@ -55,6 +59,9 @@ Elapsed values are monotonic seconds. Peak RSS is wait4 ru_maxrss in KiB. Census
 | [full-dbf13ff563-head-guard](raw/full-dbf13ff563-head-guard.json) | 0 | 36.476 | 871208 | src/compiler/factory/utilitiesPublic.ts |
 | [full-dbf13ff563-parent-base](raw/full-dbf13ff563-parent-base.json) | 0 | 33.285 | 885928 | src/compiler/factory/utilitiesPublic.ts |
 | [full-dbf13ff563-parent-guard](raw/full-dbf13ff563-parent-guard.json) | 0 | 36.193 | 889316 | src/compiler/factory/utilitiesPublic.ts |
+| [full-e082ecd054-head-guard](raw/full-e082ecd054-head-guard.json) | 0 | 144.789 | 1066352 | src/compiler/transformers/utilities.ts |
+| [full-e082ecd054-parent-base](raw/full-e082ecd054-parent-base.json) | 0 | 130.531 | 1058880 | src/compiler/transformers/utilities.ts |
+| [full-e082ecd054-parent-guard](raw/full-e082ecd054-parent-guard.json) | 0 | 141.749 | 1054344 | src/compiler/transformers/utilities.ts |
 | [guard-head](raw/guard-head.json) | 0 | 4911.040 | 4490772 |  |
 | [guard-parent](raw/guard-parent.json) | 0 | 4888.397 | 4624656 |  |
 | [identity-head](raw/identity-head.json) | 0 | 0.396 | 32468 |  |

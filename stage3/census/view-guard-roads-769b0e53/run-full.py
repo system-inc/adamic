@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Resume independent full-mode children, verify each file, checkpoint every child."""
-import concurrent.futures,hashlib,json,os,signal,subprocess,sys,threading,runpy
+import concurrent.futures,hashlib,json,os,signal,subprocess,sys,threading,runpy,datetime,shutil
 from pathlib import Path
 root=Path(__file__).resolve().parent;repo=root.parents[2]
 helpers=runpy.run_path(str(root/'pair-guards.py'));raw_findings=helpers['raw_findings'];load=helpers['load']
@@ -29,6 +29,16 @@ def one(job):
  file,side,mode,name=job;p=prefix(file)
  if stopping:return job,False
  if completed(name):return job,False
+ metadata=root/'raw'/(name+'.json')
+ if metadata.exists():
+  archive=root/'raw/attempts'/(name+'-'+datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S'))
+  archive.mkdir(parents=True,exist_ok=False)
+  names=[name+'.json',name+'.log',name+'-normal.jsonl',name+'-times.jsonl']
+  if mode=='guard':names.append(p+'-'+side+'-records.jsonl')
+  for oldname in names:
+   for suffix in ['', '.gz']:
+    old=root/'raw'/(oldname+suffix)
+    if old.exists():shutil.move(str(old),archive/old.name)
  env=dict(os.environ,LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',LATENT_ONLY_FILE=file,GOMAXPROCS='2',GOMEMLIMIT='2560MiB',ADAMIC_TYPESCRIPT_SOURCE='/workspace/roads-typescript',LATENT_TIMES=str(root/'raw'/(name+'-times.jsonl')))
  env.pop('ROADS_GUARD_MUTANT',None);env.pop('ROADS_GUARD_STREAM',None)
  binary=f'/workspace/roads-{side}-census'

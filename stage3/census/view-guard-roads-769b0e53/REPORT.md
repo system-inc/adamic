@@ -4,7 +4,7 @@ Task 3zex15c. Report only. Parent `16429a304` against head `769b0e534aa9106cec78
 
 **First-error census complete: the head adds 289 raw and 289 distinct guard findings.** These are 627 refusal observations over 635 recorded views, in 340 units. The parent guard accepts every recorded view. All reported first-error refusal paths have source-based readings in [the complete case catalogue](guard-findings.md).
 
-Full-mode status: **9/26 affected files fully verified**. The remaining checks are in progress.
+Full-mode status: **12/26 affected files fully verified**. The remaining checks are in progress.
 
 ## Paired counts
 

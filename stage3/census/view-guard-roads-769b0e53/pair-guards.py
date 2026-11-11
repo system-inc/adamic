@@ -6,6 +6,7 @@ root=Path(__file__).resolve().parent;repo=root.parents[2]
 sys.path.insert(0,str(repo/'stage3/census/pair'));import pair
 
 def load(p):
+ if not p.exists():p=Path(str(p)+'.gz')
  op=gzip.open if str(p).endswith('.gz') else open
  with op(p,'rt') as f:return [json.loads(x) for x in f if x.strip()]
 def path(name):
@@ -14,6 +15,7 @@ def path(name):
 def normal_findings(rows):
  return [f for row in rows for f in row.get('findings',[]) or []]
 def raw_findings(p):
+ if not p.exists():p=Path(str(p)+'.gz')
  op=gzip.open if str(p).endswith('.gz') else open
  chunks=[]
  with op(p,'rt') as stream:
@@ -25,6 +27,7 @@ def raw_findings(p):
    chunks.append(line[start:end].encode())
  return b'\n'.join(chunks)
 def raw_stream(p):
+ if not p.exists():p=Path(str(p)+'.gz')
  return gzip.open(p,'rb').read() if str(p).endswith('.gz') else p.read_bytes()
 def non_telemetry_bytes(p):
  return b''.join(line for line in raw_stream(p).splitlines(keepends=True) if json.loads(line).get('status')!='relation_report')
