@@ -906,19 +906,55 @@
     "command": [
       "/workspace/scratch/baobab-latent",
       "/workspace/scratch/baobab-adapted/src/compiler",
-      "/workspace/adamic/stage3/census/sourcefile-like-sites/raw/scanner.jsonl"
+      "/workspace/adamic/stage3/census/sourcefile-like-sites/continuation/baseline/raw/scanner.jsonl"
     ],
-    "child_exit": -15,
-    "wall_seconds": 300.11927463799975,
-    "over_five_minutes": true,
-    "piece": 4,
-    "max_concurrent_files": 2,
-    "stream": "raw/scanner.jsonl",
-    "recorded_files": [],
+    "child_exit": 0,
+    "wall_seconds": 253.29652612300015,
+    "timed_out": false,
+    "bound_seconds": 1500,
+    "max_concurrent_files": 1,
+    "completed_timing_units": 150,
+    "last_timing_units": [
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts:4075:1",
+        "wall_seconds": 0.13602083,
+        "cpu_seconds": 0.13613100000003442
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts:4087:1",
+        "wall_seconds": 0.103626704,
+        "cpu_seconds": 0.103999999999985
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts:4092:1",
+        "wall_seconds": 0.096856905,
+        "cpu_seconds": 0.09716900000000805
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts:4096:1",
+        "wall_seconds": 0.14665089,
+        "cpu_seconds": 0.14708899999999403
+      },
+      {
+        "file": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts",
+        "where": "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts:4103:1",
+        "wall_seconds": 0.151060042,
+        "cpu_seconds": 0.15228799999999865
+      }
+    ],
+    "stream": "continuation/baseline/raw/scanner.jsonl",
+    "over_five_minutes": false,
+    "recorded_files": [
+      "/workspace/scratch/baobab-adapted/src/compiler/scanner.ts"
+    ],
     "checker_rejected": false,
     "diagnostic_count": 0,
     "full_header": true,
-    "relation_trailer": false
+    "relation_trailer": true
   },
   {
     "file": "semver.ts",

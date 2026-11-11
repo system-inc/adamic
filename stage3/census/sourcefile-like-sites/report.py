@@ -38,6 +38,8 @@ for s in cov:lines.append(f'| {s["file"]} | {s["child_exit"]} | {s["wall_seconds
 if complete<79:lines+=['','**Incomplete census.** Counts are observed lower bounds. Missing or timed-out file results must not be treated as zero sites. See coverage.json and raw per-file logs/status files.']
 lines+=['','Raw per-file findings, timing streams, logs, and child statuses are under raw/. Files over 1,000,000 bytes are gzip compressed. run-piece.py, collect.py, classify.cjs, and report.py reproduce the run and tables; provenance.json records pins. Setup and preparation logs are under preparation/. Checkpoints are snapshot commits on typescript/sourcefile-like-sites-checkpoint; the final report branch contains one commit on the measured main tip.','']
 text='\n'.join(lines)
+addition=out/'continuation/REPORT-ADDITION.md'
+if addition.exists():text+='\n'+addition.read_text()
 assert '\u2013' not in text and '\u2014' not in text
 (out/'REPORT.md').write_text(text)
 print('\n'.join(lines[8:8+len(counts)+4]))

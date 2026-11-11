@@ -2,9 +2,9 @@
 
 Measured main: `d690f276749f91e6b36fe3a9726a5a453fcd7d39`. Upstream TypeScript 6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Report only; no compiler or adaptation changes.
 
-Attempted 79 of 79 compiler files; 76 completed full-mode streams. Physical sites: 23; distinct finding/phase/unit observations: 23.
+Attempted 79 of 79 compiler files; 77 completed full-mode streams. Physical sites: 23; distinct finding/phase/unit observations: 23.
 
-**Counts are lower bounds.** Incomplete streams: `checker.ts`, `scanner.ts`, `utilities.ts`.
+**Counts are lower bounds.** Incomplete streams: `checker.ts`, `utilities.ts`.
 
 ## By callee
 
@@ -130,7 +130,7 @@ This is a latent observational census, not an exhaustive proof of all runtime pa
 | program.ts | 0 | 729.78 | yes | yes |
 | programDiagnostics.ts | 0 | 47.93 | yes | no |
 | resolutionCache.ts | 0 | 65.13 | yes | no |
-| scanner.ts | -15 | 300.12 | no | yes |
+| scanner.ts | 0 | 253.30 | yes | no |
 | semver.ts | 0 | 60.31 | yes | no |
 | sourcemap.ts | 0 | 67.29 | yes | no |
 | symbolWalker.ts | 0 | 47.18 | yes | no |
