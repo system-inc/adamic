@@ -1,0 +1,29 @@
+--- baseline/src/compiler/scanner.ts
++++ c/src/compiler/scanner.ts
+@@ -22,7 +22,7 @@
+     LanguageFeatureMinimumTarget,
+     LanguageVariant,
+     type LanugageFeatures,
+-    type LineAndCharacter,
++    type LineAndCharacter, type LineMapSource,
+     type MapLike,
+     parsePseudoBigInt,
+     positionIsSynthesized,
+@@ -500,7 +500,7 @@
+ }
+ 
+ /** @internal */
+-export function getLineStarts(sourceFile: SourceFileLike): readonly number[] {
++export function getLineStarts(sourceFile: LineMapSource): readonly number[] {
+     return sourceFile.lineMap || (sourceFile.lineMap = computeLineStarts(sourceFile.text));
+ }
+ 
+@@ -545,7 +545,7 @@
+     return isNegative ? lowerLine - upperLine : upperLine - lowerLine;
+ }
+ 
+-export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter {
++export function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter {
+     return computeLineAndCharacterOfPosition(getLineStarts(sourceFile), position);
+ }
+ 

@@ -1,0 +1,18 @@
+--- baseline/src/compiler/types.ts
++++ c/src/compiler/types.ts
+@@ -4283,10 +4283,13 @@
+ /**
+  * Subset of properties from SourceFile that are used in multiple utility functions
+  */
+-export interface SourceFileLike {
++/** @internal */
++export interface LineMapSource {
+     readonly text: string;
+-    /** @internal */
+     lineMap?: readonly number[] | undefined;
++}
++
++export interface SourceFileLike extends LineMapSource {
+     /** @internal */
+     getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;
+ }
