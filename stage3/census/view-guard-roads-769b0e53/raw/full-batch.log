@@ -602,3 +602,79 @@ checkpoint_wrapper_child_exit=0
 {"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 104.45101113700002, "peak_rss_kib": 1073548, "user_seconds": 97.045598, "system_seconds": 4.127651, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-parent-records.jsonl"}}
 {"file": "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts", "run": "full-91560bd618-head-guard", "wrapper_child_exit": 0}
 {"file": "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts", "run": "full-91560bd618-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=255900f4edfade9c7aed013b21e18844a3fbf145
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 22,
+        "deferred_generic_instantiation": 3
+      },
+      "observed_units": 22,
+      "views_evaluated": 26,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 22,
+        "deferred_generic_instantiation": 3
+      },
+      "observed_units": 22,
+      "views_evaluated": 26,
+      "raw_guard_refusals": 26,
+      "units_with_refusals": 4,
+      "probe_errors": 0,
+      "roads": {
+        "union arms": 8,
+        "index values": 18
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 4,
+      "new_guard_stops_in_normally_finding_free_units": 1,
+      "new_guard_stops_in_already_normally_blocked_units": 3,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 7,
+      "new_sites": 7,
+      "unit_first_stop_delta": 4,
+      "regressions": 4
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 7,
+      "new_sites": 7,
+      "unit_first_stop_delta": 4,
+      "regressions": 4
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-91560bd618", "cases": 7, "categories": {"guard bug: identity/union cross-product": 7}, "needs_reading": 0}
+render_wrapper_child_exit=0
