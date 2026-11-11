@@ -1,0 +1,2178 @@
+[
+  {
+    "file": "src/compiler/tracing.ts",
+    "line": 206,
+    "column": 37,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 8172,
+    "argument_end": 8176,
+    "argument_line": 206,
+    "argument_column": 67,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/compiler/tracing.ts",
+        "start": 7973
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/tracing.ts",
+    "line": 207,
+    "column": 35,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 8256,
+    "argument_end": 8260,
+    "argument_line": 207,
+    "argument_column": 65,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/compiler/tracing.ts",
+        "start": 7973
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/scanner.ts",
+    "line": 471,
+    "column": 43,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 47328,
+    "argument_end": 47338,
+    "argument_line": 471,
+    "argument_column": 57,
+    "declared": {
+      "type": "SourceFileLike",
+      "annotation": "SourceFileLike",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/scanner.ts",
+        "start": 47045
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/scanner.ts",
+    "line": 539,
+    "column": 24,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 50636,
+    "argument_end": 50646,
+    "argument_line": 539,
+    "argument_column": 38,
+    "declared": {
+      "type": "SourceFileLike",
+      "annotation": "SourceFileLike",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/scanner.ts",
+        "start": 50498
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/scanner.ts",
+    "line": 549,
+    "column": 46,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 51206,
+    "argument_end": 51216,
+    "argument_line": 549,
+    "argument_column": 60,
+    "declared": {
+      "type": "{ readonly text: string; lineMap?: readonly number[]; }",
+      "annotation": "{ readonly text: string; lineMap?: readonly number[] }",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/scanner.ts",
+        "start": 51040
+      }
+    },
+    "flow_type": "{ readonly text: string; lineMap?: readonly number[]; }",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 1018,
+    "column": 12,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 33322,
+    "argument_end": 33332,
+    "argument_line": 1018,
+    "argument_column": 26,
+    "declared": {
+      "type": "SourceFileLike",
+      "annotation": "SourceFileLike",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/utilities.ts",
+        "start": 33228
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 1025,
+    "column": 17,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 33578,
+    "argument_end": 33582,
+    "argument_line": 1025,
+    "argument_column": 47,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/compiler/utilities.ts",
+        "start": 33497
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 1032,
+    "column": 24,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 33844,
+    "argument_end": 33854,
+    "argument_line": 1032,
+    "argument_column": 38,
+    "declared": {
+      "type": "SourceFileLike",
+      "annotation": "SourceFileLike",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/utilities.ts",
+        "start": 33738
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 1213,
+    "column": 16,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 42435,
+    "argument_end": 42445,
+    "argument_line": 1213,
+    "argument_column": 46,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/utilities.ts",
+        "start": 42210
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2526,
+    "column": 37,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 88023,
+    "argument_end": 88033,
+    "argument_line": 2526,
+    "argument_column": 67,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/utilities.ts",
+        "start": 87782
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2527,
+    "column": 35,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 88116,
+    "argument_end": 88126,
+    "argument_line": 2527,
+    "argument_column": 65,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/utilities.ts",
+        "start": 87782
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 6748,
+    "column": 24,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 266275,
+    "argument_end": 266285,
+    "argument_line": 6748,
+    "argument_column": 38,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/utilities.ts",
+        "start": 266190
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 52424,
+    "column": 27,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 3052542,
+    "argument_end": 3052546,
+    "argument_line": 52424,
+    "argument_column": 57,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/checker.ts",
+        "start": 3051869
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 52425,
+    "column": 25,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 3052637,
+    "argument_end": 3052641,
+    "argument_line": 52425,
+    "argument_column": 55,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/checker.ts",
+        "start": 3051869
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 359,
+    "column": 33,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "originalFile",
+    "argument_start": 16101,
+    "argument_end": 16113,
+    "argument_line": 359,
+    "argument_column": 63,
+    "declared": {
+      "type": "Node",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/compiler/transformers/jsx.ts",
+        "start": 15510
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/transformers/declarations.ts",
+    "line": 1264,
+    "column": 40,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "currentSourceFile",
+    "argument_start": 62455,
+    "argument_end": 62472,
+    "argument_line": 1264,
+    "argument_column": 70,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/compiler/transformers/declarations.ts",
+        "start": 9044
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/transformers/declarations.ts",
+    "line": 1264,
+    "column": 109,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "currentSourceFile",
+    "argument_start": 62524,
+    "argument_end": 62541,
+    "argument_line": 1264,
+    "argument_column": 139,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/compiler/transformers/declarations.ts",
+        "start": 9044
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 1444,
+    "column": 52,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "Debug.checkDefined(currentSourceFile)",
+    "argument_start": 58857,
+    "argument_end": 58894,
+    "argument_line": 1444,
+    "argument_column": 66,
+    "declared": {
+      "type": "ts.SourceFile",
+      "origin": "declared return of Debug.checkDefined"
+    },
+    "flow_type": "ts.SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 3961,
+    "column": 82,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "currentSourceFile",
+    "argument_start": 171010,
+    "argument_end": 171027,
+    "argument_line": 3961,
+    "argument_column": 112,
+    "declared": {
+      "type": "ts.SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/compiler/emitter.ts",
+        "start": 49810
+      }
+    },
+    "flow_type": "ts.SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 3961,
+    "column": 150,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "currentSourceFile",
+    "argument_start": 171078,
+    "argument_end": 171095,
+    "argument_line": 3961,
+    "argument_column": 180,
+    "declared": {
+      "type": "ts.SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/compiler/emitter.ts",
+        "start": 49810
+      }
+    },
+    "flow_type": "ts.SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 6233,
+    "column": 66,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceMapSource",
+    "argument_start": 268874,
+    "argument_end": 268889,
+    "argument_line": 6233,
+    "argument_column": 96,
+    "declared": {
+      "type": "ts.SourceMapSource",
+      "annotation": "SourceMapSource",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/compiler/emitter.ts",
+        "start": 51776
+      }
+    },
+    "flow_type": "ts.SourceMapSource",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 671,
+    "column": 37,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "diagnostic.file",
+    "argument_start": 24412,
+    "argument_end": 24427,
+    "argument_line": 671,
+    "argument_column": 67,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/compiler/types.ts",
+        "start": 300277
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 713,
+    "column": 59,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 26154,
+    "argument_end": 26158,
+    "argument_line": 713,
+    "argument_column": 89,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/program.ts",
+        "start": 25922
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 714,
+    "column": 57,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 26255,
+    "argument_end": 26259,
+    "argument_line": 714,
+    "argument_column": 87,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/program.ts",
+        "start": 25922
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 715,
+    "column": 28,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 26336,
+    "argument_end": 26340,
+    "argument_line": 715,
+    "argument_column": 58,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/program.ts",
+        "start": 25922
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 768,
+    "column": 59,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 29082,
+    "argument_end": 29086,
+    "argument_line": 768,
+    "argument_column": 89,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/program.ts",
+        "start": 28864
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2973,
+    "column": 28,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 145144,
+    "argument_end": 145148,
+    "argument_line": 2973,
+    "argument_column": 42,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "origin": "BindingElement",
+      "declaration": {
+        "file": "src/compiler/program.ts",
+        "start": 144958
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 249,
+    "column": 30,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "diagnosticForFileName.file!",
+    "argument_start": 8760,
+    "argument_end": 8787,
+    "argument_line": 249,
+    "argument_column": 60,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/compiler/types.ts",
+        "start": 300277
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 109,
+    "column": 27,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 2883,
+    "argument_end": 2887,
+    "argument_line": 109,
+    "argument_column": 41,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/compiler/executeCommandLine.ts",
+        "start": 2783
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "line": 913,
+    "column": 24,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 31468,
+    "argument_end": 31478,
+    "argument_line": 913,
+    "argument_column": 38,
+    "declared": {
+      "type": "SourceFileLike",
+      "annotation": "SourceFileLike",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/utilities.ts",
+        "start": 31392
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "line": 3475,
+    "column": 39,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 140186,
+    "argument_end": 140196,
+    "argument_line": 3475,
+    "argument_column": 69,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/utilities.ts",
+        "start": 139256
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "line": 3476,
+    "column": 39,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 140305,
+    "argument_end": 140315,
+    "argument_line": 3476,
+    "argument_column": 69,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/utilities.ts",
+        "start": 139256
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/sourcemaps.ts",
+    "line": 85,
+    "column": 40,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 3217,
+    "argument_end": 3221,
+    "argument_line": 85,
+    "argument_column": 54,
+    "declared": {
+      "type": "SourceFileLike | undefined",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/services/sourcemaps.ts",
+        "start": 2937
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/sourcemaps.ts",
+    "line": 236,
+    "column": 54,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "this",
+    "argument_start": 9564,
+    "argument_end": 9568,
+    "argument_line": 236,
+    "argument_column": 68,
+    "declared": {
+      "type": "SourceFileLike",
+      "origin": "explicit, class, or contextual this type",
+      "flow_this": "SourceFileLike"
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractType.ts",
+    "line": 117,
+    "column": 40,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 3411,
+    "argument_end": 3423,
+    "argument_line": 117,
+    "argument_column": 70,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractType.ts",
+    "line": 117,
+    "column": 121,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 3492,
+    "argument_end": 3504,
+    "argument_line": 117,
+    "argument_column": 151,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractType.ts",
+    "line": 118,
+    "column": 38,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 3610,
+    "argument_end": 3622,
+    "argument_line": 118,
+    "argument_column": 68,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractType.ts",
+    "line": 118,
+    "column": 119,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 3691,
+    "argument_end": 3703,
+    "argument_line": 118,
+    "argument_column": 149,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractType.ts",
+    "line": 330,
+    "column": 47,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 14471,
+    "argument_end": 14475,
+    "argument_line": 330,
+    "argument_column": 77,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/refactors/extractType.ts",
+        "start": 11149
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractType.ts",
+    "line": 330,
+    "column": 102,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 14526,
+    "argument_end": 14530,
+    "argument_line": 330,
+    "argument_column": 132,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/refactors/extractType.ts",
+        "start": 11149
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 193,
+    "column": 32,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 5367,
+    "argument_end": 5371,
+    "argument_line": 193,
+    "argument_column": 62,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/services/refactors/moveToFile.ts",
+        "start": 4291
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 193,
+    "column": 116,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 5451,
+    "argument_end": 5455,
+    "argument_line": 193,
+    "argument_column": 146,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/services/refactors/moveToFile.ts",
+        "start": 4291
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 194,
+    "column": 30,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 5564,
+    "argument_end": 5568,
+    "argument_line": 194,
+    "argument_column": 60,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/services/refactors/moveToFile.ts",
+        "start": 4291
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 194,
+    "column": 106,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 5640,
+    "argument_end": 5644,
+    "argument_line": 194,
+    "argument_column": 136,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/services/refactors/moveToFile.ts",
+        "start": 4291
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/moveToNewFile.ts",
+    "line": 60,
+    "column": 32,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 1988,
+    "argument_end": 1992,
+    "argument_line": 60,
+    "argument_column": 62,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/services/refactors/moveToNewFile.ts",
+        "start": 1864
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/moveToNewFile.ts",
+    "line": 60,
+    "column": 116,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 2072,
+    "argument_end": 2076,
+    "argument_line": 60,
+    "argument_column": 146,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/services/refactors/moveToNewFile.ts",
+        "start": 1864
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/moveToNewFile.ts",
+    "line": 61,
+    "column": 30,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 2185,
+    "argument_end": 2189,
+    "argument_line": 61,
+    "argument_column": 60,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/services/refactors/moveToNewFile.ts",
+        "start": 1864
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/moveToNewFile.ts",
+    "line": 61,
+    "column": 106,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 2261,
+    "argument_end": 2265,
+    "argument_line": 61,
+    "argument_column": 136,
+    "declared": {
+      "type": "SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/services/refactors/moveToNewFile.ts",
+        "start": 1864
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 252,
+    "column": 44,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 7343,
+    "argument_end": 7355,
+    "argument_line": 252,
+    "argument_column": 74,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 252,
+    "column": 125,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 7424,
+    "argument_end": 7436,
+    "argument_line": 252,
+    "argument_column": 155,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 253,
+    "column": 42,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 7546,
+    "argument_end": 7558,
+    "argument_line": 253,
+    "argument_column": 72,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 253,
+    "column": 123,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 7627,
+    "argument_end": 7639,
+    "argument_line": 253,
+    "argument_column": 153,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 281,
+    "column": 44,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 8987,
+    "argument_end": 8999,
+    "argument_line": 281,
+    "argument_column": 74,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 281,
+    "column": 125,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 9068,
+    "argument_end": 9080,
+    "argument_line": 281,
+    "argument_column": 155,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 282,
+    "column": 42,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 9190,
+    "argument_end": 9202,
+    "argument_line": 282,
+    "argument_column": 72,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 282,
+    "column": 123,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "context.file",
+    "argument_start": 9271,
+    "argument_end": 9283,
+    "argument_line": 282,
+    "argument_column": 153,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/services/types.ts",
+        "start": 75479
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 1126,
+    "column": 16,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "this",
+    "argument_start": 38159,
+    "argument_end": 38163,
+    "argument_line": 1126,
+    "argument_column": 46,
+    "declared": {
+      "type": "SourceFileObject",
+      "origin": "explicit, class, or contextual this type",
+      "flow_this": "this"
+    },
+    "flow_type": "this",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 1130,
+    "column": 16,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "this",
+    "argument_start": 38264,
+    "argument_end": 38268,
+    "argument_line": 1130,
+    "argument_column": 30,
+    "declared": {
+      "type": "SourceFileObject",
+      "origin": "explicit, class, or contextual this type",
+      "flow_this": "this"
+    },
+    "flow_type": "this",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 1134,
+    "column": 50,
+    "callee": "getLineStarts",
+    "callee_expression": "getLineStarts",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "this",
+    "argument_start": 38448,
+    "argument_end": 38452,
+    "argument_line": 1134,
+    "argument_column": 64,
+    "declared": {
+      "type": "SourceFileObject",
+      "origin": "explicit, class, or contextual this type",
+      "flow_this": "this"
+    },
+    "flow_type": "this",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 1325,
+    "column": 16,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "this",
+    "argument_start": 46762,
+    "argument_end": 46766,
+    "argument_line": 1325,
+    "argument_column": 46,
+    "declared": {
+      "type": "SourceMapSourceObject",
+      "origin": "explicit, class, or contextual this type",
+      "flow_this": "this"
+    },
+    "flow_type": "this",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/codefixes/disableJsDiagnostics.ts",
+    "line": 76,
+    "column": 34,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 3015,
+    "argument_end": 3025,
+    "argument_line": 76,
+    "argument_column": 64,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/codefixes/disableJsDiagnostics.ts",
+        "start": 2882
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 1801,
+    "column": 67,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 70050,
+    "argument_end": 70060,
+    "argument_line": 1801,
+    "argument_column": 97,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 64403
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 1801,
+    "column": 141,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 70124,
+    "argument_end": 70134,
+    "argument_line": 1801,
+    "argument_column": 171,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 64403
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 2171,
+    "column": 9,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 85916,
+    "argument_end": 85926,
+    "argument_line": 2171,
+    "argument_column": 39,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 85713
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 2172,
+    "column": 15,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 85988,
+    "argument_end": 85998,
+    "argument_line": 2172,
+    "argument_column": 45,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 85713
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 2462,
+    "column": 24,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "this",
+    "argument_start": 97738,
+    "argument_end": 97742,
+    "argument_line": 2462,
+    "argument_column": 54,
+    "declared": {
+      "type": "{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }",
+      "origin": "explicit, class, or contextual this type",
+      "flow_this": "{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }"
+    },
+    "flow_type": "{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 2511,
+    "column": 24,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "this",
+    "argument_start": 99585,
+    "argument_end": 99589,
+    "argument_line": 2511,
+    "argument_column": 54,
+    "declared": {
+      "type": "{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }",
+      "origin": "explicit, class, or contextual this type",
+      "flow_this": "{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }"
+    },
+    "flow_type": "{ text: string; getLineAndCharacterOfPosition(pos: number): LineAndCharacter; }",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 4393,
+    "column": 33,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 194794,
+    "argument_end": 194804,
+    "argument_line": 4393,
+    "argument_column": 63,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 137051
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 4394,
+    "column": 33,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 194894,
+    "argument_end": 194904,
+    "argument_line": 4394,
+    "argument_column": 63,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 137051
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 4415,
+    "column": 33,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 196959,
+    "argument_end": 196969,
+    "argument_line": 4415,
+    "argument_column": 63,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 137051
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 4416,
+    "column": 33,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 197059,
+    "argument_end": 197069,
+    "argument_line": 4416,
+    "argument_column": 63,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 137051
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 5344,
+    "column": 34,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 246337,
+    "argument_end": 246347,
+    "argument_line": 5344,
+    "argument_column": 64,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 245011
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 5344,
+    "column": 108,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 246411,
+    "argument_end": 246421,
+    "argument_line": 5344,
+    "argument_column": 138,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 245011
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 5738,
+    "column": 21,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 265462,
+    "argument_end": 265472,
+    "argument_line": 5738,
+    "argument_column": 51,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 262489
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 5738,
+    "column": 95,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 265536,
+    "argument_end": 265546,
+    "argument_line": 5738,
+    "argument_column": 125,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/completions.ts",
+        "start": 262489
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/textChanges.ts",
+    "line": 1343,
+    "column": 24,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "this",
+    "argument_start": 66040,
+    "argument_end": 66044,
+    "argument_line": 1343,
+    "argument_column": 54,
+    "declared": {
+      "type": "SourceFileLike",
+      "origin": "explicit, class, or contextual this type",
+      "flow_this": "SourceFileLike"
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 162,
+    "column": 30,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 6632,
+    "argument_end": 6642,
+    "argument_line": 162,
+    "argument_column": 60,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/formatting/smartIndenter.ts",
+        "start": 6458
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 163,
+    "column": 34,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 6728,
+    "argument_end": 6738,
+    "argument_line": 163,
+    "argument_column": 64,
+    "declared": {
+      "type": "SourceFile",
+      "annotation": "SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/formatting/smartIndenter.ts",
+        "start": 6458
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 402,
+    "column": 51,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 19913,
+    "argument_end": 19923,
+    "argument_line": 402,
+    "argument_column": 81,
+    "declared": {
+      "type": "SourceFileLike",
+      "annotation": "SourceFileLike",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/formatting/smartIndenter.ts",
+        "start": 19597
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 441,
+    "column": 38,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 21974,
+    "argument_end": 21984,
+    "argument_line": 441,
+    "argument_column": 68,
+    "declared": {
+      "type": "SourceFileLike",
+      "annotation": "SourceFileLike",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/formatting/smartIndenter.ts",
+        "start": 21758
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 454,
+    "column": 37,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 22839,
+    "argument_end": 22849,
+    "argument_line": 454,
+    "argument_column": 67,
+    "declared": {
+      "type": "SourceFileLike",
+      "annotation": "SourceFileLike",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/formatting/smartIndenter.ts",
+        "start": 21758
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/services/formatting/smartIndenter.ts",
+    "line": 471,
+    "column": 40,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "sourceFile",
+    "argument_start": 23802,
+    "argument_end": 23812,
+    "argument_line": 471,
+    "argument_column": 70,
+    "declared": {
+      "type": "SourceFileLike",
+      "annotation": "SourceFileLike",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/services/formatting/smartIndenter.ts",
+        "start": 23158
+      }
+    },
+    "flow_type": "SourceFileLike",
+    "diagnostics": []
+  },
+  {
+    "file": "src/server/session.ts",
+    "line": 265,
+    "column": 38,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "info.file",
+    "argument_start": 7488,
+    "argument_end": 7497,
+    "argument_line": 265,
+    "argument_column": 68,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/compiler/types.ts",
+        "start": 300277
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/server/session.ts",
+    "line": 266,
+    "column": 36,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "info.file",
+    "argument_start": 7580,
+    "argument_end": 7589,
+    "argument_line": 266,
+    "argument_column": 66,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/compiler/types.ts",
+        "start": 300277
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/server/session.ts",
+    "line": 285,
+    "column": 51,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "diag.file",
+    "argument_start": 8536,
+    "argument_end": 8545,
+    "argument_line": 285,
+    "argument_column": 81,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/compiler/types.ts",
+        "start": 300277
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/server/session.ts",
+    "line": 286,
+    "column": 49,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "diag.file",
+    "argument_start": 8661,
+    "argument_end": 8670,
+    "argument_line": 286,
+    "argument_column": 79,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/compiler/types.ts",
+        "start": 300277
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/server/session.ts",
+    "line": 1557,
+    "column": 57,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "d.file",
+    "argument_start": 65404,
+    "argument_end": 65410,
+    "argument_line": 1557,
+    "argument_column": 87,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/compiler/types.ts",
+        "start": 300277
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/server/session.ts",
+    "line": 1558,
+    "column": 55,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "d.file",
+    "argument_start": 65529,
+    "argument_end": 65535,
+    "argument_line": 1558,
+    "argument_column": 85,
+    "declared": {
+      "type": "SourceFile | undefined",
+      "annotation": "SourceFile | undefined",
+      "origin": "PropertySignature",
+      "declaration": {
+        "file": "src/compiler/types.ts",
+        "start": 300277
+      }
+    },
+    "flow_type": "SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 726,
+    "column": 41,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "ts.getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 32117,
+    "argument_end": 32121,
+    "argument_line": 726,
+    "argument_column": 74,
+    "declared": {
+      "type": "ts.SourceFile",
+      "annotation": "ts.SourceFile",
+      "origin": "Parameter",
+      "declaration": {
+        "file": "src/harness/fourslashImpl.ts",
+        "start": 31986
+      }
+    },
+    "flow_type": "ts.SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/testRunner/unittests/tsserver/completionsIncomplete.ts",
+    "line": 193,
+    "column": 41,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "ts.getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 10694,
+    "argument_end": 10698,
+    "argument_line": 193,
+    "argument_column": 74,
+    "declared": {
+      "type": "ts.SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/testRunner/unittests/tsserver/completionsIncomplete.ts",
+        "start": 10495
+      }
+    },
+    "flow_type": "ts.SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/testRunner/unittests/tsserver/completionsIncomplete.ts",
+    "line": 232,
+    "column": 40,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "ts.getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 12602,
+    "argument_end": 12606,
+    "argument_line": 232,
+    "argument_column": 73,
+    "declared": {
+      "type": "ts.SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/testRunner/unittests/tsserver/completionsIncomplete.ts",
+        "start": 12404
+      }
+    },
+    "flow_type": "ts.SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/testRunner/unittests/tsserver/completionsIncomplete.ts",
+    "line": 233,
+    "column": 38,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "ts.getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 12702,
+    "argument_end": 12706,
+    "argument_line": 233,
+    "argument_column": 71,
+    "declared": {
+      "type": "ts.SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/testRunner/unittests/tsserver/completionsIncomplete.ts",
+        "start": 12404
+      }
+    },
+    "flow_type": "ts.SourceFile",
+    "diagnostics": []
+  },
+  {
+    "file": "src/testRunner/unittests/tsserver/completionsIncomplete.ts",
+    "line": 262,
+    "column": 37,
+    "callee": "getLineAndCharacterOfPosition",
+    "callee_expression": "ts.getLineAndCharacterOfPosition",
+    "signature_file": "src/compiler/scanner.ts",
+    "argument": "file",
+    "argument_start": 14266,
+    "argument_end": 14270,
+    "argument_line": 262,
+    "argument_column": 70,
+    "declared": {
+      "type": "ts.SourceFile",
+      "origin": "VariableDeclaration",
+      "declaration": {
+        "file": "src/testRunner/unittests/tsserver/completionsIncomplete.ts",
+        "start": 14071
+      }
+    },
+    "flow_type": "ts.SourceFile",
+    "diagnostics": []
+  }
+]
