@@ -191,7 +191,9 @@ run on a box: the Red column says what each must do.
 
 S3c-1 (a generator's call handed into the one-read Iterable<T> parameter of a nested callee, whose
 call is a CallClosure), each one exact line, run by `s3c-proof.sh` with the one test it must turn
-red. Not yet run on a box: the Red column says what each must do.
+red. Rows 1, 3, 4 and 5 went red on Codex 6af3fa67-a4e8-8191-abed-203b433f002b at 6a0cd7c2 (log at
+emit/generators-s3c1-proof deb179c3, proof/s3c/mutants.log); row 2 is unit-only, and row 6 is respelled below
+to compile and still owes its run.
 
 | Mutant | Edit | Red |
 |---|---|---|
@@ -200,4 +202,4 @@ red. Not yet run on a box: the Red column says what each must do.
 | The guard blind to nested callees (Compiler's guard) | lower/generators_nested_test.go, `capturedGenerators`: `arguments, targets = call.Arguments, program.ClosureTargets(call).Functions` made `_ = call` | TestNoCapturedOrEnvironmentLocalCanHoldAGenerator: its nested callee control, a parameter a CallClosure hands a generator into made captured by hand, goes unseen |
 | The exemption read by the shared graph (Compiler's scope) | lower/view_flow.go, `newAllocationFlowGraph`: `return collectAllocationFlowGraph(program, nil)` made `return collectAllocationFlowGraph(program, closureCallsOf(program))` | TestOnlyCalledDirectlyIsTheViewProofsAlone: the shared graph's rows read a nested function's parameter known |
 | The one-read rule skipped for a nested callee | lower/iterable_views.go, `checkGeneratorArguments`: in the `ir.CallClosure` case, `call, arguments = made, made.Arguments` made `_ = made` | TestNestedIterableCalleeRoadsAreNotYet's road 2 row lowers, its second read of the parameter uncounted |
-| iterableCallee's nested arm taken out | lower/generators.go, `iterableCallee`: `if declaration.Parent.Kind != ast.KindSourceFile && !nested {` made `if declaration.Parent.Kind != ast.KindSourceFile {` | TestNestedIterableCalleeLowers, every row, the plain function* rows refused by the void rules (adamic/no-void); every nested_callee_ fixture |
+| iterableCallee's nested arm taken out | lower/generators.go, `iterableCallee`: `nested := declaration.Parent.Kind == ast.KindBlock && ast.IsFunctionLike(declaration.Parent.Parent)` made `nested := false && ast.IsFunctionLike(declaration.Parent.Parent)` (the first spelling, dropping `!nested` from the test below, left nested unused, which Go refuses: Codex 6af3fa67) | TestNestedIterableCalleeLowers, every row, the plain function* rows refused by the void rules (adamic/no-void); every nested_callee_ fixture |
