@@ -1,0 +1,22 @@
+{
+  "phase": "stopped_at_turn_budget",
+  "stopped_utc": "2026-11-11T12:16:22.131244+00:00",
+  "full_verified": 13,
+  "full_required": 26,
+  "pending": [
+    "/workspace/roads-adapted/src/compiler/binder.ts",
+    "/workspace/roads-adapted/src/compiler/checker.ts",
+    "/workspace/roads-adapted/src/compiler/core.ts",
+    "/workspace/roads-adapted/src/compiler/emitter.ts",
+    "/workspace/roads-adapted/src/compiler/factory/emitHelpers.ts",
+    "/workspace/roads-adapted/src/compiler/factory/utilities.ts",
+    "/workspace/roads-adapted/src/compiler/parser.ts",
+    "/workspace/roads-adapted/src/compiler/program.ts",
+    "/workspace/roads-adapted/src/compiler/transformers/classFields.ts",
+    "/workspace/roads-adapted/src/compiler/transformers/declarations.ts",
+    "/workspace/roads-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+    "/workspace/roads-adapted/src/compiler/utilities.ts",
+    "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts"
+  ],
+  "reason": "The approximately two-hour continuation turn budget was reached after the complete first-error pair and 13 verified full-mode file checks. The remaining full batch was terminated with SIGTERM before losing access to its processes. Its actual controller exit is 2 (partial batch), and each interrupted census child records its own signal exit, time and peak RSS. The remaining 13 files are not claimed as complete checks. All completed child and file results are checkpointed; run-full.py can resume the pending children while preserving failed-attempt evidence."
+}

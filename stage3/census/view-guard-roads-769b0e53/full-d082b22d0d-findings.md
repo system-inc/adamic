@@ -8,6 +8,8 @@ None.
 
 ## index values
 
+<a id="full-d082b22d0d-0001"></a>
+
 ### full-d082b22d0d-0001: src/compiler/transformers/module/esnextAnd2015.ts:151:46
 
 Observations: {'head': 4}. New in head: True.
@@ -36,6 +38,8 @@ Owner units:
 
 - `src/compiler/transformers/module/esnextAnd2015.ts:143:5`
 - `src/compiler/transformers/module/esnextAnd2015.ts:67:1`
+
+<a id="full-d082b22d0d-0002"></a>
 
 ### full-d082b22d0d-0002: src/compiler/utilities.ts:2704:1
 
@@ -75,6 +79,8 @@ Owner units:
 - `src/compiler/transformers/module/esnextAnd2015.ts:67:1`
 - `src/compiler/transformers/module/esnextAnd2015.ts:90:5`
 
+<a id="full-d082b22d0d-0003"></a>
+
 ### full-d082b22d0d-0003: src/compiler/utilities.ts:3839:1
 
 Observations: {'head': 2}. New in head: True.
@@ -107,6 +113,8 @@ Owner units:
 
 ## union arms
 
+<a id="full-d082b22d0d-0004"></a>
+
 ### full-d082b22d0d-0004: src/compiler/transformers/module/esnextAnd2015.ts:149:111
 
 Observations: {'head': 4}. New in head: True.
@@ -135,6 +143,8 @@ Owner units:
 
 - `src/compiler/transformers/module/esnextAnd2015.ts:143:5`
 - `src/compiler/transformers/module/esnextAnd2015.ts:67:1`
+
+<a id="full-d082b22d0d-0005"></a>
 
 ### full-d082b22d0d-0005: src/compiler/transformers/module/esnextAnd2015.ts:153:36
 
@@ -165,6 +175,8 @@ Owner units:
 - `src/compiler/transformers/module/esnextAnd2015.ts:143:5`
 - `src/compiler/transformers/module/esnextAnd2015.ts:67:1`
 
+<a id="full-d082b22d0d-0006"></a>
+
 ### full-d082b22d0d-0006: src/compiler/transformers/module/esnextAnd2015.ts:156:47
 
 Observations: {'head': 4}. New in head: True.
@@ -193,6 +205,8 @@ Owner units:
 
 - `src/compiler/transformers/module/esnextAnd2015.ts:143:5`
 - `src/compiler/transformers/module/esnextAnd2015.ts:67:1`
+
+<a id="full-d082b22d0d-0007"></a>
 
 ### full-d082b22d0d-0007: src/compiler/utilitiesPublic.ts:2625:1
 
@@ -225,6 +239,8 @@ Owner units:
 - `src/compiler/transformers/module/esnextAnd2015.ts:188:5`
 - `src/compiler/transformers/module/esnextAnd2015.ts:67:1`
 - `src/compiler/transformers/module/esnextAnd2015.ts:90:5`
+
+<a id="full-d082b22d0d-0008"></a>
 
 ### full-d082b22d0d-0008: src/compiler/utilitiesPublic.ts:2625:1
 

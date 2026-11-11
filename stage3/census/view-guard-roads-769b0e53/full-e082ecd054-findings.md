@@ -8,6 +8,8 @@ None.
 
 ## index values
 
+<a id="full-e082ecd054-0001"></a>
+
 ### full-e082ecd054-0001: src/compiler/factory/nodeTests.ts:243:1
 
 Observations: {'head': 3}. New in head: True.
@@ -40,6 +42,8 @@ Owner units:
 - `src/compiler/transformers/utilities.ts:878:1`
 - `src/compiler/transformers/utilities.ts:880:1`
 
+<a id="full-e082ecd054-0002"></a>
+
 ### full-e082ecd054-0002: src/compiler/transformers/utilities.ts:253:22
 
 Observations: {'head': 2}. New in head: True.
@@ -67,6 +71,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="full-e082ecd054-0003"></a>
 
 ### full-e082ecd054-0003: src/compiler/transformers/utilities.ts:255:36
 
@@ -96,6 +102,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
 
+<a id="full-e082ecd054-0004"></a>
+
 ### full-e082ecd054-0004: src/compiler/transformers/utilities.ts:278:130
 
 Observations: {'head': 2}. New in head: True.
@@ -123,6 +131,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="full-e082ecd054-0005"></a>
 
 ### full-e082ecd054-0005: src/compiler/transformers/utilities.ts:284:39
 
@@ -154,6 +164,8 @@ Owner units:
 
 ## union arms
 
+<a id="full-e082ecd054-0006"></a>
+
 ### full-e082ecd054-0006: src/compiler/core.ts:1787:32
 
 Observations: {'head': 2}. New in head: True.
@@ -182,6 +194,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
 - `src/compiler/transformers/utilities.ts:303:5`
+
+<a id="full-e082ecd054-0007"></a>
 
 ### full-e082ecd054-0007: src/compiler/factory/nodeTests.ts:422:1
 
@@ -214,6 +228,8 @@ Owner units:
 - `src/compiler/transformers/utilities.ts:612:1`
 - `src/compiler/transformers/utilities.ts:618:1`
 
+<a id="full-e082ecd054-0008"></a>
+
 ### full-e082ecd054-0008: src/compiler/factory/nodeTests.ts:894:1
 
 Observations: {'head': 3}. New in head: True.
@@ -245,6 +261,8 @@ Owner units:
 - `src/compiler/transformers/utilities.ts:179:1`
 - `src/compiler/transformers/utilities.ts:303:5`
 
+<a id="full-e082ecd054-0009"></a>
+
 ### full-e082ecd054-0009: src/compiler/transformers/utilities.ts:201:38
 
 Observations: {'head': 2}. New in head: True.
@@ -272,6 +290,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="full-e082ecd054-0010"></a>
 
 ### full-e082ecd054-0010: src/compiler/transformers/utilities.ts:202:70
 
@@ -301,6 +321,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
 
+<a id="full-e082ecd054-0011"></a>
+
 ### full-e082ecd054-0011: src/compiler/transformers/utilities.ts:205:76
 
 Observations: {'head': 2}. New in head: True.
@@ -328,6 +350,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="full-e082ecd054-0012"></a>
 
 ### full-e082ecd054-0012: src/compiler/transformers/utilities.ts:211:22
 
@@ -357,6 +381,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
 
+<a id="full-e082ecd054-0013"></a>
+
 ### full-e082ecd054-0013: src/compiler/transformers/utilities.ts:213:42
 
 Observations: {'head': 2}. New in head: True.
@@ -384,6 +410,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="full-e082ecd054-0014"></a>
 
 ### full-e082ecd054-0014: src/compiler/transformers/utilities.ts:219:22
 
@@ -413,6 +441,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
 
+<a id="full-e082ecd054-0015"></a>
+
 ### full-e082ecd054-0015: src/compiler/transformers/utilities.ts:220:27
 
 Observations: {'head': 2}. New in head: True.
@@ -440,6 +470,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="full-e082ecd054-0016"></a>
 
 ### full-e082ecd054-0016: src/compiler/transformers/utilities.ts:222:46
 
@@ -469,6 +501,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
 
+<a id="full-e082ecd054-0017"></a>
+
 ### full-e082ecd054-0017: src/compiler/transformers/utilities.ts:228:46
 
 Observations: {'head': 2}. New in head: True.
@@ -496,6 +530,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="full-e082ecd054-0018"></a>
 
 ### full-e082ecd054-0018: src/compiler/transformers/utilities.ts:229:45
 
@@ -525,6 +561,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
 
+<a id="full-e082ecd054-0019"></a>
+
 ### full-e082ecd054-0019: src/compiler/transformers/utilities.ts:230:66
 
 Observations: {'head': 2}. New in head: True.
@@ -552,6 +590,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="full-e082ecd054-0020"></a>
 
 ### full-e082ecd054-0020: src/compiler/transformers/utilities.ts:231:76
 
@@ -581,6 +621,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
 
+<a id="full-e082ecd054-0021"></a>
+
 ### full-e082ecd054-0021: src/compiler/transformers/utilities.ts:248:58
 
 Observations: {'head': 2}. New in head: True.
@@ -608,6 +650,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="full-e082ecd054-0022"></a>
 
 ### full-e082ecd054-0022: src/compiler/transformers/utilities.ts:632:13
 
@@ -637,6 +681,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:630:1`
 
+<a id="full-e082ecd054-0023"></a>
+
 ### full-e082ecd054-0023: src/compiler/transformers/utilities.ts:716:47
 
 Observations: {'head': 2}. New in head: True.
@@ -664,6 +710,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:703:1`
+
+<a id="full-e082ecd054-0024"></a>
 
 ### full-e082ecd054-0024: src/compiler/utilitiesPublic.ts:1581:1
 
@@ -698,6 +746,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:389:1`
 - `src/compiler/transformers/utilities.ts:441:1`
+
+<a id="full-e082ecd054-0025"></a>
 
 ### full-e082ecd054-0025: src/compiler/utilitiesPublic.ts:1586:1
 

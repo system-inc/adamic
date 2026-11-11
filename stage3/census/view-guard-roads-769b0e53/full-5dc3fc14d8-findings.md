@@ -8,6 +8,8 @@ None.
 
 ## index values
 
+<a id="full-5dc3fc14d8-0001"></a>
+
 ### full-5dc3fc14d8-0001: src/compiler/factory/nodeTests.ts:397:1
 
 Observations: {'head': 1}. New in head: True.
@@ -38,6 +40,8 @@ Owner units:
 
 - `src/compiler/transformers/destructuring.ts:218:1`
 
+<a id="full-5dc3fc14d8-0002"></a>
+
 ### full-5dc3fc14d8-0002: src/compiler/factory/nodeTests.ts:668:1
 
 Observations: {'head': 1}. New in head: True.
@@ -67,6 +71,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/destructuring.ts:446:1`
+
+<a id="full-5dc3fc14d8-0003"></a>
 
 ### full-5dc3fc14d8-0003: src/compiler/utilitiesPublic.ts:1498:1
 
@@ -99,6 +105,8 @@ Owner units:
 - `src/compiler/transformers/destructuring.ts:218:1`
 
 ## union arms
+
+<a id="full-5dc3fc14d8-0004"></a>
 
 ### full-5dc3fc14d8-0004: src/compiler/core.ts:140:1
 
@@ -134,6 +142,8 @@ Reading: **guard bug: checked every predicate.** Guard bug. flattenArrayBindingO
 Owner units:
 
 - `src/compiler/transformers/destructuring.ts:446:1`
+
+<a id="full-5dc3fc14d8-0005"></a>
 
 ### full-5dc3fc14d8-0005: src/compiler/utilitiesPublic.ts:1884:1
 
@@ -173,6 +183,8 @@ Owner units:
 - `src/compiler/transformers/destructuring.ts:218:1`
 - `src/compiler/transformers/destructuring.ts:522:1`
 
+<a id="full-5dc3fc14d8-0006"></a>
+
 ### full-5dc3fc14d8-0006: src/compiler/utilitiesPublic.ts:1884:1
 
 Observations: {'head': 3}. New in head: True.
@@ -210,6 +222,8 @@ Owner units:
 - `src/compiler/transformers/destructuring.ts:197:1`
 - `src/compiler/transformers/destructuring.ts:218:1`
 - `src/compiler/transformers/destructuring.ts:522:1`
+
+<a id="full-5dc3fc14d8-0007"></a>
 
 ### full-5dc3fc14d8-0007: src/compiler/utilitiesPublic.ts:1884:1
 
@@ -249,6 +263,8 @@ Owner units:
 - `src/compiler/transformers/destructuring.ts:218:1`
 - `src/compiler/transformers/destructuring.ts:522:1`
 
+<a id="full-5dc3fc14d8-0008"></a>
+
 ### full-5dc3fc14d8-0008: src/compiler/utilitiesPublic.ts:1884:1
 
 Observations: {'head': 3}. New in head: True.
@@ -286,6 +302,8 @@ Owner units:
 - `src/compiler/transformers/destructuring.ts:197:1`
 - `src/compiler/transformers/destructuring.ts:218:1`
 - `src/compiler/transformers/destructuring.ts:522:1`
+
+<a id="full-5dc3fc14d8-0009"></a>
 
 ### full-5dc3fc14d8-0009: src/compiler/utilitiesPublic.ts:1894:1
 
@@ -328,6 +346,8 @@ Owner units:
 
 - `src/compiler/transformers/destructuring.ts:338:1`
 
+<a id="full-5dc3fc14d8-0010"></a>
+
 ### full-5dc3fc14d8-0010: src/compiler/utilitiesPublic.ts:1894:1
 
 Observations: {'head': 1}. New in head: True.
@@ -369,6 +389,8 @@ Owner units:
 
 - `src/compiler/transformers/destructuring.ts:338:1`
 
+<a id="full-5dc3fc14d8-0011"></a>
+
 ### full-5dc3fc14d8-0011: src/compiler/utilitiesPublic.ts:1921:1
 
 Observations: {'head': 1}. New in head: True.
@@ -409,6 +431,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/destructuring.ts:338:1`
+
+<a id="full-5dc3fc14d8-0012"></a>
 
 ### full-5dc3fc14d8-0012: src/compiler/utilitiesPublic.ts:1921:1
 

@@ -8,6 +8,8 @@ None.
 
 ## index values
 
+<a id="full-01e6ae4837-0001"></a>
+
 ### full-01e6ae4837-0001: src/compiler/debug.ts:281:5
 
 Observations: {'head': 2}. New in head: True.
@@ -36,6 +38,8 @@ Owner units:
 
 - `src/compiler/transformers/esnext.ts:339:5`
 - `src/compiler/transformers/esnext.ts:395:9`
+
+<a id="full-01e6ae4837-0002"></a>
 
 ### full-01e6ae4837-0002: src/compiler/transformers/esnext.ts:410:50
 
@@ -66,6 +70,8 @@ Owner units:
 - `src/compiler/transformers/esnext.ts:339:5`
 - `src/compiler/transformers/esnext.ts:400:9`
 
+<a id="full-01e6ae4837-0003"></a>
+
 ### full-01e6ae4837-0003: src/compiler/transformers/esnext.ts:412:50
 
 Observations: {'head': 4}. New in head: True.
@@ -94,6 +100,8 @@ Owner units:
 
 - `src/compiler/transformers/esnext.ts:339:5`
 - `src/compiler/transformers/esnext.ts:400:9`
+
+<a id="full-01e6ae4837-0004"></a>
 
 ### full-01e6ae4837-0004: src/compiler/utilities.ts:2727:1
 
@@ -126,6 +134,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/esnext.ts:765:1`
+
+<a id="full-01e6ae4837-0005"></a>
 
 ### full-01e6ae4837-0005: src/compiler/utilitiesPublic.ts:2419:1
 
@@ -163,6 +173,8 @@ Owner units:
 
 ## union arms
 
+<a id="full-01e6ae4837-0006"></a>
+
 ### full-01e6ae4837-0006: src/compiler/factory/nodeTests.ts:796:1
 
 Observations: {'head': 1}. New in head: True.
@@ -192,6 +204,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/esnext.ts:774:1`
+
+<a id="full-01e6ae4837-0007"></a>
 
 ### full-01e6ae4837-0007: src/compiler/utilitiesPublic.ts:1581:1
 

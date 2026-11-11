@@ -1,10 +1,11 @@
 # Full-mode file checks
 
-12 of 26 affected files fully verified. Each completed file has a common original-parent baseline plus parent and head seam runs, with exact ordinary-record verification. The original baseline equality proof justifies the common baseline.
+13 of 26 affected files fully verified. Each completed file has a common original-parent baseline plus parent and head seam runs, with exact ordinary-record verification. The original baseline equality proof justifies the common baseline.
 
 | Selected adapted file | Parent views | Head views | Parent refusals | Head refusals | New raw / distinct | Every quoted finding |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | src/compiler/factory/nodeChildren.ts | 2 | 2 | 0 | 2 | 1 / 1 | [full-7cabb39c93](full-7cabb39c93-findings.md) |
+| src/compiler/factory/nodeTests.ts | 0 | 0 | 0 | 0 | 0 / 0 | [full-12c82900a1](full-12c82900a1-findings.md) |
 | src/compiler/factory/parenthesizerRules.ts | 21 | 21 | 0 | 21 | 14 / 14 | [full-8f10524394](full-8f10524394-findings.md) |
 | src/compiler/factory/utilitiesPublic.ts | 0 | 0 | 0 | 0 | 0 / 0 | [full-dbf13ff563](full-dbf13ff563-findings.md) |
 | src/compiler/symbolWalker.ts | 0 | 0 | 0 | 0 | 0 / 0 | [full-0854c1cf41](full-0854c1cf41-findings.md) |
@@ -24,7 +25,6 @@
 - `src/compiler/core.ts`
 - `src/compiler/emitter.ts`
 - `src/compiler/factory/emitHelpers.ts`
-- `src/compiler/factory/nodeTests.ts`
 - `src/compiler/factory/utilities.ts`
 - `src/compiler/parser.ts`
 - `src/compiler/program.ts`

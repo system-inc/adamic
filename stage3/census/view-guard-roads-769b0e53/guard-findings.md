@@ -4,6 +4,8 @@ Reasons and type names are verbatim. Source slices retain their text, with CRLF 
 
 ## elements
 
+<a id="guard-0001"></a>
+
 ### guard-0001: src/compiler/symbolWalker.ts:88:36
 
 Observations: {'head': 1}. New in head: True.
@@ -31,6 +33,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/symbolWalker.ts:30:1`
+
+<a id="guard-0002"></a>
 
 ### guard-0002: src/compiler/utilities.ts:8039:52
 
@@ -62,6 +66,8 @@ Owner units:
 
 ## index values
 
+<a id="guard-0003"></a>
+
 ### guard-0003: src/compiler/binder.ts:359:29
 
 Observations: {'head': 2}. New in head: True.
@@ -89,6 +95,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/binder.ts:350:1`
+
+<a id="guard-0004"></a>
 
 ### guard-0004: src/compiler/checker.ts:54229:12
 
@@ -118,6 +126,8 @@ Owner units:
 
 - `src/compiler/checker.ts:54227:1`
 
+<a id="guard-0005"></a>
+
 ### guard-0005: src/compiler/core.ts:1787:32
 
 Observations: {'head': 1}. New in head: True.
@@ -145,6 +155,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:675:1`
+
+<a id="guard-0006"></a>
 
 ### guard-0006: src/compiler/emitter.ts:1158:18
 
@@ -174,6 +186,8 @@ Owner units:
 
 - `src/compiler/emitter.ts:1147:1`
 
+<a id="guard-0007"></a>
+
 ### guard-0007: src/compiler/factory/nodeChildren.ts:20:17
 
 Observations: {'head': 2}. New in head: True.
@@ -201,6 +215,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/nodeChildren.ts:14:1`
+
+<a id="guard-0008"></a>
 
 ### guard-0008: src/compiler/factory/nodeTests.ts:1003:1
 
@@ -231,6 +247,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/utilities.ts:1008:1`
+
+<a id="guard-0009"></a>
 
 ### guard-0009: src/compiler/factory/nodeTests.ts:1014:1
 
@@ -266,6 +284,8 @@ Owner units:
 - `src/compiler/utilities.ts:5071:1`
 - `src/compiler/utilitiesPublic.ts:1727:1`
 
+<a id="guard-0010"></a>
+
 ### guard-0010: src/compiler/factory/nodeTests.ts:1026:1
 
 Observations: {'head': 1}. New in head: True.
@@ -300,6 +320,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:1291:1`
 
+<a id="guard-0011"></a>
+
 ### guard-0011: src/compiler/factory/nodeTests.ts:1030:1
 
 Observations: {'head': 3}. New in head: True.
@@ -329,6 +351,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:3629:1`
+
+<a id="guard-0012"></a>
 
 ### guard-0012: src/compiler/factory/nodeTests.ts:1034:1
 
@@ -360,6 +384,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:3629:1`
 
+<a id="guard-0013"></a>
+
 ### guard-0013: src/compiler/factory/nodeTests.ts:1070:1
 
 Observations: {'head': 1}. New in head: True.
@@ -389,6 +415,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4473:1`
+
+<a id="guard-0014"></a>
 
 ### guard-0014: src/compiler/factory/nodeTests.ts:1096:1
 
@@ -425,6 +453,8 @@ Owner units:
 - `src/compiler/utilities.ts:7453:1`
 - `src/compiler/utilitiesPublic.ts:1111:1`
 
+<a id="guard-0015"></a>
+
 ### guard-0015: src/compiler/factory/nodeTests.ts:1104:1
 
 Observations: {'head': 1}. New in head: True.
@@ -454,6 +484,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1121:1`
+
+<a id="guard-0016"></a>
 
 ### guard-0016: src/compiler/factory/nodeTests.ts:1112:1
 
@@ -486,6 +518,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1126:1`
 - `src/compiler/utilitiesPublic.ts:1131:1`
 
+<a id="guard-0017"></a>
+
 ### guard-0017: src/compiler/factory/nodeTests.ts:1116:1
 
 Observations: {'head': 2}. New in head: True.
@@ -516,6 +550,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1136:1`
 - `src/compiler/utilitiesPublic.ts:1141:1`
+
+<a id="guard-0018"></a>
 
 ### guard-0018: src/compiler/factory/nodeTests.ts:1120:1
 
@@ -548,6 +584,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1146:1`
 - `src/compiler/utilitiesPublic.ts:1151:1`
 
+<a id="guard-0019"></a>
+
 ### guard-0019: src/compiler/factory/nodeTests.ts:1124:1
 
 Observations: {'head': 2}. New in head: True.
@@ -579,6 +617,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1156:1`
 - `src/compiler/utilitiesPublic.ts:1161:1`
 
+<a id="guard-0020"></a>
+
 ### guard-0020: src/compiler/factory/nodeTests.ts:1128:1
 
 Observations: {'head': 1}. New in head: True.
@@ -608,6 +648,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1165:1`
+
+<a id="guard-0021"></a>
 
 ### guard-0021: src/compiler/factory/nodeTests.ts:1136:1
 
@@ -640,6 +682,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1170:1`
 - `src/compiler/utilitiesPublic.ts:1175:1`
 
+<a id="guard-0022"></a>
+
 ### guard-0022: src/compiler/factory/nodeTests.ts:1148:1
 
 Observations: {'head': 1}. New in head: True.
@@ -669,6 +713,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1106:1`
+
+<a id="guard-0023"></a>
 
 ### guard-0023: src/compiler/factory/nodeTests.ts:1152:1
 
@@ -700,6 +746,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1190:1`
 
+<a id="guard-0024"></a>
+
 ### guard-0024: src/compiler/factory/nodeTests.ts:1156:1
 
 Observations: {'head': 1}. New in head: True.
@@ -729,6 +777,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1185:1`
+
+<a id="guard-0025"></a>
 
 ### guard-0025: src/compiler/factory/nodeTests.ts:1160:1
 
@@ -763,6 +813,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1204:1`
 - `src/compiler/utilitiesPublic.ts:1224:1`
 
+<a id="guard-0026"></a>
+
 ### guard-0026: src/compiler/factory/nodeTests.ts:1164:1
 
 Observations: {'head': 2}. New in head: True.
@@ -793,6 +845,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:6921:1`
 - `src/compiler/utilitiesPublic.ts:1195:1`
+
+<a id="guard-0027"></a>
 
 ### guard-0027: src/compiler/factory/nodeTests.ts:1180:1
 
@@ -825,6 +879,8 @@ Owner units:
 - `src/compiler/utilities.ts:2882:1`
 - `src/compiler/utilitiesPublic.ts:1116:1`
 
+<a id="guard-0028"></a>
+
 ### guard-0028: src/compiler/factory/nodeTests.ts:1184:1
 
 Observations: {'head': 2}. New in head: True.
@@ -855,6 +911,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:4699:1`
 - `src/compiler/utilitiesPublic.ts:1199:1`
+
+<a id="guard-0029"></a>
 
 ### guard-0029: src/compiler/factory/nodeTests.ts:235:1
 
@@ -892,6 +950,8 @@ Owner units:
 - `src/compiler/utilities.ts:5360:1`
 - `src/compiler/utilities.ts:5365:1`
 
+<a id="guard-0030"></a>
+
 ### guard-0030: src/compiler/factory/nodeTests.ts:239:1
 
 Observations: {'head': 2}. New in head: True.
@@ -922,6 +982,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:12031:1`
 - `src/compiler/utilities.ts:2037:1`
+
+<a id="guard-0031"></a>
 
 ### guard-0031: src/compiler/factory/nodeTests.ts:243:1
 
@@ -960,6 +1022,8 @@ Owner units:
 - `src/compiler/utilities.ts:8288:1`
 - `src/compiler/utilitiesPublic.ts:1574:1`
 
+<a id="guard-0032"></a>
+
 ### guard-0032: src/compiler/factory/nodeTests.ts:284:1
 
 Observations: {'head': 2}. New in head: True.
@@ -990,6 +1054,8 @@ Owner units:
 
 - `src/compiler/factory/utilities.ts:1159:1`
 - `src/compiler/factory/utilities.ts:1163:1`
+
+<a id="guard-0033"></a>
 
 ### guard-0033: src/compiler/factory/nodeTests.ts:288:1
 
@@ -1022,6 +1088,8 @@ Owner units:
 - `src/compiler/factory/utilities.ts:1159:1`
 - `src/compiler/factory/utilities.ts:1163:1`
 
+<a id="guard-0034"></a>
+
 ### guard-0034: src/compiler/factory/nodeTests.ts:296:1
 
 Observations: {'head': 1}. New in head: True.
@@ -1051,6 +1119,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/utilities.ts:1151:1`
+
+<a id="guard-0035"></a>
 
 ### guard-0035: src/compiler/factory/nodeTests.ts:300:1
 
@@ -1082,6 +1152,8 @@ Owner units:
 
 - `src/compiler/factory/utilities.ts:1151:1`
 - `src/compiler/factory/utilities.ts:1163:1`
+
+<a id="guard-0036"></a>
 
 ### guard-0036: src/compiler/factory/nodeTests.ts:318:1
 
@@ -1134,6 +1206,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1574:1`
 - `src/compiler/utilitiesPublic.ts:1581:1`
 
+<a id="guard-0037"></a>
+
 ### guard-0037: src/compiler/factory/nodeTests.ts:322:1
 
 Observations: {'head': 2}. New in head: True.
@@ -1165,6 +1239,8 @@ Owner units:
 - `src/compiler/transformers/classFields.ts:3349:1`
 - `src/compiler/utilitiesPublic.ts:1586:1`
 
+<a id="guard-0038"></a>
+
 ### guard-0038: src/compiler/factory/nodeTests.ts:352:1
 
 Observations: {'head': 1}. New in head: True.
@@ -1195,6 +1271,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/utilities.ts:1159:1`
+
+<a id="guard-0039"></a>
 
 ### guard-0039: src/compiler/factory/nodeTests.ts:393:1
 
@@ -1230,6 +1308,8 @@ Owner units:
 - `src/compiler/utilities.ts:6812:1`
 - `src/compiler/utilities.ts:7579:1`
 
+<a id="guard-0040"></a>
+
 ### guard-0040: src/compiler/factory/nodeTests.ts:397:1
 
 Observations: {'head': 2}. New in head: True.
@@ -1260,6 +1340,8 @@ Owner units:
 
 - `src/compiler/transformers/destructuring.ts:218:1`
 - `src/compiler/utilities.ts:5077:1`
+
+<a id="guard-0041"></a>
 
 ### guard-0041: src/compiler/factory/nodeTests.ts:412:1
 
@@ -1292,6 +1374,8 @@ Owner units:
 - `src/compiler/utilities.ts:3155:1`
 - `src/compiler/utilitiesPublic.ts:1778:1`
 
+<a id="guard-0042"></a>
+
 ### guard-0042: src/compiler/factory/nodeTests.ts:450:1
 
 Observations: {'head': 1}. New in head: True.
@@ -1321,6 +1405,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1239:1`
+
+<a id="guard-0043"></a>
 
 ### guard-0043: src/compiler/factory/nodeTests.ts:468:1
 
@@ -1354,6 +1440,8 @@ Owner units:
 - `src/compiler/utilities.ts:3822:1`
 - `src/compiler/utilitiesPublic.ts:1426:1`
 
+<a id="guard-0044"></a>
+
 ### guard-0044: src/compiler/factory/nodeTests.ts:480:1
 
 Observations: {'head': 1}. New in head: True.
@@ -1383,6 +1471,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/declarations/diagnostics.ts:615:1`
+
+<a id="guard-0045"></a>
 
 ### guard-0045: src/compiler/factory/nodeTests.ts:484:1
 
@@ -1415,6 +1505,8 @@ Owner units:
 - `src/compiler/utilities.ts:8323:1`
 - `src/compiler/utilitiesPublic.ts:1239:1`
 
+<a id="guard-0046"></a>
+
 ### guard-0046: src/compiler/factory/nodeTests.ts:524:1
 
 Observations: {'head': 1}. New in head: True.
@@ -1444,6 +1536,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:5033:1`
+
+<a id="guard-0047"></a>
 
 ### guard-0047: src/compiler/factory/nodeTests.ts:544:1
 
@@ -1475,6 +1569,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:2722:1`
 
+<a id="guard-0048"></a>
+
 ### guard-0048: src/compiler/factory/nodeTests.ts:548:1
 
 Observations: {'head': 2}. New in head: True.
@@ -1505,6 +1601,8 @@ Owner units:
 
 - `src/compiler/program.ts:937:1`
 - `src/compiler/utilities.ts:2722:1`
+
+<a id="guard-0049"></a>
 
 ### guard-0049: src/compiler/factory/nodeTests.ts:576:1
 
@@ -1538,6 +1636,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:10758:1`
 
+<a id="guard-0050"></a>
+
 ### guard-0050: src/compiler/factory/nodeTests.ts:580:1
 
 Observations: {'head': 2}. New in head: True.
@@ -1568,6 +1668,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:3018:1`
 - `src/compiler/utilities.ts:3104:1`
+
+<a id="guard-0051"></a>
 
 ### guard-0051: src/compiler/factory/nodeTests.ts:584:1
 
@@ -1607,6 +1709,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1368:1`
 - `src/compiler/utilitiesPublic.ts:1605:1`
 
+<a id="guard-0052"></a>
+
 ### guard-0052: src/compiler/factory/nodeTests.ts:588:1
 
 Observations: {'head': 2}. New in head: True.
@@ -1637,6 +1741,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:4137:1`
 - `src/compiler/utilitiesPublic.ts:1372:1`
+
+<a id="guard-0053"></a>
 
 ### guard-0053: src/compiler/factory/nodeTests.ts:592:1
 
@@ -1669,6 +1775,8 @@ Owner units:
 - `src/compiler/factory/emitHelpers.ts:1486:1`
 - `src/compiler/utilities.ts:3992:1`
 - `src/compiler/utilitiesPublic.ts:1376:1`
+
+<a id="guard-0054"></a>
 
 ### guard-0054: src/compiler/factory/nodeTests.ts:608:1
 
@@ -1703,6 +1811,8 @@ Owner units:
 - `src/compiler/utilities.ts:10769:1`
 - `src/compiler/utilities.ts:11112:1`
 
+<a id="guard-0055"></a>
+
 ### guard-0055: src/compiler/factory/nodeTests.ts:612:1
 
 Observations: {'head': 2}. New in head: True.
@@ -1734,6 +1844,8 @@ Owner units:
 - `src/compiler/utilities.ts:4995:1`
 - `src/compiler/utilitiesPublic.ts:997:1`
 
+<a id="guard-0056"></a>
+
 ### guard-0056: src/compiler/factory/nodeTests.ts:628:1
 
 Observations: {'head': 1}. New in head: True.
@@ -1763,6 +1875,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4200:1`
+
+<a id="guard-0057"></a>
 
 ### guard-0057: src/compiler/factory/nodeTests.ts:636:1
 
@@ -1794,6 +1908,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:12031:1`
 - `src/compiler/utilities.ts:5365:1`
+
+<a id="guard-0058"></a>
 
 ### guard-0058: src/compiler/factory/nodeTests.ts:644:1
 
@@ -1841,6 +1957,8 @@ Owner units:
 - `src/compiler/utilities.ts:7473:1`
 - `src/compiler/utilities.ts:7585:1`
 
+<a id="guard-0059"></a>
+
 ### guard-0059: src/compiler/factory/nodeTests.ts:668:1
 
 Observations: {'head': 1}. New in head: True.
@@ -1870,6 +1988,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:10749:1`
+
+<a id="guard-0060"></a>
 
 ### guard-0060: src/compiler/factory/nodeTests.ts:672:1
 
@@ -1901,6 +2021,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:7453:1`
 
+<a id="guard-0061"></a>
+
 ### guard-0061: src/compiler/factory/nodeTests.ts:684:1
 
 Observations: {'head': 1}. New in head: True.
@@ -1930,6 +2052,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1437:1`
+
+<a id="guard-0062"></a>
 
 ### guard-0062: src/compiler/factory/nodeTests.ts:688:1
 
@@ -1962,6 +2086,8 @@ Owner units:
 - `src/compiler/parser.ts:499:1`
 - `src/compiler/utilities.ts:2704:1`
 - `src/compiler/utilities.ts:2715:1`
+
+<a id="guard-0063"></a>
 
 ### guard-0063: src/compiler/factory/nodeTests.ts:716:1
 
@@ -1998,6 +2124,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:2160:1`
 - `src/compiler/utilitiesPublic.ts:2166:1`
 
+<a id="guard-0064"></a>
+
 ### guard-0064: src/compiler/factory/nodeTests.ts:720:1
 
 Observations: {'head': 6}. New in head: True.
@@ -2033,6 +2161,8 @@ Owner units:
 - `src/compiler/utilities.ts:3903:1`
 - `src/compiler/utilities.ts:4520:1`
 
+<a id="guard-0065"></a>
+
 ### guard-0065: src/compiler/factory/nodeTests.ts:728:1
 
 Observations: {'head': 4}. New in head: True.
@@ -2066,6 +2196,8 @@ Owner units:
 - `src/compiler/utilities.ts:4489:1`
 - `src/compiler/utilities.ts:4497:1`
 
+<a id="guard-0066"></a>
+
 ### guard-0066: src/compiler/factory/nodeTests.ts:784:1
 
 Observations: {'head': 1}. New in head: True.
@@ -2095,6 +2227,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:547:1`
+
+<a id="guard-0067"></a>
 
 ### guard-0067: src/compiler/factory/nodeTests.ts:800:1
 
@@ -2127,6 +2261,8 @@ Owner units:
 - `src/compiler/utilities.ts:2738:1`
 - `src/compiler/utilities.ts:6890:1`
 
+<a id="guard-0068"></a>
+
 ### guard-0068: src/compiler/factory/nodeTests.ts:808:1
 
 Observations: {'head': 2}. New in head: True.
@@ -2158,6 +2294,8 @@ Owner units:
 - `src/compiler/utilities.ts:5227:1`
 - `src/compiler/utilities.ts:8323:1`
 
+<a id="guard-0069"></a>
+
 ### guard-0069: src/compiler/factory/nodeTests.ts:816:1
 
 Observations: {'head': 1}. New in head: True.
@@ -2188,6 +2326,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:11049:1`
 
+<a id="guard-0070"></a>
+
 ### guard-0070: src/compiler/factory/nodeTests.ts:832:1
 
 Observations: {'head': 1}. New in head: True.
@@ -2217,6 +2357,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:8283:1`
+
+<a id="guard-0071"></a>
 
 ### guard-0071: src/compiler/factory/nodeTests.ts:886:1
 
@@ -2250,6 +2392,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:2143:1`
 - `src/compiler/utilitiesPublic.ts:2148:1`
 
+<a id="guard-0072"></a>
+
 ### guard-0072: src/compiler/factory/nodeTests.ts:943:1
 
 Observations: {'head': 1}. New in head: True.
@@ -2279,6 +2423,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:8959:1`
+
+<a id="guard-0073"></a>
 
 ### guard-0073: src/compiler/factory/nodeTests.ts:995:1
 
@@ -2314,6 +2460,8 @@ Owner units:
 - `src/compiler/utilities.ts:3951:1`
 - `src/compiler/utilitiesPublic.ts:1004:1`
 
+<a id="guard-0074"></a>
+
 ### guard-0074: src/compiler/factory/nodeTests.ts:999:1
 
 Observations: {'head': 1}. New in head: True.
@@ -2343,6 +2491,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:3423:1`
+
+<a id="guard-0075"></a>
 
 ### guard-0075: src/compiler/factory/utilities.ts:1695:1
 
@@ -2376,6 +2526,8 @@ Owner units:
 
 - `src/compiler/factory/utilities.ts:1701:1`
 
+<a id="guard-0076"></a>
+
 ### guard-0076: src/compiler/factory/utilities.ts:608:58
 
 Observations: {'head': 2}. New in head: True.
@@ -2403,6 +2555,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/utilities.ts:607:1`
+
+<a id="guard-0077"></a>
 
 ### guard-0077: src/compiler/factory/utilities.ts:617:1
 
@@ -2436,6 +2590,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/utilities.ts:631:1`
+
+<a id="guard-0078"></a>
 
 ### guard-0078: src/compiler/factory/utilities.ts:631:1
 
@@ -2486,6 +2642,8 @@ Owner units:
 
 - `src/compiler/factory/utilities.ts:668:1`
 
+<a id="guard-0079"></a>
+
 ### guard-0079: src/compiler/factory/utilities.ts:631:1
 
 Observations: {'head': 1}. New in head: True.
@@ -2534,6 +2692,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/utilities.ts:668:1`
+
+<a id="guard-0080"></a>
 
 ### guard-0080: src/compiler/factory/utilities.ts:631:1
 
@@ -2584,6 +2744,8 @@ Owner units:
 
 - `src/compiler/factory/utilities.ts:668:1`
 
+<a id="guard-0081"></a>
+
 ### guard-0081: src/compiler/factory/utilities.ts:631:1
 
 Observations: {'head': 1}. New in head: True.
@@ -2632,6 +2794,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/utilities.ts:668:1`
+
+<a id="guard-0082"></a>
 
 ### guard-0082: src/compiler/factory/utilities.ts:631:1
 
@@ -2682,6 +2846,8 @@ Owner units:
 
 - `src/compiler/factory/utilities.ts:668:1`
 
+<a id="guard-0083"></a>
+
 ### guard-0083: src/compiler/factory/utilities.ts:631:1
 
 Observations: {'head': 1}. New in head: True.
@@ -2731,6 +2897,8 @@ Owner units:
 
 - `src/compiler/factory/utilities.ts:668:1`
 
+<a id="guard-0084"></a>
+
 ### guard-0084: src/compiler/factory/utilities.ts:631:1
 
 Observations: {'head': 1}. New in head: True.
@@ -2779,6 +2947,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/utilities.ts:668:1`
+
+<a id="guard-0085"></a>
 
 ### guard-0085: src/compiler/factory/utilitiesPublic.ts:14:1
 
@@ -2838,6 +3008,8 @@ Owner units:
 - `src/compiler/utilities.ts:7342:1`
 - `src/compiler/utilities.ts:7877:1`
 
+<a id="guard-0086"></a>
+
 ### guard-0086: src/compiler/utilities.ts:11182:1
 
 Observations: {'head': 2}. New in head: True.
@@ -2869,6 +3041,8 @@ Owner units:
 
 - `src/compiler/transformers/declarations.ts:259:1`
 - `src/compiler/utilitiesPublic.ts:1757:1`
+
+<a id="guard-0087"></a>
 
 ### guard-0087: src/compiler/utilities.ts:11182:1
 
@@ -2902,6 +3076,8 @@ Owner units:
 - `src/compiler/transformers/declarations.ts:259:1`
 - `src/compiler/utilitiesPublic.ts:1757:1`
 
+<a id="guard-0088"></a>
+
 ### guard-0088: src/compiler/utilities.ts:12059:14
 
 Observations: {'head': 2}. New in head: True.
@@ -2930,6 +3106,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:12057:1`
 
+<a id="guard-0089"></a>
+
 ### guard-0089: src/compiler/utilities.ts:1995:18
 
 Observations: {'head': 2}. New in head: True.
@@ -2957,6 +3135,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:1981:1`
+
+<a id="guard-0090"></a>
 
 ### guard-0090: src/compiler/utilities.ts:2079:1
 
@@ -2991,6 +3171,8 @@ Owner units:
 - `src/compiler/utilities.ts:2135:1`
 - `src/compiler/utilitiesPublic.ts:2143:1`
 
+<a id="guard-0091"></a>
+
 ### guard-0091: src/compiler/utilities.ts:2130:1
 
 Observations: {'head': 1}. New in head: True.
@@ -3021,6 +3203,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:2149:1`
+
+<a id="guard-0092"></a>
 
 ### guard-0092: src/compiler/utilities.ts:2245:1
 
@@ -3077,6 +3261,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:2233:1`
 
+<a id="guard-0093"></a>
+
 ### guard-0093: src/compiler/utilities.ts:2568:26
 
 Observations: {'head': 1}. New in head: True.
@@ -3104,6 +3290,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:2538:1`
+
+<a id="guard-0094"></a>
 
 ### guard-0094: src/compiler/utilities.ts:2571:61
 
@@ -3133,6 +3321,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:2538:1`
 
+<a id="guard-0095"></a>
+
 ### guard-0095: src/compiler/utilities.ts:2632:79
 
 Observations: {'head': 1}. New in head: True.
@@ -3160,6 +3350,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:2631:1`
+
+<a id="guard-0096"></a>
 
 ### guard-0096: src/compiler/utilities.ts:2641:1
 
@@ -3194,6 +3386,8 @@ Owner units:
 - `src/compiler/utilities.ts:3812:1`
 - `src/compiler/utilities.ts:6659:1`
 
+<a id="guard-0097"></a>
+
 ### guard-0097: src/compiler/utilities.ts:2700:53
 
 Observations: {'head': 2}. New in head: True.
@@ -3221,6 +3415,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:2699:1`
+
+<a id="guard-0098"></a>
 
 ### guard-0098: src/compiler/utilities.ts:2704:1
 
@@ -3260,6 +3456,8 @@ Owner units:
 - `src/compiler/program.ts:959:1`
 - `src/compiler/utilities.ts:3629:1`
 
+<a id="guard-0099"></a>
+
 ### guard-0099: src/compiler/utilities.ts:2706:16
 
 Observations: {'head': 2}. New in head: True.
@@ -3287,6 +3485,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:2704:1`
+
+<a id="guard-0100"></a>
 
 ### guard-0100: src/compiler/utilities.ts:2727:1
 
@@ -3323,6 +3523,8 @@ Owner units:
 - `src/compiler/transformers/esnext.ts:765:1`
 - `src/compiler/utilities.ts:1143:1`
 
+<a id="guard-0101"></a>
+
 ### guard-0101: src/compiler/utilities.ts:2729:13
 
 Observations: {'head': 1}. New in head: True.
@@ -3350,6 +3552,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:2727:1`
+
+<a id="guard-0102"></a>
 
 ### guard-0102: src/compiler/utilities.ts:2815:67
 
@@ -3379,6 +3583,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:2786:1`
 
+<a id="guard-0103"></a>
+
 ### guard-0103: src/compiler/utilities.ts:2970:17
 
 Observations: {'head': 2}. New in head: True.
@@ -3406,6 +3612,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:2968:1`
+
+<a id="guard-0104"></a>
 
 ### guard-0104: src/compiler/utilities.ts:2973:35
 
@@ -3435,6 +3643,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:2968:1`
 
+<a id="guard-0105"></a>
+
 ### guard-0105: src/compiler/utilities.ts:3061:16
 
 Observations: {'head': 1}. New in head: True.
@@ -3462,6 +3672,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:3053:1`
+
+<a id="guard-0106"></a>
 
 ### guard-0106: src/compiler/utilities.ts:3389:59
 
@@ -3491,6 +3703,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:3381:1`
 
+<a id="guard-0107"></a>
+
 ### guard-0107: src/compiler/utilities.ts:3390:20
 
 Observations: {'head': 2}. New in head: True.
@@ -3518,6 +3732,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:3381:1`
+
+<a id="guard-0108"></a>
 
 ### guard-0108: src/compiler/utilities.ts:3435:21
 
@@ -3547,6 +3763,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:3432:1`
 
+<a id="guard-0109"></a>
+
 ### guard-0109: src/compiler/utilities.ts:3438:44
 
 Observations: {'head': 2}. New in head: True.
@@ -3574,6 +3792,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:3432:1`
+
+<a id="guard-0110"></a>
 
 ### guard-0110: src/compiler/utilities.ts:3554:26
 
@@ -3605,6 +3825,8 @@ Owner units:
 - `src/compiler/utilities.ts:3549:1`
 - `src/compiler/utilities.ts:3551:1`
 
+<a id="guard-0111"></a>
+
 ### guard-0111: src/compiler/utilities.ts:3556:50
 
 Observations: {'head': 6}. New in head: True.
@@ -3634,6 +3856,8 @@ Owner units:
 - `src/compiler/utilities.ts:3547:1`
 - `src/compiler/utilities.ts:3549:1`
 - `src/compiler/utilities.ts:3551:1`
+
+<a id="guard-0112"></a>
 
 ### guard-0112: src/compiler/utilities.ts:3839:1
 
@@ -3665,6 +3889,8 @@ Owner units:
 - `src/compiler/program.ts:959:1`
 - `src/compiler/transformers/module/esnextAnd2015.ts:67:1`
 
+<a id="guard-0113"></a>
+
 ### guard-0113: src/compiler/utilities.ts:3845:45
 
 Observations: {'head': 6}. New in head: True.
@@ -3695,6 +3921,8 @@ Owner units:
 - `src/compiler/utilities.ts:3839:1`
 - `src/compiler/utilities.ts:3841:1`
 
+<a id="guard-0114"></a>
+
 ### guard-0114: src/compiler/utilities.ts:3847:55
 
 Observations: {'head': 3}. New in head: True.
@@ -3724,6 +3952,8 @@ Owner units:
 - `src/compiler/utilities.ts:3837:1`
 - `src/compiler/utilities.ts:3839:1`
 - `src/compiler/utilities.ts:3841:1`
+
+<a id="guard-0115"></a>
 
 ### guard-0115: src/compiler/utilities.ts:3864:1
 
@@ -3761,6 +3991,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:3883:1`
 
+<a id="guard-0116"></a>
+
 ### guard-0116: src/compiler/utilities.ts:3873:1
 
 Observations: {'head': 2}. New in head: True.
@@ -3797,6 +4029,8 @@ Owner units:
 - `src/compiler/utilities.ts:2285:1`
 - `src/compiler/utilities.ts:3782:1`
 
+<a id="guard-0117"></a>
+
 ### guard-0117: src/compiler/utilities.ts:3903:1
 
 Observations: {'head': 2}. New in head: True.
@@ -3830,6 +4064,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:10125:1`
 - `src/compiler/utilities.ts:2290:1`
+
+<a id="guard-0118"></a>
 
 ### guard-0118: src/compiler/utilities.ts:4146:1
 
@@ -3867,6 +4103,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:7561:1`
 
+<a id="guard-0119"></a>
+
 ### guard-0119: src/compiler/utilities.ts:4515:21
 
 Observations: {'head': 2}. New in head: True.
@@ -3894,6 +4132,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4507:1`
+
+<a id="guard-0120"></a>
 
 ### guard-0120: src/compiler/utilities.ts:4559:1
 
@@ -3997,6 +4237,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1257:1`
 - `src/compiler/utilitiesPublic.ts:2552:1`
 
+<a id="guard-0121"></a>
+
 ### guard-0121: src/compiler/utilities.ts:4857:42
 
 Observations: {'head': 2}. New in head: True.
@@ -4024,6 +4266,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4852:1`
+
+<a id="guard-0122"></a>
 
 ### guard-0122: src/compiler/utilities.ts:5026:17
 
@@ -4053,6 +4297,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:5023:1`
 
+<a id="guard-0123"></a>
+
 ### guard-0123: src/compiler/utilities.ts:5160:20
 
 Observations: {'head': 1}. New in head: True.
@@ -4081,6 +4327,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:5151:1`
 
+<a id="guard-0124"></a>
+
 ### guard-0124: src/compiler/utilities.ts:5189:10
 
 Observations: {'head': 2}. New in head: True.
@@ -4108,6 +4356,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:5187:1`
+
+<a id="guard-0125"></a>
 
 ### guard-0125: src/compiler/utilities.ts:5360:1
 
@@ -4143,6 +4393,8 @@ Owner units:
 - `src/compiler/utilities.ts:5110:1`
 - `src/compiler/utilities.ts:5395:1`
 
+<a id="guard-0126"></a>
+
 ### guard-0126: src/compiler/utilities.ts:5360:1
 
 Observations: {'head': 4}. New in head: True.
@@ -4177,6 +4429,8 @@ Owner units:
 - `src/compiler/utilities.ts:5110:1`
 - `src/compiler/utilities.ts:5395:1`
 
+<a id="guard-0127"></a>
+
 ### guard-0127: src/compiler/utilities.ts:5360:1
 
 Observations: {'head': 4}. New in head: True.
@@ -4210,6 +4464,8 @@ Owner units:
 - `src/compiler/utilities.ts:2362:1`
 - `src/compiler/utilities.ts:5110:1`
 - `src/compiler/utilities.ts:5395:1`
+
+<a id="guard-0128"></a>
 
 ### guard-0128: src/compiler/utilities.ts:5425:1
 
@@ -4250,6 +4506,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:4062:1`
 
+<a id="guard-0129"></a>
+
 ### guard-0129: src/compiler/utilities.ts:5425:1
 
 Observations: {'head': 1}. New in head: True.
@@ -4288,6 +4546,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4062:1`
+
+<a id="guard-0130"></a>
 
 ### guard-0130: src/compiler/utilities.ts:5520:1
 
@@ -4349,6 +4609,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:5562:1`
 
+<a id="guard-0131"></a>
+
 ### guard-0131: src/compiler/utilities.ts:5523:36
 
 Observations: {'head': 2}. New in head: True.
@@ -4376,6 +4638,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:5520:1`
+
+<a id="guard-0132"></a>
 
 ### guard-0132: src/compiler/utilities.ts:5525:23
 
@@ -4405,6 +4669,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:5520:1`
 
+<a id="guard-0133"></a>
+
 ### guard-0133: src/compiler/utilities.ts:5637:75
 
 Observations: {'head': 2}. New in head: True.
@@ -4432,6 +4698,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:5635:1`
+
+<a id="guard-0134"></a>
 
 ### guard-0134: src/compiler/utilities.ts:5684:75
 
@@ -4461,6 +4729,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:5682:1`
 
+<a id="guard-0135"></a>
+
 ### guard-0135: src/compiler/utilities.ts:5690:17
 
 Observations: {'head': 2}. New in head: True.
@@ -4489,6 +4759,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:5688:1`
 
+<a id="guard-0136"></a>
+
 ### guard-0136: src/compiler/utilities.ts:6797:85
 
 Observations: {'head': 1}. New in head: True.
@@ -4516,6 +4788,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:6796:1`
+
+<a id="guard-0137"></a>
 
 ### guard-0137: src/compiler/utilities.ts:7469:1
 
@@ -4549,6 +4823,8 @@ Owner units:
 - `src/compiler/utilities.ts:7482:1`
 - `src/compiler/utilitiesPublic.ts:1932:1`
 
+<a id="guard-0138"></a>
+
 ### guard-0138: src/compiler/utilities.ts:7471:1
 
 Observations: {'head': 2}. New in head: True.
@@ -4577,6 +4853,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4708:1`
+
+<a id="guard-0139"></a>
 
 ### guard-0139: src/compiler/utilities.ts:7493:1
 
@@ -4608,6 +4886,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:2882:1`
+
+<a id="guard-0140"></a>
 
 ### guard-0140: src/compiler/utilities.ts:7498:1
 
@@ -4643,6 +4923,8 @@ Owner units:
 - `src/compiler/utilities.ts:4164:1`
 - `src/compiler/utilities.ts:5171:1`
 
+<a id="guard-0141"></a>
+
 ### guard-0141: src/compiler/utilities.ts:7528:79
 
 Observations: {'head': 1}. New in head: True.
@@ -4670,6 +4952,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:7523:1`
+
+<a id="guard-0142"></a>
 
 ### guard-0142: src/compiler/utilities.ts:7533:1
 
@@ -4701,6 +4985,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:7498:1`
+
+<a id="guard-0143"></a>
 
 ### guard-0143: src/compiler/utilities.ts:7561:1
 
@@ -4734,6 +5020,8 @@ Owner units:
 - `src/compiler/utilities.ts:3946:1`
 - `src/compiler/utilities.ts:3966:1`
 
+<a id="guard-0144"></a>
+
 ### guard-0144: src/compiler/utilities.ts:7567:63
 
 Observations: {'head': 1}. New in head: True.
@@ -4761,6 +5049,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:7566:1`
+
+<a id="guard-0145"></a>
 
 ### guard-0145: src/compiler/utilities.ts:7585:1
 
@@ -4793,6 +5083,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:7590:1`
 
+<a id="guard-0146"></a>
+
 ### guard-0146: src/compiler/utilities.ts:7597:10
 
 Observations: {'head': 2}. New in head: True.
@@ -4821,6 +5113,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:7595:1`
 
+<a id="guard-0147"></a>
+
 ### guard-0147: src/compiler/utilities.ts:7603:10
 
 Observations: {'head': 2}. New in head: True.
@@ -4848,6 +5142,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:7601:1`
+
+<a id="guard-0148"></a>
 
 ### guard-0148: src/compiler/utilities.ts:8353:1
 
@@ -4881,6 +5177,8 @@ Owner units:
 - `src/compiler/utilities.ts:3920:1`
 - `src/compiler/utilities.ts:8372:1`
 
+<a id="guard-0149"></a>
+
 ### guard-0149: src/compiler/utilities.ts:8422:25
 
 Observations: {'head': 2}. New in head: True.
@@ -4908,6 +5206,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:8418:1`
+
+<a id="guard-0150"></a>
 
 ### guard-0150: src/compiler/utilities.ts:8426:25
 
@@ -4937,6 +5237,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:8418:1`
 
+<a id="guard-0151"></a>
+
 ### guard-0151: src/compiler/utilities.ts:8430:25
 
 Observations: {'head': 1}. New in head: True.
@@ -4964,6 +5266,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:8418:1`
+
+<a id="guard-0152"></a>
 
 ### guard-0152: src/compiler/utilitiesPublic.ts:1380:1
 
@@ -5001,6 +5305,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1390:1`
 - `src/compiler/utilitiesPublic.ts:1416:1`
 
+<a id="guard-0153"></a>
+
 ### guard-0153: src/compiler/utilitiesPublic.ts:1380:1
 
 Observations: {'head': 2}. New in head: True.
@@ -5036,6 +5342,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1390:1`
 - `src/compiler/utilitiesPublic.ts:1416:1`
+
+<a id="guard-0154"></a>
 
 ### guard-0154: src/compiler/utilitiesPublic.ts:1380:1
 
@@ -5073,6 +5381,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1390:1`
 - `src/compiler/utilitiesPublic.ts:1416:1`
 
+<a id="guard-0155"></a>
+
 ### guard-0155: src/compiler/utilitiesPublic.ts:1380:1
 
 Observations: {'head': 2}. New in head: True.
@@ -5109,6 +5419,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1390:1`
 - `src/compiler/utilitiesPublic.ts:1416:1`
 
+<a id="guard-0156"></a>
+
 ### guard-0156: src/compiler/utilitiesPublic.ts:1390:1
 
 Observations: {'head': 2}. New in head: True.
@@ -5140,6 +5452,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1399:1`
 - `src/compiler/utilitiesPublic.ts:1416:1`
+
+<a id="guard-0157"></a>
 
 ### guard-0157: src/compiler/utilitiesPublic.ts:1390:1
 
@@ -5173,6 +5487,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1399:1`
 - `src/compiler/utilitiesPublic.ts:1416:1`
 
+<a id="guard-0158"></a>
+
 ### guard-0158: src/compiler/utilitiesPublic.ts:1390:1
 
 Observations: {'head': 2}. New in head: True.
@@ -5205,6 +5521,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1399:1`
 - `src/compiler/utilitiesPublic.ts:1416:1`
 
+<a id="guard-0159"></a>
+
 ### guard-0159: src/compiler/utilitiesPublic.ts:1423:58
 
 Observations: {'head': 2}. New in head: True.
@@ -5232,6 +5550,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1422:1`
+
+<a id="guard-0160"></a>
 
 ### guard-0160: src/compiler/utilitiesPublic.ts:1498:1
 
@@ -5263,6 +5583,8 @@ Owner units:
 
 - `src/compiler/transformers/destructuring.ts:218:1`
 - `src/compiler/utilitiesPublic.ts:2071:1`
+
+<a id="guard-0161"></a>
 
 ### guard-0161: src/compiler/utilitiesPublic.ts:1600:1
 
@@ -5296,6 +5618,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:870:1`
 
+<a id="guard-0162"></a>
+
 ### guard-0162: src/compiler/utilitiesPublic.ts:1600:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5327,6 +5651,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:870:1`
+
+<a id="guard-0163"></a>
 
 ### guard-0163: src/compiler/utilitiesPublic.ts:1600:1
 
@@ -5360,6 +5686,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:870:1`
 
+<a id="guard-0164"></a>
+
 ### guard-0164: src/compiler/utilitiesPublic.ts:1600:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5391,6 +5719,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:870:1`
+
+<a id="guard-0165"></a>
 
 ### guard-0165: src/compiler/utilitiesPublic.ts:1600:1
 
@@ -5424,6 +5754,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:870:1`
 
+<a id="guard-0166"></a>
+
 ### guard-0166: src/compiler/utilitiesPublic.ts:1647:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5453,6 +5785,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
+
+<a id="guard-0167"></a>
 
 ### guard-0167: src/compiler/utilitiesPublic.ts:1647:1
 
@@ -5484,6 +5818,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
 
+<a id="guard-0168"></a>
+
 ### guard-0168: src/compiler/utilitiesPublic.ts:1647:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5513,6 +5849,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
+
+<a id="guard-0169"></a>
 
 ### guard-0169: src/compiler/utilitiesPublic.ts:1647:1
 
@@ -5544,6 +5882,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
 
+<a id="guard-0170"></a>
+
 ### guard-0170: src/compiler/utilitiesPublic.ts:1647:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5573,6 +5913,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
+
+<a id="guard-0171"></a>
 
 ### guard-0171: src/compiler/utilitiesPublic.ts:1647:1
 
@@ -5604,6 +5946,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
 
+<a id="guard-0172"></a>
+
 ### guard-0172: src/compiler/utilitiesPublic.ts:1647:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5633,6 +5977,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
+
+<a id="guard-0173"></a>
 
 ### guard-0173: src/compiler/utilitiesPublic.ts:1647:1
 
@@ -5664,6 +6010,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
 
+<a id="guard-0174"></a>
+
 ### guard-0174: src/compiler/utilitiesPublic.ts:1647:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5693,6 +6041,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
+
+<a id="guard-0175"></a>
 
 ### guard-0175: src/compiler/utilitiesPublic.ts:1647:1
 
@@ -5724,6 +6074,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
 
+<a id="guard-0176"></a>
+
 ### guard-0176: src/compiler/utilitiesPublic.ts:1647:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5753,6 +6105,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
+
+<a id="guard-0177"></a>
 
 ### guard-0177: src/compiler/utilitiesPublic.ts:1647:1
 
@@ -5784,6 +6138,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
 
+<a id="guard-0178"></a>
+
 ### guard-0178: src/compiler/utilitiesPublic.ts:1647:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5813,6 +6169,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
+
+<a id="guard-0179"></a>
 
 ### guard-0179: src/compiler/utilitiesPublic.ts:1647:1
 
@@ -5844,6 +6202,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
 
+<a id="guard-0180"></a>
+
 ### guard-0180: src/compiler/utilitiesPublic.ts:1647:1
 
 Observations: {'head': 1}. New in head: True.
@@ -5873,6 +6233,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1778:1`
+
+<a id="guard-0181"></a>
 
 ### guard-0181: src/compiler/utilitiesPublic.ts:1651:1
 
@@ -5905,6 +6267,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/declarations/diagnostics.ts:615:1`
+
+<a id="guard-0182"></a>
 
 ### guard-0182: src/compiler/utilitiesPublic.ts:1675:1
 
@@ -5943,6 +6307,8 @@ Owner units:
 - `src/compiler/utilities.ts:4783:1`
 - `src/compiler/utilitiesPublic.ts:603:1`
 
+<a id="guard-0183"></a>
+
 ### guard-0183: src/compiler/utilitiesPublic.ts:1680:1
 
 Observations: {'head': 3}. New in head: True.
@@ -5976,6 +6342,8 @@ Owner units:
 - `src/compiler/utilities.ts:2203:1`
 - `src/compiler/utilities.ts:3150:1`
 
+<a id="guard-0184"></a>
+
 ### guard-0184: src/compiler/utilitiesPublic.ts:1685:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6006,6 +6374,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:3130:1`
+
+<a id="guard-0185"></a>
 
 ### guard-0185: src/compiler/utilitiesPublic.ts:1732:1
 
@@ -6047,6 +6417,8 @@ Owner units:
 - `src/compiler/utilities.ts:7198:1`
 - `src/compiler/utilitiesPublic.ts:1794:1`
 
+<a id="guard-0186"></a>
+
 ### guard-0186: src/compiler/utilitiesPublic.ts:1744:1
 
 Observations: {'head': 10}. New in head: True.
@@ -6083,6 +6455,8 @@ Owner units:
 - `src/compiler/utilities.ts:7453:1`
 - `src/compiler/utilities.ts:8273:1`
 - `src/compiler/utilities.ts:8323:1`
+
+<a id="guard-0187"></a>
 
 ### guard-0187: src/compiler/utilitiesPublic.ts:1744:1
 
@@ -6121,6 +6495,8 @@ Owner units:
 - `src/compiler/utilities.ts:8273:1`
 - `src/compiler/utilities.ts:8323:1`
 
+<a id="guard-0188"></a>
+
 ### guard-0188: src/compiler/utilitiesPublic.ts:1782:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6158,6 +6534,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1794:1`
+
+<a id="guard-0189"></a>
 
 ### guard-0189: src/compiler/utilitiesPublic.ts:1968:1
 
@@ -6202,6 +6580,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1964:1`
 
+<a id="guard-0190"></a>
+
 ### guard-0190: src/compiler/utilitiesPublic.ts:1968:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6244,6 +6624,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1964:1`
+
+<a id="guard-0191"></a>
 
 ### guard-0191: src/compiler/utilitiesPublic.ts:1968:1
 
@@ -6288,6 +6670,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1964:1`
 
+<a id="guard-0192"></a>
+
 ### guard-0192: src/compiler/utilitiesPublic.ts:1968:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6330,6 +6714,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1964:1`
+
+<a id="guard-0193"></a>
 
 ### guard-0193: src/compiler/utilitiesPublic.ts:1968:1
 
@@ -6374,6 +6760,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1964:1`
 
+<a id="guard-0194"></a>
+
 ### guard-0194: src/compiler/utilitiesPublic.ts:1968:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6416,6 +6804,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1964:1`
+
+<a id="guard-0195"></a>
 
 ### guard-0195: src/compiler/utilitiesPublic.ts:1968:1
 
@@ -6460,6 +6850,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1964:1`
 
+<a id="guard-0196"></a>
+
 ### guard-0196: src/compiler/utilitiesPublic.ts:1968:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6503,6 +6895,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1964:1`
 
+<a id="guard-0197"></a>
+
 ### guard-0197: src/compiler/utilitiesPublic.ts:1979:21
 
 Observations: {'head': 2}. New in head: True.
@@ -6530,6 +6924,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1968:1`
+
+<a id="guard-0198"></a>
 
 ### guard-0198: src/compiler/utilitiesPublic.ts:1995:1
 
@@ -6563,6 +6959,8 @@ Owner units:
 - `src/compiler/utilities.ts:7471:1`
 - `src/compiler/utilities.ts:7473:1`
 
+<a id="guard-0199"></a>
+
 ### guard-0199: src/compiler/utilitiesPublic.ts:2064:21
 
 Observations: {'head': 2}. New in head: True.
@@ -6591,6 +6989,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:2059:1`
 
+<a id="guard-0200"></a>
+
 ### guard-0200: src/compiler/utilitiesPublic.ts:2065:18
 
 Observations: {'head': 2}. New in head: True.
@@ -6618,6 +7018,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:2059:1`
+
+<a id="guard-0201"></a>
 
 ### guard-0201: src/compiler/utilitiesPublic.ts:2086:1
 
@@ -6652,6 +7054,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:2170:1`
 
+<a id="guard-0202"></a>
+
 ### guard-0202: src/compiler/utilitiesPublic.ts:2108:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6683,6 +7087,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:11450:1`
+
+<a id="guard-0203"></a>
 
 ### guard-0203: src/compiler/utilitiesPublic.ts:2108:1
 
@@ -6716,6 +7122,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:11450:1`
 
+<a id="guard-0204"></a>
+
 ### guard-0204: src/compiler/utilitiesPublic.ts:2127:69
 
 Observations: {'head': 3}. New in head: True.
@@ -6745,6 +7153,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:2116:1`
 - `src/compiler/utilitiesPublic.ts:2117:1`
 - `src/compiler/utilitiesPublic.ts:2118:1`
+
+<a id="guard-0205"></a>
 
 ### guard-0205: src/compiler/utilitiesPublic.ts:2398:1
 
@@ -6782,6 +7192,8 @@ Owner units:
 - `src/compiler/utilities.ts:5077:1`
 - `src/compiler/utilities.ts:5110:1`
 
+<a id="guard-0206"></a>
+
 ### guard-0206: src/compiler/utilitiesPublic.ts:2426:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6818,6 +7230,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:2419:1`
 
+<a id="guard-0207"></a>
+
 ### guard-0207: src/compiler/utilitiesPublic.ts:2489:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6850,6 +7264,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:8959:1`
 
+<a id="guard-0208"></a>
+
 ### guard-0208: src/compiler/utilitiesPublic.ts:2489:1
 
 Observations: {'head': 1}. New in head: True.
@@ -6881,6 +7297,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:8959:1`
+
+<a id="guard-0209"></a>
 
 ### guard-0209: src/compiler/utilitiesPublic.ts:2552:1
 
@@ -6923,6 +7341,8 @@ Owner units:
 - `src/compiler/utilities.ts:12201:1`
 - `src/compiler/utilities.ts:1239:1`
 
+<a id="guard-0210"></a>
+
 ### guard-0210: src/compiler/utilitiesPublic.ts:2629:1
 
 Observations: {'head': 4}. New in head: True.
@@ -6953,6 +7373,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:3629:1`
 - `src/compiler/utilitiesPublic.ts:2522:1`
+
+<a id="guard-0211"></a>
 
 ### guard-0211: src/compiler/utilitiesPublic.ts:2629:1
 
@@ -6985,6 +7407,8 @@ Owner units:
 - `src/compiler/utilities.ts:3629:1`
 - `src/compiler/utilitiesPublic.ts:2522:1`
 
+<a id="guard-0212"></a>
+
 ### guard-0212: src/compiler/utilitiesPublic.ts:2629:1
 
 Observations: {'head': 4}. New in head: True.
@@ -7016,6 +7440,8 @@ Owner units:
 - `src/compiler/utilities.ts:3629:1`
 - `src/compiler/utilitiesPublic.ts:2522:1`
 
+<a id="guard-0213"></a>
+
 ### guard-0213: src/compiler/utilitiesPublic.ts:947:15
 
 Observations: {'head': 1}. New in head: True.
@@ -7046,6 +7472,8 @@ Owner units:
 
 ## union arms
 
+<a id="guard-0214"></a>
+
 ### guard-0214: src/compiler/binder.ts:372:39
 
 Observations: {'head': 2}. New in head: True.
@@ -7073,6 +7501,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/binder.ts:350:1`
+
+<a id="guard-0215"></a>
 
 ### guard-0215: src/compiler/core.ts:1782:35
 
@@ -7102,6 +7532,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:3104:1`
 
+<a id="guard-0216"></a>
+
 ### guard-0216: src/compiler/core.ts:1782:35
 
 Observations: {'head': 1}. New in head: True.
@@ -7130,6 +7562,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:4425:1`
 
+<a id="guard-0217"></a>
+
 ### guard-0217: src/compiler/core.ts:1787:32
 
 Observations: {'head': 1}. New in head: True.
@@ -7157,6 +7591,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/transformers/utilities.ts:179:1`
+
+<a id="guard-0218"></a>
 
 ### guard-0218: src/compiler/factory/nodeTests.ts:1082:1
 
@@ -7190,6 +7626,8 @@ Owner units:
 - `src/compiler/utilities.ts:4765:1`
 - `src/compiler/utilities.ts:4823:1`
 
+<a id="guard-0219"></a>
+
 ### guard-0219: src/compiler/factory/nodeTests.ts:1132:1
 
 Observations: {'head': 1}. New in head: True.
@@ -7219,6 +7657,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4778:1`
+
+<a id="guard-0220"></a>
 
 ### guard-0220: src/compiler/factory/nodeTests.ts:1144:1
 
@@ -7250,6 +7690,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1180:1`
 
+<a id="guard-0221"></a>
+
 ### guard-0221: src/compiler/factory/nodeTests.ts:1192:1
 
 Observations: {'head': 1}. New in head: True.
@@ -7279,6 +7721,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/program.ts:937:1`
+
+<a id="guard-0222"></a>
 
 ### guard-0222: src/compiler/factory/nodeTests.ts:403:1
 
@@ -7312,6 +7756,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:1097:1`
 
+<a id="guard-0223"></a>
+
 ### guard-0223: src/compiler/factory/nodeTests.ts:408:1
 
 Observations: {'head': 2}. New in head: True.
@@ -7344,6 +7790,8 @@ Owner units:
 - `src/compiler/utilities.ts:7294:1`
 - `src/compiler/utilitiesPublic.ts:615:1`
 
+<a id="guard-0224"></a>
+
 ### guard-0224: src/compiler/factory/nodeTests.ts:418:1
 
 Observations: {'head': 1}. New in head: True.
@@ -7375,6 +7823,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4783:1`
+
+<a id="guard-0225"></a>
 
 ### guard-0225: src/compiler/factory/nodeTests.ts:422:1
 
@@ -7411,6 +7861,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:1600:1`
 - `src/compiler/utilitiesPublic.ts:1752:1`
 
+<a id="guard-0226"></a>
+
 ### guard-0226: src/compiler/factory/nodeTests.ts:430:1
 
 Observations: {'head': 1}. New in head: True.
@@ -7440,6 +7892,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:7889:1`
+
+<a id="guard-0227"></a>
 
 ### guard-0227: src/compiler/factory/nodeTests.ts:434:1
 
@@ -7476,6 +7930,8 @@ Owner units:
 - `src/compiler/utilities.ts:7198:1`
 - `src/compiler/utilitiesPublic.ts:1680:1`
 
+<a id="guard-0228"></a>
+
 ### guard-0228: src/compiler/factory/nodeTests.ts:446:1
 
 Observations: {'head': 1}. New in head: True.
@@ -7505,6 +7961,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:8043:1`
+
+<a id="guard-0229"></a>
 
 ### guard-0229: src/compiler/factory/nodeTests.ts:570:1
 
@@ -7537,6 +7995,8 @@ Owner units:
 - `src/compiler/utilities.ts:3878:1`
 - `src/compiler/utilitiesPublic.ts:1004:1`
 - `src/compiler/utilitiesPublic.ts:644:1`
+
+<a id="guard-0230"></a>
 
 ### guard-0230: src/compiler/factory/nodeTests.ts:792:1
 
@@ -7575,6 +8035,8 @@ Owner units:
 - `src/compiler/utilities.ts:8022:1`
 - `src/compiler/utilitiesPublic.ts:1872:1`
 
+<a id="guard-0231"></a>
+
 ### guard-0231: src/compiler/factory/nodeTests.ts:796:1
 
 Observations: {'head': 2}. New in head: True.
@@ -7605,6 +8067,8 @@ Owner units:
 
 - `src/compiler/transformers/esnext.ts:774:1`
 - `src/compiler/utilitiesPublic.ts:2170:1`
+
+<a id="guard-0232"></a>
 
 ### guard-0232: src/compiler/factory/nodeTests.ts:820:1
 
@@ -7642,6 +8106,8 @@ Owner units:
 - `src/compiler/utilities.ts:2313:1`
 - `src/compiler/utilities.ts:4524:1`
 
+<a id="guard-0233"></a>
+
 ### guard-0233: src/compiler/factory/nodeTests.ts:836:1
 
 Observations: {'head': 1}. New in head: True.
@@ -7671,6 +8137,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/program.ts:959:1`
+
+<a id="guard-0234"></a>
 
 ### guard-0234: src/compiler/factory/nodeTests.ts:840:1
 
@@ -7703,6 +8171,8 @@ Owner units:
 - `src/compiler/program.ts:937:1`
 - `src/compiler/utilities.ts:12088:1`
 
+<a id="guard-0235"></a>
+
 ### guard-0235: src/compiler/factory/nodeTests.ts:870:1
 
 Observations: {'head': 1}. New in head: True.
@@ -7732,6 +8202,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4425:1`
+
+<a id="guard-0236"></a>
 
 ### guard-0236: src/compiler/factory/nodeTests.ts:874:1
 
@@ -7764,6 +8236,8 @@ Owner units:
 - `src/compiler/utilities.ts:1296:1`
 - `src/compiler/utilities.ts:3766:1`
 
+<a id="guard-0237"></a>
+
 ### guard-0237: src/compiler/factory/nodeTests.ts:882:1
 
 Observations: {'head': 1}. New in head: True.
@@ -7793,6 +8267,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1532:1`
+
+<a id="guard-0238"></a>
 
 ### guard-0238: src/compiler/factory/nodeTests.ts:890:1
 
@@ -7827,6 +8303,8 @@ Owner units:
 - `src/compiler/utilities.ts:2318:1`
 - `src/compiler/utilitiesPublic.ts:2133:1`
 
+<a id="guard-0239"></a>
+
 ### guard-0239: src/compiler/factory/nodeTests.ts:898:1
 
 Observations: {'head': 1}. New in head: True.
@@ -7856,6 +8334,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1532:1`
+
+<a id="guard-0240"></a>
 
 ### guard-0240: src/compiler/factory/nodeTests.ts:985:1
 
@@ -7890,6 +8370,8 @@ Owner units:
 - `src/compiler/utilities.ts:3629:1`
 - `src/compiler/utilities.ts:7453:1`
 
+<a id="guard-0241"></a>
+
 ### guard-0241: src/compiler/parser.ts:10806:37
 
 Observations: {'head': 1}. New in head: True.
@@ -7917,6 +8399,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/parser.ts:10800:1`
+
+<a id="guard-0242"></a>
 
 ### guard-0242: src/compiler/transformers/utilities.ts:632:13
 
@@ -7946,6 +8430,8 @@ Owner units:
 
 - `src/compiler/transformers/utilities.ts:630:1`
 
+<a id="guard-0243"></a>
+
 ### guard-0243: src/compiler/utilities.ts:10814:32
 
 Observations: {'head': 1}. New in head: True.
@@ -7973,6 +8459,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:10810:1`
+
+<a id="guard-0244"></a>
 
 ### guard-0244: src/compiler/utilities.ts:11038:21
 
@@ -8002,6 +8490,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:11026:1`
 
+<a id="guard-0245"></a>
+
 ### guard-0245: src/compiler/utilities.ts:11040:21
 
 Observations: {'head': 2}. New in head: True.
@@ -8029,6 +8519,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:11026:1`
+
+<a id="guard-0246"></a>
 
 ### guard-0246: src/compiler/utilities.ts:11042:21
 
@@ -8058,6 +8550,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:11026:1`
 
+<a id="guard-0247"></a>
+
 ### guard-0247: src/compiler/utilities.ts:11459:70
 
 Observations: {'head': 1}. New in head: True.
@@ -8086,6 +8580,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:11456:1`
 
+<a id="guard-0248"></a>
+
 ### guard-0248: src/compiler/utilities.ts:2114:71
 
 Observations: {'head': 1}. New in head: True.
@@ -8113,6 +8609,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:2112:1`
+
+<a id="guard-0249"></a>
 
 ### guard-0249: src/compiler/utilities.ts:2274:1
 
@@ -8153,6 +8651,8 @@ Owner units:
 - `src/compiler/utilities.ts:2290:1`
 - `src/compiler/utilities.ts:2318:1`
 
+<a id="guard-0250"></a>
+
 ### guard-0250: src/compiler/utilities.ts:2274:1
 
 Observations: {'head': 3}. New in head: True.
@@ -8192,6 +8692,8 @@ Owner units:
 - `src/compiler/utilities.ts:2290:1`
 - `src/compiler/utilities.ts:2318:1`
 
+<a id="guard-0251"></a>
+
 ### guard-0251: src/compiler/utilities.ts:2318:1
 
 Observations: {'head': 3}. New in head: True.
@@ -8224,6 +8726,8 @@ Owner units:
 - `src/compiler/utilities.ts:2313:1`
 - `src/compiler/utilitiesPublic.ts:2143:1`
 - `src/compiler/utilitiesPublic.ts:2148:1`
+
+<a id="guard-0252"></a>
 
 ### guard-0252: src/compiler/utilities.ts:2318:1
 
@@ -8258,6 +8762,8 @@ Owner units:
 - `src/compiler/utilitiesPublic.ts:2143:1`
 - `src/compiler/utilitiesPublic.ts:2148:1`
 
+<a id="guard-0253"></a>
+
 ### guard-0253: src/compiler/utilities.ts:2318:1
 
 Observations: {'head': 3}. New in head: True.
@@ -8290,6 +8796,8 @@ Owner units:
 - `src/compiler/utilities.ts:2313:1`
 - `src/compiler/utilitiesPublic.ts:2143:1`
 - `src/compiler/utilitiesPublic.ts:2148:1`
+
+<a id="guard-0254"></a>
 
 ### guard-0254: src/compiler/utilities.ts:2994:1
 
@@ -8337,6 +8845,8 @@ Owner units:
 - `src/compiler/utilities.ts:4655:1`
 - `src/compiler/utilities.ts:4656:1`
 
+<a id="guard-0255"></a>
+
 ### guard-0255: src/compiler/utilities.ts:3076:1
 
 Observations: {'head': 1}. New in head: True.
@@ -8370,6 +8880,8 @@ Owner units:
 
 - `src/compiler/binder.ts:3815:1`
 
+<a id="guard-0256"></a>
+
 ### guard-0256: src/compiler/utilities.ts:3772:65
 
 Observations: {'head': 2}. New in head: True.
@@ -8398,6 +8910,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:3771:1`
 
+<a id="guard-0257"></a>
+
 ### guard-0257: src/compiler/utilities.ts:3788:65
 
 Observations: {'head': 2}. New in head: True.
@@ -8425,6 +8939,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:3787:1`
+
+<a id="guard-0258"></a>
 
 ### guard-0258: src/compiler/utilities.ts:4480:1
 
@@ -8458,6 +8974,8 @@ Owner units:
 - `src/compiler/utilities.ts:4485:1`
 - `src/compiler/utilities.ts:6921:1`
 
+<a id="guard-0259"></a>
+
 ### guard-0259: src/compiler/utilities.ts:4513:21
 
 Observations: {'head': 2}. New in head: True.
@@ -8485,6 +9003,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:4507:1`
+
+<a id="guard-0260"></a>
 
 ### guard-0260: src/compiler/utilities.ts:5338:11
 
@@ -8514,6 +9034,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:5316:1`
 
+<a id="guard-0261"></a>
+
 ### guard-0261: src/compiler/utilities.ts:5527:34
 
 Observations: {'head': 1}. New in head: True.
@@ -8541,6 +9063,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilities.ts:5520:1`
+
+<a id="guard-0262"></a>
 
 ### guard-0262: src/compiler/utilitiesPublic.ts:1449:1
 
@@ -8572,6 +9096,8 @@ Owner units:
 
 - `src/compiler/utilities.ts:11055:1`
 
+<a id="guard-0263"></a>
+
 ### guard-0263: src/compiler/utilitiesPublic.ts:1539:21
 
 Observations: {'head': 2}. New in head: True.
@@ -8599,6 +9125,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1536:1`
+
+<a id="guard-0264"></a>
 
 ### guard-0264: src/compiler/utilitiesPublic.ts:1539:61
 
@@ -8628,6 +9156,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1536:1`
 
+<a id="guard-0265"></a>
+
 ### guard-0265: src/compiler/utilitiesPublic.ts:1541:21
 
 Observations: {'head': 2}. New in head: True.
@@ -8655,6 +9185,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1536:1`
+
+<a id="guard-0266"></a>
 
 ### guard-0266: src/compiler/utilitiesPublic.ts:1543:21
 
@@ -8684,6 +9216,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1536:1`
 
+<a id="guard-0267"></a>
+
 ### guard-0267: src/compiler/utilitiesPublic.ts:1545:21
 
 Observations: {'head': 2}. New in head: True.
@@ -8711,6 +9245,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1536:1`
+
+<a id="guard-0268"></a>
 
 ### guard-0268: src/compiler/utilitiesPublic.ts:1553:21
 
@@ -8740,6 +9276,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1550:1`
 
+<a id="guard-0269"></a>
+
 ### guard-0269: src/compiler/utilitiesPublic.ts:1553:61
 
 Observations: {'head': 2}. New in head: True.
@@ -8767,6 +9305,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1550:1`
+
+<a id="guard-0270"></a>
 
 ### guard-0270: src/compiler/utilitiesPublic.ts:1555:113
 
@@ -8796,6 +9336,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1550:1`
 
+<a id="guard-0271"></a>
+
 ### guard-0271: src/compiler/utilitiesPublic.ts:1555:21
 
 Observations: {'head': 2}. New in head: True.
@@ -8823,6 +9365,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1550:1`
+
+<a id="guard-0272"></a>
 
 ### guard-0272: src/compiler/utilitiesPublic.ts:1555:65
 
@@ -8852,6 +9396,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1550:1`
 
+<a id="guard-0273"></a>
+
 ### guard-0273: src/compiler/utilitiesPublic.ts:1557:21
 
 Observations: {'head': 2}. New in head: True.
@@ -8879,6 +9425,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1550:1`
+
+<a id="guard-0274"></a>
 
 ### guard-0274: src/compiler/utilitiesPublic.ts:1581:1
 
@@ -8916,6 +9464,8 @@ Owner units:
 - `src/compiler/transformers/utilities.ts:389:1`
 - `src/compiler/transformers/utilities.ts:441:1`
 
+<a id="guard-0275"></a>
+
 ### guard-0275: src/compiler/utilitiesPublic.ts:1586:1
 
 Observations: {'head': 4}. New in head: True.
@@ -8950,6 +9500,8 @@ Owner units:
 - `src/compiler/transformers/utilities.ts:389:1`
 - `src/compiler/transformers/utilities.ts:441:1`
 
+<a id="guard-0276"></a>
+
 ### guard-0276: src/compiler/utilitiesPublic.ts:1748:1
 
 Observations: {'head': 2}. New in head: True.
@@ -8980,6 +9532,8 @@ Owner units:
 
 - `src/compiler/checker.ts:54222:1`
 - `src/compiler/utilities.ts:3574:1`
+
+<a id="guard-0277"></a>
 
 ### guard-0277: src/compiler/utilitiesPublic.ts:1765:1
 
@@ -9020,6 +9574,8 @@ Owner units:
 - `src/compiler/transformers/utilities.ts:642:1`
 - `src/compiler/utilitiesPublic.ts:1600:1`
 
+<a id="guard-0278"></a>
+
 ### guard-0278: src/compiler/utilitiesPublic.ts:1798:1
 
 Observations: {'head': 1}. New in head: True.
@@ -9055,6 +9611,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:2592:1`
+
+<a id="guard-0279"></a>
 
 ### guard-0279: src/compiler/utilitiesPublic.ts:1860:1
 
@@ -9100,6 +9658,8 @@ Owner units:
 - `src/compiler/factory/utilities.ts:910:1`
 - `src/compiler/transformers/destructuring.ts:386:1`
 
+<a id="guard-0280"></a>
+
 ### guard-0280: src/compiler/utilitiesPublic.ts:1884:1
 
 Observations: {'head': 2}. New in head: True.
@@ -9136,6 +9696,8 @@ Owner units:
 
 - `src/compiler/transformers/destructuring.ts:197:1`
 - `src/compiler/transformers/destructuring.ts:218:1`
+
+<a id="guard-0281"></a>
 
 ### guard-0281: src/compiler/utilitiesPublic.ts:1884:1
 
@@ -9174,6 +9736,8 @@ Owner units:
 - `src/compiler/transformers/destructuring.ts:197:1`
 - `src/compiler/transformers/destructuring.ts:218:1`
 
+<a id="guard-0282"></a>
+
 ### guard-0282: src/compiler/utilitiesPublic.ts:1884:1
 
 Observations: {'head': 2}. New in head: True.
@@ -9211,6 +9775,8 @@ Owner units:
 - `src/compiler/transformers/destructuring.ts:197:1`
 - `src/compiler/transformers/destructuring.ts:218:1`
 
+<a id="guard-0283"></a>
+
 ### guard-0283: src/compiler/utilitiesPublic.ts:1884:1
 
 Observations: {'head': 2}. New in head: True.
@@ -9247,6 +9813,8 @@ Owner units:
 
 - `src/compiler/transformers/destructuring.ts:197:1`
 - `src/compiler/transformers/destructuring.ts:218:1`
+
+<a id="guard-0284"></a>
 
 ### guard-0284: src/compiler/utilitiesPublic.ts:1894:1
 
@@ -9289,6 +9857,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1884:1`
 
+<a id="guard-0285"></a>
+
 ### guard-0285: src/compiler/utilitiesPublic.ts:1894:1
 
 Observations: {'head': 1}. New in head: True.
@@ -9329,6 +9899,8 @@ Reading: **guard bug: excluded discriminator arm.** This predicate checks node k
 Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1884:1`
+
+<a id="guard-0286"></a>
 
 ### guard-0286: src/compiler/utilitiesPublic.ts:1921:1
 
@@ -9371,6 +9943,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1884:1`
 
+<a id="guard-0287"></a>
+
 ### guard-0287: src/compiler/utilitiesPublic.ts:1921:1
 
 Observations: {'head': 1}. New in head: True.
@@ -9412,6 +9986,8 @@ Owner units:
 
 - `src/compiler/utilitiesPublic.ts:1884:1`
 
+<a id="guard-0288"></a>
+
 ### guard-0288: src/compiler/utilitiesPublic.ts:2625:1
 
 Observations: {'head': 3}. New in head: True.
@@ -9443,6 +10019,8 @@ Owner units:
 - `src/compiler/transformers/utilities.ts:471:1`
 - `src/compiler/utilities.ts:5360:1`
 - `src/compiler/utilities.ts:6507:1`
+
+<a id="guard-0289"></a>
 
 ### guard-0289: src/compiler/utilitiesPublic.ts:2625:1
 

@@ -8,6 +8,8 @@ None.
 
 ## index values
 
+<a id="full-91560bd618-0001"></a>
+
 ### full-91560bd618-0001: src/compiler/factory/nodeTests.ts:544:1
 
 Observations: {'head': 2}. New in head: True.
@@ -39,6 +41,8 @@ Owner units:
 - `src/compiler/transformers/typeSerializer.ts:132:1`
 - `src/compiler/transformers/typeSerializer.ts:402:5`
 
+<a id="full-91560bd618-0002"></a>
+
 ### full-91560bd618-0002: src/compiler/transformers/typeSerializer.ts:308:59
 
 Observations: {'head': 4}. New in head: True.
@@ -67,6 +71,8 @@ Owner units:
 
 - `src/compiler/transformers/typeSerializer.ts:132:1`
 - `src/compiler/transformers/typeSerializer.ts:271:5`
+
+<a id="full-91560bd618-0003"></a>
 
 ### full-91560bd618-0003: src/compiler/transformers/typeSerializer.ts:320:51
 
@@ -97,6 +103,8 @@ Owner units:
 - `src/compiler/transformers/typeSerializer.ts:132:1`
 - `src/compiler/transformers/typeSerializer.ts:271:5`
 
+<a id="full-91560bd618-0004"></a>
+
 ### full-91560bd618-0004: src/compiler/transformers/typeSerializer.ts:332:22
 
 Observations: {'head': 4}. New in head: True.
@@ -125,6 +133,8 @@ Owner units:
 
 - `src/compiler/transformers/typeSerializer.ts:132:1`
 - `src/compiler/transformers/typeSerializer.ts:271:5`
+
+<a id="full-91560bd618-0005"></a>
 
 ### full-91560bd618-0005: src/compiler/transformers/typeSerializer.ts:333:47
 
@@ -157,6 +167,8 @@ Owner units:
 
 ## union arms
 
+<a id="full-91560bd618-0006"></a>
+
 ### full-91560bd618-0006: src/compiler/transformers/typeSerializer.ts:293:25
 
 Observations: {'head': 4}. New in head: True.
@@ -185,6 +197,8 @@ Owner units:
 
 - `src/compiler/transformers/typeSerializer.ts:132:1`
 - `src/compiler/transformers/typeSerializer.ts:271:5`
+
+<a id="full-91560bd618-0007"></a>
 
 ### full-91560bd618-0007: src/compiler/transformers/typeSerializer.ts:615:16
 

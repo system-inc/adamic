@@ -57,7 +57,7 @@ def main():
    counts[category]+=1
    if category=='needs reading':unread.append(dict(r,case=identifier,manual_key=manualkey))
    units=sorted({x['unit'] for x in observations});sides=collections.Counter(x['side'] for x in observations)
-   lines += [f'### {identifier}: {short(r["where"])}','',f'Observations: {dict(sides)}. New in head: {isnew}.','', 'Source and target as named by the guard:', '', '~~~~text', r['source']+' as '+r['target'], '~~~~','', 'Exact reason:', '', '~~~~text',r['reason'],'~~~~','', 'Source text:', '', '~~~~typescript',r['text'].replace('\r\n','\n'),'~~~~','',f'Reading: **{category}.** {text}','', 'Owner units:', '']
+   lines += ['<a id="'+identifier+'"></a>','',f'### {identifier}: {short(r["where"])}','',f'Observations: {dict(sides)}. New in head: {isnew}.','', 'Source and target as named by the guard:', '', '~~~~text', r['source']+' as '+r['target'], '~~~~','', 'Exact reason:', '', '~~~~text',r['reason'],'~~~~','', 'Source text:', '', '~~~~typescript',r['text'].replace('\r\n','\n'),'~~~~','',f'Reading: **{category}.** {text}','', 'Owner units:', '']
    lines += ['- `'+short(u)+'`' for u in units];lines += ['']
    catalogue.append({'case':identifier,'road':road,'where':r['where'],'source':r['source'],'target':r['target'],'new':isnew,'reading_category':category,'reading':text,'units':units,'observations':dict(sides),'reason':r['reason']})
  (root/f'{prefix}-findings.md').write_text('\n'.join(lines)+'\n')

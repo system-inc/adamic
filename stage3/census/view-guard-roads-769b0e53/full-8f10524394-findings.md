@@ -8,6 +8,8 @@ None.
 
 ## index values
 
+<a id="full-8f10524394-0001"></a>
+
 ### full-8f10524394-0001: src/compiler/factory/nodeTests.ts:1058:1
 
 Observations: {'head': 1}. New in head: True.
@@ -37,6 +39,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:622:5`
+
+<a id="full-8f10524394-0002"></a>
 
 ### full-8f10524394-0002: src/compiler/factory/nodeTests.ts:508:1
 
@@ -68,6 +72,8 @@ Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:622:5`
 
+<a id="full-8f10524394-0003"></a>
+
 ### full-8f10524394-0003: src/compiler/factory/nodeTests.ts:512:1
 
 Observations: {'head': 1}. New in head: True.
@@ -97,6 +103,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:622:5`
+
+<a id="full-8f10524394-0004"></a>
 
 ### full-8f10524394-0004: src/compiler/factory/nodeTests.ts:520:1
 
@@ -128,6 +136,8 @@ Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:622:5`
 
+<a id="full-8f10524394-0005"></a>
+
 ### full-8f10524394-0005: src/compiler/factory/parenthesizerRules.ts:272:59
 
 Observations: {'head': 2}. New in head: True.
@@ -155,6 +165,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:265:5`
+
+<a id="full-8f10524394-0006"></a>
 
 ### full-8f10524394-0006: src/compiler/factory/parenthesizerRules.ts:273:18
 
@@ -184,6 +196,8 @@ Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:265:5`
 
+<a id="full-8f10524394-0007"></a>
+
 ### full-8f10524394-0007: src/compiler/factory/parenthesizerRules.ts:274:25
 
 Observations: {'head': 2}. New in head: True.
@@ -211,6 +225,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:265:5`
+
+<a id="full-8f10524394-0008"></a>
 
 ### full-8f10524394-0008: src/compiler/factory/parenthesizerRules.ts:277:65
 
@@ -240,6 +256,8 @@ Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:265:5`
 
+<a id="full-8f10524394-0009"></a>
+
 ### full-8f10524394-0009: src/compiler/factory/parenthesizerRules.ts:279:72
 
 Observations: {'head': 2}. New in head: True.
@@ -267,6 +285,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:265:5`
+
+<a id="full-8f10524394-0010"></a>
 
 ### full-8f10524394-0010: src/compiler/factory/parenthesizerRules.ts:283:14
 
@@ -296,6 +316,8 @@ Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:265:5`
 
+<a id="full-8f10524394-0011"></a>
+
 ### full-8f10524394-0011: src/compiler/factory/parenthesizerRules.ts:379:26
 
 Observations: {'head': 2}. New in head: True.
@@ -324,6 +346,8 @@ Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:372:5`
 
+<a id="full-8f10524394-0012"></a>
+
 ### full-8f10524394-0012: src/compiler/factory/parenthesizerRules.ts:381:23
 
 Observations: {'head': 1}. New in head: True.
@@ -351,6 +375,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:372:5`
+
+<a id="full-8f10524394-0013"></a>
 
 ### full-8f10524394-0013: src/compiler/utilitiesPublic.ts:1995:1
 
@@ -381,6 +407,8 @@ Reading: **guard bug: identity/union cross-product.** The reported path first re
 Owner units:
 
 - `src/compiler/factory/parenthesizerRules.ts:412:5`
+
+<a id="full-8f10524394-0014"></a>
 
 ### full-8f10524394-0014: src/compiler/utilitiesPublic.ts:2039:1
 

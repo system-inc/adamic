@@ -4,7 +4,7 @@ Task 3zex15c. Report only. Parent `16429a304` against head `769b0e534aa9106cec78
 
 **First-error census complete: the head adds 289 raw and 289 distinct guard findings.** These are 627 refusal observations over 635 recorded views, in 340 units. The parent guard accepts every recorded view. All reported first-error refusal paths have source-based readings in [the complete case catalogue](guard-findings.md).
 
-Full-mode status: **12/26 affected files fully verified**. The remaining checks are in progress.
+Full-mode status: **13/26 affected files fully verified**. The remaining checks were stopped for the turn budget; see execution-status.json and the explicit pending-file list.
 
 ## Paired counts
 
@@ -63,7 +63,7 @@ The stock 6.0.3 parser independently counts 4562 top-level units in 81 resolved 
 
 The 26 affected full-mode files are the union of the new refusal owner files and source-site files. They differ because a caller unit can record a view at an instantiated predicate's declaration in another file. Each full run uses the same tsc entry with `LATENT_FULL=1`, `LATENT_ASSERT_NO_OUTPUT=1`, and exactly one adapted `LATENT_ONLY_FILE`. Each verified file has an original-parent baseline plus parent and head seam runs; both ordinary streams are byte-checked against that common baseline. The complete original source-path proof and first-error baseline equality justify sharing it.
 
-Full mode probes the successful state retained after normal failed-statement rollback. It can therefore have fewer views than a first-error state containing a failed statement. Full and first-error populations are reported separately. [FULL.md](FULL.md) lists every verified file, its counts, every quoted parent/head guard finding, and all pending files. No incomplete file is presented as a completed paired check.
+Full mode probes the successful state retained after normal failed-statement rollback. It can therefore have fewer views than a first-error state containing a failed statement. Full and first-error populations are reported separately. [FULL.md](FULL.md) lists every verified file, its counts, every quoted parent/head guard finding, and all pending files. No incomplete file is presented as a completed paired check. [PARTIAL-FULL.md](PARTIAL-FULL.md) quotes all available guard refusals from incomplete files and labels them as partial observations.
 
 ## Pins, replay and resources
 
@@ -74,3 +74,9 @@ Required setup was completed in the preceding report attempt: source /workspace/
 Box: four-CPU quota and 16 GiB memory limit. The four first-error processes overlapped with GOMAXPROCS=2. Full children use GOMAXPROCS=2 and a recorded GOMEMLIMIT=2560MiB soft target, with up to four independent children. [RUNS.md](RUNS.md) lists every actual child exit, elapsed seconds and peak RSS. Timings are overlapping observations, not isolated compiler performance comparisons. Logs are files; large finished raw streams are gzipped. Go evidence files end in .go.txt.
 
 Checkpoints are pushed after preparation/controls and each completed run to typescript/view-guard-roads-census-checkpoint. The continuation is a new report-only commit on typescript/view-guard-roads-census, extending the preceding blocked-report commit. No main/source branch or production lowering change is pushed; no force push is used.
+
+## Stop reason
+
+The approximately two-hour continuation turn budget was reached after the complete first-error pair and 13 verified full-mode file checks. The remaining full batch was terminated with SIGTERM before losing access to its processes. Its actual controller exit is 2 (partial batch), and each interrupted census child records its own signal exit, time and peak RSS. The remaining 13 files are not claimed as complete checks. All completed child and file results are checkpointed; run-full.py can resume the pending children while preserving failed-attempt evidence.
+
+Completed first-error counts and readings remain valid. Full-mode results are limited to the verified files listed above; incomplete raw streams retain their actual termination status and are not treated as complete censuses. run-full.py can resume children whose metadata does not show a successful completion.

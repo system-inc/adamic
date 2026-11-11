@@ -25,7 +25,9 @@ Elapsed values are monotonic seconds. Peak RSS is wait4 ru_maxrss in KiB. Census
 | [full-0854c1cf41-head-guard](raw/full-0854c1cf41-head-guard.json) | 0 | 74.474 | 1000052 | src/compiler/symbolWalker.ts |
 | [full-0854c1cf41-parent-base](raw/full-0854c1cf41-parent-base.json) | 0 | 68.144 | 1000272 | src/compiler/symbolWalker.ts |
 | [full-0854c1cf41-parent-guard](raw/full-0854c1cf41-parent-guard.json) | 0 | 69.213 | 976872 | src/compiler/symbolWalker.ts |
+| [full-12c82900a1-head-guard](raw/full-12c82900a1-head-guard.json) | 0 | 165.897 | 1108476 | src/compiler/factory/nodeTests.ts |
 | [full-12c82900a1-parent-base](raw/full-12c82900a1-parent-base.json) | 0 | 161.596 | 1133144 | src/compiler/factory/nodeTests.ts |
+| [full-12c82900a1-parent-guard](raw/full-12c82900a1-parent-guard.json) | 0 | 164.947 | 1124992 | src/compiler/factory/nodeTests.ts |
 | [full-4dd6a78338-head-guard](raw/full-4dd6a78338-head-guard.json) | 0 | 44.833 | 889900 | src/compiler/transformers/classThis.ts |
 | [full-4dd6a78338-parent-base](raw/full-4dd6a78338-parent-base.json) | 0 | 45.861 | 903412 | src/compiler/transformers/classThis.ts |
 | [full-4dd6a78338-parent-guard](raw/full-4dd6a78338-parent-guard.json) | 0 | 43.319 | 868732 | src/compiler/transformers/classThis.ts |
@@ -44,9 +46,16 @@ Elapsed values are monotonic seconds. Peak RSS is wait4 ru_maxrss in KiB. Census
 | [full-91560bd618-head-guard](raw/full-91560bd618-head-guard.json) | 0 | 103.929 | 1051488 | src/compiler/transformers/typeSerializer.ts |
 | [full-91560bd618-parent-base](raw/full-91560bd618-parent-base.json) | 0 | 103.060 | 1038416 | src/compiler/transformers/typeSerializer.ts |
 | [full-91560bd618-parent-guard](raw/full-91560bd618-parent-guard.json) | 0 | 104.451 | 1073548 | src/compiler/transformers/typeSerializer.ts |
+| [full-a0fe6b8fd2-head-guard](raw/full-a0fe6b8fd2-head-guard.json) | -15 | 2.666 | 282380 | src/compiler/factory/emitHelpers.ts |
+| [full-a0fe6b8fd2-parent-base](raw/full-a0fe6b8fd2-parent-base.json) | -15 | 51.387 | 952656 | src/compiler/factory/emitHelpers.ts |
+| [full-a0fe6b8fd2-parent-guard](raw/full-a0fe6b8fd2-parent-guard.json) | -15 | 33.194 | 868416 | src/compiler/factory/emitHelpers.ts |
 | [full-a48963c320-head-guard](raw/full-a48963c320-head-guard.json) | 0 | 58.402 | 896356 | src/compiler/transformers/namedEvaluation.ts |
 | [full-a48963c320-parent-base](raw/full-a48963c320-parent-base.json) | 0 | 49.777 | 871532 | src/compiler/transformers/namedEvaluation.ts |
 | [full-a48963c320-parent-guard](raw/full-a48963c320-parent-guard.json) | 0 | 52.175 | 902648 | src/compiler/transformers/namedEvaluation.ts |
+| [full-batch](raw/full-batch.json) | 2 | 981.643 | 1145328 |  |
+| [full-c1be4dcd17-head-guard](raw/full-c1be4dcd17-head-guard.json) | -15 | 63.071 | 1017852 | src/compiler/transformers/declarations/diagnostics.ts |
+| [full-c1be4dcd17-parent-base](raw/full-c1be4dcd17-parent-base.json) | 0 | 114.012 | 991920 | src/compiler/transformers/declarations/diagnostics.ts |
+| [full-c1be4dcd17-parent-guard](raw/full-c1be4dcd17-parent-guard.json) | 0 | 114.907 | 1019080 | src/compiler/transformers/declarations/diagnostics.ts |
 | [full-control-head-base](raw/full-control-head-base.json) | 0 | 0.194 | 32576 | /workspace/roads-guard-control/control.ts |
 | [full-control-head-mutant](raw/full-control-head-mutant.json) | 0 | 0.229 | 31876 | /workspace/roads-guard-control/control.ts |
 | [full-control-head-real](raw/full-control-head-real.json) | 0 | 0.194 | 32876 | /workspace/roads-guard-control/control.ts |
