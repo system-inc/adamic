@@ -271,9 +271,10 @@ const nodes: readonly Node[] = [{ kind: 11 }, identifier, { kind: 80 }, { kind: 
 // never called, a present one is exactly the function, and every argument through the overload keeps
 // predicateArguments' proof. Called with a one-line kind test, and through the plain overload with none,
 // both agree with Node. tsc's assertNode, assertEachNode and assertOptionalNode take a test on T, not
-// Node, and with the claim trusted they meet the census overload proof next, which refuses a callback on
-// T served by one the implementation calls with any Node; that refusal is pinned here so its move is
-// seen. Mutant: the implementation's type read as written, without looking through the parentheses and
+// Node, and with the claim trusted they met the census overload proof next, which refused a callback on
+// T served by one the implementation may call with any Node. #1w5bve2's block 3 (overloadCallbackUse,
+// #8n7eet3) serves it: this body calls test only with node, once node === undefined took undefined away,
+// so it agrees with Node too. Mutant: the implementation's type read as written, without looking through the parentheses and
 // undefined, which refuses both agreeing shapes as "there is no body proving this parameter".
 func TestOverloadPredicateOverOptionalCallback(t *testing.T) {
 	t.Parallel()
@@ -283,11 +284,7 @@ func TestOverloadPredicateOverOptionalCallback(t *testing.T) {
 	})
 	t.Run("assertNode on T", func(t *testing.T) {
 		t.Parallel()
-		_, err := lowerSourceAs(t, fmt.Sprintf(assertNodeSource, "T"), ".ts")
-		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(err.Error(), "overload 1 of assertNode parameter test cannot be served by implementation parameter test") {
-			t.Fatalf("want the census overload proof's refusal, got %v", err)
-		}
+		lowersAndAgreesWithNodeAs(t, fmt.Sprintf(assertNodeSource, "T"), ".ts")
 	})
 	t.Run("visitArrayWorker", func(t *testing.T) {
 		t.Parallel()
