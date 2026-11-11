@@ -49,7 +49,7 @@ for label in (sys.argv[1:] or ['c','c-public']):
  checker=delta(normalize(base['diagnostics'],'original'),normalize(own['diagnostics'],label))
  exact_label='c-exact' if label=='c' else 'c-public-exact'
  diagnostic_key=lambda d:{k:d.get(k) for k in ['file','line','column','code','category','message']}
- exact=delta([diagnostic_key(d) for d in base_exact],[diagnostic_key(d) for d in load(follow/exact_label/'whole-src-diagnostics.json')])
+ exact=delta([diagnostic_key(normalize(d,'original')) for d in base_exact],[diagnostic_key(normalize(d,label)) for d in load(follow/exact_label/'whole-src-diagnostics.json')])
  cohere_rows=stream(follow/label/'cohere-rules.jsonl')
  cohere=delta([cohere_key(r,'original-rules') for r in base_cohere],[cohere_key(r,label) for r in cohere_rows if r.get('kind')=='finding'])
  cohere_summary=next(r for r in cohere_rows if r.get('kind')=='summary')

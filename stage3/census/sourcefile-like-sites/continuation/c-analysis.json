@@ -33,42 +33,8 @@
       "stock_exact_delta": {
         "baseline_unique": 416,
         "variant_unique": 416,
-        "added": [
-          {
-            "file": "src/server/session.ts",
-            "line": 2581,
-            "column": 15,
-            "code": 2322,
-            "category": "Error",
-            "message": "Type '{ codeActions: CodeAction[] | undefined; documentation: SymbolDisplayPart[]; tags: JSDocTagInfo[]; name: string; kind: ScriptElementKind; kindModifiers: string; displayParts: SymbolDisplayPart[]; source?: SymbolDisplayPart[]; sourceDisplay?: SymbolDisplayPart[]; }[]' is not assignable to type 'readonly ChangePropertyTypes<CompletionEntryDetails, { tags: JSDocTagInfo[]; codeActions: CodeAction[]; }>[] | readonly CompletionEntryDetails[]'.\n  Type '{ codeActions: CodeAction[] | undefined; documentation: SymbolDisplayPart[]; tags: JSDocTagInfo[]; name: string; kind: ScriptElementKind; kindModifiers: string; displayParts: SymbolDisplayPart[]; source?: SymbolDisplayPart[]; sourceDisplay?: SymbolDisplayPart[]; }[]' is not assignable to type 'readonly CompletionEntryDetails[]'.\n    Type '{ codeActions: protocol.CodeAction[] | undefined; documentation: SymbolDisplayPart[]; tags: protocol.JSDocTagInfo[]; name: string; kind: ScriptElementKind; kindModifiers: string; displayParts: SymbolDisplayPart[]; source?: SymbolDisplayPart[]; sourceDisplay?: SymbolDisplayPart[]; }' is not assignable to type 'CompletionEntryDetails' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'tags' are incompatible.\n        Type 'import(\"/workspace/scratch/baobab-road2-c/src/server/protocol\").JSDocTagInfo[]' is not assignable to type 'import(\"/workspace/scratch/baobab-road2-c/src/services/types\").JSDocTagInfo[]'.\n          Type 'import(\"/workspace/scratch/baobab-road2-c/src/server/protocol\").JSDocTagInfo' is not assignable to type 'import(\"/workspace/scratch/baobab-road2-c/src/services/types\").JSDocTagInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n            Types of property 'text' are incompatible.\n              Type 'string | SymbolDisplayPart[]' is not assignable to type 'SymbolDisplayPart[]'.\n                Type 'string' is not assignable to type 'SymbolDisplayPart[]'."
-          },
-          {
-            "file": "src/harness/fakesHosts.ts",
-            "line": 24,
-            "column": 14,
-            "code": 2420,
-            "category": "Error",
-            "message": "Class 'import(\"/workspace/scratch/baobab-road2-c/src/harness/fakesHosts\").System' incorrectly implements interface 'import(\"/workspace/scratch/baobab-road2-c/src/compiler/sys\").System'.\n  Types of property 'getWidthOfTerminal' are incompatible.\n    Type '(() => number) | undefined' is not assignable to type '() => number'.\n      Type 'undefined' is not assignable to type '() => number'."
-          }
-        ],
-        "removed": [
-          {
-            "file": "src/server/session.ts",
-            "line": 2581,
-            "column": 15,
-            "code": 2322,
-            "category": "Error",
-            "message": "Type '{ codeActions: CodeAction[] | undefined; documentation: SymbolDisplayPart[]; tags: JSDocTagInfo[]; name: string; kind: ScriptElementKind; kindModifiers: string; displayParts: SymbolDisplayPart[]; source?: SymbolDisplayPart[]; sourceDisplay?: SymbolDisplayPart[]; }[]' is not assignable to type 'readonly ChangePropertyTypes<CompletionEntryDetails, { tags: JSDocTagInfo[]; codeActions: CodeAction[]; }>[] | readonly CompletionEntryDetails[]'.\n  Type '{ codeActions: CodeAction[] | undefined; documentation: SymbolDisplayPart[]; tags: JSDocTagInfo[]; name: string; kind: ScriptElementKind; kindModifiers: string; displayParts: SymbolDisplayPart[]; source?: SymbolDisplayPart[]; sourceDisplay?: SymbolDisplayPart[]; }[]' is not assignable to type 'readonly CompletionEntryDetails[]'.\n    Type '{ codeActions: protocol.CodeAction[] | undefined; documentation: SymbolDisplayPart[]; tags: protocol.JSDocTagInfo[]; name: string; kind: ScriptElementKind; kindModifiers: string; displayParts: SymbolDisplayPart[]; source?: SymbolDisplayPart[]; sourceDisplay?: SymbolDisplayPart[]; }' is not assignable to type 'CompletionEntryDetails' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'tags' are incompatible.\n        Type 'import(\"/workspace/scratch/baobab-adapted/src/server/protocol\").JSDocTagInfo[]' is not assignable to type 'import(\"/workspace/scratch/baobab-adapted/src/services/types\").JSDocTagInfo[]'.\n          Type 'import(\"/workspace/scratch/baobab-adapted/src/server/protocol\").JSDocTagInfo' is not assignable to type 'import(\"/workspace/scratch/baobab-adapted/src/services/types\").JSDocTagInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n            Types of property 'text' are incompatible.\n              Type 'string | SymbolDisplayPart[]' is not assignable to type 'SymbolDisplayPart[]'.\n                Type 'string' is not assignable to type 'SymbolDisplayPart[]'."
-          },
-          {
-            "file": "src/harness/fakesHosts.ts",
-            "line": 24,
-            "column": 14,
-            "code": 2420,
-            "category": "Error",
-            "message": "Class 'import(\"/workspace/scratch/baobab-adapted/src/harness/fakesHosts\").System' incorrectly implements interface 'import(\"/workspace/scratch/baobab-adapted/src/compiler/sys\").System'.\n  Types of property 'getWidthOfTerminal' are incompatible.\n    Type '(() => number) | undefined' is not assignable to type '() => number'.\n      Type 'undefined' is not assignable to type '() => number'."
-          }
-        ]
+        "added": [],
+        "removed": []
       },
       "cohere_summary": {
         "kind": "summary",
