@@ -8,7 +8,7 @@ rows=[r for n in range(1,5) for r in json.loads((out/f'group-{n}-rows.json').rea
 probes=json.loads((out/'node-readiness/results.json').read_text())
 status=json.loads((out/'entry-census-status.json').read_text())
 latent=[json.loads(line) for line in (out/'entry-latent.jsonl').read_text().splitlines()]
-expected=set(latent[0]['sources']);seen={r['file'] for r in latent[1:]}
+expected=set(latent[0]['sources']);seen={r['file'] for r in latent[1:] if 'file' in r}
 complete=status['exit_code']==0 and expected==seen
 attempted={r['file'] for r in latent[1:] if any(u['status'] in ('attempted','panic','speculative') for u in r.get('units',[]))}
 readiness={stop_file(f['where']) for r in latent[1:] for f in r.get('findings') or [] if f['reason'] in READINESS_REASONS}

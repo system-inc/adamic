@@ -35,7 +35,9 @@ for name in ['tracing','sys']:
  assert len(files)==1 and files[0]['file']==str(adapted/'src/compiler'/ (name+'.ts'))
  findings=[f for r in records for f in r.get('findings') or []]
  ordered=json.loads((out/(name+'-full-findings.json')).read_text())
- order=lambda f:(f['where'].rsplit(':',2)[0],int(f['where'].rsplit(':',2)[1]),int(f['where'].rsplit(':',2)[2]))
+ def order(f):
+  loc=f.get('where','').rsplit(':',2)
+  return (loc[0],int(loc[1]),int(loc[2])) if len(loc)==3 else (f.get('where',''),0,0)
  assert sorted(findings,key=order)==ordered
  status=json.loads((out/(name+'-full-status.json')).read_text())
  assert status['exit_code']==0 and status['process_group_cleaned']
