@@ -1,0 +1,491 @@
+{
+  "files": [
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "statements": 1,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 1
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/_namespaces/ts.performance.ts",
+      "statements": 1,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 1
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/_namespaces/ts.ts",
+      "statements": 78,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 78
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/binder.ts",
+      "statements": 16,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 16
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/builder.ts",
+      "statements": 86,
+      "deferred_generic_declarations": 2,
+      "expected_attempts": 84
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/builderPublic.ts",
+      "statements": 16,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 16
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/builderState.ts",
+      "statements": 5,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 5
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/builderStatePublic.ts",
+      "statements": 3,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 3
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/checker.ts",
+      "statements": 51,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 51
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/commandLineParser.ts",
+      "statements": 171,
+      "deferred_generic_declarations": 12,
+      "expected_attempts": 159
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/core.ts",
+      "statements": 264,
+      "deferred_generic_declarations": 207,
+      "expected_attempts": 57
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/corePublic.ts",
+      "statements": 9,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 9
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/debug.ts",
+      "statements": 5,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 5
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+      "statements": 3,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 3
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/emitter.ts",
+      "statements": 50,
+      "deferred_generic_declarations": 2,
+      "expected_attempts": 48
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/executeCommandLine.ts",
+      "statements": 50,
+      "deferred_generic_declarations": 1,
+      "expected_attempts": 49
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/expressionToTypeNode.ts",
+      "statements": 9,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 9
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/baseNodeFactory.ts",
+      "statements": 3,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 3
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/emitHelpers.ts",
+      "statements": 45,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 45
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/emitNode.ts",
+      "statements": 41,
+      "deferred_generic_declarations": 23,
+      "expected_attempts": 18
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/nodeChildren.ts",
+      "statements": 6,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 6
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/nodeConverters.ts",
+      "statements": 3,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 3
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/nodeFactory.ts",
+      "statements": 26,
+      "deferred_generic_declarations": 1,
+      "expected_attempts": 25
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/nodeTests.ts",
+      "statements": 228,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 228
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/parenthesizerRules.ts",
+      "statements": 3,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 3
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/utilities.ts",
+      "statements": 108,
+      "deferred_generic_declarations": 8,
+      "expected_attempts": 100
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/factory/utilitiesPublic.ts",
+      "statements": 4,
+      "deferred_generic_declarations": 1,
+      "expected_attempts": 3
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/hostErrors.ts",
+      "statements": 3,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 3
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/moduleNameResolver.ts",
+      "statements": 163,
+      "deferred_generic_declarations": 15,
+      "expected_attempts": 148
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/moduleSpecifiers.ts",
+      "statements": 49,
+      "deferred_generic_declarations": 1,
+      "expected_attempts": 48
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/parser.ts",
+      "statements": 75,
+      "deferred_generic_declarations": 22,
+      "expected_attempts": 53
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/path.ts",
+      "statements": 81,
+      "deferred_generic_declarations": 4,
+      "expected_attempts": 77
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/performance.ts",
+      "statements": 24,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 24
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/performanceCore.ts",
+      "statements": 12,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 12
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/program.ts",
+      "statements": 85,
+      "deferred_generic_declarations": 5,
+      "expected_attempts": 80
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/programDiagnostics.ts",
+      "statements": 5,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 5
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/resolutionCache.ts",
+      "statements": 31,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 31
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/scanner.ts",
+      "statements": 84,
+      "deferred_generic_declarations": 10,
+      "expected_attempts": 74
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/semver.ts",
+      "statements": 28,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 28
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/sourcemap.ts",
+      "statements": 31,
+      "deferred_generic_declarations": 1,
+      "expected_attempts": 30
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/symbolWalker.ts",
+      "statements": 2,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 2
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/sys.ts",
+      "statements": 62,
+      "deferred_generic_declarations": 2,
+      "expected_attempts": 60
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/tracing.ts",
+      "statements": 10,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 10
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformer.ts",
+      "statements": 17,
+      "deferred_generic_declarations": 2,
+      "expected_attempts": 15
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/classFields.ts",
+      "statements": 23,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 23
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/classThis.ts",
+      "statements": 7,
+      "deferred_generic_declarations": 2,
+      "expected_attempts": 5
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/declarations.ts",
+      "statements": 14,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 14
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+      "statements": 8,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 8
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/destructuring.ts",
+      "statements": 22,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 22
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/es2015.ts",
+      "statements": 13,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 13
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/es2016.ts",
+      "statements": 2,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 2
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/es2017.ts",
+      "statements": 6,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 6
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/es2018.ts",
+      "statements": 4,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 4
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/es2019.ts",
+      "statements": 2,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 2
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/es2020.ts",
+      "statements": 2,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 2
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/es2021.ts",
+      "statements": 2,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 2
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/esDecorators.ts",
+      "statements": 9,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 9
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/esnext.ts",
+      "statements": 9,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 9
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/generators.ts",
+      "statements": 16,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 16
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/jsx.ts",
+      "statements": 3,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 3
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/legacyDecorators.ts",
+      "statements": 2,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 2
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+      "statements": 2,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 2
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "statements": 2,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 2
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/module/module.ts",
+      "statements": 3,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 3
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/module/system.ts",
+      "statements": 2,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 2
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/namedEvaluation.ts",
+      "statements": 21,
+      "deferred_generic_declarations": 2,
+      "expected_attempts": 19
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/taggedTemplate.ts",
+      "statements": 5,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 5
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/ts.ts",
+      "statements": 5,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 5
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/typeSerializer.ts",
+      "statements": 6,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 6
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/transformers/utilities.ts",
+      "statements": 50,
+      "deferred_generic_declarations": 6,
+      "expected_attempts": 44
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/tsbuild.ts",
+      "statements": 5,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 5
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/tsbuildPublic.ts",
+      "statements": 106,
+      "deferred_generic_declarations": 72,
+      "expected_attempts": 34
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/types.ts",
+      "statements": 875,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 875
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/utilities.ts",
+      "statements": 893,
+      "deferred_generic_declarations": 59,
+      "expected_attempts": 834
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/utilitiesPublic.ts",
+      "statements": 251,
+      "deferred_generic_declarations": 9,
+      "expected_attempts": 242
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/visitorPublic.ts",
+      "statements": 41,
+      "deferred_generic_declarations": 13,
+      "expected_attempts": 28
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/watch.ts",
+      "statements": 46,
+      "deferred_generic_declarations": 10,
+      "expected_attempts": 36
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/watchPublic.ts",
+      "statements": 25,
+      "deferred_generic_declarations": 7,
+      "expected_attempts": 18
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/compiler/watchUtilities.ts",
+      "statements": 26,
+      "deferred_generic_declarations": 5,
+      "expected_attempts": 21
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/tsc/_namespaces/ts.ts",
+      "statements": 1,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 1
+    },
+    {
+      "file": "/workspace/scratch/ff5eddz-adapted/src/tsc/tsc.ts",
+      "statements": 6,
+      "deferred_generic_declarations": 0,
+      "expected_attempts": 6
+    }
+  ],
+  "total_expected_attempts": 4058
+}
