@@ -8,9 +8,12 @@
 struct adamic_timer_provider { unsigned brand; };
 static const adamic_timer_provider timer_provider = {1};
 typedef struct timer_entry timer_entry;
+typedef struct timer_list timer_list;
+/* A timer is in timers while it's live, and, while it waits, in the list of its duration: start is
+ * Node's _idleStart, the clock read its wait counts from. */
 struct timer_entry {
     uintptr_t identity;
-    double deadline;
+    double start;
     unsigned delay;
     bool repeat, referenced, firing, active;
     adamic_closure *callback;
@@ -19,9 +22,25 @@ struct timer_entry {
     adamic_value *arguments;
     bool *references;
     timer_entry *next;
+    timer_list *list;
+    timer_entry *list_previous, *list_next;
+};
+/* Node's TimersList (lib/internal/timers.js, TimersList and insert, v24): one list per duration, its
+ * timers in insertion order, an expiry and an id from one counter. Lists are taken by expiry, ties by
+ * id (compareTimersLists), and every due timer of a list runs before the next list is chosen
+ * (processTimers, listOnTimeout), so a later list's earlier deadline waits: a 5 ms list due first runs
+ * both its timers before a 3 ms timer due between them (#a6yb7d1). Loop-thread only. */
+struct timer_list {
+    unsigned msecs;
+    double expiry;
+    uint64_t id;
+    timer_entry *head, *tail;
+    timer_list *next;
 };
 static timer_entry *timers;
 static uintptr_t timer_next_identity = 1;
+static timer_list *timer_lists;
+static uint64_t timer_list_next_id;
 
 static double timer_now(void) {
 #ifdef ADAMIC_TARGET_WASI
@@ -34,6 +53,48 @@ static double timer_now(void) {
 #endif
 }
 const adamic_timer_provider *adamic_timers_provider(void) { return &timer_provider; }
+static timer_list *timer_list_of(unsigned msecs) {
+    for (timer_list *list = timer_lists; list != NULL; list = list->next)
+        if (list->msecs == msecs) return list;
+    return NULL;
+}
+static void timer_list_delete(timer_list *list) {
+    timer_list **at = &timer_lists;
+    while (*at != list) at = &(*at)->next;
+    *at = list->next;
+    free(list);
+}
+/* Node's insert: the timer's start is a clock read of its own (getLibuvNow reads the clock at every
+ * setTimeout, which a timer armed after a busy wait shows by firing after one armed before it), its
+ * list the one of its duration, made with expiry start + msecs and the next id when there's none. An
+ * existing list keeps its expiry and id, an empty one too. */
+static void timer_insert(timer_entry *entry, double start) {
+    entry->start = start;
+    timer_list *list = timer_list_of(entry->delay);
+    if (list == NULL) {
+        list = calloc(1, sizeof *list);
+        if (list == NULL) abort();
+        *list = (timer_list){.msecs = entry->delay, .expiry = start + entry->delay, .id = timer_list_next_id++, .next = timer_lists};
+        timer_lists = list;
+    }
+    entry->list = list;
+    entry->list_previous = list->tail;
+    entry->list_next = NULL;
+    if (list->tail != NULL) list->tail->list_next = entry;
+    else list->head = entry;
+    list->tail = entry;
+}
+/* Node's L.remove: a timer that isn't waiting in a list is left as it is. */
+static void timer_list_remove(timer_entry *entry) {
+    timer_list *list = entry->list;
+    if (list == NULL) return;
+    if (entry->list_previous != NULL) entry->list_previous->list_next = entry->list_next;
+    else list->head = entry->list_next;
+    if (entry->list_next != NULL) entry->list_next->list_previous = entry->list_previous;
+    else list->tail = entry->list_previous;
+    entry->list = NULL;
+    entry->list_previous = entry->list_next = NULL;
+}
 static timer_entry *timer_find(adamic_timer_handle handle) {
     if (handle.provider != &timer_provider) return NULL;
     for (timer_entry *entry = timers; entry != NULL; entry = entry->next)
@@ -132,10 +193,9 @@ adamic_timer_handle adamic_timer_start(const adamic_timer_provider *provider,
         delay_ms = 1;
     }
     unsigned delay = (unsigned)delay_ms;
-    double deadline = timer_now() + delay;
     timer_entry *entry = calloc(1, sizeof *entry);
     if (entry == NULL) abort();
-    *entry = (timer_entry){.identity = timer_next_identity++, .deadline = deadline,
+    *entry = (timer_entry){.identity = timer_next_identity++,
         .delay = delay, .repeat = repeat, .referenced = true, .active = true,
         .callback = adamic_retain(callback), .invoke = invoke, .argc = argc, .next = timers};
     if (argc != 0) {
@@ -148,6 +208,7 @@ adamic_timer_handle adamic_timer_start(const adamic_timer_provider *provider,
             if (references[index]) adamic_retain(arguments[index].reference);
     }
     timers = entry;
+    timer_insert(entry, timer_now());
     host_started = true; /* Freeze loop hooks; timer operations bind the loop owner. */
     return (adamic_timer_handle){provider, entry->identity};
 }
@@ -156,6 +217,14 @@ bool adamic_timer_cancel(adamic_timer_handle handle) {
     timer_entry *entry = timer_find(handle);
     if (entry == NULL) return false;
     timer_unlink(entry);
+    /* Node's unenroll (lib/timers.js): L.remove, then, for a referenced timer alone, its duration's list
+     * deleted when it's empty, even when the timer wasn't in it (a repeat cleared in its own callback);
+     * an unreferenced timer's empty list stays, with its expiry and id, for the next insert to reuse. */
+    timer_list_remove(entry);
+    if (entry->referenced) {
+        timer_list *list = timer_list_of(entry->delay);
+        if (list != NULL && list->head == NULL) timer_list_delete(list);
+    }
     if (!entry->firing) timer_drop(entry);
     return true;
 }
@@ -236,34 +305,54 @@ static bool timer_live(void) {
 #ifndef ADAMIC_TARGET_WASI
 /* Includes unref timers: while other work lives, their deadlines still run. */
 static int timer_wait_ms(void) {
-    if (timers == NULL) return -1;
-    double deadline = timers->deadline;
-    for (timer_entry *entry = timers->next; entry != NULL; entry = entry->next)
-        if (entry->deadline < deadline) deadline = entry->deadline;
+    if (timer_lists == NULL) return -1;
+    /* Node schedules its loop's timer for the earliest list's expiry, an empty list's among them. */
+    double expiry = timer_lists->expiry;
+    for (timer_list *list = timer_lists->next; list != NULL; list = list->next)
+        if (list->expiry < expiry) expiry = list->expiry;
     /* Millisecond rounding and poll's integer timeout can wake up to 1 ms
-     * early. A zero-timeout turn is harmless: dispatch rechecks the deadline. */
-    double delay = deadline - timer_now();
+     * early. A zero-timeout turn is harmless: dispatch rechecks the expiry. */
+    double delay = expiry - timer_now();
     return delay <= 0 ? 0 : delay > INT_MAX ? INT_MAX : (int)delay;
 }
 #endif
-static bool timer_dispatch(void) {
-    timer_entry *chosen = NULL;
-    double now = timer_now();
-    for (timer_entry *entry = timers; entry != NULL; entry = entry->next)
-        if (entry->deadline <= now && (chosen == NULL || entry->deadline < chosen->deadline ||
-            (entry->deadline == chosen->deadline && entry->identity < chosen->identity))) chosen = entry;
-    if (chosen == NULL) return false;
-    chosen->firing = true;
-    if (chosen->repeat) chosen->deadline = now + chosen->delay;
-    else timer_unlink(chosen); /* A timeout is retired before its invocation. */
-    chosen->invoke(chosen->callback, chosen->argc, chosen->arguments);
-    chosen->firing = false;
-    if (!chosen->active) timer_drop(chosen);
-    if (adamic_thrown != NULL) adamic_uncaught();
-    /* Node runs a callback's ticks before its promise jobs, so a warning its setTimeout gave is
-     * written here, ahead of the drain that follows. */
-    timer_warnings_flush();
-    return true;
+/* Node's processTimers(now) and listOnTimeout(list, now), one callback a call, so the loop drains the
+ * jobs between callbacks as Node's runNextTicks does; now is the turn's one read, as processTimers'.
+ * The list chosen stays the earliest while its timers run: a list made in a callback has a later
+ * expiry, and an insert into an existing list leaves its expiry as it was. */
+static bool timer_dispatch(double now) {
+    for (;;) {
+        timer_list *list = NULL;
+        for (timer_list *each = timer_lists; each != NULL; each = each->next)
+            if (list == NULL || each->expiry < list->expiry || (each->expiry == list->expiry && each->id < list->id)) list = each;
+        if (list == NULL || list->expiry > now) return false;
+        timer_entry *chosen = list->head;
+        if (chosen == NULL) {
+            /* Every due timer has run, or its timers were cleared unreferenced: the list goes. */
+            timer_list_delete(list);
+            continue;
+        }
+        if (now - chosen->start < list->msecs) {
+            /* The rest of the list isn't due yet: it waits for its head, with a new id. */
+            list->expiry = fmax(chosen->start + list->msecs, now + 1);
+            list->id = timer_list_next_id++;
+            continue;
+        }
+        timer_list_remove(chosen);
+        /* A repeat's next wait counts from a clock read before its callback, as Node's start does. */
+        double start = chosen->repeat ? timer_now() : 0;
+        chosen->firing = true;
+        if (!chosen->repeat) timer_unlink(chosen); /* A timeout is retired before its invocation. */
+        chosen->invoke(chosen->callback, chosen->argc, chosen->arguments);
+        chosen->firing = false;
+        if (chosen->repeat && chosen->active) timer_insert(chosen, start);
+        if (!chosen->active) timer_drop(chosen);
+        if (adamic_thrown != NULL) adamic_uncaught();
+        /* Node runs a callback's ticks before its promise jobs, so a warning its setTimeout gave is
+         * written here, ahead of the drain that follows. */
+        timer_warnings_flush();
+        return true;
+    }
 }
 static void timer_shutdown(void) {
     while (timers != NULL) {
@@ -271,6 +360,7 @@ static void timer_shutdown(void) {
         timer_unlink(entry);
         timer_drop(entry);
     }
+    while (timer_lists != NULL) timer_list_delete(timer_lists);
     free(timer_warnings);
     timer_warnings = NULL;
     timer_warnings_length = timer_warnings_capacity = 0;
