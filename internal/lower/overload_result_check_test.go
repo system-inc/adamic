@@ -305,8 +305,10 @@ console.log(String(after));
 // A discarded result is released as what the implementation hands back, never as what the overload
 // promises (Adamic's condition): the overload promises a Box, the implementation returns a union holding
 // a number and undefined, and the lying call statement's number is released as that union, natively under
-// the sanitizers. Mutant: the discarded result narrowed to the overload's object before its release, and
-// the release reads a number as a reference.
+// the sanitizers. The road that would read it as the overload's type is censusOverloadFit, which never
+// converts a union into an object: it refuses. Mutant: the discarded result fitted to the overload's
+// representation, as a read result is, and this program stops at "an overload result requiring another
+// representation" (a narrowing of the discarded value instead survives, since nothing reads it).
 func TestOverloadDiscardedResultKeepsTheImplementationsRepresentation(t *testing.T) {
 	t.Parallel()
 	source := `interface Box { readonly kind: "box"; readonly size: number }
