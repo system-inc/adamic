@@ -15,3 +15,5 @@ The matched first-error prefix now has head-only guard refusals. The smallest wi
 Full-mode controls also passed on both compilers: one recorded view, one forced-refusal mutant record, zero probe errors, and unchanged serialized normal findings against each original binary. File-specific full checks will use a common original-parent normal baseline for both seam sides; the original latent call-path proof establishes that the original head differs only in unreachable guard code.
 
 Original head baseline completed: child exit 0; 4058 timed non-generic unit attempts; 4869.733 seconds; peak RSS 5123252 KiB. The first-error guard pair and corpus noninterference checks remain in progress.
+
+Original parent baseline completed: child exit 0; 4966.145 seconds; peak RSS 5101784 KiB. Both original baseline finding arrays and all non-telemetry census bytes agree exactly. The common original-parent full-mode baseline is therefore backed by both the source call-path proof and this complete first-error comparison.
