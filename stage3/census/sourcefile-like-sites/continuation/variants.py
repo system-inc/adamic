@@ -42,7 +42,7 @@ if __name__=='__main__':
  expected=['checker.ts','emitter.ts','parser.ts','program.ts','scanner.ts','utilities.ts']
  assert all((follow/'baseline/raw'/(n.removesuffix('.ts')+'.status.json')).exists() for n in expected),'finish six baseline attempts before variants'
  assert json.loads((follow/'original/summary.json').read_text())['whole_src_diagnostics']==0
- sites=json.loads((out/'sites.json').read_text());files=sorted({s['file'] for s in sites}|{name for s in sites for name in s.get('observed_in',[])});(follow/'variant-files.json').write_text(json.dumps(files,indent=2)+'\n')
+ sites=json.loads((out/'sites.json').read_text());eligible={s['file'] for s in sites}|{name for s in sites for name in s.get('observed_in',[])};durations={s['file']:s['wall_seconds'] for s in json.loads((out/'coverage.json').read_text())};changed_files={s['file'] for s in sites if s['callee'] in ['getLineStarts','getLineAndCharacterOfPosition']};files=sorted(eligible,key=lambda name:(0 if name not in expected else 1 if name in changed_files else 2,durations.get(name,0),name));(follow/'variant-files.json').write_text(json.dumps(files,indent=2)+'\n')
  core('original',base)
  prepared={}
  for label,annotation in [('a','{ readonly text: string; lineMap?: readonly number[] }'),('b','{ readonly text: string; lineMap: readonly number[] | undefined }')]:

@@ -2,27 +2,29 @@
 
 Measured main: `d690f276749f91e6b36fe3a9726a5a453fcd7d39`. Upstream TypeScript 6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Report only; no compiler or adaptation changes.
 
-Attempted 79 of 79 compiler files; 77 completed full-mode streams. Physical sites: 23; distinct finding/phase/unit observations: 23.
+Attempted 79 of 79 compiler files; 78 completed full-mode streams. Physical sites: 34; distinct finding/phase/unit observations: 34.
 
-**Counts are lower bounds.** Incomplete streams: `checker.ts`, `utilities.ts`.
+**Counts are lower bounds.** Incomplete streams: `checker.ts`.
 
 ## By callee
 
 | Callee | Sites | SourceFile sites | Other source types | Files | First-stop roots on c504dd8f | Reads optional method | Method-only candidate sites for road 2 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- | --- |
-| `getLineAndCharacterOfPosition` | 14 | 13 | 1 | 6 | 73 | no | 14 |
-| `getLineStarts` | 3 | 3 | 0 | 3 | 0 | no | 3 |
+| `getEndLinePosition` | 1 | 1 | 0 | 1 | 0 | no | 0 |
+| `getLineAndCharacterOfPosition` | 18 | 17 | 1 | 7 | 73 | no | 18 |
+| `getLineStarts` | 4 | 4 | 0 | 4 | 0 | no | 4 |
+| `getLinesBetweenPositions` | 5 | 5 | 0 | 1 | 0 | no | 0 |
 | `getPositionOfLineAndCharacter` | 2 | 2 | 0 | 1 | 0 | yes | 0 |
 | `transferSourceFileChildren` | 2 | 2 | 0 | 1 | 0 | no | 0 |
 | `unsetNodeChildren` | 2 | 2 | 0 | 1 | 0 | no | 0 |
 
-Reason census: 22 site(s): optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; 1 site(s): optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceMapSource, which can hide fields.
+Reason census: 33 site(s): optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; 1 site(s): optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceMapSource, which can hide fields.
 
 First-stop attribution comes from `typescript/next-stops-c504dd8f` at `fe08a0d47a3d28f646db181ac9e8456e5c60885f`, file `stage3/census/next-stops-c504dd8f/grouped-first-stops.json`, copied as prior-first-stops.json. It names tracing.ts:206:67 for 73 roots. Its other six roots have unrelated outcomes. First-stop roots count only sites explicitly named in that evidence; it does not predict their next blocker.
 
 ## Initial body-only road 2 hypothesis
 
-Body inspection identifies 17 of 23 observed sites whose optional-method requirement would be removed by the two parameter changes. This was the original report hypothesis, not a measured clearance result. It does not establish that the replacement lineMap view is legal. The follow-up measurements below, when present, take precedence.
+Body inspection identifies 22 of 34 observed sites whose optional-method requirement would be removed by the two parameter changes. This was the original report hypothesis, not a measured clearance result. It does not establish that the replacement lineMap view is legal. The follow-up measurements below, when present, take precedence.
 
 The exact proposal changes only getLineAndCharacterOfPosition and getLineStarts. Their bodies and the functions receiving their source-file value use only text and lineMap. getLineStarts reads lineMap, writes the cache when absent, and passes only text to computeLineStarts. getLineAndCharacterOfPosition passes the value only to getLineStarts, then passes a number array to computeLineAndCharacterOfPosition and computeLineOfPosition. These paths never inspect the optional method.
 
@@ -60,6 +62,17 @@ Locations are in the adapted compiler. Body-inventory line numbers in the next t
 | transformers/declarations.ts:1264:70 | refusal_scan | transformDeclarations / visitDeclarationSubtree | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 | transformers/declarations.ts:1264:139 | refusal_scan | transformDeclarations / visitDeclarationSubtree | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 | transformers/jsx.ts:359:63 | refusal_scan | transformJsx / visitJsxOpeningLikeElementOrFragmentJSX | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:1025:47 | refusal_scan | nodePosToString | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:1213:46 | refusal_scan | createCommentDirectivesMap / &lt;anonymous@1212&gt; | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:2526:67 | refusal_scan | getErrorSpanForArrowFunction | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:2527:65 | refusal_scan | getErrorSpanForArrowFunction | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:2531:70 | refusal_scan | getErrorSpanForArrowFunction | getEndLinePosition (call argument) | sourceFile -&gt; getLineStarts; sourceFile.text; only numbers and strings passed onward | no | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:6748:38 | refusal_scan | getLineOfLocalPosition | getLineStarts (call argument) | reads lineMap, writes computed lineMap; text -&gt; computeLineStarts | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:7944:37 | refusal_scan | getLinesBetweenRangeEndAndRangeStart | getLinesBetweenPositions (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineOfPosition | no | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:7949:37 | refusal_scan | getLinesBetweenRangeEndPositions | getLinesBetweenPositions (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineOfPosition | no | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:7959:37 | refusal_scan | positionsAreOnSameLine | getLinesBetweenPositions (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineOfPosition | no | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:7971:37 | refusal_scan | getLinesBetweenPositionAndPrecedingNonWhitespaceCharacter | getLinesBetweenPositions (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineOfPosition | no | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
+| utilities.ts:7977:37 | refusal_scan | getLinesBetweenPositionAndNextNonWhitespaceCharacter | getLinesBetweenPositions (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineOfPosition | no | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 | watch.ts:249:60 | refusal_scan | getFilesInErrorForSummary / &lt;anonymous@241&gt; | getLineAndCharacterOfPosition (call argument) | sourceFile -&gt; getLineStarts; line-start array -&gt; computeLineAndCharacterOfPosition -&gt; computeLineOfPosition | yes | optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields |
 
 ## All exported compiler functions with a SourceFileLike parameter
@@ -166,7 +179,7 @@ This is a latent observational census, not an exhaustive proof of all runtime pa
 | tsbuild.ts | 0 | 32.97 | yes | no |
 | tsbuildPublic.ts | 0 | 72.01 | yes | no |
 | types.ts | 0 | 94.51 | yes | no |
-| utilities.ts | -15 | 300.12 | no | yes |
+| utilities.ts | 0 | 643.31 | yes | yes |
 | utilitiesPublic.ts | 0 | 207.54 | yes | no |
 | visitorPublic.ts | 0 | 37.85 | yes | no |
 | watch.ts | 0 | 52.46 | yes | no |
