@@ -232,3 +232,36 @@ Measured scratch paths and logs use /tmp/host-errors-*; the default oracle's
 phase logs are /tmp/host-errors-oracle/{install,build,tests}.log. Source stays
 outside Adamic. Evidence includes counts, fixture observations, actual mutants,
 the API comparison, oracle report/diff, and the incremental scoreboard.
+
+## Metadata spread amendment, ff5eddz
+
+The three metadata records in startTracing read meta's fields explicitly. The
+meta local and its single timestamp() call remain unchanged. The process and
+thread records retain name,args,cat,ph,ts,pid,tid key order. The browser record
+retains name,cat,ph,ts,pid,tid: its timeline category occupies the position first
+introduced by the spread category. Values are unchanged.
+
+This amends 47. On current main, 47 checked the fixed builtin loader producer
+but did not pin the whole function. meta-spread-pins.json now pins exactly the
+incoming function and the completed function, including the existing errorMessage
+rewrite and all three explicit-read literals. Only those two whole functions
+are accepted, with CRLF/LF normalization. Intermediate catch/literal combinations,
+mixed literals, and other function drift refuse before writes. The existing
+require("fs") producer check is unchanged; its node:fs amendment is separate.
+No other adaptation pins these exact metadata literals.
+
+meta-spread-pin-witness.cjs checks both exact states, no-write replay, and six
+drift controls using 47's own immediate sys, tracing and helper snapshots.
+meta-spread-witness.cjs loads both complete built compiler bundles with the
+same fixed performance clock, writes and stops real traces in temporary
+directories, and compares trace bytes and runtime export keys.
+meta-spread-emission.cjs audits every emitted JavaScript file and stops on any
+change outside the three literal nodes. Their small results are included here.
+
+The full census exposes the next stop at 104:46, JSON.stringify object
+references, previously hidden by the first spread refusal. The user expressly
+accepted this one finding as Compiler's #d9ep7de head 1 boundary, the same
+reason already present at 194:67. No other new finding is allowed anywhere in
+tracing.ts. PROOF.md quotes the exact findings, records whole-file comparison,
+and describes the complete sharded lane count and positive control. Raw logs,
+streams, patches and lane observations live on typescript/meta-spread-evidence.
