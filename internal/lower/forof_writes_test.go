@@ -166,6 +166,25 @@ for(let cursor of cursors) {
 	}
 }
 
+// The same as IR, straight at plainSpreadSources, so mutant 3 has a witness that doesn't depend on
+// the program above lowering as far as checkLibrarySpreads: a for-of's binding the body assigns a
+// literal isn't a plain spread source. Mutant 3.
+func TestForOfReassignedBindingIsNoPlainSpreadSource(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{
+		Locals: []ir.Local{{Name: "cursor", Type: ir.Object, Function: -1}},
+		Main: []ir.Statement{ir.ForOf{
+			Iterable: ir.ArrayLiteral{Element: ir.Object},
+			Element:  ir.Object,
+			Local:    0,
+			Body:     []ir.Statement{ir.Assign{Local: 0, Value: ir.ObjectLiteral{}}},
+		}},
+	}
+	if newAllocationFlowGraph(program).plainSpreadSources(ir.Read{Local: 0, Of: ir.Object}, map[int]bool{}) {
+		t.Fatal("a for-of binding reassigned with a literal is taken as a plain spread source")
+	}
+}
+
 // collect's table of local-writing fields, localWrites, has exactly the rows local_uses.go's
 // localFields classes as writes, and TestLocalFieldsClassifyEveryIntField holds that to internal/ir,
 // so an IR node that comes to write a local reds here until collect says how it takes it. Only
