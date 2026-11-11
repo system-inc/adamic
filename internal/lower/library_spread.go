@@ -44,7 +44,7 @@ func (l *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
 // not evidence of a plain object: it falls back to the closed-world type set.
 func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, active map[int]bool) bool {
 	sources := func(node int) bool {
-		if active[node] || graph.unknownParameters[node] || len(graph.sources[node]) == 0 {
+		if _, unknownSource := graph.unknownAt(node); active[node] || unknownSource || len(graph.sources[node]) == 0 {
 			return false
 		}
 		active[node] = true
