@@ -857,3 +857,77 @@ pair_wrapper_child_exit=0
 render_wrapper_child_exit=0
 push_child_exit=0 sha=23aab01794c5b5af5f542365c0f01eeab086b1ae
 checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=b543cb9e387ddef7c89369bab4b170d80e1794f3
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 29
+      },
+      "observed_units": 29,
+      "views_evaluated": 15,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 29
+      },
+      "observed_units": 29,
+      "views_evaluated": 15,
+      "raw_guard_refusals": 15,
+      "units_with_refusals": 6,
+      "probe_errors": 0,
+      "roads": {
+        "index values": 13,
+        "union arms": 2
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 6,
+      "new_guard_stops_in_normally_finding_free_units": 3,
+      "new_guard_stops_in_already_normally_blocked_units": 3,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 7,
+      "new_sites": 7,
+      "unit_first_stop_delta": 6,
+      "regressions": 6
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 7,
+      "new_sites": 7,
+      "unit_first_stop_delta": 6,
+      "regressions": 6
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-01e6ae4837", "cases": 7, "categories": {"guard bug: identity/union cross-product": 7}, "needs_reading": 0}
+render_wrapper_child_exit=0
