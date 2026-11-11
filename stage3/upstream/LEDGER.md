@@ -726,3 +726,12 @@ adaptation 71 with measured variant (e), an internal first overload for
 getLineAndCharacterOfPosition and the internal getLineStarts view. Precedent:
 getPositionOfLineAndCharacter's internal overload. SourceFileLike and the public
 signature stay unchanged; JavaScript bytes and public API require no sanction.
+
+Task dp24r5m: 99-correctness-tracing-dumptypes replaces two explicit-any reads
+with getObjectFlags and an Intrinsic flag guard plus checked IntrinsicType read.
+The whole lane records 0 calls across 398 shards and 797 Node processes; three
+generateTrace projects visit 84,642 types, including 46 real objectFlags values
+outside ObjectFlagsType, with 0 differences at all five masks or intrinsicName.
+Written types are byte-identical, 79 roots have 0 diagnostics, both restoring
+mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
+2,256 runtime export keys are identical. See its PROOF.md. No upstream issue filed.
