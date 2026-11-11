@@ -1,0 +1,15 @@
+{
+  "exactIncomingAccepted": true,
+  "exactCompletedAccepted": true,
+  "incomingMetadataEdits": 3,
+  "completedReplayEdits": 0,
+  "replayWithoutWrites": true,
+  "driftRefusedBeforeWriting": [
+    "mixed catch and original literals",
+    "mixed catch and explicit literals",
+    "mixed metadata literals",
+    "meta value drift",
+    "loader producer drift",
+    "unrelated function drift"
+  ]
+}

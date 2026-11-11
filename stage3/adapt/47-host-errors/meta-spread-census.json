@@ -1,4 +1,8 @@
 {
+  "passed": true,
+  "scope": "all findings anywhere in tracing.ts",
+  "beforeFindings": 61,
+  "afterFindings": 61,
   "before": [
     {
       "unit": "tracing.ts:59:5",
@@ -128,5 +132,20 @@
       "reason": "a spread after the first field"
     }
   ],
-  "restoringMutantMatchesBefore": true
+  "restoringMutantMatchesBefore": true,
+  "existingSameStop": {
+    "unit": "tracing.ts:187:5",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "tracing.ts:194:67",
+    "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)"
+  },
+  "allowedNewlyVisibleStop": {
+    "unit": "tracing.ts:59:5",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "tracing.ts:104:46",
+    "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)"
+  },
+  "otherNewFindings": 0
 }

@@ -1,54 +1,91 @@
-# Metadata spread candidate: stopped
+# startTracing metadata fields, ff5eddz
 
-Task ff5eddz. Base: origin/main
-`1bb9663d4a9cbf1466a758c41c2293c9c869e6ab`. TypeScript 6.0.3:
-`050880ce59e30b356b686bd3144efe24f875ebc8`. Node v24.19.0.
+The three metadata literals build from explicit reads of the fresh local meta.
+They retain the same keys, insertion order and values. The meta declaration,
+its single timestamp() call, the require("fs") producer, and all other source
+bytes are unchanged. This is a JavaScript-changing adaptation, with actual
+Node byte and emitted-output witnesses below.
 
-**Do not land this candidate.** Replacing the three spreads removes the requested
-single-spread refusal, but reveals a new finding in startTracing:
+The only newly visible census finding is the explicitly accepted next stop:
 
 ```text
 tracing.ts:104:46: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet
 ```
 
-That violates the requested condition that nothing new appear in startTracing.
-The lowerer and JSON.stringify call are unchanged. Addressing this additional
-boundary would exceed the three-literal scope. The complete sharded lane and
-its startTracing count were not run, and no lane count or landing is claimed.
-No ledger entry was added for an unlanded candidate.
+Before the edit, lowering stops the statement at its first spread. Removing
+the spreads exposes the unchanged map callback's JSON.stringify boundary.
+This belongs to Compiler's #d9ep7de head 1 and is the same reason already
+reported at tracing.ts:194:67. The user's follow-up accepts only this finding.
+A whole-file comparison checks every tracing.ts finding, including boundaries:
+no other finding is added, and the restoring mutant exactly recovers before.
+
+## Pins and source scope
+
+The final validation base is origin/main at
+`16429a30452d027809f0ea85bc395479423e493e`. The initial measurement base was
+`1bb9663d4a9cbf1466a758c41c2293c9c869e6ab`; all adaptation inputs are identical
+between those main commits. TypeScript is pinned to 6.0.3,
+`050880ce59e30b356b686bd3144efe24f875ebc8`. Node is v24.19.0.
+
+47 previously checked the builtin loader producer, without a whole-function
+pin. meta-spread-pins.json now admits exactly the incoming function and the
+completed function: the latter includes 47's existing errorMessage rewrite
+and the three explicit-read literals. CRLF/LF normalization alone is allowed.
+The existing fs producer check is unchanged. No other adaptation pins these
+exact literals. No later node:fs import amendment is included.
+
+The pin witness accepts both exact states, proves no-write finished replay,
+and refuses six other states before writing: the two mixed catch/literal
+forms, mixed metadata literals, meta-value drift, loader-producer drift, and
+unrelated function drift. It uses 47's own immediate sys, tracing and helper
+snapshots so later import merging and helper edits do not bypass 47's guards.
+The earlier full-tree replay attempt failed at an unrelated sys import guard;
+untouched origin/main 47 fails the same way. Both attempts remain in raw
+historical evidence, and no unrelated guard was weakened.
+
+All before/after src paths match. Only src/compiler/tracing.ts differs, and
+reversing the three literal replacements recovers its before bytes exactly.
+The completed source's only function diff is those three literal nodes.
 
 ## Completed checks
 
 | Check | Result |
 | --- | --- |
-| Current-main cloud setup | child exit 0 |
-| Pinned API install | child exit 0 |
-| Unchanged full apply | child exit 0 |
-| Amended full apply | child exit 0 |
+| Current-main setup and pinned API install | child exits 0 |
+| Unchanged and amended full applies | child exits 0 |
+| Final two-state-pin full apply | child exit 0; all 747 src files byte-identical to the audited build inputs |
 | Both compiler and harness builds | all four child exits 0 |
-| Actual adamic types, all 79 recursive compiler roots | child exit 0, zero diagnostics |
-| Real Node trace files | byte-identical, no timestamp normalization |
-| Runtime ts export keys | all 2,256 identical |
-| Emitted JavaScript audit | only the three literals, zero rename hunks |
-| Restoring mutant | original 103:67 refusal returns |
-| No new startTracing findings | **fails: JSON.stringify at 104:46** |
+| Actual current-main adamic types, all 79 compiler roots | exit 0, zero diagnostics |
+| Node trace bytes and runtime ts export keys | identical |
+| Every emitted JavaScript hunk | only the three literals, zero renames |
+| Before, after and mutant full censuses | all child exits 0 |
+| Whole-file census comparison | only the accepted next stop is newly visible |
+| Complete sharded lane and start/meta counts | running; result recorded before landing |
 
-The first setup attempt began on the initial older checkout, and failed when
-its older cohere pin no longer matched current main's imports. Setup was rerun
-on current main, selected its correct submodule pin, and passed. Both logs are
-retained. No production dependency or compiler option was changed.
+The initial setup attempt selected the old checkout's cohere pin and failed
+after the branch changed. Setup was rerun with current main's proper submodule
+and passed; setup also passed after main advanced. All logs are retained.
+No dependency, compiler option, expected lane count, or lane script is changed.
 
-## Exact source and JavaScript scope
+## Node and emission witnesses
 
-The entire before/after src inventories have the same names. Only
-src/compiler/tracing.ts differs. Replacing the three after literals with their
-pinned original text recovers that entire file byte for byte. The meta local,
-single timestamp() evaluation, require("fs"), and every other source byte
-remain unchanged. No other adaptation pins the exact metadata literals.
+meta-spread-witness.cjs loads both complete built/local/typescript.js bundles
+in separate VM contexts with the real fs builtin and the same fixed performance
+clock, 123.25. Each starts server-mode tracing in a fresh temporary directory,
+then stops it; server mode accepts an empty type catalog. The clock fires once
+per start. The actual complete trace files are byte-identical, without timestamp
+normalization. SHA-256:
+`9a18cde59efa0695cec3d711f43d6264b8e764820343fc92ea01eb6739dab38c`.
+All 2,256 runtime ts export keys match. The exact trace and key digest are in
+meta-spread-witness.json.
 
-All ten emitted .js files under built/ were audited. Every JavaScript diff hunk
-is listed here; each is a single compact output line containing all three
-metadata objects:
+The process/thread record key order is name,args,cat,ph,ts,pid,tid. The browser
+record order is name,cat,ph,ts,pid,tid: its explicit timeline category retains
+the position introduced by meta's cat. The meta local itself has the ordered
+own enumerable keys cat,ph,ts,pid,tid.
+
+All ten emitted .js files under built/ were audited. These are every emitted
+JavaScript diff hunk, each a single compact line containing all three objects:
 
 | File | Changed line |
 | --- | ---: |
@@ -56,71 +93,53 @@ metadata objects:
 | built/local/run.js | 2618 |
 | built/local/typescript.js | 4824 |
 
-For each changed file, parsing the JavaScript, replacing only its three after
-object nodes with the corresponding before nodes, and comparing whole-file
-bytes recovers the before file exactly. There are no pure esbuild renames and
-no other emitted JavaScript changes. The other seven files are byte-identical.
-`meta-spread-emission.json` records inventories, lines, and both SHA-256 values.
-The complete hunks are on the evidence branch in raw/all-emitted-javascript-hunks.patch.
-
-## Node witness
-
-Run `meta-spread-witness.cjs BEFORE_TREE AFTER_TREE OUTPUT_JSON` with Node 24.
-Both complete built/local/typescript.js bundles run in separate VM contexts
-with a fixed performance clock of 123.25, and the real Node fs builtin. Each
-starts server-mode tracing into its own temporary directory, then stops it.
-Server mode accepts an empty type catalog. Each start calls the clock once.
-The actual complete trace files contain exactly the three metadata records and
-are byte-identical without normalization. SHA-256:
-`9a18cde59efa0695cec3d711f43d6264b8e764820343fc92ea01eb6739dab38c`.
-
-`meta-spread-witness.json` preserves the exact trace bytes, clock counts, and
-runtime export-key count and digest. The process and thread key order is
-name,args,cat,ph,ts,pid,tid; the browser order is name,cat,ph,ts,pid,tid.
+For each changed file, parsing JavaScript and replacing only its three after
+object nodes with the corresponding before nodes recovers whole-file before
+bytes exactly. No esbuild rename or other JavaScript change occurs. The other
+seven files are byte-identical. meta-spread-emission.json records both hashes;
+the complete hunks are in raw/all-emitted-javascript-hunks.patch on the evidence
+branch. The audited bundles are reused only after the final apply's complete
+source inventory is proved identical.
 
 ## Full census and restoring mutant
 
-Each run loads the complete 79-root compiler program, selects only tracing.ts
-for attempts, sets LATENT_FULL=1 and LATENT_ASSERT_NO_OUTPUT=1, and sets
-LATENT_ONLY_FILE to that run's absolute adapted tracing.ts path. All three
-census children exit 0 and write complete relation-report trailers. Their
-headers report zero checker diagnostics and checker_rejected=false; the tool's
-historical measurement label still says "measured on a checker-rejected program".
-The binary is a scratch no-output overlay built by the repository's unchanged
-make_overlay.py. Production compiler source is unchanged.
+Each run loads all 79 compiler roots and selects tracing.ts for attempts with
+LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1, and LATENT_ONLY_FILE set to that run's
+absolute adapted tracing.ts path. The current-main scratch no-output binary
+comes from the unchanged make_overlay.py. All streams have complete trailers
+and zero checker diagnostics. Their historical measurement label still says
+"measured on a checker-rejected program", while checker_rejected is false.
 
-These are all startTracing NotYet/Refused findings, grouped by source address;
-Boundary records are retained in the raw streams:
+These are all startTracing NotYet/Refused findings; Boundary records are kept
+and compared in the complete streams:
 
-| Address | Before | After | Restoring mutant |
+| Address and phase | Before | After | Restoring mutant |
 | --- | --- | --- | --- |
-| 64:22 | NotYet: a call returning any | same | same |
-| 72:9 | NotYet: assigning a field of a value | same | same |
+| 64:22, lowering | NotYet: a call returning any | same | same |
+| 72:9, lowering | NotYet: assigning a field of a value | same | same |
 | 96:19, refusal_scan | NotYet: a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports | same | same |
 | 96:19, lowering | NotYet: reading tracingEnabled | same | same |
-| 103:67 | Refused: a spread after the first field (adamic/single-spread) | absent | restored |
-| 104:46 | absent | NotYet: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) | absent |
+| 103:67, lowering | Refused: a spread after the first field (adamic/single-spread) | absent | restored |
+| 104:46, lowering | absent | NotYet: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) | absent |
 
-The before and restoring-mutant scans report only the first spread in the
-statement, at 103:67. They do not separately report the original columns 125
-and 171. The after source contains none of the three spread nodes, and its
-startTracing findings contain no single-spread refusal. The mutant restores
-all three original literals in a private source copy, recovers the before
-tracing.ts bytes exactly, and reproduces the before startTracing findings
-exactly after path normalization. `meta-spread-census.json` records every
-NotYet/Refused finding above and the failing no-new-findings comparison.
+The before and restoring-mutant scans report the first spread at 103:67,
+not separate findings for original columns 125 and 171. The after source
+contains none of the three spreads and has no single-spread finding in
+startTracing. The private mutant restores all three originals, recovers before
+tracing.ts bytes, and reproduces all before findings after path normalization.
+meta-spread-census.json records the exact comparison over all tracing.ts sites,
+the sole permitted addition, the removed refusal, and the matching 194:67 stop.
 
-A separate attempt to replay all of 47 on the full finished tree fails at its
-existing sys.ts helper-import guard, before reaching startTracing. This is
-recorded separately from the census stop; it is not a successful replay claim.
-Untouched origin/main adaptation 47 reproduces the same helper-import failure
-(child exit 1). The focused contract script and both failure logs are retained
-only on the evidence branch. No unrelated import guard was weakened.
+## Lane runtime count
 
-## Evidence and disposition
+The complete lane measurement is running. Final counts, per-run actual meta
+keys, control observations and all 398 shard verdicts are required before landing.
 
-Raw logs, child-exit records, streams, source and emitted patches, and scratch
-measurement scripts are on
+## Evidence
+
+Raw logs, child exit records, streams, source and JavaScript patches, controls,
+private instrumentation, and lane observations are on
 [typescript/meta-spread-evidence](https://github.com/system-inc/adamic/tree/typescript/meta-spread-evidence/raw).
-The candidate and this stop report are saved to typescript/meta-spread-checkpoint.
-There is no final commit on typescript/meta-spread and no main push.
+The original stopped attempt is retained there as historical evidence. Only
+the user's specified next JSON.stringify stop is now allowed. Checkpoints go
+to typescript/meta-spread-checkpoint; main is never pushed or force-pushed.

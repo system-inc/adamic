@@ -235,30 +235,33 @@ the API comparison, oracle report/diff, and the incremental scoreboard.
 
 ## Metadata spread amendment, ff5eddz
 
-The three metadata records in `startTracing` now read `meta`'s fields explicitly.
-The local `meta` declaration and its single `timestamp()` call are unchanged.
-The process and thread records retain `name,args,cat,ph,ts,pid,tid` key order.
-The browser record retains `name,cat,ph,ts,pid,tid`; its explicit timeline category
-occupies the position first introduced by upstream's spread category.
+The three metadata records in startTracing read meta's fields explicitly. The
+meta local and its single timestamp() call remain unchanged. The process and
+thread records retain name,args,cat,ph,ts,pid,tid key order. The browser record
+retains name,cat,ph,ts,pid,tid: its timeline category occupies the position first
+introduced by the spread category. Values are unchanged.
 
-This amends 47 rather than adding a later adaptation. At base
-`1bb9663d4a9cbf1466a758c41c2293c9c869e6ab`, 47 checked the fixed builtin loader
-producer but did not pin the whole function. `meta-spread-pins.json` adds exact
-incoming and completed function pins, captured from the unchanged 47's Git
-snapshots. The adapter recognizes those forms with either all three original
-spreads or all three explicit-read literals. Mixed states and other function
-drift refuse before writes. Only line-ending normalization is allowed. The
-`require("fs")` producer is unchanged; its planned node:fs amendment is separate.
-No other adaptation identifies these metadata literals.
+This amends 47. On current main, 47 checked the fixed builtin loader producer
+but did not pin the whole function. meta-spread-pins.json now pins exactly the
+incoming function and the completed function, including the existing errorMessage
+rewrite and all three explicit-read literals. Only those two whole functions
+are accepted, with CRLF/LF normalization. Intermediate catch/literal combinations,
+mixed literals, and other function drift refuse before writes. The existing
+require("fs") producer check is unchanged; its node:fs amendment is separate.
+No other adaptation pins these exact metadata literals.
 
-`meta-spread-witness.cjs` loads both complete built compiler bundles in Node VM
-contexts with the same fixed performance clock. It writes real trace files in
-fresh temporary directories, stops server-mode tracing, compares their bytes,
-and checks the runtime namespace export keys. No timestamp normalization is
-needed. `meta-spread-emission.cjs` audits every emitted JavaScript
-file and stops on any change outside the three literal nodes. See `PROOF.md`
-for measured results and the separate evidence branch for raw logs and streams.
+meta-spread-pin-witness.cjs checks both exact states, no-write replay, and six
+drift controls using 47's own immediate sys, tracing and helper snapshots.
+meta-spread-witness.cjs loads both complete built compiler bundles with the
+same fixed performance clock, writes and stops real traces in temporary
+directories, and compares trace bytes and runtime export keys.
+meta-spread-emission.cjs audits every emitted JavaScript file and stops on any
+change outside the three literal nodes. Their small results are included here.
 
-This candidate is **stopped**, not landed: the full census exposes a new
-`JSON.stringify object references` finding at tracing.ts:104:46. The requested
-no-new-findings condition fails. The sharded lane was not run. See `PROOF.md`.
+The full census exposes the next stop at 104:46, JSON.stringify object
+references, previously hidden by the first spread refusal. The user expressly
+accepted this one finding as Compiler's #d9ep7de head 1 boundary, the same
+reason already present at 194:67. No other new finding is allowed anywhere in
+tracing.ts. PROOF.md quotes the exact findings, records whole-file comparison,
+and describes the complete sharded lane count and positive control. Raw logs,
+streams, patches and lane observations live on typescript/meta-spread-evidence.
