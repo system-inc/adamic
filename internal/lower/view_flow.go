@@ -109,6 +109,18 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 	for i, function := range program.Functions {
 		collect(function.Body, i)
 	}
+	// Outside code calls the entry module's exported functions (the JavaScript backend's
+	// ModuleExports, wasm32's handleRequest) with anything, so every parameter of one is unknown,
+	// rest included, whatever the program's own calls pass it. An export held in a global (Function
+	// is -1) is a function value, whose parameters MakeClosure already marks.
+	for _, export := range program.Exports {
+		if export.Function < 0 || export.Function >= len(program.Functions) {
+			continue
+		}
+		for _, parameter := range program.Functions[export.Function].Parameters {
+			graph.unknownParameters[parameter+1] = true
+		}
+	}
 	return graph
 }
 
